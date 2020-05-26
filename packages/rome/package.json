@@ -5,7 +5,8 @@
   "license": "MIT",
   "main": "index.ts",
   "files": [
-    "LICENSE"
+    "LICENSE",
+    "README.md"
   ],
   "bin": {
     "rome": "bin/rome.ts"

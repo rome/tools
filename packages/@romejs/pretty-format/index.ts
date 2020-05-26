@@ -13,6 +13,7 @@ import {escapeMarkup, markupTag} from "@romejs/string-markup";
 type RecursiveStack = Array<unknown>;
 
 type FormatOptions = {
+	allowCustom: boolean;
 	markup: boolean;
 	indent: string;
 	stack: RecursiveStack;
@@ -22,6 +23,7 @@ type FormatOptions = {
 };
 
 type FormatPartialOptions = {
+	allowCustom?: boolean;
 	maxDepth?: number;
 	markup?: boolean;
 	indent?: string;
@@ -30,6 +32,7 @@ type FormatPartialOptions = {
 };
 
 const DEFAULT_OPTIONS: FormatOptions = {
+	allowCustom: true,
 	maxDepth: Infinity,
 	markup: false,
 	indent: "",
@@ -48,7 +51,7 @@ function maybeEscapeMarkup(str: string, opts: FormatOptions): string {
 	}
 }
 
-export const CUSTOM_PRETTY_FORMAT = Symbol();
+export const CUSTOM_PRETTY_FORMAT = Symbol.for("custom-pretty-format");
 
 export default function prettyFormat(
 	obj: unknown,
@@ -270,6 +273,10 @@ function lineCountCompare(a: string, b: string): number {
 	return lineCount(a) - lineCount(b);
 }
 
+function formatObjectLabel(label: string, opts: FormatOptions): string {
+	return opts.markup ? markupTag("color", label, {fg: "cyan"}) : label;
+}
+
 function formatObject(
 	label: string,
 	obj: Objectish,
@@ -280,7 +287,13 @@ function formatObject(
 	const {stack} = opts;
 	if (stack.length > 0 && stack.includes(obj)) {
 		label = `Circular ${label} ${stack.indexOf(obj)}`;
-		return opts.markup ? markupTag("color", label, {fg: "cyan"}) : label;
+		return formatObjectLabel(label, opts);
+	}
+
+	const customFormat = obj[CUSTOM_PRETTY_FORMAT];
+	if (opts.allowCustom && typeof customFormat === "function") {
+		const custom = escapeMarkup(String(customFormat.call(obj)));
+		return opts.markup ? markupTag("dim", custom) : custom;
 	}
 
 	//
@@ -349,8 +362,7 @@ function formatObject(
 		}
 	}
 
-	label = opts.markup ? markupTag("color", label, {fg: "cyan"}) : label;
-	return `${label} ${open}${inner}${close}`;
+	return `${formatObjectLabel(label, opts)} ${open}${inner}${close}`;
 }
 
 function formatRegExp(val: RegExp): string {
@@ -363,6 +375,7 @@ function formatDate(val: Date): string {
 
 type Objectish = {
 	type?: unknown;
+	[CUSTOM_PRETTY_FORMAT]?: () => string;
 	[key: string]: unknown;
 };
 

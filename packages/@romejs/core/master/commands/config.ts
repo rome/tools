@@ -10,7 +10,7 @@ import {commandCategories} from "../../common/commands";
 import {createMasterCommand} from "../commands";
 import {assertHardMeta, modifyProjectConfig} from "@romejs/project";
 import {createUnknownFilePath} from "@romejs/path";
-import {markup} from "@romejs/string-markup";
+import {escapeMarkup, markup} from "@romejs/string-markup";
 import {descriptions} from "@romejs/diagnostics";
 
 export default createMasterCommand({
@@ -86,9 +86,11 @@ export default createMasterCommand({
 				{
 					pre: (meta) => {
 						reporter.success(
-							markup`Setting <emphasis>${keyParts}</emphasis> to <emphasis>${JSON.stringify(
-								value,
-							)}</emphasis> in the project config <filelink emphasis target="${meta.configPath.join()}" />`,
+							`Setting <emphasis>${keyParts}</emphasis> to <emphasis>${escapeMarkup(
+								JSON.stringify(value),
+							)}</emphasis> in the project config ${meta.configPath.toMarkup({
+								emphasis: true,
+							})}`,
 						);
 
 						if (value === "true" || value === "false") {

@@ -6,20 +6,41 @@
  */
 
 import {Reporter, ReporterOptions} from "@romejs/cli-reporter";
+import {AbsoluteFilePath} from "@romejs/path";
+
+export type LoggerOptions = {
+	cwd?: AbsoluteFilePath;
+	excludePid?: boolean;
+	type: string;
+};
+
+export type PartialLoggerOptions = Partial<LoggerOptions>;
 
 export default class Logger extends Reporter {
-	constructor(name: string, isEnabled: () => boolean, opts: ReporterOptions) {
+	constructor(
+		loggerOptions: LoggerOptions,
+		isEnabled: () => boolean,
+		opts: ReporterOptions,
+	) {
 		super({
 			verbose: true,
 			...opts,
+			markupOptions: {
+				cwd: loggerOptions.cwd,
+				...opts.markupOptions,
+			},
 		});
-		this._loggerName = name;
+		this.loggerOptions = loggerOptions;
 		this.isEnabled = isEnabled;
 	}
 
-	_loggerName: string;
+	loggerOptions: LoggerOptions;
 
 	getMessagePrefix() {
-		return `<dim>[${this._loggerName} ${process.pid}]</dim> `;
+		let inner = this.loggerOptions.type;
+		if (!this.loggerOptions.excludePid) {
+			inner += ` ${process.pid}`;
+		}
+		return `<dim>[${inner}]</dim> `;
 	}
 }

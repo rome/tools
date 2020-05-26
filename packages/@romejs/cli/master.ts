@@ -10,7 +10,7 @@ import {createBridgeFromSocket} from "@romejs/events";
 import setProcessTitle from "./utils/setProcessTitle";
 import net = require("net");
 
-import {exists, unlink} from "@romejs/fs";
+import {exists, removeFile} from "@romejs/fs";
 
 export default async function master() {
 	setProcessTitle("master");
@@ -34,7 +34,7 @@ export default async function master() {
 	});
 
 	if (await exists(SOCKET_PATH)) {
-		await unlink(SOCKET_PATH);
+		await removeFile(SOCKET_PATH);
 	}
 
 	socketServer.listen(

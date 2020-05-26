@@ -47,7 +47,7 @@ tags.set("warn", []);
 tags.set("info", []);
 tags.set("command", []);
 tags.set("color", ["fg", "bg"]);
-tags.set("highlight", ["i"]);
+tags.set("highlight", ["i", "legend"]);
 tags.set("table", []);
 tags.set("tr", []);
 tags.set("td", ["align"]);

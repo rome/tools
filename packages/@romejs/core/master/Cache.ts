@@ -15,7 +15,7 @@ import Master from "./Master";
 import {DEFAULT_PROJECT_CONFIG, ProjectDefinition} from "@romejs/project";
 import {VERSION} from "../common/constants";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@romejs/path";
-import {createDirectory, readFileText, unlink, writeFile} from "@romejs/fs";
+import {createDirectory, readFileText, removeFile, writeFile} from "@romejs/fs";
 import {stringifyJSON} from "@romejs/codec-json";
 
 type CacheEntry = {
@@ -57,7 +57,8 @@ export default class Cache {
 	constructor(master: Master) {
 		this.master = master;
 		this.loadedEntries = new AbsoluteFilePathMap();
-		this.disabled = process.env.ROME_CACHE === "0";
+		this.disabled =
+			!master.options.forceCacheEnabled && process.env.ROME_CACHE === "0";
 		this.cachePath = master.userConfig.cachePath;
 	}
 
@@ -72,7 +73,7 @@ export default class Cache {
 		});
 
 		const {memoryFs} = this.master;
-		await createDirectory(this.cachePath, {recursive: true});
+		await createDirectory(this.cachePath);
 		await memoryFs.watch(this.cachePath, DEFAULT_PROJECT_CONFIG);
 	}
 
@@ -109,7 +110,7 @@ export default class Cache {
 	async handleDeleted(path: AbsoluteFilePath) {
 		// Handle the file not existing
 		const cacheFilename = this.getCacheFilename(path);
-		await unlink(cacheFilename);
+		await removeFile(cacheFilename);
 		this.loadedEntries.delete(path);
 	}
 
@@ -187,12 +188,7 @@ export default class Cache {
 			return;
 		}
 
-		await createDirectory(
-			cacheFilename.getParent(),
-			{
-				recursive: true,
-			},
-		);
+		await createDirectory(cacheFilename.getParent());
 		await writeFile(cacheFilename, stringifyJSON(entry));
 	}
 }

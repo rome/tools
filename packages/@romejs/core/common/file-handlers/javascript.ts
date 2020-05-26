@@ -63,7 +63,7 @@ function buildJSHandler(
 				file,
 				parseOptions,
 			);
-			worker.logger.info(`Analyzing:`, file.real);
+			worker.logger.info(`Analyzing:`, file.real.toMarkup());
 
 			return worker.api.interceptAndAddGeneratedToDiagnostics(
 				await compiler.analyzeDependencies({
@@ -110,8 +110,6 @@ function buildJSHandler(
 				ref,
 				parseOptions,
 			);
-
-			worker.logger.info(`Linting: `, ref.real);
 
 			// Run the compiler in lint-mode which is where all the rules are actually ran
 			const res = await compiler.lint({

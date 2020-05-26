@@ -15,7 +15,7 @@ import {
 	UnknownFilePath,
 	createAbsoluteFilePath,
 } from "@romejs/path";
-import {exists, lstat, readFile, readFileText, readdir} from "@romejs/fs";
+import {exists, lstat, readDirectory, readFile, readFileText} from "@romejs/fs";
 
 const dirname = testOptions.dirname === undefined ? "" : testOptions.dirname;
 
@@ -66,7 +66,7 @@ async function _getFixtures(
 	}
 
 	// Get all the filenames in the directory
-	const filenames: AbsoluteFilePathSet = await readdir(dir);
+	const filenames: AbsoluteFilePathSet = await readDirectory(dir);
 
 	// Get options for this folder
 	let ownOptions;

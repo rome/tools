@@ -180,7 +180,7 @@ async function ask(
 	if (outdatedFiles.size > 0) {
 		const files = Array.from(
 			outdatedFiles,
-			(path) => `<filelink emphasis target="${path.join()}" />`,
+			(path) => path.toMarkup({emphasis: true}),
 		);
 
 		reporter.br();

@@ -959,7 +959,29 @@ export default class Reporter {
 			return;
 		}
 
-		const inner = markupTag(opts.markupTag, rawInner);
+		let inner = markupTag(opts.markupTag, rawInner);
+
+		if (args.length > 0) {
+			const formattedArgs: Array<string> = args.map((arg) => {
+				if (typeof arg === "string") {
+					return arg;
+				} else {
+					return prettyFormat(arg, {markup: true});
+				}
+			});
+
+			// Interpolate
+			inner = inner.replace(/%s/g, () => formattedArgs.shift()!);
+
+			// Add on left over arguments
+			for (const arg of formattedArgs) {
+				if (inner[inner.length - 1] !== " ") {
+					inner += " ";
+				}
+
+				inner += arg;
+			}
+		}
 
 		for (const stream of this.getStreams(opts.stderr)) {
 			// Format the prefix, selecting it depending on if we're a unicode stream
@@ -976,7 +998,7 @@ export default class Reporter {
 			);
 			const prefixLine = prefixLines[0];
 			if (prefixLines.length !== 1) {
-				throw new Error("Expected 1 prefix line");
+				throw new Error(`Expected 1 prefix line but got ${prefixLines.length}`);
 			}
 
 			const {lines} = this.markupify(stream, inner, prefixWidth);

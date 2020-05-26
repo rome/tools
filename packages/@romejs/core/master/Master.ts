@@ -37,7 +37,7 @@ import ProjectManager from "./project/ProjectManager";
 import WorkerManager from "./WorkerManager";
 import Resolver from "./fs/Resolver";
 import FileAllocator from "./fs/FileAllocator";
-import Logger from "../common/utils/Logger";
+import Logger, {PartialLoggerOptions} from "../common/utils/Logger";
 import MemoryFileSystem from "./fs/MemoryFileSystem";
 import Cache from "./Cache";
 import {Reporter, ReporterStream} from "@romejs/cli-reporter";
@@ -80,6 +80,10 @@ export type MasterClient = {
 };
 
 export type MasterOptions = {
+	inbandOnly?: boolean;
+	loggerOptions?: PartialLoggerOptions;
+	forceCacheEnabled?: boolean;
+	userConfig?: UserConfig;
 	dedicated: boolean;
 	globalErrorHandlers: boolean;
 };
@@ -149,7 +153,8 @@ export default class Master {
 		this.profiling = undefined;
 		this.options = opts;
 
-		this.userConfig = loadUserConfig();
+		this.userConfig =
+			opts.userConfig === undefined ? loadUserConfig() : opts.userConfig;
 
 		this.fileChangeEvent = new Event({
 			name: "Master.fileChange",
@@ -178,7 +183,10 @@ export default class Master {
 		});
 
 		this.logger = new Logger(
-			"master",
+			{
+				...opts.loggerOptions,
+				type: "master",
+			},
 			() => {
 				return (
 					this.logEvent.hasSubscribers() ||
@@ -190,7 +198,7 @@ export default class Master {
 					{
 						type: "all",
 						format: "none",
-						columns: 0,
+						columns: Infinity,
 						unicode: true,
 						write: (chunk) => {
 							this.emitMasterLog(chunk);
@@ -626,12 +634,12 @@ export default class Master {
 	}
 
 	async handleFileDelete(path: AbsoluteFilePath) {
-		this.logger.info(`[Master] File delete:`, path.join());
+		this.logger.info(`[Master] File delete:`, path.toMarkup());
 		this.fileChangeEvent.send(path);
 	}
 
 	async handleFileChange(path: AbsoluteFilePath) {
-		this.logger.info(`[Master] File change:`, path.join());
+		this.logger.info(`[Master] File change:`, path.toMarkup());
 		this.fileChangeEvent.send(path);
 	}
 
@@ -838,10 +846,7 @@ export default class Master {
 			);
 			if (masterCommand) {
 				// Warn about disabled disk caching
-				if (
-					process.env.ROME_CACHE === "0" &&
-					!this.warnedCacheClients.has(bridge)
-				) {
+				if (this.cache.disabled && !this.warnedCacheClients.has(bridge)) {
 					reporter.warn(
 						"Disk caching has been disabled due to the <emphasis>ROME_CACHE=0</emphasis> environment variable",
 					);

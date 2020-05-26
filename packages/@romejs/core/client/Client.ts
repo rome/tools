@@ -11,7 +11,7 @@ import {
 	DEFAULT_CLIENT_FLAGS,
 } from "../common/types/client";
 import ClientRequest, {ClientRequestType} from "./ClientRequest";
-import Master from "../master/Master";
+import Master, {MasterOptions} from "../master/Master";
 import {
 	CLI_SOCKET_PATH,
 	MasterBridge,
@@ -31,7 +31,7 @@ import {TarWriter} from "@romejs/codec-tar";
 import {Profile, Profiler, Trace, TraceEvent} from "@romejs/v8";
 import {PartialMasterQueryRequest} from "../common/bridges/MasterBridge";
 import {UserConfig, loadUserConfig} from "../common/userConfig";
-import {unlink} from "@romejs/fs";
+import {removeFile} from "@romejs/fs";
 import {stringifyJSON} from "@romejs/codec-json";
 import stream = require("stream");
 import net = require("net");
@@ -59,9 +59,17 @@ export type ClientProfileOptions = {
 	includeWorkers: boolean;
 };
 
-type BridgeStatus = {
+type BridgeStatus = BridgeStatusDedicated | BridgeStatusLocal;
+
+type BridgeStatusDedicated = {
 	bridge: MasterBridge;
-	dedicated: boolean;
+	dedicated: true;
+};
+
+type BridgeStatusLocal = {
+	bridge: MasterBridge;
+	master: Master;
+	dedicated: false;
 };
 
 type ClientRequestResponseResult = {
@@ -440,14 +448,16 @@ export default class Client {
 		}
 	}
 
-	async attachBridge(bridge: MasterBridge, dedicated: boolean) {
+	async attachBridge(status: BridgeStatus) {
 		const {stdout, stderr, columnsUpdated} = this.derivedReporterStreams;
 
 		if (this.bridgeStatus !== undefined) {
 			throw new Error("Already attached bridge to API");
 		}
 
-		this.bridgeStatus = {bridge, dedicated};
+		this.bridgeStatus = status;
+
+		const {bridge} = status;
 
 		bridge.stderr.subscribe((chunk) => {
 			stderr.write(chunk);
@@ -483,7 +493,7 @@ export default class Client {
 			bridge.handshake(),
 		]);
 
-		await this.bridgeAttachedEvent.call();
+		await this.bridgeAttachedEvent.callOptional();
 	}
 
 	async findOrStartMaster(): Promise<MasterBridge> {
@@ -499,24 +509,31 @@ export default class Client {
 			return runningDaemon;
 		}
 
+		const status = await this.startInternalMaster();
+		return status.bridge;
+	}
+
+	async startInternalMaster(
+		opts?: Partial<MasterOptions>,
+	): Promise<BridgeStatusLocal> {
 		// Otherwise, start a master inside this process
 		const master = new Master({
 			dedicated: false,
 			globalErrorHandlers: this.options.globalErrorHandlers === true,
+			...opts,
 		});
 		await master.init();
 
 		const bridge = createBridgeFromLocal(MasterBridge, {});
-		await Promise.all([
-			master.attachToBridge(bridge),
-			this.attachBridge(bridge, false),
-		]);
+		const status: BridgeStatusLocal = {bridge, master, dedicated: false};
+
+		await Promise.all([master.attachToBridge(bridge), this.attachBridge(status)]);
 
 		this.endEvent.subscribe(async () => {
 			await master.end();
 		});
 
-		return bridge;
+		return status;
 	}
 
 	async forceStartDaemon(): Promise<MasterBridge> {
@@ -585,7 +602,7 @@ export default class Client {
 				);
 			}
 
-			unlink(CLI_SOCKET_PATH).finally(() => {
+			removeFile(CLI_SOCKET_PATH).finally(() => {
 				listen();
 			});
 
@@ -647,15 +664,15 @@ export default class Client {
 			return undefined;
 		}
 
-		const server = createBridgeFromSocket(
+		const bridge = createBridgeFromSocket(
 			MasterBridge,
 			socket,
 			{
 				type: "server",
 			},
 		);
-		await this.attachBridge(server, true);
+		await this.attachBridge({bridge, dedicated: true});
 		this.reporter.success("Connected to daemon");
-		return server;
+		return bridge;
 	}
 }
