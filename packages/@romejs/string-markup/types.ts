@@ -87,3 +87,8 @@ export type MarkupFormatGridOptions = MarkupFormatOptions & {
 export type MarkupFormatNormalizeOptions = MarkupFormatOptions & {
 	stripPositions?: boolean;
 };
+
+export type MarkupLinesAndWidth = {
+	width: number;
+	lines: Array<string>;
+};
