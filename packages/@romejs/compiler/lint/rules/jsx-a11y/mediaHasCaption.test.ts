@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"jsx a11y has caption",
+	"jsx-a11y has caption",
 	async (t) => {
 		await testLintMultiple(
 			t,

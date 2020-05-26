@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"jsx a11y aria unsupported elements",
+	"jsx-a11y aria unsupported elements",
 	async (t) => {
 		await testLintMultiple(
 			t,

@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"jsx a11y lang test",
+	"jsx-a11y lang test",
 	async (t) => {
 		await testLintMultiple(
 			t,
