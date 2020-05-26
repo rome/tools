@@ -16,6 +16,17 @@ import {buildSuggestionAdvice} from "../helpers";
 import {createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	JSX_A11Y_ANCHOR_IS_VALID: (message: string) => ({
+		category: "lint/jsx-a11y/anchorIsValid",
+		message,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Anchor elements should only be used for default section or page navigation.",
+			},
+		],
+	}),
 	JSX_A11Y_ARIA_PROPS: (attribute: string) => ({
 		category: "lint/jsx-a11y/ariaProps",
 		message: `<emphasis>${attribute}</emphasis> is an invalid ARIA attribute.`,

@@ -57,6 +57,7 @@ import unsafeNegation from "./js/unsafeNegation";
 import unusedVariables from "./js/unusedVariables";
 import altText from "./jsx-a11y/altText";
 import anchorHasContent from "./jsx-a11y/anchorHasContent";
+import anchorIsValid from "./jsx-a11y/anchorIsValid";
 import ariaProps from "./jsx-a11y/ariaProps";
 import ariaUnsupportedElements from "./jsx-a11y/ariaUnsupportedElements";
 import clickEventsHaveKeyEvents from "./jsx-a11y/clickEventsHaveKeyEvents";
@@ -147,6 +148,7 @@ export const lintTransforms = [
 	unusedVariables,
 	altText,
 	anchorHasContent,
+	anchorIsValid,
 	ariaProps,
 	ariaUnsupportedElements,
 	clickEventsHaveKeyEvents,
