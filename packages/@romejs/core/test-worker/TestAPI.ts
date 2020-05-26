@@ -667,6 +667,10 @@ export default class TestAPI implements TestHelper {
 		});
 	}
 
+	getNextSnapshotId(): number {
+		return this.snapshotCounter++;
+	}
+
 	bufferSnapshot(
 		{
 			entryName,
