@@ -10,7 +10,7 @@
 
  unknown:1:18 lint/js/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Duplicate argument a in function definition
+  ✖ Avoid duplicate function arguments. Check the a argument.
 
   > 1 │ function hello(a, a) {
       │                   ^

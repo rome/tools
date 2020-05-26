@@ -10,7 +10,7 @@
 
  unknown:1:1 lint/js/noCompareNegZero ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Do not use the '>=' operator to compare against -0
+  ✖ Do not use the >= operator to compare against -0.
 
     (1 >= -0)
      ^^^^^^^

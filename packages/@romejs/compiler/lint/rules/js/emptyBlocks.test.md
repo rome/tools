@@ -58,10 +58,12 @@ if (foo) {
 
  unknown:1:9 lint/js/emptyBlocks ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Empty block
+  ✖ Avoid empty logic blocks.
 
     if (foo) {}
              ^^
+
+  ℹ Empty logic blocks usually result from incomplete refactoring.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -83,12 +85,14 @@ if (foo) {
 
  unknown:3:7 lint/js/emptyBlocks ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Empty block
+  ✖ Avoid empty logic blocks.
 
     1 │ if (foo) {
     2 │   // foo;
   > 3 │ } else {}
       │        ^^
+
+  ℹ Empty logic blocks usually result from incomplete refactoring.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

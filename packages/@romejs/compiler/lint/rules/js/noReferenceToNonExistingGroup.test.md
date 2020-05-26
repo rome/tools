@@ -130,7 +130,7 @@ foo;
 
  unknown:1:20 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Reference to non-existent group "18"
+  ✖ Avoid nonexistent group names. Check the 18 group.
 
     let foo = /([abc]+)=\18/;foo;
                         ^^^
@@ -155,7 +155,7 @@ foo;
 
  unknown:1:20 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Reference to non-existent group "49"
+  ✖ Avoid nonexistent group names. Check the 49 group.
 
     let foo = /([abc]+)=\49/;foo;
                         ^^^
@@ -180,7 +180,7 @@ foo;
 
  unknown:1:20 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Reference to non-existent group "78"
+  ✖ Avoid nonexistent group names. Check the 78 group.
 
     let foo = /([abc]+)=\78/;foo;
                         ^^^
@@ -205,7 +205,7 @@ foo;
 
  unknown:1:20 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Reference to non-existent group "99"
+  ✖ Avoid nonexistent group names. Check the 99 group.
 
     let foo = /([abc]+)=\99/;foo;
                         ^^^
@@ -230,14 +230,14 @@ foo;
 
  unknown:1:19 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Reference to non-existent group "19"
+  ✖ Avoid nonexistent group names. Check the 19 group.
 
     let foo = /(([abc])\19)+=\28/;foo;
                        ^^^
 
  unknown:1:25 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Reference to non-existent group "28"
+  ✖ Avoid nonexistent group names. Check the 28 group.
 
     let foo = /(([abc])\19)+=\28/;foo;
                              ^^^
@@ -262,7 +262,7 @@ foo;
 
  unknown:1:20 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Reference to non-existent group "19"
+  ✖ Avoid nonexistent group names. Check the 19 group.
 
     let foo = /([abc]+)=\199/;foo;
                         ^^^

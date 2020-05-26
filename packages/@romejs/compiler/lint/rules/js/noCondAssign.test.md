@@ -10,12 +10,14 @@
 
  unknown:1:16 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Cannot assign variable in loop condition
+  ✖ Do not assign variables in loop conditions.
 
   > 1 │ for (let i = 1; i = 10; i++) {
       │                 ^^^^^^
     2 │   console.log('foo');
     3 │ }
+
+  ℹ It is a common typo to mistype an equality operator as an assignment operator.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -38,12 +40,14 @@ for (let i = 1; i = 10; i++) {
 
  unknown:1:4 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Cannot assign variable in loop condition
+  ✖ Do not assign variables in loop conditions.
 
   > 1 │ if (foo = 'bar') {
       │     ^^^^^^^^^^^
     2 │   console.log('foo');
     3 │ }
+
+  ℹ It is a common typo to mistype an equality operator as an assignment operator.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -66,12 +70,14 @@ if (foo = "bar") {
 
  unknown:1:7 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Cannot assign variable in loop condition
+  ✖ Do not assign variables in loop conditions.
 
   > 1 │ while (foo = 'bar') {
       │        ^^^^^^^^^^^
     2 │   console.log('foo');
     3 │ }
+
+  ℹ It is a common typo to mistype an equality operator as an assignment operator.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -94,12 +100,14 @@ while (foo = "bar") {
 
  unknown:3:9 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Cannot assign variable in loop condition
+  ✖ Do not assign variables in loop conditions.
 
     1 │ do {
     2 │   console.log('foo');
   > 3 │ } while (foo = 'bar')
       │          ^^^^^^^^^^^
+
+  ℹ It is a common typo to mistype an equality operator as an assignment operator.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

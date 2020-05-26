@@ -10,11 +10,13 @@
 
  unknown:2 lint/js/noDeleteVars ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Variables should not be deleted.
+  ✖ This is an invalid use of the delete operator.
 
     1 │ const foo = "test";
   > 2 │ delete foo;
       │ ^^^^^^^^^^
+
+  ℹ Only object properties can be deleted.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

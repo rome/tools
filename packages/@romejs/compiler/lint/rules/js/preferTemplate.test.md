@@ -10,7 +10,7 @@
 
  unknown:1:31 lint/js/preferTemplate FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Template literals are preferred over string concatenation
+  ✖ Template literals are preferred over string concatenation.
 
     const foo = 'bar'; console.log(foo + 'baz')
                                    ^^^^^^^^^^^
@@ -40,7 +40,7 @@ console.log(`${foo}baz`);
 
  unknown:1:12 lint/js/preferTemplate FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Template literals are preferred over string concatenation
+  ✖ Template literals are preferred over string concatenation.
 
     console.log((1 * 2) + 'baz')
                 ^^^^^^^^^^^^^^^

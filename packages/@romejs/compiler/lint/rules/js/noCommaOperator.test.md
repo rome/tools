@@ -10,12 +10,12 @@
 
  unknown:1:1 lint/js/noCommaOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Avoid usage of the comma operator. It can lead to easy mistakes and ambiguous code.
+  ✖ Avoid the comma operator. It can lead to easy mistakes and ambiguous code.
 
     (0, 1, 2)
      ^^^^^^^
 
-  ℹ If you want multiple expressions then break it up.
+  ℹ If you want multiple expressions, then break it up.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

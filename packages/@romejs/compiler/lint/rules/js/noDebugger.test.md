@@ -25,7 +25,7 @@ test.debugger;
 
  unknown:1 lint/js/noDebugger FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected 'debugger' statement
+  ✖ This is an unexpected use of the debugger statement.
 
     debugger;
     ^^^^^^^^^
