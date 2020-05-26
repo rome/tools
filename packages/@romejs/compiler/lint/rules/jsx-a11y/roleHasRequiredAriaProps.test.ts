@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"role has required aria props",
+	"jsx a11y role has required aria props",
 	async (t) => {
 		await testLintMultiple(
 			t,
