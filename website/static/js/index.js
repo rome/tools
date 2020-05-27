@@ -9,25 +9,34 @@ let lastClickElement = null;
 
 function handleTocClick(event){
   const target = event.target;
+  event.preventDefault();
 
   if(target.hasAttribute("href")){
 
+    const heading = document.querySelector(target.getAttribute('href'));
+    const rect = heading.getBoundingClientRect();
+    let mobileScrollOffset = 20;
     if(lastClickElement) lastClickElement.classList.remove('active');
 
     target.classList.add('active');
     lastClickElement = target;
     //only call if on mobile
     if(sidebar.classList.contains('visible')){
-      //set to false, so it doens't call preventDefault
-      mobileToggleEvent(event, false);
+      mobileToggleEvent(event);
+      mobileScrollOffset = 84;
     }
+
+    window.scrollBy({
+      top: (heading.offsetTop - window.scrollY) - mobileScrollOffset,
+      behavior: 'smooth'
+    });
+
   }
 }
 
-function mobileToggleEvent(event, preventDefault){
+function mobileToggleEvent(event){
   const bodyClassList = document.body.classList;
-
-  if(preventDefault) event.preventDefault();
+  event.preventDefault();
   sidebar.classList.toggle('visible');
   overlay.classList.toggle('visible');
   bodyClassList.toggle('no-scroll');
