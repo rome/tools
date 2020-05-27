@@ -45,7 +45,7 @@ const UNEXPECTED_DEFAULT_THROWER: UnescapeStringUnexpected = (
 	throw new TypeError(`${metadata.message.value} (${String(index)})`);
 };
 
-export default function unescapeString(
+export default function unescapeJSONString(
 	input: string,
 	unexpected: UnescapeStringUnexpected = UNEXPECTED_DEFAULT_THROWER,
 ): string {

@@ -10,7 +10,7 @@
 
  unknown:1 lint/js/sortImportExportSpecifiers FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Specifiers of the import declaration should be sorted alphabetically.
+  ✖ The specifiers of the import declaration should be sorted alphabetically.
 
     import {b, a, c, D} from "mod";
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -39,7 +39,7 @@ import {D, a, b, c} from "mod";
 
  unknown:1 lint/js/sortImportExportSpecifiers FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Specifiers of the import declaration should be sorted alphabetically.
+  ✖ The specifiers of the import declaration should be sorted alphabetically.
 
     import {b as A, a as C, B} from "mod";
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -68,7 +68,7 @@ import {b as A, B, a as C} from "mod";
 
  unknown:1 lint/js/sortImportExportSpecifiers FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Specifiers of the import declaration should be sorted alphabetically.
+  ✖ The specifiers of the import declaration should be sorted alphabetically.
 
     import {c, b as b2, b as b1, b} from "mod";
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -97,7 +97,7 @@ import {b, b as b1, b as b2, c} from "mod";
 
  unknown:1 lint/js/sortImportExportSpecifiers FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Specifiers of the export declaration should be sorted alphabetically.
+  ✖ The specifiers of the export declaration should be sorted alphabetically.
 
     export {b, a, c, D} from "mod";
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -126,7 +126,7 @@ export {D, a, b, c} from "mod";
 
  unknown:1 lint/js/sortImportExportSpecifiers FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Specifiers of the export declaration should be sorted alphabetically.
+  ✖ The specifiers of the export declaration should be sorted alphabetically.
 
     export {b as A, a as C, B} from "mod";
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -155,7 +155,7 @@ export {B, a as C, b as A} from "mod";
 
  unknown:1 lint/js/sortImportExportSpecifiers FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Specifiers of the export declaration should be sorted alphabetically.
+  ✖ The specifiers of the export declaration should be sorted alphabetically.
 
     export {c, b as b2, b as b1, b} from "mod";
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -184,7 +184,7 @@ export {b, b as b1, b as b2, c} from "mod";
 
  unknown:1 lint/js/sortImportExportSpecifiers FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Specifiers of the export declaration should be sorted alphabetically.
+  ✖ The specifiers of the export declaration should be sorted alphabetically.
 
     export {b, a, c, D};
     ^^^^^^^^^^^^^^^^^^^^
@@ -213,7 +213,7 @@ export {D, a, b, c};
 
  unknown:1 lint/js/sortImportExportSpecifiers FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Specifiers of the export declaration should be sorted alphabetically.
+  ✖ The specifiers of the export declaration should be sorted alphabetically.
 
     export {b as A, a as C, B};
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -242,7 +242,7 @@ export {B, a as C, b as A};
 
  unknown:1 lint/js/sortImportExportSpecifiers FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Specifiers of the export declaration should be sorted alphabetically.
+  ✖ The specifiers of the export declaration should be sorted alphabetically.
 
     export {c, b as b2, b as b1, b};
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

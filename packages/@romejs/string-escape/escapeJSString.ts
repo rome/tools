@@ -88,7 +88,7 @@ type EscapeStringOptions = {
 	unicodeOnly?: boolean;
 };
 
-export default function escapeString(
+export default function escapeJSString(
 	str: string,
 	opts: EscapeStringOptions = {},
 ): string {

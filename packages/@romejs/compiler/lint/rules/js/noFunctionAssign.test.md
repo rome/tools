@@ -42,10 +42,12 @@ function foo(foo) {
 
  unknown:1:26 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Reassignment of function declaration
+  ✖ Do not reassign a function declaration.
 
     function foo() { var foo; foo = bar; }
                               ^^^
+
+  ℹ Use a local variable instead.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -132,10 +134,12 @@ function foo() {
 
  unknown:1:19 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Reassignment of function declaration
+  ✖ Do not reassign a function declaration.
 
     function foo() {}; foo = bar;
                        ^^^
+
+  ℹ Use a local variable instead.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -157,10 +161,12 @@ foo = bar;
 
  unknown:1:17 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Reassignment of function declaration
+  ✖ Do not reassign a function declaration.
 
     function foo() { foo = bar; }
                      ^^^
+
+  ℹ Use a local variable instead.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -183,10 +189,12 @@ function foo() {
 
  unknown:1 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Reassignment of function declaration
+  ✖ Do not reassign a function declaration.
 
     foo = bar; function foo() { };
     ^^^
+
+  ℹ Use a local variable instead.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -208,10 +216,12 @@ function foo() {}
 
  unknown:1:1 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Reassignment of function declaration
+  ✖ Do not reassign a function declaration.
 
     [foo] = bar; function foo() { };
      ^^^
+
+  ℹ Use a local variable instead.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -233,10 +243,12 @@ function foo() {}
 
  unknown:1:5 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Reassignment of function declaration
+  ✖ Do not reassign a function declaration.
 
     ({x: foo = 0} = bar); function foo() { };
          ^^^
+
+  ℹ Use a local variable instead.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -258,10 +270,12 @@ function foo() {}
 
  unknown:1:18 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Reassignment of function declaration
+  ✖ Do not reassign a function declaration.
 
     function foo() { [foo] = bar; }
                       ^^^
+
+  ℹ Use a local variable instead.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -284,10 +298,12 @@ function foo() {
 
  unknown:1:19 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Reassignment of function declaration
+  ✖ Do not reassign a function declaration.
 
     (function() { ({x: foo = 0} = bar); function foo() { }; })();
                        ^^^
+
+  ℹ Use a local variable instead.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

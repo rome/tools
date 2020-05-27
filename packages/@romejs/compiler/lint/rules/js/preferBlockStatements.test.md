@@ -10,7 +10,7 @@
 
  unknown:1 lint/js/preferBlockStatements FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Block statements are preferred in this position
+  ✖ Block statements are preferred in this position.
 
     if (x) x;
     ^^^^^^^^^
@@ -42,7 +42,7 @@ if (x) {
 
  unknown:1 lint/js/preferBlockStatements FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Block statements are preferred in this position
+  ✖ Block statements are preferred in this position.
 
   > 1 │ if (x) {
       │ ^^^^^^^^
@@ -82,7 +82,7 @@ if (x) {
 
  unknown:3:7 lint/js/preferBlockStatements FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Block statements are preferred in this position
+  ✖ Block statements are preferred in this position.
 
     1 │ if (x) {
     2 │   x
@@ -118,7 +118,7 @@ if (x) {
 
  unknown:1 lint/js/preferBlockStatements FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Block statements are preferred in this position
+  ✖ Block statements are preferred in this position.
 
     for (;;);
     ^^^^^^^^^
@@ -151,7 +151,7 @@ while (true) {
 
  unknown:1 lint/js/preferBlockStatements FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Block statements are preferred in this position
+  ✖ Block statements are preferred in this position.
 
     for (p in obj);
     ^^^^^^^^^^^^^^^
@@ -184,7 +184,7 @@ for (p in obj) {
 
  unknown:1 lint/js/preferBlockStatements FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Block statements are preferred in this position
+  ✖ Block statements are preferred in this position.
 
     for (x of xs);
     ^^^^^^^^^^^^^^
@@ -217,7 +217,7 @@ for (x of xs) {
 
  unknown:1 lint/js/preferBlockStatements FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Block statements are preferred in this position
+  ✖ Block statements are preferred in this position.
 
     do; while (x);
     ^^^^^^^^^^^^^^
@@ -250,7 +250,7 @@ do {
 
  unknown:1 lint/js/preferBlockStatements FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Block statements are preferred in this position
+  ✖ Block statements are preferred in this position.
 
     while (x);
     ^^^^^^^^^^
@@ -283,7 +283,7 @@ while (x) {
 
  unknown:1 lint/js/preferBlockStatements FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Block statements are preferred in this position
+  ✖ Block statements are preferred in this position.
 
     with (x);with (x);
     ^^^^^^^^^

@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"jsx a11y click events have key events",
+	"jsx-a11y click events have key events",
 	async (t) => {
 		await testLintMultiple(
 			t,

@@ -58,6 +58,8 @@ new Foo(async () => {});
     new Promise(async function foo() {})
                 ^^^^^^^^^^^^^^^^^^^^^^^
 
+  ℹ This can lead to lost errors and unnecessary indirection.
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
@@ -82,6 +84,8 @@ new Promise(async function foo() {});
     new Promise(async () => {})
                 ^^^^^^^^^^^^^^
 
+  ℹ This can lead to lost errors and unnecessary indirection.
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
@@ -105,6 +109,8 @@ new Promise(async () => {});
 
     new Promise(((((async () => {})))))
                     ^^^^^^^^^^^^^^
+
+  ℹ This can lead to lost errors and unnecessary indirection.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

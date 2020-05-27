@@ -10,7 +10,7 @@
 
  unknown:11:7 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Duplicate case c not allowed.
+  ✖ Do not duplicate the c case.
 
      9 │   case 'd':
     10 │     break;
@@ -18,6 +18,8 @@
        │        ^^^
     12 │     break;
     13 │   default:
+
+  ℹ Duplicated switch logic paths are hard to follow and usually typos.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

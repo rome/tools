@@ -10,7 +10,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"jsx a11y img redundant alt",
+	"jsx-a11y img redundant alt",
 	async (t) => {
 		await testLintMultiple(
 			t,

@@ -9,7 +9,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"jsx a11y alt text",
+	"jsx-a11y alt text",
 	async (t) => {
 		await testLintMultiple(
 			t,

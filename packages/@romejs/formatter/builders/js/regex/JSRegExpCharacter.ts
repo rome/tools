@@ -8,7 +8,7 @@
 import {Builder, Token} from "@romejs/formatter";
 
 import {AnyNode, JSRegExpCharacter} from "@romejs/ast";
-import {escapeString} from "@romejs/string-escape";
+import {escapeJSString} from "@romejs/string-escape";
 
 export default function JSRegExpCharacter(
 	builder: Builder,
@@ -75,6 +75,6 @@ export default function JSRegExpCharacter(
 			return `\\${node.value}`;
 
 		default:
-			return escapeString(node.value, {json: true, unicodeOnly: true});
+			return escapeJSString(node.value, {json: true, unicodeOnly: true});
 	}
 }

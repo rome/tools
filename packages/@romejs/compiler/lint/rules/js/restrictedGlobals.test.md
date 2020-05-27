@@ -10,10 +10,12 @@
 
  unknown:1:12 lint/js/restrictedGlobals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ The use of the existing global variable event is not allowed. Use local variable instead.
+  ✖ Do not use the global variable event.
 
     console.log(event);
                 ^^^^^
+
+  ℹ Use a local variable instead.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -34,12 +36,14 @@ console.log(event);
 
  unknown:8:8 lint/js/restrictedGlobals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ The use of the existing global variable event is not allowed. Use local variable instead.
+  ✖ Do not use the global variable event.
 
     7 │     // invalid, event is used as a global.
   > 8 │     foo(event)
       │         ^^^^^
     9 │     
+
+  ℹ Use a local variable instead.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

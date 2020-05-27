@@ -10,7 +10,7 @@
 
  unknown:2 lint/js/noDelete FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected 'delete' operator.
+  ✖ This is an unexpected use of the delete operator.
 
     1 │ const arr = [['a','b','c'], [1, 2, 3]];
   > 2 │ delete arr[0][2];
@@ -41,7 +41,7 @@ arr[0][2] = undefined;
 
  unknown:2 lint/js/noDelete FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected 'delete' operator.
+  ✖ This is an unexpected use of the delete operator.
 
     1 │ const obj = {a: {b: {c: 123}}};
   > 2 │ delete obj.a.b.c;

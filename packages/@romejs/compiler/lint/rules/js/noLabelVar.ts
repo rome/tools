@@ -21,7 +21,10 @@ export default {
 				binding !== undefined || scope.getRootScope().isGlobal(name);
 
 			if (isDefined) {
-				path.context.addNodeDiagnostic(node, descriptions.LINT.JS_NO_LABEL_VAR);
+				path.context.addNodeDiagnostic(
+					node,
+					descriptions.LINT.JS_NO_LABEL_VAR(name),
+				);
 			}
 		}
 

@@ -10,7 +10,7 @@
 
  unknown:2:2 lint/js/noDuplicateKeys ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Duplicate key test
+  ✖ Avoid duplicate component key. Check the test key.
 
     1 │ const foo = {
   > 2 │   test: true,

@@ -10,7 +10,7 @@
 
  unknown:1:12 lint/js/preferFunctionDeclarations FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Use a function declaration instead of a const function
+  ✖ Use a function declaration instead of a const function.
 
     const foo = function () {};
                 ^^^^^^^^^^^^^^
@@ -34,7 +34,7 @@ function foo() {}
 
  unknown:1:12 lint/js/preferFunctionDeclarations FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Use a function declaration instead of a const function
+  ✖ Use a function declaration instead of a const function.
 
     const foo = () => {};
                 ^^^^^^^^
@@ -74,7 +74,7 @@ const foo = () => {
 
  unknown:1:12 lint/js/preferFunctionDeclarations FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Use a function declaration instead of a const function
+  ✖ Use a function declaration instead of a const function.
 
     const foo = () => {function bar() {this;}};
                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
