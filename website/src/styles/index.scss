@@ -14,18 +14,15 @@
 
 .sidebar {
   @include transition-timing;
-  z-index: 1;
   width: $sidebar-width;
   list-style: none;
   overflow-y: auto;
   overflow-x: hidden;
   font-size: 0.9rem;
-  position: fixed;
   padding: $unit;
-  top: 64px;
-  bottom: 0;
-  left: 0;
-  width: $sidebar-width;
+  position: sticky;
+  top: 0;
+  height: 100vh;
   border-right: 1px solid $gray-color;
   background-color: #ffffff;
   transition-property: transform;
@@ -33,6 +30,9 @@
 
   @include mobile-only() {
     transform: translateX(-100%);
+    position: fixed;
+    min-width: 256px;
+    top: 64px;
 
     &.visible {
       transform: translateX(0);
@@ -62,11 +62,12 @@
 }
 
 .main {
-  margin-left: $sidebar-width;
   overflow: hidden;
+  width: 80%;
 
   @include mobile-only() {
     margin-top: $unit * 4;
     margin-left: 0;
+    width: 100%;
   }
 }

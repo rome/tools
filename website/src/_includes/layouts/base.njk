@@ -17,51 +17,62 @@
     <link rel="stylesheet" href="{{ '/static/styles.css' | url }}">
   </head>
   <body>
-    <div class="header">
-      <a class="logo" href="{{ '/' | url }}">
-        <img src="{{ '/static/img/rome-logo-black.svg' | url }}" alt="Rome" />
-        <span class="logo-text">Rome</span>
-      </a>
-      <div class="stretch"></div>
-      <a href="#" class="mobile-handle">
-        <img src="{{ '/static/img/mobile-handle.svg' | url }}" alt="Menu" />
-      </a>
-    </div>
-    <div class="sidebar">
-      <div class="table-of-contents">
-        <div class="toc-container"></div>
+    <div class="container">
+
+      <div class="header-mobile">
+        <a class="logo" href="{{ '/' | url }}">
+          <img src="{{ '/static/img/rome-logo-black.svg' | url }}" alt="Rome" />
+          <span class="logo-text">Rome</span>
+        </a>
+        <div class="stretch"></div>
+        <a href="#" class="mobile-handle">
+          <img src="{{ '/static/img/mobile-handle.svg' | url }}" alt="Menu" />
+        </a>
       </div>
-    </div>
-    <div class="main">
-      <div class="overlay"></div>
-      <div class="content">
-        {{ content | safe }}
-      </div>
-      <div class="footer">
-        <div class="row">
-          <div>
-            <h4>Community</h4>
-            <ul>
-              <li>
-                <a href="https://github.com/romejs/rome/blob/master/.github/CODE_OF_CONDUCT.md">Code of Conduct</a>
-              </li>
-              <li>
-                <a href="https://discord.gg/9WxHa5d">Discord</a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4>Resources</h4>
-            <ul>
-              <li>
-                <a href="https://github.com/romejs/rome">GitHub</a>
-              </li>
-            </ul>
-          </div>
+
+      <div class="sidebar">
+        <div class="header-desktop">
+          <a class="logo" href="{{ '/' | url }}">
+            <img src="{{ '/static/img/rome-logo-black.svg' | url }}" alt="Rome" />
+            <span class="logo-text">Rome</span>
+          </a>
         </div>
-        <span class="copyright">Copyright &copy; 2020 Rome.</span>
+        <div class="table-of-contents">
+          <div class="toc-container"></div>
+        </div>
       </div>
-    <div>
+      <div class="main">
+        <div class="overlay"></div>
+        <div class="content">
+
+          {{ content | safe }}
+        </div>
+        <div class="footer">
+          <div class="row">
+            <div>
+              <h4>Community</h4>
+              <ul>
+                <li>
+                  <a href="https://github.com/romejs/rome/blob/master/.github/CODE_OF_CONDUCT.md">Code of Conduct</a>
+                </li>
+                <li>
+                  <a href="https://discord.gg/9WxHa5d">Discord</a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4>Resources</h4>
+              <ul>
+                <li>
+                  <a href="https://github.com/romejs/rome">GitHub</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <span class="copyright">Copyright &copy; 2020 Rome.</span>
+        </div>
+      </div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.11.1/tocbot.min.js"></script>
     <script src="{{ '/static/js/index.js' | url }}"></script>
   </body>

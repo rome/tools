@@ -1,12 +1,15 @@
-.header {
+// using a different element for desktop header and mobile header
+// so i can align the elements in the middle of the page
+
+.header-mobile {
   z-index: 2;
   background-color: #ffffff;
+  height: $unit * 4;
+  display: none;
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
-  height: $unit * 4;
-  display: flex;
   align-items: center;
   padding: 0 $unit;
   width: $sidebar-width;
@@ -15,13 +18,23 @@
     flex-grow: 1;
   }
 
-  @include desktop-only() {
-    border-right: 1px solid $gray-color;
-  }
-
   @include mobile-only() {
     width: 100%;
     border-bottom: 1px solid $gray-color;
+    display: flex;
+  }
+}
+
+.header-desktop{
+  z-index: 2;
+  background-color: #ffffff;
+  height: $unit * 4;
+  display: flex;
+  align-items: center;
+  padding: 0 $unit;
+  width: $sidebar-width;
+  @include mobile-only() {
+    display: none;
   }
 }
 
