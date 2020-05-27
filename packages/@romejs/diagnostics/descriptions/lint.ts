@@ -27,6 +27,10 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
+	JSX_A11Y_NO_NONINTERACTIVE_TABINDEX: {
+		category: "lint/jsx-a11y/noNoninteractiveTabindex",
+		message: "Do not use <emphasis>tabIndex</emphasis> on an element that is not interactive",
+	},
 	JSX_A11Y_ARIA_PROPS: (attribute: string) => ({
 		category: "lint/jsx-a11y/ariaProps",
 		message: `<emphasis>${attribute}</emphasis> is an invalid ARIA attribute.`,
