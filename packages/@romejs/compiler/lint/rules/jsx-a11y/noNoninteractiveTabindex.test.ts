@@ -21,7 +21,7 @@ test(
 				"<article tabIndex={-1}></article>",
 				"<div tabIndex={-1} ></div>",
 				"<div></div>",
-				"<button tabindex='-1'></button>"
+				"<button tabindex='-1'></button>",
 			],
 			{category: "lint/jsx-a11y/noNoninteractiveTabindex"},
 		);

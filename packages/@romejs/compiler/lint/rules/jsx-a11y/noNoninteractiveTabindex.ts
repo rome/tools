@@ -108,10 +108,10 @@ export default {
 						 * e.g. <article tabIndex="-1" /> is a valid statement
 						 */
 						if (!isRoleInteractive(role) && tabIndexValue > -1) {
-								path.context.addNodeDiagnostic(
-									node,
-									descriptions.LINT.JSX_A11Y_NO_NONINTERACTIVE_TABINDEX,
-								);
+							path.context.addNodeDiagnostic(
+								node,
+								descriptions.LINT.JSX_A11Y_NO_NONINTERACTIVE_TABINDEX,
+							);
 						}
 					}
 				}
