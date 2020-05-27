@@ -142,12 +142,12 @@ async function testLintExpect(
 		}),
 	);
 
-	// const fixable = diagnostics.every((d) => d.fixable);
+	const fixable = diagnostics.every((d) => d.fixable);
 
 	let formattedEntryName = `${snapshotId}: formatted`;
-	// if (diagnostics.length !== 0) {
-	// 	formattedEntryName += fixable ? " and fixed" : " but unfixable";
-	// }
+	if (expect !== undefined && diagnostics.length !== 0) {
+		formattedEntryName += fixable ? " and fixed" : " but unfixable";
+	}
 
 	t.namedSnapshot(formattedEntryName, res.src);
 
