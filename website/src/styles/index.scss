@@ -27,6 +27,7 @@
   background-color: #ffffff;
   transition-property: transform;
   z-index: 2;
+  min-width: 256px;
 
   @include mobile-only() {
     transform: translateX(-100%);
