@@ -1,5 +1,5 @@
 // using a different element for desktop header and mobile header
-// so i can align the elements in the middle of the page
+// so i can align the website in the middle of the page
 
 .header-mobile {
   z-index: 2;
@@ -53,6 +53,7 @@
     line-height: 1em;
     font-size: 1em;
     font-family: Libre Baskerville, serif;
+    font-weight: bold;
     position: relative;
     top: 4px;
   }
