@@ -1,24 +1,43 @@
 .table-of-contents {
   background-color: #ffffff;
 
+  ol{
+    margin: 0;
+    padding: 0;
+
+    ol{
+      margin-left: $unit;
+    }
+  }
+
   a {
     text-decoration: none;
     height: auto;
-    padding: $unit / 4 $unit / 2;
+    padding: $unit / 6 $unit / 2;
     border-radius: 4px;
     display: inline-block;
+
+    &.active {
+      color: $primary-color;
+      background-color: $gray-color;
+      font-weight: bold;
+    }
+
+  }
+
+
+
+  a:hover{
+    font-weight: bold;
   }
 
   li {
     list-style-type: none;
   }
 
-  .is-active-link {
+  .active {
     color: $primary-color;
     background-color: $gray-color;
   }
 
-  .toc-container > .toc-list:first-child {
-    padding: 0;
-  }
 }

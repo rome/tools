@@ -2,12 +2,17 @@ const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
 const fs = require("fs");
+const pluginTOC = require('eleventy-plugin-nesting-toc');
+
 
 const Options = {
   dirInput: "src",
   staticPath: "static",
   docsPath: "_includes/docs",
   dirOutput: "build",
+  toc: {
+    headingText: 'test',      // Optional text to show in heading above the wrapper element
+  }
 };
 
 module.exports = function (eleventyConfig) {
@@ -18,6 +23,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy(Options.staticPath);
 
   eleventyConfig.addPlugin(syntaxHighlight);
+  eleventyConfig.addPlugin(pluginTOC);
 
   const md = markdownIt({
     html: true,
@@ -25,7 +31,7 @@ module.exports = function (eleventyConfig) {
     typographer: true,
   }).use(markdownItAnchor, {
     permalink: true,
-    permalinkSymbol: '#',
+    permalinkSymbol: '#'
   });
 
   eleventyConfig.setLibrary("md", md);

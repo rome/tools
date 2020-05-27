@@ -12,7 +12,6 @@
     <meta name="twitter:image:alt" content="{{ config.twitter.imageAlt }}">
     <meta name="twitter:card" content="{{ config.twitter.card }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/themes/prism-tomorrow.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.11.1/tocbot.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap">
     <link rel="stylesheet" href="{{ '/static/styles.css' | url }}">
   </head>
@@ -38,7 +37,9 @@
           </a>
         </div>
         <div class="table-of-contents">
-          <div class="toc-container"></div>
+          <div class="toc-container">
+            {{ content | toc(tags=['h1', 'h2'], wrapperClass='fixed toc')  | safe }}
+          </div>
         </div>
       </div>
       <div class="main">
@@ -73,7 +74,6 @@
         </div>
       </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.11.1/tocbot.min.js"></script>
     <script src="{{ '/static/js/index.js' | url }}"></script>
   </body>
 </html>
