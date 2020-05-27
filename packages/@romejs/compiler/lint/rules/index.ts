@@ -71,6 +71,7 @@ import mouseEventsHaveKeyEvents from "./jsx-a11y/mouseEventsHaveKeyEvents";
 import noAccessKey from "./jsx-a11y/noAccessKey";
 import noAutofocus from "./jsx-a11y/noAutofocus";
 import noDistractingElements from "./jsx-a11y/noDistractingElements";
+import noNoninteractiveTabindex from "./jsx-a11y/noNoninteractiveTabindex";
 import noOnChange from "./jsx-a11y/noOnChange";
 import noTargetBlank from "./jsx-a11y/noTargetBlank";
 import roleHasRequiredAriaProps from "./jsx-a11y/roleHasRequiredAriaProps";
@@ -164,6 +165,7 @@ export const lintTransforms = [
 	noAccessKey,
 	noAutofocus,
 	noDistractingElements,
+	noNoninteractiveTabindex,
 	noOnChange,
 	noTargetBlank,
 	roleHasRequiredAriaProps,
