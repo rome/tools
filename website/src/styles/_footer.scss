@@ -3,7 +3,8 @@
   margin: 0 auto;
   padding: $unit;
   border-top: 1px solid $gray-color;
-  
+  @include pattern-white;
+
   h4 {
     margin: $unit 0;
   }
@@ -17,6 +18,7 @@
   a {
     text-decoration: none;
   }
+
 }
 
 .copyright {

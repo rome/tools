@@ -20,6 +20,8 @@
   overflow-x: hidden;
   font-size: 0.9rem;
   padding: $unit;
+  padding-right: 0;
+  padding-top: $unit * 2;
   position: sticky;
   top: 0;
   height: 100vh;

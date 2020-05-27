@@ -3,8 +3,6 @@ title: A JavaScript toolchain | Rome
 layout: layouts/base.njk
 ---
 
-{% doc "Intro.md" %}
-
 {% doc "Introduction.md" %}
 
 {% doc "Installation.md" %}

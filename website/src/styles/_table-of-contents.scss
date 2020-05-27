@@ -5,21 +5,24 @@
     margin: 0;
     padding: 0;
 
+
     ol{
       margin-left: $unit;
     }
+
   }
 
   a {
     text-decoration: none;
     height: auto;
-    padding: $unit / 6 $unit / 2;
-    border-radius: 4px;
+    padding: $unit / 4 $unit / 2;
+    margin-left: $unit / 2;
+    border-radius: 2px;
     display: inline-block;
 
     &.active {
       color: $primary-color;
-      background-color: $gray-color;
+      background-color: $text-color;
       font-weight: bold;
     }
 

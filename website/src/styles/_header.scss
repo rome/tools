@@ -12,7 +12,6 @@
   top: 0;
   align-items: center;
   padding: 0 $unit;
-  width: $sidebar-width;
 
   .stretch {
     flex-grow: 1;
@@ -32,7 +31,7 @@
   display: flex;
   align-items: center;
   padding: 0 $unit;
-  width: $sidebar-width;
+  width: 100%;
   @include mobile-only() {
     display: none;
   }
@@ -42,8 +41,8 @@
   display: inline-flex;
   align-items: flex-end;
   text-decoration: none;
-  font-size: 32px;
-  margin-bottom: 16px;
+  font-size: 44px;
+  margin-bottom: $unit * 2;
 
   img {
     width: 1em;
@@ -56,7 +55,15 @@
     font-family: Libre Baskerville, serif;
     font-weight: bold;
     position: relative;
-    top: 4px;
+    top: 5.5px;
+    @include mobile-only() {
+      top: 3.5px;
+    }
+  }
+
+  @include mobile-only() {
+    font-size: 32px;
+    margin-bottom: 0;
   }
 }
 
