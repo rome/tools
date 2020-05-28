@@ -73,6 +73,7 @@ import noAutofocus from "./jsx-a11y/noAutofocus";
 import noDistractingElements from "./jsx-a11y/noDistractingElements";
 import noNoninteractiveTabindex from "./jsx-a11y/noNoninteractiveTabindex";
 import noOnChange from "./jsx-a11y/noOnChange";
+import noRedundantRoles from "./jsx-a11y/noRedundantRoles";
 import noTargetBlank from "./jsx-a11y/noTargetBlank";
 import roleHasRequiredAriaProps from "./jsx-a11y/roleHasRequiredAriaProps";
 import scope from "./jsx-a11y/scope";
@@ -167,6 +168,7 @@ export const lintTransforms = [
 	noDistractingElements,
 	noNoninteractiveTabindex,
 	noOnChange,
+	noRedundantRoles,
 	noTargetBlank,
 	roleHasRequiredAriaProps,
 	scope,

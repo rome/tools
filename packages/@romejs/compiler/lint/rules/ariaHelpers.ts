@@ -3,7 +3,7 @@ export type MapOfARIAPropertyDefinitions = Map<
 	ARIAPropertyDefinition
 >;
 
-type ARIAAbstractRole =
+export type ARIAAbstractRole =
 	| "command"
 	| "composite"
 	| "input"
@@ -17,7 +17,7 @@ type ARIAAbstractRole =
 	| "widget"
 	| "window";
 
-type ARIAWidgetRole =
+export type ARIAWidgetRole =
 	| "alert"
 	| "alertdialog"
 	| "button"
@@ -46,7 +46,7 @@ type ARIAWidgetRole =
 	| "tooltip"
 	| "treeitem";
 
-type ARIADocumentStructureRole =
+export type ARIADocumentStructureRole =
 	| "article"
 	| "cell"
 	| "columnheader"
@@ -487,6 +487,7 @@ export type ARIARoleDefinition = {
 };
 
 export type MapOfAriaRoles = Map<string, ARIARoleDefinition>;
+export type MapOfElementsToConcepts = Map<string, Set<ARIARole>>;
 export type MapOfElementsToRoles = Map<string, Set<ARIARole>>;
 
 export const roles: MapOfAriaRoles = new Map([
@@ -718,16 +719,50 @@ export const roles: MapOfAriaRoles = new Map([
 			],
 		},
 	],
+	[
+		"dialog",
+		{
+			props: ["aria-label", "aria-labelledby"],
+			requiredProps: [],
+			superClassRole: ["window"],
+			baseConcepts: [
+				{
+					module: "HTML",
+					concept: {
+						name: "dialog",
+					},
+				},
+			],
+		},
+	],
 ]);
 
+export const elementsToConcepts: MapOfElementsToConcepts = new Map();
 export const elementsToRoles: MapOfElementsToRoles = new Map();
 
 for (const [, attributes] of roles) {
 	if (attributes.baseConcepts) {
 		attributes.baseConcepts.forEach(({module, concept}) => {
 			if (module === "HTML") {
-				if (!elementsToRoles.has(concept.name)) {
-					elementsToRoles.set(concept.name, new Set(attributes.superClassRole));
+				if (!elementsToConcepts.has(concept.name)) {
+					elementsToConcepts.set(
+						concept.name,
+						new Set(attributes.superClassRole),
+					);
+				}
+			}
+		});
+	}
+}
+for (const [, attributes] of roles) {
+	if (attributes.baseConcepts) {
+		attributes.baseConcepts.forEach(({module, concept}) => {
+			if (module === "HTML") {
+				if (!elementsToConcepts.has(concept.name)) {
+					elementsToConcepts.set(
+						concept.name,
+						new Set(attributes.superClassRole),
+					);
 				}
 			}
 		});

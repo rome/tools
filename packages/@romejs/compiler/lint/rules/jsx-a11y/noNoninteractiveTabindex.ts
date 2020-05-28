@@ -6,7 +6,7 @@ import {
 	isJSXElement,
 } from "@romejs/js-ast-utils";
 import {
-	elementsToRoles,
+	elementsToConcepts,
 	isRoleInteractive,
 	roles,
 } from "@romejs/compiler/lint/rules/ariaHelpers";
@@ -72,7 +72,7 @@ export default {
 				 * e.g. <div tabIndex="0"></div>
 				 */
 				if (!hasJSXAttribute(node, "role")) {
-					const elementToRole = elementsToRoles.get(elementName);
+					const elementToRole = elementsToConcepts.get(elementName);
 					// the element is not part of any role, so it's an error
 					// e.g. div, span, etc.
 					if (elementToRole) {
