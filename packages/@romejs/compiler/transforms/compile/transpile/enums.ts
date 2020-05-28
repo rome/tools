@@ -1,8 +1,12 @@
 import {Path} from "@romejs/compiler";
 import {
 	AnyJSExpression,
+	JSIdentifier,
+	JSNumericLiteral,
 	JSObjectProperties,
 	JSObjectProperty,
+	JSPrivateName,
+	JSStringLiteral,
 	TSEnumMember,
 	jsBindingIdentifier,
 	jsIdentifier,
@@ -20,17 +24,24 @@ function getMemberName(member: TSEnumMember): string {
 }
 
 function createMember(
-	key: string | number,
+	key:
+		| string
+		| number
+		| JSStringLiteral
+		| JSIdentifier
+		| JSNumericLiteral
+		| JSPrivateName,
 	value: string | number | AnyJSExpression,
 ): JSObjectProperty {
-	const keyNode =
-		typeof key === "string"
-			? jsIdentifier.create({
-					name: key,
-				})
-			: jsNumericLiteral.create({
-					value: key,
-				});
+	let keyNode;
+	if (typeof key === "string") {
+		keyNode = jsIdentifier.create({name: key});
+	} else if (typeof key === "number") {
+		keyNode = jsNumericLiteral.create({value: key});
+	} else {
+		keyNode = key;
+	}
+
 	let valueNode: AnyJSExpression;
 	if (typeof value === "string") {
 		valueNode = jsStringLiteral.create({value});
@@ -53,6 +64,8 @@ export default {
 	enter(path: Path) {
 		const {node} = path;
 
+		let currentIndex = 0;
+
 		if (node.type === "TSEnumDeclaration") {
 			return jsVariableDeclaration.create({
 				kind: "const",
@@ -63,17 +76,35 @@ export default {
 						}),
 						init: jsObjectExpression.create({
 							properties: node.members.reduce<JSObjectProperties>(
-								(properties, member, index) => {
-									if (member.initializer) {
+								(properties, member) => {
+									properties.push(
+										createMember(
+											getMemberName(member),
+											member.initializer || currentIndex,
+										),
+									);
+
+									if (
+										!member.initializer ||
+										member.initializer.type === "JSNumericLiteral"
+									) {
 										properties.push(
-											createMember(getMemberName(member), member.initializer),
-										);
-									} else {
-										properties.push(
-											createMember(index, getMemberName(member)),
-											createMember(getMemberName(member), index),
+											createMember(
+												member.initializer || currentIndex,
+												getMemberName(member),
+											),
 										);
 									}
+
+									if (
+										member.initializer &&
+										member.initializer.type === "JSNumericLiteral"
+									) {
+										currentIndex = member.initializer.value + 1;
+									} else if (!member.initializer) {
+										currentIndex++;
+									}
+
 									return properties;
 								},
 								[],
