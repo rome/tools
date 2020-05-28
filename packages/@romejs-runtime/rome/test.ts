@@ -92,7 +92,6 @@ export interface TestHelper {
 		message?: string,
 		opts?: TestSnapshotOptions,
 	): string;
-	getNextSnapshotId(): number;
 }
 
 export type TestName = string | Array<string>;

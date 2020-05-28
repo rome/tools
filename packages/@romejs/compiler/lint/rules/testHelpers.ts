@@ -41,7 +41,7 @@ export async function testLint(
 	opts: TestLintOptions,
 ) {
 	if (typeof input === "string") {
-		return await testLintExpect(t, input, opts);
+		return testLintExpect(t, input, opts);
 	}
 
 	const {invalid, valid} = input;
@@ -127,15 +127,7 @@ async function testLintExpect(
 		t.is(diagnostics.length, 0, "Expected test not to have diagnostics.");
 	}
 
-	const snapshotId = t.getNextSnapshotId();
-
-	let entryName = String(snapshotId);
-	if (expect !== undefined) {
-		entryName += ` (${expect})`;
-	}
-
-	t.namedSnapshot(
-		entryName,
+	const snapshotName = t.snapshot(
 		printDiagnosticsToString({
 			diagnostics,
 			suppressions: res.suppressions,
@@ -144,7 +136,7 @@ async function testLintExpect(
 
 	const fixable = diagnostics.every((d) => d.fixable);
 
-	let formattedEntryName = `${snapshotId}: formatted`;
+	let formattedEntryName = `${snapshotName}: formatted`;
 	if (expect !== undefined && diagnostics.length !== 0) {
 		formattedEntryName += fixable ? " and fixed" : " but unfixable";
 	}
