@@ -16,6 +16,10 @@ import {buildSuggestionAdvice} from "../helpers";
 import {createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	REACT_NO_ACCESS_STATE_IN_SET_STATE: {
+		category: "lint/react/noAccessStateInSetState",
+		message: "Avoid using <emphasis>this.state</emphasis> within a <emphasis>this.setState</emphasis> call.",
+	},
 	JSX_A11Y_ANCHOR_IS_VALID: (message: string) => ({
 		category: "lint/jsx-a11y/anchorIsValid",
 		message,
