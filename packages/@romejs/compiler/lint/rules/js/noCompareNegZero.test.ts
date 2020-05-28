@@ -11,7 +11,13 @@ import {testLint} from "../testHelpers";
 test(
 	"disallows comparing negative zero",
 	async (t) => {
-		await testLint(t, "(1 >= -0)", {category: "lint/js/noCompareNegZero"});
-		await testLint(t, "(1 >= 0)", {category: "lint/js/noCompareNegZero"});
+		await testLint(
+			t,
+			{
+				invalid: ["(1 >= -0)"],
+				valid: ["(1 >= 0)"],
+			},
+			{category: "lint/js/noCompareNegZero"},
+		);
 	},
 );

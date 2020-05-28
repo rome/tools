@@ -7,21 +7,6 @@
 ### `0`
 
 ```
-✔ No known problems!
-
-```
-
-### `0: formatted`
-
-```
-const test = {debugger: 1};
-test.debugger;
-
-```
-
-### `1`
-
-```
 
  unknown:1 lint/js/noDebugger FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -40,9 +25,24 @@ test.debugger;
 
 ```
 
-### `1: formatted`
+### `0: formatted`
 
 ```
 
+
+```
+
+### `1`
+
+```
+✔ No known problems!
+
+```
+
+### `1: formatted`
+
+```
+const test = {debugger: 1};
+test.debugger;
 
 ```

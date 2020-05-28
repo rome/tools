@@ -28,7 +28,7 @@
 ### `0: formatted`
 
 ```
-// the denylist
+//	the	denylist
 
 ```
 
@@ -57,8 +57,8 @@
 ### `1: formatted`
 
 ```
-/* the
-blacklist */
+/*	the
+blacklist	*/
 
 ```
 

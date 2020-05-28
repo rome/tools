@@ -14,11 +14,38 @@ test(
 	async (t) => {
 		await testLint(
 			t,
-			dedent`
-        function hello(a, a) {
-          //
-        }
-      `,
+			{
+				invalid: [
+					dedent`
+						function hello(a, a) {
+							//
+						}
+					`,
+					dedent`
+						const hello = (a, a) => {
+							//
+						}
+					`,
+					dedent`
+						const hello = function (a, a) {
+							//
+						}
+					`,
+				],
+				valid: [
+					dedent`
+						function foo(foo) {
+							console.log(foo)
+						}
+					`,
+					dedent`
+						const foo = "test"
+						function bar(foo) {
+							console.log(foo)
+						}
+					`,
+				],
+			},
 			{category: "lint/js/noDupeArgs"},
 		);
 	},

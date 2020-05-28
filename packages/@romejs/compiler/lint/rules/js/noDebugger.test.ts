@@ -14,18 +14,19 @@ test(
 	async (t) => {
 		await testLint(
 			t,
-			dedent`
-        const test = { debugger: 1 };
-        test.debugger;
-      `,
-			{category: "lint/js/noDebugger"},
-		);
-
-		await testLint(
-			t,
-			dedent`
-        debugger;
-      `,
+			{
+				invalid: [
+					dedent`
+						debugger;
+					`,
+				],
+				valid: [
+					dedent`
+						const test = { debugger: 1 };
+						test.debugger;
+					`,
+				],
+			},
 			{category: "lint/js/noDebugger"},
 		);
 	},

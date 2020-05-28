@@ -6,21 +6,20 @@
  */
 
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
 	"negation else",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				"if (!true) {consequent;} else {alternate;}",
-				"!true ? consequent : alternate",
-				// VALID
-				"if (!true) {consequent;}",
-				"true ? consequent : alternate",
-			],
+			{
+				invalid: [
+					"if (!true) {consequent;} else {alternate;}",
+					"!true ? consequent : alternate",
+				],
+				valid: ["if (!true) {consequent;}", "true ? consequent : alternate"],
+			},
 			{category: "lint/js/negationElse"},
 		);
 	},
