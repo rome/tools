@@ -27,7 +27,7 @@
 
 ```
 
-### `0: formatted and fixed`
+### `0: formatted`
 
 ```
 <><Foo /><Foo /></>;
@@ -57,7 +57,7 @@
 
 ```
 
-### `1: formatted and fixed`
+### `1: formatted`
 
 ```
 <><Foo /><Foo /></>;
@@ -87,7 +87,7 @@
 
 ```
 
-### `2: formatted and fixed`
+### `2: formatted`
 
 ```
 const Hello = <div><Foo /><Foo /></div>;
@@ -117,7 +117,7 @@ const Hello = <div><Foo /><Foo /></div>;
 
 ```
 
-### `3: formatted and fixed`
+### `3: formatted`
 
 ```
 const Hello = <div><Foo /><Foo /></div>;
@@ -147,7 +147,7 @@ const Hello = <div><Foo /><Foo /></div>;
 
 ```
 
-### `4: formatted and fixed`
+### `4: formatted`
 
 ```
 const Hello = <><Foo /><Foo /></>;
@@ -177,7 +177,7 @@ const Hello = <><Foo /><Foo /></>;
 
 ```
 
-### `5: formatted and fixed`
+### `5: formatted`
 
 ```
 const Hello = <><Foo /><Foo /></>;
@@ -210,7 +210,7 @@ const Hello = <><Foo /><Foo /></>;
 
 ```
 
-### `6: formatted and fixed`
+### `6: formatted`
 
 ```
 function Foo() {
@@ -246,7 +246,7 @@ function Foo() {
 
 ```
 
-### `7: formatted and fixed`
+### `7: formatted`
 
 ```
 function Foo() {
@@ -282,7 +282,7 @@ function Foo() {
 
 ```
 
-### `8: formatted and fixed`
+### `8: formatted`
 
 ```
 function Hello() {
@@ -317,7 +317,7 @@ function Hello() {
 
 ```
 
-### `9: formatted and fixed`
+### `9: formatted`
 
 ```
 function Hello() {
@@ -349,7 +349,7 @@ function Hello() {
 
 ```
 
-### `10: formatted and fixed`
+### `10: formatted`
 
 ```
 function Hello() {
@@ -381,7 +381,7 @@ function Hello() {
 
 ```
 
-### `11: formatted and fixed`
+### `11: formatted`
 
 ```
 function Hello() {

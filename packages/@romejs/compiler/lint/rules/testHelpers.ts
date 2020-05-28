@@ -134,14 +134,7 @@ async function testLintExpect(
 		}),
 	);
 
-	const fixable = diagnostics.every((d) => d.fixable);
-
-	let formattedEntryName = `${snapshotName}: formatted`;
-	if (expect !== undefined && diagnostics.length !== 0) {
-		formattedEntryName += fixable ? " and fixed" : " but unfixable";
-	}
-
-	t.namedSnapshot(formattedEntryName, res.src);
+	t.namedSnapshot(`${snapshotName}: formatted`, res.src);
 
 	t.clearAdvice();
 }
