@@ -1,168 +1,98 @@
-const mobileHandle = document.getElementsByClassName('mobile-handle')[0];
-const toc = document.getElementsByClassName('toc-container')[0];
-const sidebar = document.getElementsByClassName('sidebar')[0];
-const overlay = document.getElementsByClassName('overlay')[0];
-const tocLinks = document.querySelectorAll('.toc-container a');
-const headings = [...document.querySelectorAll('.content h1, .content h2, .content h3')];
+const elements = {
+  mobileHandle: document.getElementsByClassName('mobile-handle')[0],
+  toc: document.getElementsByClassName('toc-container')[0],
+  sidebar: document.getElementsByClassName('sidebar')[0],
+  overlay: document.getElementsByClassName('overlay')[0],
+  headings: [...document.querySelectorAll('.content h1, .content h2, .content h3')],
+  headerMobile: document.getElementsByClassName('header-mobile')[0],
+};
 
 function isMobile(){
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
-// hold the reference for the last clicked toc link,
-// so .active can be removed on next click
-let lastClickElement = null;
-
-function handleTocClick(event){
-  const target = event.target;
-  event.preventDefault();
-
-  if(lastClickElement === target){
+const toc = {
+  getMobileNavbarHeight(){
+    let height = 0;
     if(isMobile()){
-      mobileToggleEvent(event);
-    }
-    return;
-  }
-
-  if(target.hasAttribute("href")){
-
-    const heading = document.querySelector(target.getAttribute('href'));
-    const marginTop = parseFloat(window.getComputedStyle(heading).marginTop, 10);
-    const height = parseFloat(window.getComputedStyle(heading).height, 10);
-    let mobileScrollOffset = marginTop;
-
-    //only call if on mobile
-    if(isMobile()){
-      mobileToggleEvent(event);
-      mobileScrollOffset = height + marginTop;
-      removeActive(currentActiveLink);
-
-      headingIndex = clamp(headings.indexOf(heading) - 1, 0, tocLinks.length - 1);
-
+      height = parseFloat(window.getComputedStyle(elements.headerMobile).height, 10);
     }
 
-    lastClickElement = target;
+    return height;
+  },
+  highlight(){
 
-    console.log((heading.offsetTop - window.scrollY) - mobileScrollOffset);
+    var scrollY = window.scrollY;
 
-    window.scrollBy({
-      top: (heading.offsetTop - window.scrollY) - mobileScrollOffset,
-      behavior: 'smooth'
-    });
+    for (let i = 0; i < elements.headings.length; i++) {
+      const element = elements.headings[i];
 
-    updateTocLinkHighlight();
+      const id = `#${element.getAttribute('id')}`;
+      const y = element.offsetTop;
+      const marginTop = parseFloat(window.getComputedStyle(element).marginTop, 10);
+      const link = document.querySelectorAll(`.toc-container a[href='${id}']`)[0];
+
+      const nextElement = elements.headings[i + 1];
+      let offsetTop = (y - (marginTop));
+      if(nextElement){
+        offsetTop = (nextElement.offsetTop);
+      }
+
+      let start = (y - marginTop) - toc.getMobileNavbarHeight() - 2;
+      let end = (offsetTop - toc.getMobileNavbarHeight()) - (marginTop) - 5;
+
+      if (scrollY > start && scrollY < end) {
+
+        link.classList.add('active');
+
+      } else {
+        link.classList.remove('active');
+      }
+
+    }
+
+  },
+  handleClick(event){
+    const target = event.target;
+    event.preventDefault();
+
+    if(target.hasAttribute("href")){
+
+      const heading = document.querySelector(target.getAttribute('href'));
+      const marginTop = parseFloat(window.getComputedStyle(heading).marginTop, 10);
+
+      if(isMobile()){
+        mobileToggleEvent(event);
+      }
+
+      window.scrollTo(0, (heading.offsetTop) - toc.getMobileNavbarHeight() - (marginTop));
+
+    }
+  },
+  handleScroll(){
+
+    if(isMobile()){
+      return false;
+    }
+
+    toc.highlight();
+
   }
 }
 
 function mobileToggleEvent(event){
   const bodyClassList = document.body.classList;
   event.preventDefault();
-  sidebar.classList.toggle('visible');
-  overlay.classList.toggle('visible');
+  elements.sidebar.classList.toggle('visible');
+  elements.overlay.classList.toggle('visible');
   bodyClassList.toggle('no-scroll');
+  toc.highlight();
 }
 
-toc.addEventListener('click', handleTocClick, false);
-mobileHandle.addEventListener('click', mobileToggleEvent, false);
-overlay.addEventListener('click', mobileToggleEvent, false);
-overlay.addEventListener("touchstart", mobileToggleEvent, false);
+toc.highlight();
 
-/*** Code to handle toc link highlight on scroll ****/
-
-let headingIndex = foundClosestHeading();
-let lastHeadingIndex = null;
-let currentActiveLink = 0;
-let lastScrollPosition = window.scrollY;
-
-function foundClosestHeading(){
-  let index = 0;
-
-  headings.forEach(function(element){
-
-    if( element.offsetTop - window.scrollY < 0){
-      index = headings.indexOf(element) + 1;
-    }
-  });
-
-  return index;
-}
-
-function clamp(number, min, max){
-  return Math.min(Math.max(number, min), max);
-}
-
-function removeActive(index){
-  index = clamp(index, 0, tocLinks.length - 1);
-  if(tocLinks[index].classList.contains("active")){
-    tocLinks[index].classList.remove("active");
-  }
-}
-
-function addActive(index){
-  index = clamp(index, 0, tocLinks.length - 1);
-  if(!tocLinks[index].classList.contains("active")){
-    tocLinks[index].classList.add("active");
-  }
-}
-
-function updateTocLinkHighlight(){
-
-  const id = tocLinks[headingIndex].getAttribute('href');
-  const heading = document.querySelector(id);
-  const marginTop = parseFloat(window.getComputedStyle(heading).marginTop, 10) + 3;
-  const height = parseFloat(window.getComputedStyle(heading).height, 10);
-
-  let mobileNavbarHeight = 0;
-  let mobileScrollOffset = marginTop - 2;
-
-  if(isMobile()){
-    mobileNavbarHeight = 64;
-    mobileScrollOffset = height + marginTop;
-  }
-
-  let diff = window.scrollY - lastScrollPosition;
-  let length = Math.sqrt(diff * diff);
-  //-1 == up || 1 == down
-  let normal = diff === 0 ? 0 : (diff / length);
-
-  console.log(normal);
-
-  switch (normal) {
-    case 1:
-      if( window.scrollY + mobileNavbarHeight > heading.offsetTop - mobileScrollOffset){
-        headingIndex += 1;
-      }
-
-      break;
-    case -1:
-      if( window.scrollY - mobileNavbarHeight < heading.offsetTop + mobileScrollOffset && headingIndex >= 0){
-        headingIndex -= 1;
-      }
-      break;
-
-    default:
-      break;
-  }
-
-  if(lastHeadingIndex !== headingIndex){
-
-    removeActive(lastHeadingIndex + normal);
-    removeActive(lastHeadingIndex - normal);
-    currentActiveLink = headingIndex - normal;
-    addActive(currentActiveLink);
-
-  }
-
-  headingIndex = clamp(headingIndex, 0, tocLinks.length - 1);
-  lastHeadingIndex = headingIndex;
-  lastScrollPosition = window.scrollY;
-
-}
-
-updateTocLinkHighlight();
-
-window.addEventListener('scroll', function(){
-
-  updateTocLinkHighlight();
-
-});
+elements.toc.addEventListener('click', toc.handleClick, false);
+elements.mobileHandle.addEventListener('click', mobileToggleEvent, false);
+elements.overlay.addEventListener('click', mobileToggleEvent, false);
+elements.overlay.addEventListener("touchstart", mobileToggleEvent, false);
+window.addEventListener('scroll', toc.handleScroll, false);
