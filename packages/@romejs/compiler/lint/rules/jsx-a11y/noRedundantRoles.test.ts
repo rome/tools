@@ -13,6 +13,7 @@ test(
 				"<h1 role='heading' aria-level='1'></h1>",
 				"<h1 role='heading'></h1>",
 				"<dialog role='dialog'></dialog>",
+				"<input  type='checkbox' role='checkbox' />",
 				// VALID
 				"<article role='presentation' ></article>",
 				"<Button role='button' ></Button>",

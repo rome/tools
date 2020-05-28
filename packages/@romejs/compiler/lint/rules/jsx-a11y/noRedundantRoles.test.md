@@ -10,13 +10,13 @@
 
  unknown:1:9 lint/jsx-a11y/noRedundantRoles FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Using the role attribute on the HTML element is redundant, the HTML element is semantically
-    enough.
+  ✖ Using the role attribute article and the HTML element article is redundant, using the HTML
+    element is enough.
 
     <article role='article'></article>
              ^^^^^^^^^^^^^^
 
-  Suggested fix: Remove the role attribute
+  Suggested fix: Remove the role attribute.
 
   - role='article'
   + <article></article>
@@ -40,13 +40,13 @@
 
  unknown:1:8 lint/jsx-a11y/noRedundantRoles FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Using the role attribute on the HTML element is redundant, the HTML element is semantically
-    enough.
+  ✖ Using the role attribute button and the HTML element button is redundant, using the HTML element
+    is enough.
 
     <button role='button'></button>
             ^^^^^^^^^^^^^
 
-  Suggested fix: Remove the role attribute
+  Suggested fix: Remove the role attribute.
 
   - role='button'
   + <button></button>
@@ -70,13 +70,13 @@
 
  unknown:1:4 lint/jsx-a11y/noRedundantRoles FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Using the role attribute on the HTML element is redundant, the HTML element is semantically
+  ✖ Using the role attribute heading and the HTML element h1 is redundant, using the HTML element is
     enough.
 
     <h1 role='heading' aria-level='1'></h1>
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  Suggested fix: Remove the role attribute
+  Suggested fix: Remove the role attribute and ARIA attributes.
 
   - role='heading'·aria-level='1'
   + <h1></h1>
@@ -100,13 +100,13 @@
 
  unknown:1:4 lint/jsx-a11y/noRedundantRoles FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Using the role attribute on the HTML element is redundant, the HTML element is semantically
+  ✖ Using the role attribute heading and the HTML element h1 is redundant, using the HTML element is
     enough.
 
     <h1 role='heading'></h1>
         ^^^^^^^^^^^^^^
 
-  Suggested fix: Remove the role attribute
+  Suggested fix: Remove the role attribute.
 
   - role='heading'
   + <h1></h1>
@@ -130,13 +130,13 @@
 
  unknown:1:8 lint/jsx-a11y/noRedundantRoles FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Using the role attribute on the HTML element is redundant, the HTML element is semantically
-    enough.
+  ✖ Using the role attribute dialog and the HTML element dialog is redundant, using the HTML element
+    is enough.
 
     <dialog role='dialog'></dialog>
             ^^^^^^^^^^^^^
 
-  Suggested fix: Remove the role attribute
+  Suggested fix: Remove the role attribute.
 
   - role='dialog'
   + <dialog></dialog>
@@ -157,14 +157,30 @@
 ### `5`
 
 ```
-✔ No known problems!
+
+ unknown:1:24 lint/jsx-a11y/noRedundantRoles FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Using the role attribute checkbox and the HTML element input is redundant, using the HTMLelement
+    is enough.
+
+    <input  type='checkbox' role='checkbox' />
+                            ^^^^^^^^^^^^^^^
+
+  Suggested fix: Remove the role attribute.
+
+  - role='checkbox'
+  + <input·type='checkbox'·/>
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `5: formatted`
 
 ```
-<article role='presentation'></article>;
+<input type='checkbox' role='checkbox' />;
 
 ```
 
@@ -178,7 +194,7 @@
 ### `6: formatted`
 
 ```
-<Button role='button'></Button>;
+<article role='presentation'></article>;
 
 ```
 
@@ -190,6 +206,20 @@
 ```
 
 ### `7: formatted`
+
+```
+<Button role='button'></Button>;
+
+```
+
+### `8`
+
+```
+✔ No known problems!
+
+```
+
+### `8: formatted`
 
 ```
 <span></span>;

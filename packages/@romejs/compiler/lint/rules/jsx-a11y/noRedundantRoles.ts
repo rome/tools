@@ -18,13 +18,17 @@ type CreateFixableDiagnostic = {
 	node: JSXElement;
 	mappedRole: ARIARoleDefinition | undefined;
 	roleAttribute: JSXAttribute;
+	elementName: string;
+	roleName: string;
 };
 
 function createFixableDiagnostic(
-	{context, node, mappedRole, roleAttribute}: CreateFixableDiagnostic,
+	{context, node, mappedRole, roleAttribute, elementName, roleName}: CreateFixableDiagnostic,
 ) {
 	let ariaAttributesToRemove: Array<AnyNode> = [];
 	if (mappedRole) {
+		// here we retrieve the aria-* attributes that are not needed
+		// e.g. role="heading" aria-level="1"
 		ariaAttributesToRemove = mappedRole.requiredProps.reduce(
 			(nodes, prop) => {
 				const attr = getJSXAttribute(node, (prop as string));
@@ -36,6 +40,10 @@ function createFixableDiagnostic(
 			([] as Array<AnyNode>),
 		);
 	}
+	const titleSuggestion =
+		ariaAttributesToRemove.length > 0
+			? "Remove the role attribute and ARIA attributes."
+			: "Remove the role attribute.";
 	const fixed = {
 		...node,
 		attributes: node.attributes.filter((attr) => {
@@ -61,13 +69,13 @@ function createFixableDiagnostic(
 			old: node,
 			suggestions: [
 				{
-					title: "Remove the role attribute",
+					title: titleSuggestion,
 					description: "",
 					fixed,
 				},
 			],
 		},
-		descriptions.LINT.JSX_A11Y_NO_REDUNDANT_ROLES,
+		descriptions.LINT.JSX_A11Y_NO_REDUNDANT_ROLES(roleName, elementName),
 	);
 }
 
@@ -88,10 +96,26 @@ export default {
 				let elementHasARole;
 
 				const mappedRole = roles.get(roleAttribute.value.value);
+				// here we cover cases where "role" attribute and the element name differs in naming
+				// e.g. h1 and role="heading"
 				if (mappedRole && mappedRole.baseConcepts) {
 					elementHasARole = mappedRole.baseConcepts.some(({concept, module}) => {
 						if (module === "HTML") {
-							return concept.name === elementName;
+							// here we should also match additional attributes
+							// e.g. role="checkbox" <=> <input type="checkbox" />
+							if (concept.attributes) {
+								return concept.attributes.every(({name, value}) => {
+									const attr = getJSXAttribute(node, name);
+									return (
+										attr &&
+										attr.value &&
+										attr.value.type === "JSStringLiteral" &&
+										attr.value.value === value
+									);
+								});
+							} else {
+								return concept.name === elementName;
+							}
 						}
 						return true;
 					});
@@ -103,6 +127,8 @@ export default {
 						node,
 						context,
 						mappedRole,
+						elementName,
+						roleName: roleAttribute.value.value,
 					});
 				}
 			}

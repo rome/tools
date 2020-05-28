@@ -38,10 +38,10 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_NO_REDUNDANT_ROLES: {
+	JSX_A11Y_NO_REDUNDANT_ROLES: (role: string, element: string) => ({
 		category: "lint/jsx-a11y/noRedundantRoles",
-		message: "Using the role attribute on the HTML element is redundant, the HTML element is semantically enough.",
-	},
+		message: `Using the role attribute <emphasis>${role}</emphasis> and the HTML element <emphasis>${element}</emphasis> is redundant, using the HTML element is enough.`,
+	}),
 	JSX_A11Y_ANCHOR_IS_VALID: (message: string) => ({
 		category: "lint/jsx-a11y/anchorIsValid",
 		message,
