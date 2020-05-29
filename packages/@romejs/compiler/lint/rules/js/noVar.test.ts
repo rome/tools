@@ -11,6 +11,10 @@ import {testLint} from "../testHelpers";
 test(
 	"disallow var",
 	async (t) => {
-		await testLint(t, "var foobar;\nfoobar", {category: "lint/js/noVar"});
+		await testLint(
+			t,
+			{invalid: ["var foobar;\nfoobar"]},
+			{category: "lint/js/noVar"},
+		);
 	},
 );

@@ -14,10 +14,14 @@ test(
 	async (t) => {
 		await testLint(
 			t,
-			dedent`
-        const user = "Faustina";
-        const helloUser = "Hello, \${user}!";
-      `,
+			{
+				invalid: [
+					dedent`
+					const user = "Faustina";
+					const helloUser = "Hello, \${user}!";
+				`,
+				],
+			},
 			{category: "lint/js/noTemplateCurlyInString"},
 		);
 	},

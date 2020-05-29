@@ -7,130 +7,6 @@
 ### `0`
 
 ```
-✔ No known problems!
-
-```
-
-### `0: formatted`
-
-```
-function foo() {
-	var foo = bar;
-}
-
-```
-
-### `1`
-
-```
-✔ No known problems!
-
-```
-
-### `1: formatted`
-
-```
-function foo(foo) {
-	foo = bar;
-}
-
-```
-
-### `2`
-
-```
-
- unknown:1:26 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Do not reassign a function declaration.
-
-    function foo() { var foo; foo = bar; }
-                              ^^^
-
-  ℹ Use a local variable instead.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `2: formatted`
-
-```
-function foo() {
-	var foo;
-	foo = bar;
-}
-
-```
-
-### `3`
-
-```
-✔ No known problems!
-
-```
-
-### `3: formatted`
-
-```
-var foo = () => {};
-foo = bar;
-
-```
-
-### `4`
-
-```
-✔ No known problems!
-
-```
-
-### `4: formatted`
-
-```
-var foo = function() {};
-foo = bar;
-
-```
-
-### `5`
-
-```
-✔ No known problems!
-
-```
-
-### `5: formatted`
-
-```
-var foo = function() {
-	foo = bar;
-};
-
-```
-
-### `6`
-
-```
-✔ No known problems!
-
-```
-
-### `6: formatted`
-
-```
-import bar from "bar";
-function foo() {
-	var foo = bar;
-}
-
-```
-
-### `7`
-
-```
 
  unknown:1:19 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -147,7 +23,7 @@ function foo() {
 
 ```
 
-### `7: formatted`
+### `0: formatted`
 
 ```
 function foo() {}
@@ -155,7 +31,7 @@ foo = bar;
 
 ```
 
-### `8`
+### `1`
 
 ```
 
@@ -174,7 +50,7 @@ foo = bar;
 
 ```
 
-### `8: formatted`
+### `1: formatted`
 
 ```
 function foo() {
@@ -183,7 +59,7 @@ function foo() {
 
 ```
 
-### `9`
+### `2`
 
 ```
 
@@ -202,7 +78,7 @@ function foo() {
 
 ```
 
-### `9: formatted`
+### `2: formatted`
 
 ```
 foo = bar;
@@ -210,7 +86,7 @@ function foo() {}
 
 ```
 
-### `10`
+### `3`
 
 ```
 
@@ -229,7 +105,7 @@ function foo() {}
 
 ```
 
-### `10: formatted`
+### `3: formatted`
 
 ```
 [foo] = bar;
@@ -237,7 +113,7 @@ function foo() {}
 
 ```
 
-### `11`
+### `4`
 
 ```
 
@@ -256,7 +132,7 @@ function foo() {}
 
 ```
 
-### `11: formatted`
+### `4: formatted`
 
 ```
 ({x: foo = 0} = bar);
@@ -264,7 +140,7 @@ function foo() {}
 
 ```
 
-### `12`
+### `5`
 
 ```
 
@@ -283,7 +159,7 @@ function foo() {}
 
 ```
 
-### `12: formatted`
+### `5: formatted`
 
 ```
 function foo() {
@@ -292,7 +168,7 @@ function foo() {
 
 ```
 
-### `13`
+### `6`
 
 ```
 
@@ -311,12 +187,107 @@ function foo() {
 
 ```
 
-### `13: formatted`
+### `6: formatted`
 
 ```
 (function() {
 	({x: foo = 0} = bar);
 	function foo() {}
 })();
+
+```
+
+### `7`
+
+```
+✔ No known problems!
+
+```
+
+### `7: formatted`
+
+```
+function foo() {
+	var foo = bar;
+}
+
+```
+
+### `8`
+
+```
+✔ No known problems!
+
+```
+
+### `8: formatted`
+
+```
+function foo(foo) {
+	foo = bar;
+}
+
+```
+
+### `9`
+
+```
+✔ No known problems!
+
+```
+
+### `9: formatted`
+
+```
+var foo = () => {};
+foo = bar;
+
+```
+
+### `10`
+
+```
+✔ No known problems!
+
+```
+
+### `10: formatted`
+
+```
+var foo = function() {};
+foo = bar;
+
+```
+
+### `11`
+
+```
+✔ No known problems!
+
+```
+
+### `11: formatted`
+
+```
+var foo = function() {
+	foo = bar;
+};
+
+```
+
+### `12`
+
+```
+✔ No known problems!
+
+```
+
+### `12: formatted`
+
+```
+import bar from "bar";
+function foo() {
+	var foo = bar;
+}
 
 ```

@@ -14,65 +14,54 @@ test(
 	async (t) => {
 		await testLint(
 			t,
-			dedent`
-        function greet1() {
-          try {
-            throw new Error("Try")
-          } catch(err) {
-            throw err;
-          } finally {
-            return 1;
-          }
-        }
-      `,
-			{category: "lint/js/noUnsafeFinally"},
-		);
-
-		await testLint(
-			t,
-			dedent`
-        function greet2() {
-          try {
-            throw new Error("Try")
-          } catch(err) {
-            throw err;
-          } finally {
-            break;
-          }
-        }
-      `,
-			{category: "lint/js/noUnsafeFinally"},
-		);
-
-		await testLint(
-			t,
-			dedent`
-        function greet3() {
-          try {
-            throw new Error("Try")
-          } catch(err) {
-            throw err;
-          } finally {
-            continue;
-          }
-        }
-      `,
-			{category: "lint/js/noUnsafeFinally"},
-		);
-
-		await testLint(
-			t,
-			dedent`
-        function greet4() {
-          try {
-            throw new Error("Try")
-          } catch(err) {
-            throw err;
-          } finally {
-            throw new Error("Finally");
-          }
-        }
-      `,
+			{
+				invalid: [
+					dedent`
+					function greet1() {
+						try {
+							throw new Error("Try")
+						} catch(err) {
+							throw err;
+						} finally {
+							return 1;
+						}
+					}
+				`,
+					dedent`
+					function greet2() {
+						try {
+							throw new Error("Try")
+						} catch(err) {
+							throw err;
+						} finally {
+							break;
+						}
+					}
+				`,
+					dedent`
+					function greet3() {
+						try {
+							throw new Error("Try")
+						} catch(err) {
+							throw err;
+						} finally {
+							continue;
+						}
+					}
+				`,
+					dedent`
+					function greet4() {
+						try {
+							throw new Error("Try")
+						} catch(err) {
+							throw err;
+						} finally {
+							throw new Error("Finally");
+						}
+					}
+				`,
+				],
+			},
 			{category: "lint/js/noUnsafeFinally"},
 		);
 	},

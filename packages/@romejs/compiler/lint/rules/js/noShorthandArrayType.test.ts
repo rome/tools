@@ -15,10 +15,14 @@ test(
 		// TypeScript
 		await testLint(
 			t,
-			dedent`
-        let valid: Array<foo>;
-        let invalid: bar[];
-      `,
+			{
+				invalid: [
+					dedent`
+						let valid: Array<foo>;
+						let invalid: bar[];
+					`,
+				],
+			},
 			{category: "lint/js/noShorthandArrayType", syntax: ["ts"]},
 		);
 	},

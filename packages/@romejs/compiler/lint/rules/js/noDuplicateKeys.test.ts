@@ -14,13 +14,17 @@ test(
 	async (t) => {
 		await testLint(
 			t,
-			dedent`
-        const foo = {
-          test: true,
-          test2: true,
-          test: false,
-        };
-      `,
+			{
+				invalid: [
+					dedent`
+					const foo = {
+						test: true,
+						test2: true,
+						test: false,
+					};
+				`,
+				],
+			},
 			{category: "lint/js/noDuplicateKeys"},
 		);
 	},

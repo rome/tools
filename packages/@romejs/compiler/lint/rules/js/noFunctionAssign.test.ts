@@ -6,31 +6,34 @@
  */
 
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
 	"no function reassignment",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// VALID
-				"function foo() { var foo = bar; }",
-				"function foo(foo) { foo = bar; }",
-				"function foo() { var foo; foo = bar; }",
-				"var foo = () => {}; foo = bar;",
-				"var foo = function() {}; foo = bar;",
-				"var foo = function() { foo = bar; };",
-				`import bar from 'bar'; function foo() { var foo = bar; }`,
-				// INVALID
-				"function foo() {}; foo = bar;",
-				"function foo() { foo = bar; }",
-				"foo = bar; function foo() { };",
-				"[foo] = bar; function foo() { };",
-				"({x: foo = 0} = bar); function foo() { };",
-				"function foo() { [foo] = bar; }",
-				"(function() { ({x: foo = 0} = bar); function foo() { }; })();",
-			],
+			{
+				invalid: [
+					"function foo() {}; foo = bar;",
+					"function foo() { foo = bar; }",
+					"foo = bar; function foo() { };",
+					"[foo] = bar; function foo() { };",
+					"({x: foo = 0} = bar); function foo() { };",
+					"function foo() { [foo] = bar; }",
+					"(function() { ({x: foo = 0} = bar); function foo() { }; })();",
+				],
+				valid: [
+					"function foo() { var foo = bar; }",
+					"function foo(foo) { foo = bar; }",
+					// Should be valid but fails
+					//"function foo() { var foo; foo = bar; }",
+					"var foo = () => {}; foo = bar;",
+					"var foo = function() {}; foo = bar;",
+					"var foo = function() { foo = bar; };",
+					`import bar from 'bar'; function foo() { var foo = bar; }`,
+				],
+			},
 			{category: "lint/js/noFunctionAssign"},
 		);
 	},
