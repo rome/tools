@@ -115,3 +115,25 @@ switch (expr) {
 }
 
 ```
+
+### `3`
+
+```
+✔ No known problems!
+
+```
+
+### `3: formatted`
+
+```
+const foo = "a";
+switch ("a") {
+	case foo:
+		break;
+	case foo:
+		break;
+	default:
+		break;
+}
+
+```

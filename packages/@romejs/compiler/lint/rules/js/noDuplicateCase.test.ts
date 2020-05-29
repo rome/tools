@@ -65,6 +65,18 @@ test(
 								break;
 						}
 					`,
+					// Currently no diagnostic for duplicate identifiers
+					dedent`
+						const foo = 'a';
+						switch ('a') {
+							case foo:
+								break;
+							case foo:
+								break;
+							default:
+								break;
+						}
+				`,
 				],
 			},
 			{category: "lint/js/noDuplicateCase"},
