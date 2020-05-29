@@ -17,6 +17,9 @@ html {
 body {
   font-size: 16px;
   margin: 0;
+  @include desktop-only() {
+    border-top: $unit / 3 solid $text-color;
+  }
 }
 
 h1,

@@ -27,9 +27,15 @@
   height: 100vh;
   border-right: 1px solid $gray-color;
   background-color: #ffffff;
-  transition-property: transform;
+  transition-property: transform, border-top-width;
   z-index: 2;
   min-width: 256px;
+
+  @include desktop-only() {
+    @include top-border;
+    border-top-width: 0;
+    transition-duration: 150ms;
+  }
 
   @include mobile-only() {
     transform: translateX(-100%);

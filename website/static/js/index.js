@@ -69,15 +69,23 @@ const toc = {
 
     }
   },
-  handleScroll(){
+}
 
-    if(isMobile()){
-      return false;
-    }
 
-    toc.highlight();
+function handleScroll(){
 
+  if(isMobile()){
+    return false;
   }
+
+  toc.highlight();
+
+  if(window.scrollY > 6){
+    elements.sidebar.style['border-top-width'] = '5.3333333333px';
+  } else {
+    elements.sidebar.style['border-top-width'] = '0px';
+  }
+
 }
 
 function mobileToggleEvent(event){
@@ -95,4 +103,4 @@ elements.toc.addEventListener('click', toc.handleClick, false);
 elements.mobileHandle.addEventListener('click', mobileToggleEvent, false);
 elements.overlay.addEventListener('click', mobileToggleEvent, false);
 elements.overlay.addEventListener("touchstart", mobileToggleEvent, false);
-window.addEventListener('scroll', toc.handleScroll, false);
+window.addEventListener('scroll', handleScroll, false);
