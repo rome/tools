@@ -8,17 +8,17 @@ const elements = {
 };
 
 function isMobile(){
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  return  elements.sidebar.classList.contains('visible') || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
 const toc = {
   getMobileNavbarHeight(){
-    let height = 0;
+
     if(isMobile()){
-      height = parseFloat(window.getComputedStyle(elements.headerMobile).height, 10);
+      return parseFloat(window.getComputedStyle(elements.headerMobile).height, 10);
     }
 
-    return height;
+    return 0;
   },
   highlight(){
 
@@ -61,11 +61,11 @@ const toc = {
       const heading = document.querySelector(target.getAttribute('href'));
       const marginTop = parseFloat(window.getComputedStyle(heading).marginTop, 10);
 
+      window.scrollTo(0, (heading.offsetTop) - toc.getMobileNavbarHeight() - marginTop);
+
       if(isMobile()){
         mobileToggleEvent(event);
       }
-
-      window.scrollTo(0, (heading.offsetTop) - toc.getMobileNavbarHeight() - (marginTop));
 
     }
   },
