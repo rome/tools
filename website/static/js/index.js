@@ -1,6 +1,7 @@
 const elements = {
   mobileHandle: document.getElementsByClassName('mobile-handle')[0],
   toc: document.getElementsByClassName('toc-container')[0],
+  tocLinks: [...document.querySelectorAll('.toc-container a')],
   sidebar: document.getElementsByClassName('sidebar')[0],
   overlay: document.getElementsByClassName('overlay')[0],
   headings: [...document.querySelectorAll('.content h1, .content h2, .content h3')],
@@ -96,6 +97,11 @@ function mobileToggleEvent(event){
   bodyClassList.toggle('no-scroll');
   toc.highlight();
 }
+
+//remove permalinkSymbol "#" from table of contents
+elements.tocLinks.forEach(function(link){
+  link.innerText = link.innerText.replace(/(\s#)$/,'');
+});
 
 toc.highlight();
 
