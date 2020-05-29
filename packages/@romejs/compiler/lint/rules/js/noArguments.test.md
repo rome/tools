@@ -8,13 +8,13 @@
 
 ```
 
- unknown:2:14 lint/js/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:13 lint/js/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use the rest parameters instead of arguments.
 
     1 │ function f() {
-  > 2 │   console.log(arguments);
-      │               ^^^^^^^^^
+  > 2 │  console.log(arguments);
+      │              ^^^^^^^^^
     3 │ }
 
   ℹ Arguments does not have Array.prototype methods and can be inconvenient to use.
@@ -38,13 +38,13 @@ function f() {
 
 ```
 
- unknown:2:14 lint/js/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:13 lint/js/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use the rest parameters instead of arguments.
 
     1 │ (function () {
-  > 2 │   console.log(arguments);
-      │               ^^^^^^^^^
+  > 2 │  console.log(arguments);
+      │              ^^^^^^^^^
     3 │ })();
 
   ℹ Arguments does not have Array.prototype methods and can be inconvenient to use.
@@ -68,15 +68,15 @@ function f() {
 
 ```
 
- unknown:3:16 lint/js/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:3:14 lint/js/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use the rest parameters instead of arguments.
 
     1 │ class C {
-    2 │   fn() {
-  > 3 │     console.log(arguments);
-      │                 ^^^^^^^^^
-    4 │   }
+    2 │  fn() {
+  > 3 │   console.log(arguments);
+      │               ^^^^^^^^^
+    4 │  }
     5 │ }
 
   ℹ Arguments does not have Array.prototype methods and can be inconvenient to use.
@@ -102,15 +102,15 @@ class C {
 
 ```
 
- unknown:3:16 lint/js/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:3:14 lint/js/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use the rest parameters instead of arguments.
 
     1 │ const o = {
-    2 │   fn() {
-  > 3 │     console.log(arguments);
-      │                 ^^^^^^^^^
-    4 │   },
+    2 │  fn() {
+  > 3 │   console.log(arguments);
+      │               ^^^^^^^^^
+    4 │  },
     5 │ };
 
   ℹ Arguments does not have Array.prototype methods and can be inconvenient to use.

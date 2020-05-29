@@ -7,49 +7,6 @@
 ### `0`
 
 ```
-✔ No known problems!
-
-```
-
-### `0: formatted`
-
-```
-new Promise(() => {});
-
-```
-
-### `1`
-
-```
-✔ No known problems!
-
-```
-
-### `1: formatted`
-
-```
-new Promise(() => {}, async function unrelated() {});
-
-```
-
-### `2`
-
-```
-✔ No known problems!
-
-```
-
-### `2: formatted`
-
-```
-class Foo {}
-new Foo(async () => {});
-
-```
-
-### `3`
-
-```
 
  unknown:1:12 lint/js/noAsyncPromiseExecutor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -66,14 +23,14 @@ new Foo(async () => {});
 
 ```
 
-### `3: formatted`
+### `0: formatted`
 
 ```
 new Promise(async function foo() {});
 
 ```
 
-### `4`
+### `1`
 
 ```
 
@@ -92,14 +49,14 @@ new Promise(async function foo() {});
 
 ```
 
-### `4: formatted`
+### `1: formatted`
 
 ```
 new Promise(async () => {});
 
 ```
 
-### `5`
+### `2`
 
 ```
 
@@ -118,9 +75,52 @@ new Promise(async () => {});
 
 ```
 
-### `5: formatted`
+### `2: formatted`
 
 ```
 new Promise(async () => {});
+
+```
+
+### `3`
+
+```
+✔ No known problems!
+
+```
+
+### `3: formatted`
+
+```
+new Promise(() => {});
+
+```
+
+### `4`
+
+```
+✔ No known problems!
+
+```
+
+### `4: formatted`
+
+```
+new Promise(() => {}, async function unrelated() {});
+
+```
+
+### `5`
+
+```
+✔ No known problems!
+
+```
+
+### `5: formatted`
+
+```
+class Foo {}
+new Foo(async () => {});
 
 ```

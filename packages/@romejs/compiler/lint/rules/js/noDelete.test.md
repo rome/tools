@@ -65,3 +65,18 @@ const obj = {a: {b: {c: 123}}};
 obj.a.b.c = undefined;
 
 ```
+
+### `2`
+
+```
+✔ No known problems!
+
+```
+
+### `2: formatted`
+
+```
+const foo = new Set([1, 2, 3]);
+foo.delete(1);
+
+```

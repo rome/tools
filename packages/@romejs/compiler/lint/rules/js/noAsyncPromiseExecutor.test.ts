@@ -6,23 +6,25 @@
  */
 
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
 	"no async promise executor",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// VALID
-				"new Promise(() => {})",
-				"new Promise(() => {}, async function unrelated() {})",
-				"class Foo {} new Foo(async () => {})",
-				// INVALID
-				"new Promise(async function foo() {})",
-				"new Promise(async () => {})",
-				"new Promise(((((async () => {})))))",
-			],
+			{
+				invalid: [
+					"new Promise(async function foo() {})",
+					"new Promise(async () => {})",
+					"new Promise(((((async () => {})))))",
+				],
+				valid: [
+					"new Promise(() => {})",
+					"new Promise(() => {}, async function unrelated() {})",
+					"class Foo {} new Foo(async () => {})",
+				],
+			},
 			{category: "lint/js/noAsyncPromiseExecutor"},
 		);
 	},

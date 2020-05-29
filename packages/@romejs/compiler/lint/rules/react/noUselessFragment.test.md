@@ -28,7 +28,7 @@
 
 ```
 
-### `0: formatted and fixed`
+### `0: formatted`
 
 ```
 {foo};
@@ -59,7 +59,7 @@
 
 ```
 
-### `1: formatted and fixed`
+### `1: formatted`
 
 ```
 <p>foo</p>;
@@ -90,7 +90,7 @@
 
 ```
 
-### `2: formatted and fixed`
+### `2: formatted`
 
 ```
 ;
@@ -120,7 +120,7 @@
 
 ```
 
-### `3: formatted and fixed`
+### `3: formatted`
 
 ```
 foo;
@@ -150,7 +150,7 @@ foo;
 
 ```
 
-### `4: formatted and fixed`
+### `4: formatted`
 
 ```
 foo;
@@ -188,7 +188,7 @@ foo;
 
 ```
 
-### `5: formatted and fixed`
+### `5: formatted`
 
 ```
 <section>

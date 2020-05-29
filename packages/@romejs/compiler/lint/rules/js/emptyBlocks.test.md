@@ -7,54 +7,6 @@
 ### `0`
 
 ```
-✔ No known problems!
-
-```
-
-### `0: formatted`
-
-```
-if (foo) {
-	foo;
-}
-
-```
-
-### `1`
-
-```
-✔ No known problems!
-
-```
-
-### `1: formatted`
-
-```
-if (foo) {
-	foo;
-}
-
-```
-
-### `2`
-
-```
-✔ No known problems!
-
-```
-
-### `2: formatted`
-
-```
-if (foo) {
-	// empty
-}
-
-```
-
-### `3`
-
-```
 
  unknown:1:9 lint/js/emptyBlocks ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -71,7 +23,7 @@ if (foo) {
 
 ```
 
-### `3: formatted`
+### `0: formatted`
 
 ```
 if (foo) {
@@ -79,7 +31,7 @@ if (foo) {
 
 ```
 
-### `4`
+### `1`
 
 ```
 
@@ -88,7 +40,7 @@ if (foo) {
   ✖ Avoid empty logic blocks.
 
     1 │ if (foo) {
-    2 │   // foo;
+    2 │  // foo;
   > 3 │ } else {}
       │        ^^
 
@@ -100,12 +52,60 @@ if (foo) {
 
 ```
 
-### `4: formatted`
+### `1: formatted`
 
 ```
 if (foo) {
 	// foo;
 } else {
+}
+
+```
+
+### `2`
+
+```
+✔ No known problems!
+
+```
+
+### `2: formatted`
+
+```
+if (foo) {
+	foo;
+}
+
+```
+
+### `3`
+
+```
+✔ No known problems!
+
+```
+
+### `3: formatted`
+
+```
+if (foo) {
+	foo;
+}
+
+```
+
+### `4`
+
+```
+✔ No known problems!
+
+```
+
+### `4: formatted`
+
+```
+if (foo) {
+	// empty
 }
 
 ```

@@ -14,15 +14,19 @@ test(
 	async (t) => {
 		await testLint(
 			t,
-			dedent`
-        import foo from './testdummy.ts';
-        import {bar} from './testdummy.ts';
-        import type {fooType} from './testdummy.ts';
+			{
+				invalid: [
+					dedent`
+						import	foo	from	'./testdummy.ts';
+						import	{bar}	from	'./testdummy.ts';
+						import	type	{fooType}	from	'./testdummy.ts';
 
-        const typedFoo: fooType = {
-          type: 'foo'
-        };
-      `,
+						const	typedFoo:	fooType	=	{
+							type:	'foo'
+						};
+					`,
+				],
+			},
 			{category: "lint/js/duplicateImportSource"},
 		);
 	},

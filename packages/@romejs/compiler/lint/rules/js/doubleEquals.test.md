@@ -7,62 +7,6 @@
 ### `0`
 
 ```
-✔ No known problems!
-
-```
-
-### `0: formatted`
-
-```
-foo == null;
-
-```
-
-### `1`
-
-```
-✔ No known problems!
-
-```
-
-### `1: formatted`
-
-```
-foo != null;
-
-```
-
-### `2`
-
-```
-✔ No known problems!
-
-```
-
-### `2: formatted`
-
-```
-null == foo;
-
-```
-
-### `3`
-
-```
-✔ No known problems!
-
-```
-
-### `3: formatted`
-
-```
-null != foo;
-
-```
-
-### `4`
-
-```
 
  unknown:1 lint/js/doubleEquals FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -85,9 +29,65 @@ null != foo;
 
 ```
 
-### `4: formatted`
+### `0: formatted`
 
 ```
 foo == bar;
+
+```
+
+### `1`
+
+```
+✔ No known problems!
+
+```
+
+### `1: formatted`
+
+```
+foo == null;
+
+```
+
+### `2`
+
+```
+✔ No known problems!
+
+```
+
+### `2: formatted`
+
+```
+foo != null;
+
+```
+
+### `3`
+
+```
+✔ No known problems!
+
+```
+
+### `3: formatted`
+
+```
+null == foo;
+
+```
+
+### `4`
+
+```
+✔ No known problems!
+
+```
+
+### `4: formatted`
+
+```
+null != foo;
 
 ```
