@@ -16,6 +16,17 @@ import {buildSuggestionAdvice} from "../helpers";
 import {createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	JSX_A11Y_NO_NONINTERACTIVE_ELEMENT_TO_INTERACTIVE_ROLE: (element: string) => ({
+		category: "lint/jsx-a11y/noNoninteractiveElementToInteractiveRole",
+		message: `The HTML element <emphasis>${element}</emphasis> is non-interactive and should not have an interactive role`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: `Consider replacing <emphasis>${element}</emphasis> with "div" or "span"`,
+			},
+		],
+	}),
 	REACT_NO_USELESS_FRAGMENT: {
 		category: "lint/react/noUselessFragment",
 		message: "Avoid using unnecessary <emphasis>Fragment</emphasis>.",

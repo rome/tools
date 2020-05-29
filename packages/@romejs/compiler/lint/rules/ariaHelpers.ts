@@ -496,7 +496,7 @@ export const roles: MapOfAriaRoles = new Map([
 		{
 			props: ["aria-checked", "aria-readonly"],
 			requiredProps: ["aria-checked"],
-			superClassRole: ["switch", "menuitemcheckbox"],
+			superClassRole: ["switch", "menuitemcheckbox", "widget"],
 			baseConcepts: [
 				{
 					module: "HTML",
@@ -518,7 +518,7 @@ export const roles: MapOfAriaRoles = new Map([
 		{
 			props: ["aria-checked", "aria-readonly"],
 			requiredProps: ["aria-checked"],
-			superClassRole: ["menuitemradio"],
+			superClassRole: ["menuitemradio", "widget"],
 			baseConcepts: [
 				{
 					module: "HTML",
@@ -540,7 +540,7 @@ export const roles: MapOfAriaRoles = new Map([
 		{
 			props: ["aria-checked"],
 			requiredProps: ["aria-checked"],
-			superClassRole: ["checkbox"],
+			superClassRole: ["checkbox", "widget"],
 		},
 	],
 	[
@@ -548,7 +548,7 @@ export const roles: MapOfAriaRoles = new Map([
 		{
 			props: ["aria-selected"],
 			requiredProps: ["aria-selected"],
-			superClassRole: ["treeitem"],
+			superClassRole: ["treeitem", "widget"],
 			baseConcepts: [
 				{
 					module: "HTML",
@@ -564,7 +564,7 @@ export const roles: MapOfAriaRoles = new Map([
 		{
 			props: ["aria-controls", "aria-expanded"],
 			requiredProps: ["aria-controls", "aria-expanded"],
-			superClassRole: ["select"],
+			superClassRole: ["select", "widget"],
 			baseConcepts: [
 				{
 					module: "HTML",
@@ -626,7 +626,7 @@ export const roles: MapOfAriaRoles = new Map([
 		{
 			props: ["aria-valuemax", "aria-valuemin", "aria-valuenow"],
 			requiredProps: ["aria-valuemax", "aria-valuemin", "aria-valuenow"],
-			superClassRole: ["composite", "input", "range"],
+			superClassRole: ["composite", "input", "range", "widget"],
 		},
 	],
 	[
@@ -634,7 +634,7 @@ export const roles: MapOfAriaRoles = new Map([
 		{
 			props: ["aria-valuemax", "aria-valuemin", "aria-valuenow"],
 			requiredProps: ["aria-valuemax", "aria-valuemin", "aria-valuenow"],
-			superClassRole: ["input", "range"],
+			superClassRole: ["input", "range", "widget"],
 		},
 	],
 	[
@@ -671,7 +671,7 @@ export const roles: MapOfAriaRoles = new Map([
 				"aria-orientation",
 				"aria-controls",
 			],
-			superClassRole: ["range"],
+			superClassRole: ["range", "widget"],
 		},
 	],
 
@@ -771,4 +771,24 @@ for (const [, attributes] of roles) {
 
 export function isRoleInteractive(role: ARIARoleDefinition) {
 	return role.superClassRole.includes("widget");
+}
+
+export function isElementInteractive(elementName: string) {
+	let role: ARIARoleDefinition | undefined;
+	for (const [, roleInfo] of roles) {
+		if (roleInfo.baseConcepts) {
+			const elementMatched = roleInfo.baseConcepts.some(({concept}) =>
+				concept.name === elementName
+			);
+			if (elementMatched) {
+				role = roleInfo;
+				break;
+			}
+		}
+	}
+
+	if (role) {
+		return isRoleInteractive(role);
+	}
+	return false;
 }
