@@ -176,6 +176,7 @@ type LintDiagnosticCategory =
 	| "lint/react/noRedundantShouldComponentUpdate"
 	| "lint/react/noStringRefs"
 	| "lint/react/noUnsafe"
+	| "lint/react/noUselessFragment"
 	| "lint/react/noWillUpdateSetState"
 	| "lint/react/reactInJsxScope"
 	| "lint/react/stylePropObject"

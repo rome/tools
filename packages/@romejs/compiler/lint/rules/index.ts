@@ -90,6 +90,7 @@ import noFindDOMNode from "./react/noFindDOMNode";
 import noRedundantShouldComponentUpdate from "./react/noRedundantShouldComponentUpdate";
 import noStringRefs from "./react/noStringRefs";
 import noUnsafe from "./react/noUnsafe";
+import noUselessFragment from "./react/noUselessFragment";
 import noWillUpdateSetState from "./react/noWillUpdateSetState";
 import reactInJsxScope from "./react/reactInJsxScope";
 import stylePropObject from "./react/stylePropObject";
@@ -181,6 +182,7 @@ export const lintTransforms = [
 	noRedundantShouldComponentUpdate,
 	noStringRefs,
 	noUnsafe,
+	noUselessFragment,
 	noWillUpdateSetState,
 	reactInJsxScope,
 	stylePropObject,
