@@ -8,16 +8,16 @@
 
 ```
 
- unknown:11:7 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:11:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not duplicate the c case.
 
-     9 │   case 'd':
-    10 │     break;
-  > 11 │   case 'c':
-       │        ^^^
-    12 │     break;
-    13 │   default:
+     9 │  case 'd':
+    10 │   break;
+  > 11 │  case 'c':
+       │       ^^^
+    12 │   break;
+    13 │  default:
 
   ℹ Duplicated switch logic paths are hard to follow and usually typos.
 
@@ -41,6 +41,74 @@ switch (expr) {
 	case "d":
 		break;
 	case "c":
+		break;
+	default:
+		break;
+}
+
+```
+
+### `1`
+
+```
+
+ unknown:9:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Do not duplicate the 2 case.
+
+     7 │  case 3:
+     8 │   break;
+   > 9 │  case 2:
+       │       ^
+    10 │   break;
+    11 │  default:
+
+  ℹ Duplicated switch logic paths are hard to follow and usually typos.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `1: formatted`
+
+```
+const expr = 3;
+switch (expr) {
+	case 1:
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+	case 2:
+		break;
+	default:
+		break;
+}
+
+```
+
+### `2`
+
+```
+✔ No known problems!
+
+```
+
+### `2: formatted`
+
+```
+const expr = "a";
+switch (expr) {
+	case "a":
+		break;
+	case "b":
+		break;
+	case "c":
+		break;
+	case "d":
 		break;
 	default:
 		break;

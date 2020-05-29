@@ -18,13 +18,17 @@ export default {
 			const uniqueSwitchCases = new Set();
 
 			for (const param of node.cases) {
-				if (param.test && param.test.type === "JSStringLiteral") {
+				if (
+					param.test &&
+					(param.test.type === "JSStringLiteral" ||
+					param.test.type === "JSNumericLiteral")
+				) {
 					const {test} = param;
 
 					if (uniqueSwitchCases.has(test.value)) {
 						context.addNodeDiagnostic(
 							test,
-							descriptions.LINT.JS_NO_DUPLICATE_CASE(test.value),
+							descriptions.LINT.JS_NO_DUPLICATE_CASE(String(test.value)),
 						);
 					}
 
