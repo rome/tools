@@ -61,19 +61,17 @@ export default {
 write(
 	testLoc,
 	`import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
 	"${category} ${spacedName}",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				"",
-				// VALID
-				"",
-			],
+			{
+				invalid: [""],
+				valid: [""],
+			},
 			{category: "${categoryName}"},
 		);
 	},
