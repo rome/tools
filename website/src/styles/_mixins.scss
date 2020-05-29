@@ -27,5 +27,5 @@
 
 @mixin top-border{
   @include transition-timing;
-  border-top: $unit / 3 solid $text-color;
+  border-top: $unit / 3 solid $gray-4;
 }

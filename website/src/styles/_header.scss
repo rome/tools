@@ -12,7 +12,7 @@
   top: 0;
   align-items: center;
   padding: 0 $unit;
-  border-top: $unit / 3 solid $text-color;
+  border-top: $unit / 3 solid $gray-4;
 
   .stretch {
     flex-grow: 1;
@@ -20,7 +20,7 @@
 
   @include mobile-only() {
     width: 100%;
-    border-bottom: 1px solid $gray-color;
+    border-bottom: 1px solid $gray-7;
     display: flex;
   }
 }

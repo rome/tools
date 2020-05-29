@@ -24,8 +24,8 @@
     transition-duration: 100ms;
 
     &.active {
-      color: $primary-color;
-      background-color: $text-color;
+      color: $color-4;
+      background-color: $gray-4;
       font-weight: bold;
     }
 
@@ -42,8 +42,8 @@
   }
 
   .active {
-    color: $primary-color;
-    background-color: $gray-color;
+    color: $color-4;
+    background-color: $gray-4;
   }
 
 }
