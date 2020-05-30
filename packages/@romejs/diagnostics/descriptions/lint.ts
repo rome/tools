@@ -27,6 +27,17 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
+	REACT_JSX_PASCAL_CASE: (oldName: string, newName: string) => ({
+		category: "lint/react/jsxPascalCase",
+		message: `Switch <emphasis>${oldName}</emphasis> to <emphasis>${newName}</emphasis>.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "User-defined JSX components should be defined and referenced in PascalCase.",
+			},
+		],
+	}),
 	REACT_NO_USELESS_FRAGMENT: {
 		category: "lint/react/noUselessFragment",
 		message: "Avoid using unnecessary <emphasis>Fragment</emphasis>.",
