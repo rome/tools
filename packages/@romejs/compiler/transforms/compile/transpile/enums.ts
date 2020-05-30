@@ -8,14 +8,13 @@ import {
 	jsNumericLiteral,
 	jsStringLiteral,
 } from "@romejs/ast";
-import {LetBinding, Path, VarBinding} from "@romejs/compiler";
+import {LetBinding, Path, Scope, VarBinding} from "@romejs/compiler";
 import {REDUCE_REMOVE} from "@romejs/compiler/constants";
 import {descriptions} from "@romejs/diagnostics";
 import {template, tryStaticEvaluation} from "@romejs/js-ast-utils";
+import {EvalResult} from "@romejs/js-ast-utils/tryStaticEvaluation";
 
-interface PreviousEnumMembers {
-	[name: string]: number | string;
-}
+type PreviousEnumMembers = Map<string, EvalResult["value"]>;
 
 function buildEnumWrapper(
 	id: JSBindingIdentifier,
@@ -64,8 +63,8 @@ function buildStringAssignment(
 	`;
 }
 
-function enumFill(node: TSEnumDeclaration): AnyJSExpression {
-	const x = translateEnumValues(node);
+function enumFill(node: TSEnumDeclaration, scope: Scope): AnyJSExpression {
+	const x = translateEnumValues(node, scope);
 	const assignments = x.map(([memberName, memberValue]) =>
 		buildEnumMember(
 			typeof memberValue !== "string" && memberValue.type === "JSStringLiteral",
@@ -79,9 +78,11 @@ function enumFill(node: TSEnumDeclaration): AnyJSExpression {
 
 function translateEnumValues(
 	node: TSEnumDeclaration,
+	scope: Scope,
 ): Array<[string, AnyJSExpression]> {
-	const seen: PreviousEnumMembers = Object.create(null);
+	const seen: PreviousEnumMembers = new Map();
 	let prev: number | undefined = -1;
+
 	return node.members.map((member) => {
 		let value: AnyJSExpression;
 		const initializer = member.initializer;
@@ -89,17 +90,18 @@ function translateEnumValues(
 			member.id.type === "JSIdentifier" ? member.id.name : member.id.value;
 
 		if (initializer) {
-			let {value: constValue, bailed} = tryStaticEvaluation(initializer);
+			let {value: constValue, bailed} = tryStaticEvaluation(initializer, scope);
 			if (bailed && initializer.type === "JSReferenceIdentifier") {
-				constValue = seen[initializer.name];
+				constValue = seen.get(initializer.name);
 			}
 			if (constValue !== undefined) {
-				seen[name] = constValue;
+				seen.set(name, constValue);
+
 				if (typeof constValue === "number") {
 					value = jsNumericLiteral.create({value: constValue});
 					prev = constValue;
 				} else {
-					value = jsStringLiteral.create({value: constValue});
+					value = jsStringLiteral.create({value: String(constValue)});
 					prev = undefined;
 				}
 			} else {
@@ -110,7 +112,7 @@ function translateEnumValues(
 			if (prev !== undefined) {
 				prev++;
 				value = jsNumericLiteral.create({value: prev});
-				seen[name] = prev;
+				seen.set(name, prev);
 			} else {
 				throw new Error("Enum member must have initializer");
 			}
@@ -123,7 +125,7 @@ function translateEnumValues(
 export default {
 	name: "enums",
 	enter(path: Path) {
-		const {context, node} = path;
+		const {context, node, scope} = path;
 
 		if (node.type !== "TSEnumDeclaration") {
 			return node;
@@ -141,7 +143,7 @@ export default {
 			return REDUCE_REMOVE;
 		}
 
-		const fill = enumFill(node);
+		const fill = enumFill(node, scope);
 
 		switch (path.parent.type) {
 			case "JSBlockStatement":
