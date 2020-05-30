@@ -21,7 +21,6 @@
   font-size: 0.9rem;
   padding: $unit;
   padding-right: 0;
-  padding-top: $unit * 2;
   position: sticky;
   top: 0;
   height: 100vh;
@@ -35,13 +34,14 @@
     @include top-border;
     border-top-width: 0;
     transition-duration: 150ms;
+    padding-top: $unit * 2;
   }
 
   @include mobile-only() {
     transform: translateX(-100%);
     position: fixed;
     min-width: 256px;
-    top: 64px;
+    padding-top: 64px + $unit;
 
     &.visible {
       transform: translateX(0);
@@ -79,4 +79,44 @@
     margin-left: 0;
     width: 100%;
   }
+}
+
+.menu {
+  padding-bottom: $unit;
+  border-bottom: 1px solid #e8e8e8;
+  margin-bottom: $unit;
+  font-weight: bold;
+  display: none;
+  ul{
+    margin: 0;
+    padding: 0;
+  }
+
+  li{
+    list-style-type: none;
+  }
+
+  a{
+    @include transition-timing;
+    text-decoration: none;
+    font-size: 1.1em;
+    transition-duration: 100ms;
+    height: auto;
+    padding: $unit / 5 $unit / 2;
+    margin-left: $unit / 2;
+    display: inline-block;
+  }
+
+  a:hover{
+    padding-left: $unit / 1.5;
+    text-decoration: dashed;
+    color: $gray-5;
+  }
+
+  a:active{
+    padding-left: $unit / 1.5;
+    text-decoration: dashed;
+    color: $gray-6;
+  }
+
 }

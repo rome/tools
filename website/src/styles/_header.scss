@@ -2,7 +2,7 @@
 // so i can align the website in the middle of the page
 
 .header-mobile {
-  z-index: 2;
+  z-index: 3;
   background-color: #ffffff;
   height: $unit * 4;
   display: none;
@@ -26,7 +26,6 @@
 }
 
 .header-desktop{
-  z-index: 2;
   background-color: #ffffff;
   height: $unit * 4;
   display: flex;
