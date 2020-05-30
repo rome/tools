@@ -26,7 +26,7 @@
 
 ```
 
-### `0: formatted but unfixable`
+### `0: formatted`
 
 ```
 function increment() {
@@ -57,7 +57,7 @@ function increment() {
 
 ```
 
-### `1: formatted but unfixable`
+### `1: formatted`
 
 ```
 function increment() {
@@ -89,7 +89,7 @@ function increment() {
 
 ```
 
-### `2: formatted but unfixable`
+### `2: formatted`
 
 ```
 this.setState({
@@ -121,7 +121,7 @@ this.setState({
 
 ```
 
-### `3: formatted but unfixable`
+### `3: formatted`
 
 ```
 this.setState({
@@ -153,7 +153,7 @@ this.setState({
 
 ```
 
-### `4: formatted but unfixable`
+### `4: formatted`
 
 ```
 this.setState({
@@ -185,7 +185,7 @@ this.setState({
 
 ```
 
-### `5: formatted but unfixable`
+### `5: formatted`
 
 ```
 this.setState({
@@ -218,7 +218,7 @@ this.setState({
 
 ```
 
-### `6: formatted but unfixable`
+### `6: formatted`
 
 ```
 this.setState({
@@ -252,7 +252,7 @@ this.setState({
 
 ```
 
-### `7: formatted but unfixable`
+### `7: formatted`
 
 ```
 this.setState({
@@ -285,7 +285,7 @@ this.setState({
 
 ```
 
-### `8: formatted but unfixable`
+### `8: formatted`
 
 ```
 this.setState({
@@ -318,7 +318,7 @@ this.setState({
 
 ```
 
-### `9: formatted but unfixable`
+### `9: formatted`
 
 ```
 this.setState({

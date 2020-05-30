@@ -127,16 +127,26 @@ do {
 ### `4`
 
 ```
-✔ No known problems!
+
+ unknown:1:1 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Do not assign variables in loop conditions.
+
+    (foo = bar) ? foo() : baz();
+     ^^^^^^^^^
+
+  ℹ It is a common typo to mistype an equality operator as an assignment operator.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `4: formatted`
 
 ```
-while ((foo = foo.bar) !== undefined) {
-	console.log(foo);
-}
+(foo = bar) ? foo() : baz();
 
 ```
 
@@ -150,8 +160,38 @@ while ((foo = foo.bar) !== undefined) {
 ### `5: formatted`
 
 ```
+while ((foo = foo.bar) !== undefined) {
+	console.log(foo);
+}
+
+```
+
+### `6`
+
+```
+✔ No known problems!
+
+```
+
+### `6: formatted`
+
+```
 if (foo++ === 3) {
 	console.log(foo);
 }
+
+```
+
+### `7`
+
+```
+✔ No known problems!
+
+```
+
+### `7: formatted`
+
+```
+foo = bar ? foo() : baz();
 
 ```
