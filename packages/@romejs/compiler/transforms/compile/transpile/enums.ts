@@ -7,6 +7,7 @@ import {
 	TSEnumDeclaration,
 	jsNumericLiteral,
 	jsStringLiteral,
+	jsCallExpression,
 } from "@romejs/ast";
 import {LetBinding, Path, VarBinding} from "@romejs/compiler";
 import {REDUCE_REMOVE} from "@romejs/compiler/constants";
