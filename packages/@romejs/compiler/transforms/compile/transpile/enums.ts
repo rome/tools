@@ -2,12 +2,11 @@ import {
 	AnyJSExpression,
 	AnyJSStatement,
 	JSBindingIdentifier,
-	JSCallExpression,
 	JSFunctionExpression,
 	TSEnumDeclaration,
+	jsCallExpression,
 	jsNumericLiteral,
 	jsStringLiteral,
-	jsCallExpression,
 } from "@romejs/ast";
 import {LetBinding, Path, VarBinding} from "@romejs/compiler";
 import {REDUCE_REMOVE} from "@romejs/compiler/constants";
@@ -22,9 +21,11 @@ function buildEnumWrapper(
 	id: JSBindingIdentifier,
 	assignments: Array<AnyJSExpression>,
 ): AnyJSExpression {
-	const expressionStatement = jsCallExpression.assert(template.expression`
+	const expressionStatement = jsCallExpression.assert(
+		template.expression`
 		(function (${id}) {})(${id} || (${id} = {}));
-	`);
+	`,
+	);
 	const functionExpression = (expressionStatement.callee as JSFunctionExpression);
 	functionExpression.body.body = (assignments as Array<AnyJSStatement>);
 	return (expressionStatement as AnyJSExpression);
