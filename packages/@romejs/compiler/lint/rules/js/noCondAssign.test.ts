@@ -50,10 +50,10 @@ test(
 						if (foo++ === 3) {
 							console.log(foo);
 						}
-                    `,
+					`,
 					dedent`
-                        foo = bar ? foo() : bar();
-                    `,
+						foo = bar ? foo() : bar();
+					`,
 				],
 			},
 			{category: "lint/js/noCondAssign"},
