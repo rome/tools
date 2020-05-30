@@ -35,6 +35,9 @@ test(
 						do {
 							console.log('foo');
 						} while (foo = 'bar')
+                    `,
+					dedent`
+						(foo = bar) ? foo() : bar();
 					`,
 				],
 				valid: [
@@ -47,6 +50,9 @@ test(
 						if (foo++ === 3) {
 							console.log(foo);
 						}
+					`,
+					dedent`
+						foo = bar ? foo() : bar();
 					`,
 				],
 			},

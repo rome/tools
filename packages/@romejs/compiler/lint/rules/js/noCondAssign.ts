@@ -18,7 +18,8 @@ export default {
 			(node.type === "JSIfStatement" ||
 			node.type === "JSForStatement" ||
 			node.type === "JSWhileStatement" ||
-			node.type === "JSDoWhileStatement") &&
+			node.type === "JSDoWhileStatement" ||
+			node.type === "JSConditionalExpression") &&
 			node.test &&
 			node.test.type === "JSAssignmentExpression"
 		) {
