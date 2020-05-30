@@ -20,6 +20,7 @@ import nullishCoalescing from "./compile/transpile/nullishCoalescing";
 import callSpread from "./compile/transpile/callSpread";
 import templateLiterals from "./compile/transpile/templateLiterals";
 import objectSpread from "./compile/transpile/objectSpread";
+import enums from "./compile/transpile/enums";
 import optimizeImports from "./compile/validation/optimizeImports";
 import optimizeExports from "./compile/validation/optimizeExports";
 import jsx from "./compile/jsx";
@@ -61,6 +62,7 @@ export const stageTransforms: TransformStageFactories = {
 		classProperties,
 		templateLiterals,
 		callSpread,
+		enums,
 	],
 	compileForBundle: (projectConfig: ProjectConfig, options: CompilerOptions) => {
 		const opts = options.bundle;

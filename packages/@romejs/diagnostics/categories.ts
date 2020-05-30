@@ -16,6 +16,7 @@ export type DiagnosticCategory =
 	| "bundler/moduleCycle"
 	| "bundler/topLevelAwait"
 	| "compile/classes"
+	| "compile/const-enums"
 	| "compile/jsx"
 	| "flags/invalid"
 	| "format/disabled"

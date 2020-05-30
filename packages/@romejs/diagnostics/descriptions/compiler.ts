@@ -10,4 +10,8 @@ export const compiler = createDiagnosticsCategory({
 		category: "compile/jsx",
 		message: "JSX is not XML",
 	},
+	CONST_ENUMS_UNSUPPORTED: {
+		category: "compile/const-enums",
+		message: "Const enums are not supported",
+	},
 });
