@@ -167,6 +167,7 @@ type LintDiagnosticCategory =
 	| "lint/react/jsxKey"
 	| "lint/react/jsxNoCommentText"
 	| "lint/react/jsxNoDuplicateProps"
+	| "lint/react/noAccessStateInSetState"
 	| "lint/react/noChildrenProp"
 	| "lint/react/noDanger"
 	| "lint/react/noDangerWithChildren"

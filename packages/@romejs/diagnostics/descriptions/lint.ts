@@ -27,6 +27,17 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
+	REACT_NO_ACCESS_STATE_IN_SET_STATE: {
+		category: "lint/react/noAccessStateInSetState",
+		message: "Avoid using <emphasis>this.state</emphasis> within a <emphasis>this.setState</emphasis> call.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Batched state calls could result in unexpected errors due to stale state data.",
+			},
+		],
+	},
 	JSX_A11Y_ANCHOR_IS_VALID: (message: string) => ({
 		category: "lint/jsx-a11y/anchorIsValid",
 		message,
