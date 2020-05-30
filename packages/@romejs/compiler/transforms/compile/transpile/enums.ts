@@ -22,9 +22,9 @@ function buildEnumWrapper(
 	id: JSBindingIdentifier,
 	assignments: Array<AnyJSExpression>,
 ): AnyJSExpression {
-	const expressionStatement = (template.expression`
+	const expressionStatement = jsCallExpression.assert(template.expression`
 		(function (${id}) {})(${id} || (${id} = {}));
-	` as JSCallExpression);
+	`);
 	const functionExpression = (expressionStatement.callee as JSFunctionExpression);
 	functionExpression.body.body = (assignments as Array<AnyJSStatement>);
 	return (expressionStatement as AnyJSExpression);
