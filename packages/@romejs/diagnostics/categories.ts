@@ -173,6 +173,7 @@ type LintDiagnosticCategory =
 	| "lint/react/jsxNoDuplicateProps"
 	| "lint/react/jsxPascalCase"
 	| "lint/react/noAccessStateInSetState"
+	| "lint/react/noArrayIndexKey"
 	| "lint/react/noChildrenProp"
 	| "lint/react/noDanger"
 	| "lint/react/noDangerWithChildren"
