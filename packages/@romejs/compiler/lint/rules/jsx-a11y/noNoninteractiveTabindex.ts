@@ -79,7 +79,7 @@ export default {
 						// not having the "widget" role means that the role is not interactive
 						if (!elementToRole.has("widget") && tabIndexValue > -1) {
 							path.context.addNodeDiagnostic(
-								node,
+								tabIndexAttribute,
 								descriptions.LINT.JSX_A11Y_NO_NONINTERACTIVE_TABINDEX,
 							);
 						}
@@ -91,7 +91,7 @@ export default {
 						 */
 						if (tabIndexValue > -1) {
 							path.context.addNodeDiagnostic(
-								node,
+								tabIndexAttribute,
 								descriptions.LINT.JSX_A11Y_NO_NONINTERACTIVE_TABINDEX,
 							);
 						}
@@ -109,7 +109,7 @@ export default {
 						 */
 						if (!isRoleInteractive(role) && tabIndexValue > -1) {
 							path.context.addNodeDiagnostic(
-								node,
+								attr,
 								descriptions.LINT.JSX_A11Y_NO_NONINTERACTIVE_TABINDEX,
 							);
 						}

@@ -18,12 +18,12 @@ import {createDiagnosticsCategory, orJoin} from "./index";
 export const lint = createDiagnosticsCategory({
 	JSX_A11Y_NO_NONINTERACTIVE_ELEMENT_TO_INTERACTIVE_ROLE: (element: string) => ({
 		category: "lint/jsx-a11y/noNoninteractiveElementToInteractiveRole",
-		message: `The HTML element <emphasis>${element}</emphasis> is non-interactive and should not have an interactive role`,
+		message: `The HTML element <emphasis>${element}</emphasis> is non-interactive and should not have an interactive role.`,
 		advice: [
 			{
 				type: "log",
 				category: "info",
-				text: `Consider replacing <emphasis>${element}</emphasis> with "div" or "span"`,
+				text: `Replace <emphasis>${element}</emphasis> with a div or a span.`,
 			},
 		],
 	}),
@@ -51,7 +51,7 @@ export const lint = createDiagnosticsCategory({
 	},
 	JSX_A11Y_NO_REDUNDANT_ROLES: (role: string, element: string) => ({
 		category: "lint/jsx-a11y/noRedundantRoles",
-		message: `Using the role attribute <emphasis>${role}</emphasis> and the HTML element <emphasis>${element}</emphasis> is redundant, using the HTML element is enough.`,
+		message: `Using the role attribute <emphasis>${role}</emphasis> on the <emphasis>${element}</emphasis> element is redundant.`,
 	}),
 	JSX_A11Y_ANCHOR_IS_VALID: (message: string) => ({
 		category: "lint/jsx-a11y/anchorIsValid",
@@ -66,7 +66,14 @@ export const lint = createDiagnosticsCategory({
 	}),
 	JSX_A11Y_NO_NONINTERACTIVE_TABINDEX: {
 		category: "lint/jsx-a11y/noNoninteractiveTabindex",
-		message: "Do not use <emphasis>tabIndex</emphasis> on an element that is not interactive",
+		message: "Do not use <emphasis>tabIndex</emphasis> on an element that is not interactive.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Adding non-interactive elements to the keyboard navigation flow can confuse users.",
+			},
+		],
 	},
 	JSX_A11Y_ARIA_PROPS: (attribute: string) => ({
 		category: "lint/jsx-a11y/ariaProps",

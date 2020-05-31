@@ -17,25 +17,23 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 
-		if (isJSXElement(node)) {
-			if (hasJSXAttribute(node, "role")) {
-				const name = getJSXElementName(node);
-				const roleAttribute = getJSXAttribute(node, "role");
-				if (
-					roleAttribute &&
-					roleAttribute.value &&
-					roleAttribute.value.type === "JSStringLiteral"
-				) {
-					const role = roles.get(roleAttribute.value.value);
-					if (role) {
-						if (!isElementInteractive(name) && isRoleInteractive(role)) {
-							path.context.addNodeDiagnostic(
-								node,
-								descriptions.LINT.JSX_A11Y_NO_NONINTERACTIVE_ELEMENT_TO_INTERACTIVE_ROLE(
-									name,
-								),
-							);
-						}
+		if (isJSXElement(node) && hasJSXAttribute(node, "role")) {
+			const name = getJSXElementName(node);
+			const roleAttribute = getJSXAttribute(node, "role");
+			if (
+				roleAttribute &&
+				roleAttribute.value &&
+				roleAttribute.value.type === "JSStringLiteral"
+			) {
+				const role = roles.get(roleAttribute.value.value);
+				if (role) {
+					if (!isElementInteractive(name) && isRoleInteractive(role)) {
+						path.context.addNodeDiagnostic(
+							roleAttribute,
+							descriptions.LINT.JSX_A11Y_NO_NONINTERACTIVE_ELEMENT_TO_INTERACTIVE_ROLE(
+								name,
+							),
+						);
 					}
 				}
 			}

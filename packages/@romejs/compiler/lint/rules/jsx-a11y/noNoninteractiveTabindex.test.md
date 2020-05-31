@@ -8,12 +8,14 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/noNoninteractiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:5 lint/jsx-a11y/noNoninteractiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Do not use tabIndex on an element that is not interactive
+  ✖ Do not use tabIndex on an element that is not interactive.
 
     <div tabIndex='0' ></div>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^
+         ^^^^^^^^^^^^
+
+  ℹ Adding non-interactive elements to the keyboard navigation flow can confuse users.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -32,12 +34,14 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/noNoninteractiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:5 lint/jsx-a11y/noNoninteractiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Do not use tabIndex on an element that is not interactive
+  ✖ Do not use tabIndex on an element that is not interactive.
 
     <div role='article' tabIndex='0' ></div>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         ^^^^^^^^^^^^^^
+
+  ℹ Adding non-interactive elements to the keyboard navigation flow can confuse users.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -56,12 +60,14 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/noNoninteractiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:9 lint/jsx-a11y/noNoninteractiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Do not use tabIndex on an element that is not interactive
+  ✖ Do not use tabIndex on an element that is not interactive.
 
     <article tabIndex={0} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^
+             ^^^^^^^^^^^^
+
+  ℹ Adding non-interactive elements to the keyboard navigation flow can confuse users.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

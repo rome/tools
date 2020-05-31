@@ -8,14 +8,14 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/noNoninteractiveElementToInteractiveRole ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:4 lint/jsx-a11y/noNoninteractiveElementToInteractiveRole ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ The HTML element h1 is non-interactive and should not have an interactive role
+  ✖ The HTML element h1 is non-interactive and should not have an interactive role.
 
     <h1 role='checkbox'></h1>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^
+        ^^^^^^^^^^^^^^^
 
-  ℹ Consider replacing h1 with "div" or "span"
+  ℹ Replace h1 with a div or a span.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
