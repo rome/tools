@@ -6,7 +6,10 @@
  */
 
 import {
+	MarkupFormatGridOptions,
 	MarkupFormatOptions,
+	MarkupLinesAndWidth,
+	MarkupTagName,
 	ansiEscapes,
 	markupTag,
 	markupToAnsi,
@@ -31,12 +34,7 @@ import stream = require("stream");
 import {CWD_PATH} from "@romejs/path";
 import {Event} from "@romejs/events";
 import readline = require("readline");
-import {
-	MarkupFormatGridOptions,
-	MarkupTagName,
-} from "@romejs/string-markup/types";
 import select from "./select";
-import {MarkupLinesAndWidth} from "@romejs/string-markup/format";
 import {onKeypress} from "./util";
 
 type ListOptions = {

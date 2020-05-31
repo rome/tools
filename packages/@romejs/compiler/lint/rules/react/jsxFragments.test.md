@@ -12,14 +12,14 @@
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
-    <Fragment></Fragment>
-    ^^^^^^^^^^^^^^^^^^^^^
+    <Fragment><Foo /><Foo /></Fragment>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
   ℹ Recommended fix
 
-  - <Fragment></Fragment>
+  - <Fragment><Foo /><Foo /></Fragment>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -30,7 +30,7 @@
 ### `0: formatted`
 
 ```
-<></>;
+<><Foo /><Foo /></>;
 
 ```
 
@@ -42,14 +42,14 @@
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
-    <React.Fragment></React.Fragment>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    <React.Fragment><Foo /><Foo /></React.Fragment>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
   ℹ Recommended fix
 
-  - <React.Fragment></React.Fragment>
+  - <React.Fragment><Foo /><Foo /></React.Fragment>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -60,7 +60,7 @@
 ### `1: formatted`
 
 ```
-<></>;
+<><Foo /><Foo /></>;
 
 ```
 
@@ -68,18 +68,18 @@
 
 ```
 
- unknown:1 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:19 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
-    <Fragment><Foo /></Fragment>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    const Hello = <div><Fragment><Foo /><Foo /></Fragment></div>
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
   ℹ Recommended fix
 
-  - <Fragment><Foo /></Fragment>
+  - <Fragment><Foo /><Foo /></Fragment>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -90,7 +90,7 @@
 ### `2: formatted`
 
 ```
-<><Foo /></>;
+const Hello = <div><Foo /><Foo /></div>;
 
 ```
 
@@ -98,18 +98,18 @@
 
 ```
 
- unknown:1 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:19 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
-    <React.Fragment><Foo /></React.Fragment>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    const Hello = <div><React.Fragment><Foo /><Foo /></React.Fragment></div>
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
   ℹ Recommended fix
 
-  - <React.Fragment><Foo /></React.Fragment>
+  - <React.Fragment><Foo /><Foo /></React.Fragment>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -120,7 +120,7 @@
 ### `3: formatted`
 
 ```
-<><Foo /></>;
+const Hello = <div><Foo /><Foo /></div>;
 
 ```
 
@@ -128,19 +128,18 @@
 
 ```
 
- unknown:1:19 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:14 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
-    const Hello = <div><Fragment><Foo/></Fragment></div>
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    const Hello = <React.Fragment><Foo /><Foo /></React.Fragment>
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
   ℹ Recommended fix
 
-  - <Fragment><Foo/></Fragment>
-  + <><Foo·/></>
+  - <React.Fragment><Foo /><Foo /></React.Fragment>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -151,7 +150,7 @@
 ### `4: formatted`
 
 ```
-const Hello = <div><><Foo /></></div>;
+const Hello = <><Foo /><Foo /></>;
 
 ```
 
@@ -159,19 +158,18 @@ const Hello = <div><><Foo /></></div>;
 
 ```
 
- unknown:1:19 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:14 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
-    const Hello = <div><React.Fragment><Foo/></React.Fragment></div>
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    const Hello = <Fragment><Foo /><Foo /></Fragment>
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
   ℹ Recommended fix
 
-  - <React.Fragment><Foo/></React.Fragment>
-  + <><Foo·/></>
+  - <Fragment><Foo /><Foo /></Fragment>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -182,7 +180,7 @@ const Hello = <div><><Foo /></></div>;
 ### `5: formatted`
 
 ```
-const Hello = <div><><Foo /></></div>;
+const Hello = <><Foo /><Foo /></>;
 
 ```
 
@@ -190,19 +188,21 @@ const Hello = <div><><Foo /></></div>;
 
 ```
 
- unknown:1:14 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:3:16 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
-    const Hello = <React.Fragment><Foo/></React.Fragment>
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    2 │      function Foo() {
+  > 3 │       let bar = <React.Fragment><Foo /><Foo /></React.Fragment>;
+      │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │       return bar;
+    5 │      } 
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
   ℹ Recommended fix
 
-  - <React.Fragment><Foo/></React.Fragment>
-  + <><Foo·/></>
+  - <React.Fragment><Foo /><Foo /></React.Fragment>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -213,7 +213,10 @@ const Hello = <div><><Foo /></></div>;
 ### `6: formatted`
 
 ```
-const Hello = <><Foo /></>;
+function Foo() {
+	let bar = <><Foo /><Foo /></>;
+	return bar;
+}
 
 ```
 
@@ -221,19 +224,21 @@ const Hello = <><Foo /></>;
 
 ```
 
- unknown:1:14 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:3:16 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
-    const Hello = <Fragment><Foo/></Fragment>
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    2 │      function Foo() {
+  > 3 │       let bar = <Fragment><Foo /><Foo /></Fragment>;
+      │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │       return bar;
+    5 │      } 
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
   ℹ Recommended fix
 
-  - <Fragment><Foo/></Fragment>
-  + <><Foo·/></>
+  - <Fragment><Foo /><Foo /></Fragment>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -244,7 +249,10 @@ const Hello = <><Foo /></>;
 ### `7: formatted`
 
 ```
-const Hello = <><Foo /></>;
+function Foo() {
+	let bar = <><Foo /><Foo /></>;
+	return bar;
+}
 
 ```
 
@@ -252,21 +260,21 @@ const Hello = <><Foo /></>;
 
 ```
 
- unknown:3:15 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:3:13 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
-    2 │     function Foo() {
-  > 3 │      let bar = <React.Fragment><Foo /></React.Fragment>;
-      │                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    4 │      return bar;
-    5 │     } 
+    2 │      function Hello() {
+  > 3 │       return <React.Fragment><Foo /><Foo /></React.Fragment>
+      │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │      }
+    5 │      
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
   ℹ Recommended fix
 
-  - <React.Fragment><Foo /></React.Fragment>
+  - <React.Fragment><Foo /><Foo /></React.Fragment>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -277,9 +285,8 @@ const Hello = <><Foo /></>;
 ### `8: formatted`
 
 ```
-function Foo() {
-	let bar = <><Foo /></>;
-	return bar;
+function Hello() {
+	return <><Foo /><Foo /></>;
 }
 
 ```
@@ -288,22 +295,21 @@ function Foo() {
 
 ```
 
- unknown:3:15 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:13 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
-    2 │     function Foo() {
-  > 3 │      let bar = <Fragment><Foo/></Fragment>;
-      │                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    4 │      return bar;
-    5 │     } 
+    1 │ function Hello() {
+  > 2 │       return <Fragment><Foo /><Foo /></Fragment>
+      │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │      }
+    4 │      
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
   ℹ Recommended fix
 
-  - <Fragment><Foo/></Fragment>
-  + <><Foo·/></>
+  - <Fragment><Foo /><Foo /></Fragment>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -314,9 +320,8 @@ function Foo() {
 ### `9: formatted`
 
 ```
-function Foo() {
-	let bar = <><Foo /></>;
-	return bar;
+function Hello() {
+	return <><Foo /><Foo /></>;
 }
 
 ```
@@ -325,21 +330,18 @@ function Foo() {
 
 ```
 
- unknown:3:12 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:20 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
-    2 │     function Hello() {
-  > 3 │      return <React.Fragment><Foo /></React.Fragment>
-      │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    4 │     }
-    5 │     
+    const Hello = () => <React.Fragment><Foo /><Foo /></React.Fragment>
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
   ℹ Recommended fix
 
-  - <React.Fragment><Foo /></React.Fragment>
+  - <React.Fragment><Foo /><Foo /></React.Fragment>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -351,7 +353,7 @@ function Foo() {
 
 ```
 function Hello() {
-	return <><Foo /></>;
+	return <><Foo /><Foo /></>;
 }
 
 ```
@@ -360,21 +362,18 @@ function Hello() {
 
 ```
 
- unknown:2:12 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:20 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
-    1 │ function Hello() {
-  > 2 │      return <Fragment><Foo /></Fragment>
-      │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    3 │     }
-    4 │     
+    const Hello = () => <Fragment><Foo /><Foo /></Fragment>
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
   ℹ Recommended fix
 
-  - <Fragment><Foo /></Fragment>
+  - <Fragment><Foo /><Foo /></Fragment>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -386,7 +385,7 @@ function Hello() {
 
 ```
 function Hello() {
-	return <><Foo /></>;
+	return <><Foo /><Foo /></>;
 }
 
 ```
@@ -394,64 +393,28 @@ function Hello() {
 ### `12`
 
 ```
-
- unknown:1:20 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
-
-    const Hello = () => <React.Fragment></React.Fragment>
-                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
-
-  ℹ Recommended fix
-
-  - <React.Fragment></React.Fragment>
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
 ### `12: formatted`
 
 ```
-function Hello() {
-	return <></>;
-}
+<><Foo /><Foo /></>;
 
 ```
 
 ### `13`
 
 ```
-
- unknown:1:20 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
-
-    const Hello = () => <Fragment></Fragment>
-                        ^^^^^^^^^^^^^^^^^^^^^
-
-  ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
-
-  ℹ Recommended fix
-
-  - <Fragment></Fragment>
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
 ### `13: formatted`
 
 ```
-function Hello() {
-	return <></>;
-}
+<Fragment key='id'></Fragment>;
 
 ```
 
@@ -465,7 +428,7 @@ function Hello() {
 ### `14: formatted`
 
 ```
-<></>;
+<React.Fragment key='id'><Foo /></React.Fragment>;
 
 ```
 
@@ -479,7 +442,7 @@ function Hello() {
 ### `15: formatted`
 
 ```
-<><Foo /></>;
+const Hello = <div><Fragment key='word'><Foo /></Fragment></div>;
 
 ```
 
@@ -493,7 +456,7 @@ function Hello() {
 ### `16: formatted`
 
 ```
-<Fragment key='id'></Fragment>;
+const Hello = <>hello</>;
 
 ```
 
@@ -507,7 +470,7 @@ function Hello() {
 ### `17: formatted`
 
 ```
-<React.Fragment key='id'><Foo /></React.Fragment>;
+const Hello = <Fragment key='id'><Foo /></Fragment>;
 
 ```
 
@@ -521,7 +484,7 @@ function Hello() {
 ### `18: formatted`
 
 ```
-const Hello = <div><Fragment key='word'><Foo /></Fragment></div>;
+const Hello = <React.Fragment key='id'><Foo /></React.Fragment>;
 
 ```
 
@@ -535,7 +498,10 @@ const Hello = <div><Fragment key='word'><Foo /></Fragment></div>;
 ### `19: formatted`
 
 ```
-const Hello = <>hello</>;
+function Foo() {
+	let bar = <React.Fragment key='word'></React.Fragment>;
+	return bar;
+}
 
 ```
 
@@ -549,7 +515,9 @@ const Hello = <>hello</>;
 ### `20: formatted`
 
 ```
-const Hello = <Fragment key='id'><Foo /></Fragment>;
+function Hello() {
+	return <React.Fragment key='id'><Foo /></React.Fragment>;
+}
 
 ```
 
@@ -563,7 +531,9 @@ const Hello = <Fragment key='id'><Foo /></Fragment>;
 ### `21: formatted`
 
 ```
-const Hello = <React.Fragment key='id'><Foo /></React.Fragment>;
+function Hello() {
+	return <Fragment key='id'><Foo /></Fragment>;
+}
 
 ```
 
@@ -577,9 +547,8 @@ const Hello = <React.Fragment key='id'><Foo /></React.Fragment>;
 ### `22: formatted`
 
 ```
-function Foo() {
-	let bar = <React.Fragment key='word'></React.Fragment>;
-	return bar;
+function Hello() {
+	return <></>;
 }
 
 ```
@@ -595,7 +564,7 @@ function Foo() {
 
 ```
 function Hello() {
-	return <React.Fragment key='id'><Foo /></React.Fragment>;
+	return <React.Fragment key='id'></React.Fragment>;
 }
 
 ```
@@ -608,54 +577,6 @@ function Hello() {
 ```
 
 ### `24: formatted`
-
-```
-function Hello() {
-	return <Fragment key='id'><Foo /></Fragment>;
-}
-
-```
-
-### `25`
-
-```
-✔ No known problems!
-
-```
-
-### `25: formatted`
-
-```
-function Hello() {
-	return <></>;
-}
-
-```
-
-### `26`
-
-```
-✔ No known problems!
-
-```
-
-### `26: formatted`
-
-```
-function Hello() {
-	return <React.Fragment key='id'></React.Fragment>;
-}
-
-```
-
-### `27`
-
-```
-✔ No known problems!
-
-```
-
-### `27: formatted`
 
 ```
 function Hello() {

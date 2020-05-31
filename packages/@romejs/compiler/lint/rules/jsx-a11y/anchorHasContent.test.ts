@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"jsx a11y anchor has content",
+	"jsx-a11y anchor has content",
 	async (t) => {
 		await testLintMultiple(
 			t,

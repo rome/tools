@@ -7,7 +7,19 @@
 ### `0`
 
 ```
-✔ No known problems!
+
+ unknown:1:9 lint/js/emptyBlocks ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Avoid empty logic blocks.
+
+    if (foo) {}
+             ^^
+
+  ℹ Empty logic blocks usually result from incomplete refactoring.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
@@ -15,7 +27,6 @@
 
 ```
 if (foo) {
-	foo;
 }
 
 ```
@@ -23,7 +34,21 @@ if (foo) {
 ### `1`
 
 ```
-✔ No known problems!
+
+ unknown:3:7 lint/js/emptyBlocks ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Avoid empty logic blocks.
+
+    1 │ if (foo) {
+    2 │  // foo;
+  > 3 │ } else {}
+      │        ^^
+
+  ℹ Empty logic blocks usually result from incomplete refactoring.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
@@ -31,7 +56,8 @@ if (foo) {
 
 ```
 if (foo) {
-	foo;
+	// foo;
+} else {
 }
 
 ```
@@ -47,7 +73,7 @@ if (foo) {
 
 ```
 if (foo) {
-	// empty
+	foo;
 }
 
 ```
@@ -55,17 +81,7 @@ if (foo) {
 ### `3`
 
 ```
-
- unknown:1:9 lint/js/emptyBlocks ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Empty block
-
-    if (foo) {}
-             ^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
@@ -73,6 +89,7 @@ if (foo) {
 
 ```
 if (foo) {
+	foo;
 }
 
 ```
@@ -80,19 +97,7 @@ if (foo) {
 ### `4`
 
 ```
-
- unknown:3:7 lint/js/emptyBlocks ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Empty block
-
-    1 │ if (foo) {
-    2 │   // foo;
-  > 3 │ } else {}
-      │        ^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
@@ -100,8 +105,7 @@ if (foo) {
 
 ```
 if (foo) {
-	// foo;
-} else {
+	// empty
 }
 
 ```

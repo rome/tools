@@ -10,12 +10,12 @@
 
  unknown:1 lint/js/importDefaultBasename ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ When importing the default, use the basename bar
+  ✖ Use the basename bar when importing the default.
 
     import foo from './bar';
     ^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ If you really meant this then use this instead
+  ℹ If you really meant to use a named import, use the following:
 
     import {default as foo}
 

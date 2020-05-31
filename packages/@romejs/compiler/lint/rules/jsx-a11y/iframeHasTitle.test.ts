@@ -10,7 +10,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"jsx a11y iframe has title",
+	"jsx-a11y iframe has title",
 	async (t) => {
 		await testLintMultiple(
 			t,

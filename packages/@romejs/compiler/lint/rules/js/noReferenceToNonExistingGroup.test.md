@@ -7,14 +7,24 @@
 ### `0`
 
 ```
-✔ No known problems!
+
+ unknown:1:20 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Avoid nonexistent group names. Check the 18 group.
+
+    let foo = /([abc]+)=\18/;foo;
+                        ^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `0: formatted`
 
 ```
-let foo = /([abc]+)=\u0001/;
+let foo = /([abc]+)=\18/;
 foo;
 
 ```
@@ -22,14 +32,24 @@ foo;
 ### `1`
 
 ```
-✔ No known problems!
+
+ unknown:1:20 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Avoid nonexistent group names. Check the 49 group.
+
+    let foo = /([abc]+)=\49/;foo;
+                        ^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `1: formatted`
 
 ```
-let foo = /([abc]+)=\u0002/;
+let foo = /([abc]+)=\49/;
 foo;
 
 ```
@@ -37,14 +57,24 @@ foo;
 ### `2`
 
 ```
-✔ No known problems!
+
+ unknown:1:20 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Avoid nonexistent group names. Check the 78 group.
+
+    let foo = /([abc]+)=\78/;foo;
+                        ^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `2: formatted`
 
 ```
-let foo = /([abc]+)=8/;
+let foo = /([abc]+)=\78/;
 foo;
 
 ```
@@ -52,14 +82,24 @@ foo;
 ### `3`
 
 ```
-✔ No known problems!
+
+ unknown:1:20 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Avoid nonexistent group names. Check the 99 group.
+
+    let foo = /([abc]+)=\99/;foo;
+                        ^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `3: formatted`
 
 ```
-let foo = /([abc]+)=9/;
+let foo = /([abc]+)=\99/;
 foo;
 
 ```
@@ -67,14 +107,31 @@ foo;
 ### `4`
 
 ```
-✔ No known problems!
+
+ unknown:1:19 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Avoid nonexistent group names. Check the 19 group.
+
+    let foo = /(([abc])\19)+=\28/;foo;
+                       ^^^
+
+ unknown:1:25 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Avoid nonexistent group names. Check the 28 group.
+
+    let foo = /(([abc])\19)+=\28/;foo;
+                             ^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 2 problems
 
 ```
 
 ### `4: formatted`
 
 ```
-let foo = /([abc]+)=\t9/;
+let foo = /(([abc])\19)+=\28/;
 foo;
 
 ```
@@ -82,14 +139,24 @@ foo;
 ### `5`
 
 ```
-✔ No known problems!
+
+ unknown:1:20 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Avoid nonexistent group names. Check the 19 group.
+
+    let foo = /([abc]+)=\199/;foo;
+                        ^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `5: formatted`
 
 ```
-let foo = /([abc]+)=\u001b8/;
+let foo = /([abc]+)=\199/;
 foo;
 
 ```
@@ -104,7 +171,7 @@ foo;
 ### `6: formatted`
 
 ```
-let foo = /([abc]+)=\u00ff/;
+let foo = /([abc]+)=\u0001/;
 foo;
 
 ```
@@ -119,7 +186,7 @@ foo;
 ### `7: formatted`
 
 ```
-let foo = /([abc]+)=\?7/;
+let foo = /([abc]+)=\u0002/;
 foo;
 
 ```
@@ -127,24 +194,14 @@ foo;
 ### `8`
 
 ```
-
- unknown:1:20 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Reference to non-existent group "18"
-
-    let foo = /([abc]+)=\18/;foo;
-                        ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
 ### `8: formatted`
 
 ```
-let foo = /([abc]+)=\18/;
+let foo = /([abc]+)=8/;
 foo;
 
 ```
@@ -152,24 +209,14 @@ foo;
 ### `9`
 
 ```
-
- unknown:1:20 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Reference to non-existent group "49"
-
-    let foo = /([abc]+)=\49/;foo;
-                        ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
 ### `9: formatted`
 
 ```
-let foo = /([abc]+)=\49/;
+let foo = /([abc]+)=9/;
 foo;
 
 ```
@@ -177,24 +224,14 @@ foo;
 ### `10`
 
 ```
-
- unknown:1:20 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Reference to non-existent group "78"
-
-    let foo = /([abc]+)=\78/;foo;
-                        ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
 ### `10: formatted`
 
 ```
-let foo = /([abc]+)=\78/;
+let foo = /([abc]+)=\t9/;
 foo;
 
 ```
@@ -202,24 +239,14 @@ foo;
 ### `11`
 
 ```
-
- unknown:1:20 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Reference to non-existent group "99"
-
-    let foo = /([abc]+)=\99/;foo;
-                        ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
 ### `11: formatted`
 
 ```
-let foo = /([abc]+)=\99/;
+let foo = /([abc]+)=\u001b8/;
 foo;
 
 ```
@@ -227,31 +254,14 @@ foo;
 ### `12`
 
 ```
-
- unknown:1:19 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Reference to non-existent group "19"
-
-    let foo = /(([abc])\19)+=\28/;foo;
-                       ^^^
-
- unknown:1:25 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Reference to non-existent group "28"
-
-    let foo = /(([abc])\19)+=\28/;foo;
-                             ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
+✔ No known problems!
 
 ```
 
 ### `12: formatted`
 
 ```
-let foo = /(([abc])\19)+=\28/;
+let foo = /([abc]+)=\u00ff/;
 foo;
 
 ```
@@ -259,24 +269,14 @@ foo;
 ### `13`
 
 ```
-
- unknown:1:20 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Reference to non-existent group "19"
-
-    let foo = /([abc]+)=\199/;foo;
-                        ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
 ### `13: formatted`
 
 ```
-let foo = /([abc]+)=\199/;
+let foo = /([abc]+)=\?7/;
 foo;
 
 ```

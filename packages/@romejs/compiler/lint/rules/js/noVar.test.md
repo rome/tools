@@ -10,11 +10,13 @@
 
  unknown:1 lint/js/noVar ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Variable declarations using `var` are disallowed, use `let` or `const` instead.
+  ✖ Variable declarations using var are disallowed.
 
   > 1 │ var foobar;
       │ ^^^^^^^^^^^
     2 │ foobar
+
+  ℹ Use let or const instead.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

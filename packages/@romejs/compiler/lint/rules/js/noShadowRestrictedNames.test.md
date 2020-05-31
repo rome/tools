@@ -10,7 +10,7 @@
 
  unknown:1:9 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Shadowing of global property NaN
+  ✖ Do not shadow the global NaN property.
 
     function NaN() {}
              ^^^
@@ -37,7 +37,7 @@ function NaN() {}
 
  unknown:1:4 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Shadowing of global property Set
+  ✖ Do not shadow the global Set property.
 
     let Set;
         ^^^
@@ -61,38 +61,10 @@ let Set;
 ### `2`
 
 ```
-✔ No known problems!
-
-```
-
-### `2: formatted`
-
-```
-!function Array() {};
-
-```
-
-### `3`
-
-```
-✔ No known problems!
-
-```
-
-### `3: formatted`
-
-```
-function test(JSON) {}
-
-```
-
-### `4`
-
-```
 
  unknown:1:15 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Shadowing of global property Object
+  ✖ Do not shadow the global Object property.
 
     try {  } catch(Object) {}
                    ^^^^^^
@@ -106,7 +78,7 @@ function test(JSON) {}
 
 ```
 
-### `4: formatted`
+### `2: formatted`
 
 ```
 try {

@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"jsx a11y no distracting elements",
+	"jsx-a11y no distracting elements",
 	async (t) => {
 		await testLintMultiple(
 			t,

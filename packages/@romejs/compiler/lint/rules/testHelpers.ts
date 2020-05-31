@@ -20,6 +20,11 @@ type TestLintOptions = {
 	syntax?: Array<ConstProgramSyntax>;
 };
 
+type TestLintInput = {
+	valid?: Array<string>;
+	invalid?: Array<string>;
+};
+
 export async function testLintMultiple(
 	t: TestHelper,
 	inputs: Array<string>,
@@ -32,8 +37,32 @@ export async function testLintMultiple(
 
 export async function testLint(
 	t: TestHelper,
+	input: string | TestLintInput,
+	opts: TestLintOptions,
+) {
+	if (typeof input === "string") {
+		return testLintExpect(t, input, opts);
+	}
+
+	const {invalid, valid} = input;
+
+	if (invalid !== undefined) {
+		for (input of invalid) {
+			await testLintExpect(t, input, opts, "INVALID");
+		}
+	}
+	if (valid !== undefined) {
+		for (input of valid) {
+			await testLintExpect(t, input, opts, "VALID");
+		}
+	}
+}
+
+async function testLintExpect(
+	t: TestHelper,
 	input: string,
 	{syntax = ["jsx", "ts"], category, sourceType = "module"}: TestLintOptions,
+	expect?: "INVALID" | "VALID",
 ) {
 	t.addToAdvice({
 		type: "log",
@@ -90,6 +119,13 @@ export async function testLint(
 			},
 		};
 	});
+
+	if (expect === "INVALID") {
+		t.true(diagnostics.length > 0, "Expected test to have diagnostics.");
+	}
+	if (expect === "VALID") {
+		t.is(diagnostics.length, 0, "Expected test not to have diagnostics.");
+	}
 
 	const snapshotName = t.snapshot(
 		printDiagnosticsToString({

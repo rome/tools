@@ -6,19 +6,17 @@
  */
 
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
 	"import default basename",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				"import foo from './bar';",
-				// VALID
-				"import foo from './foo';",
-			],
+			{
+				invalid: ["import foo from './bar';"],
+				valid: ["import foo from './foo';"],
+			},
 			{category: "lint/js/importDefaultBasename"},
 		);
 	},

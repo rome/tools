@@ -10,7 +10,7 @@
 
  unknown:1:1 lint/js/noDuplicateGroupNamesInRegularExpressions ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Duplicate group name month in regular expression
+  ✖ Avoid duplicate group names. Check the month group.
 
     /(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>[0-9])/
      ^^^^^^^^^^^^^^^
@@ -19,7 +19,7 @@
 
  unknown:1:17 lint/js/noDuplicateGroupNamesInRegularExpressions ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Duplicate group name year in regular expression
+  ✖ Avoid duplicate group names. Check the year group.
 
     /(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>[0-9])/
                      ^^^^^^^^^^^^^^

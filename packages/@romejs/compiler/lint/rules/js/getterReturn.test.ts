@@ -14,38 +14,34 @@ test(
 	async (t) => {
 		await testLint(
 			t,
-			dedent`
-        class p {
-          get name() {
-            console.log('hello');
-          }
-        }
-      `,
-			{category: "lint/js/getterReturn"},
-		);
-
-		await testLint(
-			t,
-			dedent`
-        let p = {
-          get name() {
-            console.log('hello');
-          },
-        };
-      `,
-			{category: "lint/js/getterReturn"},
-		);
-
-		await testLint(
-			t,
-			dedent`
-        let p = {};
-        Object.defineProperty(p, {
-          get: function () {
-            console.log('hello');
-          },
-        });
-      `,
+			{
+				invalid: [
+					dedent`
+						class p {
+							get name() {
+								console.log('hello');
+							}
+						}
+					`,
+					dedent`
+						let p = {
+							get name() {
+								console.log('hello');
+							},
+						};
+				 `,
+				],
+				valid: [
+					dedent`
+						let p = {};
+						Object.defineProperty(p, {
+							get: function () {
+								console.log('hello');
+							},
+						});
+				 `,
+				],
+			},
 			{category: "lint/js/getterReturn"},
 		);
 	},

@@ -10,7 +10,7 @@
 
  unknown:1 lint/js/unsafeNegation FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unsafe usage of negation operator in left side of binary expression
+  ✖ The negation operator is used unsafely on the left side of this binary expression.
 
     !1 in [1,2]
     ^^^^^^^^^^^

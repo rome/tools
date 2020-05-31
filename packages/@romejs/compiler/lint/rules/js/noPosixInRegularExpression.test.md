@@ -10,11 +10,12 @@
 
  unknown:1:18 lint/js/noPosixInRegularExpression ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ POSIX Character Classes and Collating Sequences are not supported in ECMAscript Regular
-    Expressions
+  ✖ Do not use POSIX character classes and collating sequences.
 
     const pattern = /[[:alpha:]]/
                       ^
+
+  ℹ This functionality is not supported in JavaScript regular expressions.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -35,11 +36,12 @@ const pattern = /[[:alpha:]\]/;
 
  unknown:1:18 lint/js/noPosixInRegularExpression ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ POSIX Character Classes and Collating Sequences are not supported in ECMAscript Regular
-    Expressions
+  ✖ Do not use POSIX character classes and collating sequences.
 
     const pattern = /[[.ch.]]/
                       ^
+
+  ℹ This functionality is not supported in JavaScript regular expressions.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

@@ -57,6 +57,7 @@ import unsafeNegation from "./js/unsafeNegation";
 import unusedVariables from "./js/unusedVariables";
 import altText from "./jsx-a11y/altText";
 import anchorHasContent from "./jsx-a11y/anchorHasContent";
+import anchorIsValid from "./jsx-a11y/anchorIsValid";
 import ariaProps from "./jsx-a11y/ariaProps";
 import ariaUnsupportedElements from "./jsx-a11y/ariaUnsupportedElements";
 import clickEventsHaveKeyEvents from "./jsx-a11y/clickEventsHaveKeyEvents";
@@ -72,6 +73,7 @@ import noAutofocus from "./jsx-a11y/noAutofocus";
 import noDistractingElements from "./jsx-a11y/noDistractingElements";
 import noOnChange from "./jsx-a11y/noOnChange";
 import noTargetBlank from "./jsx-a11y/noTargetBlank";
+import roleHasRequiredAriaProps from "./jsx-a11y/roleHasRequiredAriaProps";
 import scope from "./jsx-a11y/scope";
 import tabindexNoPositive from "./jsx-a11y/tabindexNoPositive";
 import buttonHasType from "./react/buttonHasType";
@@ -79,6 +81,7 @@ import jsxFragments from "./react/jsxFragments";
 import jsxKey from "./react/jsxKey";
 import jsxNoCommentText from "./react/jsxNoCommentText";
 import jsxNoDuplicateProps from "./react/jsxNoDuplicateProps";
+import noAccessStateInSetState from "./react/noAccessStateInSetState";
 import noChildrenProp from "./react/noChildrenProp";
 import noDanger from "./react/noDanger";
 import noDangerWithChildren from "./react/noDangerWithChildren";
@@ -88,6 +91,7 @@ import noFindDOMNode from "./react/noFindDOMNode";
 import noRedundantShouldComponentUpdate from "./react/noRedundantShouldComponentUpdate";
 import noStringRefs from "./react/noStringRefs";
 import noUnsafe from "./react/noUnsafe";
+import noUselessFragment from "./react/noUselessFragment";
 import noWillUpdateSetState from "./react/noWillUpdateSetState";
 import reactInJsxScope from "./react/reactInJsxScope";
 import stylePropObject from "./react/stylePropObject";
@@ -146,6 +150,7 @@ export const lintTransforms = [
 	unusedVariables,
 	altText,
 	anchorHasContent,
+	anchorIsValid,
 	ariaProps,
 	ariaUnsupportedElements,
 	clickEventsHaveKeyEvents,
@@ -161,6 +166,7 @@ export const lintTransforms = [
 	noDistractingElements,
 	noOnChange,
 	noTargetBlank,
+	roleHasRequiredAriaProps,
 	scope,
 	tabindexNoPositive,
 	buttonHasType,
@@ -168,6 +174,7 @@ export const lintTransforms = [
 	jsxKey,
 	jsxNoCommentText,
 	jsxNoDuplicateProps,
+	noAccessStateInSetState,
 	noChildrenProp,
 	noDanger,
 	noDangerWithChildren,
@@ -177,6 +184,7 @@ export const lintTransforms = [
 	noRedundantShouldComponentUpdate,
 	noStringRefs,
 	noUnsafe,
+	noUselessFragment,
 	noWillUpdateSetState,
 	reactInJsxScope,
 	stylePropObject,
