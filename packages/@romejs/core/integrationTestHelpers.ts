@@ -74,11 +74,9 @@ export function createIntegrationTest(
 		try {
 			const {flags, projectConfig = {}, files = {}} = opts;
 
-			projectConfig.files = {
-				// @ts-ignore
-				...projectConfig.files,
+			projectConfig.files = Object.assign({}, project.files, {
 				vendorPath: "../remote",
-			};
+			});
 
 			if (files["rome.json"] === undefined && files["rome.rjson"] === undefined) {
 				files["rome.json"] = stringifyJSON(projectConfig);
