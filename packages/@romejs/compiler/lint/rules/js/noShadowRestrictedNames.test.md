@@ -61,34 +61,6 @@ let Set;
 ### `2`
 
 ```
-✔ No known problems!
-
-```
-
-### `2: formatted`
-
-```
-!function Array() {};
-
-```
-
-### `3`
-
-```
-✔ No known problems!
-
-```
-
-### `3: formatted`
-
-```
-function test(JSON) {}
-
-```
-
-### `4`
-
-```
 
  unknown:1:15 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -106,7 +78,7 @@ function test(JSON) {}
 
 ```
 
-### `4: formatted`
+### `2: formatted`
 
 ```
 try {

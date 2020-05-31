@@ -8,15 +8,15 @@
 
 ```
 
- unknown:7:4 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:7:2 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using JSReturnStatement inside a finally clause is unsafe.
 
-    5 │     throw err;
-    6 │   } finally {
-  > 7 │     return 1;
-      │     ^^^^^^^^^
-    8 │   }
+    5 │   throw err;
+    6 │  } finally {
+  > 7 │   return 1;
+      │   ^^^^^^^^^
+    8 │  }
     9 │ }
 
   ℹ Do not use control flow statements inside finally clauses.
@@ -46,15 +46,15 @@ function greet1() {
 
 ```
 
- unknown:7:4 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:7:2 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using JSBreakStatement inside a finally clause is unsafe.
 
-    5 │     throw err;
-    6 │   } finally {
-  > 7 │     break;
-      │     ^^^^^^
-    8 │   }
+    5 │   throw err;
+    6 │  } finally {
+  > 7 │   break;
+      │   ^^^^^^
+    8 │  }
     9 │ }
 
   ℹ Do not use control flow statements inside finally clauses.
@@ -84,15 +84,15 @@ function greet2() {
 
 ```
 
- unknown:7:4 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:7:2 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using JSContinueStatement inside a finally clause is unsafe.
 
-    5 │     throw err;
-    6 │   } finally {
-  > 7 │     continue;
-      │     ^^^^^^^^^
-    8 │   }
+    5 │   throw err;
+    6 │  } finally {
+  > 7 │   continue;
+      │   ^^^^^^^^^
+    8 │  }
     9 │ }
 
   ℹ Do not use control flow statements inside finally clauses.
@@ -122,15 +122,15 @@ function greet3() {
 
 ```
 
- unknown:7:4 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:7:2 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using JSThrowStatement inside a finally clause is unsafe.
 
-    5 │     throw err;
-    6 │   } finally {
-  > 7 │     throw new Error("Finally");
-      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    8 │   }
+    5 │   throw err;
+    6 │  } finally {
+  > 7 │   throw new Error("Finally");
+      │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │  }
     9 │ }
 
   ℹ Do not use control flow statements inside finally clauses.

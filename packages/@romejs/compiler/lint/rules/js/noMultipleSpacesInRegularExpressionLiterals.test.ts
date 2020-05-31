@@ -13,15 +13,7 @@ test(
 	async (t) => {
 		await testLint(
 			t,
-			`/foo  bar/`,
-			{
-				category: "lint/js/noMultipleSpacesInRegularExpressionLiterals",
-			},
-		);
-
-		await testLint(
-			t,
-			`/foo {2}bar/`,
+			{invalid: [`/foo  bar/`], valid: [`/foo {2}bar/`]},
 			{
 				category: "lint/js/noMultipleSpacesInRegularExpressionLiterals",
 			},

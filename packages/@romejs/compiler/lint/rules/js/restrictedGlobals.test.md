@@ -34,14 +34,12 @@ console.log(event);
 
 ```
 
- unknown:8:8 lint/js/restrictedGlobals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:4 lint/js/restrictedGlobals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not use the global variable event.
 
-    7 │     // invalid, event is used as a global.
-  > 8 │     foo(event)
-      │         ^^^^^
-    9 │     
+    foo(event)
+        ^^^^^
 
   ℹ Use a local variable instead.
 
@@ -54,12 +52,22 @@ console.log(event);
 ### `1: formatted`
 
 ```
-// valid use of event into the function scope.
+foo(event);
+
+```
+
+### `2`
+
+```
+✔ No known problems!
+
+```
+
+### `2: formatted`
+
+```
 function foo(event) {
 	console.info(event);
 }
-
-// invalid, event is used as a global.
-foo(event);
 
 ```

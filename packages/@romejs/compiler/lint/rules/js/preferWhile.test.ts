@@ -6,26 +6,28 @@
  */
 
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 import {dedent} from "@romejs/string-utils";
 
 test(
 	"prefer while",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				dedent`
+			{
+				invalid: [
+					dedent`
           for (; x.running;) {
             x.step();
           }
         `,
-				dedent`
+					dedent`
           for (;;) {
             doSomething();
           }
         `,
-			],
+				],
+			},
 			{category: "lint/js/preferWhile"},
 		);
 	},

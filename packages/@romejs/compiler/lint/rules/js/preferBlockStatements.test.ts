@@ -7,39 +7,34 @@
 
 import {test} from "rome";
 import {dedent} from "@romejs/string-utils";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
 	"prefer block statements",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				`if (x) x;`,
-				dedent`
-          if (x) {
-            x;
-          } else y;
-        `,
-				dedent`
-          if (x) {
-            x
-          } else if (y) y;
-        `,
-			],
-			{category: "lint/js/preferBlockStatements"},
-		);
-
-		await testLintMultiple(
-			t,
-			[
-				`for (;;);`,
-				`for (p in obj);`,
-				`for (x of xs);`,
-				`do; while (x);`,
-				`while (x);`,
-				`with (x);`,
-			],
+			{
+				invalid: [
+					`if (x) x;`,
+					dedent`
+					if (x) {
+						x;
+					} else y;
+				`,
+					dedent`
+					if (x) {
+						x
+					} else if (y) y;
+				`,
+					`for (;;);`,
+					`for (p in obj);`,
+					`for (x of xs);`,
+					`do; while (x);`,
+					`while (x);`,
+					`with (x);`,
+				],
+			},
 			{category: "lint/js/preferBlockStatements"},
 		);
 	},

@@ -8,16 +8,16 @@
 
 ```
 
- unknown:4:6 lint/js/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:3 lint/js/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not return a value at the end of a setter method.
 
-    2 │   set name(value) {
-    3 │     if (!value) {
-  > 4 │       return 'wrong';
-      │       ^^^^^^^^^^^^^^^
-    5 │     }
-    6 │   }
+    2 │  set name(value) {
+    3 │   if (!value) {
+  > 4 │    return 'wrong';
+      │    ^^^^^^^^^^^^^^^
+    5 │   }
+    6 │  }
 
   ℹ Setters that return values are either typos or should not be setters.
 
@@ -44,16 +44,16 @@ class p {
 
 ```
 
- unknown:4:6 lint/js/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:3 lint/js/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not return a value at the end of a setter method.
 
-    2 │   static set name(value) {
-    3 │     if (!value) {
-  > 4 │       return 'wrong';
-      │       ^^^^^^^^^^^^^^^
-    5 │     }
-    6 │   }
+    2 │  static set name(value) {
+    3 │   if (!value) {
+  > 4 │    return 'wrong';
+      │    ^^^^^^^^^^^^^^^
+    5 │   }
+    6 │  }
 
   ℹ Setters that return values are either typos or should not be setters.
 
@@ -80,16 +80,16 @@ class p {
 
 ```
 
- unknown:4:6 lint/js/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:3 lint/js/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not return a value at the end of a setter method.
 
-    2 │   set name(value) {
-    3 │     if (!value) {
-  > 4 │       return 'wrong';
-      │       ^^^^^^^^^^^^^^^
-    5 │     }
-    6 │   }
+    2 │  set name(value) {
+    3 │   if (!value) {
+  > 4 │    return 'wrong';
+      │    ^^^^^^^^^^^^^^^
+    5 │   }
+    6 │  }
 
   ℹ Setters that return values are either typos or should not be setters.
 
