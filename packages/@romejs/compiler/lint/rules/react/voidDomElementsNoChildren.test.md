@@ -74,7 +74,7 @@
 
   ℹ Recommended fix
 
-  - <hr children={'invalid·children'}·/>
+  - <hr children={'invalid children'} />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -102,7 +102,7 @@
 
   ℹ Recommended fix
 
-  - <area dangerouslySetInnerHTML={{__html:·''}}></area>
+  - <area dangerouslySetInnerHTML={{__html: ''}}></area>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -130,7 +130,7 @@
 
   ℹ Recommended fix
 
-  - <img dangerouslySetInnerHTML={{__html:·''}}·children={'invalid·children'}>invalid·children</img>
+  - <img dangerouslySetInnerHTML={{__html: ''}} children={'invalid children'}>invalid children</img>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -158,7 +158,7 @@
 
   ℹ Recommended fix
 
-  - children:·"child"
+  - children: "child"
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -186,7 +186,7 @@ React.createElement("img", {children: "child"});
 
   ℹ Recommended fix
 
-  - dangerouslySetInnerHTML:·{__html:·"child"}
+  - dangerouslySetInnerHTML: {__html: "child"}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -214,7 +214,7 @@ React.createElement("img", {dangerouslySetInnerHTML: {__html: "child"}});
 
   ℹ Recommended fix
 
-  - "img", {},·"child"
+  - "img", {}, "child"
   + React.createElement("img", {})
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -243,7 +243,7 @@ React.createElement("img", {}, "child");
 
   ℹ Recommended fix
 
-  - children:·"child"
+  - children: "child"
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -271,7 +271,7 @@ createElement("img", {children: "child"});
 
   ℹ Recommended fix
 
-  - dangerouslySetInnerHTML:·{__html:·"child"}
+  - dangerouslySetInnerHTML: {__html: "child"}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -299,7 +299,7 @@ createElement("img", {dangerouslySetInnerHTML: {__html: "child"}});
 
   ℹ Recommended fix
 
-  - "img", {},·"child"
+  - "img", {}, "child"
   + createElement("img", {})
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

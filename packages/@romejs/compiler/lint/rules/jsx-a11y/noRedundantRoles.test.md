@@ -75,7 +75,7 @@
 
   Suggested fix: Remove the role attribute and ARIA attributes.
 
-  - role='heading'·aria-level='1'
+  - role='heading' aria-level='1'
   + <h1></h1>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -163,7 +163,7 @@
   Suggested fix: Remove the role attribute.
 
   - role='checkbox'
-  + <input·type='checkbox'·/>
+  + <input type='checkbox' />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
