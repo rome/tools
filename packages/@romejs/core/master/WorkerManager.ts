@@ -58,9 +58,7 @@ export default class WorkerManager {
 	workers: Map<number, WorkerContainer>;
 
 	// We use an idCounter rather than using workers.size due to race conditions
-
 	// If we use workers.size to generate the next id, then by the time we insert it
-
 	// into the map between async operations, it could already be filled!
 	idCounter: number;
 
@@ -129,6 +127,8 @@ export default class WorkerManager {
 		// Create the worker
 		const bridge = createBridgeFromLocal(WorkerBridge, {});
 		const worker = new Worker({
+			loggerOptions: this.master.logger.loggerOptions,
+			userConfig: this.master.userConfig,
 			bridge,
 			globalErrorHandlers: false,
 		});
@@ -326,8 +326,13 @@ export default class WorkerManager {
 		// Lock in case we're in the process of swapping the master worker with a dedicated worker
 		await this.locker.waitLock(0);
 
-		// If the worker is running in the master process and we've exceed our byte limit
+		// If we are inband only then we should never fork workers
+		if (this.master.options.inbandOnly) {
+			this.own(0, stats);
+			return this.getWorkerAssert(0);
+		}
 
+		// If the worker is running in the master process and we've exceed our byte limit
 		// then start up a dedicated worker process
 		if (this.selfWorker) {
 			const worker = this.getWorkerAssert(0);
@@ -341,7 +346,6 @@ export default class WorkerManager {
 		let workerId = smallestWorker.id;
 
 		// When the smallest worker exceeds the max worker byte limit and we're still under
-
 		// our max worker limit, then let's start a new one
 		if (
 			smallestWorker.byteCount > MAX_WORKER_BYTES_BEFORE_ADD &&

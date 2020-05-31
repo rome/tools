@@ -128,7 +128,7 @@ export default class BundleRequest {
 		const queue: WorkerQueue<void> = new WorkerQueue(master);
 
 		queue.addCallback(async (path) => {
-			const progressText = `<filelink target="${path.join()}" />`;
+			const progressText = path.toMarkup();
 			compilingSpinner.pushText(progressText);
 			await this.compileJS(path);
 			compilingSpinner.tick();

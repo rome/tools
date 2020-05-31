@@ -11,20 +11,18 @@ import {
 	GUTTER,
 	MAX_PATCH_LINES,
 } from "./constants";
-import {joinNoBreak, normalizeTabs, showInvisibles} from "./utils";
+import {joinNoBreak} from "./utils";
 import {Diffs, diffConstants, groupDiffByLines} from "@romejs/string-diff";
 import {escapeMarkup, markup, markupTag} from "@romejs/string-markup";
 import {DiagnosticAdviceDiff} from "@romejs/diagnostics";
 
 function formatDiffLine(diffs: Diffs) {
 	return diffs.map(([type, text]) => {
-		if (type === diffConstants.DELETE) {
-			return markupTag("error", escapeMarkup(showInvisibles(text)));
-		} else if (type === diffConstants.ADD) {
-			return markupTag("success", escapeMarkup(showInvisibles(text)));
+		const escaped = escapeMarkup(text);
+		if (type === diffConstants.EQUAL) {
+			return escaped;
 		} else {
-			// type === diffConstants.EQUAL
-			return escapeMarkup(normalizeTabs(text));
+			return markupTag("emphasis", escaped);
 		}
 	}).join("");
 }
@@ -43,41 +41,38 @@ export default function buildPatchCodeFrame(
 	truncated: boolean;
 	frame: string;
 } {
-	const diffsByLine = groupDiffByLines(item.diff);
-	let lastVisibleLine = -1;
+	const {diffsByLine, beforeLineCount, afterLineCount} = groupDiffByLines(
+		item.diff,
+	);
+	let lastVisibleIndex = -1;
 
 	// Calculate the parts of the diff we should show
-	const shownLines: Set<number> = new Set();
+	const shownLineIndexes: Set<number> = new Set();
 	for (let i = 0; i < diffsByLine.length; i++) {
-		const diffs = diffsByLine[i];
+		const {beforeLine, afterLine} = diffsByLine[i];
 
-		let hasChange = false;
-		for (const [type] of diffs) {
-			if (type === diffConstants.DELETE || type === diffConstants.ADD) {
-				hasChange = true;
-				break;
-			}
-		}
-
-		if (hasChange) {
+		if (beforeLine === undefined || afterLine === undefined) {
 			for (
-				let start = i - CODE_FRAME_CONTEXT_LINES;
-				start < i + CODE_FRAME_CONTEXT_LINES;
-				start++
+				let visible = i - CODE_FRAME_CONTEXT_LINES;
+				visible < i + CODE_FRAME_CONTEXT_LINES;
+				visible++
 			) {
-				shownLines.add(start);
-
-				if (start > lastVisibleLine) {
-					lastVisibleLine = start;
-				}
+				shownLineIndexes.add(visible);
+				lastVisibleIndex = visible;
 			}
 		}
 	}
 
-	const lineLength = String(lastVisibleLine).length;
+	// Calculate width of line no column
+	const lastVisibleLine = diffsByLine[lastVisibleIndex];
+	let beforeNoLength = 0;
+	let afterNoLength = 0;
+	if (lastVisibleLine !== undefined) {
+		beforeNoLength = String(lastVisibleLine.beforeLine).length;
+		afterNoLength = String(lastVisibleLine.afterLine).length;
+	}
 
-	// Don't output a gutter if there's only a single line
-	const singleLine = diffsByLine.length === 1;
+	const singleLine = beforeLineCount === 1 && afterLineCount === 1;
 
 	const {legend} = item;
 	const frame = [];
@@ -85,11 +80,28 @@ export default function buildPatchCodeFrame(
 	let truncated = false;
 	let lastDisplayedLine = -1;
 
-	const skippedLine = `<emphasis>${CODE_FRAME_INDENT}${".".repeat(lineLength)}${GUTTER}</emphasis>`;
+	// Add 1 for the space separator
+	const lineNoLength = beforeNoLength + afterNoLength + 1;
+	const skippedLine = `<emphasis>${CODE_FRAME_INDENT}${"\xb7".repeat(
+		lineNoLength,
+	)}${GUTTER}</emphasis>`;
+
+	function createGutter(beforeLine?: number, afterLine?: number) {
+		let gutter = `<emphasis>${CODE_FRAME_INDENT}<pad align="right" width="${beforeNoLength}">`;
+		if (beforeLine !== undefined) {
+			gutter += String(beforeLine);
+		}
+		gutter += `</pad> <pad align="right" width="${afterNoLength}">`;
+		if (afterLine !== undefined) {
+			gutter += String(afterLine);
+		}
+		gutter += `</pad>${GUTTER}</emphasis>`;
+		return gutter;
+	}
 
 	// Build the actual frame
 	for (let i = 0; i < diffsByLine.length; i++) {
-		if (shownLines.has(i) === false) {
+		if (!shownLineIndexes.has(i)) {
 			continue;
 		}
 
@@ -100,68 +112,57 @@ export default function buildPatchCodeFrame(
 			continue;
 		}
 
-		const diffs = diffsByLine[i];
-		const lineNo = i + 1;
+		const {beforeLine, afterLine, diffs} = diffsByLine[i];
 
-		const deletions: Diffs = [];
-		const addition: Diffs = [];
-
-		let hasDeletions = false;
-		let hasAddition = false;
+		let lineType: "EQUAL" | "ADD" | "DELETE" = "EQUAL";
 
 		for (const tuple of diffs) {
 			let [type] = tuple;
 
-			if (type === diffConstants.DELETE) {
-				hasDeletions = true;
-				deletions.push(tuple);
-			}
+			switch (type) {
+				case diffConstants.DELETE: {
+					lineType = "DELETE";
+					break;
+				}
 
-			if (type === diffConstants.ADD) {
-				hasAddition = true;
-				addition.push(tuple);
-			}
-
-			if (type === diffConstants.EQUAL) {
-				addition.push(tuple);
-				deletions.push(tuple);
+				case diffConstants.ADD: {
+					lineType = "ADD";
+					break;
+				}
 			}
 		}
 
-		if (lastDisplayedLine !== lineNo - 1 && lastDisplayedLine !== -1) {
+		if (lastDisplayedLine !== i - 1 && lastDisplayedLine !== -1) {
 			frame.push(skippedLine);
 		}
 
-		let gutterWithLine = "";
-		let gutterNoLine = "";
-		let deleteMarker = DELETE_MARKER;
-		let addMarker = ADD_MARKER;
+		let gutter = "";
 
-		if (!singleLine) {
-			gutterWithLine = `<emphasis>${CODE_FRAME_INDENT}<pad align="right" width="${lineLength}">${lineNo}</pad>${GUTTER}</emphasis>`;
-			gutterNoLine = `<emphasis>${CODE_FRAME_INDENT}${" ".repeat(lineLength)}${GUTTER}</emphasis>`;
+		if (singleLine) {
+			if (legend !== undefined) {
+				if (lineType === "DELETE") {
+					gutter = formatSingleLineMarker(legend.delete);
+				} else if (lineType === "ADD") {
+					gutter = formatSingleLineMarker(legend.add);
+				}
+			}
+		} else {
+			gutter = createGutter(beforeLine, afterLine);
 		}
 
-		if (singleLine && legend !== undefined) {
-			addMarker = formatSingleLineMarker(legend.add);
-			deleteMarker = formatSingleLineMarker(legend.delete);
+		if (lineType === "DELETE") {
+			frame.push(
+				`${gutter}${DELETE_MARKER} <error>${formatDiffLine(diffs)}</error>`,
+			);
+		} else if (lineType === "ADD") {
+			frame.push(
+				`${gutter}${ADD_MARKER} <success>${formatDiffLine(diffs)}</success>`,
+			);
+		} else {
+			frame.push(`${gutter}  ${formatDiffLine(diffs)}`);
 		}
 
-		if (hasDeletions) {
-			const gutter = hasAddition ? gutterNoLine : gutterWithLine;
-			frame.push(`${gutter}${deleteMarker} ${formatDiffLine(deletions)}`);
-		}
-
-		if (hasAddition) {
-			frame.push(`${gutterWithLine}${addMarker} ${formatDiffLine(addition)}`);
-		}
-
-		if (!hasAddition && !hasDeletions) {
-			// Output one of the lines, they're the same
-			frame.push(`${gutterWithLine}  ${formatDiffLine(addition)}`);
-		}
-
-		lastDisplayedLine = lineNo;
+		lastDisplayedLine = i;
 	}
 
 	if (truncated) {
@@ -170,7 +171,7 @@ export default function buildPatchCodeFrame(
 		);
 	}
 
-	if (legend !== undefined && !singleLine) {
+	if (legend !== undefined) {
 		frame.push("");
 		frame.push(`<error>- ${escapeMarkup(legend.delete)}</error>`);
 		frame.push(`<success>+ ${escapeMarkup(legend.add)}</success>`);

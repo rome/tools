@@ -171,7 +171,7 @@ export default class ProjectManager {
 			name: "rome-internal-remote",
 		};
 		const defaultVendorPath = vendorProjectConfig.files.vendorPath;
-		await createDirectory(defaultVendorPath, {recursive: true});
+		await createDirectory(defaultVendorPath);
 		await this.addProjectWithConfig({
 			projectFolder: defaultVendorPath,
 			meta: DEFAULT_PROJECT_CONFIG_META,

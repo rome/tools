@@ -112,7 +112,7 @@ export type WorkerFormatResult = {
 };
 
 export type WorkerLintResult = {
-	saved: boolean;
+	save: undefined | string;
 	diagnostics: Diagnostics;
 	suppressions: DiagnosticSuppressions;
 };
@@ -245,6 +245,16 @@ export default class WorkerBridge extends Bridge {
 		void
 	>({
 		name: "updateBuffer",
+		direction: "server->client",
+	});
+
+	clearBuffer = this.createEvent<
+		{
+			file: JSONFileReference;
+		},
+		void
+	>({
+		name: "clearBuffer",
 		direction: "server->client",
 	});
 

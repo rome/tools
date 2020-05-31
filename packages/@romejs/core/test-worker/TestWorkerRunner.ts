@@ -158,7 +158,9 @@ export default class TestWorkerRunner {
 			if (args.length === 1 && typeof args[0] === "string") {
 				textParts.push(escapeMarkup(args[0]));
 			} else {
-				textParts = args.map((arg) => prettyFormat(arg, {markup: true}));
+				textParts = args.map((arg) =>
+					prettyFormat(arg, {allowCustom: false, markup: true})
+				);
 			}
 			const text = textParts.join(" ");
 

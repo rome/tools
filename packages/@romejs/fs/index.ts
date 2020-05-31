@@ -119,7 +119,9 @@ function createReaddirReturn(
 	);
 }
 
-export function readdir(path: AbsoluteFilePath): Promise<AbsoluteFilePathSet> {
+export function readDirectory(
+	path: AbsoluteFilePath,
+): Promise<AbsoluteFilePathSet> {
 	return new Promise((resolve, reject) => {
 		fs.readdir(
 			path.join(),
@@ -134,7 +136,7 @@ export function readdir(path: AbsoluteFilePath): Promise<AbsoluteFilePathSet> {
 	});
 }
 
-export function readdirSync(path: AbsoluteFilePath): AbsoluteFilePathSet {
+export function readDirectorySync(path: AbsoluteFilePath): AbsoluteFilePathSet {
 	return createReaddirReturn(path, fs.readdirSync(path.join()));
 }
 
@@ -167,7 +169,7 @@ export function existsSync(path: AbsoluteFilePath): boolean {
 }
 
 // unlink
-export function unlink(path: AbsoluteFilePath): Promise<void> {
+export function removeFile(path: AbsoluteFilePath): Promise<void> {
 	return promisifyVoid(
 		path,
 		(filename, callback) =>
@@ -185,7 +187,7 @@ export function unlink(path: AbsoluteFilePath): Promise<void> {
 	);
 }
 
-export function unlinkSync(path: AbsoluteFilePath): void {
+export function removeFileSync(path: AbsoluteFilePath): void {
 	try {
 		fs.unlinkSync(path.join());
 	} catch (err) {
@@ -195,18 +197,15 @@ export function unlinkSync(path: AbsoluteFilePath): void {
 	}
 }
 
-// createDirectory
-export function createDirectory(
-	path: AbsoluteFilePath,
-	opts: CreateDirectoryOptions = {},
-): Promise<void> {
+// rmdir
+export function removeDirectory(path: AbsoluteFilePath): Promise<void> {
 	return promisifyVoid(
 		path,
 		(filename, callback) =>
-			fs.mkdir(
+			fs.rmdir(
 				filename,
 				{
-					recursive: opts.recursive,
+					recursive: true,
 				},
 				callback,
 			)
@@ -214,13 +213,31 @@ export function createDirectory(
 	);
 }
 
-export function createDirectorySync(
-	path: AbsoluteFilePath,
-	opts: CreateDirectoryOptions = {},
-): void {
-	fs.mkdirSync(path.join(), {recursive: opts.recursive});
+export function removeDirectorySync(path: AbsoluteFilePath): void {
+	fs.rmdirSync(
+		path.join(),
+		{
+			recursive: true,
+		},
+	);
 }
 
-type CreateDirectoryOptions = {
-	recursive?: boolean;
-};
+// createDirectory
+export function createDirectory(path: AbsoluteFilePath): Promise<void> {
+	return promisifyVoid(
+		path,
+		(filename, callback) =>
+			fs.mkdir(
+				filename,
+				{
+					recursive: true,
+				},
+				callback,
+			)
+		,
+	);
+}
+
+export function createDirectorySync(path: AbsoluteFilePath): void {
+	fs.mkdirSync(path.join());
+}

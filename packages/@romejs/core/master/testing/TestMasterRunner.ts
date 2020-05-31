@@ -47,7 +47,7 @@ import {
 	TestWorkerContainers,
 } from "./types";
 import {formatPercent, percentInsideCoverageFolder, sortMapKeys} from "./utils";
-import {escapeMarkup, markup, safeMarkup} from "@romejs/string-markup";
+import {markup, safeMarkup} from "@romejs/string-markup";
 import {MAX_WORKER_COUNT} from "@romejs/core/common/constants";
 import {TestWorkerFlags} from "@romejs/core/test-worker/TestWorker";
 import net = require("net");
@@ -72,9 +72,7 @@ function grammarNumberTests(num: number): string {
 }
 
 function getProgressTestRefText(ref: TestRef) {
-	return markup`<filelink target="${ref.filename}" />: ${escapeMarkup(
-		ref.testName,
-	)}`;
+	return markup`<filelink target="${ref.filename}" />: ${ref.testName}`;
 }
 
 function findAvailablePort(): Promise<number> {
