@@ -20,6 +20,7 @@ import {
 } from "@romejs/core";
 import fork from "../common/utils/fork";
 import {
+	BridgeError,
 	Event,
 	createBridgeFromLocal,
 	createBridgeFromSocket,
@@ -443,7 +444,17 @@ export default class Client {
 
 		const status = this.bridgeStatus;
 		if (status !== undefined) {
-			status.bridge.end();
+			if (status.bridge.alive) {
+				try {
+					await status.bridge.endMaster.call();
+				} catch (err) {
+					// Swallow BridgeErrors since we expect one to be emitted as the endMaster call will be an unanswered request
+					// when the master ends all client sockets
+					if (!(err instanceof BridgeError)) {
+						throw err;
+					}
+				}
+			}
 			this.bridgeStatus = undefined;
 		}
 	}
