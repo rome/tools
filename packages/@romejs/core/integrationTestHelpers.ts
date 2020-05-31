@@ -74,14 +74,22 @@ export function createIntegrationTest(
 		try {
 			const {flags, projectConfig = {}, files = {}} = opts;
 
-			projectConfig.files = Object.assign({}, project.files, {
-				vendorPath: "../remote",
-			});
+			// Properly configure `vendorPath` so it doesn't point to /tmp
+			projectConfig.files = Object.assign(
+				{},
+				projectConfig.files,
+				{
+					vendorPath: "../remote",
+				},
+			);
 
+			// Add serialized project config. We skip this if there's already a project config files entry to allow
+			// some flexibility if we want invalid project config tests.
 			if (files["rome.json"] === undefined && files["rome.rjson"] === undefined) {
 				files["rome.json"] = stringifyJSON(projectConfig);
 			}
 
+			// Materialize files
 			for (let basename in files) {
 				const path = projectPath.append(basename);
 				await createDirectory(path.getParent());
@@ -90,6 +98,7 @@ export function createIntegrationTest(
 				await writeFile(path, content);
 			}
 
+			// Mock and capture stdout
 			let console = "";
 			const stdout = new stream.Writable({
 				write(chunk, encoding, callback) {
@@ -98,6 +107,7 @@ export function createIntegrationTest(
 				},
 			});
 
+			// Create a Client. The abstraction used by the CLI.
 			const client = new Client({
 				globalErrorHandlers: false,
 				flags: {
@@ -109,6 +119,7 @@ export function createIntegrationTest(
 				stderr: stdout,
 			});
 
+			// Capture client logs
 			let logs = "";
 			client.bridgeAttachedEvent.subscribe(async () => {
 				await client.subscribeLogs(
@@ -120,11 +131,16 @@ export function createIntegrationTest(
 			});
 
 			try {
+				// Start the master inside of the process
 				const {master, bridge} = await client.startInternalMaster({
+					// Only one worker running inside of this process. Don't fork workers.
 					inbandOnly: true,
+					// Force cache to be enabled (which will be at our generated folder specified above)
+					// This will ignore any ROME_CACHE env variable specified by scripts/dev-rome
 					forceCacheEnabled: true,
+					// Custom loggerOptions so that logs don't vary between runs. ie. relative paths and no PIDs
 					loggerOptions: {
-						cwd: projectPath,
+						cwd: temp,
 						excludePid: true,
 					},
 					userConfig,
@@ -153,8 +169,7 @@ export function createIntegrationTest(
 				t.namedSnapshot("console", console);
 
 				// Logs
-				//t.namedSnapshot("logs", logs);
-				logs;
+				t.namedSnapshot("logs", logs);
 
 				// Files
 				const files: Array<string> = [];
@@ -184,6 +199,7 @@ export function createIntegrationTest(
 				t.namedSnapshot("files", filesSnapshot);
 			}
 		} finally {
+			// Clean up after ourselves. Will be called whether the tests fails or is successful
 			await removeDirectory(temp);
 		}
 	};

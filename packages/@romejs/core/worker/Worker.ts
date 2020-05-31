@@ -231,15 +231,22 @@ export default class Worker {
 				payload.content,
 			);
 		});
+
+		bridge.clearBuffer.subscribe((payload) => {
+			return this.clearBuffer(convertTransportFileReference(payload.file));
+		});
 	}
 
-	async updateBuffer(ref: FileReference, content: string) {
-		const path = ref.real;
-		this.buffers.set(path, content);
+	clearBuffer({real}: FileReference) {
+		this.logger.info(`Cleared ${real.toMarkup()} buffer`);
+		this.buffers.delete(real);
+		this.evict(real);
+	}
 
-		// Now outdated
-		this.astCache.delete(path);
-		this.moduleSignatureCache.delete(path);
+	updateBuffer(ref: FileReference, content: string) {
+		this.logger.info(`Updated ${ref.real.toMarkup()} buffer`);
+		this.buffers.set(ref.real, content);
+		this.evict(ref.real);
 	}
 
 	async getTypeCheckProvider(
@@ -457,6 +464,7 @@ export default class Worker {
 	}
 
 	evict(path: AbsoluteFilePath) {
+		this.logger.info(`Evicted ${path.toMarkup()}`);
 		this.astCache.delete(path);
 		this.moduleSignatureCache.delete(path);
 	}

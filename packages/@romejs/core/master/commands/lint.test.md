@@ -8,19 +8,19 @@
 
 ```
 [2K[1G[2K[1G[2K[1G
- index.js:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ project/index.js:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Undeclared variable unknownVariable
+  ✖ The unknownVariable variable is undeclared.
 
     unknownVariable
     ^^^^^^^^^^^^^^^
 
- index.js lint/pendingFixes FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ project/index.js lint/pendingFixes FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Pending formatting and recommended autofixes
 
-    1 │ + unknownVariable;
-    2 │ + 
+     1 │ + unknownVariable;
+     2 │ + 
 
   ℹ To apply fixes and formatting run
   $ rome lint index.js --save 
@@ -50,32 +50,108 @@ unknownVariable
 
 ```
 
+### `logs`
+
+```
+[master] ℹ [Master] Handling CLI request: Object {
+             args: Array []
+             cancelToken: undefined
+             commandFlags: Object {}
+             commandName: "lint"
+             noData: false
+             silent: false
+             terminateWhenIdle: false
+             requestFlags: Object {
+               benchmark: false
+               benchmarkIterations: 10
+               collectMarkers: false
+               fieri: false
+               grep: ""
+               inverseGrep: false
+               maxDiagnostics: 100
+               resolverMocks: false
+               resolverPlatform: undefined
+               resolverScale: undefined
+               review: false
+               showAllDiagnostics: false
+               timing: false
+               verboseDiagnostics: false
+               watch: false
+             }
+           }
+[master] ℹ [MemoryFileSystem] Adding new project folder project
+[master] ℹ [MemoryFileSystem] Watching project
+[master] ℹ [MemoryFileSystem] Finished initial crawl for project - added 2 files
+[master] ℹ [FileAllocator] File project/index.js assigned to worker 0
+[master] ℹ [MasterRequest] Started marker lint: index.js
+[worker] ℹ Linting: project/index.js
+[worker] ℹ Parsing: project/index.js
+[master] ℹ [MasterRequest] Finished marker lint: index.js
+[master] ℹ [MasterRequest] Started marker analyzeDependencies: index.js
+[worker] ℹ Analyze dependencies: project/index.js
+[worker] ℹ Analyzing: project/index.js
+[master] ℹ [MasterRequest] Finished marker analyzeDependencies: index.js
+[master] ℹ [Master] Replying to CLI request: Object {
+             args: Array []
+             cancelToken: undefined
+             commandFlags: Object {}
+             commandName: "lint"
+             noData: false
+             silent: false
+             terminateWhenIdle: false
+             requestFlags: Object {
+               benchmark: false
+               benchmarkIterations: 10
+               collectMarkers: false
+               fieri: false
+               grep: ""
+               inverseGrep: false
+               maxDiagnostics: 100
+               resolverMocks: false
+               resolverPlatform: undefined
+               resolverScale: undefined
+               review: false
+               showAllDiagnostics: false
+               timing: false
+               verboseDiagnostics: false
+               watch: false
+             }
+           }
+[master] ℹ [Master] Teardown triggered
+
+```
+
 ## `smoke save`
 
 ### `console`
 
 ```
 [2K[1G[2K[1G[2K[1G
- index.js:1:4 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ project/index.js:1:4 lint/js/undeclaredVariables OUTDATED ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Undeclared variable unformatted
+  ✖ The unformatted variable is undeclared.
 
   > 1 │ if (unformatted) {
       │     ^^^^^^^^^^^
     2 │  swag;
     3 │ }
 
- index.js:2:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ⚠ This file has been changed since the diagnostic was produced and may be out of date
 
-  ✖ Undeclared variable swag
+ project/index.js:2:1 lint/js/undeclaredVariables OUTDATED ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The swag variable is undeclared.
 
     1 │ if (unformatted) {
   > 2 │  swag;
       │  ^^^^
     3 │ }
 
+  ⚠ This file has been changed since the diagnostic was produced and may be out of date
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+✔ 1 file updated
 ✖ Found 2 problems
 
 ```
@@ -94,5 +170,85 @@ if (unformatted) {
 		"vendorPath": "../remote"
 	}
 }
+
+```
+
+### `logs`
+
+```
+[master] ℹ [Master] Handling CLI request: Object {
+             args: Array []
+             cancelToken: undefined
+             commandName: "lint"
+             noData: false
+             silent: false
+             terminateWhenIdle: false
+             commandFlags: Object {save: true}
+             requestFlags: Object {
+               benchmark: false
+               benchmarkIterations: 10
+               collectMarkers: false
+               fieri: false
+               grep: ""
+               inverseGrep: false
+               maxDiagnostics: 100
+               resolverMocks: false
+               resolverPlatform: undefined
+               resolverScale: undefined
+               review: false
+               showAllDiagnostics: false
+               timing: false
+               verboseDiagnostics: false
+               watch: false
+             }
+           }
+[master] ℹ [MemoryFileSystem] Adding new project folder project
+[master] ℹ [MemoryFileSystem] Watching project
+[master] ℹ [MemoryFileSystem] Finished initial crawl for project - added 2 files
+[master] ℹ [FileAllocator] File project/index.js assigned to worker 0
+[master] ℹ [MasterRequest] Started marker lint: index.js
+[worker] ℹ Linting: project/index.js
+[worker] ℹ Parsing: project/index.js
+[worker] ℹ Updated project/index.js buffer
+[worker] ℹ Evicted project/index.js
+[worker] ℹ Linting: project/index.js
+[worker] ℹ Parsing: project/index.js
+[worker] ℹ Cleared project/index.js buffer
+[worker] ℹ Evicted project/index.js
+[master] ℹ [MasterRequest] Finished marker lint: index.js
+[master] ℹ [Linter] Saving files
+<dim>[master]</dim> - project/index.js
+[master] ℹ [MasterRequest] Started marker analyzeDependencies: index.js
+[worker] ℹ Analyze dependencies: project/index.js
+[worker] ℹ Parsing: project/index.js
+[worker] ℹ Analyzing: project/index.js
+[master] ℹ [MasterRequest] Finished marker analyzeDependencies: index.js
+[master] ℹ [Master] Replying to CLI request: Object {
+             args: Array []
+             cancelToken: undefined
+             commandName: "lint"
+             noData: false
+             silent: false
+             terminateWhenIdle: false
+             commandFlags: Object {save: true}
+             requestFlags: Object {
+               benchmark: false
+               benchmarkIterations: 10
+               collectMarkers: false
+               fieri: false
+               grep: ""
+               inverseGrep: false
+               maxDiagnostics: 100
+               resolverMocks: false
+               resolverPlatform: undefined
+               resolverScale: undefined
+               review: false
+               showAllDiagnostics: false
+               timing: false
+               verboseDiagnostics: false
+               watch: false
+             }
+           }
+[master] ℹ [Master] Teardown triggered
 
 ```

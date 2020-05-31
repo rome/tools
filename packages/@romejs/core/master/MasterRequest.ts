@@ -895,6 +895,17 @@ export default class MasterRequest {
 		this.master.fileChangeEvent.send(path);
 	}
 
+	async requestWorkerClearBuffer(path: AbsoluteFilePath): Promise<void> {
+		this.checkCancelled();
+
+		await this.wrapRequestDiagnostic(
+			"updateBuffer",
+			path,
+			(bridge, file) => bridge.clearBuffer.call({file}),
+		);
+		await this.master.fileAllocator.evict(path);
+	}
+
 	async requestWorkerParse(
 		path: AbsoluteFilePath,
 		opts: WorkerParseOptions,

@@ -337,7 +337,7 @@ export default class WorkerAPI {
 		const {lint} = handler;
 		if (lint === undefined && handler.format === undefined) {
 			return {
-				saved: false,
+				save: undefined,
 				diagnostics: [],
 				suppressions: [],
 			};
@@ -367,7 +367,7 @@ export default class WorkerAPI {
 		// These are fatal diagnostics
 		if (res.diagnostics !== undefined) {
 			return {
-				saved: false,
+				save: undefined,
 				suppressions: [],
 				diagnostics: res.diagnostics,
 			};
@@ -376,7 +376,7 @@ export default class WorkerAPI {
 		// `format` could have return undefined
 		if (res.value === undefined) {
 			return {
-				saved: false,
+				save: undefined,
 				diagnostics: [],
 				suppressions: [],
 			};
@@ -399,20 +399,25 @@ export default class WorkerAPI {
 
 		// Autofix if necessary
 		if (options.save && needsSave) {
-			// Save the file and evict it from the cache
-			await this.worker.writeFile(ref.real, formatted);
+			// Update our buffer to relint with the new contents
+			await this.worker.updateBuffer(ref, formatted);
 
 			// Relint this file without fixing it, we do this to prevent false positive error messages
-			return {
+			const res: WorkerLintResult = {
 				...(await this.lint(ref, {...options, save: false}, parseOptions)),
-				saved: true,
+				save: formatted,
 			};
+
+			// Clear our fake buffer
+			this.worker.clearBuffer(ref);
+
+			return res;
 		}
 
 		// If there's no pending fix then no need for diagnostics
 		if (!needsSave) {
 			return {
-				saved: false,
+				save: undefined,
 				diagnostics,
 				suppressions,
 			};
@@ -420,7 +425,7 @@ export default class WorkerAPI {
 
 		// Add pending autofix diagnostic
 		return {
-			saved: false,
+			save: undefined,
 			suppressions,
 			diagnostics: [
 				...diagnostics,
