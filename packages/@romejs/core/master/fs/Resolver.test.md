@@ -27,13 +27,3 @@
 }
 
 ```
-
-### `logs`
-
-```
-[master] ℹ [MemoryFileSystem] Adding new project folder project
-[master] ℹ [MemoryFileSystem] Watching project
-[master] ℹ [MemoryFileSystem] Finished initial crawl for project - added 3 files
-[master] ℹ [Master] Teardown triggered
-
-```

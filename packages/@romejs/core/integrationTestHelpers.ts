@@ -169,7 +169,8 @@ export function createIntegrationTest(
 				t.namedSnapshot("console", console);
 
 				// Logs
-				t.namedSnapshot("logs", logs);
+				//t.namedSnapshot("logs", logs);
+				logs;
 
 				// Files
 				const files: Array<string> = [];
