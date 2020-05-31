@@ -10,8 +10,7 @@
 
  unknown:1:9 lint/jsx-a11y/noRedundantRoles FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Using the role attribute article and the HTML element article is redundant, using the HTML
-    element is enough.
+  ✖ Using the role attribute article on the article element is redundant.
 
     <article role='article'></article>
              ^^^^^^^^^^^^^^
@@ -40,8 +39,7 @@
 
  unknown:1:8 lint/jsx-a11y/noRedundantRoles FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Using the role attribute button and the HTML element button is redundant, using the HTML element
-    is enough.
+  ✖ Using the role attribute button on the button element is redundant.
 
     <button role='button'></button>
             ^^^^^^^^^^^^^
@@ -70,8 +68,7 @@
 
  unknown:1:4 lint/jsx-a11y/noRedundantRoles FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Using the role attribute heading and the HTML element h1 is redundant, using the HTML element is
-    enough.
+  ✖ Using the role attribute heading on the h1 element is redundant.
 
     <h1 role='heading' aria-level='1'></h1>
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -100,8 +97,7 @@
 
  unknown:1:4 lint/jsx-a11y/noRedundantRoles FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Using the role attribute heading and the HTML element h1 is redundant, using the HTML element is
-    enough.
+  ✖ Using the role attribute heading on the h1 element is redundant.
 
     <h1 role='heading'></h1>
         ^^^^^^^^^^^^^^
@@ -130,8 +126,7 @@
 
  unknown:1:8 lint/jsx-a11y/noRedundantRoles FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Using the role attribute dialog and the HTML element dialog is redundant, using the HTML element
-    is enough.
+  ✖ Using the role attribute dialog on the dialog element is redundant.
 
     <dialog role='dialog'></dialog>
             ^^^^^^^^^^^^^
@@ -160,8 +155,7 @@
 
  unknown:1:24 lint/jsx-a11y/noRedundantRoles FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Using the role attribute checkbox and the HTML element input is redundant, using the HTMLelement
-    is enough.
+  ✖ Using the role attribute checkbox on the input element is redundant.
 
     <input  type='checkbox' role='checkbox' />
                             ^^^^^^^^^^^^^^^

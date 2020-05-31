@@ -23,7 +23,7 @@
 
 ```
 
-### `0: formatted but unfixable`
+### `0: formatted`
 
 ```
 <h1 role='checkbox'></h1>;
