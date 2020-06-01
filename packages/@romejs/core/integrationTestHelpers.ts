@@ -12,6 +12,7 @@ import {
 	removeDirectory,
 	writeFile,
 } from "@romejs/fs";
+import {Stdout} from "@romejs/cli-reporter";
 import {Dict} from "@romejs/typescript-helpers";
 import {UserConfig} from "./common/userConfig";
 import crypto = require("crypto");
@@ -100,12 +101,13 @@ export function createIntegrationTest(
 
 			// Mock and capture stdout
 			let console = "";
-			const stdout = new stream.Writable({
+			const stdout: Stdout = new stream.Writable({
 				write(chunk, encoding, callback) {
 					console += chunk;
 					callback();
 				},
 			});
+			stdout.unicode = true;
 
 			// Create a Client. The abstraction used by the CLI.
 			const client = new Client({

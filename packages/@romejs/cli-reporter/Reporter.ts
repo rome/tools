@@ -26,6 +26,7 @@ import {
 	ReporterTableField,
 	SelectArguments,
 	SelectOptions,
+	Stdout,
 } from "./types";
 import {removeSuffix} from "@romejs/string-utils";
 import Progress from "./Progress";
@@ -84,11 +85,6 @@ type QuestionOptions = {
 };
 
 let remoteProgressIdCounter = 0;
-
-type Stdout = stream.Writable & {
-	isTTY?: boolean;
-	columns?: number;
-};
 
 function getStreamFormat(stdout: undefined | Stdout): ReporterStream["format"] {
 	return stdout !== undefined && stdout.isTTY === true ? "ansi" : "none";
@@ -155,7 +151,10 @@ export default class Reporter {
 		});
 
 		// Windows terminals are awful
-		const unicode = process.platform !== "win32";
+		const unicode =
+			stdout !== undefined && stdout.unicode !== undefined
+				? stdout.unicode
+				: process.platform !== "win32";
 
 		const outStream: ReporterStream = {
 			type: "out",
