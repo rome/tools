@@ -16,6 +16,28 @@ import {buildSuggestionAdvice} from "../helpers";
 import {createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	JSX_A11Y_NO_NONINTERACTIVE_ELEMENT_TO_INTERACTIVE_ROLE: (element: string) => ({
+		category: "lint/jsx-a11y/noNoninteractiveElementToInteractiveRole",
+		message: `The HTML element <emphasis>${element}</emphasis> is non-interactive and should not have an interactive role.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: `Replace <emphasis>${element}</emphasis> with a div or a span.`,
+			},
+		],
+	}),
+	REACT_JSX_PASCAL_CASE: (oldName: string, newName: string) => ({
+		category: "lint/react/jsxPascalCase",
+		message: `Switch <emphasis>${oldName}</emphasis> to <emphasis>${newName}</emphasis>.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "User-defined JSX components should be defined and referenced in PascalCase.",
+			},
+		],
+	}),
 	REACT_NO_USELESS_FRAGMENT: {
 		category: "lint/react/noUselessFragment",
 		message: "Avoid using unnecessary <emphasis>Fragment</emphasis>.",
@@ -38,6 +60,10 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
+	JSX_A11Y_NO_REDUNDANT_ROLES: (role: string, element: string) => ({
+		category: "lint/jsx-a11y/noRedundantRoles",
+		message: `Using the role attribute <emphasis>${role}</emphasis> on the <emphasis>${element}</emphasis> element is redundant.`,
+	}),
 	JSX_A11Y_ANCHOR_IS_VALID: (message: string) => ({
 		category: "lint/jsx-a11y/anchorIsValid",
 		message,
@@ -49,6 +75,17 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
+	JSX_A11Y_NO_NONINTERACTIVE_TABINDEX: {
+		category: "lint/jsx-a11y/noNoninteractiveTabindex",
+		message: "Do not use <emphasis>tabIndex</emphasis> on an element that is not interactive.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Adding non-interactive elements to the keyboard navigation flow can confuse users.",
+			},
+		],
+	},
 	JSX_A11Y_ARIA_PROPS: (attribute: string) => ({
 		category: "lint/jsx-a11y/ariaProps",
 		message: `<emphasis>${attribute}</emphasis> is an invalid ARIA attribute.`,

@@ -71,7 +71,10 @@ import mouseEventsHaveKeyEvents from "./jsx-a11y/mouseEventsHaveKeyEvents";
 import noAccessKey from "./jsx-a11y/noAccessKey";
 import noAutofocus from "./jsx-a11y/noAutofocus";
 import noDistractingElements from "./jsx-a11y/noDistractingElements";
+import noNoninteractiveElementToInteractiveRole from "./jsx-a11y/noNoninteractiveElementToInteractiveRole";
+import noNoninteractiveTabindex from "./jsx-a11y/noNoninteractiveTabindex";
 import noOnChange from "./jsx-a11y/noOnChange";
+import noRedundantRoles from "./jsx-a11y/noRedundantRoles";
 import noTargetBlank from "./jsx-a11y/noTargetBlank";
 import roleHasRequiredAriaProps from "./jsx-a11y/roleHasRequiredAriaProps";
 import scope from "./jsx-a11y/scope";
@@ -82,6 +85,7 @@ import jsxKey from "./react/jsxKey";
 import jsxNoCommentText from "./react/jsxNoCommentText";
 import jsxNoDuplicateProps from "./react/jsxNoDuplicateProps";
 import jsxNoLiterals from "./react/jsxNoLiterals";
+import jsxPascalCase from "./react/jsxPascalCase";
 import noAccessStateInSetState from "./react/noAccessStateInSetState";
 import noChildrenProp from "./react/noChildrenProp";
 import noDanger from "./react/noDanger";
@@ -165,7 +169,10 @@ export const lintTransforms = [
 	noAccessKey,
 	noAutofocus,
 	noDistractingElements,
+	noNoninteractiveElementToInteractiveRole,
+	noNoninteractiveTabindex,
 	noOnChange,
+	noRedundantRoles,
 	noTargetBlank,
 	roleHasRequiredAriaProps,
 	scope,
@@ -176,6 +183,7 @@ export const lintTransforms = [
 	jsxNoCommentText,
 	jsxNoDuplicateProps,
 	jsxNoLiterals,
+	jsxPascalCase,
 	noAccessStateInSetState,
 	noChildrenProp,
 	noDanger,

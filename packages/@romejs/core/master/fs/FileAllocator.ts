@@ -101,7 +101,7 @@ export default class FileAllocator {
 		});
 		this.evictEvent.send(path);
 
-		this.master.logger.info(`[FileAllocator] Evicted %s`, filename);
+		this.master.logger.info(`[FileAllocator] Evicted %s`, path.toMarkup());
 	}
 
 	async handleDeleted(path: AbsoluteFilePath) {
@@ -127,7 +127,6 @@ export default class FileAllocator {
 		oldStats: undefined | Stats,
 		newStats: Stats,
 	) {
-		const filename = path.join();
 		const {logger, workerManager} = this.master;
 
 		// Send update to worker owner
@@ -135,7 +134,7 @@ export default class FileAllocator {
 			// Get the worker
 			const workerId = this.getOwnerId(path);
 			if (workerId === undefined) {
-				throw new Error(`Expected worker id for ${filename}`);
+				throw new Error(`Expected worker id for ${path.join()}`);
 			}
 
 			// Evict the file from 'cache
@@ -155,10 +154,10 @@ export default class FileAllocator {
 		} else if (await this.master.projectManager.maybeEvictPossibleConfig(path)) {
 			logger.info(
 				`[FileAllocator] Evicted the project belonging to config %s`,
-				filename,
+				path.toMarkup(),
 			);
 		} else {
-			logger.info(`[FileAllocator] No owner for eviction %s`, filename);
+			logger.info(`[FileAllocator] No owner for eviction %s`, path.toMarkup());
 		}
 	}
 
@@ -179,7 +178,7 @@ export default class FileAllocator {
 		// Add ourselves to the file map
 		logger.info(
 			`[FileAllocator] File %s assigned to worker %s`,
-			filename,
+			path.toMarkup(),
 			worker.id,
 		);
 		this.fileToWorker.set(filename, worker.id);

@@ -10,7 +10,7 @@ import {
 	AbsoluteFilePathMap,
 	createAbsoluteFilePath,
 } from "@romejs/path";
-import {exists, readFileText, unlink, writeFile} from "@romejs/fs";
+import {exists, readFileText, removeFile, writeFile} from "@romejs/fs";
 import {TestMasterRunnerOptions} from "../master/testing/types";
 import TestWorkerRunner from "./TestWorkerRunner";
 import {DiagnosticDescription, descriptions} from "@romejs/diagnostics";
@@ -317,7 +317,7 @@ export default class SnapshotManager {
 					// Don't delete a snapshot if there are test failures as those failures may be hiding a snapshot usage
 					if (!hasDiagnostics) {
 						// If a snapshot wasn't used or is empty then delete it!
-						await unlink(path);
+						await removeFile(path);
 						this.snapshotCounts.deleted++;
 					}
 				} else if (used && formatted !== raw) {

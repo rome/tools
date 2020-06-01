@@ -15,7 +15,7 @@ import Master from "./Master";
 import {DEFAULT_PROJECT_CONFIG, ProjectDefinition} from "@romejs/project";
 import {VERSION} from "../common/constants";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@romejs/path";
-import {createDirectory, readFileText, unlink, writeFile} from "@romejs/fs";
+import {createDirectory, readFileText, removeFile, writeFile} from "@romejs/fs";
 import {stringifyJSON} from "@romejs/codec-json";
 
 type CacheEntry = {
@@ -53,12 +53,20 @@ function areEntriesEqual(a: CacheEntry, b: CacheEntry): boolean {
 	return true;
 }
 
+// Write cache entries every 5 seconds after the first modification
+const BATCH_WRITES_MS = 5_000;
+
 export default class Cache {
 	constructor(master: Master) {
 		this.master = master;
 		this.loadedEntries = new AbsoluteFilePathMap();
-		this.disabled = process.env.ROME_CACHE === "0";
+		this.disabled =
+			!master.options.forceCacheEnabled && process.env.ROME_CACHE === "0";
 		this.cachePath = master.userConfig.cachePath;
+
+		this.runningWritePromise = undefined;
+		this.pendingWriteTimer = undefined;
+		this.pendingWrites = new AbsoluteFilePathMap();
 	}
 
 	disabled: boolean;
@@ -66,14 +74,73 @@ export default class Cache {
 	master: Master;
 	cachePath: AbsoluteFilePath;
 
+	runningWritePromise: undefined | Promise<void>;
+	pendingWrites: AbsoluteFilePathMap<CacheEntry>;
+	pendingWriteTimer: undefined | NodeJS.Timeout;
+
 	async init() {
 		this.master.memoryFs.deletedFileEvent.subscribe((filename) => {
 			return this.master.cache.handleDeleted(filename);
 		});
 
 		const {memoryFs} = this.master;
-		await createDirectory(this.cachePath, {recursive: true});
+		await createDirectory(this.cachePath);
 		await memoryFs.watch(this.cachePath, DEFAULT_PROJECT_CONFIG);
+
+		this.master.endEvent.subscribe(async () => {
+			// Wait on possible running writePending
+			await this.runningWritePromise;
+
+			// Write any remaining
+			await this.writePending("end");
+		});
+	}
+
+	async writePending(reason: "queue" | "end") {
+		// Clear timer since we're now running
+		const {pendingWriteTimer} = this;
+		if (pendingWriteTimer !== undefined) {
+			clearTimeout(pendingWriteTimer);
+		}
+
+		const {pendingWrites} = this;
+		this.pendingWrites = new AbsoluteFilePathMap();
+
+		// Write pending files
+		const filelinks: Array<string> = [];
+		for (const [path, entry] of pendingWrites) {
+			filelinks.push(path.toMarkup());
+			await writeFile(path, stringifyJSON(entry));
+		}
+
+		// Log
+		const {logger} = this.master;
+		if (filelinks.length > 0) {
+			logger.info(`[Cache] Wrote entries due to ${reason}`);
+			logger.list(filelinks);
+		}
+	}
+
+	addPendingWrite(path: AbsoluteFilePath, entry: CacheEntry) {
+		this.pendingWrites.set(path, entry);
+
+		// Set a write timer
+		const {pendingWriteTimer} = this;
+		if (pendingWriteTimer !== undefined) {
+			return;
+		}
+
+		this.pendingWriteTimer = setTimeout(
+			() => {
+				this.runningWritePromise = this.writePending("queue").catch((err) => {
+					this.master.onFatalError(err);
+				}).finally(() => {
+					// Finished running
+					this.runningWritePromise = undefined;
+				});
+			},
+			BATCH_WRITES_MS,
+		);
 	}
 
 	async createEmptyEntry(path: AbsoluteFilePath): Promise<CacheEntry> {
@@ -109,7 +176,7 @@ export default class Cache {
 	async handleDeleted(path: AbsoluteFilePath) {
 		// Handle the file not existing
 		const cacheFilename = this.getCacheFilename(path);
-		await unlink(cacheFilename);
+		await removeFile(cacheFilename);
 		this.loadedEntries.delete(path);
 	}
 
@@ -187,12 +254,7 @@ export default class Cache {
 			return;
 		}
 
-		await createDirectory(
-			cacheFilename.getParent(),
-			{
-				recursive: true,
-			},
-		);
-		await writeFile(cacheFilename, stringifyJSON(entry));
+		await createDirectory(cacheFilename.getParent());
+		this.addPendingWrite(cacheFilename, entry);
 	}
 }

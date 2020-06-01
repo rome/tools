@@ -204,6 +204,11 @@ export default class Bridge {
 			return;
 		}
 
+		// Nobody to send an update to
+		if (!this.alive) {
+			return;
+		}
+
 		// Notify the other side of what we're currently subscribed to
 		// We send over a list of all of our subscriptions every time
 		// This is fine since we don't change subscriptions often and they aren't very large

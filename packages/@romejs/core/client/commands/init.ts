@@ -47,9 +47,7 @@ export default createLocalCommand({
 
 		// Run lint, capture diagnostics
 
-		reporter.success(
-			`Created config <filelink emphasis target="${configPath.join()}" />`,
-		);
+		reporter.success(`Created config ${configPath.toMarkup()}`);
 
 		return true;
 	},

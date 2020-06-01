@@ -11,6 +11,6 @@ import {testLint} from "../testHelpers";
 test(
 	"sparse array",
 	async (t) => {
-		await testLint(t, `[1,,2]`, {category: "lint/js/sparseArray"});
+		await testLint(t, {invalid: ["[1,,2]"]}, {category: "lint/js/sparseArray"});
 	},
 );

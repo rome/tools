@@ -6,6 +6,13 @@
  */
 
 import {Event} from "@romejs/events";
+import stream = require("stream");
+
+export type Stdout = stream.Writable & {
+	unicode?: boolean;
+	isTTY?: boolean;
+	columns?: number;
+};
 
 export type SelectOption = {
 	label: string;

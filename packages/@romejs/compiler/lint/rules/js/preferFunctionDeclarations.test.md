@@ -55,22 +55,6 @@ function foo() {}
 ### `2`
 
 ```
-✔ No known problems!
-
-```
-
-### `2: formatted`
-
-```
-const foo = () => {
-	this;
-};
-
-```
-
-### `3`
-
-```
 
  unknown:1:12 lint/js/preferFunctionDeclarations FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -85,7 +69,7 @@ const foo = () => {
 
 ```
 
-### `3: formatted`
+### `2: formatted`
 
 ```
 function foo() {
@@ -93,6 +77,22 @@ function foo() {
 		this;
 	}
 }
+
+```
+
+### `3`
+
+```
+✔ No known problems!
+
+```
+
+### `3: formatted`
+
+```
+const foo = () => {
+	this;
+};
 
 ```
 

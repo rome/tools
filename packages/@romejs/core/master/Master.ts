@@ -37,7 +37,7 @@ import ProjectManager from "./project/ProjectManager";
 import WorkerManager from "./WorkerManager";
 import Resolver from "./fs/Resolver";
 import FileAllocator from "./fs/FileAllocator";
-import Logger from "../common/utils/Logger";
+import Logger, {PartialLoggerOptions} from "../common/utils/Logger";
 import MemoryFileSystem from "./fs/MemoryFileSystem";
 import Cache from "./Cache";
 import {Reporter, ReporterStream} from "@romejs/cli-reporter";
@@ -80,6 +80,10 @@ export type MasterClient = {
 };
 
 export type MasterOptions = {
+	inbandOnly?: boolean;
+	loggerOptions?: PartialLoggerOptions;
+	forceCacheEnabled?: boolean;
+	userConfig?: UserConfig;
 	dedicated: boolean;
 	globalErrorHandlers: boolean;
 };
@@ -149,7 +153,8 @@ export default class Master {
 		this.profiling = undefined;
 		this.options = opts;
 
-		this.userConfig = loadUserConfig();
+		this.userConfig =
+			opts.userConfig === undefined ? loadUserConfig() : opts.userConfig;
 
 		this.fileChangeEvent = new Event({
 			name: "Master.fileChange",
@@ -166,11 +171,6 @@ export default class Master {
 			onError: this.onFatalErrorBound,
 		});
 
-		this.logEvent = new Event({
-			name: "Master.log",
-			onError: this.onFatalErrorBound,
-		});
-
 		this.endEvent = new Event({
 			name: "Master.end",
 			onError: this.onFatalErrorBound,
@@ -178,19 +178,19 @@ export default class Master {
 		});
 
 		this.logger = new Logger(
-			"master",
+			{
+				...opts.loggerOptions,
+				type: "master",
+			},
 			() => {
-				return (
-					this.logEvent.hasSubscribers() ||
-					this.connectedClientsListeningForLogs.size > 0
-				);
+				return this.connectedClientsListeningForLogs.size > 0;
 			},
 			{
 				streams: [
 					{
 						type: "all",
 						format: "none",
-						columns: 0,
+						columns: Infinity,
 						unicode: true,
 						write: (chunk) => {
 							this.emitMasterLog(chunk);
@@ -259,7 +259,6 @@ export default class Master {
 	requestStartEvent: Event<MasterRequest, void>;
 	clientStartEvent: Event<MasterClient, void>;
 	fileChangeEvent: Event<AbsoluteFilePath, void>;
-	logEvent: Event<string, void>;
 	endEvent: Event<void, void>;
 
 	onFatalErrorBound: (err: Error) => void;
@@ -288,10 +287,11 @@ export default class Master {
 	connectedClientsListeningForLogs: Set<MasterClient>;
 
 	emitMasterLog(chunk: string) {
-		this.logEvent.send(chunk);
-
 		for (const {bridge} of this.connectedClientsListeningForLogs) {
-			bridge.log.send({chunk, origin: "master"});
+			// Sometimes the bridge hasn't completely been teardown and we still consider it connected
+			if (bridge.alive) {
+				bridge.log.send({chunk, origin: "master"});
+			}
 		}
 	}
 
@@ -399,17 +399,25 @@ export default class Master {
 	}
 
 	async end() {
+		this.logger.info("[Master] Teardown triggered");
+
+		// Unwatch all project folders
+		// We do this before anything else as we don't want events firing while we're in a teardown state
+		this.memoryFs.unwatchAll();
+
 		// Cancel all queries in flight
 		for (const client of this.connectedClients) {
 			for (const req of client.requestsInFlight) {
 				req.cancel();
 			}
+
+			// Kill socket
+			client.bridge.end();
 		}
 
 		// We should remove everything that has an external dependency like a socket or process
 		await this.endEvent.callOptional();
 		this.workerManager.end();
-		this.memoryFs.unwatchAll();
 	}
 
 	async attachToBridge(bridge: MasterBridge) {
@@ -508,6 +516,8 @@ export default class Master {
 				}
 			}
 		});
+
+		bridge.endMaster.subscribe(async () => this.end());
 
 		await this.clientStartEvent.callOptional(client);
 	}
@@ -611,27 +621,27 @@ export default class Master {
 		});
 
 		bridge.endEvent.subscribe(() => {
-			// Cancel any requests still in flight
-			for (const req of client.requestsInFlight) {
-				req.cancel();
-			}
-
 			this.connectedClients.delete(client);
 			this.connectedClientsListeningForLogs.delete(client);
 			this.connectedReporters.removeStream(errStream);
 			this.connectedReporters.removeStream(outStream);
+
+			// Cancel any requests still in flight
+			for (const req of client.requestsInFlight) {
+				req.cancel();
+			}
 		});
 
 		return client;
 	}
 
 	async handleFileDelete(path: AbsoluteFilePath) {
-		this.logger.info(`[Master] File delete:`, path.join());
+		this.logger.info(`[Master] File delete:`, path.toMarkup());
 		this.fileChangeEvent.send(path);
 	}
 
 	async handleFileChange(path: AbsoluteFilePath) {
-		this.logger.info(`[Master] File change:`, path.join());
+		this.logger.info(`[Master] File change:`, path.toMarkup());
 		this.fileChangeEvent.send(path);
 	}
 
@@ -838,10 +848,7 @@ export default class Master {
 			);
 			if (masterCommand) {
 				// Warn about disabled disk caching
-				if (
-					process.env.ROME_CACHE === "0" &&
-					!this.warnedCacheClients.has(bridge)
-				) {
+				if (this.cache.disabled && !this.warnedCacheClients.has(bridge)) {
 					reporter.warn(
 						"Disk caching has been disabled due to the <emphasis>ROME_CACHE=0</emphasis> environment variable",
 					);

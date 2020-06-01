@@ -196,6 +196,7 @@ export default class Event<Param, Ret = void> {
 		// If this callback was the root subscription, then set it to the next one
 		if (callback === this.rootSubscription) {
 			this.rootSubscription = Array.from(this.subscriptions)[0];
+			this.subscriptions.delete(this.rootSubscription);
 			this.onSubscriptionChange();
 			return;
 		}

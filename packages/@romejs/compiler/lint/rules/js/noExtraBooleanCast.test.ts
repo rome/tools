@@ -14,42 +14,31 @@ test(
 	async (t) => {
 		await testLint(
 			t,
-			dedent`
-        if (Boolean(foo)) {
-          return foo;
-        }
-      `,
-			{category: "lint/js/noExtraBooleanCast"},
-		);
-
-		await testLint(
-			t,
-			dedent`
-        while (!!foo) {
-          return foo;
-        }
-      `,
-			{category: "lint/js/noExtraBooleanCast"},
-		);
-
-		await testLint(
-			t,
-			dedent`
-        let x = 1;
-        do {
-          1 + 1;
-        } while (Boolean(x));
-      `,
-			{category: "lint/js/noExtraBooleanCast"},
-		);
-
-		await testLint(
-			t,
-			dedent`
-        for (; !!foo; ) {
-          return 1 + 1;
-        }
-      `,
+			{
+				invalid: [
+					dedent`
+					if (Boolean(foo)) {
+						return foo;
+					}
+				`,
+					dedent`
+					while (!!foo) {
+						return foo;
+					}
+				`,
+					dedent`
+					let x = 1;
+					do {
+						1 + 1;
+					} while (Boolean(x));
+				`,
+					dedent`
+					for (; !!foo; ) {
+						return 1 + 1;
+					}
+				`,
+				],
+			},
 			{category: "lint/js/noExtraBooleanCast"},
 		);
 	},

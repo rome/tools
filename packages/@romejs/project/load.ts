@@ -28,7 +28,12 @@ import {
 } from "./utils";
 import {ConsumeJSONResult, consumeJSONExtra} from "@romejs/codec-json";
 import {AbsoluteFilePath, AbsoluteFilePathSet} from "@romejs/path";
-import {existsSync, lstatSync, readFileTextSync, readdirSync} from "@romejs/fs";
+import {
+	existsSync,
+	lstatSync,
+	readDirectorySync,
+	readFileTextSync,
+} from "@romejs/fs";
 import crypto = require("crypto");
 import {ROME_CONFIG_PACKAGE_JSON_FIELD} from "./constants";
 import {parseSemverRange} from "@romejs/codec-semver";
@@ -344,7 +349,7 @@ function normalizeTypeCheckingLibs(
 
 	// Crawl library folders and add their files
 	for (const folder of folders) {
-		const files = readdirSync(folder);
+		const files = readDirectorySync(folder);
 		for (const file of files) {
 			const stats = lstatSync(file);
 			if (stats.isFile()) {

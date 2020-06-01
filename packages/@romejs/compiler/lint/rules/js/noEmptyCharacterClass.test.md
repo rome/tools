@@ -7,186 +7,6 @@
 ### `0`
 
 ```
-✔ No known problems!
-
-```
-
-### `0: formatted`
-
-```
-let foo = /^abc[a-zA-Z]/;
-foo;
-
-```
-
-### `1`
-
-```
-✔ No known problems!
-
-```
-
-### `1: formatted`
-
-```
-let regExp = new RegExp("^abc[]");
-regExp;
-
-```
-
-### `2`
-
-```
-✔ No known problems!
-
-```
-
-### `2: formatted`
-
-```
-let foo = /^abc/;
-foo;
-
-```
-
-### `3`
-
-```
-✔ No known problems!
-
-```
-
-### `3: formatted`
-
-```
-let foo = /[[]/;
-foo;
-
-```
-
-### `4`
-
-```
-✔ No known problems!
-
-```
-
-### `4: formatted`
-
-```
-let foo = /[]]/;
-foo;
-
-```
-
-### `5`
-
-```
-✔ No known problems!
-
-```
-
-### `5: formatted`
-
-```
-let foo = /[a-zA-Z[]/;
-foo;
-
-```
-
-### `6`
-
-```
-✔ No known problems!
-
-```
-
-### `6: formatted`
-
-```
-let foo = /[[]/;
-foo;
-
-```
-
-### `7`
-
-```
-✔ No known problems!
-
-```
-
-### `7: formatted`
-
-```
-let foo = /[[a-z[]\]/;
-foo;
-
-```
-
-### `8`
-
-```
-✔ No known problems!
-
-```
-
-### `8: formatted`
-
-```
-let foo = /[\-[]\/{}()*+?.\\^$|]/g;
-foo;
-
-```
-
-### `9`
-
-```
-✔ No known problems!
-
-```
-
-### `9: formatted`
-
-```
-let foo = /[]]/yu;
-foo;
-
-```
-
-### `10`
-
-```
-✔ No known problems!
-
-```
-
-### `10: formatted`
-
-```
-let foo = /[]]/s;
-foo;
-
-```
-
-### `11`
-
-```
-✔ No known problems!
-
-```
-
-### `11: formatted`
-
-```
-let foo = /\[\]/;
-foo;
-
-```
-
-### `12`
-
-```
 
  unknown:1:15 lint/js/noEmptyCharacterClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -203,7 +23,7 @@ foo;
 
 ```
 
-### `12: formatted`
+### `0: formatted`
 
 ```
 let foo = /^abc/;
@@ -211,7 +31,7 @@ foo;
 
 ```
 
-### `13`
+### `1`
 
 ```
 
@@ -230,7 +50,7 @@ foo;
 
 ```
 
-### `13: formatted`
+### `1: formatted`
 
 ```
 let foo = /foobar/;
@@ -238,7 +58,7 @@ foo;
 
 ```
 
-### `14`
+### `2`
 
 ```
 
@@ -257,7 +77,7 @@ foo;
 
 ```
 
-### `14: formatted`
+### `2: formatted`
 
 ```
 let foo = "";
@@ -267,7 +87,7 @@ if (foo.match(/^abc/)) {
 
 ```
 
-### `15`
+### `3`
 
 ```
 
@@ -286,7 +106,7 @@ if (foo.match(/^abc/)) {
 
 ```
 
-### `15: formatted`
+### `3: formatted`
 
 ```
 let foo = /\]/;
@@ -294,7 +114,7 @@ foo;
 
 ```
 
-### `16`
+### `4`
 
 ```
 
@@ -313,7 +133,7 @@ foo;
 
 ```
 
-### `16: formatted`
+### `4: formatted`
 
 ```
 let foo = /\[/;
@@ -321,7 +141,7 @@ foo;
 
 ```
 
-### `17`
+### `5`
 
 ```
 
@@ -340,10 +160,190 @@ foo;
 
 ```
 
-### `17: formatted`
+### `5: formatted`
 
 ```
 let foo = /\[\[\]a-z/;
+foo;
+
+```
+
+### `6`
+
+```
+✔ No known problems!
+
+```
+
+### `6: formatted`
+
+```
+let foo = /^abc[a-zA-Z]/;
+foo;
+
+```
+
+### `7`
+
+```
+✔ No known problems!
+
+```
+
+### `7: formatted`
+
+```
+let regExp = new RegExp("^abc[]");
+regExp;
+
+```
+
+### `8`
+
+```
+✔ No known problems!
+
+```
+
+### `8: formatted`
+
+```
+let foo = /^abc/;
+foo;
+
+```
+
+### `9`
+
+```
+✔ No known problems!
+
+```
+
+### `9: formatted`
+
+```
+let foo = /[[]/;
+foo;
+
+```
+
+### `10`
+
+```
+✔ No known problems!
+
+```
+
+### `10: formatted`
+
+```
+let foo = /[]]/;
+foo;
+
+```
+
+### `11`
+
+```
+✔ No known problems!
+
+```
+
+### `11: formatted`
+
+```
+let foo = /[a-zA-Z[]/;
+foo;
+
+```
+
+### `12`
+
+```
+✔ No known problems!
+
+```
+
+### `12: formatted`
+
+```
+let foo = /[[]/;
+foo;
+
+```
+
+### `13`
+
+```
+✔ No known problems!
+
+```
+
+### `13: formatted`
+
+```
+let foo = /[[a-z[]\]/;
+foo;
+
+```
+
+### `14`
+
+```
+✔ No known problems!
+
+```
+
+### `14: formatted`
+
+```
+let foo = /[\-[]\/{}()*+?.\\^$|]/g;
+foo;
+
+```
+
+### `15`
+
+```
+✔ No known problems!
+
+```
+
+### `15: formatted`
+
+```
+let foo = /[]]/yu;
+foo;
+
+```
+
+### `16`
+
+```
+✔ No known problems!
+
+```
+
+### `16: formatted`
+
+```
+let foo = /[]]/s;
+foo;
+
+```
+
+### `17`
+
+```
+✔ No known problems!
+
+```
+
+### `17: formatted`
+
+```
+let foo = /\[\]/;
 foo;
 
 ```

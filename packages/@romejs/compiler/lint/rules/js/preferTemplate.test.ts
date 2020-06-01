@@ -13,15 +13,12 @@ test(
 	async (t) => {
 		await testLint(
 			t,
-			`const foo = 'bar'; console.log(foo + 'baz')`,
 			{
-				category: "lint/js/preferTemplate",
+				invalid: [
+					`const foo = 'bar'; console.log(foo + 'baz')`,
+					`console.log((1 * 2) + 'baz')`,
+				],
 			},
-		);
-
-		await testLint(
-			t,
-			`console.log((1 * 2) + 'baz')`,
 			{
 				category: "lint/js/preferTemplate",
 			},

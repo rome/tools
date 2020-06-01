@@ -7,126 +7,6 @@
 ### `0`
 
 ```
-✔ No known problems!
-
-```
-
-### `0: formatted`
-
-```
-let foo = /([abc]+)=\u0001/;
-foo;
-
-```
-
-### `1`
-
-```
-✔ No known problems!
-
-```
-
-### `1: formatted`
-
-```
-let foo = /([abc]+)=\u0002/;
-foo;
-
-```
-
-### `2`
-
-```
-✔ No known problems!
-
-```
-
-### `2: formatted`
-
-```
-let foo = /([abc]+)=8/;
-foo;
-
-```
-
-### `3`
-
-```
-✔ No known problems!
-
-```
-
-### `3: formatted`
-
-```
-let foo = /([abc]+)=9/;
-foo;
-
-```
-
-### `4`
-
-```
-✔ No known problems!
-
-```
-
-### `4: formatted`
-
-```
-let foo = /([abc]+)=\t9/;
-foo;
-
-```
-
-### `5`
-
-```
-✔ No known problems!
-
-```
-
-### `5: formatted`
-
-```
-let foo = /([abc]+)=\u001b8/;
-foo;
-
-```
-
-### `6`
-
-```
-✔ No known problems!
-
-```
-
-### `6: formatted`
-
-```
-let foo = /([abc]+)=\u00ff/;
-foo;
-
-```
-
-### `7`
-
-```
-✔ No known problems!
-
-```
-
-### `7: formatted`
-
-```
-let foo = /([abc]+)=\?7/;
-foo;
-
-```
-
-### `8`
-
-```
 
  unknown:1:20 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -141,7 +21,7 @@ foo;
 
 ```
 
-### `8: formatted`
+### `0: formatted`
 
 ```
 let foo = /([abc]+)=\18/;
@@ -149,7 +29,7 @@ foo;
 
 ```
 
-### `9`
+### `1`
 
 ```
 
@@ -166,7 +46,7 @@ foo;
 
 ```
 
-### `9: formatted`
+### `1: formatted`
 
 ```
 let foo = /([abc]+)=\49/;
@@ -174,7 +54,7 @@ foo;
 
 ```
 
-### `10`
+### `2`
 
 ```
 
@@ -191,7 +71,7 @@ foo;
 
 ```
 
-### `10: formatted`
+### `2: formatted`
 
 ```
 let foo = /([abc]+)=\78/;
@@ -199,7 +79,7 @@ foo;
 
 ```
 
-### `11`
+### `3`
 
 ```
 
@@ -216,7 +96,7 @@ foo;
 
 ```
 
-### `11: formatted`
+### `3: formatted`
 
 ```
 let foo = /([abc]+)=\99/;
@@ -224,7 +104,7 @@ foo;
 
 ```
 
-### `12`
+### `4`
 
 ```
 
@@ -248,7 +128,7 @@ foo;
 
 ```
 
-### `12: formatted`
+### `4: formatted`
 
 ```
 let foo = /(([abc])\19)+=\28/;
@@ -256,7 +136,7 @@ foo;
 
 ```
 
-### `13`
+### `5`
 
 ```
 
@@ -273,10 +153,130 @@ foo;
 
 ```
 
-### `13: formatted`
+### `5: formatted`
 
 ```
 let foo = /([abc]+)=\199/;
+foo;
+
+```
+
+### `6`
+
+```
+✔ No known problems!
+
+```
+
+### `6: formatted`
+
+```
+let foo = /([abc]+)=\u0001/;
+foo;
+
+```
+
+### `7`
+
+```
+✔ No known problems!
+
+```
+
+### `7: formatted`
+
+```
+let foo = /([abc]+)=\u0002/;
+foo;
+
+```
+
+### `8`
+
+```
+✔ No known problems!
+
+```
+
+### `8: formatted`
+
+```
+let foo = /([abc]+)=8/;
+foo;
+
+```
+
+### `9`
+
+```
+✔ No known problems!
+
+```
+
+### `9: formatted`
+
+```
+let foo = /([abc]+)=9/;
+foo;
+
+```
+
+### `10`
+
+```
+✔ No known problems!
+
+```
+
+### `10: formatted`
+
+```
+let foo = /([abc]+)=\t9/;
+foo;
+
+```
+
+### `11`
+
+```
+✔ No known problems!
+
+```
+
+### `11: formatted`
+
+```
+let foo = /([abc]+)=\u001b8/;
+foo;
+
+```
+
+### `12`
+
+```
+✔ No known problems!
+
+```
+
+### `12: formatted`
+
+```
+let foo = /([abc]+)=\u00ff/;
+foo;
+
+```
+
+### `13`
+
+```
+✔ No known problems!
+
+```
+
+### `13: formatted`
+
+```
+let foo = /([abc]+)=\?7/;
 foo;
 
 ```

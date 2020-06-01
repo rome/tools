@@ -6,14 +6,14 @@
  */
 
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
 	"no POSIX in regular expression",
 	async (t) => {
-		testLintMultiple(
+		testLint(
 			t,
-			["const pattern = /[[:alpha:]]/", "const pattern = /[[.ch.]]/"],
+			{invalid: ["const pattern = /[[:alpha:]]/", "const pattern = /[[.ch.]]/"]},
 			{category: "lint/js/noPosixInRegularExpression"},
 		);
 	},

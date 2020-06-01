@@ -50,33 +50,89 @@ export const diffConstants = {
 	ADD: DIFF_INSERT,
 };
 
-export function groupDiffByLines(rawDiffs: Diffs): Array<Diffs> {
-	const diffsByLine: Array<Diffs> = [];
+export type GroupDiffs = {
+	diffsByLine: Array<GroupDiffsLine>;
+	beforeLineCount: number;
+	afterLineCount: number;
+};
 
-	// Refers to the current line array being built
-	let line: Diffs = [];
-	function flushLine() {
-		if (line.length > 0) {
-			diffsByLine.push(line);
-			line = [];
+export type GroupDiffsLine = {
+	beforeLine?: number;
+	afterLine?: number;
+	diffs: Diffs;
+};
+
+function generateLineKey(beforeLine?: number, afterLine?: number) {
+	return `${beforeLine || ""}:${afterLine || ""}`;
+}
+
+export function groupDiffByLines(rawDiffs: Diffs): GroupDiffs {
+	const diffsByLine: Array<GroupDiffsLine> = [];
+
+	const modifiedLines: Set<string> = new Set();
+	const insertedLines: Map<string, GroupDiffsLine> = new Map();
+
+	let beforeLine = 1;
+	let afterLine = 1;
+	createLine();
+
+	function getLine(beforeLine?: number, afterLine?: number): GroupDiffsLine {
+		const line = insertedLines.get(generateLineKey(beforeLine, afterLine));
+		if (line === undefined) {
+			throw new Error("Expected line");
+		}
+		return line;
+	}
+
+	function pushLine(beforeLine?: number, afterLine?: number) {
+		const key = generateLineKey(beforeLine, afterLine);
+		if (insertedLines.has(key)) {
+			return;
+		}
+
+		const line: GroupDiffsLine = {beforeLine, afterLine, diffs: []};
+		insertedLines.set(key, line);
+		diffsByLine.push(line);
+	}
+
+	function createLine() {
+		pushLine(beforeLine, afterLine);
+		pushLine(beforeLine, undefined);
+		pushLine(undefined, afterLine);
+	}
+
+	function pushToLine(diff: Diff) {
+		switch (diff[0]) {
+			case diffConstants.ADD: {
+				getLine(undefined, afterLine).diffs.push(diff);
+				modifiedLines.add(generateLineKey(undefined, afterLine));
+				break;
+			}
+
+			case diffConstants.DELETE: {
+				getLine(beforeLine, undefined).diffs.push(diff);
+				modifiedLines.add(generateLineKey(beforeLine));
+				break;
+			}
+
+			case diffConstants.EQUAL: {
+				getLine(beforeLine, afterLine).diffs.push(diff);
+				getLine(undefined, afterLine).diffs.push(diff);
+				getLine(beforeLine, undefined).diffs.push(diff);
+				break;
+			}
 		}
 	}
 
 	for (const tuple of rawDiffs) {
 		const [type, text] = tuple;
 
-		// Deleted lines don't affect the line count
-		if (type === DIFF_DELETE) {
-			line.push(tuple);
-			continue;
-		}
-
 		// Get all the lines
 		const parts = text.split("\n");
 
 		// Doesn't contain a newline
 		if (parts.length <= 1) {
-			line.push(tuple);
+			pushToLine(tuple);
 			continue;
 		}
 
@@ -85,19 +141,59 @@ export function groupDiffByLines(rawDiffs: Diffs): Array<Diffs> {
 
 		// The first chunk belongs to the current line
 		if (currentLine !== "") {
-			line.push([type, currentLine]);
+			pushToLine([type, currentLine]);
 		}
 
 		// Create unique lines for each other chunk
 		for (const newLine of futureLines) {
-			flushLine();
-			line.push([type, newLine]);
+			switch (type) {
+				case diffConstants.EQUAL: {
+					afterLine++;
+					beforeLine++;
+					break;
+				}
+
+				case diffConstants.DELETE: {
+					beforeLine++;
+					break;
+				}
+
+				case diffConstants.ADD: {
+					afterLine++;
+					break;
+				}
+			}
+
+			createLine();
+			pushToLine([type, newLine]);
 		}
 	}
 
-	flushLine();
+	const diffsByLineClean = diffsByLine.filter((line) => {
+		if (line.beforeLine !== undefined && line.afterLine !== undefined) {
+			// Ignore if either side is modified
+			if (
+				modifiedLines.has(generateLineKey(line.beforeLine, undefined)) ||
+				modifiedLines.has(generateLineKey(undefined, line.afterLine))
+			) {
+				return false;
+			}
 
-	return diffsByLine;
+			return true;
+		} else {
+			// Include if either side is modified
+			return (
+				modifiedLines.has(generateLineKey(undefined, line.afterLine)) ||
+				modifiedLines.has(generateLineKey(line.beforeLine, undefined))
+			);
+		}
+	});
+
+	return {
+		diffsByLine: diffsByLineClean,
+		beforeLineCount: beforeLine,
+		afterLineCount: afterLine,
+	};
 }
 
 export default function stringDiff(text1: string, text2: string): Diffs {
