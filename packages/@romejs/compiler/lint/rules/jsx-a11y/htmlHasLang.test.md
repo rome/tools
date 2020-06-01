@@ -149,7 +149,7 @@
 ### `5: formatted`
 
 ```
-<html lang={false}></html>;
+<html lang='en'></html>;
 
 ```
 
@@ -161,48 +161,6 @@
 ```
 
 ### `6: formatted`
-
-```
-<html lang={true}></html>;
-
-```
-
-### `7`
-
-```
-✔ No known problems!
-
-```
-
-### `7: formatted`
-
-```
-<html lang={42}></html>;
-
-```
-
-### `8`
-
-```
-✔ No known problems!
-
-```
-
-### `8: formatted`
-
-```
-<html lang='en'></html>;
-
-```
-
-### `9`
-
-```
-✔ No known problems!
-
-```
-
-### `9: formatted`
 
 ```
 <html lang={language}></html>;

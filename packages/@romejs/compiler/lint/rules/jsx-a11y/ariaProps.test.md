@@ -7,104 +7,6 @@
 ### `0`
 
 ```
-✔ No known problems!
-
-```
-
-### `0: formatted`
-
-```
-<div />;
-
-```
-
-### `1`
-
-```
-✔ No known problems!
-
-```
-
-### `1: formatted`
-
-```
-<div></div>;
-
-```
-
-### `2`
-
-```
-✔ No known problems!
-
-```
-
-### `2: formatted`
-
-```
-<div aria='wee'></div>;
-
-```
-
-### `3`
-
-```
-✔ No known problems!
-
-```
-
-### `3: formatted`
-
-```
-<div abcARIAdef='true'></div>;
-
-```
-
-### `4`
-
-```
-✔ No known problems!
-
-```
-
-### `4: formatted`
-
-```
-<div fooaria-foobar='true'></div>;
-
-```
-
-### `5`
-
-```
-✔ No known problems!
-
-```
-
-### `5: formatted`
-
-```
-<div fooaria-hidden='true'></div>;
-
-```
-
-### `6`
-
-```
-✔ No known problems!
-
-```
-
-### `6: formatted`
-
-```
-<input type='text' aria-errormessage='foobar' />;
-
-```
-
-### `7`
-
-```
 
  unknown:1:20 lint/jsx-a11y/ariaProps FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -123,14 +25,14 @@
 
 ```
 
-### `7: formatted`
+### `0: formatted`
 
 ```
 <input className='' aria-labell='' />;
 
 ```
 
-### `8`
+### `1`
 
 ```
 
@@ -147,14 +49,14 @@
 
 ```
 
-### `8: formatted`
+### `1: formatted`
 
 ```
 <div aria-='foobar' />;
 
 ```
 
-### `9`
+### `2`
 
 ```
 
@@ -175,14 +77,14 @@
 
 ```
 
-### `9: formatted`
+### `2: formatted`
 
 ```
 <div aria-labeledby='foobar' />;
 
 ```
 
-### `10`
+### `3`
 
 ```
 
@@ -199,9 +101,107 @@
 
 ```
 
-### `10: formatted`
+### `3: formatted`
 
 ```
 <div aria-skldjfaria-klajsd='foobar' />;
+
+```
+
+### `4`
+
+```
+✔ No known problems!
+
+```
+
+### `4: formatted`
+
+```
+<div />;
+
+```
+
+### `5`
+
+```
+✔ No known problems!
+
+```
+
+### `5: formatted`
+
+```
+<div></div>;
+
+```
+
+### `6`
+
+```
+✔ No known problems!
+
+```
+
+### `6: formatted`
+
+```
+<div aria='wee'></div>;
+
+```
+
+### `7`
+
+```
+✔ No known problems!
+
+```
+
+### `7: formatted`
+
+```
+<div abcARIAdef='true'></div>;
+
+```
+
+### `8`
+
+```
+✔ No known problems!
+
+```
+
+### `8: formatted`
+
+```
+<div fooaria-foobar='true'></div>;
+
+```
+
+### `9`
+
+```
+✔ No known problems!
+
+```
+
+### `9: formatted`
+
+```
+<div fooaria-hidden='true'></div>;
+
+```
+
+### `10`
+
+```
+✔ No known problems!
+
+```
+
+### `10: formatted`
+
+```
+<input type='text' aria-errormessage='foobar' />;
 
 ```

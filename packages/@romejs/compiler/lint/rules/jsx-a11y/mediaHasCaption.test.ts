@@ -1,22 +1,24 @@
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
 	"jsx-a11y has caption",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				"<audio {...props} />",
-				"<video {...props} />",
-				"<audio>child</audio>",
-				"<video>child</audio>",
-				// VALID
-				"<audio><track kind='captions' {...props} /></audio>",
-				"<video><track kind='captions' {...props} /></video>",
-				"<video muted {...props} ></video>",
-			],
+			{
+				invalid: [
+					"<audio {...props} />",
+					"<video {...props} />",
+					"<audio>child</audio>",
+					"<video>child</audio>",
+				],
+				valid: [
+					"<audio><track kind='captions' {...props} /></audio>",
+					"<video><track kind='captions' {...props} /></video>",
+					"<video muted {...props} ></video>",
+				],
+			},
 			{category: "lint/jsx-a11y/mediaHasCaption"},
 		);
 	},
