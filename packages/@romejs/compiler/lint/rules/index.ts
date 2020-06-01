@@ -81,6 +81,7 @@ import jsxFragments from "./react/jsxFragments";
 import jsxKey from "./react/jsxKey";
 import jsxNoCommentText from "./react/jsxNoCommentText";
 import jsxNoDuplicateProps from "./react/jsxNoDuplicateProps";
+import jsxNoLiterals from "./react/jsxNoLiterals";
 import noAccessStateInSetState from "./react/noAccessStateInSetState";
 import noChildrenProp from "./react/noChildrenProp";
 import noDanger from "./react/noDanger";
@@ -174,6 +175,7 @@ export const lintTransforms = [
 	jsxKey,
 	jsxNoCommentText,
 	jsxNoDuplicateProps,
+	jsxNoLiterals,
 	noAccessStateInSetState,
 	noChildrenProp,
 	noDanger,

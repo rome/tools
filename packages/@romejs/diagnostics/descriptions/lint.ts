@@ -68,6 +68,10 @@ export const lint = createDiagnosticsCategory({
 		category: "lint/react/jsxNoDuplicateProps",
 		message: `Avoid duplicate component props. Check the <emphasis>${key}</emphasis> prop.`,
 	}),
+	REACT_JSX_NO_LITERALS: {
+		category: "lint/react/jsxNoLiterals",
+		message: "Wrap the literal in jsx with jsx expression.",
+	},
 	REACT_NO_STRING_REFS: (details: string) => ({
 		category: "lint/react/noStringRefs",
 		message: `Using ${details} is a deprecated pattern.`,
