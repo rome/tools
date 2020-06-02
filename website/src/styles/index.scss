@@ -42,6 +42,7 @@
     min-width: 256px;
     padding-top: 64px + $unit;
     background: var(--background-color);
+    height: 100%;
 
     &.visible {
       transform: translateX(0);
