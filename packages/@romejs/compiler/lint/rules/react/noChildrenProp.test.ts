@@ -6,23 +6,25 @@
  */
 
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
 	"react no children props",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				"<MyComponent children={'foo'}></MyComponent>",
-				"React.createElement('div', {children: 'foo'})",
-				"createElement('div', {children: 'foo'})",
-				// VALID
-				"<MyComponent><AnotherComponent /></MyComponent  >",
-				"React.createElement('div', {}, 'children')",
-				"React.createElement('div', child1, 'child2')",
-			],
+			{
+				invalid: [
+					"<MyComponent children={'foo'}></MyComponent>",
+					"React.createElement('div', {children: 'foo'})",
+					"createElement('div', {children: 'foo'})",
+				],
+				valid: [
+					"<MyComponent><AnotherComponent /></MyComponent  >",
+					"React.createElement('div', {}, 'children')",
+					"React.createElement('div', child1, 'child2')",
+				],
+			},
 			{category: "lint/react/noChildrenProp"},
 		);
 	},

@@ -8,16 +8,16 @@
 
 ```
 
- unknown:4:12 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:3:2 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentWillUpdate method.
 
-    2 │         class Hello extends React.Component {
-    3 │           componentWillUpdate() {
-  > 4 │             this.setState({
-      │             ^^^^^^^^^^^^^
-    5 │               name: 'John'
-    6 │             });
+    1 │ class Hello extends React.Component {
+    2 │  componentWillUpdate() {
+  > 3 │   this.setState({
+      │   ^^^^^^^^^^^^^
+    4 │    name: 'John'
+    5 │   });
 
   ℹ Updating state immediately before a scheduled render causes a second render that can causevisual
     layout thrashing.
@@ -45,16 +45,16 @@ class Hello extends React.Component {
 
 ```
 
- unknown:5:12 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:2 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentWillUpdate method.
 
-    3 │           componentWillUpdate() {
-    4 │             foo();
-  > 5 │             this.setState({
-      │             ^^^^^^^^^^^^^
-    6 │               name: 'John'
-    7 │             });
+    2 │  componentWillUpdate() {
+    3 │   foo();
+  > 4 │   this.setState({
+      │   ^^^^^^^^^^^^^
+    5 │    name: 'John'
+    6 │   });
 
   ℹ Updating state immediately before a scheduled render causes a second render that can causevisual
     layout thrashing.
@@ -83,16 +83,16 @@ class Hello extends React.Component {
 
 ```
 
- unknown:4:12 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:3:2 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentWillUpdate method.
 
-    2 │         class Hello extends Component {
-    3 │           componentWillUpdate() {
-  > 4 │             this.setState({
-      │             ^^^^^^^^^^^^^
-    5 │               name: 'John'
-    6 │             });
+    1 │ class Hello extends Component {
+    2 │  componentWillUpdate() {
+  > 3 │   this.setState({
+      │   ^^^^^^^^^^^^^
+    4 │    name: 'John'
+    5 │   });
 
   ℹ Updating state immediately before a scheduled render causes a second render that can causevisual
     layout thrashing.
@@ -120,16 +120,16 @@ class Hello extends Component {
 
 ```
 
- unknown:5:12 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:2 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentWillUpdate method.
 
-    3 │           componentWillUpdate() {
-    4 │             foo();
-  > 5 │             this.setState({
-      │             ^^^^^^^^^^^^^
-    6 │               name: 'John'
-    7 │             });
+    2 │  componentWillUpdate() {
+    3 │   foo();
+  > 4 │   this.setState({
+      │   ^^^^^^^^^^^^^
+    5 │    name: 'John'
+    6 │   });
 
   ℹ Updating state immediately before a scheduled render causes a second render that can causevisual
     layout thrashing.
@@ -158,16 +158,16 @@ class Hello extends Component {
 
 ```
 
- unknown:4:12 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:3:2 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentWillUpdate method.
 
-    2 │         class Hello extends React.Component {
-    3 │           UNSAFE_componentWillUpdate() {
-  > 4 │             this.setState({
-      │             ^^^^^^^^^^^^^
-    5 │               name: 'John'
-    6 │             });
+    1 │ class Hello extends React.Component {
+    2 │  UNSAFE_componentWillUpdate() {
+  > 3 │   this.setState({
+      │   ^^^^^^^^^^^^^
+    4 │    name: 'John'
+    5 │   });
 
   ℹ Updating state immediately before a scheduled render causes a second render that can causevisual
     layout thrashing.
@@ -195,16 +195,16 @@ class Hello extends React.Component {
 
 ```
 
- unknown:4:12 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:3:2 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentWillUpdate method.
 
-    2 │         class Hello extends Component {
-    3 │           UNSAFE_componentWillUpdate() {
-  > 4 │             this.setState({
-      │             ^^^^^^^^^^^^^
-    5 │               name: 'John'
-    6 │             });
+    1 │ class Hello extends Component {
+    2 │  UNSAFE_componentWillUpdate() {
+  > 3 │   this.setState({
+      │   ^^^^^^^^^^^^^
+    4 │    name: 'John'
+    5 │   });
 
   ℹ Updating state immediately before a scheduled render causes a second render that can causevisual
     layout thrashing.

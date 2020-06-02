@@ -7,115 +7,6 @@
 ### `0`
 
 ```
-✔ No known problems!
-
-```
-
-### `0: formatted`
-
-```
-const age: number = 17;
-age;
-
-```
-
-### `1`
-
-```
-✔ No known problems!
-
-```
-
-### `1: formatted`
-
-```
-const ages: Array<number> = [17];
-ages;
-
-```
-
-### `2`
-
-```
-✔ No known problems!
-
-```
-
-### `2: formatted`
-
-```
-function greet(): string {}
-greet();
-
-```
-
-### `3`
-
-```
-✔ No known problems!
-
-```
-
-### `3: formatted`
-
-```
-function greet(): Array<string> {}
-greet();
-
-```
-
-### `4`
-
-```
-✔ No known problems!
-
-```
-
-### `4: formatted`
-
-```
-function greet(): Array<Array<string>> {}
-greet();
-
-```
-
-### `5`
-
-```
-✔ No known problems!
-
-```
-
-### `5: formatted`
-
-```
-function greet(param: Array<string>): string {
-	return param;
-}
-greet();
-
-```
-
-### `6`
-
-```
-✔ No known problems!
-
-```
-
-### `6: formatted`
-
-```
-function greet(param: Array<string>): Array<string> {
-	return param;
-}
-greet();
-
-```
-
-### `7`
-
-```
 
  unknown:1:11 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -132,7 +23,7 @@ greet();
 
 ```
 
-### `7: formatted`
+### `0: formatted`
 
 ```
 const age: any = "seventeen";
@@ -140,7 +31,7 @@ age;
 
 ```
 
-### `8`
+### `1`
 
 ```
 
@@ -159,7 +50,7 @@ age;
 
 ```
 
-### `8: formatted`
+### `1: formatted`
 
 ```
 const ages: Array<any> = ["seventeen"];
@@ -167,7 +58,7 @@ ages;
 
 ```
 
-### `9`
+### `2`
 
 ```
 
@@ -186,7 +77,7 @@ ages;
 
 ```
 
-### `9: formatted`
+### `2: formatted`
 
 ```
 const ages: Array<any> = ["seventeen"];
@@ -194,7 +85,7 @@ ages;
 
 ```
 
-### `10`
+### `3`
 
 ```
 
@@ -213,7 +104,7 @@ ages;
 
 ```
 
-### `10: formatted`
+### `3: formatted`
 
 ```
 function greet(): any {}
@@ -221,7 +112,7 @@ greet();
 
 ```
 
-### `11`
+### `4`
 
 ```
 
@@ -240,7 +131,7 @@ greet();
 
 ```
 
-### `11: formatted`
+### `4: formatted`
 
 ```
 function greet(): Array<any> {}
@@ -248,7 +139,7 @@ greet();
 
 ```
 
-### `12`
+### `5`
 
 ```
 
@@ -267,7 +158,7 @@ greet();
 
 ```
 
-### `12: formatted`
+### `5: formatted`
 
 ```
 function greet(): Array<any> {}
@@ -275,7 +166,7 @@ greet();
 
 ```
 
-### `13`
+### `6`
 
 ```
 
@@ -294,7 +185,7 @@ greet();
 
 ```
 
-### `13: formatted`
+### `6: formatted`
 
 ```
 function greet(): Array<Array<any>> {}
@@ -302,7 +193,7 @@ greet();
 
 ```
 
-### `14`
+### `7`
 
 ```
 
@@ -321,7 +212,7 @@ greet();
 
 ```
 
-### `14: formatted`
+### `7: formatted`
 
 ```
 function greet(param: Array<any>): string {
@@ -331,7 +222,7 @@ greet();
 
 ```
 
-### `15`
+### `8`
 
 ```
 
@@ -359,10 +250,119 @@ greet();
 
 ```
 
-### `15: formatted`
+### `8: formatted`
 
 ```
 function greet(param: Array<any>): Array<any> {
+	return param;
+}
+greet();
+
+```
+
+### `9`
+
+```
+✔ No known problems!
+
+```
+
+### `9: formatted`
+
+```
+const age: number = 17;
+age;
+
+```
+
+### `10`
+
+```
+✔ No known problems!
+
+```
+
+### `10: formatted`
+
+```
+const ages: Array<number> = [17];
+ages;
+
+```
+
+### `11`
+
+```
+✔ No known problems!
+
+```
+
+### `11: formatted`
+
+```
+function greet(): string {}
+greet();
+
+```
+
+### `12`
+
+```
+✔ No known problems!
+
+```
+
+### `12: formatted`
+
+```
+function greet(): Array<string> {}
+greet();
+
+```
+
+### `13`
+
+```
+✔ No known problems!
+
+```
+
+### `13: formatted`
+
+```
+function greet(): Array<Array<string>> {}
+greet();
+
+```
+
+### `14`
+
+```
+✔ No known problems!
+
+```
+
+### `14: formatted`
+
+```
+function greet(param: Array<string>): string {
+	return param;
+}
+greet();
+
+```
+
+### `15`
+
+```
+✔ No known problems!
+
+```
+
+### `15: formatted`
+
+```
+function greet(param: Array<string>): Array<string> {
 	return param;
 }
 greet();

@@ -8,16 +8,14 @@
 
 ```
 
- unknown:2:8 lint/react/noRedundantShouldComponentUpdate ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/noRedundantShouldComponentUpdate ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not implement shouldComponentUpdate when extending React.PureComponent.
 
-  > 2 │         class Hello extends React.PureComponent {
-      │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  > 3 │           shouldComponentUpdate() {}
-  > 4 │         }
-      │ ^^^^^^^^^
-    5 │     
+  > 1 │ class Hello extends React.PureComponent {
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 2 │  shouldComponentUpdate() {}
+  > 3 │ }
 
   ℹ When the shouldComponentUpdate method is implemented, extending React.PureComponent provides no
     benefit.
@@ -41,16 +39,14 @@ class Hello extends React.PureComponent {
 
 ```
 
- unknown:2:8 lint/react/noRedundantShouldComponentUpdate ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/noRedundantShouldComponentUpdate ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not implement shouldComponentUpdate when extending React.PureComponent.
 
-  > 2 │         class Hello extends PureComponent {
-      │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  > 3 │           shouldComponentUpdate() {}
-  > 4 │         }
-      │ ^^^^^^^^^
-    5 │         
+  > 1 │ class Hello extends PureComponent {
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 2 │  shouldComponentUpdate() {}
+  > 3 │ }
 
   ℹ When the shouldComponentUpdate method is implemented, extending React.PureComponent provides no
     benefit.

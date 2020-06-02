@@ -1,30 +1,33 @@
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
 	"react in jsx scope",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				`
-				export function HelloWorldComponent() {
-					return <div>
-							Hello World!!!
-					</div>;
-				}
-				`,
-				// VALID
-				`
-				import React from "react";
-				export function HelloWorldComponent() {
-					return <div>
-							Hello World!!!
-					</div>;
-				}
-				`,
-			],
+			{
+				invalid: [
+					dedent`
+						export function HelloWorldComponent() {
+							return <div>
+									Hello World!!!
+							</div>;
+						}
+					`,
+				],
+				valid: [
+					dedent`
+						import React from "react";
+						export function HelloWorldComponent() {
+							return <div>
+									Hello World!!!
+							</div>;
+						}
+					`,
+				],
+			},
 			{category: "lint/react/reactInJsxScope"},
 		);
 	},
