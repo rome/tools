@@ -7,7 +7,7 @@
 ### `console`
 
 ```
-[2K[1G[2K[1G[2K[1G
+
  project/index.js:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The unknownVariable variable is undeclared.
@@ -55,7 +55,7 @@ unknownVariable
 ### `console`
 
 ```
-[2K[1G[2K[1G[2K[1G
+
  project/index.js:1:4 lint/js/undeclaredVariables OUTDATED ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The unformatted variable is undeclared.
