@@ -1,19 +1,15 @@
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
 	"jsx-a11y scope",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				"<div scope={scope} />",
-				'<div scope="col" />',
-				// VALID
-				"<th scope={scope}></th>",
-				'<th scope="col"></th>',
-			],
+			{
+				invalid: ["<div scope={scope} />", '<div scope="col" />'],
+				valid: ["<th scope={scope}></th>", '<th scope="col"></th>'],
+			},
 			{category: "lint/jsx-a11y/scope"},
 		);
 	},

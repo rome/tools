@@ -1,27 +1,29 @@
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
 	"jsx-a11y aria unsupported elements",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				"<meta charset='UTF-8' aria-hidden='false' />",
-				"<meta charset='UTF-8' role='meta' />",
-				"<html aria-required='true' />",
-				"<html role='html'></html>",
-				"<script aria-label='script'></script>",
-				"<script role='script'></script>",
-				"<style aria-labelledby></style>",
-				"<style role='style'></style>",
-				// VALID
-				"<meta charset='UTF-8' />",
-				"<html maria='text'></html>",
-				"<script></script>",
-				"<style parole></style>",
-			],
+			{
+				invalid: [
+					"<meta charset='UTF-8' aria-hidden='false' />",
+					"<meta charset='UTF-8' role='meta' />",
+					"<html aria-required='true' />",
+					"<html role='html'></html>",
+					"<script aria-label='script'></script>",
+					"<script role='script'></script>",
+					"<style aria-labelledby></style>",
+					"<style role='style'></style>",
+				],
+				valid: [
+					"<meta charset='UTF-8' />",
+					"<html maria='text'></html>",
+					"<script></script>",
+					"<style parole></style>",
+				],
+			},
 			{category: "lint/jsx-a11y/ariaUnsupportedElements"},
 		);
 	},

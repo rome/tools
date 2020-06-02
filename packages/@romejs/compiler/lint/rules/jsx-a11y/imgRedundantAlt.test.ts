@@ -6,26 +6,24 @@
  */
 
 import {test} from "rome";
-
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
 	"jsx-a11y img redundant alt",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				'<img src="src" alt="photo content" />',
-				'<img src="src" alt="picture content" />',
-				'<img src="src" alt="image content" />',
-				'<img src="src" alt="Photo content" />',
-				'<img src="src" alt="Picture content" />',
-				'<img src="src" alt="Image content" />',
-				// VALID
-				'<img src="src" alt="alt" />',
-				'<img src="src" alt={photo} />',
-			],
+			{
+				invalid: [
+					'<img src="src" alt="photo content" />',
+					'<img src="src" alt="picture content" />',
+					'<img src="src" alt="image content" />',
+					'<img src="src" alt="Photo content" />',
+					'<img src="src" alt="Picture content" />',
+					'<img src="src" alt="Image content" />',
+				],
+				valid: ['<img src="src" alt="alt" />', '<img src="src" alt={photo} />'],
+			},
 			{category: "lint/jsx-a11y/imgRedundantAlt"},
 		);
 	},

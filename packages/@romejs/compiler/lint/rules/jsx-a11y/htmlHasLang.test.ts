@@ -6,28 +6,26 @@
  */
 
 import {test} from "rome";
-
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
 	"jsx-a11y has lang",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				"<html></html>",
-				"<html {...props}></html>",
-				'<html lang=""></html>',
-				'<html lang={""}></html>',
-				"<html lang={undefined}></html>",
-				"<html lang={false}></html>",
-				"<html lang={true}></html>",
-				"<html lang={42}></html>",
-				// VALID
-				'<html lang="en"></html>',
-				"<html lang={language}></html>",
-			],
+			{
+				invalid: [
+					"<html></html>",
+					"<html {...props}></html>",
+					'<html lang=""></html>',
+					'<html lang={""}></html>',
+					"<html lang={undefined}></html>",
+					// "<html lang={false}></html>",
+					// "<html lang={true}></html>",
+					// "<html lang={42}></html>",
+				],
+				valid: ['<html lang="en"></html>', "<html lang={language}></html>"],
+			},
 			{category: "lint/jsx-a11y/htmlHasLang"},
 		);
 	},

@@ -111,20 +111,6 @@
 ### `4`
 
 ```
-✔ No known problems!
-
-```
-
-### `4: formatted`
-
-```
-<iframe title={``} />;
-
-```
-
-### `5`
-
-```
 
  unknown:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -141,10 +127,24 @@
 
 ```
 
-### `5: formatted`
+### `4: formatted`
 
 ```
 <iframe title={undefined} />;
+
+```
+
+### `5`
+
+```
+✔ No known problems!
+
+```
+
+### `5: formatted`
+
+```
+<iframe title='title' />;
 
 ```
 
@@ -156,62 +156,6 @@
 ```
 
 ### `6: formatted`
-
-```
-<iframe title={false} />;
-
-```
-
-### `7`
-
-```
-✔ No known problems!
-
-```
-
-### `7: formatted`
-
-```
-<iframe title={true} />;
-
-```
-
-### `8`
-
-```
-✔ No known problems!
-
-```
-
-### `8: formatted`
-
-```
-<iframe title={42} />;
-
-```
-
-### `9`
-
-```
-✔ No known problems!
-
-```
-
-### `9: formatted`
-
-```
-<iframe title='title' />;
-
-```
-
-### `10`
-
-```
-✔ No known problems!
-
-```
-
-### `10: formatted`
 
 ```
 <iframe title={title}></iframe>;

@@ -1,21 +1,20 @@
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
 	"jsx-a11y anchor has content",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				"<a />",
-				"<a><TextWrapper aria-hidden /></a>",
-				// VALID
-				"<a>Anchor Content!</a>",
-				"<a><TextWrapper /></a>",
-				"<a dangerouslySetInnerHTML={{ __html: 'foo' }} />",
-				"<a><TextWrapper aria-hidden /> visible content</a>",
-			],
+			{
+				invalid: ["<a />", "<a><TextWrapper aria-hidden /></a>"],
+				valid: [
+					"<a>Anchor Content!</a>",
+					"<a><TextWrapper /></a>",
+					"<a dangerouslySetInnerHTML={{ __html: 'foo' }} />",
+					"<a><TextWrapper aria-hidden /> visible content</a>",
+				],
+			},
 			{category: "lint/jsx-a11y/anchorHasContent"},
 		);
 	},
