@@ -2,8 +2,8 @@
 // so i can align the website in the middle of the page
 
 .header-mobile {
+  background: var(--background-color);
   z-index: 3;
-  background-color: #ffffff;
   height: $unit * 4;
   display: none;
   position: fixed;
@@ -12,7 +12,7 @@
   top: 0;
   align-items: center;
   padding: 0 $unit;
-  border-top: $unit / 3 solid $gray-4;
+  border-top: $unit / 3 solid var(--top-border-color);
 
   .stretch {
     flex-grow: 1;
@@ -20,13 +20,12 @@
 
   @include mobile-only() {
     width: 100%;
-    border-bottom: 1px solid $gray-7;
+    border-bottom: 1px solid var(--soft-border-color);
     display: flex;
   }
 }
 
 .header-desktop{
-  background-color: #ffffff;
   height: $unit * 4;
   display: flex;
   align-items: center;

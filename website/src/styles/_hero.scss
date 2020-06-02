@@ -1,8 +1,7 @@
 .hero {
   position: relative;
   padding: $unit * 2;
-  color: rgb(68, 73, 80);
-  border-bottom: 1px solid $gray-7;
+  border-bottom: 1px solid var(--soft-border-color);
   @include pattern-white;
 
   @include mobile-only() {

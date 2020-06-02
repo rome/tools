@@ -15,6 +15,32 @@ $gray-6: #9B9D99;
 $gray-7: #E8E8E8;
 
 
+:root {
+
+  --background-color: #fff;
+  --font-color: #{$gray-4};
+  --top-border-color: #{$gray-4};
+  --soft-border-color: #{$gray-7};
+  --pattern-color: #{rgba($gray-7, 0.6)};
+  --pattern-img-path: url("/static/img/pattern-white.png");
+  --toc-background-active: #{$gray-4};
+  --toc-link-color-active: #{$color-4};
+
+}
+
+html[data-theme='dark'] {
+
+  --background-color: #{$gray-4};
+  --font-color: #{$gray-7};
+  --top-border-color: #{$color-4};
+  --soft-border-color: #{$gray-3};
+  --pattern-color: #{rgba($gray-3, 0.4)};
+  --pattern-img-path: url("/static/img/pattern-black.png");
+  --toc-background-active: #{$color-4};
+  --toc-link-color-active: #{$gray-4};
+
+}
+
 $sidebar-width: 20%;
 $container-width: 100%;
 

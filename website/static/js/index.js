@@ -6,6 +6,7 @@ const elements = {
   overlay: document.getElementsByClassName('overlay')[0],
   headings: [...document.querySelectorAll('.content h1, .content h2, .content h3')],
   headerMobile: document.getElementsByClassName('header-mobile')[0],
+  themeToggle: document.getElementById('theme-toggle')
 };
 
 function isMobile(){
@@ -98,6 +99,23 @@ function mobileToggleEvent(event){
   toc.highlight();
 }
 
+function themeToggle(event){
+
+  event.preventDefault();
+
+  const $doc = document.documentElement;
+  const atribute = $doc.getAttribute('data-theme');
+
+  if(atribute === 'light'){
+    $doc.setAttribute('data-theme', 'dark');
+  }
+
+  if(atribute === 'dark'){
+    $doc.setAttribute('data-theme', 'light');
+  }
+
+}
+
 //remove permalinkSymbol "#" from table of contents
 elements.tocLinks.forEach(function(link){
   link.innerText = link.innerText.replace(/(\s#)$/,'');
@@ -110,3 +128,5 @@ elements.mobileHandle.addEventListener('click', mobileToggleEvent, false);
 elements.overlay.addEventListener('click', mobileToggleEvent, false);
 elements.overlay.addEventListener("touchstart", mobileToggleEvent, false);
 window.addEventListener('scroll', handleScroll, false);
+
+elements.themeToggle.addEventListener('click', themeToggle, false);

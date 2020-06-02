@@ -1,5 +1,4 @@
 .table-of-contents {
-  background-color: #ffffff;
 
   ol{
     margin: 0;
@@ -24,8 +23,8 @@
     transition-duration: 100ms;
 
     &.active {
-      color: $color-4;
-      background-color: $gray-4;
+      color: var(--toc-link-color-active);
+      background-color: var(--toc-background-active);
       font-weight: bold;
     }
 

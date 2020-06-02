@@ -24,9 +24,8 @@
   position: sticky;
   top: 0;
   height: 100vh;
-  border-right: 1px solid $gray-7;
-  background-color: #ffffff;
-  transition-property: transform, border-top-width;
+  border-right: 1px solid var(--soft-border-color);
+  transition-property: transform, border-top-width, border-right;
   z-index: 2;
   min-width: 256px;
 
@@ -42,6 +41,7 @@
     position: fixed;
     min-width: 256px;
     padding-top: 64px + $unit;
+    background: var(--background-color);
 
     &.visible {
       transform: translateX(0);
@@ -83,10 +83,13 @@
 
 .menu {
   padding-bottom: $unit;
-  border-bottom: 1px solid #e8e8e8;
+  border-bottom: 1px solid var(--soft-border-color);
   margin-bottom: $unit;
   font-weight: bold;
-  display: none;
+  // display: none;
+  @include transition-timing;
+  transition-property: border-bottom;
+
   ul{
     margin: 0;
     padding: 0;
@@ -101,6 +104,7 @@
     text-decoration: none;
     font-size: 1.1em;
     transition-duration: 100ms;
+    transition-property: color;
     height: auto;
     padding: $unit / 5 $unit / 2;
     margin-left: $unit / 2;
