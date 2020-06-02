@@ -8,15 +8,15 @@ $color-7: #FFFCB4;
 
 $gray-1: darken(#27272A, 15%);
 $gray-2: darken(#27272A, 10%);
-$gray-3: darken(#27272A, 4%);
+$gray-3: darken(#27272A, 3%);
 $gray-4: #27272A; //logo gray
 $gray-5: lighten(#27272A, 25%);
 $gray-6: lighten(#27272A, 45%);
 $gray-7: lighten(#27272A, 75%);
 $gray-8: lighten(#27272A, 80%);
 
-
 :root {
+
   --logo-font-color: #{$gray-4};
   --background-color: #fff;
   --font-color: #{$gray-4};
@@ -24,8 +24,8 @@ $gray-8: lighten(#27272A, 80%);
   --soft-border-color: #{$gray-7};
   --pattern-color: #{rgba($gray-7, 0.6)};
   --pattern-img-path: url("/static/img/pattern-white.png");
-  --toc-background-active: #{$gray-4};
-  --toc-link-color-active: #{$color-4};
+  --toc-background-active: #{$gray-8};
+  --toc-link-color-active: #{$gray-4};
 
 }
 
@@ -38,8 +38,8 @@ html[data-theme='dark'] {
   --soft-border-color: #{$gray-3};
   --pattern-color: #{rgba($gray-3, 0.4)};
   --pattern-img-path: url("/static/img/pattern-black.png");
-  --toc-background-active: #{$color-4};
-  --toc-link-color-active: #{$gray-4};
+  --toc-background-active: #{$gray-3};
+  --toc-link-color-active: #{$gray-8};
 
 }
 

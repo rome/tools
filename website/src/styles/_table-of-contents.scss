@@ -19,7 +19,7 @@
     border-radius: 2px;
     display: inline-block;
     @include transition-timing;
-    transition-property: color, background-color;
+    transition-property: background-color;
     transition-duration: 100ms;
 
     &.active {
