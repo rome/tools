@@ -6,17 +6,18 @@ $color-5: #FFDC1C;
 $color-6: #FFF065;
 $color-7: #FFFCB4;
 
-$gray-1: #030303;
-$gray-2: #040404;
-$gray-3: #101111;
+$gray-1: darken(#27272A, 15%);
+$gray-2: darken(#27272A, 10%);
+$gray-3: darken(#27272A, 4%);
 $gray-4: #27272A; //logo gray
-$gray-5: #565A59;
-$gray-6: #9B9D99;
-$gray-7: #E8E8E8;
+$gray-5: lighten(#27272A, 25%);
+$gray-6: lighten(#27272A, 45%);
+$gray-7: lighten(#27272A, 75%);
+$gray-8: lighten(#27272A, 80%);
 
 
 :root {
-
+  --logo-font-color: #{$gray-4};
   --background-color: #fff;
   --font-color: #{$gray-4};
   --top-border-color: #{$gray-4};
@@ -30,8 +31,9 @@ $gray-7: #E8E8E8;
 
 html[data-theme='dark'] {
 
+  --logo-font-color: #{$gray-8};
   --background-color: #{$gray-4};
-  --font-color: #{$gray-7};
+  --font-color: #{lighten(#27272A, 65%)};
   --top-border-color: #{$color-4};
   --soft-border-color: #{$gray-3};
   --pattern-color: #{rgba($gray-3, 0.4)};
@@ -40,6 +42,8 @@ html[data-theme='dark'] {
   --toc-link-color-active: #{$gray-4};
 
 }
+
+$body-line-height: 1.5em;
 
 $sidebar-width: 20%;
 $container-width: 100%;

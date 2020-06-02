@@ -23,3 +23,9 @@
     border-radius: $unit-border-radius;
   }
 }
+
+.content h1 {
+  border-bottom: 1px solid var(--soft-border-color);
+  padding-bottom: $unit;
+  margin-top: $unit * 2;
+}

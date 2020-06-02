@@ -40,8 +40,8 @@ const toc = {
         offsetTop = (nextElement.offsetTop);
       }
 
-      let start = (y - marginTop) - toc.getMobileNavbarHeight() - 2;
-      let end = (offsetTop - toc.getMobileNavbarHeight()) - (marginTop) - 5;
+      let start = (y - marginTop) - toc.getMobileNavbarHeight() - 10;
+      let end = (offsetTop - toc.getMobileNavbarHeight()) - (marginTop) - 13;
 
       if (scrollY > start && scrollY < end) {
 

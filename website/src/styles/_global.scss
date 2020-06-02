@@ -19,7 +19,7 @@ body {
   text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
   color: var(--font-color);
-  line-height: 1.65;
+  line-height: 1.5;
   margin: 0;
   @include transition-timing;
   transition-property: border-top, color;
@@ -28,11 +28,36 @@ body {
   }
 }
 
+p{
+  margin-bottom: 1.5em;
+}
+
+h1{
+  font-size: 2em;
+  line-height: $body-line-height / 2em;
+}
+
+h2{
+  font-size: 1.5em;
+  line-height: $body-line-height / 1.5em;
+}
+
+h3{
+  font-size: 1em;
+  line-height: $body-line-height / 1em;
+}
+
+h3{
+  font-size: 0.7em;
+  line-height: $body-line-height / 0.7em;
+}
+
 h1,
 h2,
 h3,
 h4 {
   font-family: Libre Baskerville, serif;
+  color: var(--logo-font-color);
 }
 
 a {

@@ -18,7 +18,7 @@
   list-style: none;
   overflow-y: auto;
   overflow-x: hidden;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   padding: $unit;
   padding-right: 0;
   position: sticky;
@@ -109,18 +109,19 @@
     padding: $unit / 5 $unit / 2;
     margin-left: $unit / 2;
     display: inline-block;
+    color: var(--logo-font-color);
   }
 
   a:hover{
     padding-left: $unit / 1.5;
     text-decoration: dashed;
-    color: $gray-5;
+    opacity: 0.7;
   }
 
   a:active{
     padding-left: $unit / 1.5;
     text-decoration: dashed;
-    color: $gray-6;
+    opacity: 0.6;
   }
 
 }
