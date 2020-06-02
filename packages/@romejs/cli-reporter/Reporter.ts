@@ -732,8 +732,10 @@ export default class Reporter {
 	}
 
 	clearLineSpecific(stream: ReporterStream) {
-		stream.write(ansiEscapes.eraseLine);
-		stream.write(ansiEscapes.cursorTo(0));
+		if (stream.format === "ansi") {
+			stream.write(ansiEscapes.eraseLine);
+			stream.write(ansiEscapes.cursorTo(0));
+		}
 	}
 
 	writeAll(msg: string, opts: LogOptions = {}) {
