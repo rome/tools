@@ -48,6 +48,21 @@ test(
 								break;
 						}
 					`,
+					dedent`
+						const expr = 3;
+						switch (expr) {
+							case 1:
+								break;
+							case 2n:
+								break;
+							case 3:
+								break;
+							case 2n:
+								break;
+							default:
+								break;
+						}
+					`,
 				],
 				valid: [
 					dedent`
@@ -60,6 +75,21 @@ test(
 							case 'c':
 								break;
 							case 'd':
+								break;
+							default:
+								break;
+						}
+					`,
+					dedent`
+						const expr = 3;
+						switch (expr) {
+							case 1:
+								break;
+							case 2:
+								break;
+							case 3:
+								break;
+							case 2n:
 								break;
 							default:
 								break;

@@ -21,7 +21,8 @@ export default {
 				if (
 					param.test &&
 					(param.test.type === "JSStringLiteral" ||
-					param.test.type === "JSNumericLiteral")
+					param.test.type === "JSNumericLiteral" ||
+					param.test.type === "JSBigIntLiteral")
 				) {
 					const {test} = param;
 

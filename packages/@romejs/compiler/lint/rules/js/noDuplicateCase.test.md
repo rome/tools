@@ -93,11 +93,53 @@ switch (expr) {
 ### `2`
 
 ```
-✔ No known problems!
+
+ unknown:9:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Do not duplicate the 2 case.
+
+     7 │  case 3:
+     8 │   break;
+   > 9 │  case 2n:
+       │       ^^
+    10 │   break;
+    11 │  default:
+
+  ℹ Duplicated switch logic paths are hard to follow and usually typos.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `2: formatted`
+
+```
+const expr = 3;
+switch (expr) {
+	case 1:
+		break;
+	case 2n:
+		break;
+	case 3:
+		break;
+	case 2n:
+		break;
+	default:
+		break;
+}
+
+```
+
+### `3`
+
+```
+✔ No known problems!
+
+```
+
+### `3: formatted`
 
 ```
 const expr = "a";
@@ -116,14 +158,40 @@ switch (expr) {
 
 ```
 
-### `3`
+### `4`
 
 ```
 ✔ No known problems!
 
 ```
 
-### `3: formatted`
+### `4: formatted`
+
+```
+const expr = 3;
+switch (expr) {
+	case 1:
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+	case 2n:
+		break;
+	default:
+		break;
+}
+
+```
+
+### `5`
+
+```
+✔ No known problems!
+
+```
+
+### `5: formatted`
 
 ```
 const foo = "a";
