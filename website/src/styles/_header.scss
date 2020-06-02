@@ -43,9 +43,14 @@
   font-size: 44px;
   margin-bottom: $unit * 2;
 
-  img {
+  svg {
     width: 1em;
     margin-right: $unit / 2;
+
+    .cls-1 {
+      fill: var(--logo-font-color);
+    }
+
   }
 
   .logo-text {
