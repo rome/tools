@@ -1,35 +1,38 @@
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
 	"react no unsafe",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				`
-        class Hello extends React.Component {
-          UNSAFE_componentWillMount() {}
-        }
-				`,
-				`
-        class Hello extends React.Component {
-          UNSAFE_componentWillReceiveProps() {}
-        }
-				`,
-				`
-        class Hello extends React.Component {
-          UNSAFE_componentWillUpdate() {}
-        }
-        `,
-				// VALID
-				`
-				class Hello extends React.Component {
-          componentDidMount() {}
-        }
-				`,
-			],
+			{
+				invalid: [
+					dedent`
+						class Hello extends React.Component {
+							UNSAFE_componentWillMount() {}
+						}
+					`,
+					dedent`
+						class Hello extends React.Component {
+							UNSAFE_componentWillReceiveProps() {}
+						}
+					`,
+					dedent`
+						class Hello extends React.Component {
+							UNSAFE_componentWillUpdate() {}
+						}
+					`,
+				],
+				valid: [
+					dedent`
+						class Hello extends React.Component {
+							componentDidMount() {}
+						}
+					`,
+				],
+			},
 			{category: "lint/react/noUnsafe"},
 		);
 	},

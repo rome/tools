@@ -8,18 +8,17 @@
 
 ```
 
- unknown:3:12 lint/react/reactInJsxScope ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:8 lint/react/reactInJsxScope ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ React must be in scope when using JSX.
 
-    2 │     export function HelloWorldComponent() {
-  > 3 │      return <div>
-      │             ^^^^^
-  > 4 │        Hello World!!!
-  > 5 │      </div>;
-      │ ^^^^^^^^^^^
-    6 │     }
-    7 │     
+    1 │ export function HelloWorldComponent() {
+  > 2 │  return <div>
+      │         ^^^^^
+  > 3 │    Hello World!!!
+  > 4 │  </div>;
+      │ ^^^^^^^
+    5 │ }
 
   ℹ The React JSX parser must be available in modules that use JSX syntax.
 
@@ -34,8 +33,8 @@
 ```
 export function HelloWorldComponent() {
 	return <div>
-							Hello World!!!
-					</div>;
+			Hello World!!!
+	</div>;
 }
 
 ```
@@ -53,8 +52,8 @@ export function HelloWorldComponent() {
 import React from "react";
 export function HelloWorldComponent() {
 	return <div>
-							Hello World!!!
-					</div>;
+			Hello World!!!
+	</div>;
 }
 
 ```

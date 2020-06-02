@@ -121,13 +121,13 @@ Children.map(children, (x) => <div>{x}</div>);
 
 ```
 
- unknown:2:9 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:8 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
     1 │ const a = [1, 2].map(x => {
-  > 2 │   return <div>{x}</div>;
-      │          ^^^^^^^^^^^^^^
+  > 2 │  return <div>{x}</div>;
+      │         ^^^^^^^^^^^^^^
     3 │ });
 
   ℹ Keys help React identify which items have changed, are added, or are removed.
@@ -151,13 +151,13 @@ const a = [1, 2].map((x) => {
 
 ```
 
- unknown:2:9 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:8 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
     1 │ React.Children.map(children, x => {
-  > 2 │   return <div>{x}</div>;
-      │          ^^^^^^^^^^^^^^
+  > 2 │  return <div>{x}</div>;
+      │         ^^^^^^^^^^^^^^
     3 │ });
 
   ℹ Keys help React identify which items have changed, are added, or are removed.
@@ -184,13 +184,13 @@ React.Children.map(
 
 ```
 
- unknown:2:9 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:8 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
     1 │ Children.map(children, x => {
-  > 2 │   return <div>{x}</div>;
-      │          ^^^^^^^^^^^^^^
+  > 2 │  return <div>{x}</div>;
+      │         ^^^^^^^^^^^^^^
     3 │ });
 
   ℹ Keys help React identify which items have changed, are added, or are removed.
@@ -217,13 +217,13 @@ Children.map(
 
 ```
 
- unknown:2:9 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:8 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
     1 │ const a = [1, 2].map(function(x) {
-  > 2 │   return <div>{x}</div>;
-      │          ^^^^^^^^^^^^^^
+  > 2 │  return <div>{x}</div>;
+      │         ^^^^^^^^^^^^^^
     3 │ });
 
   ℹ Keys help React identify which items have changed, are added, or are removed.
@@ -247,13 +247,13 @@ const a = [1, 2].map(function(x) {
 
 ```
 
- unknown:2:9 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:8 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
     1 │ React.Children.map(children, function(x) {
-  > 2 │   return <div>{x}</div>;
-      │          ^^^^^^^^^^^^^^
+  > 2 │  return <div>{x}</div>;
+      │         ^^^^^^^^^^^^^^
     3 │ });
 
   ℹ Keys help React identify which items have changed, are added, or are removed.
@@ -280,13 +280,13 @@ React.Children.map(
 
 ```
 
- unknown:2:9 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:8 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
     1 │ Children.map(children, function(x) {
-  > 2 │   return <div>{x}</div>;
-      │          ^^^^^^^^^^^^^^
+  > 2 │  return <div>{x}</div>;
+      │         ^^^^^^^^^^^^^^
     3 │ });
 
   ℹ Keys help React identify which items have changed, are added, or are removed.
