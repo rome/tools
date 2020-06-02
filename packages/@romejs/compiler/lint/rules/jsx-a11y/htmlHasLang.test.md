@@ -142,27 +142,122 @@
 ### `5`
 
 ```
-✔ No known problems!
+
+ unknown:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Provide a lang attribute when using the html element.
+
+    <html lang={false}></html>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when no
+    user default is specified.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `5: formatted`
 
 ```
-<html lang='en'></html>;
+<html lang={false}></html>;
 
 ```
 
 ### `6`
 
 ```
-✔ No known problems!
+
+ unknown:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Provide a lang attribute when using the html element.
+
+    <html lang={true}></html>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when no
+    user default is specified.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `6: formatted`
 
 ```
+<html lang={true}></html>;
+
+```
+
+### `7`
+
+```
+
+ unknown:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Provide a lang attribute when using the html element.
+
+    <html lang={42}></html>
+    ^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when no
+    user default is specified.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `7: formatted`
+
+```
+<html lang={42}></html>;
+
+```
+
+### `8`
+
+```
+✔ No known problems!
+
+```
+
+### `8: formatted`
+
+```
+<html lang='en'></html>;
+
+```
+
+### `9`
+
+```
+✔ No known problems!
+
+```
+
+### `9: formatted`
+
+```
 <html lang={language}></html>;
+
+```
+
+### `10`
+
+```
+✔ No known problems!
+
+```
+
+### `10: formatted`
+
+```
+<html lang={() => language}></html>;
 
 ```
