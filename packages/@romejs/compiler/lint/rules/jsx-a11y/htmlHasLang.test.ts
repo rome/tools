@@ -12,6 +12,7 @@ test(
 					"<html {...props}></html>",
 					'<html lang=""></html>',
 					'<html lang={""}></html>',
+					"<html lang={``}></html>",
 					"<html lang={undefined}></html>",
 					"<html lang={false}></html>",
 					"<html lang={true}></html>",

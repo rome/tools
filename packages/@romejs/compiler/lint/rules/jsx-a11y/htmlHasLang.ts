@@ -6,6 +6,7 @@ import {
 	hasJSXAttribute,
 	isJSXElement,
 } from "@romejs/js-ast-utils";
+import isEmptyTemplateLiteral from "@romejs/js-ast-utils/isEmptyTemplateLiteral";
 
 function validLang(node: JSXElement) {
 	if (hasJSXAttribute(node, "lang")) {
@@ -13,7 +14,9 @@ function validLang(node: JSXElement) {
 		if (attr && attr.value) {
 			if (attr.value.type === "JSXExpressionContainer") {
 				const expression = attr.value.expression;
-				console.log(expression);
+				if (expression.type === "JSTemplateLiteral") {
+					return !isEmptyTemplateLiteral(expression);
+				}
 				return (
 					expression.type !== "JSNumericLiteral" &&
 					expression.type !== "JSBooleanLiteral"

@@ -116,8 +116,8 @@
 
   ✖ Provide a title attribute when using iframe elements.
 
-    <iframe title={undefined} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    <iframe title={``} />
+    ^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Screen readers rely on the title set on an iframe to describe the content being displayed.
 
@@ -130,32 +130,136 @@
 ### `4: formatted`
 
 ```
-<iframe title={undefined} />;
+<iframe title={``} />;
 
 ```
 
 ### `5`
 
 ```
-✔ No known problems!
+
+ unknown:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Provide a title attribute when using iframe elements.
+
+    <iframe title={undefined} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Screen readers rely on the title set on an iframe to describe the content being displayed.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `5: formatted`
 
 ```
-<iframe title='title' />;
+<iframe title={undefined} />;
 
 ```
 
 ### `6`
 
 ```
-✔ No known problems!
+
+ unknown:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Provide a title attribute when using iframe elements.
+
+    <iframe title={false} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Screen readers rely on the title set on an iframe to describe the content being displayed.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `6: formatted`
+
+```
+<iframe title={false} />;
+
+```
+
+### `7`
+
+```
+
+ unknown:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Provide a title attribute when using iframe elements.
+
+    <iframe title={true} />
+    ^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Screen readers rely on the title set on an iframe to describe the content being displayed.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `7: formatted`
+
+```
+<iframe title={true} />;
+
+```
+
+### `8`
+
+```
+
+ unknown:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Provide a title attribute when using iframe elements.
+
+    <iframe title={42} />
+    ^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Screen readers rely on the title set on an iframe to describe the content being displayed.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `8: formatted`
+
+```
+<iframe title={42} />;
+
+```
+
+### `9`
+
+```
+✔ No known problems!
+
+```
+
+### `9: formatted`
+
+```
+<iframe title='title' />;
+
+```
+
+### `10`
+
+```
+✔ No known problems!
+
+```
+
+### `10: formatted`
 
 ```
 <iframe title={title}></iframe>;

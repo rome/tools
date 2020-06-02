@@ -120,8 +120,8 @@
 
   ✖ Provide a lang attribute when using the html element.
 
-    <html lang={undefined}></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    <html lang={``}></html>
+    ^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when no
     user default is specified.
@@ -135,11 +135,38 @@
 ### `4: formatted`
 
 ```
-<html lang={undefined}></html>;
+<html lang={``}></html>;
 
 ```
 
 ### `5`
+
+```
+
+ unknown:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Provide a lang attribute when using the html element.
+
+    <html lang={undefined}></html>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when no
+    user default is specified.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `5: formatted`
+
+```
+<html lang={undefined}></html>;
+
+```
+
+### `6`
 
 ```
 
@@ -159,14 +186,14 @@
 
 ```
 
-### `5: formatted`
+### `6: formatted`
 
 ```
 <html lang={false}></html>;
 
 ```
 
-### `6`
+### `7`
 
 ```
 
@@ -186,14 +213,14 @@
 
 ```
 
-### `6: formatted`
+### `7: formatted`
 
 ```
 <html lang={true}></html>;
 
 ```
 
-### `7`
+### `8`
 
 ```
 
@@ -213,24 +240,10 @@
 
 ```
 
-### `7: formatted`
-
-```
-<html lang={42}></html>;
-
-```
-
-### `8`
-
-```
-✔ No known problems!
-
-```
-
 ### `8: formatted`
 
 ```
-<html lang='en'></html>;
+<html lang={42}></html>;
 
 ```
 
@@ -244,7 +257,7 @@
 ### `9: formatted`
 
 ```
-<html lang={language}></html>;
+<html lang='en'></html>;
 
 ```
 
@@ -256,6 +269,20 @@
 ```
 
 ### `10: formatted`
+
+```
+<html lang={language}></html>;
+
+```
+
+### `11`
+
+```
+✔ No known problems!
+
+```
+
+### `11: formatted`
 
 ```
 <html lang={() => language}></html>;
