@@ -10,7 +10,7 @@
 
  unknown:11:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Do not duplicate the c case.
+  ✖ Do not duplicate the 'c' case.
 
      9 │  case 'd':
     10 │   break;
@@ -96,7 +96,7 @@ switch (expr) {
 
  unknown:9:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Do not duplicate the 2 case.
+  ✖ Do not duplicate the 2n case.
 
      7 │  case 3:
      8 │   break;
@@ -135,11 +135,125 @@ switch (expr) {
 ### `3`
 
 ```
-✔ No known problems!
+
+ unknown:5:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Do not duplicate the foo case.
+
+    3 │  case foo:
+    4 │   break;
+  > 5 │  case foo:
+      │       ^^^
+    6 │   break;
+    7 │  default:
+
+  ℹ Duplicated switch logic paths are hard to follow and usually typos.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `3: formatted`
+
+```
+const foo = "a";
+switch ("a") {
+	case foo:
+		break;
+	case foo:
+		break;
+	default:
+		break;
+}
+
+```
+
+### `4`
+
+```
+
+ unknown:5:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Do not duplicate the 'foo' case.
+
+    3 │  case 'foo':
+    4 │   break;
+  > 5 │  case "foo":
+      │       ^^^^^
+    6 │   break;
+    7 │  default:
+
+  ℹ Duplicated switch logic paths are hard to follow and usually typos.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `4: formatted`
+
+```
+const foo = "a";
+switch ("a") {
+	case "foo":
+		break;
+	case "foo":
+		break;
+	default:
+		break;
+}
+
+```
+
+### `5`
+
+```
+
+ unknown:5:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Do not duplicate the null case.
+
+    3 │  case null:
+    4 │   break;
+  > 5 │  case null:
+      │       ^^^^
+    6 │   break;
+    7 │  default:
+
+  ℹ Duplicated switch logic paths are hard to follow and usually typos.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `5: formatted`
+
+```
+const foo = "a";
+switch ("a") {
+	case null:
+		break;
+	case null:
+		break;
+	default:
+		break;
+}
+
+```
+
+### `6`
+
+```
+✔ No known problems!
+
+```
+
+### `6: formatted`
 
 ```
 const expr = "a";
@@ -158,14 +272,14 @@ switch (expr) {
 
 ```
 
-### `4`
+### `7`
 
 ```
 ✔ No known problems!
 
 ```
 
-### `4: formatted`
+### `7: formatted`
 
 ```
 const expr = 3;
@@ -184,21 +298,31 @@ switch (expr) {
 
 ```
 
-### `5`
+### `8`
 
 ```
 ✔ No known problems!
 
 ```
 
-### `5: formatted`
+### `8: formatted`
 
 ```
-const foo = "a";
-switch ("a") {
-	case foo:
+const expr = 3;
+switch (expr) {
+	case 1:
+		break;
+	case "1":
+		break;
+	case 1n:
+		break;
+	case "null":
+		break;
+	case null:
 		break;
 	case foo:
+		break;
+	case "foo":
 		break;
 	default:
 		break;

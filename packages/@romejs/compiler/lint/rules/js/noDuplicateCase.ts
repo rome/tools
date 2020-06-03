@@ -9,6 +9,22 @@ import {Path} from "@romejs/compiler";
 import {AnyNode} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
+function getRawValue(node: AnyNode): string | undefined {
+    switch(node.type) {
+        case "JSStringLiteral":
+            return `'${node.value}'`;
+        case "JSBigIntLiteral":
+            return `${node.value}n`;
+        case "JSNumericLiteral":
+            return String(node.value);
+        case "JSReferenceIdentifier":
+            return String(node.name);
+        case "JSNullLiteral":
+            return "null";
+    }
+    return undefined;
+}
+
 export default {
 	name: "noDuplicateCase",
 	enter(path: Path): AnyNode {
@@ -18,22 +34,19 @@ export default {
 			const uniqueSwitchCases = new Set();
 
 			for (const param of node.cases) {
-				if (
-					param.test &&
-					(param.test.type === "JSStringLiteral" ||
-					param.test.type === "JSNumericLiteral" ||
-					param.test.type === "JSBigIntLiteral")
-				) {
+                const rawValue = param.test && getRawValue(param.test);
+
+				if (rawValue) {
 					const {test} = param;
 
-					if (uniqueSwitchCases.has(test.value)) {
+					if (uniqueSwitchCases.has(rawValue)) {
 						context.addNodeDiagnostic(
 							test,
-							descriptions.LINT.JS_NO_DUPLICATE_CASE(String(test.value)),
+							descriptions.LINT.JS_NO_DUPLICATE_CASE(rawValue),
 						);
 					}
 
-					uniqueSwitchCases.add(test.value);
+					uniqueSwitchCases.add(rawValue);
 				}
 			}
 		}
