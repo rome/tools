@@ -25,36 +25,16 @@ type TestLintInput = {
 	invalid?: Array<string>;
 };
 
-export async function testLintMultiple(
-	t: TestHelper,
-	inputs: Array<string>,
-	opts: TestLintOptions,
-) {
-	for (const input of inputs) {
-		await testLint(t, input, opts);
-	}
-}
-
 export async function testLint(
 	t: TestHelper,
-	input: string | TestLintInput,
+	{invalid = [], valid = []}: TestLintInput,
 	opts: TestLintOptions,
 ) {
-	if (typeof input === "string") {
-		return testLintExpect(t, input, opts);
+	for (const input of invalid) {
+		await testLintExpect(t, input, opts, false);
 	}
-
-	const {invalid, valid} = input;
-
-	if (invalid !== undefined) {
-		for (input of invalid) {
-			await testLintExpect(t, input, opts, "INVALID");
-		}
-	}
-	if (valid !== undefined) {
-		for (input of valid) {
-			await testLintExpect(t, input, opts, "VALID");
-		}
+	for (const input of valid) {
+		await testLintExpect(t, input, opts, true);
 	}
 }
 
@@ -62,7 +42,7 @@ async function testLintExpect(
 	t: TestHelper,
 	input: string,
 	{syntax = ["jsx", "ts"], category, sourceType = "module"}: TestLintOptions,
-	expect?: "INVALID" | "VALID",
+	expectValid: boolean,
 ) {
 	t.addToAdvice({
 		type: "log",
@@ -117,11 +97,11 @@ async function testLintExpect(
 
 	const diagnostics = processor.getDiagnostics();
 
-	if (expect === "INVALID") {
+	if (expectValid === false) {
 		t.true(diagnostics.length > 0, "Expected test to have diagnostics.");
 	}
 
-	if (expect === "VALID") {
+	if (expectValid === true) {
 		t.is(diagnostics.length, 0, "Expected test not to have diagnostics.");
 	}
 
