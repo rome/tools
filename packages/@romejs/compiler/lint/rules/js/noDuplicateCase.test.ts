@@ -62,6 +62,39 @@ test(
 							default:
 								break;
 						}
+                    `,
+					dedent`
+						const foo = 'a';
+						switch ('a') {
+							case foo:
+								break;
+							case foo:
+								break;
+							default:
+								break;
+						}
+					`,
+					dedent`
+						const foo = 'a';
+						switch ('a') {
+							case 'foo':
+								break;
+							case "foo":
+								break;
+							default:
+								break;
+						}
+					`,
+					dedent`
+						const foo = 'a';
+						switch ('a') {
+							case null:
+								break;
+							case null:
+								break;
+							default:
+								break;
+						}
 					`,
 				],
 				valid: [
@@ -94,19 +127,28 @@ test(
 							default:
 								break;
 						}
-					`,
-					// Currently no diagnostic for duplicate identifiers
+                    `,
 					dedent`
-						const foo = 'a';
-						switch ('a') {
-							case foo:
+						const expr = 3;
+						switch (expr) {
+							case 1:
+								break;
+							case "1":
+								break;
+							case 1n:
+								break;
+							case "null":
+								break;
+							case null:
 								break;
 							case foo:
+								break;
+							case "foo":
 								break;
 							default:
 								break;
 						}
-				`,
+                	`,
 				],
 			},
 			{category: "lint/js/noDuplicateCase"},
