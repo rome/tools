@@ -31,7 +31,7 @@ const DELETE_MARKER = markupTag("error", "-");
 const ADD_MARKER = markupTag("success", "+");
 
 function formatSingleLineMarker(text: string): string {
-	return markup`<emphasis>${text}</emphasis>:`;
+	return markup`<emphasis>${text}</emphasis>: `;
 }
 
 export default function buildPatchCodeFrame(

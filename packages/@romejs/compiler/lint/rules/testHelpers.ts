@@ -11,7 +11,7 @@ import {parseJS} from "@romejs/js-parser";
 import {createUnknownFilePath} from "@romejs/path";
 import {DEFAULT_PROJECT_CONFIG} from "@romejs/project";
 import {ConstProgramSyntax, ConstSourceType} from "@romejs/ast";
-import {DiagnosticCategory} from "@romejs/diagnostics";
+import {DiagnosticCategory, DiagnosticsProcessor} from "@romejs/diagnostics";
 import {printDiagnosticsToString} from "@romejs/cli-diagnostics";
 
 type TestLintOptions = {
@@ -108,21 +108,19 @@ async function testLintExpect(
 		},
 	});
 
-	const diagnostics = res.diagnostics.filter((diag) => {
-		return diag.description.category === category;
-	}).map((diag) => {
-		return {
-			...diag,
-			location: {
-				...diag.location,
-				sourceText: input,
-			},
-		};
+	const processor = new DiagnosticsProcessor();
+	processor.normalizer.setInlineSourceText("unknown", input);
+	processor.addFilter({
+		test: (diag) => diag.description.category === category,
 	});
+	processor.addDiagnostics(res.diagnostics);
+
+	const diagnostics = processor.getDiagnostics();
 
 	if (expect === "INVALID") {
 		t.true(diagnostics.length > 0, "Expected test to have diagnostics.");
 	}
+
 	if (expect === "VALID") {
 		t.is(diagnostics.length, 0, "Expected test not to have diagnostics.");
 	}

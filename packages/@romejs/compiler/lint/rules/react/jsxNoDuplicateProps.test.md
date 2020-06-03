@@ -17,6 +17,9 @@
 
   ℹ Defined already here
 
+    <Hello foo="bar" foo="baz" />
+                     ^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
@@ -43,6 +46,9 @@
 
   ℹ Defined already here
 
+    <div style="{}" style="{}" id="foo" id="bar" />
+                    ^^^^^^^^^^
+
  unknown:1:27 lint/react/jsxNoDuplicateProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid duplicate component props. Check the id prop.
@@ -51,6 +57,9 @@
                                ^^^^^^^^
 
   ℹ Defined already here
+
+    <div style="{}" style="{}" id="foo" id="bar" />
+                                        ^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

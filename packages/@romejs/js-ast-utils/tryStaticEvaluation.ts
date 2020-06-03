@@ -160,7 +160,7 @@ export default function tryStaticEvaluation(
 
 	let res: EvalResult = BAILED;
 
-	node = resolveIndirection(node, scope);
+	({node, scope} = resolveIndirection(node, scope));
 
 	switch (node.type) {
 		case "JSUnaryExpression": {

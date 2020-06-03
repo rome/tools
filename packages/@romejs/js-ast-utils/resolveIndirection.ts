@@ -1,7 +1,13 @@
 import {AnyNode} from "@romejs/ast";
 import {ConstBinding, Scope} from "@romejs/compiler";
 
-export default function resolveIndirection(node: AnyNode, scope: Scope): AnyNode {
+export default function resolveIndirection(
+	node: AnyNode,
+	scope: Scope,
+): {
+	node: AnyNode;
+	scope: Scope;
+} {
 	switch (node.type) {
 		case "JSReferenceIdentifier": {
 			const binding = scope.getBinding(node.name);
@@ -23,5 +29,5 @@ export default function resolveIndirection(node: AnyNode, scope: Scope): AnyNode
 			return resolveIndirection(node.expression, scope);
 	}
 
-	return node;
+	return {node, scope};
 }
