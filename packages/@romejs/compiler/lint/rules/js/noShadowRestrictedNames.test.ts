@@ -18,9 +18,8 @@ test(
 					"function NaN() {}",
 					"let Set;",
 					"try {  } catch(Object) {}",
-					// These are false negatives
-					// "!function Array() {}",
-					// "function test(JSON) {console.log(JSON)}",
+					"!function Array() {}",
+					"function test(JSON) {console.log(JSON)}",
 				],
 			},
 			{category: "lint/js/noShadowRestrictedNames"},

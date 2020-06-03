@@ -17,7 +17,7 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {node, context, scope} = path;
 
-		if (scope.node === node) {
+		if (scope.node === node || node.type === "JSFunctionHead") {
 			for (const [name, binding] of scope.getOwnBindings()) {
 				if (restrictedNames.has(name)) {
 					context.addNodeDiagnostic(

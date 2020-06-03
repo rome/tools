@@ -86,3 +86,59 @@ try {
 }
 
 ```
+
+### `3`
+
+```
+
+ unknown:1:10 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Do not shadow the global Array property.
+
+    !function Array() {}
+              ^^^^^
+
+  ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're named
+    after a known global.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `3: formatted`
+
+```
+!function Array() {};
+
+```
+
+### `4`
+
+```
+
+ unknown:1:14 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Do not shadow the global JSON property.
+
+    function test(JSON) {console.log(JSON)}
+                  ^^^^
+
+  ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're named
+    after a known global.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `4: formatted`
+
+```
+function test(JSON) {
+	console.log(JSON);
+}
+
+```
