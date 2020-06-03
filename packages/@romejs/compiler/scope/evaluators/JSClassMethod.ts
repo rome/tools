@@ -6,12 +6,12 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, jsArrowFunctionExpression} from "@romejs/ast";
+import {AnyNode, jsClassMethod} from "@romejs/ast";
 import {buildFunctionScope} from "../utils";
 import {createScopeEvaluator} from "./index";
 
 export default createScopeEvaluator({
 	enter(node: AnyNode, parent: AnyNode, scope: Scope) {
-		return buildFunctionScope(jsArrowFunctionExpression.assert(node), scope);
+		return buildFunctionScope(jsClassMethod.assert(node), scope);
 	},
 });

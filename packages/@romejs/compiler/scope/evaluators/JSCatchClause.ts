@@ -8,11 +8,12 @@
 import Scope from "../Scope";
 import {LetBinding} from "@romejs/compiler";
 import {getBindingIdentifiers} from "@romejs/js-ast-utils";
-import {AnyNode, JSCatchClause} from "@romejs/ast";
+import {AnyNode, jsCatchClause} from "@romejs/ast";
+import {createScopeEvaluator} from "./index";
 
-export default {
-	creator: true,
-	build(node: JSCatchClause, parent: AnyNode, scope: Scope) {
+export default createScopeEvaluator({
+	enter(node: AnyNode, parent: AnyNode, scope: Scope) {
+		node = jsCatchClause.assert(node);
 		const newScope = scope.fork("block", node);
 		if (node.param !== undefined) {
 			for (const id of getBindingIdentifiers(node.param)) {
@@ -30,4 +31,4 @@ export default {
 		}
 		return newScope;
 	},
-};
+});

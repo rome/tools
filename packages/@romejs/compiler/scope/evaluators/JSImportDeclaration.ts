@@ -7,12 +7,14 @@
 
 import Scope from "../Scope";
 import {ImportBinding, ImportBindingMeta} from "@romejs/compiler";
-import {AnyNode, ConstImportModuleKind, JSImportDeclaration} from "@romejs/ast";
+import {AnyNode, ConstImportModuleKind, jsImportDeclaration} from "@romejs/ast";
 import {getImportSpecifiers} from "@romejs/js-ast-utils";
+import {createScopeEvaluator} from "./index";
 
-export default {
-	creator: false,
-	build(node: JSImportDeclaration, parent: AnyNode, scope: Scope) {
+export default createScopeEvaluator({
+	inject(node: AnyNode, parent: AnyNode, scope: Scope) {
+		node = jsImportDeclaration.assert(node);
+
 		const source = node.source.value;
 
 		for (const specifier of getImportSpecifiers(node)) {
@@ -57,4 +59,4 @@ export default {
 			);
 		}
 	},
-};
+});

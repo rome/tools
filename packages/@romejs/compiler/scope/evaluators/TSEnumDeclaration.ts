@@ -6,12 +6,13 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, TSEnumDeclaration} from "@romejs/ast";
+import {AnyNode, tsEnumDeclaration} from "@romejs/ast";
 import {TypeBinding} from "@romejs/compiler";
+import {createScopeEvaluator} from "./index";
 
-export default {
-	creator: false,
-	build(node: TSEnumDeclaration, parent: AnyNode, scope: Scope) {
+export default createScopeEvaluator({
+	inject(node: AnyNode, parent: AnyNode, scope: Scope) {
+		node = tsEnumDeclaration.assert(node);
 		scope.addBinding(
 			new TypeBinding(
 				{
@@ -24,4 +25,4 @@ export default {
 			),
 		);
 	},
-};
+});

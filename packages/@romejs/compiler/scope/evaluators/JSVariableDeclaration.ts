@@ -7,12 +7,14 @@
 
 import Scope from "../Scope";
 import {ConstBinding, LetBinding, VarBinding} from "@romejs/compiler";
-import {AnyNode, JSVariableDeclaration} from "@romejs/ast";
+import {AnyNode, jsVariableDeclaration} from "@romejs/ast";
 import {getBindingIdentifiers} from "@romejs/js-ast-utils";
+import {createScopeEvaluator} from "./index";
 
-export default {
-	creator: false,
-	build(node: JSVariableDeclaration, parent: AnyNode, scope: Scope) {
+export default createScopeEvaluator({
+	inject(node: AnyNode, parent: AnyNode, scope: Scope) {
+		node = jsVariableDeclaration.assert(node);
+
 		for (const decl of node.declarations) {
 			for (const id of getBindingIdentifiers(decl)) {
 				if (node.kind === "let") {
@@ -62,4 +64,4 @@ export default {
 			}
 		}
 	},
-};
+});

@@ -6,13 +6,13 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, TSImportEqualsDeclaration} from "@romejs/ast";
+import {AnyNode, tsImportEqualsDeclaration} from "@romejs/ast";
 import {ImportBinding} from "@romejs/compiler";
+import {createScopeEvaluator} from "./index";
 
-export default {
-	creator: false,
-	build(node: TSImportEqualsDeclaration, parent: AnyNode, scope: Scope) {
-		const {moduleReference, id} = node;
+export default createScopeEvaluator({
+	inject(node: AnyNode, parent: AnyNode, scope: Scope) {
+		const {moduleReference, id} = tsImportEqualsDeclaration.assert(node);
 
 		if (moduleReference.type === "TSExternalModuleReference") {
 			scope.addBinding(
@@ -33,4 +33,4 @@ export default {
 			// TODO
 		}
 	},
-};
+});

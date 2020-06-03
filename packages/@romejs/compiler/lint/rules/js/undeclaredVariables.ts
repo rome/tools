@@ -50,7 +50,7 @@ export default {
 
 			const isDefined =
 				binding !== undefined ||
-				scope.getRootScope().isGlobal(name) ||
+				scope.isGlobal(name) ||
 				BROWSER_VARIABLES.includes(name) ||
 				NODE_VARIABLES.includes(name);
 
