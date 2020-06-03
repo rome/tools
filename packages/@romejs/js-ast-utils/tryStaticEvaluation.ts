@@ -4,7 +4,8 @@ import {
 	JSTemplateLiteral,
 	JSUnaryExpression,
 } from "@romejs/ast";
-import {ConstBinding, Scope} from "@romejs/compiler";
+import {Scope} from "@romejs/compiler";
+import resolveIndirection from "./resolveIndirection";
 
 export type EvalResult = {
 	value: undefined | null | string | number | boolean;
@@ -159,6 +160,8 @@ export default function tryStaticEvaluation(
 
 	let res: EvalResult = BAILED;
 
+	node = resolveIndirection(node, scope);
+
 	switch (node.type) {
 		case "JSUnaryExpression": {
 			res = evalUnaryExpression(node, scope, opts);
@@ -186,10 +189,6 @@ export default function tryStaticEvaluation(
 			const binding = scope.getBinding(node.name);
 			if (binding === undefined && node.name === "undefined") {
 				res = createResult(undefined);
-			} else {
-				if (binding instanceof ConstBinding && binding.value !== undefined) {
-					res = tryStaticEvaluation(binding.value, binding.scope, opts);
-				}
 			}
 			break;
 		}
