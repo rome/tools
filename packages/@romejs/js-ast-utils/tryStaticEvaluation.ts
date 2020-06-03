@@ -8,7 +8,7 @@ import {Scope} from "@romejs/compiler";
 import resolveIndirection from "./resolveIndirection";
 
 export type EvalResult = {
-	value: undefined | null | string | number | boolean;
+	value: undefined | null | bigint | string | number | boolean;
 	bailed: boolean;
 };
 
@@ -175,6 +175,11 @@ export default function tryStaticEvaluation(
 
 		case "JSNullLiteral": {
 			res = createResult(null);
+			break;
+		}
+
+		case "JSBigIntLiteral": {
+			res = createResult(BigInt(node.value));
 			break;
 		}
 
