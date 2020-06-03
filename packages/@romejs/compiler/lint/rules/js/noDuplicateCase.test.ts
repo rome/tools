@@ -128,7 +128,7 @@ test(
 								break;
 						}
                     `,
-                    dedent`
+					dedent`
 						const expr = 3;
 						switch (expr) {
 							case 1:
