@@ -138,7 +138,7 @@ function formatString(val: string): string {
 // This function is used by rome-json so make sure it can parse whatever you return here
 export function formatNumber(val: bigint | number): string {
 	if (typeof val === "bigint") {
-		return humanizeNumber(val, "_");
+		return `${humanizeNumber(val, "_")}n`;
 	} else if (isNaN(val)) {
 		return "NaN";
 	} else if (Object.is(val, -0)) {

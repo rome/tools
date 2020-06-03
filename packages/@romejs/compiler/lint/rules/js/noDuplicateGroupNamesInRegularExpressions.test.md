@@ -17,6 +17,12 @@
 
   ℹ Defined already here
 
+    /(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>[0-9])/
+                                    ^^^^^^^^^^^^^^^
+
+    /(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>[0-9])/
+                                                                                         ^^^^^^^^^^^^^^
+
  unknown:1:17 lint/js/noDuplicateGroupNamesInRegularExpressions ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid duplicate group names. Check the year group.
@@ -25,6 +31,9 @@
                      ^^^^^^^^^^^^^^
 
   ℹ Defined already here
+
+    /(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>[0-9])/
+                                                    ^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
