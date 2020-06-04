@@ -457,6 +457,17 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
+	REACT_NO_DIRECT_MUTATION_STATE: {
+		category: "lint/react/noDirectMutationState",
+		message: "Avoid mutating <emphasis>this.state</emphasis> directly.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Calling <emphasis>setState()</emphasis> after mutating <emphasis>this.state</emphasis> directly may replace the mutation you made. The only place you may set <emphasis>this.state</emphasis> directly is in a constructor of a react class component.",
+			},
+		],
+	},
 	REACT_NO_FIND_DOM_NODE: {
 		category: "lint/react/noFindDOMNode",
 		message: "Avoid using the <emphasis>findDOMNode</emphasis> function.",

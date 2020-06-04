@@ -91,6 +91,7 @@ import noDanger from "./react/noDanger";
 import noDangerWithChildren from "./react/noDangerWithChildren";
 import noDidMountSetState from "./react/noDidMountSetState";
 import noDidUpdateSetState from "./react/noDidUpdateSetState";
+import noDirectMutationState from "./react/noDirectMutationState";
 import noFindDOMNode from "./react/noFindDOMNode";
 import noRedundantShouldComponentUpdate from "./react/noRedundantShouldComponentUpdate";
 import noStringRefs from "./react/noStringRefs";
@@ -190,6 +191,7 @@ export const lintTransforms = [
 	noDangerWithChildren,
 	noDidMountSetState,
 	noDidUpdateSetState,
+	noDirectMutationState,
 	noFindDOMNode,
 	noRedundantShouldComponentUpdate,
 	noStringRefs,
