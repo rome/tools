@@ -98,6 +98,7 @@ import noUnsafe from "./react/noUnsafe";
 import noUselessFragment from "./react/noUselessFragment";
 import noWillUpdateSetState from "./react/noWillUpdateSetState";
 import reactInJsxScope from "./react/reactInJsxScope";
+import renderReturn from "./react/renderReturn";
 import stylePropObject from "./react/stylePropObject";
 import voidDomElementsNoChildren from "./react/voidDomElementsNoChildren";
 import noExplicitAny from "./ts/noExplicitAny";
@@ -195,6 +196,7 @@ export const lintTransforms = [
 	noUselessFragment,
 	noWillUpdateSetState,
 	reactInJsxScope,
+	renderReturn,
 	stylePropObject,
 	voidDomElementsNoChildren,
 	noExplicitAny,
