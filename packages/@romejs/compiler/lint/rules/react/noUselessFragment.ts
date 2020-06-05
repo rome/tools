@@ -4,7 +4,6 @@ import {
 	doesNodeMatchPattern,
 	hasJSXAttribute,
 	isFunctionNode,
-	isJSXElement,
 } from "@romejs/js-ast-utils";
 import {AnyNode, JSXElement, JSXFragment} from "@romejs/ast";
 import {REDUCE_REMOVE} from "@romejs/compiler/constants";
@@ -21,7 +20,7 @@ function isChildOfHtmlElement(path: Path): boolean {
 function isFragment(node: JSXFragment | JSXElement): boolean {
 	return (
 		node.type === "JSXFragment" ||
-		(isJSXElement(node) &&
+		(node.type === "JSXElement" &&
 		(doesNodeMatchPattern(node.name, "Fragment") ||
 		doesNodeMatchPattern(node.name, "React.Fragment")))
 	);
@@ -48,7 +47,7 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {node, context} = path;
 
-		if (node.type !== "JSXFragment" && !isJSXElement(node)) {
+		if (node.type !== "JSXFragment" && node.type !== "JSXElement") {
 			return node;
 		}
 
@@ -57,7 +56,7 @@ export default {
 			path.parent.type !== "JSVariableDeclarator" &&
 			!isFunctionNode(path.parent) &&
 			isFragment(node) &&
-			!(isJSXElement(node) && hasJSXAttribute(node, "key")) &&
+			!(node.type === "JSXElement" && hasJSXAttribute(node, "key")) &&
 			(hasLessThanTwoChildren(node) || isChildOfHtmlElement(path))
 		) {
 			return context.addFixableDiagnostic(

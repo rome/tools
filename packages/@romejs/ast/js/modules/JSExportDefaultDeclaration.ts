@@ -12,7 +12,7 @@ import {
 	JSNodeBase,
 	TSInterfaceDeclaration,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 import {TSDeclareFunction} from "../typescript/TSDeclareFunction";
 
 export type JSExportDefaultDeclaration = JSNodeBase & {

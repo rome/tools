@@ -11,7 +11,7 @@ import {
 	JSNodeBase,
 	TSTypeParameterDeclaration,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type TSTypeAliasTypeAnnotation = JSNodeBase & {
 	type: "TSTypeAliasTypeAnnotation";

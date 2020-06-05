@@ -10,7 +10,6 @@ import {
 	AnyNode,
 	JSClassExpression,
 	JSFunctionExpression,
-	jsRoot,
 	jsStringLiteral,
 } from "@romejs/ast";
 import {
@@ -25,7 +24,8 @@ export default {
 	name: "esToCJSTransform",
 	enter(path: Path): AnyNode {
 		const {node} = path;
-		if (!jsRoot.is(node)) {
+
+		if (node.type !== "JSRoot") {
 			return node;
 		}
 

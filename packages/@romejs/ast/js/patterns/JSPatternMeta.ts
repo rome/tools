@@ -6,7 +6,7 @@
  */
 
 import {AnyTSPrimary, JSNodeBase} from "@romejs/ast";
-import {createQuickBuilder} from "../utils";
+import {createQuickBuilder} from "../../utils";
 
 export type JSPatternMeta = JSNodeBase & {
 	type: "JSPatternMeta";

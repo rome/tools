@@ -6,7 +6,7 @@
  */
 
 import {AnyJSStatement, JSIdentifier, JSNodeBase} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSLabeledStatement = JSNodeBase & {
 	type: "JSLabeledStatement";

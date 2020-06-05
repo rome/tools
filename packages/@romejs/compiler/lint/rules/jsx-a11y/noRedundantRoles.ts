@@ -1,10 +1,6 @@
 import {CompilerContext, Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
-import {
-	getJSXAttribute,
-	hasJSXAttribute,
-	isJSXElement,
-} from "@romejs/js-ast-utils";
+import {getJSXAttribute, hasJSXAttribute} from "@romejs/js-ast-utils";
 import getJSXElementName from "@romejs/js-ast-utils/getJSXElementName";
 import {
 	ARIAProperty,
@@ -84,7 +80,7 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {node, context} = path;
 
-		if (isJSXElement(node) && hasJSXAttribute(node, "role")) {
+		if (node.type === "JSXElement" && hasJSXAttribute(node, "role")) {
 			const elementName = getJSXElementName(node);
 
 			const roleAttribute = getJSXAttribute(node, "role");

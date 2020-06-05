@@ -15,7 +15,7 @@ import {
 	JSNodeBase,
 } from "@romejs/ast";
 import {Diagnostics} from "@romejs/diagnostics";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSRoot = JSNodeBase & {
 	type: "JSRoot";

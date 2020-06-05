@@ -12,7 +12,7 @@ import {
 	JSNodeBase,
 	JSStaticPropertyKey,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSObjectMethodKind = "get" | "set" | "method";
 

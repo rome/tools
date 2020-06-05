@@ -13,7 +13,7 @@ import {
 	TSTypeParameterDeclaration,
 	TSTypeParameterInstantiation,
 } from "@romejs/ast";
-import {createQuickBuilder} from "../utils";
+import {createQuickBuilder} from "../../utils";
 
 export type JSClassHead = JSNodeBase & {
 	type: "JSClassHead";

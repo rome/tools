@@ -50,7 +50,7 @@ export default {
 		const {node} = path;
 
 		if (
-			isJSXElement(node) &&
+			node.type === "JSXElement" &&
 			jsxAnchorHasBlankTarget(node) &&
 			!jsxAnchorHasNoReferrer(node) &&
 			jsxAnchorHasExternalLink(node)

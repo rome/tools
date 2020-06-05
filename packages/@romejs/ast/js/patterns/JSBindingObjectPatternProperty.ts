@@ -10,7 +10,7 @@ import {
 	AnyJSObjectPropertyKey,
 	JSNodeBase,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSBindingObjectPatternProperty = JSNodeBase & {
 	type: "JSBindingObjectPatternProperty";

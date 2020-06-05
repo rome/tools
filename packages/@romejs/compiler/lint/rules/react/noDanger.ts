@@ -7,15 +7,14 @@
 
 import {Path} from "@romejs/compiler";
 import {AnyNode} from "@romejs/ast";
-import {
-	doesNodeMatchPattern,
-	getJSXAttribute,
-	isJSXElement,
-} from "@romejs/js-ast-utils";
+import {doesNodeMatchPattern, getJSXAttribute} from "@romejs/js-ast-utils";
 import {descriptions} from "@romejs/diagnostics";
 
 function getJSXDangerProp(node: AnyNode) {
-	return isJSXElement(node) && getJSXAttribute(node, "dangerouslySetInnerHTML");
+	return (
+		node.type === "JSXElement" &&
+		getJSXAttribute(node, "dangerouslySetInnerHTML")
+	);
 }
 
 function getCreateElementDangerProp(node: AnyNode) {

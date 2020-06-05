@@ -6,7 +6,7 @@
  */
 
 import {AnyTSPrimary, JSBindingIdentifier, JSNodeBase} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type TSIndexSignature = JSNodeBase & {
 	type: "TSIndexSignature";

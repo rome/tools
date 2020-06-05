@@ -6,7 +6,7 @@
  */
 
 import {JSNodeBase, JSPatternMeta} from "@romejs/ast";
-import {createQuickBuilder} from "../utils";
+import {createQuickBuilder} from "../../utils";
 
 export type JSBindingIdentifier = JSNodeBase & {
 	type: "JSBindingIdentifier";

@@ -1,11 +1,7 @@
 import {descriptions} from "@romejs/diagnostics";
 import {AnyNode} from "@romejs/ast";
 import {Path} from "@romejs/compiler";
-import {
-	getJSXAttribute,
-	hasJSXAttribute,
-	isJSXElement,
-} from "@romejs/js-ast-utils";
+import {getJSXAttribute, hasJSXAttribute} from "@romejs/js-ast-utils";
 
 export default {
 	name: "jsxA11YNoAutofocus",
@@ -13,7 +9,7 @@ export default {
 	enter(path: Path): AnyNode {
 		const {node} = path;
 
-		if (isJSXElement(node) && hasJSXAttribute(node, "autoFocus")) {
+		if (node.type === "JSXElement" && hasJSXAttribute(node, "autoFocus")) {
 			path.context.addFixableDiagnostic(
 				{
 					target: getJSXAttribute(node, "autoFocus"),

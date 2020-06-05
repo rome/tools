@@ -4,7 +4,6 @@ import {
 	doesNodeMatchPattern,
 	getJSXAttribute,
 	hasJSXAttribute,
-	isJSXElement,
 } from "@romejs/js-ast-utils";
 import {JSXAttribute} from "@romejs/ast";
 
@@ -45,7 +44,7 @@ export default {
 			);
 		}
 
-		if (isJSXElement(node) && hasJSXAttribute(node, "ref")) {
+		if (node.type === "JSXElement" && hasJSXAttribute(node, "ref")) {
 			const ref = getJSXAttribute(node, "ref");
 
 			if (ref === undefined) {

@@ -1,6 +1,6 @@
 import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
-import {hasJSXAttribute, isJSXElement} from "@romejs/js-ast-utils";
+import {hasJSXAttribute} from "@romejs/js-ast-utils";
 
 export default {
 	name: "clickEventsHaveKeyEvents",
@@ -8,7 +8,7 @@ export default {
 		const {node} = path;
 
 		if (
-			isJSXElement(node) &&
+			node.type === "JSXElement" &&
 			hasJSXAttribute(node, "onClick") &&
 			!(hasJSXAttribute(node, "onKeyUp") ||
 			hasJSXAttribute(node, "onKeyDown") ||

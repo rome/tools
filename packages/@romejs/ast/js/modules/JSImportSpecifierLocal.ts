@@ -6,7 +6,7 @@
  */
 
 import {JSBindingIdentifier, JSNodeBase} from "@romejs/ast";
-import {createQuickBuilder} from "../utils";
+import {createQuickBuilder} from "../../utils";
 
 export type JSImportSpecifierLocal = JSNodeBase & {
 	type: "JSImportSpecifierLocal";

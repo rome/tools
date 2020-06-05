@@ -1,6 +1,5 @@
 import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
-import {isJSXElement} from "@romejs/js-ast-utils";
 import {toCamelCase} from "@romejs/string-utils";
 
 export default {
@@ -8,7 +7,10 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 
-		if (isJSXElement(node) && node.name.type === "JSXReferenceIdentifier") {
+		if (
+			node.type === "JSXElement" &&
+			node.name.type === "JSXReferenceIdentifier"
+		) {
 			const pascalCaseName = toCamelCase(node.name.name, true);
 			if (node.name.name !== pascalCaseName) {
 				path.context.addNodeDiagnostic(

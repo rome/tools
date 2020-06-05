@@ -1,17 +1,13 @@
 import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
-import {
-	getJSXAttribute,
-	hasJSXAttribute,
-	isJSXElement,
-} from "@romejs/js-ast-utils";
+import {getJSXAttribute, hasJSXAttribute} from "@romejs/js-ast-utils";
 
 export default {
 	name: "mouseEventsHaveKeyEvents",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 
-		if (isJSXElement(node)) {
+		if (node.type === "JSXElement") {
 			if (
 				hasJSXAttribute(node, "onMouseOver") &&
 				!hasJSXAttribute(node, "onFocus")

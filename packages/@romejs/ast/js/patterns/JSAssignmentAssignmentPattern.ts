@@ -11,7 +11,7 @@ import {
 	JSNodeBase,
 	JSPatternMeta,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSAssignmentAssignmentPattern = JSNodeBase & {
 	type: "JSAssignmentAssignmentPattern";

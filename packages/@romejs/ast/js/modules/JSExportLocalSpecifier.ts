@@ -11,7 +11,7 @@ import {
 	JSNodeBase,
 	JSReferenceIdentifier,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSExportLocalSpecifier = JSNodeBase & {
 	type: "JSExportLocalSpecifier";

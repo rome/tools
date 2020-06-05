@@ -12,7 +12,7 @@ import {
 	JSFunctionHead,
 	JSNodeBase,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type TSDeclareMethod = JSNodeBase & {
 	type: "TSDeclareMethod";
