@@ -18,7 +18,7 @@ export default createScopeEvaluator({
 			for (const {name} of getBindingIdentifiers(node)) {
 				scope.addGlobal(name);
 			}
-		} else {
+		} else if (node.declaration.kind !== "var") {
 			scope.injectEvaluate(node.declaration, node);
 		}
 	},

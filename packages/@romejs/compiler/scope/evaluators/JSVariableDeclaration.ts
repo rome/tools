@@ -44,7 +44,7 @@ export default createScopeEvaluator({
 
 				if (
 					node.kind === "var" &&
-					(scope.kind === "program" || scope.kind === "function")
+					(scope.kind === "program" || scope.kind === "block")
 				) {
 					if (!scope.hasHoistedVars) {
 						throw new Error(
