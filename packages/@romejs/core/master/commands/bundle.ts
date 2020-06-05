@@ -55,9 +55,9 @@ export default createMasterCommand<Flags>({
 		}
 
 		if (commandFlags.quiet) {
-			reporter.success(markup`Saved to ${dir.toMarkup()}`);
+			reporter.success(`Saved to ${dir.toMarkup()}`);
 		} else {
-			reporter.success(markup`Saved the following files to ${dir.toMarkup()}`);
+			reporter.success(`Saved the following files to ${dir.toMarkup()}`);
 			reporter.list(savedList);
 		}
 	},
