@@ -1,10 +1,3 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
 import {AnyNode} from "@romejs/ast";
 import {Path, Scope, createHook} from "@romejs/compiler";
 import {getBindingIdentifiers} from "@romejs/js-ast-utils";
@@ -59,8 +52,6 @@ const provider = createHook<State, undefined, AnyNode>({
 	},
 
 	exit(path, state) {
-		console.log(state.usedBindings)
-		throw new Error()
 		for (const name in state.usedBindings) {
 			const used = state.usedBindings[name];
 			const binding = path.scope.getBinding(name);
@@ -87,7 +78,6 @@ export default {
 			const usedBindings: Dict<boolean> = {};
 
 			// Get all the non-exported bindings in this file and mark them as unused
-			console.log('bindings',  scope.getOwnBindings())
 			for (const [name, binding] of scope.getOwnBindings()) {
 				if (binding instanceof ArgumentsBinding) {
 					continue;

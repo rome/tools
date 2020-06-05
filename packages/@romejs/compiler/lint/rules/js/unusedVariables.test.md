@@ -10,10 +10,12 @@
 
  unknown:1:6 lint/js/unusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unused constant a
+  ✖ The constant variable a is unused.
 
     const a = 4;
           ^
+
+  ℹ Unused variables are dead code and usually result from incomplete refactoring.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -34,10 +36,12 @@ const a = 4;
 
  unknown:1:4 lint/js/unusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unused variable a
+  ✖ The variable variable a is unused.
 
     let a = 4;
         ^
+
+  ℹ Unused variables are dead code and usually result from incomplete refactoring.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -58,12 +62,14 @@ let a = 4;
 
  unknown:1:9 lint/js/unusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unused function foo
+  ✖ The function variable foo is unused.
 
-  > 1 │ function foo(myVar) { 
+  > 1 │ function foo(myVar) {
       │          ^^^
-    2 │      console.log("foo"); 
-    3 │     };
+    2 │  console.log("foo");
+    3 │ };
+
+  ℹ Unused variables are dead code and usually result from incomplete refactoring.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -83,54 +89,47 @@ function foo(myVar) {
 ### `3`
 
 ```
-✔ No known problems!
+
+ unknown:1:6 lint/js/unusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The constant variable foo is unused.
+
+  > 1 │ const foo = (b) => {
+      │       ^^^
+    2 │  console.log("foo");
+    3 │ };
+
+  ℹ Unused variables are dead code and usually result from incomplete refactoring.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `3: formatted`
 
 ```
-function foo(myVar) {
+function foo(b) {
 	console.log("foo");
 }
-foo();
 
 ```
 
 ### `4`
 
 ```
-
- unknown:1:6 lint/js/unusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Unused constant foo
-
-  > 1 │ const foo = (b) => { 
-      │       ^^^
-    2 │      console.log("foo"); 
-    3 │     };
-
- unknown:1:13 lint/js/unusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Unused parameter b
-
-  > 1 │ const foo = (b) => { 
-      │              ^
-    2 │      console.log("foo"); 
-    3 │     };
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
+✔ No known problems!
 
 ```
 
 ### `4: formatted`
 
 ```
-function foo(b) {
-	console.log("foo");
+function foo(_, b) {
+	console.log(b);
 }
+foo();
 
 ```
 
@@ -142,23 +141,6 @@ function foo(b) {
 ```
 
 ### `5: formatted`
-
-```
-function foo(_, b) {
-	console.log(b);
-}
-foo();
-
-```
-
-### `6`
-
-```
-✔ No known problems!
-
-```
-
-### `6: formatted`
 
 ```
 function foo(_, b) {
