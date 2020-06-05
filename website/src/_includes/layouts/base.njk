@@ -85,6 +85,11 @@
             {{ content | toc(tags=['h1', 'h2'], wrapperClass='fixed toc')  | safe }}
           </div>
         </div>
+        <div class="mode-switch-container">
+          <button id="mode-switch" class="mode-switch">
+            Dark Mode
+          </button>
+        </div>
       </div>
       <div class="main">
         <div class="overlay"></div>
@@ -119,14 +124,6 @@
               <ul>
                 <li>
                   <a href="https://github.com/romejs/rome">GitHub</a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4></h4>
-              <ul>
-                <li>
-                  <button id="theme-toggle">Dark Mode</button>
                 </li>
               </ul>
             </div>

@@ -19,8 +19,6 @@
   overflow-y: auto;
   overflow-x: hidden;
   font-size: 0.95rem;
-  padding: $unit;
-  padding-right: 0;
   position: sticky;
   top: 0;
   height: 100vh;
@@ -28,6 +26,8 @@
   transition-property: transform, border-top-width, border-right;
   z-index: 2;
   min-width: 256px;
+  display: flex;
+  flex-direction: column;
 
   @include desktop-only() {
     @include top-border;
@@ -43,6 +43,7 @@
     padding-top: 64px + $unit;
     background: var(--background-color);
     height: 100%;
+    -webkit-overflow-scrolling: touch;
 
     &.visible {
       transform: translateX(0);
@@ -87,6 +88,7 @@
   border-bottom: 1px solid var(--soft-border-color);
   margin-bottom: $unit;
   font-weight: bold;
+  margin-left: $unit;
   // display: none;
   @include transition-timing;
   transition-property: border-bottom;
@@ -125,4 +127,23 @@
     opacity: 0.6;
   }
 
+}
+
+.mode-switch{
+  text-align: center;
+  color: var(--background-color);
+  background: var(--font-color);
+  border: 0;
+  padding: 5px 10px;
+  cursor: pointer;
+  width: 100%;
+  margin: auto $unit * 2 $unit $unit * 2;
+  font-weight: bold;
+}
+
+.mode-switch-container{
+  margin-top: $unit;
+  height: 100%;
+  display: flex;
+  width: 100%;
 }

@@ -1,4 +1,5 @@
 .table-of-contents {
+  margin-left: $unit;
 
   ol{
     margin: 0;
@@ -41,6 +42,9 @@
   }
 
   .active {
+    &.li{
+      display: inline-block;
+    }
     color: $color-4;
     background-color: $gray-4;
   }

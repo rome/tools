@@ -6,7 +6,7 @@ const elements = {
   overlay: document.getElementsByClassName('overlay')[0],
   headings: [...document.querySelectorAll('.content h1, .content h2, .content h3')],
   headerMobile: document.getElementsByClassName('header-mobile')[0],
-  themeToggle: document.getElementById('theme-toggle')
+  modeSwitch: document.getElementById('mode-switch')
 };
 
 function isMobile(){
@@ -99,7 +99,7 @@ function mobileToggleEvent(event){
   toc.highlight();
 }
 
-function themeToggle(event){
+function modeSwitch(event){
 
   event.preventDefault();
 
@@ -108,10 +108,12 @@ function themeToggle(event){
 
   if(atribute === 'light'){
     $doc.setAttribute('data-theme', 'dark');
+    elements.modeSwitch.innerText = "Light Mode";
   }
 
   if(atribute === 'dark'){
     $doc.setAttribute('data-theme', 'light');
+    elements.modeSwitch.innerText = "Dark Mode";
   }
 
 }
@@ -129,4 +131,4 @@ elements.overlay.addEventListener('click', mobileToggleEvent, false);
 elements.overlay.addEventListener("touchstart", mobileToggleEvent, false);
 window.addEventListener('scroll', handleScroll, false);
 
-elements.themeToggle.addEventListener('click', themeToggle, false);
+elements.modeSwitch.addEventListener('click', modeSwitch, false);
