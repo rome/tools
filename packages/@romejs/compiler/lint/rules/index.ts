@@ -59,6 +59,7 @@ import altText from "./jsx-a11y/altText";
 import anchorHasContent from "./jsx-a11y/anchorHasContent";
 import anchorIsValid from "./jsx-a11y/anchorIsValid";
 import ariaProps from "./jsx-a11y/ariaProps";
+import ariaProptypes from "./jsx-a11y/ariaProptypes";
 import ariaUnsupportedElements from "./jsx-a11y/ariaUnsupportedElements";
 import clickEventsHaveKeyEvents from "./jsx-a11y/clickEventsHaveKeyEvents";
 import headingHasContent from "./jsx-a11y/headingHasContent";
@@ -158,6 +159,7 @@ export const lintTransforms = [
 	anchorHasContent,
 	anchorIsValid,
 	ariaProps,
+	ariaProptypes,
 	ariaUnsupportedElements,
 	clickEventsHaveKeyEvents,
 	headingHasContent,

@@ -146,6 +146,7 @@ type LintDiagnosticCategory =
 	| "lint/jsx-a11y/anchorHasContent"
 	| "lint/jsx-a11y/anchorIsValid"
 	| "lint/jsx-a11y/ariaProps"
+	| "lint/jsx-a11y/ariaProptypes"
 	| "lint/jsx-a11y/ariaUnsupportedElements"
 	| "lint/jsx-a11y/clickEventsHaveKeyEvents"
 	| "lint/jsx-a11y/headingHasContent"
