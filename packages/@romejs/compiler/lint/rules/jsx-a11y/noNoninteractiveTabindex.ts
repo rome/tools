@@ -1,10 +1,6 @@
 import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
-import {
-	getJSXAttribute,
-	hasJSXAttribute,
-	isJSXElement,
-} from "@romejs/js-ast-utils";
+import {getJSXAttribute, hasJSXAttribute} from "@romejs/js-ast-utils";
 import {
 	elementsToConcepts,
 	isRoleInteractive,
@@ -49,7 +45,7 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 
-		if (isJSXElement(node)) {
+		if (node.type === "JSXElement") {
 			// it's a component, we don't know how the tabIndex is handled
 			if (node.name && node.name.type === "JSXReferenceIdentifier") {
 				return node;

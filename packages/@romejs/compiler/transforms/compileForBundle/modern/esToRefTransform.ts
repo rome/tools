@@ -52,7 +52,7 @@ export default {
 
 		const opts = getOptions(context);
 
-		if (jsRoot.is(node)) {
+		if (node.type === "JSRoot") {
 			const mappings = new Map();
 
 			// make all variables private

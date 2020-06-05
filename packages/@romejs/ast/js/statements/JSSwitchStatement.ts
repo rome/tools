@@ -6,7 +6,7 @@
  */
 
 import {AnyJSExpression, JSNodeBase, JSSwitchCase} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSSwitchStatement = JSNodeBase & {
 	type: "JSSwitchStatement";

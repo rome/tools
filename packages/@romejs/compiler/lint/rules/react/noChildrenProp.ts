@@ -7,15 +7,11 @@
 
 import {Path} from "@romejs/compiler";
 import {AnyNode} from "@romejs/ast";
-import {
-	doesNodeMatchPattern,
-	getJSXAttribute,
-	isJSXElement,
-} from "@romejs/js-ast-utils";
+import {doesNodeMatchPattern, getJSXAttribute} from "@romejs/js-ast-utils";
 import {descriptions} from "@romejs/diagnostics";
 
 function getJSXChildrenProp(node: AnyNode) {
-	return isJSXElement(node) && getJSXAttribute(node, "children");
+	return node.type === "JSXElement" && getJSXAttribute(node, "children");
 }
 
 function getCreateElementChildrenProp(node: AnyNode) {

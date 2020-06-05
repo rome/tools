@@ -6,7 +6,7 @@
  */
 
 import {JSIdentifier, JSNodeBase} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSExportDefaultSpecifier = JSNodeBase & {
 	type: "JSExportDefaultSpecifier";

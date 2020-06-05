@@ -6,7 +6,7 @@
  */
 
 import {JSIdentifier, JSNodeBase, JSPrivateName} from "@romejs/ast";
-import {createQuickBuilder} from "../utils";
+import {createQuickBuilder} from "../../utils";
 
 export type JSStaticMemberProperty = JSNodeBase & {
 	type: "JSStaticMemberProperty";

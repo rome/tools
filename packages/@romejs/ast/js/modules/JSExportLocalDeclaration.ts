@@ -18,7 +18,7 @@ import {
 	TSModuleDeclaration,
 	TSTypeAliasTypeAnnotation,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSExportLocalDeclaration = JSNodeBase & {
 	type: "JSExportLocalDeclaration";

@@ -6,7 +6,7 @@
  */
 
 import {JSNodeBase} from "@romejs/ast";
-import {createQuickBuilder} from "../utils";
+import {createQuickBuilder} from "../../utils";
 
 export type JSXIdentifier = JSNodeBase & {
 	type: "JSXIdentifier";

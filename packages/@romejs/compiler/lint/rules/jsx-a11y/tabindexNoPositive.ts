@@ -1,10 +1,6 @@
 import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
-import {
-	getJSXAttribute,
-	hasJSXAttribute,
-	isJSXElement,
-} from "@romejs/js-ast-utils";
+import {getJSXAttribute, hasJSXAttribute} from "@romejs/js-ast-utils";
 import {JSXAttribute, JSXElement} from "@romejs/ast";
 
 function createDiagnostic(path: Path, node: JSXElement, attribute: JSXAttribute) {
@@ -28,7 +24,7 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 
-		if (isJSXElement(node) && hasJSXAttribute(node, "tabIndex")) {
+		if (node.type === "JSXElement" && hasJSXAttribute(node, "tabIndex")) {
 			const attribute = getJSXAttribute(node, "tabIndex");
 			if (
 				attribute &&

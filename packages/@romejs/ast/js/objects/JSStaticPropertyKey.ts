@@ -12,7 +12,7 @@ import {
 	JSPrivateName,
 	JSStringLiteral,
 } from "@romejs/ast";
-import {createQuickBuilder} from "../utils";
+import {createQuickBuilder} from "../../utils";
 
 export type JSStaticPropertyKey = JSNodeBase & {
 	type: "JSStaticPropertyKey";

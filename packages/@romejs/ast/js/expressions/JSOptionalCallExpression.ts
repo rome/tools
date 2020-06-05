@@ -12,7 +12,7 @@ import {
 	JSSuper,
 	TSTypeParameterInstantiation,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSOptionalCallExpression = JSNodeBase & {
 	type: "JSOptionalCallExpression";

@@ -6,7 +6,7 @@
  */
 
 import {AnyTSPrimary, JSIdentifier, JSNodeBase, TSThisType} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type TSTypePredicate = JSNodeBase & {
 	type: "TSTypePredicate";

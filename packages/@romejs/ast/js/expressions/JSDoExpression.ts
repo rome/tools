@@ -6,7 +6,7 @@
  */
 
 import {JSBlockStatement, JSNodeBase} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSDoExpression = JSNodeBase & {
 	type: "JSDoExpression";

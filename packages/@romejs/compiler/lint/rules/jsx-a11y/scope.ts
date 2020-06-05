@@ -11,7 +11,7 @@ export default {
 		const jsxNode = (node as JSXElement);
 
 		if (
-			isJSXElement(node) &&
+			node.type === "JSXElement" &&
 			hasJSXAttribute(node, "scope") &&
 			!isJSXElement(node, "th")
 		) {

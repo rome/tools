@@ -6,7 +6,7 @@
  */
 
 import {JSBindingIdentifier, JSClassHead, JSNodeBase} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSClassExpression = JSNodeBase & {
 	type: "JSClassExpression";
