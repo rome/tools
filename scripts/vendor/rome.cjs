@@ -393,7 +393,12 @@ const ___R$$priv$project$rome$$romejs$path$index_ts$os = require("os");
 			if (emphasis) {
 				markup += "emphasis ";
 			}
-			markup += 'target="' + this.join() + '" />';
+			markup +=
+				'target="' +
+				___R$project$rome$$romejs$string$markup$escape_ts$escapeMarkup(
+					this.join(),
+				) +
+				'" />';
 			return markup;
 		}
 
@@ -20180,12 +20185,8 @@ function ___R$project$rome$$romejs$js$ast$utils$isVariableIdentifier_ts$default(
 
   // project-rome/@romejs/project/types.ts
 const ___R$project$rome$$romejs$project$types_ts = {
-		get DEFAULT_PROJECT_CONFIG_META() {
-			return ___R$project$rome$$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG_META;
-		},
-		get DEFAULT_PROJECT_CONFIG() {
-			return ___R$project$rome$$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG;
-		},
+		createDefaultProjectConfigMeta: ___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfigMeta,
+		createDefaultProjectConfig: ___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfig,
 	};
 
 
@@ -20212,56 +20213,62 @@ const ___R$project$rome$$romejs$project$types_ts = {
 
 
 
-	const ___R$project$rome$$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG_META = {
-		projectFolder: undefined,
-		configPath: undefined,
-		configHashes: [],
-		configDependencies: new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet(),
-		consumer: undefined,
-		configSourceSubKey: undefined,
-		consumersChain: [],
-	};
+	function ___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfigMeta() {
+		return {
+			projectFolder: undefined,
+			configPath: undefined,
+			configHashes: [],
+			configDependencies: new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet(),
+			consumer: undefined,
+			configSourceSubKey: undefined,
+			consumersChain: [],
+		};
+	}
 
-	const ___R$project$rome$$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG = {
-		name: "unknown",
-		root: false,
-		version: undefined,
-		cache: {},
-		develop: {
-			serveStatic: true,
-		},
-		bundler: {
-			mode: "modern",
-		},
-		compiler: {},
-		resolver: {},
-		typeCheck: {
-			enabled: false,
-			// Maybe this needs to be cloned...?
-			libs: new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet(),
-		},
-		dependencies: {
-			enabled: false,
-		},
-		lint: {
-			ignore: [],
-			globals: [],
-		},
-		tests: {
-			ignore: [],
-		},
-		vcs: {
-			root: ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath("/"),
-		},
-		files: {
-			vendorPath: ___R$project$rome$$romejs$path$index_ts$TEMP_PATH.append(
-				"rome-remote",
-			),
-			assetExtensions: [],
-			maxSize: 40_000_000, // 40 megabytes
-		},
-		targets: new Map(),
-	};
+	function ___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfig() {
+		return {
+			name: "unknown",
+			root: false,
+			version: undefined,
+			cache: {},
+			develop: {
+				serveStatic: true,
+			},
+			bundler: {
+				mode: "modern",
+			},
+			compiler: {},
+			resolver: {},
+			typeCheck: {
+				enabled: false,
+				// Maybe this needs to be cloned...?
+				libs: new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet(),
+			},
+			dependencies: {
+				enabled: false,
+			},
+			lint: {
+				ignore: [],
+				globals: [],
+			},
+			tests: {
+				ignore: [],
+			},
+			vcs: {
+				root: ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(
+					"/",
+				),
+			},
+			files: {
+				vendorPath: ___R$project$rome$$romejs$path$index_ts$TEMP_PATH.append(
+					"rome-remote",
+				),
+				assetExtensions: [],
+				maxSize: 40_000_000, // 40 megabytes
+			},
+			targets: new Map(),
+		};
+	}
 
 
   // project-rome/@romejs/path-match/types.ts
@@ -22562,16 +22569,11 @@ const ___R$project$rome$$romejs$project$load_ts = {
 		const {consumer} = meta;
 
 		// Produce a defaultConfig with some folder specific values
+		const _defaultConfig = ___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfig();
 		const defaultConfig = Object.assign(
 			{},
-			___R$project$rome$$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG,
-			{
-				vcs: Object.assign(
-					{},
-					___R$project$rome$$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG.vcs,
-					{root: projectFolder},
-				),
-			},
+			_defaultConfig,
+			{vcs: Object.assign({}, _defaultConfig.vcs, {root: projectFolder})},
 		);
 
 		const name = consumer.get("name").asString(
@@ -22580,12 +22582,10 @@ const ___R$project$rome$$romejs$project$load_ts = {
 
 		const config = Object.assign(
 			{},
-			___R$project$rome$$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG,
+			defaultConfig,
 			{
 				name,
-				root: partial.root === undefined
-					? ___R$project$rome$$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG.root
-					: partial.root,
+				root: partial.root === undefined ? defaultConfig.root : partial.root,
 			},
 			___R$$priv$project$rome$$romejs$project$load_ts$mergePartialConfig(
 				defaultConfig,
@@ -69787,7 +69787,7 @@ function ___R$project$rome$$romejs$ast$utils$isRoot_ts$isRoot(node) {
 				sourceText = "",
 				project = {
 					folder: undefined,
-					config: ___R$project$rome$$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG,
+					config: ___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfig(),
 				},
 				suppressions,
 			} = arg;
@@ -79714,7 +79714,7 @@ function ___R$$priv$project$rome$$romejs$js$ast$utils$removeLoc_ts$removeProp(
 			ast: ___R$project$rome$$romejs$ast$js$core$JSRoot_ts$MOCK_PROGRAM,
 			project: {
 				folder: undefined,
-				config: ___R$project$rome$$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG,
+				config: ___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfig(),
 			},
 		});
 		return context.reduce(
@@ -119290,7 +119290,7 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
 
 			const vendorProjectConfig = Object.assign(
 				{},
-				___R$project$rome$$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG,
+				___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfig(),
 				{name: "rome-internal-remote"},
 			);
 			const defaultVendorPath = vendorProjectConfig.files.vendorPath;
@@ -119299,7 +119299,7 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
 			);
 			await this.addProjectWithConfig({
 				projectFolder: defaultVendorPath,
-				meta: ___R$project$rome$$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG_META,
+				meta: ___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfigMeta(),
 				config: vendorProjectConfig,
 			});
 			await this.master.memoryFs.watch(defaultVendorPath, vendorProjectConfig);
@@ -121072,7 +121072,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 				switch (protocol) {
 					case "http":
 					case "https": {
-						let projectConfig = ___R$project$rome$$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG;
+						let projectConfig = ___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfig();
 
 						if (origin.isAbsolute()) {
 							const project = this.master.projectManager.findProjectExisting(
@@ -122739,7 +122739,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 			);
 			await memoryFs.watch(
 				this.cachePath,
-				___R$project$rome$$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG,
+				___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfig(),
 			);
 
 			this.master.endEvent.subscribe(async () => {
@@ -123093,12 +123093,12 @@ class ___R$project$rome$$romejs$core$master$fs$VirtualModules_ts$default {
 			// Initialize as project
 			const projectConfig = Object.assign(
 				{},
-				___R$project$rome$$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG,
+				___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfig(),
 				{name: "rome-runtime"},
 			);
 			await this.master.projectManager.addProjectWithConfig({
 				projectFolder: runtimeModulesPath,
-				meta: ___R$project$rome$$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG_META,
+				meta: ___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfigMeta(),
 				config: projectConfig,
 			});
 			await this.master.memoryFs.watch(runtimeModulesPath, projectConfig);
