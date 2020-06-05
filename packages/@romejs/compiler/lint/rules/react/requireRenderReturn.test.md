@@ -195,11 +195,71 @@ const Foo = class extends Component {
 ### `6`
 
 ```
-✔ No known problems!
+
+ unknown:3:16 lint/react/requireRenderReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The render method on a component must return content.
+
+    1 │ import React from "react";
+    2 │ const Foo = class extends React.PureComponent {
+  > 3 │  render = () => { }
+      │                 ^^^
+    4 │ }
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `6: formatted`
+
+```
+import React from "react";
+const Foo = class extends React.PureComponent {
+	render = () => {};
+};
+
+```
+
+### `7`
+
+```
+
+ unknown:3:16 lint/react/requireRenderReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The render method on a component must return content.
+
+    1 │ import React, {PureComponent} from "react";
+    2 │ const Foo = class extends PureComponent {
+  > 3 │  render = () => { }
+      │                 ^^^
+    4 │ }
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `7: formatted`
+
+```
+import React, {PureComponent} from "react";
+const Foo = class extends PureComponent {
+	render = () => {};
+};
+
+```
+
+### `8`
+
+```
+✔ No known problems!
+
+```
+
+### `8: formatted`
 
 ```
 import React from "react";
@@ -211,14 +271,14 @@ class Foo extends React.Component {
 
 ```
 
-### `7`
+### `9`
 
 ```
 ✔ No known problems!
 
 ```
 
-### `7: formatted`
+### `9: formatted`
 
 ```
 import React from "react";
@@ -234,14 +294,14 @@ class Foo extends React.Component {
 
 ```
 
-### `8`
+### `10`
 
 ```
 ✔ No known problems!
 
 ```
 
-### `8: formatted`
+### `10: formatted`
 
 ```
 class Foo {
@@ -252,14 +312,14 @@ class Foo {
 
 ```
 
-### `9`
+### `11`
 
 ```
 ✔ No known problems!
 
 ```
 
-### `9: formatted`
+### `11: formatted`
 
 ```
 class Foo {
@@ -268,14 +328,14 @@ class Foo {
 
 ```
 
-### `10`
+### `12`
 
 ```
 ✔ No known problems!
 
 ```
 
-### `10: formatted`
+### `12: formatted`
 
 ```
 class Foo extends Bar {

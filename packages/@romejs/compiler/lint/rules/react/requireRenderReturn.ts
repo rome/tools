@@ -25,10 +25,16 @@ function getMethodBody(node: AnyJSClassMember) {
 	return undefined;
 }
 
+const REACT_COMPONENT_PATTERNS = [
+	"React.Component",
+	"Component",
+	"React.PureComponent",
+	"PureComponent",
+];
+
 function isExtendingReactComponent(node: JSClassHead) {
-	return (
-		doesNodeMatchPattern(node.superClass, "React.Component") ||
-		doesNodeMatchPattern(node.superClass, "Component")
+	return REACT_COMPONENT_PATTERNS.some((pattern) =>
+		doesNodeMatchPattern(node.superClass, pattern)
 	);
 }
 

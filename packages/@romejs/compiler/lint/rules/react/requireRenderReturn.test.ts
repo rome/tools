@@ -49,6 +49,18 @@ test(
 							render = () => { }
 						}
 					`,
+					dedent`
+						import React from "react";
+						const Foo = class extends React.PureComponent {
+							render = () => { }
+						}
+					`,
+					dedent`
+						import React, {PureComponent} from "react";
+						const Foo = class extends PureComponent {
+							render = () => { }
+						}
+					`,
 				],
 
 				valid: [
