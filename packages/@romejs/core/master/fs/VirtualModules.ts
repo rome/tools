@@ -10,9 +10,9 @@ import {modules} from "./runtime-modules";
 import {AbsoluteFilePath} from "@romejs/path";
 import {createDirectory, writeFile} from "@romejs/fs";
 import {
-	DEFAULT_PROJECT_CONFIG,
-	DEFAULT_PROJECT_CONFIG_META,
 	ProjectConfig,
+	createDefaultProjectConfig,
+	createDefaultProjectConfigMeta,
 } from "@romejs/project";
 
 export default class VirtualModules {
@@ -41,12 +41,12 @@ export default class VirtualModules {
 
 		// Initialize as project
 		const projectConfig: ProjectConfig = {
-			...DEFAULT_PROJECT_CONFIG,
+			...createDefaultProjectConfig(),
 			name: "rome-runtime",
 		};
 		await this.master.projectManager.addProjectWithConfig({
 			projectFolder: runtimeModulesPath,
-			meta: DEFAULT_PROJECT_CONFIG_META,
+			meta: createDefaultProjectConfigMeta(),
 			config: projectConfig,
 		});
 		await this.master.memoryFs.watch(runtimeModulesPath, projectConfig);

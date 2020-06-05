@@ -12,7 +12,7 @@ import {
 } from "../common/bridges/WorkerBridge";
 import {ModuleSignature} from "@romejs/js-analysis";
 import Master from "./Master";
-import {DEFAULT_PROJECT_CONFIG, ProjectDefinition} from "@romejs/project";
+import {ProjectDefinition, createDefaultProjectConfig} from "@romejs/project";
 import {VERSION} from "../common/constants";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@romejs/path";
 import {createDirectory, readFileText, removeFile, writeFile} from "@romejs/fs";
@@ -85,7 +85,7 @@ export default class Cache {
 
 		const {memoryFs} = this.master;
 		await createDirectory(this.cachePath);
-		await memoryFs.watch(this.cachePath, DEFAULT_PROJECT_CONFIG);
+		await memoryFs.watch(this.cachePath, createDefaultProjectConfig());
 
 		this.master.endEvent.subscribe(async () => {
 			// Wait on possible running writePending

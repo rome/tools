@@ -9,7 +9,7 @@ import {TestHelper} from "rome";
 import lint from "../index";
 import {parseJS} from "@romejs/js-parser";
 import {createUnknownFilePath} from "@romejs/path";
-import {DEFAULT_PROJECT_CONFIG} from "@romejs/project";
+import {createDefaultProjectConfig} from "@romejs/project";
 import {ConstProgramSyntax, ConstSourceType} from "@romejs/ast";
 import {DiagnosticCategory, DiagnosticsProcessor} from "@romejs/diagnostics";
 import {printDiagnosticsToString} from "@romejs/cli-diagnostics";
@@ -84,7 +84,7 @@ async function testLintExpect(
 		sourceText: input,
 		project: {
 			folder: undefined,
-			config: DEFAULT_PROJECT_CONFIG,
+			config: createDefaultProjectConfig(),
 		},
 	});
 

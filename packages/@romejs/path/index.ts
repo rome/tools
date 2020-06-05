@@ -6,6 +6,7 @@
  */
 
 import os = require("os");
+import {escapeMarkup} from "@romejs/string-markup";
 
 type FilePathOptions<Super> = {
 	filename?: string;
@@ -76,7 +77,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
 		if (emphasis) {
 			markup += `emphasis `;
 		}
-		markup += `target="${this.join()}" />`;
+		markup += `target="${escapeMarkup(this.join())}" />`;
 		return markup;
 	}
 
