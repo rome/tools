@@ -5,9 +5,6 @@
   padding-bottom: $unit * 2;
   border-top: 1px solid var(--soft-border-color);
   @include pattern-white;
-  background: var(--background-color);
-  background-image: var(--pattern-img-path),
-  linear-gradient(180deg, var(--pattern-color) 20%, rgba(0, 0, 0, 0) 100%);;
 
   .container{
     display: block;

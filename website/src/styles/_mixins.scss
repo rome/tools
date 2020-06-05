@@ -16,15 +16,11 @@
 }
 
 @mixin pattern-white{
-  background: var(--background-color);
+  background-color: var(--background-color);
   background-image: var(--pattern-img-path),
-  linear-gradient(90deg, var(--pattern-color) 60%, rgba(0, 0, 0, 0) 100%);;
+  linear-gradient(180deg, var(--pattern-color) 20%, var(--pattern-color-2) 100%);
   background-repeat: repeat;
   background-position: 50%;
-  z-index: -1;
-  @include transition-timing;
-  transition-property: background, background-image;
-  transition-property: 200ms, 350ms;
 }
 
 @mixin top-border{
