@@ -69,7 +69,6 @@ export default class Bridge {
 			});
 		}
 
-		this.clear();
 		this.init();
 	}
 

@@ -44,6 +44,7 @@ export default class Event<Param, Ret = void> {
 
 	clear() {
 		this.subscriptions.clear();
+		this.rootSubscription = undefined;
 	}
 
 	hasSubscribers(): boolean {
