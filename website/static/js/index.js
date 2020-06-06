@@ -14,6 +14,7 @@ function isMobile(){
 }
 
 const toc = {
+  currentH1Link: null,
   getMobileNavbarHeight(){
 
     if(isMobile()){
@@ -51,6 +52,24 @@ const toc = {
       if (scrollY > start && scrollY < end) {
 
         link.classList.add('active');
+
+        if(toc.currentH1Link){
+          if(toc.currentH1Link.parentElement.lastElementChild.tagName == 'OL'){
+            toc.currentH1Link.parentElement.lastElementChild.classList.remove('not-sr-only');
+          }
+        }
+
+        if(element.tagName === 'H2'){
+
+          toc.currentH1Link = link // link inside a level 2 OL
+                              .parentElement // li
+                              .parentElement // ol
+                              .parentElement // Level one ol
+                              .firstElementChild; // h1 link
+
+          link.parentElement.parentElement.classList.add('not-sr-only');
+
+        }
 
       } else {
 

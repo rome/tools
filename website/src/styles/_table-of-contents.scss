@@ -8,6 +8,7 @@
 
     ol{
       margin-left: $unit;
+      @extend .sr-only;
     }
 
   }
@@ -31,8 +32,6 @@
 
   }
 
-
-
   a:hover{
     font-weight: bold;
   }
@@ -41,12 +40,16 @@
     list-style-type: none;
   }
 
-  .active {
-    &.li{
-      display: inline-block;
-    }
-    color: $color-4;
-    background-color: $gray-4;
-  }
+}
 
+.table-of-contents a.active + ol{
+  @extend .not-sr-only;
+  margin-left: $unit !important;
+  @include transition-timing;
+  transition-property: all;
+}
+
+.table-of-contents a + ol.not-sr-only {
+  @extend .not-sr-only;
+  margin-left: $unit !important;
 }
