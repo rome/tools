@@ -16,7 +16,7 @@ const initialState: State = {
 };
 
 const provider = createHook<State, undefined, AnyNode>({
-	name: "unusedVariablesProvider",
+	name: "noUnusedVariablesProvider",
 	initialState,
 	call(path: Path, state: State) {
 		const {node} = path;
@@ -59,7 +59,7 @@ const provider = createHook<State, undefined, AnyNode>({
 			if (used === false && binding !== undefined) {
 				path.context.addNodeDiagnostic(
 					binding.node,
-					descriptions.LINT.JS_UNUSED_VARIABLES(binding.kind, name),
+					descriptions.LINT.JS_NO_UNUSED_VARIABLES(binding.kind, name),
 				);
 			}
 		}

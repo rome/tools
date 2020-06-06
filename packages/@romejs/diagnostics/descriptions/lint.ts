@@ -549,8 +549,8 @@ export const lint = createDiagnosticsCategory({
 		category: "lint/js/unsafeNegation",
 		message: "The <emphasis>negation operator is used unsafely</emphasis> on the left side of this binary expression.",
 	},
-	JS_UNUSED_VARIABLES: (kind: string, name: string) => ({
-		category: "lint/js/unusedVariables",
+	JS_NO_UNUSED_VARIABLES: (kind: string, name: string) => ({
+		category: "lint/js/noUnusedVariables",
 		message: markup`The ${kind} variable <emphasis>${name}</emphasis> is unused.`,
 		advice: [
 			{

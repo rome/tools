@@ -43,7 +43,7 @@ test(
 					`,
 				],
 			},
-			{category: "lint/js/unusedVariables"},
+			{category: "lint/js/noUnusedVariables"},
 		);
 	},
 );
