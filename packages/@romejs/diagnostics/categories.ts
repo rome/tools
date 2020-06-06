@@ -185,6 +185,7 @@ type LintDiagnosticCategory =
 	| "lint/react/noUselessFragment"
 	| "lint/react/noWillUpdateSetState"
 	| "lint/react/reactInJsxScope"
+	| "lint/react/requireRenderReturn"
 	| "lint/react/stylePropObject"
 	| "lint/react/voidDomElementsNoChildren"
 	| "lint/ts/noExplicitAny";
