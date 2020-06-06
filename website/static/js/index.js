@@ -32,23 +32,30 @@ const toc = {
       const id = `#${element.getAttribute('id')}`;
       const y = element.offsetTop;
       const marginTop = parseFloat(window.getComputedStyle(element).marginTop, 10);
+      const height = parseFloat(window.getComputedStyle(element).marginTop, 10);
       const link = document.querySelectorAll(`.toc-container a[href='${id}']`)[0];
 
       const nextElement = elements.headings[i + 1];
-      let offsetTop = (y - (marginTop));
+
+      let start = y - marginTop;
+      let end = y + height + marginTop;
+
       if(nextElement){
-        offsetTop = (nextElement.offsetTop);
+        const nextMarginTop = parseFloat(window.getComputedStyle(nextElement).marginTop, 10);
+        end = (nextElement.offsetTop - nextMarginTop);
       }
 
-      let start = (y - marginTop) - toc.getMobileNavbarHeight() - 10;
-      let end = (offsetTop - toc.getMobileNavbarHeight()) - (marginTop) - 13;
+      start -= toc.getMobileNavbarHeight();
+      end -= toc.getMobileNavbarHeight();
 
       if (scrollY > start && scrollY < end) {
 
         link.classList.add('active');
 
       } else {
+
         link.classList.remove('active');
+
       }
 
     }
@@ -63,7 +70,7 @@ const toc = {
       const heading = document.querySelector(target.getAttribute('href'));
       const marginTop = parseFloat(window.getComputedStyle(heading).marginTop, 10);
 
-      window.scrollTo(0, (heading.offsetTop) - toc.getMobileNavbarHeight() - marginTop);
+      window.scrollTo(0, (heading.offsetTop) - toc.getMobileNavbarHeight() - (marginTop - 2));
 
       if(isMobile()){
         mobileToggleEvent(event);
