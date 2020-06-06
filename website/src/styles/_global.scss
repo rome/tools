@@ -21,8 +21,6 @@ body {
   color: var(--font-color);
   line-height: 1.5;
   margin: 0;
-  @include transition-timing;
-  transition-property: border-top, color;
   @include desktop-only() {
     border-top: $unit / 3 solid var(--top-border-color);
   }

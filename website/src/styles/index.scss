@@ -23,7 +23,7 @@
   top: 0;
   height: 100vh;
   border-right: 1px solid var(--soft-border-color);
-  transition-property: transform, border-top-width, border-right;
+  transition-property: transform;
   z-index: 2;
   min-width: 256px;
   display: flex;
@@ -93,8 +93,6 @@
   font-weight: bold;
   margin-left: $unit;
   // display: none;
-  @include transition-timing;
-  transition-property: border-bottom;
 
   ul{
     margin: 0;
