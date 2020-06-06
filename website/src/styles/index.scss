@@ -52,22 +52,25 @@
 }
 
 .overlay{
-  display: none;
+  transform: translateX(100%);
+  width: 100%;
+  height: 100%;
+
+  @include desktop-only() {
+    display: none;
+  }
 
   @include mobile-only() {
     @include transition-timing;
     position: fixed;
     background: #181818;
     opacity: 0;
-    transition-property: opacity;
+    transition-property: opacity, transform;
     display: block;
     z-index: 1;
     &.visible {
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      opacity: 0.5;
+      transform: translateX(0);
+      opacity: 0.6;
     }
   }
 }
