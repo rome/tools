@@ -7,12 +7,12 @@
 
 import Scope from "../Scope";
 import {TypeBinding} from "@romejs/compiler";
-import {AnyNode, TSTypeAliasTypeAnnotation} from "@romejs/ast";
+import {AnyNode, tsTypeAliasTypeAnnotation} from "@romejs/ast";
+import {createScopeEvaluator} from "./index";
 
-export default {
-	creator: false,
-	build(node: TSTypeAliasTypeAnnotation, parent: AnyNode, scope: Scope) {
-		scope.evaluate(node.typeParameters);
+export default createScopeEvaluator({
+	inject(node: AnyNode, parent: AnyNode, scope: Scope) {
+		node = tsTypeAliasTypeAnnotation.assert(node);
 		scope.addBinding(
 			new TypeBinding(
 				{
@@ -25,4 +25,11 @@ export default {
 			),
 		);
 	},
-};
+
+	enter(node: AnyNode, parent: AnyNode, scope: Scope) {
+		node = tsTypeAliasTypeAnnotation.assert(node);
+		const newScope = scope.fork("type-generic", node);
+		newScope.injectEvaluate(node.typeParameters);
+		return newScope;
+	},
+});

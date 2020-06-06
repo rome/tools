@@ -6,7 +6,10 @@
  */
 
 import {
+	MarkupFormatGridOptions,
 	MarkupFormatOptions,
+	MarkupLinesAndWidth,
+	MarkupTagName,
 	ansiEscapes,
 	markupTag,
 	markupToAnsi,
@@ -23,6 +26,7 @@ import {
 	ReporterTableField,
 	SelectArguments,
 	SelectOptions,
+	Stdout,
 } from "./types";
 import {removeSuffix} from "@romejs/string-utils";
 import Progress from "./Progress";
@@ -31,12 +35,7 @@ import stream = require("stream");
 import {CWD_PATH} from "@romejs/path";
 import {Event} from "@romejs/events";
 import readline = require("readline");
-import {
-	MarkupFormatGridOptions,
-	MarkupTagName,
-} from "@romejs/string-markup/types";
 import select from "./select";
-import {MarkupLinesAndWidth} from "@romejs/string-markup/format";
 import {onKeypress} from "./util";
 
 type ListOptions = {
@@ -86,11 +85,6 @@ type QuestionOptions = {
 };
 
 let remoteProgressIdCounter = 0;
-
-type Stdout = stream.Writable & {
-	isTTY?: boolean;
-	columns?: number;
-};
 
 function getStreamFormat(stdout: undefined | Stdout): ReporterStream["format"] {
 	return stdout !== undefined && stdout.isTTY === true ? "ansi" : "none";
@@ -157,7 +151,10 @@ export default class Reporter {
 		});
 
 		// Windows terminals are awful
-		const unicode = process.platform !== "win32";
+		const unicode =
+			stdout !== undefined && stdout.unicode !== undefined
+				? stdout.unicode
+				: process.platform !== "win32";
 
 		const outStream: ReporterStream = {
 			type: "out",
@@ -735,8 +732,10 @@ export default class Reporter {
 	}
 
 	clearLineSpecific(stream: ReporterStream) {
-		stream.write(ansiEscapes.eraseLine);
-		stream.write(ansiEscapes.cursorTo(0));
+		if (stream.format === "ansi") {
+			stream.write(ansiEscapes.eraseLine);
+			stream.write(ansiEscapes.cursorTo(0));
+		}
 	}
 
 	writeAll(msg: string, opts: LogOptions = {}) {
@@ -959,7 +958,29 @@ export default class Reporter {
 			return;
 		}
 
-		const inner = markupTag(opts.markupTag, rawInner);
+		let inner = markupTag(opts.markupTag, rawInner);
+
+		if (args.length > 0) {
+			const formattedArgs: Array<string> = args.map((arg) => {
+				if (typeof arg === "string") {
+					return arg;
+				} else {
+					return prettyFormat(arg, {markup: true});
+				}
+			});
+
+			// Interpolate
+			inner = inner.replace(/%s/g, () => formattedArgs.shift()!);
+
+			// Add on left over arguments
+			for (const arg of formattedArgs) {
+				if (inner[inner.length - 1] !== " ") {
+					inner += " ";
+				}
+
+				inner += arg;
+			}
+		}
 
 		for (const stream of this.getStreams(opts.stderr)) {
 			// Format the prefix, selecting it depending on if we're a unicode stream
@@ -976,7 +997,7 @@ export default class Reporter {
 			);
 			const prefixLine = prefixLines[0];
 			if (prefixLines.length !== 1) {
-				throw new Error("Expected 1 prefix line");
+				throw new Error(`Expected 1 prefix line but got ${prefixLines.length}`);
 			}
 
 			const {lines} = this.markupify(stream, inner, prefixWidth);

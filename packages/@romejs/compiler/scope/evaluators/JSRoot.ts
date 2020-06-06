@@ -7,18 +7,23 @@
 
 import Scope from "../Scope";
 import {addVarBindings} from "../utils";
-import {AnyNode, JSRoot} from "@romejs/ast";
+import {AnyNode, jsRoot} from "@romejs/ast";
+import {createScopeEvaluator} from "./index";
 
-export default {
-	creator: true,
-	build(node: JSRoot, parent: AnyNode, scope: Scope) {
+export default createScopeEvaluator({
+	enter(node: AnyNode, parent: AnyNode, scope: Scope) {
+		node = jsRoot.assert(node);
+
 		const newScope = scope.fork("program", node);
+
 		if (node.hasHoistedVars) {
 			addVarBindings(newScope, node);
 		}
+
 		for (const child of node.body) {
-			newScope.evaluate(child, node);
+			newScope.injectEvaluate(child, node);
 		}
+
 		return newScope;
 	},
-};
+});

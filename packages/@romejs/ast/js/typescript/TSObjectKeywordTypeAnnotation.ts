@@ -6,7 +6,7 @@
  */
 
 import {JSNodeBase} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type TSObjectKeywordTypeAnnotation = JSNodeBase & {
 	type: "TSObjectKeywordTypeAnnotation";

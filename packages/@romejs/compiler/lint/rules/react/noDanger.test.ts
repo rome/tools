@@ -6,19 +6,25 @@
  */
 
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
-	"no danger",
+	"react no danger",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				'<div dangerouslySetInnerHTML={{ __html: "Hello World" }}></div>;',
-				// VALID
-				"<div>Hello World</div>;",
-			],
+			{
+				invalid: [
+					'<div dangerouslySetInnerHTML={{ __html: "child" }}></div>;',
+					`React.createElement('div', {dangerouslySetInnerHTML: { __html: "child" }})`,
+					`createElement('div', {dangerouslySetInnerHTML: { __html: "child" }})`,
+				],
+				valid: [
+					"<div>Hello World</div>;",
+					"React.createElement('div', 'child)",
+					"createElement('div', 'child)",
+				],
+			},
 			{category: "lint/react/noDanger"},
 		);
 	},

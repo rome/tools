@@ -6,7 +6,7 @@
  */
 
 import {AnyJSAssignmentPattern, AnyJSExpression, JSNodeBase} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSAssignmentExpression = JSNodeBase & {
 	type: "JSAssignmentExpression";

@@ -50,16 +50,14 @@ export default createMasterCommand<Flags>({
 					buff,
 				)}</filesize> <inverse>${kind}</inverse>`,
 			);
-			await createDirectory(file.getParent(), {recursive: true});
+			await createDirectory(file.getParent());
 			await writeFile(file, buff);
 		}
 
 		if (commandFlags.quiet) {
-			reporter.success(markup`Saved to <filelink target="${dir.join()}" />`);
+			reporter.success(`Saved to ${dir.toMarkup()}`);
 		} else {
-			reporter.success(
-				markup`Saved the following files to <filelink target="${dir.join()}" />`,
-			);
+			reporter.success(`Saved the following files to ${dir.toMarkup()}`);
 			reporter.list(savedList);
 		}
 	},

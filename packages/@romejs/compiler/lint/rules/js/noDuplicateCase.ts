@@ -8,6 +8,9 @@
 import {Path} from "@romejs/compiler";
 import {AnyNode} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
+import {DiagnosticsDuplicateHelper} from "@romejs/compiler/lib/DiagnosticsDuplicateHelper";
+import {resolveIndirection, tryStaticEvaluation} from "@romejs/js-ast-utils";
+import prettyFormat from "@romejs/pretty-format";
 
 export default {
 	name: "noDuplicateCase",
@@ -15,22 +18,34 @@ export default {
 		const {node, context} = path;
 
 		if (node.type === "JSSwitchStatement") {
-			const uniqueSwitchCases = new Set();
+			const duplicates = new DiagnosticsDuplicateHelper(
+				context,
+				descriptions.LINT.JS_NO_DUPLICATE_CASE,
+			);
 
 			for (const param of node.cases) {
-				if (param.test && param.test.type === "JSStringLiteral") {
-					const {test} = param;
-
-					if (uniqueSwitchCases.has(test.value)) {
-						context.addNodeDiagnostic(
-							test,
-							descriptions.LINT.JS_NO_DUPLICATE_CASE(test.value),
-						);
-					}
-
-					uniqueSwitchCases.add(test.value);
+				if (param.test === undefined) {
+					continue;
 				}
+
+				const test = resolveIndirection(param.test, path.scope);
+				const res = tryStaticEvaluation(test.node, test.scope);
+
+				if (res.bailed && test.node.type === "JSReferenceIdentifier") {
+					// We weren't able to resolve this variable further
+					duplicates.addLocation(test.node.name, param.test.loc);
+					continue;
+				}
+
+				// No idea what this could be
+				if (res.bailed) {
+					continue;
+				}
+
+				duplicates.addLocation(prettyFormat(res.value), param.test.loc);
 			}
+
+			duplicates.process();
 		}
 
 		return node;

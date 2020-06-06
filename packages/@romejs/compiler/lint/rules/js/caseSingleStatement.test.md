@@ -7,7 +7,30 @@
 ### `0`
 
 ```
-✔ No known problems!
+
+ unknown:3:11 lint/js/caseSingleStatement FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ A switch case should only have a single statement. If you want more, then wrap it in a block.
+
+    1 │ switch (foo) {
+    2 │  case true:
+  > 3 │  case false:
+  > 4 │   let foo = '';
+  > 5 │   foo;
+      │ ^^^^^^
+    6 │ }
+
+  ℹ Recommended fix
+
+     1 │ + case false: {
+    2  │ -     let foo = '';
+     2 │ +   let foo = "";
+    3  │ -     foo;
+     4 │ + }
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
@@ -16,8 +39,10 @@
 ```
 switch (foo) {
 	case true:
-	case false:
-		return "yes";
+	case false: {
+		let foo = "";
+		foo;
+	}
 }
 
 ```
@@ -33,9 +58,9 @@ switch (foo) {
 
 ```
 switch (foo) {
-	case true: {
-		// empty
-	}
+	case true:
+	case false:
+		return "yes";
 }
 
 ```
@@ -51,7 +76,9 @@ switch (foo) {
 
 ```
 switch (foo) {
-	case true:
+	case true: {
+		// empty
+	}
 }
 
 ```
@@ -59,32 +86,7 @@ switch (foo) {
 ### `3`
 
 ```
-
- unknown:3:12 lint/js/caseSingleStatement FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ A switch case should only have a single statement. If you want more then wrap it in a block.
-
-    1 │ switch (foo) {
-    2 │   case true:
-  > 3 │   case false:
-  > 4 │     let foo = '';
-  > 5 │     foo;
-      │ ^^^^^^^^
-    6 │ }
-
-  ℹ Recommended fix
-
-      │ - :⏎··  
-    1 │ + case false: {
-      │ - let foo = '';
-    2 │ + ↹let foo = "";
-      │ - ····foo;
-    3 │ + ↹foo;
-    4 │ + }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
@@ -93,10 +95,6 @@ switch (foo) {
 ```
 switch (foo) {
 	case true:
-	case false: {
-		let foo = "";
-		foo;
-	}
 }
 
 ```

@@ -21,7 +21,6 @@ import {
 	DiagnosticsPrinterFlags,
 	DiagnosticsPrinterOptions,
 } from "./types";
-
 import {
 	formatAnsi,
 	markup,

@@ -69,7 +69,6 @@ export default class Bridge {
 			});
 		}
 
-		this.clear();
 		this.init();
 	}
 
@@ -201,6 +200,11 @@ export default class Bridge {
 	sendSubscriptions(): void {
 		if (!this.hasHandshook) {
 			// If we haven't had the handshake then no point sending them. They'll be sent all at once after
+			return;
+		}
+
+		// Nobody to send an update to
+		if (!this.alive) {
 			return;
 		}
 

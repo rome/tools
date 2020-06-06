@@ -6,7 +6,7 @@
  */
 
 import {AnyTSTypeElement, JSNodeBase} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type TSTypeLiteral = JSNodeBase & {
 	type: "TSTypeLiteral";

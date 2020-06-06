@@ -128,7 +128,7 @@ export default class BundleRequest {
 		const queue: WorkerQueue<void> = new WorkerQueue(master);
 
 		queue.addCallback(async (path) => {
-			const progressText = `<filelink target="${path.join()}" />`;
+			const progressText = path.toMarkup();
 			compilingSpinner.pushText(progressText);
 			await this.compileJS(path);
 			compilingSpinner.tick();
@@ -182,8 +182,6 @@ export default class BundleRequest {
 			assetPath,
 		};
 
-		const lock = await this.bundler.compileLocker.getLock(source);
-
 		const res: WorkerCompileResult = await this.bundler.request.requestWorkerCompile(
 			path,
 			"compileForBundle",
@@ -192,8 +190,6 @@ export default class BundleRequest {
 			},
 			{},
 		);
-
-		lock.release();
 
 		if (!res.cached) {
 			this.cached = false;

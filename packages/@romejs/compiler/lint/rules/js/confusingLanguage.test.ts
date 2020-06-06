@@ -6,21 +6,23 @@
  */
 
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
 	"confusing language",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				"// the blacklist",
-				"/* the\nblacklist */",
-				"blacklist;",
-				"BLACKLIST;",
-				"someBlacklist;",
-				"SOME_BLACKLIST;",
-			],
+			{
+				invalid: [
+					"//\tthe\tblacklist",
+					"/*\tthe\nblacklist\t*/",
+					"blacklist;",
+					"BLACKLIST;",
+					"someBlacklist;",
+					"SOME_BLACKLIST;",
+				],
+			},
 			{category: "lint/js/confusingLanguage"},
 		);
 	},

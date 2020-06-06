@@ -20,12 +20,18 @@ export default class DiagnosticsNormalizer {
 	) {
 		this.sourceMaps = sourceMaps;
 		this.markupOptions = markupOptions || {};
+		this.inlineSourceText = new Map();
 		this.hasMarkupOptions = markupOptions !== undefined;
 	}
 
 	sourceMaps: undefined | SourceMapConsumerCollection;
 	markupOptions: MarkupFormatNormalizeOptions;
 	hasMarkupOptions: boolean;
+	inlineSourceText: Map<string, string>;
+
+	setInlineSourceText(filename: string, sourceText: string) {
+		this.inlineSourceText.set(filename, sourceText);
+	}
 
 	normalizeFilename(filename: undefined | string): undefined | string {
 		const {markupOptions} = this;
@@ -91,9 +97,20 @@ export default class DiagnosticsNormalizer {
 			}
 		}
 
+		const normalizedFilename = this.normalizeFilename(filename);
+
+		let {sourceText} = location;
+		if (sourceText === undefined && filename !== undefined) {
+			sourceText = this.inlineSourceText.get(filename);
+		}
+		if (sourceText === undefined && normalizedFilename !== undefined) {
+			sourceText = this.inlineSourceText.get(normalizedFilename);
+		}
+
 		return {
 			...location,
-			filename: this.normalizeFilename(filename),
+			sourceText,
+			filename: normalizedFilename,
 			marker: this.maybeNormalizeMarkup(marker),
 			start: this.normalizePositionValue(start),
 			end: this.normalizePositionValue(end),
@@ -193,7 +210,8 @@ export default class DiagnosticsNormalizer {
 		// Fast path for a common case
 		if (
 			!this.hasMarkupOptions &&
-			(sourceMaps === undefined || !sourceMaps.hasAny())
+			(sourceMaps === undefined || !sourceMaps.hasAny()) &&
+			this.inlineSourceText.size === 0
 		) {
 			return diag;
 		}

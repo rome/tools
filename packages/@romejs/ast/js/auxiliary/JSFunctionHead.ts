@@ -13,7 +13,7 @@ import {
 	JSNodeBase,
 	TSTypeParameterDeclaration,
 } from "@romejs/ast";
-import {createQuickBuilder} from "../utils";
+import {createQuickBuilder} from "../../utils";
 
 export type JSFunctionHead = JSNodeBase & {
 	type: "JSFunctionHead";

@@ -52,7 +52,7 @@ export default {
 
 		const opts = getOptions(context);
 
-		if (jsRoot.is(node)) {
+		if (node.type === "JSRoot") {
 			const mappings = new Map();
 
 			// make all variables private
@@ -135,11 +135,7 @@ export default {
 			const newProgram = jsRoot.assert(renameBindings(path, mappings));
 
 			// Get new scope with updated bindings. TODO Maybe `renameBindings` should return the path?
-			const newScope = scope.getRootScope().evaluate(
-				newProgram,
-				undefined,
-				true,
-			);
+			const newScope = scope.getRootScope().enterEvaluate(newProgram);
 
 			if (opts.moduleAll === true) {
 				// Get all the export names

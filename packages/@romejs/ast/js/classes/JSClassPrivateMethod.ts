@@ -13,7 +13,7 @@ import {
 	JSNodeBase,
 	JSPrivateName,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSClassPrivateMethod = JSNodeBase & {
 	type: "JSClassPrivateMethod";

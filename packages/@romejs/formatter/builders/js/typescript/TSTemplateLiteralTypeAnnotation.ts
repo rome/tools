@@ -8,11 +8,11 @@
 import {Builder, Token} from "@romejs/formatter";
 
 import {TSTemplateLiteralTypeAnnotation} from "@romejs/ast";
-import {escapeString} from "@romejs/string-escape";
+import {escapeJSString} from "@romejs/string-escape";
 
 export default function TSTemplateLiteralTypeAnnotation(
 	builder: Builder,
 	node: TSTemplateLiteralTypeAnnotation,
 ): Token {
-	return escapeString(node.value, {quote: "`"});
+	return escapeJSString(node.value, {quote: "`"});
 }

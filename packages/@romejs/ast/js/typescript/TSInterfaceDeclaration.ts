@@ -12,7 +12,7 @@ import {
 	TSInterfaceBody,
 	TSTypeParameterDeclaration,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type TSInterfaceDeclaration = JSNodeBase & {
 	type: "TSInterfaceDeclaration";

@@ -7,8 +7,8 @@
 
 import {assertSingleNode, inheritLoc} from "@romejs/js-ast-utils";
 import {NodeBase} from "@romejs/parser-core";
-import {AnyNode} from "../index";
-import {JSNodeBase} from "./base";
+import {AnyNode} from "./index";
+import {JSNodeBase} from "./js/base";
 import {TransformExitResult} from "@romejs/compiler";
 
 export const bindingKeys: Map<string, Array<string>> = new Map();
@@ -88,18 +88,6 @@ class Builder<Node extends AnyNode> {
 			...opts,
 			type: this.type,
 		};
-	}
-
-	is(node: undefined | AnyNode): node is Node {
-		return node !== undefined && node.type === this.type;
-	}
-
-	normalize(node: undefined | AnyNode): undefined | Node {
-		if (this.is(node)) {
-			return node;
-		} else {
-			return undefined;
-		}
 	}
 
 	assert(res: undefined | TransformExitResult): Node {

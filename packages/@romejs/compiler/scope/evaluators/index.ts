@@ -26,20 +26,26 @@ import JSForOfStatement from "./JSForOfStatement";
 import JSVariableDeclarationStatement from "./JSVariableDeclarationStatement";
 import TSInterfaceDeclaration from "./TSInterfaceDeclaration";
 import TSDeclareFunction from "./TSDeclareFunction";
-import JSFunctionHead from "./JSFunctionHead";
 import TSEnumDeclaration from "./TSEnumDeclaration";
+import JSFunctionExpression from "./JSFunctionExpression";
+import JSObjectMethod from "./JSObjectMethod";
+import JSClassMethod from "./JSClassMethod";
+import TSDeclareMethod from "./TSDeclareMethod";
+import JSForInStatement from "./JSForInStatement";
 import {AnyNode} from "@romejs/ast";
 
-type ScopeEvaluator = {
-	creator: boolean;
-
-	// rome-ignore lint/js/noExplicitAny
-	build: (node: any, parent: AnyNode, scope: Scope) => void | Scope;
+export type ScopeEvaluator = {
+	enter?: (node: AnyNode, parent: AnyNode, scope: Scope) => Scope;
+	inject?: (node: AnyNode, parent: AnyNode, scope: Scope) => void;
 };
+
+export function createScopeEvaluator<T extends ScopeEvaluator>(obj: T): T {
+	return obj;
+}
 
 const evaluators: Map<string, ScopeEvaluator> = new Map();
 
-evaluators.set("JSFunctionHead", JSFunctionHead);
+evaluators.set("TSDeclareMethod", TSDeclareMethod);
 evaluators.set("TSDeclareFunction", TSDeclareFunction);
 evaluators.set("JSClassDeclaration", JSClassDeclaration);
 evaluators.set("JSFunctionDeclaration", JSFunctionDeclaration);
@@ -47,6 +53,7 @@ evaluators.set("JSVariableDeclarationStatement", JSVariableDeclarationStatement)
 evaluators.set("JSVariableDeclaration", JSVariableDeclaration);
 evaluators.set("JSExportDefaultDeclaration", JSExportDefaultDeclaration);
 evaluators.set("JSExportLocalDeclaration", JSExportLocalDeclaration);
+evaluators.set("JSFunctionExpression", JSFunctionExpression);
 evaluators.set("JSImportDeclaration", JSImportDeclaration);
 evaluators.set("JSSwitchCase", JSSwitchCase);
 evaluators.set("JSSwitchStatement", JSSwitchStatement);
@@ -59,7 +66,9 @@ evaluators.set("JSCatchClause", JSCatchClause);
 evaluators.set("JSRoot", JSRoot);
 evaluators.set("JSForStatement", JSForStatement);
 evaluators.set("JSForOfStatement", JSForOfStatement);
-evaluators.set("JSForInStatement", JSForOfStatement);
+evaluators.set("JSForInStatement", JSForInStatement);
+evaluators.set("JSClassMethod", JSClassMethod);
+evaluators.set("JSObjectMethod", JSObjectMethod);
 evaluators.set("TSInterfaceDeclaration", TSInterfaceDeclaration);
 evaluators.set("TSEnumDeclaration", TSEnumDeclaration);
 

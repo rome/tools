@@ -11,7 +11,7 @@ import {
 	JSStringLiteral,
 	TSModuleBlock,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type TSModuleDeclaration = JSNodeBase & {
 	type: "TSModuleDeclaration";

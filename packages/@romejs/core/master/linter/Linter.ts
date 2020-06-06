@@ -28,6 +28,7 @@ import {
 import {markup} from "@romejs/string-markup";
 import WorkerQueue from "../WorkerQueue";
 import {Dict} from "@romejs/typescript-helpers";
+import {writeFile} from "@romejs/fs";
 
 type LintWatchChanges = Array<{
 	filename: undefined | string;
@@ -161,8 +162,8 @@ class LintRunner {
 	): Promise<{
 		savedCount: number;
 	}> {
-		let savedCount = 0;
 		const {master} = this.request;
+		const saveQueue: AbsoluteFilePathMap<string> = new AbsoluteFilePathMap();
 
 		const {
 			lintCompilerOptionsPerFile = {},
@@ -207,7 +208,7 @@ class LintRunner {
 			const {
 				diagnostics,
 				suppressions,
-				saved,
+				save,
 			} = await this.request.requestWorkerLint(
 				path,
 				{
@@ -219,8 +220,8 @@ class LintRunner {
 			processor.addSuppressions(suppressions);
 			processor.addDiagnostics(diagnostics);
 			this.compilerDiagnosticsCache.set(path, {suppressions, diagnostics});
-			if (saved) {
-				savedCount++;
+			if (save !== undefined) {
+				saveQueue.set(path, save);
 			}
 
 			progress.popText(text);
@@ -234,7 +235,19 @@ class LintRunner {
 		await queue.spin();
 		progress.end();
 
-		return {savedCount};
+		// Run through save queue
+		if (saveQueue.size > 0) {
+			const {logger} = master;
+			logger.info("[Linter] Saving files");
+			logger.list(Array.from(saveQueue.keys(), (path) => path.toMarkup()));
+
+			// TODO maybe this could be parallelized?
+			for (const [path, content] of saveQueue) {
+				await writeFile(path, content);
+			}
+		}
+
+		return {savedCount: saveQueue.size};
 	}
 
 	async runGraph(
@@ -373,9 +386,7 @@ class LintRunner {
 		}
 
 		// We can produce diagnostics that don't actually point at a file. For LSP we will just throw these away,
-
 		// otherwise inside of Rome we can display them.
-
 		// These filenames may be relative or undefined
 		for (const filename of includedFilenamesInDiagnostics.others) {
 			changes.push({
@@ -450,7 +461,6 @@ export default class Linter {
 		processor.addAllowedUnusedSuppressionPrefix("bundler");
 
 		// Only display files that aren't absolute, are in the changed paths, or have had previous compiler diagnostics
-
 		// This hides errors that have been lint ignored but may have been produced by dependency analysis
 		processor.addFilter({
 			test: (diag) => {

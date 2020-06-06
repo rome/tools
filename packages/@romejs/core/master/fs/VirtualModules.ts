@@ -10,9 +10,9 @@ import {modules} from "./runtime-modules";
 import {AbsoluteFilePath} from "@romejs/path";
 import {createDirectory, writeFile} from "@romejs/fs";
 import {
-	DEFAULT_PROJECT_CONFIG,
-	DEFAULT_PROJECT_CONFIG_META,
 	ProjectConfig,
+	createDefaultProjectConfig,
+	createDefaultProjectConfigMeta,
 } from "@romejs/project";
 
 export default class VirtualModules {
@@ -30,10 +30,10 @@ export default class VirtualModules {
 		// Materalize virtual files to disk
 		// We could technically keep these in memory and never materialize them but
 		// this way we can have something to point at on disk for errors etc
-		await createDirectory(runtimeModulesPath, {recursive: true});
+		await createDirectory(runtimeModulesPath);
 		for (const [name, files] of modules) {
 			const modulePath = runtimeModulesPath.append(name);
-			await createDirectory(modulePath, {recursive: true});
+			await createDirectory(modulePath);
 			for (const [basename, content] of files) {
 				await writeFile(modulePath.append(basename), content);
 			}
@@ -41,12 +41,12 @@ export default class VirtualModules {
 
 		// Initialize as project
 		const projectConfig: ProjectConfig = {
-			...DEFAULT_PROJECT_CONFIG,
+			...createDefaultProjectConfig(),
 			name: "rome-runtime",
 		};
 		await this.master.projectManager.addProjectWithConfig({
 			projectFolder: runtimeModulesPath,
-			meta: DEFAULT_PROJECT_CONFIG_META,
+			meta: createDefaultProjectConfigMeta(),
 			config: projectConfig,
 		});
 		await this.master.memoryFs.watch(runtimeModulesPath, projectConfig);

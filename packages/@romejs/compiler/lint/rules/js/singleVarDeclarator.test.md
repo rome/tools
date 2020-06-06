@@ -10,14 +10,14 @@
 
  unknown:1 lint/js/singleVarDeclarator FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Declare each variable separately
+  ✖ Declare variables separately.
 
     let foo, bar;
     ^^^^^^^^^^^^^
 
   ℹ Recommended fix
 
-  - let·foo,·bar;
+  - let foo, bar;
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

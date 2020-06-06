@@ -6,17 +6,15 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, JSClassDeclaration, JSClassExpression} from "@romejs/ast";
+import {AnyNode, jsClassDeclaration} from "@romejs/ast";
+import {createScopeEvaluator} from "./index";
 
-export default {
-	creator: true,
-	build(
-		node: JSClassExpression | JSClassDeclaration,
-		parent: AnyNode,
-		scope: Scope,
-	) {
+export default createScopeEvaluator({
+	enter(node: AnyNode, parent: AnyNode, scope: Scope) {
+		node =
+			node.type === "JSClassExpression" ? node : jsClassDeclaration.assert(node);
 		const newScope = scope.fork("class", node);
-		newScope.evaluate(node.meta.typeParameters);
+		newScope.injectEvaluate(node.meta.typeParameters);
 		return newScope;
 	},
-};
+});

@@ -10,11 +10,13 @@
 
  unknown:2 lint/js/noImportAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ x is read-only
+  ✖ The imported variable x is read-only.
 
     1 │ import x from "y";
   > 2 │ x=1;
       │ ^
+
+  ℹ Use a local variable instead of reassigning an import.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -36,11 +38,13 @@ x = 1;
 
  unknown:2:1 lint/js/noImportAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ x is read-only
+  ✖ The imported variable x is read-only.
 
     1 │ import x from "y";
   > 2 │ [x]=1;
       │  ^
+
+  ℹ Use a local variable instead of reassigning an import.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -62,11 +66,13 @@ import x from "y";
 
  unknown:2:2 lint/js/noImportAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ x is read-only
+  ✖ The imported variable x is read-only.
 
     1 │ import x from "y";
   > 2 │ ({x}=1);
       │   ^
+
+  ℹ Use a local variable instead of reassigning an import.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -88,11 +94,13 @@ import x from "y";
 
  unknown:2 lint/js/noImportAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ x is read-only
+  ✖ The imported variable x is read-only.
 
     1 │ import x from "y";
   > 2 │ x++
       │ ^
+
+  ℹ Use a local variable instead of reassigning an import.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -114,11 +122,13 @@ x++;
 
  unknown:2:4 lint/js/noImportAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ x is read-only
+  ✖ The imported variable x is read-only.
 
     1 │ import x from "y";
   > 2 │ [...x]=1;
       │     ^
+
+  ℹ Use a local variable instead of reassigning an import.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -140,11 +150,13 @@ import x from "y";
 
  unknown:2:5 lint/js/noImportAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ x is read-only
+  ✖ The imported variable x is read-only.
 
     1 │ import x from "y";
   > 2 │ ({...x}=1);
       │      ^
+
+  ℹ Use a local variable instead of reassigning an import.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -166,11 +178,13 @@ import x from "y";
 
  unknown:2:5 lint/js/noImportAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ x is read-only
+  ✖ The imported variable x is read-only.
 
     1 │ import x from "y";
   > 2 │ for (x in y);
       │      ^
+
+  ℹ Use a local variable instead of reassigning an import.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -194,11 +208,13 @@ for (x in y) {
 
  unknown:2 lint/js/noImportAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ x is read-only
+  ✖ The imported variable x is read-only.
 
     1 │ import x from "y";
   > 2 │ x+=1
       │ ^
+
+  ℹ Use a local variable instead of reassigning an import.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -220,11 +236,13 @@ x += 1;
 
  unknown:2 lint/js/noImportAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ x is read-only
+  ✖ The imported variable x is read-only.
 
     1 │ import * as x from "y";
   > 2 │ x=1;
       │ ^
+
+  ℹ Use a local variable instead of reassigning an import.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -246,11 +264,13 @@ x = 1;
 
  unknown:2 lint/js/noImportAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ x is read-only
+  ✖ The imported variable x is read-only.
 
     1 │ import {x} from "y";
   > 2 │ x=1;
       │ ^
+
+  ℹ Use a local variable instead of reassigning an import.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

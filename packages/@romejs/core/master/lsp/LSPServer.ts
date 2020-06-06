@@ -285,7 +285,7 @@ class LSPProgress extends ReporterProgressBase {
 export default class LSPServer {
 	constructor(request: MasterRequest) {
 		this.status = "IDLE";
-		this.buffer = "";
+		this.socketBuffer = "";
 		this.nextHeaders = undefined;
 
 		this.request = request;
@@ -295,8 +295,10 @@ export default class LSPServer {
 		this.lintSessionsPending = new AbsoluteFilePathSet();
 		this.lintSessions = new AbsoluteFilePathMap();
 
-		request.endEvent.subscribe(() => {
-			this.shutdown();
+		this.fileBuffers = new AbsoluteFilePathSet();
+
+		request.endEvent.subscribe(async () => {
+			await this.shutdown();
 		});
 	}
 
@@ -305,7 +307,9 @@ export default class LSPServer {
 	master: Master;
 	nextHeaders: undefined | Headers;
 	status: Status;
-	buffer: string;
+	socketBuffer: string;
+
+	fileBuffers: AbsoluteFilePathSet;
 	lintSessionsPending: AbsoluteFilePathSet;
 	lintSessions: AbsoluteFilePathMap<MasterRequest>;
 
@@ -415,11 +419,18 @@ export default class LSPServer {
 		this.lintSessionsPending.delete(path);
 	}
 
-	shutdown() {
+	async shutdown() {
+		// Unwatch projects
 		for (const path of this.lintSessions.keys()) {
 			this.unwatchProject(path);
 		}
 		this.lintSessions.clear();
+
+		// Clear set buffers
+		for (const path of this.fileBuffers) {
+			await this.request.requestWorkerClearBuffer(path);
+		}
+		this.fileBuffers.clear();
 	}
 
 	async sendClientRequest(
@@ -514,6 +525,14 @@ export default class LSPServer {
 				const path = getPathFromTextDocument(params.get("textDocument"));
 				const content = params.get("contentChanges").asArray()[0].get("text").asString();
 				await this.request.requestWorkerUpdateBuffer(path, content);
+				this.fileBuffers.add(path);
+				break;
+			}
+
+			case "textDocument/didSave": {
+				const path = getPathFromTextDocument(params.get("textDocument"));
+				this.fileBuffers.delete(path);
+				await this.request.requestWorkerClearBuffer(path);
 				break;
 			}
 		}
@@ -575,7 +594,7 @@ export default class LSPServer {
 	process() {
 		switch (this.status) {
 			case "IDLE": {
-				if (this.buffer.length > 0) {
+				if (this.socketBuffer.length > 0) {
 					this.status = "WAITING_FOR_HEADERS_END";
 					this.process();
 				}
@@ -583,15 +602,17 @@ export default class LSPServer {
 			}
 
 			case "WAITING_FOR_HEADERS_END": {
-				const endIndex = this.buffer.indexOf(HEADERS_END);
+				const endIndex = this.socketBuffer.indexOf(HEADERS_END);
 				if (endIndex !== -1) {
 					// Parse headers
-					const rawHeaders = this.buffer.slice(0, endIndex);
+					const rawHeaders = this.socketBuffer.slice(0, endIndex);
 					this.nextHeaders = parseHeaders(rawHeaders);
 
 					// Process rest of the buffer
 					this.status = "WAITING_FOR_RESPONSE_END";
-					this.buffer = this.buffer.slice(endIndex + HEADERS_END.length);
+					this.socketBuffer = this.socketBuffer.slice(
+						endIndex + HEADERS_END.length,
+					);
 					this.process();
 				}
 				break;
@@ -602,13 +623,13 @@ export default class LSPServer {
 				if (headers === undefined) {
 					throw new Error("Expected headers due to our status");
 				}
-				if (this.buffer.length >= headers.length) {
-					const content = this.buffer.slice(0, headers.length);
+				if (this.socketBuffer.length >= headers.length) {
+					const content = this.socketBuffer.slice(0, headers.length);
 					this.onMessage(headers, content);
 
 					// Reset headers and trim content
 					this.nextHeaders = undefined;
-					this.buffer = this.buffer.slice(headers.length);
+					this.socketBuffer = this.socketBuffer.slice(headers.length);
 
 					// Process rest of the buffer
 					this.status = "IDLE";
@@ -620,7 +641,7 @@ export default class LSPServer {
 	}
 
 	append(data: string) {
-		this.buffer += data;
+		this.socketBuffer += data;
 		this.process();
 	}
 }

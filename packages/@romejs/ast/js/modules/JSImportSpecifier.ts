@@ -6,7 +6,7 @@
  */
 
 import {JSIdentifier, JSImportSpecifierLocal, JSNodeBase} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSImportSpecifier = JSNodeBase & {
 	type: "JSImportSpecifier";

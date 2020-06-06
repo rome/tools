@@ -31,7 +31,7 @@ import {
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
 } from "@romejs/path";
-import {exists, lstat, readFileText, readdir, watch} from "@romejs/fs";
+import {exists, lstat, readDirectory, readFileText, watch} from "@romejs/fs";
 import {getFileHandler} from "../../common/file-handlers/index";
 import {markup} from "@romejs/string-markup";
 import crypto = require("crypto");
@@ -131,15 +131,14 @@ export type MemoryFSGlobOptions = {
 async function createWatcher(
 	memoryFs: MemoryFileSystem,
 	diagnostics: DiagnosticsProcessor,
-	projectFolderPath: AbsoluteFilePath,
+	projectFolder: AbsoluteFilePath,
 ): Promise<WatcherClose> {
-	const projectFolder = projectFolderPath.join();
 	const {logger} = memoryFs.master;
 
 	// Create activity spinners for all connected reporters
 	const activity = memoryFs.master.connectedReporters.progress({
 		initDelay: 1_000,
-		title: `Adding project ${projectFolder}`,
+		title: `Adding project ${projectFolder.toMarkup()}`,
 	});
 
 	const watchers: AbsoluteFilePathMap<fs.FSWatcher> = new AbsoluteFilePathMap();
@@ -155,7 +154,7 @@ async function createWatcher(
 			if (process.platform === "linux") {
 				// Node on Linux doesn't support recursive directory watching so we need an fs.watch for every directory...
 				recursive = false;
-			} else if (!folderPath.equal(projectFolderPath)) {
+			} else if (!folderPath.equal(projectFolder)) {
 				// If we're on any other platform then only watch the root project folder
 				return;
 			}
@@ -214,9 +213,9 @@ async function createWatcher(
 		// No need to call watch() on the projectFolder since it will call us
 
 		// Perform an initial crawl
-		const stats = await memoryFs.stat(projectFolderPath);
+		const stats = await memoryFs.stat(projectFolder);
 		await memoryFs.addDirectory(
-			projectFolderPath,
+			projectFolder,
 			stats,
 			{
 				crawl: true,
@@ -225,8 +224,8 @@ async function createWatcher(
 			},
 		);
 		logger.info(
-			`[MemoryFileSystem] Finished initial crawl for ${projectFolder} - added ${humanizeNumber(
-				memoryFs.countFiles(projectFolderPath),
+			`[MemoryFileSystem] Finished initial crawl for ${projectFolder.toMarkup()} - added ${humanizeNumber(
+				memoryFs.countFiles(projectFolder),
 			)} files`,
 		);
 	} finally {
@@ -244,12 +243,12 @@ export default class MemoryFileSystem {
 	constructor(master: Master) {
 		this.master = master;
 
-		this.watchPromises = new Map();
+		this.watchPromises = new AbsoluteFilePathMap();
 		this.directoryListings = new AbsoluteFilePathMap();
 		this.directories = new AbsoluteFilePathMap();
 		this.files = new AbsoluteFilePathMap();
 		this.manifests = new AbsoluteFilePathMap();
-		this.watchers = new Map();
+		this.watchers = new AbsoluteFilePathMap();
 		this.manifestCounter = 0;
 
 		this.changedFileEvent = new Event({
@@ -269,21 +268,15 @@ export default class MemoryFileSystem {
 	files: AbsoluteFilePathMap<Stats>;
 	manifests: AbsoluteFilePathMap<ManifestDefinition>;
 
-	watchers: Map<
-		string,
-		{
-			path: AbsoluteFilePath;
-			close: WatcherClose;
-		}
-	>;
+	watchers: AbsoluteFilePathMap<{
+		path: AbsoluteFilePath;
+		close: WatcherClose;
+	}>;
 
-	watchPromises: Map<
-		string,
-		{
-			promise: Promise<WatcherClose>;
-			path: AbsoluteFilePath;
-		}
-	>;
+	watchPromises: AbsoluteFilePathMap<{
+		promise: Promise<WatcherClose>;
+		path: AbsoluteFilePath;
+	}>;
 
 	changedFileEvent: Event<
 		{
@@ -298,13 +291,12 @@ export default class MemoryFileSystem {
 	init() {}
 
 	unwatch(dirPath: AbsoluteFilePath) {
-		const dir = dirPath.join();
-		const watcher = this.watchers.get(dir);
+		const watcher = this.watchers.get(dirPath);
 		if (watcher === undefined) {
 			return;
 		}
 
-		this.watchers.delete(dir);
+		this.watchers.delete(dirPath);
 		watcher.close();
 
 		// Go through and clear all files and directories from our internal maps
@@ -476,12 +468,12 @@ export default class MemoryFileSystem {
 	}
 
 	async watch(
-		projectFolderPath: AbsoluteFilePath,
+		projectFolder: AbsoluteFilePath,
 		projectConfig: ProjectConfig,
 	): Promise<void> {
 		const {logger} = this.master;
-		const projectFolder = projectFolderPath.join();
-		const folderLink = markup`<filelink target="${projectFolder}" />`;
+		const projectFolderJoined = projectFolder.join();
+		const folderLink = markup`<filelink target="${projectFolderJoined}" />`;
 
 		// Defer if we're already currently initializing this project
 		const cached = this.watchPromises.get(projectFolder);
@@ -497,7 +489,7 @@ export default class MemoryFileSystem {
 
 		// Check if we're already watching a parent directory
 		for (const {path} of this.watchers.values()) {
-			if (projectFolderPath.isRelativeTo(path)) {
+			if (projectFolder.isRelativeTo(path)) {
 				logger.info(
 					`[MemoryFileSystem] Skipped crawl for ${folderLink} because we're already watching the parent directory ${path.join()}`,
 				);
@@ -506,14 +498,14 @@ export default class MemoryFileSystem {
 		}
 
 		// Wait for other initializations
-		await this.waitIfInitializingWatch(projectFolderPath);
+		await this.waitIfInitializingWatch(projectFolder);
 
 		// New watch target
 		logger.info(`[MemoryFileSystem] Adding new project folder ${folderLink}`);
 
 		// Remove watchers that are descedents of this folder as this watcher will handle them
 		for (const [loc, {close, path}] of this.watchers) {
-			if (path.isRelativeTo(projectFolderPath)) {
+			if (path.isRelativeTo(projectFolder)) {
 				this.watchers.delete(loc);
 				close();
 			}
@@ -529,11 +521,11 @@ export default class MemoryFileSystem {
 		});
 
 		logger.info(`[MemoryFileSystem] Watching ${folderLink}`);
-		const promise = createWatcher(this, diagnostics, projectFolderPath);
+		const promise = createWatcher(this, diagnostics, projectFolder);
 		this.watchPromises.set(
 			projectFolder,
 			{
-				path: projectFolderPath,
+				path: projectFolder,
 				promise,
 			},
 		);
@@ -542,7 +534,7 @@ export default class MemoryFileSystem {
 		this.watchers.set(
 			projectFolder,
 			{
-				path: projectFolderPath,
+				path: projectFolder,
 				close: watcherClose,
 			},
 		);
@@ -568,7 +560,16 @@ export default class MemoryFileSystem {
 		};
 	}
 
-	getMtime(path: AbsoluteFilePath) {
+	maybeGetMtime(path: AbsoluteFilePath): undefined | number {
+		const stats = this.getFileStats(path);
+		if (stats === undefined) {
+			return undefined;
+		} else {
+			return stats.mtime;
+		}
+	}
+
+	getMtime(path: AbsoluteFilePath): number {
 		const stats = this.getFileStats(path);
 		if (stats === undefined) {
 			throw new Error(`File ${path.join()} not in database, cannot get mtime`);
@@ -823,7 +824,7 @@ export default class MemoryFileSystem {
 
 		if (opts.crawl) {
 			// Crawl the folder
-			const files = await readdir(folderPath);
+			const files = await readDirectory(folderPath);
 
 			// Declare the file
 			const declareItem = async (path: AbsoluteFilePath) => {

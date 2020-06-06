@@ -6,6 +6,7 @@
  */
 
 import os = require("os");
+import {escapeMarkup} from "@romejs/string-markup";
 
 type FilePathOptions<Super> = {
 	filename?: string;
@@ -47,6 +48,8 @@ class BaseFilePath<Super extends UnknownFilePath> {
 		this.memoizedChildren = new Map();
 	}
 
+	type: string = "unknown";
+
 	segments: PathSegments;
 
 	memoizedUnique: undefined | Super;
@@ -59,6 +62,24 @@ class BaseFilePath<Super extends UnknownFilePath> {
 
 	absoluteType: ParsedPathAbsoluteType;
 	absoluteTarget: undefined | string;
+
+	// Actually meant to be CUSTOM_PRETTY_FORMAT from "@romejs/pretty-format" but it causes a module cycle
+	[Symbol.for("custom-pretty-format")](): string {
+		return `Path<${this.type}> ${this.join()}`;
+	}
+
+	toMarkup(
+		{emphasis}: {
+			emphasis: boolean;
+		} = {emphasis: false},
+	): string {
+		let markup = `<filelink `;
+		if (emphasis) {
+			markup += `emphasis `;
+		}
+		markup += `target="${escapeMarkup(this.join())}" />`;
+		return markup;
+	}
 
 	getParsed(): ParsedPath {
 		return {

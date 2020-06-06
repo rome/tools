@@ -398,7 +398,7 @@ export default class TestAPI implements TestHelper {
 	not(
 		received: unknown,
 		expected: unknown,
-		message: string = "t.not() failed, using !Object.is() semantics",
+		message: string = "t.not() failed, using !Object.is semantics",
 	): void {
 		if (Object.is(received, expected) === true) {
 			this.fail(
@@ -471,7 +471,7 @@ export default class TestAPI implements TestHelper {
 	async throwsAsync(
 		thrower: AsyncFunc,
 		expected?: ExpectedError,
-		message: string = "t.throws() failed, callback did not throw an error",
+		message: string = "t.throwsAsync() failed, callback did not throw an error",
 	): Promise<void> {
 		try {
 			await thrower();
@@ -480,7 +480,7 @@ export default class TestAPI implements TestHelper {
 				return undefined;
 			} else {
 				this.fail(
-					`t.throws() expected an error to be thrown that matches ${formatExpectedError(
+					`t.throwsAsync() expected an error to be thrown that matches ${formatExpectedError(
 						expected,
 					)} but got ${err.name}: ${JSON.stringify(err.message)}`,
 					getErrorStackAdvice(
@@ -503,7 +503,7 @@ export default class TestAPI implements TestHelper {
 		} catch (err) {
 			const advice = getErrorStackAdvice(
 				getErrorStructure(err),
-				`t.notThrows did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
+				`t.notThrows() did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
 					err.message,
 				)}`,
 			);
@@ -513,14 +513,14 @@ export default class TestAPI implements TestHelper {
 
 	async notThrowsAsync(
 		nonThrower: AsyncFunc,
-		message: string = "t.notThrowsAsync failed, callback threw an error",
+		message: string = "t.notThrowsAsync() failed, callback threw an error",
 	): Promise<void> {
 		try {
 			await nonThrower();
 		} catch (err) {
 			const advice = getErrorStackAdvice(
 				getErrorStructure(err),
-				`t.notThrowsAsync did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
+				`t.notThrowsAsync() did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
 					err.message,
 				)}`,
 			);
@@ -531,7 +531,7 @@ export default class TestAPI implements TestHelper {
 	regex(
 		contents: string,
 		regex: RegExp,
-		message: string = "t.regex failed, using RegExp.test semantics",
+		message: string = "t.regex() failed, using RegExp.test semantics",
 	): void {
 		if (!regex.test(contents)) {
 			this.fail(
@@ -564,7 +564,7 @@ export default class TestAPI implements TestHelper {
 	notRegex(
 		contents: string,
 		regex: RegExp,
-		message: string = "t.regex failed, using RegExp.test semantics",
+		message: string = "t.notRegex() failed, using !RegExp.test semantics",
 	): void {
 		if (regex.test(contents)) {
 			this.fail(
@@ -729,14 +729,18 @@ export default class TestAPI implements TestHelper {
 				);
 
 				if (message === undefined) {
-					message = markup`Snapshot ${entryName} at <filelink emphasis target="${this.snapshotManager.defaultSnapshotPath.join()}" /> doesn't match`;
+					message = `Snapshot ${escapeMarkup(entryName)} at ${this.snapshotManager.defaultSnapshotPath.toMarkup({
+						emphasis: true,
+					})} doesn't match`;
 				} else {
 					message = escapeMarkup(message);
 
 					advice.push({
 						type: "log",
 						category: "info",
-						text: markup`Snapshot can be found at <filelink emphasis target="${this.snapshotManager.defaultSnapshotPath.join()}" />`,
+						text: `Snapshot can be found at ${this.snapshotManager.defaultSnapshotPath.toMarkup({
+							emphasis: true,
+						})}`,
 					});
 				}
 

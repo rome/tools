@@ -9,6 +9,7 @@ import {
 	Children,
 	MarkupFormatGridOptions,
 	MarkupFormatNormalizeOptions,
+	MarkupLinesAndWidth,
 	TagNode,
 } from "./types";
 import {parseMarkup} from "./parse";
@@ -145,11 +146,6 @@ export function markupToPlainText(
 		lines: grid.getLines(),
 	};
 }
-
-export type MarkupLinesAndWidth = {
-	width: number;
-	lines: Array<string>;
-};
 
 export function markupToAnsi(
 	input: string,

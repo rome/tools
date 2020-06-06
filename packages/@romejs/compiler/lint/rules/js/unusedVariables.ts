@@ -57,6 +57,7 @@ const provider = createHook<State, undefined, AnyNode>({
 			},
 		};
 	},
+
 	exit(path, state) {
 		for (const name in state.usedBindings) {
 			const used = state.usedBindings[name];
@@ -101,31 +102,53 @@ export default {
 				return node;
 			}
 
-			// For functions, consider all parameters except the last to be used
+			// For functions, special case parameters
 			if (
 				node.type === "JSFunctionDeclaration" ||
 				node.type === "JSFunctionExpression" ||
 				node.type === "JSObjectMethod" ||
 				node.type === "JSClassMethod" ||
+				node.type === "TSDeclareMethod" ||
+				node.type === "TSDeclareFunction" ||
 				node.type === "JSArrowFunctionExpression"
 			) {
-				for (const {name} of getBindingIdentifiers(
-					node.head.params.slice(0, -1),
-				)) {
-					usedBindings[name] = true;
+				let ignoreLast = true;
+				let includeRest = false;
+
+				// If there's no rest then only consider the last parameter to be unused
+				const {rest} = node.head;
+				if (rest === undefined) {
+					ignoreLast = false;
 				}
 
-				// For functions that have a single throw statement in the body, consider all their arguments
-				// to be used as this is typically an interface definition
-				const {body: block} = node;
-				if (
-					block.type === "JSBlockStatement" &&
-					block.body.length === 1 &&
-					block.body[0].type === "JSThrowStatement"
-				) {
-					for (const {name} of getBindingIdentifiers(node.head.params)) {
-						usedBindings[name] = true;
+				if (node.type === "TSDeclareFunction" || node.type === "TSDeclareMethod") {
+					// This is an interface and has no body
+					ignoreLast = false;
+					includeRest = true;
+				} else {
+					// For functions that have a single throw statement in the body, consider all their arguments
+					// to be used as this is typically an interface definition
+					const {body} = node;
+					if (
+						body.type === "JSBlockStatement" &&
+						body.body.length === 1 &&
+						body.body[0].type === "JSThrowStatement"
+					) {
+						ignoreLast = false;
+						includeRest = true;
 					}
+				}
+
+				// Mark parameters as used
+				let params = [...node.head.params];
+				if (ignoreLast) {
+					params.pop();
+				}
+				if (includeRest && rest !== undefined) {
+					params.push(rest);
+				}
+				for (const {name} of getBindingIdentifiers(params)) {
+					usedBindings[name] = true;
 				}
 			}
 

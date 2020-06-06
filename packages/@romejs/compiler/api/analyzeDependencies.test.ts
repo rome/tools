@@ -6,7 +6,7 @@
  */
 
 import analyzeDependencies from "./analyzeDependencies";
-import {DEFAULT_PROJECT_CONFIG} from "@romejs/project";
+import {createDefaultProjectConfig} from "@romejs/project";
 import {test} from "rome";
 import {parseJS} from "@romejs/js-parser";
 import {ConstSourceType} from "@romejs/ast";
@@ -20,7 +20,7 @@ async function testAnalyzeDeps(input: string, sourceType: ConstSourceType) {
 		sourceText: input,
 		project: {
 			folder: undefined,
-			config: DEFAULT_PROJECT_CONFIG,
+			config: createDefaultProjectConfig(),
 		},
 	});
 }

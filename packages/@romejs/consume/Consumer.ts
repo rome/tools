@@ -49,7 +49,7 @@ import {
 	ob1Get,
 } from "@romejs/ob1";
 import {isValidIdentifierName} from "@romejs/js-ast-utils";
-import {escapeString} from "@romejs/string-escape";
+import {escapeJSString} from "@romejs/string-escape";
 import {
 	AbsoluteFilePath,
 	RelativeFilePath,
@@ -297,7 +297,7 @@ export default class Consumer {
 				const inner =
 					typeof part === "number"
 						? String(part)
-						: escapeString(
+						: escapeJSString(
 								part,
 								{
 									quote: "'",

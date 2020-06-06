@@ -6,11 +6,12 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, JSArrowFunctionExpression} from "@romejs/ast";
+import {AnyNode, jsArrowFunctionExpression} from "@romejs/ast";
+import {buildFunctionScope} from "../utils";
+import {createScopeEvaluator} from "./index";
 
-export default {
-	creator: true,
-	build(node: JSArrowFunctionExpression, parent: AnyNode, scope: Scope) {
-		return scope.evaluate(node.head, node, true);
+export default createScopeEvaluator({
+	enter(node: AnyNode, parent: AnyNode, scope: Scope) {
+		return buildFunctionScope(jsArrowFunctionExpression.assert(node), scope);
 	},
-};
+});

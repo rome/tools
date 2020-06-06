@@ -10,7 +10,7 @@ import {
 	JSBindingIdentifier,
 	JSNodeBase,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type TSImportEqualsDeclaration = JSNodeBase & {
 	type: "TSImportEqualsDeclaration";

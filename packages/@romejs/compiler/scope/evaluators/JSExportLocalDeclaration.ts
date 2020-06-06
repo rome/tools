@@ -6,19 +6,19 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, JSExportLocalDeclaration} from "@romejs/ast";
+import {AnyNode, jsExportLocalDeclaration} from "@romejs/ast";
 import {getBindingIdentifiers} from "@romejs/js-ast-utils";
+import {createScopeEvaluator} from "./index";
 
-export default {
-	creator: false,
-	build(node: JSExportLocalDeclaration, parent: AnyNode, scope: Scope) {
-		const newScope = scope.evaluate(node.declaration, node);
+export default createScopeEvaluator({
+	inject(node: AnyNode, parent: AnyNode, scope: Scope) {
+		node = jsExportLocalDeclaration.assert(node);
+		scope.injectEvaluate(node.declaration, node);
 		for (const id of getBindingIdentifiers(node)) {
-			const binding = newScope.getBinding(id.name);
+			const binding = scope.getBinding(id.name);
 			if (binding !== undefined) {
 				binding.setExported(true);
 			}
 		}
-		return newScope;
 	},
-};
+});

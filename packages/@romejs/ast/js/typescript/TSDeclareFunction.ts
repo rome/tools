@@ -6,7 +6,7 @@
  */
 
 import {JSBindingIdentifier, JSFunctionHead, JSNodeBase} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type TSDeclareFunction = JSNodeBase & {
 	type: "TSDeclareFunction";

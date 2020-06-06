@@ -6,7 +6,7 @@
  */
 
 import {JSNodeBase, JSXElement} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSXFragment = JSNodeBase & {
 	type: "JSXFragment";

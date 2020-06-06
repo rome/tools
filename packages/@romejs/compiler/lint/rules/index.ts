@@ -57,7 +57,10 @@ import unsafeNegation from "./js/unsafeNegation";
 import unusedVariables from "./js/unusedVariables";
 import altText from "./jsx-a11y/altText";
 import anchorHasContent from "./jsx-a11y/anchorHasContent";
+import anchorIsValid from "./jsx-a11y/anchorIsValid";
+import ariaProps from "./jsx-a11y/ariaProps";
 import ariaUnsupportedElements from "./jsx-a11y/ariaUnsupportedElements";
+import clickEventsHaveKeyEvents from "./jsx-a11y/clickEventsHaveKeyEvents";
 import headingHasContent from "./jsx-a11y/headingHasContent";
 import htmlHasLang from "./jsx-a11y/htmlHasLang";
 import iframeHasTitle from "./jsx-a11y/iframeHasTitle";
@@ -68,13 +71,21 @@ import mouseEventsHaveKeyEvents from "./jsx-a11y/mouseEventsHaveKeyEvents";
 import noAccessKey from "./jsx-a11y/noAccessKey";
 import noAutofocus from "./jsx-a11y/noAutofocus";
 import noDistractingElements from "./jsx-a11y/noDistractingElements";
+import noNoninteractiveElementToInteractiveRole from "./jsx-a11y/noNoninteractiveElementToInteractiveRole";
+import noNoninteractiveTabindex from "./jsx-a11y/noNoninteractiveTabindex";
 import noOnChange from "./jsx-a11y/noOnChange";
+import noRedundantRoles from "./jsx-a11y/noRedundantRoles";
 import noTargetBlank from "./jsx-a11y/noTargetBlank";
+import roleHasRequiredAriaProps from "./jsx-a11y/roleHasRequiredAriaProps";
 import scope from "./jsx-a11y/scope";
 import tabindexNoPositive from "./jsx-a11y/tabindexNoPositive";
 import buttonHasType from "./react/buttonHasType";
+import jsxFragments from "./react/jsxFragments";
 import jsxKey from "./react/jsxKey";
 import jsxNoCommentText from "./react/jsxNoCommentText";
+import jsxNoDuplicateProps from "./react/jsxNoDuplicateProps";
+import jsxPascalCase from "./react/jsxPascalCase";
+import noAccessStateInSetState from "./react/noAccessStateInSetState";
 import noChildrenProp from "./react/noChildrenProp";
 import noDanger from "./react/noDanger";
 import noDangerWithChildren from "./react/noDangerWithChildren";
@@ -82,7 +93,9 @@ import noDidMountSetState from "./react/noDidMountSetState";
 import noDidUpdateSetState from "./react/noDidUpdateSetState";
 import noFindDOMNode from "./react/noFindDOMNode";
 import noRedundantShouldComponentUpdate from "./react/noRedundantShouldComponentUpdate";
+import noStringRefs from "./react/noStringRefs";
 import noUnsafe from "./react/noUnsafe";
+import noUselessFragment from "./react/noUselessFragment";
 import noWillUpdateSetState from "./react/noWillUpdateSetState";
 import reactInJsxScope from "./react/reactInJsxScope";
 import stylePropObject from "./react/stylePropObject";
@@ -141,7 +154,10 @@ export const lintTransforms = [
 	unusedVariables,
 	altText,
 	anchorHasContent,
+	anchorIsValid,
+	ariaProps,
 	ariaUnsupportedElements,
+	clickEventsHaveKeyEvents,
 	headingHasContent,
 	htmlHasLang,
 	iframeHasTitle,
@@ -152,13 +168,21 @@ export const lintTransforms = [
 	noAccessKey,
 	noAutofocus,
 	noDistractingElements,
+	noNoninteractiveElementToInteractiveRole,
+	noNoninteractiveTabindex,
 	noOnChange,
+	noRedundantRoles,
 	noTargetBlank,
+	roleHasRequiredAriaProps,
 	scope,
 	tabindexNoPositive,
 	buttonHasType,
+	jsxFragments,
 	jsxKey,
 	jsxNoCommentText,
+	jsxNoDuplicateProps,
+	jsxPascalCase,
+	noAccessStateInSetState,
 	noChildrenProp,
 	noDanger,
 	noDangerWithChildren,
@@ -166,7 +190,9 @@ export const lintTransforms = [
 	noDidUpdateSetState,
 	noFindDOMNode,
 	noRedundantShouldComponentUpdate,
+	noStringRefs,
 	noUnsafe,
+	noUselessFragment,
 	noWillUpdateSetState,
 	reactInJsxScope,
 	stylePropObject,

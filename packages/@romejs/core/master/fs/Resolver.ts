@@ -8,7 +8,7 @@
 import {Manifest, ManifestDefinition} from "@romejs/codec-js-manifest";
 import Master from "../Master";
 import {PLATFORM_ALIASES, Platform} from "../../common/types/platform";
-import {DEFAULT_PROJECT_CONFIG, ProjectDefinition} from "@romejs/project";
+import {ProjectDefinition, createDefaultProjectConfig} from "@romejs/project";
 import {FileReference} from "../../common/types/files";
 import resolverSuggest from "./resolverSuggest";
 import {
@@ -367,7 +367,7 @@ export default class Resolver {
 			switch (protocol) {
 				case "http":
 				case "https": {
-					let projectConfig = DEFAULT_PROJECT_CONFIG;
+					let projectConfig = createDefaultProjectConfig();
 
 					if (origin.isAbsolute()) {
 						const project = this.master.projectManager.findProjectExisting(

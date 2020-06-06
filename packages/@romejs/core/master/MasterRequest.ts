@@ -731,10 +731,7 @@ export default class MasterRequest {
 
 						advice.push({
 							type: "list",
-							list: Array.from(
-								withoutIgnore,
-								(path) => `<filelink target="${path.join()}" />`,
-							),
+							list: Array.from(withoutIgnore, (path) => path.toMarkup()),
 							truncate: true,
 						});
 
@@ -768,7 +765,7 @@ export default class MasterRequest {
 				diagnostics.push({
 					location: {
 						...location,
-						marker: `<filelink target="${path.join()}" />`,
+						marker: path.toMarkup(),
 					},
 					description: {
 						...descriptions.FLAGS.NO_FILES_FOUND(opts.noun),
@@ -802,7 +799,7 @@ export default class MasterRequest {
 	startMarker(
 		opts: Omit<MasterUnfinishedMarker, "start">,
 	): MasterUnfinishedMarker {
-		this.master.logger.info("Started marker %s", opts.label);
+		this.master.logger.info("[MasterRequest] Started marker", opts.label);
 		return {
 			...opts,
 			start: Date.now(),
@@ -814,7 +811,10 @@ export default class MasterRequest {
 			...startMarker,
 			end: Date.now(),
 		};
-		this.master.logger.info("Finished marker %s", startMarker.label);
+		this.master.logger.info(
+			"[MasterRequest] Finished marker",
+			startMarker.label,
+		);
 		this.markerEvent.send(endMarker);
 		return endMarker;
 	}
@@ -826,10 +826,12 @@ export default class MasterRequest {
 	): Promise<T> {
 		const {master} = this;
 		const owner = await master.fileAllocator.getOrAssignOwner(path);
+		const startMtime = master.memoryFs.maybeGetMtime(path);
+		const lock = await master.fileLocker.getLock(path.join());
 		const ref = master.projectManager.getTransportFileReference(path);
 
 		const marker = this.startMarker({
-			label: `${method}: ${ref.uid}`,
+			label: `${method}: ${ref.relative}`,
 			facet: method,
 			rowId: `worker ${owner.id}`,
 		});
@@ -869,6 +871,13 @@ export default class MasterRequest {
 				// We don't want to tamper with these
 				throw err;
 			}
+		} finally {
+			lock.release();
+
+			const endMtime = this.master.memoryFs.maybeGetMtime(path);
+			if (endMtime !== startMtime) {
+				return this.wrapRequestDiagnostic(method, path, factory);
+			}
 		}
 	}
 
@@ -884,6 +893,17 @@ export default class MasterRequest {
 			(bridge, file) => bridge.updateBuffer.call({file, content}),
 		);
 		this.master.fileChangeEvent.send(path);
+	}
+
+	async requestWorkerClearBuffer(path: AbsoluteFilePath): Promise<void> {
+		this.checkCancelled();
+
+		await this.wrapRequestDiagnostic(
+			"updateBuffer",
+			path,
+			(bridge, file) => bridge.clearBuffer.call({file}),
+		);
+		await this.master.fileAllocator.evict(path);
 	}
 
 	async requestWorkerParse(

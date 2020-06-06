@@ -7,8 +7,6 @@
 
 import Master from "../Master";
 import {
-	DEFAULT_PROJECT_CONFIG,
-	DEFAULT_PROJECT_CONFIG_META,
 	ProjectConfig,
 	ProjectConfigMeta,
 	ProjectDefinition,
@@ -16,6 +14,8 @@ import {
 	ROME_CONFIG_PACKAGE_JSON_FIELD,
 	ROME_CONFIG_WARN_FILENAMES,
 	assertHardMeta,
+	createDefaultProjectConfig,
+	createDefaultProjectConfigMeta,
 	loadCompleteProjectConfig,
 	serializeJSONProjectConfig,
 } from "@romejs/project";
@@ -167,14 +167,14 @@ export default class ProjectManager {
 		});
 
 		const vendorProjectConfig: ProjectConfig = {
-			...DEFAULT_PROJECT_CONFIG,
+			...createDefaultProjectConfig(),
 			name: "rome-internal-remote",
 		};
 		const defaultVendorPath = vendorProjectConfig.files.vendorPath;
-		await createDirectory(defaultVendorPath, {recursive: true});
+		await createDirectory(defaultVendorPath);
 		await this.addProjectWithConfig({
 			projectFolder: defaultVendorPath,
-			meta: DEFAULT_PROJECT_CONFIG_META,
+			meta: createDefaultProjectConfigMeta(),
 			config: vendorProjectConfig,
 		});
 		await this.master.memoryFs.watch(defaultVendorPath, vendorProjectConfig);

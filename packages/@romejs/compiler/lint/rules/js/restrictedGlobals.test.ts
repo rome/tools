@@ -7,30 +7,31 @@
 
 import {test} from "rome";
 import {testLint} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
 	"restricted globals",
 	async (t) => {
 		await testLint(
 			t,
-			"console.log(event);",
+			{
+				invalid: [
+					// invalid, event is used as a global.
+					"console.log(event);",
+					"foo(event)",
+				],
+				valid: [
+					// valid use of event into the function scope.
+					dedent`
+						function foo(event) {
+							console.info(event);
+						}
+					`,
+				],
+			},
 			{
 				category: "lint/js/restrictedGlobals",
 			},
-		);
-
-		await testLint(
-			t,
-			`
-    // valid use of event into the function scope.
-    function foo(event) {
-      console.info(event);
-    }
-
-    // invalid, event is used as a global.
-    foo(event)
-    `,
-			{category: "lint/js/restrictedGlobals"},
 		);
 	},
 );

@@ -6,13 +6,14 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, JSForOfStatement} from "@romejs/ast";
+import {AnyNode, jsForOfStatement} from "@romejs/ast";
+import {createScopeEvaluator} from "./index";
 
-export default {
-	creator: true,
-	build(node: JSForOfStatement, parent: AnyNode, scope: Scope) {
+export default createScopeEvaluator({
+	enter(node: AnyNode, parent: AnyNode, scope: Scope) {
+		node = jsForOfStatement.assert(node);
 		const newScope = scope.fork("loop", node);
-		newScope.evaluate(node.left, node);
+		newScope.injectEvaluate(node.left, node);
 		return newScope;
 	},
-};
+});

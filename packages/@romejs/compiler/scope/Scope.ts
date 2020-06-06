@@ -29,6 +29,7 @@ export type ScopeKind =
 	| "function"
 	| "block"
 	| "loop"
+	| "type-generic"
 	| "class";
 
 export default class Scope {
@@ -103,10 +104,9 @@ export default class Scope {
 		return rootScope;
 	}
 
-	evaluate(
-		node?: AnyNode,
+	enterEvaluate(
+		node: undefined | AnyNode,
 		parent: AnyNode = MOCK_PARENT,
-		creatorOnly: boolean = false,
 		force: boolean = false,
 	): Scope {
 		if (node === undefined) {
@@ -116,29 +116,34 @@ export default class Scope {
 		if (!force && node === this.node) {
 			return this;
 		}
+
 		const cached = this.childScopeCache.get(node);
 		if (cached !== undefined) {
 			return cached;
 		}
 
-		let evaluator = evaluators.get(node.type);
-
-		if (!creatorOnly && evaluator !== undefined && evaluator.creator) {
-			evaluator = undefined;
-		}
-
-		if (evaluator === undefined) {
+		const evaluator = evaluators.get(node.type);
+		if (evaluator === undefined || evaluator.enter === undefined) {
 			return this;
 		}
 
-		let scope = evaluator.build(node, parent, this);
+		let scope = evaluator.enter(node, parent, this);
+		this.childScopeCache.set(node, scope);
 
-		if (scope === undefined) {
-			scope = this;
+		return scope;
+	}
+
+	injectEvaluate(node: undefined | AnyNode, parent: AnyNode = MOCK_PARENT): void {
+		if (node === undefined) {
+			return;
 		}
 
-		this.childScopeCache.set(node, scope);
-		return scope;
+		const evaluator = evaluators.get(node.type);
+		if (evaluator === undefined || evaluator.inject === undefined) {
+			return;
+		}
+
+		evaluator.inject(node, parent, this);
 	}
 
 	fork(kind: ScopeKind, node: undefined | AnyNode): Scope {
@@ -155,7 +160,17 @@ export default class Scope {
 		if (root) {
 			console.log("START");
 		}
-		console.log("------", this.id, this.kind);
+		if (this.globals.size > 0) {
+			console.log("------ GLOBALS", this.id, this.kind);
+			for (const name of this.globals) {
+				if (globalGlobals.includes(name)) {
+					continue;
+				}
+
+				console.log(" ", name);
+			}
+		}
+		console.log("------ VARIABLES", this.id, this.kind);
 		for (const [name, binding] of this.bindings) {
 			console.log(" ", binding.id, "-", binding.constructor.name, name);
 		}
@@ -237,6 +252,19 @@ export default class Scope {
 const GLOBAL_COMMENT_START = /^([\s+]|)global /;
 const GLOBAL_COMMENT_COLON = /:(.*?)$/;
 
+// lol global globals
+const globalGlobals = [
+	...GLOBALS.builtin,
+	...GLOBALS.es5,
+	...GLOBALS.es2015,
+	...GLOBALS.es2017,
+	...GLOBALS.browser,
+	...GLOBALS.worker,
+	...GLOBALS.node,
+	...GLOBALS.commonjs,
+	...GLOBALS.serviceworker,
+];
+
 export class RootScope extends Scope {
 	constructor(context: CompilerContext, ast: JSRoot) {
 		super({
@@ -249,15 +277,7 @@ export class RootScope extends Scope {
 		this.context = context;
 
 		this.globals = new Set([
-			...GLOBALS.builtin,
-			...GLOBALS.es5,
-			...GLOBALS.es2015,
-			...GLOBALS.es2017,
-			...GLOBALS.browser,
-			...GLOBALS.worker,
-			...GLOBALS.node,
-			...GLOBALS.commonjs,
-			...GLOBALS.serviceworker,
+			...globalGlobals,
 			...context.project.config.lint.globals,
 			...this.parseGlobalComments(ast),
 		]);

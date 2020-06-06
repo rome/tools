@@ -6,17 +6,14 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, JSBlockStatement} from "@romejs/ast";
+import {AnyNode, jsBlockStatement} from "@romejs/ast";
 import {isFunctionNode} from "@romejs/js-ast-utils";
 import {addVarBindings} from "../utils";
+import {createScopeEvaluator} from "./index";
 
-export default {
-	creator: true,
-	build(node: JSBlockStatement, parent: AnyNode, scope: Scope) {
-		if (isFunctionNode(parent) && scope.node !== parent) {
-			scope = scope.evaluate(parent.head, parent, true);
-		}
-
+export default createScopeEvaluator({
+	enter(node: AnyNode, parent: AnyNode, scope: Scope) {
+		node = jsBlockStatement.assert(node);
 		const newScope = scope.fork("block", node);
 
 		if (isFunctionNode(parent) && parent.head.hasHoistedVars) {
@@ -24,9 +21,9 @@ export default {
 		}
 
 		for (const child of node.body) {
-			newScope.evaluate(child, node);
+			newScope.injectEvaluate(child, node);
 		}
 
 		return newScope;
 	},
-};
+});

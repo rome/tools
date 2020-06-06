@@ -5,8 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export {bindingKeys, nodeNames, visitorKeys} from "./utils";
-
 export * from "./base";
 
 export * from "./constants";

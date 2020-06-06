@@ -7,12 +7,13 @@
 
 import Scope from "../Scope";
 import {ClassBinding} from "@romejs/compiler";
-import {AnyNode, JSClassDeclaration} from "@romejs/ast";
+import {AnyNode, jsClassDeclaration} from "@romejs/ast";
 import JSClassExpression from "./JSClassExpression";
+import {createScopeEvaluator} from "./index";
 
-export default {
-	creator: false,
-	build(node: JSClassDeclaration, parent: AnyNode, scope: Scope) {
+export default createScopeEvaluator({
+	inject(node: AnyNode, parent: AnyNode, scope: Scope) {
+		node = jsClassDeclaration.assert(node);
 		if (node.id !== undefined) {
 			scope.addBinding(
 				new ClassBinding({
@@ -22,6 +23,8 @@ export default {
 				}),
 			);
 		}
-		return JSClassExpression.build(node, parent, scope);
 	},
-};
+	enter(node: AnyNode, parent: AnyNode, scope: Scope) {
+		return JSClassExpression.enter(node, parent, scope);
+	},
+});

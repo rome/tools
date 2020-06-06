@@ -11,7 +11,7 @@ import {
 	JSNodeBase,
 	JSSpreadElement,
 } from "@romejs/ast";
-import {createQuickBuilder} from "../utils";
+import {createQuickBuilder} from "../../utils";
 
 export type JSArrayExpression = JSNodeBase & {
 	type: "JSArrayExpression";

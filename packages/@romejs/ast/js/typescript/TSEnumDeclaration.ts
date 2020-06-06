@@ -6,7 +6,7 @@
  */
 
 import {JSBindingIdentifier, JSNodeBase, TSEnumMember} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type TSEnumDeclaration = JSNodeBase & {
 	type: "TSEnumDeclaration";

@@ -52,7 +52,7 @@ import stringDiff from "@romejs/string-diff";
 import {formatAST} from "@romejs/formatter";
 import {REDUCE_REMOVE} from "../constants";
 import {FileReference} from "@romejs/core";
-import {DEFAULT_PROJECT_CONFIG} from "@romejs/project";
+import {createDefaultProjectConfig} from "@romejs/project";
 import {
 	buildLintDecisionAdviceAction,
 	buildLintDecisionGlobalString,
@@ -114,7 +114,7 @@ export default class CompilerContext {
 			sourceText = "",
 			project = {
 				folder: undefined,
-				config: DEFAULT_PROJECT_CONFIG,
+				config: createDefaultProjectConfig(),
 			},
 			suppressions,
 		} = arg;

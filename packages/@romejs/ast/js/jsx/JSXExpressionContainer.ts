@@ -6,7 +6,7 @@
  */
 
 import {AnyJSExpression, JSNodeBase, JSXEmptyExpression} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSXExpressionContainer = JSNodeBase & {
 	type: "JSXExpressionContainer";

@@ -14,7 +14,7 @@ import {
 	JSXIdentifier,
 	JSXNamespacedName,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSXAttribute = JSNodeBase & {
 	type: "JSXAttribute";

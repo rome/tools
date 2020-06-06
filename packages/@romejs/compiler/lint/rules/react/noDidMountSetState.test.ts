@@ -1,64 +1,85 @@
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-	"no did mount set state",
+	"react no did mount set state",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				`
-        class Hello extends React.Component {
-          componentDidMount() {
-            this.setState({
-              name: 'John'
-            });
-          }
-        }
-        `,
-				`
-        class Hello extends React.Component {
-          componentDidMount() {
-            foo();
-            this.setState({
-              name: 'John'
-            });
-          }
-        }
-        `,
-				`
-        class Hello extends Component {
-          componentDidMount() {
-            this.setState({
-              name: 'John'
-            });
-          }
-        }
-        `,
-				`
-        class Hello extends Component {
-          componentDidMount() {
-            foo();
-            this.setState({
-              name: 'John'
-            });
-          }
-        }
-        `,
-				// VALID
-				`
-        class Hello extends React.Component {
-          componentDidMount() {
-            if (condition) {
-              this.setState({
-                name: 'John'
-              });
-            }
-          }
-        }
-        `,
-			],
+			{
+				invalid: [
+					dedent`
+						class Hello extends React.Component {
+							componentDidMount() {
+								this.setState({
+									name: 'John'
+								});
+							}
+						}
+					`,
+					dedent`
+						class Hello extends React.Component {
+							componentDidMount() {
+								foo();
+								this.setState({
+									name: 'John'
+								});
+							}
+						}
+					`,
+					dedent`
+						class Hello extends Component {
+							componentDidMount() {
+								this.setState({
+									name: 'John'
+								});
+							}
+						}
+					`,
+					dedent`
+						class Hello extends Component {
+							componentDidMount() {
+								foo();
+								this.setState({
+									name: 'John'
+								});
+							}
+						}
+					`,
+				],
+				valid: [
+					dedent`
+						class Hello extends React.Component {
+							componentDidMount() {
+								if (condition) {
+									this.setState({
+										name: 'John'
+									});
+								}
+							}
+						}
+					`,
+					dedent`
+						class Hello extends React.Component {
+							componentDidMount() {
+								condition && this.setState({
+									name: 'John'
+								});
+							}
+						}
+					`,
+					dedent`
+						class Hello extends React.Component {
+							componentDidMount() {
+								condition ? this.setState({
+									name: 'John'
+								}) : undefined;
+							}
+						}
+					`,
+				],
+			},
 			{category: "lint/react/noDidMountSetState"},
 		);
 	},

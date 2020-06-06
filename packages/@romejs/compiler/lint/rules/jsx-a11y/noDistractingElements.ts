@@ -1,6 +1,6 @@
 import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
-import {isJSXElement} from "@romejs/js-ast-utils";
+import {doesNodeMatchPattern} from "@romejs/js-ast-utils";
 
 const DISTRACTING_TYPES = ["blink", "marquee"];
 
@@ -11,8 +11,8 @@ export default {
 		const {node} = path;
 
 		const distractingType =
-			isJSXElement(node) &&
-			DISTRACTING_TYPES.find((name) => isJSXElement(node, name));
+			node.type === "JSXElement" &&
+			DISTRACTING_TYPES.find((name) => doesNodeMatchPattern(node.name, name));
 
 		if (distractingType) {
 			path.context.addNodeDiagnostic(

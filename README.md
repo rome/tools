@@ -43,7 +43,7 @@ To setup Rome in a project, all you need is a `rome.json` file.
 ```bash
 $ mkdir hello-world
 $ cd hello-world
-$ echo '{}' >rome.json
+$ rome init
 ```
 
 This file is used to configure Rome and indicates the boundaries of your project.

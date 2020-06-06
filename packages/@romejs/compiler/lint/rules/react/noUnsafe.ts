@@ -6,17 +6,14 @@ const UNSAFE_METHODS = [
 	{
 		oldMethod: "UNSAFE_componentWillMount",
 		newMethod: "componentDidMount",
-		details: 'See <hyperlink target="https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html" />.',
 	},
 	{
 		oldMethod: "UNSAFE_componentWillReceiveProps",
 		newMethod: "getDerivedStateFromProps",
-		details: 'See <hyperlink target="https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html" />.',
 	},
 	{
 		oldMethod: "UNSAFE_componentWillUpdate",
 		newMethod: "componentDidUpdate",
-		details: 'See <hyperlink target="https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html" />.',
 	},
 ];
 
@@ -32,7 +29,7 @@ function getUnsafeDef(node: AnyNode) {
 }
 
 export default {
-	name: "noUnsafe",
+	name: "reactNoUnsafe",
 
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
@@ -45,7 +42,6 @@ export default {
 				descriptions.LINT.REACT_NO_UNSAFE(
 					unsafeDef.oldMethod,
 					unsafeDef.newMethod,
-					unsafeDef.details,
 				),
 			);
 		}

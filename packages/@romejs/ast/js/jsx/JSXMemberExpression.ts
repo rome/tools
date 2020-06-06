@@ -11,7 +11,7 @@ import {
 	JSXNamespacedName,
 	JSXReferenceIdentifier,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSXMemberExpression = JSNodeBase & {
 	type: "JSXMemberExpression";

@@ -10,7 +10,7 @@
 
  unknown:2:13 lint/js/noShorthandArrayType FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Use Array<T> instead of shorthand T[]
+  ✖ Use <emphasis>Array<T> syntax</emphasis> instead of <emphasis>shorthand T[] syntax</emphasis>.
 
     1 │ let valid: Array<foo>;
   > 2 │ let invalid: bar[];
@@ -28,37 +28,6 @@
 ```
 
 ### `0: formatted`
-
-```
-let valid: Array<foo>;
-let invalid: Array<bar>;
-
-```
-
-### `1`
-
-```
-
- unknown:2:13 lint/noShorthandArrayType FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Use Array<T> instead of shorthand T[]
-
-    1 │ let valid: Array<foo>;
-  > 2 │ let invalid: bar[];
-      │              ^^^^^
-
-  ℹ Recommended fix
-
-  - bar[]
-  + Array<bar>
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `1: formatted`
 
 ```
 let valid: Array<foo>;

@@ -12,17 +12,36 @@ import {
 	REDUCE_SKIP_SUBTREE,
 } from "@romejs/compiler";
 import {getBindingIdentifiers, isFunctionNode} from "@romejs/js-ast-utils";
-import {AnyJSFunction, JSRoot} from "@romejs/ast";
+import {
+	AnyJSFunction,
+	JSRoot,
+	TSDeclareFunction,
+	TSDeclareMethod,
+} from "@romejs/ast";
 
-export function addFunctionBindings(
-	scope: Scope,
-	node: AnyJSFunction,
-	hasArguments: boolean = true,
-) {
+export function buildFunctionScope(
+	node: AnyJSFunction | TSDeclareFunction | TSDeclareMethod,
+	parentScope: Scope,
+): Scope {
 	const {head} = node;
 
+	const scope = parentScope.fork("function", node);
+
+	if (node.type === "JSFunctionExpression") {
+		const {id} = node;
+		if (id !== undefined) {
+			scope.addBinding(
+				new LetBinding({
+					node: id,
+					name: id.name,
+					scope,
+				}),
+			);
+		}
+	}
+
 	// Add type parameters
-	scope.evaluate(head.typeParameters);
+	scope.injectEvaluate(head.typeParameters, head);
 
 	const params =
 		head.rest === undefined ? head.params : [...head.params, head.rest];
@@ -30,7 +49,6 @@ export function addFunctionBindings(
 	// Add parameters
 	for (const param of params) {
 		for (const id of getBindingIdentifiers(param)) {
-			// TODO maybe add a `param` binding type?
 			scope.addBinding(
 				new LetBinding({
 					node: id,
@@ -43,19 +61,17 @@ export function addFunctionBindings(
 	}
 
 	// Add `arguments` binding
-	if (hasArguments) {
+	if (node.type !== "JSArrowFunctionExpression") {
 		scope.addBinding(
 			new ArgumentsBinding({
 				name: "arguments",
-				node,
+				node: head,
 				scope,
 			}),
 		);
 	}
 
-	if (head.hasHoistedVars) {
-		addVarBindings(scope, node);
-	}
+	return scope;
 }
 
 export function addVarBindings(scope: Scope, topNode: AnyJSFunction | JSRoot) {
@@ -75,7 +91,7 @@ export function addVarBindings(scope: Scope, topNode: AnyJSFunction | JSRoot) {
 					}
 
 					if (node.type === "JSVariableDeclaration" && node.kind === "var") {
-						scope.evaluate(node, parent);
+						scope.injectEvaluate(node, parent);
 					}
 
 					return node;

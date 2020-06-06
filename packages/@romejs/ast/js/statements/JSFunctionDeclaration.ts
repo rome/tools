@@ -11,7 +11,7 @@ import {
 	JSFunctionHead,
 	JSNodeBase,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSFunctionDeclaration = JSNodeBase & {
 	type: "JSFunctionDeclaration";

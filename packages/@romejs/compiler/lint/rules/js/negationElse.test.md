@@ -10,20 +10,18 @@
 
  unknown:1 lint/js/negationElse FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Invert the blocks when you have a negation test
+  ✖ Invert blocks when performing a negation test.
 
     if (!true) {consequent;} else {alternate;}
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Recommended fix
 
-    1 │ - if (!true) {consequ
-    2 │ + ↹alternate;
-      │ - } else {alt
-    3 │ + } else {
-      │ - ernate;
-    4 │ + ↹consequent;
-    5 │ + }
+    1  │ - if (!true) {consequent;} else {alternate;}
+     2 │ +   alternate;
+     3 │ + } else {
+     4 │ +   consequent;
+     5 │ + }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -48,15 +46,15 @@ if (true) {
 
  unknown:1 lint/js/negationElse FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Invert the blocks when you have a negation test
+  ✖ Invert blocks when performing a negation test.
 
     !true ? consequent : alternate
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Recommended fix
 
-  - !true ? consequent·:·alternate
-  + true ?·alternate·: consequent
+  - !true ? consequent : alternate
+  + true ? alternate : consequent
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

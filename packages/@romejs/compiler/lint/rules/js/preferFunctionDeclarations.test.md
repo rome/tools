@@ -10,7 +10,7 @@
 
  unknown:1:12 lint/js/preferFunctionDeclarations FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Use a function declaration instead of a const function
+  ✖ Use a function declaration instead of a const function.
 
     const foo = function () {};
                 ^^^^^^^^^^^^^^
@@ -34,7 +34,7 @@ function foo() {}
 
  unknown:1:12 lint/js/preferFunctionDeclarations FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Use a function declaration instead of a const function
+  ✖ Use a function declaration instead of a const function.
 
     const foo = () => {};
                 ^^^^^^^^
@@ -55,26 +55,10 @@ function foo() {}
 ### `2`
 
 ```
-✔ No known problems!
-
-```
-
-### `2: formatted`
-
-```
-const foo = () => {
-	this;
-};
-
-```
-
-### `3`
-
-```
 
  unknown:1:12 lint/js/preferFunctionDeclarations FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Use a function declaration instead of a const function
+  ✖ Use a function declaration instead of a const function.
 
     const foo = () => {function bar() {this;}};
                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -85,7 +69,7 @@ const foo = () => {
 
 ```
 
-### `3: formatted`
+### `2: formatted`
 
 ```
 function foo() {
@@ -93,6 +77,22 @@ function foo() {
 		this;
 	}
 }
+
+```
+
+### `3`
+
+```
+✔ No known problems!
+
+```
+
+### `3: formatted`
+
+```
+const foo = () => {
+	this;
+};
 
 ```
 

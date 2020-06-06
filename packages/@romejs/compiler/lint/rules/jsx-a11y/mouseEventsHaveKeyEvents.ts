@@ -1,19 +1,19 @@
 import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
-import {hasJSXAttribute, isJSXElement} from "@romejs/js-ast-utils";
+import {getJSXAttribute, hasJSXAttribute} from "@romejs/js-ast-utils";
 
 export default {
 	name: "mouseEventsHaveKeyEvents",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 
-		if (isJSXElement(node)) {
+		if (node.type === "JSXElement") {
 			if (
 				hasJSXAttribute(node, "onMouseOver") &&
 				!hasJSXAttribute(node, "onFocus")
 			) {
 				path.context.addNodeDiagnostic(
-					node,
+					getJSXAttribute(node, "onMouseOver"),
 					descriptions.LINT.JSX_A11Y_MOUSE_EVENTS_HAVE_KEY_EVENTS(
 						"onMouseOver",
 						"onFocus",
@@ -26,7 +26,7 @@ export default {
 				!hasJSXAttribute(node, "onBlur")
 			) {
 				path.context.addNodeDiagnostic(
-					node,
+					getJSXAttribute(node, "onMouseOut"),
 					descriptions.LINT.JSX_A11Y_MOUSE_EVENTS_HAVE_KEY_EVENTS(
 						"onMouseOut",
 						"onBlur",

@@ -6,7 +6,7 @@
  */
 
 import {AnyTSEntityName, JSNodeBase, TSImportType} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type TSTypeQuery = JSNodeBase & {
 	type: "TSTypeQuery";

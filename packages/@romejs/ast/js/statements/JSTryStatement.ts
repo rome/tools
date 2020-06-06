@@ -6,7 +6,7 @@
  */
 
 import {JSBlockStatement, JSCatchClause, JSNodeBase} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSTryStatement = JSNodeBase & {
 	type: "JSTryStatement";

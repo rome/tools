@@ -6,7 +6,7 @@
  */
 
 import {AnyJSExpression, JSNodeBase} from "@romejs/ast";
-import {createQuickBuilder} from "../utils";
+import {createQuickBuilder} from "../../utils";
 
 export type JSReturnStatement = JSNodeBase & {
 	type: "JSReturnStatement";

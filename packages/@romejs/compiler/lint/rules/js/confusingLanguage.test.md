@@ -10,12 +10,12 @@
 
  unknown:1:5 lint/js/confusingLanguage FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ blacklist can be considered raciallly charged language
+  ✖ The word blacklist can be considered racially charged language.
 
     // the blacklist
          ^^^^^^^^^
 
-  ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation
+  ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation.
 
   ℹ Consider using denylist instead
 
@@ -28,7 +28,7 @@
 ### `0: formatted`
 
 ```
-// the denylist
+//	the	denylist
 
 ```
 
@@ -38,13 +38,13 @@
 
  unknown:2 lint/js/confusingLanguage FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ blacklist can be considered raciallly charged language
+  ✖ The word blacklist can be considered racially charged language.
 
     1 │ /* the
   > 2 │ blacklist */
       │ ^^^^^^^^^
 
-  ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation
+  ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation.
 
   ℹ Consider using denylist instead
 
@@ -57,8 +57,8 @@
 ### `1: formatted`
 
 ```
-/* the
-blacklist */
+/*	the
+blacklist	*/
 
 ```
 
@@ -68,12 +68,12 @@ blacklist */
 
  unknown:1 lint/js/confusingLanguage FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ blacklist can be considered raciallly charged language
+  ✖ The word blacklist can be considered racially charged language.
 
     blacklist;
     ^^^^^^^^^
 
-  ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation
+  ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation.
 
   ℹ Consider using denylist instead
 
@@ -96,12 +96,12 @@ blacklist;
 
  unknown:1 lint/js/confusingLanguage FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ blacklist can be considered raciallly charged language
+  ✖ The word blacklist can be considered racially charged language.
 
     BLACKLIST;
     ^^^^^^^^^
 
-  ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation
+  ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation.
 
   ℹ Consider using DENYLIST instead
 
@@ -124,12 +124,12 @@ BLACKLIST;
 
  unknown:1:4 lint/js/confusingLanguage FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ blacklist can be considered raciallly charged language
+  ✖ The word blacklist can be considered racially charged language.
 
     someBlacklist;
         ^^^^^^^^^
 
-  ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation
+  ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation.
 
   ℹ Consider using Denylist instead
 
@@ -152,174 +152,14 @@ someBlacklist;
 
  unknown:1:5 lint/js/confusingLanguage FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ blacklist can be considered raciallly charged language
+  ✖ The word blacklist can be considered racially charged language.
 
     SOME_BLACKLIST;
          ^^^^^^^^^
 
-  ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation
+  ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation.
 
   ℹ Consider using DENYLIST instead
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `5: formatted`
-
-```
-SOME_BLACKLIST;
-
-```
-
-## `inconsiderate language`
-
-### `0`
-
-```
-
- unknown:1:5 lint/inconsiderateLanguage FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Replace racially-charged language with more accurate and inclusive words
-
-    // the blacklist
-         ^^^^^^^^^
-
-  ℹ Instead of blacklist use denylist
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `0: formatted`
-
-```
-// the denylist
-
-```
-
-### `1`
-
-```
-
- unknown:2 lint/inconsiderateLanguage FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Replace racially-charged language with more accurate and inclusive words
-
-    1 │ /* the
-  > 2 │ blacklist */
-      │ ^^^^^^^^^
-
-  ℹ Instead of blacklist use denylist
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `1: formatted`
-
-```
-/* the
-blacklist */
-
-```
-
-### `2`
-
-```
-
- unknown:1 lint/inconsiderateLanguage FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Replace racially-charged language with more accurate and inclusive words
-
-    blacklist;
-    ^^^^^^^^^
-
-  ℹ Instead of blacklist use denylist
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `2: formatted`
-
-```
-blacklist;
-
-```
-
-### `3`
-
-```
-
- unknown:1 lint/inconsiderateLanguage FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Replace racially-charged language with more accurate and inclusive words
-
-    BLACKLIST;
-    ^^^^^^^^^
-
-  ℹ Instead of BLACKLIST use DENYLIST
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `3: formatted`
-
-```
-BLACKLIST;
-
-```
-
-### `4`
-
-```
-
- unknown:1:4 lint/inconsiderateLanguage FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Replace racially-charged language with more accurate and inclusive words
-
-    someBlacklist;
-        ^^^^^^^^^
-
-  ℹ Instead of Blacklist use Denylist
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `4: formatted`
-
-```
-someBlacklist;
-
-```
-
-### `5`
-
-```
-
- unknown:1:5 lint/inconsiderateLanguage FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Replace racially-charged language with more accurate and inclusive words
-
-    SOME_BLACKLIST;
-         ^^^^^^^^^
-
-  ℹ Instead of BLACKLIST use DENYLIST
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

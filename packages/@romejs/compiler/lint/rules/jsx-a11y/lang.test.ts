@@ -1,24 +1,26 @@
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
-	"should warn when an invalid lang is provided",
+	"jsx-a11y lang test",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				'<html lang="foo"></html>',
-				'<html lang="ex"></html>',
-				'<html lang="foo-bar"></html>',
-				'<html lang="aa-zz"></html>',
-				'<html lang="zz-AA"></html>',
-				'<html lang="en2></html>',
-				// VALID
-				'<html lang="en-US"></html>',
-				'<html lang="en"></html>',
-				"<html lang={lang}></html>",
-			],
+			{
+				invalid: [
+					'<html lang="foo"></html>',
+					'<html lang="ex"></html>',
+					'<html lang="foo-bar"></html>',
+					'<html lang="aa-zz"></html>',
+					'<html lang="zz-AA"></html>',
+					'<html lang="en2></html>',
+				],
+				valid: [
+					'<html lang="en-US"></html>',
+					'<html lang="en"></html>',
+					"<html lang={lang}></html>",
+				],
+			},
 			{category: "lint/jsx-a11y/lang"},
 		);
 	},

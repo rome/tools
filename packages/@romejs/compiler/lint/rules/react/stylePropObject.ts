@@ -10,7 +10,7 @@ import {AnyNode} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 export default {
-	name: "stylePropObject",
+	name: "reactStylePropObject",
 	enter(path: Path): AnyNode {
 		const {node} = path;
 
