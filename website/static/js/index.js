@@ -86,10 +86,7 @@ const toc = {
 
     if(target.hasAttribute("href")){
 
-      const heading = document.querySelector(target.getAttribute('href'));
-      const marginTop = parseFloat(window.getComputedStyle(heading).marginTop, 10);
-
-      window.scrollTo(0, (heading.offsetTop) - toc.getMobileNavbarHeight() - (marginTop - 2));
+      scrollToHeading(target.getAttribute('href'));
 
       if(isMobile()){
         mobileToggleEvent(event);
@@ -99,6 +96,14 @@ const toc = {
   },
 }
 
+function scrollToHeading(hash){
+  const heading = document.querySelector(hash);
+
+  if(!heading) return null;
+
+  const marginTop = parseFloat(window.getComputedStyle(heading).marginTop, 10);
+  window.scrollTo(0, (heading.offsetTop) - toc.getMobileNavbarHeight() - (marginTop - 2));
+}
 
 function handleScroll(){
 
@@ -149,7 +154,20 @@ elements.tocLinks.forEach(function(link){
   link.innerText = link.innerText.replace(/(\s#)$/,'');
 });
 
-toc.highlight();
+window.onload = function(){
+  scrollToHeading(window.location.hash);
+  toc.highlight();
+}
+
+document.addEventListener('click', function (event) {
+
+	if (!event.target.matches('.header-anchor')) return;
+
+	event.preventDefault();
+
+  scrollToHeading(event.target.getAttribute('href'));
+
+}, false);
 
 elements.toc.addEventListener('click', toc.handleClick, false);
 elements.mobileHandle.addEventListener('click', mobileToggleEvent, false);
