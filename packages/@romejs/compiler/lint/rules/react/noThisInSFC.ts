@@ -1,6 +1,6 @@
 import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
-import {isFunctionNode, isJSXElement} from "@romejs/js-ast-utils";
+import {isFunctionNode} from "@romejs/js-ast-utils";
 
 export default {
 	name: "reactNoThisInSFC",
@@ -9,7 +9,7 @@ export default {
 
 		if (node.type === "JSThisExpression") {
 			const hasJSX = path.findAncestry((path) => {
-				if (isJSXElement(path.node)) {
+				if (path.node.type === "JSXElement") {
 					return true;
 				}
 
@@ -18,7 +18,7 @@ export default {
 						path.node.body.some((statement) =>
 							statement.type === "JSReturnStatement" &&
 							statement.argument &&
-							isJSXElement(statement.argument)
+							statement.argument.type === "JSXElement"
 						)
 					) {
 						return true;
@@ -29,7 +29,7 @@ export default {
 					path.node.type === "JSVariableDeclarator" &&
 					path.node.init &&
 					path.node.init.type === "JSArrowFunctionExpression" &&
-					isJSXElement(path.node.init.body)
+					path.node.init.body.type === "JSXElement"
 				) {
 					return true;
 				}
