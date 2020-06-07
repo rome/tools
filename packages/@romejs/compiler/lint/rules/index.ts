@@ -43,6 +43,7 @@ import noShadowRestrictedNames from "./js/noShadowRestrictedNames";
 import noShorthandArrayType from "./js/noShorthandArrayType";
 import noTemplateCurlyInString from "./js/noTemplateCurlyInString";
 import noUnsafeFinally from "./js/noUnsafeFinally";
+import noUnusedVariables from "./js/noUnusedVariables";
 import noVar from "./js/noVar";
 import preferBlockStatements from "./js/preferBlockStatements";
 import preferFunctionDeclarations from "./js/preferFunctionDeclarations";
@@ -54,7 +55,6 @@ import sortImportExportSpecifiers from "./js/sortImportExportSpecifiers";
 import sparseArray from "./js/sparseArray";
 import undeclaredVariables from "./js/undeclaredVariables";
 import unsafeNegation from "./js/unsafeNegation";
-import unusedVariables from "./js/unusedVariables";
 import altText from "./jsx-a11y/altText";
 import anchorHasContent from "./jsx-a11y/anchorHasContent";
 import anchorIsValid from "./jsx-a11y/anchorIsValid";
@@ -142,6 +142,7 @@ export const lintTransforms = [
 	noShorthandArrayType,
 	noTemplateCurlyInString,
 	noUnsafeFinally,
+	noUnusedVariables,
 	noVar,
 	preferBlockStatements,
 	preferFunctionDeclarations,
@@ -153,7 +154,6 @@ export const lintTransforms = [
 	sparseArray,
 	undeclaredVariables,
 	unsafeNegation,
-	unusedVariables,
 	altText,
 	anchorHasContent,
 	anchorIsValid,
