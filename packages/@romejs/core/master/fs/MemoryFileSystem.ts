@@ -392,7 +392,7 @@ export default class MemoryFileSystem {
 		listing.set(path, path);
 	}
 
-	handleDeletion(path: AbsoluteFilePath): void {
+	async handleDeletion(path: AbsoluteFilePath): Promise<void> {
 		// If a folder then evict all children
 		const folderInfo = this.directories.get(path);
 		if (folderInfo !== undefined) {
@@ -402,10 +402,13 @@ export default class MemoryFileSystem {
 			if (listing !== undefined) {
 				this.directoryListings.delete(path);
 				for (const path of listing.values()) {
-					this.handleDeletion(path);
+					await this.handleDeletion(path);
 				}
 			}
 		}
+
+		// Wait for any subscribers that might need the file's stats
+		await this.deletedFileEvent.call(path);
 
 		// Remove from 'all possible caches
 		this.files.delete(path);
@@ -422,8 +425,6 @@ export default class MemoryFileSystem {
 		if (parentListing !== undefined) {
 			parentListing.delete(path);
 		}
-
-		this.deletedFileEvent.send(path);
 	}
 
 	handleDeletedManifest(path: AbsoluteFilePath): void {
