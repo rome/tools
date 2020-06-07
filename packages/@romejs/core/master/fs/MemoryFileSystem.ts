@@ -402,7 +402,7 @@ export default class MemoryFileSystem {
 			if (listing !== undefined) {
 				this.directoryListings.delete(path);
 				for (const path of listing.values()) {
-					this.handleDeletion(path);
+					await this.handleDeletion(path);
 				}
 			}
 		}
