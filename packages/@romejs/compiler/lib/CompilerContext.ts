@@ -163,7 +163,7 @@ export default class CompilerContext {
 	diagnostics: DiagnosticsProcessor;
 	suppressions: DiagnosticSuppressions;
 	frozen: boolean;
-	rootScope: undefined | RootScope;
+	rootScope: RootScope;
 	mtime: undefined | number;
 	origin: undefined | DiagnosticOrigin;
 	options: CompilerOptions;
@@ -202,14 +202,6 @@ export default class CompilerContext {
 		}
 
 		return false;
-	}
-
-	getRootScope(): RootScope {
-		const {rootScope} = this;
-		if (rootScope === undefined) {
-			throw new Error("Expected root scope");
-		}
-		return rootScope;
 	}
 
 	getCacheDependencies(): Array<string> {

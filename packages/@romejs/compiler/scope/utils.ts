@@ -18,6 +18,7 @@ import {
 	TSDeclareFunction,
 	TSDeclareMethod,
 } from "@romejs/ast";
+import {VarBinding} from "./bindings";
 
 export function buildFunctionScope(
 	node: AnyJSFunction | TSDeclareFunction | TSDeclareMethod,
@@ -74,6 +75,7 @@ export function buildFunctionScope(
 	return scope;
 }
 
+// var are function scoped so we have separate traversal logic to inject them
 export function addVarBindings(scope: Scope, topNode: AnyJSFunction | JSRoot) {
 	const {context} = scope.getRootScope();
 	scope.setHoistedVars();
@@ -84,14 +86,24 @@ export function addVarBindings(scope: Scope, topNode: AnyJSFunction | JSRoot) {
 			{
 				name: "scopeVarFunc",
 				enter: (path) => {
-					const {node, parent} = path;
+					const {node} = path;
 
 					if (isFunctionNode(node) && node !== topNode) {
 						return REDUCE_SKIP_SUBTREE;
 					}
 
 					if (node.type === "JSVariableDeclaration" && node.kind === "var") {
-						scope.injectEvaluate(node, parent);
+						for (const decl of node.declarations) {
+							for (const id of getBindingIdentifiers(decl)) {
+								scope.addBinding(
+									new VarBinding({
+										node: id,
+										name: id.name,
+										scope,
+									}),
+								);
+							}
+						}
 					}
 
 					return node;
