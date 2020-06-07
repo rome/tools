@@ -110,7 +110,7 @@ export default {
 
 				// If there's no rest then only consider the last parameter to be unused
 				const {rest} = node.head;
-				if (rest === undefined) {
+				if (rest !== undefined) {
 					ignoreLast = false;
 				}
 

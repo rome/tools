@@ -71,9 +71,20 @@ let a = 4;
 
   ℹ Unused variables are dead code and usually result from incomplete refactoring.
 
+ unknown:1:13 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The parameter variable myVar is unused.
+
+  > 1 │ function foo(myVar) {
+      │              ^^^^^
+    2 │  console.log("foo");
+    3 │ };
+
+  ℹ Unused variables are dead code and usually result from incomplete refactoring.
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✖ Found 1 problem
+✖ Found 2 problems
 
 ```
 
@@ -90,14 +101,14 @@ function foo(myVar) {
 
 ```
 
- unknown:1:6 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:13 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ The constant variable foo is unused.
+  ✖ The parameter variable myVar is unused.
 
-  > 1 │ const foo = (b) => {
-      │       ^^^
+  > 1 │ function foo(myVar) {
+      │              ^^^^^
     2 │  console.log("foo");
-    3 │ };
+    3 │ }
 
   ℹ Unused variables are dead code and usually result from incomplete refactoring.
 
@@ -110,26 +121,51 @@ function foo(myVar) {
 ### `3: formatted`
 
 ```
-function foo(b) {
+function foo(myVar) {
 	console.log("foo");
 }
+foo();
 
 ```
 
 ### `4`
 
 ```
-✔ No known problems!
+
+ unknown:1:6 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The constant variable foo is unused.
+
+  > 1 │ const foo = (b) => {
+      │       ^^^
+    2 │  console.log("foo");
+    3 │ };
+
+  ℹ Unused variables are dead code and usually result from incomplete refactoring.
+
+ unknown:1:13 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The parameter variable b is unused.
+
+  > 1 │ const foo = (b) => {
+      │              ^
+    2 │  console.log("foo");
+    3 │ };
+
+  ℹ Unused variables are dead code and usually result from incomplete refactoring.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 2 problems
 
 ```
 
 ### `4: formatted`
 
 ```
-function foo(_, b) {
-	console.log(b);
+function foo(b) {
+	console.log("foo");
 }
-foo();
 
 ```
 
@@ -141,6 +177,23 @@ foo();
 ```
 
 ### `5: formatted`
+
+```
+function foo(_, b) {
+	console.log(b);
+}
+foo();
+
+```
+
+### `6`
+
+```
+✔ No known problems!
+
+```
+
+### `6: formatted`
 
 ```
 function foo(_, b) {

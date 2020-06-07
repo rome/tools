@@ -112,10 +112,10 @@ test(
 	"Event#callSync with promise subscription",
 	async (t) => {
 		const event = new Event<string, string>({name: "testEvent"});
-		const foo: Callback<string, string> = (param) => {
+		const foo: Callback<string, string> = () => {
 			return "foo returns";
 		};
-		const bar: Callback<string, string> = (param) => {
+		const bar: Callback<string, string> = () => {
 			return Promise.resolve("bar returns a promise");
 		};
 

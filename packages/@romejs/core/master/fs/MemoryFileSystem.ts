@@ -16,11 +16,7 @@ import {
 	matchPathPatterns,
 	parsePathPattern,
 } from "@romejs/path-match";
-import {
-	ProjectConfig,
-	ProjectDefinition,
-	ROME_CONFIG_FILENAMES,
-} from "@romejs/project";
+import {ProjectDefinition, ROME_CONFIG_FILENAMES} from "@romejs/project";
 import {DiagnosticsProcessor, catchDiagnostics} from "@romejs/diagnostics";
 import {Event} from "@romejs/events";
 import {consumeJSON} from "@romejs/codec-json";
@@ -468,10 +464,7 @@ export default class MemoryFileSystem {
 		}
 	}
 
-	async watch(
-		projectFolder: AbsoluteFilePath,
-		projectConfig: ProjectConfig,
-	): Promise<void> {
+	async watch(projectFolder: AbsoluteFilePath): Promise<void> {
 		const {logger} = this.master;
 		const projectFolderJoined = projectFolder.join();
 		const folderLink = markup`<filelink target="${projectFolderJoined}" />`;

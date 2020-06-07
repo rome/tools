@@ -11,7 +11,6 @@ import ClientRequest from "../ClientRequest";
 import {Dict} from "@romejs/typescript-helpers";
 import {exists, writeFile} from "@romejs/fs";
 import {VERSION} from "../../common/constants";
-import {Consumer} from "@romejs/consume";
 import {stringifyRJSON} from "@romejs/codec-json";
 
 export default createLocalCommand({
@@ -19,7 +18,7 @@ export default createLocalCommand({
 	description: "create a project config",
 	usage: "",
 	examples: [],
-	defineFlags(consumer: Consumer) {
+	defineFlags() {
 		return {};
 	},
 	async callback(req: ClientRequest) {
