@@ -4,7 +4,7 @@ import {test} from "rome";
 type Callback<Param, Ret> = (param: Param) => Ret | Promise<Ret>;
 
 test(
-	"Event 1",
+	"Event basic",
 	async (t) => {
 		const event = new Event<string, void>({name: "testEvent"});
 		const fooCalls: Array<string> = [];
@@ -43,7 +43,7 @@ test(
 );
 
 test(
-	"Event 2",
+	"Event send void",
 	async (t) => {
 		const event = new Event<string, string>({name: "testEvent"});
 		const fooCalls: Array<string> = [];
@@ -67,7 +67,7 @@ test(
 );
 
 test(
-	"Event 3",
+	"Event subscription order",
 	async (t) => {
 		const event = new Event<string, string>({name: "testEvent"});
 		const fooCalls: Array<string> = [];
@@ -109,7 +109,7 @@ test(
 );
 
 test(
-	"Event 4",
+	"Event#callSync with promise subscription",
 	async (t) => {
 		const event = new Event<string, string>({name: "testEvent"});
 		const foo: Callback<string, string> = (param) => {
@@ -132,7 +132,7 @@ test(
 );
 
 test(
-	"Event 5",
+	"Event#onError",
 	async (t) => {
 		const errors: Array<Error> = [];
 		const event = new Event<string, string>({
@@ -157,18 +157,21 @@ test(
 );
 
 test(
-	"Event 6",
+	"Event#wait",
 	async (t) => {
 		const event = new Event<string, string>({name: "testEvent"});
 		let foo: string;
 
+  await new Promise((resolve) => {
 		setTimeout(
 			() => {
 				foo = event.callSync("wait for this");
 				t.is(foo, "wait arg");
+        resolve();
 			},
 			100,
 		);
+  });
 
 		const waitValue = await event.wait("wait arg");
 		t.is(waitValue, "wait for this");
