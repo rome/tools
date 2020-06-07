@@ -160,21 +160,13 @@ test(
 	"Event#wait",
 	async (t) => {
 		const event = new Event<string, string>({name: "testEvent"});
-		let foo: string;
 
-  await new Promise((resolve) => {
-		setTimeout(
-			() => {
-				foo = event.callSync("wait for this");
-				t.is(foo, "wait arg");
-        resolve();
-			},
-			100,
-		);
-  });
+		const waitPromise = event.wait("wait arg");
 
-		const waitValue = await event.wait("wait arg");
-		t.is(waitValue, "wait for this");
+		const foo = event.callSync("wait for this");
+		t.is(foo, "wait arg");
+
+		t.is(await waitPromise, "wait for this");
 
 		t.throwsAsync(async () => {
 			await event.wait("will timeout", 0);
