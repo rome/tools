@@ -16,12 +16,12 @@ test(
 							console.log("foo");
 						};
 					`,
-					// dedent`
-					// 	function foo(myVar) {
-					// 		console.log("foo");
-					// 	};
-					// 	foo();
-					// `,
+					dedent`
+						function foo(myVar) {
+							console.log("foo");
+						}
+						foo();
+					`,
 					dedent`
 						const foo = (b) => {
 							console.log("foo");
