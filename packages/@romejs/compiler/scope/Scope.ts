@@ -17,8 +17,6 @@ import {
 } from "@romejs/js-ast-utils";
 import Path from "../lib/Path";
 
-let scopeCounter = 0;
-
 Error.stackTraceLimit = Infinity;
 
 type ScopeBindings = Map<string, Binding>;
@@ -51,7 +49,6 @@ export default class Scope {
 		this.node = node;
 		this.kind = kind;
 		this.bindings = new Map();
-		this.id = scopeCounter++;
 		this.hasHoistedVars = false;
 		this.globals = new Set();
 
@@ -63,7 +60,6 @@ export default class Scope {
 	rootScope: undefined | RootScope;
 	parentScope: undefined | Scope;
 	globals: Set<string>;
-	id: number;
 	node: undefined | AnyNode;
 	kind: ScopeKind;
 	hasHoistedVars: boolean;
@@ -156,30 +152,48 @@ export default class Scope {
 		});
 	}
 
-	dump(root: boolean = true) {
-		if (root) {
-			console.log("START");
-		}
+	// Debug utility for dumping scope information
+	dump(): string {
+		const lines = [];
+
+		lines.push(`# Scope ${this.kind}`);
+
 		if (this.globals.size > 0) {
-			console.log("------ GLOBALS", this.id, this.kind);
+			const filteredGlobals: Array<string> = [];
 			for (const name of this.globals) {
 				if (globalGlobals.includes(name)) {
 					continue;
 				}
 
-				console.log(" ", name);
+				filteredGlobals.push(name);
+			}
+
+			if (filteredGlobals.length > 0) {
+				lines.push("## Globals");
+
+				for (const name of filteredGlobals) {
+					lines.push(` * ${name}`);
+				}
 			}
 		}
-		console.log("------ VARIABLES", this.id, this.kind);
-		for (const [name, binding] of this.bindings) {
-			console.log(" ", binding.id, "-", binding.constructor.name, name);
+
+		if (this.bindings.size > 0) {
+			lines.push("## Variables");
+			for (const [name, binding] of this.bindings) {
+				lines.push(` * ${binding.kind} ${name}`);
+			}
 		}
+
+		return lines.join("\n");
+	}
+
+	dumpAncestry() {
+		const lines = [];
+		lines.push(this.dump());
 		if (this.parentScope !== undefined) {
-			this.parentScope.dump(false);
+			lines.push(this.parentScope.dump());
 		}
-		if (root) {
-			console.log("END");
-		}
+		return lines.join("\n");
 	}
 
 	getOwnBinding(name: string): undefined | Binding {
@@ -319,9 +333,7 @@ export class RootScope extends Scope {
 					const value = match[1].trim();
 
 					// Other tools would flag these as unavailable and remove them from the master set
-
 					// We don't do that, we might want to later though?
-
 					// Also, we should maybe validate the value to only true/false
 					if (value === "false") {
 						break;

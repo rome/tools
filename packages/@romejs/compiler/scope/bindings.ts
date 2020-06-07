@@ -8,8 +8,6 @@
 import Scope from "./Scope";
 import {AnyNode, ConstImportModuleKind} from "@romejs/ast";
 
-let id = 0;
-
 type BindingOpts = {
 	scope: Scope;
 	node: AnyNode;
@@ -24,10 +22,8 @@ export class Binding {
 		this.name = opts.name;
 		this.node = opts.node;
 		this.kind = opts.kind === undefined ? defaultKind : opts.kind;
-		this.id = id++;
 	}
 
-	id: number;
 	name: string;
 	kind: string;
 	scope: Scope;
