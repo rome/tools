@@ -239,8 +239,10 @@ function foo(foo) {
 ### `9: formatted`
 
 ```
-var foo = () => {};
-foo = bar;
+function foo() {
+	var foo;
+	foo = bar;
+}
 
 ```
 
@@ -254,7 +256,7 @@ foo = bar;
 ### `10: formatted`
 
 ```
-var foo = function() {};
+var foo = () => {};
 foo = bar;
 
 ```
@@ -269,9 +271,8 @@ foo = bar;
 ### `11: formatted`
 
 ```
-var foo = function() {
-	foo = bar;
-};
+var foo = function() {};
+foo = bar;
 
 ```
 
@@ -283,6 +284,22 @@ var foo = function() {
 ```
 
 ### `12: formatted`
+
+```
+var foo = function() {
+	foo = bar;
+};
+
+```
+
+### `13`
+
+```
+✔ No known problems!
+
+```
+
+### `13: formatted`
 
 ```
 import bar from "bar";
