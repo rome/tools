@@ -1,6 +1,7 @@
 ---
 title: Rome - A JavaScript toolchain
 layout: layouts/base.njk
+showHero: true
 ---
 
 {% doc "Introduction.md" %}

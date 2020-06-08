@@ -99,10 +99,14 @@
       </div>
       <div class="main">
         <div class="overlay"></div>
+
+        {% if showHero %}
         <div class="hero">
           <h1>Your next-gen JavaScript toolchain.</h1>
           <h2>Focus on code, let Rome take care of the rest!</h2>
         </div>
+        {% endif %}
+
         <main id="main-content" class="content">
 
           {{ content | safe }}
