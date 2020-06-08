@@ -165,7 +165,9 @@ elements.tocLinks.forEach(function(link){
 });
 
 window.onload = function(){
-  scrollToHeading(window.location.hash);
+  if(window.location.hash !== ''){
+    scrollToHeading(window.location.hash);
+  }
   toc.highlight();
 }
 
