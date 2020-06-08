@@ -7,6 +7,9 @@
 ### `0`
 
 ```
+# Input 
+ var foo; 
+
 # Scope root
 ## Child Scopes
 	# Scope program
@@ -17,6 +20,15 @@
 ### `1`
 
 ```
+# Input 
+ function foo() {
+	var bar;
+
+	{
+		var car;
+	}
+} 
+
 # Scope root
 ## Child Scopes
 	# Scope program
