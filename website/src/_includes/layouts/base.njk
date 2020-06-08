@@ -68,7 +68,7 @@
             <span class="logo-text">Rome</span>
           </a>
         </div>
-        <nav class="menu">
+        <nav aria-label="site" class="menu">
           <ul>
             <li>
               <a href="#">Item 1</a>
@@ -84,11 +84,11 @@
             </li>
           <ul>
         </nav>
-        <div class="table-of-contents">
+        <nav aria-label="page" class="table-of-contents">
           <div class="toc-container">
             {{ content | toc(tags=['h1', 'h2'], wrapperClass='fixed toc')  | safe }}
           </div>
-        </div>
+        </nav>
         <div class="mode-switch-container">
           <button id="mode-switch" class="mode-switch">
             Dark Mode
