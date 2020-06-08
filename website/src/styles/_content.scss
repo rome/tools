@@ -22,10 +22,18 @@
   pre {
     border-radius: $unit-border-radius;
   }
-}
 
-.content h1 {
-  border-bottom: 1px solid var(--soft-border-color);
-  padding-bottom: $unit;
-  margin-top: $unit * 2;
+  h1 {
+    border-bottom: 1px solid var(--soft-border-color);
+    padding: $unit 0;
+    margin-top: $unit;
+  }
+
+
+  h2,
+  h3,
+  h4 {
+    padding: $unit / 4 0;
+  }
+
 }
