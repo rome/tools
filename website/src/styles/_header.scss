@@ -62,6 +62,7 @@
     font-weight: bold;
     position: relative;
     top: 5.5px;
+    margin: 0;
     @include mobile-only() {
       top: 3.5px;
     }

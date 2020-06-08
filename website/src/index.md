@@ -1,5 +1,5 @@
 ---
-title: A JavaScript toolchain | Rome
+title: Rome - A JavaScript toolchain
 layout: layouts/base.njk
 ---
 
