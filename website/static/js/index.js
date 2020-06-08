@@ -134,22 +134,30 @@ function mobileToggleEvent(event){
 
 function modeSwitch(event){
 
-  event.preventDefault();
-
   const $doc = document.documentElement;
-  const atribute = $doc.getAttribute('data-theme');
+  let theme = $doc.getAttribute('data-theme');
 
-  if(atribute === 'light'){
-    $doc.setAttribute('data-theme', 'dark');
+  if(theme === 'light'){
     elements.modeSwitch.innerText = "Light Mode";
+    theme = 'dark';
+  } else {
+    elements.modeSwitch.innerText = "Dark Mode";
+    theme = 'light';
   }
 
-  if(atribute === 'dark'){
-    $doc.setAttribute('data-theme', 'light');
-    elements.modeSwitch.innerText = "Dark Mode";
-  }
+  $doc.setAttribute('data-theme', theme);
+  window.localStorage.setItem('data-theme', theme);
 
 }
+
+
+const themeInStorage = window.localStorage.getItem('data-theme');
+
+if(!themeInStorage){
+  window.localStorage.setItem('data-theme', 'light');
+}
+
+document.documentElement.setAttribute('data-theme', window.localStorage.getItem('data-theme'));
 
 //remove permalinkSymbol "#" from table of contents
 elements.tocLinks.forEach(function(link){
