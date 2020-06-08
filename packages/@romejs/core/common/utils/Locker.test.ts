@@ -15,9 +15,6 @@ test(
 			locker.getNewLock("rome");
 		});
 
-		t.is(lock.locker, locker);
-		t.is(lock.key, "rome");
-
 		lock.release();
 		t.false(locker.hasLock("rome"));
 	},
