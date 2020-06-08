@@ -101,6 +101,8 @@ function scrollToHeading(hash){
 
   if(!heading) return null;
 
+  heading.setAttribute('tabindex','-1');
+  heading.focus();
   const marginTop = parseFloat(window.getComputedStyle(heading).marginTop, 10);
   window.scrollTo(0, (heading.offsetTop) - toc.getMobileNavbarHeight() - (marginTop - 2));
 }
