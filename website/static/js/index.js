@@ -84,9 +84,13 @@ const toc = {
     const target = event.target;
     event.preventDefault();
 
+    const hash = target.getAttribute("href");
+
     if(target.hasAttribute("href")){
 
-      scrollToHeading(target.getAttribute('href'));
+      window.location.hash = hash;
+
+      scrollToHeading(hash);
 
       if(isMobile()){
         mobileToggleEvent(event);
@@ -103,6 +107,7 @@ function scrollToHeading(hash){
 
   heading.setAttribute('tabindex','-1');
   heading.focus();
+
   const marginTop = parseFloat(window.getComputedStyle(heading).marginTop, 10);
   window.scrollTo(0, (heading.offsetTop) - toc.getMobileNavbarHeight() - (marginTop - 2));
 }
@@ -175,9 +180,13 @@ document.addEventListener('click', function (event) {
 
 	if (!event.target.matches('.header-anchor')) return;
 
-	event.preventDefault();
+  event.preventDefault();
 
-  scrollToHeading(event.target.getAttribute('href'));
+  const hash = event.target.getAttribute('href');
+
+  window.location.hash = hash;
+
+  scrollToHeading(hash);
 
 }, false);
 
