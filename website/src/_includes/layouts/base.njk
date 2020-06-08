@@ -16,7 +16,11 @@
     <link rel="stylesheet" href="{{ '/static/styles.css' | url }}">
   </head>
   <body>
+
     <div class="container">
+    <div class="skip-to-content">
+      <a href="#main-content">Skip to main content</a>
+    </div>
 
       <div class="header-mobile">
         <a class="logo" href="{{ '/' | url }}">
@@ -97,7 +101,7 @@
           <h1>Your next-gen JavaScript toolchain.</h1>
           <h2>Focus on code, let Rome take care of the rest!</h2>
         </div>
-        <div class="content">
+        <div id="main-content" class="content">
 
           {{ content | safe }}
 

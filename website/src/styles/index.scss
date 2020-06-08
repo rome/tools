@@ -133,7 +133,7 @@
 .mode-switch{
   text-align: center;
   color: var(--background-color);
-  background: var(--font-color);
+  background: var(--logo-font-color);
   border: 0;
   padding: 5px 10px;
   cursor: pointer;
@@ -147,4 +147,25 @@
   height: 100%;
   display: flex;
   width: 100%;
+}
+
+.skip-to-content a{
+  @include transition-timing;
+  transition-property: top;
+  position: absolute;
+  right: 0;
+  top: -40px;
+  padding: $unit / 2 $unit;
+  z-index: 100;
+  background: var(--logo-font-color);
+  color: var(--background-color);
+  font-weight: bold;
+}
+
+.skip-to-content a:focus{
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: $unit;
+  z-index: 100;
 }
