@@ -10,8 +10,17 @@ function indent(str: string): string {
 	return `	${str.split("\n").join("\n\t")}`;
 }
 
-function dumpScope(scope: Scope, childScopeMap: ChildScopeMap): string {
-	const lines = [scope.dump()];
+function dumpScope(
+	scope: Scope,
+	childScopeMap: ChildScopeMap,
+	input?: string,
+): string {
+	const lines = [];
+
+	if (input) {
+		lines.push(`# Input \n ${input} \n`);
+	}
+	lines.push(scope.dump());
 
 	const childScopeNodes = childScopeMap.get(scope);
 	if (childScopeNodes !== undefined) {
@@ -53,7 +62,7 @@ function dumpScopeTree(input: string): string {
 		},
 	);
 
-	return dumpScope(context.rootScope, scopeToChildScopes);
+	return dumpScope(context.rootScope, scopeToChildScopes, input);
 }
 
 test(
