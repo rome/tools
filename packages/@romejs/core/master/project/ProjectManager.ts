@@ -177,7 +177,7 @@ export default class ProjectManager {
 			meta: createDefaultProjectConfigMeta(),
 			config: vendorProjectConfig,
 		});
-		await this.master.memoryFs.watch(defaultVendorPath, vendorProjectConfig);
+		await this.master.memoryFs.watch(defaultVendorPath);
 	}
 
 	handleDeleted(path: AbsoluteFilePath) {
@@ -643,7 +643,7 @@ export default class ProjectManager {
 		this.master.workerManager.onNewProject(project);
 
 		// Start watching and crawl this project folder
-		await this.master.memoryFs.watch(projectFolder, config);
+		await this.master.memoryFs.watch(projectFolder);
 
 		return project;
 	}

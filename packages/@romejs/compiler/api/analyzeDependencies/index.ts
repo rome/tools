@@ -258,7 +258,7 @@ export default async function analyzeDependencies(
 	const topLevelLocalBindings: AnalyzeDependencyTopLevelLocalBindings = {};
 
 	// Get all top level bindings
-	for (const [name, binding] of context.getRootScope().enterEvaluate(ast).getOwnBindings()) {
+	for (const [name, binding] of context.rootScope.enterEvaluate(ast).getOwnBindings()) {
 		topLevelLocalBindings[name] = binding.node.loc;
 	}
 

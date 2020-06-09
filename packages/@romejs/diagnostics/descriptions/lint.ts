@@ -16,6 +16,17 @@ import {buildSuggestionAdvice} from "../helpers";
 import {createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	REACT_NO_THIS_IN_SFC: {
+		category: "lint/react/noThisInSFC",
+		message: "Avoid using <emphasis>this</emphasis> in stateless functional components.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "The <emphasis>this</emphasis> keyword has no binding in functional components. Use hooks instead.",
+			},
+		],
+	},
 	JSX_A11Y_NO_NONINTERACTIVE_ELEMENT_TO_INTERACTIVE_ROLE: (element: string) => ({
 		category: "lint/jsx-a11y/noNoninteractiveElementToInteractiveRole",
 		message: `The HTML element <emphasis>${element}</emphasis> is non-interactive and should not have an interactive role.`,
@@ -479,6 +490,10 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
+	REACT_REQUIRE_RENDER_RETURN: {
+		category: "lint/react/requireRenderReturn",
+		message: "The <emphasis>render</emphasis> method on a component must return content.",
+	},
 	REACT_VOID_DOM_ELEMENTS_NO_CHILDREN: (
 		element: string,
 		properties: Array<string>,
@@ -549,8 +564,8 @@ export const lint = createDiagnosticsCategory({
 		category: "lint/js/unsafeNegation",
 		message: "The <emphasis>negation operator is used unsafely</emphasis> on the left side of this binary expression.",
 	},
-	JS_UNUSED_VARIABLES: (kind: string, name: string) => ({
-		category: "lint/js/unusedVariables",
+	JS_NO_UNUSED_VARIABLES: (kind: string, name: string) => ({
+		category: "lint/js/noUnusedVariables",
 		message: markup`The ${kind} variable <emphasis>${name}</emphasis> is unused.`,
 		advice: [
 			{

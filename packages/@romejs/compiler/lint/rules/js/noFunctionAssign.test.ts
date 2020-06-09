@@ -26,8 +26,7 @@ test(
 				valid: [
 					"function foo() { var foo = bar; }",
 					"function foo(foo) { foo = bar; }",
-					// Should be valid but fails
-					//"function foo() { var foo; foo = bar; }",
+					"function foo() { var foo; foo = bar; }",
 					"var foo = () => {}; foo = bar;",
 					"var foo = function() {}; foo = bar;",
 					"var foo = function() { foo = bar; };",

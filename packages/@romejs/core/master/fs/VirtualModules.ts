@@ -49,7 +49,7 @@ export default class VirtualModules {
 			meta: createDefaultProjectConfigMeta(),
 			config: projectConfig,
 		});
-		await this.master.memoryFs.watch(runtimeModulesPath, projectConfig);
+		await this.master.memoryFs.watch(runtimeModulesPath);
 	}
 
 	resolve(name: string): undefined | AbsoluteFilePath {

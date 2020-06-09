@@ -16,11 +16,7 @@ import {
 	matchPathPatterns,
 	parsePathPattern,
 } from "@romejs/path-match";
-import {
-	ProjectConfig,
-	ProjectDefinition,
-	ROME_CONFIG_FILENAMES,
-} from "@romejs/project";
+import {ProjectDefinition, ROME_CONFIG_FILENAMES} from "@romejs/project";
 import {DiagnosticsProcessor, catchDiagnostics} from "@romejs/diagnostics";
 import {Event} from "@romejs/events";
 import {consumeJSON} from "@romejs/codec-json";
@@ -392,7 +388,7 @@ export default class MemoryFileSystem {
 		listing.set(path, path);
 	}
 
-	handleDeletion(path: AbsoluteFilePath): void {
+	async handleDeletion(path: AbsoluteFilePath): Promise<void> {
 		// If a folder then evict all children
 		const folderInfo = this.directories.get(path);
 		if (folderInfo !== undefined) {
@@ -402,10 +398,13 @@ export default class MemoryFileSystem {
 			if (listing !== undefined) {
 				this.directoryListings.delete(path);
 				for (const path of listing.values()) {
-					this.handleDeletion(path);
+					await this.handleDeletion(path);
 				}
 			}
 		}
+
+		// Wait for any subscribers that might need the file's stats
+		await this.deletedFileEvent.call(path);
 
 		// Remove from 'all possible caches
 		this.files.delete(path);
@@ -422,8 +421,6 @@ export default class MemoryFileSystem {
 		if (parentListing !== undefined) {
 			parentListing.delete(path);
 		}
-
-		this.deletedFileEvent.send(path);
 	}
 
 	handleDeletedManifest(path: AbsoluteFilePath): void {
@@ -467,10 +464,7 @@ export default class MemoryFileSystem {
 		}
 	}
 
-	async watch(
-		projectFolder: AbsoluteFilePath,
-		projectConfig: ProjectConfig,
-	): Promise<void> {
+	async watch(projectFolder: AbsoluteFilePath): Promise<void> {
 		const {logger} = this.master;
 		const projectFolderJoined = projectFolder.join();
 		const folderLink = markup`<filelink target="${projectFolderJoined}" />`;

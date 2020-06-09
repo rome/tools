@@ -1,10 +1,3 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
 import {AnyNode} from "@romejs/ast";
 import {Path, Scope, createHook} from "@romejs/compiler";
 import {getBindingIdentifiers} from "@romejs/js-ast-utils";
@@ -23,7 +16,7 @@ const initialState: State = {
 };
 
 const provider = createHook<State, undefined, AnyNode>({
-	name: "unusedVariablesProvider",
+	name: "noUnusedVariablesProvider",
 	initialState,
 	call(path: Path, state: State) {
 		const {node} = path;
@@ -66,7 +59,7 @@ const provider = createHook<State, undefined, AnyNode>({
 			if (used === false && binding !== undefined) {
 				path.context.addNodeDiagnostic(
 					binding.node,
-					descriptions.LINT.JS_UNUSED_VARIABLES(binding.kind, name),
+					descriptions.LINT.JS_NO_UNUSED_VARIABLES(binding.kind, name),
 				);
 			}
 		}
@@ -117,7 +110,7 @@ export default {
 
 				// If there's no rest then only consider the last parameter to be unused
 				const {rest} = node.head;
-				if (rest === undefined) {
+				if (rest !== undefined) {
 					ignoreLast = false;
 				}
 

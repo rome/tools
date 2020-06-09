@@ -43,6 +43,7 @@ import noShadowRestrictedNames from "./js/noShadowRestrictedNames";
 import noShorthandArrayType from "./js/noShorthandArrayType";
 import noTemplateCurlyInString from "./js/noTemplateCurlyInString";
 import noUnsafeFinally from "./js/noUnsafeFinally";
+import noUnusedVariables from "./js/noUnusedVariables";
 import noVar from "./js/noVar";
 import preferBlockStatements from "./js/preferBlockStatements";
 import preferFunctionDeclarations from "./js/preferFunctionDeclarations";
@@ -54,7 +55,6 @@ import sortImportExportSpecifiers from "./js/sortImportExportSpecifiers";
 import sparseArray from "./js/sparseArray";
 import undeclaredVariables from "./js/undeclaredVariables";
 import unsafeNegation from "./js/unsafeNegation";
-import unusedVariables from "./js/unusedVariables";
 import altText from "./jsx-a11y/altText";
 import anchorHasContent from "./jsx-a11y/anchorHasContent";
 import anchorIsValid from "./jsx-a11y/anchorIsValid";
@@ -94,10 +94,12 @@ import noDidUpdateSetState from "./react/noDidUpdateSetState";
 import noFindDOMNode from "./react/noFindDOMNode";
 import noRedundantShouldComponentUpdate from "./react/noRedundantShouldComponentUpdate";
 import noStringRefs from "./react/noStringRefs";
+import noThisInSFC from "./react/noThisInSFC";
 import noUnsafe from "./react/noUnsafe";
 import noUselessFragment from "./react/noUselessFragment";
 import noWillUpdateSetState from "./react/noWillUpdateSetState";
 import reactInJsxScope from "./react/reactInJsxScope";
+import requireRenderReturn from "./react/requireRenderReturn";
 import stylePropObject from "./react/stylePropObject";
 import voidDomElementsNoChildren from "./react/voidDomElementsNoChildren";
 import noExplicitAny from "./ts/noExplicitAny";
@@ -140,6 +142,7 @@ export const lintTransforms = [
 	noShorthandArrayType,
 	noTemplateCurlyInString,
 	noUnsafeFinally,
+	noUnusedVariables,
 	noVar,
 	preferBlockStatements,
 	preferFunctionDeclarations,
@@ -151,7 +154,6 @@ export const lintTransforms = [
 	sparseArray,
 	undeclaredVariables,
 	unsafeNegation,
-	unusedVariables,
 	altText,
 	anchorHasContent,
 	anchorIsValid,
@@ -191,10 +193,12 @@ export const lintTransforms = [
 	noFindDOMNode,
 	noRedundantShouldComponentUpdate,
 	noStringRefs,
+	noThisInSFC,
 	noUnsafe,
 	noUselessFragment,
 	noWillUpdateSetState,
 	reactInJsxScope,
+	requireRenderReturn,
 	stylePropObject,
 	voidDomElementsNoChildren,
 	noExplicitAny,
