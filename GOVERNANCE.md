@@ -122,7 +122,7 @@ Each report will be assigned reviewers. These will initially be all project [ste
 
 In the event of any conflict of interest - ie. stewards who are personally connected to a situation, they must immediately recuse themselves.
 
-At request of the reporter and if deemed appropriate by the reviwers, another neutral third-party may be involved in the review and decision process.
+At request of the reporter and if deemed appropriate by the reviewers, another neutral third-party may be involved in the review and decision process.
 
 ### Review
 
