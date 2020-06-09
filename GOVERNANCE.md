@@ -18,15 +18,15 @@ There are no expectations around activity once someone becomes a core contributo
 
 #### Induction
 
-Core contributors may either be nominated by another core contributor or can be self nominated. This can be done via message in the [`#contributors` Discord channel](https://discord.com/channels/678763474494423051/678763474930761739) or by privately messaging a director.
+Core contributors may either be nominated by another core contributor or can be self nominated. This can be done via message in the [`#contributors` Discord channel](https://discord.com/channels/678763474494423051/678763474930761739) or by privately messaging a steward.
 
 New core contributors will be decided based on a [vote](#voting) conducted in the [`#contributors-private` Discord channel](https://discord.com/channels/678763474494423051/712849311985041420).
 
 In the event of a rejection the nominated person will be privately given the requirements they have not met. Details of the discussion such as the names of those who objected will not be disclosed.
 
-### Director
+### Steward
 
-Directors have additional privileges over core contributors. Directors control and maintain sensitive project assets, and act as tiebreakers in the event of disagreements. These additional privileges include:
+Stewards have additional privileges over core contributors. Stewards control and maintain sensitive project assets, and act as tiebreakers in the event of disagreements. These additional privileges include:
 
 - Access to the [@romejsdev Twitter account](https://twitter.com/romejsdev)
 - Administration privileges on the [Rome GitHub org](https://github.com/romejs)
@@ -42,9 +42,9 @@ Directors have additional privileges over core contributors. Directors control a
 
 #### Induction
 
-New directors will be added based on a unanimous vote by the existing directors. In the event that someone is unreachable then the decision will be deferred. Discussion and approval will be done in private. Directors cannot be self-nominated. Inducted directors must have already be a core contributor.
+New stewards will be added based on a unanimous vote by the existing stewards. In the event that someone is unreachable then the decision will be deferred. Discussion and approval will be done in private. Stewards cannot be self-nominated. Inducted stewards must have already be a core contributor.
 
-A [vote](#voting) will be conducted with core contributors to gauge general sentiment, however final decision will be reserved to the existing directors.
+A [vote](#voting) will be conducted with core contributors to gauge general sentiment, however final decision will be reserved to the existing stewards.
 
 ### Owner
 
@@ -54,7 +54,7 @@ Certain parts of the codebase can be owned by one or more people. This process i
 
 Members listed in alphabetical order.
 
-### Directors
+### Stewards
 
 - [Sebastian McKenzie @sebmck](https://github.com/sebmck)
 
@@ -70,7 +70,7 @@ Members listed in alphabetical order.
 
 ## Project direction and planning
 
-Project direction and planning is a shared responsibility amongst members. Directors are responsible for dictating high level goals and scope of the project that should be adhered to.
+Project direction and planning is a shared responsibility amongst members. Stewards are responsible for dictating high level goals and scope of the project that should be adhered to.
 
 ## Voting
 
@@ -79,14 +79,14 @@ Certain project decisions require a vote. These include:
 - Governance changes: simple majority (over 50%) conducted via GitHub PR approval.
 - Core contributor membership: overwhelming majority (over 70%) conducted in the `#contributors-private` Discord channel.
 
-A director may initiate a vote for any unlisted project decision. Core contributors can request a vote by contacting a director.
+A steward may initiate a vote for any unlisted project decision. Core contributors can request a vote by contacting a steward.
 
 ### Rules
 
 - Members may abstain from a vote.
 - Members who do not vote within 7 days will automatically abstain.
-- Directors may reduce the 7 day automatic abstain for urgent decisions.
-- Directors reserve the right to veto approval with a publicly disclosed reason.
+- Stewards may reduce the 7 day automatic abstain for urgent decisions.
+- Stewards reserve the right to veto approval with a publicly disclosed reason.
 
 ## Code review
 
@@ -110,17 +110,17 @@ Outlined below is the process for Code of Conduct violation reviews.
 
 Anyone may report a violation. Violations can be reported in the following ways:
 
-- In private, via <conduct@romejs.dev> which is listed in the [Code of Conduct](./CODE_OF_CONDUCT.md). This email address is monitored by all directors.
-- In private, via email to one or more directors.
-- In private, via direct message to a project director on Discord
-- In public, via a GitHub comment (mentioning `@romejs/directors`).
+- In private, via <conduct@romejs.dev> which is listed in the [Code of Conduct](./CODE_OF_CONDUCT.md). This email address is monitored by all stewards.
+- In private, via email to one or more stewards.
+- In private, via direct message to a project steward on Discord
+- In public, via a GitHub comment (mentioning `@romejs/stewards`).
 - In public, via the project Discord server.
 
 ### Who gets involved?
 
-Each report will be assigned reviewers. These will initially be all project [directors](#directors).
+Each report will be assigned reviewers. These will initially be all project [stewards](#stewards).
 
-In the event of any conflict of interest - ie. directors who are personally connected to a situation, they must immediately recuse themselves.
+In the event of any conflict of interest - ie. stewards who are personally connected to a situation, they must immediately recuse themselves.
 
 At request of the reporter and if deemed appropriate by the reviwers, another neutral third-party may be involved in the review and decision process.
 
@@ -151,4 +151,4 @@ Responses will be determined by the reviewers on the basis of the information ga
 
 - Funds will be allocated for project-specific services such as domain registration and website hosting.
 - Other usage of funds has yet to be decided.
-- Expenses will be approved by project directors.
+- Expenses will be approved by project stewards.
