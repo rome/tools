@@ -52,22 +52,31 @@ exports.write = function(loc, content) {
 	fs.writeFileSync(loc, content);
 };
 
-exports.inverse = function(str) {
-	return `\u001b[7m ${str} \u001b[27m`;
+exports.heading = function(str) {
+	console.log(`\u001b[7m ${str} \u001b[27m`);
 };
 
 exports.execDev = function(argv) {
 	exports.buildTrunk();
 	process.env.ROME_CACHE = "0";
-	console.log(exports.inverse("Executing trunk"));
+	exports.heading("Executing trunk");
 	exports.execNode([path.join(devFolder, "index.js"), ...argv]);
+};
+
+exports.buildRelease = function(argv) {
+	exports.execNode([
+		path.join(__dirname, "dev-rome"),
+		"bundle",
+		path.join(root, "packages/rome"),
+		...argv,
+	]);
 };
 
 exports.buildTrunk = function() {
 	exports.unlink(devFolder);
 	fs.mkdirSync(devFolder);
 
-	console.log(exports.inverse("Building trunk"));
+	exports.heading("Building trunk");
 	exports.execNode([
 		path.join(__dirname, "vendor/rome.cjs"),
 		"bundle",

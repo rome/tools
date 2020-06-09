@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+
+require("./_setup.cjs");
+
+const { heading, buildRelease, unlink } = require("./_utils.cjs");
+const path = require("path");
+const os = require("os");
+
+const releaseFolder = path.join(os.tmpdir(), "rome-publish-release");
+
+try {
+  heading("Building release");
+  buildRelease([releaseFolder]);
+
+  heading("Publishing to registry.npmjs.com");
+  // TODO
+
+  heading("Publishing to npm.pkg.github.com");
+  // TODO
+} finally {
+  unlink(releaseFolder);
+}
