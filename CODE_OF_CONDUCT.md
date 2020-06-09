@@ -6,12 +6,12 @@ reported to the community leaders responsible for enforcement at
 
 The following people have access to the above email address:
 
- - Sebastian McKenzie <sebmck@gmail.com> [GitHub](https://github.com/sebmck) [Twitter](https://twitter.com/sebmck)
+- Sebastian McKenzie <sebmck@gmail.com> [GitHub](https://github.com/sebmck) [Twitter](https://twitter.com/sebmck)
 
 In the event that your report includes one of the people mentioned above please
 feel free to reach out to one of the other people listed instead.
 
-The moderation process for violations is listed in [`MODERATION.md`](./MODERATION.md).
+The moderation and review process can be found in [here](GOVERNANCE.md#moderation).
 
 Followed is an unmodified [Contributor Covenant Code of Conduct 2.0](https://www.contributor-covenant.org/).
 
