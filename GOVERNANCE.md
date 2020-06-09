@@ -104,17 +104,48 @@ We have a fairly liberal approach to code review and merging. We value quick ite
 
 ## Moderation
 
-Users found to be in violation of the projects [Code of Conduct](./CODE_OF_CONDUCT.md) will be:
+Outlined below is the process for Code of Conduct violation reviews.
 
-- Banned from the GitHub org and Discord server
-- Have their contributor status revoked (if applicable)
-- Action listed in [`MODERATION.md`](./MODERATION.md). There may be some scenarios where discretion is required and some details omitted to protect an individual's privacy.
+### Reporting
 
-This is a one-strike policy.
+Anyone may report a violation. Violations can be reported in the following ways:
 
-Code of Conduct violations can be reported to <conduct@romejs.dev> which is listed in the [Code of Conduct](./CODE_OF_CONDUCT.md). This email address is monitored by directors. Alternatively email addresses for each directror is included in the Code of Conduct for private disclosements in the event of a report involving a directror.
+- In private, via <conduct@romejs.dev> which is listed in the [Code of Conduct](./CODE_OF_CONDUCT.md). This email address is monitored by all directors.
+- In private, via email to one or more dcirectors.
+- In private, via direct message to a project director on Discord
+- In public, via a GitHub comment (mentioning `@romejs/directors`).
+- In public, via the project Discord server.
 
-Moderation decisions and Code of Conduct violations will be reviewed by the directors in private. If a violation involves a directror then it will be decided amongst the remaining directors. Review can be delegated to core contributors.
+### Who gets involved?
+
+Each report will be assigned reviewers. These will initially be all project [directors](#directors).
+
+In the event of any conflict of interest - ie. directors who are personally connected to a situation, they must immediately recuse themselves.
+
+At request of the reporter and if deemed appropriate by the reviwers, another netural third-party may be involved in the review and decision process.
+
+### Review
+
+If a report doesn’t contain enough information, the reviewers will strive to obtain all relevant data before acting.
+
+The reviewers will then review the incident and determine, to the best of their ability:
+
+- What happened.
+- Whether this event constitutes a Code of Conduct violation.
+- Who, if anyone, was involved in the violation.
+- Whether this is an ongoing situation.
+
+The reviewers should aim to have a resolution agreed very rapidly; if not agreed within a week, they will inform the parties of the planned date.
+
+### Resolution
+
+Responses will be determined by the reviewers on the basis of the information gathered and of the potential consequences. It may include:
+
+- taking no further action
+- issuing a reprimand (private or public)
+- asking for an apology (private or public)
+- permanent ban from the GitHub org and Discord server
+- revoked contributor status
 
 ## OpenCollective fund allocation
 
