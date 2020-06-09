@@ -111,7 +111,7 @@ Outlined below is the process for Code of Conduct violation reviews.
 Anyone may report a violation. Violations can be reported in the following ways:
 
 - In private, via <conduct@romejs.dev> which is listed in the [Code of Conduct](./CODE_OF_CONDUCT.md). This email address is monitored by all directors.
-- In private, via email to one or more dcirectors.
+- In private, via email to one or more directors.
 - In private, via direct message to a project director on Discord
 - In public, via a GitHub comment (mentioning `@romejs/directors`).
 - In public, via the project Discord server.
@@ -122,7 +122,7 @@ Each report will be assigned reviewers. These will initially be all project [dir
 
 In the event of any conflict of interest - ie. directors who are personally connected to a situation, they must immediately recuse themselves.
 
-At request of the reporter and if deemed appropriate by the reviwers, another netural third-party may be involved in the review and decision process.
+At request of the reporter and if deemed appropriate by the reviwers, another neutral third-party may be involved in the review and decision process.
 
 ### Review
 
