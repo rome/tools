@@ -67,6 +67,7 @@ Members listed in alphabetical order.
 - [Olivier Dusabimana @diokey](https://github.com/diokey)
 - [Paul Bouchon @bitpshr](https://github.com/bitpshr)
 - [Victor Hom @VictorHom](https://github.com/VictorHom)
+- [Yasser Elassal @yassere](https://github.com/yassere)
 
 ## Project direction and planning
 
