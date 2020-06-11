@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/js/preferBlockStatements FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
 
@@ -40,7 +40,7 @@ if (x) {
 
 ```
 
- unknown:1 lint/js/preferBlockStatements FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
 
@@ -79,7 +79,7 @@ if (x) {
 
 ```
 
- unknown:3:7 lint/js/preferBlockStatements FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:3:7 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
 
@@ -115,7 +115,7 @@ if (x) {
 
 ```
 
- unknown:1 lint/js/preferBlockStatements FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
 
@@ -148,7 +148,7 @@ while (true) {
 
 ```
 
- unknown:1 lint/js/preferBlockStatements FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
 
@@ -181,7 +181,7 @@ for (p in obj) {
 
 ```
 
- unknown:1 lint/js/preferBlockStatements FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
 
@@ -214,7 +214,7 @@ for (x of xs) {
 
 ```
 
- unknown:1 lint/js/preferBlockStatements FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
 
@@ -247,7 +247,7 @@ do {
 
 ```
 
- unknown:1 lint/js/preferBlockStatements FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
 
@@ -280,7 +280,7 @@ while (x) {
 
 ```
 
- unknown:1 lint/js/preferBlockStatements FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
 

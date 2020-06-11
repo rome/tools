@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
@@ -38,7 +38,7 @@
 
 ```
 
- unknown:1 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
@@ -68,7 +68,7 @@
 
 ```
 
- unknown:1:19 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:19 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
@@ -98,7 +98,7 @@ const Hello = <div><Foo /><Foo /></div>;
 
 ```
 
- unknown:1:19 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:19 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
@@ -128,7 +128,7 @@ const Hello = <div><Foo /><Foo /></div>;
 
 ```
 
- unknown:1:14 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:14 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
@@ -158,7 +158,7 @@ const Hello = <><Foo /><Foo /></>;
 
 ```
 
- unknown:1:14 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:14 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
@@ -188,7 +188,7 @@ const Hello = <><Foo /><Foo /></>;
 
 ```
 
- unknown:3:16 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:3:16 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
@@ -224,7 +224,7 @@ function Foo() {
 
 ```
 
- unknown:3:16 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:3:16 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
@@ -260,7 +260,7 @@ function Foo() {
 
 ```
 
- unknown:3:13 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:3:13 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
@@ -295,7 +295,7 @@ function Hello() {
 
 ```
 
- unknown:2:13 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:13 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
@@ -330,7 +330,7 @@ function Hello() {
 
 ```
 
- unknown:1:20 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:20 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
@@ -362,7 +362,7 @@ function Hello() {
 
 ```
 
- unknown:1:20 lint/react/jsxFragments FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:20 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 

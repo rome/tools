@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/react/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/voidDomElementsNoChildren  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ br is a void element tag and must not have children.
 
@@ -37,7 +37,7 @@
 
 ```
 
- unknown:1 lint/react/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/voidDomElementsNoChildren  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ img is a void element tag and must not have children.
 
@@ -65,7 +65,7 @@
 
 ```
 
- unknown:1 lint/react/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/voidDomElementsNoChildren  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ hr is a void element tag and must not have children.
 
@@ -93,7 +93,7 @@
 
 ```
 
- unknown:1 lint/react/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/voidDomElementsNoChildren  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ area is a void element tag and must not have dangerouslySetInnerHTML.
 
@@ -121,7 +121,7 @@
 
 ```
 
- unknown:1 lint/react/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/voidDomElementsNoChildren  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ img is a void element tag and must not have children, or dangerouslySetInnerHTML.
 
@@ -149,7 +149,7 @@
 
 ```
 
- unknown:1:28 lint/react/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:28 lint/react/voidDomElementsNoChildren  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ img is a void element tag and must not have children.
 
@@ -177,7 +177,7 @@ React.createElement("img", {children: "child"});
 
 ```
 
- unknown:1:28 lint/react/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:28 lint/react/voidDomElementsNoChildren  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ img is a void element tag and must not have dangerouslySetInnerHTML.
 
@@ -205,7 +205,7 @@ React.createElement("img", {dangerouslySetInnerHTML: {__html: "child"}});
 
 ```
 
- unknown:1:20 lint/react/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:20 lint/react/voidDomElementsNoChildren  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ img is a void element tag and must not have children.
 
@@ -234,7 +234,7 @@ React.createElement("img", {}, "child");
 
 ```
 
- unknown:1:22 lint/react/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:22 lint/react/voidDomElementsNoChildren  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ img is a void element tag and must not have children.
 
@@ -262,7 +262,7 @@ createElement("img", {children: "child"});
 
 ```
 
- unknown:1:22 lint/react/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:22 lint/react/voidDomElementsNoChildren  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ img is a void element tag and must not have dangerouslySetInnerHTML.
 
@@ -290,7 +290,7 @@ createElement("img", {dangerouslySetInnerHTML: {__html: "child"}});
 
 ```
 
- unknown:1:14 lint/react/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:14 lint/react/voidDomElementsNoChildren  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ img is a void element tag and must not have children.
 

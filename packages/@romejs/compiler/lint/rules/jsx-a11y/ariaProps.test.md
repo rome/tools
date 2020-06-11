@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:20 lint/jsx-a11y/ariaProps FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:20 lint/jsx-a11y/ariaProps  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ aria-labell is an invalid ARIA attribute.
 
@@ -60,7 +60,7 @@
 
 ```
 
- unknown:1:5 lint/jsx-a11y/ariaProps FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:5 lint/jsx-a11y/ariaProps  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ aria-labeledby is an invalid ARIA attribute.
 

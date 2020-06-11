@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:31 lint/js/preferTemplate FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:31 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literals are preferred over string concatenation.
 
@@ -38,7 +38,7 @@ console.log(`${foo}baz`);
 
 ```
 
- unknown:1:12 lint/js/preferTemplate FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literals are preferred over string concatenation.
 

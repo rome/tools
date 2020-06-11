@@ -15,7 +15,7 @@
     unknownVariable
     ^^^^^^^^^^^^^^^
 
- project/index.js lint/pendingFixes FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ project/index.js lint/pendingFixes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Pending formatting and recommended autofixes
 
@@ -56,7 +56,7 @@ unknownVariable
 
 ```
 
- project/index.js:1:4 lint/js/undeclaredVariables OUTDATED ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ project/index.js:1:4 lint/js/undeclaredVariables  OUTDATED  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The unformatted variable is undeclared.
 
@@ -67,7 +67,7 @@ unknownVariable
 
   ⚠ This file has been changed since the diagnostic was produced and may be out of date
 
- project/index.js:2:1 lint/js/undeclaredVariables OUTDATED ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ project/index.js:2:1 lint/js/undeclaredVariables  OUTDATED  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The swag variable is undeclared.
 
