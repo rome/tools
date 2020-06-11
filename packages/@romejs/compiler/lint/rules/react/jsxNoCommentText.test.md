@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:15 lint/react/jsxNoCommentText FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:15 lint/react/jsxNoCommentText  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Wrap comments inside children within braces.
 
@@ -40,7 +40,7 @@ const a = <div>// comment</div>;
 
 ```
 
- unknown:1:15 lint/react/jsxNoCommentText FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:15 lint/react/jsxNoCommentText  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Wrap comments inside children within braces.
 
@@ -71,7 +71,7 @@ const a = <div>/* comment */</div>;
 
 ```
 
- unknown:1:15 lint/react/jsxNoCommentText FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:15 lint/react/jsxNoCommentText  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Wrap comments inside children within braces.
 

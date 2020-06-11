@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/react/noUselessFragment FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using unnecessary Fragment.
 
@@ -39,7 +39,7 @@
 
 ```
 
- unknown:1:3 lint/react/noUselessFragment FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:3 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using unnecessary Fragment.
 
@@ -70,7 +70,7 @@
 
 ```
 
- unknown:1 lint/react/noUselessFragment FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using unnecessary Fragment.
 
@@ -101,7 +101,7 @@
 
 ```
 
- unknown lint/react/noUselessFragment FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using unnecessary Fragment.
 
@@ -131,7 +131,7 @@ foo;
 
 ```
 
- unknown lint/react/noUselessFragment FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using unnecessary Fragment.
 
@@ -161,7 +161,7 @@ foo;
 
 ```
 
- unknown:2:5 lint/react/noUselessFragment FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:5 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using unnecessary Fragment.
 

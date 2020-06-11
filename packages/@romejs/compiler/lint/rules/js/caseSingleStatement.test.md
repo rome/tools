@@ -8,7 +8,7 @@
 
 ```
 
- unknown:3:11 lint/js/caseSingleStatement FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:3:11 lint/js/caseSingleStatement  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A switch case should only have a single statement. If you want more, then wrap it in a block.
 

@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:31 lint/jsx-a11y/noTargetBlank FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:31 lint/jsx-a11y/noTargetBlank  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using target="_blank" without rel="noreferrer".
 
@@ -40,7 +40,7 @@
 
 ```
 
- unknown:1:22 lint/jsx-a11y/noTargetBlank FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:22 lint/jsx-a11y/noTargetBlank  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using target="_blank" without rel="noreferrer".
 

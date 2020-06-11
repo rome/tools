@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:5 lint/js/confusingLanguage FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:5 lint/js/confusingLanguage  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The word blacklist can be considered racially charged language.
 
@@ -36,7 +36,7 @@
 
 ```
 
- unknown:2 lint/js/confusingLanguage FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2 lint/js/confusingLanguage  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The word blacklist can be considered racially charged language.
 
@@ -66,7 +66,7 @@ blacklist	*/
 
 ```
 
- unknown:1 lint/js/confusingLanguage FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/js/confusingLanguage  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The word blacklist can be considered racially charged language.
 
@@ -94,7 +94,7 @@ blacklist;
 
 ```
 
- unknown:1 lint/js/confusingLanguage FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/js/confusingLanguage  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The word blacklist can be considered racially charged language.
 
@@ -122,7 +122,7 @@ BLACKLIST;
 
 ```
 
- unknown:1:4 lint/js/confusingLanguage FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:4 lint/js/confusingLanguage  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The word blacklist can be considered racially charged language.
 
@@ -150,7 +150,7 @@ someBlacklist;
 
 ```
 
- unknown:1:5 lint/js/confusingLanguage FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:5 lint/js/confusingLanguage  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The word blacklist can be considered racially charged language.
 
