@@ -8,7 +8,7 @@
 
 ```
 
- foo.ts:1:24 lint/js/defaultExportSameBasename FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ foo.ts:1:24 lint/js/defaultExportSameBasename  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The filename and the name of a default function should match.
 
@@ -36,7 +36,7 @@ export default function foo() {}
 
 ```
 
- foo.ts:1:21 lint/js/defaultExportSameBasename FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ foo.ts:1:21 lint/js/defaultExportSameBasename  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The filename and the name of a default class should match.
 
