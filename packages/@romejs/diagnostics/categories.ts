@@ -178,6 +178,7 @@ type LintDiagnosticCategory =
 	| "lint/react/noDangerWithChildren"
 	| "lint/react/noDidMountSetState"
 	| "lint/react/noDidUpdateSetState"
+	| "lint/react/noDirectMutationState"
 	| "lint/react/noFindDOMNode"
 	| "lint/react/noRedundantShouldComponentUpdate"
 	| "lint/react/noStringRefs"
