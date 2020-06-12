@@ -30,7 +30,7 @@
 
 **Rome** supports processing [JSX](https://reactjs.org/docs/introducing-jsx.html) and [TypeScript](https://www.typescriptlang.org/) annotated code.
 
-See [CONTRIBUTING](.github/CONTRIBUTING.md) for more information.
+See [CONTRIBUTING](./CONTRIBUTING.md) for more information.
 
 ## Status
 
@@ -74,6 +74,6 @@ This list includes general ethos the project should abide by. This list is not c
 
 ## Community
 
-Contribution and development instructions can be found in [CONTRIBUTING](.github/CONTRIBUTING.md).
+Contribution and development instructions can be found in [CONTRIBUTING](./CONTRIBUTING.md).
 
-Additional project coordination and realtime discussion happens on our [Discord server](https://discord.gg/9WxHa5d). Remember that all activity on the Discord is still moderated and will be strictly enforced under the project's [Code of Conduct](.github/CODE_OF_CONDUCT.md).
+Additional project coordination and realtime discussion happens on our [Discord server](https://discord.gg/9WxHa5d). Remember that all activity on the Discord is still moderated and will be strictly enforced under the project's [Code of Conduct](./CODE_OF_CONDUCT.md).
