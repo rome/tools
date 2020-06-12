@@ -10,7 +10,7 @@
 
  unknown:1:12 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Do not depend on the return value from ReactDOM.render()
+  ✖ Do not depend on the return value from ReactDOM.render().
 
     const foo = ReactDOM.render(<div />, document.body);
                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -34,7 +34,7 @@ const foo = ReactDOM.render(<div />, document.body);
 
  unknown:1:12 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Do not depend on the return value from ReactDOM.render()
+  ✖ Do not depend on the return value from ReactDOM.render().
 
     const foo = bar && ReactDOM.render(<div />, document.body);
                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -58,7 +58,7 @@ const foo = bar && ReactDOM.render(<div />, document.body);
 
  unknown:1:12 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Do not depend on the return value from ReactDOM.render()
+  ✖ Do not depend on the return value from ReactDOM.render().
 
     const foo = bar ? ReactDOM.render(<div />, document.body) : null
                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -82,7 +82,7 @@ const foo = bar ? ReactDOM.render(<div />, document.body) : null;
 
  unknown:1:18 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Do not depend on the return value from ReactDOM.render()
+  ✖ Do not depend on the return value from ReactDOM.render().
 
     const foo = () => ReactDOM.render(<div />, document.body);
                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -108,7 +108,7 @@ function foo() {
 
  unknown:3:13 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Do not depend on the return value from ReactDOM.render()
+  ✖ Do not depend on the return value from ReactDOM.render().
 
     2 │      const foo = {
   > 3 │       react: ReactDOM.render(<div />, document.body)
@@ -136,7 +136,7 @@ const foo = {
 
  unknown:3:11 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Do not depend on the return value from ReactDOM.render()
+  ✖ Do not depend on the return value from ReactDOM.render().
 
     2 │      let foo;
   > 3 │      foo = ReactDOM.render(<div />, document.body);
@@ -163,7 +163,7 @@ foo = ReactDOM.render(<div />, document.body);
 
  unknown:3:13 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Do not depend on the return value from ReactDOM.render()
+  ✖ Do not depend on the return value from ReactDOM.render().
 
     2 │      function render () {
   > 3 │       return ReactDOM.render(<div />, document.body)
@@ -196,5 +196,37 @@ function render() {
 
 ```
 ReactDOM.render(<div />, document.body);
+
+```
+
+### `8`
+
+```
+✔ No known problems!
+
+```
+
+### `8: formatted`
+
+```
+function render() {
+	ReactDOM.render(<div />, document.body);
+}
+
+```
+
+### `9`
+
+```
+✔ No known problems!
+
+```
+
+### `9: formatted`
+
+```
+function render() {
+	ReactDOM.render(<div />, document.body);
+}
 
 ```

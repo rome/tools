@@ -496,7 +496,7 @@ export const lint = createDiagnosticsCategory({
 	},
 	REACT_NO_RENDER_RETURN_VALUE: {
 		category: "lint/react/noRenderReturnValue",
-		message: "Do not depend on the return value from <emphasis>ReactDOM.render()</emphasis>",
+		message: "Do not depend on the return value from <emphasis>ReactDOM.render()</emphasis>.",
 	},
 	REACT_VOID_DOM_ELEMENTS_NO_CHILDREN: (
 		element: string,
