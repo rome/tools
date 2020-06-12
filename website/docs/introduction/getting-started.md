@@ -26,18 +26,13 @@ rome init
 ## What did we do?
 
 Running `rome init` with the recommended settings creates a Rome
-configuration file, `rome.json`, which looks like this:
+configuration file, `rome.rjson`, which looks like this:
 
-```json
-{
-  "version": "^0.0.52",
-  "lint": {
-    "enabled": true
-  }
-}
+```rjson
+version: "^0.0.25"
 ```
 
-This file tells `rome` that it should be at least version 0.0.52
+This file tells `rome` that it should be at least version 0.0.25
 in order to work with your project, and that it should lint your code.
 If you want to disable linting or apply advanced settings, see
 the `rome init` documentation.
