@@ -179,6 +179,7 @@ type LintDiagnosticCategory =
 	| "lint/react/noDidMountSetState"
 	| "lint/react/noDidUpdateSetState"
 	| "lint/react/noFindDOMNode"
+	| "lint/react/noRenderReturnValue"
 	| "lint/react/noRedundantShouldComponentUpdate"
 	| "lint/react/noStringRefs"
 	| "lint/react/noThisInSFC"

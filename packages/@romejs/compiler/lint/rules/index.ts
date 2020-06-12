@@ -102,6 +102,7 @@ import reactInJsxScope from "./react/reactInJsxScope";
 import requireRenderReturn from "./react/requireRenderReturn";
 import stylePropObject from "./react/stylePropObject";
 import voidDomElementsNoChildren from "./react/voidDomElementsNoChildren";
+import noRenderReturnValue from "./react/noRenderReturnValue";
 import noExplicitAny from "./ts/noExplicitAny";
 
 export const lintTransforms = [
@@ -199,6 +200,7 @@ export const lintTransforms = [
 	noWillUpdateSetState,
 	reactInJsxScope,
 	requireRenderReturn,
+	noRenderReturnValue,
 	stylePropObject,
 	voidDomElementsNoChildren,
 	noExplicitAny,
