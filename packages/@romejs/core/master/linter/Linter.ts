@@ -216,8 +216,13 @@ class LintRunner {
 					},
 				),
 			);
+
+			// Deleted
 			if (res === undefined) {
-				// Deleted
+				this.compilerDiagnosticsCache.set(
+					path,
+					{suppressions: [], diagnostics: []},
+				);
 				return;
 			}
 
