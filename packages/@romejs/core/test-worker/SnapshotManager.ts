@@ -291,7 +291,7 @@ export default class SnapshotManager {
 	}
 
 	async save() {
-		// If there'a s focused test then we don't write or validate a snapshot
+		// If there's a focused test then we don't write or validate a snapshot
 		if (this.runner.hasFocusedTests) {
 			return;
 		}
