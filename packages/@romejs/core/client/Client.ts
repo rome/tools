@@ -11,12 +11,12 @@ import {
 	DEFAULT_CLIENT_FLAGS,
 } from "../common/types/client";
 import ClientRequest, {ClientRequestType} from "./ClientRequest";
-import Master, {MasterOptions} from "../master/Master";
+import Server, {ServerOptions} from "../server/Server";
 import {
 	CLI_SOCKET_PATH,
-	MasterBridge,
-	MasterQueryResponse,
 	SOCKET_PATH,
+	ServerBridge,
+	ServerQueryResponse,
 } from "@romejs/core";
 import fork from "../common/utils/fork";
 import {
@@ -30,7 +30,7 @@ import prettyFormat from "@romejs/pretty-format";
 import {VERSION} from "../common/constants";
 import {TarWriter} from "@romejs/codec-tar";
 import {Profile, Profiler, Trace, TraceEvent} from "@romejs/v8";
-import {PartialMasterQueryRequest} from "../common/bridges/MasterBridge";
+import {PartialServerQueryRequest} from "../common/bridges/ServerBridge";
 import {UserConfig, loadUserConfig} from "../common/userConfig";
 import {removeFile} from "@romejs/fs";
 import {stringifyJSON} from "@romejs/codec-json";
@@ -63,19 +63,19 @@ export type ClientProfileOptions = {
 type BridgeStatus = BridgeStatusDedicated | BridgeStatusLocal;
 
 type BridgeStatusDedicated = {
-	bridge: MasterBridge;
+	bridge: ServerBridge;
 	dedicated: true;
 };
 
 type BridgeStatusLocal = {
-	bridge: MasterBridge;
-	master: Master;
+	bridge: ServerBridge;
+	server: Server;
 	dedicated: false;
 };
 
 type ClientRequestResponseResult = {
-	request: PartialMasterQueryRequest;
-	response: MasterQueryResponse;
+	request: PartialServerQueryRequest;
+	response: ServerQueryResponse;
 };
 
 export default class Client {
@@ -165,7 +165,7 @@ export default class Client {
 		this.reporter.info("Starting CPU profile...");
 
 		// Start server and start profiling
-		const bridge = await this.findOrStartMaster();
+		const bridge = await this.findOrStartServer();
 		await bridge.profilingStart.call({
 			samplingInterval,
 		});
@@ -217,9 +217,9 @@ export default class Client {
 				]);
 			}
 
-			// Master
+			// Server
 			fetchers.push([
-				cliProfiler === undefined ? "Master/CLI" : "Master",
+				cliProfiler === undefined ? "Server/CLI" : "Server",
 				async () => {
 					return await bridge.profilingStop.call(
 						undefined,
@@ -277,7 +277,7 @@ export default class Client {
 		includeWorkerLogs: boolean,
 		callback: (chunk: string) => void,
 	): Promise<void> {
-		const bridge = await this.findOrStartMaster();
+		const bridge = await this.findOrStartServer();
 
 		if (includeWorkerLogs) {
 			await bridge.enableWorkerLogs.call();
@@ -374,7 +374,7 @@ export default class Client {
 			env.push(`Platform: ${indent(`${process.platform} ${process.arch}`)}`);
 			writer.append({name: "environment.txt"}, `${env.join("\n\n")}\n`);
 
-			// Don't do this if we never connected to the master
+			// Don't do this if we never connected to the server
 			const bridgeStatus = this.getBridge();
 			if (bridgeStatus !== undefined) {
 				const status = await this.query({
@@ -400,9 +400,9 @@ export default class Client {
 	}
 
 	async query(
-		query: PartialMasterQueryRequest,
+		query: PartialServerQueryRequest,
 		type?: ClientRequestType,
-	): Promise<MasterQueryResponse> {
+	): Promise<ServerQueryResponse> {
 		const request = new ClientRequest(this, type, query);
 		const res = await request.init();
 		this.requestResponseEvent.send({request: query, response: res});
@@ -410,10 +410,10 @@ export default class Client {
 	}
 
 	cancellableQuery(
-		query: PartialMasterQueryRequest,
+		query: PartialServerQueryRequest,
 		type?: ClientRequestType,
 	): {
-		promise: Promise<MasterQueryResponse>;
+		promise: Promise<ServerQueryResponse>;
 		cancel: () => Promise<void>;
 	} {
 		const cancelToken = String(this.queryCounter++);
@@ -446,10 +446,10 @@ export default class Client {
 		if (status !== undefined) {
 			if (status.bridge.alive) {
 				try {
-					await status.bridge.endMaster.call();
+					await status.bridge.endServer.call();
 				} catch (err) {
-					// Swallow BridgeErrors since we expect one to be emitted as the endMaster call will be an unanswered request
-					// when the master ends all client sockets
+					// Swallow BridgeErrors since we expect one to be emitted as the endServer call will be an unanswered request
+					// when the server ends all client sockets
 					if (!(err instanceof BridgeError)) {
 						throw err;
 					}
@@ -507,7 +507,7 @@ export default class Client {
 		await this.bridgeAttachedEvent.callOptional();
 	}
 
-	async findOrStartMaster(): Promise<MasterBridge> {
+	async findOrStartServer(): Promise<ServerBridge> {
 		// First check if we already have a bridge connection
 		const connected = this.getBridge();
 		if (connected !== undefined) {
@@ -520,34 +520,34 @@ export default class Client {
 			return runningDaemon;
 		}
 
-		const status = await this.startInternalMaster();
+		const status = await this.startInternalServer();
 		return status.bridge;
 	}
 
-	async startInternalMaster(
-		opts?: Partial<MasterOptions>,
+	async startInternalServer(
+		opts?: Partial<ServerOptions>,
 	): Promise<BridgeStatusLocal> {
-		// Otherwise, start a master inside this process
-		const master = new Master({
+		// Otherwise, start a server inside this process
+		const server = new Server({
 			dedicated: false,
 			globalErrorHandlers: this.options.globalErrorHandlers === true,
 			...opts,
 		});
-		await master.init();
+		await server.init();
 
-		const bridge = createBridgeFromLocal(MasterBridge, {});
-		const status: BridgeStatusLocal = {bridge, master, dedicated: false};
+		const bridge = createBridgeFromLocal(ServerBridge, {});
+		const status: BridgeStatusLocal = {bridge, server, dedicated: false};
 
-		await Promise.all([master.attachToBridge(bridge), this.attachBridge(status)]);
+		await Promise.all([server.attachToBridge(bridge), this.attachBridge(status)]);
 
 		this.endEvent.subscribe(async () => {
-			await master.end();
+			await server.end();
 		});
 
 		return status;
 	}
 
-	async forceStartDaemon(): Promise<MasterBridge> {
+	async forceStartDaemon(): Promise<ServerBridge> {
 		const daemon = await this.startDaemon();
 		if (daemon === undefined) {
 			this.reporter.error("Failed to start daemon");
@@ -557,11 +557,11 @@ export default class Client {
 		}
 	}
 
-	async startDaemon(): Promise<undefined | MasterBridge> {
+	async startDaemon(): Promise<undefined | ServerBridge> {
 		const {reporter} = this;
 
 		if (this.bridgeStatus !== undefined) {
-			throw new Error("Already started master");
+			throw new Error("Already started server");
 		}
 
 		reporter.info("No running daemon found. Starting one...");
@@ -569,7 +569,7 @@ export default class Client {
 		let exited = false;
 		let proc: undefined | child.ChildProcess;
 
-		const newDaemon: undefined | MasterBridge = await new Promise((resolve) => {
+		const newDaemon: undefined | ServerBridge = await new Promise((resolve) => {
 			const timeout = setTimeout(
 				() => {
 					reporter.error("Daemon connection timed out");
@@ -596,7 +596,7 @@ export default class Client {
 				socketServer.listen(CLI_SOCKET_PATH.join());
 
 				proc = fork(
-					"master",
+					"server",
 					{
 						detached: true,
 					},
@@ -640,7 +640,7 @@ export default class Client {
 		return undefined;
 	}
 
-	async tryConnectToExistingDaemon(): Promise<undefined | MasterBridge> {
+	async tryConnectToExistingDaemon(): Promise<undefined | ServerBridge> {
 		const promise: Promise<undefined | net.Socket> = new Promise((
 			resolve,
 			reject,
@@ -676,7 +676,7 @@ export default class Client {
 		}
 
 		const bridge = createBridgeFromSocket(
-			MasterBridge,
+			ServerBridge,
 			socket,
 			{
 				type: "server",

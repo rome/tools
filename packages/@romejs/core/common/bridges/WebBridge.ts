@@ -6,13 +6,13 @@
  */
 
 import {Bridge} from "@romejs/events";
-import {WebMasterClient, WebMasterRequest} from "../../master/web";
+import {WebServerClient, WebServerRequest} from "../../server/web";
 
 export default class WebBridge extends Bridge {
 	requests = this.createEvent<
 		{
-			requests: Array<WebMasterRequest>;
-			clients: Array<WebMasterClient>;
+			requests: Array<WebServerRequest>;
+			clients: Array<WebServerClient>;
 		},
 		void
 	>({

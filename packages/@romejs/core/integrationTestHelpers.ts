@@ -1,5 +1,5 @@
 import {TestHelper} from "rome";
-import {Client, Master, MasterBridge} from ".";
+import {Client, Server, ServerBridge} from ".";
 import {AbsoluteFilePath, RelativeFilePath, TEMP_PATH} from "@romejs/path";
 import {ClientFlags} from "./common/types/client";
 import {JSONObject, stringifyJSON} from "@romejs/codec-json";
@@ -20,9 +20,9 @@ import stream = require("stream");
 
 type IntegrationTestHelper = {
 	cwd: AbsoluteFilePath;
-	bridge: MasterBridge;
+	bridge: ServerBridge;
 	client: Client;
-	master: Master;
+	server: Server;
 	writeFile: (
 		relative: RelativeFilePath | string,
 		content: string,
@@ -133,8 +133,8 @@ export function createIntegrationTest(
 			});
 
 			try {
-				// Start the master inside of the process
-				const {master, bridge} = await client.startInternalMaster({
+				// Start the server inside of the process
+				const {server, bridge} = await client.startInternalServer({
 					// Only one worker running inside of this process. Don't fork workers.
 					inbandOnly: true,
 					// Force cache to be enabled (which will be at our generated folder specified above)
@@ -154,7 +154,7 @@ export function createIntegrationTest(
 						cwd: projectPath,
 						bridge,
 						client,
-						master,
+						server,
 						async writeFile(
 							relative: RelativeFilePath | string,
 							content: string,

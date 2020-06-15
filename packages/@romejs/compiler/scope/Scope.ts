@@ -332,7 +332,7 @@ export class RootScope extends Scope {
 
 					const value = match[1].trim();
 
-					// Other tools would flag these as unavailable and remove them from the master set
+					// Other tools would flag these as unavailable and remove them from the server set
 					// We don't do that, we might want to later though?
 					// Also, we should maybe validate the value to only true/false
 					if (value === "false") {

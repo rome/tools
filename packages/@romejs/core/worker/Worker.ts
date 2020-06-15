@@ -119,7 +119,7 @@ export default class Worker {
 	}
 
 	end() {
-		// This will only actually be called when a Worker is created inside of the Master
+		// This will only actually be called when a Worker is created inside of the Server
 		// Clear internal maps for memory, in case the Worker instance sticks around
 		this.astCache.clear();
 		this.projects.clear();
@@ -303,7 +303,7 @@ export default class Worker {
 					);
 					if (cached === undefined) {
 						throw new Error(
-							`Master told us we have the export types for ${value.filename} cached but we dont!`,
+							`Server told us we have the export types for ${value.filename} cached but we dont!`,
 						);
 					}
 					return cached;

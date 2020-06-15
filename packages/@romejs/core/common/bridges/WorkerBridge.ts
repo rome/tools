@@ -15,7 +15,7 @@ import {
 	TransformStageName,
 } from "@romejs/compiler";
 import {Profile} from "@romejs/v8";
-import {ProfilingStartData} from "./MasterBridge";
+import {ProfilingStartData} from "./ServerBridge";
 import {
 	DiagnosticSuppressions,
 	Diagnostics,

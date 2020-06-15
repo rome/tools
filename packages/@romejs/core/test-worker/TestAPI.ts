@@ -15,7 +15,7 @@ import {
 	getErrorStackAdvice,
 } from "@romejs/diagnostics";
 import SnapshotManager from "./SnapshotManager";
-import {TestMasterRunnerOptions} from "../master/testing/types";
+import {TestServerRunnerOptions} from "../server/testing/types";
 import {Event} from "@romejs/events";
 import stringDiff from "@romejs/string-diff";
 import {getErrorStructure} from "@romejs/v8";
@@ -93,7 +93,7 @@ export default class TestAPI implements TestHelper {
 			testName: string;
 			onTimeout: OnTimeout;
 			snapshotManager: SnapshotManager;
-			options: TestMasterRunnerOptions;
+			options: TestServerRunnerOptions;
 		},
 	) {
 		this.testName = testName;
@@ -112,7 +112,7 @@ export default class TestAPI implements TestHelper {
 	}
 
 	startTime: number;
-	options: TestMasterRunnerOptions;
+	options: TestServerRunnerOptions;
 	file: FileReference;
 	emitDiagnostic: EmitDiagnostic;
 

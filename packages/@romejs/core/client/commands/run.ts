@@ -23,7 +23,7 @@ export default createLocalCommand({
 		return {};
 	},
 	async callback(req: ClientRequest) {
-		const bridge = await req.client.findOrStartMaster();
+		const bridge = await req.client.findOrStartServer();
 		if (bridge === undefined) {
 			return false;
 		}
@@ -41,7 +41,7 @@ export default createLocalCommand({
 				commandName: "run",
 				args: req.query.args,
 			},
-			"master",
+			"server",
 		);
 
 		if (res.type !== "SUCCESS") {

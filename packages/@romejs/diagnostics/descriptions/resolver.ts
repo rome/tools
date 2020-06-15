@@ -3,7 +3,7 @@ import {DiagnosticLocation} from "../types";
 import {markup} from "@romejs/string-markup";
 import {buildSuggestionAdvice} from "../helpers";
 import {DiagnosticCategory} from "../categories";
-import {ResolverQueryResponseNotFound} from "@romejs/core/master/fs/Resolver";
+import {ResolverQueryResponseNotFound} from "@romejs/core/server/fs/Resolver";
 import {SourceLocation} from "@romejs/parser-core";
 
 // @romejs/path-match

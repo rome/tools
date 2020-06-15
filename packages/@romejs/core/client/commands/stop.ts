@@ -26,7 +26,7 @@ export default createLocalCommand({
 				{
 					commandName: "stop",
 				},
-				"master",
+				"server",
 			);
 			if (stop.type === "ERROR" && stop.fatal) {
 				reporter.success("Stopped server.");
