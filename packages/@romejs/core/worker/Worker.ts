@@ -36,6 +36,7 @@ import {
 import {getFileHandlerAssert} from "../common/file-handlers/index";
 import {TransformProjectDefinition} from "@romejs/compiler";
 import WorkerAPI from "./WorkerAPI";
+import {FileNotFound} from "../common/FileNotFound";
 
 export type ParseResult = {
 	ast: AnyRoot;
@@ -326,11 +327,19 @@ export default class Worker {
 	}
 
 	async readFile(path: AbsoluteFilePath): Promise<string> {
-		const buffer = this.buffers.get(path);
-		if (buffer === undefined) {
-			return await readFileText(path);
-		} else {
-			return buffer;
+		try {
+			const buffer = this.buffers.get(path);
+			if (buffer === undefined) {
+				return await readFileText(path);
+			} else {
+				return buffer;
+			}
+		} catch (err) {
+			if (err.code === "ENOENT") {
+				throw new FileNotFound(path, "fs.readFile ENOENT");
+			} else {
+				throw err;
+			}
 		}
 	}
 

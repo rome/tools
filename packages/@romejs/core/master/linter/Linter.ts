@@ -29,6 +29,7 @@ import {markup} from "@romejs/string-markup";
 import WorkerQueue from "../WorkerQueue";
 import {Dict} from "@romejs/typescript-helpers";
 import {writeFile} from "@romejs/fs";
+import {FileNotFound} from "@romejs/core/common/FileNotFound";
 
 type LintWatchChanges = Array<{
 	filename: undefined | string;
@@ -205,18 +206,34 @@ class LintRunner {
 				}
 			}
 
+			const res = await FileNotFound.allowMissing(
+				path,
+				() =>
+					this.request.requestWorkerLint(
+						path,
+						{
+							save: shouldSave,
+							applyFixes: shouldApplyFixes,
+							compilerOptions,
+						},
+					)
+				,
+			);
+
+			// Deleted
+			if (res === undefined) {
+				this.compilerDiagnosticsCache.set(
+					path,
+					{suppressions: [], diagnostics: []},
+				);
+				return;
+			}
+
 			const {
 				diagnostics,
 				suppressions,
 				save,
-			} = await this.request.requestWorkerLint(
-				path,
-				{
-					save: shouldSave,
-					applyFixes: shouldApplyFixes,
-					compilerOptions,
-				},
-			);
+			} = res;
 			processor.addSuppressions(suppressions);
 			processor.addDiagnostics(diagnostics);
 			this.compilerDiagnosticsCache.set(path, {suppressions, diagnostics});
@@ -274,6 +291,7 @@ class LintRunner {
 			title: firstRun ? "Analyzing files" : "Analyzing changed files",
 		});
 		await graph.seed({
+			allowFileNotFound: true,
 			paths: Array.from(evictedPaths),
 			diagnosticsProcessor: processor,
 			validate: false,
@@ -447,7 +465,7 @@ export default class Linter {
 
 	createDiagnosticsProcessor(
 		evictedPaths: AbsoluteFilePathSet,
-		runner: LintRunner,
+		runner?: LintRunner,
 	): DiagnosticsProcessor {
 		const processor = this.request.createDiagnosticsProcessor({
 			origins: [
@@ -470,7 +488,7 @@ export default class Linter {
 				return (
 					absolute === undefined ||
 					evictedPaths.has(absolute) ||
-					runner.compilerDiagnosticsCache.has(absolute)
+					(runner !== undefined && runner.compilerDiagnosticsCache.has(absolute))
 				);
 			},
 		});
@@ -506,25 +524,21 @@ export default class Linter {
 		);
 	}
 
-	async run(watch: boolean) {
+	async runWatch() {
 		const {request} = this;
 		const {reporter} = request;
 
-		let printer: undefined | DiagnosticsPrinter;
-
 		const diagnosticsByFilename: Map<undefined | string, Diagnostics> = new Map();
 
-		const watchEvent = await this.watch({
+		await this.watch({
 			onRunStart: () => {
-				if (watch) {
-					reporter.clearScreen();
-				}
+				reporter.clearScreen();
 			},
 			createProgress: (opts) => {
 				return reporter.progress(opts);
 			},
 			onChanges: ({evictedPaths, changes, totalCount, savedCount, runner}) => {
-				printer = createDiagnosticsPrinter(
+				const printer = createDiagnosticsPrinter(
 					request,
 					this.createDiagnosticsProcessor(evictedPaths, runner),
 					totalCount,
@@ -545,24 +559,57 @@ export default class Linter {
 					printer.processor.addDiagnostics(diagnostics);
 				}
 
-				if (watch) {
-					reporter.clearScreen();
-					printer.print();
-					printer.footer();
+				reporter.clearScreen();
+				printer.print();
+				printer.footer();
+			},
+		});
+
+		await request.endEvent.wait();
+	}
+
+	async runSingle() {
+		const {request} = this;
+		const {reporter} = request;
+		const diagnosticsByFilename: Map<undefined | string, Diagnostics> = new Map();
+
+		let savedCount = 0;
+		let paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
+
+		const watchEvent = await this.watch({
+			onRunStart: () => {},
+			createProgress: (opts) => {
+				return reporter.progress(opts);
+			},
+			onChanges: (res) => {
+				// Update counts
+				savedCount += res.savedCount;
+				paths = new AbsoluteFilePathSet([...paths, ...res.evictedPaths]);
+
+				// Update our diagnostics with the changes
+				for (const {filename, diagnostics} of res.changes) {
+					if (diagnostics.length === 0) {
+						diagnosticsByFilename.delete(filename);
+					} else {
+						diagnosticsByFilename.set(filename, diagnostics);
+					}
 				}
 			},
 		});
 
-		if (watch) {
-			await request.endEvent.wait();
-		} else {
-			watchEvent.unsubscribe();
+		watchEvent.unsubscribe();
 
-			if (printer === undefined) {
-				throw new Error("Expected a printer");
-			}
+		const printer = createDiagnosticsPrinter(
+			request,
+			this.createDiagnosticsProcessor(paths),
+			paths.size,
+			savedCount,
+		);
 
-			throw printer;
+		for (const diagnostics of diagnosticsByFilename.values()) {
+			printer.processor.addDiagnostics(diagnostics);
 		}
+
+		throw printer;
 	}
 }

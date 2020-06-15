@@ -589,17 +589,19 @@ export default class MasterRequest {
 			opts.tryAlternateArg,
 		);
 
-		const initial = await this.getFilesFromArgs(opts);
-		await callback(initial, true);
-
 		let pendingEvictPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 		let pendingEvictProjects: Set<ProjectDefinition> = new Set();
 		let timeout: undefined | NodeJS.Timeout;
 		let changesWhileRunningCallback = false;
 		let runningCallback = false;
+		let unsubscribed = false;
 
-		async function flush() {
-			if (pendingEvictPaths.size === 0) {
+		async function flush(initial: boolean) {
+			if (unsubscribed) {
+				return;
+			}
+
+			if (!initial && pendingEvictPaths.size === 0) {
 				return;
 			}
 
@@ -613,12 +615,12 @@ export default class MasterRequest {
 			pendingEvictProjects = new Set();
 
 			runningCallback = true;
-			await callback(result, false);
+			await callback(result, initial);
 			runningCallback = false;
 
 			if (changesWhileRunningCallback) {
 				changesWhileRunningCallback = false;
-				flush();
+				await flush(false);
 			}
 		}
 
@@ -645,7 +647,7 @@ export default class MasterRequest {
 			if (runningCallback) {
 				changesWhileRunningCallback = true;
 			} else if (timeout === undefined) {
-				timeout = setTimeout(flush, 100);
+				timeout = setTimeout(() => flush(false), 100);
 			}
 		};
 
@@ -655,12 +657,30 @@ export default class MasterRequest {
 		);
 		const fileChangeEvent = this.master.fileChangeEvent.subscribe(onChange);
 
+		const sub = mergeEventSubscriptions([
+			evictSubscription,
+			fileChangeEvent,
+			{
+				unsubscribe() {
+					unsubscribed = true;
+					if (timeout !== undefined) {
+						clearTimeout(timeout);
+					}
+				},
+			},
+		]);
+
 		this.endEvent.subscribe(() => {
-			evictSubscription.unsubscribe();
-			fileChangeEvent.unsubscribe();
+			sub.unsubscribe();
 		});
 
-		return mergeEventSubscriptions([evictSubscription, fileChangeEvent]);
+		// Flush initial
+		const initial = await this.getFilesFromArgs(opts);
+		pendingEvictPaths = initial.paths;
+		pendingEvictProjects = initial.projects;
+		await flush(true);
+
+		return sub;
 	}
 
 	async getFilesFromArgs(

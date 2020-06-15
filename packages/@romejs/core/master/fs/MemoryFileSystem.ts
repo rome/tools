@@ -32,6 +32,7 @@ import {getFileHandler} from "../../common/file-handlers/index";
 import {markup} from "@romejs/string-markup";
 import crypto = require("crypto");
 import fs = require("fs");
+import {FileNotFound} from "@romejs/core/common/FileNotFound";
 
 const DEFAULT_DENYLIST = [".hg", ".git"];
 
@@ -296,16 +297,11 @@ export default class MemoryFileSystem {
 		watcher.close();
 
 		// Go through and clear all files and directories from our internal maps
-
 		// NOTE: We deliberately do not call 'deletedFileEvent' as the code that
-
 		// calls us will already be cleaning up
 		let queue: Array<AbsoluteFilePath> = [dirPath];
 		while (queue.length > 0) {
-			const path = queue.pop();
-			if (path === undefined) {
-				throw new Error("Unknown path");
-			}
+			const path = queue.pop()!;
 
 			this.directories.delete(path);
 			this.manifests.delete(path);
@@ -566,7 +562,7 @@ export default class MemoryFileSystem {
 	getMtime(path: AbsoluteFilePath): number {
 		const stats = this.getFileStats(path);
 		if (stats === undefined) {
-			throw new Error(`File ${path.join()} not in database, cannot get mtime`);
+			throw new FileNotFound(path, "Not found in memory file system");
 		} else {
 			return stats.mtime;
 		}
@@ -579,7 +575,7 @@ export default class MemoryFileSystem {
 	getFileStatsAssert(path: AbsoluteFilePath): Stats {
 		const stats = this.getFileStats(path);
 		if (stats === undefined) {
-			throw new Error(`Expected file stats for ${path}`);
+			throw new FileNotFound(path, "Not found in memory file system");
 		}
 		return stats;
 	}

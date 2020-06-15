@@ -105,6 +105,10 @@ export default createMasterCommand<Flags>({
 		};
 
 		const linter = new Linter(req, opts);
-		await linter.run(req.query.requestFlags.watch);
+		if (req.query.requestFlags.watch) {
+			await linter.runWatch();
+		} else {
+			await linter.runSingle();
+		}
 	},
 });

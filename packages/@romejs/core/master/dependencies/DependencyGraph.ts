@@ -25,6 +25,7 @@ import {
 } from "@romejs/path";
 import {AnalyzeModuleType} from "../../common/types/analyzeDependencies";
 import {markup} from "@romejs/string-markup";
+import {FileNotFound} from "@romejs/core/common/FileNotFound";
 
 export type DependencyGraphSeedResult = {
 	node: DependencyNode;
@@ -153,7 +154,7 @@ export default class DependencyGraph {
 	getNode(path: AbsoluteFilePath): DependencyNode {
 		const mod = this.maybeGetNode(path);
 		if (mod === undefined) {
-			throw new Error(`No module found for ${path.join()}`);
+			throw new FileNotFound(path, "No dependency node found");
 		}
 		return mod;
 	}
@@ -163,11 +164,13 @@ export default class DependencyGraph {
 			paths,
 			diagnosticsProcessor,
 			analyzeProgress,
+			allowFileNotFound = false,
 			validate = false,
 		}: {
 			paths: Array<AbsoluteFilePath>;
 			diagnosticsProcessor: DiagnosticsProcessor;
 			analyzeProgress?: ReporterProgress;
+			allowFileNotFound?: boolean;
 			validate?: boolean;
 		},
 	): Promise<void> {
@@ -188,18 +191,24 @@ export default class DependencyGraph {
 		});
 
 		// Add initial queue items
-		const roots: Array<DependencyNode> = await Promise.all(
+		const roots: Array<undefined | DependencyNode> = await Promise.all(
 			paths.map((path) =>
-				this.resolve(
+				FileNotFound.maybeAllowMissing(
+					allowFileNotFound,
 					path,
-					{
-						workerQueue,
-						all: true,
-						async: false,
-						ancestry: [],
-					},
-					diagnosticsProcessor,
-					analyzeProgress,
+					() =>
+						this.resolve(
+							path,
+							{
+								workerQueue,
+								all: true,
+								async: false,
+								ancestry: [],
+							},
+							diagnosticsProcessor,
+							analyzeProgress,
+						)
+					,
 				)
 			),
 		);
@@ -212,7 +221,13 @@ export default class DependencyGraph {
 
 		if (validate) {
 			for (const root of roots) {
-				this.validateTransitive(root, diagnosticsProcessor);
+				if (root !== undefined) {
+					await FileNotFound.maybeAllowMissing(
+						allowFileNotFound,
+						root.path,
+						() => this.validateTransitive(root, diagnosticsProcessor),
+					);
+				}
 			}
 		}
 	}
