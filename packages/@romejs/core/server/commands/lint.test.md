@@ -56,7 +56,7 @@ unknownVariable
 
 ```
 
- project/index.js:1:4 lint/js/undeclaredVariables  OUTDATED  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ project/index.js:1:4 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The unformatted variable is undeclared.
 
@@ -65,9 +65,7 @@ unknownVariable
     2 │  swag;
     3 │ }
 
-  ⚠ This file has been changed since the diagnostic was produced and may be out of date
-
- project/index.js:2:1 lint/js/undeclaredVariables  OUTDATED  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ project/index.js:2:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The swag variable is undeclared.
 
@@ -75,8 +73,6 @@ unknownVariable
   > 2 │  swag;
       │  ^^^^
     3 │ }
-
-  ⚠ This file has been changed since the diagnostic was produced and may be out of date
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
