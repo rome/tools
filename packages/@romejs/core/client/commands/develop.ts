@@ -30,7 +30,7 @@ export default createLocalCommand({
 				...req.query,
 				terminateWhenIdle: true,
 			},
-			"master",
+			"server",
 		);
 
 		return true;

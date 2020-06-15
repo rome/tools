@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// Taken from 'https://github.com/sindresorhus/globals/blob/master/globals.json
+// Taken from 'https://github.com/sindresorhus/globals/blob/server/globals.json
 export const builtin = [
 	"Array",
 	"ArrayBuffer",

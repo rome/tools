@@ -18,13 +18,13 @@ import lsp from "./commands/lsp";
 import {Dict} from "@romejs/typescript-helpers";
 import ClientRequest from "./ClientRequest";
 import {SharedCommand} from "../common/commands";
-import {MasterQueryResponse} from "../common/bridges/MasterBridge";
+import {ServerQueryResponse} from "../common/bridges/ServerBridge";
 
 export type LocalCommand<Flags extends Dict<unknown>> = SharedCommand<Flags> & {
 	callback: (
 		req: ClientRequest,
 		commandFlags: Flags,
-	) => Promise<boolean | MasterQueryResponse>;
+	) => Promise<boolean | ServerQueryResponse>;
 };
 
 export function createLocalCommand<Flags extends Dict<unknown>>(

@@ -25,7 +25,7 @@ export default createLocalCommand({
 				{
 					commandName: "status",
 				},
-				"master",
+				"server",
 			);
 			if (status.type === "SUCCESS") {
 				reporter.inspect(status.data);

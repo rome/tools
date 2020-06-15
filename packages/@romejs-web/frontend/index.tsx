@@ -11,14 +11,14 @@ import Button from './Button';
 import Spinner from './Spinner';
 import React = require('react');
 import ReactDOM = require('react-dom');
-import {WebMasterRequest, WebMasterClient} from '@romejs/core';
+import {WebServerRequest, WebServerClient} from '@romejs/core';
 import {humanizeTime} from '@romejs/string-utils';
 
 const {css, injectGlobal} = require('emotion');
 
 type Data = {
-  clients: Array<WebMasterClient>;
-  requests: Array<WebMasterRequest>;
+  clients: Array<WebServerClient>;
+  requests: Array<WebServerRequest>;
 };
 
 injectGlobal`
@@ -219,7 +219,7 @@ function ClientItem({
   client,
   setFocused,
 }: {
-  client: WebMasterClient;
+  client: WebServerClient;
   setFocused: () => void;
 }) {
   const endTime = client.endTime === undefined ? Date.now() : client.endTime;
@@ -302,7 +302,7 @@ function Content() {
     undefined | number
   >(undefined);
 
-  let focusedClient: undefined | WebMasterClient;
+  let focusedClient: undefined | WebServerClient;
   if (focusedClientId !== undefined) {
     focusedClient = data.clients.find(client => client.id === focusedClientId);
   }
@@ -324,7 +324,7 @@ function Content() {
       </>
     );
   } else {
-    const actualFocusClient: WebMasterClient = focusedClient;
+    const actualFocusClient: WebServerClient = focusedClient;
 
     const requests = data.requests.filter(
       req => req.client === actualFocusClient.id,
