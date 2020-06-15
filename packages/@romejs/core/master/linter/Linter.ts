@@ -29,6 +29,7 @@ import {markup} from "@romejs/string-markup";
 import WorkerQueue from "../WorkerQueue";
 import {Dict} from "@romejs/typescript-helpers";
 import {writeFile} from "@romejs/fs";
+import {FileNotFound} from "@romejs/core/common/FileNotFound";
 
 type LintWatchChanges = Array<{
 	filename: undefined | string;
@@ -205,16 +206,18 @@ class LintRunner {
 				}
 			}
 
-			const res = await this.request.requestAllowDeletion(
+			const res = await FileNotFound.allowMissing(
 				path,
-				this.request.requestWorkerLint(
-					path,
-					{
-						save: shouldSave,
-						applyFixes: shouldApplyFixes,
-						compilerOptions,
-					},
-				),
+				() =>
+					this.request.requestWorkerLint(
+						path,
+						{
+							save: shouldSave,
+							applyFixes: shouldApplyFixes,
+							compilerOptions,
+						},
+					)
+				,
 			);
 
 			// Deleted
@@ -288,6 +291,7 @@ class LintRunner {
 			title: firstRun ? "Analyzing files" : "Analyzing changed files",
 		});
 		await graph.seed({
+			allowFileNotFound: true,
 			paths: Array.from(evictedPaths),
 			diagnosticsProcessor: processor,
 			validate: false,

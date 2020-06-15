@@ -36,7 +36,7 @@ import {
 import {getFileHandlerAssert} from "../common/file-handlers/index";
 import {TransformProjectDefinition} from "@romejs/compiler";
 import WorkerAPI from "./WorkerAPI";
-import {WorkerFileNotFound} from "./WorkerFileNotFound";
+import {FileNotFound} from "../common/FileNotFound";
 
 export type ParseResult = {
 	ast: AnyRoot;
@@ -336,7 +336,7 @@ export default class Worker {
 			}
 		} catch (err) {
 			if (err.code === "ENOENT") {
-				throw new WorkerFileNotFound(path);
+				throw new FileNotFound(path, "fs.readFile ENOENT");
 			} else {
 				throw err;
 			}

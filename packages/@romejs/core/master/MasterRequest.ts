@@ -84,7 +84,6 @@ import {DiagnosticsProcessorOptions} from "@romejs/diagnostics/DiagnosticsProces
 import {JSONObject} from "@romejs/codec-json";
 import {VCSClient} from "@romejs/vcs";
 import {InlineSnapshotUpdates} from "../test-worker/SnapshotManager";
-import {WorkerFileNotFound} from "../worker/WorkerFileNotFound";
 
 type MasterRequestOptions = {
 	master: Master;
@@ -898,21 +897,6 @@ export default class MasterRequest {
 			const endMtime = this.master.memoryFs.maybeGetMtime(path);
 			if (endMtime !== startMtime) {
 				return this.wrapRequestDiagnostic(method, path, factory);
-			}
-		}
-	}
-
-	async requestAllowDeletion<T>(
-		path: AbsoluteFilePath,
-		promise: Promise<T>,
-	): Promise<undefined | T> {
-		try {
-			return await promise;
-		} catch (err) {
-			if (err instanceof WorkerFileNotFound && err.path.equal(path)) {
-				return undefined;
-			} else {
-				throw err;
 			}
 		}
 	}

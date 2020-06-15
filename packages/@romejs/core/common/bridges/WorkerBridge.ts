@@ -26,7 +26,7 @@ import {Bridge} from "@romejs/events";
 import {JSONFileReference} from "../types/files";
 import {AnalyzeDependencyResult} from "../types/analyzeDependencies";
 import {InlineSnapshotUpdates} from "@romejs/core/test-worker/SnapshotManager";
-import {WorkerFileNotFound} from "@romejs/core/worker/WorkerFileNotFound";
+import {FileNotFound} from "@romejs/core/common/FileNotFound";
 import {createAbsoluteFilePath} from "@romejs/path";
 
 export type WorkerProjects = Array<{
@@ -262,11 +262,11 @@ export default class WorkerBridge extends Bridge {
 
 	init() {
 		this.addErrorTransport(
-			"WorkerFileNotFound",
+			"FileNotFound",
 			{
 				serialize(err: Error) {
-					if (!(err instanceof WorkerFileNotFound)) {
-						throw new Error("Expected WorkerFileNotFound");
+					if (!(err instanceof FileNotFound)) {
+						throw new Error("Expected FileNotFound");
 					}
 
 					return {
@@ -275,8 +275,9 @@ export default class WorkerBridge extends Bridge {
 				},
 				hydrate(err, data) {
 					// rome-ignore lint/js/noExplicitAny
-					return new WorkerFileNotFound(
+					return new FileNotFound(
 						createAbsoluteFilePath((data.path as any)),
+						err.message,
 					);
 				},
 			},
