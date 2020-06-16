@@ -11,7 +11,7 @@ showHero: false
 
 | Rule  | Description |
 | ------------- | ------------- |
-| [camel-case](/lint/rules/camel-case) | This rule enforce the use of camelCase |
+| [camel-case](/lint/rules/camel-case) |  This rule enforce the use of camelCase |
 | case-single-statement |  |
 | confusing-language |  |
 | default-export-same-basename |  |

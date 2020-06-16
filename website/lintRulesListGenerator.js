@@ -59,6 +59,15 @@ for (const [category] of Object.entries(map)) {
   });
 }
 
+function getDescription(content){
+  const description = content.match(/description:(.*)/);
+  if(description){
+    return description[1];
+  }
+
+  return null;
+
+}
 
 
 for (const [category, value] of Object.entries(map)) {
@@ -70,12 +79,17 @@ let table = `
 
   for (const rule of value) {
 
-    if(fs.existsSync(`./src/lint/rules/${rule}.md`)){
+    const file = `./src/lint/rules/${rule}.md`;
 
-      const content = fs.readFileSync(`./src/lint/rules/${rule}.md`).toString();
-      const description = content.match(/description: (.*)/)[1];
+    if(fs.existsSync(file)){
 
-      table += `| [${rule}](/lint/rules/${rule}) | ${description} |\n`;
+      const content = fs.readFileSync(file).toString();
+      const description = getDescription(content);
+      if(!description){
+        console.log(`${file} is missing a description`);
+      }
+
+      table += `| [${rule}](/lint/rules/${rule}) | ${description || ''} |\n`;
     } else {
       table += `| ${rule} |  |\n`;
     }
