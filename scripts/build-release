@@ -9,9 +9,7 @@
 
 require("./_setup.cjs");
 
-const {root, argv} = require("./_constants.cjs");
-const {execNode} = require("./_utils.cjs");
-const path = require("path");
-const PKG_ROOT = path.join(root, "packages/rome");
+const { argv } = require("./_constants.cjs");
+const { buildRelease } = require("./_utils.cjs");
 
-execNode([path.join(__dirname, "dev-rome"), "bundle", PKG_ROOT, ...argv]);
+buildRelease(argv);
