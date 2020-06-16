@@ -49,7 +49,6 @@ for (const category of fs.readdirSync(lintRulesFolder)) {
     if(rule.endsWith(".ts") && !rule.endsWith("test.ts")){
       map[category].push(nameFormat(rule));
     }
-
   }
 
 }
@@ -70,7 +69,17 @@ let table = `
   file += `## ${categoryAlias[category]}\n\n`;
 
   for (const rule of value) {
-    table += `| ${rule} |  |\n`;
+
+    if(fs.existsSync(`./src/lint/rules/${rule}.md`)){
+
+      const content = fs.readFileSync(`./src/lint/rules/${rule}.md`).toString();
+      const description = content.match(/description: (.*)/)[1];
+
+      table += `| [${rule}](/lint/rules/${rule}) | ${description} |\n`;
+    } else {
+      table += `| ${rule} |  |\n`;
+    }
+
   }
 
   file += table;
