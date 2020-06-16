@@ -245,7 +245,7 @@ class LintRunner {
 		});
 
 		for (const path of evictedPaths) {
-			await queue.pushQueue(path);
+			await FileNotFound.allowMissing(path, () => queue.pushQueue(path));
 		}
 
 		await queue.spin();
@@ -299,9 +299,12 @@ class LintRunner {
 
 		// Build a list of dependents to recheck
 		for (const path of evictedPaths) {
-			validatedDependencyPaths.add(path);
+			const newNode = graph.maybeGetNode(path);
 
-			const newNode = graph.getNode(path);
+			if (newNode === undefined) {
+				continue;
+			}
+			validatedDependencyPaths.add(path);
 
 			// Get the previous node and see if the exports have actually changed
 			const oldNode = oldEvictedNodes.get(path);

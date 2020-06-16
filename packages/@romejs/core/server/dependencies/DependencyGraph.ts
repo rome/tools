@@ -295,15 +295,17 @@ export default class DependencyGraph {
 			analyzeProgress.pushText(progressText);
 		}
 
-		const res: WorkerAnalyzeDependencyResult = await this.request.requestWorkerAnalyzeDependencies(
-			path,
-			{},
-		);
+		let res: WorkerAnalyzeDependencyResult;
+		let node: DependencyNode;
+		try {
+			res = await this.request.requestWorkerAnalyzeDependencies(path, {});
 
-		const node = this.addNode(path, res);
-		node.setAll(all);
-		node.setUsedAsync(async);
-		lock.release();
+			node = this.addNode(path, res);
+			node.setAll(all);
+			node.setUsedAsync(async);
+		} finally {
+			lock.release();
+		}
 
 		const {dependencies, diagnostics} = res;
 
