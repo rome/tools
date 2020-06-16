@@ -16,6 +16,17 @@ import {buildSuggestionAdvice} from "../helpers";
 import {createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	REACT_NO_ARRAY_INDEX_KEY: {
+		category: "lint/react/noArrayIndexKey",
+		message: "Avoid using array index as key property in an element.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: 'See <hyperlink target="https://reactjs.org/docs/lists-and-keys.html#keys" /> for more information.',
+			},
+		],
+	},
 	REACT_NO_THIS_IN_SFC: {
 		category: "lint/react/noThisInSFC",
 		message: "Avoid using <emphasis>this</emphasis> in stateless functional components.",
