@@ -16,6 +16,17 @@ import {buildSuggestionAdvice} from "../helpers";
 import {createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	REACT_JSX_PROPS_NO_SPREADING: {
+		category: "lint/react/jsxPropsNoSpreading",
+		message: "Avoid using property spreading in JSX components.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Explicit JSX attributes enhance the readability of code by clearly indicating which props are accepted by a given element.",
+			},
+		],
+	},
 	REACT_NO_ARRAY_INDEX_KEY: {
 		category: "lint/react/noArrayIndexKey",
 		message: "Avoid using array index as key property in an element.",

@@ -172,6 +172,7 @@ type LintDiagnosticCategory =
 	| "lint/react/jsxNoCommentText"
 	| "lint/react/jsxNoDuplicateProps"
 	| "lint/react/jsxPascalCase"
+	| "lint/react/jsxPropsNoSpreading"
 	| "lint/react/noAccessStateInSetState"
 	| "lint/react/noArrayIndexKey"
 	| "lint/react/noChildrenProp"
