@@ -79,7 +79,7 @@ let table = `
 
 }
 
-fs.writeFile('./src/rules.md', file, function (err,data) {
+fs.writeFile('./src/lint/rules/index.md', file, function (err,data) {
   if (err) {
     return console.log(err);
   }
