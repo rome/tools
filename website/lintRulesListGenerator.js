@@ -69,6 +69,9 @@ function getDescription(content){
 
 }
 
+let countExistingFiles = 0;
+let countMissingFiles = 0;
+
 
 for (const [category, value] of Object.entries(map)) {
 let table = `
@@ -90,8 +93,11 @@ let table = `
       }
 
       table += `| [${rule}](/lint/rules/${rule}) | ${description || ''} |\n`;
+
+      countExistingFiles += 1;
     } else {
       table += `| ${rule} |  |\n`;
+      countMissingFiles += 1;
     }
 
   }
@@ -99,7 +105,6 @@ let table = `
   file += table;
 
   file += `\n`;
-
 }
 
 fs.writeFile('./src/lint/rules/index.md', file, function (err,data) {
@@ -107,3 +112,5 @@ fs.writeFile('./src/lint/rules/index.md', file, function (err,data) {
     return console.log(err);
   }
 });
+
+console.log(`Documentation progress: ${countExistingFiles}/${countExistingFiles + countMissingFiles}`);
