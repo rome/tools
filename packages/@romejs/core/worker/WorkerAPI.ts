@@ -399,19 +399,11 @@ export default class WorkerAPI {
 
 		// Autofix if necessary
 		if (options.save && needsSave) {
-			// Update our buffer to relint with the new contents
-			await this.worker.updateBuffer(ref, formatted);
-
-			// Relint this file without fixing it, we do this to prevent false positive error messages
-			const res: WorkerLintResult = {
-				...(await this.lint(ref, {...options, save: false}, parseOptions)),
+			return {
 				save: formatted,
+				diagnostics,
+				suppressions,
 			};
-
-			// Clear our fake buffer
-			this.worker.clearBuffer(ref);
-
-			return res;
 		}
 
 		// If there's no pending fix then no need for diagnostics
