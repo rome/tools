@@ -516,6 +516,10 @@ export const lint = createDiagnosticsCategory({
 		category: "lint/react/requireRenderReturn",
 		message: "The <emphasis>render</emphasis> method on a component must return content.",
 	},
+	REACT_NO_RENDER_RETURN_VALUE: {
+		category: "lint/react/noRenderReturnValue",
+		message: "Do not depend on the return value from <emphasis>ReactDOM.render()</emphasis>.",
+	},
 	REACT_VOID_DOM_ELEMENTS_NO_CHILDREN: (
 		element: string,
 		properties: Array<string>,

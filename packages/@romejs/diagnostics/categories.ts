@@ -182,6 +182,7 @@ type LintDiagnosticCategory =
 	| "lint/react/noDirectMutationState"
 	| "lint/react/noFindDOMNode"
 	| "lint/react/noRedundantShouldComponentUpdate"
+	| "lint/react/noRenderReturnValue"
 	| "lint/react/noStringRefs"
 	| "lint/react/noThisInSFC"
 	| "lint/react/noUnsafe"
