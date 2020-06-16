@@ -100,10 +100,10 @@ export function createIntegrationTest(
 			}
 
 			// Mock and capture stdout
-			let console = "";
+			let terminalOutput = "";
 			const stdout: Stdout = new stream.Writable({
 				write(chunk, encoding, callback) {
-					console += chunk;
+					terminalOutput += chunk;
 					callback();
 				},
 			});
@@ -168,7 +168,7 @@ export function createIntegrationTest(
 				await client.end();
 
 				// Console
-				t.namedSnapshot("console", console);
+				t.namedSnapshot("console", terminalOutput);
 
 				// Logs
 				//t.namedSnapshot("logs", logs);

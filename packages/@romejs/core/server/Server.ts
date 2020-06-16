@@ -57,6 +57,8 @@ import setupGlobalErrorHandlers from "../common/utils/setupGlobalErrorHandlers";
 import {UserConfig, loadUserConfig} from "../common/userConfig";
 import {
 	AbsoluteFilePath,
+	AbsoluteFilePathMap,
+	AbsoluteFilePathSet,
 	createAbsoluteFilePath,
 	createUnknownFilePath,
 } from "@romejs/path";
@@ -67,6 +69,7 @@ import VirtualModules from "./fs/VirtualModules";
 import {DiagnosticsProcessorOptions} from "@romejs/diagnostics/DiagnosticsProcessor";
 import {toKebabCase} from "@romejs/string-utils";
 import Locker from "../common/utils/Locker";
+import {writeFile} from "@romejs/fs";
 
 const STDOUT_MAX_CHUNK_LENGTH = 100_000;
 
@@ -156,11 +159,6 @@ export default class Server {
 		this.userConfig =
 			opts.userConfig === undefined ? loadUserConfig() : opts.userConfig;
 
-		this.fileChangeEvent = new Event({
-			name: "Server.fileChange",
-			onError: this.onFatalErrorBound,
-		});
-
 		this.clientStartEvent = new Event({
 			name: "Server.clientStart",
 			onError: this.onFatalErrorBound,
@@ -168,6 +166,11 @@ export default class Server {
 
 		this.requestStartEvent = new Event({
 			name: "Server.requestStart",
+			onError: this.onFatalErrorBound,
+		});
+
+		this.refreshFileEvent = new Event({
+			name: "Server.refreshFile",
 			onError: this.onFatalErrorBound,
 		});
 
@@ -238,14 +241,6 @@ export default class Server {
 		this.resolver = new Resolver(this);
 		this.cache = new Cache(this);
 
-		this.memoryFs.deletedFileEvent.subscribe((path) => {
-			return this.handleFileDelete(path);
-		});
-
-		this.memoryFs.changedFileEvent.subscribe(({path}) => {
-			return this.handleFileChange(path);
-		});
-
 		this.warnedCacheClients = new WeakSet();
 
 		this.clientIdCounter = 0;
@@ -258,8 +253,14 @@ export default class Server {
 
 	requestStartEvent: Event<ServerRequest, void>;
 	clientStartEvent: Event<ServerClient, void>;
-	fileChangeEvent: Event<AbsoluteFilePath, void>;
 	endEvent: Event<void, void>;
+
+	// Event for when a file needs to be "refreshed". This could include:
+	// - Deleted
+	// - Created
+	// - Modified
+	// - Buffer updated
+	refreshFileEvent: Event<AbsoluteFilePath, void>;
 
 	onFatalErrorBound: (err: Error) => void;
 
@@ -385,6 +386,47 @@ export default class Server {
 		this.endEvent.subscribe(() => {
 			teardown();
 		});
+	}
+
+	// Utility to write a list of files and wait for all refresh events to be emitted
+	// parameter designed to handle `AbsoluteFileMap#entries`
+	async writeFiles(files: AbsoluteFilePathMap<string | Buffer>) {
+		const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet(files.keys());
+
+		if (files.size === 0) {
+			this.logger.info("[Server] Writing no files");
+			return;
+		} else {
+			this.logger.info("[Server] Writing files");
+			this.logger.list(Array.from(paths, (path) => path.toMarkup()));
+		}
+
+		let teardown: undefined | (() => void);
+
+		const waitRefresh = new Promise((resolve) => {
+			const sub = this.refreshFileEvent.subscribe((path) => {
+				paths.delete(path);
+				if (paths.size === 0) {
+					resolve();
+				}
+			});
+
+			teardown = () => {
+				sub.unsubscribe();
+			};
+		});
+
+		try {
+			for (const [path, content] of files) {
+				await writeFile(path, content);
+			}
+
+			await waitRefresh;
+		} finally {
+			if (teardown !== undefined) {
+				teardown();
+			}
+		}
 	}
 
 	async init() {
@@ -633,16 +675,6 @@ export default class Server {
 		});
 
 		return client;
-	}
-
-	async handleFileDelete(path: AbsoluteFilePath) {
-		this.logger.info(`[Server] File delete:`, path.toMarkup());
-		this.fileChangeEvent.send(path);
-	}
-
-	async handleFileChange(path: AbsoluteFilePath) {
-		this.logger.info(`[Server] File change:`, path.toMarkup());
-		this.fileChangeEvent.send(path);
 	}
 
 	async handleRequestStart(req: ServerRequest) {

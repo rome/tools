@@ -589,37 +589,37 @@ export default class ServerRequest {
 			opts.tryAlternateArg,
 		);
 
-		let pendingEvictPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
-		let pendingEvictProjects: Set<ProjectDefinition> = new Set();
 		let timeout: undefined | NodeJS.Timeout;
-		let changesWhileRunningCallback = false;
 		let runningCallback = false;
 		let unsubscribed = false;
+
+		let pendingResult: ServerRequestGetFilesResult = {
+			paths: new AbsoluteFilePathSet(),
+			projects: new Set(),
+		};
 
 		async function flush(initial: boolean) {
 			if (unsubscribed) {
 				return;
 			}
 
-			if (!initial && pendingEvictPaths.size === 0) {
+			if (!initial && pendingResult.paths.size === 0) {
 				return;
 			}
 
 			timeout = undefined;
 
-			const result: ServerRequestGetFilesResult = {
-				paths: pendingEvictPaths,
-				projects: pendingEvictProjects,
+			const result = pendingResult;
+			pendingResult = {
+				paths: new AbsoluteFilePathSet(),
+				projects: new Set(),
 			};
-			pendingEvictPaths = new AbsoluteFilePathSet();
-			pendingEvictProjects = new Set();
 
 			runningCallback = true;
 			await callback(result, initial);
 			runningCallback = false;
 
-			if (changesWhileRunningCallback) {
-				changesWhileRunningCallback = false;
+			if (pendingResult.paths.size > 0) {
 				await flush(false);
 			}
 		}
@@ -638,28 +638,21 @@ export default class ServerRequest {
 
 			const project = this.server.projectManager.findProjectExisting(path);
 			if (project !== undefined) {
-				pendingEvictProjects.add(project);
+				pendingResult.projects.add(project);
 			}
 
-			pendingEvictPaths.add(path);
+			pendingResult.paths.add(path);
 
 			// Buffer up evicted paths
-			if (runningCallback) {
-				changesWhileRunningCallback = true;
-			} else if (timeout === undefined) {
+			if (!runningCallback && timeout === undefined) {
 				timeout = setTimeout(() => flush(false), 100);
 			}
 		};
 
-		// Subscribe to evictions and file changes. This can cause double emits but we dedupe them with AbsoluteFilePathSet. An updated buffer dispatches a fileChangeEvent but NOT an evictEvent. An evictEvent is dispatched for all files in a project when the project config is changed but does NOT dispatch evictEvent.
-		const evictSubscription = this.server.fileAllocator.evictEvent.subscribe(
-			onChange,
-		);
-		const fileChangeEvent = this.server.fileChangeEvent.subscribe(onChange);
+		const refreshFileEvent = this.server.refreshFileEvent.subscribe(onChange);
 
 		const sub = mergeEventSubscriptions([
-			evictSubscription,
-			fileChangeEvent,
+			refreshFileEvent,
 			{
 				unsubscribe() {
 					unsubscribed = true;
@@ -675,9 +668,7 @@ export default class ServerRequest {
 		});
 
 		// Flush initial
-		const initial = await this.getFilesFromArgs(opts);
-		pendingEvictPaths = initial.paths;
-		pendingEvictProjects = initial.projects;
+		pendingResult = await this.getFilesFromArgs(opts);
 		await flush(true);
 
 		return sub;
@@ -912,7 +903,7 @@ export default class ServerRequest {
 			path,
 			(bridge, file) => bridge.updateBuffer.call({file, content}),
 		);
-		this.server.fileChangeEvent.send(path);
+		this.server.refreshFileEvent.send(path);
 	}
 
 	async requestWorkerClearBuffer(path: AbsoluteFilePath): Promise<void> {
@@ -924,6 +915,7 @@ export default class ServerRequest {
 			(bridge, file) => bridge.clearBuffer.call({file}),
 		);
 		await this.server.fileAllocator.evict(path);
+		this.server.refreshFileEvent.send(path);
 	}
 
 	async requestWorkerParse(

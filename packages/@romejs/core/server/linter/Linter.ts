@@ -28,7 +28,6 @@ import {
 import {markup} from "@romejs/string-markup";
 import WorkerQueue from "../WorkerQueue";
 import {Dict} from "@romejs/typescript-helpers";
-import {writeFile} from "@romejs/fs";
 import {FileNotFound} from "@romejs/core/common/FileNotFound";
 
 type LintWatchChanges = Array<{
@@ -254,14 +253,7 @@ class LintRunner {
 
 		// Run through save queue
 		if (saveQueue.size > 0) {
-			const {logger} = server;
-			logger.info("[Linter] Saving files");
-			logger.list(Array.from(saveQueue.keys(), (path) => path.toMarkup()));
-
-			// TODO maybe this could be parallelized?
-			for (const [path, content] of saveQueue) {
-				await writeFile(path, content);
-			}
+			await this.server.writeFiles(saveQueue);
 		}
 
 		return {savedCount: saveQueue.size};

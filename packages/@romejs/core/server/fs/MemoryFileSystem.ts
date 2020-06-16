@@ -400,7 +400,9 @@ export default class MemoryFileSystem {
 		}
 
 		// Wait for any subscribers that might need the file's stats
+		this.server.logger.info(`[MemoryFileSystem] File deleted:`, path.toMarkup());
 		await this.deletedFileEvent.call(path);
+		this.server.refreshFileEvent.send(path);
 
 		// Remove from 'all possible caches
 		this.files.delete(path);
@@ -436,6 +438,11 @@ export default class MemoryFileSystem {
 		const changed = await this.addFile(path, stats, opts);
 		if (changed) {
 			const newStats: Stats = this.getFileStatsAssert(path);
+			this.server.logger.info(
+				`[MemoryFileSystem] File change:`,
+				path.toMarkup(),
+			);
+			this.server.refreshFileEvent.send(path);
 			this.changedFileEvent.send({path, oldStats, newStats});
 		}
 		return changed;

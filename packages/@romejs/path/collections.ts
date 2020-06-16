@@ -79,7 +79,7 @@ class FilePathMap<FilePath extends UnknownFilePath, Value> {
 }
 
 class FilePathSet<FilePath extends UnknownFilePath> {
-	constructor(entries?: Array<FilePath>) {
+	constructor(entries?: Iterable<FilePath>) {
 		this.map = new FilePathMap();
 		this.size = 0;
 
