@@ -1,0 +1,30 @@
+@mixin desktop-only {
+  @media only screen and (min-width: $mobile-breakpoint + 1) {
+    @content;
+  }
+}
+
+@mixin mobile-only {
+  @media only screen and (max-width: $mobile-breakpoint) {
+    @content;
+  }
+}
+
+@mixin transition-timing{
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.57, 0.33, 0.19, 0.97);
+}
+
+@mixin pattern-white{
+  background-color: var(--background-color);
+  background-image: var(--pattern-img-path),
+  linear-gradient(180deg, var(--pattern-color) 20%, var(--pattern-color-2) 100%);
+  background-repeat: repeat;
+  background-position: 50%;
+}
+
+@mixin top-border{
+  @include transition-timing;
+  transition-property: border-top;
+  border-top: $unit / 3 solid var(--top-border-color);
+}

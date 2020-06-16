@@ -1,0 +1,15 @@
+.hero {
+  position: relative;
+  padding: $unit * 2;
+  border-bottom: 1px solid var(--soft-border-color);
+  border-right: 1px solid var(--soft-border-color);
+  @include pattern-white;
+
+  @include mobile-only() {
+    text-align: center;
+  }
+
+  h1, h2{
+    line-height: 1.5em;
+  }
+}

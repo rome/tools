@@ -1,0 +1,86 @@
+*,
+html {
+  box-sizing: border-box;
+}
+
+html {
+
+  @include transition-timing;
+  transition-property: background;
+  background: var(--background-color);
+
+}
+
+body {
+  font-size: 16px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell,
+    "Noto Sans", sans-serif, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: antialiased;
+  color: var(--font-color);
+  line-height: 1.5;
+  margin: 0;
+  @include desktop-only() {
+    border-top: $unit / 3 solid var(--top-border-color);
+  }
+}
+
+p{
+  margin-bottom: 1.5em;
+}
+
+h1{
+  font-size: 2em;
+  line-height: $body-line-height / 2em;
+}
+
+h2{
+  font-size: 1.5em;
+  line-height: $body-line-height / 1.5em;
+}
+
+h3{
+  font-size: 1em;
+  line-height: $body-line-height / 1em;
+}
+
+h3{
+  font-size: 0.7em;
+  line-height: $body-line-height / 0.7em;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: Libre Baskerville, serif;
+  color: var(--logo-font-color);
+}
+
+a {
+  color: inherit;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border-width: 0 !important;
+}
+
+.not-sr-only {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: normal !important;
+}

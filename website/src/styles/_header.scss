@@ -1,0 +1,88 @@
+// using a different element for desktop header and mobile header
+// so i can align the website in the middle of the page
+
+.header-mobile {
+  background: var(--background-color);
+  z-index: 3;
+  height: $unit * 4;
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  align-items: center;
+  padding: 0 $unit;
+  border-top: $unit / 3 solid var(--top-border-color);
+
+  .stretch {
+    flex-grow: 1;
+  }
+
+  @include mobile-only() {
+    width: 100%;
+    border-bottom: 1px solid var(--soft-border-color);
+    display: flex;
+  }
+}
+
+.header-desktop{
+  height: $unit * 4;
+  display: flex;
+  align-items: center;
+  padding: 0 $unit;
+  width: 100%;
+  @include mobile-only() {
+    display: none;
+  }
+}
+
+.logo {
+  display: inline-flex;
+  align-items: flex-end;
+  text-decoration: none;
+  font-size: 44px;
+  margin-left: $unit;
+  margin-bottom: $unit * 2;
+
+  svg {
+    width: 1em;
+    margin-right: $unit / 2;
+
+    .cls-1 {
+      fill: var(--logo-font-color);
+    }
+
+  }
+
+  .logo-text {
+    color: var(--logo-font-color);
+    line-height: 1em;
+    font-size: 1em;
+    font-family: Libre Baskerville, serif;
+    font-weight: bold;
+    position: relative;
+    top: 5.5px;
+    margin: 0;
+    @include mobile-only() {
+      top: 3.5px;
+    }
+  }
+
+  @include mobile-only() {
+    font-size: 32px;
+    margin-bottom: 0;
+  }
+}
+
+.mobile-handle {
+  height: 32px;
+  display: none;
+
+  svg path{
+    fill: var(--top-border-color);
+  }
+
+  @include mobile-only() {
+    display: inline-block;
+  }
+}

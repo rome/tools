@@ -1,0 +1,39 @@
+.content {
+  max-width: $container-width;
+  margin: 0 auto;
+  padding: 0 $unit * 2 $unit * 4 $unit * 2;
+
+  .header-anchor {
+    display: none;
+    text-decoration: none;
+    color: $color-4;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  h1:hover .header-anchor,
+  h2:hover .header-anchor,
+  h3:hover .header-anchor {
+    display: inline-block;
+  }
+
+  pre {
+    border-radius: $unit-border-radius;
+  }
+
+  h1 {
+    border-bottom: 1px solid var(--soft-border-color);
+    padding: $unit 0;
+    margin-top: $unit;
+  }
+
+
+  h2,
+  h3,
+  h4 {
+    padding: $unit / 4 0;
+  }
+
+}

@@ -1,0 +1,20 @@
+.row {
+  display: flex;
+  padding: 0 $unit / 2;
+
+  > div {
+    padding: 0 $unit / 2;
+    flex: 1;
+  }
+
+  @include mobile-only() {
+    display: block;
+  }
+}
+
+.container{
+  max-width: 1280px;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+}
