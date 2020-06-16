@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:7 lint/jsx-a11y/noAccessKey FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:7 lint/jsx-a11y/noAccessKey  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid the accessKey attribute to reduce inconsistencies between keyboard shortcuts and screen
     reader keyboard comments.
@@ -41,7 +41,7 @@
 
 ```
 
- unknown:1:7 lint/jsx-a11y/noAccessKey FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:7 lint/jsx-a11y/noAccessKey  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid the accessKey attribute to reduce inconsistencies between keyboard shortcuts and screen
     reader keyboard comments.

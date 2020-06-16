@@ -28,7 +28,7 @@ export default createLocalCommand({
 		const stdin = req.client.reporter.getStdin();
 		req.client.reporter.teardown();
 
-		const bridge = await req.client.findOrStartMaster();
+		const bridge = await req.client.findOrStartServer();
 		if (bridge === undefined) {
 			return false;
 		}
@@ -48,7 +48,7 @@ export default createLocalCommand({
 			{
 				commandName: "lsp",
 			},
-			"master",
+			"server",
 		);
 
 		return true;

@@ -60,7 +60,7 @@ module.exports = {
             {
               label: 'Code of Conduct',
               href:
-                'https://github.com/romejs/rome/blob/master/.github/CODE_OF_CONDUCT.md',
+                'https://github.com/romejs/rome/blob/master/CODE_OF_CONDUCT.md',
             },
             {
               label: 'Contributing',

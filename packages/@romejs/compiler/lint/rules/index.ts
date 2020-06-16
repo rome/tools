@@ -86,11 +86,13 @@ import jsxNoCommentText from "./react/jsxNoCommentText";
 import jsxNoDuplicateProps from "./react/jsxNoDuplicateProps";
 import jsxPascalCase from "./react/jsxPascalCase";
 import noAccessStateInSetState from "./react/noAccessStateInSetState";
+import noArrayIndexKey from "./react/noArrayIndexKey";
 import noChildrenProp from "./react/noChildrenProp";
 import noDanger from "./react/noDanger";
 import noDangerWithChildren from "./react/noDangerWithChildren";
 import noDidMountSetState from "./react/noDidMountSetState";
 import noDidUpdateSetState from "./react/noDidUpdateSetState";
+import noDirectMutationState from "./react/noDirectMutationState";
 import noFindDOMNode from "./react/noFindDOMNode";
 import noRedundantShouldComponentUpdate from "./react/noRedundantShouldComponentUpdate";
 import noStringRefs from "./react/noStringRefs";
@@ -185,11 +187,13 @@ export const lintTransforms = [
 	jsxNoDuplicateProps,
 	jsxPascalCase,
 	noAccessStateInSetState,
+	noArrayIndexKey,
 	noChildrenProp,
 	noDanger,
 	noDangerWithChildren,
 	noDidMountSetState,
 	noDidUpdateSetState,
+	noDirectMutationState,
 	noFindDOMNode,
 	noRedundantShouldComponentUpdate,
 	noStringRefs,

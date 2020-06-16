@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:7 lint/jsx-a11y/noAutofocus FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:7 lint/jsx-a11y/noAutofocus  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid the autoFocus attribute.
 
@@ -40,7 +40,7 @@
 
 ```
 
- unknown:1:7 lint/jsx-a11y/noAutofocus FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:7 lint/jsx-a11y/noAutofocus  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid the autoFocus attribute.
 
@@ -72,7 +72,7 @@
 
 ```
 
- unknown:1:7 lint/jsx-a11y/noAutofocus FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:7 lint/jsx-a11y/noAutofocus  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid the autoFocus attribute.
 

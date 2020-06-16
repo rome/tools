@@ -8,7 +8,7 @@
 import {TestHelper} from "rome";
 import lint from "../index";
 import {parseJS} from "@romejs/js-parser";
-import {createUnknownFilePath} from "@romejs/path";
+import {UnknownFilePath, createUnknownFilePath} from "@romejs/path";
 import {createDefaultProjectConfig} from "@romejs/project";
 import {ConstProgramSyntax, ConstSourceType} from "@romejs/ast";
 import {DiagnosticCategory, DiagnosticsProcessor} from "@romejs/diagnostics";
@@ -18,6 +18,7 @@ type TestLintOptions = {
 	category: undefined | DiagnosticCategory;
 	sourceType?: ConstSourceType;
 	syntax?: Array<ConstProgramSyntax>;
+	path?: UnknownFilePath | string;
 };
 
 type TestLintInput = {
@@ -41,7 +42,12 @@ export async function testLint(
 async function testLintExpect(
 	t: TestHelper,
 	input: string,
-	{syntax = ["jsx", "ts"], category, sourceType = "module"}: TestLintOptions,
+	{
+		syntax = ["jsx", "ts"],
+		category,
+		sourceType = "module",
+		path = createUnknownFilePath("unknown"),
+	}: TestLintOptions,
 	expectValid: boolean,
 ) {
 	t.addToAdvice({
@@ -73,7 +79,7 @@ async function testLintExpect(
 	const ast = parseJS({
 		input,
 		sourceType,
-		path: createUnknownFilePath("unknown"),
+		path,
 		syntax,
 	});
 

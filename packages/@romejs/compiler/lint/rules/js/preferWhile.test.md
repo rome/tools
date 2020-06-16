@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/js/preferWhile FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/js/preferWhile  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use while loops instead of for loops.
 
@@ -44,7 +44,7 @@ while (x.running) {
 
 ```
 
- unknown:1 lint/js/preferWhile FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/js/preferWhile  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use while loops instead of for loops.
 

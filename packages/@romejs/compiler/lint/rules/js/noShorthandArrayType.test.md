@@ -8,7 +8,7 @@
 
 ```
 
- unknown:2:13 lint/js/noShorthandArrayType FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:13 lint/js/noShorthandArrayType  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use <emphasis>Array<T> syntax</emphasis> instead of <emphasis>shorthand T[] syntax</emphasis>.
 

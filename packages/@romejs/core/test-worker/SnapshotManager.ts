@@ -11,7 +11,7 @@ import {
 	createAbsoluteFilePath,
 } from "@romejs/path";
 import {exists, readFileText, removeFile, writeFile} from "@romejs/fs";
-import {TestMasterRunnerOptions} from "../master/testing/types";
+import {TestServerRunnerOptions} from "../server/testing/types";
 import TestWorkerRunner from "./TestWorkerRunner";
 import {DiagnosticDescription, descriptions} from "@romejs/diagnostics";
 import {createSnapshotParser} from "./SnapshotParser";
@@ -100,7 +100,7 @@ export default class SnapshotManager {
 	snapshots: AbsoluteFilePathMap<Snapshot>;
 	fileLocker: Locker<string>;
 	runner: TestWorkerRunner;
-	options: TestMasterRunnerOptions;
+	options: TestServerRunnerOptions;
 	snapshotCounts: SnapshotCounts;
 
 	normalizeSnapshotPath(filename: undefined | string): AbsoluteFilePath {
@@ -291,7 +291,7 @@ export default class SnapshotManager {
 	}
 
 	async save() {
-		// If there'a s focused test then we don't write or validate a snapshot
+		// If there's a focused test then we don't write or validate a snapshot
 		if (this.runner.hasFocusedTests) {
 			return;
 		}

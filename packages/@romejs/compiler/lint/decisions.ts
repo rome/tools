@@ -19,7 +19,7 @@ import {
 } from "../types";
 import {ob1Get0, ob1Get1} from "@romejs/ob1";
 import {AbsoluteFilePath} from "@romejs/path";
-import {LinterCompilerOptionsPerFile} from "@romejs/core/master/linter/Linter";
+import {LinterCompilerOptionsPerFile} from "@romejs/core/server/linter/Linter";
 import {escapeSplit} from "@romejs/string-utils";
 
 type UnexpectedDecision = (

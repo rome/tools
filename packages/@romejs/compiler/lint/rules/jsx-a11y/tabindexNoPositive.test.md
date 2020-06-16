@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:6 lint/jsx-a11y/tabindexNoPositive FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:6 lint/jsx-a11y/tabindexNoPositive  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid positive integer values for the tabIndex attribute.
 
@@ -40,7 +40,7 @@
 
 ```
 
- unknown:1:6 lint/jsx-a11y/tabindexNoPositive FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:6 lint/jsx-a11y/tabindexNoPositive  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid positive integer values for the tabIndex attribute.
 
@@ -72,7 +72,7 @@
 
 ```
 
- unknown:1:6 lint/jsx-a11y/tabindexNoPositive FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:6 lint/jsx-a11y/tabindexNoPositive  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid positive integer values for the tabIndex attribute.
 

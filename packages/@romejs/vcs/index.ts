@@ -99,7 +99,7 @@ export class VCSClient {
 class GitVCSClient extends VCSClient {
 	constructor(root: AbsoluteFilePath) {
 		super(root);
-		this.trunkBranch = "master";
+		this.trunkBranch = "main";
 	}
 
 	async getUncommittedFiles(): Promise<Array<string>> {

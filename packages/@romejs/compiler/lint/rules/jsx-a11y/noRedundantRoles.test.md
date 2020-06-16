@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:9 lint/jsx-a11y/noRedundantRoles FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:9 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using the role attribute article on the article element is redundant.
 
@@ -37,7 +37,7 @@
 
 ```
 
- unknown:1:8 lint/jsx-a11y/noRedundantRoles FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:8 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using the role attribute button on the button element is redundant.
 
@@ -66,7 +66,7 @@
 
 ```
 
- unknown:1:4 lint/jsx-a11y/noRedundantRoles FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:4 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using the role attribute heading on the h1 element is redundant.
 
@@ -95,7 +95,7 @@
 
 ```
 
- unknown:1:4 lint/jsx-a11y/noRedundantRoles FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:4 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using the role attribute heading on the h1 element is redundant.
 
@@ -124,7 +124,7 @@
 
 ```
 
- unknown:1:8 lint/jsx-a11y/noRedundantRoles FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:8 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using the role attribute dialog on the dialog element is redundant.
 
@@ -153,7 +153,7 @@
 
 ```
 
- unknown:1:24 lint/jsx-a11y/noRedundantRoles FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:24 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using the role attribute checkbox on the input element is redundant.
 

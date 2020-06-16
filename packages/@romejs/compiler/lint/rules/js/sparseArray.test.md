@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:3 lint/js/sparseArray FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:3 lint/js/sparseArray  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ This array contains an empty slot.
 

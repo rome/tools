@@ -602,7 +602,7 @@ export default {
 			name: "BSD Source Code Attribution",
 			licenseId: "BSD-Source-Code",
 			seeAlso: [
-				"https://github.com/robbiehanson/CocoaHTTPServer/blob/master/LICENSE.txt",
+				"https://github.com/robbiehanson/CocoaHTTPServer/blob/server/LICENSE.txt",
 			],
 			isOsiApproved: false,
 		},
@@ -2154,7 +2154,7 @@ export default {
 			name: "Japan Network Information Center License",
 			licenseId: "JPNIC",
 			seeAlso: [
-				"https://gitlab.isc.org/isc-projects/bind9/blob/master/COPYRIGHT#L366",
+				"https://gitlab.isc.org/isc-projects/bind9/blob/server/COPYRIGHT#L366",
 			],
 			isOsiApproved: false,
 		},
@@ -2549,7 +2549,7 @@ export default {
 			seeAlso: [
 				"https://github.com/aws/mit-0",
 				"https://romanrm.net/mit-zero",
-				"https://github.com/awsdocs/aws-cloud9-user-guide/blob/master/LICENSE-SAMPLECODE",
+				"https://github.com/awsdocs/aws-cloud9-user-guide/blob/server/LICENSE-SAMPLECODE",
 			],
 			isOsiApproved: false,
 		},
@@ -2903,7 +2903,7 @@ export default {
 			name: "NTP No Attribution",
 			licenseId: "NTP-0",
 			seeAlso: [
-				"https://github.com/tytso/e2fsprogs/blob/master/lib/et/et_name.c",
+				"https://github.com/tytso/e2fsprogs/blob/server/lib/et/et_name.c",
 			],
 			isOsiApproved: false,
 		},
@@ -3773,7 +3773,7 @@ export default {
 			name: "Secure Messaging Protocol Public License",
 			licenseId: "SMPPL",
 			seeAlso: [
-				"https://github.com/dcblake/SMP/blob/master/Documentation/License.txt",
+				"https://github.com/dcblake/SMP/blob/server/Documentation/License.txt",
 			],
 			isOsiApproved: false,
 		},
@@ -4407,7 +4407,7 @@ export default {
 			referenceNumber: "69",
 			name: "bzip2 and libbzip2 License v1.0.6",
 			licenseId: "bzip2-1.0.6",
-			seeAlso: ["https://github.com/asimonov-im/bzip2/blob/master/LICENSE"],
+			seeAlso: ["https://github.com/asimonov-im/bzip2/blob/server/LICENSE"],
 			isOsiApproved: false,
 		},
 		{
@@ -4418,7 +4418,7 @@ export default {
 			name: "copyleft-next 0.3.0",
 			licenseId: "copyleft-next-0.3.0",
 			seeAlso: [
-				"https://github.com/copyleft-next/copyleft-next/blob/master/Releases/copyleft-next-0.3.0",
+				"https://github.com/copyleft-next/copyleft-next/blob/server/Releases/copyleft-next-0.3.0",
 			],
 			isOsiApproved: false,
 		},
@@ -4430,7 +4430,7 @@ export default {
 			name: "copyleft-next 0.3.1",
 			licenseId: "copyleft-next-0.3.1",
 			seeAlso: [
-				"https://github.com/copyleft-next/copyleft-next/blob/master/Releases/copyleft-next-0.3.1",
+				"https://github.com/copyleft-next/copyleft-next/blob/server/Releases/copyleft-next-0.3.1",
 			],
 			isOsiApproved: false,
 		},
@@ -4441,7 +4441,7 @@ export default {
 			referenceNumber: "314",
 			name: "curl License",
 			licenseId: "curl",
-			seeAlso: ["https://github.com/bagder/curl/blob/master/COPYING"],
+			seeAlso: ["https://github.com/bagder/curl/blob/server/COPYING"],
 			isOsiApproved: false,
 		},
 		{
@@ -4496,8 +4496,8 @@ export default {
 			name: "Etalab Open License 2.0",
 			licenseId: "etalab-2.0",
 			seeAlso: [
-				"https://github.com/DISIC/politique-de-contribution-open-source/blob/master/LICENSE.pdf",
-				"https://raw.githubusercontent.com/DISIC/politique-de-contribution-open-source/master/LICENSE",
+				"https://github.com/DISIC/politique-de-contribution-open-source/blob/server/LICENSE.pdf",
+				"https://raw.githubusercontent.com/DISIC/politique-de-contribution-open-source/server/LICENSE",
 			],
 			isOsiApproved: false,
 		},
@@ -4551,7 +4551,7 @@ export default {
 			name: "libselinux public domain notice",
 			licenseId: "libselinux-1.0",
 			seeAlso: [
-				"https://github.com/SELinuxProject/selinux/blob/master/libselinux/LICENSE",
+				"https://github.com/SELinuxProject/selinux/blob/server/libselinux/LICENSE",
 			],
 			isOsiApproved: false,
 		},

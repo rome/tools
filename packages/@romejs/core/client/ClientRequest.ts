@@ -6,37 +6,37 @@
  */
 
 import {
-	MasterQueryResponse,
-	PartialMasterQueryRequest,
-} from "../common/bridges/MasterBridge";
+	PartialServerQueryRequest,
+	ServerQueryResponse,
+} from "../common/bridges/ServerBridge";
 import {LocalCommand, localCommands} from "./commands";
 import Client from "./Client";
 import {consumeUnknown} from "@romejs/consume";
 import {BridgeError} from "@romejs/events";
 import review from "./review";
 
-export type ClientRequestType = "local" | "master";
+export type ClientRequestType = "local" | "server";
 
 export default class ClientRequest {
 	constructor(
 		client: Client,
 		type: ClientRequestType = "local",
-		query: PartialMasterQueryRequest,
+		query: PartialServerQueryRequest,
 	) {
 		this.client = client;
 		this.type = type;
 		this.query = query;
 	}
 
-	query: PartialMasterQueryRequest;
+	query: PartialServerQueryRequest;
 	type: ClientRequestType;
 	client: Client;
 
-	fork(query: PartialMasterQueryRequest): ClientRequest {
+	fork(query: PartialServerQueryRequest): ClientRequest {
 		return new ClientRequest(this.client, this.type, query);
 	}
 
-	async init(): Promise<MasterQueryResponse> {
+	async init(): Promise<ServerQueryResponse> {
 		try {
 			const {requestFlags} = this.query;
 			if (requestFlags !== undefined && requestFlags.review) {
@@ -56,15 +56,15 @@ export default class ClientRequest {
 		}
 	}
 
-	async initReview(): Promise<MasterQueryResponse> {
+	async initReview(): Promise<ServerQueryResponse> {
 		return review(this);
 	}
 
-	async initCommand(): Promise<MasterQueryResponse> {
+	async initCommand(): Promise<ServerQueryResponse> {
 		const localCommand = localCommands.get(this.query.commandName);
 
-		if (this.type === "master" || localCommand === undefined) {
-			return this.initFromMaster();
+		if (this.type === "server" || localCommand === undefined) {
+			return this.initFromServer();
 		} else {
 			return this.initFromLocal(localCommand);
 		}
@@ -73,7 +73,7 @@ export default class ClientRequest {
 	async initFromLocal(
 		// rome-ignore lint/js/noExplicitAny
 		localCommand: LocalCommand<any>,
-	): Promise<MasterQueryResponse> {
+	): Promise<ServerQueryResponse> {
 		const {query} = this;
 
 		let flags;
@@ -106,11 +106,11 @@ export default class ClientRequest {
 		}
 	}
 
-	async initFromMaster(): Promise<MasterQueryResponse> {
+	async initFromServer(): Promise<ServerQueryResponse> {
 		const {client} = this;
 
 		try {
-			const bridge = await client.findOrStartMaster();
+			const bridge = await client.findOrStartServer();
 			return await bridge.query.call(this.query);
 		} catch (err) {
 			if (err instanceof BridgeError) {
