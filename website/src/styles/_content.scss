@@ -38,10 +38,15 @@
 
 }
 
+table{
+  border-collapse: collapse;
+}
+
 tbody td{
   padding: $unit / 2;
+  border: 1px solid var(--soft-border-color);
 }
 
 tbody tr:nth-child(even) {
-  background-color: var(--soft-border-color);
+  background-color: var(--toc-background-active);
 }
