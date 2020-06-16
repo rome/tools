@@ -6,56 +6,51 @@
  */
 
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 import {dedent} from "@romejs/string-utils";
 
 test(
 	"case single statement",
 	async (t) => {
-		// VALID
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// Single statement
-				dedent`
-          switch (foo) {
-            case true:
-            case false:
-              return 'yes';
-          }
-        `,
-				// Single block
-				dedent`
-          switch (foo) {
-            case true: {
-              // empty
-            }
-          }
-        `,
-				// Nothing
-				dedent`
-          switch (foo) {
-            case true:
-          }
-        `,
-			],
-			{category: "lint/js/caseSingleStatement"},
-		);
-
-		// INVALID
-		await testLintMultiple(
-			t,
-			[
-				// Multiple statements
-				dedent`
-          switch (foo) {
-            case true:
-            case false:
-              let foo = '';
-              foo;
-          }
-        `,
-			],
+			{
+				invalid: [
+					// Multiple statements
+					dedent`
+						switch (foo) {
+							case true:
+							case false:
+								let foo = '';
+								foo;
+						}
+					`,
+				],
+				valid: [
+					// Single statement
+					dedent`
+						switch (foo) {
+							case true:
+							case false:
+								return 'yes';
+						}
+					`,
+					// Single block
+					dedent`
+						switch (foo) {
+							case true: {
+								// empty
+							}
+						}
+					`,
+					// Nothing
+					dedent`
+						switch (foo) {
+							case true:
+						}
+					`,
+				],
+			},
 			{category: "lint/js/caseSingleStatement"},
 		);
 	},

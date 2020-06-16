@@ -6,20 +6,22 @@
  */
 
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
 	"no shadow restricted names",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				"function NaN() {}",
-				"let Set;",
-				"!function Array() {}",
-				"function test(JSON) {}",
-				"try {  } catch(Object) {}",
-			],
+			{
+				invalid: [
+					"function NaN() {}",
+					"let Set;",
+					"try {  } catch(Object) {}",
+					"!function Array() {}",
+					"function test(JSON) {console.log(JSON)}",
+				],
+			},
 			{category: "lint/js/noShadowRestrictedNames"},
 		);
 	},

@@ -90,7 +90,7 @@ export default class WorkerAPI {
 	async moduleSignatureJS(ref: FileReference, parseOptions: WorkerParseOptions) {
 		const {ast, project} = await this.worker.parse(ref, parseOptions);
 
-		this.logger.info(`Generating export types:`, ref.real);
+		this.logger.info(`Generating module signature:`, ref.real.toMarkup());
 
 		return await jsAnalysis.getModuleSignature({
 			ast,
@@ -206,7 +206,7 @@ export default class WorkerAPI {
 	): Promise<AnalyzeDependencyResult> {
 		const project = this.worker.getProject(ref.project);
 		const {handler} = getFileHandlerAssert(ref.real, project.config);
-		this.logger.info(`Analyze dependencies:`, ref.real);
+		this.logger.info(`Analyze dependencies:`, ref.real.toMarkup());
 
 		const {analyzeDependencies} = handler;
 		if (analyzeDependencies === undefined) {
@@ -251,7 +251,7 @@ export default class WorkerAPI {
 			ref,
 			parseOptions,
 		);
-		this.logger.info(`Compiling:`, ref.real);
+		this.logger.info(`Compiling:`, ref.real.toMarkup());
 
 		const compilerOptions = await this.workerCompilerOptionsToCompilerOptions(
 			ref,
@@ -305,7 +305,7 @@ export default class WorkerAPI {
 		parseOptions: WorkerParseOptions,
 	): Promise<undefined | ExtensionLintResult> {
 		const project = this.worker.getProject(ref.project);
-		this.logger.info(`Formatting:`, ref.real);
+		this.logger.info(`Formatting:`, ref.real.toMarkup());
 
 		const {handler} = getFileHandlerAssert(ref.real, project.config);
 		const {format} = handler;
@@ -329,7 +329,7 @@ export default class WorkerAPI {
 		parseOptions: WorkerParseOptions,
 	): Promise<WorkerLintResult> {
 		const project = this.worker.getProject(ref.project);
-		this.logger.info(`Linting:`, ref.real);
+		this.logger.info(`Linting:`, ref.real.toMarkup());
 
 		// Get the extension handler
 		const {handler} = getFileHandlerAssert(ref.real, project.config);
@@ -337,7 +337,7 @@ export default class WorkerAPI {
 		const {lint} = handler;
 		if (lint === undefined && handler.format === undefined) {
 			return {
-				saved: false,
+				save: undefined,
 				diagnostics: [],
 				suppressions: [],
 			};
@@ -367,7 +367,7 @@ export default class WorkerAPI {
 		// These are fatal diagnostics
 		if (res.diagnostics !== undefined) {
 			return {
-				saved: false,
+				save: undefined,
 				suppressions: [],
 				diagnostics: res.diagnostics,
 			};
@@ -376,7 +376,7 @@ export default class WorkerAPI {
 		// `format` could have return undefined
 		if (res.value === undefined) {
 			return {
-				saved: false,
+				save: undefined,
 				diagnostics: [],
 				suppressions: [],
 			};
@@ -399,20 +399,25 @@ export default class WorkerAPI {
 
 		// Autofix if necessary
 		if (options.save && needsSave) {
-			// Save the file and evict it from the cache
-			await this.worker.writeFile(ref.real, formatted);
+			// Update our buffer to relint with the new contents
+			await this.worker.updateBuffer(ref, formatted);
 
 			// Relint this file without fixing it, we do this to prevent false positive error messages
-			return {
+			const res: WorkerLintResult = {
 				...(await this.lint(ref, {...options, save: false}, parseOptions)),
-				saved: true,
+				save: formatted,
 			};
+
+			// Clear our fake buffer
+			this.worker.clearBuffer(ref);
+
+			return res;
 		}
 
 		// If there's no pending fix then no need for diagnostics
 		if (!needsSave) {
 			return {
-				saved: false,
+				save: undefined,
 				diagnostics,
 				suppressions,
 			};
@@ -420,7 +425,7 @@ export default class WorkerAPI {
 
 		// Add pending autofix diagnostic
 		return {
-			saved: false,
+			save: undefined,
 			suppressions,
 			diagnostics: [
 				...diagnostics,

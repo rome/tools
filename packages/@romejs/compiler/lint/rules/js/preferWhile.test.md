@@ -8,9 +8,9 @@
 
 ```
 
- unknown:1 lint/js/preferWhile FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/js/preferWhile  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ A while loop should be used over a for loop
+  ✖ Use while loops instead of for loops.
 
   > 1 │ for (; x.running;) {
       │ ^^^^^^^^^^^^^^^^^^^^
@@ -19,11 +19,11 @@
 
   ℹ Recommended fix
 
-      │ - for (;·x.running;) {
-    1 │ + while (x.running) {
-      │ - ··x.step();
-    2 │ + ↹x.step();
-    3 │   }
+    1   │ - for (; x.running;) {
+      1 │ + while (x.running) {
+    2   │ -   x.step();
+      2 │ +   x.step();
+    3 3 │   }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -44,9 +44,9 @@ while (x.running) {
 
 ```
 
- unknown:1 lint/js/preferWhile FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/js/preferWhile  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ A while loop should be used over a for loop
+  ✖ Use while loops instead of for loops.
 
   > 1 │ for (;;) {
       │ ^^^^^^^^^^
@@ -55,11 +55,11 @@ while (x.running) {
 
   ℹ Recommended fix
 
-      │ - for (;;) {
-    1 │ + while (true) {
-      │ - ··doSomething();
-    2 │ + ↹doSomething();
-    3 │   }
+    1   │ - for (;;) {
+      1 │ + while (true) {
+    2   │ -   doSomething();
+      2 │ +   doSomething();
+    3 3 │   }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

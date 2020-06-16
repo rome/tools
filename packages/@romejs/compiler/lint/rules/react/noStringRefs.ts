@@ -4,7 +4,6 @@ import {
 	doesNodeMatchPattern,
 	getJSXAttribute,
 	hasJSXAttribute,
-	isJSXElement,
 } from "@romejs/js-ast-utils";
 import {JSXAttribute} from "@romejs/ast";
 
@@ -34,7 +33,7 @@ function containsStringContainer(attribute: JSXAttribute): boolean {
 }
 
 export default {
-	name: "noStringRefs",
+	name: "reactNoStringRefs",
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 
@@ -45,7 +44,7 @@ export default {
 			);
 		}
 
-		if (isJSXElement(node) && hasJSXAttribute(node, "ref")) {
+		if (node.type === "JSXElement" && hasJSXAttribute(node, "ref")) {
 			const ref = getJSXAttribute(node, "ref");
 
 			if (ref === undefined) {

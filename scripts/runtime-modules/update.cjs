@@ -18,7 +18,7 @@ const runtimeModules = path.join(root, "packages", "@romejs-runtime");
 const runtimeIndex = path.join(
 	packages,
 	"core",
-	"master",
+	"server",
 	"fs",
 	"runtime-modules.ts",
 );

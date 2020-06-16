@@ -758,8 +758,7 @@ export default class Grid {
 		}
 
 		if (hasText) {
-			// Wrap hr text in spaces
-			if (tag.name === "hr") {
+			if (tag.name === "hr" || tag.name === "inverse") {
 				return [
 					{
 						...tag,
@@ -910,7 +909,7 @@ function ansiFormatText(
 		}
 
 		case "inverse":
-			return formatAnsi.inverse(` ${value} `);
+			return formatAnsi.inverse(value);
 
 		case "emphasis":
 			return formatAnsi.bold(value);

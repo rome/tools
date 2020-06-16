@@ -6,7 +6,7 @@
  */
 
 import {AnyJSStatement, JSDirective, JSNodeBase} from "@romejs/ast";
-import {createQuickBuilder} from "../utils";
+import {createQuickBuilder} from "../../utils";
 
 export type JSBlockStatement = JSNodeBase & {
 	type: "JSBlockStatement";

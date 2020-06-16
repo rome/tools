@@ -122,12 +122,11 @@ export default {
 				// Produce diagnostics
 				const {results, fixed} = check(loc, value);
 				let suppressed = false;
-				for (const {loc, word, description, suggestion, advice} of results) {
+				for (const {loc, description, suggestion, advice} of results) {
 					({suppressed} = context.addLocDiagnostic(
 						loc,
 						descriptions.LINT.JS_CONFUSING_LANGUAGE(
 							description,
-							word,
 							suggestion,
 							advice,
 						),

@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {jsObjectExpression} from "@romejs/ast";
 import {Path} from "@romejs/compiler";
 import {
 	doesNodeMatchPattern,
@@ -74,7 +73,7 @@ export default {
 			if (isModuleExports) {
 				const {right} = node;
 
-				if (jsObjectExpression.is(right)) {
+				if (right.type === "JSObjectExpression") {
 					context.record(
 						new ExportRecord({
 							type: "local",

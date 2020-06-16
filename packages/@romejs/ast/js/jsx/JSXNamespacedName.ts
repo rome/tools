@@ -6,7 +6,7 @@
  */
 
 import {JSNodeBase, JSXIdentifier} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSXNamespacedName = JSNodeBase & {
 	type: "JSXNamespacedName";

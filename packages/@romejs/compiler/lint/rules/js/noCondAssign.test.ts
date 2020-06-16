@@ -14,41 +14,48 @@ test(
 	async (t) => {
 		await testLint(
 			t,
-			dedent`
-        for (let i = 1; i = 10; i++) {
-          console.log('foo');
-        }
-      `,
-			{category: "lint/js/noCondAssign"},
-		);
-
-		await testLint(
-			t,
-			dedent`
-        if (foo = 'bar') {
-          console.log('foo');
-        }
-      `,
-			{category: "lint/js/noCondAssign"},
-		);
-
-		await testLint(
-			t,
-			dedent`
-        while (foo = 'bar') {
-          console.log('foo');
-        }
-      `,
-			{category: "lint/js/noCondAssign"},
-		);
-
-		await testLint(
-			t,
-			dedent`
-        do {
-          console.log('foo');
-        } while (foo = 'bar')
-      `,
+			{
+				invalid: [
+					dedent`
+						for (let i = 1; i = 10; i++) {
+							console.log('foo');
+						}
+					`,
+					dedent`
+						if (foo = 'bar') {
+							console.log('foo');
+						}
+					`,
+					dedent`
+						while (foo = 'bar') {
+							console.log('foo');
+						}
+					`,
+					dedent`
+						do {
+							console.log('foo');
+						} while (foo = 'bar')
+                    `,
+					dedent`
+						(foo = bar) ? foo() : bar();
+					`,
+				],
+				valid: [
+					dedent`
+						while ((foo = foo.bar) !== undefined) {
+							console.log(foo);
+						}
+					`,
+					dedent`
+						if (foo++ === 3) {
+							console.log(foo);
+						}
+					`,
+					dedent`
+						foo = bar ? foo() : bar();
+					`,
+				],
+			},
 			{category: "lint/js/noCondAssign"},
 		);
 	},

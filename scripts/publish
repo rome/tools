@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+
+require("./_setup.cjs");
+
+const {heading, buildRelease, exec, unlink} = require("./_utils.cjs");
+const path = require("path");
+const child = require("child_process");
+const os = require("os");
+const fs = require("fs");
+
+const releaseFolder = path.join(os.tmpdir(), "rome-publish-release");
+const releaseManifest = path.join(releaseFolder, "package.json");
+
+function setName(name) {
+  const manifest = {
+    ...JSON.parse(fs.readFileSync(releaseManifest, "utf8")),
+    name,
+  };
+  fs.writeFileSync(releaseManifest, JSON.stringify(manifest, null, "\t") + "\n");
+}
+
+function publishRegistry(registry) {
+  exec("npm", ["publish", "--registry", registry], releaseFolder);
+}
+
+try {
+  heading("Building release");
+  buildRelease([releaseFolder]);
+
+  heading("Publishing to registry.npmjs.com");
+  setName("rome");
+  publishRegistry("https://registry.npmjs.org/");
+
+  heading("Publishing to npm.pkg.github.com");
+  setName("@romejs/rome");
+  publishRegistry("https://npm.pkg.github.com/");
+} finally {
+  unlink(releaseFolder);
+}

@@ -10,13 +10,13 @@
 // Project configs are initialized very infrequently anyway so we can live with the extremely minor perf hit.
 import {Consumer} from "@romejs/consume";
 import {
-	DEFAULT_PROJECT_CONFIG,
 	PartialProjectConfig,
 	ProjectConfig,
 	ProjectConfigMeta,
 	ProjectConfigMetaHard,
 	ProjectConfigObjects,
 	ProjectConfigTarget,
+	createDefaultProjectConfig,
 } from "./types";
 import {parsePathPatternsFile} from "@romejs/path-match";
 import {
@@ -28,7 +28,12 @@ import {
 } from "./utils";
 import {ConsumeJSONResult, consumeJSONExtra} from "@romejs/codec-json";
 import {AbsoluteFilePath, AbsoluteFilePathSet} from "@romejs/path";
-import {existsSync, lstatSync, readFileTextSync, readdirSync} from "@romejs/fs";
+import {
+	existsSync,
+	lstatSync,
+	readDirectorySync,
+	readFileTextSync,
+} from "@romejs/fs";
 import crypto = require("crypto");
 import {ROME_CONFIG_PACKAGE_JSON_FIELD} from "./constants";
 import {parseSemverRange} from "@romejs/codec-semver";
@@ -62,10 +67,11 @@ export function loadCompleteProjectConfig(
 	const {consumer} = meta;
 
 	// Produce a defaultConfig with some folder specific values
+	const _defaultConfig: ProjectConfig = createDefaultProjectConfig();
 	const defaultConfig: ProjectConfig = {
-		...DEFAULT_PROJECT_CONFIG,
+		..._defaultConfig,
 		vcs: {
-			...DEFAULT_PROJECT_CONFIG.vcs,
+			..._defaultConfig.vcs,
 			root: projectFolder,
 		},
 	};
@@ -75,11 +81,9 @@ export function loadCompleteProjectConfig(
 	);
 
 	const config: ProjectConfig = {
-		...DEFAULT_PROJECT_CONFIG,
+		...defaultConfig,
 		name,
-		root: partial.root === undefined
-			? DEFAULT_PROJECT_CONFIG.root
-			: partial.root,
+		root: partial.root === undefined ? defaultConfig.root : partial.root,
 		...mergePartialConfig(defaultConfig, partial),
 	};
 
@@ -344,7 +348,7 @@ function normalizeTypeCheckingLibs(
 
 	// Crawl library folders and add their files
 	for (const folder of folders) {
-		const files = readdirSync(folder);
+		const files = readDirectorySync(folder);
 		for (const file of files) {
 			const stats = lstatSync(file);
 			if (stats.isFile()) {

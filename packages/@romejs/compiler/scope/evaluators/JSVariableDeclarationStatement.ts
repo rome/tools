@@ -6,18 +6,20 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, JSVariableDeclarationStatement} from "@romejs/ast";
+import {AnyNode, jsVariableDeclarationStatement} from "@romejs/ast";
 import {getBindingIdentifiers} from "@romejs/js-ast-utils";
+import {createScopeEvaluator} from "./index";
 
-export default {
-	creator: false,
-	build(node: JSVariableDeclarationStatement, parent: AnyNode, scope: Scope) {
+export default createScopeEvaluator({
+	inject(node: AnyNode, parent: AnyNode, scope: Scope) {
+		node = jsVariableDeclarationStatement.assert(node);
+
 		if (node.declare) {
 			for (const {name} of getBindingIdentifiers(node)) {
 				scope.addGlobal(name);
 			}
 		} else {
-			scope.evaluate(node.declaration, node);
+			scope.injectEvaluate(node.declaration, node);
 		}
 	},
-};
+});

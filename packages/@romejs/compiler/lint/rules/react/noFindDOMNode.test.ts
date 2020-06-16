@@ -6,21 +6,20 @@
  */
 
 import {test} from "rome";
-
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
-	"do not allow findDOMNode",
+	"react no find dom node",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				"findDOMNode(this).scrollIntoView()",
-				"ReactDOM.findDOMNode(this).scrollIntoView()",
-				// VALID
-				"this.node.scrollIntoView()",
-			],
+			{
+				invalid: [
+					"findDOMNode(this).scrollIntoView()",
+					"ReactDOM.findDOMNode(this).scrollIntoView()",
+				],
+				valid: ["this.node.scrollIntoView()"],
+			},
 			{category: "lint/react/noFindDOMNode"},
 		);
 	},

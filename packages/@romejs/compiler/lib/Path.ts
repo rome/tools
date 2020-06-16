@@ -60,7 +60,7 @@ export default class Path {
 
 		const parentScope =
 			opts.parentScope === undefined || isRoot(node)
-				? context.getRootScope()
+				? context.rootScope
 				: opts.parentScope;
 
 		let scope = opts.scope;
@@ -68,7 +68,7 @@ export default class Path {
 			if (opts.noScopeCreation === true) {
 				scope = parentScope;
 			} else {
-				scope = parentScope.evaluate(node, this.parent, true);
+				scope = parentScope.enterEvaluate(node, this.parent);
 			}
 		}
 		this.scope = scope;

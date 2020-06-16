@@ -6,39 +6,41 @@
  */
 
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 import {dedent} from "@romejs/string-utils";
 
 test(
 	"empty blocks",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// VALID
-				dedent`
-          if (foo) foo;
-        `,
-				dedent`
-          if (foo) {
-            foo;
-          }
-        `,
-				dedent`
-          if (foo) {
-            // empty
-          }
-        `,
-				// INVALID
-				dedent`
-          if (foo) {}
-        `,
-				dedent`
-          if (foo) {
-            // foo;
-          } else {}
-        `,
-			],
+			{
+				invalid: [
+					dedent`
+						if (foo) {}
+					`,
+					dedent`
+						if (foo) {
+							// foo;
+						} else {}
+					`,
+				],
+				valid: [
+					dedent`
+						if (foo) foo;
+					`,
+					dedent`
+						if (foo) {
+							foo;
+						}
+					`,
+					dedent`
+						if (foo) {
+							// empty
+						}
+					`,
+				],
+			},
 			{category: "lint/js/emptyBlocks"},
 		);
 	},

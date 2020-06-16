@@ -6,7 +6,7 @@
  */
 
 import {JSNodeBase, JSVariableDeclarator} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSVariableDeclarationKind = "var" | "let" | "const";
 

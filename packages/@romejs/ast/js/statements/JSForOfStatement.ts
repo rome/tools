@@ -12,7 +12,7 @@ import {
 	JSNodeBase,
 	JSVariableDeclaration,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSForOfStatement = JSNodeBase & {
 	type: "JSForOfStatement";

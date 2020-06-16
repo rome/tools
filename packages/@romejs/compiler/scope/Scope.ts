@@ -17,8 +17,6 @@ import {
 } from "@romejs/js-ast-utils";
 import Path from "../lib/Path";
 
-let scopeCounter = 0;
-
 Error.stackTraceLimit = Infinity;
 
 type ScopeBindings = Map<string, Binding>;
@@ -29,6 +27,7 @@ export type ScopeKind =
 	| "function"
 	| "block"
 	| "loop"
+	| "type-generic"
 	| "class";
 
 export default class Scope {
@@ -50,7 +49,6 @@ export default class Scope {
 		this.node = node;
 		this.kind = kind;
 		this.bindings = new Map();
-		this.id = scopeCounter++;
 		this.hasHoistedVars = false;
 		this.globals = new Set();
 
@@ -62,7 +60,6 @@ export default class Scope {
 	rootScope: undefined | RootScope;
 	parentScope: undefined | Scope;
 	globals: Set<string>;
-	id: number;
 	node: undefined | AnyNode;
 	kind: ScopeKind;
 	hasHoistedVars: boolean;
@@ -103,10 +100,9 @@ export default class Scope {
 		return rootScope;
 	}
 
-	evaluate(
-		node?: AnyNode,
+	enterEvaluate(
+		node: undefined | AnyNode,
 		parent: AnyNode = MOCK_PARENT,
-		creatorOnly: boolean = false,
 		force: boolean = false,
 	): Scope {
 		if (node === undefined) {
@@ -116,29 +112,34 @@ export default class Scope {
 		if (!force && node === this.node) {
 			return this;
 		}
+
 		const cached = this.childScopeCache.get(node);
 		if (cached !== undefined) {
 			return cached;
 		}
 
-		let evaluator = evaluators.get(node.type);
-
-		if (!creatorOnly && evaluator !== undefined && evaluator.creator) {
-			evaluator = undefined;
-		}
-
-		if (evaluator === undefined) {
+		const evaluator = evaluators.get(node.type);
+		if (evaluator === undefined || evaluator.enter === undefined) {
 			return this;
 		}
 
-		let scope = evaluator.build(node, parent, this);
+		let scope = evaluator.enter(node, parent, this);
+		this.childScopeCache.set(node, scope);
 
-		if (scope === undefined) {
-			scope = this;
+		return scope;
+	}
+
+	injectEvaluate(node: undefined | AnyNode, parent: AnyNode = MOCK_PARENT): void {
+		if (node === undefined) {
+			return;
 		}
 
-		this.childScopeCache.set(node, scope);
-		return scope;
+		const evaluator = evaluators.get(node.type);
+		if (evaluator === undefined || evaluator.inject === undefined) {
+			return;
+		}
+
+		evaluator.inject(node, parent, this);
 	}
 
 	fork(kind: ScopeKind, node: undefined | AnyNode): Scope {
@@ -151,20 +152,48 @@ export default class Scope {
 		});
 	}
 
-	dump(root: boolean = true) {
-		if (root) {
-			console.log("START");
+	// Debug utility for dumping scope information
+	dump(): string {
+		const lines = [];
+
+		lines.push(`# Scope ${this.kind}`);
+
+		if (this.globals.size > 0) {
+			const filteredGlobals: Array<string> = [];
+			for (const name of this.globals) {
+				if (globalGlobals.includes(name)) {
+					continue;
+				}
+
+				filteredGlobals.push(name);
+			}
+
+			if (filteredGlobals.length > 0) {
+				lines.push("## Globals");
+
+				for (const name of filteredGlobals) {
+					lines.push(` * ${name}`);
+				}
+			}
 		}
-		console.log("------", this.id, this.kind);
-		for (const [name, binding] of this.bindings) {
-			console.log(" ", binding.id, "-", binding.constructor.name, name);
+
+		if (this.bindings.size > 0) {
+			lines.push("## Variables");
+			for (const [name, binding] of this.bindings) {
+				lines.push(` * ${binding.kind} ${name}`);
+			}
 		}
+
+		return lines.join("\n");
+	}
+
+	dumpAncestry() {
+		const lines = [];
+		lines.push(this.dump());
 		if (this.parentScope !== undefined) {
-			this.parentScope.dump(false);
+			lines.push(this.parentScope.dump());
 		}
-		if (root) {
-			console.log("END");
-		}
+		return lines.join("\n");
 	}
 
 	getOwnBinding(name: string): undefined | Binding {
@@ -237,6 +266,19 @@ export default class Scope {
 const GLOBAL_COMMENT_START = /^([\s+]|)global /;
 const GLOBAL_COMMENT_COLON = /:(.*?)$/;
 
+// lol global globals
+const globalGlobals = [
+	...GLOBALS.builtin,
+	...GLOBALS.es5,
+	...GLOBALS.es2015,
+	...GLOBALS.es2017,
+	...GLOBALS.browser,
+	...GLOBALS.worker,
+	...GLOBALS.node,
+	...GLOBALS.commonjs,
+	...GLOBALS.serviceworker,
+];
+
 export class RootScope extends Scope {
 	constructor(context: CompilerContext, ast: JSRoot) {
 		super({
@@ -249,15 +291,7 @@ export class RootScope extends Scope {
 		this.context = context;
 
 		this.globals = new Set([
-			...GLOBALS.builtin,
-			...GLOBALS.es5,
-			...GLOBALS.es2015,
-			...GLOBALS.es2017,
-			...GLOBALS.browser,
-			...GLOBALS.worker,
-			...GLOBALS.node,
-			...GLOBALS.commonjs,
-			...GLOBALS.serviceworker,
+			...globalGlobals,
 			...context.project.config.lint.globals,
 			...this.parseGlobalComments(ast),
 		]);
@@ -298,10 +332,8 @@ export class RootScope extends Scope {
 
 					const value = match[1].trim();
 
-					// Other tools would flag these as unavailable and remove them from the master set
-
+					// Other tools would flag these as unavailable and remove them from the server set
 					// We don't do that, we might want to later though?
-
 					// Also, we should maybe validate the value to only true/false
 					if (value === "false") {
 						break;

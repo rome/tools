@@ -32,7 +32,7 @@ import {
 	TestWorkerPrepareTestResult,
 	TestWorkerRunTestOptions,
 } from "../common/bridges/TestWorkerBridge";
-import {TestMasterRunnerOptions} from "../master/testing/types";
+import {TestServerRunnerOptions} from "../server/testing/types";
 import SnapshotManager, {
 	InlineSnapshotUpdate,
 	SnapshotCounts,
@@ -141,7 +141,7 @@ export default class TestWorkerRunner {
 	bridge: TestWorkerBridge;
 	projectFolder: AbsoluteFilePath;
 	file: FileReference;
-	options: TestMasterRunnerOptions;
+	options: TestServerRunnerOptions;
 	snapshotManager: SnapshotManager;
 	opts: TestWorkerPrepareTestOptions;
 	locked: boolean;
@@ -158,7 +158,9 @@ export default class TestWorkerRunner {
 			if (args.length === 1 && typeof args[0] === "string") {
 				textParts.push(escapeMarkup(args[0]));
 			} else {
-				textParts = args.map((arg) => prettyFormat(arg, {markup: true}));
+				textParts = args.map((arg) =>
+					prettyFormat(arg, {allowCustom: false, markup: true})
+				);
 			}
 			const text = textParts.join(" ");
 

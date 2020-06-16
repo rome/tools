@@ -20,6 +20,7 @@ if (ruleName === undefined || category === undefined) {
 }
 
 const camelCasedName = toCamelCase(ruleName);
+const groupCamelCasedName = toCamelCase(`${category}-${ruleName}`);
 const spacedName = camelCasedName.replace(/([A-Z+])/g, " $1").trim().toLowerCase();
 const descriptionKey = `${category}_${spacedName}`.toUpperCase().replace(
 	/[\s\-]/g,
@@ -40,7 +41,7 @@ write(
 import {descriptions} from "@romejs/diagnostics";
 
 export default {
- name: "${camelCasedName}",
+ name: "${groupCamelCasedName}",
  enter(path: Path): TransformExitResult {
 	 const {node} = path;
 
@@ -60,19 +61,17 @@ export default {
 write(
 	testLoc,
 	`import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
-	"${spacedName}",
+	"${category} ${spacedName}",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				"",
-				// VALID
-				"",
-			],
+			{
+				invalid: [""],
+				valid: [""],
+			},
 			{category: "${categoryName}"},
 		);
 	},

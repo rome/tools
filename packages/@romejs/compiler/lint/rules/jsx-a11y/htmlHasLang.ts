@@ -1,17 +1,33 @@
-/**
-* Copyright (c) Facebook, Inc. and its affiliates.
-*
-* This source code is licensed under the MIT license found in the
-* LICENSE file in the root directory of this source tree.
-*/
-
 import {descriptions} from "@romejs/diagnostics";
-import {AnyNode} from "@romejs/ast";
+import {AnyNode, JSXElement} from "@romejs/ast";
 import {Path} from "@romejs/compiler";
-import {hasJSXAttribute, isJSXElement} from "@romejs/js-ast-utils";
+import {
+	getJSXAttribute,
+	hasJSXAttribute,
+	isJSXElement,
+} from "@romejs/js-ast-utils";
+import isEmptyTemplateLiteral from "@romejs/js-ast-utils/isEmptyTemplateLiteral";
 
-function jsxHTMLMissingLang(node: AnyNode) {
-	return isJSXElement(node, "html") && !hasJSXAttribute(node, "lang");
+function validLang(node: JSXElement) {
+	if (hasJSXAttribute(node, "lang")) {
+		const attr = getJSXAttribute(node, "lang");
+		if (attr && attr.value) {
+			if (attr.value.type === "JSXExpressionContainer") {
+				const expression = attr.value.expression;
+				if (expression.type === "JSTemplateLiteral") {
+					return !isEmptyTemplateLiteral(expression);
+				}
+				return (
+					expression.type !== "JSNumericLiteral" &&
+					expression.type !== "JSBooleanLiteral"
+				);
+			} else if (attr.value.type === "JSStringLiteral") {
+				return true;
+			}
+			return false;
+		}
+	}
+	return false;
 }
 
 export default {
@@ -19,12 +35,13 @@ export default {
 
 	enter(path: Path): AnyNode {
 		const {node} = path;
-
-		if (jsxHTMLMissingLang(node)) {
-			path.context.addNodeDiagnostic(
-				node,
-				descriptions.LINT.JSX_A11Y_HTML_HAS_LANG,
-			);
+		if (isJSXElement(node, "html")) {
+			if (!hasJSXAttribute(node, "lang") || !validLang(node)) {
+				path.context.addNodeDiagnostic(
+					node,
+					descriptions.LINT.JSX_A11Y_HTML_HAS_LANG,
+				);
+			}
 		}
 
 		return node;

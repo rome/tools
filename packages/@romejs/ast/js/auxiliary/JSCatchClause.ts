@@ -6,7 +6,7 @@
  */
 
 import {AnyJSBindingPattern, JSBlockStatement, JSNodeBase} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSCatchClause = JSNodeBase & {
 	type: "JSCatchClause";

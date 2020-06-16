@@ -6,12 +6,13 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, TSInterfaceDeclaration} from "@romejs/ast";
+import {AnyNode, tsInterfaceDeclaration} from "@romejs/ast";
 import {TypeBinding} from "@romejs/compiler";
+import {createScopeEvaluator} from "./index";
 
-export default {
-	creator: false,
-	build(node: TSInterfaceDeclaration, parent: AnyNode, scope: Scope) {
+export default createScopeEvaluator({
+	inject(node: AnyNode, parent: AnyNode, scope: Scope) {
+		node = tsInterfaceDeclaration.assert(node);
 		scope.addBinding(
 			new TypeBinding(
 				{
@@ -24,4 +25,4 @@ export default {
 			),
 		);
 	},
-};
+});

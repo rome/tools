@@ -1,58 +1,103 @@
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-	"no this.setState in componentWillUpdate",
+	"react no will update set state",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				`
-        class Hello extends React.Component {
-          componentWillUpdate() {
-            this.setState({
-              name: 'John'
-            });
-          }
-        }
-        `,
-				`
-        class Hello extends React.Component {
-          componentWillUpdate() {
-            foo();
-            this.setState({
-              name: 'John'
-            });
-          }
-        }
-        `,
-				`
-        class Hello extends Component {
-          UNSAFE_componentWillUpdate() {
-            foo();
-            this.setState({
-              name: 'John'
-            });
-          }
-        }
-        `,
-				// VALID
-				`
-        class Hello extends React.Component {
-          componentWillUpdate() {
-						foo()
-          }
-        }
-				`,
-				`
-        class Hello extends React.Component {
-          UNSAFE_componentWillUpdate() {
-						foo()
-          }
-        }
-        `,
-			],
+			{
+				invalid: [
+					dedent`
+						class Hello extends React.Component {
+							componentWillUpdate() {
+								this.setState({
+									name: 'John'
+								});
+							}
+						}
+					`,
+					dedent`
+						class Hello extends React.Component {
+							componentWillUpdate() {
+								foo();
+								this.setState({
+									name: 'John'
+								});
+							}
+						}
+					`,
+					dedent`
+						class Hello extends Component {
+							componentWillUpdate() {
+								this.setState({
+									name: 'John'
+								});
+							}
+						}
+					`,
+					dedent`
+						class Hello extends Component {
+							componentWillUpdate() {
+								foo();
+								this.setState({
+									name: 'John'
+								});
+							}
+						}
+					`,
+					dedent`
+						class Hello extends React.Component {
+							UNSAFE_componentWillUpdate() {
+								this.setState({
+									name: 'John'
+								});
+							}
+						}
+					`,
+					dedent`
+						class Hello extends Component {
+							UNSAFE_componentWillUpdate() {
+								this.setState({
+									name: 'John'
+								});
+							}
+						}
+					`,
+				],
+				valid: [
+					dedent`
+						class Hello extends React.Component {
+							componentWillUpdate() {
+								if (condition) {
+									this.setState({
+										name: 'John'
+									});
+								}
+							}
+						}
+					`,
+					dedent`
+						class Hello extends React.Component {
+							componentWillUpdate() {
+								condition && this.setState({
+									name: 'John'
+								});
+							}
+						}
+					`,
+					dedent`
+						class Hello extends React.Component {
+							componentWillUpdate() {
+								condition ? this.setState({
+									name: 'John'
+								}) : undefined;
+							}
+						}
+					`,
+				],
+			},
 			{category: "lint/react/noWillUpdateSetState"},
 		);
 	},

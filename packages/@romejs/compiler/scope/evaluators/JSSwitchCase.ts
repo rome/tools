@@ -6,13 +6,14 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, JSSwitchCase} from "@romejs/ast";
+import {AnyNode, jsSwitchCase} from "@romejs/ast";
+import {createScopeEvaluator} from "./index";
 
-export default {
-	creator: false,
-	build(node: JSSwitchCase, parent: AnyNode, scope: Scope) {
+export default createScopeEvaluator({
+	inject(node: AnyNode, parent: AnyNode, scope: Scope) {
+		node = jsSwitchCase.assert(node);
 		for (const child of node.consequent) {
-			scope.evaluate(child, node);
+			scope.injectEvaluate(child, node);
 		}
 	},
-};
+});

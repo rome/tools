@@ -6,17 +6,17 @@
  */
 
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
 	"no comma operator",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				"(0, 1, 2)",
-			],
+			{
+				invalid: ["(0, 1, 2)", "test(), rome()"],
+				valid: ["foo(0, 1, 2)", "[1, 2,]", "[1,,,3]", "let a, b, c;"],
+			},
 			{category: "lint/js/noCommaOperator"},
 		);
 	},

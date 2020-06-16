@@ -11,7 +11,7 @@ import {
 	JSTemplateLiteral,
 	TSTypeParameterInstantiation,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSTaggedTemplateExpression = JSNodeBase & {
 	type: "JSTaggedTemplateExpression";

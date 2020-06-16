@@ -1,7 +1,6 @@
 import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
 import {DiagnosticsDuplicateHelper} from "@romejs/compiler/lib/DiagnosticsDuplicateHelper";
-import {isJSXElement} from "@romejs/js-ast-utils";
 import {JSXAttribute} from "@romejs/ast";
 
 function getAttributeKey(node: JSXAttribute): string {
@@ -10,12 +9,12 @@ function getAttributeKey(node: JSXAttribute): string {
 }
 
 export default {
-	name: "jsxNoDuplicateProps",
+	name: "reactJsxNoDuplicateProps",
 
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 
-		if (!isJSXElement(node)) {
+		if (node.type !== "JSXElement") {
 			return node;
 		}
 

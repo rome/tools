@@ -13,7 +13,7 @@ import {
 	JSNodeBase,
 	TSTypeParameterDeclaration,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type TSSignatureDeclarationMeta = JSNodeBase & {
 	type: "TSSignatureDeclarationMeta";

@@ -14,10 +14,9 @@ import WorkerBridge, {
 	WorkerProjects,
 } from "../common/bridges/WorkerBridge";
 import {AnyRoot, ConstSourceType, JSRoot} from "@romejs/ast";
-import Logger from "../common/utils/Logger";
+import Logger, {PartialLoggerOptions} from "../common/utils/Logger";
 import {Profiler} from "@romejs/v8";
-import WorkerAPI from "./WorkerAPI";
-import {Reporter} from "@romejs/cli-reporter";
+
 import setupGlobalErrorHandlers from "../common/utils/setupGlobalErrorHandlers";
 import {UserConfig, loadUserConfig} from "../common/userConfig";
 import {hydrateJSONProjectConfig} from "@romejs/project";
@@ -36,6 +35,8 @@ import {
 } from "../common/types/files";
 import {getFileHandlerAssert} from "../common/file-handlers/index";
 import {TransformProjectDefinition} from "@romejs/compiler";
+import WorkerAPI from "./WorkerAPI";
+import {FileNotFound} from "../common/FileNotFound";
 
 export type ParseResult = {
 	ast: AnyRoot;
@@ -47,6 +48,8 @@ export type ParseResult = {
 };
 
 type WorkerOptions = {
+	loggerOptions?: PartialLoggerOptions;
+	userConfig?: UserConfig;
 	globalErrorHandlers: boolean;
 	bridge: WorkerBridge;
 };
@@ -55,7 +58,8 @@ export default class Worker {
 	constructor(opts: WorkerOptions) {
 		this.bridge = opts.bridge;
 
-		this.userConfig = loadUserConfig();
+		this.userConfig =
+			opts.userConfig === undefined ? loadUserConfig() : opts.userConfig;
 		this.partialManifests = new Map();
 		this.projects = new Map();
 		this.astCache = new AbsoluteFilePathMap();
@@ -63,14 +67,17 @@ export default class Worker {
 		this.buffers = new AbsoluteFilePathMap();
 
 		this.logger = new Logger(
-			"worker",
+			{
+				...opts.loggerOptions,
+				type: "worker",
+			},
 			() => opts.bridge.log.hasSubscribers(),
 			{
 				streams: [
 					{
 						type: "all",
 						format: "none",
-						columns: Reporter.DEFAULT_COLUMNS,
+						columns: Infinity,
 						unicode: true,
 						write(chunk) {
 							opts.bridge.log.send(chunk.toString());
@@ -112,7 +119,7 @@ export default class Worker {
 	}
 
 	end() {
-		// This will only actually be called when a Worker is created inside of the Master
+		// This will only actually be called when a Worker is created inside of the Server
 		// Clear internal maps for memory, in case the Worker instance sticks around
 		this.astCache.clear();
 		this.projects.clear();
@@ -225,15 +232,22 @@ export default class Worker {
 				payload.content,
 			);
 		});
+
+		bridge.clearBuffer.subscribe((payload) => {
+			return this.clearBuffer(convertTransportFileReference(payload.file));
+		});
 	}
 
-	async updateBuffer(ref: FileReference, content: string) {
-		const path = ref.real;
-		this.buffers.set(path, content);
+	clearBuffer({real}: FileReference) {
+		this.logger.info(`Cleared ${real.toMarkup()} buffer`);
+		this.buffers.delete(real);
+		this.evict(real);
+	}
 
-		// Now outdated
-		this.astCache.delete(path);
-		this.moduleSignatureCache.delete(path);
+	updateBuffer(ref: FileReference, content: string) {
+		this.logger.info(`Updated ${ref.real.toMarkup()} buffer`);
+		this.buffers.set(ref.real, content);
+		this.evict(ref.real);
 	}
 
 	async getTypeCheckProvider(
@@ -289,7 +303,7 @@ export default class Worker {
 					);
 					if (cached === undefined) {
 						throw new Error(
-							`Master told us we have the export types for ${value.filename} cached but we dont!`,
+							`Server told us we have the export types for ${value.filename} cached but we dont!`,
 						);
 					}
 					return cached;
@@ -313,11 +327,19 @@ export default class Worker {
 	}
 
 	async readFile(path: AbsoluteFilePath): Promise<string> {
-		const buffer = this.buffers.get(path);
-		if (buffer === undefined) {
-			return await readFileText(path);
-		} else {
-			return buffer;
+		try {
+			const buffer = this.buffers.get(path);
+			if (buffer === undefined) {
+				return await readFileText(path);
+			} else {
+				return buffer;
+			}
+		} catch (err) {
+			if (err.code === "ENOENT") {
+				throw new FileNotFound(path, "fs.readFile ENOENT");
+			} else {
+				throw err;
+			}
 		}
 	}
 
@@ -383,7 +405,7 @@ export default class Worker {
 			}
 		}
 
-		this.logger.info(`Parsing:`, path);
+		this.logger.info(`Parsing:`, path.toMarkup());
 
 		const stat = await lstat(path);
 		let manifestPath: undefined | string;
@@ -451,6 +473,7 @@ export default class Worker {
 	}
 
 	evict(path: AbsoluteFilePath) {
+		this.logger.info(`Evicted ${path.toMarkup()}`);
 		this.astCache.delete(path);
 		this.moduleSignatureCache.delete(path);
 	}

@@ -1,76 +1,80 @@
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-	"no string refs",
+	"react no string refs",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				`
-					class Hello extends React.Component {
-						componentDidMount() {
-							const component = this.refs.hello;
-						}
+			{
+				invalid: [
+					dedent`
+						class Hello extends React.Component {
+							componentDidMount() {
+								const component = this.refs.hello;
+							}
 
-						render() {
-							return <div>Hello {this.props.name}</div>;
+							render() {
+								return <div>Hello {this.props.name}</div>;
+							}
 						}
-					}
-				`,
-				`
-					class Hello extends React.Component {
-						render() {
-							return <div ref="hello">Hello {this.props.name}</div>;
+					`,
+					dedent`
+						class Hello extends React.Component {
+							render() {
+								return <div ref="hello">Hello {this.props.name}</div>;
+							}
 						}
-					}
-				`,
-				`
-					class Hello extends React.Component {
-						render() {
-							return <div ref={\`hello\`}>Hello {this.props.name}</div>;
+					`,
+					// dedent currently passes backslashes through raw
+					dedent`
+						class Hello extends React.Component {
+							render() {
+								return <div ref={${"`"}hello${"`"}}>Hello {this.props.name}</div>;
+							}
 						}
-					}
-				`,
-				`
-					class Hello extends React.Component {
-						render() {
-							return <div ref={'hello'}>Hello {this.props.name}</div>;
+					`,
+					dedent`
+						class Hello extends React.Component {
+							render() {
+								return <div ref={'hello'}>Hello {this.props.name}</div>;
+							}
 						}
-					}
-				`,
-				`
-					class Hello extends React.Component {
-					  render() {
-					    return <div ref={\`hello\${index}\`}>Hello {this.props.name}</div>;
-					  }
-					}
-				`,
-				`
-					class Hello extends React.Component {
-						componentDidMount() {
-							const component = this.refs.hello;
+					`,
+					dedent`
+						class Hello extends React.Component {
+							render() {
+								return <div ref={${"`"}hello${"$"}{index}${"`"}}>Hello {this.props.name}</div>;
+							}
 						}
+					`,
+					dedent`
+						class Hello extends React.Component {
+							componentDidMount() {
+								const component = this.refs.hello;
+							}
 
-						render() {
-							return <div ref="hello">Hello {this.props.name}</div>;
+							render() {
+								return <div ref="hello">Hello {this.props.name}</div>;
+							}
 						}
-					}
-				`,
-				// VALID
-				`
-					class Hello extends React.Component {
-						componentDidMount() {
-							const component = this.hello;
-						}
+					`,
+				],
+				valid: [
+					dedent`
+						class Hello extends React.Component {
+							componentDidMount() {
+								const component = this.hello;
+							}
 
-						render() {
-							return <div ref={c => this.hello = c}>Hello {this.props.name}</div>;
+							render() {
+								return <div ref={c => this.hello = c}>Hello {this.props.name}</div>;
+							}
 						}
-					}
-				`,
-			],
+					`,
+				],
+			},
 			{category: "lint/react/noStringRefs"},
 		);
 	},

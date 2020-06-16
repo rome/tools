@@ -1,26 +1,34 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
 import {test} from "rome";
 import {testLint} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-	'"React" in scope when using JSX',
+	"react in jsx scope",
 	async (t) => {
 		await testLint(
 			t,
-			`export function HelloWorldComponent() {
-                return <div>
-                    Hello World!!!
-                </div>;
-            }`,
 			{
-				category: "lint/react/reactInJsxScope",
+				invalid: [
+					dedent`
+						export function HelloWorldComponent() {
+							return <div>
+									Hello World!!!
+							</div>;
+						}
+					`,
+				],
+				valid: [
+					dedent`
+						import React from "react";
+						export function HelloWorldComponent() {
+							return <div>
+									Hello World!!!
+							</div>;
+						}
+					`,
+				],
 			},
+			{category: "lint/react/reactInJsxScope"},
 		);
 	},
 );

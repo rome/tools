@@ -10,11 +10,13 @@
 
  unknown:2 lint/js/noDeleteVars ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Variables should not be deleted.
+  ✖ This is an invalid use of the delete operator.
 
     1 │ const foo = "test";
   > 2 │ delete foo;
       │ ^^^^^^^^^^
+
+  ℹ Only object properties can be deleted.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -27,5 +29,50 @@
 ```
 const foo = "test";
 delete foo;
+
+```
+
+### `1`
+
+```
+✔ No known problems!
+
+```
+
+### `1: formatted`
+
+```
+const arr = [["a", "b", "c"], [1, 2, 3]];
+arr[0][2] = undefined;
+
+```
+
+### `2`
+
+```
+✔ No known problems!
+
+```
+
+### `2: formatted`
+
+```
+const obj = {a: {b: {c: 123}}};
+obj.a.b.c = undefined;
+
+```
+
+### `3`
+
+```
+✔ No known problems!
+
+```
+
+### `3: formatted`
+
+```
+const foo = new Set([1, 2, 3]);
+foo.delete(1);
 
 ```

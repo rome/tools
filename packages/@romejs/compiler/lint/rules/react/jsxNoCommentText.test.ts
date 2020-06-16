@@ -6,21 +6,25 @@
  */
 
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
-	"jsx no comment textnodes",
+	"react jsx no comment text",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				"const a = <div>// comment</div>",
-				"const a = <div>/* comment */</div>",
-				// VALID
-				"const a = <div>{/* comment */}</div>",
-				'const a = <div className={"cls" /* comment */}></div>',
-			],
+			{
+				invalid: [
+					"const a = <div>// comment</div>",
+					"const a = <div>/* comment */</div>",
+					"const a = <div>/** comment */</div>",
+				],
+				valid: [
+					"const a = <div>{/* comment */}</div>",
+					"const a = <div>{/** comment */}</div>",
+					'const a = <div className={"cls" /* comment */}></div>',
+				],
+			},
 			{category: "lint/react/jsxNoCommentText"},
 		);
 	},

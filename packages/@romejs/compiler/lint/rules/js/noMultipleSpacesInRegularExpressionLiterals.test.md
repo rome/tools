@@ -8,9 +8,9 @@
 
 ```
 
- unknown:1:4 lint/js/noMultipleSpacesInRegularExpressionLiterals FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:4 lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unclear multiple spaces in regular expression
+  ✖ This regular expression contains unclear uses of multiple spaces.
 
     /foo  bar/
         ^

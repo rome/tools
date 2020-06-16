@@ -10,7 +10,7 @@ import {
 	JSRegExpAlternation,
 	JSRegExpSubExpression,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSRegExpLiteral = JSNodeBase & {
 	type: "JSRegExpLiteral";

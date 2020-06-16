@@ -46,7 +46,11 @@ export default function doesNodeMatchPattern(
 	}
 
 	// Not a member expression
-	if (node.type !== "JSMemberExpression" && !isIdentifierish(node)) {
+	if (
+		node.type !== "JSMemberExpression" &&
+		node.type !== "JSXMemberExpression" &&
+		!isIdentifierish(node)
+	) {
 		return false;
 	}
 

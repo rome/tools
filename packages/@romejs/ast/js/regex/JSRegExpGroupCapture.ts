@@ -6,7 +6,7 @@
  */
 
 import {AnyJSRegExpExpression, JSNodeBase} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSRegExpGroupCapture = JSNodeBase & {
 	type: "JSRegExpGroupCapture";

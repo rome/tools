@@ -13,10 +13,10 @@ import {
 	DiagnosticAdviceAction,
 	derivePositionlessKeyFromDiagnostic,
 } from "@romejs/diagnostics";
-import {MasterQueryResponse} from "../common/bridges/MasterBridge";
+import {ServerQueryResponse} from "../common/bridges/ServerBridge";
 import {ClientRequestFlags} from "../common/types/client";
 import {Dict} from "@romejs/typescript-helpers";
-import {EMPTY_SUCCESS_RESPONSE} from "../master/MasterRequest";
+import {EMPTY_SUCCESS_RESPONSE} from "../server/ServerRequest";
 
 type State = {
 	initial: boolean;
@@ -27,7 +27,7 @@ type State = {
 async function check(
 	req: ClientRequest,
 	state: State,
-): Promise<MasterQueryResponse> {
+): Promise<ServerQueryResponse> {
 	const {reporter} = req.client;
 
 	reporter.clearScreen();
@@ -78,7 +78,7 @@ async function ask(
 	req: ClientRequest,
 	state: State,
 	showMoreOptions: boolean,
-): Promise<MasterQueryResponse> {
+): Promise<ServerQueryResponse> {
 	const {client} = req;
 	const {reporter} = client;
 	reporter.clearScreen();
@@ -180,7 +180,7 @@ async function ask(
 	if (outdatedFiles.size > 0) {
 		const files = Array.from(
 			outdatedFiles,
-			(path) => `<filelink emphasis target="${path.join()}" />`,
+			(path) => path.toMarkup({emphasis: true}),
 		);
 
 		reporter.br();
@@ -234,7 +234,7 @@ async function ask(
 			commandFlags: action.commandFlags,
 			requestFlags,
 		},
-		"master",
+		"server",
 	);
 	if (actionRes.type !== "DIAGNOSTICS" && actionRes.type !== "SUCCESS") {
 		return actionRes;
@@ -246,7 +246,7 @@ async function ask(
 
 export default async function review(
 	req: ClientRequest,
-): Promise<MasterQueryResponse> {
+): Promise<ServerQueryResponse> {
 	const {reporter} = req.client;
 	const state: State = {
 		initial: true,

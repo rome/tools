@@ -1,0 +1,88 @@
+import {Path, TransformExitResult} from "@romejs/compiler";
+import {AnyNode} from "@romejs/ast";
+import {descriptions} from "@romejs/diagnostics";
+import {doesNodeMatchPattern} from "@romejs/js-ast-utils";
+
+// Checks if the current class extends React.Component
+function isReactComponent(path: Path): boolean {
+	const ancestor = path.findAncestry(({node}) =>
+	// Check if it extends React.Component or Component, and React.PureCompnent and PureComponent
+		node.type === "JSClassHead" &&
+		node.superClass !== undefined &&
+		(doesNodeMatchPattern(node.superClass, "React.Component") ||
+		doesNodeMatchPattern(node.superClass, "Component") ||
+		doesNodeMatchPattern(node.superClass, "React.PureComponent") ||
+		doesNodeMatchPattern(node.superClass, "PureComponent"))
+	);
+
+	return ancestor !== undefined;
+}
+
+// Check if this.state mutation was in the constructor
+function isMutationInConstructor(path: Path): boolean {
+	// Find the first instance of a constructor or a call method
+	const ancestor = path.findAncestry(({node}) =>
+		(node.type === "JSClassMethod" &&
+		node.key.type === "JSStaticPropertyKey" &&
+		node.key.value.type === "JSIdentifier" &&
+		node.key.value.name === "constructor") ||
+		node.type === "JSCallExpression"
+	);
+
+	// If undefined, or a call expression, then its not in a constructor
+	return ancestor !== undefined && ancestor.node.type !== "JSCallExpression";
+}
+
+// Checks if the node contains this.state that is mutated (binary and unary expr)
+function isStateMutated(node: AnyNode): boolean {
+	// Check if node is a binary expression where this.state is the left side
+	if (
+		node.type === "JSAssignmentExpression" &&
+		(doesNodeMatchPattern(node.left, "this.state") ||
+		doesNodeMatchPattern(node.left, "this.state.**"))
+	) {
+		return true;
+	}
+
+	// Check if the node is an update expression (++ and --)
+	if (
+		node.type === "JSUpdateExpression" &&
+		(doesNodeMatchPattern(node.argument, "this.state") ||
+		doesNodeMatchPattern(node.argument, "this.state.**"))
+	) {
+		return true;
+	}
+
+	// Check if the delete operator is used
+	if (
+		node.type === "JSUnaryExpression" &&
+		node.operator === "delete" &&
+		(doesNodeMatchPattern(node.argument, "this.state") ||
+		doesNodeMatchPattern(node.argument, "this.state.**"))
+	) {
+		return true;
+	}
+
+	return false;
+}
+
+export default {
+	name: "reactNoDirectMutationState",
+	enter(path: Path): TransformExitResult {
+		const {node} = path;
+
+		// If the state is mutated anywhere except in a constructor, show message
+		if (
+			isStateMutated(node) &&
+			isReactComponent(path) &&
+			!isMutationInConstructor(path)
+		) {
+			path.context.addNodeDiagnostic(
+				node,
+				descriptions.LINT.REACT_NO_DIRECT_MUTATION_STATE,
+			);
+		}
+
+		return node;
+	},
+};

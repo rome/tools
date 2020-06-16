@@ -6,7 +6,7 @@
  */
 
 import {AnyTSPrimary, JSNodeBase, TSOptionalType} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type TSTupleType = JSNodeBase & {
 	type: "TSTupleType";

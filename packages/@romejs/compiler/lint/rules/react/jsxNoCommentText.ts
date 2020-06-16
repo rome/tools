@@ -9,15 +9,23 @@ import {Path} from "@romejs/compiler";
 import {AnyNode} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
+const commentPattern = /(^(\/\*\*|\/\*|\/\/)|\*\/$)/gm;
+
 export default {
-	name: "jsxNoCommentText",
+	name: "reactJsxNoCommentText",
 	enter(path: Path): AnyNode {
 		const {node} = path;
 
 		if (node.type === "JSXText") {
-			if (/^\s*\/(\/|\*)/m.test(node.value)) {
-				path.context.addNodeDiagnostic(
-					node,
+			if (commentPattern.test(node.value)) {
+				path.context.addFixableDiagnostic(
+					{
+						old: node,
+						fixed: {
+							...node,
+							value: `{/**${node.value.replace(commentPattern, "")}*/}`,
+						},
+					},
 					descriptions.LINT.REACT_JSX_NO_COMMENT_TEXT,
 				);
 			}

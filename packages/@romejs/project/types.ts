@@ -143,51 +143,55 @@ export type ProjectConfigMetaHard = RequiredProps<
 // Final project config
 export type ProjectConfig = ProjectConfigBase & ProjectConfigObjects;
 
-export const DEFAULT_PROJECT_CONFIG_META: ProjectConfigMeta = {
-	projectFolder: undefined,
-	configPath: undefined,
-	configHashes: [],
-	configDependencies: new AbsoluteFilePathSet(),
-	consumer: undefined,
-	configSourceSubKey: undefined,
-	consumersChain: [],
-};
+export function createDefaultProjectConfigMeta(): ProjectConfigMeta {
+	return {
+		projectFolder: undefined,
+		configPath: undefined,
+		configHashes: [],
+		configDependencies: new AbsoluteFilePathSet(),
+		consumer: undefined,
+		configSourceSubKey: undefined,
+		consumersChain: [],
+	};
+}
 
-export const DEFAULT_PROJECT_CONFIG: ProjectConfig = {
-	name: "unknown",
-	root: false,
-	version: undefined,
-	cache: {},
-	develop: {
-		serveStatic: true,
-	},
-	bundler: {
-		mode: "modern",
-	},
-	compiler: {},
-	resolver: {},
-	typeCheck: {
-		enabled: false,
-		// Maybe this needs to be cloned...?
-		libs: new AbsoluteFilePathSet(),
-	},
-	dependencies: {
-		enabled: false,
-	},
-	lint: {
-		ignore: [],
-		globals: [],
-	},
-	tests: {
-		ignore: [],
-	},
-	vcs: {
-		root: createAbsoluteFilePath("/"),
-	},
-	files: {
-		vendorPath: TEMP_PATH.append(`rome-remote`),
-		assetExtensions: [],
-		maxSize: 40_000_000, // 40 megabytes
-	},
-	targets: new Map(),
-};
+export function createDefaultProjectConfig(): ProjectConfig {
+	return {
+		name: "unknown",
+		root: false,
+		version: undefined,
+		cache: {},
+		develop: {
+			serveStatic: true,
+		},
+		bundler: {
+			mode: "modern",
+		},
+		compiler: {},
+		resolver: {},
+		typeCheck: {
+			enabled: false,
+			// Maybe this needs to be cloned...?
+			libs: new AbsoluteFilePathSet(),
+		},
+		dependencies: {
+			enabled: false,
+		},
+		lint: {
+			ignore: [],
+			globals: [],
+		},
+		tests: {
+			ignore: [],
+		},
+		vcs: {
+			root: createAbsoluteFilePath("/"),
+		},
+		files: {
+			vendorPath: TEMP_PATH.append(`rome-remote`),
+			assetExtensions: [],
+			maxSize: 40_000_000, // 40 megabytes
+		},
+		targets: new Map(),
+	};
+}

@@ -10,8 +10,8 @@ import {
 	AbsoluteFilePathMap,
 	createAbsoluteFilePath,
 } from "@romejs/path";
-import {exists, readFileText, unlink, writeFile} from "@romejs/fs";
-import {TestMasterRunnerOptions} from "../master/testing/types";
+import {exists, readFileText, removeFile, writeFile} from "@romejs/fs";
+import {TestServerRunnerOptions} from "../server/testing/types";
 import TestWorkerRunner from "./TestWorkerRunner";
 import {DiagnosticDescription, descriptions} from "@romejs/diagnostics";
 import {createSnapshotParser} from "./SnapshotParser";
@@ -19,6 +19,7 @@ import {ErrorFrame} from "@romejs/v8";
 import {Number0, Number1} from "@romejs/ob1";
 import prettyFormat from "@romejs/pretty-format";
 import {naturalCompare} from "@romejs/string-utils";
+import Locker from "../common/utils/Locker";
 
 function cleanHeading(key: string): string {
 	if (key[0] === "`") {
@@ -37,6 +38,7 @@ type SnapshotEntry = {
 	entryName: string;
 	language: undefined | string;
 	value: string;
+	used: boolean;
 };
 
 type Snapshot = {
@@ -83,6 +85,7 @@ export default class SnapshotManager {
 		this.runner = runner;
 		this.options = runner.options;
 		this.snapshots = new AbsoluteFilePathMap();
+		this.fileLocker = new Locker();
 		this.inlineSnapshotsUpdates = [];
 		this.snapshotCounts = {
 			deleted: 0,
@@ -95,8 +98,9 @@ export default class SnapshotManager {
 	testPath: AbsoluteFilePath;
 	defaultSnapshotPath: AbsoluteFilePath;
 	snapshots: AbsoluteFilePathMap<Snapshot>;
+	fileLocker: Locker<string>;
 	runner: TestWorkerRunner;
-	options: TestMasterRunnerOptions;
+	options: TestServerRunnerOptions;
 	snapshotCounts: SnapshotCounts;
 
 	normalizeSnapshotPath(filename: undefined | string): AbsoluteFilePath {
@@ -129,6 +133,14 @@ export default class SnapshotManager {
 	async loadSnapshot(path: AbsoluteFilePath): Promise<undefined | Snapshot> {
 		if (!(await exists(path))) {
 			return;
+		}
+
+		const lock = await this.fileLocker.getLock(path.join());
+
+		const loadedSnapshot = this.snapshots.get(path);
+		if (loadedSnapshot !== undefined) {
+			lock.release();
+			return loadedSnapshot;
 		}
 
 		const content = await readFileText(path);
@@ -181,6 +193,7 @@ export default class SnapshotManager {
 								entryName,
 								language: codeBlock.language,
 								value: codeBlock.text,
+								used: false,
 							},
 						);
 
@@ -197,6 +210,7 @@ export default class SnapshotManager {
 								entryName: "0",
 								language: node.language,
 								value: node.text,
+								used: false,
 							},
 						);
 					}
@@ -208,6 +222,7 @@ export default class SnapshotManager {
 			}
 		}
 
+		lock.release();
 		return snapshot;
 	}
 
@@ -231,6 +246,9 @@ export default class SnapshotManager {
 
 		const testNameToEntries: Map<string, Map<string, SnapshotEntry>> = new Map();
 		for (const entry of entries) {
+			if (!entry.used && !this.runner.hasFocusedTests) {
+				continue;
+			}
 			let entriesByTestName = testNameToEntries.get(entry.testName);
 			if (entriesByTestName === undefined) {
 				entriesByTestName = new Map();
@@ -273,7 +291,7 @@ export default class SnapshotManager {
 	}
 
 	async save() {
-		// If there'a s focused test then we don't write or validate a snapshot
+		// If there's a focused test then we don't write or validate a snapshot
 		if (this.runner.hasFocusedTests) {
 			return;
 		}
@@ -299,7 +317,7 @@ export default class SnapshotManager {
 					// Don't delete a snapshot if there are test failures as those failures may be hiding a snapshot usage
 					if (!hasDiagnostics) {
 						// If a snapshot wasn't used or is empty then delete it!
-						await unlink(path);
+						await removeFile(path);
 						this.snapshotCounts.deleted++;
 					}
 				} else if (used && formatted !== raw) {
@@ -388,6 +406,7 @@ export default class SnapshotManager {
 		if (entry === undefined) {
 			return undefined;
 		} else {
+			entry.used = true;
 			return entry.value;
 		}
 	}
@@ -426,6 +445,7 @@ export default class SnapshotManager {
 				entryName,
 				language,
 				value,
+				used: true,
 			},
 		);
 	}

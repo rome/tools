@@ -15,7 +15,7 @@ import {
 	TransformStageName,
 } from "@romejs/compiler";
 import {Profile} from "@romejs/v8";
-import {ProfilingStartData} from "./MasterBridge";
+import {ProfilingStartData} from "./ServerBridge";
 import {
 	DiagnosticSuppressions,
 	Diagnostics,
@@ -26,6 +26,8 @@ import {Bridge} from "@romejs/events";
 import {JSONFileReference} from "../types/files";
 import {AnalyzeDependencyResult} from "../types/analyzeDependencies";
 import {InlineSnapshotUpdates} from "@romejs/core/test-worker/SnapshotManager";
+import {FileNotFound} from "@romejs/core/common/FileNotFound";
+import {createAbsoluteFilePath} from "@romejs/path";
 
 export type WorkerProjects = Array<{
 	id: number;
@@ -112,7 +114,7 @@ export type WorkerFormatResult = {
 };
 
 export type WorkerLintResult = {
-	saved: boolean;
+	save: undefined | string;
 	diagnostics: Diagnostics;
 	suppressions: DiagnosticSuppressions;
 };
@@ -248,7 +250,39 @@ export default class WorkerBridge extends Bridge {
 		direction: "server->client",
 	});
 
+	clearBuffer = this.createEvent<
+		{
+			file: JSONFileReference;
+		},
+		void
+	>({
+		name: "clearBuffer",
+		direction: "server->client",
+	});
+
 	init() {
+		this.addErrorTransport(
+			"FileNotFound",
+			{
+				serialize(err: Error) {
+					if (!(err instanceof FileNotFound)) {
+						throw new Error("Expected FileNotFound");
+					}
+
+					return {
+						path: err.path.join(),
+					};
+				},
+				hydrate(err, data) {
+					// rome-ignore lint/js/noExplicitAny
+					return new FileNotFound(
+						createAbsoluteFilePath((data.path as any)),
+						err.message,
+					);
+				},
+			},
+		);
+
 		this.addErrorTransport(
 			"DiagnosticsError",
 			{

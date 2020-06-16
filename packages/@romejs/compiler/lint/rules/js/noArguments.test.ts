@@ -14,45 +14,34 @@ test(
 	async (t) => {
 		await testLint(
 			t,
-			dedent`
-        function f() {
-          console.log(arguments);
-        }
-      `,
-			{category: "lint/js/noArguments"},
-		);
-
-		await testLint(
-			t,
-			dedent`
-        (function () {
-          console.log(arguments);
-        })();
-      `,
-			{category: "lint/js/noArguments"},
-		);
-
-		await testLint(
-			t,
-			dedent`
-        class C {
-          fn() {
-            console.log(arguments);
-          }
-        }
-      `,
-			{category: "lint/js/noArguments"},
-		);
-
-		await testLint(
-			t,
-			dedent`
-        const o = {
-          fn() {
-            console.log(arguments);
-          },
-        };
-      `,
+			{
+				invalid: [
+					dedent`
+						function f() {
+							console.log(arguments);
+						}
+					`,
+					dedent`
+						(function () {
+							console.log(arguments);
+						})();
+					`,
+					dedent`
+						class C {
+							fn() {
+								console.log(arguments);
+							}
+						}
+					`,
+					dedent`
+						const o = {
+							fn() {
+								console.log(arguments);
+							},
+						};
+					`,
+				],
+			},
 			{category: "lint/js/noArguments"},
 		);
 	},

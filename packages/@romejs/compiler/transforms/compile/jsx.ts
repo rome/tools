@@ -35,10 +35,8 @@ import {
 	jsStaticPropertyKey,
 	jsStringLiteral,
 	jsThisExpression,
-	jsxElement,
 	jsxExpressionContainer,
 	jsxIdentifier,
-	jsxNamespacedName,
 } from "@romejs/ast";
 import {Path} from "@romejs/compiler";
 import {
@@ -281,10 +279,10 @@ export default {
 	enter(path: Path): AnyNode {
 		const {node, context, parent} = path;
 
-		if (jsxElement.is(node)) {
+		if (node.type === "JSXElement") {
 			let type = convertJSXIdentifier(path.getChildPath("name"));
 
-			if (jsxNamespacedName.is(node.name)) {
+			if (node.name.type === "JSXNamespacedName") {
 				// TODO better handle this
 				context.addNodeDiagnostic(type, descriptions.COMPILER.JSX_NOT_XML);
 			}
@@ -302,7 +300,7 @@ export default {
 			});
 
 			// If we're a JSX element child then we need to be wrapped
-			if (jsxElement.is(parent)) {
+			if (parent.type === "JSXElement") {
 				return jsxExpressionContainer.create({
 					expression: call,
 				});

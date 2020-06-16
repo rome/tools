@@ -12,7 +12,7 @@ import {
 	JSClassPropertyMeta,
 	JSNodeBase,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSClassProperty = JSNodeBase & {
 	type: "JSClassProperty";

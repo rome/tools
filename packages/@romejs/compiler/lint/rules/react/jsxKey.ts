@@ -6,8 +6,9 @@
  */
 
 import {Path} from "@romejs/compiler";
-import {AnyNode, JSXElement} from "@romejs/ast";
+import {AnyNode, JSCallExpression, JSXElement} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
+import {doesNodeMatchPattern} from "@romejs/js-ast-utils";
 
 function containsKeyAttr(node: JSXElement): boolean {
 	const ATTR_NAME = "key";
@@ -16,8 +17,27 @@ function containsKeyAttr(node: JSXElement): boolean {
 	);
 }
 
+function getMapCallback(node: JSCallExpression) {
+	if (
+		doesNodeMatchPattern(node.callee, "React.Children.map") ||
+		doesNodeMatchPattern(node.callee, "Children.map")
+	) {
+		return node.arguments[1];
+	}
+
+	if (
+		node.callee.type === "JSMemberExpression" &&
+		node.callee.property.value.type === "JSIdentifier" &&
+		node.callee.property.value.name === "map"
+	) {
+		return node.arguments[0];
+	}
+
+	return undefined;
+}
+
 export default {
-	name: "jsxKey",
+	name: "reactJsxKey",
 	enter(path: Path): AnyNode {
 		const {node, context} = path;
 
@@ -30,15 +50,10 @@ export default {
 			context.addNodeDiagnostic(node, descriptions.LINT.REACT_JSX_KEY("array"));
 		}
 
-		// Array.prototype.map
-		if (
-			node.type === "JSCallExpression" &&
-			node.callee.type === "JSMemberExpression" &&
-			node.callee.property.value.type === "JSIdentifier" &&
-			node.callee.property.value.name === "map"
-		) {
-			const fn = node.arguments[0];
+		const fn = node.type === "JSCallExpression" && getMapCallback(node);
 
+		// Array.prototype.map
+		if (fn) {
 			// Short hand arrow function
 			if (
 				fn.type === "JSArrowFunctionExpression" &&

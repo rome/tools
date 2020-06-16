@@ -8,7 +8,7 @@
 import {Diagnostics} from "@romejs/diagnostics";
 import {SourceMapGenerator} from "@romejs/codec-source-map";
 import {AbsoluteFilePath} from "@romejs/path";
-import {ResolverOptions} from "../../master/fs/Resolver";
+import {ResolverOptions} from "../../server/fs/Resolver";
 
 export type BundlerConfig = {
 	inlineSourceMap: boolean;

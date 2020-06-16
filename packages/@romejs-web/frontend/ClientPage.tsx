@@ -6,10 +6,10 @@
  */
 
 import React = require('react');
-import {WebMasterRequest, WebMasterClient} from '@romejs/core';
+import {WebServerRequest, WebServerClient} from '@romejs/core';
 import Spinner from './Spinner';
 import Button from './Button';
-import {MasterMarker} from '@romejs/core/master/Master';
+import {ServerMarker} from '@romejs/core/server/Server';
 
 const {css} = require('emotion');
 const xterm = require('xterm');
@@ -154,13 +154,13 @@ function Ommission(props: {children: React.ReactNode}) {
   );
 }
 
-function doesMarkerOverlap(a: MasterMarker, b: MasterMarker): boolean {
+function doesMarkerOverlap(a: ServerMarker, b: ServerMarker): boolean {
   return !(a.start >= b.end || a.start >= b.end);
 }
 
 const colors = ['#f39237', '#bf1363', '#0e79b2'];
 
-function Markers({request}: {request: WebMasterRequest}) {
+function Markers({request}: {request: WebServerRequest}) {
   const {markers} = request;
 
   if (markers.length === 0) {
@@ -179,10 +179,10 @@ function Markers({request}: {request: WebMasterRequest}) {
     end = markers[markers.length - 1].end;
   }
 
-  const rows: Array<Array<MasterMarker>> = [];
+  const rows: Array<Array<ServerMarker>> = [];
 
   for (const marker of markers.slice().sort(a => a.end - a.start)) {
-    let row: undefined | Array<MasterMarker>;
+    let row: undefined | Array<ServerMarker>;
 
     // Find row without an overlapping marker
     for (const checkRow of rows) {
@@ -262,7 +262,7 @@ function Markers({request}: {request: WebMasterRequest}) {
   );
 }
 
-function Request({request}: {request: WebMasterRequest}) {
+function Request({request}: {request: WebServerRequest}) {
   const {query} = request;
 
   let backgroundColor = 'rgba(255, 255, 255, 0.1)';
@@ -351,8 +351,8 @@ export default function ClientPage({
   requests,
   goBack,
 }: {
-  client: WebMasterClient;
-  requests: Array<WebMasterRequest>;
+  client: WebServerClient;
+  requests: Array<WebServerRequest>;
   goBack: () => void;
 }) {
   return (

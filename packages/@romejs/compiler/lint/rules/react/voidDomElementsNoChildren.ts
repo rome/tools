@@ -5,10 +5,12 @@
 * LICENSE file in the root directory of this source tree.
 */
 
-import {Path} from "@romejs/compiler";
+import {Path, REDUCE_REMOVE} from "@romejs/compiler";
 
 import {descriptions} from "@romejs/diagnostics";
 import {TransformExitResult} from "@romejs/compiler/types";
+import {doesNodeMatchPattern} from "@romejs/js-ast-utils";
+import {JSStringLiteral} from "@romejs/ast";
 
 const VOID_DOM_ELEMENTS = new Set([
 	"area",
@@ -30,9 +32,72 @@ const VOID_DOM_ELEMENTS = new Set([
 ]);
 
 export default {
-	name: "voidDomElementsNoChildren",
+	name: "reactVoidDomElementsNoChildren",
 	enter(path: Path): TransformExitResult {
 		const {node, context} = path;
+
+		if (
+			node.type === "JSCallExpression" &&
+			(doesNodeMatchPattern(node.callee, "React.createElement") ||
+			doesNodeMatchPattern(node.callee, "createElement")) &&
+			node.arguments[0].type === "JSStringLiteral" &&
+			VOID_DOM_ELEMENTS.has(node.arguments[0].value)
+		) {
+			if (node.arguments[1].type === "JSObjectExpression") {
+				const childrenNode = node.arguments[1].properties.find((property) =>
+					property.type === "JSObjectProperty" &&
+					property.key.value.type === "JSIdentifier" &&
+					property.key.value.name === "children"
+				);
+				if (childrenNode) {
+					context.addFixableDiagnostic(
+						{
+							old: childrenNode,
+							fixed: REDUCE_REMOVE,
+						},
+						descriptions.LINT.REACT_VOID_DOM_ELEMENTS_NO_CHILDREN(
+							node.arguments[0].value,
+							["children"],
+						),
+					);
+				}
+
+				const dangerNode = node.arguments[1].properties.find((property) =>
+					property.type === "JSObjectProperty" &&
+					property.key.value.type === "JSIdentifier" &&
+					property.key.value.name === "dangerouslySetInnerHTML"
+				);
+				if (dangerNode) {
+					context.addFixableDiagnostic(
+						{
+							old: dangerNode,
+							fixed: REDUCE_REMOVE,
+						},
+						descriptions.LINT.REACT_VOID_DOM_ELEMENTS_NO_CHILDREN(
+							node.arguments[0].value,
+							["dangerouslySetInnerHTML"],
+						),
+					);
+				}
+			}
+
+			if (node.arguments.length > 2) {
+				context.addFixableDiagnostic(
+					{
+						target: node.arguments,
+						old: node,
+						fixed: {
+							...node,
+							arguments: [node.arguments[0], node.arguments[1]],
+						},
+					},
+					descriptions.LINT.REACT_VOID_DOM_ELEMENTS_NO_CHILDREN(
+						(node.arguments[0] as JSStringLiteral).value,
+						["children"],
+					),
+				);
+			}
+		}
 
 		if (
 			node.type === "JSXElement" &&

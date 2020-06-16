@@ -25,7 +25,7 @@ function hasFindCallExpression(node: AnyNode) {
 }
 
 export default {
-	name: "noFindDOMNode",
+	name: "reactNoFindDOMNode",
 
 	enter(path: Path): AnyNode {
 		const {node} = path;

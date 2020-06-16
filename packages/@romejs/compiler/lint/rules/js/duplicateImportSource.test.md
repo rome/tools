@@ -8,9 +8,9 @@
 
 ```
 
- unknown:2 lint/js/duplicateImportSource FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2 lint/js/duplicateImportSource  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ This module has already been imported
+  ✖ This module has already been imported.
 
     1 │ import foo from './testdummy.ts';
   > 2 │ import {bar} from './testdummy.ts';
@@ -18,6 +18,11 @@
     3 │ import type {fooType} from './testdummy.ts';
 
   ℹ Previously imported here
+
+  > 1 │ import foo from './testdummy.ts';
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    2 │ import {bar} from './testdummy.ts';
+    3 │ import type {fooType} from './testdummy.ts';
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

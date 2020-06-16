@@ -13,6 +13,8 @@ export {
 	MarkupFormatGridOptions,
 	MarkupFormatNormalizeOptions,
 	MarkupFormatOptions,
+	MarkupLinesAndWidth,
+	MarkupTagName,
 } from "./types";
 
 export {

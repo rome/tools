@@ -8,9 +8,9 @@
 
 ```
 
- unknown:2 lint/js/noDelete FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2 lint/js/noDelete  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected 'delete' operator.
+  ✖ This is an unexpected use of the delete operator.
 
     1 │ const arr = [['a','b','c'], [1, 2, 3]];
   > 2 │ delete arr[0][2];
@@ -18,8 +18,8 @@
 
   ℹ Recommended fix
 
-  - delete·arr[0][2]
-  + arr[0][2]·=·undefined
+  - delete arr[0][2]
+  + arr[0][2] = undefined
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -39,9 +39,9 @@ arr[0][2] = undefined;
 
 ```
 
- unknown:2 lint/js/noDelete FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2 lint/js/noDelete  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected 'delete' operator.
+  ✖ This is an unexpected use of the delete operator.
 
     1 │ const obj = {a: {b: {c: 123}}};
   > 2 │ delete obj.a.b.c;
@@ -49,8 +49,8 @@ arr[0][2] = undefined;
 
   ℹ Recommended fix
 
-  - delete·obj.a.b.c
-  + obj.a.b.c·=·undefined
+  - delete obj.a.b.c
+  + obj.a.b.c = undefined
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -63,5 +63,20 @@ arr[0][2] = undefined;
 ```
 const obj = {a: {b: {c: 123}}};
 obj.a.b.c = undefined;
+
+```
+
+### `2`
+
+```
+✔ No known problems!
+
+```
+
+### `2: formatted`
+
+```
+const foo = new Set([1, 2, 3]);
+foo.delete(1);
 
 ```

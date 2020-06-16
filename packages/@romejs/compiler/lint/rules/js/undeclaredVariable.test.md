@@ -10,7 +10,7 @@
 
  unknown:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Undeclared variable foobar
+  ✖ The foobar variable is undeclared.
 
     foobar;
     ^^^^^^

@@ -6,7 +6,7 @@
  */
 
 import {AnyJSExpression, JSNodeBase} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSSpreadProperty = JSNodeBase & {
 	type: "JSSpreadProperty";

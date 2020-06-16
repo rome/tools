@@ -6,7 +6,7 @@
  */
 
 import {Diagnostics} from "@romejs/diagnostics";
-import {DEFAULT_PROJECT_CONFIG} from "@romejs/project";
+import {createDefaultProjectConfig} from "@romejs/project";
 import {test} from "rome";
 import {check} from "@romejs/js-analysis";
 import {parseJS} from "@romejs/js-parser";
@@ -23,7 +23,7 @@ async function testCheck(code: string): Promise<Diagnostics> {
 		ast,
 		project: {
 			folder: undefined,
-			config: DEFAULT_PROJECT_CONFIG,
+			config: createDefaultProjectConfig(),
 		},
 		provider: {
 			getExportTypes() {

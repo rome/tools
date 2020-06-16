@@ -11,7 +11,7 @@ import {
 	JSNodeBase,
 	JSSpreadElement,
 } from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type JSAmbiguousFlowTypeCastExpression = JSNodeBase & {
 	type: "JSAmbiguousFlowTypeCastExpression";

@@ -6,7 +6,7 @@
  */
 
 import {AnyJSExpression, AnyTSPrimary, JSNodeBase} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type TSTypeAssertion = JSNodeBase & {
 	type: "TSTypeAssertion";

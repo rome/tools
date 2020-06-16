@@ -6,7 +6,7 @@
  */
 
 import {Diagnostic, DiagnosticOrigin} from "@romejs/diagnostics";
-import {TestMasterRunnerOptions} from "../../master/testing/types";
+import {TestServerRunnerOptions} from "../../server/testing/types";
 import {Bridge} from "@romejs/events";
 import {JSONFileReference} from "../types/files";
 import {
@@ -25,7 +25,7 @@ export type TestWorkerPrepareTestOptions = {
 	projectFolder: string;
 	code: string;
 	cwd: string;
-	options: TestMasterRunnerOptions;
+	options: TestServerRunnerOptions;
 };
 
 export type TestWorkerPrepareTestResult = {

@@ -6,22 +6,24 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, JSExportDefaultDeclaration} from "@romejs/ast";
+import {AnyNode, jsExportDefaultDeclaration} from "@romejs/ast";
+import {createScopeEvaluator} from "./index";
 
-export default {
-	creator: false,
-	build(node: JSExportDefaultDeclaration, parent: AnyNode, scope: Scope) {
+export default createScopeEvaluator({
+	inject(node: AnyNode, parent: AnyNode, scope: Scope) {
+		node = jsExportDefaultDeclaration.assert(node);
+
 		const {declaration} = node;
-		const newScope = scope.evaluate(declaration, node);
+		scope.injectEvaluate(declaration, node);
+
 		if (
 			declaration.type === "JSClassDeclaration" ||
 			declaration.type === "JSFunctionDeclaration"
 		) {
 			const id = declaration.id;
 			if (id !== undefined) {
-				newScope.getBindingAssert(id.name).setExported(true);
+				scope.getBindingAssert(id.name).setExported(true);
 			}
 		}
-		return newScope;
 	},
-};
+});

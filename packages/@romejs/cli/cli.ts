@@ -14,7 +14,7 @@ import {
 	PLATFORMS,
 	VERSION,
 	localCommands,
-	masterCommands,
+	serverCommands,
 } from "@romejs/core";
 import setProcessTitle from "./utils/setProcessTitle";
 import {parseCLIFlagsFromProcess} from "@romejs/cli-flags";
@@ -146,7 +146,7 @@ export default async function cli() {
 					logs: c.get(
 						"logs",
 						{
-							description: "Output master logs",
+							description: "Output server logs",
 						},
 					).asBoolean(false),
 					logWorkers: c.get(
@@ -268,10 +268,10 @@ export default async function cli() {
 	let commandFlags: JSONObject = {};
 	let args: Array<string> = [];
 
-	// Create command handlers. We use a set here since we may have some conflicting master and local command names. We always want the local command to take precedence.
+	// Create command handlers. We use a set here since we may have some conflicting server and local command names. We always want the local command to take precedence.
 	const commandNames = new Set([
 		...localCommands.keys(),
-		...masterCommands.keys(),
+		...serverCommands.keys(),
 	]);
 	for (const cmd of commandNames) {
 		const local = localCommands.get(cmd);
@@ -293,20 +293,20 @@ export default async function cli() {
 			continue;
 		}
 
-		const master = masterCommands.get(cmd);
-		if (master !== undefined) {
+		const server = serverCommands.get(cmd);
+		if (server !== undefined) {
 			p.command({
 				name: cmd,
-				category: master.category,
-				description: master.description,
-				defineFlags: master.defineFlags,
-				ignoreFlags: master.ignoreFlags,
-				usage: master.usage,
-				examples: master.examples,
+				category: server.category,
+				description: server.description,
+				defineFlags: server.defineFlags,
+				ignoreFlags: server.ignoreFlags,
+				usage: server.usage,
+				examples: server.examples,
 				callback(_commandFlags) {
 					commandFlags = _commandFlags;
-					overrideClientFlags = master.overrideClientFlags;
-					overrideRequestFlags = master.overrideRequestFlags;
+					overrideClientFlags = server.overrideClientFlags;
+					overrideRequestFlags = server.overrideRequestFlags;
 
 					args = p.getArgs();
 					command = cmd;
@@ -315,7 +315,7 @@ export default async function cli() {
 		}
 	}
 
-	// Mock `rage` command that just uses the master noop command and adds the --rage flag
+	// Mock `rage` command that just uses the server noop command and adds the --rage flag
 	p.command({
 		name: "rage",
 		category: commandCategories.INTERNAL,
@@ -329,7 +329,7 @@ export default async function cli() {
 		},
 	});
 
-	// Mock `logs` command that just uses the master noop command and adds the --logs flag
+	// Mock `logs` command that just uses the server noop command and adds the --logs flag
 	p.command({
 		name: "logs",
 		category: commandCategories.INTERNAL,
@@ -399,7 +399,9 @@ export default async function cli() {
 					await writeFile(resolvedProfilePath, str);
 
 					client.reporter.success(
-						markup`Wrote CPU profile to <filelink emphasis target="${resolvedProfilePath.join()}" />`,
+						markup`Wrote CPU profile to ${resolvedProfilePath.toMarkup({
+							emphasis: true,
+						})}`,
 					);
 				},
 			);
@@ -460,7 +462,7 @@ export default async function cli() {
 			await writeFile(markersPath, stringifyJSON(res.markers));
 
 			client.reporter.success(
-				markup`Wrote markers to <filelink emphasis target="${markersPath.join()}" />`,
+				markup`Wrote markers to ${markersPath.toMarkup({emphasis: true})}`,
 			);
 		}
 	}

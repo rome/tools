@@ -6,7 +6,7 @@
  */
 
 import {JSNodeBase, JSObjectProperties} from "@romejs/ast";
-import {createQuickBuilder} from "../utils";
+import {createQuickBuilder} from "../../utils";
 
 export type JSObjectExpression = JSNodeBase & {
 	type: "JSObjectExpression";

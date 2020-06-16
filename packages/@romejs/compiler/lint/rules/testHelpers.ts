@@ -8,32 +8,47 @@
 import {TestHelper} from "rome";
 import lint from "../index";
 import {parseJS} from "@romejs/js-parser";
-import {createUnknownFilePath} from "@romejs/path";
-import {DEFAULT_PROJECT_CONFIG} from "@romejs/project";
+import {UnknownFilePath, createUnknownFilePath} from "@romejs/path";
+import {createDefaultProjectConfig} from "@romejs/project";
 import {ConstProgramSyntax, ConstSourceType} from "@romejs/ast";
-import {DiagnosticCategory} from "@romejs/diagnostics";
+import {DiagnosticCategory, DiagnosticsProcessor} from "@romejs/diagnostics";
 import {printDiagnosticsToString} from "@romejs/cli-diagnostics";
 
 type TestLintOptions = {
 	category: undefined | DiagnosticCategory;
 	sourceType?: ConstSourceType;
 	syntax?: Array<ConstProgramSyntax>;
+	path?: UnknownFilePath | string;
 };
 
-export async function testLintMultiple(
-	t: TestHelper,
-	inputs: Array<string>,
-	opts: TestLintOptions,
-) {
-	for (const input of inputs) {
-		await testLint(t, input, opts);
-	}
-}
+type TestLintInput = {
+	valid?: Array<string>;
+	invalid?: Array<string>;
+};
 
 export async function testLint(
 	t: TestHelper,
+	{invalid = [], valid = []}: TestLintInput,
+	opts: TestLintOptions,
+) {
+	for (const input of invalid) {
+		await testLintExpect(t, input, opts, false);
+	}
+	for (const input of valid) {
+		await testLintExpect(t, input, opts, true);
+	}
+}
+
+async function testLintExpect(
+	t: TestHelper,
 	input: string,
-	{syntax = ["jsx", "ts"], category, sourceType = "module"}: TestLintOptions,
+	{
+		syntax = ["jsx", "ts"],
+		category,
+		sourceType = "module",
+		path = createUnknownFilePath("unknown"),
+	}: TestLintOptions,
+	expectValid: boolean,
 ) {
 	t.addToAdvice({
 		type: "log",
@@ -64,7 +79,7 @@ export async function testLint(
 	const ast = parseJS({
 		input,
 		sourceType,
-		path: createUnknownFilePath("unknown"),
+		path,
 		syntax,
 	});
 
@@ -75,21 +90,26 @@ export async function testLint(
 		sourceText: input,
 		project: {
 			folder: undefined,
-			config: DEFAULT_PROJECT_CONFIG,
+			config: createDefaultProjectConfig(),
 		},
 	});
 
-	const diagnostics = res.diagnostics.filter((diag) => {
-		return diag.description.category === category;
-	}).map((diag) => {
-		return {
-			...diag,
-			location: {
-				...diag.location,
-				sourceText: input,
-			},
-		};
+	const processor = new DiagnosticsProcessor();
+	processor.normalizer.setInlineSourceText("unknown", input);
+	processor.addFilter({
+		test: (diag) => diag.description.category === category,
 	});
+	processor.addDiagnostics(res.diagnostics);
+
+	const diagnostics = processor.getDiagnostics();
+
+	if (expectValid === false) {
+		t.true(diagnostics.length > 0, "Expected test to have diagnostics.");
+	}
+
+	if (expectValid === true) {
+		t.is(diagnostics.length, 0, "Expected test not to have diagnostics.");
+	}
 
 	const snapshotName = t.snapshot(
 		printDiagnosticsToString({

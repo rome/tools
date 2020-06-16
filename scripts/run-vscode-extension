@@ -7,25 +7,25 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const {argv, root} = require("./_constants.cjs");
-const {buildTrunk, inverse, exec, execNode} = require("./_utils.cjs");
+const { argv, root } = require("./_constants.cjs");
+const { buildTrunk, heading, exec, execNode } = require("./_utils.cjs");
 const path = require("path");
 
 const extensionFolder = path.join(root, "packages/@romejs-integration/vscode");
 
 buildTrunk();
 
-console.log(inverse("Compiling Extension"));
+heading("Compiling Extension");
 execNode([
-	path.join("node_modules", ".bin", "tsc"),
-	"--build",
-	extensionFolder,
+  path.join("node_modules", ".bin", "tsc"),
+  "--build",
+  extensionFolder,
 ]);
 
-console.log(inverse("Running VSCode"));
+heading("Running VSCode");
 exec("code", [
-	"--extensionDevelopmentPath",
-	extensionFolder,
-	"--disable-extensions",
-	...argv,
+  "--extensionDevelopmentPath",
+  extensionFolder,
+  "--disable-extensions",
+  ...argv,
 ]);

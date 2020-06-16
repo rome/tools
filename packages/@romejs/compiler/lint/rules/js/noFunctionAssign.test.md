@@ -7,30 +7,53 @@
 ### `0`
 
 ```
-✔ No known problems!
+
+ unknown:1:19 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Do not reassign a function declaration.
+
+    function foo() {}; foo = bar;
+                       ^^^
+
+  ℹ Use a local variable instead.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `0: formatted`
 
 ```
-function foo() {
-	var foo = bar;
-}
+function foo() {}
+foo = bar;
 
 ```
 
 ### `1`
 
 ```
-✔ No known problems!
+
+ unknown:1:17 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Do not reassign a function declaration.
+
+    function foo() { foo = bar; }
+                     ^^^
+
+  ℹ Use a local variable instead.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `1: formatted`
 
 ```
-function foo(foo) {
+function foo() {
 	foo = bar;
 }
 
@@ -40,12 +63,14 @@ function foo(foo) {
 
 ```
 
- unknown:1:26 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Reassignment of function declaration
+  ✖ Do not reassign a function declaration.
 
-    function foo() { var foo; foo = bar; }
-                              ^^^
+    foo = bar; function foo() { };
+    ^^^
+
+  ℹ Use a local variable instead.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -56,170 +81,31 @@ function foo(foo) {
 ### `2: formatted`
 
 ```
-function foo() {
-	var foo;
-	foo = bar;
-}
+foo = bar;
+function foo() {}
 
 ```
 
 ### `3`
 
 ```
-✔ No known problems!
-
-```
-
-### `3: formatted`
-
-```
-var foo = () => {};
-foo = bar;
-
-```
-
-### `4`
-
-```
-✔ No known problems!
-
-```
-
-### `4: formatted`
-
-```
-var foo = function() {};
-foo = bar;
-
-```
-
-### `5`
-
-```
-✔ No known problems!
-
-```
-
-### `5: formatted`
-
-```
-var foo = function() {
-	foo = bar;
-};
-
-```
-
-### `6`
-
-```
-✔ No known problems!
-
-```
-
-### `6: formatted`
-
-```
-import bar from "bar";
-function foo() {
-	var foo = bar;
-}
-
-```
-
-### `7`
-
-```
-
- unknown:1:19 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Reassignment of function declaration
-
-    function foo() {}; foo = bar;
-                       ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `7: formatted`
-
-```
-function foo() {}
-foo = bar;
-
-```
-
-### `8`
-
-```
-
- unknown:1:17 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Reassignment of function declaration
-
-    function foo() { foo = bar; }
-                     ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `8: formatted`
-
-```
-function foo() {
-	foo = bar;
-}
-
-```
-
-### `9`
-
-```
-
- unknown:1 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Reassignment of function declaration
-
-    foo = bar; function foo() { };
-    ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `9: formatted`
-
-```
-foo = bar;
-function foo() {}
-
-```
-
-### `10`
-
-```
 
  unknown:1:1 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Reassignment of function declaration
+  ✖ Do not reassign a function declaration.
 
     [foo] = bar; function foo() { };
      ^^^
 
+  ℹ Use a local variable instead.
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
 
 ```
 
-### `10: formatted`
+### `3: formatted`
 
 ```
 [foo] = bar;
@@ -227,16 +113,18 @@ function foo() {}
 
 ```
 
-### `11`
+### `4`
 
 ```
 
  unknown:1:5 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Reassignment of function declaration
+  ✖ Do not reassign a function declaration.
 
     ({x: foo = 0} = bar); function foo() { };
          ^^^
+
+  ℹ Use a local variable instead.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -244,7 +132,7 @@ function foo() {}
 
 ```
 
-### `11: formatted`
+### `4: formatted`
 
 ```
 ({x: foo = 0} = bar);
@@ -252,16 +140,18 @@ function foo() {}
 
 ```
 
-### `12`
+### `5`
 
 ```
 
  unknown:1:18 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Reassignment of function declaration
+  ✖ Do not reassign a function declaration.
 
     function foo() { [foo] = bar; }
                       ^^^
+
+  ℹ Use a local variable instead.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -269,7 +159,7 @@ function foo() {}
 
 ```
 
-### `12: formatted`
+### `5: formatted`
 
 ```
 function foo() {
@@ -278,16 +168,18 @@ function foo() {
 
 ```
 
-### `13`
+### `6`
 
 ```
 
  unknown:1:19 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Reassignment of function declaration
+  ✖ Do not reassign a function declaration.
 
     (function() { ({x: foo = 0} = bar); function foo() { }; })();
                        ^^^
+
+  ℹ Use a local variable instead.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -295,12 +187,124 @@ function foo() {
 
 ```
 
-### `13: formatted`
+### `6: formatted`
 
 ```
 (function() {
 	({x: foo = 0} = bar);
 	function foo() {}
 })();
+
+```
+
+### `7`
+
+```
+✔ No known problems!
+
+```
+
+### `7: formatted`
+
+```
+function foo() {
+	var foo = bar;
+}
+
+```
+
+### `8`
+
+```
+✔ No known problems!
+
+```
+
+### `8: formatted`
+
+```
+function foo(foo) {
+	foo = bar;
+}
+
+```
+
+### `9`
+
+```
+✔ No known problems!
+
+```
+
+### `9: formatted`
+
+```
+function foo() {
+	var foo;
+	foo = bar;
+}
+
+```
+
+### `10`
+
+```
+✔ No known problems!
+
+```
+
+### `10: formatted`
+
+```
+var foo = () => {};
+foo = bar;
+
+```
+
+### `11`
+
+```
+✔ No known problems!
+
+```
+
+### `11: formatted`
+
+```
+var foo = function() {};
+foo = bar;
+
+```
+
+### `12`
+
+```
+✔ No known problems!
+
+```
+
+### `12: formatted`
+
+```
+var foo = function() {
+	foo = bar;
+};
+
+```
+
+### `13`
+
+```
+✔ No known problems!
+
+```
+
+### `13: formatted`
+
+```
+import bar from "bar";
+function foo() {
+	var foo = bar;
+}
 
 ```

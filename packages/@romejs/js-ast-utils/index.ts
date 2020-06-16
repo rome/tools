@@ -41,3 +41,6 @@ export {default as createMemberProperty} from "./createMemberProperty";
 export {default as hasJSXAttribute} from "./hasJSXAttribute";
 export {default as getJSXAttribute} from "./getJSXAttribute";
 export {default as isJSXElement} from "./isJSXElement";
+export {default as tryStaticEvaluation} from "./tryStaticEvaluation";
+export {default as tryStaticEvaluationPath} from "./tryStaticEvaluationPath";
+export {default as resolveIndirection} from "./resolveIndirection";

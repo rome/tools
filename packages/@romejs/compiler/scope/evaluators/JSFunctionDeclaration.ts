@@ -7,11 +7,13 @@
 
 import Scope from "../Scope";
 import {FunctionBinding} from "@romejs/compiler";
-import {AnyNode, JSFunctionDeclaration} from "@romejs/ast";
+import {AnyNode, jsFunctionDeclaration} from "@romejs/ast";
+import {buildFunctionScope} from "../utils";
+import {createScopeEvaluator} from "./index";
 
-export default {
-	creator: false,
-	build(node: JSFunctionDeclaration, parent: AnyNode, scope: Scope) {
+export default createScopeEvaluator({
+	inject(node: AnyNode, parent: AnyNode, scope: Scope) {
+		node = jsFunctionDeclaration.assert(node);
 		if (node.id !== undefined) {
 			scope.addBinding(
 				new FunctionBinding({
@@ -22,4 +24,7 @@ export default {
 			);
 		}
 	},
-};
+	enter(node: AnyNode, parent: AnyNode, scope: Scope) {
+		return buildFunctionScope(jsFunctionDeclaration.assert(node), scope);
+	},
+});

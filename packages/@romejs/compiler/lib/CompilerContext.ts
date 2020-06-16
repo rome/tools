@@ -52,7 +52,7 @@ import stringDiff from "@romejs/string-diff";
 import {formatAST} from "@romejs/formatter";
 import {REDUCE_REMOVE} from "../constants";
 import {FileReference} from "@romejs/core";
-import {DEFAULT_PROJECT_CONFIG} from "@romejs/project";
+import {createDefaultProjectConfig} from "@romejs/project";
 import {
 	buildLintDecisionAdviceAction,
 	buildLintDecisionGlobalString,
@@ -114,7 +114,7 @@ export default class CompilerContext {
 			sourceText = "",
 			project = {
 				folder: undefined,
-				config: DEFAULT_PROJECT_CONFIG,
+				config: createDefaultProjectConfig(),
 			},
 			suppressions,
 		} = arg;
@@ -163,7 +163,7 @@ export default class CompilerContext {
 	diagnostics: DiagnosticsProcessor;
 	suppressions: DiagnosticSuppressions;
 	frozen: boolean;
-	rootScope: undefined | RootScope;
+	rootScope: RootScope;
 	mtime: undefined | number;
 	origin: undefined | DiagnosticOrigin;
 	options: CompilerOptions;
@@ -202,14 +202,6 @@ export default class CompilerContext {
 		}
 
 		return false;
-	}
-
-	getRootScope(): RootScope {
-		const {rootScope} = this;
-		if (rootScope === undefined) {
-			throw new Error("Expected root scope");
-		}
-		return rootScope;
 	}
 
 	getCacheDependencies(): Array<string> {

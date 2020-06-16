@@ -14,57 +14,48 @@ test(
 	async (t) => {
 		await testLint(
 			t,
-			dedent`
-        class p {
-          set name(value) {
-            if (!value) {
-              return 'wrong';
-            }
-          }
-        }
-      `,
-			{category: "lint/js/noSetterReturn"},
-		);
-
-		await testLint(
-			t,
-			dedent`
-        class p {
-          static set name(value) {
-            if (!value) {
-              return 'wrong';
-            }
-          }
-        }
-      `,
-			{category: "lint/js/noSetterReturn"},
-		);
-
-		await testLint(
-			t,
-			dedent`
-        let p = {
-          set name(value) {
-            if (!value) {
-              return 'wrong';
-            }
-          }
-        };
-      `,
-			{category: "lint/js/noSetterReturn"},
-		);
-
-		await testLint(
-			t,
-			dedent`
-        class p {
-          set name(value) {
-            if (!value) {
-              return;
-            }
-          }
-        }
-      `,
+			{
+				invalid: [
+					dedent`
+					class p {
+						set name(value) {
+							if (!value) {
+								return 'wrong';
+							}
+						}
+					}
+				`,
+					dedent`
+					class p {
+						static set name(value) {
+							if (!value) {
+								return 'wrong';
+							}
+						}
+					}
+				`,
+					dedent`
+					let p = {
+						set name(value) {
+							if (!value) {
+								return 'wrong';
+							}
+						}
+					};
+				`,
+				],
+				valid: [
+					dedent`
+					class p {
+						set name(value) {
+							if (!value) {
+								return;
+							}
+						}
+					}
+				`,
+				],
+			},
 			{category: "lint/js/noSetterReturn"},
 		);
 	},

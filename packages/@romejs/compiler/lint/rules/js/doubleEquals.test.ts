@@ -6,22 +6,17 @@
  */
 
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
 	"double equals",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// VALID
-				"foo == null",
-				"foo != null",
-				"null == foo",
-				"null != foo",
-				// INVALID
-				"foo == bar",
-			],
+			{
+				invalid: ["foo == bar"],
+				valid: ["foo == null", "foo != null", "null == foo", "null != foo"],
+			},
 			{category: "lint/js/doubleEquals"},
 		);
 	},

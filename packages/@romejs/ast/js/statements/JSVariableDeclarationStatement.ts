@@ -6,7 +6,7 @@
  */
 
 import {JSNodeBase, JSVariableDeclaration} from "@romejs/ast";
-import {createQuickBuilder} from "../utils";
+import {createQuickBuilder} from "../../utils";
 
 export type JSVariableDeclarationStatement = JSNodeBase & {
 	type: "JSVariableDeclarationStatement";

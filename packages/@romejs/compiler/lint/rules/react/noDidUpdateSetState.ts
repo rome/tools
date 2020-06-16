@@ -23,7 +23,7 @@ function inComponentDidUpdate(path: Path): boolean {
 }
 
 export default {
-	name: "noDidUpdateSetState",
+	name: "reactNoDidUpdateSetState",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

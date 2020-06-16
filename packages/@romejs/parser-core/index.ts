@@ -204,8 +204,12 @@ export class ParserCore<Tokens extends TokensShape, State> {
 		const tokens: Array<TokenValues<Tokens>> = [];
 
 		const {diagnostics} = catchDiagnosticsSync(() => {
-			while (!this.matchToken("EOF")) {
+			while (true) {
 				tokens.push(this.getToken());
+				if (this.matchToken("EOF")) {
+					break;
+				}
+
 				this.nextToken();
 			}
 		});

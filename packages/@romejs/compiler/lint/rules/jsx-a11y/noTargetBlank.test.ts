@@ -1,22 +1,25 @@
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
 
 test(
-	'require anchors with target="_blank" to use rel="noreferrer"',
+	"jsx-a11y no target blank",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				'<a href="http://external.link" target="_blank">child</a>',
-				'<a href={dynamicLink} target="_blank">child</a>',
-				// VALID
-				'<p href="http://external.link" target="_blank">child</p>',
-				'<a href="http://external.link" rel="noreferrer" target="_blank">child</a>',
-				'<a href="http://external.link" rel="noopener noreferrer" target="_blank">child</a>',
-				'<a href="relative/link" rel="noreferrer" target="_blank">child</a>',
-				'<a href="/absolute/link" rel="noreferrer" target="_blank">child</a>',
-			],
+			{
+				invalid: [
+					'<a href="http://external.link" target="_blank">child</a>',
+					'<a href={dynamicLink} target="_blank">child</a>',
+				],
+				valid: [
+					'<p href="http://external.link" target="_blank">child</p>',
+					'<a href="http://external.link" rel="noreferrer" target="_blank">child</a>',
+					'<a href="http://external.link" rel="noopener noreferrer" target="_blank">child</a>',
+					'<a href="relative/link" rel="noreferrer" target="_blank">child</a>',
+					'<a href="/absolute/link" rel="noreferrer" target="_blank">child</a>',
+					'<a href={dynamicLink} rel="noreferrer" target="_blank">child</a>',
+				],
+			},
 			{category: "lint/jsx-a11y/noTargetBlank"},
 		);
 	},

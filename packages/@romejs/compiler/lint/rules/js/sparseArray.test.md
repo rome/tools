@@ -8,12 +8,14 @@
 
 ```
 
- unknown:1:3 lint/js/sparseArray FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:3 lint/js/sparseArray  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Your array contains an empty slot
+  ✖ This array contains an empty slot.
 
     [1,,2]
        ^
+
+  ℹ Sparse arrays without values for some items can lead to confusion.
 
   ℹ Recommended fix
 

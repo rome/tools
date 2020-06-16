@@ -1,35 +1,38 @@
 import {test} from "rome";
-import {testLintMultiple} from "../testHelpers";
+import {testLint} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-	"no redundant should component update",
+	"react no redundant should component update",
 	async (t) => {
-		await testLintMultiple(
+		await testLint(
 			t,
-			[
-				// INVALID
-				`
-        class Hello extends React.PureComponent {
-          componentShouldUpdate() {}
-        }
-				`,
-				`
-        class Hello extends PureComponent {
-          componentShouldUpdate() {}
-        }
-        `,
-				// VALID
-				`
-        class Hello extends React.PureComponent {
-          componentDidMount() {}
-        }
-        `,
-				`
-        class Hello extends PureComponent {
-          componentDidMount() {}
-        }
-        `,
-			],
+			{
+				invalid: [
+					dedent`
+						class Hello extends React.PureComponent {
+							shouldComponentUpdate() {}
+						}
+					`,
+					dedent`
+						class Hello extends PureComponent {
+							shouldComponentUpdate() {}
+						}
+					`,
+				],
+				valid: [
+					dedent`
+						class Hello extends React.PureComponent {
+							componentDidMount() {}
+						}
+					`,
+					dedent`
+						class Hello extends PureComponent {
+							componentDidMount() {}
+						}
+					`,
+				],
+			},
 			{category: "lint/react/noRedundantShouldComponentUpdate"},
 		);
 	},

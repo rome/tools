@@ -10,11 +10,13 @@
 
  unknown:2 lint/js/noLabelVar ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Labels should not be variable names
+  ✖ Do not use the x variable name as a label.
 
     1 │ const x = 'test';
   > 2 │ x: const y = 'test';
       │ ^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Creating a label with the same name as an in-scope variable leads to confusion.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

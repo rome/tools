@@ -6,7 +6,7 @@
  */
 
 import {AnyTSEntityName, JSIdentifier, JSNodeBase} from "@romejs/ast";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type TSQualifiedName = JSNodeBase & {
 	type: "TSQualifiedName";

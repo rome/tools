@@ -14,19 +14,20 @@ test(
 	async (t) => {
 		await testLint(
 			t,
-			dedent`
-        const x = 'test';
-        x: const y = 'test';
-      `,
-			{category: "lint/js/noLabelVar"},
-		);
-
-		await testLint(
-			t,
-			dedent`
-        const x = 'test';
-        z: const y = 'test';
-      `,
+			{
+				invalid: [
+					dedent`
+						const x = 'test';
+						x: const y = 'test';
+					`,
+				],
+				valid: [
+					dedent`
+						const x = 'test';
+						z: const y = 'test';
+					`,
+				],
+			},
 			{category: "lint/js/noLabelVar"},
 		);
 	},
