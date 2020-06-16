@@ -10,9 +10,9 @@
 require("./_setup.cjs");
 
 const child = require("child_process");
-const { argv, root } = require("./_constants.cjs");
+const {argv, root} = require("./_constants.cjs");
 const path = require("path");
-const { exec } = require("./_utils.cjs");
+const {exec} = require("./_utils.cjs");
 const https = require("https");
 
 function spawnNpmVersionSync(argv, cwd) {
@@ -29,7 +29,15 @@ function spawnNpmVersionSync(argv, cwd) {
     process.exit(1);
   }
 
-  return res.stdout.toString();
+  return res.stdout.toString().trim();
+}
+
+// Ensure we're on the main branch
+const branchRes = child.spawnSync("git", ["rev-parse", "--abbrev-ref", "HEAD"]);
+const branch = branchRes.stdout.toString().trim();
+if (branch !== "main") {
+  console.error(`On branch ${branch} instead of main`);
+  process.exit(1);
 }
 
 // Ensure git isn"t dirty
@@ -40,7 +48,7 @@ if (gitRes.status === 1) {
 }
 
 // Update root
-const version = spawnNpmVersionSync(argv, root).trim().slice(1);
+const version = spawnNpmVersionSync(argv, root).slice(1);
 console.log("New version", version);
 
 // Check this isn"t an already published version
