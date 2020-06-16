@@ -93,6 +93,7 @@ import noDidMountSetState from "./react/noDidMountSetState";
 import noDidUpdateSetState from "./react/noDidUpdateSetState";
 import noFindDOMNode from "./react/noFindDOMNode";
 import noRedundantShouldComponentUpdate from "./react/noRedundantShouldComponentUpdate";
+import noRenderReturnValue from "./react/noRenderReturnValue";
 import noStringRefs from "./react/noStringRefs";
 import noThisInSFC from "./react/noThisInSFC";
 import noUnsafe from "./react/noUnsafe";
@@ -102,7 +103,6 @@ import reactInJsxScope from "./react/reactInJsxScope";
 import requireRenderReturn from "./react/requireRenderReturn";
 import stylePropObject from "./react/stylePropObject";
 import voidDomElementsNoChildren from "./react/voidDomElementsNoChildren";
-import noRenderReturnValue from "./react/noRenderReturnValue";
 import noExplicitAny from "./ts/noExplicitAny";
 
 export const lintTransforms = [
@@ -193,6 +193,7 @@ export const lintTransforms = [
 	noDidUpdateSetState,
 	noFindDOMNode,
 	noRedundantShouldComponentUpdate,
+	noRenderReturnValue,
 	noStringRefs,
 	noThisInSFC,
 	noUnsafe,
@@ -200,7 +201,6 @@ export const lintTransforms = [
 	noWillUpdateSetState,
 	reactInJsxScope,
 	requireRenderReturn,
-	noRenderReturnValue,
 	stylePropObject,
 	voidDomElementsNoChildren,
 	noExplicitAny,
