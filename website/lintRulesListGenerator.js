@@ -60,12 +60,20 @@ for (const [category] of Object.entries(map)) {
   });
 }
 
+
+
 for (const [category, value] of Object.entries(map)) {
+let table = `
+| Rule  | Description |
+| ------------- | ------------- |
+`;
   file += `## ${categoryAlias[category]}\n\n`;
 
   for (const rule of value) {
-    file += `* ${rule}\n`;
+    table += `| ${rule} |  |\n`;
   }
+
+  file += table;
 
   file += `\n`;
 

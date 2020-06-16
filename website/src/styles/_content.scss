@@ -37,3 +37,11 @@
   }
 
 }
+
+tbody td{
+  padding: $unit / 2;
+}
+
+tbody tr:nth-child(even) {
+  background-color: var(--soft-border-color);
+}
