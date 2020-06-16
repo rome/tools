@@ -26,12 +26,13 @@ exports.unlink = function(loc) {
 	}
 };
 
-exports.exec = function(cmd, args) {
+exports.exec = function(cmd, args, cwd) {
 	const res = child.spawnSync(
 		cmd,
 		args,
 		{
 			stdio: "inherit",
+			cwd,
 		},
 	);
 	if (res.status !== 0) {
