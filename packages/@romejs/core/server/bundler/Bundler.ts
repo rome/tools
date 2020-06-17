@@ -349,6 +349,10 @@ export default class Bundler {
 		// rome-ignore lint/js/noDelete
 		delete newManifest.type;
 
+		// Remove rome project config
+		// rome-ignore lint/js/noDelete
+		delete newManifest.rome;
+
 		return newManifest;
 	}
 

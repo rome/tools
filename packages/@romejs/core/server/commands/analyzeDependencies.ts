@@ -9,7 +9,6 @@ import {ServerRequest} from "@romejs/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {Consumer} from "@romejs/consume";
-import {createUnknownFilePath} from "@romejs/path";
 import {SourceLocation} from "@romejs/parser-core";
 
 type Flags = {
@@ -37,17 +36,8 @@ export default createServerCommand({
 		};
 	},
 	async callback(req: ServerRequest, commandFlags: Flags): Promise<void> {
-		const {server, reporter} = req;
-		const {args} = req.query;
-		req.expectArgumentLength(1);
-
-		const filename = await server.resolver.resolveEntryAssertPath(
-			{
-				...req.getResolverOptionsFromFlags(),
-				source: createUnknownFilePath(args[0]),
-			},
-			{location: req.getDiagnosticPointerFromFlags({type: "arg", key: 0})},
-		);
+		const {reporter} = req;
+		const filename = await req.resolveEntryAssertPathArg(0);
 
 		let res = await req.requestWorkerAnalyzeDependencies(filename, {});
 

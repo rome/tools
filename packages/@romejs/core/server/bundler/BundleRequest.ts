@@ -29,6 +29,7 @@ import crypto = require("crypto");
 import {Dict} from "@romejs/typescript-helpers";
 import {Reporter} from "@romejs/cli-reporter";
 import WorkerQueue from "../WorkerQueue";
+import {dedent} from "@romejs/string-utils";
 
 export type BundleOptions = {
 	prefix?: string;
@@ -263,6 +264,16 @@ export default class BundleRequest {
 			push(`#!${interpreter}\n`);
 		}
 
+		push(
+			dedent`
+			(function(res) {
+				if (typeof module !== "undefined") {
+					module.exports = res;
+				}
+				return res;
+			})(`,
+		);
+
 		// add on bootstrap
 		if (order.firstTopAwaitLocations.length > 0) {
 			if (mode === "legacy") {
@@ -350,7 +361,7 @@ export default class BundleRequest {
 
 		// push footer
 		push(
-			"})(typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : this);",
+			"})(typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : this));",
 		);
 
 		//

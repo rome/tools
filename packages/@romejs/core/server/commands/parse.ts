@@ -9,7 +9,6 @@ import {ServerRequest} from "@romejs/core";
 import {Consumer} from "@romejs/consume";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import {createUnknownFilePath} from "@romejs/path";
 import {ConstSourceType, jsRoot} from "@romejs/ast";
 import {removeLoc} from "@romejs/js-ast-utils";
 
@@ -32,17 +31,8 @@ export default createServerCommand({
 		};
 	},
 	async callback(req: ServerRequest, flags: Flags): Promise<void> {
-		const {server, reporter} = req;
-		const {args} = req.query;
-		req.expectArgumentLength(1);
-
-		const filename = await server.resolver.resolveEntryAssertPath(
-			{
-				...req.getResolverOptionsFromFlags(),
-				source: createUnknownFilePath(args[0]),
-			},
-			{location: req.getDiagnosticPointerFromFlags({type: "arg", key: 0})},
-		);
+		const {reporter} = req;
+		const filename = await req.resolveEntryAssertPathArg(0);
 
 		let ast = await req.requestWorkerParse(
 			filename,

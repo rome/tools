@@ -5,21 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	LanguageClient,
-	LanguageClientOptions,
-	ServerOptions,
-	TransportKind,
-} from "vscode-languageclient";
-// rome-ignore resolver/notFound
-import * as vscode from "vscode";
+import languageClient = require("vscode-languageclient");
 import path = require("path");
-
+import vscode = require("vscode");
 import fs = require("fs");
-
 import os = require("os");
 
-let client: LanguageClient;
+let client: languageClient.LanguageClient;
 
 function crawl(root: string): Iterable<string> {
 	return {
@@ -142,13 +134,13 @@ export async function activate() {
 
 	log(`Discovered Rome path ${romePath}`);
 
-	let serverOptions: ServerOptions = {
+	let serverOptions: languageClient.ServerOptions = {
 		module: romePath,
 		args: ["lsp"],
-		transport: TransportKind.stdio,
+		transport: languageClient.TransportKind.stdio,
 	};
 
-	let clientOptions: LanguageClientOptions = {
+	let clientOptions: languageClient.LanguageClientOptions = {
 		outputChannel,
 		documentSelector: [
 			{scheme: "file", language: "javascript"},
@@ -159,7 +151,12 @@ export async function activate() {
 		],
 	};
 
-	client = new LanguageClient("rome", "Rome", serverOptions, clientOptions);
+	client = new languageClient.LanguageClient(
+		"rome",
+		"Rome",
+		serverOptions,
+		clientOptions,
+	);
 
 	client.start();
 }

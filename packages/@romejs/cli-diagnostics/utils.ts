@@ -8,6 +8,7 @@
 import {markupToPlainTextString} from "@romejs/string-markup";
 import highlightCode, {AnsiHighlightOptions} from "./highlightCode";
 import {NEWLINE} from "@romejs/js-parser-utils";
+import {removeCarriageReturn} from "@romejs/string-utils";
 
 export function normalizeTabs(str: string): string {
 	return str.replace(/\t/g, "  ");
@@ -72,8 +73,9 @@ export type ToLines = {
 };
 
 export function toLines(opts: AnsiHighlightOptions): ToLines {
-	const raw = splitLines(opts.input);
-	const highlighted = splitLines(highlightCode(opts));
+	const input = removeCarriageReturn(opts.input);
+	const raw = splitLines(input);
+	const highlighted = splitLines(highlightCode({...opts, input}));
 
 	if (raw.length !== highlighted.length) {
 		throw new Error(

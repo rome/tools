@@ -14,7 +14,11 @@
     "onLanguage:typescriptreact",
     "onLanguage:json"
   ],
-  "main": "./out/extension",
+  "files": [
+    "/icon.png",
+    "/README.md"
+  ],
+  "main": "index.ts",
   "engines": {
     "vscode": "^1.33.0"
   },
@@ -27,5 +31,13 @@
   },
   "bugs": {
     "url": "https://github.com/romejs/rome/issues"
+  },
+  "rome": {
+    "extends": "../../../package.json",
+    "bundler": {
+      "externals": [
+        "vscode"
+      ]
+    }
   }
 }
