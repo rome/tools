@@ -27,6 +27,7 @@ $gray-8: lighten(#27272A, 80%);
   --pattern-img-path: url("/static/img/pattern-white.png");
   --toc-background-active: #{$gray-8};
   --toc-link-color-active: #{$gray-4};
+  --blockquote-color: #{$gray-7};
 
 }
 
@@ -42,6 +43,7 @@ html[data-theme='dark'] {
   --pattern-img-path: url("/static/img/pattern-black.png");
   --toc-background-active: #{$gray-3};
   --toc-link-color-active: #{$gray-8};
+  --blockquote-color: #{$gray-7};
 
 }
 

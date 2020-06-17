@@ -14,7 +14,7 @@ Now, create a Rome configuration for your project. When prompted, it is advised 
 rome init
 ```
 
-This command creates a Rome configuration file, `rome.json`, which looks like this:
+This command creates a Rome configuration file, `rome.rjson`, which looks like this:
 
 ```json
 {
@@ -24,5 +24,7 @@ This command creates a Rome configuration file, `rome.json`, which looks like th
   }
 }
 ```
+
+> Note: RJSON is a superset of JSON that supports more-concise syntax and features such as comments.
 
 You're all set to get started with Rome. Continue reading to explore the variety of commands that Rome supports.
