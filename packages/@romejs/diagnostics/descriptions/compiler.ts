@@ -14,4 +14,8 @@ export const compiler = createDiagnosticsCategory({
 		category: "compile/const-enums",
 		message: "Const enums are not supported",
 	},
+	ENUM_COMPUTED_VALUES_UNSUPPORTED: {
+		category: "compile/nonnumeric-enum-values",
+		message: "Only numeric enums can have computed members",
+	},
 });
