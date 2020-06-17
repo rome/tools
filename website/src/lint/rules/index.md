@@ -8,8 +8,7 @@ showHero: false
 
 ## Javascript
 
-
-| Rule  | Description |
+| Rule | Description |
 | ------------- | ------------- |
 | [camel-case](/lint/rules/camel-case) |  This rule enforce the use of camelCase |
 | case-single-statement |  |
@@ -63,8 +62,7 @@ showHero: false
 
 ## JSX a11y
 
-
-| Rule  | Description |
+| Rule | Description |
 | ------------- | ------------- |
 | alt-text |  |
 | anchor-has-content |  |
@@ -93,8 +91,7 @@ showHero: false
 
 ## React
 
-
-| Rule  | Description |
+| Rule | Description |
 | ------------- | ------------- |
 | button-has-type |  |
 | jsx-fragments |  |
@@ -124,8 +121,7 @@ showHero: false
 
 ## TypeScript
 
-
-| Rule  | Description |
+| Rule | Description |
 | ------------- | ------------- |
 | no-explicit-any |  |
 

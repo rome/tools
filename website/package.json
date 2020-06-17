@@ -6,8 +6,7 @@
     "build:styles": "sass --style=compressed src/styles/index.scss static/styles.css",
     "start": "npm-run-all build:styles --parallel watch:*",
     "watch:eleventy": "eleventy --serve",
-    "watch:sass": "npm run build:styles -- --watch",
-    "generate:lint-rules-doc": "node ./lintRulesListGenerator.js"
+    "watch:sass": "npm run build:styles -- --watch"
   },
   "devDependencies": {
     "@11ty/eleventy": "^0.11.0",

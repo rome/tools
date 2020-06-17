@@ -128,3 +128,12 @@ exports.toCamelCase = function(str, forceCapitalize) {
 
 	return str;
 };
+
+exports.camelCaseToKebabCase = function(str) {
+
+	str = str.replace(/([A-Z0-9]{1})(?=[a-z])/g, '-$1')
+	str = str.replace(/([a-z0-9]{1})(?=[A-Z]{2})/g, '$1-')
+	str = str.toLowerCase();
+
+	return str;
+}

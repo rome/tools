@@ -23,6 +23,14 @@ exports.lintRulesFolder = path.join(
 	"lint",
 	"rules",
 );
+exports.lintRulesDocFolder = path.join(
+	__dirname,
+	"..",
+	"website",
+	"src",
+	"lint",
+	"rules",
+);
 exports.categoriesFile = path.join(
 	exports.packages,
 	"diagnostics",
