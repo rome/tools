@@ -11,8 +11,8 @@ export function toCamelCase(str: string, forceCapitalize?: boolean): string {
 		return str;
 	}
 
-	// Prepend uppercase letters with a space
-	str = str.replace(/([A-Z+])/g, " $1");
+	// Prepend uppercase letters with a space unless all characters are uppercase
+	str = str.toUpperCase() === str ? ` ${str}` : str.replace(/([A-Z+])/g, " $1");
 
 	// We no longer care about the casing
 	str = str.toLowerCase();
