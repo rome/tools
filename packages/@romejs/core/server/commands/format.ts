@@ -8,7 +8,6 @@
 import {ServerRequest} from "@romejs/core";
 import {createServerCommand} from "../commands";
 import {commandCategories} from "../../common/commands";
-import {createUnknownFilePath} from "@romejs/path";
 import {Consumer} from "@romejs/consume";
 
 type Flags = {
@@ -26,17 +25,8 @@ export default createServerCommand({
 		};
 	},
 	async callback(req: ServerRequest, flags: Flags): Promise<undefined | string> {
-		const {reporter, server} = req;
-		const {args} = req.query;
-		req.expectArgumentLength(1);
-
-		const filename = await server.resolver.resolveEntryAssertPath(
-			{
-				...req.getResolverOptionsFromFlags(),
-				source: createUnknownFilePath(args[0]),
-			},
-			{location: req.getDiagnosticPointerFromFlags({type: "arg", key: 0})},
-		);
+		const {reporter} = req;
+		const filename = await req.resolveEntryAssertPathArg(0);
 
 		const res = await req.requestWorkerFormat(
 			filename,

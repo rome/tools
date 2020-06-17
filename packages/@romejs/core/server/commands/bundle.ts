@@ -55,9 +55,11 @@ export default createServerCommand<Flags>({
 		}
 
 		if (commandFlags.quiet) {
-			reporter.success(`Saved to ${dir.toMarkup()}`);
+			reporter.success(`Saved to <emphasis>${dir.toMarkup()}</emphasis>`);
 		} else {
-			reporter.success(`Saved the following files to ${dir.toMarkup()}`);
+			reporter.success(
+				`Saved the following files to <emphasis>${dir.toMarkup()}</emphasis>`,
+			);
 			reporter.list(savedList);
 		}
 	},

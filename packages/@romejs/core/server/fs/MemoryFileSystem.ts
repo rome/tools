@@ -16,7 +16,11 @@ import {
 	matchPathPatterns,
 	parsePathPattern,
 } from "@romejs/path-match";
-import {ProjectDefinition, ROME_CONFIG_FILENAMES} from "@romejs/project";
+import {
+	ProjectDefinition,
+	ROME_CONFIG_FILENAMES,
+	ROME_CONFIG_PACKAGE_JSON_FIELD,
+} from "@romejs/project";
 import {DiagnosticsProcessor, catchDiagnostics} from "@romejs/diagnostics";
 import {Event} from "@romejs/events";
 import {consumeJSON} from "@romejs/codec-json";
@@ -608,7 +612,7 @@ export default class MemoryFileSystem {
 	}
 
 	isIgnored(path: AbsoluteFilePath, type: "directory" | "file"): boolean {
-		const project = this.server.projectManager.findProjectExisting(path);
+		const project = this.server.projectManager.findProjectExisting(path, false);
 		if (project === undefined) {
 			return false;
 		}
@@ -685,15 +689,17 @@ export default class MemoryFileSystem {
 		// If we aren't in node_modules then this is a project package
 		const isProjectPackage = this.isInsideProject(path);
 		const {projectManager} = this.server;
-		const project = projectManager.findProjectExisting(path);
-		if (project !== undefined) {
-			projectManager.declareManifest(
-				project,
-				isProjectPackage,
-				def,
-				diagnostics,
-			);
+
+		if (isProjectPackage && consumer.has(ROME_CONFIG_PACKAGE_JSON_FIELD)) {
+			await projectManager.addProject({
+				projectFolder: folder,
+				configPath: path,
+				watch: false,
+			});
 		}
+
+		const project = projectManager.assertProjectExisting(path);
+		projectManager.declareManifest(project, isProjectPackage, def, diagnostics);
 
 		// Tell all workers of our discovery
 		for (const worker of this.server.workerManager.getWorkers()) {
@@ -929,7 +935,11 @@ export default class MemoryFileSystem {
 
 		// Add project if this is a config
 		if (ROME_CONFIG_FILENAMES.includes(basename)) {
-			await projectManager.queueAddProject(dirname, path);
+			await projectManager.addProject({
+				projectFolder: dirname,
+				configPath: path,
+				watch: false,
+			});
 		}
 
 		if (isValidManifest(path)) {

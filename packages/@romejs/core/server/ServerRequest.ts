@@ -285,6 +285,19 @@ export default class ServerRequest {
 		this.normalizedCommandFlags = normalized;
 	}
 
+	async resolveEntryAssertPathArg(index: number): Promise<AbsoluteFilePath> {
+		this.expectArgumentLength(index + 1);
+		const arg = this.query.args[index];
+
+		return await this.server.resolver.resolveEntryAssertPath(
+			{
+				...this.getResolverOptionsFromFlags(),
+				source: createUnknownFilePath(arg),
+			},
+			{location: this.getDiagnosticPointerFromFlags({type: "arg", key: index})},
+		);
+	}
+
 	async assertClientCwdProject(): Promise<ProjectDefinition> {
 		const location = this.getDiagnosticPointerForClientCwd();
 		return this.server.projectManager.assertProject(

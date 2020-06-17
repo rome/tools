@@ -36,6 +36,7 @@ export type ProjectConfigObjects = {
 	resolver: {};
 	compiler: {};
 	bundler: {
+		externals: Array<string>;
 		mode: BundlerMode;
 	};
 	lint: {
@@ -165,6 +166,7 @@ export function createDefaultProjectConfig(): ProjectConfig {
 			serveStatic: true,
 		},
 		bundler: {
+			externals: [],
 			mode: "modern",
 		},
 		compiler: {},
