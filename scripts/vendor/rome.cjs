@@ -105755,9 +105755,12 @@ const ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$crypto = requ
 			await this.wrapRequestDiagnostic(
 				"updateBuffer",
 				path,
-				(bridge, file) => bridge.updateBuffer.call({file, content}),
+				async (bridge, file) => {
+					await bridge.updateBuffer.call({file, content});
+					this.server.memoryFs.addBuffer(path, content);
+					this.server.refreshFileEvent.send(path);
+				},
 			);
-			this.server.refreshFileEvent.send(path);
 		}
 
 		async requestWorkerClearBuffer(path) {
@@ -105766,10 +105769,12 @@ const ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$crypto = requ
 			await this.wrapRequestDiagnostic(
 				"updateBuffer",
 				path,
-				(bridge, file) => bridge.clearBuffer.call({file}),
+				async (bridge, file) => {
+					await bridge.clearBuffer.call({file});
+					this.server.memoryFs.clearBuffer(path);
+					this.server.refreshFileEvent.send(path);
+				},
 			);
-			await this.server.fileAllocator.evict(path);
-			this.server.refreshFileEvent.send(path);
 		}
 
 		async requestWorkerParse(path, opts) {
@@ -122621,7 +122626,7 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 
 						const path = folderPath.resolve(filename);
 
-						memoryFs.stat(path).then((newStats) => {
+						memoryFs.hardStat(path).then((newStats) => {
 							const diagnostics = memoryFs.server.createDisconnectedDiagnosticsProcessor([
 								{
 									category: "memory-fs",
@@ -122664,7 +122669,7 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 			// No need to call watch() on the projectFolder since it will call us
 
 			// Perform an initial crawl
-			const stats = await memoryFs.stat(projectFolder);
+			const stats = await memoryFs.hardStat(projectFolder);
 			await memoryFs.addDirectory(
 				projectFolder,
 				stats,
@@ -122704,6 +122709,7 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 			this.files = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
 			this.manifests = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
 			this.watchers = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
+			this.buffers = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
 			this.manifestCounter = 0;
 
 			this.changedFileEvent = new ___R$project$rome$$romejs$events$Event_ts$default({
@@ -122717,6 +122723,21 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 		}
 
 		init() {}
+
+		addBuffer(path, content) {
+			this.buffers.set(
+				path,
+				{
+					type: "file",
+					size: content.length,
+					mtime: Date.now(),
+				},
+			);
+		}
+
+		clearBuffer(path) {
+			this.buffers.delete(path);
+		}
 
 		unwatch(dirPath) {
 			const watcher = this.watchers.get(dirPath);
@@ -122973,7 +122994,8 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 			diagnostics.maybeThrowDiagnosticsError();
 		}
 
-		async stat(path) {
+		// Query actual file system for stats
+		async hardStat(path) {
 			const stats = await ___R$project$rome$$romejs$fs$index_ts$lstat(path);
 
 			let type = "unknown";
@@ -122991,7 +123013,7 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 		}
 
 		maybeGetMtime(path) {
-			const stats = this.getFileStats(path);
+			const stats = this.buffers.get(path) || this.files.get(path);
 			if (stats === undefined) {
 				return undefined;
 			} else {
@@ -123000,14 +123022,14 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 		}
 
 		getMtime(path) {
-			const stats = this.getFileStats(path);
-			if (stats === undefined) {
+			const mtime = this.maybeGetMtime(path);
+			if (mtime === undefined) {
 				throw new ___R$project$rome$$romejs$core$common$FileNotFound_ts$FileNotFound(
 					path,
 					"Not found in memory file system",
 				);
 			} else {
-				return stats.mtime;
+				return mtime;
 			}
 		}
 
@@ -123283,7 +123305,7 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 
 				// Declare the file
 				const declareItem = async (path) => {
-					const stats = await this.stat(path);
+					const stats = await this.hardStat(path);
 					if (stats.type === "file") {
 						await this.addFile(path, stats, opts);
 					} else if (stats.type === "directory") {
