@@ -36,7 +36,7 @@ export const lint = createDiagnosticsCategory({
 			advice.push({
 				type: "log",
 				category: "info",
-				text: `The supported values for <emphasis>${attributeName}</emphasis> are: ${values.reduce(
+				text: `The supported values for the <emphasis>${attributeName}</emphasis> attribute are: ${values.reduce(
 					(str, value) => {
 						str.push(typeof value === "boolean" ? String(value) : `"${value}"`);
 						return str;
