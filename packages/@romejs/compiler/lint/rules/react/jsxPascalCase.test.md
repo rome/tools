@@ -36,7 +36,7 @@
 
  unknown:1 lint/react/jsxPascalCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Switch FOO_COMPONENT to FOOCOMPONENT.
+  ✖ Switch FOO_COMPONENT to FooComponent.
 
     <FOO_COMPONENT />
     ^^^^^^^^^^^^^^^^^
