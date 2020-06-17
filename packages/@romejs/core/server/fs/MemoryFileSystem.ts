@@ -167,7 +167,7 @@ async function createWatcher(
 
 					const path = folderPath.resolve(filename);
 
-					memoryFs.stat(path).then((newStats) => {
+					memoryFs.hardStat(path).then((newStats) => {
 						const diagnostics = memoryFs.server.createDisconnectedDiagnosticsProcessor([
 							{
 								category: "memory-fs",
@@ -210,7 +210,7 @@ async function createWatcher(
 		// No need to call watch() on the projectFolder since it will call us
 
 		// Perform an initial crawl
-		const stats = await memoryFs.stat(projectFolder);
+		const stats = await memoryFs.hardStat(projectFolder);
 		await memoryFs.addDirectory(
 			projectFolder,
 			stats,
@@ -246,6 +246,7 @@ export default class MemoryFileSystem {
 		this.files = new AbsoluteFilePathMap();
 		this.manifests = new AbsoluteFilePathMap();
 		this.watchers = new AbsoluteFilePathMap();
+		this.buffers = new AbsoluteFilePathMap();
 		this.manifestCounter = 0;
 
 		this.changedFileEvent = new Event({
@@ -285,7 +286,25 @@ export default class MemoryFileSystem {
 	>;
 	deletedFileEvent: Event<AbsoluteFilePath, void>;
 
+	// Used to maintain fake mtimes for file buffers
+	buffers: AbsoluteFilePathMap<Stats>;
+
 	init() {}
+
+	addBuffer(path: AbsoluteFilePath, content: string) {
+		this.buffers.set(
+			path,
+			{
+				type: "file",
+				size: content.length,
+				mtime: Date.now(),
+			},
+		);
+	}
+
+	clearBuffer(path: AbsoluteFilePath) {
+		this.buffers.delete(path);
+	}
 
 	unwatch(dirPath: AbsoluteFilePath) {
 		const watcher = this.watchers.get(dirPath);
@@ -540,7 +559,8 @@ export default class MemoryFileSystem {
 		diagnostics.maybeThrowDiagnosticsError();
 	}
 
-	async stat(path: AbsoluteFilePath): Promise<Stats> {
+	// Query actual file system for stats
+	async hardStat(path: AbsoluteFilePath): Promise<Stats> {
 		const stats = await lstat(path);
 
 		let type: StatsType = "unknown";
@@ -558,7 +578,7 @@ export default class MemoryFileSystem {
 	}
 
 	maybeGetMtime(path: AbsoluteFilePath): undefined | number {
-		const stats = this.getFileStats(path);
+		const stats = this.buffers.get(path) || this.files.get(path);
 		if (stats === undefined) {
 			return undefined;
 		} else {
@@ -567,11 +587,11 @@ export default class MemoryFileSystem {
 	}
 
 	getMtime(path: AbsoluteFilePath): number {
-		const stats = this.getFileStats(path);
-		if (stats === undefined) {
+		const mtime = this.maybeGetMtime(path);
+		if (mtime === undefined) {
 			throw new FileNotFound(path, "Not found in memory file system");
 		} else {
-			return stats.mtime;
+			return mtime;
 		}
 	}
 
@@ -825,7 +845,7 @@ export default class MemoryFileSystem {
 
 			// Declare the file
 			const declareItem = async (path: AbsoluteFilePath) => {
-				const stats = await this.stat(path);
+				const stats = await this.hardStat(path);
 				if (stats.type === "file") {
 					await this.addFile(path, stats, opts);
 				} else if (stats.type === "directory") {
