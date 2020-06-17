@@ -210,4 +210,12 @@ export default class BridgeEvent<
 			throw err;
 		}
 	}
+
+	callSync(): never {
+		throw new Error(`callSync not allowed on BridgeEvent ${this.name}`);
+	}
+
+	callOptional(): never {
+		throw new Error(`callOptional not allowed on BridgeEvent ${this.name}`);
+	}
 }

@@ -111,6 +111,16 @@ test(
 			// client bridges can't call server<-client events
 			await barGreet.call("bar");
 		});
+
+		t.throws(() => {
+			// callSync not allowed on BridgeEvents
+			fooGreet.callSync();
+		});
+
+		t.throwsAsync(async () => {
+			// callOptional not allowed on BridgeEvents
+			fooGreet.callOptional();
+		});
 	},
 );
 
