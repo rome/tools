@@ -39,7 +39,7 @@
     <span aria-autocomplete='test' ></span>
           ^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ The supported values for aria-autocomplete are: "inline", "list", "both", "none"
+  ℹ The supported values for the aria-autocomplete attribute are: "inline", "list", "both", "none"
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -65,7 +65,7 @@
     <span aria-invalid='foo'></span>
           ^^^^^^^^^^^^^^^^^^
 
-  ℹ The supported values for aria-invalid are: "grammar", false, "spelling", true
+  ℹ The supported values for the aria-invalid attribute are: "grammar", false, "spelling", true
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -115,7 +115,7 @@
     <span aria-relevant='fancy' ></span>
           ^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ The supported values for aria-relevant are: "additions", "all", "removals", "text"
+  ℹ The supported values for the aria-relevant attribute are: "additions", "all", "removals", "text"
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
