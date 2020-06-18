@@ -10,7 +10,7 @@
 
 **Rome** aims to be a replacement for many existing JavaScript tools. We will, however, offer integrations for components in other tools. For example, using the Rome compiler as a plugin for another bundler.
 
-**Rome** is [MIT licensed](LICENSE), and the project managed under the [Contributor Covenant Code of Conduct](.github/CODE_OF_CONDUCT.md).
+**Rome** is [MIT licensed](LICENSE), and the project managed under the [Contributor Covenant Code of Conduct](./CODE_OF_CONDUCT.md).
 
 ## History
 
