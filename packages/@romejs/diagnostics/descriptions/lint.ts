@@ -49,6 +49,31 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
+	JSX_A11Y_ARIA_PROPTYPES: (
+		attributeName: string,
+		values?: Array<string | boolean>,
+	) => {
+		let advice: DiagnosticAdvice = [];
+		if (values) {
+			advice.push({
+				type: "log",
+				category: "info",
+				text: `The supported values for the <emphasis>${attributeName}</emphasis> attribute are: ${values.reduce(
+					(str, value) => {
+						str.push(typeof value === "boolean" ? String(value) : `"${value}"`);
+						return str;
+					},
+					([] as Array<string>),
+				).join(", ")}`,
+			});
+		}
+		return {
+			category: "lint/jsx-a11y/ariaProptypes",
+			message: `The value of the ARIA attribute <emphasis>${attributeName}</emphasis> is not correct.`,
+			advice,
+		};
+	},
+
 	JSX_A11Y_NO_NONINTERACTIVE_ELEMENT_TO_INTERACTIVE_ROLE: (element: string) => ({
 		category: "lint/jsx-a11y/noNoninteractiveElementToInteractiveRole",
 		message: `The HTML element <emphasis>${element}</emphasis> is non-interactive and should not have an interactive role.`,
