@@ -612,7 +612,7 @@ export default class MemoryFileSystem {
 	}
 
 	isIgnored(path: AbsoluteFilePath, type: "directory" | "file"): boolean {
-		const project = this.server.projectManager.findProjectExisting(path, false);
+		const project = this.server.projectManager.findProjectExisting(path);
 		if (project === undefined) {
 			return false;
 		}

@@ -166,7 +166,7 @@ export default class ProjectManager {
 			projectFolder: defaultVendorPath,
 			meta: createDefaultProjectConfigMeta(),
 			config: vendorProjectConfig,
-			watch: true,
+			watch: false,
 		});
 		await this.server.memoryFs.watch(defaultVendorPath);
 	}
@@ -812,7 +812,7 @@ export default class ProjectManager {
 
 				const hasProject = await this.server.memoryFs.existsHard(configPath);
 				if (hasProject) {
-					return this.addProject({projectFolder: dir, configPath, watch: true});
+					return this.addProject({projectFolder: dir, configPath, watch: false});
 				}
 			}
 
@@ -825,7 +825,7 @@ export default class ProjectManager {
 					return this.addProject({
 						projectFolder: dir,
 						configPath: packagePath,
-						watch: true,
+						watch: false,
 					});
 				}
 			}

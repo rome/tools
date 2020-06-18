@@ -48,7 +48,7 @@ export default class VirtualModules {
 			projectFolder: runtimeModulesPath,
 			meta: createDefaultProjectConfigMeta(),
 			config: projectConfig,
-			watch: true,
+			watch: false,
 		});
 		await this.server.memoryFs.watch(runtimeModulesPath);
 	}
