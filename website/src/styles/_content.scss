@@ -52,14 +52,12 @@ tbody tr:nth-child(even) {
   background-color: var(--toc-background-active);
 }
 
-  blockquote {
-    border-left: $unit * 0.5 solid var(--blockquote-color);
-    margin: $unit 0 $unit * 1.5 0;
-    padding: $unit;
+blockquote {
+  border-left: $unit * 0.5 solid var(--blockquote-color);
+  margin: $unit 0 $unit * 1.5 0;
+  padding: $unit;
 
-    > p {
-      margin: 0;
-    }
+  > p {
+    margin: 0;
   }
-
 }
