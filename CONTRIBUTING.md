@@ -18,6 +18,10 @@ cd rome
 
 No dependency installation step is required as we check in our `node_modules` folder that contains only a copy of TypeScript and some definitions.
 
+If files specific to your local development environment should be ignored,
+please add these files to a global git ignore file rather than to a git ignore
+file within Rome. You can find more information on this process [here](https://help.github.com/en/github/using-git/ignoring-files#configuring-ignored-files-for-all-repositories-on-your-computer).
+
 Refer to [Getting Started](https://romejs.dev/docs/introduction/getting-started/) for more usage documentation.
 
 ## Testing
