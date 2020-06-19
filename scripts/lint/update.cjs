@@ -137,3 +137,8 @@ docTemplate += docTemplateTable;
 docTemplate += `\n`;
 
 write(lintRulesDocFile, docTemplate);
+
+console.log(
+	`\nRules doc progress: ${countExistingDocFiles}/${countExistingDocFiles +
+	countMissingDocFiles}`,
+);
