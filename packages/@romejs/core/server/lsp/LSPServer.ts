@@ -21,7 +21,11 @@ import {
 	AbsoluteFilePathSet,
 	createAbsoluteFilePath,
 } from "@romejs/path";
-import {DiagnosticLocation, Diagnostics} from "@romejs/diagnostics";
+import {
+	DiagnosticLocation,
+	Diagnostics,
+	catchDiagnostics,
+} from "@romejs/diagnostics";
 import {Position} from "@romejs/parser-core";
 import {Number0, ob1Coerce1To0, ob1Inc, ob1Number0} from "@romejs/ob1";
 import {markupToPlainTextString} from "@romejs/string-markup";
@@ -319,6 +323,16 @@ export default class LSPServer {
 		this.client.bridge.lspFromServerBuffer.send(out);
 	}
 
+	logMessage(path: AbsoluteFilePath, message: string) {
+		this.write({
+			method: "window/logMessage",
+			params: {
+				uri: `file://${path.join()}`,
+				message,
+			},
+		});
+	}
+
 	createFakeServerRequest(
 		commandName: string,
 		args: Array<string> = [],
@@ -417,6 +431,9 @@ export default class LSPServer {
 
 		this.lintSessions.set(path, req);
 		this.lintSessionsPending.delete(path);
+
+		const date = new Date();
+		this.logMessage(path, `Watching ${path.join()} at ${date.toTimeString()}`);
 	}
 
 	async shutdown() {
@@ -491,13 +508,31 @@ export default class LSPServer {
 					return null;
 				}
 
-				const res = await this.request.requestWorkerFormat(path, {});
-				if (res === undefined) {
-					// Not a file we support formatting
+				const {value, diagnostics} = await catchDiagnostics(async () => {
+					return this.request.requestWorkerFormat(path, {});
+				});
+
+				if (diagnostics !== undefined && diagnostics.length > 0) {
+					const date = new Date();
+					this.logMessage(
+						path,
+						`[Diagnostics - ${date.toTimeString()}] ${path.join()}`,
+					);
+
+					diagnostics.forEach((diag) => {
+						this.logMessage(
+							path,
+							`  (${diag.description.category}) ${diag.description.message.value}`,
+						);
+					});
+				}
+
+				if (value === undefined) {
+					// Not a file we support formatting or has diagnostics
 					return null;
 				}
 
-				return diffTextEdits(res.original, res.formatted);
+				return diffTextEdits(value.original, value.formatted);
 			}
 
 			case "shutdown": {
