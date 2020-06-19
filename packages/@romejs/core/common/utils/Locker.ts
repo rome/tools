@@ -77,10 +77,10 @@ export default class Locker<Key> {
 		}
 	}
 
-	async wrapLock(key: Key, callback: () => void | Promise<void>): Promise<void> {
+	async wrapLock<T>(key: Key, callback: () => T | Promise<T>): Promise<T> {
 		const lock = await this.getLock(key);
 		try {
-			await callback();
+			return await callback();
 		} finally {
 			lock.release();
 		}

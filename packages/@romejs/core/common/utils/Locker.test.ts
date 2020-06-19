@@ -93,14 +93,16 @@ test(
 		const lock = locker.getNewLock("rome");
 
 		let foo = "one";
+		let res = "";
 
 		async function bar() {
 			foo = "two";
 			// creates a lock internally and releases it after running a callback
-			await locker.wrapLock(
+			res = await locker.wrapLock(
 				"rome",
 				() => {
 					foo = "three";
+					return "result";
 				},
 			);
 		}
@@ -118,6 +120,8 @@ test(
 		await locker.waitLock("rome");
 
 		t.is(foo, "three");
+
+		t.is(res, "result");
 
 		t.false(locker.hasLock("rome"));
 	},
