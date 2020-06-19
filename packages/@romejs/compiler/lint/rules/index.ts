@@ -59,6 +59,7 @@ import altText from "./jsx-a11y/altText";
 import anchorHasContent from "./jsx-a11y/anchorHasContent";
 import anchorIsValid from "./jsx-a11y/anchorIsValid";
 import ariaProps from "./jsx-a11y/ariaProps";
+import ariaProptypes from "./jsx-a11y/ariaProptypes";
 import ariaUnsupportedElements from "./jsx-a11y/ariaUnsupportedElements";
 import clickEventsHaveKeyEvents from "./jsx-a11y/clickEventsHaveKeyEvents";
 import headingHasContent from "./jsx-a11y/headingHasContent";
@@ -85,6 +86,7 @@ import jsxKey from "./react/jsxKey";
 import jsxNoCommentText from "./react/jsxNoCommentText";
 import jsxNoDuplicateProps from "./react/jsxNoDuplicateProps";
 import jsxPascalCase from "./react/jsxPascalCase";
+import jsxPropsNoSpreading from "./react/jsxPropsNoSpreading";
 import noAccessStateInSetState from "./react/noAccessStateInSetState";
 import noArrayIndexKey from "./react/noArrayIndexKey";
 import noChildrenProp from "./react/noChildrenProp";
@@ -95,6 +97,7 @@ import noDidUpdateSetState from "./react/noDidUpdateSetState";
 import noDirectMutationState from "./react/noDirectMutationState";
 import noFindDOMNode from "./react/noFindDOMNode";
 import noRedundantShouldComponentUpdate from "./react/noRedundantShouldComponentUpdate";
+import noRenderReturnValue from "./react/noRenderReturnValue";
 import noStringRefs from "./react/noStringRefs";
 import noThisInSFC from "./react/noThisInSFC";
 import noUnsafe from "./react/noUnsafe";
@@ -160,6 +163,7 @@ export const lintTransforms = [
 	anchorHasContent,
 	anchorIsValid,
 	ariaProps,
+	ariaProptypes,
 	ariaUnsupportedElements,
 	clickEventsHaveKeyEvents,
 	headingHasContent,
@@ -186,6 +190,7 @@ export const lintTransforms = [
 	jsxNoCommentText,
 	jsxNoDuplicateProps,
 	jsxPascalCase,
+	jsxPropsNoSpreading,
 	noAccessStateInSetState,
 	noArrayIndexKey,
 	noChildrenProp,
@@ -196,6 +201,7 @@ export const lintTransforms = [
 	noDirectMutationState,
 	noFindDOMNode,
 	noRedundantShouldComponentUpdate,
+	noRenderReturnValue,
 	noStringRefs,
 	noThisInSFC,
 	noUnsafe,

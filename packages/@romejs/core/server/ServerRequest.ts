@@ -285,6 +285,19 @@ export default class ServerRequest {
 		this.normalizedCommandFlags = normalized;
 	}
 
+	async resolveEntryAssertPathArg(index: number): Promise<AbsoluteFilePath> {
+		this.expectArgumentLength(index + 1);
+		const arg = this.query.args[index];
+
+		return await this.server.resolver.resolveEntryAssertPath(
+			{
+				...this.getResolverOptionsFromFlags(),
+				source: createUnknownFilePath(arg),
+			},
+			{location: this.getDiagnosticPointerFromFlags({type: "arg", key: index})},
+		);
+	}
+
 	async assertClientCwdProject(): Promise<ProjectDefinition> {
 		const location = this.getDiagnosticPointerForClientCwd();
 		return this.server.projectManager.assertProject(
@@ -901,9 +914,12 @@ export default class ServerRequest {
 		await this.wrapRequestDiagnostic(
 			"updateBuffer",
 			path,
-			(bridge, file) => bridge.updateBuffer.call({file, content}),
+			async (bridge, file) => {
+				await bridge.updateBuffer.call({file, content});
+				this.server.memoryFs.addBuffer(path, content);
+				this.server.refreshFileEvent.send(path);
+			},
 		);
-		this.server.refreshFileEvent.send(path);
 	}
 
 	async requestWorkerClearBuffer(path: AbsoluteFilePath): Promise<void> {
@@ -912,10 +928,12 @@ export default class ServerRequest {
 		await this.wrapRequestDiagnostic(
 			"updateBuffer",
 			path,
-			(bridge, file) => bridge.clearBuffer.call({file}),
+			async (bridge, file) => {
+				await bridge.clearBuffer.call({file});
+				this.server.memoryFs.clearBuffer(path);
+				this.server.refreshFileEvent.send(path);
+			},
 		);
-		await this.server.fileAllocator.evict(path);
-		this.server.refreshFileEvent.send(path);
 	}
 
 	async requestWorkerParse(

@@ -160,9 +160,14 @@ const themeInStorage = window.localStorage.getItem('data-theme');
 
 if(!themeInStorage){
   window.localStorage.setItem('data-theme', 'light');
+} else {
+  const $doc = document.documentElement;
+  if (themeInStorage === "dark") {
+    elements.modeSwitch.innerText = "Light Mode";
+  }
 }
 
-document.documentElement.setAttribute('data-theme', window.localStorage.getItem('data-theme'));
+document.documentElement.setAttribute("data-theme", themeInStorage);
 
 //remove permalinkSymbol "#" from table of contents
 elements.tocLinks.forEach(function(link){

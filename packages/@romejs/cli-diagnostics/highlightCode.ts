@@ -69,7 +69,7 @@ function reduce<Token extends {
 		const lines = value.split("\n");
 
 		const values: Array<string> = lines.map((line) => {
-			return callback(token, escapeMarkup(line));
+			return line === "" ? "" : callback(token, escapeMarkup(line));
 		});
 
 		buff += values.join("\n");

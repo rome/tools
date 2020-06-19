@@ -5092,8 +5092,7 @@ function ___R$project$rome$$romejs$string$markup$tagFormatters_ts$humanizeMarkup
 			}
 
 			if (hasText) {
-				// Wrap hr text in spaces
-				if (tag.name === "hr") {
+				if (tag.name === "hr" || tag.name === "inverse") {
 					return [
 						Object.assign(
 							{},
@@ -5270,7 +5269,7 @@ function ___R$project$rome$$romejs$string$markup$tagFormatters_ts$humanizeMarkup
 
 			case "inverse":
 				return ___R$project$rome$$romejs$string$markup$ansi_ts$formatAnsi.inverse(
-					" " + value + " ",
+					value,
 				);
 
 			case "emphasis":
@@ -7281,6 +7280,7 @@ function ___R$$priv$project$rome$$romejs$string$escape$unescapeJSONString_ts$une
 
 		clear() {
 			this.subscriptions.clear();
+			this.rootSubscription = undefined;
 		}
 
 		hasSubscribers() {
@@ -10684,134 +10684,6 @@ const ___R$$priv$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$split
 	}
 
 
-  // project-rome/@romejs/ast/js/utils.ts
-const ___R$project$rome$$romejs$ast$js$utils_ts$bindingKeys = new Map();
-	const ___R$project$rome$$romejs$ast$js$utils_ts$visitorKeys = new Map();
-	const ___R$project$rome$$romejs$ast$js$utils_ts$nodeNames = new Set();
-
-
-
-
-
-
-
-
-
-
-
-
-
-	function ___R$$priv$project$rome$$romejs$ast$js$utils_ts$declareBuilder(
-		type,
-		opts,
-	) {
-		___R$project$rome$$romejs$ast$js$utils_ts$nodeNames.add(type);
-
-		if (opts.visitorKeys !== undefined) {
-			___R$project$rome$$romejs$ast$js$utils_ts$visitorKeys.set(
-				type,
-				Object.keys(opts.visitorKeys),
-			);
-		}
-
-		if (opts.bindingKeys !== undefined) {
-			___R$project$rome$$romejs$ast$js$utils_ts$bindingKeys.set(
-				type,
-				Object.keys(opts.bindingKeys),
-			);
-		}
-	}
-
-	// TODO only allow this method to be called on a node with only one required property
-	function ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
-		type,
-		quickKey,
-		opts,
-	) {
-		___R$$priv$project$rome$$romejs$ast$js$utils_ts$declareBuilder(type, opts);
-
-		return new ___R$$priv$project$rome$$romejs$ast$js$utils_ts$QuickBuilder(
-			type,
-			opts.visitorKeys,
-			quickKey,
-		);
-	}
-
-	function ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(type, opts) {
-		___R$$priv$project$rome$$romejs$ast$js$utils_ts$declareBuilder(type, opts);
-
-		return new ___R$$priv$project$rome$$romejs$ast$js$utils_ts$Builder(
-			type,
-			opts.visitorKeys,
-		);
-	}
-
-	class ___R$$priv$project$rome$$romejs$ast$js$utils_ts$Builder {
-		constructor(type, visitorKeys) {
-			this.type = type;
-			this.visitorKeys = visitorKeys;
-		}
-
-		create(opts, inheritNode) {
-			// @ts-ignore
-			return Object.assign(
-				{
-					loc: inheritNode === undefined
-						? undefined
-						: ___R$project$rome$$romejs$js$ast$utils$inheritLoc_ts$default(
-								inheritNode,
-							),
-				},
-				opts,
-				{type: this.type},
-			);
-		}
-
-		is(node) {
-			return node !== undefined && node.type === this.type;
-		}
-
-		normalize(node) {
-			if (this.is(node)) {
-				return node;
-			} else {
-				return undefined;
-			}
-		}
-
-		assert(res) {
-			if (res === undefined) {
-				throw new Error("Expected " + this.type + " Node but got undefined");
-			}
-
-			const node = ___R$project$rome$$romejs$js$ast$utils$assertSingleNode_ts$default(
-				res,
-			);
-
-			if (node.type !== this.type) {
-				throw new Error("Expected " + this.type + " Node but got " + node.type);
-			}
-
-			// @ts-ignore
-			return node;
-		}
-	}
-
-	class ___R$$priv$project$rome$$romejs$ast$js$utils_ts$QuickBuilder
-		extends ___R$$priv$project$rome$$romejs$ast$js$utils_ts$Builder {
-		constructor(type, visitorKeys, quickKey) {
-			super(type, visitorKeys);
-			this.quickKey = quickKey;
-		}
-
-		quick(arg, opts, inheritNode) {
-			const node = (Object.assign({}, opts, {[this.quickKey]: arg}));
-
-			return this.create(node, inheritNode);
-		}
-	}
-
-
   // project-rome/@romejs/ast/js/base.ts
 const ___R$project$rome$$romejs$ast$js$base_ts = {};
 
@@ -10910,17 +10782,7 @@ const ___R$project$rome$$romejs$ast$js$unions_ts = {};
 
 
   // project-rome/@romejs/ast/js/index.ts
-const ___R$project$rome$$romejs$ast$js$index_ts = {
-		get bindingKeys() {
-			return ___R$project$rome$$romejs$ast$js$utils_ts$bindingKeys;
-		},
-		get nodeNames() {
-			return ___R$project$rome$$romejs$ast$js$utils_ts$nodeNames;
-		},
-		get visitorKeys() {
-			return ___R$project$rome$$romejs$ast$js$utils_ts$visitorKeys;
-		},
-	};
+const ___R$project$rome$$romejs$ast$js$index_ts = {};
 	Object.keys(___R$project$rome$$romejs$ast$js$base_ts).forEach(function(key) {
 		if (key === "default") return undefined;
 		Object.defineProperty(
@@ -10972,6 +10834,122 @@ const ___R$project$rome$$romejs$ast$unions_ts = {};
 
 
 
+  // project-rome/@romejs/ast/utils.ts
+const ___R$project$rome$$romejs$ast$utils_ts$bindingKeys = new Map();
+	const ___R$project$rome$$romejs$ast$utils_ts$visitorKeys = new Map();
+	const ___R$project$rome$$romejs$ast$utils_ts$nodeNames = new Set();
+
+
+
+
+
+
+
+
+
+
+
+
+
+	function ___R$$priv$project$rome$$romejs$ast$utils_ts$declareBuilder(
+		type,
+		opts,
+	) {
+		___R$project$rome$$romejs$ast$utils_ts$nodeNames.add(type);
+
+		if (opts.visitorKeys !== undefined) {
+			___R$project$rome$$romejs$ast$utils_ts$visitorKeys.set(
+				type,
+				Object.keys(opts.visitorKeys),
+			);
+		}
+
+		if (opts.bindingKeys !== undefined) {
+			___R$project$rome$$romejs$ast$utils_ts$bindingKeys.set(
+				type,
+				Object.keys(opts.bindingKeys),
+			);
+		}
+	}
+
+	// TODO only allow this method to be called on a node with only one required property
+	function ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
+		type,
+		quickKey,
+		opts,
+	) {
+		___R$$priv$project$rome$$romejs$ast$utils_ts$declareBuilder(type, opts);
+
+		return new ___R$$priv$project$rome$$romejs$ast$utils_ts$QuickBuilder(
+			type,
+			opts.visitorKeys,
+			quickKey,
+		);
+	}
+
+	function ___R$project$rome$$romejs$ast$utils_ts$createBuilder(type, opts) {
+		___R$$priv$project$rome$$romejs$ast$utils_ts$declareBuilder(type, opts);
+
+		return new ___R$$priv$project$rome$$romejs$ast$utils_ts$Builder(
+			type,
+			opts.visitorKeys,
+		);
+	}
+
+	class ___R$$priv$project$rome$$romejs$ast$utils_ts$Builder {
+		constructor(type, visitorKeys) {
+			this.type = type;
+			this.visitorKeys = visitorKeys;
+		}
+
+		create(opts, inheritNode) {
+			// @ts-ignore
+			return Object.assign(
+				{
+					loc: inheritNode === undefined
+						? undefined
+						: ___R$project$rome$$romejs$js$ast$utils$inheritLoc_ts$default(
+								inheritNode,
+							),
+				},
+				opts,
+				{type: this.type},
+			);
+		}
+
+		assert(res) {
+			if (res === undefined) {
+				throw new Error("Expected " + this.type + " Node but got undefined");
+			}
+
+			const node = ___R$project$rome$$romejs$js$ast$utils$assertSingleNode_ts$default(
+				res,
+			);
+
+			if (node.type !== this.type) {
+				throw new Error("Expected " + this.type + " Node but got " + node.type);
+			}
+
+			// @ts-ignore
+			return node;
+		}
+	}
+
+	class ___R$$priv$project$rome$$romejs$ast$utils_ts$QuickBuilder
+		extends ___R$$priv$project$rome$$romejs$ast$utils_ts$Builder {
+		constructor(type, visitorKeys, quickKey) {
+			super(type, visitorKeys);
+			this.quickKey = quickKey;
+		}
+
+		quick(arg, opts, inheritNode) {
+			const node = (Object.assign({}, opts, {[this.quickKey]: arg}));
+
+			return this.create(node, inheritNode);
+		}
+	}
+
+
   // project-rome/@romejs/ast/js/temp/JSAmbiguousFlowTypeCastExpression.ts
 const ___R$project$rome$$romejs$ast$js$temp$JSAmbiguousFlowTypeCastExpression_ts = {
 		get jsAmbiguousFlowTypeCastExpression() {
@@ -10980,7 +10958,7 @@ const ___R$project$rome$$romejs$ast$js$temp$JSAmbiguousFlowTypeCastExpression_ts
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$temp$JSAmbiguousFlowTypeCastExpression_ts$jsAmbiguousFlowTypeCastExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$temp$JSAmbiguousFlowTypeCastExpression_ts$jsAmbiguousFlowTypeCastExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSAmbiguousFlowTypeCastExpression",
 		{
 			bindingKeys: {},
@@ -11000,7 +10978,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSArrayExpression_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSArrayExpression_ts$jsArrayExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSArrayExpression_ts$jsArrayExpression = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSArrayExpression",
 		"elements",
 		{
@@ -11020,7 +10998,7 @@ const ___R$project$rome$$romejs$ast$js$auxiliary$JSArrayHole_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$auxiliary$JSArrayHole_ts$jsArrayHole = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$auxiliary$JSArrayHole_ts$jsArrayHole = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"ArrayHole",
 		{
 			bindingKeys: {},
@@ -11037,7 +11015,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSArrowFunctionExpression_ts 
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSArrowFunctionExpression_ts$jsArrowFunctionExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSArrowFunctionExpression_ts$jsArrowFunctionExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSArrowFunctionExpression",
 		{
 			bindingKeys: {},
@@ -11057,7 +11035,7 @@ const ___R$project$rome$$romejs$ast$js$patterns$JSAssignmentArrayPattern_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$patterns$JSAssignmentArrayPattern_ts$jsAssignmentArrayPattern = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$patterns$JSAssignmentArrayPattern_ts$jsAssignmentArrayPattern = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSAssignmentArrayPattern",
 		{
 			bindingKeys: {},
@@ -11078,7 +11056,7 @@ const ___R$project$rome$$romejs$ast$js$patterns$JSAssignmentAssignmentPattern_ts
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$patterns$JSAssignmentAssignmentPattern_ts$jsAssignmentAssignmentPattern = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$patterns$JSAssignmentAssignmentPattern_ts$jsAssignmentAssignmentPattern = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSAssignmentAssignmentPattern",
 		{
 			bindingKeys: {},
@@ -11101,7 +11079,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSAssignmentExpression_ts = {
 
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSAssignmentExpression_ts$jsAssignmentExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSAssignmentExpression_ts$jsAssignmentExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSAssignmentExpression",
 		{
 			bindingKeys: {},
@@ -11121,7 +11099,7 @@ const ___R$project$rome$$romejs$ast$js$patterns$JSAssignmentIdentifier_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$patterns$JSAssignmentIdentifier_ts$jsAssignmentIdentifier = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$patterns$JSAssignmentIdentifier_ts$jsAssignmentIdentifier = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSAssignmentIdentifier",
 		"name",
 		{
@@ -11139,7 +11117,7 @@ const ___R$project$rome$$romejs$ast$js$patterns$JSAssignmentObjectPattern_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$patterns$JSAssignmentObjectPattern_ts$jsAssignmentObjectPattern = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$patterns$JSAssignmentObjectPattern_ts$jsAssignmentObjectPattern = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSAssignmentObjectPattern",
 		{
 			bindingKeys: {},
@@ -11160,7 +11138,7 @@ const ___R$project$rome$$romejs$ast$js$patterns$JSAssignmentObjectPatternPropert
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$patterns$JSAssignmentObjectPatternProperty_ts$jsAssignmentObjectPatternProperty = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$patterns$JSAssignmentObjectPatternProperty_ts$jsAssignmentObjectPatternProperty = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSAssignmentObjectPatternProperty",
 		{
 			bindingKeys: {},
@@ -11180,7 +11158,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSAwaitExpression_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSAwaitExpression_ts$jsAwaitExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSAwaitExpression_ts$jsAwaitExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSAwaitExpression",
 		{
 			bindingKeys: {},
@@ -11199,7 +11177,7 @@ const ___R$project$rome$$romejs$ast$js$literals$JSBigIntLiteral_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$literals$JSBigIntLiteral_ts$jsBigIntLiteral = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$literals$JSBigIntLiteral_ts$jsBigIntLiteral = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSBigIntLiteral",
 		{
 			bindingKeys: {},
@@ -11218,7 +11196,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSBinaryExpression_ts = {
 
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSBinaryExpression_ts$jsBinaryExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSBinaryExpression_ts$jsBinaryExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSBinaryExpression",
 		{
 			bindingKeys: {},
@@ -11238,7 +11216,7 @@ const ___R$project$rome$$romejs$ast$js$patterns$JSBindingArrayPattern_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$patterns$JSBindingArrayPattern_ts$jsBindingArrayPattern = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$patterns$JSBindingArrayPattern_ts$jsBindingArrayPattern = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSBindingArrayPattern",
 		{
 			bindingKeys: {
@@ -11262,7 +11240,7 @@ const ___R$project$rome$$romejs$ast$js$patterns$JSBindingAssignmentPattern_ts = 
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$patterns$JSBindingAssignmentPattern_ts$jsBindingAssignmentPattern = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$patterns$JSBindingAssignmentPattern_ts$jsBindingAssignmentPattern = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSBindingAssignmentPattern",
 		{
 			bindingKeys: {
@@ -11285,7 +11263,7 @@ const ___R$project$rome$$romejs$ast$js$patterns$JSBindingIdentifier_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$patterns$JSBindingIdentifier_ts$jsBindingIdentifier = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$patterns$JSBindingIdentifier_ts$jsBindingIdentifier = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSBindingIdentifier",
 		"name",
 		{
@@ -11305,7 +11283,7 @@ const ___R$project$rome$$romejs$ast$js$patterns$JSBindingObjectPattern_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$patterns$JSBindingObjectPattern_ts$jsBindingObjectPattern = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$patterns$JSBindingObjectPattern_ts$jsBindingObjectPattern = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSBindingObjectPattern",
 		{
 			bindingKeys: {
@@ -11329,7 +11307,7 @@ const ___R$project$rome$$romejs$ast$js$patterns$JSBindingObjectPatternProperty_t
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$patterns$JSBindingObjectPatternProperty_ts$jsBindingObjectPatternProperty = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$patterns$JSBindingObjectPatternProperty_ts$jsBindingObjectPatternProperty = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSBindingObjectPatternProperty",
 		{
 			bindingKeys: {
@@ -11351,7 +11329,7 @@ const ___R$project$rome$$romejs$ast$js$statements$JSBlockStatement_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$statements$JSBlockStatement_ts$jsBlockStatement = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$statements$JSBlockStatement_ts$jsBlockStatement = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSBlockStatement",
 		"body",
 		{
@@ -11372,7 +11350,7 @@ const ___R$project$rome$$romejs$ast$js$literals$JSBooleanLiteral_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$literals$JSBooleanLiteral_ts$jsBooleanLiteral = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$literals$JSBooleanLiteral_ts$jsBooleanLiteral = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSBooleanLiteral",
 		"value",
 		{
@@ -11390,7 +11368,7 @@ const ___R$project$rome$$romejs$ast$js$statements$JSBreakStatement_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$statements$JSBreakStatement_ts$jsBreakStatement = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$statements$JSBreakStatement_ts$jsBreakStatement = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSBreakStatement",
 		{
 			bindingKeys: {},
@@ -11409,7 +11387,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSCallExpression_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSCallExpression_ts$jsCallExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSCallExpression_ts$jsCallExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSCallExpression",
 		{
 			bindingKeys: {},
@@ -11430,7 +11408,7 @@ const ___R$project$rome$$romejs$ast$js$auxiliary$JSCatchClause_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$auxiliary$JSCatchClause_ts$jsCatchClause = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$auxiliary$JSCatchClause_ts$jsCatchClause = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSCatchClause",
 		{
 			bindingKeys: {
@@ -11452,7 +11430,7 @@ const ___R$project$rome$$romejs$ast$js$classes$JSClassDeclaration_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$classes$JSClassDeclaration_ts$jsClassDeclaration = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$classes$JSClassDeclaration_ts$jsClassDeclaration = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSClassDeclaration",
 		{
 			bindingKeys: {
@@ -11474,7 +11452,7 @@ const ___R$project$rome$$romejs$ast$js$classes$JSClassExpression_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$classes$JSClassExpression_ts$jsClassExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$classes$JSClassExpression_ts$jsClassExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSClassExpression",
 		{
 			bindingKeys: {
@@ -11496,7 +11474,7 @@ const ___R$project$rome$$romejs$ast$js$classes$JSClassHead_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$classes$JSClassHead_ts$jsClassHead = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$classes$JSClassHead_ts$jsClassHead = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSClassHead",
 		"body",
 		{
@@ -11522,7 +11500,7 @@ const ___R$project$rome$$romejs$ast$js$classes$JSClassMethod_ts = {
 
 
 
-	const ___R$project$rome$$romejs$ast$js$classes$JSClassMethod_ts$jsClassMethod = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$classes$JSClassMethod_ts$jsClassMethod = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSClassMethod",
 		{
 			bindingKeys: {},
@@ -11544,7 +11522,7 @@ const ___R$project$rome$$romejs$ast$js$classes$JSClassPrivateMethod_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$classes$JSClassPrivateMethod_ts$jsClassPrivateMethod = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$classes$JSClassPrivateMethod_ts$jsClassPrivateMethod = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSClassPrivateMethod",
 		{
 			bindingKeys: {},
@@ -11566,7 +11544,7 @@ const ___R$project$rome$$romejs$ast$js$classes$JSClassPrivateProperty_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$classes$JSClassPrivateProperty_ts$jsClassPrivateProperty = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$classes$JSClassPrivateProperty_ts$jsClassPrivateProperty = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSClassPrivateProperty",
 		{
 			bindingKeys: {},
@@ -11588,7 +11566,7 @@ const ___R$project$rome$$romejs$ast$js$classes$JSClassProperty_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$classes$JSClassProperty_ts$jsClassProperty = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$classes$JSClassProperty_ts$jsClassProperty = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSClassProperty",
 		{
 			bindingKeys: {},
@@ -11610,7 +11588,7 @@ const ___R$project$rome$$romejs$ast$js$classes$JSClassPropertyMeta_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$classes$JSClassPropertyMeta_ts$jsClassPropertyMeta = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$classes$JSClassPropertyMeta_ts$jsClassPropertyMeta = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSClassPropertyMeta",
 		{
 			bindingKeys: {},
@@ -11627,7 +11605,7 @@ const ___R$project$rome$$romejs$ast$js$core$JSCommentBlock_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$core$JSCommentBlock_ts$jsCommentBlock = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$core$JSCommentBlock_ts$jsCommentBlock = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSCommentBlock",
 		{
 			bindingKeys: {},
@@ -11644,7 +11622,7 @@ const ___R$project$rome$$romejs$ast$js$core$JSCommentLine_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$core$JSCommentLine_ts$jsCommentLine = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$core$JSCommentLine_ts$jsCommentLine = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSCommentLine",
 		{
 			bindingKeys: {},
@@ -11661,7 +11639,7 @@ const ___R$project$rome$$romejs$ast$js$auxiliary$JSComputedMemberProperty_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$auxiliary$JSComputedMemberProperty_ts$jsComputedMemberProperty = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$auxiliary$JSComputedMemberProperty_ts$jsComputedMemberProperty = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSComputedMemberProperty",
 		"value",
 		{
@@ -11681,7 +11659,7 @@ const ___R$project$rome$$romejs$ast$js$objects$JSComputedPropertyKey_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$objects$JSComputedPropertyKey_ts$jsComputedPropertyKey = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$objects$JSComputedPropertyKey_ts$jsComputedPropertyKey = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSComputedPropertyKey",
 		"value",
 		{
@@ -11701,7 +11679,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSConditionalExpression_ts = 
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSConditionalExpression_ts$jsConditionalExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSConditionalExpression_ts$jsConditionalExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSConditionalExpression",
 		{
 			bindingKeys: {},
@@ -11722,7 +11700,7 @@ const ___R$project$rome$$romejs$ast$js$statements$JSContinueStatement_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$statements$JSContinueStatement_ts$jsContinueStatement = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$statements$JSContinueStatement_ts$jsContinueStatement = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSContinueStatement",
 		{
 			bindingKeys: {},
@@ -11741,7 +11719,7 @@ const ___R$project$rome$$romejs$ast$js$statements$JSDebuggerStatement_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$statements$JSDebuggerStatement_ts$jsDebuggerStatement = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$statements$JSDebuggerStatement_ts$jsDebuggerStatement = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSDebuggerStatement",
 		{
 			bindingKeys: {},
@@ -11758,7 +11736,7 @@ const ___R$project$rome$$romejs$ast$js$core$JSDirective_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$core$JSDirective_ts$jsDirective = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$core$JSDirective_ts$jsDirective = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSDirective",
 		{
 			bindingKeys: {},
@@ -11775,7 +11753,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSDoExpression_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSDoExpression_ts$jsDoExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSDoExpression_ts$jsDoExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSDoExpression",
 		{
 			bindingKeys: {},
@@ -11794,7 +11772,7 @@ const ___R$project$rome$$romejs$ast$js$statements$JSDoWhileStatement_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$statements$JSDoWhileStatement_ts$jsDoWhileStatement = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$statements$JSDoWhileStatement_ts$jsDoWhileStatement = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSDoWhileStatement",
 		{
 			bindingKeys: {},
@@ -11814,7 +11792,7 @@ const ___R$project$rome$$romejs$ast$js$statements$JSEmptyStatement_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$statements$JSEmptyStatement_ts$jsEmptyStatement = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$statements$JSEmptyStatement_ts$jsEmptyStatement = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSEmptyStatement",
 		{
 			bindingKeys: {},
@@ -11831,7 +11809,7 @@ const ___R$project$rome$$romejs$ast$js$modules$JSExportAllDeclaration_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$modules$JSExportAllDeclaration_ts$jsExportAllDeclaration = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$modules$JSExportAllDeclaration_ts$jsExportAllDeclaration = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSExportAllDeclaration",
 		{
 			bindingKeys: {},
@@ -11850,7 +11828,7 @@ const ___R$project$rome$$romejs$ast$js$modules$JSExportDefaultDeclaration_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$modules$JSExportDefaultDeclaration_ts$jsExportDefaultDeclaration = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$modules$JSExportDefaultDeclaration_ts$jsExportDefaultDeclaration = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSExportDefaultDeclaration",
 		{
 			bindingKeys: {},
@@ -11869,7 +11847,7 @@ const ___R$project$rome$$romejs$ast$js$modules$JSExportDefaultSpecifier_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$modules$JSExportDefaultSpecifier_ts$jsExportDefaultSpecifier = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$modules$JSExportDefaultSpecifier_ts$jsExportDefaultSpecifier = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSExportDefaultSpecifier",
 		{
 			bindingKeys: {},
@@ -11890,7 +11868,7 @@ const ___R$project$rome$$romejs$ast$js$modules$JSExportExternalDeclaration_ts = 
 
 
 
-	const ___R$project$rome$$romejs$ast$js$modules$JSExportExternalDeclaration_ts$jsExportExternalDeclaration = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$modules$JSExportExternalDeclaration_ts$jsExportExternalDeclaration = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSExportExternalDeclaration",
 		{
 			bindingKeys: {},
@@ -11912,7 +11890,7 @@ const ___R$project$rome$$romejs$ast$js$modules$JSExportExternalSpecifier_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$modules$JSExportExternalSpecifier_ts$jsExportExternalSpecifier = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$modules$JSExportExternalSpecifier_ts$jsExportExternalSpecifier = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSExportExternalSpecifier",
 		{
 			bindingKeys: {},
@@ -11932,7 +11910,7 @@ const ___R$project$rome$$romejs$ast$js$modules$JSExportLocalDeclaration_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$modules$JSExportLocalDeclaration_ts$jsExportLocalDeclaration = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$modules$JSExportLocalDeclaration_ts$jsExportLocalDeclaration = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSExportLocalDeclaration",
 		{
 			bindingKeys: {
@@ -11954,7 +11932,7 @@ const ___R$project$rome$$romejs$ast$js$modules$JSExportLocalSpecifier_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$modules$JSExportLocalSpecifier_ts$jsExportLocalSpecifier = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$modules$JSExportLocalSpecifier_ts$jsExportLocalSpecifier = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSExportLocalSpecifier",
 		{
 			bindingKeys: {},
@@ -11974,7 +11952,7 @@ const ___R$project$rome$$romejs$ast$js$modules$JSExportNamespaceSpecifier_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$modules$JSExportNamespaceSpecifier_ts$jsExportNamespaceSpecifier = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$modules$JSExportNamespaceSpecifier_ts$jsExportNamespaceSpecifier = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSExportNamespaceSpecifier",
 		{
 			bindingKeys: {},
@@ -11993,7 +11971,7 @@ const ___R$project$rome$$romejs$ast$js$statements$JSExpressionStatement_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$statements$JSExpressionStatement_ts$jsExpressionStatement = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$statements$JSExpressionStatement_ts$jsExpressionStatement = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSExpressionStatement",
 		{
 			bindingKeys: {},
@@ -12012,7 +11990,7 @@ const ___R$project$rome$$romejs$ast$js$statements$JSForInStatement_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$statements$JSForInStatement_ts$jsForInStatement = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$statements$JSForInStatement_ts$jsForInStatement = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSForInStatement",
 		{
 			bindingKeys: {},
@@ -12033,7 +12011,7 @@ const ___R$project$rome$$romejs$ast$js$statements$JSForOfStatement_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$statements$JSForOfStatement_ts$jsForOfStatement = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$statements$JSForOfStatement_ts$jsForOfStatement = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSForOfStatement",
 		{
 			bindingKeys: {},
@@ -12054,7 +12032,7 @@ const ___R$project$rome$$romejs$ast$js$statements$JSForStatement_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$statements$JSForStatement_ts$jsForStatement = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$statements$JSForStatement_ts$jsForStatement = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSForStatement",
 		{
 			bindingKeys: {},
@@ -12076,7 +12054,7 @@ const ___R$project$rome$$romejs$ast$js$statements$JSFunctionDeclaration_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$statements$JSFunctionDeclaration_ts$jsFunctionDeclaration = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$statements$JSFunctionDeclaration_ts$jsFunctionDeclaration = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSFunctionDeclaration",
 		{
 			bindingKeys: {
@@ -12099,7 +12077,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSFunctionExpression_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSFunctionExpression_ts$jsFunctionExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSFunctionExpression_ts$jsFunctionExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSFunctionExpression",
 		{
 			bindingKeys: {
@@ -12122,7 +12100,7 @@ const ___R$project$rome$$romejs$ast$js$auxiliary$JSFunctionHead_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$auxiliary$JSFunctionHead_ts$jsFunctionHead = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$auxiliary$JSFunctionHead_ts$jsFunctionHead = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSFunctionHead",
 		"params",
 		{
@@ -12149,7 +12127,7 @@ const ___R$project$rome$$romejs$ast$js$auxiliary$JSIdentifier_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$auxiliary$JSIdentifier_ts$jsIdentifier = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$auxiliary$JSIdentifier_ts$jsIdentifier = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSIdentifier",
 		"name",
 		{
@@ -12167,7 +12145,7 @@ const ___R$project$rome$$romejs$ast$js$statements$JSIfStatement_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$statements$JSIfStatement_ts$jsIfStatement = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$statements$JSIfStatement_ts$jsIfStatement = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSIfStatement",
 		{
 			bindingKeys: {},
@@ -12188,7 +12166,7 @@ const ___R$project$rome$$romejs$ast$js$modules$JSImportCall_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$modules$JSImportCall_ts$jsImportCall = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$modules$JSImportCall_ts$jsImportCall = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSImportCall",
 		{
 			bindingKeys: {},
@@ -12209,7 +12187,7 @@ const ___R$project$rome$$romejs$ast$js$modules$JSImportDeclaration_ts = {
 
 
 
-	const ___R$project$rome$$romejs$ast$js$modules$JSImportDeclaration_ts$jsImportDeclaration = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$modules$JSImportDeclaration_ts$jsImportDeclaration = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSImportDeclaration",
 		{
 			bindingKeys: {
@@ -12235,7 +12213,7 @@ const ___R$project$rome$$romejs$ast$js$modules$JSImportDefaultSpecifier_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$modules$JSImportDefaultSpecifier_ts$jsImportDefaultSpecifier = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$modules$JSImportDefaultSpecifier_ts$jsImportDefaultSpecifier = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSImportDefaultSpecifier",
 		{
 			bindingKeys: {
@@ -12256,7 +12234,7 @@ const ___R$project$rome$$romejs$ast$js$modules$JSImportNamespaceSpecifier_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$modules$JSImportNamespaceSpecifier_ts$jsImportNamespaceSpecifier = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$modules$JSImportNamespaceSpecifier_ts$jsImportNamespaceSpecifier = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSImportNamespaceSpecifier",
 		{
 			bindingKeys: {
@@ -12277,7 +12255,7 @@ const ___R$project$rome$$romejs$ast$js$modules$JSImportSpecifier_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$modules$JSImportSpecifier_ts$jsImportSpecifier = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$modules$JSImportSpecifier_ts$jsImportSpecifier = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSImportSpecifier",
 		{
 			bindingKeys: {
@@ -12299,7 +12277,7 @@ const ___R$project$rome$$romejs$ast$js$modules$JSImportSpecifierLocal_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$modules$JSImportSpecifierLocal_ts$jsImportSpecifierLocal = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$modules$JSImportSpecifierLocal_ts$jsImportSpecifierLocal = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSImportSpecifierLocal",
 		"name",
 		{
@@ -12321,7 +12299,7 @@ const ___R$project$rome$$romejs$ast$js$core$JSInterpreterDirective_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$core$JSInterpreterDirective_ts$jsInterpreterDirective = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$core$JSInterpreterDirective_ts$jsInterpreterDirective = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSInterpreterDirective",
 		{
 			bindingKeys: {},
@@ -12338,7 +12316,7 @@ const ___R$project$rome$$romejs$ast$js$statements$JSLabeledStatement_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$statements$JSLabeledStatement_ts$jsLabeledStatement = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$statements$JSLabeledStatement_ts$jsLabeledStatement = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSLabeledStatement",
 		{
 			bindingKeys: {},
@@ -12360,7 +12338,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSLogicalExpression_ts = {
 
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSLogicalExpression_ts$jsLogicalExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSLogicalExpression_ts$jsLogicalExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSLogicalExpression",
 		{
 			bindingKeys: {},
@@ -12380,7 +12358,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSMemberExpression_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSMemberExpression_ts$jsMemberExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSMemberExpression_ts$jsMemberExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSMemberExpression",
 		{
 			bindingKeys: {},
@@ -12400,7 +12378,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSMetaProperty_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSMetaProperty_ts$jsMetaProperty = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSMetaProperty_ts$jsMetaProperty = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSMetaProperty",
 		{
 			bindingKeys: {},
@@ -12423,7 +12401,7 @@ const ___R$project$rome$$romejs$ast$js$temp$JSMockParent_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$temp$JSMockParent_ts$jsMockParent = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$temp$JSMockParent_ts$jsMockParent = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSMockParent",
 		{
 			bindingKeys: {},
@@ -12444,7 +12422,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSNewExpression_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSNewExpression_ts$jsNewExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSNewExpression_ts$jsNewExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSNewExpression",
 		{
 			bindingKeys: {},
@@ -12465,7 +12443,7 @@ const ___R$project$rome$$romejs$ast$js$literals$JSNullLiteral_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$literals$JSNullLiteral_ts$jsNullLiteral = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$literals$JSNullLiteral_ts$jsNullLiteral = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSNullLiteral",
 		{
 			bindingKeys: {},
@@ -12482,7 +12460,7 @@ const ___R$project$rome$$romejs$ast$js$literals$JSNumericLiteral_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$literals$JSNumericLiteral_ts$jsNumericLiteral = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$literals$JSNumericLiteral_ts$jsNumericLiteral = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSNumericLiteral",
 		"value",
 		{
@@ -12500,7 +12478,7 @@ const ___R$project$rome$$romejs$ast$js$objects$JSObjectExpression_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$objects$JSObjectExpression_ts$jsObjectExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$objects$JSObjectExpression_ts$jsObjectExpression = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSObjectExpression",
 		"properties",
 		{
@@ -12522,7 +12500,7 @@ const ___R$project$rome$$romejs$ast$js$objects$JSObjectMethod_ts = {
 
 
 
-	const ___R$project$rome$$romejs$ast$js$objects$JSObjectMethod_ts$jsObjectMethod = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$objects$JSObjectMethod_ts$jsObjectMethod = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSObjectMethod",
 		{
 			bindingKeys: {},
@@ -12543,7 +12521,7 @@ const ___R$project$rome$$romejs$ast$js$objects$JSObjectProperty_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$objects$JSObjectProperty_ts$jsObjectProperty = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$objects$JSObjectProperty_ts$jsObjectProperty = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSObjectProperty",
 		{
 			bindingKeys: {},
@@ -12563,7 +12541,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSOptionalCallExpression_ts =
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSOptionalCallExpression_ts$jsOptionalCallExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSOptionalCallExpression_ts$jsOptionalCallExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSOptionalCallExpression",
 		{
 			bindingKeys: {},
@@ -12584,7 +12562,7 @@ const ___R$project$rome$$romejs$ast$js$patterns$JSPatternMeta_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$patterns$JSPatternMeta_ts$jsPatternMeta = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$patterns$JSPatternMeta_ts$jsPatternMeta = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSPatternMeta",
 		"typeAnnotation",
 		{
@@ -12604,7 +12582,7 @@ const ___R$project$rome$$romejs$ast$js$classes$JSPrivateName_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$classes$JSPrivateName_ts$jsPrivateName = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$classes$JSPrivateName_ts$jsPrivateName = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSPrivateName",
 		{
 			bindingKeys: {},
@@ -12623,7 +12601,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSReferenceIdentifier_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSReferenceIdentifier_ts$jsReferenceIdentifier = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSReferenceIdentifier_ts$jsReferenceIdentifier = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSReferenceIdentifier",
 		"name",
 		{
@@ -12643,7 +12621,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpAlternation_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpAlternation_ts$jsRegExpAlternation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpAlternation_ts$jsRegExpAlternation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpAlternation",
 		{
 			bindingKeys: {},
@@ -12663,7 +12641,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpAnyCharacter_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpAnyCharacter_ts$jsRegExpAnyCharacter = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpAnyCharacter_ts$jsRegExpAnyCharacter = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpAnyCharacter",
 		{
 			bindingKeys: {},
@@ -12680,7 +12658,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpCharacter_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpCharacter_ts$jsRegExpCharacter = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpCharacter_ts$jsRegExpCharacter = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpCharacter",
 		{
 			bindingKeys: {},
@@ -12697,7 +12675,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpCharSet_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpCharSet_ts$jsRegExpCharSet = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpCharSet_ts$jsRegExpCharSet = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpCharSet",
 		{
 			bindingKeys: {},
@@ -12716,7 +12694,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpCharSetRange_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpCharSetRange_ts$jsRegExpCharSetRange = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpCharSetRange_ts$jsRegExpCharSetRange = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpCharSetRange",
 		{
 			bindingKeys: {},
@@ -12736,7 +12714,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpControlCharacter_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpControlCharacter_ts$jsRegExpControlCharacter = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpControlCharacter_ts$jsRegExpControlCharacter = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpControlCharacter",
 		{
 			bindingKeys: {},
@@ -12753,7 +12731,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpDigitCharacter_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpDigitCharacter_ts$jsRegExpDigitCharacter = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpDigitCharacter_ts$jsRegExpDigitCharacter = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpDigitCharacter",
 		{
 			bindingKeys: {},
@@ -12770,7 +12748,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpEndCharacter_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpEndCharacter_ts$jsRegExpEndCharacter = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpEndCharacter_ts$jsRegExpEndCharacter = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpEndCharacter",
 		{
 			bindingKeys: {},
@@ -12787,7 +12765,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpGroupCapture_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpGroupCapture_ts$jsRegExpGroupCapture = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpGroupCapture_ts$jsRegExpGroupCapture = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpGroupCapture",
 		{
 			bindingKeys: {},
@@ -12806,7 +12784,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpGroupNonCapture_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpGroupNonCapture_ts$jsRegExpGroupNonCapture = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpGroupNonCapture_ts$jsRegExpGroupNonCapture = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpGroupNonCapture",
 		{
 			bindingKeys: {},
@@ -12825,7 +12803,7 @@ const ___R$project$rome$$romejs$ast$js$literals$JSRegExpLiteral_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$literals$JSRegExpLiteral_ts$jsRegExpLiteral = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$literals$JSRegExpLiteral_ts$jsRegExpLiteral = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpLiteral",
 		{
 			bindingKeys: {},
@@ -12844,7 +12822,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpNamedBackReference_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpNamedBackReference_ts$jsRegExpNamedBackReference = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpNamedBackReference_ts$jsRegExpNamedBackReference = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpNamedBackReference",
 		{
 			bindingKeys: {},
@@ -12861,7 +12839,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpNonDigitCharacter_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpNonDigitCharacter_ts$jsRegExpNonDigitCharacter = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpNonDigitCharacter_ts$jsRegExpNonDigitCharacter = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpNonDigitCharacter",
 		{
 			bindingKeys: {},
@@ -12878,7 +12856,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpNonWhiteSpaceCharacter_ts =
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpNonWhiteSpaceCharacter_ts$jsRegExpNonWhiteSpaceCharacter = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpNonWhiteSpaceCharacter_ts$jsRegExpNonWhiteSpaceCharacter = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpNonWhiteSpaceCharacter",
 		{
 			bindingKeys: {},
@@ -12895,7 +12873,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpNonWordBoundaryCharacter_ts
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpNonWordBoundaryCharacter_ts$jsRegExpNonWordBoundaryCharacter = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpNonWordBoundaryCharacter_ts$jsRegExpNonWordBoundaryCharacter = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpNonWordBoundaryCharacter",
 		{
 			bindingKeys: {},
@@ -12912,7 +12890,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpNonWordCharacter_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpNonWordCharacter_ts$jsRegExpNonWordCharacter = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpNonWordCharacter_ts$jsRegExpNonWordCharacter = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpNonWordCharacter",
 		{
 			bindingKeys: {},
@@ -12929,7 +12907,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpNumericBackReference_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpNumericBackReference_ts$jsRegExpNumericBackReference = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpNumericBackReference_ts$jsRegExpNumericBackReference = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpNumericBackReference",
 		{
 			bindingKeys: {},
@@ -12946,7 +12924,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpQuantified_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpQuantified_ts$jsRegExpQuantified = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpQuantified_ts$jsRegExpQuantified = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpQuantified",
 		{
 			bindingKeys: {},
@@ -12965,7 +12943,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpStartCharacter_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpStartCharacter_ts$jsRegExpStartCharacter = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpStartCharacter_ts$jsRegExpStartCharacter = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpStartCharacter",
 		{
 			bindingKeys: {},
@@ -12982,7 +12960,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpSubExpression_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpSubExpression_ts$jsRegExpSubExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpSubExpression_ts$jsRegExpSubExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpSubExpression",
 		{
 			bindingKeys: {},
@@ -13001,7 +12979,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpWhiteSpaceCharacter_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpWhiteSpaceCharacter_ts$jsRegExpWhiteSpaceCharacter = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpWhiteSpaceCharacter_ts$jsRegExpWhiteSpaceCharacter = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpWhiteSpaceCharacter",
 		{
 			bindingKeys: {},
@@ -13018,7 +12996,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpWordBoundaryCharacter_ts = 
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpWordBoundaryCharacter_ts$jsRegExpWordBoundaryCharacter = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpWordBoundaryCharacter_ts$jsRegExpWordBoundaryCharacter = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpWordBoundaryCharacter",
 		{
 			bindingKeys: {},
@@ -13035,7 +13013,7 @@ const ___R$project$rome$$romejs$ast$js$regex$JSRegExpWordCharacter_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpWordCharacter_ts$jsRegExpWordCharacter = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$regex$JSRegExpWordCharacter_ts$jsRegExpWordCharacter = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRegExpWordCharacter",
 		{
 			bindingKeys: {},
@@ -13052,7 +13030,7 @@ const ___R$project$rome$$romejs$ast$js$statements$JSReturnStatement_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$statements$JSReturnStatement_ts$jsReturnStatement = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$statements$JSReturnStatement_ts$jsReturnStatement = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSReturnStatement",
 		"argument",
 		{
@@ -13090,7 +13068,7 @@ const ___R$project$rome$$romejs$ast$js$core$JSRoot_ts = {
 		hasHoistedVars: false,
 	};
 
-	const ___R$project$rome$$romejs$ast$js$core$JSRoot_ts$jsRoot = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$core$JSRoot_ts$jsRoot = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSRoot",
 		{
 			bindingKeys: {},
@@ -13112,7 +13090,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSSequenceExpression_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSSequenceExpression_ts$jsSequenceExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSSequenceExpression_ts$jsSequenceExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSSequenceExpression",
 		{bindingKeys: {}, visitorKeys: {expressions: true}},
 	);
@@ -13126,7 +13104,7 @@ const ___R$project$rome$$romejs$ast$js$auxiliary$JSSpreadElement_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$auxiliary$JSSpreadElement_ts$jsSpreadElement = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$auxiliary$JSSpreadElement_ts$jsSpreadElement = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSSpreadElement",
 		"argument",
 		{
@@ -13146,7 +13124,7 @@ const ___R$project$rome$$romejs$ast$js$objects$JSSpreadProperty_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$objects$JSSpreadProperty_ts$jsSpreadProperty = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$objects$JSSpreadProperty_ts$jsSpreadProperty = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSSpreadProperty",
 		{
 			bindingKeys: {},
@@ -13165,7 +13143,7 @@ const ___R$project$rome$$romejs$ast$js$auxiliary$JSStaticMemberProperty_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$auxiliary$JSStaticMemberProperty_ts$jsStaticMemberProperty = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$auxiliary$JSStaticMemberProperty_ts$jsStaticMemberProperty = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSStaticMemberProperty",
 		"value",
 		{
@@ -13185,7 +13163,7 @@ const ___R$project$rome$$romejs$ast$js$objects$JSStaticPropertyKey_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$objects$JSStaticPropertyKey_ts$jsStaticPropertyKey = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$objects$JSStaticPropertyKey_ts$jsStaticPropertyKey = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSStaticPropertyKey",
 		"value",
 		{
@@ -13205,7 +13183,7 @@ const ___R$project$rome$$romejs$ast$js$literals$JSStringLiteral_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$literals$JSStringLiteral_ts$jsStringLiteral = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$literals$JSStringLiteral_ts$jsStringLiteral = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSStringLiteral",
 		"value",
 		{
@@ -13223,7 +13201,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSSuper_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSSuper_ts$jsSuper = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSSuper_ts$jsSuper = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSSuper",
 		{
 			bindingKeys: {},
@@ -13240,7 +13218,7 @@ const ___R$project$rome$$romejs$ast$js$auxiliary$JSSwitchCase_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$auxiliary$JSSwitchCase_ts$jsSwitchCase = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$auxiliary$JSSwitchCase_ts$jsSwitchCase = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSSwitchCase",
 		{
 			bindingKeys: {},
@@ -13260,7 +13238,7 @@ const ___R$project$rome$$romejs$ast$js$statements$JSSwitchStatement_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$statements$JSSwitchStatement_ts$jsSwitchStatement = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$statements$JSSwitchStatement_ts$jsSwitchStatement = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSSwitchStatement",
 		{
 			bindingKeys: {},
@@ -13280,7 +13258,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSTaggedTemplateExpression_ts
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSTaggedTemplateExpression_ts$jsTaggedTemplateExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSTaggedTemplateExpression_ts$jsTaggedTemplateExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSTaggedTemplateExpression",
 		{
 			bindingKeys: {},
@@ -13301,7 +13279,7 @@ const ___R$project$rome$$romejs$ast$js$auxiliary$JSTemplateElement_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$auxiliary$JSTemplateElement_ts$jsTemplateElement = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$auxiliary$JSTemplateElement_ts$jsTemplateElement = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSTemplateElement",
 		{
 			bindingKeys: {},
@@ -13318,7 +13296,7 @@ const ___R$project$rome$$romejs$ast$js$literals$JSTemplateLiteral_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$literals$JSTemplateLiteral_ts$jsTemplateLiteral = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$literals$JSTemplateLiteral_ts$jsTemplateLiteral = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSTemplateLiteral",
 		{
 			bindingKeys: {},
@@ -13338,7 +13316,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSThisExpression_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSThisExpression_ts$jsThisExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSThisExpression_ts$jsThisExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSThisExpression",
 		{
 			bindingKeys: {},
@@ -13355,7 +13333,7 @@ const ___R$project$rome$$romejs$ast$js$statements$JSThrowStatement_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$statements$JSThrowStatement_ts$jsThrowStatement = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$statements$JSThrowStatement_ts$jsThrowStatement = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSThrowStatement",
 		{
 			bindingKeys: {},
@@ -13374,7 +13352,7 @@ const ___R$project$rome$$romejs$ast$js$statements$JSTryStatement_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$statements$JSTryStatement_ts$jsTryStatement = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$statements$JSTryStatement_ts$jsTryStatement = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSTryStatement",
 		{
 			bindingKeys: {},
@@ -13397,7 +13375,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSUnaryExpression_ts = {
 
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSUnaryExpression_ts$jsUnaryExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSUnaryExpression_ts$jsUnaryExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSUnaryExpression",
 		{
 			bindingKeys: {},
@@ -13418,7 +13396,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSUpdateExpression_ts = {
 
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSUpdateExpression_ts$jsUpdateExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSUpdateExpression_ts$jsUpdateExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSUpdateExpression",
 		{
 			bindingKeys: {},
@@ -13439,7 +13417,7 @@ const ___R$project$rome$$romejs$ast$js$auxiliary$JSVariableDeclaration_ts = {
 
 
 
-	const ___R$project$rome$$romejs$ast$js$auxiliary$JSVariableDeclaration_ts$jsVariableDeclaration = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$auxiliary$JSVariableDeclaration_ts$jsVariableDeclaration = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSVariableDeclaration",
 		{
 			bindingKeys: {
@@ -13460,7 +13438,7 @@ const ___R$project$rome$$romejs$ast$js$statements$JSVariableDeclarationStatement
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$statements$JSVariableDeclarationStatement_ts$jsVariableDeclarationStatement = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$statements$JSVariableDeclarationStatement_ts$jsVariableDeclarationStatement = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSVariableDeclarationStatement",
 		"declaration",
 		{
@@ -13482,7 +13460,7 @@ const ___R$project$rome$$romejs$ast$js$auxiliary$JSVariableDeclarator_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$auxiliary$JSVariableDeclarator_ts$jsVariableDeclarator = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$auxiliary$JSVariableDeclarator_ts$jsVariableDeclarator = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSVariableDeclarator",
 		{
 			bindingKeys: {
@@ -13504,7 +13482,7 @@ const ___R$project$rome$$romejs$ast$js$statements$JSWhileStatement_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$statements$JSWhileStatement_ts$jsWhileStatement = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$statements$JSWhileStatement_ts$jsWhileStatement = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSWhileStatement",
 		{
 			bindingKeys: {},
@@ -13524,7 +13502,7 @@ const ___R$project$rome$$romejs$ast$js$statements$JSWithStatement_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$statements$JSWithStatement_ts$jsWithStatement = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$statements$JSWithStatement_ts$jsWithStatement = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSWithStatement",
 		{
 			bindingKeys: {},
@@ -13544,7 +13522,7 @@ const ___R$project$rome$$romejs$ast$js$jsx$JSXAttribute_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$jsx$JSXAttribute_ts$jsxAttribute = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$jsx$JSXAttribute_ts$jsxAttribute = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSXAttribute",
 		{
 			bindingKeys: {},
@@ -13564,7 +13542,7 @@ const ___R$project$rome$$romejs$ast$js$jsx$JSXElement_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$jsx$JSXElement_ts$jsxElement = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$jsx$JSXElement_ts$jsxElement = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSXElement",
 		{
 			bindingKeys: {},
@@ -13586,7 +13564,7 @@ const ___R$project$rome$$romejs$ast$js$jsx$JSXEmptyExpression_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$jsx$JSXEmptyExpression_ts$jsxEmptyExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$jsx$JSXEmptyExpression_ts$jsxEmptyExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSXEmptyExpression",
 		{
 			bindingKeys: {},
@@ -13603,7 +13581,7 @@ const ___R$project$rome$$romejs$ast$js$jsx$JSXExpressionContainer_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$jsx$JSXExpressionContainer_ts$jsxExpressionContainer = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$jsx$JSXExpressionContainer_ts$jsxExpressionContainer = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSXExpressionContainer",
 		{
 			bindingKeys: {},
@@ -13622,7 +13600,7 @@ const ___R$project$rome$$romejs$ast$js$jsx$JSXFragment_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$jsx$JSXFragment_ts$jsxFragment = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$jsx$JSXFragment_ts$jsxFragment = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSXFragment",
 		{
 			bindingKeys: {},
@@ -13641,7 +13619,7 @@ const ___R$project$rome$$romejs$ast$js$jsx$JSXIdentifier_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$jsx$JSXIdentifier_ts$jsxIdentifier = ___R$project$rome$$romejs$ast$js$utils_ts$createQuickBuilder(
+	const ___R$project$rome$$romejs$ast$js$jsx$JSXIdentifier_ts$jsxIdentifier = ___R$project$rome$$romejs$ast$utils_ts$createQuickBuilder(
 		"JSXIdentifier",
 		"name",
 		{
@@ -13659,7 +13637,7 @@ const ___R$project$rome$$romejs$ast$js$jsx$JSXMemberExpression_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$jsx$JSXMemberExpression_ts$jsxMemberExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$jsx$JSXMemberExpression_ts$jsxMemberExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSXMemberExpression",
 		{
 			bindingKeys: {},
@@ -13679,7 +13657,7 @@ const ___R$project$rome$$romejs$ast$js$jsx$JSXNamespacedName_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$jsx$JSXNamespacedName_ts$jsxNamespacedName = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$jsx$JSXNamespacedName_ts$jsxNamespacedName = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSXNamespacedName",
 		{
 			bindingKeys: {},
@@ -13699,7 +13677,7 @@ const ___R$project$rome$$romejs$ast$js$jsx$JSXReferenceIdentifier_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$jsx$JSXReferenceIdentifier_ts$jsxReferenceIdentifier = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$jsx$JSXReferenceIdentifier_ts$jsxReferenceIdentifier = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSXReferenceIdentifier",
 		{
 			bindingKeys: {},
@@ -13716,7 +13694,7 @@ const ___R$project$rome$$romejs$ast$js$jsx$JSXSpreadAttribute_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$jsx$JSXSpreadAttribute_ts$jsxSpreadAttribute = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$jsx$JSXSpreadAttribute_ts$jsxSpreadAttribute = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSXSpreadAttribute",
 		{
 			bindingKeys: {},
@@ -13735,7 +13713,7 @@ const ___R$project$rome$$romejs$ast$js$jsx$JSXSpreadChild_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$jsx$JSXSpreadChild_ts$jsxSpreadChild = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$jsx$JSXSpreadChild_ts$jsxSpreadChild = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSXSpreadChild",
 		{
 			bindingKeys: {},
@@ -13754,7 +13732,7 @@ const ___R$project$rome$$romejs$ast$js$jsx$JSXText_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$jsx$JSXText_ts$jsxText = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$jsx$JSXText_ts$jsxText = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSXText",
 		{
 			bindingKeys: {},
@@ -13771,7 +13749,7 @@ const ___R$project$rome$$romejs$ast$js$expressions$JSYieldExpression_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$expressions$JSYieldExpression_ts$jsYieldExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$expressions$JSYieldExpression_ts$jsYieldExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"JSYieldExpression",
 		{bindingKeys: {}, visitorKeys: {argument: true}},
 	);
@@ -13785,7 +13763,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSAnyKeywordTypeAnnotation_ts 
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSAnyKeywordTypeAnnotation_ts$tsAnyKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSAnyKeywordTypeAnnotation_ts$tsAnyKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSAnyKeywordTypeAnnotation",
 		{
 			bindingKeys: {},
@@ -13802,7 +13780,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSArrayType_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSArrayType_ts$tsArrayType = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSArrayType_ts$tsArrayType = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSArrayType",
 		{
 			bindingKeys: {},
@@ -13819,7 +13797,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSAsExpression_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSAsExpression_ts$tsAsExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSAsExpression_ts$tsAsExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSAsExpression",
 		{
 			bindingKeys: {},
@@ -13836,7 +13814,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSAssignmentAsExpression_ts = 
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSAssignmentAsExpression_ts$tsAssignmentAsExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSAssignmentAsExpression_ts$tsAssignmentAsExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSAssignmentAsExpression",
 		{
 			bindingKeys: {},
@@ -13853,7 +13831,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSAssignmentNonNullExpression_
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSAssignmentNonNullExpression_ts$tsAssignmentNonNullExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSAssignmentNonNullExpression_ts$tsAssignmentNonNullExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSAssignmentNonNullExpression",
 		{
 			bindingKeys: {},
@@ -13870,7 +13848,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSAssignmentTypeAssertion_ts =
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSAssignmentTypeAssertion_ts$tsAssignmentTypeAssertion = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSAssignmentTypeAssertion_ts$tsAssignmentTypeAssertion = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSAssignmentTypeAssertion",
 		{
 			bindingKeys: {},
@@ -13887,7 +13865,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSBigIntKeywordTypeAnnotation_
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSBigIntKeywordTypeAnnotation_ts$tsBigIntKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSBigIntKeywordTypeAnnotation_ts$tsBigIntKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSBigIntKeywordTypeAnnotation",
 		{
 			bindingKeys: {},
@@ -13904,7 +13882,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSBooleanKeywordTypeAnnotation
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSBooleanKeywordTypeAnnotation_ts$tsBooleanKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSBooleanKeywordTypeAnnotation_ts$tsBooleanKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSBooleanKeywordTypeAnnotation",
 		{
 			bindingKeys: {},
@@ -13921,7 +13899,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSBooleanLiteralTypeAnnotation
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSBooleanLiteralTypeAnnotation_ts$tsBooleanLiteralTypeAnnotation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSBooleanLiteralTypeAnnotation_ts$tsBooleanLiteralTypeAnnotation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSBooleanLiteralTypeAnnotation",
 		{
 			bindingKeys: {},
@@ -13938,7 +13916,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSCallSignatureDeclaration_ts 
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSCallSignatureDeclaration_ts$tsCallSignatureDeclaration = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSCallSignatureDeclaration_ts$tsCallSignatureDeclaration = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSCallSignatureDeclaration",
 		{
 			bindingKeys: {},
@@ -13958,7 +13936,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSConditionalType_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSConditionalType_ts$tsConditionalType = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSConditionalType_ts$tsConditionalType = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSConditionalType",
 		{
 			bindingKeys: {},
@@ -13980,7 +13958,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSConstructorType_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSConstructorType_ts$tsConstructorType = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSConstructorType_ts$tsConstructorType = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSConstructorType",
 		{
 			bindingKeys: {},
@@ -14000,7 +13978,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSConstructSignatureDeclaratio
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSConstructSignatureDeclaration_ts$tsConstructSignatureDeclaration = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSConstructSignatureDeclaration_ts$tsConstructSignatureDeclaration = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSConstructSignatureDeclaration",
 		{
 			bindingKeys: {},
@@ -14020,7 +13998,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSDeclareFunction_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSDeclareFunction_ts$tsDeclareFunction = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSDeclareFunction_ts$tsDeclareFunction = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSDeclareFunction",
 		{
 			bindingKeys: {
@@ -14042,7 +14020,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSDeclareMethod_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSDeclareMethod_ts$tsDeclareMethod = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSDeclareMethod_ts$tsDeclareMethod = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSDeclareMethod",
 		{
 			bindingKeys: {},
@@ -14063,7 +14041,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSEmptyKeywordTypeAnnotation_t
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSEmptyKeywordTypeAnnotation_ts$tsEmptyKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSEmptyKeywordTypeAnnotation_ts$tsEmptyKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSEmptyKeywordTypeAnnotation",
 		{
 			bindingKeys: {},
@@ -14080,7 +14058,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSEnumDeclaration_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSEnumDeclaration_ts$tsEnumDeclaration = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSEnumDeclaration_ts$tsEnumDeclaration = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSEnumDeclaration",
 		{
 			bindingKeys: {
@@ -14102,7 +14080,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSEnumMember_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSEnumMember_ts$tsEnumMember = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSEnumMember_ts$tsEnumMember = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSEnumMember",
 		{
 			bindingKeys: {},
@@ -14122,7 +14100,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSExportAssignment_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSExportAssignment_ts$tsExportAssignment = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSExportAssignment_ts$tsExportAssignment = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSExportAssignment",
 		{bindingKeys: {}, visitorKeys: {expression: true}},
 	);
@@ -14136,7 +14114,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSExpressionWithTypeArguments_
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSExpressionWithTypeArguments_ts$tsExpressionWithTypeArguments = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSExpressionWithTypeArguments_ts$tsExpressionWithTypeArguments = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSExpressionWithTypeArguments",
 		{
 			bindingKeys: {},
@@ -14156,7 +14134,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSExternalModuleReference_ts =
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSExternalModuleReference_ts$tsExternalModuleReference = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSExternalModuleReference_ts$tsExternalModuleReference = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSExternalModuleReference",
 		{
 			bindingKeys: {},
@@ -14173,7 +14151,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSFunctionType_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSFunctionType_ts$tsFunctionType = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSFunctionType_ts$tsFunctionType = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSFunctionType",
 		{
 			bindingKeys: {},
@@ -14193,7 +14171,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSImportEqualsDeclaration_ts =
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSImportEqualsDeclaration_ts$tsImportEqualsDeclaration = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSImportEqualsDeclaration_ts$tsImportEqualsDeclaration = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSImportEqualsDeclaration",
 		{
 			bindingKeys: {
@@ -14212,7 +14190,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSImportType_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSImportType_ts$tsImportType = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSImportType_ts$tsImportType = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSImportType",
 		{
 			bindingKeys: {},
@@ -14233,7 +14211,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSIndexedAccessType_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSIndexedAccessType_ts$tsIndexedAccessType = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSIndexedAccessType_ts$tsIndexedAccessType = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSIndexedAccessType",
 		{
 			bindingKeys: {},
@@ -14253,7 +14231,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSIndexSignature_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSIndexSignature_ts$tsIndexSignature = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSIndexSignature_ts$tsIndexSignature = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSIndexSignature",
 		{
 			bindingKeys: {
@@ -14275,7 +14253,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSInferType_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSInferType_ts$tsInferType = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSInferType_ts$tsInferType = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSInferType",
 		{
 			bindingKeys: {},
@@ -14294,7 +14272,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSInterfaceBody_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSInterfaceBody_ts$tsInterfaceBody = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSInterfaceBody_ts$tsInterfaceBody = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSInterfaceBody",
 		{
 			bindingKeys: {},
@@ -14313,7 +14291,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSInterfaceDeclaration_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSInterfaceDeclaration_ts$tsInterfaceDeclaration = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSInterfaceDeclaration_ts$tsInterfaceDeclaration = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSInterfaceDeclaration",
 		{
 			bindingKeys: {
@@ -14337,7 +14315,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSIntersectionTypeAnnotation_t
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSIntersectionTypeAnnotation_ts$tsIntersectionTypeAnnotation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSIntersectionTypeAnnotation_ts$tsIntersectionTypeAnnotation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSIntersectionTypeAnnotation",
 		{
 			bindingKeys: {},
@@ -14358,7 +14336,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSMappedType_ts = {
 
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSMappedType_ts$tsMappedType = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSMappedType_ts$tsMappedType = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSMappedType",
 		{
 			bindingKeys: {},
@@ -14378,7 +14356,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSMethodSignature_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSMethodSignature_ts$tsMethodSignature = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSMethodSignature_ts$tsMethodSignature = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSMethodSignature",
 		{
 			bindingKeys: {},
@@ -14399,7 +14377,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSMixedKeywordTypeAnnotation_t
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSMixedKeywordTypeAnnotation_ts$tsMixedKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSMixedKeywordTypeAnnotation_ts$tsMixedKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSMixedKeywordTypeAnnotation",
 		{
 			bindingKeys: {},
@@ -14416,7 +14394,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSModuleBlock_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSModuleBlock_ts$tsModuleBlock = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSModuleBlock_ts$tsModuleBlock = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSModuleBlock",
 		{
 			bindingKeys: {},
@@ -14435,7 +14413,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSModuleDeclaration_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSModuleDeclaration_ts$tsModuleDeclaration = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSModuleDeclaration_ts$tsModuleDeclaration = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSModuleDeclaration",
 		{
 			bindingKeys: {},
@@ -14455,7 +14433,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSNamespaceExportDeclaration_t
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSNamespaceExportDeclaration_ts$tsNamespaceExportDeclaration = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSNamespaceExportDeclaration_ts$tsNamespaceExportDeclaration = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSNamespaceExportDeclaration",
 		{bindingKeys: {}, visitorKeys: {id: true}},
 	);
@@ -14469,7 +14447,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSNeverKeywordTypeAnnotation_t
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSNeverKeywordTypeAnnotation_ts$tsNeverKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSNeverKeywordTypeAnnotation_ts$tsNeverKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSNeverKeywordTypeAnnotation",
 		{
 			bindingKeys: {},
@@ -14486,7 +14464,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSNonNullExpression_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSNonNullExpression_ts$tsNonNullExpression = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSNonNullExpression_ts$tsNonNullExpression = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSNonNullExpression",
 		{
 			bindingKeys: {},
@@ -14505,7 +14483,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSNullKeywordTypeAnnotation_ts
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSNullKeywordTypeAnnotation_ts$tsNullKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSNullKeywordTypeAnnotation_ts$tsNullKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSNullKeywordTypeAnnotation",
 		{
 			bindingKeys: {},
@@ -14522,7 +14500,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSNumberKeywordTypeAnnotation_
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSNumberKeywordTypeAnnotation_ts$tsNumberKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSNumberKeywordTypeAnnotation_ts$tsNumberKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSNumberKeywordTypeAnnotation",
 		{
 			bindingKeys: {},
@@ -14539,7 +14517,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSNumericLiteralTypeAnnotation
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSNumericLiteralTypeAnnotation_ts$tsNumericLiteralTypeAnnotation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSNumericLiteralTypeAnnotation_ts$tsNumericLiteralTypeAnnotation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSNumericLiteralTypeAnnotation",
 		{
 			bindingKeys: {},
@@ -14556,7 +14534,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSObjectKeywordTypeAnnotation_
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSObjectKeywordTypeAnnotation_ts$tsObjectKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSObjectKeywordTypeAnnotation_ts$tsObjectKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSObjectKeywordTypeAnnotation",
 		{
 			bindingKeys: {},
@@ -14573,7 +14551,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSOptionalType_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSOptionalType_ts$tsOptionalType = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSOptionalType_ts$tsOptionalType = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSOptionalType",
 		{
 			bindingKeys: {},
@@ -14592,7 +14570,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSParenthesizedType_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSParenthesizedType_ts$tsParenthesizedType = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSParenthesizedType_ts$tsParenthesizedType = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSParenthesizedType",
 		{
 			bindingKeys: {},
@@ -14611,7 +14589,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSPropertySignature_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSPropertySignature_ts$tsPropertySignature = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSPropertySignature_ts$tsPropertySignature = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSPropertySignature",
 		{
 			bindingKeys: {},
@@ -14631,7 +14609,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSQualifiedName_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSQualifiedName_ts$tsQualifiedName = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSQualifiedName_ts$tsQualifiedName = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSQualifiedName",
 		{
 			bindingKeys: {},
@@ -14651,7 +14629,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSSignatureDeclarationMeta_ts 
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSSignatureDeclarationMeta_ts$tsSignatureDeclarationMeta = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSSignatureDeclarationMeta_ts$tsSignatureDeclarationMeta = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSSignatureDeclarationMeta",
 		{
 			bindingKeys: {},
@@ -14672,7 +14650,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSStringKeywordTypeAnnotation_
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSStringKeywordTypeAnnotation_ts$tsStringKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSStringKeywordTypeAnnotation_ts$tsStringKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSStringKeywordTypeAnnotation",
 		{
 			bindingKeys: {},
@@ -14689,7 +14667,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSStringLiteralTypeAnnotation_
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSStringLiteralTypeAnnotation_ts$tsStringLiteralTypeAnnotation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSStringLiteralTypeAnnotation_ts$tsStringLiteralTypeAnnotation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSStringLiteralTypeAnnotation",
 		{
 			bindingKeys: {},
@@ -14706,7 +14684,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSSymbolKeywordTypeAnnotation_
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSSymbolKeywordTypeAnnotation_ts$tsSymbolKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSSymbolKeywordTypeAnnotation_ts$tsSymbolKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSSymbolKeywordTypeAnnotation",
 		{
 			bindingKeys: {},
@@ -14723,7 +14701,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSTemplateLiteralTypeAnnotatio
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSTemplateLiteralTypeAnnotation_ts$tsTemplateLiteralTypeAnnotation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSTemplateLiteralTypeAnnotation_ts$tsTemplateLiteralTypeAnnotation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSTemplateLiteralTypeAnnotation",
 		{
 			bindingKeys: {},
@@ -14740,7 +14718,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSThisType_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSThisType_ts$tsThisType = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSThisType_ts$tsThisType = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSThisType",
 		{
 			bindingKeys: {},
@@ -14757,7 +14735,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSTupleType_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSTupleType_ts$tsTupleType = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSTupleType_ts$tsTupleType = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSTupleType",
 		{
 			bindingKeys: {},
@@ -14777,7 +14755,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSTypeAliasTypeAnnotation_ts =
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSTypeAliasTypeAnnotation_ts$tsTypeAliasTypeAnnotation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSTypeAliasTypeAnnotation_ts$tsTypeAliasTypeAnnotation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSTypeAliasTypeAnnotation",
 		{
 			bindingKeys: {
@@ -14800,7 +14778,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSTypeAssertion_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSTypeAssertion_ts$tsTypeAssertion = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSTypeAssertion_ts$tsTypeAssertion = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSTypeAssertion",
 		{
 			bindingKeys: {},
@@ -14820,7 +14798,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSTypeLiteral_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSTypeLiteral_ts$tsTypeLiteral = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSTypeLiteral_ts$tsTypeLiteral = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSTypeLiteral",
 		{
 			bindingKeys: {},
@@ -14839,7 +14817,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSTypeOperator_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSTypeOperator_ts$tsTypeOperator = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSTypeOperator_ts$tsTypeOperator = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSTypeOperator",
 		{
 			bindingKeys: {},
@@ -14858,7 +14836,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSTypeParameter_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSTypeParameter_ts$tsTypeParameter = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSTypeParameter_ts$tsTypeParameter = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSTypeParameter",
 		{
 			bindingKeys: {},
@@ -14878,7 +14856,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSTypeParameterDeclaration_ts 
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSTypeParameterDeclaration_ts$tsTypeParameterDeclaration = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSTypeParameterDeclaration_ts$tsTypeParameterDeclaration = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSTypeParameterDeclaration",
 		{
 			bindingKeys: {},
@@ -14897,7 +14875,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSTypeParameterInstantiation_t
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSTypeParameterInstantiation_ts$tsTypeParameterInstantiation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSTypeParameterInstantiation_ts$tsTypeParameterInstantiation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSTypeParameterInstantiation",
 		{
 			bindingKeys: {},
@@ -14916,7 +14894,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSTypePredicate_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSTypePredicate_ts$tsTypePredicate = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSTypePredicate_ts$tsTypePredicate = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSTypePredicate",
 		{
 			bindingKeys: {},
@@ -14936,7 +14914,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSTypeQuery_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSTypeQuery_ts$tsTypeQuery = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSTypeQuery_ts$tsTypeQuery = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSTypeQuery",
 		{
 			bindingKeys: {},
@@ -14955,7 +14933,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSTypeReference_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSTypeReference_ts$tsTypeReference = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSTypeReference_ts$tsTypeReference = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSTypeReference",
 		{
 			bindingKeys: {},
@@ -14975,7 +14953,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSUndefinedKeywordTypeAnnotati
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSUndefinedKeywordTypeAnnotation_ts$tsUndefinedKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSUndefinedKeywordTypeAnnotation_ts$tsUndefinedKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSUndefinedKeywordTypeAnnotation",
 		{bindingKeys: {}, visitorKeys: {}},
 	);
@@ -14989,7 +14967,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSUnionTypeAnnotation_ts = {
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSUnionTypeAnnotation_ts$tsUnionTypeAnnotation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSUnionTypeAnnotation_ts$tsUnionTypeAnnotation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSUnionTypeAnnotation",
 		{
 			bindingKeys: {},
@@ -15008,7 +14986,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSUnknownKeywordTypeAnnotation
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSUnknownKeywordTypeAnnotation_ts$tsUnknownKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSUnknownKeywordTypeAnnotation_ts$tsUnknownKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSUnknownKeywordTypeAnnotation",
 		{
 			bindingKeys: {},
@@ -15025,7 +15003,7 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSVoidKeywordTypeAnnotation_ts
 	};
 
 
-	const ___R$project$rome$$romejs$ast$js$typescript$TSVoidKeywordTypeAnnotation_ts$tsVoidKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$js$utils_ts$createBuilder(
+	const ___R$project$rome$$romejs$ast$js$typescript$TSVoidKeywordTypeAnnotation_ts$tsVoidKeywordTypeAnnotation = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
 		"TSVoidKeywordTypeAnnotation",
 		{
 			bindingKeys: {},
@@ -15035,7 +15013,17 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSVoidKeywordTypeAnnotation_ts
 
 
   // project-rome/@romejs/ast/index.ts
-const ___R$project$rome$$romejs$ast$index_ts = {};
+const ___R$project$rome$$romejs$ast$index_ts = {
+		get bindingKeys() {
+			return ___R$project$rome$$romejs$ast$utils_ts$bindingKeys;
+		},
+		get nodeNames() {
+			return ___R$project$rome$$romejs$ast$utils_ts$nodeNames;
+		},
+		get visitorKeys() {
+			return ___R$project$rome$$romejs$ast$utils_ts$visitorKeys;
+		},
+	};
 	Object.keys(___R$project$rome$$romejs$ast$js$index_ts).forEach(function(key) {
 		if (key === "default") return undefined;
 		Object.defineProperty(
@@ -18413,7 +18401,7 @@ function ___R$project$rome$$romejs$js$ast$utils$getBindingIdentifiers_ts$default
 				continue;
 			}
 
-			const keys = ___R$project$rome$$romejs$ast$js$utils_ts$bindingKeys.get(
+			const keys = ___R$project$rome$$romejs$ast$utils_ts$bindingKeys.get(
 				node.type,
 			);
 			if (keys === undefined) {
@@ -23241,6 +23229,108 @@ const ___R$project$rome$$romejs$compiler$scope$evaluators$JSClassDeclaration_ts$
 	});
 
 
+  // project-rome/@romejs/compiler/scope/bindings.ts
+const ___R$project$rome$$romejs$compiler$scope$bindings_ts = {
+		get Binding() {
+			return ___R$project$rome$$romejs$compiler$scope$bindings_ts$Binding;
+		},
+		get ConstBinding() {
+			return ___R$project$rome$$romejs$compiler$scope$bindings_ts$ConstBinding;
+		},
+		get LetBinding() {
+			return ___R$project$rome$$romejs$compiler$scope$bindings_ts$LetBinding;
+		},
+		get VarBinding() {
+			return ___R$project$rome$$romejs$compiler$scope$bindings_ts$VarBinding;
+		},
+		get ImportBinding() {
+			return ___R$project$rome$$romejs$compiler$scope$bindings_ts$ImportBinding;
+		},
+		get ArgumentsBinding() {
+			return ___R$project$rome$$romejs$compiler$scope$bindings_ts$ArgumentsBinding;
+		},
+		get FunctionBinding() {
+			return ___R$project$rome$$romejs$compiler$scope$bindings_ts$FunctionBinding;
+		},
+		get TypeBinding() {
+			return ___R$project$rome$$romejs$compiler$scope$bindings_ts$TypeBinding;
+		},
+		get ClassBinding() {
+			return ___R$project$rome$$romejs$compiler$scope$bindings_ts$ClassBinding;
+		},
+	};
+
+
+	class ___R$project$rome$$romejs$compiler$scope$bindings_ts$Binding {
+		constructor(opts, defaultKind = "variable") {
+			this.isExported = false;
+			this.scope = opts.scope;
+			this.name = opts.name;
+			this.node = opts.node;
+			this.kind = opts.kind === undefined ? defaultKind : opts.kind;
+		}
+
+		setExported(isExported) {
+			this.isExported = isExported;
+		}
+	}
+
+
+
+	class ___R$project$rome$$romejs$compiler$scope$bindings_ts$ConstBinding
+		extends ___R$project$rome$$romejs$compiler$scope$bindings_ts$Binding {
+		constructor(opts, value, kind = "constant") {
+			super(opts, kind);
+			this.value = value;
+		}
+	}
+
+	class ___R$project$rome$$romejs$compiler$scope$bindings_ts$LetBinding
+		extends ___R$project$rome$$romejs$compiler$scope$bindings_ts$Binding {}
+
+	class ___R$project$rome$$romejs$compiler$scope$bindings_ts$VarBinding
+		extends ___R$project$rome$$romejs$compiler$scope$bindings_ts$Binding {}
+
+	class ___R$project$rome$$romejs$compiler$scope$bindings_ts$ImportBinding
+		extends ___R$project$rome$$romejs$compiler$scope$bindings_ts$Binding {
+		constructor(opts, meta) {
+			super(opts, "import");
+			this.meta = meta;
+		}
+	}
+
+	class ___R$project$rome$$romejs$compiler$scope$bindings_ts$ArgumentsBinding
+		extends ___R$project$rome$$romejs$compiler$scope$bindings_ts$Binding {
+		constructor(opts) {
+			super(opts, "arguments");
+		}
+	}
+
+	class ___R$project$rome$$romejs$compiler$scope$bindings_ts$FunctionBinding
+		extends ___R$project$rome$$romejs$compiler$scope$bindings_ts$Binding {
+		constructor(opts) {
+			super(opts, "function");
+		}
+	}
+
+
+
+	class ___R$project$rome$$romejs$compiler$scope$bindings_ts$TypeBinding
+		extends ___R$project$rome$$romejs$compiler$scope$bindings_ts$ConstBinding {
+		constructor(opts, valueNode, kind) {
+			super(opts, valueNode, "type");
+			this.typeKind = kind;
+		}
+	}
+
+	class ___R$project$rome$$romejs$compiler$scope$bindings_ts$ClassBinding
+		extends ___R$project$rome$$romejs$compiler$scope$bindings_ts$Binding {
+		constructor(opts) {
+			super(opts, "class");
+		}
+	}
+
+
   // project-rome/@romejs/compiler/scope/utils.ts
 function ___R$project$rome$$romejs$compiler$scope$utils_ts$buildFunctionScope(
 		node,
@@ -23312,7 +23402,7 @@ function ___R$project$rome$$romejs$compiler$scope$utils_ts$buildFunctionScope(
 				{
 					name: "scopeVarFunc",
 					enter: (path) => {
-						const {node, parent} = path;
+						const {node} = path;
 
 						if (
 							___R$project$rome$$romejs$js$ast$utils$isFunctionNode_ts$default(
@@ -23324,7 +23414,19 @@ function ___R$project$rome$$romejs$compiler$scope$utils_ts$buildFunctionScope(
 						}
 
 						if (node.type === "JSVariableDeclaration" && node.kind === "var") {
-							scope.injectEvaluate(node, parent);
+							for (const decl of node.declarations) {
+								for (const id of ___R$project$rome$$romejs$js$ast$utils$getBindingIdentifiers_ts$default(
+									decl,
+								)) {
+									scope.addBinding(
+										new ___R$project$rome$$romejs$compiler$scope$bindings_ts$VarBinding({
+											node: id,
+											name: id.name,
+											scope,
+										}),
+									);
+								}
+							}
 						}
 
 						return node;
@@ -23377,49 +23479,38 @@ const ___R$project$rome$$romejs$compiler$scope$evaluators$JSVariableDeclaration_
 				for (const id of ___R$project$rome$$romejs$js$ast$utils$getBindingIdentifiers_ts$default(
 					decl,
 				)) {
-					if (node.kind === "let") {
-						scope.addBinding(
-							new ___R$project$rome$$romejs$compiler$scope$bindings_ts$LetBinding({
-								node: id,
-								name: id.name,
-								scope,
-							}),
-						);
-					}
-
-					if (node.kind === "const") {
-						// Only set the value for simple declarations
-						let valueNode = id === decl.id ? decl.init : undefined;
-						scope.addBinding(
-							new ___R$project$rome$$romejs$compiler$scope$bindings_ts$ConstBinding(
-								{
+					switch (node.kind) {
+						case "let": {
+							scope.addBinding(
+								new ___R$project$rome$$romejs$compiler$scope$bindings_ts$LetBinding({
 									node: id,
 									name: id.name,
 									scope,
-								},
-								valueNode,
-							),
-						);
-					}
-
-					if (
-						node.kind === "var" &&
-						(scope.kind === "program" || scope.kind === "function")
-					) {
-						if (!scope.hasHoistedVars) {
-							throw new Error(
-								"This scope does not allow `var`iables. This is probably because `var`iables were injected into a scope that did not contain `var` in the original source." +
-								scope.kind,
+								}),
 							);
+							break;
 						}
 
-						scope.addBinding(
-							new ___R$project$rome$$romejs$compiler$scope$bindings_ts$VarBinding({
-								node: id,
-								name: id.name,
-								scope,
-							}),
-						);
+						case "const": {
+							// Only set the value for simple declarations
+							let valueNode = id === decl.id ? decl.init : undefined;
+							scope.addBinding(
+								new ___R$project$rome$$romejs$compiler$scope$bindings_ts$ConstBinding(
+									{
+										node: id,
+										name: id.name,
+										scope,
+									},
+									valueNode,
+								),
+							);
+							break;
+						}
+
+						case "var": {
+							// Should be injected manually by `addVarBindings`
+							break;
+						}
 					}
 				}
 			}
@@ -25168,9 +25259,7 @@ const ___R$project$rome$$romejs$compiler$scope$globals_ts = {
 
 
   // project-rome/@romejs/compiler/scope/Scope.ts
-let ___R$$priv$project$rome$$romejs$compiler$scope$Scope_ts$scopeCounter = 0;
-
-	Error.stackTraceLimit = Infinity;
+Error.stackTraceLimit = Infinity;
 
 
 
@@ -25190,7 +25279,6 @@ let ___R$$priv$project$rome$$romejs$compiler$scope$Scope_ts$scopeCounter = 0;
 			this.node = node;
 			this.kind = kind;
 			this.bindings = new Map();
-			this.id = ___R$$priv$project$rome$$romejs$compiler$scope$Scope_ts$scopeCounter++;
 			this.hasHoistedVars = false;
 			this.globals = new Set();
 
@@ -25292,12 +25380,14 @@ let ___R$$priv$project$rome$$romejs$compiler$scope$Scope_ts$scopeCounter = 0;
 			});
 		}
 
-		dump(root = true) {
-			if (root) {
-				console.log("START");
-			}
+		// Debug utility for dumping scope information
+		dump() {
+			const lines = [];
+
+			lines.push("# Scope " + this.kind);
+
 			if (this.globals.size > 0) {
-				console.log("------ GLOBALS", this.id, this.kind);
+				const filteredGlobals = [];
 				for (const name of this.globals) {
 					if (
 						___R$$priv$project$rome$$romejs$compiler$scope$Scope_ts$globalGlobals.includes(
@@ -25307,19 +25397,35 @@ let ___R$$priv$project$rome$$romejs$compiler$scope$Scope_ts$scopeCounter = 0;
 						continue;
 					}
 
-					console.log(" ", name);
+					filteredGlobals.push(name);
+				}
+
+				if (filteredGlobals.length > 0) {
+					lines.push("## Globals");
+
+					for (const name of filteredGlobals) {
+						lines.push(" * " + name);
+					}
 				}
 			}
-			console.log("------ VARIABLES", this.id, this.kind);
-			for (const [name, binding] of this.bindings) {
-				console.log(" ", binding.id, "-", binding.constructor.name, name);
+
+			if (this.bindings.size > 0) {
+				lines.push("## Variables");
+				for (const [name, binding] of this.bindings) {
+					lines.push(" * " + binding.kind + " " + name);
+				}
 			}
+
+			return lines.join("\n");
+		}
+
+		dumpAncestry() {
+			const lines = [];
+			lines.push(this.dump());
 			if (this.parentScope !== undefined) {
-				this.parentScope.dump(false);
+				lines.push(this.parentScope.dump());
 			}
-			if (root) {
-				console.log("END");
-			}
+			return lines.join("\n");
 		}
 
 		getOwnBinding(name) {
@@ -25476,10 +25582,8 @@ let ___R$$priv$project$rome$$romejs$compiler$scope$Scope_ts$scopeCounter = 0;
 
 						const value = match[1].trim();
 
-						// Other tools would flag these as unavailable and remove them from the master set
-
+						// Other tools would flag these as unavailable and remove them from the server set
 						// We don't do that, we might want to later though?
-
 						// Also, we should maybe validate the value to only true/false
 						if (value === "false") {
 							break;
@@ -25716,7 +25820,7 @@ const ___R$$priv$project$rome$$romejs$compiler$methods$reduce_ts$BAIL_EXIT = "BA
 
 		// Reduce the children
 		let {node} = path;
-		const visitorKeys = ___R$project$rome$$romejs$ast$js$utils_ts$visitorKeys.get(
+		const visitorKeys = ___R$project$rome$$romejs$ast$utils_ts$visitorKeys.get(
 			node.type,
 		);
 		if (visitorKeys !== undefined) {
@@ -27835,16 +27939,12 @@ function ___R$$priv$project$rome$$romejs$compiler$transforms$compile$jsx_ts$conv
 		enter(path) {
 			const {node, context, parent} = path;
 
-			if (___R$project$rome$$romejs$ast$js$jsx$JSXElement_ts$jsxElement.is(node)) {
+			if (node.type === "JSXElement") {
 				let type = ___R$$priv$project$rome$$romejs$compiler$transforms$compile$jsx_ts$convertJSXIdentifier(
 					path.getChildPath("name"),
 				);
 
-				if (
-					___R$project$rome$$romejs$ast$js$jsx$JSXNamespacedName_ts$jsxNamespacedName.is(
-						node.name,
-					)
-				) {
+				if (node.name.type === "JSXNamespacedName") {
 					// TODO better handle this
 					context.addNodeDiagnostic(
 						type,
@@ -27875,11 +27975,7 @@ function ___R$$priv$project$rome$$romejs$compiler$transforms$compile$jsx_ts$conv
 				});
 
 				// If we're a JSX element child then we need to be wrapped
-				if (
-					___R$project$rome$$romejs$ast$js$jsx$JSXElement_ts$jsxElement.is(
-						parent,
-					)
-				) {
+				if (parent.type === "JSXElement") {
 					return ___R$project$rome$$romejs$ast$js$jsx$JSXExpressionContainer_ts$jsxExpressionContainer.create({
 						expression: call,
 					});
@@ -67229,7 +67325,7 @@ const ___R$project$rome$$romejs$compiler$transforms$compileForBundle$modern$esTo
 				context,
 			);
 
-			if (___R$project$rome$$romejs$ast$js$core$JSRoot_ts$jsRoot.is(node)) {
+			if (node.type === "JSRoot") {
 				const mappings = new Map();
 
 				// make all variables private
@@ -67959,7 +68055,8 @@ const ___R$project$rome$$romejs$compiler$transforms$compileForBundle$legacy$esTo
 		name: "esToCJSTransform",
 		enter(path) {
 			const {node} = path;
-			if (!___R$project$rome$$romejs$ast$js$core$JSRoot_ts$jsRoot.is(node)) {
+
+			if (node.type !== "JSRoot") {
 				return node;
 			}
 
@@ -69866,14 +69963,6 @@ function ___R$project$rome$$romejs$ast$utils$isRoot_ts$isRoot(node) {
 			return false;
 		}
 
-		getRootScope() {
-			const {rootScope} = this;
-			if (rootScope === undefined) {
-				throw new Error("Expected root scope");
-			}
-			return rootScope;
-		}
-
 		getCacheDependencies() {
 			return Array.from(this.cacheDependencies);
 		}
@@ -70256,7 +70345,7 @@ function ___R$project$rome$$romejs$ast$utils$isRoot_ts$isRoot(node) {
 			const parentScope =
 				opts.parentScope === undefined ||
 				___R$project$rome$$romejs$ast$utils$isRoot_ts$isRoot(node)
-					? context.getRootScope()
+					? context.rootScope
 					: opts.parentScope;
 
 			let scope = opts.scope;
@@ -72111,111 +72200,6 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$js$noExtraBooleanCa
 	};
 
 
-  // project-rome/@romejs/compiler/scope/bindings.ts
-const ___R$project$rome$$romejs$compiler$scope$bindings_ts = {
-		get Binding() {
-			return ___R$project$rome$$romejs$compiler$scope$bindings_ts$Binding;
-		},
-		get ConstBinding() {
-			return ___R$project$rome$$romejs$compiler$scope$bindings_ts$ConstBinding;
-		},
-		get LetBinding() {
-			return ___R$project$rome$$romejs$compiler$scope$bindings_ts$LetBinding;
-		},
-		get VarBinding() {
-			return ___R$project$rome$$romejs$compiler$scope$bindings_ts$VarBinding;
-		},
-		get ImportBinding() {
-			return ___R$project$rome$$romejs$compiler$scope$bindings_ts$ImportBinding;
-		},
-		get ArgumentsBinding() {
-			return ___R$project$rome$$romejs$compiler$scope$bindings_ts$ArgumentsBinding;
-		},
-		get FunctionBinding() {
-			return ___R$project$rome$$romejs$compiler$scope$bindings_ts$FunctionBinding;
-		},
-		get TypeBinding() {
-			return ___R$project$rome$$romejs$compiler$scope$bindings_ts$TypeBinding;
-		},
-		get ClassBinding() {
-			return ___R$project$rome$$romejs$compiler$scope$bindings_ts$ClassBinding;
-		},
-	};
-	let ___R$$priv$project$rome$$romejs$compiler$scope$bindings_ts$id = 0;
-
-
-
-	class ___R$project$rome$$romejs$compiler$scope$bindings_ts$Binding {
-		constructor(opts, defaultKind = "variable") {
-			this.isExported = false;
-			this.scope = opts.scope;
-			this.name = opts.name;
-			this.node = opts.node;
-			this.kind = opts.kind === undefined ? defaultKind : opts.kind;
-			this.id = ___R$$priv$project$rome$$romejs$compiler$scope$bindings_ts$id++;
-		}
-
-		setExported(isExported) {
-			this.isExported = isExported;
-		}
-	}
-
-
-
-	class ___R$project$rome$$romejs$compiler$scope$bindings_ts$ConstBinding
-		extends ___R$project$rome$$romejs$compiler$scope$bindings_ts$Binding {
-		constructor(opts, value, kind = "constant") {
-			super(opts, kind);
-			this.value = value;
-		}
-	}
-
-	class ___R$project$rome$$romejs$compiler$scope$bindings_ts$LetBinding
-		extends ___R$project$rome$$romejs$compiler$scope$bindings_ts$Binding {}
-
-	class ___R$project$rome$$romejs$compiler$scope$bindings_ts$VarBinding
-		extends ___R$project$rome$$romejs$compiler$scope$bindings_ts$Binding {}
-
-	class ___R$project$rome$$romejs$compiler$scope$bindings_ts$ImportBinding
-		extends ___R$project$rome$$romejs$compiler$scope$bindings_ts$Binding {
-		constructor(opts, meta) {
-			super(opts, "import");
-			this.meta = meta;
-		}
-	}
-
-	class ___R$project$rome$$romejs$compiler$scope$bindings_ts$ArgumentsBinding
-		extends ___R$project$rome$$romejs$compiler$scope$bindings_ts$Binding {
-		constructor(opts) {
-			super(opts, "arguments");
-		}
-	}
-
-	class ___R$project$rome$$romejs$compiler$scope$bindings_ts$FunctionBinding
-		extends ___R$project$rome$$romejs$compiler$scope$bindings_ts$Binding {
-		constructor(opts) {
-			super(opts, "function");
-		}
-	}
-
-
-
-	class ___R$project$rome$$romejs$compiler$scope$bindings_ts$TypeBinding
-		extends ___R$project$rome$$romejs$compiler$scope$bindings_ts$ConstBinding {
-		constructor(opts, valueNode, kind) {
-			super(opts, valueNode, "type");
-			this.typeKind = kind;
-		}
-	}
-
-	class ___R$project$rome$$romejs$compiler$scope$bindings_ts$ClassBinding
-		extends ___R$project$rome$$romejs$compiler$scope$bindings_ts$Binding {
-		constructor(opts) {
-			super(opts, "class");
-		}
-	}
-
-
   // project-rome/@romejs/compiler/lint/rules/js/noFunctionAssign.ts
 const ___R$project$rome$$romejs$compiler$lint$rules$js$noFunctionAssign_ts$default = {
 		name: "noFunctionAssign",
@@ -72652,6 +72636,197 @@ const ___R$project$rome$$romejs$compiler$lint$rules$js$noUnsafeFinally_ts$defaul
 						}
 					}
 				}
+			}
+
+			return node;
+		},
+	};
+
+
+  // project-rome/@romejs/compiler/lint/rules/js/noUnusedVariables.ts
+
+
+	const ___R$$priv$project$rome$$romejs$compiler$lint$rules$js$noUnusedVariables_ts$initialState = {
+		usedBindings: {},
+		scope: undefined,
+	};
+
+	const ___R$$priv$project$rome$$romejs$compiler$lint$rules$js$noUnusedVariables_ts$provider = ___R$project$rome$$romejs$compiler$api$createHook_ts$default({
+		name: "noUnusedVariablesProvider",
+		initialState: ___R$$priv$project$rome$$romejs$compiler$lint$rules$js$noUnusedVariables_ts$initialState,
+		call(path, state) {
+			const {node} = path;
+			if (
+				node.type !== "JSReferenceIdentifier" &&
+				node.type !== "JSXReferenceIdentifier"
+			) {
+				throw new Error("Expected only JSIdentifier to be dispatched");
+			}
+
+			const binding = path.scope.getBindingFromPath(path);
+
+			// Check if this binding belongs to the scope we're tracking
+			if (binding === undefined || binding.scope !== state.scope) {
+				return {
+					bubble: true,
+					value: node,
+					state,
+				};
+			}
+
+			// Mark this binding as used
+			return {
+				value: node,
+				state: Object.assign(
+					{},
+					state,
+					{
+						usedBindings: Object.assign(
+							{},
+							state.usedBindings,
+							{[node.name]: true},
+						),
+					},
+				),
+			};
+		},
+
+		exit(path, state) {
+			for (const name in state.usedBindings) {
+				const used = state.usedBindings[name];
+				const binding = path.scope.getBinding(name);
+
+				if (used === false && binding !== undefined) {
+					path.context.addNodeDiagnostic(
+						binding.node,
+						___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.JS_NO_UNUSED_VARIABLES(
+							binding.kind,
+							name,
+						),
+					);
+				}
+			}
+
+			return path.node;
+		},
+	});
+	const ___R$project$rome$$romejs$compiler$lint$rules$js$noUnusedVariables_ts$default = {
+		name: "unusedVariables",
+		enter(path) {
+			const {node, scope} = path;
+
+			if (scope.node === node) {
+				let hasBindings = false;
+				const usedBindings = {};
+
+				// Get all the non-exported bindings in this file and mark them as unused
+				for (const [name, binding] of scope.getOwnBindings()) {
+					if (
+						binding instanceof
+						___R$project$rome$$romejs$compiler$scope$bindings_ts$ArgumentsBinding
+					) {
+						continue;
+					}
+
+					if (binding.isExported) {
+						continue;
+					}
+
+					hasBindings = true;
+					usedBindings[name] = false;
+				}
+
+				if (!hasBindings) {
+					return node;
+				}
+
+				// For functions, special case parameters
+				if (
+					node.type === "JSFunctionDeclaration" ||
+					node.type === "JSFunctionExpression" ||
+					node.type === "JSObjectMethod" ||
+					node.type === "JSClassMethod" ||
+					node.type === "TSDeclareMethod" ||
+					node.type === "TSDeclareFunction" ||
+					node.type === "JSArrowFunctionExpression"
+				) {
+					let ignoreLast = true;
+					let includeRest = false;
+
+					// If there's no rest then only consider the last parameter to be unused
+					const {rest} = node.head;
+					if (rest !== undefined) {
+						ignoreLast = false;
+					}
+
+					if (
+						node.type === "TSDeclareFunction" ||
+						node.type === "TSDeclareMethod"
+					) {
+						// This is an interface and has no body
+						ignoreLast = false;
+						includeRest = true;
+					} else {
+						// For functions that have a single throw statement in the body, consider all their arguments
+						// to be used as this is typically an interface definition
+						const {body} = node;
+						if (
+							body.type === "JSBlockStatement" &&
+							body.body.length === 1 &&
+							body.body[0].type === "JSThrowStatement"
+						) {
+							ignoreLast = false;
+							includeRest = true;
+						}
+					}
+
+					// Mark parameters as used
+					let params = [...node.head.params];
+					if (ignoreLast) {
+						params.pop();
+					}
+					if (includeRest && rest !== undefined) {
+						params.push(rest);
+					}
+					for (const {name} of ___R$project$rome$$romejs$js$ast$utils$getBindingIdentifiers_ts$default(
+						params,
+					)) {
+						usedBindings[name] = true;
+					}
+				}
+
+				if (
+					node.type === "JSCatchClause" &&
+					node.param &&
+					node.param.type === "JSBindingIdentifier"
+				) {
+					// Mark error param as used as they are required
+					usedBindings[node.param.name] = true;
+				}
+
+				// For a named function expression, don't consider the id to be unused
+				if (node.type === "JSFunctionExpression" && node.id !== undefined) {
+					usedBindings[node.id.name] = true;
+				}
+
+				return path.provideHook(
+					___R$$priv$project$rome$$romejs$compiler$lint$rules$js$noUnusedVariables_ts$provider,
+					{
+						usedBindings,
+						scope,
+					},
+				);
+			}
+
+			if (
+				node.type === "JSXReferenceIdentifier" ||
+				node.type === "JSReferenceIdentifier"
+			) {
+				return path.callHook(
+					___R$$priv$project$rome$$romejs$compiler$lint$rules$js$noUnusedVariables_ts$provider,
+					undefined,
+					node,
+				);
 			}
 
 			return node;
@@ -73406,197 +73581,6 @@ const ___R$project$rome$$romejs$compiler$lint$rules$js$unsafeNegation_ts$default
 						}),
 					},
 					___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.JS_UNSAFE_NEGATION,
-				);
-			}
-
-			return node;
-		},
-	};
-
-
-  // project-rome/@romejs/compiler/lint/rules/js/unusedVariables.ts
-
-
-	const ___R$$priv$project$rome$$romejs$compiler$lint$rules$js$unusedVariables_ts$initialState = {
-		usedBindings: {},
-		scope: undefined,
-	};
-
-	const ___R$$priv$project$rome$$romejs$compiler$lint$rules$js$unusedVariables_ts$provider = ___R$project$rome$$romejs$compiler$api$createHook_ts$default({
-		name: "unusedVariablesProvider",
-		initialState: ___R$$priv$project$rome$$romejs$compiler$lint$rules$js$unusedVariables_ts$initialState,
-		call(path, state) {
-			const {node} = path;
-			if (
-				node.type !== "JSReferenceIdentifier" &&
-				node.type !== "JSXReferenceIdentifier"
-			) {
-				throw new Error("Expected only JSIdentifier to be dispatched");
-			}
-
-			const binding = path.scope.getBindingFromPath(path);
-
-			// Check if this binding belongs to the scope we're tracking
-			if (binding === undefined || binding.scope !== state.scope) {
-				return {
-					bubble: true,
-					value: node,
-					state,
-				};
-			}
-
-			// Mark this binding as used
-			return {
-				value: node,
-				state: Object.assign(
-					{},
-					state,
-					{
-						usedBindings: Object.assign(
-							{},
-							state.usedBindings,
-							{[node.name]: true},
-						),
-					},
-				),
-			};
-		},
-
-		exit(path, state) {
-			for (const name in state.usedBindings) {
-				const used = state.usedBindings[name];
-				const binding = path.scope.getBinding(name);
-
-				if (used === false && binding !== undefined) {
-					path.context.addNodeDiagnostic(
-						binding.node,
-						___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.JS_UNUSED_VARIABLES(
-							binding.kind,
-							name,
-						),
-					);
-				}
-			}
-
-			return path.node;
-		},
-	});
-	const ___R$project$rome$$romejs$compiler$lint$rules$js$unusedVariables_ts$default = {
-		name: "unusedVariables",
-		enter(path) {
-			const {node, scope} = path;
-
-			if (scope.node === node) {
-				let hasBindings = false;
-				const usedBindings = {};
-
-				// Get all the non-exported bindings in this file and mark them as unused
-				for (const [name, binding] of scope.getOwnBindings()) {
-					if (
-						binding instanceof
-						___R$project$rome$$romejs$compiler$scope$bindings_ts$ArgumentsBinding
-					) {
-						continue;
-					}
-
-					if (binding.isExported) {
-						continue;
-					}
-
-					hasBindings = true;
-					usedBindings[name] = false;
-				}
-
-				if (!hasBindings) {
-					return node;
-				}
-
-				// For functions, special case parameters
-				if (
-					node.type === "JSFunctionDeclaration" ||
-					node.type === "JSFunctionExpression" ||
-					node.type === "JSObjectMethod" ||
-					node.type === "JSClassMethod" ||
-					node.type === "TSDeclareMethod" ||
-					node.type === "TSDeclareFunction" ||
-					node.type === "JSArrowFunctionExpression"
-				) {
-					let ignoreLast = true;
-					let includeRest = false;
-
-					// If there's no rest then only consider the last parameter to be unused
-					const {rest} = node.head;
-					if (rest === undefined) {
-						ignoreLast = false;
-					}
-
-					if (
-						node.type === "TSDeclareFunction" ||
-						node.type === "TSDeclareMethod"
-					) {
-						// This is an interface and has no body
-						ignoreLast = false;
-						includeRest = true;
-					} else {
-						// For functions that have a single throw statement in the body, consider all their arguments
-						// to be used as this is typically an interface definition
-						const {body} = node;
-						if (
-							body.type === "JSBlockStatement" &&
-							body.body.length === 1 &&
-							body.body[0].type === "JSThrowStatement"
-						) {
-							ignoreLast = false;
-							includeRest = true;
-						}
-					}
-
-					// Mark parameters as used
-					let params = [...node.head.params];
-					if (ignoreLast) {
-						params.pop();
-					}
-					if (includeRest && rest !== undefined) {
-						params.push(rest);
-					}
-					for (const {name} of ___R$project$rome$$romejs$js$ast$utils$getBindingIdentifiers_ts$default(
-						params,
-					)) {
-						usedBindings[name] = true;
-					}
-				}
-
-				if (
-					node.type === "JSCatchClause" &&
-					node.param &&
-					node.param.type === "JSBindingIdentifier"
-				) {
-					// Mark error param as used as they are required
-					usedBindings[node.param.name] = true;
-				}
-
-				// For a named function expression, don't consider the id to be unused
-				if (node.type === "JSFunctionExpression" && node.id !== undefined) {
-					usedBindings[node.id.name] = true;
-				}
-
-				return path.provideHook(
-					___R$$priv$project$rome$$romejs$compiler$lint$rules$js$unusedVariables_ts$provider,
-					{
-						usedBindings,
-						scope,
-					},
-				);
-			}
-
-			if (
-				node.type === "JSXReferenceIdentifier" ||
-				node.type === "JSReferenceIdentifier"
-			) {
-				return path.callHook(
-					___R$$priv$project$rome$$romejs$compiler$lint$rules$js$unusedVariables_ts$provider,
-					undefined,
-					node,
 				);
 			}
 
@@ -74733,7 +74717,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$clickEventsHaveKeyE
 			const {node} = path;
 
 			if (
-				___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(node) &&
+				node.type === "JSXElement" &&
 				___R$project$rome$$romejs$js$ast$utils$hasJSXAttribute_ts$default(
 					node,
 					"onClick",
@@ -75605,7 +75589,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$mouseEventsHaveKeyE
 		enter(path) {
 			const {node} = path;
 
-			if (___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(node)) {
+			if (node.type === "JSXElement") {
 				if (
 					___R$project$rome$$romejs$js$ast$utils$hasJSXAttribute_ts$default(
 						node,
@@ -75664,7 +75648,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noAccessKey_ts$defa
 			const {node} = path;
 
 			if (
-				___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(node) &&
+				node.type === "JSXElement" &&
 				___R$project$rome$$romejs$js$ast$utils$hasJSXAttribute_ts$default(
 					node,
 					"accessKey",
@@ -75705,7 +75689,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noAutofocus_ts$defa
 			const {node} = path;
 
 			if (
-				___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(node) &&
+				node.type === "JSXElement" &&
 				___R$project$rome$$romejs$js$ast$utils$hasJSXAttribute_ts$default(
 					node,
 					"autoFocus",
@@ -75750,12 +75734,12 @@ const ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noDistracting
 			const {node} = path;
 
 			const distractingType =
-				___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(node) &&
+				node.type === "JSXElement" &&
 				___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noDistractingElements_ts$DISTRACTING_TYPES.find((
 					name,
 				) =>
-					___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(
-						node,
+					___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+						node.name,
 						name,
 					)
 				);
@@ -75799,7 +75783,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noNoninteractiveEle
 			const {node} = path;
 
 			if (
-				___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(node) &&
+				node.type === "JSXElement" &&
 				___R$project$rome$$romejs$js$ast$utils$hasJSXAttribute_ts$default(
 					node,
 					"role",
@@ -75881,7 +75865,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noNoninter
 		enter(path) {
 			const {node} = path;
 
-			if (___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(node)) {
+			if (node.type === "JSXElement") {
 				// it's a component, we don't know how the tabIndex is handled
 				if (node.name && node.name.type === "JSXReferenceIdentifier") {
 					return node;
@@ -76108,7 +76092,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noOnChange_ts$defau
 			const {node, context} = path;
 
 			if (
-				___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(node) &&
+				node.type === "JSXElement" &&
 				___R$project$rome$$romejs$js$ast$utils$hasJSXAttribute_ts$default(
 					node,
 					"role",
@@ -76230,7 +76214,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noTargetBl
 			const {node} = path;
 
 			if (
-				___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(node) &&
+				node.type === "JSXElement" &&
 				___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noTargetBlank_ts$jsxAnchorHasBlankTarget(
 					node,
 				) &&
@@ -76275,7 +76259,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$roleHasRequiredAria
 			const {node} = path;
 
 			if (
-				___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(node) &&
+				node.type === "JSXElement" &&
 				___R$project$rome$$romejs$js$ast$utils$hasJSXAttribute_ts$default(
 					node,
 					"role",
@@ -76334,7 +76318,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$scope_ts$default = 
 			const jsxNode = (node);
 
 			if (
-				___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(node) &&
+				node.type === "JSXElement" &&
 				___R$project$rome$$romejs$js$ast$utils$hasJSXAttribute_ts$default(
 					node,
 					"scope",
@@ -76396,7 +76380,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$tabindexNo
 			const {node} = path;
 
 			if (
-				___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(node) &&
+				node.type === "JSXElement" &&
 				___R$project$rome$$romejs$js$ast$utils$hasJSXAttribute_ts$default(
 					node,
 					"tabIndex",
@@ -76561,7 +76545,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$react$jsxFragments_ts$defaul
 			const {node, context} = path;
 
 			if (
-				___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(node) &&
+				node.type === "JSXElement" &&
 				(___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
 					node.name,
 					"Fragment",
@@ -76756,7 +76740,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$jsxNoDuplicat
 		enter(path) {
 			const {context, node} = path;
 
-			if (!___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(node)) {
+			if (node.type !== "JSXElement") {
 				return node;
 			}
 
@@ -76790,7 +76774,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$react$jsxPascalCase_ts$defau
 			const {node} = path;
 
 			if (
-				___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(node) &&
+				node.type === "JSXElement" &&
 				node.name.type === "JSXReferenceIdentifier"
 			) {
 				const pascalCaseName = ___R$project$rome$$romejs$string$utils$toCamelCase_ts$toCamelCase(
@@ -76889,12 +76873,274 @@ const ___R$project$rome$$romejs$compiler$lint$rules$react$noAccessStateInSetStat
 	};
 
 
+  // project-rome/@romejs/compiler/lint/rules/react/noArrayIndexKey.ts
+function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$getKeyValue(
+		path,
+	) {
+		let keyValue = undefined;
+		let callExpression = undefined;
+
+		// handle React.cloneElement and cloneElement
+		if (path.node.type === "JSCallExpression") {
+			callExpression = path.node;
+		} else if (path.parent.type === "JSCallExpression") {
+			callExpression = path.parent;
+		}
+		if (
+			callExpression &&
+			callExpression.type === "JSCallExpression" &&
+			callExpression.arguments.length > 1
+		) {
+			const obj = callExpression.arguments[1];
+			if (obj.type === "JSObjectExpression") {
+				for (const prop of obj.properties) {
+					if (
+						prop.type === "JSObjectProperty" &&
+						prop.key.type === "JSStaticPropertyKey" &&
+						prop.key.value.type === "JSIdentifier" &&
+						prop.key.value.name === "key"
+					) {
+						if (prop.value.type === "JSReferenceIdentifier") {
+							keyValue = prop.value.name;
+						}
+					}
+				}
+			}
+		}
+		return keyValue;
+	}
+
+	function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$getReactChildrenArrayMethod(
+		path,
+	) {
+		return path.findAncestry(({node}) => {
+			if (
+				node.type === "JSExpressionStatement" &&
+				node.expression.type === "JSCallExpression"
+			) {
+				const expr = node.expression;
+				// Children
+				if (
+					expr.callee.type === "JSMemberExpression" &&
+					expr.callee.object.type === "JSReferenceIdentifier" &&
+					expr.callee.object.name === "Children" &&
+					expr.callee.property.value.type === "JSIdentifier" &&
+					(expr.callee.property.value.name === "map" ||
+					expr.callee.property.value.name === "forEach")
+				) {
+					return true;
+				}
+
+				// React.Children
+				if (
+					expr.callee.type === "JSMemberExpression" &&
+					expr.callee.object.type === "JSMemberExpression" &&
+					expr.callee.object.object.type === "JSReferenceIdentifier" &&
+					expr.callee.object.object.name === "React" &&
+					expr.callee.object.property.type === "JSStaticMemberProperty" &&
+					expr.callee.object.property.value.type === "JSIdentifier" &&
+					expr.callee.object.property.value.name === "Children" &&
+					expr.callee.property.value.type === "JSIdentifier" &&
+					(expr.callee.property.value.name === "map" ||
+					expr.callee.property.value.name === "forEach")
+				) {
+					return true;
+				}
+			}
+			return false;
+		});
+	}
+
+	function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$hasArrayMethod(
+		path,
+	) {
+		return path.findAncestry(({node}) => {
+			if (
+				node.type === "JSExpressionStatement" &&
+				node.expression.type === "JSCallExpression" &&
+				node.expression.callee.type === "JSMemberExpression" &&
+				node.expression.callee.property.type === "JSStaticMemberProperty" &&
+				node.expression.callee.property.value.type === "JSIdentifier"
+			) {
+				return /[map|forEach|filter|some|every|find|findIndex|reduce|reduceRight|]/.test(
+					node.expression.callee.property.value.name,
+				);
+			}
+			return false;
+		});
+	}
+
+	function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$hasArrayIndexKey(
+		keyValue,
+		node,
+	) {
+		if (
+			node.type === "JSExpressionStatement" &&
+			node.expression.type === "JSCallExpression" &&
+			node.expression.arguments.length > 0
+		) {
+			const lastArg = node.expression.arguments[node.expression.arguments.length -
+			1];
+			if (
+				___R$project$rome$$romejs$js$ast$utils$isFunctionNode_ts$default(
+					lastArg,
+				)
+			) {
+				node = lastArg;
+			}
+		}
+		if (
+			___R$project$rome$$romejs$js$ast$utils$isFunctionNode_ts$default(node) &&
+			node.head.params.length > 0
+		) {
+			const lastParam = node.head.params[node.head.params.length - 1];
+			if (lastParam.type === "JSBindingIdentifier") {
+				return lastParam.name === keyValue;
+			}
+		}
+
+		return false;
+	}
+	const ___R$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$default = {
+		name: "reactNoArrayIndexKey",
+		enter(path) {
+			const {node} = path;
+
+			if (
+				___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+					node,
+					"cloneElement",
+				)
+			) {
+				const memberExpressionPath = path.findAncestry((path) =>
+					path.node.type === "JSCallExpression"
+				);
+				if (memberExpressionPath) {
+					const keyValue = ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$getKeyValue(
+						memberExpressionPath,
+					);
+					const reactChildrenArrayMethod = ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$getReactChildrenArrayMethod(
+						memberExpressionPath,
+					);
+					const arrayMethod = ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$hasArrayMethod(
+						memberExpressionPath,
+					);
+
+					if (keyValue && (reactChildrenArrayMethod || arrayMethod)) {
+						if (
+							(reactChildrenArrayMethod &&
+							___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$hasArrayIndexKey(
+								keyValue,
+								reactChildrenArrayMethod.node,
+							)) ||
+							(arrayMethod &&
+							___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$hasArrayIndexKey(
+								keyValue,
+								arrayMethod.node,
+							))
+						) {
+							path.context.addNodeDiagnostic(
+								node,
+								___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.REACT_NO_ARRAY_INDEX_KEY,
+							);
+						}
+					}
+				}
+			}
+
+			if (
+				___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+					node,
+					"React.cloneElement",
+				)
+			) {
+				const keyValue = ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$getKeyValue(
+					path,
+				);
+				const reactChildrenArrayMethod = ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$getReactChildrenArrayMethod(
+					path,
+				);
+				const arrayMethod = ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$hasArrayMethod(
+					path,
+				);
+
+				if (keyValue && (reactChildrenArrayMethod || arrayMethod)) {
+					if (
+						(reactChildrenArrayMethod &&
+						___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$hasArrayIndexKey(
+							keyValue,
+							reactChildrenArrayMethod.node,
+						)) ||
+						(arrayMethod &&
+						___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$hasArrayIndexKey(
+							keyValue,
+							arrayMethod.node,
+						))
+					) {
+						path.context.addNodeDiagnostic(
+							node,
+							___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.REACT_NO_ARRAY_INDEX_KEY,
+						);
+					}
+				}
+			}
+
+			if (
+				node.type === "JSXElement" &&
+				___R$project$rome$$romejs$js$ast$utils$hasJSXAttribute_ts$default(
+					node,
+					"key",
+				)
+			) {
+				let keyValue = undefined;
+				const keyAttribute = ___R$project$rome$$romejs$js$ast$utils$getJSXAttribute_ts$default(
+					node,
+					"key",
+				);
+				if (keyAttribute) {
+					if (
+						keyAttribute.value &&
+						keyAttribute.value.type === "JSXExpressionContainer" &&
+						keyAttribute.value.expression.type === "JSReferenceIdentifier" &&
+						keyAttribute.value.expression.name
+					) {
+						keyValue = keyAttribute.value.expression.name;
+					}
+				}
+				const functionExpression = path.findAncestry((path) => {
+					return ___R$project$rome$$romejs$js$ast$utils$isFunctionNode_ts$default(
+						path.node,
+					);
+				});
+
+				if (keyValue && functionExpression) {
+					if (
+						___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$hasArrayMethod(
+							functionExpression,
+						) &&
+						___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$hasArrayIndexKey(
+							keyValue,
+							functionExpression.node,
+						)
+					) {
+						path.context.addNodeDiagnostic(
+							node,
+							___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.REACT_NO_ARRAY_INDEX_KEY,
+						);
+					}
+				}
+			}
+			return node;
+		},
+	};
+
+
   // project-rome/@romejs/compiler/lint/rules/react/noChildrenProp.ts
 function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noChildrenProp_ts$getJSXChildrenProp(
 		node,
 	) {
 		return (
-			___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(node) &&
+			node.type === "JSXElement" &&
 			___R$project$rome$$romejs$js$ast$utils$getJSXAttribute_ts$default(
 				node,
 				"children",
@@ -76953,7 +77199,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDanger_ts$g
 		node,
 	) {
 		return (
-			___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(node) &&
+			node.type === "JSXElement" &&
 			___R$project$rome$$romejs$js$ast$utils$getJSXAttribute_ts$default(
 				node,
 				"dangerouslySetInnerHTML",
@@ -77229,6 +77475,133 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDidUpdateSe
 	};
 
 
+  // project-rome/@romejs/compiler/lint/rules/react/noDirectMutationState.ts
+// Checks if the current class extends React.Component
+	function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDirectMutationState_ts$isReactComponent(
+		path,
+	) {
+		const ancestor = path.findAncestry(({node}) =>
+		// Check if it extends React.Component or Component, and React.PureCompnent and PureComponent
+			node.type === "JSClassHead" &&
+			node.superClass !== undefined &&
+			(___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+				node.superClass,
+				"React.Component",
+			) ||
+			___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+				node.superClass,
+				"Component",
+			) ||
+			___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+				node.superClass,
+				"React.PureComponent",
+			) ||
+			___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+				node.superClass,
+				"PureComponent",
+			))
+		);
+
+		return ancestor !== undefined;
+	}
+
+	// Check if this.state mutation was in the constructor
+	function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDirectMutationState_ts$isMutationInConstructor(
+		path,
+	) {
+		// Find the first instance of a constructor or a call method
+		const ancestor = path.findAncestry(({node}) =>
+			(node.type === "JSClassMethod" &&
+			node.key.type === "JSStaticPropertyKey" &&
+			node.key.value.type === "JSIdentifier" &&
+			node.key.value.name === "constructor") ||
+			node.type === "JSCallExpression"
+		);
+
+		// If undefined, or a call expression, then its not in a constructor
+		return ancestor !== undefined && ancestor.node.type !== "JSCallExpression";
+	}
+
+	// Checks if the node contains this.state that is mutated (binary and unary expr)
+	function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDirectMutationState_ts$isStateMutated(
+		node,
+	) {
+		// Check if node is a binary expression where this.state is the left side
+		if (
+			node.type === "JSAssignmentExpression" &&
+			(___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+				node.left,
+				"this.state",
+			) ||
+			___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+				node.left,
+				"this.state.**",
+			))
+		) {
+			return true;
+		}
+
+		// Check if the node is an update expression (++ and --)
+		if (
+			node.type === "JSUpdateExpression" &&
+			(___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+				node.argument,
+				"this.state",
+			) ||
+			___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+				node.argument,
+				"this.state.**",
+			))
+		) {
+			return true;
+		}
+
+		// Check if the delete operator is used
+		if (
+			node.type === "JSUnaryExpression" &&
+			node.operator === "delete" &&
+			(___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+				node.argument,
+				"this.state",
+			) ||
+			___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+				node.argument,
+				"this.state.**",
+			))
+		) {
+			return true;
+		}
+
+		return false;
+	}
+	const ___R$project$rome$$romejs$compiler$lint$rules$react$noDirectMutationState_ts$default = {
+		name: "reactNoDirectMutationState",
+		enter(path) {
+			const {node} = path;
+
+			// If the state is mutated anywhere except in a constructor, show message
+			if (
+				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDirectMutationState_ts$isStateMutated(
+					node,
+				) &&
+				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDirectMutationState_ts$isReactComponent(
+					path,
+				) &&
+				!___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDirectMutationState_ts$isMutationInConstructor(
+					path,
+				)
+			) {
+				path.context.addNodeDiagnostic(
+					node,
+					___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.REACT_NO_DIRECT_MUTATION_STATE,
+				);
+			}
+
+			return node;
+		},
+	};
+
+
   // project-rome/@romejs/compiler/lint/rules/react/noFindDOMNode.ts
 function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noFindDOMNode_ts$hasFindMemberProperty(
 		node,
@@ -77312,6 +77685,32 @@ const ___R$project$rome$$romejs$compiler$lint$rules$react$noRedundantShouldCompo
 	};
 
 
+  // project-rome/@romejs/compiler/lint/rules/react/noRenderReturnValue.ts
+const ___R$project$rome$$romejs$compiler$lint$rules$react$noRenderReturnValue_ts$default = {
+		name: "reactNoRenderReturnValue",
+
+		enter(path) {
+			const {node, parent} = path;
+
+			if (
+				node.type === "JSCallExpression" &&
+				___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+					node.callee,
+					"ReactDOM.render",
+				) &&
+				parent.type !== "JSExpressionStatement"
+			) {
+				path.context.addNodeDiagnostic(
+					node,
+					___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.REACT_NO_RENDER_RETURN_VALUE,
+				);
+			}
+
+			return node;
+		},
+	};
+
+
   // project-rome/@romejs/compiler/lint/rules/react/noStringRefs.ts
 function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noStringRefs_ts$inClassComponent(
 		path,
@@ -77374,7 +77773,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noStringRefs_
 			}
 
 			if (
-				___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(node) &&
+				node.type === "JSXElement" &&
 				___R$project$rome$$romejs$js$ast$utils$hasJSXAttribute_ts$default(
 					node,
 					"ref",
@@ -77403,6 +77802,64 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noStringRefs_
 							"string literals in ref attributes",
 						),
 					);
+				}
+			}
+
+			return node;
+		},
+	};
+
+
+  // project-rome/@romejs/compiler/lint/rules/react/noThisInSFC.ts
+const ___R$project$rome$$romejs$compiler$lint$rules$react$noThisInSFC_ts$default = {
+		name: "reactNoThisInSFC",
+		enter(path) {
+			const {node} = path;
+
+			if (node.type === "JSThisExpression") {
+				const hasJSX = path.findAncestry((path) => {
+					if (path.node.type === "JSXElement") {
+						return true;
+					}
+
+					if (path.node.type === "JSBlockStatement") {
+						if (
+							path.node.body.some((statement) =>
+								statement.type === "JSReturnStatement" &&
+								statement.argument &&
+								statement.argument.type === "JSXElement"
+							)
+						) {
+							return true;
+						}
+					}
+
+					if (
+						path.node.type === "JSVariableDeclarator" &&
+						path.node.init &&
+						path.node.init.type === "JSArrowFunctionExpression" &&
+						path.node.init.body.type === "JSXElement"
+					) {
+						return true;
+					}
+					return false;
+				});
+
+				if (hasJSX) {
+					const isFunction = hasJSX.findAncestry((path) => {
+						return ___R$project$rome$$romejs$js$ast$utils$isFunctionNode_ts$default(
+							path.node,
+						);
+					});
+
+					const declaration = hasJSX.node.type === "JSVariableDeclarator";
+
+					if (isFunction || declaration) {
+						path.context.addNodeDiagnostic(
+							node,
+							___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.REACT_NO_THIS_IN_SFC,
+						);
+					}
 				}
 			}
 
@@ -77481,7 +77938,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noUselessFrag
 	) {
 		return (
 			node.type === "JSXFragment" ||
-			(___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(node) &&
+			(node.type === "JSXElement" &&
 			(___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
 				node.name,
 				"Fragment",
@@ -77515,10 +77972,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noUselessFrag
 		enter(path) {
 			const {node, context} = path;
 
-			if (
-				node.type !== "JSXFragment" &&
-				!___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(node)
-			) {
+			if (node.type !== "JSXFragment" && node.type !== "JSXElement") {
 				return node;
 			}
 
@@ -77531,7 +77985,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noUselessFrag
 				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noUselessFragment_ts$isFragment(
 					node,
 				) &&
-				!(___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(node) &&
+				!(node.type === "JSXElement" &&
 				___R$project$rome$$romejs$js$ast$utils$hasJSXAttribute_ts$default(
 					node,
 					"key",
@@ -77620,6 +78074,91 @@ const ___R$project$rome$$romejs$compiler$lint$rules$react$reactInJsxScope_ts$def
 				}
 			}
 
+			return node;
+		},
+	};
+
+
+  // project-rome/@romejs/compiler/lint/rules/react/requireRenderReturn.ts
+function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$requireRenderReturn_ts$isRenderProperty(
+		node,
+	) {
+		return (
+			node.type === "JSStaticPropertyKey" &&
+			node.value.type === "JSIdentifier" &&
+			node.value.name === "render"
+		);
+	}
+
+	function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$requireRenderReturn_ts$getMethodBody(
+		node,
+	) {
+		if (node.type === "JSClassMethod") {
+			return node.body;
+		}
+
+		if (
+			node.type === "JSClassProperty" &&
+			(node.value == null ? undefined : node.value.type) ===
+			"JSArrowFunctionExpression"
+		) {
+			return node.value.body;
+		}
+		return undefined;
+	}
+
+	const ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$requireRenderReturn_ts$REACT_COMPONENT_PATTERNS = [
+		"React.Component",
+		"Component",
+		"React.PureComponent",
+		"PureComponent",
+	];
+
+	function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$requireRenderReturn_ts$isExtendingReactComponent(
+		node,
+	) {
+		return ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$requireRenderReturn_ts$REACT_COMPONENT_PATTERNS.some((
+			pattern,
+		) =>
+			___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+				node.superClass,
+				pattern,
+			)
+		);
+	}
+	const ___R$project$rome$$romejs$compiler$lint$rules$react$requireRenderReturn_ts$default = {
+		name: "requireRenderReturn",
+		enter(path) {
+			const {node} = path;
+			if (
+				node.type === "JSClassHead" &&
+				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$requireRenderReturn_ts$isExtendingReactComponent(
+					node,
+				)
+			) {
+				const renderMember = node.body.find(({key}) =>
+					___R$$priv$project$rome$$romejs$compiler$lint$rules$react$requireRenderReturn_ts$isRenderProperty(
+						key,
+					)
+				);
+				const renderBody =
+					renderMember &&
+					___R$$priv$project$rome$$romejs$compiler$lint$rules$react$requireRenderReturn_ts$getMethodBody(
+						renderMember,
+					);
+
+				if (
+					renderBody &&
+					!___R$project$rome$$romejs$js$ast$utils$getCompletionRecords_ts$default(
+						renderBody,
+					).some(({type}) => type === "COMPLETION")
+				) {
+					path.context.addNodeDiagnostic(
+						renderBody,
+						___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.REACT_REQUIRE_RENDER_RETURN,
+					);
+				}
+			}
 			return node;
 		},
 	};
@@ -77855,6 +78394,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$index_ts$lintTransforms = [
 		___R$project$rome$$romejs$compiler$lint$rules$js$noShorthandArrayType_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$js$noTemplateCurlyInString_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$js$noUnsafeFinally_ts$default,
+		___R$project$rome$$romejs$compiler$lint$rules$js$noUnusedVariables_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$js$noVar_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$js$preferBlockStatements_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$js$preferFunctionDeclarations_ts$default,
@@ -77866,7 +78406,6 @@ const ___R$project$rome$$romejs$compiler$lint$rules$index_ts$lintTransforms = [
 		___R$project$rome$$romejs$compiler$lint$rules$js$sparseArray_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$js$undeclaredVariables_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$js$unsafeNegation_ts$default,
-		___R$project$rome$$romejs$compiler$lint$rules$js$unusedVariables_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$altText_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$anchorHasContent_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$anchorIsValid_ts$default,
@@ -77898,18 +78437,23 @@ const ___R$project$rome$$romejs$compiler$lint$rules$index_ts$lintTransforms = [
 		___R$project$rome$$romejs$compiler$lint$rules$react$jsxNoDuplicateProps_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$jsxPascalCase_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$noAccessStateInSetState_ts$default,
+		___R$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$noChildrenProp_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$noDanger_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$noDangerWithChildren_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$noDidMountSetState_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$noDidUpdateSetState_ts$default,
+		___R$project$rome$$romejs$compiler$lint$rules$react$noDirectMutationState_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$noFindDOMNode_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$noRedundantShouldComponentUpdate_ts$default,
+		___R$project$rome$$romejs$compiler$lint$rules$react$noRenderReturnValue_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$noStringRefs_ts$default,
+		___R$project$rome$$romejs$compiler$lint$rules$react$noThisInSFC_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$noUnsafe_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$noUselessFragment_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$noWillUpdateSetState_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$reactInJsxScope_ts$default,
+		___R$project$rome$$romejs$compiler$lint$rules$react$requireRenderReturn_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$stylePropObject_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$voidDomElementsNoChildren_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$ts$noExplicitAny_ts$default,
@@ -78983,11 +79527,7 @@ const ___R$project$rome$$romejs$compiler$api$analyzeDependencies$visitors$cjs_ts
 				if (isModuleExports) {
 					const {right} = node;
 
-					if (
-						___R$project$rome$$romejs$ast$js$objects$JSObjectExpression_ts$jsObjectExpression.is(
-							right,
-						)
-					) {
+					if (right.type === "JSObjectExpression") {
 						context.record(
 							new ___R$project$rome$$romejs$compiler$api$analyzeDependencies$records_ts$ExportRecord({
 								type: "local",
@@ -79443,7 +79983,7 @@ const ___R$$priv$project$rome$$romejs$compiler$api$analyzeDependencies$index_ts$
 		const topLevelLocalBindings = {};
 
 		// Get all top level bindings
-		for (const [name, binding] of context.getRootScope().enterEvaluate(ast).getOwnBindings()) {
+		for (const [name, binding] of context.rootScope.enterEvaluate(ast).getOwnBindings()) {
 			topLevelLocalBindings[name] = binding.node.loc;
 		}
 
@@ -80323,12 +80863,10 @@ function ___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(
 	) {
 		return (
 			node.type === "JSXElement" &&
-			(name
-				? ___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
-						node.name,
-						name,
-					)
-				: true)
+			___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+				node.name,
+				name,
+			)
 		);
 	}
 
@@ -82838,7 +83376,6 @@ const ___R$$priv$project$rome$$romejs$v8$CoverageCollector_ts$inspector = requir
 				});
 			}
 
-			this.clear();
 			this.init();
 		}
 
@@ -101520,6 +102057,28 @@ const ___R$project$rome$$romejs$diagnostics$descriptions$projectConfig_ts$projec
 
   // project-rome/@romejs/diagnostics/descriptions/lint.ts
 const ___R$project$rome$$romejs$diagnostics$descriptions$lint_ts$lint = ___R$project$rome$$romejs$diagnostics$descriptions$index_ts$createDiagnosticsCategory({
+		REACT_NO_ARRAY_INDEX_KEY: {
+			category: "lint/react/noArrayIndexKey",
+			message: "Avoid using array index as key property in an element.",
+			advice: [
+				{
+					type: "log",
+					category: "info",
+					text: 'See <hyperlink target="https://reactjs.org/docs/lists-and-keys.html#keys" /> for more information.',
+				},
+			],
+		},
+		REACT_NO_THIS_IN_SFC: {
+			category: "lint/react/noThisInSFC",
+			message: "Avoid using <emphasis>this</emphasis> in stateless functional components.",
+			advice: [
+				{
+					type: "log",
+					category: "info",
+					text: "The <emphasis>this</emphasis> keyword has no binding in functional components. Use hooks instead.",
+				},
+			],
+		},
 		JSX_A11Y_NO_NONINTERACTIVE_ELEMENT_TO_INTERACTIVE_ROLE: (element) => ({
 			category: "lint/jsx-a11y/noNoninteractiveElementToInteractiveRole",
 			message: "The HTML element <emphasis>" +
@@ -101977,6 +102536,17 @@ const ___R$project$rome$$romejs$diagnostics$descriptions$lint_ts$lint = ___R$pro
 				},
 			],
 		},
+		REACT_NO_DIRECT_MUTATION_STATE: {
+			category: "lint/react/noDirectMutationState",
+			message: "Avoid mutating <emphasis>this.state</emphasis> directly.",
+			advice: [
+				{
+					type: "log",
+					category: "info",
+					text: "Calling <emphasis>setState()</emphasis> after mutating <emphasis>this.state</emphasis> directly may replace the mutation you made. The only place you may set <emphasis>this.state</emphasis> directly is in a constructor of a react class component.",
+				},
+			],
+		},
 		REACT_NO_FIND_DOM_NODE: {
 			category: "lint/react/noFindDOMNode",
 			message: "Avoid using the <emphasis>findDOMNode</emphasis> function.",
@@ -102009,6 +102579,14 @@ const ___R$project$rome$$romejs$diagnostics$descriptions$lint_ts$lint = ___R$pro
 					text: "React will ignore non-object style props, even valid JSON strings.",
 				},
 			],
+		},
+		REACT_REQUIRE_RENDER_RETURN: {
+			category: "lint/react/requireRenderReturn",
+			message: "The <emphasis>render</emphasis> method on a component must return content.",
+		},
+		REACT_NO_RENDER_RETURN_VALUE: {
+			category: "lint/react/noRenderReturnValue",
+			message: "Do not depend on the return value from <emphasis>ReactDOM.render()</emphasis>.",
 		},
 		REACT_VOID_DOM_ELEMENTS_NO_CHILDREN: (element, properties) => ({
 			category: "lint/react/voidDomElementsNoChildren",
@@ -102083,8 +102661,8 @@ const ___R$project$rome$$romejs$diagnostics$descriptions$lint_ts$lint = ___R$pro
 			category: "lint/js/unsafeNegation",
 			message: "The <emphasis>negation operator is used unsafely</emphasis> on the left side of this binary expression.",
 		},
-		JS_UNUSED_VARIABLES: (kind, name) => ({
-			category: "lint/js/unusedVariables",
+		JS_NO_UNUSED_VARIABLES: (kind, name) => ({
+			category: "lint/js/noUnusedVariables",
 			message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`The ${kind} variable <emphasis>${name}</emphasis> is unused.`,
 			advice: [
 				{
@@ -103763,7 +104341,7 @@ const ___R$project$rome$$romejs$diagnostics$categories_ts = {};
 const ___R$project$rome$ackage_json$default = {
 		"name": "rome-root",
 		"license": "MIT",
-		"version": "0.0.25",
+		"version": "0.0.26",
 		"engines": {"node": ">=12.0.0"},
 		"//": "Look! No deps!",
 		"dependencies": {},
@@ -103946,7 +104524,7 @@ const ___R$project$rome$$romejs$core$client$commands$init_ts$default = ___R$proj
 		description: "create a project config",
 		usage: "",
 		examples: [],
-		defineFlags(consumer) {
+		defineFlags() {
 			return {};
 		},
 		async callback(req) {
@@ -104028,7 +104606,7 @@ const ___R$project$rome$$romejs$core$client$commands$develop_ts$default = ___R$p
 
 			await req.client.query(
 				Object.assign({}, req.query, {terminateWhenIdle: true}),
-				"master",
+				"server",
 			);
 
 			return true;
@@ -104054,7 +104632,7 @@ const ___R$project$rome$$romejs$core$client$commands$stop_ts$default = ___R$proj
 					{
 						commandName: "stop",
 					},
-					"master",
+					"server",
 				);
 				if (stop.type === "ERROR" && stop.fatal) {
 					reporter.success("Stopped server.");
@@ -104194,7 +104772,7 @@ const ___R$project$rome$$romejs$core$client$commands$run_ts$default = ___R$proje
 			return {};
 		},
 		async callback(req) {
-			const bridge = await req.client.findOrStartMaster();
+			const bridge = await req.client.findOrStartServer();
 			if (bridge === undefined) {
 				return false;
 			}
@@ -104212,7 +104790,7 @@ const ___R$project$rome$$romejs$core$client$commands$run_ts$default = ___R$proje
 					commandName: "run",
 					args: req.query.args,
 				},
-				"master",
+				"server",
 			);
 
 			if (res.type !== "SUCCESS") {
@@ -104303,7 +104881,7 @@ const ___R$project$rome$$romejs$core$client$commands$status_ts$default = ___R$pr
 					{
 						commandName: "status",
 					},
-					"master",
+					"server",
 				);
 				if (status.type === "SUCCESS") {
 					reporter.inspect(status.data);
@@ -104339,7 +104917,7 @@ const ___R$project$rome$$romejs$core$client$commands$lsp_ts$default = ___R$proje
 			const stdin = req.client.reporter.getStdin();
 			req.client.reporter.teardown();
 
-			const bridge = await req.client.findOrStartMaster();
+			const bridge = await req.client.findOrStartServer();
 			if (bridge === undefined) {
 				return false;
 			}
@@ -104359,7 +104937,7 @@ const ___R$project$rome$$romejs$core$client$commands$lsp_ts$default = ___R$proje
 				{
 					commandName: "lsp",
 				},
-				"master",
+				"server",
 			);
 
 			return true;
@@ -104411,13 +104989,13 @@ const ___R$project$rome$$romejs$core$client$commands$lsp_ts$default = ___R$proje
 	);
 
 
-  // project-rome/@romejs/core/master/MasterRequest.ts
-const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = require(
+  // project-rome/@romejs/core/server/ServerRequest.ts
+const ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$crypto = require(
 		"crypto",
 	);
 
 
-	let ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$requestIdCounter = 0;
+	let ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$requestIdCounter = 0;
 
 
 
@@ -104425,7 +105003,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 
 
 
-	const ___R$project$rome$$romejs$core$master$MasterRequest_ts$EMPTY_SUCCESS_RESPONSE = {
+	const ___R$project$rome$$romejs$core$server$ServerRequest_ts$EMPTY_SUCCESS_RESPONSE = {
 		type: "SUCCESS",
 		hasData: false,
 		data: undefined,
@@ -104438,7 +105016,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 
 
 
-	class ___R$project$rome$$romejs$core$master$MasterRequest_ts$MasterRequestInvalid
+	class ___R$project$rome$$romejs$core$server$ServerRequest_ts$ServerRequestInvalid
 		extends ___R$project$rome$$romejs$diagnostics$errors_ts$DiagnosticsError {
 		constructor(message, diagnostics, showHelp) {
 			super(message, diagnostics);
@@ -104446,44 +105024,44 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 		}
 	}
 
-	function ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$hash(
+	function ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$hash(
 		val,
 	) {
 		return val === undefined || Object.keys(val).length === 0
 			? "none"
-			: ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto.createHash(
+			: ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$crypto.createHash(
 					"sha256",
 				).update(JSON.stringify(val)).digest("hex");
 	}
 
-	class ___R$project$rome$$romejs$core$master$MasterRequest_ts$MasterRequestCancelled
+	class ___R$project$rome$$romejs$core$server$ServerRequest_ts$ServerRequestCancelled
 		extends Error {
 		constructor() {
 			super(
-				"MasterRequest has been cancelled. This error is meant to be seen by Master",
+				"ServerRequest has been cancelled. This error is meant to be seen by Server",
 			);
 		}
 	}
 
-	class ___R$project$rome$$romejs$core$master$MasterRequest_ts$default {
+	class ___R$project$rome$$romejs$core$server$ServerRequest_ts$default {
 		constructor(opts) {
 			this.query = opts.query;
-			this.master = opts.master;
+			this.server = opts.server;
 			this.bridge = opts.client.bridge;
 			this.reporter = opts.client.reporter;
 			this.cancelled = false;
 			this.toredown = false;
 			this.markerEvent = new ___R$project$rome$$romejs$events$Event_ts$default({
-				name: "MasterRequest.marker",
-				onError: this.master.onFatalErrorBound,
+				name: "ServerRequest.marker",
+				onError: this.server.onFatalErrorBound,
 			});
 			this.endEvent = new ___R$project$rome$$romejs$events$Event_ts$default({
-				name: "MasterRequest.teardown",
-				onError: this.master.onFatalErrorBound,
+				name: "ServerRequest.teardown",
+				onError: this.server.onFatalErrorBound,
 				serial: true,
 			});
 			this.client = opts.client;
-			this.id = ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$requestIdCounter++;
+			this.id = ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$requestIdCounter++;
 			this.markers = [];
 			this.start = Date.now();
 			this.normalizedCommandFlags = {
@@ -104500,12 +105078,12 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 				});
 			}
 
-			await this.master.handleRequestStart(this);
+			await this.server.handleRequestStart(this);
 		}
 
 		checkCancelled() {
 			if (this.cancelled) {
-				throw new ___R$project$rome$$romejs$core$master$MasterRequest_ts$MasterRequestCancelled();
+				throw new ___R$project$rome$$romejs$core$server$ServerRequest_ts$ServerRequestCancelled();
 			}
 		}
 
@@ -104540,7 +105118,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 					if (res.type === "SUCCESS") {
 						res = Object.assign(
 							{},
-							___R$project$rome$$romejs$core$master$MasterRequest_ts$EMPTY_SUCCESS_RESPONSE,
+							___R$project$rome$$romejs$core$server$ServerRequest_ts$EMPTY_SUCCESS_RESPONSE,
 							{hasData: res.data !== undefined},
 						);
 					} else if (res.type === "DIAGNOSTICS") {
@@ -104566,7 +105144,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 
 			this.reporter.teardown();
 			this.endEvent.send(res);
-			this.master.handleRequestEnd(this);
+			this.server.handleRequestEnd(this);
 			return res;
 		}
 
@@ -104576,20 +105154,20 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 
 		async assertClientCwdProject() {
 			const location = this.getDiagnosticPointerForClientCwd();
-			return this.master.projectManager.assertProject(
+			return this.server.projectManager.assertProject(
 				this.client.flags.cwd,
 				location,
 			);
 		}
 
 		async getVCSClient() {
-			return this.master.projectManager.getVCSClient(
+			return this.server.projectManager.getVCSClient(
 				await this.assertClientCwdProject(),
 			);
 		}
 
 		async maybeGetVCSClient() {
-			return this.master.projectManager.maybeGetVCSClient(
+			return this.server.projectManager.maybeGetVCSClient(
 				await this.assertClientCwdProject(),
 			);
 		}
@@ -104602,7 +105180,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 
 		createDiagnosticsPrinter(processor = this.createDiagnosticsProcessor()) {
 			processor.unshiftOrigin({
-				category: "master",
+				category: "server",
 				message: this.query.commandName + " command was dispatched",
 			});
 
@@ -104611,7 +105189,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 				reporter: this.reporter,
 				cwd: this.client.flags.cwd,
 				flags: this.getDiagnosticsPrinterFlags(),
-				readFile: this.master.readDiagnosticsPrinterFile.bind(this.master),
+				readFile: this.server.readDiagnosticsPrinterFile.bind(this.server),
 			});
 		}
 
@@ -104694,7 +105272,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 				location,
 			};
 
-			throw new ___R$project$rome$$romejs$core$master$MasterRequest_ts$MasterRequestInvalid(
+			throw new ___R$project$rome$$romejs$core$server$ServerRequest_ts$ServerRequestInvalid(
 				description.message.value,
 				[diag],
 				showHelp,
@@ -104815,7 +105393,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 					if (tryAlternateArg !== undefined) {
 						const alternateSource = tryAlternateArg(source);
 						if (alternateSource !== undefined) {
-							const resolvedAlternate = await this.master.resolver.resolveEntry({
+							const resolvedAlternate = await this.server.resolver.resolveEntry({
 								origin: cwd,
 								source: alternateSource,
 								requestedType: "folder",
@@ -104827,7 +105405,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 					}
 
 					if (resolved === undefined) {
-						resolved = await this.master.resolver.resolveEntryAssert(
+						resolved = await this.server.resolver.resolveEntryAssert(
 							{
 								origin: cwd,
 								source,
@@ -104839,7 +105417,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 						);
 					}
 
-					const project = this.master.projectManager.assertProjectExisting(
+					const project = this.server.projectManager.assertProjectExisting(
 						resolved.path,
 					);
 					projects.add(project);
@@ -104867,36 +105445,38 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 				opts.tryAlternateArg,
 			);
 
-			const initial = await this.getFilesFromArgs(opts);
-			await callback(initial, true);
-
-			let pendingEvictPaths = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet();
-			let pendingEvictProjects = new Set();
 			let timeout;
-			let changesWhileRunningCallback = false;
 			let runningCallback = false;
+			let unsubscribed = false;
 
-			async function flush() {
-				if (pendingEvictPaths.size === 0) {
+			let pendingResult = {
+				paths: new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet(),
+				projects: new Set(),
+			};
+
+			async function flush(initial) {
+				if (unsubscribed) {
+					return;
+				}
+
+				if (!initial && pendingResult.paths.size === 0) {
 					return;
 				}
 
 				timeout = undefined;
 
-				const result = {
-					paths: pendingEvictPaths,
-					projects: pendingEvictProjects,
+				const result = pendingResult;
+				pendingResult = {
+					paths: new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet(),
+					projects: new Set(),
 				};
-				pendingEvictPaths = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet();
-				pendingEvictProjects = new Set();
 
 				runningCallback = true;
-				await callback(result, false);
+				await callback(result, initial);
 				runningCallback = false;
 
-				if (changesWhileRunningCallback) {
-					changesWhileRunningCallback = false;
-					flush();
+				if (pendingResult.paths.size > 0) {
+					await flush(false);
 				}
 			}
 
@@ -104912,42 +105492,48 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 					return;
 				}
 
-				const project = this.master.projectManager.findProjectExisting(path);
+				const project = this.server.projectManager.findProjectExisting(path);
 				if (project !== undefined) {
-					pendingEvictProjects.add(project);
+					pendingResult.projects.add(project);
 				}
 
-				pendingEvictPaths.add(path);
+				pendingResult.paths.add(path);
 
 				// Buffer up evicted paths
-				if (runningCallback) {
-					changesWhileRunningCallback = true;
-				} else if (timeout === undefined) {
-					timeout = setTimeout(flush, 100);
+				if (!runningCallback && timeout === undefined) {
+					timeout = setTimeout(() => flush(false), 100);
 				}
 			};
 
-			// Subscribe to evictions and file changes. This can cause double emits but we dedupe them with AbsoluteFilePathSet. An updated buffer dispatches a fileChangeEvent but NOT an evictEvent. An evictEvent is dispatched for all files in a project when the project config is changed but does NOT dispatch evictEvent.
-			const evictSubscription = this.master.fileAllocator.evictEvent.subscribe(
-				onChange,
-			);
-			const fileChangeEvent = this.master.fileChangeEvent.subscribe(onChange);
+			const refreshFileEvent = this.server.refreshFileEvent.subscribe(onChange);
+
+			const sub = ___R$project$rome$$romejs$events$utils_ts$mergeEventSubscriptions([
+				refreshFileEvent,
+				{
+					unsubscribe() {
+						unsubscribed = true;
+						if (timeout !== undefined) {
+							clearTimeout(timeout);
+						}
+					},
+				},
+			]);
 
 			this.endEvent.subscribe(() => {
-				evictSubscription.unsubscribe();
-				fileChangeEvent.unsubscribe();
+				sub.unsubscribe();
 			});
 
-			return ___R$project$rome$$romejs$events$utils_ts$mergeEventSubscriptions([
-				evictSubscription,
-				fileChangeEvent,
-			]);
+			// Flush initial
+			pendingResult = await this.getFilesFromArgs(opts);
+			await flush(true);
+
+			return sub;
 		}
 
 		async getFilesFromArgs(opts = {}) {
 			this.checkCancelled();
 
-			const {master} = this;
+			const {server} = this;
 			const {configCategory, ignoreProjectIgnore} = opts;
 			const {projects, resolvedArgs} = await this.resolveFilesFromArgs(
 				opts.args,
@@ -104968,7 +105554,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 			// Match files
 			const paths = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet();
 			for (const arg of resolvedArgs) {
-				const matches = master.memoryFs.glob(arg.path, extendedGlobOpts);
+				const matches = server.memoryFs.glob(arg.path, extendedGlobOpts);
 
 				if (matches.size === 0) {
 					if (!opts.ignoreArgumentMisses) {
@@ -105013,7 +105599,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 								truncate: true,
 							});
 
-							const ignoreSource = master.projectManager.findProjectConfigConsumer(
+							const ignoreSource = server.projectManager.findProjectConfigConsumer(
 								project,
 								(consumer) =>
 									consumer.has(configCategory) &&
@@ -105053,7 +105639,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 				}
 
 				throw new ___R$project$rome$$romejs$diagnostics$errors_ts$DiagnosticsError(
-					"MasterRequest.getFilesFromArgs: Some arguments did not resolve to any files",
+					"ServerRequest.getFilesFromArgs: Some arguments did not resolve to any files",
 					diagnostics,
 				);
 			}
@@ -105062,7 +105648,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 		}
 
 		normalizeCompileResult(res) {
-			const {projectManager} = this.master;
+			const {projectManager} = this.server;
 
 			// Turn all the cacheDependencies entries from 'absolute paths to UIDs
 			return Object.assign(
@@ -105081,14 +105667,14 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 		}
 
 		startMarker(opts) {
-			this.master.logger.info("[MasterRequest] Started marker", opts.label);
+			this.server.logger.info("[ServerRequest] Started marker", opts.label);
 			return Object.assign({}, opts, {start: Date.now()});
 		}
 
 		endMarker(startMarker) {
 			const endMarker = Object.assign({}, startMarker, {end: Date.now()});
-			this.master.logger.info(
-				"[MasterRequest] Finished marker",
+			this.server.logger.info(
+				"[ServerRequest] Finished marker",
 				startMarker.label,
 			);
 			this.markerEvent.send(endMarker);
@@ -105096,11 +105682,11 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 		}
 
 		async wrapRequestDiagnostic(method, path, factory) {
-			const {master} = this;
-			const owner = await master.fileAllocator.getOrAssignOwner(path);
-			const startMtime = master.memoryFs.maybeGetMtime(path);
-			const lock = await master.fileLocker.getLock(path.join());
-			const ref = master.projectManager.getTransportFileReference(path);
+			const {server} = this;
+			const owner = await server.fileAllocator.getOrAssignOwner(path);
+			const startMtime = server.memoryFs.maybeGetMtime(path);
+			const lock = await server.fileLocker.getLock(path.join());
+			const ref = server.projectManager.getTransportFileReference(path);
 
 			const marker = this.startMarker({
 				label: method + ": " + ref.relative,
@@ -105156,7 +105742,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 			} finally {
 				lock.release();
 
-				const endMtime = this.master.memoryFs.maybeGetMtime(path);
+				const endMtime = this.server.memoryFs.maybeGetMtime(path);
 				if (endMtime !== startMtime) {
 					return this.wrapRequestDiagnostic(method, path, factory);
 				}
@@ -105169,9 +105755,12 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 			await this.wrapRequestDiagnostic(
 				"updateBuffer",
 				path,
-				(bridge, file) => bridge.updateBuffer.call({file, content}),
+				async (bridge, file) => {
+					await bridge.updateBuffer.call({file, content});
+					this.server.memoryFs.addBuffer(path, content);
+					this.server.refreshFileEvent.send(path);
+				},
 			);
-			this.master.fileChangeEvent.send(path);
 		}
 
 		async requestWorkerClearBuffer(path) {
@@ -105180,9 +105769,12 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 			await this.wrapRequestDiagnostic(
 				"updateBuffer",
 				path,
-				(bridge, file) => bridge.clearBuffer.call({file}),
+				async (bridge, file) => {
+					await bridge.clearBuffer.call({file});
+					this.server.memoryFs.clearBuffer(path);
+					this.server.refreshFileEvent.send(path);
+				},
 			);
-			await this.master.fileAllocator.evict(path);
 		}
 
 		async requestWorkerParse(path, opts) {
@@ -105210,10 +105802,10 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 		async requestWorkerLint(path, optionsWithoutModSigs) {
 			this.checkCancelled();
 
-			const {cache} = this.master;
+			const {cache} = this.server;
 			const cacheEntry = await cache.get(path);
 
-			const cacheKey = ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$hash(
+			const cacheKey = ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$hash(
 				optionsWithoutModSigs,
 			);
 			const cached = cacheEntry.lint[cacheKey];
@@ -105260,13 +105852,13 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 		async requestWorkerCompile(path, stage, options, parseOptions) {
 			this.checkCancelled();
 
-			const {cache} = this.master;
+			const {cache} = this.server;
 
 			// Create a cache key comprised of the stage and hash of the options
 			const cacheKey =
 				stage +
 				":" +
-				___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$hash(
+				___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$hash(
 					options,
 				);
 
@@ -105313,7 +105905,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 		async requestWorkerAnalyzeDependencies(path, parseOptions) {
 			this.checkCancelled();
 
-			const {cache} = this.master;
+			const {cache} = this.server;
 
 			const cacheEntry = await cache.get(path);
 			if (cacheEntry.analyzeDependencies !== undefined) {
@@ -105338,7 +105930,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 		async requestWorkerModuleSignature(path, parseOptions) {
 			this.checkCancelled();
 
-			const {cache} = this.master;
+			const {cache} = this.server;
 
 			const cacheEntry = await cache.get(path);
 			if (cacheEntry.moduleSignature !== undefined) {
@@ -105362,7 +105954,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 		async maybePrefetchModuleSignatures(path) {
 			this.checkCancelled();
 
-			const {projectManager} = this.master;
+			const {projectManager} = this.server;
 
 			const prefetchedModuleSignatures = {};
 			const project = await projectManager.assertProject(path);
@@ -105412,7 +106004,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
       }
 
       // get mtime so we can use it for a cache
-      const mtime = this.master.memoryFs.getMtime(absolute);
+      const mtime = this.server.memoryFs.getMtime(absolute);
 
       // check if this worker has it cached
       // TODO figure out some way to evict this on file deletion
@@ -105661,7 +106253,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 		}
 
 		if (answer === "exit") {
-			return ___R$project$rome$$romejs$core$master$MasterRequest_ts$EMPTY_SUCCESS_RESPONSE;
+			return ___R$project$rome$$romejs$core$server$ServerRequest_ts$EMPTY_SUCCESS_RESPONSE;
 		}
 
 		const action = optionToAction.get(answer);
@@ -105679,7 +106271,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 				commandFlags: action.commandFlags,
 				requestFlags,
 			},
-			"master",
+			"server",
 		);
 		if (actionRes.type !== "DIAGNOSTICS" && actionRes.type !== "SUCCESS") {
 			return actionRes;
@@ -105788,8 +106380,8 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 				this.query.commandName,
 			);
 
-			if (this.type === "master" || localCommand === undefined) {
-				return this.initFromMaster();
+			if (this.type === "server" || localCommand === undefined) {
+				return this.initFromServer();
 			} else {
 				return this.initFromLocal(localCommand);
 			}
@@ -105834,11 +106426,11 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 			}
 		}
 
-		async initFromMaster() {
+		async initFromServer() {
 			const {client} = this;
 
 			try {
-				const bridge = await client.findOrStartMaster();
+				const bridge = await client.findOrStartServer();
 				return await bridge.query.call(this.query);
 			} catch (err) {
 				if (
@@ -105861,16 +106453,16 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 	}
 
 
-  // project-rome/@romejs/core/master/WorkerQueue.ts
+  // project-rome/@romejs/core/server/WorkerQueue.ts
 
 
 
 
 
 
-	class ___R$project$rome$$romejs$core$master$WorkerQueue_ts$default {
-		constructor(master, maxPer = 2) {
-			this.master = master;
+	class ___R$project$rome$$romejs$core$server$WorkerQueue_ts$default {
+		constructor(server, maxPer = 2) {
+			this.server = server;
 			this.callbacks = [];
 			this.runningWorkers = [];
 			this.workers = new Map();
@@ -105887,7 +106479,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 				throw new Error("No callbacks attached to queue");
 			}
 
-			const workerContainer = await this.master.fileAllocator.getOrAssignOwner(
+			const workerContainer = await this.server.fileAllocator.getOrAssignOwner(
 				path,
 			);
 
@@ -105964,12 +106556,12 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 	}
 
 
-  // project-rome/@romejs/core/master/dependencies/DependencyOrderer.ts
+  // project-rome/@romejs/core/server/dependencies/DependencyOrderer.ts
 
 
 
 
-	class ___R$project$rome$$romejs$core$master$dependencies$DependencyOrderer_ts$default {
+	class ___R$project$rome$$romejs$core$server$dependencies$DependencyOrderer_ts$default {
 		constructor(graph) {
 			this.graph = graph;
 			this.orderedNodes = new Set();
@@ -106100,14 +106692,14 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 	}
 
 
-  // project-rome/@romejs/core/master/dependencies/DependencyNode.ts
+  // project-rome/@romejs/core/server/dependencies/DependencyNode.ts
 
 
 
 
 
 
-	function ___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyNode_ts$equalKind(
+	function ___R$$priv$project$rome$$romejs$core$server$dependencies$DependencyNode_ts$equalKind(
 		producer,
 		consumerKind,
 	) {
@@ -106137,11 +106729,11 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 
 
 
-	class ___R$project$rome$$romejs$core$master$dependencies$DependencyNode_ts$default {
+	class ___R$project$rome$$romejs$core$server$dependencies$DependencyNode_ts$default {
 		constructor(graph, ref, res) {
 			this.graph = graph;
 
-			this.project = graph.master.projectManager.assertProjectExisting(ref.real);
+			this.project = graph.server.projectManager.assertProjectExisting(ref.real);
 			this.uid = ref.uid;
 			this.path = ref.real;
 			this.ref = ref;
@@ -106162,7 +106754,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 		}
 
 		getMtime() {
-			return this.graph.master.memoryFs.getMtime(this.path);
+			return this.graph.server.memoryFs.getMtime(this.path);
 		}
 
 		setUsedAsync(usedAsync) {
@@ -106249,7 +106841,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 		}
 
 		getDependencyOrder() {
-			const orderer = new ___R$project$rome$$romejs$core$master$dependencies$DependencyOrderer_ts$default(
+			const orderer = new ___R$project$rome$$romejs$core$server$dependencies$DependencyOrderer_ts$default(
 				this.graph,
 			);
 			return orderer.order(this.path);
@@ -106288,7 +106880,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 
 			for (const exp of this.analyze.exports) {
 				if (
-					!___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyNode_ts$equalKind(
+					!___R$$priv$project$rome$$romejs$core$server$dependencies$DependencyNode_ts$equalKind(
 						exp,
 						kind,
 					)
@@ -106309,7 +106901,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 						);
 						if (
 							resolved.type === "FOUND" &&
-							___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyNode_ts$equalKind(
+							___R$$priv$project$rome$$romejs$core$server$dependencies$DependencyNode_ts$equalKind(
 								resolved.record,
 								kind,
 							)
@@ -106462,7 +107054,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 					// Flag imports of the wrong type
 					if (
 						!allowTypeImportsAsValue &&
-						!___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyNode_ts$equalKind(
+						!___R$$priv$project$rome$$romejs$core$server$dependencies$DependencyNode_ts$equalKind(
 							resolved.record,
 							kind,
 						)
@@ -106632,10 +107224,48 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 	}
 
 
-  // project-rome/@romejs/core/master/dependencies/DependencyGraph.ts
+  // project-rome/@romejs/core/common/FileNotFound.ts
+class ___R$project$rome$$romejs$core$common$FileNotFound_ts$FileNotFound
+		extends Error {
+		constructor(path, message) {
+			super(message === undefined ? path.join() : path.join() + ": " + message);
+			this.name = "FileNotFound";
+			this.path = path;
+		}
+
+		static async maybeAllowMissing(allow, path, factory) {
+			if (allow) {
+				return ___R$project$rome$$romejs$core$common$FileNotFound_ts$FileNotFound.allowMissing(
+					path,
+					factory,
+				);
+			} else {
+				return factory();
+			}
+		}
+
+		static async allowMissing(path, factory) {
+			try {
+				return await factory();
+			} catch (err) {
+				if (
+					err instanceof
+					___R$project$rome$$romejs$core$common$FileNotFound_ts$FileNotFound &&
+					err.path.equal(path)
+				) {
+					return undefined;
+				} else {
+					throw err;
+				}
+			}
+		}
+	}
 
 
-	const ___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyGraph_ts$BUILTINS = [
+  // project-rome/@romejs/core/server/dependencies/DependencyGraph.ts
+
+
+	const ___R$$priv$project$rome$$romejs$core$server$dependencies$DependencyGraph_ts$BUILTINS = [
 		"electron",
 		"buffer",
 		"child_process",
@@ -106677,10 +107307,10 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 
 
 
-	class ___R$project$rome$$romejs$core$master$dependencies$DependencyGraph_ts$default {
+	class ___R$project$rome$$romejs$core$server$dependencies$DependencyGraph_ts$default {
 		constructor(request, resolverOpts) {
 			this.request = request;
-			this.master = request.master;
+			this.server = request.server;
 			this.nodes = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
 			this.resolverOpts = resolverOpts;
 
@@ -106695,7 +107325,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 		}
 
 		isExternal(source) {
-			return ___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyGraph_ts$BUILTINS.includes(
+			return ___R$$priv$project$rome$$romejs$core$server$dependencies$DependencyGraph_ts$BUILTINS.includes(
 				source,
 			);
 		}
@@ -106731,9 +107361,9 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 		}
 
 		addNode(path, res) {
-			const module = new ___R$project$rome$$romejs$core$master$dependencies$DependencyNode_ts$default(
+			const module = new ___R$project$rome$$romejs$core$server$dependencies$DependencyNode_ts$default(
 				this,
-				this.master.projectManager.getFileReference(path),
+				this.server.projectManager.getFileReference(path),
 				res,
 			);
 			this.nodes.set(path, module);
@@ -106747,7 +107377,10 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 		getNode(path) {
 			const mod = this.maybeGetNode(path);
 			if (mod === undefined) {
-				throw new Error("No module found for " + path.join());
+				throw new ___R$project$rome$$romejs$core$common$FileNotFound_ts$FileNotFound(
+					path,
+					"No dependency node found",
+				);
 			}
 			return mod;
 		}
@@ -106757,11 +107390,12 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 				paths,
 				diagnosticsProcessor,
 				analyzeProgress,
+				allowFileNotFound = false,
 				validate = false,
 			},
 		) {
-			const workerQueue = new ___R$project$rome$$romejs$core$master$WorkerQueue_ts$default(
-				this.master,
+			const workerQueue = new ___R$project$rome$$romejs$core$server$WorkerQueue_ts$default(
+				this.server,
 			);
 
 			workerQueue.addCallback(async (path, item) => {
@@ -106781,16 +107415,22 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 			// Add initial queue items
 			const roots = await Promise.all(
 				paths.map((path) =>
-					this.resolve(
+					___R$project$rome$$romejs$core$common$FileNotFound_ts$FileNotFound.maybeAllowMissing(
+						allowFileNotFound,
 						path,
-						{
-							workerQueue,
-							all: true,
-							async: false,
-							ancestry: [],
-						},
-						diagnosticsProcessor,
-						analyzeProgress,
+						() =>
+							this.resolve(
+								path,
+								{
+									workerQueue,
+									all: true,
+									async: false,
+									ancestry: [],
+								},
+								diagnosticsProcessor,
+								analyzeProgress,
+							)
+						,
 					)
 				),
 			);
@@ -106803,7 +107443,13 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 
 			if (validate) {
 				for (const root of roots) {
-					this.validateTransitive(root, diagnosticsProcessor);
+					if (root !== undefined) {
+						await ___R$project$rome$$romejs$core$common$FileNotFound_ts$FileNotFound.maybeAllowMissing(
+							allowFileNotFound,
+							root.path,
+							() => this.validateTransitive(root, diagnosticsProcessor),
+						);
+					}
 				}
 			}
 		}
@@ -106828,7 +107474,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 		async resolve(path, opts, diagnosticsProcessor, analyzeProgress) {
 			const filename = path.join();
 			const {async, all, ancestry} = opts;
-			const {master} = this;
+			const {server} = this;
 
 			// We have a lock here in case we hit `this.resolve` while we're waiting for the `analyzeDependencies` result
 			const lock = await this.locker.getLock(filename);
@@ -106855,12 +107501,17 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 				analyzeProgress.pushText(progressText);
 			}
 
-			const res = await this.request.requestWorkerAnalyzeDependencies(path, {});
+			let res;
+			let node;
+			try {
+				res = await this.request.requestWorkerAnalyzeDependencies(path, {});
 
-			const node = this.addNode(path, res);
-			node.setAll(all);
-			node.setUsedAsync(async);
-			lock.release();
+				node = this.addNode(path, res);
+				node.setAll(all);
+				node.setUsedAsync(async);
+			} finally {
+				lock.release();
+			}
 
 			const {dependencies, diagnostics} = res;
 
@@ -106869,7 +107520,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 			}
 
 			// If we're a remote path then the origin should be the URL and not our local path
-			const remote = this.master.projectManager.getRemoteFromLocalPath(path);
+			const remote = this.server.projectManager.getRemoteFromLocalPath(path);
 			const origin = remote === undefined ? path : remote.getParent();
 
 			// Resolve full locations
@@ -106882,7 +107533,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 
 					const {diagnostics} = await ___R$project$rome$$romejs$diagnostics$wrap_ts$catchDiagnostics(
 						async () => {
-							const resolved = await master.resolver.resolveAssert(
+							const resolved = await server.resolver.resolveAssert(
 								Object.assign(
 									{},
 									this.resolverOpts,
@@ -106944,13 +107595,13 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 	}
 
 
-  // project-rome/@romejs/core/master/bundler/BundleRequest.ts
-const ___R$$priv$project$rome$$romejs$core$master$bundler$BundleRequest_ts$crypto = require(
+  // project-rome/@romejs/core/server/bundler/BundleRequest.ts
+const ___R$$priv$project$rome$$romejs$core$server$bundler$BundleRequest_ts$crypto = require(
 		"crypto",
 	);
 
 
-	class ___R$project$rome$$romejs$core$master$bundler$BundleRequest_ts$default {
+	class ___R$project$rome$$romejs$core$server$bundler$BundleRequest_ts$default {
 		constructor(
 			{
 				bundler,
@@ -106967,7 +107618,7 @@ const ___R$$priv$project$rome$$romejs$core$master$bundler$BundleRequest_ts$crypt
 			this.mode = mode;
 
 			this.resolvedEntry = resolvedEntry;
-			this.resolvedEntryUid = bundler.master.projectManager.getUid(
+			this.resolvedEntryUid = bundler.server.projectManager.getUid(
 				resolvedEntry,
 			);
 
@@ -107015,7 +107666,7 @@ const ___R$$priv$project$rome$$romejs$core$master$bundler$BundleRequest_ts$crypt
 		}
 
 		async stepCompile(paths) {
-			const {master} = this.bundler;
+			const {server} = this.bundler;
 			const {reporter} = this;
 			this.diagnostics.setThrowAfter(undefined);
 
@@ -107025,8 +107676,8 @@ const ___R$$priv$project$rome$$romejs$core$master$bundler$BundleRequest_ts$crypt
 			});
 			compilingSpinner.setTotal(paths.length);
 
-			const queue = new ___R$project$rome$$romejs$core$master$WorkerQueue_ts$default(
-				master,
+			const queue = new ___R$project$rome$$romejs$core$server$WorkerQueue_ts$default(
+				server,
 			);
 
 			queue.addCallback(async (path) => {
@@ -107069,7 +107720,7 @@ const ___R$$priv$project$rome$$romejs$core$master$bundler$BundleRequest_ts$crypt
 				);
 
 				// Asset path in the form of: BASENAME-SHA1HASH.EXTENSIONS
-				const hash = ___R$$priv$project$rome$$romejs$core$master$bundler$BundleRequest_ts$crypto.createHash(
+				const hash = ___R$$priv$project$rome$$romejs$core$server$bundler$BundleRequest_ts$crypto.createHash(
 					"sha1",
 				).update(buffer).digest("hex");
 				const basename = mod.path.getExtensionlessBasename();
@@ -107203,7 +107854,7 @@ const ___R$$priv$project$rome$$romejs$core$master$bundler$BundleRequest_ts$crypt
     );
     push('(function() {');
     addMappings(
-      this.bundler.master.projectManager.getUid(path),
+      this.bundler.server.projectManager.getUid(path),
       res.src,
       res.mappings,
     );
@@ -107933,7 +108584,7 @@ const ___R$project$rome$$romejs$codec$spdx$license$data_ts$default = {
 				name: "BSD Source Code Attribution",
 				licenseId: "BSD-Source-Code",
 				seeAlso: [
-					"https://github.com/robbiehanson/CocoaHTTPServer/blob/master/LICENSE.txt",
+					"https://github.com/robbiehanson/CocoaHTTPServer/blob/server/LICENSE.txt",
 				],
 				isOsiApproved: false,
 			},
@@ -109485,7 +110136,7 @@ const ___R$project$rome$$romejs$codec$spdx$license$data_ts$default = {
 				name: "Japan Network Information Center License",
 				licenseId: "JPNIC",
 				seeAlso: [
-					"https://gitlab.isc.org/isc-projects/bind9/blob/master/COPYRIGHT#L366",
+					"https://gitlab.isc.org/isc-projects/bind9/blob/server/COPYRIGHT#L366",
 				],
 				isOsiApproved: false,
 			},
@@ -109880,7 +110531,7 @@ const ___R$project$rome$$romejs$codec$spdx$license$data_ts$default = {
 				seeAlso: [
 					"https://github.com/aws/mit-0",
 					"https://romanrm.net/mit-zero",
-					"https://github.com/awsdocs/aws-cloud9-user-guide/blob/master/LICENSE-SAMPLECODE",
+					"https://github.com/awsdocs/aws-cloud9-user-guide/blob/server/LICENSE-SAMPLECODE",
 				],
 				isOsiApproved: false,
 			},
@@ -110236,7 +110887,7 @@ const ___R$project$rome$$romejs$codec$spdx$license$data_ts$default = {
 				name: "NTP No Attribution",
 				licenseId: "NTP-0",
 				seeAlso: [
-					"https://github.com/tytso/e2fsprogs/blob/master/lib/et/et_name.c",
+					"https://github.com/tytso/e2fsprogs/blob/server/lib/et/et_name.c",
 				],
 				isOsiApproved: false,
 			},
@@ -111114,7 +111765,7 @@ const ___R$project$rome$$romejs$codec$spdx$license$data_ts$default = {
 				name: "Secure Messaging Protocol Public License",
 				licenseId: "SMPPL",
 				seeAlso: [
-					"https://github.com/dcblake/SMP/blob/master/Documentation/License.txt",
+					"https://github.com/dcblake/SMP/blob/server/Documentation/License.txt",
 				],
 				isOsiApproved: false,
 			},
@@ -111752,7 +112403,7 @@ const ___R$project$rome$$romejs$codec$spdx$license$data_ts$default = {
 				referenceNumber: "69",
 				name: "bzip2 and libbzip2 License v1.0.6",
 				licenseId: "bzip2-1.0.6",
-				seeAlso: ["https://github.com/asimonov-im/bzip2/blob/master/LICENSE"],
+				seeAlso: ["https://github.com/asimonov-im/bzip2/blob/server/LICENSE"],
 				isOsiApproved: false,
 			},
 			{
@@ -111763,7 +112414,7 @@ const ___R$project$rome$$romejs$codec$spdx$license$data_ts$default = {
 				name: "copyleft-next 0.3.0",
 				licenseId: "copyleft-next-0.3.0",
 				seeAlso: [
-					"https://github.com/copyleft-next/copyleft-next/blob/master/Releases/copyleft-next-0.3.0",
+					"https://github.com/copyleft-next/copyleft-next/blob/server/Releases/copyleft-next-0.3.0",
 				],
 				isOsiApproved: false,
 			},
@@ -111775,7 +112426,7 @@ const ___R$project$rome$$romejs$codec$spdx$license$data_ts$default = {
 				name: "copyleft-next 0.3.1",
 				licenseId: "copyleft-next-0.3.1",
 				seeAlso: [
-					"https://github.com/copyleft-next/copyleft-next/blob/master/Releases/copyleft-next-0.3.1",
+					"https://github.com/copyleft-next/copyleft-next/blob/server/Releases/copyleft-next-0.3.1",
 				],
 				isOsiApproved: false,
 			},
@@ -111786,7 +112437,7 @@ const ___R$project$rome$$romejs$codec$spdx$license$data_ts$default = {
 				referenceNumber: "314",
 				name: "curl License",
 				licenseId: "curl",
-				seeAlso: ["https://github.com/bagder/curl/blob/master/COPYING"],
+				seeAlso: ["https://github.com/bagder/curl/blob/server/COPYING"],
 				isOsiApproved: false,
 			},
 			{
@@ -111841,8 +112492,8 @@ const ___R$project$rome$$romejs$codec$spdx$license$data_ts$default = {
 				name: "Etalab Open License 2.0",
 				licenseId: "etalab-2.0",
 				seeAlso: [
-					"https://github.com/DISIC/politique-de-contribution-open-source/blob/master/LICENSE.pdf",
-					"https://raw.githubusercontent.com/DISIC/politique-de-contribution-open-source/master/LICENSE",
+					"https://github.com/DISIC/politique-de-contribution-open-source/blob/server/LICENSE.pdf",
+					"https://raw.githubusercontent.com/DISIC/politique-de-contribution-open-source/server/LICENSE",
 				],
 				isOsiApproved: false,
 			},
@@ -111896,7 +112547,7 @@ const ___R$project$rome$$romejs$codec$spdx$license$data_ts$default = {
 				name: "libselinux public domain notice",
 				licenseId: "libselinux-1.0",
 				seeAlso: [
-					"https://github.com/SELinuxProject/selinux/blob/master/libselinux/LICENSE",
+					"https://github.com/SELinuxProject/selinux/blob/server/libselinux/LICENSE",
 				],
 				isOsiApproved: false,
 			},
@@ -114082,25 +114733,25 @@ const ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$TYPO_KEYS = new
 	}
 
 
-  // project-rome/@romejs/core/master/bundler/Bundler.ts
+  // project-rome/@romejs/core/server/bundler/Bundler.ts
 
 
-	class ___R$project$rome$$romejs$core$master$bundler$Bundler_ts$default {
+	class ___R$project$rome$$romejs$core$server$bundler$Bundler_ts$default {
 		constructor(req, config) {
 			this.config = config;
-			this.master = req.master;
+			this.server = req.server;
 			this.reporter = req.reporter;
 			this.request = req;
 
 			this.entries = [];
-			this.graph = new ___R$project$rome$$romejs$core$master$dependencies$DependencyGraph_ts$default(
+			this.graph = new ___R$project$rome$$romejs$core$server$dependencies$DependencyGraph_ts$default(
 				req,
 				config.resolver,
 			);
 		}
 
-		static createFromMasterRequest(req) {
-			return new ___R$project$rome$$romejs$core$master$bundler$Bundler_ts$default(
+		static createFromServerRequest(req) {
+			return new ___R$project$rome$$romejs$core$server$bundler$Bundler_ts$default(
 				req,
 				req.getBundlerConfigFromFlags(),
 			);
@@ -114109,7 +114760,7 @@ const ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$TYPO_KEYS = new
 		async getResolvedEntry(unresolvedEntry) {
 			const {cwd} = this.config;
 
-			const res = await this.master.resolver.resolveEntryAssert(
+			const res = await this.server.resolver.resolveEntryAssert(
 				Object.assign(
 					{},
 					this.config.resolver,
@@ -114122,11 +114773,11 @@ const ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$TYPO_KEYS = new
 				),
 			);
 
-			const {master} = this;
+			const {server} = this;
 			const resolvedEntry = res.path;
 
 			// Now do the same resolver request but with a package
-			const manifestRootResolved = master.resolver.resolveLocal(
+			const manifestRootResolved = server.resolver.resolveLocal(
 				Object.assign(
 					{},
 					this.config.resolver,
@@ -114145,7 +114796,7 @@ const ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$TYPO_KEYS = new
 					: undefined;
 			let manifestDef;
 			if (manifestRoot !== undefined) {
-				const def = master.memoryFs.getManifestDefinition(manifestRoot);
+				const def = server.memoryFs.getManifestDefinition(manifestRoot);
 				if (def !== undefined) {
 					manifestDef = def;
 				}
@@ -114155,13 +114806,13 @@ const ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$TYPO_KEYS = new
 		}
 
 		createBundleRequest(resolvedEntry, options, reporter) {
-			const project = this.master.projectManager.assertProjectExisting(
+			const project = this.server.projectManager.assertProjectExisting(
 				resolvedEntry,
 			);
 			const mode = project.config.bundler.mode;
 
 			this.entries.push(resolvedEntry);
-			return new ___R$project$rome$$romejs$core$master$bundler$BundleRequest_ts$default({
+			return new ___R$project$rome$$romejs$core$server$bundler$BundleRequest_ts$default({
 				bundler: this,
 				mode,
 				resolvedEntry,
@@ -114192,7 +114843,7 @@ const ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$TYPO_KEYS = new
 				],
 			});
 			const entryUids = entries.map((entry) =>
-				this.master.projectManager.getUid(entry)
+				this.server.projectManager.getUid(entry)
 			);
 			const analyzeProgress = this.reporter.progress({
 				name: "bundler:analyze:" + entryUids.join(","),
@@ -114336,7 +114987,7 @@ const ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$TYPO_KEYS = new
 			);
 
 			// TODO inherit some manifest properties from project configs
-			const project = this.master.projectManager.findProjectExisting(
+			const project = this.server.projectManager.findProjectExisting(
 				manifestDef.folder,
 			);
 			if (project !== undefined) {
@@ -114351,7 +115002,7 @@ const ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$TYPO_KEYS = new
 
 			// Copy manifest.files
 			if (manifest.files !== undefined) {
-				const paths = await this.master.memoryFs.glob(
+				const paths = await this.server.memoryFs.glob(
 					manifestDef.folder,
 					{
 						overrideIgnore: ___R$project$rome$$romejs$path$match$index_ts$flipPathPatterns(
@@ -114383,7 +115034,7 @@ const ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$TYPO_KEYS = new
 						? binConsumer
 						: binConsumer.get(binName)).getDiagnosticLocation("inner-value");
 
-					const absolute = await this.master.resolver.resolveAssert(
+					const absolute = await this.server.resolver.resolveAssert(
 						Object.assign(
 							{},
 							this.config.resolver,
@@ -114481,9 +115132,9 @@ const ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$TYPO_KEYS = new
 	}
 
 
-  // project-rome/@romejs/core/master/commands/run.ts
+  // project-rome/@romejs/core/server/commands/run.ts
 
-	const ___R$project$rome$$romejs$core$master$commands$run_ts$default = ___R$project$rome$$romejs$core$master$commands_ts$createMasterCommand({
+	const ___R$project$rome$$romejs$core$server$commands$run_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.PROJECT_MANAGEMENT,
 		description: "TODO",
 		usage: "",
@@ -114494,11 +115145,11 @@ const ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$TYPO_KEYS = new
 		async callback(req) {
 			const {args} = req.query;
 			const {flags} = req.client;
-			const {master} = req;
+			const {server} = req;
 			req.expectArgumentLength(1);
 
 			async function executeCode(path) {
-				const bundler = ___R$project$rome$$romejs$core$master$bundler$Bundler_ts$default.createFromMasterRequest(
+				const bundler = ___R$project$rome$$romejs$core$server$bundler$Bundler_ts$default.createFromServerRequest(
 					req,
 				);
 				const {entry} = await bundler.bundle(path);
@@ -114511,11 +115162,11 @@ const ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$TYPO_KEYS = new
 			}
 
 			// Get the current project
-			const project = await master.projectManager.findProject(flags.cwd);
+			const project = await server.projectManager.findProject(flags.cwd);
 
 			// check for absolute paths
 			const target = args[0];
-			const resolved = await master.resolver.resolveEntry(
+			const resolved = await server.resolver.resolveEntry(
 				Object.assign(
 					{},
 					req.getResolverOptionsFromFlags(),
@@ -114538,7 +115189,7 @@ const ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$TYPO_KEYS = new
 						continue;
 					}
 
-					const resolved = await master.resolver.resolveEntryAssertPath(
+					const resolved = await server.resolver.resolveEntryAssertPath(
 						Object.assign(
 							{},
 							req.getResolverOptionsFromFlags(),
@@ -114564,8 +115215,8 @@ const ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$TYPO_KEYS = new
 	});
 
 
-  // project-rome/@romejs/core/master/commands/publish.ts
-const ___R$project$rome$$romejs$core$master$commands$publish_ts$default = ___R$project$rome$$romejs$core$master$commands_ts$createMasterCommand({
+  // project-rome/@romejs/core/server/commands/publish.ts
+const ___R$project$rome$$romejs$core$server$commands$publish_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.PROJECT_MANAGEMENT,
 		description: "TODO",
 		usage: "",
@@ -114581,21 +115232,21 @@ const ___R$project$rome$$romejs$core$master$commands$publish_ts$default = ___R$p
 	});
 
 
-  // project-rome/@romejs/core/master/commands/status.ts
+  // project-rome/@romejs/core/server/commands/status.ts
 
 
 
-	const ___R$project$rome$$romejs$core$master$commands$status_ts$default = ___R$project$rome$$romejs$core$master$commands_ts$createMasterCommand({
+	const ___R$project$rome$$romejs$core$server$commands$status_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.PROCESS_MANAGEMENT,
-		description: "dump memory and process info of master and workers",
+		description: "dump memory and process info of server and workers",
 		usage: "",
 		examples: [],
 		defineFlags() {
 			return {};
 		},
-		async callback({master}) {
+		async callback({server}) {
 			const workers = await Promise.all(
-				master.workerManager.getWorkers().map(async (worker) => {
+				server.workerManager.getWorkers().map(async (worker) => {
 					const workerStatus = await worker.bridge.status.call();
 
 					return {
@@ -114611,13 +115262,13 @@ const ___R$project$rome$$romejs$core$master$commands$publish_ts$default = ___R$p
 
 			const {heapTotal} = process.memoryUsage();
 			return {
-				master: {
+				server: {
 					heapTotal,
 					pid: process.pid,
 					uptime: process.uptime(),
 				},
 				workers,
-				projects: master.projectManager.getProjects().map((project) => {
+				projects: server.projectManager.getProjects().map((project) => {
 					return {
 						id: project.id,
 					};
@@ -114627,8 +115278,8 @@ const ___R$project$rome$$romejs$core$master$commands$publish_ts$default = ___R$p
 	});
 
 
-  // project-rome/@romejs/core/master/commands/stop.ts
-const ___R$project$rome$$romejs$core$master$commands$stop_ts$default = ___R$project$rome$$romejs$core$master$commands_ts$createMasterCommand({
+  // project-rome/@romejs/core/server/commands/stop.ts
+const ___R$project$rome$$romejs$core$server$commands$stop_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.PROCESS_MANAGEMENT,
 		description: "stop daemon",
 		usage: "",
@@ -114636,8 +115287,8 @@ const ___R$project$rome$$romejs$core$master$commands$stop_ts$default = ___R$proj
 		defineFlags() {
 			return {};
 		},
-		async callback({master}) {
-			master.end();
+		async callback({server}) {
+			server.end();
 		},
 	});
 
@@ -115174,13 +115825,13 @@ const ___R$$priv$project$rome$$romejs$codec$url$index_ts$url = require("url");
 	}
 
 
-  // project-rome/@romejs/core/master/web/WebRequest.ts
-const ___R$$priv$project$rome$$romejs$core$master$web$WebRequest_ts$http = require(
+  // project-rome/@romejs/core/server/web/WebRequest.ts
+const ___R$$priv$project$rome$$romejs$core$server$web$WebRequest_ts$http = require(
 		"http",
 	);
-	const ___R$$priv$project$rome$$romejs$core$master$web$WebRequest_ts$waitForever = new Promise(() => {});
+	const ___R$$priv$project$rome$$romejs$core$server$web$WebRequest_ts$waitForever = new Promise(() => {});
 
-	function ___R$project$rome$$romejs$core$master$web$WebRequest_ts$stripBundleSuffix(
+	function ___R$project$rome$$romejs$core$server$web$WebRequest_ts$stripBundleSuffix(
 		pathname,
 	) {
 		return ___R$project$rome$$romejs$string$utils$removePrefix_ts$removePrefix(
@@ -115192,14 +115843,14 @@ const ___R$$priv$project$rome$$romejs$core$master$web$WebRequest_ts$http = requi
 		);
 	}
 
-	class ___R$project$rome$$romejs$core$master$web$WebRequest_ts$default {
-		constructor(server, req, res) {
+	class ___R$project$rome$$romejs$core$server$web$WebRequest_ts$default {
+		constructor(webServer, req, res) {
 			this.req = req;
 			this.res = res;
-			this.server = server;
-			this.reporter = server.reporter;
-			this.masterRequest = server.masterRequest;
-			this.master = server.master;
+			this.webServer = webServer;
+			this.reporter = webServer.reporter;
+			this.server = webServer.server;
+			this.serverRequest = webServer.serverRequest;
 
 			const reqUrl = req.url;
 			if (reqUrl === undefined) {
@@ -115259,8 +115910,8 @@ const ___R$$priv$project$rome$$romejs$core$master$web$WebRequest_ts$http = requi
 
 				//this.request.reporter.clear();
 				try {
-					const printer = this.masterRequest.createDiagnosticsPrinter(
-						this.master.createDiagnosticsProcessor({
+					const printer = this.serverRequest.createDiagnosticsPrinter(
+						this.server.createDiagnosticsProcessor({
 							origins: [
 								{
 									category: "WebRequest",
@@ -115337,7 +115988,7 @@ const ___R$$priv$project$rome$$romejs$core$master$web$WebRequest_ts$http = requi
 			}
 
 			// Look up static file
-			const project = await this.masterRequest.assertClientCwdProject();
+			const project = await this.serverRequest.assertClientCwdProject();
 			if (project.config.develop.serveStatic) {
 				const handled = await this.handlePossibleStatic(pathname, project);
 				if (handled) {
@@ -115353,14 +116004,14 @@ const ___R$$priv$project$rome$$romejs$core$master$web$WebRequest_ts$http = requi
 		async handlePossibleStatic(pathname, project) {
 			project;
 
-			const possibleStaticPath = await this.server.pathnameToAbsolutePath(
+			const possibleStaticPath = await this.webServer.pathnameToAbsolutePath(
 				pathname,
 			);
 
 			// TODO check if it is a file
 			if (
 				possibleStaticPath !== undefined &&
-				(await this.master.memoryFs.existsHard(possibleStaticPath))
+				(await this.server.memoryFs.existsHard(possibleStaticPath))
 			) {
 				return true;
 			}
@@ -115372,18 +116023,18 @@ const ___R$$priv$project$rome$$romejs$core$master$web$WebRequest_ts$http = requi
 			const {res} = this;
 			res.writeHead(200, {"Content-Type": "application/javascript"});
 
-			const bundler = new ___R$project$rome$$romejs$core$master$bundler$Bundler_ts$default(
-				this.masterRequest,
+			const bundler = new ___R$project$rome$$romejs$core$server$bundler$Bundler_ts$default(
+				this.serverRequest,
 				{
 					inlineSourceMap: false,
-					cwd: this.masterRequest.client.flags.cwd,
+					cwd: this.serverRequest.client.flags.cwd,
 					resolver: {
 						platform: "web",
 					},
 				},
 			);
-			const resolved = await this.master.resolver.resolveEntryAssertPath({
-				origin: this.masterRequest.client.flags.cwd,
+			const resolved = await this.server.resolver.resolveEntryAssertPath({
+				origin: this.serverRequest.client.flags.cwd,
 				source: ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(
 					"@romejs-web/frontend",
 				),
@@ -115415,7 +116066,7 @@ const ___R$$priv$project$rome$$romejs$core$master$web$WebRequest_ts$http = requi
 		async handleDeviceWebsocketMessage(socket, data) {
 			switch (data.type) {
 				case "log":
-					return this.server.printConsoleLog(data);
+					return this.webServer.printConsoleLog(data);
 
 				case "log-opt-in":
 					// ???
@@ -115438,7 +116089,7 @@ const ___R$$priv$project$rome$$romejs$core$master$web$WebRequest_ts$http = requi
 				"server",
 				req.socket,
 			);
-			this.server.deviceWebsockets.add(socket);
+			this.webServer.deviceWebsockets.add(socket);
 
 			req.socket.on(
 				"error",
@@ -115470,10 +116121,10 @@ const ___R$$priv$project$rome$$romejs$core$master$web$WebRequest_ts$http = requi
 
 			socket.endEvent.subscribe(() => {
 				console.log("END");
-				this.server.deviceWebsockets.delete(socket);
+				this.webServer.deviceWebsockets.delete(socket);
 			});
 
-			await ___R$$priv$project$rome$$romejs$core$master$web$WebRequest_ts$waitForever;
+			await ___R$$priv$project$rome$$romejs$core$server$web$WebRequest_ts$waitForever;
 		}
 
 		async handleFrontendWebsocket() {
@@ -115491,12 +116142,12 @@ const ___R$$priv$project$rome$$romejs$core$master$web$WebRequest_ts$http = requi
 					type: "client",
 				},
 			);
-			this.server.frontendWebsocketBridges.add(bridge);
+			this.webServer.frontendWebsocketBridges.add(bridge);
 
 			req.socket.on(
 				"close",
 				() => {
-					this.server.frontendWebsocketBridges.delete(bridge);
+					this.webServer.frontendWebsocketBridges.delete(bridge);
 				},
 			);
 
@@ -115504,15 +116155,15 @@ const ___R$$priv$project$rome$$romejs$core$master$web$WebRequest_ts$http = requi
 
 			this.reporter.success("Frontend websocket client connected");
 
-			this.server.sendRequests(bridge);
+			this.webServer.sendRequests(bridge);
 
-			await ___R$$priv$project$rome$$romejs$core$master$web$WebRequest_ts$waitForever;
+			await ___R$$priv$project$rome$$romejs$core$server$web$WebRequest_ts$waitForever;
 		}
 
 		async handleBundleRequest() {
 			const {res} = this;
 
-			const {bundler, path} = await this.server.getBundler(this.url);
+			const {bundler, path} = await this.webServer.getBundler(this.url);
 			const bundle = await bundler.bundle(path);
 			const content = bundle.entry.js.content;
 
@@ -115553,8 +116204,8 @@ const ___R$project$rome$$romejs$core$common$types$platform_ts = {
 	};
 
 
-  // project-rome/@romejs/core/master/web/index.ts
-const ___R$$priv$project$rome$$romejs$core$master$web$index_ts$http = require(
+  // project-rome/@romejs/core/server/web/index.ts
+const ___R$$priv$project$rome$$romejs$core$server$web$index_ts$http = require(
 		"http",
 	);
 
@@ -115563,13 +116214,13 @@ const ___R$$priv$project$rome$$romejs$core$master$web$index_ts$http = require(
 
 
 
-	class ___R$project$rome$$romejs$core$master$web$index_ts$WebServer {
+	class ___R$project$rome$$romejs$core$server$web$index_ts$WebServer {
 		constructor(req) {
-			const {master} = req;
+			const {server} = req;
 
-			this.masterRequest = req;
+			this.serverRequest = req;
 			this.reporter = req.reporter;
-			this.master = master;
+			this.server = server;
 
 			this.bundlerCache = new Map();
 
@@ -115580,11 +116231,11 @@ const ___R$$priv$project$rome$$romejs$core$master$web$index_ts$http = require(
 			this.deviceWebsockets = new Set();
 			this.frontendWebsocketBridges = new Set();
 
-			this.server = ___R$$priv$project$rome$$romejs$core$master$web$index_ts$http.createServer((
+			this.httpServer = ___R$$priv$project$rome$$romejs$core$server$web$index_ts$http.createServer((
 				req,
 				res,
 			) => {
-				const webRequest = new ___R$project$rome$$romejs$core$master$web$WebRequest_ts$default(
+				const webRequest = new ___R$project$rome$$romejs$core$server$web$WebRequest_ts$default(
 					this,
 					req,
 					res,
@@ -115592,7 +116243,7 @@ const ___R$$priv$project$rome$$romejs$core$master$web$index_ts$http = require(
 				webRequest.dispatch();
 			});
 
-			master.clientStartEvent.subscribe((client) => {
+			server.clientStartEvent.subscribe((client) => {
 				if (!this.savingRequests) {
 					return;
 				}
@@ -115629,21 +116280,21 @@ const ___R$$priv$project$rome$$romejs$core$master$web$index_ts$http = require(
 				};
 
 				client.reporter.addStream(ansiReporterStream);
-				master.connectedReporters.addStream(ansiReporterStream);
+				server.connectedReporters.addStream(ansiReporterStream);
 
 				client.reporter.addStream(htmlReporterStream);
-				master.connectedReporters.addStream(htmlReporterStream);
+				server.connectedReporters.addStream(htmlReporterStream);
 
 				client.bridge.endEvent.subscribe(() => {
-					master.connectedReporters.removeStream(ansiReporterStream);
-					master.connectedReporters.removeStream(htmlReporterStream);
+					server.connectedReporters.removeStream(ansiReporterStream);
+					server.connectedReporters.removeStream(htmlReporterStream);
 
 					data.endTime = Date.now();
 					this.refreshRequests();
 				});
 			});
 
-			master.requestStartEvent.subscribe((request) => {
+			server.requestStartEvent.subscribe((request) => {
 				if (!this.savingRequests) {
 					return;
 				}
@@ -115688,11 +116339,11 @@ const ___R$$priv$project$rome$$romejs$core$master$web$index_ts$http = require(
 		}
 
 		close() {
-			this.server.close();
+			this.httpServer.close();
 		}
 
 		listen(port) {
-			this.server.listen(port);
+			this.httpServer.listen(port);
 
 			//this.reporter.clear();
 			const url = "http://localhost:" + String(port);
@@ -115707,7 +116358,7 @@ const ___R$$priv$project$rome$$romejs$core$master$web$index_ts$http = require(
 		}
 
 		printConsoleLog(msg) {
-			const {reporter} = this.masterRequest;
+			const {reporter} = this.serverRequest;
 
 			let buf = msg.data.map((arg) => {
 				if (typeof arg === "string") {
@@ -115747,7 +116398,7 @@ const ___R$$priv$project$rome$$romejs$core$master$web$index_ts$http = require(
 		}
 
 		async pathnameToAbsolutePath(pathname) {
-			const project = await this.masterRequest.assertClientCwdProject();
+			const project = await this.serverRequest.assertClientCwdProject();
 			const possibleStaticPath = project.folder.append(pathname);
 
 			// This check makes sure that files outside of the project directory cannot be served
@@ -115766,7 +116417,7 @@ const ___R$$priv$project$rome$$romejs$core$master$web$index_ts$http = require(
 		}
 
 		async getBundler(url) {
-			const pathname = ___R$project$rome$$romejs$core$master$web$WebRequest_ts$stripBundleSuffix(
+			const pathname = ___R$project$rome$$romejs$core$server$web$WebRequest_ts$stripBundleSuffix(
 				String(url.path.asString()),
 			);
 
@@ -115776,9 +116427,9 @@ const ___R$$priv$project$rome$$romejs$core$master$web$index_ts$http = require(
 			}
 
 			const pathPointer = url.path.getDiagnosticLocation();
-			const path = await this.master.resolver.resolveEntryAssertPath(
+			const path = await this.server.resolver.resolveEntryAssertPath(
 				{
-					origin: this.masterRequest.client.flags.cwd,
+					origin: this.serverRequest.client.flags.cwd,
 					source: absolute,
 				},
 				pathPointer === undefined ? undefined : {location: pathPointer},
@@ -115796,12 +116447,12 @@ const ___R$$priv$project$rome$$romejs$core$master$web$index_ts$http = require(
 				return {bundler: cached, path};
 			}
 
-			const bundlerConfig = this.masterRequest.getBundlerConfigFromFlags({
+			const bundlerConfig = this.serverRequest.getBundlerConfigFromFlags({
 				platform,
 			});
 
-			const bundler = new ___R$project$rome$$romejs$core$master$bundler$Bundler_ts$default(
-				this.masterRequest,
+			const bundler = new ___R$project$rome$$romejs$core$server$bundler$Bundler_ts$default(
+				this.serverRequest,
 				bundlerConfig,
 			);
 			this.bundlerCache.set(cacheKey, bundler);
@@ -115810,11 +116461,11 @@ const ___R$$priv$project$rome$$romejs$core$master$web$index_ts$http = require(
 	}
 
 
-  // project-rome/@romejs/core/master/commands/develop.ts
+  // project-rome/@romejs/core/server/commands/develop.ts
 
 
-	const ___R$$priv$project$rome$$romejs$core$master$commands$develop_ts$DEFAULT_PORT = 8_081;
-	const ___R$project$rome$$romejs$core$master$commands$develop_ts$default = ___R$project$rome$$romejs$core$master$commands_ts$createMasterCommand({
+	const ___R$$priv$project$rome$$romejs$core$server$commands$develop_ts$DEFAULT_PORT = 8_081;
+	const ___R$project$rome$$romejs$core$server$commands$develop_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.SOURCE_CODE,
 		description: "start a web server",
 		usage: "",
@@ -115822,15 +116473,15 @@ const ___R$$priv$project$rome$$romejs$core$master$web$index_ts$http = require(
 		defineFlags(c) {
 			return {
 				port: c.get("port").asNumber(
-					___R$$priv$project$rome$$romejs$core$master$commands$develop_ts$DEFAULT_PORT,
+					___R$$priv$project$rome$$romejs$core$server$commands$develop_ts$DEFAULT_PORT,
 				),
 			};
 		},
 		async callback(req, flags) {
 			// Initialize cwd early since we'll need it for any requests
-			await req.master.projectManager.findProject(req.client.flags.cwd);
+			await req.server.projectManager.findProject(req.client.flags.cwd);
 
-			const web = new ___R$project$rome$$romejs$core$master$web$index_ts$WebServer(
+			const web = new ___R$project$rome$$romejs$core$server$web$index_ts$WebServer(
 				req,
 			);
 			web.listen(flags.port);
@@ -115844,8 +116495,8 @@ const ___R$$priv$project$rome$$romejs$core$master$web$index_ts$http = require(
 	});
 
 
-  // project-rome/@romejs/core/master/commands/config.ts
-const ___R$project$rome$$romejs$core$master$commands$config_ts$default = ___R$project$rome$$romejs$core$master$commands_ts$createMasterCommand({
+  // project-rome/@romejs/core/server/commands/config.ts
+const ___R$project$rome$$romejs$core$server$commands$config_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.PROJECT_MANAGEMENT,
 		description: "Modify a project config",
 		usage: "(enable|disable|set) key [value]",
@@ -115969,9 +116620,9 @@ const ___R$project$rome$$romejs$core$master$commands$config_ts$default = ___R$pr
 	});
 
 
-  // project-rome/@romejs/core/master/commands/compile.ts
+  // project-rome/@romejs/core/server/commands/compile.ts
 
-	const ___R$project$rome$$romejs$core$master$commands$compile_ts$default = ___R$project$rome$$romejs$core$master$commands_ts$createMasterCommand({
+	const ___R$project$rome$$romejs$core$server$commands$compile_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.SOURCE_CODE,
 		description: "compile a single file",
 		usage: "",
@@ -115982,11 +116633,11 @@ const ___R$project$rome$$romejs$core$master$commands$config_ts$default = ___R$pr
 			};
 		},
 		async callback(req, commandFlags) {
-			const {master, reporter} = req;
+			const {server, reporter} = req;
 			const {args} = req.query;
 			req.expectArgumentLength(1);
 
-			const resolved = await master.resolver.resolveEntryAssert(
+			const resolved = await server.resolver.resolveEntryAssert(
 				Object.assign(
 					{},
 					req.getResolverOptionsFromFlags(),
@@ -116001,7 +116652,7 @@ const ___R$project$rome$$romejs$core$master$commands$config_ts$default = ___R$pr
 
 			let res;
 			if (commandFlags.bundle) {
-				const bundler = ___R$project$rome$$romejs$core$master$bundler$Bundler_ts$default.createFromMasterRequest(
+				const bundler = ___R$project$rome$$romejs$core$server$bundler$Bundler_ts$default.createFromServerRequest(
 					req,
 				);
 				res = await bundler.compile(resolved.path);
@@ -116024,8 +116675,8 @@ const ___R$project$rome$$romejs$core$master$commands$config_ts$default = ___R$pr
 	});
 
 
-  // project-rome/@romejs/core/master/commands/resolve.ts
-const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$project$rome$$romejs$core$master$commands_ts$createMasterCommand({
+  // project-rome/@romejs/core/server/commands/resolve.ts
+const ___R$project$rome$$romejs$core$server$commands$resolve_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.SOURCE_CODE,
 		description: "resolve a file",
 		usage: "",
@@ -116034,7 +116685,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 			return {};
 		},
 		async callback(req) {
-			const {master, reporter} = req;
+			const {server, reporter} = req;
 			const {args} = req.query;
 			const {flags} = req.client;
 			req.expectArgumentLength(1, 2);
@@ -116064,7 +116715,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 				},
 			);
 
-			const resolved = await master.resolver.resolveEntryAssert(
+			const resolved = await server.resolver.resolveEntryAssert(
 				query,
 				{
 					location: req.getDiagnosticPointerFromFlags({type: "arg", key}),
@@ -116077,10 +116728,10 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 	});
 
 
-  // project-rome/@romejs/core/master/commands/analyzeDependencies.ts
+  // project-rome/@romejs/core/server/commands/analyzeDependencies.ts
 
 
-	function ___R$$priv$project$rome$$romejs$core$master$commands$analyzeDependencies_ts$removeLoc(
+	function ___R$$priv$project$rome$$romejs$core$server$commands$analyzeDependencies_ts$removeLoc(
 		obj,
 	) {
 		const ___R$ = obj;
@@ -116090,7 +116741,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 		loc;
 		return locless;
 	}
-	const ___R$project$rome$$romejs$core$master$commands$analyzeDependencies_ts$default = ___R$project$rome$$romejs$core$master$commands_ts$createMasterCommand({
+	const ___R$project$rome$$romejs$core$server$commands$analyzeDependencies_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.SOURCE_CODE,
 		description: "analyze and dump the dependencies of a file",
 		usage: "",
@@ -116102,11 +116753,11 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 			};
 		},
 		async callback(req, commandFlags) {
-			const {master, reporter} = req;
+			const {server, reporter} = req;
 			const {args} = req.query;
 			req.expectArgumentLength(1);
 
-			const filename = await master.resolver.resolveEntryAssertPath(
+			const filename = await server.resolver.resolveEntryAssertPath(
 				Object.assign(
 					{},
 					req.getResolverOptionsFromFlags(),
@@ -116143,7 +116794,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 					res,
 					{
 						importFirstUsage: res.importFirstUsage.map((imp) => {
-							return ___R$$priv$project$rome$$romejs$core$master$commands$analyzeDependencies_ts$removeLoc(
+							return ___R$$priv$project$rome$$romejs$core$server$commands$analyzeDependencies_ts$removeLoc(
 								imp,
 							);
 						}),
@@ -116151,22 +116802,22 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 							// This weird switch is because TS only returns an object with the properties common amongst all
 							switch (exp.type) {
 								case "local":
-									return ___R$$priv$project$rome$$romejs$core$master$commands$analyzeDependencies_ts$removeLoc(
+									return ___R$$priv$project$rome$$romejs$core$server$commands$analyzeDependencies_ts$removeLoc(
 										exp,
 									);
 
 								case "external":
-									return ___R$$priv$project$rome$$romejs$core$master$commands$analyzeDependencies_ts$removeLoc(
+									return ___R$$priv$project$rome$$romejs$core$server$commands$analyzeDependencies_ts$removeLoc(
 										exp,
 									);
 
 								case "externalAll":
-									return ___R$$priv$project$rome$$romejs$core$master$commands$analyzeDependencies_ts$removeLoc(
+									return ___R$$priv$project$rome$$romejs$core$server$commands$analyzeDependencies_ts$removeLoc(
 										exp,
 									);
 
 								case "externalNamespace":
-									return ___R$$priv$project$rome$$romejs$core$master$commands$analyzeDependencies_ts$removeLoc(
+									return ___R$$priv$project$rome$$romejs$core$server$commands$analyzeDependencies_ts$removeLoc(
 										exp,
 									);
 							}
@@ -116174,12 +116825,12 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 						dependencies: res.dependencies.map((dep) => {
 							return Object.assign(
 								{},
-								___R$$priv$project$rome$$romejs$core$master$commands$analyzeDependencies_ts$removeLoc(
+								___R$$priv$project$rome$$romejs$core$server$commands$analyzeDependencies_ts$removeLoc(
 									dep,
 								),
 								{
 									names: dep.names.map((name) => {
-										return ___R$$priv$project$rome$$romejs$core$master$commands$analyzeDependencies_ts$removeLoc(
+										return ___R$$priv$project$rome$$romejs$core$server$commands$analyzeDependencies_ts$removeLoc(
 											name,
 										);
 									}),
@@ -116195,9 +116846,9 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 	});
 
 
-  // project-rome/@romejs/core/master/commands/parse.ts
+  // project-rome/@romejs/core/server/commands/parse.ts
 
-	const ___R$project$rome$$romejs$core$master$commands$parse_ts$default = ___R$project$rome$$romejs$core$master$commands_ts$createMasterCommand({
+	const ___R$project$rome$$romejs$core$server$commands$parse_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.SOURCE_CODE,
 		description: "parse a single file and dump its ast",
 		usage: "",
@@ -116210,11 +116861,11 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 			};
 		},
 		async callback(req, flags) {
-			const {master, reporter} = req;
+			const {server, reporter} = req;
 			const {args} = req.query;
 			req.expectArgumentLength(1);
 
-			const filename = await master.resolver.resolveEntryAssertPath(
+			const filename = await server.resolver.resolveEntryAssertPath(
 				Object.assign(
 					{},
 					req.getResolverOptionsFromFlags(),
@@ -116246,9 +116897,9 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 	});
 
 
-  // project-rome/@romejs/core/master/commands/bundle.ts
+  // project-rome/@romejs/core/server/commands/bundle.ts
 
-	const ___R$project$rome$$romejs$core$master$commands$bundle_ts$default = ___R$project$rome$$romejs$core$master$commands_ts$createMasterCommand({
+	const ___R$project$rome$$romejs$core$server$commands$bundle_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.SOURCE_CODE,
 		description: "build a standalone js bundle for a package",
 		usage: "",
@@ -116265,7 +116916,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 			req.expectArgumentLength(2);
 
 			const [entryFilename, outputFolder] = args;
-			const bundler = ___R$project$rome$$romejs$core$master$bundler$Bundler_ts$default.createFromMasterRequest(
+			const bundler = ___R$project$rome$$romejs$core$server$bundler$Bundler_ts$default.createFromServerRequest(
 				req,
 			);
 
@@ -116299,9 +116950,9 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 	});
 
 
-  // project-rome/@romejs/core/master/commands/format.ts
+  // project-rome/@romejs/core/server/commands/format.ts
 
-	const ___R$project$rome$$romejs$core$master$commands$format_ts$default = ___R$project$rome$$romejs$core$master$commands_ts$createMasterCommand({
+	const ___R$project$rome$$romejs$core$server$commands$format_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.INTERNAL,
 		description: "TODO",
 		usage: "",
@@ -116312,11 +116963,11 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 			};
 		},
 		async callback(req, flags) {
-			const {reporter, master} = req;
+			const {reporter, server} = req;
 			const {args} = req.query;
 			req.expectArgumentLength(1);
 
-			const filename = await master.resolver.resolveEntryAssertPath(
+			const filename = await server.resolver.resolveEntryAssertPath(
 				Object.assign(
 					{},
 					req.getResolverOptionsFromFlags(),
@@ -116347,7 +116998,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 	});
 
 
-  // project-rome/@romejs/core/master/linter/Linter.ts
+  // project-rome/@romejs/core/server/linter/Linter.ts
 
 
 
@@ -116362,7 +117013,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 
 
 
-	function ___R$$priv$project$rome$$romejs$core$master$linter$Linter_ts$createDiagnosticsPrinter(
+	function ___R$$priv$project$rome$$romejs$core$server$linter$Linter_ts$createDiagnosticsPrinter(
 		request,
 		processor,
 		totalCount,
@@ -116418,7 +117069,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 		return printer;
 	}
 
-	class ___R$$priv$project$rome$$romejs$core$master$linter$Linter_ts$LintRunner {
+	class ___R$$priv$project$rome$$romejs$core$server$linter$Linter_ts$LintRunner {
 		constructor(
 			linter,
 			{
@@ -116427,7 +117078,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 			},
 		) {
 			this.linter = linter;
-			this.master = linter.request.master;
+			this.server = linter.request.server;
 			this.graph = graph;
 			this.request = linter.request;
 			this.options = linter.options;
@@ -116442,7 +117093,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 				processor,
 			},
 		) {
-			const {master} = this.request;
+			const {server} = this.request;
 			const saveQueue = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
 
 			const {
@@ -116453,8 +117104,8 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 			const shouldSave = this.linter.shouldSave();
 			const shouldApplyFixes = !this.linter.shouldOnlyFormat();
 
-			const queue = new ___R$project$rome$$romejs$core$master$WorkerQueue_ts$default(
-				master,
+			const queue = new ___R$project$rome$$romejs$core$server$WorkerQueue_ts$default(
+				server,
 			);
 
 			const progress = this.events.createProgress({title: "Linting"});
@@ -116490,18 +117141,34 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 					}
 				}
 
+				const res = await ___R$project$rome$$romejs$core$common$FileNotFound_ts$FileNotFound.allowMissing(
+					path,
+					() =>
+						this.request.requestWorkerLint(
+							path,
+							{
+								save: shouldSave,
+								applyFixes: shouldApplyFixes,
+								compilerOptions,
+							},
+						)
+					,
+				);
+
+				// Deleted
+				if (res === undefined) {
+					this.compilerDiagnosticsCache.set(
+						path,
+						{suppressions: [], diagnostics: []},
+					);
+					return;
+				}
+
 				const {
 					diagnostics,
 					suppressions,
 					save,
-				} = await this.request.requestWorkerLint(
-					path,
-					{
-						save: shouldSave,
-						applyFixes: shouldApplyFixes,
-						compilerOptions,
-					},
-				);
+				} = res;
 				processor.addSuppressions(suppressions);
 				processor.addDiagnostics(diagnostics);
 				this.compilerDiagnosticsCache.set(path, {suppressions, diagnostics});
@@ -116514,7 +117181,10 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 			});
 
 			for (const path of evictedPaths) {
-				await queue.pushQueue(path);
+				await ___R$project$rome$$romejs$core$common$FileNotFound_ts$FileNotFound.allowMissing(
+					path,
+					() => queue.pushQueue(path),
+				);
 			}
 
 			await queue.spin();
@@ -116522,14 +117192,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 
 			// Run through save queue
 			if (saveQueue.size > 0) {
-				const {logger} = master;
-				logger.info("[Linter] Saving files");
-				logger.list(Array.from(saveQueue.keys(), (path) => path.toMarkup()));
-
-				// TODO maybe this could be parallelized?
-				for (const [path, content] of saveQueue) {
-					await ___R$project$rome$$romejs$fs$index_ts$writeFile(path, content);
-				}
+				await this.server.writeFiles(saveQueue);
 			}
 
 			return {savedCount: saveQueue.size};
@@ -116559,6 +117222,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 				title: firstRun ? "Analyzing files" : "Analyzing changed files",
 			});
 			await graph.seed({
+				allowFileNotFound: true,
 				paths: Array.from(evictedPaths),
 				diagnosticsProcessor: processor,
 				validate: false,
@@ -116574,9 +117238,12 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 
 			// Build a list of dependents to recheck
 			for (const path of evictedPaths) {
-				validatedDependencyPaths.add(path);
+				const newNode = graph.maybeGetNode(path);
 
-				const newNode = graph.getNode(path);
+				if (newNode === undefined) {
+					continue;
+				}
+				validatedDependencyPaths.add(path);
 
 				// Get the previous node and see if the exports have actually changed
 				const oldNode = oldEvictedNodes.get(path);
@@ -116630,7 +117297,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 		}
 
 		computeChanges({evictedPaths, processor}, validatedDependencyPaths) {
-			const {master} = this;
+			const {server} = this;
 			const changes = [];
 
 			const updatedPaths = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet([
@@ -116640,7 +117307,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 			const diagnosticsByFilename = processor.getDiagnosticsByFilename();
 
 			// In case we pushed on any diagnostics that aren't from the input paths, try to resolve them
-			const includedFilenamesInDiagnostics = master.projectManager.normalizeFilenamesToFilePaths(
+			const includedFilenamesInDiagnostics = server.projectManager.normalizeFilenamesToFilePaths(
 				diagnosticsByFilename.keys(),
 			);
 			for (const path of includedFilenamesInDiagnostics.absolutes) {
@@ -116660,7 +117327,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 
 			// We can't just use getDiagnosticFilenames as we need to produce empty arrays for removed diagnostics
 			for (const path of updatedPaths) {
-				const ref = this.request.master.projectManager.getFileReference(path);
+				const ref = this.request.server.projectManager.getFileReference(path);
 				const diagnostics = [
 					...(diagnosticsByFilename.get(ref.uid) || []),
 					...(diagnosticsByFilename.get(ref.real.join()) || []),
@@ -116702,7 +117369,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 		}
 	}
 
-	class ___R$project$rome$$romejs$core$master$linter$Linter_ts$default {
+	class ___R$project$rome$$romejs$core$server$linter$Linter_ts$default {
 		constructor(req, opts) {
 			this.request = req;
 			this.options = opts;
@@ -116746,13 +117413,14 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 			// This hides errors that have been lint ignored but may have been produced by dependency analysis
 			processor.addFilter({
 				test: (diag) => {
-					const absolute = this.request.master.projectManager.getFilePathFromUidOrAbsolute(
+					const absolute = this.request.server.projectManager.getFilePathFromUidOrAbsolute(
 						diag.location.filename,
 					);
 					return (
 						absolute === undefined ||
 						evictedPaths.has(absolute) ||
-						runner.compilerDiagnosticsCache.has(absolute)
+						(runner !== undefined &&
+						runner.compilerDiagnosticsCache.has(absolute))
 					);
 				},
 			});
@@ -116761,12 +117429,12 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 		}
 
 		async watch(events) {
-			const graph = new ___R$project$rome$$romejs$core$master$dependencies$DependencyGraph_ts$default(
+			const graph = new ___R$project$rome$$romejs$core$server$dependencies$DependencyGraph_ts$default(
 				this.request,
 				this.request.getResolverOptionsFromFlags(),
 			);
 
-			const runner = new ___R$$priv$project$rome$$romejs$core$master$linter$Linter_ts$LintRunner(
+			const runner = new ___R$$priv$project$rome$$romejs$core$server$linter$Linter_ts$LintRunner(
 				this,
 				{
 					events,
@@ -116791,25 +117459,21 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 			);
 		}
 
-		async run(watch) {
+		async runWatch() {
 			const {request} = this;
 			const {reporter} = request;
 
-			let printer;
-
 			const diagnosticsByFilename = new Map();
 
-			const watchEvent = await this.watch({
+			await this.watch({
 				onRunStart: () => {
-					if (watch) {
-						reporter.clearScreen();
-					}
+					reporter.clearScreen();
 				},
 				createProgress: (opts) => {
 					return reporter.progress(opts);
 				},
 				onChanges: ({evictedPaths, changes, totalCount, savedCount, runner}) => {
-					printer = ___R$$priv$project$rome$$romejs$core$master$linter$Linter_ts$createDiagnosticsPrinter(
+					const printer = ___R$$priv$project$rome$$romejs$core$server$linter$Linter_ts$createDiagnosticsPrinter(
 						request,
 						this.createDiagnosticsProcessor(evictedPaths, runner),
 						totalCount,
@@ -116830,37 +117494,73 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 						printer.processor.addDiagnostics(diagnostics);
 					}
 
-					if (watch) {
-						reporter.clearScreen();
-						printer.print();
-						printer.footer();
+					reporter.clearScreen();
+					printer.print();
+					printer.footer();
+				},
+			});
+
+			await request.endEvent.wait();
+		}
+
+		async runSingle() {
+			const {request} = this;
+			const {reporter} = request;
+			const diagnosticsByFilename = new Map();
+
+			let savedCount = 0;
+			let paths = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet();
+
+			const watchEvent = await this.watch({
+				onRunStart: () => {},
+				createProgress: (opts) => {
+					return reporter.progress(opts);
+				},
+				onChanges: (res) => {
+					// Update counts
+					savedCount += res.savedCount;
+					paths = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet([
+						...paths,
+						...res.evictedPaths,
+					]);
+
+					// Update our diagnostics with the changes
+					for (const {filename, diagnostics} of res.changes) {
+						if (diagnostics.length === 0) {
+							diagnosticsByFilename.delete(filename);
+						} else {
+							diagnosticsByFilename.set(filename, diagnostics);
+						}
 					}
 				},
 			});
 
-			if (watch) {
-				await request.endEvent.wait();
-			} else {
-				watchEvent.unsubscribe();
+			watchEvent.unsubscribe();
 
-				if (printer === undefined) {
-					throw new Error("Expected a printer");
-				}
+			const printer = ___R$$priv$project$rome$$romejs$core$server$linter$Linter_ts$createDiagnosticsPrinter(
+				request,
+				this.createDiagnosticsProcessor(paths),
+				paths.size,
+				savedCount,
+			);
 
-				throw printer;
+			for (const diagnostics of diagnosticsByFilename.values()) {
+				printer.processor.addDiagnostics(diagnostics);
 			}
+
+			throw printer;
 		}
 	}
 
 
-  // project-rome/@romejs/core/master/lsp/LSPServer.ts
+  // project-rome/@romejs/core/server/lsp/LSPServer.ts
 
 
 
 
-	const ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$HEADERS_END = "\r\n\r\n";
+	const ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$HEADERS_END = "\r\n\r\n";
 
-	function ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$parseHeaders(
+	function ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$parseHeaders(
 		buffer,
 	) {
 		const headers = new Map();
@@ -116888,7 +117588,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 		};
 	}
 
-	function ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$convertPositionToLSP(
+	function ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$convertPositionToLSP(
 		pos,
 	) {
 		if (pos === undefined) {
@@ -116904,22 +117604,22 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 		}
 	}
 
-	function ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$convertDiagnosticLocationToLSPRange(
+	function ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$convertDiagnosticLocationToLSPRange(
 		location,
 	) {
 		return {
-			start: ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$convertPositionToLSP(
+			start: ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$convertPositionToLSP(
 				location.start,
 			),
-			end: ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$convertPositionToLSP(
+			end: ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$convertPositionToLSP(
 				location.end,
 			),
 		};
 	}
 
-	function ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$convertDiagnosticsToLSP(
+	function ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$convertDiagnosticsToLSP(
 		diagnostics,
-		master,
+		server,
 	) {
 		const lspDiagnostics = [];
 
@@ -116935,7 +117635,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 					nextItem !== undefined &&
 					nextItem.type === "frame"
 				) {
-					const abs = master.projectManager.getFilePathFromUidOrAbsolute(
+					const abs = server.projectManager.getFilePathFromUidOrAbsolute(
 						nextItem.location.filename,
 					);
 					if (abs !== undefined) {
@@ -116945,7 +117645,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 							),
 							location: {
 								uri: "file://" + abs.join(),
-								range: ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$convertDiagnosticLocationToLSPRange(
+								range: ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$convertDiagnosticLocationToLSPRange(
 									nextItem.location,
 								),
 							},
@@ -116956,7 +117656,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 
 			lspDiagnostics.push({
 				severity: 1,
-				range: ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$convertDiagnosticLocationToLSPRange(
+				range: ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$convertDiagnosticLocationToLSPRange(
 					location,
 				),
 				message: ___R$project$rome$$romejs$string$markup$format_ts$markupToPlainTextString(
@@ -116971,7 +117671,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 		return lspDiagnostics;
 	}
 
-	function ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$getPathFromTextDocument(
+	function ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$getPathFromTextDocument(
 		consumer,
 	) {
 		return ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(
@@ -116979,7 +117679,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 		);
 	}
 
-	function ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$diffTextEdits(
+	function ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$diffTextEdits(
 		original,
 		desired,
 	) {
@@ -117049,14 +117749,14 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 		return edits;
 	}
 
-	let ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$progressTokenCounter = 0;
+	let ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$progressTokenCounter = 0;
 
-	class ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$LSPProgress
+	class ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$LSPProgress
 		extends ___R$project$rome$$romejs$cli$reporter$ProgressBase_ts$default {
 		constructor(server, reporter, opts) {
 			super(reporter, opts);
 			this.server = server;
-			this.token = ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$progressTokenCounter++;
+			this.token = ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$progressTokenCounter++;
 			this.lastRenderKey = "";
 
 			server.write({
@@ -117111,14 +117811,14 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 		}
 	}
 
-	class ___R$project$rome$$romejs$core$master$lsp$LSPServer_ts$default {
+	class ___R$project$rome$$romejs$core$server$lsp$LSPServer_ts$default {
 		constructor(request) {
 			this.status = "IDLE";
 			this.socketBuffer = "";
 			this.nextHeaders = undefined;
 
 			this.request = request;
-			this.master = request.master;
+			this.server = request.server;
 			this.client = request.client;
 
 			this.lintSessionsPending = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet();
@@ -117136,15 +117836,15 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 			const out =
 				"Content-Length: " +
 				String(json.length) +
-				___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$HEADERS_END +
+				___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$HEADERS_END +
 				json;
 			this.client.bridge.lspFromServerBuffer.send(out);
 		}
 
-		createFakeMasterRequest(commandName, args = []) {
-			return new ___R$project$rome$$romejs$core$master$MasterRequest_ts$default({
+		createFakeServerRequest(commandName, args = []) {
+			return new ___R$project$rome$$romejs$core$server$ServerRequest_ts$default({
 				client: this.client,
-				master: this.master,
+				server: this.server,
 				query: {
 					requestFlags: ___R$project$rome$$romejs$core$common$types$client_ts$DEFAULT_CLIENT_REQUEST_FLAGS,
 					commandFlags: {},
@@ -117162,14 +117862,14 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 			const req = this.lintSessions.get(path);
 			if (req !== undefined) {
 				req.teardown(
-					___R$project$rome$$romejs$core$master$MasterRequest_ts$EMPTY_SUCCESS_RESPONSE,
+					___R$project$rome$$romejs$core$server$ServerRequest_ts$EMPTY_SUCCESS_RESPONSE,
 				);
 				this.lintSessions.delete(path);
 			}
 		}
 
 		createProgress(opts) {
-			return new ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$LSPProgress(
+			return new ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$LSPProgress(
 				this,
 				this.request.reporter,
 				opts,
@@ -117183,7 +117883,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 
 			this.lintSessionsPending.add(path);
 
-			const project = await this.master.projectManager.findProject(path);
+			const project = await this.server.projectManager.findProject(path);
 
 			if (project === undefined) {
 				// Not a Rome project
@@ -117191,10 +117891,10 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 				return;
 			}
 
-			const req = this.createFakeMasterRequest("lsp_project", [path.join()]);
+			const req = this.createFakeServerRequest("lsp_project", [path.join()]);
 			await req.init();
 
-			const linter = new ___R$project$rome$$romejs$core$master$linter$Linter_ts$default(
+			const linter = new ___R$project$rome$$romejs$core$server$linter$Linter_ts$default(
 				req,
 				{
 					save: false,
@@ -117226,9 +117926,9 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 							method: "textDocument/publishDiagnostics",
 							params: {
 								uri: "file://" + ref.real.join(),
-								diagnostics: ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$convertDiagnosticsToLSP(
+								diagnostics: ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$convertDiagnosticsToLSP(
 									processor.getDiagnostics(),
-									this.master,
+									this.server,
 								),
 							},
 						});
@@ -117259,7 +117959,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 		}
 
 		async sendClientRequest(req) {
-			return this.master.handleRequest(
+			return this.server.handleRequest(
 				this.client,
 				Object.assign({silent: true}, req),
 			);
@@ -117281,7 +117981,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 					if (workspaceFolders.exists()) {
 						for (const elem of workspaceFolders.asArray()) {
 							this.watchProject(
-								___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$getPathFromTextDocument(
+								___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$getPathFromTextDocument(
 									elem,
 								),
 							);
@@ -117308,11 +118008,11 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 				}
 
 				case "textDocument/formatting": {
-					const path = ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$getPathFromTextDocument(
+					const path = ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$getPathFromTextDocument(
 						params.get("textDocument"),
 					);
 
-					const project = this.master.projectManager.findProjectExisting(path);
+					const project = this.server.projectManager.findProjectExisting(path);
 					if (project === undefined) {
 						// Not in a Rome project
 						return null;
@@ -117324,7 +118024,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 						return null;
 					}
 
-					return ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$diffTextEdits(
+					return ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$diffTextEdits(
 						res.original,
 						res.formatted,
 					);
@@ -117344,14 +118044,14 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 				case "workspace/didChangeWorkspaceFolders": {
 					for (const elem of params.get("added").asArray()) {
 						this.watchProject(
-							___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$getPathFromTextDocument(
+							___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$getPathFromTextDocument(
 								elem,
 							),
 						);
 					}
 					for (const elem of params.get("removed").asArray()) {
 						this.unwatchProject(
-							___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$getPathFromTextDocument(
+							___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$getPathFromTextDocument(
 								elem,
 							),
 						);
@@ -117360,7 +118060,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 				}
 
 				case "textDocument/didChange": {
-					const path = ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$getPathFromTextDocument(
+					const path = ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$getPathFromTextDocument(
 						params.get("textDocument"),
 					);
 					const content = params.get("contentChanges").asArray()[0].get("text").asString();
@@ -117370,7 +118070,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 				}
 
 				case "textDocument/didSave": {
-					const path = ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$getPathFromTextDocument(
+					const path = ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$getPathFromTextDocument(
 						params.get("textDocument"),
 					);
 					this.fileBuffers.delete(path);
@@ -117448,12 +118148,12 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 
 				case "WAITING_FOR_HEADERS_END": {
 					const endIndex = this.socketBuffer.indexOf(
-						___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$HEADERS_END,
+						___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$HEADERS_END,
 					);
 					if (endIndex !== -1) {
 						// Parse headers
 						const rawHeaders = this.socketBuffer.slice(0, endIndex);
-						this.nextHeaders = ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$parseHeaders(
+						this.nextHeaders = ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$parseHeaders(
 							rawHeaders,
 						);
 
@@ -117461,7 +118161,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 						this.status = "WAITING_FOR_RESPONSE_END";
 						this.socketBuffer = this.socketBuffer.slice(
 							endIndex +
-							___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$HEADERS_END.length,
+							___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$HEADERS_END.length,
 						);
 						this.process();
 					}
@@ -117497,8 +118197,8 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
 	}
 
 
-  // project-rome/@romejs/core/master/commands/lsp.ts
-const ___R$project$rome$$romejs$core$master$commands$lsp_ts$default = ___R$project$rome$$romejs$core$master$commands_ts$createMasterCommand({
+  // project-rome/@romejs/core/server/commands/lsp.ts
+const ___R$project$rome$$romejs$core$server$commands$lsp_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.PROJECT_MANAGEMENT,
 		description: "TODO",
 		usage: "",
@@ -117507,15 +118207,15 @@ const ___R$project$rome$$romejs$core$master$commands$lsp_ts$default = ___R$proje
 			return {};
 		},
 		async callback(req) {
-			const {master, bridge} = req;
+			const {server, bridge} = req;
 
-			const lspServer = new ___R$project$rome$$romejs$core$master$lsp$LSPServer_ts$default(
+			const lspServer = new ___R$project$rome$$romejs$core$server$lsp$LSPServer_ts$default(
 				req,
 			);
-			master.connectedLSPServers.add(lspServer);
+			server.connectedLSPServers.add(lspServer);
 
 			bridge.endEvent.subscribe(() => {
-				master.connectedLSPServers.delete(lspServer);
+				server.connectedLSPServers.delete(lspServer);
 			});
 
 			bridge.lspFromClientBuffer.subscribe((chunk) => {
@@ -117527,9 +118227,9 @@ const ___R$project$rome$$romejs$core$master$commands$lsp_ts$default = ___R$proje
 	});
 
 
-  // project-rome/@romejs/core/master/commands/lint.ts
+  // project-rome/@romejs/core/server/commands/lint.ts
 
-	const ___R$project$rome$$romejs$core$master$commands$lint_ts$default = ___R$project$rome$$romejs$core$master$commands_ts$createMasterCommand({
+	const ___R$project$rome$$romejs$core$server$commands$lint_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.CODE_QUALITY,
 		description: "run lint against a set of files",
 		allowRequestFlags: ["watch", "review"],
@@ -117615,11 +118315,15 @@ const ___R$project$rome$$romejs$core$master$commands$lsp_ts$default = ___R$proje
 				args,
 			};
 
-			const linter = new ___R$project$rome$$romejs$core$master$linter$Linter_ts$default(
+			const linter = new ___R$project$rome$$romejs$core$server$linter$Linter_ts$default(
 				req,
 				opts,
 			);
-			await linter.run(req.query.requestFlags.watch);
+			if (req.query.requestFlags.watch) {
+				await linter.runWatch();
+			} else {
+				await linter.runSingle();
+			}
 		},
 	});
 
@@ -117657,8 +118361,8 @@ const ___R$$priv$project$rome$$romejs$core$common$utils$fork_ts$child = require(
 	}
 
 
-  // project-rome/@romejs/core/master/testing/utils.ts
-function ___R$project$rome$$romejs$core$master$testing$utils_ts$sortMapKeys(map) {
+  // project-rome/@romejs/core/server/testing/utils.ts
+function ___R$project$rome$$romejs$core$server$testing$utils_ts$sortMapKeys(map) {
 		const sortedKeys = Array.from(map.keys()).sort(
 			___R$project$rome$$romejs$string$utils$naturalCompare_ts$naturalCompare,
 		);
@@ -117673,7 +118377,7 @@ function ___R$project$rome$$romejs$core$master$testing$utils_ts$sortMapKeys(map)
 		return newMap;
 	}
 
-	function ___R$project$rome$$romejs$core$master$testing$utils_ts$formatPercent(
+	function ___R$project$rome$$romejs$core$server$testing$utils_ts$formatPercent(
 		num,
 	) {
 		const str = String(Math.floor(num));
@@ -117686,7 +118390,7 @@ function ___R$project$rome$$romejs$core$master$testing$utils_ts$sortMapKeys(map)
 		}
 	}
 
-	function ___R$project$rome$$romejs$core$master$testing$utils_ts$percentInsideCoverageFolder(
+	function ___R$project$rome$$romejs$core$server$testing$utils_ts$percentInsideCoverageFolder(
 		folder,
 	) {
 		let totalFiles = 0;
@@ -117718,11 +118422,11 @@ function ___R$project$rome$$romejs$core$master$testing$utils_ts$sortMapKeys(map)
 	}
 
 
-  // project-rome/@romejs/core/master/testing/TestMasterRunner.ts
-const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$net = require(
+  // project-rome/@romejs/core/server/testing/TestServerRunner.ts
+const ___R$$priv$project$rome$$romejs$core$server$testing$TestServerRunner_ts$net = require(
 		"net",
 	);
-	class ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$BridgeDiagnosticsError
+	class ___R$$priv$project$rome$$romejs$core$server$testing$TestServerRunner_ts$BridgeDiagnosticsError
 		extends ___R$project$rome$$romejs$diagnostics$errors_ts$DiagnosticsError {
 		constructor(diag, bridge) {
 			super(diag.description.message.value, [diag]);
@@ -117730,7 +118434,7 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 		}
 	}
 
-	function ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$grammarNumberTests(
+	function ___R$$priv$project$rome$$romejs$core$server$testing$TestServerRunner_ts$grammarNumberTests(
 		num,
 	) {
 		return (
@@ -117740,16 +118444,16 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 		);
 	}
 
-	function ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$getProgressTestRefText(
+	function ___R$$priv$project$rome$$romejs$core$server$testing$TestServerRunner_ts$getProgressTestRefText(
 		ref,
 	) {
 		return ___R$project$rome$$romejs$string$markup$escape_ts$markup`<filelink target="${ref.filename}" />: ${ref.testName}`;
 	}
 
-	function ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$findAvailablePort() {
+	function ___R$$priv$project$rome$$romejs$core$server$testing$TestServerRunner_ts$findAvailablePort() {
 		return new Promise((resolve, reject) => {
 			// When you create a server without specifying a port then the OS will choose a port number for you!
-			const server = ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$net.createServer();
+			const server = ___R$$priv$project$rome$$romejs$core$server$testing$TestServerRunner_ts$net.createServer();
 			server.unref();
 			server.on("error", reject);
 			server.listen(
@@ -117770,11 +118474,11 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 
 
 
-	class ___R$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$default {
+	class ___R$project$rome$$romejs$core$server$testing$TestServerRunner_ts$default {
 		constructor(opts) {
 			this.sources = opts.sources;
 			this.reporter = opts.request.reporter;
-			this.master = opts.request.master;
+			this.server = opts.request.server;
 			this.cwd = opts.request.client.flags.cwd;
 			this.request = opts.request;
 			this.options = opts.options;
@@ -117908,10 +118612,10 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 					const {focusedTests} = await bridge.prepareTest.call({
 						id,
 						options: opts,
-						projectFolder: req.master.projectManager.assertProjectExisting(
+						projectFolder: req.server.projectManager.assertProjectExisting(
 							ref.real,
 						).folder.join(),
-						file: req.master.projectManager.getTransportFileReference(ref.real),
+						file: req.server.projectManager.getTransportFileReference(ref.real),
 						cwd: flags.cwd.join(),
 						code,
 					});
@@ -117977,7 +118681,7 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 
 			if (
 				err instanceof
-				___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$BridgeDiagnosticsError
+				___R$$priv$project$rome$$romejs$core$server$testing$TestServerRunner_ts$BridgeDiagnosticsError
 			) {
 				bridge = err.bridge;
 			}
@@ -118103,7 +118807,7 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 				i < ___R$project$rome$$romejs$core$common$constants_ts$MAX_WORKER_COUNT;
 				i++
 			) {
-				const inspectorPort = await ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$findAvailablePort();
+				const inspectorPort = await ___R$$priv$project$rome$$romejs$core$server$testing$TestServerRunner_ts$findAvailablePort();
 				containerPromises.push(this.spawnWorker({inspectorPort}));
 			}
 
@@ -118234,7 +118938,7 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 			}
 
 			bridge.endWithError(
-				new ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$BridgeDiagnosticsError(
+				new ___R$$priv$project$rome$$romejs$core$server$testing$TestServerRunner_ts$BridgeDiagnosticsError(
 					___R$project$rome$$romejs$diagnostics$derive_ts$deriveDiagnosticFromErrorStructure(
 						{
 							name: "Error",
@@ -118265,7 +118969,7 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 
 		getWorkers() {
 			if (this.workers === undefined) {
-				throw new Error("TestMasterRunner.init has not been called yet");
+				throw new Error("TestServerRunner.init has not been called yet");
 			} else {
 				return this.workers;
 			}
@@ -118402,7 +119106,7 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 					ourRunningTests.add(this.refToKey(data.ref));
 					this.onTestStart(container, data.ref, data.timeout);
 					progress.pushText(
-						___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$getProgressTestRefText(
+						___R$$priv$project$rome$$romejs$core$server$testing$TestServerRunner_ts$getProgressTestRefText(
 							data.ref,
 						),
 					);
@@ -118411,7 +119115,7 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 				bridge.testFinish.subscribe((data) => {
 					this.onTestFinished(data.ref);
 					progress.popText(
-						___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$getProgressTestRefText(
+						___R$$priv$project$rome$$romejs$core$server$testing$TestServerRunner_ts$getProgressTestRefText(
 							data.ref,
 						),
 					);
@@ -118427,7 +119131,7 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 		}
 
 		printCoverageReport(isError) {
-			const {reporter, master, coverageCollector} = this;
+			const {reporter, server, coverageCollector} = this;
 
 			if (isError && this.options.showAllCoverage) {
 				// Only show coverage for errors when --show-all-coverage has been specified
@@ -118451,7 +119155,7 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 			// Get the packages associated with all the ran tests, we will filter code coverage to those packages only
 			const testedPackages = new Set();
 			for (const {ref} of this.sources.values()) {
-				testedPackages.add(master.memoryFs.getOwnedManifest(ref.real));
+				testedPackages.add(server.memoryFs.getOwnedManifest(ref.real));
 			}
 
 			let root = {
@@ -118467,13 +119171,13 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 				const {filename} = file;
 
 				// Get the absolute filename
-				const absolute = master.projectManager.getFilePathFromUid(filename);
+				const absolute = server.projectManager.getFilePathFromUid(filename);
 				if (absolute === undefined) {
 					continue;
 				}
 
 				// Filter out untested packages
-				const pkg = master.memoryFs.getOwnedManifest(absolute);
+				const pkg = server.memoryFs.getOwnedManifest(absolute);
 				if (testedPackages.has(pkg) === false) {
 					continue;
 				}
@@ -118535,19 +119239,19 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 
 			function buildRows(folder, depth) {
 				const name = folder.name === undefined ? "All files" : folder.name + "/";
-				const folderPercent = ___R$project$rome$$romejs$core$master$testing$utils_ts$percentInsideCoverageFolder(
+				const folderPercent = ___R$project$rome$$romejs$core$server$testing$utils_ts$percentInsideCoverageFolder(
 					folder,
 				);
 
 				rows.push([
 					" ".repeat(depth) + ("<emphasis>" + name + "</emphasis>"),
-					___R$project$rome$$romejs$core$master$testing$utils_ts$formatPercent(
+					___R$project$rome$$romejs$core$server$testing$utils_ts$formatPercent(
 						folderPercent.functions,
 					),
-					___R$project$rome$$romejs$core$master$testing$utils_ts$formatPercent(
+					___R$project$rome$$romejs$core$server$testing$utils_ts$formatPercent(
 						folderPercent.branches,
 					),
-					___R$project$rome$$romejs$core$master$testing$utils_ts$formatPercent(
+					___R$project$rome$$romejs$core$server$testing$utils_ts$formatPercent(
 						folderPercent.lines,
 					),
 				]);
@@ -118558,13 +119262,13 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 				}
 
 				const fileIndent = " ".repeat(depth + 1);
-				for (const [name, file] of ___R$project$rome$$romejs$core$master$testing$utils_ts$sortMapKeys(
+				for (const [name, file] of ___R$project$rome$$romejs$core$server$testing$utils_ts$sortMapKeys(
 					folder.files,
 				)) {
 					let absolute = file.filename;
 
 					// Exchange any UIDs
-					const absolutePath = master.projectManager.getFilePathFromUid(
+					const absolutePath = server.projectManager.getFilePathFromUid(
 						file.filename,
 					);
 					if (absolutePath !== undefined) {
@@ -118574,19 +119278,19 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 					rows.push([
 						fileIndent +
 						___R$project$rome$$romejs$string$markup$escape_ts$markup`<filelink target="${absolute}">${name}</filelink>`,
-						___R$project$rome$$romejs$core$master$testing$utils_ts$formatPercent(
+						___R$project$rome$$romejs$core$server$testing$utils_ts$formatPercent(
 							file.functions.percent,
 						),
-						___R$project$rome$$romejs$core$master$testing$utils_ts$formatPercent(
+						___R$project$rome$$romejs$core$server$testing$utils_ts$formatPercent(
 							file.branches.percent,
 						),
-						___R$project$rome$$romejs$core$master$testing$utils_ts$formatPercent(
+						___R$project$rome$$romejs$core$server$testing$utils_ts$formatPercent(
 							file.lines.percent,
 						),
 					]);
 				}
 
-				for (const subFolder of ___R$project$rome$$romejs$core$master$testing$utils_ts$sortMapKeys(
+				for (const subFolder of ___R$project$rome$$romejs$core$server$testing$utils_ts$sortMapKeys(
 					folder.folders,
 				).values()) {
 					buildRows(subFolder, depth + 1);
@@ -118641,7 +119345,7 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 					"Only ran the following <number emphasis>" +
 					focusedTests.length +
 					"</number> focused " +
-					___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$grammarNumberTests(
+					___R$$priv$project$rome$$romejs$core$server$testing$TestServerRunner_ts$grammarNumberTests(
 						focusedTests.length,
 					),
 				);
@@ -118653,7 +119357,7 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 				"<number emphasis>" +
 				otherTotal +
 				"</number> other " +
-				___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$grammarNumberTests(
+				___R$$priv$project$rome$$romejs$core$server$testing$TestServerRunner_ts$grammarNumberTests(
 					otherTotal,
 				) +
 				" ignored",
@@ -118718,7 +119422,7 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 							totalCount,
 						) +
 						"</emphasis> " +
-						___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$grammarNumberTests(
+						___R$$priv$project$rome$$romejs$core$server$testing$TestServerRunner_ts$grammarNumberTests(
 							totalCount,
 						) +
 						" passed!",
@@ -118735,9 +119439,9 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 	}
 
 
-  // project-rome/@romejs/core/master/commands/test.ts
+  // project-rome/@romejs/core/server/commands/test.ts
 
-	const ___R$project$rome$$romejs$core$master$commands$test_ts$default = ___R$project$rome$$romejs$core$master$commands_ts$createMasterCommand({
+	const ___R$project$rome$$romejs$core$server$commands$test_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.CODE_QUALITY,
 		description: "run tests",
 		usage: "",
@@ -118782,7 +119486,7 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 
 			const tests = new Map();
 
-			const bundler = new ___R$project$rome$$romejs$core$master$bundler$Bundler_ts$default(
+			const bundler = new ___R$project$rome$$romejs$core$server$bundler$Bundler_ts$default(
 				req,
 				req.getBundlerConfigFromFlags({
 					mocks: true,
@@ -118800,12 +119504,12 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 					{
 						code: res.entry.js.content,
 						sourceMap: res.entry.sourceMap.map,
-						ref: req.master.projectManager.getFileReference(path),
+						ref: req.server.projectManager.getFileReference(path),
 					},
 				);
 			}
 
-			const runner = new ___R$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$default({
+			const runner = new ___R$project$rome$$romejs$core$server$testing$TestServerRunner_ts$default({
 				addDiagnostics,
 				options: Object.assign(
 					{},
@@ -118820,8 +119524,8 @@ const ___R$$priv$project$rome$$romejs$core$master$testing$TestMasterRunner_ts$ne
 	});
 
 
-  // project-rome/@romejs/core/master/commands/ci.ts
-async function ___R$$priv$project$rome$$romejs$core$master$commands$ci_ts$runChildCommand(
+  // project-rome/@romejs/core/server/commands/ci.ts
+async function ___R$$priv$project$rome$$romejs$core$server$commands$ci_ts$runChildCommand(
 		req,
 		fn,
 	) {
@@ -118837,7 +119541,7 @@ async function ___R$$priv$project$rome$$romejs$core$master$commands$ci_ts$runChi
 				if (err.hasDiagnostics()) {
 					throw err;
 				} else {
-					req.master.handleRequestError(req, err);
+					req.server.handleRequestError(req, err);
 				}
 			} else {
 				throw err;
@@ -118846,7 +119550,7 @@ async function ___R$$priv$project$rome$$romejs$core$master$commands$ci_ts$runChi
 	}
 
 
-	const ___R$project$rome$$romejs$core$master$commands$ci_ts$default = ___R$project$rome$$romejs$core$master$commands_ts$createMasterCommand({
+	const ___R$project$rome$$romejs$core$server$commands$ci_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.CODE_QUALITY,
 		description: "run lint and tests",
 		usage: "",
@@ -118860,10 +119564,10 @@ async function ___R$$priv$project$rome$$romejs$core$master$commands$ci_ts$runChi
 			const {reporter} = req;
 
 			reporter.heading("Running lint");
-			await ___R$$priv$project$rome$$romejs$core$master$commands$ci_ts$runChildCommand(
+			await ___R$$priv$project$rome$$romejs$core$server$commands$ci_ts$runChildCommand(
 				req,
 				async () => {
-					await ___R$project$rome$$romejs$core$master$commands$lint_ts$default.callback(
+					await ___R$project$rome$$romejs$core$server$commands$lint_ts$default.callback(
 						req,
 						{
 							formatOnly: false,
@@ -118876,10 +119580,10 @@ async function ___R$$priv$project$rome$$romejs$core$master$commands$ci_ts$runChi
 			);
 
 			reporter.heading("Running tests");
-			await ___R$$priv$project$rome$$romejs$core$master$commands$ci_ts$runChildCommand(
+			await ___R$$priv$project$rome$$romejs$core$server$commands$ci_ts$runChildCommand(
 				req,
 				async () => {
-					await ___R$project$rome$$romejs$core$master$commands$test_ts$default.callback(
+					await ___R$project$rome$$romejs$core$server$commands$test_ts$default.callback(
 						req,
 						{
 							focusAllowed: false,
@@ -118896,8 +119600,8 @@ async function ___R$$priv$project$rome$$romejs$core$master$commands$ci_ts$runChi
 	});
 
 
-  // project-rome/@romejs/core/master/commands/_evict.ts
-const ___R$project$rome$$romejs$core$master$commands$_evict_ts$default = ___R$project$rome$$romejs$core$master$commands_ts$createMasterCommand({
+  // project-rome/@romejs/core/server/commands/_evict.ts
+const ___R$project$rome$$romejs$core$server$commands$_evict_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
 		description: "evict a file from the memory cache",
 		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.INTERNAL,
 		usage: "",
@@ -118907,17 +119611,17 @@ const ___R$project$rome$$romejs$core$master$commands$_evict_ts$default = ___R$pr
 		},
 		async callback(req) {
 			const {
-				master,
+				server,
 				reporter,
 				client,
 				query: {args},
 			} = req;
 
 			const files =
-				args.length === 0 ? master.fileAllocator.getAllOwnedFilenames() : args;
+				args.length === 0 ? server.fileAllocator.getAllOwnedFilenames() : args;
 
 			for (const file of files) {
-				await master.fileAllocator.evict(client.flags.cwd.resolve(file));
+				await server.fileAllocator.evict(client.flags.cwd.resolve(file));
 				reporter.success("Evicted " + file);
 			}
 
@@ -118926,8 +119630,8 @@ const ___R$project$rome$$romejs$core$master$commands$_evict_ts$default = ___R$pr
 	});
 
 
-  // project-rome/@romejs/core/master/commands/_moduleSignature.ts
-const ___R$project$rome$$romejs$core$master$commands$_moduleSignature_ts$default = ___R$project$rome$$romejs$core$master$commands_ts$createMasterCommand({
+  // project-rome/@romejs/core/server/commands/_moduleSignature.ts
+const ___R$project$rome$$romejs$core$server$commands$_moduleSignature_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.INTERNAL,
 		description: "get the module type signature of a file",
 		usage: "",
@@ -118936,11 +119640,11 @@ const ___R$project$rome$$romejs$core$master$commands$_moduleSignature_ts$default
 			return {};
 		},
 		async callback(req) {
-			const {master, reporter} = req;
+			const {server, reporter} = req;
 			const {args} = req.query;
 			req.expectArgumentLength(1);
 
-			const filename = await master.resolver.resolveEntryAssertPath(
+			const filename = await server.resolver.resolveEntryAssertPath(
 				Object.assign(
 					{},
 					req.getResolverOptionsFromFlags(),
@@ -118957,8 +119661,8 @@ const ___R$project$rome$$romejs$core$master$commands$_moduleSignature_ts$default
 	});
 
 
-  // project-rome/@romejs/core/master/commands/_noop.ts
-const ___R$project$rome$$romejs$core$master$commands$_noop_ts$default = ___R$project$rome$$romejs$core$master$commands_ts$createMasterCommand({
+  // project-rome/@romejs/core/server/commands/_noop.ts
+const ___R$project$rome$$romejs$core$server$commands$_noop_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.INTERNAL,
 		description: "TODO",
 		usage: "",
@@ -118972,91 +119676,91 @@ const ___R$project$rome$$romejs$core$master$commands$_noop_ts$default = ___R$pro
 	});
 
 
-  // project-rome/@romejs/core/master/commands.ts
+  // project-rome/@romejs/core/server/commands.ts
 
 
-	function ___R$project$rome$$romejs$core$master$commands_ts$createMasterCommand(
+	function ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand(
 		cmd,
 	) {
 		return cmd;
 	}
 
-	const ___R$project$rome$$romejs$core$master$commands_ts$masterCommands = new Map();
-	___R$project$rome$$romejs$core$master$commands_ts$masterCommands.set(
+	const ___R$project$rome$$romejs$core$server$commands_ts$serverCommands = new Map();
+	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
 		"test",
-		___R$project$rome$$romejs$core$master$commands$test_ts$default,
+		___R$project$rome$$romejs$core$server$commands$test_ts$default,
 	);
-	___R$project$rome$$romejs$core$master$commands_ts$masterCommands.set(
+	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
 		"lint",
-		___R$project$rome$$romejs$core$master$commands$lint_ts$default,
+		___R$project$rome$$romejs$core$server$commands$lint_ts$default,
 	);
-	___R$project$rome$$romejs$core$master$commands_ts$masterCommands.set(
+	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
 		"config",
-		___R$project$rome$$romejs$core$master$commands$config_ts$default,
+		___R$project$rome$$romejs$core$server$commands$config_ts$default,
 	);
-	___R$project$rome$$romejs$core$master$commands_ts$masterCommands.set(
+	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
 		"bundle",
-		___R$project$rome$$romejs$core$master$commands$bundle_ts$default,
+		___R$project$rome$$romejs$core$server$commands$bundle_ts$default,
 	);
-	___R$project$rome$$romejs$core$master$commands_ts$masterCommands.set(
+	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
 		"parse",
-		___R$project$rome$$romejs$core$master$commands$parse_ts$default,
+		___R$project$rome$$romejs$core$server$commands$parse_ts$default,
 	);
-	___R$project$rome$$romejs$core$master$commands_ts$masterCommands.set(
+	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
 		"analyzeDependencies",
-		___R$project$rome$$romejs$core$master$commands$analyzeDependencies_ts$default,
+		___R$project$rome$$romejs$core$server$commands$analyzeDependencies_ts$default,
 	);
-	___R$project$rome$$romejs$core$master$commands_ts$masterCommands.set(
+	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
 		"resolve",
-		___R$project$rome$$romejs$core$master$commands$resolve_ts$default,
+		___R$project$rome$$romejs$core$server$commands$resolve_ts$default,
 	);
-	___R$project$rome$$romejs$core$master$commands_ts$masterCommands.set(
+	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
 		"compile",
-		___R$project$rome$$romejs$core$master$commands$compile_ts$default,
+		___R$project$rome$$romejs$core$server$commands$compile_ts$default,
 	);
-	___R$project$rome$$romejs$core$master$commands_ts$masterCommands.set(
+	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
 		"stop",
-		___R$project$rome$$romejs$core$master$commands$stop_ts$default,
+		___R$project$rome$$romejs$core$server$commands$stop_ts$default,
 	);
-	___R$project$rome$$romejs$core$master$commands_ts$masterCommands.set(
+	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
 		"status",
-		___R$project$rome$$romejs$core$master$commands$status_ts$default,
+		___R$project$rome$$romejs$core$server$commands$status_ts$default,
 	);
-	___R$project$rome$$romejs$core$master$commands_ts$masterCommands.set(
+	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
 		"run",
-		___R$project$rome$$romejs$core$master$commands$run_ts$default,
+		___R$project$rome$$romejs$core$server$commands$run_ts$default,
 	);
-	___R$project$rome$$romejs$core$master$commands_ts$masterCommands.set(
+	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
 		"publish",
-		___R$project$rome$$romejs$core$master$commands$publish_ts$default,
+		___R$project$rome$$romejs$core$server$commands$publish_ts$default,
 	);
-	___R$project$rome$$romejs$core$master$commands_ts$masterCommands.set(
+	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
 		"ci",
-		___R$project$rome$$romejs$core$master$commands$ci_ts$default,
+		___R$project$rome$$romejs$core$server$commands$ci_ts$default,
 	);
-	___R$project$rome$$romejs$core$master$commands_ts$masterCommands.set(
+	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
 		"develop",
-		___R$project$rome$$romejs$core$master$commands$develop_ts$default,
+		___R$project$rome$$romejs$core$server$commands$develop_ts$default,
 	);
-	___R$project$rome$$romejs$core$master$commands_ts$masterCommands.set(
+	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
 		"format",
-		___R$project$rome$$romejs$core$master$commands$format_ts$default,
+		___R$project$rome$$romejs$core$server$commands$format_ts$default,
 	);
-	___R$project$rome$$romejs$core$master$commands_ts$masterCommands.set(
+	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
 		"lsp",
-		___R$project$rome$$romejs$core$master$commands$lsp_ts$default,
+		___R$project$rome$$romejs$core$server$commands$lsp_ts$default,
 	);
-	___R$project$rome$$romejs$core$master$commands_ts$masterCommands.set(
+	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
 		"_evict",
-		___R$project$rome$$romejs$core$master$commands$_evict_ts$default,
+		___R$project$rome$$romejs$core$server$commands$_evict_ts$default,
 	);
-	___R$project$rome$$romejs$core$master$commands_ts$masterCommands.set(
+	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
 		"_moduleSignature",
-		___R$project$rome$$romejs$core$master$commands$_moduleSignature_ts$default,
+		___R$project$rome$$romejs$core$server$commands$_moduleSignature_ts$default,
 	);
-	___R$project$rome$$romejs$core$master$commands_ts$masterCommands.set(
+	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
 		"_noop",
-		___R$project$rome$$romejs$core$master$commands$_noop_ts$default,
+		___R$project$rome$$romejs$core$server$commands$_noop_ts$default,
 	);
 
 
@@ -119170,7 +119874,7 @@ const ___R$$priv$project$rome$$romejs$vcs$index_ts$childProcess = require(
 		extends ___R$project$rome$$romejs$vcs$index_ts$VCSClient {
 		constructor(root) {
 			super(root);
-			this.trunkBranch = "master";
+			this.trunkBranch = "main";
 		}
 
 		async getUncommittedFiles() {
@@ -119199,8 +119903,8 @@ const ___R$$priv$project$rome$$romejs$vcs$index_ts$childProcess = require(
 	}
 
 
-  // project-rome/@romejs/core/master/project/ProjectManager.ts
-function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$cleanUidParts(
+  // project-rome/@romejs/core/server/project/ProjectManager.ts
+function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$cleanUidParts(
 		parts,
 	) {
 		let uid = "";
@@ -119231,7 +119935,7 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
 	}
 
 	// If a UID has a relative path that's just index.js, index.ts etc then omit it
-	function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$cleanRelativeUidPath(
+	function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$cleanRelativeUidPath(
 		relative,
 	) {
 		return relative.join();
@@ -119263,9 +119967,9 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
 
 
 
-	class ___R$project$rome$$romejs$core$master$project$ProjectManager_ts$default {
-		constructor(master) {
-			this.master = master;
+	class ___R$project$rome$$romejs$core$server$project$ProjectManager_ts$default {
+		constructor(server) {
+			this.server = server;
 
 			this.isAddingProject = false;
 			this.pendingAddProjects = [];
@@ -119284,7 +119988,7 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
 		}
 
 		async init() {
-			this.master.memoryFs.deletedFileEvent.subscribe((path) => {
+			this.server.memoryFs.deletedFileEvent.subscribe((path) => {
 				this.handleDeleted(path);
 			});
 
@@ -119302,7 +120006,7 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
 				meta: ___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfigMeta(),
 				config: vendorProjectConfig,
 			});
-			await this.master.memoryFs.watch(defaultVendorPath, vendorProjectConfig);
+			await this.server.memoryFs.watch(defaultVendorPath);
 		}
 
 		handleDeleted(path) {
@@ -119407,7 +120111,7 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
 			// Push on parent package names
 			let targetPackagePath = path;
 			while (true) {
-				const pkg = this.master.memoryFs.getOwnedManifest(targetPackagePath);
+				const pkg = this.server.memoryFs.getOwnedManifest(targetPackagePath);
 				if (pkg === undefined || pkg.folder.equal(project.folder)) {
 					break;
 				} else {
@@ -119427,14 +120131,14 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
 
 			parts.unshift(project.config.name);
 
-			const relative = ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$cleanRelativeUidPath(
+			const relative = ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$cleanRelativeUidPath(
 				root.relative(path),
 			);
 			if (relative !== undefined) {
 				parts.push(relative);
 			}
 
-			const uid = ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$cleanUidParts(
+			const uid = ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$cleanUidParts(
 				parts,
 			);
 			this.setUid(path, uid);
@@ -119444,7 +120148,7 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
 		getFileReference(path) {
 			const project = this.assertProjectExisting(path);
 			const uid = this.getUid(path);
-			const pkg = this.master.memoryFs.getOwnedManifest(path);
+			const pkg = this.server.memoryFs.getOwnedManifest(path);
 			return {
 				uid,
 				project: project.id,
@@ -119534,7 +120238,7 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
 			}
 
 			// Notify all workers that it should delete the project
-			for (const {bridge} of this.master.workerManager.getWorkers()) {
+			for (const {bridge} of this.server.workerManager.getWorkers()) {
 				// Evict project
 				bridge.updateProjects.send({
 					projects: [
@@ -119571,11 +120275,11 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
 				}
 			}
 			await Promise.all(
-				ownedFiles.map((path) => this.master.fileAllocator.evict(path)),
+				ownedFiles.map((path) => this.server.fileAllocator.evict(path)),
 			);
 
 			// Tell the MemoryFileSystem to stop watching and clear it's maps
-			this.master.memoryFs.unwatch(project.folder);
+			this.server.memoryFs.unwatch(project.folder);
 		}
 
 		getProjects() {
@@ -119762,10 +120466,10 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
 			}
 
 			// Notify other pieces of our creation
-			this.master.workerManager.onNewProject(project);
+			this.server.workerManager.onNewProject(project);
 
 			// Start watching and crawl this project folder
-			await this.master.memoryFs.watch(projectFolder, config);
+			await this.server.memoryFs.watch(projectFolder);
 
 			return project;
 		}
@@ -119830,7 +120534,7 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
 				for (const def of project.manifests.values()) {
 					manifestsSerial.push({
 						id: def.id,
-						manifest: this.master.memoryFs.getPartialManifest(def),
+						manifest: this.server.memoryFs.getPartialManifest(def),
 					});
 				}
 			}
@@ -119972,7 +120676,7 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
 					// Check in root
 					const configPath = dir.append(configFilename);
 
-					const hasProject = await this.master.memoryFs.existsHard(configPath);
+					const hasProject = await this.server.memoryFs.existsHard(configPath);
 					if (hasProject) {
 						return this.queueAddProject(dir, configPath);
 					}
@@ -119980,7 +120684,7 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
 
 				// Check for package.json
 				const packagePath = dir.append("package.json");
-				if (await this.master.memoryFs.existsHard(packagePath)) {
+				if (await this.server.memoryFs.existsHard(packagePath)) {
 					const input = await ___R$project$rome$$romejs$fs$index_ts$readFileText(
 						packagePath,
 					);
@@ -120003,7 +120707,7 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
 				for (const basename of ___R$project$rome$$romejs$project$constants_ts$ROME_CONFIG_WARN_FILENAMES) {
 					const path = dir.append(basename);
 
-					if (await this.master.memoryFs.existsHard(path)) {
+					if (await this.server.memoryFs.existsHard(path)) {
 						this.warnIncorrectConfigFile(
 							path,
 							___R$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$default.createImmediateThrower([
@@ -120043,19 +120747,19 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
 	}
 
 
-  // project-rome/@romejs/core/master/WorkerManager.ts
-const ___R$$priv$project$rome$$romejs$core$master$WorkerManager_ts$child = require(
+  // project-rome/@romejs/core/server/WorkerManager.ts
+const ___R$$priv$project$rome$$romejs$core$server$WorkerManager_ts$child = require(
 		"child_process",
 	);
 
 
-	class ___R$project$rome$$romejs$core$master$WorkerManager_ts$default {
-		constructor(master) {
-			this.master = master;
+	class ___R$project$rome$$romejs$core$server$WorkerManager_ts$default {
+		constructor(server) {
+			this.server = server;
 
 			this.workerStartEvent = new ___R$project$rome$$romejs$events$Event_ts$default({
 				name: "WorkerManager.workerStart",
-				onError: master.onFatalErrorBound,
+				onError: server.onFatalErrorBound,
 			});
 			this.selfWorker = true;
 			this.locker = new ___R$project$rome$$romejs$core$common$utils$Locker_ts$default();
@@ -120131,8 +120835,8 @@ const ___R$$priv$project$rome$$romejs$core$master$WorkerManager_ts$child = requi
 				{},
 			);
 			const worker = new ___R$project$rome$$romejs$core$worker$Worker_ts$default({
-				loggerOptions: this.master.logger.loggerOptions,
-				userConfig: this.master.userConfig,
+				loggerOptions: this.server.logger.loggerOptions,
+				userConfig: this.server.userConfig,
 				bridge,
 				globalErrorHandlers: false,
 			});
@@ -120142,7 +120846,7 @@ const ___R$$priv$project$rome$$romejs$core$master$WorkerManager_ts$child = requi
 			// Let's use an invariant here for completeness
 			const id = this.getNextWorkerId();
 			if (id !== 0) {
-				throw new Error("Expected master worker id to be 0");
+				throw new Error("Expected server worker id to be 0");
 			}
 
 			const container = {
@@ -120166,9 +120870,9 @@ const ___R$$priv$project$rome$$romejs$core$master$WorkerManager_ts$child = requi
 			const lock = this.locker.getNewLock(0);
 
 			try {
-				const masterWorker = this.getWorkerAssert(0);
-				this.master.logger.info(
-					"[WorkerManager] Spawning first worker outside of master after exceeding " +
+				const serverWorker = this.getWorkerAssert(0);
+				this.server.logger.info(
+					"[WorkerManager] Spawning first worker outside of server after exceeding " +
 					___R$project$rome$$romejs$core$common$constants_ts$MAX_MASTER_BYTES_BEFORE_WORKERS +
 					" bytes",
 				);
@@ -120178,7 +120882,7 @@ const ___R$$priv$project$rome$$romejs$core$master$WorkerManager_ts$child = requi
 				const newWorker = await this.spawnWorker(this.getNextWorkerId(), true);
 
 				// End the old worker, will automatically cleanup
-				masterWorker.bridge.end();
+				serverWorker.bridge.end();
 
 				// Swap the workers
 
@@ -120187,8 +120891,8 @@ const ___R$$priv$project$rome$$romejs$core$master$WorkerManager_ts$child = requi
 					0,
 					{
 						id: 0,
-						fileCount: masterWorker.fileCount,
-						byteCount: masterWorker.byteCount,
+						fileCount: serverWorker.fileCount,
+						byteCount: serverWorker.byteCount,
 						bridge: newWorker.bridge,
 						process: newWorker.process,
 						ghost: false,
@@ -120202,7 +120906,7 @@ const ___R$$priv$project$rome$$romejs$core$master$WorkerManager_ts$child = requi
 		}
 
 		onNewProject(newProject) {
-			this.master.projectManager.notifyWorkersOfProjects(
+			this.server.projectManager.notifyWorkersOfProjects(
 				this.getWorkers(),
 				[newProject],
 			);
@@ -120211,7 +120915,7 @@ const ___R$$priv$project$rome$$romejs$core$master$WorkerManager_ts$child = requi
 		async workerHandshake(worker) {
 			const {bridge} = worker;
 			await bridge.handshake({timeout: 3_000});
-			await this.master.projectManager.notifyWorkersOfProjects([worker]);
+			await this.server.projectManager.notifyWorkersOfProjects([worker]);
 			worker.ready = true;
 		}
 
@@ -120237,7 +120941,7 @@ const ___R$$priv$project$rome$$romejs$core$master$WorkerManager_ts$child = requi
 				{
 					type: "client",
 					onSendMessage: (data) => {
-						this.master.logger.info(
+						this.server.logger.info(
 							"[WorkerManager] Sending worker request to %s:",
 							workerId,
 							data,
@@ -120263,7 +120967,7 @@ const ___R$$priv$project$rome$$romejs$core$master$WorkerManager_ts$child = requi
 					// The process could not be spawned, or
 					// The process could not be killed, or
 					// Sending a message to the child process failed.
-					this.master.onFatalError(err);
+					this.server.onFatalError(err);
 					process.kill();
 				},
 			);
@@ -120272,7 +120976,7 @@ const ___R$$priv$project$rome$$romejs$core$master$WorkerManager_ts$child = requi
 				"exit",
 				() => {
 					//bridge.end(`Worker ${String(workerId)} died`);
-					this.master.onFatalError(
+					this.server.onFatalError(
 						new Error("Worker " + String(workerId) + " died"),
 					);
 				},
@@ -120281,13 +120985,13 @@ const ___R$$priv$project$rome$$romejs$core$master$WorkerManager_ts$child = requi
 			await this.workerHandshake(worker);
 
 			// If a worker is spawned while we're profiling then make sure it's profiling too
-			if (this.master.profiling !== undefined) {
-				await bridge.profilingStart.call(this.master.profiling);
+			if (this.server.profiling !== undefined) {
+				await bridge.profilingStart.call(this.server.profiling);
 			}
 
 			this.workerStartEvent.send(bridge);
 
-			this.master.logger.info(
+			this.server.logger.info(
 				"[WorkerManager] Worker %s started after %sms",
 				workerId,
 				Date.now() - start,
@@ -120309,36 +121013,30 @@ const ___R$$priv$project$rome$$romejs$core$master$WorkerManager_ts$child = requi
 		}
 
 		async getNextWorker(path) {
-			const {logger, memoryFs, fileAllocator} = this.master;
+			const {logger, memoryFs, fileAllocator} = this.server;
 
 			// Get stats first
 			let stats = memoryFs.getFileStats(path);
 			if (stats === undefined) {
 				// Give memoryFs a chance to finish initializing if it's in a pending project
-				await this.master.memoryFs.waitIfInitializingWatch(path);
+				await this.server.memoryFs.waitIfInitializingWatch(path);
 
-				stats = memoryFs.getFileStats(path);
-				if (stats === undefined) {
-					console.error(
-						Array.from(memoryFs.files.keys(), (path) => path.join()),
-					);
-					throw new Error("The file " + path.join() + " doesn't exist");
-				}
+				stats = memoryFs.getFileStatsAssert(path);
 			}
 
 			// Verify that this file doesn't exceed any size limit
 			fileAllocator.verifySize(path, stats);
 
-			// Lock in case we're in the process of swapping the master worker with a dedicated worker
+			// Lock in case we're in the process of swapping the server worker with a dedicated worker
 			await this.locker.waitLock(0);
 
 			// If we are inband only then we should never fork workers
-			if (this.master.options.inbandOnly) {
+			if (this.server.options.inbandOnly) {
 				this.own(0, stats);
 				return this.getWorkerAssert(0);
 			}
 
-			// If the worker is running in the master process and we've exceed our byte limit
+			// If the worker is running in the server process and we've exceed our byte limit
 			// then start up a dedicated worker process
 			if (this.selfWorker) {
 				const worker = this.getWorkerAssert(0);
@@ -120382,8 +121080,8 @@ const ___R$$priv$project$rome$$romejs$core$master$WorkerManager_ts$child = requi
 	}
 
 
-  // project-rome/@romejs/core/master/fs/resolverSuggest.ts
-function ___R$project$rome$$romejs$core$master$fs$resolverSuggest_ts$default(
+  // project-rome/@romejs/core/server/fs/resolverSuggest.ts
+function ___R$project$rome$$romejs$core$server$fs$resolverSuggest_ts$default(
 		resolver,
 		query,
 		resolved,
@@ -120516,7 +121214,7 @@ function ___R$project$rome$$romejs$core$master$fs$resolverSuggest_ts$default(
 
 			// Suggestions based on similarity to paths and packages on disk
 			if (!skipSimilaritySuggestions) {
-				const suggestions = ___R$$priv$project$rome$$romejs$core$master$fs$resolverSuggest_ts$getSuggestions(
+				const suggestions = ___R$$priv$project$rome$$romejs$core$server$fs$resolverSuggest_ts$getSuggestions(
 					resolver,
 					localQuery,
 				);
@@ -120573,7 +121271,7 @@ function ___R$project$rome$$romejs$core$master$fs$resolverSuggest_ts$default(
 			// Hint if this was an entry resolve and the cwd wasn't a project
 			if (
 				query.entry === true &&
-				resolver.master.projectManager.findProjectExisting(localQuery.origin) ===
+				resolver.server.projectManager.findProjectExisting(localQuery.origin) ===
 				undefined
 			) {
 				advice.push({
@@ -120610,7 +121308,7 @@ function ___R$project$rome$$romejs$core$master$fs$resolverSuggest_ts$default(
 
 
 
-	function ___R$$priv$project$rome$$romejs$core$master$fs$resolverSuggest_ts$getPathSuggestions(
+	function ___R$$priv$project$rome$$romejs$core$server$fs$resolverSuggest_ts$getPathSuggestions(
 		resolver,
 		query,
 	) {
@@ -120619,7 +121317,7 @@ function ___R$project$rome$$romejs$core$master$fs$resolverSuggest_ts$default(
 		const suggestions = new Map();
 
 		// Try normal resolved
-		___R$$priv$project$rome$$romejs$core$master$fs$resolverSuggest_ts$tryPathSuggestions(
+		___R$$priv$project$rome$$romejs$core$server$fs$resolverSuggest_ts$tryPathSuggestions(
 			resolver,
 			suggestions,
 			originFolder.resolve(source),
@@ -120634,7 +121332,7 @@ function ___R$project$rome$$romejs$core$master$fs$resolverSuggest_ts$default(
 		// Try parent directories of the origin
 
 		for (const path of originFolder.getChain()) {
-			___R$$priv$project$rome$$romejs$core$master$fs$resolverSuggest_ts$tryPathSuggestions(
+			___R$$priv$project$rome$$romejs$core$server$fs$resolverSuggest_ts$tryPathSuggestions(
 				resolver,
 				suggestions,
 				path.append(sourceParts),
@@ -120644,14 +121342,14 @@ function ___R$project$rome$$romejs$core$master$fs$resolverSuggest_ts$default(
 		return suggestions;
 	}
 
-	const ___R$$priv$project$rome$$romejs$core$master$fs$resolverSuggest_ts$MIN_SIMILARITY = 0.8;
+	const ___R$$priv$project$rome$$romejs$core$server$fs$resolverSuggest_ts$MIN_SIMILARITY = 0.8;
 
-	function ___R$$priv$project$rome$$romejs$core$master$fs$resolverSuggest_ts$tryPathSuggestions(
+	function ___R$$priv$project$rome$$romejs$core$server$fs$resolverSuggest_ts$tryPathSuggestions(
 		resolver,
 		suggestions,
 		path,
 	) {
-		const {memoryFs} = resolver.master;
+		const {memoryFs} = resolver.server;
 
 		const segments = path.getSegments();
 		const chain = path.getChain();
@@ -120687,7 +121385,7 @@ function ___R$project$rome$$romejs$core$master$fs$resolverSuggest_ts$default(
 					path.getExtensionlessBasename(),
 					entries,
 					{
-						minRating: ___R$$priv$project$rome$$romejs$core$master$fs$resolverSuggest_ts$MIN_SIMILARITY,
+						minRating: ___R$$priv$project$rome$$romejs$core$server$fs$resolverSuggest_ts$MIN_SIMILARITY,
 						formatItem: (target) => {
 							return ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(
 								target,
@@ -120697,7 +121395,7 @@ function ___R$project$rome$$romejs$core$master$fs$resolverSuggest_ts$default(
 				);
 
 				for (const rating of ratings) {
-					___R$$priv$project$rome$$romejs$core$master$fs$resolverSuggest_ts$tryPathSuggestions(
+					___R$$priv$project$rome$$romejs$core$server$fs$resolverSuggest_ts$tryPathSuggestions(
 						resolver,
 						suggestions,
 						___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(
@@ -120709,17 +121407,17 @@ function ___R$project$rome$$romejs$core$master$fs$resolverSuggest_ts$default(
 		}
 	}
 
-	function ___R$$priv$project$rome$$romejs$core$master$fs$resolverSuggest_ts$getPackageSuggestions(
+	function ___R$$priv$project$rome$$romejs$core$server$fs$resolverSuggest_ts$getPackageSuggestions(
 		resolver,
 		query,
 	) {
 		const possibleGlobalPackages = new Map();
 
-		const mainProject = resolver.master.projectManager.findProjectExisting(
+		const mainProject = resolver.server.projectManager.findProjectExisting(
 			query.origin,
 		);
 		if (mainProject !== undefined) {
-			const projects = resolver.master.projectManager.getHierarchyFromProject(
+			const projects = resolver.server.projectManager.getHierarchyFromProject(
 				mainProject,
 			);
 
@@ -120735,7 +121433,7 @@ function ___R$project$rome$$romejs$core$master$fs$resolverSuggest_ts$default(
 			query.source.join(),
 			Array.from(possibleGlobalPackages.keys()),
 			{
-				minRating: ___R$$priv$project$rome$$romejs$core$master$fs$resolverSuggest_ts$MIN_SIMILARITY,
+				minRating: ___R$$priv$project$rome$$romejs$core$server$fs$resolverSuggest_ts$MIN_SIMILARITY,
 			},
 		).map((item) => {
 			const name = item.target;
@@ -120750,32 +121448,32 @@ function ___R$project$rome$$romejs$core$master$fs$resolverSuggest_ts$default(
 		return new Map(matches);
 	}
 
-	function ___R$$priv$project$rome$$romejs$core$master$fs$resolverSuggest_ts$getSuggestions(
+	function ___R$$priv$project$rome$$romejs$core$server$fs$resolverSuggest_ts$getSuggestions(
 		resolver,
 		query,
 	) {
 		if (query.entry === true) {
 			return new Map([
-				...___R$$priv$project$rome$$romejs$core$master$fs$resolverSuggest_ts$getPathSuggestions(
+				...___R$$priv$project$rome$$romejs$core$server$fs$resolverSuggest_ts$getPathSuggestions(
 					resolver,
 					query,
 				),
-				...___R$$priv$project$rome$$romejs$core$master$fs$resolverSuggest_ts$getPackageSuggestions(
+				...___R$$priv$project$rome$$romejs$core$server$fs$resolverSuggest_ts$getPackageSuggestions(
 					resolver,
 					query,
 				),
 			]);
 		} else if (
-			___R$project$rome$$romejs$core$master$fs$Resolver_ts$isPathLike(
+			___R$project$rome$$romejs$core$server$fs$Resolver_ts$isPathLike(
 				query.source,
 			)
 		) {
-			return ___R$$priv$project$rome$$romejs$core$master$fs$resolverSuggest_ts$getPathSuggestions(
+			return ___R$$priv$project$rome$$romejs$core$server$fs$resolverSuggest_ts$getPathSuggestions(
 				resolver,
 				query,
 			);
 		} else {
-			return ___R$$priv$project$rome$$romejs$core$master$fs$resolverSuggest_ts$getPackageSuggestions(
+			return ___R$$priv$project$rome$$romejs$core$server$fs$resolverSuggest_ts$getPackageSuggestions(
 				resolver,
 				query,
 			);
@@ -120783,15 +121481,15 @@ function ___R$project$rome$$romejs$core$master$fs$resolverSuggest_ts$default(
 	}
 
 
-  // project-rome/@romejs/core/master/fs/Resolver.ts
-const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require(
+  // project-rome/@romejs/core/server/fs/Resolver.ts
+const ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$https = require(
 		"https",
 	);
-	function ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$request(
+	function ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$request(
 		url,
 	) {
 		return new Promise((resolve) => {
-			const req = ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https.get(
+			const req = ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$https.get(
 				url,
 				(res) => {
 					if (res.statusCode !== 200) {
@@ -120855,7 +121553,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 		});
 	}
 
-	const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$NODE_MODULES = "node_modules";
+	const ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$NODE_MODULES = "node_modules";
 
 
 
@@ -120875,7 +121573,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 
 
 
-	const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$QUERY_RESPONSE_MISSING = {
+	const ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$QUERY_RESPONSE_MISSING = {
 		type: "MISSING",
 		source: undefined,
 	};
@@ -120884,19 +121582,19 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 
 
 
-	function ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$shouldReturnQueryResponse(
+	function ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$shouldReturnQueryResponse(
 		res,
 	) {
 		return res.type === "FOUND" || res.source !== undefined;
 	}
 
-	function ___R$project$rome$$romejs$core$master$fs$Resolver_ts$isPathLike(
+	function ___R$project$rome$$romejs$core$server$fs$Resolver_ts$isPathLike(
 		source,
 	) {
 		return source.isAbsolute() || source.isExplicitRelative();
 	}
 
-	function ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$appendTypeQueryResponse(
+	function ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$appendTypeQueryResponse(
 		res,
 		types,
 	) {
@@ -120911,7 +121609,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 
 
 
-	function ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$attachExportAliasIfUnresolved(
+	function ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$attachExportAliasIfUnresolved(
 		res,
 		alias,
 	) {
@@ -120935,7 +121633,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 		);
 	}
 
-	function ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$getExportsAlias(
+	function ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$getExportsAlias(
 		{
 			manifest,
 			relative,
@@ -120979,12 +121677,12 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 		return undefined;
 	}
 
-	function ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$getPreferredMainKey(
+	function ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$getPreferredMainKey(
 		consumer,
 		manifest,
 		platform,
 	) {
-		const alias = ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$getExportsAlias({
+		const alias = ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$getExportsAlias({
 			manifest,
 			relative: ___R$project$rome$$romejs$path$index_ts$createRelativeFilePath(
 				".",
@@ -121007,9 +121705,9 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 		return undefined;
 	}
 
-	class ___R$project$rome$$romejs$core$master$fs$Resolver_ts$default {
-		constructor(master) {
-			this.master = master;
+	class ___R$project$rome$$romejs$core$server$fs$Resolver_ts$default {
+		constructor(server) {
+			this.server = server;
 		}
 
 		init() {}
@@ -121017,13 +121715,13 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 		async findProjectFromQuery(query) {
 			// If we were passed an absolute path then we should find and add the project it belongs to
 			if (query.source.isAbsolute()) {
-				await this.master.projectManager.findProject(
+				await this.server.projectManager.findProject(
 					query.source.assertAbsolute(),
 				);
 			} else if (query.origin.isAbsolute()) {
 				const origin = query.origin.assertAbsolute();
-				await this.master.projectManager.findProject(origin);
-				await this.master.projectManager.findProject(
+				await this.server.projectManager.findProject(origin);
+				await this.server.projectManager.findProject(
 					origin.append(query.source.assertRelative()),
 				);
 			}
@@ -121053,7 +121751,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 			if (resolved.type === "FOUND") {
 				return resolved;
 			} else {
-				throw ___R$project$rome$$romejs$core$master$fs$resolverSuggest_ts$default(
+				throw ___R$project$rome$$romejs$core$server$fs$resolverSuggest_ts$default(
 					this,
 					query,
 					resolved,
@@ -121075,7 +121773,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 						let projectConfig = ___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfig();
 
 						if (origin.isAbsolute()) {
-							const project = this.master.projectManager.findProjectExisting(
+							const project = this.server.projectManager.findProjectExisting(
 								query.origin.assertAbsolute(),
 							);
 							if (project !== undefined) {
@@ -121087,8 +121785,8 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 							source.join().replace(/[\/:]/g, "$").replace(/\$+/g, "$"),
 						);
 
-						if (!this.master.memoryFs.exists(remotePath)) {
-							const result = await ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$request(
+						if (!this.server.memoryFs.exists(remotePath)) {
+							const result = await ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$request(
 								source.join(),
 							);
 							if (result.type === "DOWNLOADED") {
@@ -121104,7 +121802,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 						return {
 							type: "FOUND",
 							types: [],
-							ref: this.master.projectManager.getURLFileReference(
+							ref: this.server.projectManager.getURLFileReference(
 								remotePath,
 								sourceURL,
 							),
@@ -121152,7 +121850,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 		resolveLocal(query) {
 			// Do some basic checks to determine if this is an absolute or relative path
 			if (
-				___R$project$rome$$romejs$core$master$fs$Resolver_ts$isPathLike(
+				___R$project$rome$$romejs$core$server$fs$Resolver_ts$isPathLike(
 					query.source,
 				)
 			) {
@@ -121189,7 +121887,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 			yield {path, types: callees};
 
 			//
-			const {handler} = this.master.projectManager.getHandlerWithProject(
+			const {handler} = this.server.projectManager.getHandlerWithProject(
 				path.isAbsolute() ? path.assertAbsolute() : query.origin,
 			);
 			const usesUnknownExtension = !query.strict && handler === undefined;
@@ -121253,13 +121951,13 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 			return {
 				type: "FOUND",
 				types: types === undefined ? [] : types,
-				ref: this.master.projectManager.getFileReference(path),
+				ref: this.server.projectManager.getFileReference(path),
 				path,
 			};
 		}
 
 		getOriginFolder(query) {
-			const {memoryFs} = this.master;
+			const {memoryFs} = this.server;
 			const {origin} = query;
 
 			if (memoryFs.isFile(origin)) {
@@ -121270,7 +121968,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 		}
 
 		resolvePath(query, checkVariants = true, types) {
-			const {memoryFs} = this.master;
+			const {memoryFs} = this.server;
 
 			// Resolve the path heiarchy
 			const originFolder = this.getOriginFolder(query);
@@ -121280,7 +121978,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 			if (memoryFs.isFile(resolvedOrigin)) {
 				// If we're querying a package then we should never return a file
 				if (query.requestedType === "package") {
-					return ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$QUERY_RESPONSE_MISSING;
+					return ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$QUERY_RESPONSE_MISSING;
 				}
 
 				return this.finishResolverQueryResponse(resolvedOrigin, types);
@@ -121300,11 +121998,11 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 					);
 
 					if (
-						___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$shouldReturnQueryResponse(
+						___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$shouldReturnQueryResponse(
 							resolved,
 						)
 					) {
-						return ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$appendTypeQueryResponse(
+						return ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$appendTypeQueryResponse(
 							resolved,
 							variant.types,
 						);
@@ -121326,7 +122024,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 						return this.finishResolverQueryResponse(resolvedOrigin, types);
 					}
 
-					const main = ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$getPreferredMainKey(
+					const main = ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$getPreferredMainKey(
 						manifestDef.consumer,
 						manifestDef.manifest,
 						query.platform,
@@ -121342,7 +122040,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 							["package"],
 						);
 
-						return ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$attachExportAliasIfUnresolved(
+						return ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$attachExportAliasIfUnresolved(
 							resolved,
 							main,
 						);
@@ -121363,7 +122061,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 						);
 
 						if (
-							___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$shouldReturnQueryResponse(
+							___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$shouldReturnQueryResponse(
 								indexResolved,
 							)
 						) {
@@ -121373,12 +122071,12 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 				}
 			}
 
-			return ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$QUERY_RESPONSE_MISSING;
+			return ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$QUERY_RESPONSE_MISSING;
 		}
 
 		resolvePackageFolder(query, moduleName) {
 			// Find the project
-			const project = this.master.projectManager.findProjectExisting(
+			const project = this.server.projectManager.findProjectExisting(
 				query.origin,
 			);
 			if (project === undefined) {
@@ -121386,7 +122084,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 			}
 
 			// Find the package
-			const projects = this.master.projectManager.getHierarchyFromProject(
+			const projects = this.server.projectManager.getHierarchyFromProject(
 				project,
 			);
 
@@ -121407,18 +122105,18 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 
 		resolveManifest(query, manifestDef, moduleNameParts) {
 			if (manifestDef === undefined) {
-				return ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$QUERY_RESPONSE_MISSING;
+				return ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$QUERY_RESPONSE_MISSING;
 			}
 
 			if (moduleNameParts.length > 0) {
 				// Submodules of this package are private
 				if (manifestDef.manifest.exports === false) {
-					return ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$QUERY_RESPONSE_MISSING;
+					return ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$QUERY_RESPONSE_MISSING;
 				}
 
 				// Check if we're allowed to touch this submodule
 				if (manifestDef.manifest.exports !== true) {
-					const alias = ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$getExportsAlias({
+					const alias = ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$getExportsAlias({
 						manifest: manifestDef.manifest,
 						relative: ___R$project$rome$$romejs$path$index_ts$createFilePathFromSegments(
 							moduleNameParts,
@@ -121428,7 +122126,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 
 					if (alias === undefined) {
 						// No submodule found
-						return ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$QUERY_RESPONSE_MISSING;
+						return ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$QUERY_RESPONSE_MISSING;
 					}
 
 					// Alias found!
@@ -121441,7 +122139,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 						true,
 						["package"],
 					);
-					return ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$attachExportAliasIfUnresolved(
+					return ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$attachExportAliasIfUnresolved(
 						resolved,
 						alias,
 					);
@@ -121462,7 +122160,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 
 		resolveMock(query, project, parentDirectories) {
 			if (project === undefined) {
-				return ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$QUERY_RESPONSE_MISSING;
+				return ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$QUERY_RESPONSE_MISSING;
 			}
 
 			const moduleName = query.source.assertRelative();
@@ -121473,7 +122171,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 				);
 
 				// No use resolving against a directory that doesn't exist
-				if (!this.master.memoryFs.exists(mocksDir)) {
+				if (!this.server.memoryFs.exists(mocksDir)) {
 					continue;
 				}
 
@@ -121482,18 +122180,18 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 				);
 
 				if (
-					___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$shouldReturnQueryResponse(
+					___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$shouldReturnQueryResponse(
 						resolved,
 					)
 				) {
-					return ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$appendTypeQueryResponse(
+					return ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$appendTypeQueryResponse(
 						resolved,
 						["mock"],
 					);
 				}
 			}
 
-			return ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$QUERY_RESPONSE_MISSING;
+			return ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$QUERY_RESPONSE_MISSING;
 		}
 
 		// Given a reference to a module, extract the module name and any trailing relative paths
@@ -121514,7 +122212,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 			const {origin, source} = query;
 
 			// Get project for the origin
-			const project = this.master.projectManager.findProjectExisting(origin);
+			const project = this.server.projectManager.findProjectExisting(origin);
 
 			// Get all the parent directories for when we crawl up
 			const parentDirectories = this.getOriginFolder(query).getChain();
@@ -121523,7 +122221,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 			if (query.mocks === true) {
 				const mockResolved = this.resolveMock(query, project, parentDirectories);
 				if (
-					___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$shouldReturnQueryResponse(
+					___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$shouldReturnQueryResponse(
 						mockResolved,
 					)
 				) {
@@ -121535,7 +122233,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 			const [moduleName, moduleNameParts] = this.splitModuleName(source);
 
 			// Resolve a virtual module
-			const virtualResolved = this.master.virtualModules.resolve(moduleName);
+			const virtualResolved = this.server.virtualModules.resolve(moduleName);
 			if (virtualResolved !== undefined) {
 				return this.resolvePath(
 					Object.assign(
@@ -121555,7 +122253,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 				moduleNameParts,
 			);
 			if (
-				___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$shouldReturnQueryResponse(
+				___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$shouldReturnQueryResponse(
 					packageResolved,
 				)
 			) {
@@ -121565,9 +122263,9 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 			// Check all parent directories for node_modules
 			for (const dir of parentDirectories) {
 				const modulePath = dir.append(
-					___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$NODE_MODULES,
+					___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$NODE_MODULES,
 				).append(moduleName);
-				const manifestDef = this.master.memoryFs.getManifestDefinition(
+				const manifestDef = this.server.memoryFs.getManifestDefinition(
 					modulePath,
 				);
 				if (manifestDef !== undefined) {
@@ -121575,15 +122273,15 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 				}
 			}
 
-			return ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$QUERY_RESPONSE_MISSING;
+			return ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$QUERY_RESPONSE_MISSING;
 		}
 	}
 
 
-  // project-rome/@romejs/core/master/fs/FileAllocator.ts
-class ___R$project$rome$$romejs$core$master$fs$FileAllocator_ts$default {
-		constructor(master) {
-			this.master = master;
+  // project-rome/@romejs/core/server/fs/FileAllocator.ts
+class ___R$project$rome$$romejs$core$server$fs$FileAllocator_ts$default {
+		constructor(server) {
+			this.server = server;
 			this.fileToWorker = new Map();
 			this.locker = new ___R$project$rome$$romejs$core$common$utils$Locker_ts$default();
 			this.evictEvent = new ___R$project$rome$$romejs$events$Event_ts$default({
@@ -121592,11 +122290,11 @@ class ___R$project$rome$$romejs$core$master$fs$FileAllocator_ts$default {
 		}
 
 		init() {
-			this.master.memoryFs.deletedFileEvent.subscribe((path) => {
+			this.server.memoryFs.deletedFileEvent.subscribe((path) => {
 				return this.handleDeleted(path);
 			});
 
-			this.master.memoryFs.changedFileEvent.subscribe((
+			this.server.memoryFs.changedFileEvent.subscribe((
 				{path, oldStats, newStats},
 			) => {
 				return this.handleChange(path, oldStats, newStats);
@@ -121616,7 +122314,7 @@ class ___R$project$rome$$romejs$core$master$fs$FileAllocator_ts$default {
 		}
 
 		verifySize(path, stats) {
-			const project = this.master.projectManager.assertProjectExisting(path);
+			const project = this.server.projectManager.assertProjectExisting(path);
 			const maxSize = project.config.files.maxSize;
 
 			if (stats.size > maxSize) {
@@ -121631,7 +122329,7 @@ class ___R$project$rome$$romejs$core$master$fs$FileAllocator_ts$default {
 		}
 
 		getOwnerAssert(path) {
-			const {workerManager} = this.master;
+			const {workerManager} = this.server;
 			const workerId = this.getOwnerId(path);
 			if (workerId === undefined) {
 				throw new Error("No worker found for " + path);
@@ -121645,7 +122343,7 @@ class ___R$project$rome$$romejs$core$master$fs$FileAllocator_ts$default {
 		}
 
 		async getOrAssignOwner(path) {
-			const {workerManager} = this.master;
+			const {workerManager} = this.server;
 
 			const workerId = this.getOwnerId(path);
 			if (workerId === undefined) {
@@ -121665,13 +122363,13 @@ class ___R$project$rome$$romejs$core$master$fs$FileAllocator_ts$default {
 
 			// Notify the worker to remove it from 'it's cache
 			const filename = path.join();
-			const worker = this.master.workerManager.getWorkerAssert(workerId);
+			const worker = this.server.workerManager.getWorkerAssert(workerId);
 			await worker.bridge.evict.call({
 				filename,
 			});
 			this.evictEvent.send(path);
 
-			this.master.logger.info("[FileAllocator] Evicted %s", path.toMarkup());
+			this.server.logger.info("[FileAllocator] Evicted %s", path.toMarkup());
 		}
 
 		async handleDeleted(path) {
@@ -121688,12 +122386,12 @@ class ___R$project$rome$$romejs$core$master$fs$FileAllocator_ts$default {
 			this.fileToWorker.delete(path.join());
 
 			// Remove the total size from 'this worker so it'll be assigned next
-			const stats = this.master.memoryFs.getFileStatsAssert(path);
-			this.master.workerManager.disown(workerId, stats);
+			const stats = this.server.memoryFs.getFileStatsAssert(path);
+			this.server.workerManager.disown(workerId, stats);
 		}
 
 		async handleChange(path, oldStats, newStats) {
-			const {logger, workerManager} = this.master;
+			const {logger, workerManager} = this.server;
 
 			// Send update to worker owner
 			if (this.hasOwner(path)) {
@@ -121717,7 +122415,7 @@ class ___R$project$rome$$romejs$core$master$fs$FileAllocator_ts$default {
 				}
 				workerManager.disown(workerId, oldStats);
 				workerManager.own(workerId, newStats);
-			} else if (await this.master.projectManager.maybeEvictPossibleConfig(path)) {
+			} else if (await this.server.projectManager.maybeEvictPossibleConfig(path)) {
 				logger.info(
 					"[FileAllocator] Evicted the project belonging to config %s",
 					path.toMarkup(),
@@ -121728,7 +122426,7 @@ class ___R$project$rome$$romejs$core$master$fs$FileAllocator_ts$default {
 		}
 
 		async assignOwner(path) {
-			const {workerManager, logger} = this.master;
+			const {workerManager, logger} = this.server;
 
 			const filename = path.join();
 			const lock = await this.locker.getLock(filename);
@@ -121738,21 +122436,22 @@ class ___R$project$rome$$romejs$core$master$fs$FileAllocator_ts$default {
 				lock.release();
 				return this.getOwnerAssert(path);
 			}
+			try {
+				const worker = await workerManager.getNextWorker(path);
 
-			const worker = await workerManager.getNextWorker(path);
+				// Add ourselves to the file map
+				logger.info(
+					"[FileAllocator] File %s assigned to worker %s",
+					path.toMarkup(),
+					worker.id,
+				);
+				this.fileToWorker.set(filename, worker.id);
 
-			// Add ourselves to the file map
-			logger.info(
-				"[FileAllocator] File %s assigned to worker %s",
-				path.toMarkup(),
-				worker.id,
-			);
-			this.fileToWorker.set(filename, worker.id);
-
-			// Release and continue
-			lock.release();
-
-			return worker;
+				return worker;
+			} finally {
+				// Release and continue
+				lock.release();
+			}
 		}
 	}
 
@@ -121791,19 +122490,19 @@ class ___R$project$rome$$romejs$core$master$fs$FileAllocator_ts$default {
 	}
 
 
-  // project-rome/@romejs/core/master/fs/MemoryFileSystem.ts
-const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto = require(
+  // project-rome/@romejs/core/server/fs/MemoryFileSystem.ts
+const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto = require(
 		"crypto",
 	);
-	const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$fs = require(
+	const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$fs = require(
 		"fs",
 	);
-	const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$DEFAULT_DENYLIST = [
+	const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$DEFAULT_DENYLIST = [
 		".hg",
 		".git",
 	];
 
-	const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$GLOB_IGNORE = [
+	const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$GLOB_IGNORE = [
 		___R$project$rome$$romejs$path$match$parse_ts$parsePattern({
 			input: "node_modules",
 		}),
@@ -121811,7 +122510,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 		___R$project$rome$$romejs$path$match$parse_ts$parsePattern({input: ".hg"}),
 	];
 
-	function ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$concatGlobIgnore(
+	function ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$concatGlobIgnore(
 		patterns,
 	) {
 		// If there are any negate patterns then it'll never include GLOB_IGNORE
@@ -121822,12 +122521,12 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 		}
 
 		return [
-			...___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$GLOB_IGNORE,
+			...___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$GLOB_IGNORE,
 			...patterns,
 		];
 	}
 
-	function ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$isValidManifest(
+	function ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$isValidManifest(
 		path,
 	) {
 		if (path.getBasename() !== "package.json") {
@@ -121869,7 +122568,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 	}
 
 	// Whenever we're performing an operation on a set of files, always do these first as they may influence how the rest are processed
-	const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$PRIORITY_FILES = new Set(
+	const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$PRIORITY_FILES = new Set(
 		___R$project$rome$$romejs$project$constants_ts$ROME_CONFIG_FILENAMES,
 	);
 
@@ -121885,15 +122584,15 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 
 
 
-	async function ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$createWatcher(
+	async function ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$createWatcher(
 		memoryFs,
 		diagnostics,
 		projectFolder,
 	) {
-		const {logger} = memoryFs.master;
+		const {logger} = memoryFs.server;
 
 		// Create activity spinners for all connected reporters
-		const activity = memoryFs.master.connectedReporters.progress({
+		const activity = memoryFs.server.connectedReporters.progress({
 			initDelay: 1_000,
 			title: "Adding project " + projectFolder.toMarkup(),
 		});
@@ -121927,8 +122626,8 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 
 						const path = folderPath.resolve(filename);
 
-						memoryFs.stat(path).then((newStats) => {
-							const diagnostics = memoryFs.master.createDisconnectedDiagnosticsProcessor([
+						memoryFs.hardStat(path).then((newStats) => {
+							const diagnostics = memoryFs.server.createDisconnectedDiagnosticsProcessor([
 								{
 									category: "memory-fs",
 									message: "Processing fs.watch changes",
@@ -121970,7 +122669,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 			// No need to call watch() on the projectFolder since it will call us
 
 			// Perform an initial crawl
-			const stats = await memoryFs.stat(projectFolder);
+			const stats = await memoryFs.hardStat(projectFolder);
 			await memoryFs.addDirectory(
 				projectFolder,
 				stats,
@@ -122000,9 +122699,9 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 		};
 	}
 
-	class ___R$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$default {
-		constructor(master) {
-			this.master = master;
+	class ___R$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$default {
+		constructor(server) {
+			this.server = server;
 
 			this.watchPromises = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
 			this.directoryListings = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
@@ -122010,19 +122709,35 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 			this.files = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
 			this.manifests = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
 			this.watchers = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
+			this.buffers = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
 			this.manifestCounter = 0;
 
 			this.changedFileEvent = new ___R$project$rome$$romejs$events$Event_ts$default({
 				name: "MemoryFileSystem.changedFile",
-				onError: master.onFatalErrorBound,
+				onError: server.onFatalErrorBound,
 			});
 			this.deletedFileEvent = new ___R$project$rome$$romejs$events$Event_ts$default({
 				name: "MemoryFileSystem.deletedFile",
-				onError: master.onFatalErrorBound,
+				onError: server.onFatalErrorBound,
 			});
 		}
 
 		init() {}
+
+		addBuffer(path, content) {
+			this.buffers.set(
+				path,
+				{
+					type: "file",
+					size: content.length,
+					mtime: Date.now(),
+				},
+			);
+		}
+
+		clearBuffer(path) {
+			this.buffers.delete(path);
+		}
 
 		unwatch(dirPath) {
 			const watcher = this.watchers.get(dirPath);
@@ -122034,16 +122749,11 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 			watcher.close();
 
 			// Go through and clear all files and directories from our internal maps
-
 			// NOTE: We deliberately do not call 'deletedFileEvent' as the code that
-
 			// calls us will already be cleaning up
 			let queue = [dirPath];
 			while (queue.length > 0) {
 				const path = queue.pop();
-				if (path === undefined) {
-					throw new Error("Unknown path");
-				}
 
 				this.directories.delete(path);
 				this.manifests.delete(path);
@@ -122099,7 +122809,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 
 		getOwnedManifest(path) {
 			for (const dir of path.getChain()) {
-				const def = this.master.memoryFs.getManifestDefinition(dir);
+				const def = this.server.memoryFs.getManifestDefinition(dir);
 				if (def !== undefined) {
 					return def;
 				}
@@ -122124,7 +122834,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 			listing.set(path, path);
 		}
 
-		handleDeletion(path) {
+		async handleDeletion(path) {
 			// If a folder then evict all children
 			const folderInfo = this.directories.get(path);
 			if (folderInfo !== undefined) {
@@ -122134,10 +122844,18 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 				if (listing !== undefined) {
 					this.directoryListings.delete(path);
 					for (const path of listing.values()) {
-						this.handleDeletion(path);
+						await this.handleDeletion(path);
 					}
 				}
 			}
+
+			// Wait for any subscribers that might need the file's stats
+			this.server.logger.info(
+				"[MemoryFileSystem] File deleted:",
+				path.toMarkup(),
+			);
+			await this.deletedFileEvent.call(path);
+			this.server.refreshFileEvent.send(path);
 
 			// Remove from 'all possible caches
 			this.files.delete(path);
@@ -122154,8 +122872,6 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 			if (parentListing !== undefined) {
 				parentListing.delete(path);
 			}
-
-			this.deletedFileEvent.send(path);
 		}
 
 		handleDeletedManifest(path) {
@@ -122171,6 +122887,11 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 			const changed = await this.addFile(path, stats, opts);
 			if (changed) {
 				const newStats = this.getFileStatsAssert(path);
+				this.server.logger.info(
+					"[MemoryFileSystem] File change:",
+					path.toMarkup(),
+				);
+				this.server.refreshFileEvent.send(path);
 				this.changedFileEvent.send({path, oldStats, newStats});
 			}
 			return changed;
@@ -122193,8 +122914,8 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 			}
 		}
 
-		async watch(projectFolder, projectConfig) {
-			const {logger} = this.master;
+		async watch(projectFolder) {
+			const {logger} = this.server;
 			const projectFolderJoined = projectFolder.join();
 			const folderLink = ___R$project$rome$$romejs$string$markup$escape_ts$markup`<filelink target="${projectFolderJoined}" />`;
 
@@ -122237,7 +122958,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 				}
 			}
 
-			const diagnostics = this.master.createDiagnosticsProcessor({
+			const diagnostics = this.server.createDiagnosticsProcessor({
 				origins: [
 					{
 						category: "memory-fs",
@@ -122247,7 +122968,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 			});
 
 			logger.info("[MemoryFileSystem] Watching " + folderLink);
-			const promise = ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$createWatcher(
+			const promise = ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$createWatcher(
 				this,
 				diagnostics,
 				projectFolder,
@@ -122273,7 +122994,8 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 			diagnostics.maybeThrowDiagnosticsError();
 		}
 
-		async stat(path) {
+		// Query actual file system for stats
+		async hardStat(path) {
 			const stats = await ___R$project$rome$$romejs$fs$index_ts$lstat(path);
 
 			let type = "unknown";
@@ -122291,7 +123013,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 		}
 
 		maybeGetMtime(path) {
-			const stats = this.getFileStats(path);
+			const stats = this.buffers.get(path) || this.files.get(path);
 			if (stats === undefined) {
 				return undefined;
 			} else {
@@ -122300,13 +123022,14 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 		}
 
 		getMtime(path) {
-			const stats = this.getFileStats(path);
-			if (stats === undefined) {
-				throw new Error(
-					"File " + path.join() + " not in database, cannot get mtime",
+			const mtime = this.maybeGetMtime(path);
+			if (mtime === undefined) {
+				throw new ___R$project$rome$$romejs$core$common$FileNotFound_ts$FileNotFound(
+					path,
+					"Not found in memory file system",
 				);
 			} else {
-				return stats.mtime;
+				return mtime;
 			}
 		}
 
@@ -122317,13 +123040,16 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 		getFileStatsAssert(path) {
 			const stats = this.getFileStats(path);
 			if (stats === undefined) {
-				throw new Error("Expected file stats for " + path);
+				throw new ___R$project$rome$$romejs$core$common$FileNotFound_ts$FileNotFound(
+					path,
+					"Not found in memory file system",
+				);
 			}
 			return stats;
 		}
 
 		isIgnored(path, type) {
-			const project = this.master.projectManager.findProjectExisting(path);
+			const project = this.server.projectManager.findProjectExisting(path);
 			if (project === undefined) {
 				return false;
 			}
@@ -122342,7 +123068,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 			// Ensure we aren't in any of the default denylists
 			const basename = path.getBasename();
 			if (
-				___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$DEFAULT_DENYLIST.includes(
+				___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$DEFAULT_DENYLIST.includes(
 					basename,
 				)
 			) {
@@ -122377,7 +123103,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 			const manifestRaw = await ___R$project$rome$$romejs$fs$index_ts$readFileText(
 				path,
 			);
-			const hash = ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto.createHash(
+			const hash = ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto.createHash(
 				"sha256",
 			).update(manifestRaw).digest("hex");
 
@@ -122416,7 +123142,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 
 			// If we aren't in node_modules then this is a project package
 			const isProjectPackage = this.isInsideProject(path);
-			const {projectManager} = this.master;
+			const {projectManager} = this.server;
 			const project = projectManager.findProjectExisting(path);
 			if (project !== undefined) {
 				projectManager.declareManifest(
@@ -122428,7 +123154,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 			}
 
 			// Tell all workers of our discovery
-			for (const worker of this.master.workerManager.getWorkers()) {
+			for (const worker of this.server.workerManager.getWorkers()) {
 				worker.bridge.updateManifests.call({
 					manifests: [{id: def.id, manifest: this.getPartialManifest(def)}],
 				});
@@ -122447,7 +123173,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 			while (crawl.length > 0) {
 				const path = crawl.pop();
 
-				const project = this.master.projectManager.assertProjectExisting(path);
+				const project = this.server.projectManager.assertProjectExisting(path);
 
 				let ignore = overrideIgnore;
 
@@ -122455,7 +123181,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 				if (getProjectIgnore !== undefined) {
 					const projectIgnore = ignoresByProject.get(project);
 					if (projectIgnore === undefined) {
-						ignore = ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$concatGlobIgnore([
+						ignore = ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$concatGlobIgnore([
 							...ignore,
 							...getProjectIgnore(project),
 						]);
@@ -122579,7 +123305,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 
 				// Declare the file
 				const declareItem = async (path) => {
-					const stats = await this.stat(path);
+					const stats = await this.hardStat(path);
 					if (stats.type === "file") {
 						await this.addFile(path, stats, opts);
 					} else if (stats.type === "directory") {
@@ -122590,7 +123316,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 				// Give priority to package.json in case we want to derive something from the project config
 				for (const file of files) {
 					if (
-						___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$PRIORITY_FILES.has(
+						___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$PRIORITY_FILES.has(
 							file.getBasename(),
 						)
 					) {
@@ -122658,7 +123384,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 			const dirname = path.getParent();
 
 			// Warn about potentially incorrect Rome config filenames
-			const {projectManager} = this.master;
+			const {projectManager} = this.server;
 			projectManager.checkConfigFile(path, opts.diagnostics);
 
 			// Add project if this is a config
@@ -122671,7 +123397,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 			}
 
 			if (
-				___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$isValidManifest(
+				___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$isValidManifest(
 					path,
 				)
 			) {
@@ -122687,10 +123413,10 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 	}
 
 
-  // project-rome/@romejs/core/master/Cache.ts
+  // project-rome/@romejs/core/server/Cache.ts
 
 	// Basic checks to determine if we can consider a and b to be mergable
-	function ___R$$priv$project$rome$$romejs$core$master$Cache_ts$areEntriesEqual(
+	function ___R$$priv$project$rome$$romejs$core$server$Cache_ts$areEntriesEqual(
 		a,
 		b,
 	) {
@@ -122713,15 +123439,15 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 	}
 
 	// Write cache entries every 5 seconds after the first modification
-	const ___R$$priv$project$rome$$romejs$core$master$Cache_ts$BATCH_WRITES_MS = 5_000;
+	const ___R$$priv$project$rome$$romejs$core$server$Cache_ts$BATCH_WRITES_MS = 5_000;
 
-	class ___R$project$rome$$romejs$core$master$Cache_ts$default {
-		constructor(master) {
-			this.master = master;
+	class ___R$project$rome$$romejs$core$server$Cache_ts$default {
+		constructor(server) {
+			this.server = server;
 			this.loadedEntries = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
 			this.disabled =
-				!master.options.forceCacheEnabled && process.env.ROME_CACHE === "0";
-			this.cachePath = master.userConfig.cachePath;
+				!server.options.forceCacheEnabled && process.env.ROME_CACHE === "0";
+			this.cachePath = server.userConfig.cachePath;
 
 			this.runningWritePromise = undefined;
 			this.pendingWriteTimer = undefined;
@@ -122729,20 +123455,17 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 		}
 
 		async init() {
-			this.master.memoryFs.deletedFileEvent.subscribe((filename) => {
-				return this.master.cache.handleDeleted(filename);
+			this.server.memoryFs.deletedFileEvent.subscribe((filename) => {
+				return this.server.cache.handleDeleted(filename);
 			});
 
-			const {memoryFs} = this.master;
+			const {memoryFs} = this.server;
 			await ___R$project$rome$$romejs$fs$index_ts$createDirectory(
 				this.cachePath,
 			);
-			await memoryFs.watch(
-				this.cachePath,
-				___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfig(),
-			);
+			await memoryFs.watch(this.cachePath);
 
-			this.master.endEvent.subscribe(async () => {
+			this.server.endEvent.subscribe(async () => {
 				// Wait on possible running writePending
 				await this.runningWritePromise;
 
@@ -122772,7 +123495,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 			}
 
 			// Log
-			const {logger} = this.master;
+			const {logger} = this.server;
 			if (filelinks.length > 0) {
 				logger.info("[Cache] Wrote entries due to " + reason);
 				logger.list(filelinks);
@@ -122791,23 +123514,23 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 			this.pendingWriteTimer = setTimeout(
 				() => {
 					this.runningWritePromise = this.writePending("queue").catch((err) => {
-						this.master.onFatalError(err);
+						this.server.onFatalError(err);
 					}).finally(() => {
 						// Finished running
 						this.runningWritePromise = undefined;
 					});
 				},
-				___R$$priv$project$rome$$romejs$core$master$Cache_ts$BATCH_WRITES_MS,
+				___R$$priv$project$rome$$romejs$core$server$Cache_ts$BATCH_WRITES_MS,
 			);
 		}
 
 		async createEmptyEntry(path) {
-			const {projectManager, memoryFs} = this.master;
+			const {projectManager, memoryFs} = this.server;
 
 			const project = await projectManager.assertProject(path);
 
 			const configHashes = [...project.meta.configHashes];
-			const pkg = this.master.memoryFs.getOwnedManifest(path);
+			const pkg = this.server.memoryFs.getOwnedManifest(path);
 			if (pkg !== undefined) {
 				configHashes.push(pkg.hash);
 			}
@@ -122827,7 +123550,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 		}
 
 		getCacheFilename(path) {
-			const uid = this.master.projectManager.getUid(path);
+			const uid = this.server.projectManager.getUid(path);
 			return this.cachePath.append(uid);
 		}
 
@@ -122845,7 +123568,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 			let loaded = this.loadedEntries.get(path);
 			if (
 				loaded !== undefined &&
-				___R$$priv$project$rome$$romejs$core$master$Cache_ts$areEntriesEqual(
+				___R$$priv$project$rome$$romejs$core$server$Cache_ts$areEntriesEqual(
 					loaded,
 					emptyEntry,
 				)
@@ -122867,7 +123590,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 		}
 
 		async checkPossibleDiskCacheEntry(cacheFilename, emptyEntry) {
-			const {memoryFs} = this.master;
+			const {memoryFs} = this.server;
 
 			if (!memoryFs.exists(cacheFilename)) {
 				return emptyEntry;
@@ -122880,7 +123603,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 				const obj = JSON.parse(json);
 
 				if (
-					___R$$priv$project$rome$$romejs$core$master$Cache_ts$areEntriesEqual(
+					___R$$priv$project$rome$$romejs$core$server$Cache_ts$areEntriesEqual(
 						emptyEntry,
 						obj,
 					)
@@ -123011,21 +123734,21 @@ function ___R$project$rome$$romejs$core$common$utils$setupGlobalErrorHandlers_ts
 	}
 
 
-  // project-rome/@romejs/core/master/MasterReporter.ts
-class ___R$project$rome$$romejs$core$master$MasterReporter_ts$default
+  // project-rome/@romejs/core/server/ServerReporter.ts
+class ___R$project$rome$$romejs$core$server$ServerReporter_ts$default
 		extends ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default {
-		constructor(master) {
+		constructor(server) {
 			super({
-				wrapperFactory: master.wrapFatal.bind(master),
+				wrapperFactory: server.wrapFatal.bind(server),
 			});
-			this.master = master;
+			this.server = server;
 		}
 
 		// This is so all progress bars are also shown on an LSP client, alongside connected CLIs
 		progress(opts) {
 			const progresses = [this.progressLocal(opts)];
 
-			for (const server of this.master.connectedLSPServers) {
+			for (const server of this.server.connectedLSPServers) {
 				progresses.push(server.createProgress(opts));
 			}
 
@@ -123036,11 +123759,11 @@ class ___R$project$rome$$romejs$core$master$MasterReporter_ts$default
 	}
 
 
-  // project-rome/@romejs/core/master/fs/runtime-modules.ts
-const ___R$project$rome$$romejs$core$master$fs$runtime$modules_ts$modules = new Map();
+  // project-rome/@romejs/core/server/fs/runtime-modules.ts
+const ___R$project$rome$$romejs$core$server$fs$runtime$modules_ts$modules = new Map();
 
 	// EVERYTHING BELOW IS AUTOGENERATED. SEE SCRIPTS FOLDER FOR UPDATE SCRIPTS
-	___R$project$rome$$romejs$core$master$fs$runtime$modules_ts$modules.set(
+	___R$project$rome$$romejs$core$server$fs$runtime$modules_ts$modules.set(
 		"rome",
 		new Map([
 			[
@@ -123063,11 +123786,11 @@ const ___R$project$rome$$romejs$core$master$fs$runtime$modules_ts$modules = new 
 	);
 
 
-  // project-rome/@romejs/core/master/fs/VirtualModules.ts
-class ___R$project$rome$$romejs$core$master$fs$VirtualModules_ts$default {
-		constructor(master) {
-			this.master = master;
-			this.runtimeModulesPath = master.userConfig.runtimeModulesPath;
+  // project-rome/@romejs/core/server/fs/VirtualModules.ts
+class ___R$project$rome$$romejs$core$server$fs$VirtualModules_ts$default {
+		constructor(server) {
+			this.server = server;
+			this.runtimeModulesPath = server.userConfig.runtimeModulesPath;
 		}
 
 		async init() {
@@ -123079,7 +123802,7 @@ class ___R$project$rome$$romejs$core$master$fs$VirtualModules_ts$default {
 			await ___R$project$rome$$romejs$fs$index_ts$createDirectory(
 				runtimeModulesPath,
 			);
-			for (const [name, files] of ___R$project$rome$$romejs$core$master$fs$runtime$modules_ts$modules) {
+			for (const [name, files] of ___R$project$rome$$romejs$core$server$fs$runtime$modules_ts$modules) {
 				const modulePath = runtimeModulesPath.append(name);
 				await ___R$project$rome$$romejs$fs$index_ts$createDirectory(modulePath);
 				for (const [basename, content] of files) {
@@ -123096,17 +123819,17 @@ class ___R$project$rome$$romejs$core$master$fs$VirtualModules_ts$default {
 				___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfig(),
 				{name: "rome-runtime"},
 			);
-			await this.master.projectManager.addProjectWithConfig({
+			await this.server.projectManager.addProjectWithConfig({
 				projectFolder: runtimeModulesPath,
 				meta: ___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfigMeta(),
 				config: projectConfig,
 			});
-			await this.master.memoryFs.watch(runtimeModulesPath, projectConfig);
+			await this.server.memoryFs.watch(runtimeModulesPath);
 		}
 
 		resolve(name) {
 			if (
-				___R$project$rome$$romejs$core$master$fs$runtime$modules_ts$modules.has(
+				___R$project$rome$$romejs$core$server$fs$runtime$modules_ts$modules.has(
 					name,
 				)
 			) {
@@ -123118,8 +123841,8 @@ class ___R$project$rome$$romejs$core$master$fs$VirtualModules_ts$default {
 	}
 
 
-  // project-rome/@romejs/core/master/Master.ts
-const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LENGTH = 100_000;
+  // project-rome/@romejs/core/server/Server.ts
+const ___R$$priv$project$rome$$romejs$core$server$Server_ts$STDOUT_MAX_CHUNK_LENGTH = 100_000;
 
 
 
@@ -123129,31 +123852,31 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 
 
 
-	const ___R$$priv$project$rome$$romejs$core$master$Master_ts$disallowedFlagsWhenReviewing = [
+	const ___R$$priv$project$rome$$romejs$core$server$Server_ts$disallowedFlagsWhenReviewing = [
 		"watch",
 	];
 
-	async function ___R$$priv$project$rome$$romejs$core$master$Master_ts$validateRequestFlags(
+	async function ___R$$priv$project$rome$$romejs$core$server$Server_ts$validateRequestFlags(
 		req,
-		masterCommand,
+		serverCommand,
 	) {
 		const {requestFlags} = req.query;
 
 		// Commands need to explicitly allow these flags
-		___R$$priv$project$rome$$romejs$core$master$Master_ts$validateAllowedRequestFlag(
+		___R$$priv$project$rome$$romejs$core$server$Server_ts$validateAllowedRequestFlag(
 			req,
 			"watch",
-			masterCommand,
+			serverCommand,
 		);
-		___R$$priv$project$rome$$romejs$core$master$Master_ts$validateAllowedRequestFlag(
+		___R$$priv$project$rome$$romejs$core$server$Server_ts$validateAllowedRequestFlag(
 			req,
 			"review",
-			masterCommand,
+			serverCommand,
 		);
 
 		// Don't allow review in combination with other flags
 		if (requestFlags.review) {
-			for (const key of ___R$$priv$project$rome$$romejs$core$master$Master_ts$disallowedFlagsWhenReviewing) {
+			for (const key of ___R$$priv$project$rome$$romejs$core$server$Server_ts$disallowedFlagsWhenReviewing) {
 				if (requestFlags[key]) {
 					throw req.throwDiagnosticFlagError({
 						description: ___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.FLAGS.DISALLOWED_REVIEW_FLAG(
@@ -123166,12 +123889,12 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 		}
 	}
 
-	function ___R$$priv$project$rome$$romejs$core$master$Master_ts$validateAllowedRequestFlag(
+	function ___R$$priv$project$rome$$romejs$core$server$Server_ts$validateAllowedRequestFlag(
 		req,
 		flagKey,
-		masterCommand,
+		serverCommand,
 	) {
-		const allowRequestFlags = masterCommand.allowRequestFlags || [];
+		const allowRequestFlags = serverCommand.allowRequestFlags || [];
 		if (req.query.requestFlags[flagKey] && !allowRequestFlags.includes(flagKey)) {
 			throw req.throwDiagnosticFlagError({
 				description: ___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.FLAGS.DISALLOWED_REQUEST_FLAG(
@@ -123182,7 +123905,7 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 		}
 	}
 
-	class ___R$project$rome$$romejs$core$master$Master_ts$default {
+	class ___R$project$rome$$romejs$core$server$Server_ts$default {
 		constructor(opts) {
 			this.onFatalErrorBound = this.onFatalError.bind(this);
 
@@ -123194,29 +123917,29 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 					? ___R$project$rome$$romejs$core$common$userConfig_ts$loadUserConfig()
 					: opts.userConfig;
 
-			this.fileChangeEvent = new ___R$project$rome$$romejs$events$Event_ts$default({
-				name: "Master.fileChange",
-				onError: this.onFatalErrorBound,
-			});
-
 			this.clientStartEvent = new ___R$project$rome$$romejs$events$Event_ts$default({
-				name: "Master.clientStart",
+				name: "Server.clientStart",
 				onError: this.onFatalErrorBound,
 			});
 
 			this.requestStartEvent = new ___R$project$rome$$romejs$events$Event_ts$default({
-				name: "Master.requestStart",
+				name: "Server.requestStart",
+				onError: this.onFatalErrorBound,
+			});
+
+			this.refreshFileEvent = new ___R$project$rome$$romejs$events$Event_ts$default({
+				name: "Server.refreshFile",
 				onError: this.onFatalErrorBound,
 			});
 
 			this.endEvent = new ___R$project$rome$$romejs$events$Event_ts$default({
-				name: "Master.end",
+				name: "Server.end",
 				onError: this.onFatalErrorBound,
 				serial: true,
 			});
 
 			this.logger = new ___R$project$rome$$romejs$core$common$utils$Logger_ts$default(
-				Object.assign({}, opts.loggerOptions, {type: "master"}),
+				Object.assign({}, opts.loggerOptions, {type: "server"}),
 				() => {
 					return this.connectedClientsListeningForLogs.size > 0;
 				},
@@ -123228,7 +123951,7 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 							columns: Infinity,
 							unicode: true,
 							write: (chunk) => {
-								this.emitMasterLog(chunk);
+								this.emitServerLog(chunk);
 							},
 						},
 					],
@@ -123261,7 +123984,7 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 
 			this.fileLocker = new ___R$project$rome$$romejs$core$common$utils$Locker_ts$default();
 
-			this.connectedReporters = new ___R$project$rome$$romejs$core$master$MasterReporter_ts$default(
+			this.connectedReporters = new ___R$project$rome$$romejs$core$server$ServerReporter_ts$default(
 				this,
 			);
 
@@ -123269,35 +123992,27 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 			this.connectedLSPServers = new Set();
 			this.connectedClients = new Set();
 
-			this.virtualModules = new ___R$project$rome$$romejs$core$master$fs$VirtualModules_ts$default(
+			this.virtualModules = new ___R$project$rome$$romejs$core$server$fs$VirtualModules_ts$default(
 				this,
 			);
-			this.memoryFs = new ___R$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$default(
+			this.memoryFs = new ___R$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$default(
 				this,
 			);
-			this.projectManager = new ___R$project$rome$$romejs$core$master$project$ProjectManager_ts$default(
+			this.projectManager = new ___R$project$rome$$romejs$core$server$project$ProjectManager_ts$default(
 				this,
 			);
-			this.workerManager = new ___R$project$rome$$romejs$core$master$WorkerManager_ts$default(
+			this.workerManager = new ___R$project$rome$$romejs$core$server$WorkerManager_ts$default(
 				this,
 			);
-			this.fileAllocator = new ___R$project$rome$$romejs$core$master$fs$FileAllocator_ts$default(
+			this.fileAllocator = new ___R$project$rome$$romejs$core$server$fs$FileAllocator_ts$default(
 				this,
 			);
-			this.resolver = new ___R$project$rome$$romejs$core$master$fs$Resolver_ts$default(
+			this.resolver = new ___R$project$rome$$romejs$core$server$fs$Resolver_ts$default(
 				this,
 			);
-			this.cache = new ___R$project$rome$$romejs$core$master$Cache_ts$default(
+			this.cache = new ___R$project$rome$$romejs$core$server$Cache_ts$default(
 				this,
 			);
-
-			this.memoryFs.deletedFileEvent.subscribe((path) => {
-				return this.handleFileDelete(path);
-			});
-
-			this.memoryFs.changedFileEvent.subscribe(({path}) => {
-				return this.handleFileChange(path);
-			});
 
 			this.warnedCacheClients = new WeakSet();
 
@@ -123307,11 +124022,11 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 			this.terminateWhenIdle = false;
 		}
 
-		emitMasterLog(chunk) {
+		emitServerLog(chunk) {
 			for (const {bridge} of this.connectedClientsListeningForLogs) {
 				// Sometimes the bridge hasn't completely been teardown and we still consider it connected
 				if (bridge.alive) {
-					bridge.log.send({chunk, origin: "master"});
+					bridge.log.send({chunk, origin: "server"});
 				}
 			}
 		}
@@ -123386,7 +124101,7 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 				origins: [
 					...origins,
 					{
-						category: "master",
+						category: "server",
 						message: "Created disconnected diagnostics collector",
 					},
 				],
@@ -123409,6 +124124,49 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 			});
 		}
 
+		// Utility to write a list of files and wait for all refresh events to be emitted
+		// parameter designed to handle `AbsoluteFileMap#entries`
+		async writeFiles(files) {
+			const paths = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet(
+				files.keys(),
+			);
+
+			if (files.size === 0) {
+				this.logger.info("[Server] Writing no files");
+				return;
+			} else {
+				this.logger.info("[Server] Writing files");
+				this.logger.list(Array.from(paths, (path) => path.toMarkup()));
+			}
+
+			let teardown;
+
+			const waitRefresh = new Promise((resolve) => {
+				const sub = this.refreshFileEvent.subscribe((path) => {
+					paths.delete(path);
+					if (paths.size === 0) {
+						resolve();
+					}
+				});
+
+				teardown = () => {
+					sub.unsubscribe();
+				};
+			});
+
+			try {
+				for (const [path, content] of files) {
+					await ___R$project$rome$$romejs$fs$index_ts$writeFile(path, content);
+				}
+
+				await waitRefresh;
+			} finally {
+				if (teardown !== undefined) {
+					teardown();
+				}
+			}
+		}
+
 		async init() {
 			this.maybeSetupGlobalErrorHandlers();
 			this.memoryFs.init();
@@ -123421,7 +124179,7 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 		}
 
 		async end() {
-			this.logger.info("[Master] Teardown triggered");
+			this.logger.info("[Server] Teardown triggered");
 
 			// Unwatch all project folders
 			// We do this before anything else as we don't want events firing while we're in a teardown state
@@ -123446,7 +124204,7 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 			let profiler;
 
 			// If we aren't a dedicated process then we should only expect a single connection
-			// and when that ends. End the Master.
+			// and when that ends. End the Server.
 			if (this.options.dedicated === false) {
 				bridge.endEvent.subscribe(() => {
 					this.end();
@@ -123469,10 +124227,10 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 				if (profiler === undefined) {
 					throw new Error("Expected profiler to be running");
 				}
-				const masterProfile = await profiler.stopProfiling();
+				const serverProfile = await profiler.stopProfiling();
 				profiler = undefined;
 				this.profiling = undefined;
-				return masterProfile;
+				return serverProfile;
 			});
 
 			bridge.profilingGetWorkers.subscribe(async () => {
@@ -123489,7 +124247,7 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 			});
 
 			// When enableWorkerLogs is called we setup subscriptions to the worker logs
-			// Logs are never transported from workers to the master unless there is a subscription
+			// Logs are never transported from workers to the server unless there is a subscription
 			let subscribedWorkers = false;
 			bridge.enableWorkerLogs.subscribe(() => {
 				// enableWorkerLogs could be called twice in the case of `--logs --rage`. We'll only want to setup the subscriptions once
@@ -123548,7 +124306,7 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 				}
 			});
 
-			bridge.endMaster.subscribe(async () => this.end());
+			bridge.endServer.subscribe(async () => this.end());
 
 			await this.clientStartEvent.callOptional(client);
 		}
@@ -123588,17 +124346,17 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 					// Split up stdout chunks
 					if (
 						chunk.length <
-						___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LENGTH
+						___R$$priv$project$rome$$romejs$core$server$Server_ts$STDOUT_MAX_CHUNK_LENGTH
 					) {
 						bridge.stdout.send(chunk);
 					} else {
 						while (chunk.length > 0) {
 							const subChunk = chunk.slice(
 								0,
-								___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LENGTH,
+								___R$$priv$project$rome$$romejs$core$server$Server_ts$STDOUT_MAX_CHUNK_LENGTH,
 							);
 							chunk = chunk.slice(
-								___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LENGTH,
+								___R$$priv$project$rome$$romejs$core$server$Server_ts$STDOUT_MAX_CHUNK_LENGTH,
 							);
 							bridge.stdout.send(subChunk);
 						}
@@ -123682,20 +124440,10 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 			return client;
 		}
 
-		async handleFileDelete(path) {
-			this.logger.info("[Master] File delete:", path.toMarkup());
-			this.fileChangeEvent.send(path);
-		}
-
-		async handleFileChange(path) {
-			this.logger.info("[Master] File change:", path.toMarkup());
-			this.fileChangeEvent.send(path);
-		}
-
 		async handleRequestStart(req) {
-			this.logger.info("[Master] Handling CLI request:", req.query);
+			this.logger.info("[Server] Handling CLI request:", req.query);
 
-			// Hook used by the web server to track and collect master requests
+			// Hook used by the web server to track and collect server requests
 			await this.requestStartEvent.callOptional(req);
 
 			// Track the amount of running queries for terminateWhenIdle
@@ -123709,7 +124457,7 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 
 		handleRequestEnd(req) {
 			this.requestRunningCounter--;
-			this.logger.info("[Master] Replying to CLI request:", req.query);
+			this.logger.info("[Server] Replying to CLI request:", req.query);
 
 			// If we're waiting to terminate ourselves when idle, then do so when there's no running requests
 			if (this.terminateWhenIdle && this.requestRunningCounter === 0) {
@@ -123758,10 +124506,10 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 				});
 			}
 
-			const req = new ___R$project$rome$$romejs$core$master$MasterRequest_ts$default({
+			const req = new ___R$project$rome$$romejs$core$server$ServerRequest_ts$default({
 				client,
 				query,
-				master: this,
+				server: this,
 			});
 
 			await req.init();
@@ -123773,7 +124521,7 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 
 				if (res === undefined) {
 					throw new Error(
-						"teardown should have returned a normalized MasterQueryResponse",
+						"teardown should have returned a normalized ServerQueryResponse",
 					);
 				}
 
@@ -123883,10 +124631,10 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 				let promises = [bridgeEndPromise];
 
 				// Get command
-				const masterCommand = ___R$project$rome$$romejs$core$master$commands_ts$masterCommands.get(
+				const serverCommand = ___R$project$rome$$romejs$core$server$commands_ts$serverCommands.get(
 					query.commandName,
 				);
-				if (masterCommand) {
+				if (serverCommand) {
 					// Warn about disabled disk caching
 					if (this.cache.disabled && !this.warnedCacheClients.has(bridge)) {
 						reporter.warn(
@@ -123895,14 +124643,14 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 						this.warnedCacheClients.add(bridge);
 					}
 
-					await ___R$$priv$project$rome$$romejs$core$master$Master_ts$validateRequestFlags(
+					await ___R$$priv$project$rome$$romejs$core$server$Server_ts$validateRequestFlags(
 						req,
-						masterCommand,
+						serverCommand,
 					);
 
 					let commandFlags;
-					if (masterCommand.defineFlags !== undefined) {
-						commandFlags = masterCommand.defineFlags(flagsConsumer);
+					if (serverCommand.defineFlags !== undefined) {
+						commandFlags = serverCommand.defineFlags(flagsConsumer);
 					}
 
 					req.setNormalizedCommandFlags({
@@ -123911,7 +124659,7 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 					});
 
 					// @ts-ignore
-					const commandPromise = masterCommand.callback(req, commandFlags);
+					const commandPromise = serverCommand.callback(req, commandFlags);
 					promises.push(commandPromise);
 
 					await Promise.race(promises);
@@ -123920,7 +124668,7 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 					const data = await commandPromise;
 					return Object.assign(
 						{},
-						___R$project$rome$$romejs$core$master$MasterRequest_ts$EMPTY_SUCCESS_RESPONSE,
+						___R$project$rome$$romejs$core$server$ServerRequest_ts$EMPTY_SUCCESS_RESPONSE,
 						{hasData: data !== undefined, data},
 					);
 				} else {
@@ -123940,14 +124688,14 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 					};
 				} else if (
 					err instanceof
-					___R$project$rome$$romejs$core$master$MasterRequest_ts$MasterRequestCancelled
+					___R$project$rome$$romejs$core$server$ServerRequest_ts$ServerRequestCancelled
 				) {
 					return {
 						type: "CANCELLED",
 					};
 				} else if (
 					err instanceof
-					___R$project$rome$$romejs$core$master$MasterRequest_ts$MasterRequestInvalid
+					___R$project$rome$$romejs$core$server$ServerRequest_ts$ServerRequestInvalid
 				) {
 					return {
 						type: "INVALID_REQUEST",
@@ -124002,7 +124750,7 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 				}
 				if (
 					rawErr instanceof
-					___R$project$rome$$romejs$core$master$MasterRequest_ts$MasterRequestInvalid
+					___R$project$rome$$romejs$core$server$ServerRequest_ts$ServerRequestInvalid
 				) {
 					shouldPrint = true;
 				}
@@ -124016,7 +124764,7 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 					// Don't output the footer if this is a notifier for an invalid request as it will be followed by a help screen
 					if (
 						!(rawErr instanceof
-						___R$project$rome$$romejs$core$master$MasterRequest_ts$MasterRequestInvalid)
+						___R$project$rome$$romejs$core$server$ServerRequest_ts$ServerRequestInvalid)
 					) {
 						printer.footer();
 					}
@@ -124470,7 +125218,7 @@ const ___R$$priv$project$rome$$romejs$core$client$Client_ts$stream = require(
 			this.reporter.info("Starting CPU profile...");
 
 			// Start server and start profiling
-			const bridge = await this.findOrStartMaster();
+			const bridge = await this.findOrStartServer();
 			await bridge.profilingStart.call({
 				samplingInterval,
 			});
@@ -124522,9 +125270,9 @@ const ___R$$priv$project$rome$$romejs$core$client$Client_ts$stream = require(
 					]);
 				}
 
-				// Master
+				// Server
 				fetchers.push([
-					cliProfiler === undefined ? "Master/CLI" : "Master",
+					cliProfiler === undefined ? "Server/CLI" : "Server",
 					async () => {
 						return await bridge.profilingStop.call(
 							undefined,
@@ -124579,7 +125327,7 @@ const ___R$$priv$project$rome$$romejs$core$client$Client_ts$stream = require(
 		}
 
 		async subscribeLogs(includeWorkerLogs, callback) {
-			const bridge = await this.findOrStartMaster();
+			const bridge = await this.findOrStartServer();
 
 			if (includeWorkerLogs) {
 				await bridge.enableWorkerLogs.call();
@@ -124697,7 +125445,7 @@ const ___R$$priv$project$rome$$romejs$core$client$Client_ts$stream = require(
 				env.push("Platform: " + indent(process.platform + " " + process.arch));
 				writer.append({name: "environment.txt"}, env.join("\n\n") + "\n");
 
-				// Don't do this if we never connected to the master
+				// Don't do this if we never connected to the server
 				const bridgeStatus = this.getBridge();
 				if (bridgeStatus !== undefined) {
 					const status = await this.query({
@@ -124758,10 +125506,10 @@ const ___R$$priv$project$rome$$romejs$core$client$Client_ts$stream = require(
 			if (status !== undefined) {
 				if (status.bridge.alive) {
 					try {
-						await status.bridge.endMaster.call();
+						await status.bridge.endServer.call();
 					} catch (err) {
-						// Swallow BridgeErrors since we expect one to be emitted as the endMaster call will be an unanswered request
-						// when the master ends all client sockets
+						// Swallow BridgeErrors since we expect one to be emitted as the endServer call will be an unanswered request
+						// when the server ends all client sockets
 						if (
 							!(err instanceof
 							___R$project$rome$$romejs$events$BridgeError_ts$default)
@@ -124822,7 +125570,7 @@ const ___R$$priv$project$rome$$romejs$core$client$Client_ts$stream = require(
 			await this.bridgeAttachedEvent.callOptional();
 		}
 
-		async findOrStartMaster() {
+		async findOrStartServer() {
 			// First check if we already have a bridge connection
 			const connected = this.getBridge();
 			if (connected !== undefined) {
@@ -124835,13 +125583,13 @@ const ___R$$priv$project$rome$$romejs$core$client$Client_ts$stream = require(
 				return runningDaemon;
 			}
 
-			const status = await this.startInternalMaster();
+			const status = await this.startInternalServer();
 			return status.bridge;
 		}
 
-		async startInternalMaster(opts) {
-			// Otherwise, start a master inside this process
-			const master = new ___R$project$rome$$romejs$core$master$Master_ts$default(
+		async startInternalServer(opts) {
+			// Otherwise, start a server inside this process
+			const server = new ___R$project$rome$$romejs$core$server$Server_ts$default(
 				Object.assign(
 					{
 						dedicated: false,
@@ -124850,21 +125598,21 @@ const ___R$$priv$project$rome$$romejs$core$client$Client_ts$stream = require(
 					opts,
 				),
 			);
-			await master.init();
+			await server.init();
 
 			const bridge = ___R$project$rome$$romejs$events$bridgeCreators_ts$createBridgeFromLocal(
-				___R$project$rome$$romejs$core$common$bridges$MasterBridge_ts$default,
+				___R$project$rome$$romejs$core$common$bridges$ServerBridge_ts$default,
 				{},
 			);
-			const status = {bridge, master, dedicated: false};
+			const status = {bridge, server, dedicated: false};
 
 			await Promise.all([
-				master.attachToBridge(bridge),
+				server.attachToBridge(bridge),
 				this.attachBridge(status),
 			]);
 
 			this.endEvent.subscribe(async () => {
-				await master.end();
+				await server.end();
 			});
 
 			return status;
@@ -124884,7 +125632,7 @@ const ___R$$priv$project$rome$$romejs$core$client$Client_ts$stream = require(
 			const {reporter} = this;
 
 			if (this.bridgeStatus !== undefined) {
-				throw new Error("Already started master");
+				throw new Error("Already started server");
 			}
 
 			reporter.info("No running daemon found. Starting one...");
@@ -124921,7 +125669,7 @@ const ___R$$priv$project$rome$$romejs$core$client$Client_ts$stream = require(
 					);
 
 					proc = ___R$project$rome$$romejs$core$common$utils$fork_ts$default(
-						"master",
+						"server",
 						{
 							detached: true,
 						},
@@ -125000,7 +125748,7 @@ const ___R$$priv$project$rome$$romejs$core$client$Client_ts$stream = require(
 			}
 
 			const bridge = ___R$project$rome$$romejs$events$bridgeCreators_ts$createBridgeFromSocket(
-				___R$project$rome$$romejs$core$common$bridges$MasterBridge_ts$default,
+				___R$project$rome$$romejs$core$common$bridges$ServerBridge_ts$default,
 				socket,
 				{
 					type: "server",
@@ -125435,24 +126183,11 @@ const ___R$project$rome$$romejs$core$common$types$files_ts = {
 
 			// Autofix if necessary
 			if (options.save && needsSave) {
-				// Update our buffer to relint with the new contents
-				await this.worker.updateBuffer(ref, formatted);
-
-				// Relint this file without fixing it, we do this to prevent false positive error messages
-				const res = Object.assign(
-					{},
-					await this.lint(
-						ref,
-						Object.assign({}, options, {save: false}),
-						parseOptions,
-					),
-					{save: formatted},
-				);
-
-				// Clear our fake buffer
-				this.worker.clearBuffer(ref);
-
-				return res;
+				return {
+					save: formatted,
+					diagnostics,
+					suppressions,
+				};
 			}
 
 			// If there's no pending fix then no need for diagnostics
@@ -125548,7 +126283,7 @@ const ___R$project$rome$$romejs$core$common$types$files_ts = {
 		}
 
 		end() {
-			// This will only actually be called when a Worker is created inside of the Master
+			// This will only actually be called when a Worker is created inside of the Server
 			// Clear internal maps for memory, in case the Worker instance sticks around
 			this.astCache.clear();
 			this.projects.clear();
@@ -125760,7 +126495,7 @@ const ___R$project$rome$$romejs$core$common$types$files_ts = {
 						);
 						if (cached === undefined) {
 							throw new Error(
-								"Master told us we have the export types for " +
+								"Server told us we have the export types for " +
 								value.filename +
 								" cached but we dont!",
 							);
@@ -125783,11 +126518,22 @@ const ___R$project$rome$$romejs$core$common$types$files_ts = {
 		}
 
 		async readFile(path) {
-			const buffer = this.buffers.get(path);
-			if (buffer === undefined) {
-				return await ___R$project$rome$$romejs$fs$index_ts$readFileText(path);
-			} else {
-				return buffer;
+			try {
+				const buffer = this.buffers.get(path);
+				if (buffer === undefined) {
+					return await ___R$project$rome$$romejs$fs$index_ts$readFileText(path);
+				} else {
+					return buffer;
+				}
+			} catch (err) {
+				if (err.code === "ENOENT") {
+					throw new ___R$project$rome$$romejs$core$common$FileNotFound_ts$FileNotFound(
+						path,
+						"fs.readFile ENOENT",
+					);
+				} else {
+					throw err;
+				}
 			}
 		}
 
@@ -127266,7 +128012,7 @@ function ___R$$priv$project$rome$$romejs$core$test$worker$SnapshotManager_ts$cle
 		}
 
 		async save() {
-			// If there'a s focused test then we don't write or validate a snapshot
+			// If there's a focused test then we don't write or validate a snapshot
 			if (this.runner.hasFocusedTests) {
 				return;
 			}
@@ -128229,6 +128975,33 @@ const ___R$$priv$project$rome$$romejs$core$test$worker$TestWorker_ts$inspector =
 		}
 		init() {
 			this.addErrorTransport(
+				"FileNotFound",
+				{
+					serialize(err) {
+						if (
+							!(err instanceof
+							___R$project$rome$$romejs$core$common$FileNotFound_ts$FileNotFound)
+						) {
+							throw new Error("Expected FileNotFound");
+						}
+
+						return {
+							path: err.path.join(),
+						};
+					},
+					hydrate(err, data) {
+						// rome-ignore lint/js/noExplicitAny
+						return new ___R$project$rome$$romejs$core$common$FileNotFound_ts$FileNotFound(
+							___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(
+								(data.path),
+							),
+							err.message,
+						);
+					},
+				},
+			);
+
+			this.addErrorTransport(
 				"DiagnosticsError",
 				{
 					serialize(err) {
@@ -128256,7 +129029,7 @@ const ___R$$priv$project$rome$$romejs$core$test$worker$TestWorker_ts$inspector =
 	}
 
 
-  // project-rome/@romejs/core/common/bridges/MasterBridge.ts
+  // project-rome/@romejs/core/common/bridges/ServerBridge.ts
 
 
 
@@ -128277,7 +129050,7 @@ const ___R$$priv$project$rome$$romejs$core$test$worker$TestWorker_ts$inspector =
 
 
 
-	class ___R$project$rome$$romejs$core$common$bridges$MasterBridge_ts$default
+	class ___R$project$rome$$romejs$core$common$bridges$ServerBridge_ts$default
 		extends ___R$project$rome$$romejs$events$Bridge_ts$default {
 		constructor(...args) {
 			super(...args);
@@ -128345,8 +129118,8 @@ const ___R$$priv$project$rome$$romejs$core$test$worker$TestWorker_ts$inspector =
 				name: "lspFromServerBuffer",
 				direction: "server->client",
 			});
-			this.endMaster = this.createEvent({
-				name: "endMaster",
+			this.endServer = this.createEvent({
+				name: "endServer",
 				direction: "server<-client",
 			});
 		}
@@ -128530,7 +129303,7 @@ const ___R$$priv$project$rome$$romejs$cli$cli_ts$fs = require("fs");
 							logs: c.get(
 								"logs",
 								{
-									description: "Output master logs",
+									description: "Output server logs",
 								},
 							).asBoolean(false),
 							logWorkers: c.get(
@@ -128683,10 +129456,10 @@ const ___R$$priv$project$rome$$romejs$cli$cli_ts$fs = require("fs");
 		let commandFlags = {};
 		let args = [];
 
-		// Create command handlers. We use a set here since we may have some conflicting master and local command names. We always want the local command to take precedence.
+		// Create command handlers. We use a set here since we may have some conflicting server and local command names. We always want the local command to take precedence.
 		const commandNames = new Set([
 			...___R$project$rome$$romejs$core$client$commands_ts$localCommands.keys(),
-			...___R$project$rome$$romejs$core$master$commands_ts$masterCommands.keys(),
+			...___R$project$rome$$romejs$core$server$commands_ts$serverCommands.keys(),
 		]);
 		for (const cmd of commandNames) {
 			const local = ___R$project$rome$$romejs$core$client$commands_ts$localCommands.get(
@@ -128710,22 +129483,22 @@ const ___R$$priv$project$rome$$romejs$cli$cli_ts$fs = require("fs");
 				continue;
 			}
 
-			const master = ___R$project$rome$$romejs$core$master$commands_ts$masterCommands.get(
+			const server = ___R$project$rome$$romejs$core$server$commands_ts$serverCommands.get(
 				cmd,
 			);
-			if (master !== undefined) {
+			if (server !== undefined) {
 				p.command({
 					name: cmd,
-					category: master.category,
-					description: master.description,
-					defineFlags: master.defineFlags,
-					ignoreFlags: master.ignoreFlags,
-					usage: master.usage,
-					examples: master.examples,
+					category: server.category,
+					description: server.description,
+					defineFlags: server.defineFlags,
+					ignoreFlags: server.ignoreFlags,
+					usage: server.usage,
+					examples: server.examples,
 					callback(_commandFlags) {
 						commandFlags = _commandFlags;
-						overrideClientFlags = master.overrideClientFlags;
-						overrideRequestFlags = master.overrideRequestFlags;
+						overrideClientFlags = server.overrideClientFlags;
+						overrideRequestFlags = server.overrideRequestFlags;
 
 						args = p.getArgs();
 						command = cmd;
@@ -128734,7 +129507,7 @@ const ___R$$priv$project$rome$$romejs$cli$cli_ts$fs = require("fs");
 			}
 		}
 
-		// Mock `rage` command that just uses the master noop command and adds the --rage flag
+		// Mock `rage` command that just uses the server noop command and adds the --rage flag
 		p.command({
 			name: "rage",
 			category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.INTERNAL,
@@ -128748,7 +129521,7 @@ const ___R$$priv$project$rome$$romejs$cli$cli_ts$fs = require("fs");
 			},
 		});
 
-		// Mock `logs` command that just uses the master noop command and adds the --logs flag
+		// Mock `logs` command that just uses the server noop command and adds the --logs flag
 		p.command({
 			name: "logs",
 			category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.INTERNAL,
@@ -128942,29 +129715,29 @@ const ___R$$priv$project$rome$$romejs$cli$cli_ts$fs = require("fs");
 	}
 
 
-  // project-rome/@romejs/cli/master.ts
-const ___R$$priv$project$rome$$romejs$cli$master_ts$net = require("net");
-	async function ___R$project$rome$$romejs$cli$master_ts$default() {
-		___R$project$rome$$romejs$cli$utils$setProcessTitle_ts$default("master");
+  // project-rome/@romejs/cli/server.ts
+const ___R$$priv$project$rome$$romejs$cli$server_ts$net = require("net");
+	async function ___R$project$rome$$romejs$cli$server_ts$default() {
+		___R$project$rome$$romejs$cli$utils$setProcessTitle_ts$default("server");
 
-		const master = new ___R$project$rome$$romejs$core$master$Master_ts$default({
+		const server = new ___R$project$rome$$romejs$core$server$Server_ts$default({
 			dedicated: true,
 			globalErrorHandlers: true,
 		});
 
-		await master.init();
+		await server.init();
 
-		const socketServer = ___R$$priv$project$rome$$romejs$cli$master_ts$net.createServer(function(
+		const socketServer = ___R$$priv$project$rome$$romejs$cli$server_ts$net.createServer(function(
 			socket,
 		) {
 			const client = ___R$project$rome$$romejs$events$bridgeCreators_ts$createBridgeFromSocket(
-				___R$project$rome$$romejs$core$common$bridges$MasterBridge_ts$default,
+				___R$project$rome$$romejs$core$common$bridges$ServerBridge_ts$default,
 				socket,
 				{
 					type: "client",
 				},
 			);
-			master.attachToBridge(client);
+			server.attachToBridge(client);
 		});
 
 		if (
@@ -128980,7 +129753,7 @@ const ___R$$priv$project$rome$$romejs$cli$master_ts$net = require("net");
 		socketServer.listen(
 			___R$project$rome$$romejs$core$common$constants_ts$SOCKET_PATH.join(),
 			() => {
-				const socket = ___R$$priv$project$rome$$romejs$cli$master_ts$net.createConnection(
+				const socket = ___R$$priv$project$rome$$romejs$cli$server_ts$net.createConnection(
 					___R$project$rome$$romejs$core$common$constants_ts$CLI_SOCKET_PATH.join(),
 					() => {
 						socket.end();
@@ -129047,8 +129820,8 @@ async function ___R$$priv$project$rome$$romejs$cli$bin$rome_ts$main() {
 			___R$project$rome$$romejs$core$common$constants_ts$VERSION &&
 			process.env.ROME_PROCESS_TYPE
 		) {
-			case "master":
-				return ___R$project$rome$$romejs$cli$master_ts$default();
+			case "server":
+				return ___R$project$rome$$romejs$cli$server_ts$default();
 
 			case "worker":
 				return ___R$project$rome$$romejs$cli$worker_ts$default();

@@ -662,7 +662,10 @@ export default class Resolver {
 		moduleName: string,
 	): undefined | ManifestDefinition {
 		// Find the project
-		const project = this.server.projectManager.findProjectExisting(query.origin);
+		const project = this.server.projectManager.findProjectExisting(
+			query.origin,
+			false,
+		);
 		if (project === undefined) {
 			return undefined;
 		}
@@ -791,7 +794,10 @@ export default class Resolver {
 		const {origin, source} = query;
 
 		// Get project for the origin
-		const project = this.server.projectManager.findProjectExisting(origin);
+		const project = this.server.projectManager.findProjectExisting(
+			origin,
+			false,
+		);
 
 		// Get all the parent directories for when we crawl up
 		const parentDirectories = this.getOriginFolder(query).getChain();

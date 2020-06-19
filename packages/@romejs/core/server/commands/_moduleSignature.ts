@@ -8,7 +8,6 @@
 import {ServerRequest} from "@romejs/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import {createUnknownFilePath} from "@romejs/path";
 
 export default createServerCommand({
 	category: commandCategories.INTERNAL,
@@ -19,17 +18,8 @@ export default createServerCommand({
 		return {};
 	},
 	async callback(req: ServerRequest): Promise<void> {
-		const {server, reporter} = req;
-		const {args} = req.query;
-		req.expectArgumentLength(1);
-
-		const filename = await server.resolver.resolveEntryAssertPath(
-			{
-				...req.getResolverOptionsFromFlags(),
-				source: createUnknownFilePath(args[0]),
-			},
-			{location: req.getDiagnosticPointerFromFlags({type: "arg", key: 0})},
-		);
+		const {reporter} = req;
+		const filename = await req.resolveEntryAssertPathArg(0);
 		reporter.inspect(await req.requestWorkerModuleSignature(filename, {}));
 	},
 });

@@ -33,7 +33,7 @@ export type DependencyGraphSeedResult = {
 	cached: boolean;
 };
 
-const BUILTINS = [
+const NODE_BUILTINS = [
 	"electron",
 	"buffer",
 	"child_process",
@@ -103,8 +103,12 @@ export default class DependencyGraph {
 		this.closeEvent.send();
 	}
 
-	isExternal(source: string): boolean {
-		return BUILTINS.includes(source);
+	isExternal(path: AbsoluteFilePath, source: string): boolean {
+		const project = this.server.projectManager.assertProjectExisting(path);
+		return (
+			project.config.bundler.externals.includes(source) ||
+			NODE_BUILTINS.includes(source)
+		);
 	}
 
 	getBundleBuddyStats(entries: Array<AbsoluteFilePath>): BundleBuddyStats {
@@ -295,15 +299,17 @@ export default class DependencyGraph {
 			analyzeProgress.pushText(progressText);
 		}
 
-		const res: WorkerAnalyzeDependencyResult = await this.request.requestWorkerAnalyzeDependencies(
-			path,
-			{},
-		);
+		let res: WorkerAnalyzeDependencyResult;
+		let node: DependencyNode;
+		try {
+			res = await this.request.requestWorkerAnalyzeDependencies(path, {});
 
-		const node = this.addNode(path, res);
-		node.setAll(all);
-		node.setUsedAsync(async);
-		lock.release();
+			node = this.addNode(path, res);
+			node.setAll(all);
+			node.setUsedAsync(async);
+		} finally {
+			lock.release();
+		}
 
 		const {dependencies, diagnostics} = res;
 
@@ -319,7 +325,7 @@ export default class DependencyGraph {
 		await Promise.all(
 			dependencies.map(async (dep) => {
 				const {source, optional} = dep;
-				if (this.isExternal(source)) {
+				if (this.isExternal(path, source)) {
 					return;
 				}
 

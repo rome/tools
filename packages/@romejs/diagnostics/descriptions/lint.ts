@@ -16,6 +16,17 @@ import {buildSuggestionAdvice} from "../helpers";
 import {createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	REACT_JSX_PROPS_NO_SPREADING: {
+		category: "lint/react/jsxPropsNoSpreading",
+		message: "Avoid using property spreading in JSX components.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Explicit JSX attributes enhance the readability of code by clearly indicating which props are accepted by a given element.",
+			},
+		],
+	},
 	REACT_NO_ARRAY_INDEX_KEY: {
 		category: "lint/react/noArrayIndexKey",
 		message: "Avoid using array index as key property in an element.",
@@ -38,6 +49,31 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
+	JSX_A11Y_ARIA_PROPTYPES: (
+		attributeName: string,
+		values?: Array<string | boolean>,
+	) => {
+		let advice: DiagnosticAdvice = [];
+		if (values) {
+			advice.push({
+				type: "log",
+				category: "info",
+				text: `The supported values for the <emphasis>${attributeName}</emphasis> attribute are: ${values.reduce(
+					(str, value) => {
+						str.push(typeof value === "boolean" ? String(value) : `"${value}"`);
+						return str;
+					},
+					([] as Array<string>),
+				).join(", ")}`,
+			});
+		}
+		return {
+			category: "lint/jsx-a11y/ariaProptypes",
+			message: `The value of the ARIA attribute <emphasis>${attributeName}</emphasis> is not correct.`,
+			advice,
+		};
+	},
+
 	JSX_A11Y_NO_NONINTERACTIVE_ELEMENT_TO_INTERACTIVE_ROLE: (element: string) => ({
 		category: "lint/jsx-a11y/noNoninteractiveElementToInteractiveRole",
 		message: `The HTML element <emphasis>${element}</emphasis> is non-interactive and should not have an interactive role.`,
@@ -515,6 +551,10 @@ export const lint = createDiagnosticsCategory({
 	REACT_REQUIRE_RENDER_RETURN: {
 		category: "lint/react/requireRenderReturn",
 		message: "The <emphasis>render</emphasis> method on a component must return content.",
+	},
+	REACT_NO_RENDER_RETURN_VALUE: {
+		category: "lint/react/noRenderReturnValue",
+		message: "Do not depend on the return value from <emphasis>ReactDOM.render()</emphasis>.",
 	},
 	REACT_VOID_DOM_ELEMENTS_NO_CHILDREN: (
 		element: string,

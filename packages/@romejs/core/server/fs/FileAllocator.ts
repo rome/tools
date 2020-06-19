@@ -172,20 +172,21 @@ export default class FileAllocator {
 			lock.release();
 			return this.getOwnerAssert(path);
 		}
+		try {
+			const worker = await workerManager.getNextWorker(path);
 
-		const worker = await workerManager.getNextWorker(path);
+			// Add ourselves to the file map
+			logger.info(
+				`[FileAllocator] File %s assigned to worker %s`,
+				path.toMarkup(),
+				worker.id,
+			);
+			this.fileToWorker.set(filename, worker.id);
 
-		// Add ourselves to the file map
-		logger.info(
-			`[FileAllocator] File %s assigned to worker %s`,
-			path.toMarkup(),
-			worker.id,
-		);
-		this.fileToWorker.set(filename, worker.id);
-
-		// Release and continue
-		lock.release();
-
-		return worker;
+			return worker;
+		} finally {
+			// Release and continue
+			lock.release();
+		}
 	}
 }

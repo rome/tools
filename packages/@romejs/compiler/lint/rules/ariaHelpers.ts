@@ -126,18 +126,20 @@ export type ARIAState =
 	| "aria-pressed"
 	| "aria-selected";
 
+export type ARIAPropertyType =
+	| "string"
+	| "id"
+	| "idlist"
+	| "integer"
+	| "number"
+	| "boolean"
+	| "token"
+	| "tokenlist"
+	| "tristate";
+
 export type ARIAPropertyDefinition = {
-	type:
-		| "string"
-		| "id"
-		| "idlist"
-		| "integer"
-		| "number"
-		| "boolean"
-		| "token"
-		| "tokenlist"
-		| "tristate";
-	value?: Array<string | boolean>;
+	type: ARIAPropertyType;
+	values?: Array<string | boolean>;
 	allowUndefined?: boolean;
 };
 

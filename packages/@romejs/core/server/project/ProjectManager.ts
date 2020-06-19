@@ -120,9 +120,6 @@ export default class ProjectManager {
 	constructor(server: Server) {
 		this.server = server;
 
-		this.isAddingProject = false;
-		this.pendingAddProjects = [];
-
 		this.projectIdCounter = 0;
 		this.projectFolderToId = new AbsoluteFilePathMap();
 		this.projectConfigDependenciesToIds = new AbsoluteFilePathMap();
@@ -137,13 +134,6 @@ export default class ProjectManager {
 	}
 
 	server: Server;
-
-	isAddingProject: boolean;
-	pendingAddProjects: Array<{
-		projectFolder: AbsoluteFilePath;
-		configPath: AbsoluteFilePath;
-		resolve: (project: ProjectDefinition) => void;
-	}>;
 
 	uidToFilename: Map<string, AbsoluteFilePath>;
 	filenameToUid: AbsoluteFilePathMap<string>;
@@ -176,6 +166,7 @@ export default class ProjectManager {
 			projectFolder: defaultVendorPath,
 			meta: createDefaultProjectConfigMeta(),
 			config: vendorProjectConfig,
+			watch: true,
 		});
 		await this.server.memoryFs.watch(defaultVendorPath);
 	}
@@ -454,60 +445,6 @@ export default class ProjectManager {
 		return Array.from(this.projects.values());
 	}
 
-	async queueAddProject(
-		projectFolder: AbsoluteFilePath,
-		configPath: AbsoluteFilePath,
-	): Promise<ProjectDefinition> {
-		// Check if we've already loaded this project
-		const maybeProject = this.findProjectExisting(projectFolder);
-		if (maybeProject !== undefined) {
-			return maybeProject;
-		}
-
-		// If we're currently adding a project then add it to the queue
-		if (this.isAddingProject) {
-			return new Promise((resolve) => {
-				this.pendingAddProjects.push({projectFolder, configPath, resolve});
-			});
-		}
-
-		// First time loading this project
-		this.isAddingProject = true;
-
-		// fetch this project
-		const mainProject = await this.addProject(projectFolder, configPath);
-		const resolvedProjectsByDir: Map<string, ProjectDefinition> = new Map();
-		resolvedProjectsByDir.set(projectFolder.join(), mainProject);
-
-		// Resolve all pending projects that were added while we were adding the current project
-		const resolvedProjects: Array<{
-			project: ProjectDefinition;
-			resolve: (project: ProjectDefinition) => void;
-		}> = [];
-		for (const {projectFolder, configPath, resolve} of this.pendingAddProjects) {
-			// Check if the project has already been resolved
-			const existing = resolvedProjectsByDir.get(projectFolder.join());
-			if (existing !== undefined) {
-				resolvedProjects.push({project: existing, resolve});
-			} else {
-				// It hasn't been resolved yet so let's add it
-				const project = await this.addProject(projectFolder, configPath);
-				resolvedProjects.push({project, resolve});
-			}
-		}
-
-		// Resolve all promises
-		for (const {project, resolve} of resolvedProjects) {
-			resolve(project);
-		}
-
-		// Cleanup
-		this.pendingAddProjects = [];
-		this.isAddingProject = false;
-
-		return mainProject;
-	}
-
 	addDependencyToProjectId(path: AbsoluteFilePath, projectId: number): void {
 		const ids = this.projectConfigDependenciesToIds.get(path);
 
@@ -572,15 +509,23 @@ export default class ProjectManager {
 	}
 
 	async addProject(
-		projectFolder: AbsoluteFilePath,
-		configPath: AbsoluteFilePath,
+		{projectFolder, configPath, watch}: {
+			projectFolder: AbsoluteFilePath;
+			configPath: AbsoluteFilePath;
+			watch: boolean;
+		},
 	): Promise<ProjectDefinition> {
+		if (this.isLoadedProjectFolder(projectFolder)) {
+			return this.assertProjectExisting(projectFolder);
+		}
+
 		const {config, meta} = loadCompleteProjectConfig(projectFolder, configPath);
 
 		return this.addProjectWithConfig({
 			projectFolder,
 			meta,
 			config,
+			watch,
 		});
 	}
 
@@ -589,10 +534,12 @@ export default class ProjectManager {
 			projectFolder,
 			meta,
 			config,
+			watch,
 		}: {
 			projectFolder: AbsoluteFilePath;
 			meta: ProjectConfigMeta;
 			config: ProjectConfig;
+			watch: boolean;
 		},
 	): Promise<ProjectDefinition> {
 		// Make sure there's no project with the same `name` as us
@@ -643,7 +590,9 @@ export default class ProjectManager {
 		this.server.workerManager.onNewProject(project);
 
 		// Start watching and crawl this project folder
-		await this.server.memoryFs.watch(projectFolder);
+		if (watch) {
+			await this.server.memoryFs.watch(projectFolder);
+		}
 
 		return project;
 	}
@@ -763,6 +712,11 @@ export default class ProjectManager {
 		});
 	}
 
+	isLoadedProjectFolder(path: AbsoluteFilePath): boolean {
+		const project = this.fileToProject.get(path);
+		return project !== undefined && project.path.equal(path);
+	}
+
 	// Convenience method to get the project config and pass it to the file handler class
 	getHandlerWithProject(path: AbsoluteFilePath): GetFileHandlerResult {
 		const project = this.findProjectExisting(path);
@@ -808,7 +762,10 @@ export default class ProjectManager {
 		return project;
 	}
 
-	findProjectExisting(cwd: AbsoluteFilePath): undefined | ProjectDefinition {
+	findProjectExisting(
+		cwd: AbsoluteFilePath,
+		cache: boolean = true,
+	): undefined | ProjectDefinition {
 		const tried: Array<AbsoluteFilePath> = [];
 
 		for (const dir of cwd.getChain()) {
@@ -816,8 +773,10 @@ export default class ProjectManager {
 			if (cached === undefined) {
 				tried.push(dir);
 			} else {
-				for (const dir of tried) {
-					this.fileToProject.set(dir, cached);
+				if (cache) {
+					for (const dir of tried) {
+						this.fileToProject.set(dir, cached);
+					}
 				}
 
 				const project = this.projects.get(cached.projectId);
@@ -853,7 +812,7 @@ export default class ProjectManager {
 
 				const hasProject = await this.server.memoryFs.existsHard(configPath);
 				if (hasProject) {
-					return this.queueAddProject(dir, configPath);
+					return this.addProject({projectFolder: dir, configPath, watch: true});
 				}
 			}
 
@@ -863,7 +822,11 @@ export default class ProjectManager {
 				const input = await readFileText(packagePath);
 				const json = await consumeJSON({input, path: packagePath});
 				if (json.has(ROME_CONFIG_PACKAGE_JSON_FIELD)) {
-					return this.queueAddProject(dir, packagePath);
+					return this.addProject({
+						projectFolder: dir,
+						configPath: packagePath,
+						watch: true,
+					});
 				}
 			}
 		}

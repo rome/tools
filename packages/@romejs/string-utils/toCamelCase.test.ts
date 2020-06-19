@@ -11,15 +11,22 @@ import {test} from "rome";
 test(
 	"toCamelCase",
 	(t) => {
-		const testCases = [
+		[
 			{input: "rometest", expected: "rometest"},
 			{input: "rome test", expected: "romeTest"},
 			{input: "RoMe TeSt", expected: "RoMeTeSt"},
-			{input: "ROME TEST", expected: "ROMETEST"},
-		];
-
-		testCases.forEach((td) => {
+			{input: "ROME TEST", expected: "RomeTest"},
+		].forEach((td) => {
 			t.is(toCamelCase(td.input), td.expected);
+		});
+
+		[
+			{input: "rometest", expected: "Rometest"},
+			{input: "rome test", expected: "RomeTest"},
+			{input: "RoMe TeSt", expected: "RoMeTeSt"},
+			{input: "ROME TEST", expected: "RomeTest"},
+		].forEach((td) => {
+			t.is(toCamelCase(td.input, true), td.expected);
 		});
 	},
 );

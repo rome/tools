@@ -313,11 +313,7 @@ export default class WorkerManager {
 			// Give memoryFs a chance to finish initializing if it's in a pending project
 			await this.server.memoryFs.waitIfInitializingWatch(path);
 
-			stats = memoryFs.getFileStats(path);
-			if (stats === undefined) {
-				console.error(Array.from(memoryFs.files.keys(), (path) => path.join()));
-				throw new Error(`The file ${path.join()} doesn't exist`);
-			}
+			stats = memoryFs.getFileStatsAssert(path);
 		}
 
 		// Verify that this file doesn't exceed any size limit

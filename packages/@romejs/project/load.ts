@@ -218,6 +218,10 @@ export function normalizeProjectConfig(
 				"legacy",
 			]);
 		}
+
+		if (bundler.has("externals")) {
+			config.bundler.externals = arrayOfStrings(bundler.get("externals"));
+		}
 	}
 
 	const typeChecking = consumer.get("typeChecking");
@@ -384,12 +388,10 @@ function extendProjectConfig(
 	);
 
 	// Check for recursive config
-	for (const path of extendsMeta.configDependencies) {
-		if (path.equal(extendsPath)) {
-			throw extendsStrConsumer.unexpected(
-				descriptions.PROJECT_CONFIG.RECURSIVE_CONFIG,
-			);
-		}
+	if (extendsMeta.configDependencies.has(meta.configPath)) {
+		throw extendsStrConsumer.unexpected(
+			descriptions.PROJECT_CONFIG.RECURSIVE_CONFIG,
+		);
 	}
 
 	const merged: PartialProjectConfig = mergePartialConfig(extendsObj, config);
@@ -418,6 +420,14 @@ function extendProjectConfig(
 	);
 	if (typeCheckingLibs !== undefined) {
 		merged.typeCheck.libs = typeCheckingLibs;
+	}
+
+	const bundlerExternals = mergeArrays(
+		extendsObj.bundler.externals,
+		config.bundler.externals,
+	);
+	if (bundlerExternals !== undefined) {
+		merged.bundler.externals = bundlerExternals;
 	}
 
 	return {
