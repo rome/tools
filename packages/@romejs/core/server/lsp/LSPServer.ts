@@ -333,6 +333,23 @@ export default class LSPServer {
 		});
 	}
 
+	logDiagnostics(path: AbsoluteFilePath, diagnostics: Diagnostics = []) {
+		if (diagnostics.length === 0) {
+			return;
+		}
+
+		const lines: Array<string> = [];
+		const date = new Date();
+
+		lines.push(`[Diagnostics - ${date.toTimeString()}] ${path.join()}`);
+		for (const diag of diagnostics) {
+			lines.push(
+				`  (${diag.description.category}) ${diag.description.message.value}`,
+			);
+		}
+		this.logMessage(path, lines.join("\n"));
+	}
+
 	createFakeServerRequest(
 		commandName: string,
 		args: Array<string> = [],
@@ -512,20 +529,7 @@ export default class LSPServer {
 					return this.request.requestWorkerFormat(path, {});
 				});
 
-				if (diagnostics !== undefined && diagnostics.length > 0) {
-					const date = new Date();
-					this.logMessage(
-						path,
-						`[Diagnostics - ${date.toTimeString()}] ${path.join()}`,
-					);
-
-					diagnostics.forEach((diag) => {
-						this.logMessage(
-							path,
-							`  (${diag.description.category}) ${diag.description.message.value}`,
-						);
-					});
-				}
+				this.logDiagnostics(path, diagnostics);
 
 				if (value === undefined) {
 					// Not a file we support formatting or has diagnostics
