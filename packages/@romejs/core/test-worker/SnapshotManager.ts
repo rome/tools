@@ -135,97 +135,95 @@ export default class SnapshotManager {
 			return;
 		}
 
-		const lock = await this.fileLocker.getLock(path.join());
-
-		const loadedSnapshot = this.snapshots.get(path);
-		if (loadedSnapshot !== undefined) {
-			lock.release();
-			return loadedSnapshot;
-		}
-
-		try {
-			const content = await readFileText(path);
-			const parser = createSnapshotParser({
-				path,
-				input: content,
-			});
-
-			const nodes = parser.parse();
-
-			const snapshot: Snapshot = {
-				existsOnDisk: true,
-				used: false,
-				raw: parser.input,
-				entries: new Map(),
-			};
-			this.snapshots.set(path, snapshot);
-
-			while (nodes.length > 0) {
-				const node = nodes.shift()!;
-
-				if (node.type === "Heading" && node.level === 1) {
-					// Title
-					continue;
+		return this.fileLocker.wrapLock(
+			path.join(),
+			async () => {
+				const loadedSnapshot = this.snapshots.get(path);
+				if (loadedSnapshot !== undefined) {
+					return loadedSnapshot;
 				}
 
-				if (node.type === "Heading" && node.level === 2) {
-					const testName = cleanHeading(node.text);
+				const content = await readFileText(path);
+				const parser = createSnapshotParser({
+					path,
+					input: content,
+				});
 
-					while (nodes.length > 0) {
-						const node = nodes[0];
+				const nodes = parser.parse();
 
-						if (node.type === "Heading" && node.level === 3) {
-							nodes.shift();
+				const snapshot: Snapshot = {
+					existsOnDisk: true,
+					used: false,
+					raw: parser.input,
+					entries: new Map(),
+				};
+				this.snapshots.set(path, snapshot);
 
-							const entryName = cleanHeading(node.text);
+				while (nodes.length > 0) {
+					const node = nodes.shift()!;
 
-							const codeBlock = nodes.shift();
-							if (codeBlock === undefined || codeBlock.type !== "CodeBlock") {
-								throw parser.unexpected({
-									description: descriptions.SNAPSHOTS.EXPECTED_CODE_BLOCK_AFTER_HEADING,
-									loc: node.loc,
-								});
-							}
-
-							snapshot.entries.set(
-								buildEntriesKey(testName, entryName),
-								{
-									testName,
-									entryName,
-									language: codeBlock.language,
-									value: codeBlock.text,
-									used: false,
-								},
-							);
-
-							continue;
-						}
-
-						if (node.type === "CodeBlock") {
-							nodes.shift();
-
-							snapshot.entries.set(
-								buildEntriesKey(testName, "0"),
-								{
-									testName,
-									entryName: "0",
-									language: node.language,
-									value: node.text,
-									used: false,
-								},
-							);
-						}
-
-						break;
+					if (node.type === "Heading" && node.level === 1) {
+						// Title
+						continue;
 					}
 
-					continue;
+					if (node.type === "Heading" && node.level === 2) {
+						const testName = cleanHeading(node.text);
+
+						while (nodes.length > 0) {
+							const node = nodes[0];
+
+							if (node.type === "Heading" && node.level === 3) {
+								nodes.shift();
+
+								const entryName = cleanHeading(node.text);
+
+								const codeBlock = nodes.shift();
+								if (codeBlock === undefined || codeBlock.type !== "CodeBlock") {
+									throw parser.unexpected({
+										description: descriptions.SNAPSHOTS.EXPECTED_CODE_BLOCK_AFTER_HEADING,
+										loc: node.loc,
+									});
+								}
+
+								snapshot.entries.set(
+									buildEntriesKey(testName, entryName),
+									{
+										testName,
+										entryName,
+										language: codeBlock.language,
+										value: codeBlock.text,
+										used: false,
+									},
+								);
+
+								continue;
+							}
+
+							if (node.type === "CodeBlock") {
+								nodes.shift();
+
+								snapshot.entries.set(
+									buildEntriesKey(testName, "0"),
+									{
+										testName,
+										entryName: "0",
+										language: node.language,
+										value: node.text,
+										used: false,
+									},
+								);
+							}
+
+							break;
+						}
+
+						continue;
+					}
 				}
-			}
-			return snapshot;
-		} finally {
-			lock.release();
-		}
+				return snapshot;
+			},
+		);
 	}
 
 	buildSnapshot(entries: Iterable<SnapshotEntry>): Array<string> {
