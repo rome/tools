@@ -85,3 +85,82 @@ test(
 		t.false(locker.hasLock("rome"));
 	},
 );
+
+test(
+	"Locker#wrapLock",
+	async (t) => {
+		const locker = new Locker<string>();
+		const lock = locker.getNewLock("rome");
+
+		let foo = "one";
+		let res = "";
+
+		async function bar() {
+			foo = "two";
+			// creates a lock internally and releases it after running a callback
+			res = await locker.wrapLock(
+				"rome",
+				() => {
+					foo = "three";
+					return "result";
+				},
+			);
+		}
+
+		t.is(foo, "one");
+
+		bar();
+
+		t.is(foo, "two");
+
+		// wrapLock callback can execute now
+		lock.release();
+
+		// wait here for wrapLock to release its internal lock
+		await locker.waitLock("rome");
+
+		t.is(foo, "three");
+
+		t.is(res, "result");
+
+		t.false(locker.hasLock("rome"));
+	},
+);
+
+test(
+	"Locker#wrapLock throws",
+	async (t) => {
+		const locker = new Locker<string>();
+		const lock = locker.getNewLock("rome");
+
+		let foo = "one";
+
+		async function bar() {
+			foo = "two";
+			// creates a lock internally and releases it after running a callback
+			await locker.wrapLock(
+				"rome",
+				async () => {
+					foo = "three";
+					throw new Error("oops!");
+				},
+			);
+		}
+
+		t.is(foo, "one");
+
+		// bar throws an error but wrapLock still releases its internal lock
+		t.throwsAsync(async () => {
+			await bar();
+		});
+
+		t.is(foo, "two");
+
+		lock.release();
+		await locker.waitLock("rome");
+
+		t.is(foo, "three");
+
+		t.false(locker.hasLock("rome"));
+	},
+);
