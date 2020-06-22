@@ -8,29 +8,18 @@
 import {descriptions} from "@romejs/diagnostics";
 import {AnyNode} from "@romejs/ast";
 import {Path} from "@romejs/compiler";
-import {doesNodeMatchPattern} from "@romejs/js-ast-utils";
-
-function hasFindMemberProperty(node: AnyNode) {
-	return (
-		node.type === "JSStaticMemberProperty" &&
-		doesNodeMatchPattern(node.value, "findDOMNode")
-	);
-}
-
-function hasFindCallExpression(node: AnyNode) {
-	return (
-		node.type === "JSCallExpression" &&
-		doesNodeMatchPattern(node.callee, "findDOMNode")
-	);
-}
+import {doesNodeMatchReactPattern} from "../../utils/react";
 
 export default {
 	name: "reactNoFindDOMNode",
 
 	enter(path: Path): AnyNode {
-		const {node} = path;
+		const {node, scope} = path;
 
-		if (hasFindMemberProperty(node) || hasFindCallExpression(node)) {
+		if (
+			doesNodeMatchReactPattern(node, scope, "findDOMNode") ||
+			doesNodeMatchReactPattern(node, scope, "React.findDOMNode")
+		) {
 			path.context.addNodeDiagnostic(
 				node,
 				descriptions.LINT.REACT_NO_FIND_DOM_NODE,

@@ -1,13 +1,9 @@
 import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
 import {getJSXAttribute, hasJSXAttribute} from "@romejs/js-ast-utils";
-import {
-	elementsToConcepts,
-	isRoleInteractive,
-	roles,
-} from "@romejs/compiler/lint/rules/ariaHelpers";
 import getJSXElementName from "@romejs/js-ast-utils/getJSXElementName";
 import {JSXAttribute} from "@romejs/ast";
+import {elementsToConcepts, isRoleInteractive, roles} from "../../utils/aria";
 
 function hasValidTabIndexValue(
 	node: JSXAttribute | undefined,

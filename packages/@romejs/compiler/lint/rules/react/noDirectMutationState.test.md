@@ -934,24 +934,3 @@ class Example extends SuperExample.Component {
 }
 
 ```
-
-### `32`
-
-```
-✔ No known problems!
-
-```
-
-### `32: formatted`
-
-```
-class Example extends SuperExample.Component {
-	someOtherFunction(props) {
-		super(props);
-		this.state = {
-			count: 0,
-		};
-	}
-}
-
-```

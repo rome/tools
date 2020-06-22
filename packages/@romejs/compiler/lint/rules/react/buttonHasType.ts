@@ -1,36 +1,24 @@
-import {Path, TransformExitResult} from "@romejs/compiler";
+import {Path, Scope, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
 import {AnyNode} from "@romejs/ast";
 import {
-	doesNodeMatchPattern,
 	getJSXAttribute,
 	hasJSXAttribute,
 	isJSXElement,
 } from "@romejs/js-ast-utils";
+import {
+	analyzeCreateElementProp,
+	getCreateElementType,
+} from "../../utils/react";
 
 const BUTTON_TYPE_REGEX = /^(reset)|(submit)|(button)$/;
 
-function createElementMissingType(node: AnyNode) {
-	if (node.type !== "JSCallExpression") {
-		return false;
+function createElementMissingType(node: AnyNode, scope: Scope) {
+	if (getCreateElementType(node, scope) !== "button") {
+		return;
 	}
-	if (
-		(doesNodeMatchPattern(node.callee, "React.createElement") ||
-		doesNodeMatchPattern(node.callee, "createElement")) &&
-		node.arguments[0].type === "JSStringLiteral" &&
-		node.arguments[0].value === "button" &&
-		node.arguments[1].type === "JSObjectExpression" &&
-		!node.arguments[1].properties.find((prop) =>
-			prop.type === "JSObjectProperty" &&
-			prop.key.value.type === "JSIdentifier" &&
-			prop.key.value.name === "type" &&
-			prop.value.type === "JSStringLiteral" &&
-			BUTTON_TYPE_REGEX.test(prop.value.value)
-		)
-	) {
-		return true;
-	}
-	return false;
+	const elementType = analyzeCreateElementProp(node, scope, "type");
+	return typeof elementType !== "string" || !BUTTON_TYPE_REGEX.test(elementType);
 }
 
 function jsxMissingType(node: AnyNode) {
@@ -53,9 +41,9 @@ function jsxMissingType(node: AnyNode) {
 export default {
 	name: "reactButtonHasType",
 	enter(path: Path): TransformExitResult {
-		const {node} = path;
+		const {node, scope} = path;
 
-		if (createElementMissingType(node) || jsxMissingType(node)) {
+		if (createElementMissingType(node, scope) || jsxMissingType(node)) {
 			path.context.addNodeDiagnostic(
 				(isJSXElement(node, "button") && getJSXAttribute(node, "type")) || node,
 				descriptions.LINT.REACT_BUTTON_HAS_TYPE,

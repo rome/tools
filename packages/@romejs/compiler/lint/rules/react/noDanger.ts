@@ -7,8 +7,9 @@
 
 import {Path} from "@romejs/compiler";
 import {AnyNode} from "@romejs/ast";
-import {doesNodeMatchPattern, getJSXAttribute} from "@romejs/js-ast-utils";
+import {getJSXAttribute} from "@romejs/js-ast-utils";
 import {descriptions} from "@romejs/diagnostics";
+import {getCreateElementProp} from "../../utils/react";
 
 function getJSXDangerProp(node: AnyNode) {
 	return (
@@ -17,28 +18,13 @@ function getJSXDangerProp(node: AnyNode) {
 	);
 }
 
-function getCreateElementDangerProp(node: AnyNode) {
-	if (
-		node.type === "JSCallExpression" &&
-		(doesNodeMatchPattern(node.callee, "React.createElement") ||
-		doesNodeMatchPattern(node.callee, "createElement")) &&
-		node.arguments[1].type === "JSObjectExpression"
-	) {
-		return node.arguments[1].properties.find((property) =>
-			property.type === "JSObjectProperty" &&
-			property.key.value.type === "JSIdentifier" &&
-			property.key.value.name === "dangerouslySetInnerHTML"
-		);
-	}
-	return undefined;
-}
-
 export default {
 	name: "reactNoDanger",
 	enter(path: Path): AnyNode {
-		const {node} = path;
+		const {node, scope} = path;
 		const dangerProp =
-			getJSXDangerProp(node) || getCreateElementDangerProp(node);
+			getJSXDangerProp(node) ||
+			getCreateElementProp(node, scope, "dangerouslySetInnerHTML");
 		if (dangerProp) {
 			path.context.addNodeDiagnostic(
 				dangerProp,

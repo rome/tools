@@ -6,16 +6,7 @@ import {
 	hasJSXAttribute,
 } from "@romejs/js-ast-utils";
 import {JSXAttribute} from "@romejs/ast";
-
-function inClassComponent(path: Path): boolean {
-	return (
-		path.findAncestry(({node}) =>
-			node.type === "JSClassMethod" &&
-			node.key.type === "JSStaticPropertyKey" &&
-			node.key.value.type === "JSIdentifier"
-		) !== undefined
-	);
-}
+import {insideClassComponent} from "../../utils/react";
 
 function containsStringLiteral(attribute: JSXAttribute): boolean {
 	return attribute.value?.type === "JSStringLiteral";
@@ -37,7 +28,7 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 
-		if (inClassComponent(path) && doesNodeMatchPattern(node, "this.refs")) {
+		if (insideClassComponent(path) && doesNodeMatchPattern(node, "this.refs")) {
 			context.addNodeDiagnostic(
 				node,
 				descriptions.LINT.REACT_NO_STRING_REFS("<emphasis>this.refs</emphasis>"),

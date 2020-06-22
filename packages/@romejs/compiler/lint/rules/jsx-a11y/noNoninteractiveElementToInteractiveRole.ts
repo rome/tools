@@ -2,11 +2,7 @@ import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
 import {getJSXAttribute, hasJSXAttribute} from "@romejs/js-ast-utils";
 import getJSXElementName from "@romejs/js-ast-utils/getJSXElementName";
-import {
-	isElementInteractive,
-	isRoleInteractive,
-	roles,
-} from "@romejs/compiler/lint/rules/ariaHelpers";
+import {isElementInteractive, isRoleInteractive, roles} from "../../utils/aria";
 
 export default {
 	name: "jsxA11YNoNoninteractiveElementToInteractiveRole",

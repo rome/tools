@@ -1,17 +1,25 @@
 import {descriptions} from "@romejs/diagnostics";
 import {AnyNode} from "@romejs/ast";
 import {Path} from "@romejs/compiler";
-import {doesNodeMatchPattern} from "@romejs/js-ast-utils";
+import {doesNodeMatchReactPattern} from "../../utils/react";
 
 export default {
 	name: "reactNoRenderReturnValue",
 
 	enter(path: Path): AnyNode {
-		const {node, parent} = path;
+		const {node, parent, scope} = path;
 
 		if (
 			node.type === "JSCallExpression" &&
-			doesNodeMatchPattern(node.callee, "ReactDOM.render") &&
+			doesNodeMatchReactPattern(
+				node.callee,
+				scope,
+				"ReactDOM.render",
+				{
+					packageName: "react-dom",
+					importName: "ReactDOM",
+				},
+			) &&
 			parent.type !== "JSExpressionStatement"
 		) {
 			path.context.addNodeDiagnostic(

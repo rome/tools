@@ -7,7 +7,7 @@
 
 import {test} from "rome";
 import {dedent} from "@romejs/string-utils";
-import {testLint} from "../testHelpers";
+import {testLint} from "../../utils/testing";
 
 test(
 	"react jsx key",

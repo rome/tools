@@ -6,9 +6,12 @@
 */
 
 import {descriptions} from "@romejs/diagnostics";
-import {AnyNode, JSObjectExpression} from "@romejs/ast";
-import {Path} from "@romejs/compiler";
-import {doesNodeMatchPattern} from "@romejs/js-ast-utils";
+import {AnyNode} from "@romejs/ast";
+import {Path, Scope} from "@romejs/compiler";
+import {
+	getCreateElementChildren,
+	getCreateElementProp,
+} from "../../utils/react";
 
 function jsxDangerWithChildren(node: AnyNode) {
 	if (node.type !== "JSXElement") {
@@ -40,58 +43,10 @@ function jsxDangerWithPropChildren(node: AnyNode) {
 	return hasDangerAttribute && hasChildrenAttribute;
 }
 
-function createElementDangerWithChildren(node: AnyNode): boolean {
-	if (node.type !== "JSCallExpression") {
-		return false;
-	}
-
-	const propsArgument = node.arguments[node.arguments.length - 2];
-
+function createElementDangerWithChildren(node: AnyNode, scope: Scope): boolean {
 	return (
-		(doesNodeMatchPattern(node.callee, "React.createElement") ||
-		doesNodeMatchPattern(node.callee, "createElement")) &&
-		node.arguments.length === 3 &&
-		propsArgument.type === "JSObjectExpression" &&
-		propsArgument.properties.some((prop) =>
-			prop.type === "JSObjectProperty" &&
-			prop.key.type === "JSStaticPropertyKey" &&
-			prop.key.value.type === "JSIdentifier" &&
-			prop.key.value.name === "dangerouslySetInnerHTML"
-		)
-	);
-}
-
-function createElementDangerWithPropChildren(node: AnyNode): boolean {
-	if (node.type !== "JSCallExpression") {
-		return false;
-	}
-
-	const propsArgument = node.arguments[1];
-
-	function hasDangerAttribute(node: JSObjectExpression) {
-		return node.properties.some((prop) =>
-			prop.type === "JSObjectProperty" &&
-			prop.key.type === "JSStaticPropertyKey" &&
-			prop.key.value.type === "JSIdentifier" &&
-			prop.key.value.name === "dangerouslySetInnerHTML"
-		);
-	}
-
-	function hasChildrenAttribute(node: JSObjectExpression) {
-		return node.properties.some((prop) =>
-			prop.type === "JSObjectProperty" &&
-			prop.key.type === "JSStaticPropertyKey" &&
-			prop.key.value.type === "JSIdentifier" &&
-			prop.key.value.name === "children"
-		);
-	}
-
-	return (
-		(doesNodeMatchPattern(node.callee, "React.createElement") ||
-		doesNodeMatchPattern(node.callee, "createElement")) &&
-		propsArgument.type === "JSObjectExpression" &&
-		hasDangerAttribute(propsArgument) &&
-		hasChildrenAttribute(propsArgument)
+		!!getCreateElementChildren(node, scope) &&
+		!!getCreateElementProp(node, scope, "dangerouslySetInnerHTML")
 	);
 }
 
@@ -99,13 +54,12 @@ export default {
 	name: "reactNoDangerWithChildren",
 
 	enter(path: Path): AnyNode {
-		const {node} = path;
+		const {node, scope} = path;
 
 		if (
 			jsxDangerWithChildren(node) ||
 			jsxDangerWithPropChildren(node) ||
-			createElementDangerWithChildren(node) ||
-			createElementDangerWithPropChildren(node)
+			createElementDangerWithChildren(node, scope)
 		) {
 			path.context.addNodeDiagnostic(
 				node,

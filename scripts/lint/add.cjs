@@ -61,7 +61,7 @@ export default {
 write(
 	testLoc,
 	`import {test} from "rome";
-import {testLint} from "../testHelpers";
+import {testLint} from "../../utils/testing";
 
 test(
 	"${category} ${spacedName}",

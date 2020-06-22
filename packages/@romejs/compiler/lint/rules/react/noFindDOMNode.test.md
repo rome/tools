@@ -13,7 +13,7 @@
   ✖ Avoid using the findDOMNode function.
 
     findDOMNode(this).scrollIntoView()
-    ^^^^^^^^^^^^^^^^^
+    ^^^^^^^^^^^
 
   ℹ React plans to deprecate the findDOMNode function entirely since it prevents internal
     optimizations. Use callback refs instead.
@@ -35,6 +35,16 @@ findDOMNode(this).scrollIntoView();
 
 ```
 
+ unknown:1 lint/react/noFindDOMNode ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Avoid using the findDOMNode function.
+
+    ReactDOM.findDOMNode(this).scrollIntoView()
+    ^^^^^^^^^^^^^^^^^^^^
+
+  ℹ React plans to deprecate the findDOMNode function entirely since it prevents internal
+    optimizations. Use callback refs instead.
+
  unknown:1:9 lint/react/noFindDOMNode ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the findDOMNode function.
@@ -47,7 +57,7 @@ findDOMNode(this).scrollIntoView();
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✖ Found 1 problem
+✖ Found 2 problems
 
 ```
 

@@ -1,7 +1,7 @@
 import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
 import {getJSXAttribute, hasJSXAttribute} from "@romejs/js-ast-utils";
-import {roles} from "@romejs/compiler/lint/rules/ariaHelpers";
+import {roles} from "../../utils/aria";
 
 export default {
 	name: "jsxA11YRoleHasRequiredAriaProps",
