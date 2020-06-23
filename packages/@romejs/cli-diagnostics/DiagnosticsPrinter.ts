@@ -22,10 +22,10 @@ import {
 	DiagnosticsPrinterOptions,
 } from "./types";
 import {
+	escapeMarkup,
 	formatAnsi,
 	markup,
 	markupToPlainTextString,
-	escapeMarkup,
 } from "@romejs/string-markup";
 import {ToLines, toLines} from "./utils";
 import printAdvice from "./printAdvice";
