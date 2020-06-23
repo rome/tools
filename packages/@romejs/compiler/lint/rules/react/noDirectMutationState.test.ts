@@ -268,6 +268,15 @@ test(
                 };
               }
             }
+					`,
+					`
+            class Example extends SuperExample.Component {
+              someOtherFunction(props) {
+                this.state = {
+                  count: 0
+                };
+              }
+            }
           `,
 				],
 			},

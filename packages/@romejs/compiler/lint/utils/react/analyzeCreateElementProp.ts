@@ -9,9 +9,9 @@ export default function analyzeCreateElementProp(
 	scope: Scope,
 	propName: string,
 ): EvalResult["value"] {
-	const elementType = getCreateElementProp(node, scope, propName);
-	if (!elementType) {
+	const prop = getCreateElementProp(node, scope, propName);
+	if (!prop) {
 		return;
 	}
-	return tryStaticEvaluation(elementType.value, scope).value;
+	return tryStaticEvaluation(prop.value, scope).value;
 }

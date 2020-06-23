@@ -17,11 +17,12 @@ export default {
 		const {node, scope} = path;
 
 		if (
-			doesNodeMatchReactPattern(node, scope, "findDOMNode") ||
-			doesNodeMatchReactPattern(node, scope, "React.findDOMNode")
+			node.type === "JSCallExpression" &&
+			(doesNodeMatchReactPattern(node.callee, scope, "findDOMNode") ||
+			doesNodeMatchReactPattern(node.callee, scope, "React.findDOMNode"))
 		) {
 			path.context.addNodeDiagnostic(
-				node,
+				node.callee,
 				descriptions.LINT.REACT_NO_FIND_DOM_NODE,
 			);
 		}
