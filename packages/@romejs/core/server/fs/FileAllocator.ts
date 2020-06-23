@@ -8,15 +8,15 @@
 import {Server} from "@romejs/core";
 import {Stats} from "./MemoryFileSystem";
 import {WorkerContainer} from "../WorkerManager";
-import Locker from "../../common/utils/Locker";
-import {AbsoluteFilePath} from "@romejs/path";
+import {FilePathLocker} from "../../common/utils/lockers";
+import {AbsoluteFilePath, AbsoluteFilePathMap} from "@romejs/path";
 import {Event} from "@romejs/events";
 
 export default class FileAllocator {
 	constructor(server: Server) {
 		this.server = server;
-		this.fileToWorker = new Map();
-		this.locker = new Locker();
+		this.fileToWorker = new AbsoluteFilePathMap();
+		this.locker = new FilePathLocker();
 		this.evictEvent = new Event({
 			name: "evict",
 		});
@@ -24,8 +24,8 @@ export default class FileAllocator {
 
 	evictEvent: Event<AbsoluteFilePath, void>;
 	server: Server;
-	locker: Locker<string>;
-	fileToWorker: Map<string, number>;
+	locker: FilePathLocker;
+	fileToWorker: AbsoluteFilePathMap<number>;
 
 	init() {
 		this.server.memoryFs.deletedFileEvent.subscribe((path) => {
@@ -37,7 +37,7 @@ export default class FileAllocator {
 		});
 	}
 
-	getAllOwnedFilenames(): Array<string> {
+	getAllOwnedFilenames(): Array<AbsoluteFilePath> {
 		return Array.from(this.fileToWorker.keys());
 	}
 
@@ -46,7 +46,7 @@ export default class FileAllocator {
 	}
 
 	getOwnerId(path: AbsoluteFilePath): undefined | number {
-		return this.fileToWorker.get(path.join());
+		return this.fileToWorker.get(path);
 	}
 
 	verifySize(path: AbsoluteFilePath, stats: Stats) {
@@ -115,7 +115,7 @@ export default class FileAllocator {
 		await this.evict(path);
 
 		// Disown it from 'our internal map
-		this.fileToWorker.delete(path.join());
+		this.fileToWorker.delete(path);
 
 		// Remove the total size from 'this worker so it'll be assigned next
 		const stats = this.server.memoryFs.getFileStatsAssert(path);
@@ -164,8 +164,7 @@ export default class FileAllocator {
 	async assignOwner(path: AbsoluteFilePath): Promise<WorkerContainer> {
 		const {workerManager, logger} = this.server;
 
-		const filename = path.join();
-		const lock = await this.locker.getLock(filename);
+		const lock = await this.locker.getLock(path);
 
 		// We may have waited on the lock and could already have an owner
 		if (this.hasOwner(path)) {
@@ -181,7 +180,7 @@ export default class FileAllocator {
 				path.toMarkup(),
 				worker.id,
 			);
-			this.fileToWorker.set(filename, worker.id);
+			this.fileToWorker.set(path, worker.id);
 
 			return worker;
 		} finally {

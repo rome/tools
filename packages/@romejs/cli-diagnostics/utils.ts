@@ -79,7 +79,7 @@ export function toLines(opts: AnsiHighlightOptions): ToLines {
 
 	if (raw.length !== highlighted.length) {
 		throw new Error(
-			`raw and highlighted line count mismatch ${raw.length} !== ${highlighted.length}`,
+			`${opts.path.join()}: raw and highlighted line count mismatch ${raw.length} !== ${highlighted.length}`,
 		);
 	}
 

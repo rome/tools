@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 
+(function(res) {
+	if (typeof module !== "undefined") {
+		module.exports = res;
+	}
+	return res;
+})(
 (function(global) {
   'use strict';
   // project-rome/@romejs/cli-diagnostics/types.ts
@@ -731,18 +737,7 @@ const ___R$$priv$project$rome$$romejs$path$index_ts$os = require("os");
 			return filename;
 		}
 
-		// This does some weird optimizations to avoid materializing complete filenames
-
-		// Might not be relevant... TODO benchmark this or something lol
 		equal(other) {
-			// Quick check if we've materalized the filename on both instances
-			if (
-				this.memoizedFilename !== undefined &&
-				other.memoizedFilename !== undefined
-			) {
-				return this.memoizedFilename === other.memoizedFilename;
-			}
-
 			const a = this.getSegments();
 			const b = other.getSegments();
 
@@ -1659,6 +1654,10 @@ const ___R$$priv$project$rome$$romejs$string$utils$humanizeFileSize_ts$UNITS = [
 	function ___R$project$rome$$romejs$string$utils$humanizeFileSize_ts$humanizeFileSize(
 		bytes,
 	) {
+		if (bytes === 0) {
+			return "0B";
+		}
+
 		const exponent = Math.min(
 			Math.floor(Math.log10(bytes) / 3),
 			___R$$priv$project$rome$$romejs$string$utils$humanizeFileSize_ts$UNITS.length -
@@ -2297,8 +2296,9 @@ function ___R$project$rome$$romejs$string$utils$toCamelCase_ts$toCamelCase(
 			return str;
 		}
 
-		// Prepend uppercase letters with a space
-		str = str.replace(/([A-Z+])/g, " $1");
+		// Prepend uppercase letters with a space unless all characters are uppercase
+		str =
+			str.toUpperCase() === str ? " " + str : str.replace(/([A-Z+])/g, " $1");
 
 		// We no longer care about the casing
 		str = str.toLowerCase();
@@ -7638,6 +7638,14 @@ class ___R$project$rome$$romejs$events$BridgeError_ts$default extends Error {
 				throw err;
 			}
 		}
+
+		callSync() {
+			throw new Error("callSync not allowed on BridgeEvent " + this.name);
+		}
+
+		callOptional() {
+			throw new Error("callOptional not allowed on BridgeEvent " + this.name);
+		}
 	}
 
 
@@ -8788,6 +8796,70 @@ const ___R$project$rome$$romejs$v8$types_ts = {};
 
 
 
+  // project-rome/@romejs/node/errors.ts
+const ___R$project$rome$$romejs$node$errors_ts = {
+		convertPossibleNodeError: ___R$project$rome$$romejs$node$errors_ts$convertPossibleNodeError,
+	};
+
+
+	function ___R$$priv$project$rome$$romejs$node$errors_ts$changeMessage(
+		old,
+		msg,
+	) {
+		const err = new ___R$$priv$project$rome$$romejs$node$errors_ts$Error(msg);
+
+		// Without doing something jank we can't retain the original Error constructor ie. TypeError etc
+		// We probably don't need to or actually care
+		err.name = old.name;
+
+		// Populate ERROR_FRAMES_PROP
+		old.stack;
+		err[___R$project$rome$$romejs$v8$errors_ts$ERROR_FRAMES_PROP] = old[___R$project$rome$$romejs$v8$errors_ts$ERROR_FRAMES_PROP];
+		err.stack;
+
+		return err;
+	}
+
+	function ___R$$priv$project$rome$$romejs$node$errors_ts$convertNodeErrorWithPath(
+		err,
+		path,
+	) {
+		switch (err.code) {
+			case "ENOENT":
+				return ___R$$priv$project$rome$$romejs$node$errors_ts$changeMessage(
+					err,
+					"'" + path + "' does not exist",
+				);
+
+			case "EPERM":
+				return ___R$$priv$project$rome$$romejs$node$errors_ts$changeMessage(
+					err,
+					"Cannot access '" + path + "'",
+				);
+
+			default:
+				return err;
+		}
+	}
+
+	function ___R$project$rome$$romejs$node$errors_ts$convertPossibleNodeError(
+		err,
+	) {
+		if (err.path !== undefined) {
+			return ___R$$priv$project$rome$$romejs$node$errors_ts$convertNodeErrorWithPath(
+				err,
+				err.path,
+			);
+		}
+
+		return err;
+	}
+
+
+  // project-rome/@romejs/node/index.ts
+
+
+
   // project-rome/@romejs/v8/errors.ts
 const ___R$project$rome$$romejs$v8$errors_ts = {
 		get ERROR_FRAMES_PROP() {
@@ -8814,10 +8886,19 @@ const ___R$project$rome$$romejs$v8$errors_ts = {
 
 
 
+
+
 	function ___R$project$rome$$romejs$v8$errors_ts$getErrorStructure(
 		err,
 		framesToShift = 0,
 	) {
+		// Make some node errors more pretty
+		if (err instanceof Error) {
+			err = ___R$project$rome$$romejs$node$errors_ts$convertPossibleNodeError(
+				err,
+			);
+		}
+
 		let name = "Error";
 		let message = "Unknown message";
 		let stack = undefined;
@@ -20223,6 +20304,7 @@ const ___R$project$rome$$romejs$project$types_ts = {
 				serveStatic: true,
 			},
 			bundler: {
+				externals: [],
 				mode: "modern",
 			},
 			compiler: {},
@@ -21122,7 +21204,11 @@ const ___R$$priv$project$rome$$romejs$fs$index_ts$fs = require("fs");
 					if (err === null) {
 						resolve(data);
 					} else {
-						reject(err);
+						reject(
+							___R$project$rome$$romejs$node$errors_ts$convertPossibleNodeError(
+								err,
+							),
+						);
 					}
 				},
 			);
@@ -21142,7 +21228,11 @@ const ___R$$priv$project$rome$$romejs$fs$index_ts$fs = require("fs");
 					if (err === null) {
 						resolve();
 					} else {
-						reject(err);
+						reject(
+							___R$project$rome$$romejs$node$errors_ts$convertPossibleNodeError(
+								err,
+							),
+						);
 					}
 				},
 			);
@@ -22525,6 +22615,8 @@ const ___R$project$rome$$romejs$project$load_ts = {
 		".hgignore",
 	];
 
+
+
 	function ___R$$priv$project$rome$$romejs$project$load_ts$categoryExists(
 		consumer,
 	) {
@@ -22545,12 +22637,12 @@ const ___R$project$rome$$romejs$project$load_ts = {
 		return true;
 	}
 
-	function ___R$project$rome$$romejs$project$load_ts$loadCompleteProjectConfig(
+	async function ___R$project$rome$$romejs$project$load_ts$loadCompleteProjectConfig(
 		projectFolder,
 		configPath,
 	) {
 		// TODO use consumer.capture somehow here to aggregate errors
-		const {partial, meta} = ___R$$priv$project$rome$$romejs$project$load_ts$loadPartialProjectConfig(
+		const {partial, meta} = await ___R$$priv$project$rome$$romejs$project$load_ts$loadPartialProjectConfig(
 			projectFolder,
 			configPath,
 		);
@@ -22609,11 +22701,11 @@ const ___R$project$rome$$romejs$project$load_ts = {
 		};
 	}
 
-	function ___R$$priv$project$rome$$romejs$project$load_ts$loadPartialProjectConfig(
+	async function ___R$$priv$project$rome$$romejs$project$load_ts$loadPartialProjectConfig(
 		projectFolder,
 		configPath,
 	) {
-		const configFile = ___R$project$rome$$romejs$fs$index_ts$readFileTextSync(
+		const configFile = await ___R$project$rome$$romejs$fs$index_ts$readFileText(
 			configPath,
 		);
 		const res = ___R$project$rome$$romejs$codec$json$index_ts$consumeJSONExtra({
@@ -22629,7 +22721,7 @@ const ___R$project$rome$$romejs$project$load_ts = {
 		);
 	}
 
-	function ___R$project$rome$$romejs$project$load_ts$normalizeProjectConfig(
+	async function ___R$project$rome$$romejs$project$load_ts$normalizeProjectConfig(
 		res,
 		configPath,
 		configFile,
@@ -22723,6 +22815,12 @@ const ___R$project$rome$$romejs$project$load_ts = {
 					"modern",
 					"legacy",
 				]);
+			}
+
+			if (bundler.has("externals")) {
+				config.bundler.externals = ___R$project$rome$$romejs$project$utils_ts$arrayOfStrings(
+					bundler.get("externals"),
+				);
 			}
 		}
 
@@ -22843,7 +22941,7 @@ const ___R$project$rome$$romejs$project$load_ts = {
 		consumer.enforceUsedProperties("config property");
 
 		if (_extends.exists()) {
-			return ___R$$priv$project$rome$$romejs$project$load_ts$extendProjectConfig(
+			return await ___R$$priv$project$rome$$romejs$project$load_ts$extendProjectConfig(
 				projectFolder,
 				_extends,
 				config,
@@ -22889,7 +22987,7 @@ const ___R$project$rome$$romejs$project$load_ts = {
 		};
 	}
 
-	function ___R$$priv$project$rome$$romejs$project$load_ts$extendProjectConfig(
+	async function ___R$$priv$project$rome$$romejs$project$load_ts$extendProjectConfig(
 		projectFolder,
 		extendsStrConsumer,
 		config,
@@ -22902,18 +23000,16 @@ const ___R$project$rome$$romejs$project$load_ts = {
 		}
 
 		const extendsPath = projectFolder.resolve(extendsRelative);
-		const {partial: extendsObj, meta: extendsMeta} = ___R$$priv$project$rome$$romejs$project$load_ts$loadPartialProjectConfig(
+		const {partial: extendsObj, meta: extendsMeta} = await ___R$$priv$project$rome$$romejs$project$load_ts$loadPartialProjectConfig(
 			extendsPath.getParent(),
 			extendsPath,
 		);
 
 		// Check for recursive config
-		for (const path of extendsMeta.configDependencies) {
-			if (path.equal(extendsPath)) {
-				throw extendsStrConsumer.unexpected(
-					___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.PROJECT_CONFIG.RECURSIVE_CONFIG,
-				);
-			}
+		if (extendsMeta.configDependencies.has(meta.configPath)) {
+			throw extendsStrConsumer.unexpected(
+				___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.PROJECT_CONFIG.RECURSIVE_CONFIG,
+			);
 		}
 
 		const merged = ___R$$priv$project$rome$$romejs$project$load_ts$mergePartialConfig(
@@ -22951,6 +23047,14 @@ const ___R$project$rome$$romejs$project$load_ts = {
 		);
 		if (typeCheckingLibs !== undefined) {
 			merged.typeCheck.libs = typeCheckingLibs;
+		}
+
+		const bundlerExternals = ___R$project$rome$$romejs$project$utils_ts$mergeArrays(
+			extendsObj.bundler.externals,
+			config.bundler.externals,
+		);
+		if (bundlerExternals !== undefined) {
+			merged.bundler.externals = bundlerExternals;
 		}
 
 		return {
@@ -27226,10 +27330,12 @@ function ___R$$priv$project$rome$$romejs$compiler$transforms$compile$transpile$o
 	function ___R$$priv$project$rome$$romejs$compiler$transforms$compile$transpile$enums_ts$enumFill(
 		node,
 		scope,
+		context,
 	) {
 		const x = ___R$$priv$project$rome$$romejs$compiler$transforms$compile$transpile$enums_ts$translateEnumValues(
 			node,
 			scope,
+			context,
 		);
 		const assignments = x.map(([memberName, memberValue]) =>
 			___R$$priv$project$rome$$romejs$compiler$transforms$compile$transpile$enums_ts$buildEnumMember(
@@ -27249,6 +27355,7 @@ function ___R$$priv$project$rome$$romejs$compiler$transforms$compile$transpile$o
 	function ___R$$priv$project$rome$$romejs$compiler$transforms$compile$transpile$enums_ts$translateEnumValues(
 		node,
 		scope,
+		context,
 	) {
 		const seen = new Map();
 		let prev = -1;
@@ -27263,7 +27370,23 @@ function ___R$$priv$project$rome$$romejs$compiler$transforms$compile$transpile$o
 				let {value: constValue, bailed} = ___R$project$rome$$romejs$js$ast$utils$tryStaticEvaluation_ts$default(
 					initializer,
 					scope,
+					{
+						isNodeValid: (node, resolvedNode) => {
+							if (
+								node.type === "JSReferenceIdentifier" &&
+								resolvedNode.type !== "JSNumericLiteral"
+							) {
+								context.addNodeDiagnostic(
+									member,
+									___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.COMPILER.ENUM_COMPUTED_VALUES_UNSUPPORTED,
+								);
+								return false;
+							}
+							return true;
+						},
+					},
 				);
+
 				if (bailed && initializer.type === "JSReferenceIdentifier") {
 					constValue = seen.get(initializer.name);
 				}
@@ -27324,6 +27447,7 @@ function ___R$$priv$project$rome$$romejs$compiler$transforms$compile$transpile$o
 			const fill = ___R$$priv$project$rome$$romejs$compiler$transforms$compile$transpile$enums_ts$enumFill(
 				node,
 				scope,
+				context,
 			);
 
 			switch (path.parent.type) {
@@ -73940,6 +74064,8 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$anchorIsVa
 
 
 
+
+
 	const ___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$ariaPropsMap = new Map([
 		[
 			"aria-activedescendant",
@@ -74648,6 +74774,174 @@ const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$ariaProps_ts$defaul
 	};
 
 
+  // project-rome/@romejs/js-ast-utils/isEmptyTemplateLiteral.ts
+function ___R$project$rome$$romejs$js$ast$utils$isEmptyTemplateLiteral_ts$default(
+		node,
+	) {
+		if (!node.quasis || node.quasis.length === 0) {
+			return false;
+		}
+
+		if (node.quasis.length === 1) {
+			const quasi = node.quasis[0];
+			return quasi.cooked === "";
+		}
+		return false;
+	}
+
+
+  // project-rome/@romejs/compiler/lint/rules/jsx-a11y/ariaProptypes.ts
+function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$ariaProptypes_ts$isCorrectValue(
+		attribute,
+		value,
+	) {
+		switch (attribute.type) {
+			case "boolean": {
+				if (typeof value === "string") {
+					return value === "false" || value === "true";
+				}
+				return typeof value === "boolean";
+			}
+
+			case "id":
+			case "string":
+				return typeof value === "string";
+
+			case "tristate": {
+				if (typeof value === "string") {
+					return value === "false" || value === "true" || value === "mixed";
+				}
+				if (typeof value === "boolean") {
+					return Boolean(value);
+				}
+				return false;
+			}
+			case "token": {
+				if (attribute.values) {
+					const result = attribute.values.some((token) => {
+						if (typeof token === "boolean") {
+							if (typeof value === "string") {
+								return value === "true" || value === "false";
+							}
+							return Boolean(value) === token;
+						}
+						return typeof value === "string" ? value === token : value === token;
+					});
+					return result;
+				}
+				return false;
+			}
+
+			case "idlist": {
+				return (
+					typeof value === "string" &&
+					value.split(" ").every((token) => typeof token === "string")
+				);
+			}
+
+			case "integer":
+			case "number":
+				return typeof value !== "boolean" && isNaN(Number(value)) === false;
+
+			case "tokenlist": {
+				if (attribute.values) {
+					return (
+						typeof value === "string" &&
+						value.split(" ").every((token) => {
+							return (
+								attribute.values &&
+								attribute.values.indexOf(token.toLowerCase()) > -1
+							);
+						})
+					);
+				}
+				return false;
+			}
+
+			default:
+				return false;
+		}
+	}
+	const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$ariaProptypes_ts$default = {
+		name: "jsxA11YAriaProptypes",
+		enter(path) {
+			const {node} = path;
+
+			if (node.type === "JSXAttribute") {
+				if (
+					node.name.type === "JSXIdentifier" &&
+					node.name.name.indexOf("aria-") === 0
+				) {
+					if (node.value) {
+						const ariaAttribute = ___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$ariaPropsMap.get(
+							(node.name.name),
+						);
+						if (ariaAttribute) {
+							if (node.value.type === "JSStringLiteral") {
+								if (
+									node.value.value === "" ||
+									!___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$ariaProptypes_ts$isCorrectValue(
+										ariaAttribute,
+										node.value.value,
+									)
+								) {
+									path.context.addNodeDiagnostic(
+										node,
+										___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.JSX_A11Y_ARIA_PROPTYPES(
+											node.name.name,
+											ariaAttribute.values,
+										),
+									);
+								}
+							}
+
+							if (node.value.type === "JSXExpressionContainer") {
+								const expression = node.value.expression;
+
+								if (
+									expression.type === "JSBooleanLiteral" ||
+									expression.type === "JSNumericLiteral"
+								) {
+									if (
+										!___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$ariaProptypes_ts$isCorrectValue(
+											ariaAttribute,
+											expression.value,
+										)
+									) {
+										path.context.addNodeDiagnostic(
+											node,
+											___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.JSX_A11Y_ARIA_PROPTYPES(
+												node.name.name,
+												ariaAttribute.values,
+											),
+										);
+									}
+								} else if (expression.type === "JSTemplateLiteral") {
+									if (
+										___R$project$rome$$romejs$js$ast$utils$isEmptyTemplateLiteral_ts$default(
+											expression,
+										)
+									) {
+										path.context.addNodeDiagnostic(
+											node,
+											___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.JSX_A11Y_ARIA_PROPTYPES(
+												node.name.name,
+												ariaAttribute.values,
+											),
+										);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			return node;
+		},
+	};
+
+
   // project-rome/@romejs/compiler/lint/rules/jsx-a11y/ariaUnsupportedElements.ts
 function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$ariaUnsupportedElements_ts$hasAriaAttributes(
 		node,
@@ -74813,22 +75107,6 @@ const ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$headingHasCon
 			return node;
 		},
 	};
-
-
-  // project-rome/@romejs/js-ast-utils/isEmptyTemplateLiteral.ts
-function ___R$project$rome$$romejs$js$ast$utils$isEmptyTemplateLiteral_ts$default(
-		node,
-	) {
-		if (!node.quasis || node.quasis.length === 0) {
-			return false;
-		}
-
-		if (node.quasis.length === 1) {
-			const quasi = node.quasis[0];
-			return quasi.cooked === "";
-		}
-		return false;
-	}
 
 
   // project-rome/@romejs/compiler/lint/rules/jsx-a11y/htmlHasLang.ts
@@ -76796,6 +77074,24 @@ const ___R$project$rome$$romejs$compiler$lint$rules$react$jsxPascalCase_ts$defau
 	};
 
 
+  // project-rome/@romejs/compiler/lint/rules/react/jsxPropsNoSpreading.ts
+const ___R$project$rome$$romejs$compiler$lint$rules$react$jsxPropsNoSpreading_ts$default = {
+		name: "reactJsxPropsNoSpreading",
+		enter(path) {
+			const {node} = path;
+
+			if (node.type === "JSXSpreadAttribute") {
+				path.context.addNodeDiagnostic(
+					node,
+					___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.REACT_JSX_PROPS_NO_SPREADING,
+				);
+			}
+
+			return node;
+		},
+	};
+
+
   // project-rome/@romejs/compiler/lint/rules/react/noAccessStateInSetState.ts
 const ___R$project$rome$$romejs$compiler$lint$rules$react$noAccessStateInSetState_ts$default = {
 		name: "reactNoAccessStateInSetState",
@@ -78410,6 +78706,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$index_ts$lintTransforms = [
 		___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$anchorHasContent_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$anchorIsValid_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$ariaProps_ts$default,
+		___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$ariaProptypes_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$ariaUnsupportedElements_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$clickEventsHaveKeyEvents_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$headingHasContent_ts$default,
@@ -78436,6 +78733,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$index_ts$lintTransforms = [
 		___R$project$rome$$romejs$compiler$lint$rules$react$jsxNoCommentText_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$jsxNoDuplicateProps_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$jsxPascalCase_ts$default,
+		___R$project$rome$$romejs$compiler$lint$rules$react$jsxPropsNoSpreading_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$noAccessStateInSetState_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$noChildrenProp_ts$default,
@@ -81112,16 +81410,20 @@ function ___R$project$rome$$romejs$js$ast$utils$resolveIndirection_ts$default(
 
 		let res = ___R$$priv$project$rome$$romejs$js$ast$utils$tryStaticEvaluation_ts$BAILED;
 
-		({node, scope} = ___R$project$rome$$romejs$js$ast$utils$resolveIndirection_ts$default(
+		const {node: resolvedNode, scope: resolvedScope} = ___R$project$rome$$romejs$js$ast$utils$resolveIndirection_ts$default(
 			node,
 			scope,
-		));
+		);
 
-		switch (node.type) {
+		if (opts.isNodeValid && !opts.isNodeValid(node, resolvedNode)) {
+			return res;
+		}
+
+		switch (resolvedNode.type) {
 			case "JSUnaryExpression": {
 				res = ___R$$priv$project$rome$$romejs$js$ast$utils$tryStaticEvaluation_ts$evalUnaryExpression(
-					node,
-					scope,
+					resolvedNode,
+					resolvedScope,
 					opts,
 				);
 				break;
@@ -81129,8 +81431,8 @@ function ___R$project$rome$$romejs$js$ast$utils$resolveIndirection_ts$default(
 
 			case "JSBinaryExpression": {
 				res = ___R$$priv$project$rome$$romejs$js$ast$utils$tryStaticEvaluation_ts$evalBinaryExpression(
-					node,
-					scope,
+					resolvedNode,
+					resolvedScope,
 					opts,
 				);
 				break;
@@ -81145,7 +81447,7 @@ function ___R$project$rome$$romejs$js$ast$utils$resolveIndirection_ts$default(
 
 			case "JSBigIntLiteral": {
 				res = ___R$$priv$project$rome$$romejs$js$ast$utils$tryStaticEvaluation_ts$createResult(
-					BigInt(node.value),
+					BigInt(resolvedNode.value),
 				);
 				break;
 			}
@@ -81154,14 +81456,14 @@ function ___R$project$rome$$romejs$js$ast$utils$resolveIndirection_ts$default(
 			case "JSBooleanLiteral":
 			case "JSNumericLiteral": {
 				res = ___R$$priv$project$rome$$romejs$js$ast$utils$tryStaticEvaluation_ts$createResult(
-					node.value,
+					resolvedNode.value,
 				);
 				break;
 			}
 
 			case "JSReferenceIdentifier": {
-				const binding = scope.getBinding(node.name);
-				if (binding === undefined && node.name === "undefined") {
+				const binding = resolvedScope.getBinding(resolvedNode.name);
+				if (binding === undefined && resolvedNode.name === "undefined") {
 					res = ___R$$priv$project$rome$$romejs$js$ast$utils$tryStaticEvaluation_ts$createResult(
 						undefined,
 					);
@@ -81171,8 +81473,8 @@ function ___R$project$rome$$romejs$js$ast$utils$resolveIndirection_ts$default(
 
 			case "JSTemplateLiteral": {
 				res = ___R$$priv$project$rome$$romejs$js$ast$utils$tryStaticEvaluation_ts$evalTemplateLiteral(
-					node,
-					scope,
+					resolvedNode,
+					resolvedScope,
 					opts,
 				);
 				break;
@@ -85802,10 +86104,14 @@ const ___R$project$rome$$romejs$cli$reporter$types_ts = {};
 			const lines = value.split("\n");
 
 			const values = lines.map((line) => {
-				return callback(
-					token,
-					___R$project$rome$$romejs$string$markup$escape_ts$escapeMarkup(line),
-				);
+				return line === ""
+					? ""
+					: callback(
+							token,
+							___R$project$rome$$romejs$string$markup$escape_ts$escapeMarkup(
+								line,
+							),
+						);
 			});
 
 			buff += values.join("\n");
@@ -86138,16 +86444,22 @@ function ___R$project$rome$$romejs$cli$diagnostics$utils_ts$normalizeTabs(str) {
 
 
 	function ___R$project$rome$$romejs$cli$diagnostics$utils_ts$toLines(opts) {
-		const raw = ___R$project$rome$$romejs$cli$diagnostics$utils_ts$splitLines(
+		const input = ___R$project$rome$$romejs$string$utils$removeCarriageReturn_ts$removeCarriageReturn(
 			opts.input,
 		);
+		const raw = ___R$project$rome$$romejs$cli$diagnostics$utils_ts$splitLines(
+			input,
+		);
 		const highlighted = ___R$project$rome$$romejs$cli$diagnostics$utils_ts$splitLines(
-			___R$project$rome$$romejs$cli$diagnostics$highlightCode_ts$default(opts),
+			___R$project$rome$$romejs$cli$diagnostics$highlightCode_ts$default(
+				Object.assign({}, opts, {input}),
+			),
 		);
 
 		if (raw.length !== highlighted.length) {
 			throw new Error(
-				"raw and highlighted line count mismatch " +
+				opts.path.join() +
+				": raw and highlighted line count mismatch " +
 				raw.length +
 				" !== " +
 				highlighted.length,
@@ -100206,7 +100518,7 @@ const ___R$project$rome$$romejs$cli$diagnostics$banners$error_json$default = {
 				if (stats === undefined) {
 					this.missingFileSources.add(abs);
 				} else {
-					this.addFileSource(dep, stats);
+					this.wrapError(() => this.addFileSource(dep, stats));
 				}
 			}
 		}
@@ -100217,12 +100529,32 @@ const ___R$project$rome$$romejs$cli$diagnostics$banners$error_json$default = {
 			this.displayDiagnostics(filteredDiagnostics);
 		}
 
-		displayDiagnostics(diagnostics) {
-			const restoreRedirect = this.reporter.redirectOutToErr(true);
-			for (const diag of diagnostics) {
-				this.displayDiagnostic(diag);
+		wrapError(callback) {
+			const {reporter} = this;
+			try {
+				callback();
+			} catch (err) {
+				// Sometimes we'll run into issues displaying diagnostics
+				// We can safely catch them here since the presence of diagnostics is considered a critical failure
+				// Display diagnostics is idempotent
+				reporter.error("Encountered an error displaying this diagnostic");
+				reporter.error(
+					___R$project$rome$$romejs$string$markup$escape_ts$escapeMarkup(
+						err.stack,
+					),
+				);
 			}
-			this.reporter.redirectOutToErr(restoreRedirect);
+		}
+
+		displayDiagnostics(diagnostics) {
+			const {reporter} = this;
+			const restoreRedirect = reporter.redirectOutToErr(true);
+
+			for (const diag of diagnostics) {
+				this.wrapError(() => this.displayDiagnostic(diag));
+			}
+
+			reporter.redirectOutToErr(restoreRedirect);
 		}
 
 		getOutdatedFiles(diag) {
@@ -100894,6 +101226,10 @@ const ___R$project$rome$$romejs$diagnostics$descriptions$compiler_ts$compiler = 
 		CONST_ENUMS_UNSUPPORTED: {
 			category: "compile/const-enums",
 			message: "Const enums are not supported",
+		},
+		ENUM_COMPUTED_VALUES_UNSUPPORTED: {
+			category: "compile/nonnumeric-enum-values",
+			message: "Only numeric enums can have computed members",
 		},
 	});
 
@@ -102057,6 +102393,17 @@ const ___R$project$rome$$romejs$diagnostics$descriptions$projectConfig_ts$projec
 
   // project-rome/@romejs/diagnostics/descriptions/lint.ts
 const ___R$project$rome$$romejs$diagnostics$descriptions$lint_ts$lint = ___R$project$rome$$romejs$diagnostics$descriptions$index_ts$createDiagnosticsCategory({
+		REACT_JSX_PROPS_NO_SPREADING: {
+			category: "lint/react/jsxPropsNoSpreading",
+			message: "Avoid using property spreading in JSX components.",
+			advice: [
+				{
+					type: "log",
+					category: "info",
+					text: "Explicit JSX attributes enhance the readability of code by clearly indicating which props are accepted by a given element.",
+				},
+			],
+		},
 		REACT_NO_ARRAY_INDEX_KEY: {
 			category: "lint/react/noArrayIndexKey",
 			message: "Avoid using array index as key property in an element.",
@@ -102079,6 +102426,35 @@ const ___R$project$rome$$romejs$diagnostics$descriptions$lint_ts$lint = ___R$pro
 				},
 			],
 		},
+		JSX_A11Y_ARIA_PROPTYPES: (attributeName, values) => {
+			let advice = [];
+			if (values) {
+				advice.push({
+					type: "log",
+					category: "info",
+					text: "The supported values for the <emphasis>" +
+					attributeName +
+					"</emphasis> attribute are: " +
+					values.reduce(
+						(str, value) => {
+							str.push(
+								typeof value === "boolean" ? String(value) : '"' + value + '"',
+							);
+							return str;
+						},
+						([]),
+					).join(", "),
+				});
+			}
+			return {
+				category: "lint/jsx-a11y/ariaProptypes",
+				message: "The value of the ARIA attribute <emphasis>" +
+				attributeName +
+				"</emphasis> is not correct.",
+				advice,
+			};
+		},
+
 		JSX_A11Y_NO_NONINTERACTIVE_ELEMENT_TO_INTERACTIVE_ROLE: (element) => ({
 			category: "lint/jsx-a11y/noNoninteractiveElementToInteractiveRole",
 			message: "The HTML element <emphasis>" +
@@ -105152,6 +105528,26 @@ const ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$crypto = requ
 			this.normalizedCommandFlags = normalized;
 		}
 
+		async resolveEntryAssertPathArg(index) {
+			this.expectArgumentLength(index + 1);
+			const arg = this.query.args[index];
+
+			return await this.server.resolver.resolveEntryAssertPath(
+				Object.assign(
+					{},
+					this.getResolverOptionsFromFlags(),
+					{
+						source: ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(
+							arg,
+						),
+					},
+				),
+				{
+					location: this.getDiagnosticPointerFromFlags({type: "arg", key: index}),
+				},
+			);
+		}
+
 		async assertClientCwdProject() {
 			const location = this.getDiagnosticPointerForClientCwd();
 			return this.server.projectManager.assertProject(
@@ -105685,7 +106081,7 @@ const ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$crypto = requ
 			const {server} = this;
 			const owner = await server.fileAllocator.getOrAssignOwner(path);
 			const startMtime = server.memoryFs.maybeGetMtime(path);
-			const lock = await server.fileLocker.getLock(path.join());
+			const lock = await server.requestFileLocker.getLock(path);
 			const ref = server.projectManager.getTransportFileReference(path);
 
 			const marker = this.startMarker({
@@ -107152,14 +107548,15 @@ const ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$crypto = requ
 	}
 
 
-  // project-rome/@romejs/core/common/utils/Locker.ts
+  // project-rome/@romejs/core/common/utils/locker.ts
 
 
-	class ___R$$priv$project$rome$$romejs$core$common$utils$Locker_ts$Lock {
-		constructor(locker, key) {
+	class ___R$$priv$project$rome$$romejs$core$common$utils$locker_ts$Lock {
+		constructor(locker, rawKey, mapKey) {
 			this.locker = locker;
 			this.resolves = [];
-			this.key = key;
+			this.rawKey = rawKey;
+			this.mapKey = mapKey;
 		}
 
 		addResolve(resolve) {
@@ -107170,7 +107567,7 @@ const ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$crypto = requ
 			const {resolves} = this;
 
 			if (resolves.length === 0) {
-				this.locker.locks.delete(this.key);
+				this.locker.locks.delete(this.mapKey);
 			} else {
 				const resolve = resolves.shift();
 				if (resolve === undefined) {
@@ -107181,33 +107578,40 @@ const ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$crypto = requ
 		}
 	}
 
-	class ___R$project$rome$$romejs$core$common$utils$Locker_ts$default {
+	class ___R$$priv$project$rome$$romejs$core$common$utils$locker_ts$LockerNormalized {
 		constructor() {
 			this.locks = new Map();
 		}
 
-		hasLock(id) {
-			return this.locks.has(id);
+		normalizeKey(rawKey) {
+			throw new Error("Unimplemented");
 		}
 
-		getNewLock(key) {
-			if (this.locks.has(key)) {
+		hasLock(key) {
+			return this.locks.has(this.normalizeKey(key));
+		}
+
+		getNewLock(rawKey) {
+			const mapKey = this.normalizeKey(rawKey);
+			if (this.locks.has(mapKey)) {
 				throw new Error("Expected no lock to exist");
 			}
 
-			const lock = new ___R$$priv$project$rome$$romejs$core$common$utils$Locker_ts$Lock(
+			const lock = new ___R$$priv$project$rome$$romejs$core$common$utils$locker_ts$Lock(
 				this,
-				key,
+				rawKey,
+				mapKey,
 			);
-			this.locks.set(key, lock);
+			this.locks.set(mapKey, lock);
 			return lock;
 		}
 
-		async getLock(key) {
+		async getLock(rawKey) {
+			const key = this.normalizeKey(rawKey);
 			const existingLock = this.locks.get(key);
 
 			if (existingLock === undefined) {
-				return this.getNewLock(key);
+				return this.getNewLock(rawKey);
 			} else {
 				return new Promise((resolve) => {
 					existingLock.addResolve(resolve);
@@ -107220,6 +107624,29 @@ const ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$crypto = requ
 				const lock = await this.getLock(key);
 				lock.release();
 			}
+		}
+
+		async wrapLock(key, callback) {
+			const lock = await this.getLock(key);
+			try {
+				return await callback();
+			} finally {
+				lock.release();
+			}
+		}
+	}
+
+	class ___R$project$rome$$romejs$core$common$utils$locker_ts$Locker
+		extends ___R$$priv$project$rome$$romejs$core$common$utils$locker_ts$LockerNormalized {
+		normalizeKey(key) {
+			return key;
+		}
+	}
+
+	class ___R$project$rome$$romejs$core$common$utils$locker_ts$FilePathLocker
+		extends ___R$$priv$project$rome$$romejs$core$common$utils$locker_ts$LockerNormalized {
+		normalizeKey(path) {
+			return path.join();
 		}
 	}
 
@@ -107265,7 +107692,7 @@ class ___R$project$rome$$romejs$core$common$FileNotFound_ts$FileNotFound
   // project-rome/@romejs/core/server/dependencies/DependencyGraph.ts
 
 
-	const ___R$$priv$project$rome$$romejs$core$server$dependencies$DependencyGraph_ts$BUILTINS = [
+	const ___R$$priv$project$rome$$romejs$core$server$dependencies$DependencyGraph_ts$NODE_BUILTINS = [
 		"electron",
 		"buffer",
 		"child_process",
@@ -107314,7 +107741,7 @@ class ___R$project$rome$$romejs$core$common$FileNotFound_ts$FileNotFound
 			this.nodes = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
 			this.resolverOpts = resolverOpts;
 
-			this.locker = new ___R$project$rome$$romejs$core$common$utils$Locker_ts$default();
+			this.locker = new ___R$project$rome$$romejs$core$common$utils$locker_ts$Locker();
 			this.closeEvent = new ___R$project$rome$$romejs$events$Event_ts$default({
 				name: "DependencyGraph.closeEvent",
 			});
@@ -107324,9 +107751,13 @@ class ___R$project$rome$$romejs$core$common$FileNotFound_ts$FileNotFound
 			this.closeEvent.send();
 		}
 
-		isExternal(source) {
-			return ___R$$priv$project$rome$$romejs$core$server$dependencies$DependencyGraph_ts$BUILTINS.includes(
-				source,
+		isExternal(path, source) {
+			const project = this.server.projectManager.assertProjectExisting(path);
+			return (
+				project.config.bundler.externals.includes(source) ||
+				___R$$priv$project$rome$$romejs$core$server$dependencies$DependencyGraph_ts$NODE_BUILTINS.includes(
+					source,
+				)
 			);
 		}
 
@@ -107527,7 +107958,7 @@ class ___R$project$rome$$romejs$core$common$FileNotFound_ts$FileNotFound
 			await Promise.all(
 				dependencies.map(async (dep) => {
 					const {source, optional} = dep;
-					if (this.isExternal(source)) {
+					if (this.isExternal(path, source)) {
 						return;
 					}
 
@@ -107824,6 +108255,16 @@ const ___R$$priv$project$rome$$romejs$core$server$bundler$BundleRequest_ts$crypt
 				push("#!" + interpreter + "\n");
 			}
 
+			push(
+				___R$project$rome$$romejs$string$utils$dedent_ts$dedent`
+			(function(res) {
+				if (typeof module !== "undefined") {
+					module.exports = res;
+				}
+				return res;
+			})(`,
+			);
+
 			// add on bootstrap
 			if (order.firstTopAwaitLocations.length > 0) {
 				if (mode === "legacy") {
@@ -107928,7 +108369,7 @@ const ___R$$priv$project$rome$$romejs$core$server$bundler$BundleRequest_ts$crypt
 
 			// push footer
 			push(
-				"})(typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : this);",
+				"})(typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : this));",
 			);
 
 			//
@@ -115065,6 +115506,10 @@ const ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$TYPO_KEYS = new
 			// rome-ignore lint/js/noDelete
 			delete newManifest.type;
 
+			// Remove rome project config
+			// rome-ignore lint/js/noDelete
+			delete newManifest.rome;
+
 			return newManifest;
 		}
 
@@ -116633,31 +117078,17 @@ const ___R$project$rome$$romejs$core$server$commands$config_ts$default = ___R$pr
 			};
 		},
 		async callback(req, commandFlags) {
-			const {server, reporter} = req;
-			const {args} = req.query;
-			req.expectArgumentLength(1);
-
-			const resolved = await server.resolver.resolveEntryAssert(
-				Object.assign(
-					{},
-					req.getResolverOptionsFromFlags(),
-					{
-						source: ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(
-							args[0],
-						),
-					},
-				),
-				{location: req.getDiagnosticPointerFromFlags({type: "arg", key: 0})},
-			);
+			const {reporter} = req;
+			const resolved = await req.resolveEntryAssertPathArg(0);
 
 			let res;
 			if (commandFlags.bundle) {
 				const bundler = ___R$project$rome$$romejs$core$server$bundler$Bundler_ts$default.createFromServerRequest(
 					req,
 				);
-				res = await bundler.compile(resolved.path);
+				res = await bundler.compile(resolved);
 			} else {
-				res = await req.requestWorkerCompile(resolved.path, "compile", {}, {});
+				res = await req.requestWorkerCompile(resolved, "compile", {}, {});
 			}
 
 			const {compiledCode, diagnostics, suppressions} = res;
@@ -116753,22 +117184,8 @@ const ___R$project$rome$$romejs$core$server$commands$resolve_ts$default = ___R$p
 			};
 		},
 		async callback(req, commandFlags) {
-			const {server, reporter} = req;
-			const {args} = req.query;
-			req.expectArgumentLength(1);
-
-			const filename = await server.resolver.resolveEntryAssertPath(
-				Object.assign(
-					{},
-					req.getResolverOptionsFromFlags(),
-					{
-						source: ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(
-							args[0],
-						),
-					},
-				),
-				{location: req.getDiagnosticPointerFromFlags({type: "arg", key: 0})},
-			);
+			const {reporter} = req;
+			const filename = await req.resolveEntryAssertPathArg(0);
 
 			let res = await req.requestWorkerAnalyzeDependencies(filename, {});
 
@@ -116861,22 +117278,8 @@ const ___R$project$rome$$romejs$core$server$commands$resolve_ts$default = ___R$p
 			};
 		},
 		async callback(req, flags) {
-			const {server, reporter} = req;
-			const {args} = req.query;
-			req.expectArgumentLength(1);
-
-			const filename = await server.resolver.resolveEntryAssertPath(
-				Object.assign(
-					{},
-					req.getResolverOptionsFromFlags(),
-					{
-						source: ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(
-							args[0],
-						),
-					},
-				),
-				{location: req.getDiagnosticPointerFromFlags({type: "arg", key: 0})},
-			);
+			const {reporter} = req;
+			const filename = await req.resolveEntryAssertPathArg(0);
 
 			let ast = await req.requestWorkerParse(
 				filename,
@@ -116941,9 +117344,13 @@ const ___R$project$rome$$romejs$core$server$commands$resolve_ts$default = ___R$p
 			}
 
 			if (commandFlags.quiet) {
-				reporter.success("Saved to " + dir.toMarkup());
+				reporter.success("Saved to <emphasis>" + dir.toMarkup() + "</emphasis>");
 			} else {
-				reporter.success("Saved the following files to " + dir.toMarkup());
+				reporter.success(
+					"Saved the following files to <emphasis>" +
+					dir.toMarkup() +
+					"</emphasis>",
+				);
 				reporter.list(savedList);
 			}
 		},
@@ -116963,22 +117370,8 @@ const ___R$project$rome$$romejs$core$server$commands$resolve_ts$default = ___R$p
 			};
 		},
 		async callback(req, flags) {
-			const {reporter, server} = req;
-			const {args} = req.query;
-			req.expectArgumentLength(1);
-
-			const filename = await server.resolver.resolveEntryAssertPath(
-				Object.assign(
-					{},
-					req.getResolverOptionsFromFlags(),
-					{
-						source: ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(
-							args[0],
-						),
-					},
-				),
-				{location: req.getDiagnosticPointerFromFlags({type: "arg", key: 0})},
-			);
+			const {reporter} = req;
+			const filename = await req.resolveEntryAssertPathArg(0);
 
 			const res = await req.requestWorkerFormat(
 				filename,
@@ -117841,6 +118234,36 @@ const ___R$project$rome$$romejs$core$server$commands$resolve_ts$default = ___R$p
 			this.client.bridge.lspFromServerBuffer.send(out);
 		}
 
+		logMessage(path, message) {
+			this.write({
+				method: "window/logMessage",
+				params: {
+					uri: "file://" + path.join(),
+					message,
+				},
+			});
+		}
+
+		logDiagnostics(path, diagnostics = []) {
+			if (diagnostics.length === 0) {
+				return;
+			}
+
+			const lines = [];
+			const date = new Date();
+
+			lines.push("[Diagnostics - " + date.toTimeString() + "] " + path.join());
+			for (const diag of diagnostics) {
+				lines.push(
+					"  (" +
+					diag.description.category +
+					") " +
+					diag.description.message.value,
+				);
+			}
+			this.logMessage(path, lines.join("\n"));
+		}
+
 		createFakeServerRequest(commandName, args = []) {
 			return new ___R$project$rome$$romejs$core$server$ServerRequest_ts$default({
 				client: this.client,
@@ -117942,6 +118365,12 @@ const ___R$project$rome$$romejs$core$server$commands$resolve_ts$default = ___R$p
 
 			this.lintSessions.set(path, req);
 			this.lintSessionsPending.delete(path);
+
+			const date = new Date();
+			this.logMessage(
+				path,
+				"Watching " + path.join() + " at " + date.toTimeString(),
+			);
 		}
 
 		async shutdown() {
@@ -118018,15 +118447,20 @@ const ___R$project$rome$$romejs$core$server$commands$resolve_ts$default = ___R$p
 						return null;
 					}
 
-					const res = await this.request.requestWorkerFormat(path, {});
-					if (res === undefined) {
-						// Not a file we support formatting
+					const {value, diagnostics} = await ___R$project$rome$$romejs$diagnostics$wrap_ts$catchDiagnostics(async () => {
+						return this.request.requestWorkerFormat(path, {});
+					});
+
+					this.logDiagnostics(path, diagnostics);
+
+					if (value === undefined) {
+						// Not a file we support formatting or has diagnostics
 						return null;
 					}
 
 					return ___R$$priv$project$rome$$romejs$core$server$lsp$LSPServer_ts$diffTextEdits(
-						res.original,
-						res.formatted,
+						value.original,
+						value.formatted,
 					);
 				}
 
@@ -119084,7 +119518,13 @@ const ___R$$priv$project$rome$$romejs$core$server$testing$TestServerRunner_ts$ne
 											errDiag.description,
 											{
 												// We don't care about the advice
-												advice: [],
+												advice: [
+													{
+														type: "log",
+														category: "info",
+														text: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Was executing test file <filelink emphasis target="${ref.filename}" />`,
+													},
+												],
 											},
 										),
 									},
@@ -119640,22 +120080,8 @@ const ___R$project$rome$$romejs$core$server$commands$_moduleSignature_ts$default
 			return {};
 		},
 		async callback(req) {
-			const {server, reporter} = req;
-			const {args} = req.query;
-			req.expectArgumentLength(1);
-
-			const filename = await server.resolver.resolveEntryAssertPath(
-				Object.assign(
-					{},
-					req.getResolverOptionsFromFlags(),
-					{
-						source: ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(
-							args[0],
-						),
-					},
-				),
-				{location: req.getDiagnosticPointerFromFlags({type: "arg", key: 0})},
-			);
+			const {reporter} = req;
+			const filename = await req.resolveEntryAssertPathArg(0);
 			reporter.inspect(await req.requestWorkerModuleSignature(filename, {}));
 		},
 	});
@@ -119672,6 +120098,37 @@ const ___R$project$rome$$romejs$core$server$commands$_noop_ts$default = ___R$pro
 		},
 		async callback(req) {
 			req;
+		},
+	});
+
+
+  // project-rome/@romejs/core/server/commands/_projectDump.ts
+const ___R$project$rome$$romejs$core$server$commands$_projectDump_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
+		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.INTERNAL,
+		description: "TODO",
+		usage: "",
+		examples: [],
+		defineFlags(c) {
+			return {
+				complete: c.get("complete").asBoolean(false),
+			};
+		},
+		async callback(req, flags) {
+			const path = await req.resolveEntryAssertPathArg(0);
+			let project = req.server.projectManager.assertProjectExisting(path);
+
+			while (project !== undefined) {
+				req.reporter.logAll(project.folder.toMarkup());
+				if (flags.complete) {
+					req.reporter.inspect(project.config);
+				} else {
+					const {consumer} = project.meta;
+					if (consumer !== undefined) {
+						req.reporter.inspect(consumer.asUnknown());
+					}
+				}
+				project = project.parent;
+			}
 		},
 	});
 
@@ -119761,6 +120218,10 @@ const ___R$project$rome$$romejs$core$server$commands$_noop_ts$default = ___R$pro
 	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
 		"_noop",
 		___R$project$rome$$romejs$core$server$commands$_noop_ts$default,
+	);
+	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
+		"_projectDump",
+		___R$project$rome$$romejs$core$server$commands$_projectDump_ts$default,
 	);
 
 
@@ -119967,16 +120428,16 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 
 
 
+
+
 	class ___R$project$rome$$romejs$core$server$project$ProjectManager_ts$default {
 		constructor(server) {
 			this.server = server;
 
-			this.isAddingProject = false;
-			this.pendingAddProjects = [];
-
 			this.projectIdCounter = 0;
 			this.projectFolderToId = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
 			this.projectConfigDependenciesToIds = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
+			this.projectLoadingLocks = new ___R$project$rome$$romejs$core$common$utils$locker_ts$FilePathLocker();
 			this.fileToProject = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
 			this.projects = new Map();
 
@@ -120005,6 +120466,7 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 				projectFolder: defaultVendorPath,
 				meta: ___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfigMeta(),
 				config: vendorProjectConfig,
+				watch: true,
 			});
 			await this.server.memoryFs.watch(defaultVendorPath);
 		}
@@ -120286,54 +120748,6 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 			return Array.from(this.projects.values());
 		}
 
-		async queueAddProject(projectFolder, configPath) {
-			// Check if we've already loaded this project
-			const maybeProject = this.findProjectExisting(projectFolder);
-			if (maybeProject !== undefined) {
-				return maybeProject;
-			}
-
-			// If we're currently adding a project then add it to the queue
-			if (this.isAddingProject) {
-				return new Promise((resolve) => {
-					this.pendingAddProjects.push({projectFolder, configPath, resolve});
-				});
-			}
-
-			// First time loading this project
-			this.isAddingProject = true;
-
-			// fetch this project
-			const mainProject = await this.addProject(projectFolder, configPath);
-			const resolvedProjectsByDir = new Map();
-			resolvedProjectsByDir.set(projectFolder.join(), mainProject);
-
-			// Resolve all pending projects that were added while we were adding the current project
-			const resolvedProjects = [];
-			for (const {projectFolder, configPath, resolve} of this.pendingAddProjects) {
-				// Check if the project has already been resolved
-				const existing = resolvedProjectsByDir.get(projectFolder.join());
-				if (existing !== undefined) {
-					resolvedProjects.push({project: existing, resolve});
-				} else {
-					// It hasn't been resolved yet so let's add it
-					const project = await this.addProject(projectFolder, configPath);
-					resolvedProjects.push({project, resolve});
-				}
-			}
-
-			// Resolve all promises
-			for (const {project, resolve} of resolvedProjects) {
-				resolve(project);
-			}
-
-			// Cleanup
-			this.pendingAddProjects = [];
-			this.isAddingProject = false;
-
-			return mainProject;
-		}
-
 		addDependencyToProjectId(path, projectId) {
 			const ids = this.projectConfigDependenciesToIds.get(path);
 
@@ -120398,20 +120812,61 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 			);
 		}
 
-		async addProject(projectFolder, configPath) {
-			const {config, meta} = ___R$project$rome$$romejs$project$load_ts$loadCompleteProjectConfig(
-				projectFolder,
-				configPath,
-			);
-
-			return this.addProjectWithConfig({
-				projectFolder,
-				meta,
-				config,
+		// We don't want to do file watching inside of the project loading lock since the memory file system can trigger projects to be loaded
+		// There's separate locks there to handle the initial watch
+		maybeWatchProject(opts, promise) {
+			return promise.then((project) => {
+				if (opts.watch) {
+					return this.server.memoryFs.watch(opts.projectFolder).then(() =>
+						project
+					);
+				} else {
+					return project;
+				}
 			});
 		}
 
-		async addProjectWithConfig(
+		addProject(opts) {
+			const {projectFolder, configPath} = opts;
+
+			return this.maybeWatchProject(
+				opts,
+				this.projectLoadingLocks.wrapLock(
+					projectFolder,
+					async () => {
+						if (this.hasLoadedProjectFolder(projectFolder)) {
+							return this.assertProjectExisting(projectFolder);
+						}
+
+						const {config, meta} = await ___R$project$rome$$romejs$project$load_ts$loadCompleteProjectConfig(
+							projectFolder,
+							configPath,
+						);
+
+						return this._addProjectWithConfig({
+							projectFolder: opts.projectFolder,
+							meta,
+							config,
+
+							// Doesn't do anything
+							watch: false,
+						});
+					},
+				),
+			);
+		}
+
+		addProjectWithConfig(opts) {
+			return this.maybeWatchProject(
+				opts,
+				this.projectLoadingLocks.wrapLock(
+					opts.projectFolder,
+					() => this._addProjectWithConfig(opts),
+				),
+			);
+		}
+
+		_addProjectWithConfig(
 			{
 				projectFolder,
 				meta,
@@ -120419,10 +120874,12 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 			},
 		) {
 			// Make sure there's no project with the same `name` as us
-			for (const project of this.projects.values()) {
+			for (const project of this.getProjects()) {
 				if (project.config.name === config.name) {
 					throw new Error(
-						"Conflicting project names. " +
+						"Conflicting project name " +
+						config.name +
+						". " +
 						projectFolder +
 						" and " +
 						project.folder,
@@ -120467,9 +120924,6 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 
 			// Notify other pieces of our creation
 			this.server.workerManager.onNewProject(project);
-
-			// Start watching and crawl this project folder
-			await this.server.memoryFs.watch(projectFolder);
 
 			return project;
 		}
@@ -120587,6 +121041,16 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 			});
 		}
 
+		hasLoadedProjectFolder(path) {
+			for (const project of this.getProjects()) {
+				if (project.folder.equal(path)) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
 		// Convenience method to get the project config and pass it to the file handler class
 		getHandlerWithProject(path) {
 			const project = this.findProjectExisting(path);
@@ -120635,7 +121099,7 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 			return project;
 		}
 
-		findProjectExisting(cwd) {
+		findProjectExisting(cwd, cache = true) {
 			const tried = [];
 
 			for (const dir of cwd.getChain()) {
@@ -120643,8 +121107,10 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 				if (cached === undefined) {
 					tried.push(dir);
 				} else {
-					for (const dir of tried) {
-						this.fileToProject.set(dir, cached);
+					if (cache) {
+						for (const dir of tried) {
+							this.fileToProject.set(dir, cached);
+						}
 					}
 
 					const project = this.projects.get(cached.projectId);
@@ -120678,7 +121144,7 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 
 					const hasProject = await this.server.memoryFs.existsHard(configPath);
 					if (hasProject) {
-						return this.queueAddProject(dir, configPath);
+						return this.addProject({projectFolder: dir, configPath, watch: true});
 					}
 				}
 
@@ -120697,7 +121163,11 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 							___R$project$rome$$romejs$project$constants_ts$ROME_CONFIG_PACKAGE_JSON_FIELD,
 						)
 					) {
-						return this.queueAddProject(dir, packagePath);
+						return this.addProject({
+							projectFolder: dir,
+							configPath: packagePath,
+							watch: true,
+						});
 					}
 				}
 			}
@@ -120762,7 +121232,7 @@ const ___R$$priv$project$rome$$romejs$core$server$WorkerManager_ts$child = requi
 				onError: server.onFatalErrorBound,
 			});
 			this.selfWorker = true;
-			this.locker = new ___R$project$rome$$romejs$core$common$utils$Locker_ts$default();
+			this.locker = new ___R$project$rome$$romejs$core$common$utils$locker_ts$Locker();
 			this.workers = new Map();
 			this.idCounter = 0;
 		}
@@ -122078,6 +122548,7 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$https = require
 			// Find the project
 			const project = this.server.projectManager.findProjectExisting(
 				query.origin,
+				false,
 			);
 			if (project === undefined) {
 				return undefined;
@@ -122212,7 +122683,10 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$https = require
 			const {origin, source} = query;
 
 			// Get project for the origin
-			const project = this.server.projectManager.findProjectExisting(origin);
+			const project = this.server.projectManager.findProjectExisting(
+				origin,
+				false,
+			);
 
 			// Get all the parent directories for when we crawl up
 			const parentDirectories = this.getOriginFolder(query).getChain();
@@ -122282,8 +122756,8 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$https = require
 class ___R$project$rome$$romejs$core$server$fs$FileAllocator_ts$default {
 		constructor(server) {
 			this.server = server;
-			this.fileToWorker = new Map();
-			this.locker = new ___R$project$rome$$romejs$core$common$utils$Locker_ts$default();
+			this.fileToWorker = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
+			this.locker = new ___R$project$rome$$romejs$core$common$utils$locker_ts$FilePathLocker();
 			this.evictEvent = new ___R$project$rome$$romejs$events$Event_ts$default({
 				name: "evict",
 			});
@@ -122310,7 +122784,7 @@ class ___R$project$rome$$romejs$core$server$fs$FileAllocator_ts$default {
 		}
 
 		getOwnerId(path) {
-			return this.fileToWorker.get(path.join());
+			return this.fileToWorker.get(path);
 		}
 
 		verifySize(path, stats) {
@@ -122383,7 +122857,7 @@ class ___R$project$rome$$romejs$core$server$fs$FileAllocator_ts$default {
 			await this.evict(path);
 
 			// Disown it from 'our internal map
-			this.fileToWorker.delete(path.join());
+			this.fileToWorker.delete(path);
 
 			// Remove the total size from 'this worker so it'll be assigned next
 			const stats = this.server.memoryFs.getFileStatsAssert(path);
@@ -122428,8 +122902,7 @@ class ___R$project$rome$$romejs$core$server$fs$FileAllocator_ts$default {
 		async assignOwner(path) {
 			const {workerManager, logger} = this.server;
 
-			const filename = path.join();
-			const lock = await this.locker.getLock(filename);
+			const lock = await this.locker.getLock(path);
 
 			// We may have waited on the lock and could already have an owner
 			if (this.hasOwner(path)) {
@@ -122445,7 +122918,7 @@ class ___R$project$rome$$romejs$core$server$fs$FileAllocator_ts$default {
 					path.toMarkup(),
 					worker.id,
 				);
-				this.fileToWorker.set(filename, worker.id);
+				this.fileToWorker.set(path, worker.id);
 
 				return worker;
 			} finally {
@@ -123049,7 +123522,10 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 		}
 
 		isIgnored(path, type) {
-			const project = this.server.projectManager.findProjectExisting(path);
+			const project = this.server.projectManager.findProjectExisting(
+				path,
+				false,
+			);
 			if (project === undefined) {
 				return false;
 			}
@@ -123143,15 +123619,27 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 			// If we aren't in node_modules then this is a project package
 			const isProjectPackage = this.isInsideProject(path);
 			const {projectManager} = this.server;
-			const project = projectManager.findProjectExisting(path);
-			if (project !== undefined) {
-				projectManager.declareManifest(
-					project,
-					isProjectPackage,
-					def,
-					diagnostics,
-				);
+
+			if (
+				isProjectPackage &&
+				consumer.has(
+					___R$project$rome$$romejs$project$constants_ts$ROME_CONFIG_PACKAGE_JSON_FIELD,
+				)
+			) {
+				await projectManager.addProject({
+					projectFolder: folder,
+					configPath: path,
+					watch: false,
+				});
 			}
+
+			const project = projectManager.assertProjectExisting(path);
+			projectManager.declareManifest(
+				project,
+				isProjectPackage,
+				def,
+				diagnostics,
+			);
 
 			// Tell all workers of our discovery
 			for (const worker of this.server.workerManager.getWorkers()) {
@@ -123393,7 +123881,11 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 					basename,
 				)
 			) {
-				await projectManager.queueAddProject(dirname, path);
+				await projectManager.addProject({
+					projectFolder: dirname,
+					configPath: path,
+					watch: false,
+				});
 			}
 
 			if (
@@ -123823,6 +124315,7 @@ class ___R$project$rome$$romejs$core$server$fs$VirtualModules_ts$default {
 				projectFolder: runtimeModulesPath,
 				meta: ___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfigMeta(),
 				config: projectConfig,
+				watch: true,
 			});
 			await this.server.memoryFs.watch(runtimeModulesPath);
 		}
@@ -123982,7 +124475,7 @@ const ___R$$priv$project$rome$$romejs$core$server$Server_ts$STDOUT_MAX_CHUNK_LEN
 				},
 			);
 
-			this.fileLocker = new ___R$project$rome$$romejs$core$common$utils$Locker_ts$default();
+			this.requestFileLocker = new ___R$project$rome$$romejs$core$common$utils$locker_ts$FilePathLocker();
 
 			this.connectedReporters = new ___R$project$rome$$romejs$core$server$ServerReporter_ts$default(
 				this,
@@ -127791,7 +128284,7 @@ function ___R$$priv$project$rome$$romejs$core$test$worker$SnapshotManager_ts$cle
 			this.runner = runner;
 			this.options = runner.options;
 			this.snapshots = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
-			this.fileLocker = new ___R$project$rome$$romejs$core$common$utils$Locker_ts$default();
+			this.fileLocker = new ___R$project$rome$$romejs$core$common$utils$locker_ts$FilePathLocker();
 			this.inlineSnapshotsUpdates = [];
 			this.snapshotCounts = {
 				deleted: 0,
@@ -127840,107 +128333,107 @@ function ___R$$priv$project$rome$$romejs$core$test$worker$SnapshotManager_ts$cle
 				return;
 			}
 
-			const lock = await this.fileLocker.getLock(path.join());
-
-			const loadedSnapshot = this.snapshots.get(path);
-			if (loadedSnapshot !== undefined) {
-				lock.release();
-				return loadedSnapshot;
-			}
-
-			const content = await ___R$project$rome$$romejs$fs$index_ts$readFileText(
+			return this.fileLocker.wrapLock(
 				path,
-			);
-			const parser = ___R$project$rome$$romejs$core$test$worker$SnapshotParser_ts$createSnapshotParser({
-				path,
-				input: content,
-			});
+				async () => {
+					const loadedSnapshot = this.snapshots.get(path);
+					if (loadedSnapshot !== undefined) {
+						return loadedSnapshot;
+					}
 
-			const nodes = parser.parse();
-
-			const snapshot = {
-				existsOnDisk: true,
-				used: false,
-				raw: parser.input,
-				entries: new Map(),
-			};
-			this.snapshots.set(path, snapshot);
-
-			while (nodes.length > 0) {
-				const node = nodes.shift();
-
-				if (node.type === "Heading" && node.level === 1) {
-					// Title
-					continue;
-				}
-
-				if (node.type === "Heading" && node.level === 2) {
-					const testName = ___R$$priv$project$rome$$romejs$core$test$worker$SnapshotManager_ts$cleanHeading(
-						node.text,
+					const content = await ___R$project$rome$$romejs$fs$index_ts$readFileText(
+						path,
 					);
+					const parser = ___R$project$rome$$romejs$core$test$worker$SnapshotParser_ts$createSnapshotParser({
+						path,
+						input: content,
+					});
+
+					const nodes = parser.parse();
+
+					const snapshot = {
+						existsOnDisk: true,
+						used: false,
+						raw: parser.input,
+						entries: new Map(),
+					};
+					this.snapshots.set(path, snapshot);
 
 					while (nodes.length > 0) {
-						const node = nodes[0];
+						const node = nodes.shift();
 
-						if (node.type === "Heading" && node.level === 3) {
-							nodes.shift();
-
-							const entryName = ___R$$priv$project$rome$$romejs$core$test$worker$SnapshotManager_ts$cleanHeading(
-								node.text,
-							);
-
-							const codeBlock = nodes.shift();
-							if (codeBlock === undefined || codeBlock.type !== "CodeBlock") {
-								throw parser.unexpected({
-									description: ___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.SNAPSHOTS.EXPECTED_CODE_BLOCK_AFTER_HEADING,
-									loc: node.loc,
-								});
-							}
-
-							snapshot.entries.set(
-								___R$$priv$project$rome$$romejs$core$test$worker$SnapshotManager_ts$buildEntriesKey(
-									testName,
-									entryName,
-								),
-								{
-									testName,
-									entryName,
-									language: codeBlock.language,
-									value: codeBlock.text,
-									used: false,
-								},
-							);
-
+						if (node.type === "Heading" && node.level === 1) {
+							// Title
 							continue;
 						}
 
-						if (node.type === "CodeBlock") {
-							nodes.shift();
-
-							snapshot.entries.set(
-								___R$$priv$project$rome$$romejs$core$test$worker$SnapshotManager_ts$buildEntriesKey(
-									testName,
-									"0",
-								),
-								{
-									testName,
-									entryName: "0",
-									language: node.language,
-									value: node.text,
-									used: false,
-								},
+						if (node.type === "Heading" && node.level === 2) {
+							const testName = ___R$$priv$project$rome$$romejs$core$test$worker$SnapshotManager_ts$cleanHeading(
+								node.text,
 							);
+
+							while (nodes.length > 0) {
+								const node = nodes[0];
+
+								if (node.type === "Heading" && node.level === 3) {
+									nodes.shift();
+
+									const entryName = ___R$$priv$project$rome$$romejs$core$test$worker$SnapshotManager_ts$cleanHeading(
+										node.text,
+									);
+
+									const codeBlock = nodes.shift();
+									if (codeBlock === undefined || codeBlock.type !== "CodeBlock") {
+										throw parser.unexpected({
+											description: ___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.SNAPSHOTS.EXPECTED_CODE_BLOCK_AFTER_HEADING,
+											loc: node.loc,
+										});
+									}
+
+									snapshot.entries.set(
+										___R$$priv$project$rome$$romejs$core$test$worker$SnapshotManager_ts$buildEntriesKey(
+											testName,
+											entryName,
+										),
+										{
+											testName,
+											entryName,
+											language: codeBlock.language,
+											value: codeBlock.text,
+											used: false,
+										},
+									);
+
+									continue;
+								}
+
+								if (node.type === "CodeBlock") {
+									nodes.shift();
+
+									snapshot.entries.set(
+										___R$$priv$project$rome$$romejs$core$test$worker$SnapshotManager_ts$buildEntriesKey(
+											testName,
+											"0",
+										),
+										{
+											testName,
+											entryName: "0",
+											language: node.language,
+											value: node.text,
+											used: false,
+										},
+									);
+								}
+
+								break;
+							}
+
+							continue;
 						}
-
-						break;
 					}
-
-					continue;
-				}
-			}
-
-			lock.release();
-			return snapshot;
+					return snapshot;
+				},
+			);
 		}
 
 		buildSnapshot(entries) {
@@ -129876,5 +130369,5 @@ const ___R$project$rome$rome$bin$rome_ts = {};
 
 
   return ___R$project$rome$rome$bin$rome_ts;
-})(typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : this);
+})(typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : this));
 //# sourceMappingURL=rome.ts.map

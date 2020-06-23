@@ -21,6 +21,7 @@ import BridgeEvent, {BridgeEventOptions} from "./BridgeEvent";
 import Event from "./Event";
 import {
 	ERROR_FRAMES_PROP,
+	ErrorWithFrames,
 	StructuredError,
 	getErrorStructure,
 } from "@romejs/v8";
@@ -286,9 +287,7 @@ export default class Bridge {
 	buildError(struct: StructuredError, data: JSONObject) {
 		const transport = this.errorTransports.get(struct.name);
 		if (transport === undefined) {
-			const err: Error & {
-				[ERROR_FRAMES_PROP]?: unknown;
-			} = new Error(struct.message);
+			const err: ErrorWithFrames = new Error(struct.message);
 			err.name = struct.name || "Error";
 			err.stack = struct.stack;
 			err[ERROR_FRAMES_PROP] = struct.frames;
