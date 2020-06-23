@@ -203,8 +203,7 @@ export function createIntegrationTest(
 			}
 		} finally {
 			// Clean up after ourselves. Will be called whether the tests fails or is successful
-			//await removeDirectory(temp);
-			removeDirectory;
+			await removeDirectory(temp);
 		}
 	};
 }

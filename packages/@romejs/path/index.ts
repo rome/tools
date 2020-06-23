@@ -407,18 +407,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
 		return filename;
 	}
 
-	// This does some weird optimizations to avoid materializing complete filenames
-
-	// Might not be relevant... TODO benchmark this or something lol
 	equal(other: UnknownFilePath): boolean {
-		// Quick check if we've materalized the filename on both instances
-		if (
-			this.memoizedFilename !== undefined &&
-			other.memoizedFilename !== undefined
-		) {
-			return this.memoizedFilename === other.memoizedFilename;
-		}
-
 		const a = this.getSegments();
 		const b = other.getSegments();
 

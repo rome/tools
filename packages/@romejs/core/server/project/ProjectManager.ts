@@ -515,7 +515,7 @@ export default class ProjectManager {
 			watch: boolean;
 		},
 	): Promise<ProjectDefinition> {
-		if (this.isLoadedProjectFolder(projectFolder)) {
+		if (this.hasLoadedProjectFolder(projectFolder)) {
 			return this.assertProjectExisting(projectFolder);
 		}
 
@@ -543,10 +543,10 @@ export default class ProjectManager {
 		},
 	): Promise<ProjectDefinition> {
 		// Make sure there's no project with the same `name` as us
-		for (const project of this.projects.values()) {
+		for (const project of this.getProjects()) {
 			if (project.config.name === config.name) {
 				throw new Error(
-					`Conflicting project names. ${projectFolder} and ${project.folder}`,
+					`Conflicting project name ${config.name}. ${projectFolder} and ${project.folder}`,
 				);
 			}
 		}
@@ -712,9 +712,14 @@ export default class ProjectManager {
 		});
 	}
 
-	isLoadedProjectFolder(path: AbsoluteFilePath): boolean {
-		const project = this.fileToProject.get(path);
-		return project !== undefined && project.path.equal(path);
+	hasLoadedProjectFolder(path: AbsoluteFilePath): boolean {
+		for (const project of this.getProjects()) {
+			if (project.folder.equal(path)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	// Convenience method to get the project config and pass it to the file handler class
