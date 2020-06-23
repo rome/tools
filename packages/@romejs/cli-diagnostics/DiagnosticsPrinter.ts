@@ -153,7 +153,6 @@ export default class DiagnosticsPrinter extends Error {
 	flags: DiagnosticsPrinterFlags;
 	cwd: AbsoluteFilePath;
 	readFile: DiagnosticsFileReader;
-
 	hasTruncatedDiagnostics: boolean;
 	missingFileSources: AbsoluteFilePathSet;
 	fileSources: DiagnosticsPrinterFileSources;
@@ -352,11 +351,22 @@ export default class DiagnosticsPrinter extends Error {
 	}
 
 	displayDiagnostics(diagnostics: Diagnostics) {
-		const restoreRedirect = this.reporter.redirectOutToErr(true);
+		const {reporter} = this;
+		const restoreRedirect = reporter.redirectOutToErr(true);
+
 		for (const diag of diagnostics) {
-			this.displayDiagnostic(diag);
+			try {
+				this.displayDiagnostic(diag);
+			} catch (err) {
+				// Sometimes we'll run into issues displaying diagnostics
+				// We can safely catch them here since the presence of diagnostics is considered a critical failure
+				// Display diagnostics is idempotent
+				reporter.error("Encountered an error displaying this diagnostic");
+				reporter.error(err.stack);
+			}
 		}
-		this.reporter.redirectOutToErr(restoreRedirect);
+
+		reporter.redirectOutToErr(restoreRedirect);
 	}
 
 	getOutdatedFiles(diag: Diagnostic): UnknownFilePathSet {

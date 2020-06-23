@@ -53,7 +53,7 @@ import {createDirectory, readFileText} from "@romejs/fs";
 import {Consumer} from "@romejs/consume";
 import {consumeJSON} from "@romejs/codec-json";
 import {VCSClient, getVCSClient} from "@romejs/vcs";
-import {FilePathLocker, FilePathLocker} from "@romejs/core/common/utils/locker";
+import {FilePathLocker} from "@romejs/core/common/utils/locker";
 
 function cleanUidParts(parts: Array<string>): string {
 	let uid = "";
