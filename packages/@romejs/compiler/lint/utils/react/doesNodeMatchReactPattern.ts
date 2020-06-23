@@ -57,7 +57,7 @@ export default function doesNodeMatchReactPattern(
 		}
 
 		return (
-			(!reference && `${config.importName}.${identifier.name}` === pattern) ||
+			(!reference && `${objectNode.name}.${identifier.name}` === pattern) ||
 			(reference instanceof ImportBinding &&
 			reference.meta.source === config.packageName &&
 			identifier.name === member)

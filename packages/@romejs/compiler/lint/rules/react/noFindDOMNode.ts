@@ -10,6 +10,11 @@ import {AnyNode} from "@romejs/ast";
 import {Path} from "@romejs/compiler";
 import {doesNodeMatchReactPattern} from "../../utils/react";
 
+const reactDOMConfig = {
+	packageName: "react-dom",
+	importName: "ReactDOM",
+};
+
 export default {
 	name: "reactNoFindDOMNode",
 
@@ -18,8 +23,18 @@ export default {
 
 		if (
 			node.type === "JSCallExpression" &&
-			(doesNodeMatchReactPattern(node.callee, scope, "findDOMNode") ||
-			doesNodeMatchReactPattern(node.callee, scope, "React.findDOMNode"))
+			(doesNodeMatchReactPattern(
+				node.callee,
+				scope,
+				"findDOMNode",
+				reactDOMConfig,
+			) ||
+			doesNodeMatchReactPattern(
+				node.callee,
+				scope,
+				"ReactDOM.findDOMNode",
+				reactDOMConfig,
+			))
 		) {
 			path.context.addNodeDiagnostic(
 				node.callee,
