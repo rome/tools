@@ -53,6 +53,7 @@ import {createDirectory, readFileText} from "@romejs/fs";
 import {Consumer} from "@romejs/consume";
 import {consumeJSON} from "@romejs/codec-json";
 import {VCSClient, getVCSClient} from "@romejs/vcs";
+import Locker from "@romejs/core/common/utils/Locker";
 
 function cleanUidParts(parts: Array<string>): string {
 	let uid = "";
@@ -111,6 +112,13 @@ function cleanRelativeUidPath(relative: UnknownFilePath): undefined | string {
 	return relative.join();
 }
 
+type AddProjectWithConfigOptions = {
+	projectFolder: AbsoluteFilePath;
+	meta: ProjectConfigMeta;
+	config: ProjectConfig;
+	watch: boolean;
+};
+
 export type ProjectConfigSource = {
 	consumer: Consumer;
 	value: undefined | Consumer;
@@ -123,6 +131,7 @@ export default class ProjectManager {
 		this.projectIdCounter = 0;
 		this.projectFolderToId = new AbsoluteFilePathMap();
 		this.projectConfigDependenciesToIds = new AbsoluteFilePathMap();
+		this.projectLoadingLocks = new Locker();
 		this.fileToProject = new AbsoluteFilePathMap();
 		this.projects = new Map();
 
@@ -141,6 +150,8 @@ export default class ProjectManager {
 	remoteToLocalPath: UnknownFilePathMap<AbsoluteFilePath>;
 	localPathToRemote: AbsoluteFilePathMap<URLFilePath>;
 
+	// Lock to prevent race conditions that result in the same project being loaded multiple times at once
+	projectLoadingLocks: Locker<string>;
 	projects: Map<number, ProjectDefinition>;
 	projectConfigDependenciesToIds: AbsoluteFilePathMap<Set<number>>;
 	projectIdCounter: number;
@@ -508,40 +519,76 @@ export default class ProjectManager {
 		return await getVCSClient(project.config.vcs.root);
 	}
 
-	async addProject(
-		{projectFolder, configPath, watch}: {
+	// We don't want to do file watching inside of the project loading lock since the memory file system can trigger projects to be loaded
+	// There's separate locks there to handle the initial watch
+	maybeWatchProject(
+		opts: Pick<AddProjectWithConfigOptions, "projectFolder" | "watch">,
+		promise: Promise<ProjectDefinition>,
+	): Promise<ProjectDefinition> {
+		return promise.then((project) => {
+			if (opts.watch) {
+				return this.server.memoryFs.watch(opts.projectFolder).then(() => project);
+			} else {
+				return project;
+			}
+		});
+	}
+
+	addProject(
+		opts: {
 			projectFolder: AbsoluteFilePath;
 			configPath: AbsoluteFilePath;
 			watch: boolean;
 		},
 	): Promise<ProjectDefinition> {
-		if (this.hasLoadedProjectFolder(projectFolder)) {
-			return this.assertProjectExisting(projectFolder);
-		}
+		const {projectFolder, configPath} = opts;
 
-		const {config, meta} = loadCompleteProjectConfig(projectFolder, configPath);
+		return this.maybeWatchProject(
+			opts,
+			this.projectLoadingLocks.wrapLock(
+				projectFolder.join(),
+				async () => {
+					if (this.hasLoadedProjectFolder(projectFolder)) {
+						return this.assertProjectExisting(projectFolder);
+					}
 
-		return this.addProjectWithConfig({
-			projectFolder,
-			meta,
-			config,
-			watch,
-		});
+					const {config, meta} = await loadCompleteProjectConfig(
+						projectFolder,
+						configPath,
+					);
+
+					return this._addProjectWithConfig({
+						projectFolder: opts.projectFolder,
+						meta,
+						config,
+
+						// Doesn't do anything
+						watch: false,
+					});
+				},
+			),
+		);
 	}
 
-	async addProjectWithConfig(
+	addProjectWithConfig(
+		opts: AddProjectWithConfigOptions,
+	): Promise<ProjectDefinition> {
+		return this.maybeWatchProject(
+			opts,
+			this.projectLoadingLocks.wrapLock(
+				opts.projectFolder.join(),
+				() => this._addProjectWithConfig(opts),
+			),
+		);
+	}
+
+	_addProjectWithConfig(
 		{
 			projectFolder,
 			meta,
 			config,
-			watch,
-		}: {
-			projectFolder: AbsoluteFilePath;
-			meta: ProjectConfigMeta;
-			config: ProjectConfig;
-			watch: boolean;
-		},
-	): Promise<ProjectDefinition> {
+		}: AddProjectWithConfigOptions,
+	): ProjectDefinition {
 		// Make sure there's no project with the same `name` as us
 		for (const project of this.getProjects()) {
 			if (project.config.name === config.name) {
@@ -588,11 +635,6 @@ export default class ProjectManager {
 
 		// Notify other pieces of our creation
 		this.server.workerManager.onNewProject(project);
-
-		// Start watching and crawl this project folder
-		if (watch) {
-			await this.server.memoryFs.watch(projectFolder);
-		}
 
 		return project;
 	}
