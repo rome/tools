@@ -25,6 +25,7 @@ import {
 	formatAnsi,
 	markup,
 	markupToPlainTextString,
+	escapeMarkup,
 } from "@romejs/string-markup";
 import {ToLines, toLines} from "./utils";
 import printAdvice from "./printAdvice";
@@ -359,7 +360,7 @@ export default class DiagnosticsPrinter extends Error {
 			// We can safely catch them here since the presence of diagnostics is considered a critical failure
 			// Display diagnostics is idempotent
 			reporter.error("Encountered an error displaying this diagnostic");
-			reporter.error(err.stack);
+			reporter.error(escapeMarkup(err.stack));
 		}
 	}
 

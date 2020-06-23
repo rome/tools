@@ -100538,7 +100538,11 @@ const ___R$project$rome$$romejs$cli$diagnostics$banners$error_json$default = {
 				// We can safely catch them here since the presence of diagnostics is considered a critical failure
 				// Display diagnostics is idempotent
 				reporter.error("Encountered an error displaying this diagnostic");
-				reporter.error(err.stack);
+				reporter.error(
+					___R$project$rome$$romejs$string$markup$escape_ts$escapeMarkup(
+						err.stack,
+					),
+				);
 			}
 		}
 
