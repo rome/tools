@@ -13,7 +13,7 @@ import {ResolverOptions} from "../fs/Resolver";
 import WorkerQueue from "../WorkerQueue";
 import DependencyNode from "./DependencyNode";
 import {ReporterProgress} from "@romejs/cli-reporter";
-import {Locker} from "../../common/utils/locker";
+import {Locker} from "../../common/utils/lockers";
 import {DependencyOrder} from "./DependencyOrderer";
 import {Event} from "@romejs/events";
 import {WorkerAnalyzeDependencyResult} from "../../common/bridges/WorkerBridge";

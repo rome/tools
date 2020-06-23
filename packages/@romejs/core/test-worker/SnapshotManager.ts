@@ -19,7 +19,7 @@ import {ErrorFrame} from "@romejs/v8";
 import {Number0, Number1} from "@romejs/ob1";
 import prettyFormat from "@romejs/pretty-format";
 import {naturalCompare} from "@romejs/string-utils";
-import {FilePathLocker} from "../common/utils/locker";
+import {FilePathLocker} from "../common/utils/lockers";
 
 function cleanHeading(key: string): string {
 	if (key[0] === "`") {

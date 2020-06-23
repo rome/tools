@@ -8,7 +8,7 @@
 import {Server} from "@romejs/core";
 import {Stats} from "./MemoryFileSystem";
 import {WorkerContainer} from "../WorkerManager";
-import {FilePathLocker} from "../../common/utils/locker";
+import {FilePathLocker} from "../../common/utils/lockers";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@romejs/path";
 import {Event} from "@romejs/events";
 

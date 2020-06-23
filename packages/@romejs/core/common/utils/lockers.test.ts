@@ -1,4 +1,4 @@
-import {Locker} from "./locker";
+import {Locker} from "./lockers";
 import {test} from "rome";
 
 test(

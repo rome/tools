@@ -68,7 +68,7 @@ import ServerReporter from "./ServerReporter";
 import VirtualModules from "./fs/VirtualModules";
 import {DiagnosticsProcessorOptions} from "@romejs/diagnostics/DiagnosticsProcessor";
 import {toKebabCase} from "@romejs/string-utils";
-import {FilePathLocker} from "../common/utils/locker";
+import {FilePathLocker} from "../common/utils/lockers";
 import {writeFile} from "@romejs/fs";
 
 const STDOUT_MAX_CHUNK_LENGTH = 100_000;

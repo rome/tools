@@ -13,7 +13,7 @@ import {
 	MAX_WORKER_BYTES_BEFORE_ADD,
 } from "../common/constants";
 import {MAX_WORKER_COUNT, Server, Worker, WorkerBridge} from "@romejs/core";
-import {Locker} from "../common/utils/locker";
+import {Locker} from "../common/utils/lockers";
 import {
 	Event,
 	createBridgeFromChildProcess,
