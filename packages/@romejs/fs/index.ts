@@ -8,6 +8,7 @@
 import {AbsoluteFilePath, AbsoluteFilePathSet} from "@romejs/path";
 
 import fs = require("fs");
+import {convertPossibleNodeError} from "@romejs/node";
 
 // This file contains some wrappers around Node's fs module. Except here we support passing in AbsoluteFilePath instances.
 // NOTE We don't bother using Node's built-in fs promise functions at all. They already contain a level of indirection to callbacks.
@@ -26,7 +27,7 @@ function promisifyData<Data>(
 				if (err === null) {
 					resolve(data);
 				} else {
-					reject(err);
+					reject(convertPossibleNodeError(err));
 				}
 			},
 		);
@@ -46,7 +47,7 @@ function promisifyVoid(
 				if (err === null) {
 					resolve();
 				} else {
-					reject(err);
+					reject(convertPossibleNodeError(err));
 				}
 			},
 		);

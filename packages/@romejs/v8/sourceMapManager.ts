@@ -8,7 +8,7 @@
 import {SourceMapConsumerCollection} from "@romejs/codec-source-map";
 import {ErrorFrame} from "@romejs/v8";
 import {ob1Coerce1, ob1Coerce1To0} from "@romejs/ob1";
-import {ERROR_FRAMES_PROP, getErrorStructure} from "./errors";
+import {ERROR_FRAMES_PROP, ErrorWithFrames, getErrorStructure} from "./errors";
 
 let inited: boolean = false;
 
@@ -108,9 +108,7 @@ function noNull<T>(val: null | T): undefined | T {
 }
 
 function addErrorFrames(
-	err: Error & {
-		[ERROR_FRAMES_PROP]?: unknown;
-	},
+	err: ErrorWithFrames,
 	frames: Array<NodeJS.CallSite>,
 ): void {
 	if (err[ERROR_FRAMES_PROP]) {
