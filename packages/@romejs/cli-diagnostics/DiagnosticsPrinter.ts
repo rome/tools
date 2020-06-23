@@ -339,7 +339,7 @@ export default class DiagnosticsPrinter extends Error {
 			if (stats === undefined) {
 				this.missingFileSources.add(abs);
 			} else {
-				this.addFileSource(dep, stats);
+				this.wrapError(() => this.addFileSource(dep, stats));
 			}
 		}
 	}
@@ -350,20 +350,25 @@ export default class DiagnosticsPrinter extends Error {
 		this.displayDiagnostics(filteredDiagnostics);
 	}
 
+	wrapError(callback: () => void) {
+		const {reporter} = this;
+		try {
+			callback();
+		} catch (err) {
+			// Sometimes we'll run into issues displaying diagnostics
+			// We can safely catch them here since the presence of diagnostics is considered a critical failure
+			// Display diagnostics is idempotent
+			reporter.error("Encountered an error displaying this diagnostic");
+			reporter.error(err.stack);
+		}
+	}
+
 	displayDiagnostics(diagnostics: Diagnostics) {
 		const {reporter} = this;
 		const restoreRedirect = reporter.redirectOutToErr(true);
 
 		for (const diag of diagnostics) {
-			try {
-				this.displayDiagnostic(diag);
-			} catch (err) {
-				// Sometimes we'll run into issues displaying diagnostics
-				// We can safely catch them here since the presence of diagnostics is considered a critical failure
-				// Display diagnostics is idempotent
-				reporter.error("Encountered an error displaying this diagnostic");
-				reporter.error(err.stack);
-			}
+			this.wrapError(() => this.displayDiagnostic(diag));
 		}
 
 		reporter.redirectOutToErr(restoreRedirect);
