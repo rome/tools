@@ -5,20 +5,28 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-type LockResolve<Key> = (lock: Lock<Key>) => void;
+import {UnknownFilePath} from "@romejs/path";
 
-class Lock<Key> {
-	constructor(locker: Locker<Key>, key: Key) {
+type LockResolve<RawKey, MapKey> = (lock: Lock<RawKey, MapKey>) => void;
+
+class Lock<RawKey, MapKey> {
+	constructor(
+		locker: LockerNormalized<RawKey, MapKey>,
+		rawKey: RawKey,
+		mapKey: MapKey,
+	) {
 		this.locker = locker;
 		this.resolves = [];
-		this.key = key;
+		this.rawKey = rawKey;
+		this.mapKey = mapKey;
 	}
 
-	locker: Locker<Key>;
-	resolves: Array<LockResolve<Key>>;
-	key: Key;
+	locker: LockerNormalized<RawKey, MapKey>;
+	resolves: Array<LockResolve<RawKey, MapKey>>;
+	rawKey: RawKey;
+	mapKey: MapKey;
 
-	addResolve(resolve: LockResolve<Key>) {
+	addResolve(resolve: LockResolve<RawKey, MapKey>) {
 		this.resolves.push(resolve);
 	}
 
@@ -26,7 +34,7 @@ class Lock<Key> {
 		const {resolves} = this;
 
 		if (resolves.length === 0) {
-			this.locker.locks.delete(this.key);
+			this.locker.locks.delete(this.mapKey);
 		} else {
 			const resolve = resolves.shift();
 			if (resolve === undefined) {
@@ -37,32 +45,38 @@ class Lock<Key> {
 	}
 }
 
-export default class Locker<Key> {
+class LockerNormalized<RawKey, MapKey> {
 	constructor() {
 		this.locks = new Map();
 	}
 
-	locks: Map<Key, Lock<Key>>;
+	locks: Map<MapKey, Lock<RawKey, MapKey>>;
 
-	hasLock(id: Key): boolean {
-		return this.locks.has(id);
+	normalizeKey(rawKey: RawKey): MapKey {
+		throw new Error("Unimplemented");
 	}
 
-	getNewLock(key: Key): Lock<Key> {
-		if (this.locks.has(key)) {
+	hasLock(key: RawKey): boolean {
+		return this.locks.has(this.normalizeKey(key));
+	}
+
+	getNewLock(rawKey: RawKey): Lock<RawKey, MapKey> {
+		const mapKey = this.normalizeKey(rawKey);
+		if (this.locks.has(mapKey)) {
 			throw new Error("Expected no lock to exist");
 		}
 
-		const lock = new Lock(this, key);
-		this.locks.set(key, lock);
+		const lock = new Lock(this, rawKey, mapKey);
+		this.locks.set(mapKey, lock);
 		return lock;
 	}
 
-	async getLock(key: Key): Promise<Lock<Key>> {
+	async getLock(rawKey: RawKey): Promise<Lock<RawKey, MapKey>> {
+		const key = this.normalizeKey(rawKey);
 		const existingLock = this.locks.get(key);
 
 		if (existingLock === undefined) {
-			return this.getNewLock(key);
+			return this.getNewLock(rawKey);
 		} else {
 			return new Promise((resolve) => {
 				existingLock.addResolve(resolve);
@@ -70,19 +84,31 @@ export default class Locker<Key> {
 		}
 	}
 
-	async waitLock(key: Key): Promise<void> {
+	async waitLock(key: RawKey): Promise<void> {
 		if (this.hasLock(key)) {
 			const lock = await this.getLock(key);
 			lock.release();
 		}
 	}
 
-	async wrapLock<T>(key: Key, callback: () => T | Promise<T>): Promise<T> {
+	async wrapLock<T>(key: RawKey, callback: () => T | Promise<T>): Promise<T> {
 		const lock = await this.getLock(key);
 		try {
 			return await callback();
 		} finally {
 			lock.release();
 		}
+	}
+}
+
+export class Locker<Key> extends LockerNormalized<Key, Key> {
+	normalizeKey(key: Key): Key {
+		return key;
+	}
+}
+
+export class FilePathLocker extends LockerNormalized<UnknownFilePath, string> {
+	normalizeKey(path: UnknownFilePath): string {
+		return path.join();
 	}
 }

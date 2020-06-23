@@ -68,7 +68,7 @@ import ServerReporter from "./ServerReporter";
 import VirtualModules from "./fs/VirtualModules";
 import {DiagnosticsProcessorOptions} from "@romejs/diagnostics/DiagnosticsProcessor";
 import {toKebabCase} from "@romejs/string-utils";
-import Locker from "../common/utils/Locker";
+import {FilePathLocker} from "../common/utils/locker";
 import {writeFile} from "@romejs/fs";
 
 const STDOUT_MAX_CHUNK_LENGTH = 100_000;
@@ -225,7 +225,7 @@ export default class Server {
 			},
 		);
 
-		this.fileLocker = new Locker();
+		this.requestFileLocker = new FilePathLocker();
 
 		this.connectedReporters = new ServerReporter(this);
 
@@ -282,7 +282,7 @@ export default class Server {
 	cache: Cache;
 	connectedReporters: ServerReporter;
 	logger: Logger;
-	fileLocker: Locker<string>;
+	requestFileLocker: FilePathLocker;
 	connectedClients: Set<ServerClient>;
 	connectedLSPServers: Set<LSPServer>;
 	connectedClientsListeningForLogs: Set<ServerClient>;

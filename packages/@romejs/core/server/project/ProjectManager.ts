@@ -53,7 +53,7 @@ import {createDirectory, readFileText} from "@romejs/fs";
 import {Consumer} from "@romejs/consume";
 import {consumeJSON} from "@romejs/codec-json";
 import {VCSClient, getVCSClient} from "@romejs/vcs";
-import Locker from "@romejs/core/common/utils/Locker";
+import {FilePathLocker, FilePathLocker} from "@romejs/core/common/utils/locker";
 
 function cleanUidParts(parts: Array<string>): string {
 	let uid = "";
@@ -131,7 +131,7 @@ export default class ProjectManager {
 		this.projectIdCounter = 0;
 		this.projectFolderToId = new AbsoluteFilePathMap();
 		this.projectConfigDependenciesToIds = new AbsoluteFilePathMap();
-		this.projectLoadingLocks = new Locker();
+		this.projectLoadingLocks = new FilePathLocker();
 		this.fileToProject = new AbsoluteFilePathMap();
 		this.projects = new Map();
 
@@ -151,7 +151,7 @@ export default class ProjectManager {
 	localPathToRemote: AbsoluteFilePathMap<URLFilePath>;
 
 	// Lock to prevent race conditions that result in the same project being loaded multiple times at once
-	projectLoadingLocks: Locker<string>;
+	projectLoadingLocks: FilePathLocker;
 	projects: Map<number, ProjectDefinition>;
 	projectConfigDependenciesToIds: AbsoluteFilePathMap<Set<number>>;
 	projectIdCounter: number;
@@ -546,7 +546,7 @@ export default class ProjectManager {
 		return this.maybeWatchProject(
 			opts,
 			this.projectLoadingLocks.wrapLock(
-				projectFolder.join(),
+				projectFolder,
 				async () => {
 					if (this.hasLoadedProjectFolder(projectFolder)) {
 						return this.assertProjectExisting(projectFolder);
@@ -576,7 +576,7 @@ export default class ProjectManager {
 		return this.maybeWatchProject(
 			opts,
 			this.projectLoadingLocks.wrapLock(
-				opts.projectFolder.join(),
+				opts.projectFolder,
 				() => this._addProjectWithConfig(opts),
 			),
 		);

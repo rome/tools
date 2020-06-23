@@ -851,7 +851,7 @@ export default class ServerRequest {
 		const {server} = this;
 		const owner = await server.fileAllocator.getOrAssignOwner(path);
 		const startMtime = server.memoryFs.maybeGetMtime(path);
-		const lock = await server.fileLocker.getLock(path.join());
+		const lock = await server.requestFileLocker.getLock(path);
 		const ref = server.projectManager.getTransportFileReference(path);
 
 		const marker = this.startMarker({
