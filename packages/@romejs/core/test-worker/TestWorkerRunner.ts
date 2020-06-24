@@ -85,8 +85,8 @@ function cleanFrames(frames: ErrorFrames): ErrorFrames {
 	if (latestTestWorkerFrame === undefined) {
 		latestTestWorkerFrame = frames.find((frame) => {
 			return (
-				frame.typeName !== undefined &&
-				frame.typeName.includes("$TestWorkerRunner")
+				frame.filename !== undefined &&
+				frame.filename.includes("TestWorkerRunner")
 			);
 		});
 	}

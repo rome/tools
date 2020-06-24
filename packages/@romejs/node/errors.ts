@@ -1,8 +1,5 @@
 import {ERROR_FRAMES_PROP, ErrorWithFrames} from "@romejs/v8";
 
-// rome-ignore lint/js/noShadowRestrictedNames
-type Error = NodeJS.ErrnoException;
-
 function changeMessage(old: ErrorWithFrames, msg: string): Error {
 	const err: ErrorWithFrames = new Error(msg);
 
@@ -18,7 +15,10 @@ function changeMessage(old: ErrorWithFrames, msg: string): Error {
 	return err;
 }
 
-function convertNodeErrorWithPath(err: Error, path: string): Error {
+function convertNodeErrorWithPath(
+	err: NodeJS.ErrnoException,
+	path: string,
+): Error {
 	switch (err.code) {
 		case "ENOENT":
 			return changeMessage(err, `'${path}' does not exist`);
@@ -31,7 +31,7 @@ function convertNodeErrorWithPath(err: Error, path: string): Error {
 	}
 }
 
-export function convertPossibleNodeError(err: Error): Error {
+export function convertPossibleNodeError(err: NodeJS.ErrnoException): Error {
 	if (err.path !== undefined) {
 		return convertNodeErrorWithPath(err, err.path);
 	}
