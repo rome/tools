@@ -701,10 +701,7 @@ export default class MemoryFileSystem {
 			const path = crawl.pop()!;
 
 			// `cache: false` to allow calling us with deleted paths
-			const project = this.server.projectManager.findProjectExisting(
-				path,
-				false,
-			);
+			const project = this.server.projectManager.findProjectExisting(path);
 
 			let ignore: PathPatterns = overrideIgnore;
 
