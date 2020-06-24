@@ -162,7 +162,11 @@ export default class TestWorkerRunner {
 					prettyFormat(arg, {allowCustom: false, markup: true})
 				);
 			}
-			const text = textParts.join(" ");
+			let text = textParts.join(" ");
+
+			if (text === "") {
+				text = "<dim>empty log</dim>";
+			}
 
 			const err = new Error();
 

@@ -509,7 +509,7 @@ export default class Linter {
 
 		return this.request.watchFilesFromArgs(
 			this.getFileArgOptions(),
-			async ({paths: evictedPaths}, initial) => {
+			async (evictedPaths, initial) => {
 				const processor = this.createDiagnosticsProcessor(evictedPaths, runner);
 
 				const result = await runner.run({firstRun, evictedPaths, processor});
@@ -592,7 +592,7 @@ export default class Linter {
 			},
 		});
 
-		watchEvent.unsubscribe();
+		await watchEvent.unsubscribe();
 
 		const printer = createDiagnosticsPrinter(
 			request,

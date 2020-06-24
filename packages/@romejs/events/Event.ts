@@ -181,7 +181,7 @@ export default class Event<Param, Ret = void> {
 		this.onSubscriptionChange();
 
 		return {
-			unsubscribe: () => {
+			unsubscribe: async () => {
 				this.unsubscribe(callback);
 			},
 		};
