@@ -10,19 +10,14 @@ import {Stats} from "./MemoryFileSystem";
 import {WorkerContainer} from "../WorkerManager";
 import {FilePathLocker} from "../../common/utils/lockers";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@romejs/path";
-import {Event} from "@romejs/events";
 
 export default class FileAllocator {
 	constructor(server: Server) {
 		this.server = server;
 		this.fileToWorker = new AbsoluteFilePathMap();
 		this.locker = new FilePathLocker();
-		this.evictEvent = new Event({
-			name: "evict",
-		});
 	}
 
-	evictEvent: Event<AbsoluteFilePath, void>;
 	server: Server;
 	locker: FilePathLocker;
 	fileToWorker: AbsoluteFilePathMap<number>;
@@ -99,7 +94,6 @@ export default class FileAllocator {
 		await worker.bridge.evict.call({
 			filename,
 		});
-		this.evictEvent.send(path);
 
 		this.server.logger.info(`[FileAllocator] Evicted %s`, path.toMarkup());
 	}
