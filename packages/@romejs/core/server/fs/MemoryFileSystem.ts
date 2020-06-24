@@ -97,7 +97,7 @@ function isValidManifest(path: AbsoluteFilePath): boolean {
 }
 
 // Whenever we're performing an operation on a set of files, always do these first as they may influence how the rest are processed
-const PRIORITY_FILES = new Set(ROME_CONFIG_FILENAMES);
+const PRIORITY_FILES = new Set([...ROME_CONFIG_FILENAMES, "package.json"]);
 
 type DeclareManifestOpts = {
 	diagnostics: DiagnosticsProcessor;
@@ -275,10 +275,7 @@ export default class MemoryFileSystem {
 		close: WatcherClose;
 	}>;
 
-	watchPromises: AbsoluteFilePathMap<{
-		promise: Promise<WatcherClose>;
-		path: AbsoluteFilePath;
-	}>;
+	watchPromises: AbsoluteFilePathMap<Promise<WatcherClose>>;
 
 	changedFileEvent: Event<
 		{
@@ -475,7 +472,7 @@ export default class MemoryFileSystem {
 		projectFolderPath: AbsoluteFilePath,
 	): Promise<void> {
 		// Defer if we're initializing a parent folder
-		for (const {promise, path} of this.watchPromises.values()) {
+		for (const [path, promise] of this.watchPromises) {
 			if (projectFolderPath.isRelativeTo(path)) {
 				await promise;
 				return;
@@ -483,7 +480,7 @@ export default class MemoryFileSystem {
 		}
 
 		// Wait if we're initializing descendents
-		for (const {path, promise} of this.watchPromises.values()) {
+		for (const [path, promise] of this.watchPromises) {
 			if (path.isRelativeTo(projectFolderPath)) {
 				await promise;
 			}
@@ -542,13 +539,7 @@ export default class MemoryFileSystem {
 
 		logger.info(`[MemoryFileSystem] Watching ${folderLink}`);
 		const promise = createWatcher(this, diagnostics, projectFolder);
-		this.watchPromises.set(
-			projectFolder,
-			{
-				path: projectFolder,
-				promise,
-			},
-		);
+		this.watchPromises.set(projectFolder, promise);
 
 		const watcherClose = await promise;
 		this.watchers.set(
@@ -612,7 +603,7 @@ export default class MemoryFileSystem {
 	}
 
 	isIgnored(path: AbsoluteFilePath, type: "directory" | "file"): boolean {
-		const project = this.server.projectManager.findProjectExisting(path, false);
+		const project = this.server.projectManager.findProjectExisting(path);
 		if (project === undefined) {
 			return false;
 		}
@@ -691,10 +682,9 @@ export default class MemoryFileSystem {
 		const {projectManager} = this.server;
 
 		if (isProjectPackage && consumer.has(ROME_CONFIG_PACKAGE_JSON_FIELD)) {
-			await projectManager.addProject({
+			await projectManager.addDiskProject({
 				projectFolder: folder,
 				configPath: path,
-				watch: false,
 			});
 		}
 
@@ -881,7 +871,7 @@ export default class MemoryFileSystem {
 		}
 
 		// If we're still performing an initial crawl of any path higher in the tree then we don't know if it exists yet
-		for (const {path: projectFolder} of this.watchPromises.values()) {
+		for (const projectFolder of this.watchPromises.keys()) {
 			if (path.isRelativeTo(projectFolder)) {
 				return undefined;
 			}
@@ -935,10 +925,9 @@ export default class MemoryFileSystem {
 
 		// Add project if this is a config
 		if (ROME_CONFIG_FILENAMES.includes(basename)) {
-			await projectManager.addProject({
+			await projectManager.addDiskProject({
 				projectFolder: dirname,
 				configPath: path,
-				watch: false,
 			});
 		}
 

@@ -44,11 +44,10 @@ export default class VirtualModules {
 			...createDefaultProjectConfig(),
 			name: "rome-runtime",
 		};
-		await this.server.projectManager.addProjectWithConfig({
+		await this.server.projectManager.declareProject({
 			projectFolder: runtimeModulesPath,
 			meta: createDefaultProjectConfigMeta(),
 			config: projectConfig,
-			watch: true,
 		});
 		await this.server.memoryFs.watch(runtimeModulesPath);
 	}

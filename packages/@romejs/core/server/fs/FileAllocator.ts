@@ -10,19 +10,14 @@ import {Stats} from "./MemoryFileSystem";
 import {WorkerContainer} from "../WorkerManager";
 import {FilePathLocker} from "../../common/utils/lockers";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@romejs/path";
-import {Event} from "@romejs/events";
 
 export default class FileAllocator {
 	constructor(server: Server) {
 		this.server = server;
 		this.fileToWorker = new AbsoluteFilePathMap();
 		this.locker = new FilePathLocker();
-		this.evictEvent = new Event({
-			name: "evict",
-		});
 	}
 
-	evictEvent: Event<AbsoluteFilePath, void>;
 	server: Server;
 	locker: FilePathLocker;
 	fileToWorker: AbsoluteFilePathMap<number>;
@@ -86,7 +81,7 @@ export default class FileAllocator {
 		}
 	}
 
-	async evict(path: AbsoluteFilePath) {
+	async workerEvict(path: AbsoluteFilePath) {
 		// Find owner
 		const workerId = this.getOwnerId(path);
 		if (workerId === undefined) {
@@ -99,7 +94,6 @@ export default class FileAllocator {
 		await worker.bridge.evict.call({
 			filename,
 		});
-		this.evictEvent.send(path);
 
 		this.server.logger.info(`[FileAllocator] Evicted %s`, path.toMarkup());
 	}
@@ -112,7 +106,7 @@ export default class FileAllocator {
 		}
 
 		// Evict file from 'worker cache
-		await this.evict(path);
+		await this.workerEvict(path);
 
 		// Disown it from 'our internal map
 		this.fileToWorker.delete(path);
@@ -138,7 +132,7 @@ export default class FileAllocator {
 			}
 
 			// Evict the file from 'cache
-			await this.evict(path);
+			await this.workerEvict(path);
 
 			// Verify that this file doesn't exceed any size limit
 			this.verifySize(path, newStats);

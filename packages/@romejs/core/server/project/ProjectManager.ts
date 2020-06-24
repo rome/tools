@@ -112,13 +112,6 @@ function cleanRelativeUidPath(relative: UnknownFilePath): undefined | string {
 	return relative.join();
 }
 
-type AddProjectWithConfigOptions = {
-	projectFolder: AbsoluteFilePath;
-	meta: ProjectConfigMeta;
-	config: ProjectConfig;
-	watch: boolean;
-};
-
 export type ProjectConfigSource = {
 	consumer: Consumer;
 	value: undefined | Consumer;
@@ -129,10 +122,9 @@ export default class ProjectManager {
 		this.server = server;
 
 		this.projectIdCounter = 0;
-		this.projectFolderToId = new AbsoluteFilePathMap();
 		this.projectConfigDependenciesToIds = new AbsoluteFilePathMap();
 		this.projectLoadingLocks = new FilePathLocker();
-		this.fileToProject = new AbsoluteFilePathMap();
+		this.projectFolderToProject = new AbsoluteFilePathMap();
 		this.projects = new Map();
 
 		// We maintain these maps so we can reverse any uids, and protect against collisions
@@ -153,14 +145,9 @@ export default class ProjectManager {
 	// Lock to prevent race conditions that result in the same project being loaded multiple times at once
 	projectLoadingLocks: FilePathLocker;
 	projects: Map<number, ProjectDefinition>;
+	projectFolderToProject: AbsoluteFilePathMap<ProjectDefinition>;
 	projectConfigDependenciesToIds: AbsoluteFilePathMap<Set<number>>;
 	projectIdCounter: number;
-	fileToProject: AbsoluteFilePathMap<{
-		projectId: number;
-		path: AbsoluteFilePath;
-	}>;
-
-	projectFolderToId: AbsoluteFilePathMap<number>;
 
 	async init() {
 		this.server.memoryFs.deletedFileEvent.subscribe((path) => {
@@ -173,11 +160,10 @@ export default class ProjectManager {
 		};
 		const defaultVendorPath = vendorProjectConfig.files.vendorPath;
 		await createDirectory(defaultVendorPath);
-		await this.addProjectWithConfig({
+		await this.declareProject({
 			projectFolder: defaultVendorPath,
 			meta: createDefaultProjectConfigMeta(),
 			config: vendorProjectConfig,
-			watch: true,
 		});
 		await this.server.memoryFs.watch(defaultVendorPath);
 	}
@@ -186,7 +172,6 @@ export default class ProjectManager {
 		const filename = path.join();
 
 		this.projectConfigDependenciesToIds.delete(path);
-		this.fileToProject.delete(path);
 
 		// Remove uids
 		const uid = this.filenameToUid.get(path);
@@ -396,7 +381,7 @@ export default class ProjectManager {
 	async evictProject(project: ProjectDefinition) {
 		const evictProjectId = project.id;
 
-		// Remove the config locs from 'our internal map that belong to this project
+		// Remove the config locs from our internal map that belong to this project
 		for (const [configLoc, projectIds] of this.projectConfigDependenciesToIds) {
 			if (projectIds.has(evictProjectId)) {
 				projectIds.delete(evictProjectId);
@@ -434,18 +419,16 @@ export default class ProjectManager {
 
 		// Delete the project from 'our internal map
 		this.projects.delete(evictProjectId);
-		this.projectFolderToId.delete(project.folder);
+		this.projectFolderToProject.delete(project.folder);
 
 		// Evict all files that belong to this project and delete their project mapping
 		const ownedFiles: Array<AbsoluteFilePath> = [];
-		for (const {projectId, path} of this.fileToProject.values()) {
-			if (evictProjectId === projectId) {
-				this.handleDeleted(path);
-				ownedFiles.push(path);
-			}
+		for (const path of this.server.memoryFs.glob(project.folder)) {
+			this.handleDeleted(path);
+			ownedFiles.push(path);
 		}
 		await Promise.all(
-			ownedFiles.map((path) => this.server.fileAllocator.evict(path)),
+			ownedFiles.map((path) => this.server.fileAllocator.workerEvict(path)),
 		);
 
 		// Tell the MemoryFileSystem to stop watching and clear it's maps
@@ -519,81 +502,51 @@ export default class ProjectManager {
 		return await getVCSClient(project.config.vcs.root);
 	}
 
-	// We don't want to do file watching inside of the project loading lock since the memory file system can trigger projects to be loaded
-	// There's separate locks there to handle the initial watch
-	maybeWatchProject(
-		opts: Pick<AddProjectWithConfigOptions, "projectFolder" | "watch">,
-		promise: Promise<ProjectDefinition>,
-	): Promise<ProjectDefinition> {
-		return promise.then((project) => {
-			if (opts.watch) {
-				return this.server.memoryFs.watch(opts.projectFolder).then(() => project);
-			} else {
-				return project;
-			}
-		});
-	}
-
-	addProject(
+	addDiskProject(
 		opts: {
 			projectFolder: AbsoluteFilePath;
 			configPath: AbsoluteFilePath;
-			watch: boolean;
 		},
-	): Promise<ProjectDefinition> {
+	): Promise<void> {
 		const {projectFolder, configPath} = opts;
 
-		return this.maybeWatchProject(
-			opts,
-			this.projectLoadingLocks.wrapLock(
-				projectFolder,
-				async () => {
-					if (this.hasLoadedProjectFolder(projectFolder)) {
-						return this.assertProjectExisting(projectFolder);
-					}
+		return this.projectLoadingLocks.wrapLock(
+			projectFolder,
+			async () => {
+				if (this.hasLoadedProjectFolder(projectFolder)) {
+					return;
+				}
 
-					const {config, meta} = await loadCompleteProjectConfig(
-						projectFolder,
-						configPath,
-					);
+				const {config, meta} = await loadCompleteProjectConfig(
+					projectFolder,
+					configPath,
+				);
 
-					return this._addProjectWithConfig({
-						projectFolder: opts.projectFolder,
-						meta,
-						config,
-
-						// Doesn't do anything
-						watch: false,
-					});
-				},
-			),
+				await this.declareProject({
+					projectFolder: opts.projectFolder,
+					meta,
+					config,
+				});
+			},
 		);
 	}
 
-	addProjectWithConfig(
-		opts: AddProjectWithConfigOptions,
-	): Promise<ProjectDefinition> {
-		return this.maybeWatchProject(
-			opts,
-			this.projectLoadingLocks.wrapLock(
-				opts.projectFolder,
-				() => this._addProjectWithConfig(opts),
-			),
-		);
-	}
-
-	_addProjectWithConfig(
+	async declareProject(
 		{
 			projectFolder,
 			meta,
 			config,
-		}: AddProjectWithConfigOptions,
-	): ProjectDefinition {
+		}: {
+			projectFolder: AbsoluteFilePath;
+			meta: ProjectConfigMeta;
+			config: ProjectConfig;
+		},
+	): Promise<void> {
 		// Make sure there's no project with the same `name` as us
 		for (const project of this.getProjects()) {
 			if (project.config.name === config.name) {
 				throw new Error(
-					`Conflicting project name ${config.name}. ${projectFolder} and ${project.folder}`,
+					`Conflicting project name ${config.name}. ${projectFolder.join()} and ${project.folder.join()}`,
 				);
 			}
 		}
@@ -612,14 +565,7 @@ export default class ProjectManager {
 		};
 
 		this.projects.set(project.id, project);
-		this.fileToProject.set(
-			projectFolder,
-			{
-				path: projectFolder,
-				projectId: project.id,
-			},
-		);
-		this.projectFolderToId.set(projectFolder, project.id);
+		this.projectFolderToProject.set(projectFolder, project);
 
 		if (parentProject !== undefined) {
 			parentProject.children.add(project);
@@ -635,8 +581,6 @@ export default class ProjectManager {
 
 		// Notify other pieces of our creation
 		this.server.workerManager.onNewProject(project);
-
-		return project;
 	}
 
 	declareManifest(
@@ -728,17 +672,9 @@ export default class ProjectManager {
 		path: AbsoluteFilePath,
 		location?: DiagnosticLocation,
 	): Promise<ProjectDefinition> {
-		// We won't recurse up and check a parent project if we've already visited it
-		const syncProject = this.findProjectExisting(path);
-		const project = syncProject || (await this.findProject(path));
-
+		const project =
+			this.findProjectExisting(path) || (await this.findProject(path));
 		if (project) {
-			// Continue searching for projects up the directory
-			// We don't do this for root projects since it would be a waste, but there's no implications other than some unnecessary work if we did
-			if (project.config.root === false && syncProject === undefined) {
-				await this.findProject(project.folder.getParent());
-			}
-
 			return project;
 		}
 
@@ -746,22 +682,16 @@ export default class ProjectManager {
 			throw new Error(
 				`Couldn't find a project. Checked ${ROME_CONFIG_FILENAMES.join(" or ")} for ${path.join()}`,
 			);
+		} else {
+			throw createSingleDiagnosticError({
+				location,
+				description: descriptions.PROJECT_MANAGER.NOT_FOUND,
+			});
 		}
-
-		throw createSingleDiagnosticError({
-			location,
-			description: descriptions.PROJECT_MANAGER.NOT_FOUND,
-		});
 	}
 
 	hasLoadedProjectFolder(path: AbsoluteFilePath): boolean {
-		for (const project of this.getProjects()) {
-			if (project.folder.equal(path)) {
-				return true;
-			}
-		}
-
-		return false;
+		return this.projectFolderToProject.has(path);
 	}
 
 	// Convenience method to get the project config and pass it to the file handler class
@@ -804,34 +734,20 @@ export default class ProjectManager {
 	assertProjectExisting(path: AbsoluteFilePath): ProjectDefinition {
 		const project = this.findProjectExisting(path);
 		if (project === undefined) {
-			throw new Error(`Expected existing project for ${path.join()}`);
+			throw new Error(
+				`Expected existing project for ${path.join()} only have ${Array.from(
+					this.projectFolderToProject.keys(),
+					(folder) => folder.join(),
+				).join(", ")}`,
+			);
 		}
 		return project;
 	}
 
-	findProjectExisting(
-		cwd: AbsoluteFilePath,
-		cache: boolean = true,
-	): undefined | ProjectDefinition {
-		const tried: Array<AbsoluteFilePath> = [];
-
+	findProjectExisting(cwd: AbsoluteFilePath): undefined | ProjectDefinition {
 		for (const dir of cwd.getChain()) {
-			const cached = this.fileToProject.get(dir);
-			if (cached === undefined) {
-				tried.push(dir);
-			} else {
-				if (cache) {
-					for (const dir of tried) {
-						this.fileToProject.set(dir, cached);
-					}
-				}
-
-				const project = this.projects.get(cached.projectId);
-				if (project === undefined) {
-					throw new Error(
-						"Expected project from project id found in fileToProject",
-					);
-				}
+			const project = this.projectFolderToProject.get(dir);
+			if (project !== undefined) {
 				return project;
 			}
 		}
@@ -839,6 +755,7 @@ export default class ProjectManager {
 		return undefined;
 	}
 
+	// Attempt to find a project on the real disk and seed it into the memory file system
 	async findProject(
 		cwd: AbsoluteFilePath,
 	): Promise<undefined | ProjectDefinition> {
@@ -851,7 +768,7 @@ export default class ProjectManager {
 		const parentDirectories = cwd.getChain();
 
 		// If not then let's access the file system and try to find one
-		for (const dir of parentDirectories) {
+		for (const dir of parentDirectories.slice().reverse()) {
 			// Check for dedicated project configs
 			for (const configFilename of ROME_CONFIG_FILENAMES) {
 				// Check in root
@@ -859,7 +776,8 @@ export default class ProjectManager {
 
 				const hasProject = await this.server.memoryFs.existsHard(configPath);
 				if (hasProject) {
-					return this.addProject({projectFolder: dir, configPath, watch: true});
+					await this.server.memoryFs.watch(dir);
+					return this.assertProjectExisting(cwd);
 				}
 			}
 
@@ -869,11 +787,8 @@ export default class ProjectManager {
 				const input = await readFileText(packagePath);
 				const json = await consumeJSON({input, path: packagePath});
 				if (json.has(ROME_CONFIG_PACKAGE_JSON_FIELD)) {
-					return this.addProject({
-						projectFolder: dir,
-						configPath: packagePath,
-						watch: true,
-					});
+					await this.server.memoryFs.watch(dir);
+					return this.assertProjectExisting(cwd);
 				}
 			}
 		}
