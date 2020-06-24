@@ -125,7 +125,6 @@ export default class ProjectManager {
 		this.projectConfigDependenciesToIds = new AbsoluteFilePathMap();
 		this.projectLoadingLocks = new FilePathLocker();
 		this.projectFolderToProject = new AbsoluteFilePathMap();
-		this.pathToProject = new AbsoluteFilePathMap();
 		this.projects = new Map();
 
 		// We maintain these maps so we can reverse any uids, and protect against collisions
@@ -146,7 +145,6 @@ export default class ProjectManager {
 	// Lock to prevent race conditions that result in the same project being loaded multiple times at once
 	projectLoadingLocks: FilePathLocker;
 
-	pathToProject: AbsoluteFilePathMap<ProjectDefinition>;
 	projects: Map<number, ProjectDefinition>;
 	projectFolderToProject: AbsoluteFilePathMap<ProjectDefinition>;
 	projectConfigDependenciesToIds: AbsoluteFilePathMap<Set<number>>;
@@ -174,7 +172,6 @@ export default class ProjectManager {
 	handleDeleted(path: AbsoluteFilePath) {
 		const filename = path.join();
 
-		this.pathToProject.delete(path);
 		this.projectConfigDependenciesToIds.delete(path);
 
 		// Remove uids
@@ -379,9 +376,6 @@ export default class ProjectManager {
 			await this.evictProject(project);
 		}
 
-		// Invalidate path cache
-		this.pathToProject.clear();
-
 		return true;
 	}
 
@@ -578,9 +572,6 @@ export default class ProjectManager {
 			parentProject.children.add(project);
 		}
 
-		// Invalidate path cache
-		this.pathToProject.clear();
-
 		// Add all project config dependencies so changes invalidate the whole project
 		if (meta.configPath !== undefined) {
 			this.addDependencyToProjectId(meta.configPath, project.id);
@@ -755,15 +746,9 @@ export default class ProjectManager {
 	}
 
 	findProjectExisting(path: AbsoluteFilePath): undefined | ProjectDefinition {
-		const cached = this.pathToProject.get(path);
-		if (cached !== undefined) {
-			return cached;
-		}
-
 		for (const dir of path.getChain()) {
 			const project = this.projectFolderToProject.get(dir);
 			if (project !== undefined) {
-				this.pathToProject.set(path, project);
 				return project;
 			}
 		}
