@@ -36,6 +36,7 @@ export default class Bridge {
 		this.errorTransports = new Map();
 
 		this.alive = true;
+		this.endError = undefined;
 		this.type = opts.type;
 		this.opts = opts;
 
@@ -91,6 +92,7 @@ export default class Bridge {
 	endEvent: Event<Error, void>;
 
 	alive: boolean;
+	endError: undefined | Error;
 	type: BridgeType;
 
 	messageIdCounter: number;
@@ -252,8 +254,8 @@ export default class Bridge {
 
 	//# Connection death
 	assertAlive(): void {
-		if (this.alive === false) {
-			throw new Error("Bridge is dead");
+		if (this.endError !== undefined) {
+			throw this.endError;
 		}
 	}
 
@@ -263,6 +265,7 @@ export default class Bridge {
 		}
 
 		this.alive = false;
+		this.endError = err;
 
 		// Reject any pending requests
 		for (const [, event] of this.events) {
