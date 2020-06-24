@@ -3,6 +3,11 @@ import {ERROR_FRAMES_PROP, ErrorWithFrames} from "@romejs/v8";
 function changeMessage(old: ErrorWithFrames, msg: string): Error {
 	const err: ErrorWithFrames = new Error(msg);
 
+	// Inherit some NodeJS.ErrnoException props
+	err.code = old.code;
+	err.path = old.path;
+	err.syscall = old.syscall;
+
 	// Without doing something jank we can't retain the original Error constructor ie. TypeError etc
 	// We probably don't need to or actually care
 	err.name = old.name;
