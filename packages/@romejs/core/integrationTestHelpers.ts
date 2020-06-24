@@ -1,6 +1,11 @@
 import {TestHelper} from "rome";
 import {Client, Server, ServerBridge} from ".";
-import {AbsoluteFilePath, RelativeFilePath, TEMP_PATH} from "@romejs/path";
+import {
+	AbsoluteFilePath,
+	AbsoluteFilePathMap,
+	RelativeFilePath,
+	TEMP_PATH,
+} from "@romejs/path";
 import {ClientFlags} from "./common/types/client";
 import {JSONObject, stringifyJSON} from "@romejs/codec-json";
 import {
@@ -17,6 +22,9 @@ import {Dict} from "@romejs/typescript-helpers";
 import {UserConfig} from "./common/userConfig";
 import crypto = require("crypto");
 import stream = require("stream");
+import ServerRequest from "./server/ServerRequest";
+import {partialServerQueryResponseToFull} from "./server/Server";
+import {PartialServerQueryRequest} from "./common/bridges/ServerBridge";
 
 type IntegrationTestHelper = {
 	cwd: AbsoluteFilePath;
@@ -27,6 +35,7 @@ type IntegrationTestHelper = {
 		relative: RelativeFilePath | string,
 		content: string,
 	) => Promise<void>;
+	createRequest: (query?: PartialServerQueryRequest) => Promise<ServerRequest>;
 };
 
 type IntegrationTestOptions = {
@@ -134,7 +143,7 @@ export function createIntegrationTest(
 
 			try {
 				// Start the server inside of the process
-				const {server, bridge} = await client.startInternalServer({
+				const {server, bridge, serverClient} = await client.startInternalServer({
 					// Only one worker running inside of this process. Don't fork workers.
 					inbandOnly: true,
 					// Force cache to be enabled (which will be at our generated folder specified above)
@@ -160,7 +169,18 @@ export function createIntegrationTest(
 							content: string,
 						): Promise<void> {
 							const absolute = projectPath.append(relative);
-							await writeFile(absolute, content);
+							await server.writeFiles(
+								new AbsoluteFilePathMap([[absolute, content]]),
+							);
+						},
+						async createRequest(
+							query: PartialServerQueryRequest = {commandName: "unknown"},
+						) {
+							return new ServerRequest({
+								client: serverClient,
+								query: partialServerQueryResponseToFull(query),
+								server,
+							});
 						},
 					},
 				);

@@ -17,6 +17,7 @@ import {
 	parsePathPattern,
 } from "@romejs/path-match";
 import {
+	ProjectConfigCategoriesWithIgnore,
 	ProjectDefinition,
 	ROME_CONFIG_FILENAMES,
 	ROME_CONFIG_PACKAGE_JSON_FIELD,
@@ -106,8 +107,8 @@ type DeclareManifestOpts = {
 };
 
 type CrawlOptions = {
+	reason: "watch" | "initial";
 	diagnostics: DiagnosticsProcessor;
-	crawl: boolean;
 	onFoundDirectory?: (path: AbsoluteFilePath) => void;
 	tick?: (path: AbsoluteFilePath) => void;
 };
@@ -125,7 +126,7 @@ export type WatcherClose = () => void;
 export type MemoryFSGlobOptions = {
 	extensions?: Array<string>;
 	overrideIgnore?: PathPatterns;
-	getProjectIgnore?: (project: ProjectDefinition) => PathPatterns;
+	configCategory?: ProjectConfigCategoriesWithIgnore;
 	test?: (path: AbsoluteFilePath) => boolean;
 };
 
@@ -180,12 +181,12 @@ async function createWatcher(
 						]);
 
 						if (newStats.type === "file") {
-							memoryFs.handleFileChange(
+							memoryFs.addFile(
 								path,
 								newStats,
 								{
+									reason: "watch",
 									diagnostics,
-									crawl: true,
 								},
 							);
 						} else if (newStats.type === "directory") {
@@ -193,7 +194,7 @@ async function createWatcher(
 								path,
 								newStats,
 								{
-									crawl: true,
+									reason: "watch",
 									diagnostics,
 									onFoundDirectory,
 								},
@@ -219,9 +220,9 @@ async function createWatcher(
 			projectFolder,
 			stats,
 			{
-				crawl: true,
 				diagnostics,
 				onFoundDirectory,
+				reason: "initial",
 			},
 		);
 		logger.info(
@@ -424,8 +425,12 @@ export default class MemoryFileSystem {
 
 		// Wait for any subscribers that might need the file's stats
 		this.server.logger.info(`[MemoryFileSystem] File deleted:`, path.toMarkup());
-		await this.deletedFileEvent.call(path);
-		this.server.refreshFileEvent.send(path);
+
+		// Only emit these events for files
+		if (folderInfo === undefined) {
+			await this.deletedFileEvent.call(path);
+			this.server.refreshFileEvent.send(path);
+		}
 
 		// Remove from 'all possible caches
 		this.files.delete(path);
@@ -450,25 +455,6 @@ export default class MemoryFileSystem {
 		if (def !== undefined) {
 			this.manifests.delete(folder);
 		}
-	}
-
-	async handleFileChange(
-		path: AbsoluteFilePath,
-		stats: Stats,
-		opts: CrawlOptions,
-	): Promise<boolean> {
-		const oldStats: undefined | Stats = this.getFileStats(path);
-		const changed = await this.addFile(path, stats, opts);
-		if (changed) {
-			const newStats: Stats = this.getFileStatsAssert(path);
-			this.server.logger.info(
-				`[MemoryFileSystem] File change:`,
-				path.toMarkup(),
-			);
-			this.server.refreshFileEvent.send(path);
-			this.changedFileEvent.send({path, oldStats, newStats});
-		}
-		return changed;
 	}
 
 	async waitIfInitializingWatch(
@@ -713,7 +699,7 @@ export default class MemoryFileSystem {
 		cwd: AbsoluteFilePath,
 		opts: MemoryFSGlobOptions = {},
 	): AbsoluteFilePathSet {
-		const {extensions, getProjectIgnore, test, overrideIgnore = []} = opts;
+		const {extensions, configCategory, test, overrideIgnore = []} = opts;
 
 		const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
@@ -724,15 +710,22 @@ export default class MemoryFileSystem {
 		while (crawl.length > 0) {
 			const path = crawl.pop()!;
 
-			const project = this.server.projectManager.assertProjectExisting(path);
+			// `cache: false` to allow calling us with deleted paths
+			const project = this.server.projectManager.findProjectExisting(
+				path,
+				false,
+			);
 
 			let ignore: PathPatterns = overrideIgnore;
 
 			// Get ignore patterns
-			if (getProjectIgnore !== undefined) {
+			if (configCategory !== undefined && project !== undefined) {
 				const projectIgnore = ignoresByProject.get(project);
 				if (projectIgnore === undefined) {
-					ignore = concatGlobIgnore([...ignore, ...getProjectIgnore(project)]);
+					ignore = concatGlobIgnore([
+						...ignore,
+						...project.config[configCategory].ignore,
+					]);
 					ignoresByProject.set(project, ignore);
 				} else {
 					ignore = projectIgnore;
@@ -845,31 +838,29 @@ export default class MemoryFileSystem {
 			opts.onFoundDirectory(folderPath);
 		}
 
-		if (opts.crawl) {
-			// Crawl the folder
-			const files = await readDirectory(folderPath);
+		// Crawl the folder
+		const files = await readDirectory(folderPath);
 
-			// Declare the file
-			const declareItem = async (path: AbsoluteFilePath) => {
-				const stats = await this.hardStat(path);
-				if (stats.type === "file") {
-					await this.addFile(path, stats, opts);
-				} else if (stats.type === "directory") {
-					await this.addDirectory(path, stats, opts);
-				}
-			};
-
-			// Give priority to package.json in case we want to derive something from the project config
-			for (const file of files) {
-				if (PRIORITY_FILES.has(file.getBasename())) {
-					files.delete(file);
-					await declareItem(file);
-				}
+		// Declare the file
+		const declareItem = async (path: AbsoluteFilePath) => {
+			const stats = await this.hardStat(path);
+			if (stats.type === "file") {
+				await this.addFile(path, stats, opts);
+			} else if (stats.type === "directory") {
+				await this.addDirectory(path, stats, opts);
 			}
+		};
 
-			// Add the rest of the items
-			await Promise.all(Array.from(files, declareItem));
+		// Give priority to package.json in case we want to derive something from the project config
+		for (const file of files) {
+			if (PRIORITY_FILES.has(file.getBasename())) {
+				files.delete(file);
+				await declareItem(file);
+			}
 		}
+
+		// Add the rest of the items
+		await Promise.all(Array.from(files, declareItem));
 
 		return true;
 	}
@@ -948,6 +939,17 @@ export default class MemoryFileSystem {
 				dirname,
 				path,
 			});
+		}
+
+		// Detect file changes
+		const oldStats = this.getFileStats(path);
+		if (oldStats !== undefined && opts.reason === "watch") {
+			this.server.logger.info(
+				`[MemoryFileSystem] File change:`,
+				path.toMarkup(),
+			);
+			this.server.refreshFileEvent.send(path);
+			this.changedFileEvent.send({path, oldStats, newStats: stats});
 		}
 
 		return true;

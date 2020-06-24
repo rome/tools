@@ -11,9 +11,9 @@ export function mergeEventSubscriptions(
 	subs: Array<EventSubscription>,
 ): EventSubscription {
 	return {
-		unsubscribe() {
+		async unsubscribe() {
 			for (const sub of subs) {
-				sub.unsubscribe();
+				await sub.unsubscribe();
 			}
 		},
 	};
