@@ -13,7 +13,7 @@ import {convertPossibleNodeError} from "@romejs/node";
 
 export * from "./types";
 
-export const ERROR_FRAMES_PROP = Symbol();
+export const ERROR_FRAMES_PROP = "ERROR_FRAMES";
 
 export type ErrorWithFrames = Error & {
 	[ERROR_FRAMES_PROP]?: unknown;
