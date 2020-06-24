@@ -15,7 +15,7 @@ export * from "./types";
 
 export const ERROR_FRAMES_PROP = "ERROR_FRAMES";
 
-export type ErrorWithFrames = Error & {
+export type ErrorWithFrames = NodeJS.ErrnoException & {
 	[ERROR_FRAMES_PROP]?: unknown;
 };
 
