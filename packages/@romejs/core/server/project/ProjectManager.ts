@@ -428,7 +428,7 @@ export default class ProjectManager {
 			ownedFiles.push(path);
 		}
 		await Promise.all(
-			ownedFiles.map((path) => this.server.fileAllocator.workerEvict(path)),
+			ownedFiles.map((path) => this.server.fileAllocator.evict(path)),
 		);
 
 		// Tell the MemoryFileSystem to stop watching and clear it's maps

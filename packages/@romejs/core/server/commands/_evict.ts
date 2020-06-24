@@ -29,7 +29,7 @@ export default createServerCommand({
 			args.length === 0 ? server.fileAllocator.getAllOwnedFilenames() : args;
 
 		for (const file of files) {
-			await server.fileAllocator.workerEvict(client.flags.cwd.resolve(file));
+			await server.fileAllocator.evict(client.flags.cwd.resolve(file));
 			reporter.success(`Evicted ${file}`);
 		}
 

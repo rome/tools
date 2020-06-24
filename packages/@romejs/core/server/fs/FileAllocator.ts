@@ -81,7 +81,7 @@ export default class FileAllocator {
 		}
 	}
 
-	async workerEvict(path: AbsoluteFilePath) {
+	async evict(path: AbsoluteFilePath) {
 		// Find owner
 		const workerId = this.getOwnerId(path);
 		if (workerId === undefined) {
@@ -106,7 +106,7 @@ export default class FileAllocator {
 		}
 
 		// Evict file from 'worker cache
-		await this.workerEvict(path);
+		await this.evict(path);
 
 		// Disown it from 'our internal map
 		this.fileToWorker.delete(path);
@@ -132,7 +132,7 @@ export default class FileAllocator {
 			}
 
 			// Evict the file from 'cache
-			await this.workerEvict(path);
+			await this.evict(path);
 
 			// Verify that this file doesn't exceed any size limit
 			this.verifySize(path, newStats);
