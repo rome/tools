@@ -100,7 +100,7 @@ We have a fairly liberal approach to code review and merging. We value quick ite
 - You are welcome to use the `rome` repo for your WIP branches. However you should prefix branches with your username. ie. `git branch sebmck/feature`. Branches not involved in an active PR will be regularly pruned.
 - If you are adding a new feature then ensure that it has been discussed or approved on GitHub or Discord.
 - If necessary, identify potential owners for PR review and approval.
-- All code needs to go through Pull Requests (PR) and must pass status checks before being merged. If a PR is merged that breaks `master` due to the branch not being up to date, then it should either be reverted or a quick fix merged as a separate PR.
+- All code needs to go through Pull Requests (PR) and must pass status checks before being merged. If a PR is merged that breaks `main` due to the branch not being up to date, then it should either be reverted or a quick fix merged as a separate PR.
 - If a PR is against code that you have previously committed and is either small changes, bug fixes, or refactors, then you're free to merge it without any review. However if you don't feel confident in your changes then you can wait for approval from another core contributor.
 
 ## Moderation

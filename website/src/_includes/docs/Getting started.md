@@ -1,30 +1,11 @@
-# Getting started
+# Getting Started
 
-While Rome seeks to fill the role of many tools in the JavaScript ecosystem, it can be integrated into existing projects and used as much or as little as you like.
-
-First, navigate into your project folder:
-
-```bash
-cd my_existing_project
-```
-
-Now, create a Rome configuration for your project. When prompted, it is advised to use the recommended settings:
+To get started with Rome navigate to your projects folder and run:
 
 ```bash
 rome init
 ```
 
-This command creates a Rome configuration file, `rome.rjson`, which looks like this:
+This will create a `rome.rjson` files that serves as your configuration as well as telling Rome the boundary of your project.
 
-```json
-{
-  "version": "^0.0.52",
-  "lint": {
-    "enabled": true
-  }
-}
-```
-
-> Note: RJSON is a superset of JSON that supports more-concise syntax and features such as comments.
-
-You're all set to get started with Rome. Continue reading to explore the variety of commands that Rome supports.
+> Note: [RJSON](/docs/rjson) is a superset of JSON that supports more-concise syntax and features such as comments.
