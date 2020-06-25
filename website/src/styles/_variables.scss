@@ -16,7 +16,6 @@ $gray-7: lighten(#27272A, 75%);
 $gray-8: lighten(#27272A, 80%);
 
 :root {
-
   --logo-font-color: #{$gray-4};
   --background-color: #fff;
   --font-color: #{$gray-4};
@@ -26,13 +25,12 @@ $gray-8: lighten(#27272A, 80%);
   --pattern-color-2: #{rgba(255, 255, 255, 0)};
   --pattern-img-path: url("/static/img/pattern-white.png");
   --toc-background-active: #{$gray-8};
+  --toc-link-color-hover: #{$gray-6};
   --toc-link-color-active: #{$gray-4};
   --blockquote-color: #{$gray-7};
-
 }
 
 html[data-theme='dark'] {
-
   --logo-font-color: #{$gray-8};
   --background-color: #{$gray-4};
   --font-color: #{lighten(#27272A, 65%)};
@@ -42,9 +40,9 @@ html[data-theme='dark'] {
   --pattern-color-2: #{rgba(0, 0, 0, 0)};
   --pattern-img-path: url("/static/img/pattern-black.png");
   --toc-background-active: #{$gray-3};
+  --toc-link-color-hover: #{$gray-6};
   --toc-link-color-active: #{$gray-8};
   --blockquote-color: #{$gray-7};
-
 }
 
 $body-line-height: 1.5em;

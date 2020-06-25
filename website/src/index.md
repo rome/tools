@@ -1,5 +1,5 @@
 ---
-title: Rome - A JavaScript toolchain
+title: Rome JavaScript toolchain
 layout: layouts/base.njk
 showHero: true
 ---
@@ -8,10 +8,12 @@ showHero: true
 
 {% doc "Installation.md" %}
 
-{% doc "Getting started.md" %}
+{% doc "Getting Started.md" %}
 
-{% doc "Usage.md" %}
+{% doc "Commands.md" %}
 
-{% doc "Linting.md" %}
+{% doc "Editor Integration.md" %}
+
+{% doc "Diagnostics.md" %}
 
 {% doc "Contributing.md" %}

@@ -25,7 +25,7 @@
   }
 }
 
-.header-desktop{
+.header-desktop {
   height: $unit * 4;
   display: flex;
   align-items: center;
@@ -51,7 +51,6 @@
     .cls-1 {
       fill: var(--logo-font-color);
     }
-
   }
 
   .logo-text {
@@ -78,7 +77,7 @@
   height: 32px;
   display: none;
 
-  svg path{
+  svg path {
     fill: var(--top-border-color);
   }
 

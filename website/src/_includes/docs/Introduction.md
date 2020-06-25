@@ -1,5 +1,21 @@
-# Introduction
+**Rome** is a JavaScript toolchain. It unifies functionality that has previously been completely separate tools in the JavaScript ecosystem.
 
-Rome is an all-in-one JavaScript toolchain, including a compiler, linter, formatter, bundler, testing framework and more. It aims to be a comprehensive tool for anything related to the processing of JavaScript source code.
+Imagine tools like [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Webpack](https://webpack.js.org/), [Jest](https://jestjs.io/), and more, as a single tool. That is Rome except we have built these tools from the ground up in the same codebase.
 
-Rome aims to be a replacement for many existing JavaScript tools. We will, however, offer integrations for components in other tools. For example, using the Rome compiler as a plugin for another bundler.
+Building upon a shared base allows us to provide a cohesive experience for processing JavaScript, displaying errors, parallelizing work, caching, and configuration.
+
+**Rome is currently only supported as a linter.** As Rome's use as a linter stabilizes we will begin polishing the other pieces of Rome for release and usage.
+
+Rome aims to have implementations for the following:
+
+ - Bundling
+ - Compiling
+ - Documentation Generation
+ - Formatting
+ - Linting
+ - Minification
+ - Package Management
+ - Testing
+ - Type Checking
+
+**Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io) and [Yarn](https://yarnpkg.com).
