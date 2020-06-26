@@ -6,7 +6,7 @@
  */
 
 import {test} from "rome";
-import {testLint} from "../testHelpers";
+import {testLint} from "../../utils/testing";
 
 test(
 	"empty matches; may match infinitely",

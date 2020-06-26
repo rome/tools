@@ -947,7 +947,6 @@ class Example extends SuperExample.Component {
 ```
 class Example extends SuperExample.Component {
 	someOtherFunction(props) {
-		super(props);
 		this.state = {
 			count: 0,
 		};

@@ -1,5 +1,5 @@
 import {test} from "rome";
-import {testLint} from "../testHelpers";
+import {testLint} from "../../utils/testing";
 
 test(
 	"react no this in stateless functional component",
@@ -48,7 +48,7 @@ test(
 									{this.context.foo ? this.props.bar : ''}
 								</div>
 							);
-						}				
+						}
 					`,
 					`
 						function Foo(props, context) {
@@ -85,7 +85,7 @@ test(
 									{bar}
 								</div>
 							);
-						}				
+						}
 					`,
 					`
 						React.memo(

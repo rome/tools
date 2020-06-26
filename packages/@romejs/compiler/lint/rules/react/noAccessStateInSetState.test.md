@@ -8,15 +8,16 @@
 
 ```
 
- unknown:3:6 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:7 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this.state within a this.setState call.
 
-    2 │      function increment() {
-  > 3 │       this.setState({value: this.state.value + 1});
-      │       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    4 │      }
-    5 │     
+    2 │      class MyComponent extends Component {
+    3 │       function increment() {
+  > 4 │        this.setState({value: this.state.value + 1});
+      │        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │       }
+    6 │      }
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
@@ -29,8 +30,10 @@
 ### `0: formatted`
 
 ```
-function increment() {
-	this.setState({value: this.state.value + 1});
+class MyComponent extends Component {
+	increment() {
+		this.setState({value: this.state.value + 1});
+	}
 }
 
 ```
@@ -39,15 +42,16 @@ function increment() {
 
 ```
 
- unknown:3:6 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:7 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this.state within a this.setState call.
 
-    2 │      function increment() {
-  > 3 │       this.setState({value: 1 + this.state.value});
-      │       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    4 │      }
-    5 │     
+    2 │      class MyComponent extends Component {
+    3 │       function increment() {
+  > 4 │        this.setState({value: 1 + this.state.value});
+      │        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │       }
+    6 │      }
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
@@ -60,8 +64,10 @@ function increment() {
 ### `1: formatted`
 
 ```
-function increment() {
-	this.setState({value: 1 + this.state.value});
+class MyComponent extends Component {
+	increment() {
+		this.setState({value: 1 + this.state.value});
+	}
 }
 
 ```
@@ -70,16 +76,19 @@ function increment() {
 
 ```
 
- unknown:2:5 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:7 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this.state within a this.setState call.
 
-  > 2 │      this.setState({
-      │      ^^^^^^^^^^^^^^^
-  > 3 │       value: this.state.value + 1
-  > 4 │      });
-      │ ^^^^^^^
-    5 │     
+    2 │      class MyComponent extends Component {
+    3 │       function toggle() {
+  > 4 │        this.setState({
+      │        ^^^^^^^^^^^^^^^
+  > 5 │         value: !this.state.value
+  > 6 │        });
+      │ ^^^^^^^^^
+    7 │       }
+    8 │      }
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
@@ -92,9 +101,13 @@ function increment() {
 ### `2: formatted`
 
 ```
-this.setState({
-	value: this.state.value + 1,
-});
+class MyComponent extends Component {
+	toggle() {
+		this.setState({
+			value: !this.state.value,
+		});
+	}
+}
 
 ```
 
@@ -102,16 +115,19 @@ this.setState({
 
 ```
 
- unknown:2:5 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:7 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this.state within a this.setState call.
 
-  > 2 │      this.setState({
-      │      ^^^^^^^^^^^^^^^
-  > 3 │       value: 1 + this.state.value
-  > 4 │      });
-      │ ^^^^^^^
-    5 │     
+    2 │      class MyComponent extends Component {
+    3 │       function toggle() {
+  > 4 │        this.setState({
+      │        ^^^^^^^^^^^^^^^
+  > 5 │         value: !!this.state.value
+  > 6 │        });
+      │ ^^^^^^^^^
+    7 │       }
+    8 │      }
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
@@ -124,9 +140,13 @@ this.setState({
 ### `3: formatted`
 
 ```
-this.setState({
-	value: 1 + this.state.value,
-});
+class MyComponent extends Component {
+	toggle() {
+		this.setState({
+			value: !!this.state.value,
+		});
+	}
+}
 
 ```
 
@@ -134,16 +154,20 @@ this.setState({
 
 ```
 
- unknown:2:5 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:7 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this.state within a this.setState call.
 
-  > 2 │      this.setState({
-      │      ^^^^^^^^^^^^^^^
-  > 3 │       value: !this.state.value
-  > 4 │      });
-      │ ^^^^^^^
-    5 │     
+    2 │      class MyComponent extends Component {
+    3 │       function update() {
+  > 4 │        this.setState({
+      │        ^^^^^^^^^^^^^^^
+  > 5 │         foo: bar,
+  > 6 │         value: 1 + this.state.value
+  > 7 │        });
+      │ ^^^^^^^^^
+    8 │       }
+    9 │      }
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
@@ -156,9 +180,14 @@ this.setState({
 ### `4: formatted`
 
 ```
-this.setState({
-	value: !this.state.value,
-});
+class MyComponent extends Component {
+	update() {
+		this.setState({
+			foo: bar,
+			value: 1 + this.state.value,
+		});
+	}
+}
 
 ```
 
@@ -166,16 +195,20 @@ this.setState({
 
 ```
 
- unknown:2:5 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:7 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this.state within a this.setState call.
 
-  > 2 │      this.setState({
-      │      ^^^^^^^^^^^^^^^
-  > 3 │       value: !!this.state.value
-  > 4 │      });
-      │ ^^^^^^^
-    5 │     
+    2 │      class MyComponent extends Component {
+    3 │       function update() {
+  > 4 │        this.setState({
+      │        ^^^^^^^^^^^^^^^
+  > 5 │         foo: bar,
+  > 6 │         value: this.state.value + 1
+  > 7 │        });
+      │ ^^^^^^^^^
+    8 │       }
+    9 │      }
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
@@ -188,9 +221,14 @@ this.setState({
 ### `5: formatted`
 
 ```
-this.setState({
-	value: !!this.state.value,
-});
+class MyComponent extends Component {
+	update() {
+		this.setState({
+			foo: bar,
+			value: this.state.value + 1,
+		});
+	}
+}
 
 ```
 
@@ -198,17 +236,19 @@ this.setState({
 
 ```
 
- unknown:2:5 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:7 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this.state within a this.setState call.
 
-  > 2 │      this.setState({
-      │      ^^^^^^^^^^^^^^^
-  > 3 │       foo: bar,
-  > 4 │       value: 1 + this.state.value
-  > 5 │      });
-      │ ^^^^^^^
-    6 │     
+    2 │      class MyComponent extends Component {
+    3 │       function update() {
+  > 4 │        this.setState({
+      │        ^^^^^^^^^^^^^^^
+  > 5 │         value: this.state.value
+  > 6 │        });
+      │ ^^^^^^^^^
+    7 │       }
+    8 │      }
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
@@ -221,10 +261,13 @@ this.setState({
 ### `6: formatted`
 
 ```
-this.setState({
-	foo: bar,
-	value: 1 + this.state.value,
-});
+class MyComponent extends Component {
+	update() {
+		this.setState({
+			value: this.state.value,
+		});
+	}
+}
 
 ```
 
@@ -232,17 +275,20 @@ this.setState({
 
 ```
 
- unknown:2:5 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:7 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this.state within a this.setState call.
 
-  > 2 │      this.setState({
-      │      ^^^^^^^^^^^^^^^
-  > 3 │       foo: bar,
-  > 4 │       value: this.state.value + 1
-  > 5 │      });
-      │ ^^^^^^^
-    6 │     
+    2 │      class MyComponent extends Component {
+    3 │       function update() {
+  > 4 │        this.setState({
+      │        ^^^^^^^^^^^^^^^
+  > 5 │         foo: bar,
+  > 6 │         value: this.state.value
+  > 7 │        });
+      │ ^^^^^^^^^
+    8 │       }
+    9 │      }
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
@@ -255,107 +301,51 @@ this.setState({
 ### `7: formatted`
 
 ```
-this.setState({
-	foo: bar,
-	value: this.state.value + 1,
-});
+class MyComponent extends Component {
+	update() {
+		this.setState({
+			foo: bar,
+			value: this.state.value,
+		});
+	}
+}
 
 ```
 
 ### `8`
 
 ```
-
- unknown:2:5 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Avoid using this.state within a this.setState call.
-
-  > 2 │      this.setState({
-      │      ^^^^^^^^^^^^^^^
-  > 3 │       value: this.state.value
-  > 4 │      });
-      │ ^^^^^^^
-    5 │     
-
-  ℹ Batched state calls could result in unexpected errors due to stale state data.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
 ### `8: formatted`
 
 ```
-this.setState({
-	value: this.state.value,
-});
+class MyComponent extends Component {
+	update() {
+		this.setState({
+			foo: bar,
+		});
+	}
+}
 
 ```
 
 ### `9`
 
 ```
-
- unknown:2:5 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Avoid using this.state within a this.setState call.
-
-  > 2 │      this.setState({
-      │      ^^^^^^^^^^^^^^^
-  > 3 │       foo: bar,
-  > 4 │       value: this.state.value
-  > 5 │      });
-      │ ^^^^^^^
-    6 │     
-
-  ℹ Batched state calls could result in unexpected errors due to stale state data.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
 ### `9: formatted`
 
 ```
-this.setState({
-	foo: bar,
-	value: this.state.value,
-});
-
-```
-
-### `10`
-
-```
-✔ No known problems!
-
-```
-
-### `10: formatted`
-
-```
-this.setState({
-	foo: bar,
-});
-
-```
-
-### `11`
-
-```
-✔ No known problems!
-
-```
-
-### `11: formatted`
-
-```
-function increment() {
-	this.setState((prevState) => ({value: prevState.value + 1}));
+class MyComponent extends Component {
+	increment() {
+		this.setState((prevState) => ({value: prevState.value + 1}));
+	}
 }
 
 ```

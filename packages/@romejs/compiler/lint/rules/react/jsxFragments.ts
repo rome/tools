@@ -1,17 +1,18 @@
 import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
 import {jsxFragment} from "@romejs/ast";
-import {doesNodeMatchPattern, hasJSXAttribute} from "@romejs/js-ast-utils";
+import {hasJSXAttribute} from "@romejs/js-ast-utils";
+import {doesNodeMatchReactPattern} from "../../utils/react";
 
 export default {
 	name: "reactJsxFragments",
 	enter(path: Path): TransformExitResult {
-		const {node, context} = path;
+		const {node, context, scope} = path;
 
 		if (
 			node.type === "JSXElement" &&
-			(doesNodeMatchPattern(node.name, "Fragment") ||
-			doesNodeMatchPattern(node.name, "React.Fragment")) &&
+			(doesNodeMatchReactPattern(node.name, scope, "Fragment") ||
+			doesNodeMatchReactPattern(node.name, scope, "React.Fragment")) &&
 			!hasJSXAttribute(node, "key")
 		) {
 			return context.addFixableDiagnostic(

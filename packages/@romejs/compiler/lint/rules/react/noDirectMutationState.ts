@@ -2,21 +2,7 @@ import {Path, TransformExitResult} from "@romejs/compiler";
 import {AnyNode} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 import {doesNodeMatchPattern} from "@romejs/js-ast-utils";
-
-// Checks if the current class extends React.Component
-function isReactComponent(path: Path): boolean {
-	const ancestor = path.findAncestry(({node}) =>
-	// Check if it extends React.Component or Component, and React.PureCompnent and PureComponent
-		node.type === "JSClassHead" &&
-		node.superClass !== undefined &&
-		(doesNodeMatchPattern(node.superClass, "React.Component") ||
-		doesNodeMatchPattern(node.superClass, "Component") ||
-		doesNodeMatchPattern(node.superClass, "React.PureComponent") ||
-		doesNodeMatchPattern(node.superClass, "PureComponent"))
-	);
-
-	return ancestor !== undefined;
-}
+import {insideClassComponent} from "../../utils/react";
 
 // Check if this.state mutation was in the constructor
 function isMutationInConstructor(path: Path): boolean {
@@ -74,7 +60,7 @@ export default {
 		// If the state is mutated anywhere except in a constructor, show message
 		if (
 			isStateMutated(node) &&
-			isReactComponent(path) &&
+			insideClassComponent(path) &&
 			!isMutationInConstructor(path)
 		) {
 			path.context.addNodeDiagnostic(

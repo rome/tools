@@ -1,5 +1,5 @@
 import {test} from "rome";
-import {testLint} from "../testHelpers";
+import {testLint} from "../../utils/testing";
 
 test(
 	"react jsx fragments",
@@ -18,13 +18,13 @@ test(
 					function Foo() {
 						let bar = <React.Fragment><Foo /><Foo /></React.Fragment>;
 						return bar;
-					}	
+					}
 					`,
 					`
 					function Foo() {
 						let bar = <Fragment><Foo /><Foo /></Fragment>;
 						return bar;
-					}	
+					}
 					`,
 					`
 					function Hello() {
@@ -51,7 +51,7 @@ test(
 					function Foo() {
 						let bar = <React.Fragment key='word'></React.Fragment>;
 						return bar;
-					}	
+					}
 					`,
 					`
 					function Hello() {

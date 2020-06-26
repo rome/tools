@@ -1,12 +1,12 @@
-import {Path, TransformExitResult} from "@romejs/compiler";
+import {Path, Scope, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
 import {AnyNode} from "@romejs/ast";
 import {
-	doesNodeMatchPattern,
 	getJSXAttribute,
 	hasJSXAttribute,
 	isFunctionNode,
 } from "@romejs/js-ast-utils";
+import {doesNodeMatchReactPattern} from "../../utils/react";
 
 function getKeyValue(path: Path): string | undefined {
 	let keyValue = undefined;
@@ -42,7 +42,7 @@ function getKeyValue(path: Path): string | undefined {
 	return keyValue;
 }
 
-function getReactChildrenArrayMethod(path: Path): Path | undefined {
+function getReactChildrenArrayMethod(path: Path, scope: Scope): Path | undefined {
 	return path.findAncestry(({node}) => {
 		if (
 			node.type === "JSExpressionStatement" &&
@@ -53,7 +53,7 @@ function getReactChildrenArrayMethod(path: Path): Path | undefined {
 			if (
 				expr.callee.type === "JSMemberExpression" &&
 				expr.callee.object.type === "JSReferenceIdentifier" &&
-				expr.callee.object.name === "Children" &&
+				doesNodeMatchReactPattern(expr.callee.object, scope, "Children") &&
 				expr.callee.property.value.type === "JSIdentifier" &&
 				(expr.callee.property.value.name === "map" ||
 				expr.callee.property.value.name === "forEach")
@@ -65,8 +65,7 @@ function getReactChildrenArrayMethod(path: Path): Path | undefined {
 			if (
 				expr.callee.type === "JSMemberExpression" &&
 				expr.callee.object.type === "JSMemberExpression" &&
-				expr.callee.object.object.type === "JSReferenceIdentifier" &&
-				expr.callee.object.object.name === "React" &&
+				doesNodeMatchReactPattern(expr.callee.object, scope, "React.Children") &&
 				expr.callee.object.property.type === "JSStaticMemberProperty" &&
 				expr.callee.object.property.value.type === "JSIdentifier" &&
 				expr.callee.object.property.value.name === "Children" &&
@@ -123,9 +122,9 @@ function hasArrayIndexKey(keyValue: string, node: AnyNode) {
 export default {
 	name: "reactNoArrayIndexKey",
 	enter(path: Path): TransformExitResult {
-		const {node} = path;
+		const {node, scope} = path;
 
-		if (doesNodeMatchPattern(node, "cloneElement")) {
+		if (doesNodeMatchReactPattern(node, scope, "cloneElement")) {
 			const memberExpressionPath = path.findAncestry((path) =>
 				path.node.type === "JSCallExpression"
 			);
@@ -133,6 +132,7 @@ export default {
 				const keyValue = getKeyValue(memberExpressionPath);
 				const reactChildrenArrayMethod = getReactChildrenArrayMethod(
 					memberExpressionPath,
+					scope,
 				);
 				const arrayMethod = hasArrayMethod(memberExpressionPath);
 
@@ -151,9 +151,9 @@ export default {
 			}
 		}
 
-		if (doesNodeMatchPattern(node, "React.cloneElement")) {
+		if (doesNodeMatchReactPattern(node, scope, "React.cloneElement")) {
 			const keyValue = getKeyValue(path);
-			const reactChildrenArrayMethod = getReactChildrenArrayMethod(path);
+			const reactChildrenArrayMethod = getReactChildrenArrayMethod(path, scope);
 			const arrayMethod = hasArrayMethod(path);
 
 			if (keyValue && (reactChildrenArrayMethod || arrayMethod)) {
