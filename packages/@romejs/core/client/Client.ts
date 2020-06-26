@@ -11,7 +11,7 @@ import {
 	DEFAULT_CLIENT_FLAGS,
 } from "../common/types/client";
 import ClientRequest, {ClientRequestType} from "./ClientRequest";
-import Server, {ServerOptions} from "../server/Server";
+import Server, {ServerClient, ServerOptions} from "../server/Server";
 import {
 	CLI_SOCKET_PATH,
 	SOCKET_PATH,
@@ -526,7 +526,11 @@ export default class Client {
 
 	async startInternalServer(
 		opts?: Partial<ServerOptions>,
-	): Promise<BridgeStatusLocal> {
+	): Promise<{
+		bridge: ServerBridge;
+		server: Server;
+		serverClient: ServerClient;
+	}> {
 		// Otherwise, start a server inside this process
 		const server = new Server({
 			dedicated: false,
@@ -538,13 +542,16 @@ export default class Client {
 		const bridge = createBridgeFromLocal(ServerBridge, {});
 		const status: BridgeStatusLocal = {bridge, server, dedicated: false};
 
-		await Promise.all([server.attachToBridge(bridge), this.attachBridge(status)]);
+		const [serverClient] = await Promise.all([
+			server.attachToBridge(bridge),
+			this.attachBridge(status),
+		]);
 
 		this.endEvent.subscribe(async () => {
 			await server.end();
 		});
 
-		return status;
+		return {serverClient, bridge, server};
 	}
 
 	async forceStartDaemon(): Promise<ServerBridge> {

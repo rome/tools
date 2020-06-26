@@ -17,6 +17,7 @@ import {
 	parsePathPattern,
 } from "@romejs/path-match";
 import {
+	ProjectConfigCategoriesWithIgnore,
 	ProjectDefinition,
 	ROME_CONFIG_FILENAMES,
 	ROME_CONFIG_PACKAGE_JSON_FIELD,
@@ -97,7 +98,7 @@ function isValidManifest(path: AbsoluteFilePath): boolean {
 }
 
 // Whenever we're performing an operation on a set of files, always do these first as they may influence how the rest are processed
-const PRIORITY_FILES = new Set(ROME_CONFIG_FILENAMES);
+const PRIORITY_FILES = new Set([...ROME_CONFIG_FILENAMES, "package.json"]);
 
 type DeclareManifestOpts = {
 	diagnostics: DiagnosticsProcessor;
@@ -106,8 +107,8 @@ type DeclareManifestOpts = {
 };
 
 type CrawlOptions = {
+	reason: "watch" | "initial";
 	diagnostics: DiagnosticsProcessor;
-	crawl: boolean;
 	onFoundDirectory?: (path: AbsoluteFilePath) => void;
 	tick?: (path: AbsoluteFilePath) => void;
 };
@@ -125,7 +126,7 @@ export type WatcherClose = () => void;
 export type MemoryFSGlobOptions = {
 	extensions?: Array<string>;
 	overrideIgnore?: PathPatterns;
-	getProjectIgnore?: (project: ProjectDefinition) => PathPatterns;
+	configCategory?: ProjectConfigCategoriesWithIgnore;
 	test?: (path: AbsoluteFilePath) => boolean;
 };
 
@@ -180,12 +181,12 @@ async function createWatcher(
 						]);
 
 						if (newStats.type === "file") {
-							memoryFs.handleFileChange(
+							memoryFs.addFile(
 								path,
 								newStats,
 								{
+									reason: "watch",
 									diagnostics,
-									crawl: true,
 								},
 							);
 						} else if (newStats.type === "directory") {
@@ -193,7 +194,7 @@ async function createWatcher(
 								path,
 								newStats,
 								{
-									crawl: true,
+									reason: "watch",
 									diagnostics,
 									onFoundDirectory,
 								},
@@ -219,9 +220,9 @@ async function createWatcher(
 			projectFolder,
 			stats,
 			{
-				crawl: true,
 				diagnostics,
 				onFoundDirectory,
+				reason: "initial",
 			},
 		);
 		logger.info(
@@ -275,10 +276,7 @@ export default class MemoryFileSystem {
 		close: WatcherClose;
 	}>;
 
-	watchPromises: AbsoluteFilePathMap<{
-		promise: Promise<WatcherClose>;
-		path: AbsoluteFilePath;
-	}>;
+	watchPromises: AbsoluteFilePathMap<Promise<WatcherClose>>;
 
 	changedFileEvent: Event<
 		{
@@ -424,8 +422,12 @@ export default class MemoryFileSystem {
 
 		// Wait for any subscribers that might need the file's stats
 		this.server.logger.info(`[MemoryFileSystem] File deleted:`, path.toMarkup());
-		await this.deletedFileEvent.call(path);
-		this.server.refreshFileEvent.send(path);
+
+		// Only emit these events for files
+		if (folderInfo === undefined) {
+			await this.deletedFileEvent.call(path);
+			this.server.refreshFileEvent.send(path);
+		}
 
 		// Remove from 'all possible caches
 		this.files.delete(path);
@@ -452,30 +454,11 @@ export default class MemoryFileSystem {
 		}
 	}
 
-	async handleFileChange(
-		path: AbsoluteFilePath,
-		stats: Stats,
-		opts: CrawlOptions,
-	): Promise<boolean> {
-		const oldStats: undefined | Stats = this.getFileStats(path);
-		const changed = await this.addFile(path, stats, opts);
-		if (changed) {
-			const newStats: Stats = this.getFileStatsAssert(path);
-			this.server.logger.info(
-				`[MemoryFileSystem] File change:`,
-				path.toMarkup(),
-			);
-			this.server.refreshFileEvent.send(path);
-			this.changedFileEvent.send({path, oldStats, newStats});
-		}
-		return changed;
-	}
-
 	async waitIfInitializingWatch(
 		projectFolderPath: AbsoluteFilePath,
 	): Promise<void> {
 		// Defer if we're initializing a parent folder
-		for (const {promise, path} of this.watchPromises.values()) {
+		for (const [path, promise] of this.watchPromises) {
 			if (projectFolderPath.isRelativeTo(path)) {
 				await promise;
 				return;
@@ -483,7 +466,7 @@ export default class MemoryFileSystem {
 		}
 
 		// Wait if we're initializing descendents
-		for (const {path, promise} of this.watchPromises.values()) {
+		for (const [path, promise] of this.watchPromises) {
 			if (path.isRelativeTo(projectFolderPath)) {
 				await promise;
 			}
@@ -542,13 +525,7 @@ export default class MemoryFileSystem {
 
 		logger.info(`[MemoryFileSystem] Watching ${folderLink}`);
 		const promise = createWatcher(this, diagnostics, projectFolder);
-		this.watchPromises.set(
-			projectFolder,
-			{
-				path: projectFolder,
-				promise,
-			},
-		);
+		this.watchPromises.set(projectFolder, promise);
 
 		const watcherClose = await promise;
 		this.watchers.set(
@@ -612,7 +589,7 @@ export default class MemoryFileSystem {
 	}
 
 	isIgnored(path: AbsoluteFilePath, type: "directory" | "file"): boolean {
-		const project = this.server.projectManager.findProjectExisting(path, false);
+		const project = this.server.projectManager.findProjectExisting(path);
 		if (project === undefined) {
 			return false;
 		}
@@ -691,10 +668,9 @@ export default class MemoryFileSystem {
 		const {projectManager} = this.server;
 
 		if (isProjectPackage && consumer.has(ROME_CONFIG_PACKAGE_JSON_FIELD)) {
-			await projectManager.addProject({
+			await projectManager.addDiskProject({
 				projectFolder: folder,
 				configPath: path,
-				watch: false,
 			});
 		}
 
@@ -713,7 +689,7 @@ export default class MemoryFileSystem {
 		cwd: AbsoluteFilePath,
 		opts: MemoryFSGlobOptions = {},
 	): AbsoluteFilePathSet {
-		const {extensions, getProjectIgnore, test, overrideIgnore = []} = opts;
+		const {extensions, configCategory, test, overrideIgnore = []} = opts;
 
 		const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
@@ -724,15 +700,19 @@ export default class MemoryFileSystem {
 		while (crawl.length > 0) {
 			const path = crawl.pop()!;
 
-			const project = this.server.projectManager.assertProjectExisting(path);
+			// `cache: false` to allow calling us with deleted paths
+			const project = this.server.projectManager.findProjectExisting(path);
 
 			let ignore: PathPatterns = overrideIgnore;
 
 			// Get ignore patterns
-			if (getProjectIgnore !== undefined) {
+			if (configCategory !== undefined && project !== undefined) {
 				const projectIgnore = ignoresByProject.get(project);
 				if (projectIgnore === undefined) {
-					ignore = concatGlobIgnore([...ignore, ...getProjectIgnore(project)]);
+					ignore = concatGlobIgnore([
+						...ignore,
+						...project.config[configCategory].ignore,
+					]);
 					ignoresByProject.set(project, ignore);
 				} else {
 					ignore = projectIgnore;
@@ -845,31 +825,29 @@ export default class MemoryFileSystem {
 			opts.onFoundDirectory(folderPath);
 		}
 
-		if (opts.crawl) {
-			// Crawl the folder
-			const files = await readDirectory(folderPath);
+		// Crawl the folder
+		const files = await readDirectory(folderPath);
 
-			// Declare the file
-			const declareItem = async (path: AbsoluteFilePath) => {
-				const stats = await this.hardStat(path);
-				if (stats.type === "file") {
-					await this.addFile(path, stats, opts);
-				} else if (stats.type === "directory") {
-					await this.addDirectory(path, stats, opts);
-				}
-			};
-
-			// Give priority to package.json in case we want to derive something from the project config
-			for (const file of files) {
-				if (PRIORITY_FILES.has(file.getBasename())) {
-					files.delete(file);
-					await declareItem(file);
-				}
+		// Declare the file
+		const declareItem = async (path: AbsoluteFilePath) => {
+			const stats = await this.hardStat(path);
+			if (stats.type === "file") {
+				await this.addFile(path, stats, opts);
+			} else if (stats.type === "directory") {
+				await this.addDirectory(path, stats, opts);
 			}
+		};
 
-			// Add the rest of the items
-			await Promise.all(Array.from(files, declareItem));
+		// Give priority to package.json in case we want to derive something from the project config
+		for (const file of files) {
+			if (PRIORITY_FILES.has(file.getBasename())) {
+				files.delete(file);
+				await declareItem(file);
+			}
 		}
+
+		// Add the rest of the items
+		await Promise.all(Array.from(files, declareItem));
 
 		return true;
 	}
@@ -881,7 +859,7 @@ export default class MemoryFileSystem {
 		}
 
 		// If we're still performing an initial crawl of any path higher in the tree then we don't know if it exists yet
-		for (const {path: projectFolder} of this.watchPromises.values()) {
+		for (const projectFolder of this.watchPromises.keys()) {
 			if (path.isRelativeTo(projectFolder)) {
 				return undefined;
 			}
@@ -935,10 +913,9 @@ export default class MemoryFileSystem {
 
 		// Add project if this is a config
 		if (ROME_CONFIG_FILENAMES.includes(basename)) {
-			await projectManager.addProject({
+			await projectManager.addDiskProject({
 				projectFolder: dirname,
 				configPath: path,
-				watch: false,
 			});
 		}
 
@@ -948,6 +925,17 @@ export default class MemoryFileSystem {
 				dirname,
 				path,
 			});
+		}
+
+		// Detect file changes
+		const oldStats = this.getFileStats(path);
+		if (oldStats !== undefined && opts.reason === "watch") {
+			this.server.logger.info(
+				`[MemoryFileSystem] File change:`,
+				path.toMarkup(),
+			);
+			this.server.refreshFileEvent.send(path);
+			this.changedFileEvent.send({path, oldStats, newStats: stats});
 		}
 
 		return true;

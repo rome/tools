@@ -19,7 +19,7 @@ import {ErrorFrame} from "@romejs/v8";
 import {Number0, Number1} from "@romejs/ob1";
 import prettyFormat from "@romejs/pretty-format";
 import {naturalCompare} from "@romejs/string-utils";
-import Locker from "../common/utils/Locker";
+import {FilePathLocker} from "../common/utils/lockers";
 
 function cleanHeading(key: string): string {
 	if (key[0] === "`") {
@@ -85,7 +85,7 @@ export default class SnapshotManager {
 		this.runner = runner;
 		this.options = runner.options;
 		this.snapshots = new AbsoluteFilePathMap();
-		this.fileLocker = new Locker();
+		this.fileLocker = new FilePathLocker();
 		this.inlineSnapshotsUpdates = [];
 		this.snapshotCounts = {
 			deleted: 0,
@@ -98,7 +98,7 @@ export default class SnapshotManager {
 	testPath: AbsoluteFilePath;
 	defaultSnapshotPath: AbsoluteFilePath;
 	snapshots: AbsoluteFilePathMap<Snapshot>;
-	fileLocker: Locker<string>;
+	fileLocker: FilePathLocker;
 	runner: TestWorkerRunner;
 	options: TestServerRunnerOptions;
 	snapshotCounts: SnapshotCounts;
@@ -135,95 +135,95 @@ export default class SnapshotManager {
 			return;
 		}
 
-		const lock = await this.fileLocker.getLock(path.join());
-
-		const loadedSnapshot = this.snapshots.get(path);
-		if (loadedSnapshot !== undefined) {
-			lock.release();
-			return loadedSnapshot;
-		}
-
-		const content = await readFileText(path);
-		const parser = createSnapshotParser({
+		return this.fileLocker.wrapLock(
 			path,
-			input: content,
-		});
+			async () => {
+				const loadedSnapshot = this.snapshots.get(path);
+				if (loadedSnapshot !== undefined) {
+					return loadedSnapshot;
+				}
 
-		const nodes = parser.parse();
+				const content = await readFileText(path);
+				const parser = createSnapshotParser({
+					path,
+					input: content,
+				});
 
-		const snapshot: Snapshot = {
-			existsOnDisk: true,
-			used: false,
-			raw: parser.input,
-			entries: new Map(),
-		};
-		this.snapshots.set(path, snapshot);
+				const nodes = parser.parse();
 
-		while (nodes.length > 0) {
-			const node = nodes.shift()!;
-
-			if (node.type === "Heading" && node.level === 1) {
-				// Title
-				continue;
-			}
-
-			if (node.type === "Heading" && node.level === 2) {
-				const testName = cleanHeading(node.text);
+				const snapshot: Snapshot = {
+					existsOnDisk: true,
+					used: false,
+					raw: parser.input,
+					entries: new Map(),
+				};
+				this.snapshots.set(path, snapshot);
 
 				while (nodes.length > 0) {
-					const node = nodes[0];
+					const node = nodes.shift()!;
 
-					if (node.type === "Heading" && node.level === 3) {
-						nodes.shift();
-
-						const entryName = cleanHeading(node.text);
-
-						const codeBlock = nodes.shift();
-						if (codeBlock === undefined || codeBlock.type !== "CodeBlock") {
-							throw parser.unexpected({
-								description: descriptions.SNAPSHOTS.EXPECTED_CODE_BLOCK_AFTER_HEADING,
-								loc: node.loc,
-							});
-						}
-
-						snapshot.entries.set(
-							buildEntriesKey(testName, entryName),
-							{
-								testName,
-								entryName,
-								language: codeBlock.language,
-								value: codeBlock.text,
-								used: false,
-							},
-						);
-
+					if (node.type === "Heading" && node.level === 1) {
+						// Title
 						continue;
 					}
 
-					if (node.type === "CodeBlock") {
-						nodes.shift();
+					if (node.type === "Heading" && node.level === 2) {
+						const testName = cleanHeading(node.text);
 
-						snapshot.entries.set(
-							buildEntriesKey(testName, "0"),
-							{
-								testName,
-								entryName: "0",
-								language: node.language,
-								value: node.text,
-								used: false,
-							},
-						);
+						while (nodes.length > 0) {
+							const node = nodes[0];
+
+							if (node.type === "Heading" && node.level === 3) {
+								nodes.shift();
+
+								const entryName = cleanHeading(node.text);
+
+								const codeBlock = nodes.shift();
+								if (codeBlock === undefined || codeBlock.type !== "CodeBlock") {
+									throw parser.unexpected({
+										description: descriptions.SNAPSHOTS.EXPECTED_CODE_BLOCK_AFTER_HEADING,
+										loc: node.loc,
+									});
+								}
+
+								snapshot.entries.set(
+									buildEntriesKey(testName, entryName),
+									{
+										testName,
+										entryName,
+										language: codeBlock.language,
+										value: codeBlock.text,
+										used: false,
+									},
+								);
+
+								continue;
+							}
+
+							if (node.type === "CodeBlock") {
+								nodes.shift();
+
+								snapshot.entries.set(
+									buildEntriesKey(testName, "0"),
+									{
+										testName,
+										entryName: "0",
+										language: node.language,
+										value: node.text,
+										used: false,
+									},
+								);
+							}
+
+							break;
+						}
+
+						continue;
 					}
-
-					break;
 				}
-
-				continue;
-			}
-		}
-
-		lock.release();
-		return snapshot;
+				return snapshot;
+			},
+		);
 	}
 
 	buildSnapshot(entries: Iterable<SnapshotEntry>): Array<string> {

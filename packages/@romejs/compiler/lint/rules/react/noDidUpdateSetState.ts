@@ -8,6 +8,7 @@
 import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
 import {doesNodeMatchPattern, isConditional} from "@romejs/js-ast-utils";
+import {insideClassComponent} from "../../utils/react";
 
 function inComponentDidUpdate(path: Path): boolean {
 	const func = path.findAncestry(({node}) => isConditional(node)) !== undefined;
@@ -28,6 +29,7 @@ export default {
 		const {node} = path;
 
 		if (
+			insideClassComponent(path) &&
 			doesNodeMatchPattern(node, "this.setState") &&
 			inComponentDidUpdate(path)
 		) {

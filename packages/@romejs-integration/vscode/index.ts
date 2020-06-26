@@ -82,7 +82,10 @@ async function getRomeLocation(): Promise<undefined | string> {
 				return manifest;
 			}
 
-			const nodeModules = await tryChain(uri.path, `node_modules/rome/index.js`);
+			const nodeModules = await tryChain(
+				uri.path,
+				`node_modules/rome/bin/rome/index.js`,
+			);
 			if (nodeModules !== undefined) {
 				return nodeModules;
 			}

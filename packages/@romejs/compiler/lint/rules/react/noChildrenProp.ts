@@ -7,35 +7,20 @@
 
 import {Path} from "@romejs/compiler";
 import {AnyNode} from "@romejs/ast";
-import {doesNodeMatchPattern, getJSXAttribute} from "@romejs/js-ast-utils";
+import {getJSXAttribute} from "@romejs/js-ast-utils";
 import {descriptions} from "@romejs/diagnostics";
+import {getCreateElementProp} from "../../utils/react";
 
 function getJSXChildrenProp(node: AnyNode) {
 	return node.type === "JSXElement" && getJSXAttribute(node, "children");
 }
 
-function getCreateElementChildrenProp(node: AnyNode) {
-	if (
-		node.type === "JSCallExpression" &&
-		(doesNodeMatchPattern(node.callee, "React.createElement") ||
-		doesNodeMatchPattern(node.callee, "createElement")) &&
-		node.arguments[1].type === "JSObjectExpression"
-	) {
-		return node.arguments[1].properties.find((property) =>
-			property.type === "JSObjectProperty" &&
-			property.key.value.type === "JSIdentifier" &&
-			property.key.value.name === "children"
-		);
-	}
-	return undefined;
-}
-
 export default {
 	name: "reactNoChildrenProp",
 	enter(path: Path): AnyNode {
-		const {node} = path;
+		const {node, scope} = path;
 		const childrenProp =
-			getJSXChildrenProp(node) || getCreateElementChildrenProp(node);
+			getJSXChildrenProp(node) || getCreateElementProp(node, scope, "children");
 		if (childrenProp) {
 			path.context.addNodeDiagnostic(
 				childrenProp,

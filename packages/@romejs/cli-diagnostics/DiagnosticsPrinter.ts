@@ -22,6 +22,7 @@ import {
 	DiagnosticsPrinterOptions,
 } from "./types";
 import {
+	escapeMarkup,
 	formatAnsi,
 	markup,
 	markupToPlainTextString,
@@ -153,7 +154,6 @@ export default class DiagnosticsPrinter extends Error {
 	flags: DiagnosticsPrinterFlags;
 	cwd: AbsoluteFilePath;
 	readFile: DiagnosticsFileReader;
-
 	hasTruncatedDiagnostics: boolean;
 	missingFileSources: AbsoluteFilePathSet;
 	fileSources: DiagnosticsPrinterFileSources;
@@ -340,7 +340,7 @@ export default class DiagnosticsPrinter extends Error {
 			if (stats === undefined) {
 				this.missingFileSources.add(abs);
 			} else {
-				this.addFileSource(dep, stats);
+				this.wrapError(() => this.addFileSource(dep, stats));
 			}
 		}
 	}
@@ -351,12 +351,28 @@ export default class DiagnosticsPrinter extends Error {
 		this.displayDiagnostics(filteredDiagnostics);
 	}
 
-	displayDiagnostics(diagnostics: Diagnostics) {
-		const restoreRedirect = this.reporter.redirectOutToErr(true);
-		for (const diag of diagnostics) {
-			this.displayDiagnostic(diag);
+	wrapError(callback: () => void) {
+		const {reporter} = this;
+		try {
+			callback();
+		} catch (err) {
+			// Sometimes we'll run into issues displaying diagnostics
+			// We can safely catch them here since the presence of diagnostics is considered a critical failure
+			// Display diagnostics is idempotent
+			reporter.error("Encountered an error displaying this diagnostic");
+			reporter.error(escapeMarkup(err.stack));
 		}
-		this.reporter.redirectOutToErr(restoreRedirect);
+	}
+
+	displayDiagnostics(diagnostics: Diagnostics) {
+		const {reporter} = this;
+		const restoreRedirect = reporter.redirectOutToErr(true);
+
+		for (const diag of diagnostics) {
+			this.wrapError(() => this.displayDiagnostic(diag));
+		}
+
+		reporter.redirectOutToErr(restoreRedirect);
 	}
 
 	getOutdatedFiles(diag: Diagnostic): UnknownFilePathSet {

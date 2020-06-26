@@ -1,5 +1,5 @@
 import {test} from "rome";
-import {testLint} from "../testHelpers";
+import {testLint} from "../../utils/testing";
 
 test(
 	"react no useless fragment",

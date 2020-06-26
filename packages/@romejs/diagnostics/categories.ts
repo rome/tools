@@ -18,6 +18,7 @@ export type DiagnosticCategory =
 	| "compile/classes"
 	| "compile/const-enums"
 	| "compile/jsx"
+	| "compile/nonnumeric-enum-values"
 	| "flags/invalid"
 	| "format/disabled"
 	| "internalError/httpServer"

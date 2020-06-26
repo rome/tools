@@ -6,7 +6,7 @@
  */
 
 import {test} from "rome";
-import {testLint} from "../testHelpers";
+import {testLint} from "../../utils/testing";
 
 test(
 	"disallow multiple spaces in regular expression literals",

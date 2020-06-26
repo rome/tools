@@ -213,12 +213,23 @@ export default class WorkerAPI {
 			return UNKNOWN_ANALYZE_DEPENDENCIES_RESULT;
 		}
 
-		return await analyzeDependencies({
-			file: ref,
-			project,
-			worker: this.worker,
-			parseOptions,
-		});
+		const {value, diagnostics} = await catchDiagnostics(() =>
+			analyzeDependencies({
+				file: ref,
+				project,
+				worker: this.worker,
+				parseOptions,
+			})
+		);
+
+		if (diagnostics !== undefined) {
+			return {...UNKNOWN_ANALYZE_DEPENDENCIES_RESULT, diagnostics};
+		}
+		if (value === undefined) {
+			return UNKNOWN_ANALYZE_DEPENDENCIES_RESULT;
+		}
+
+		return value;
 	}
 
 	async workerCompilerOptionsToCompilerOptions(

@@ -85,8 +85,8 @@ function cleanFrames(frames: ErrorFrames): ErrorFrames {
 	if (latestTestWorkerFrame === undefined) {
 		latestTestWorkerFrame = frames.find((frame) => {
 			return (
-				frame.typeName !== undefined &&
-				frame.typeName.includes("$TestWorkerRunner")
+				frame.filename !== undefined &&
+				frame.filename.includes("TestWorkerRunner")
 			);
 		});
 	}
@@ -162,7 +162,11 @@ export default class TestWorkerRunner {
 					prettyFormat(arg, {allowCustom: false, markup: true})
 				);
 			}
-			const text = textParts.join(" ");
+			let text = textParts.join(" ");
+
+			if (text === "") {
+				text = "<dim>empty log</dim>";
+			}
 
 			const err = new Error();
 

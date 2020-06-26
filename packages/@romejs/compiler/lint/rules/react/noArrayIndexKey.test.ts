@@ -1,5 +1,5 @@
 import {test} from "rome";
-import {testLint} from "../testHelpers";
+import {testLint} from "../../utils/testing";
 
 test(
 	"react no array index key",
@@ -92,12 +92,12 @@ test(
 							cloneElement(child, { key: index })
 						))
 					`,
-					`					
+					`
 						things.map((thing, index) => (
 							<Hello key={index} />
 						));
 					`,
-					`					
+					`
 						things.map(function(thing, index) {
 							return (<Hello key={index} />);
 						});
@@ -117,12 +117,12 @@ test(
 							return cloneElement(thing, { key: index })
 						});
 					`,
-					`					
+					`
 						things.forEach((thing, index) => {
 							otherThings.push(<Hello key={index} />);
 						});
 					`,
-					`					
+					`
 						things.forEach(function(thing, index) {
 							otherThings.push(<Hello key={index} />);
 						});
@@ -135,7 +135,7 @@ test(
 					`
 						things.some((thing, index) => {
 							otherThings.push(<Hello key={index} />);
-						});					
+						});
 					`,
 					`
 						things.every((thing, index) => {
@@ -184,12 +184,12 @@ test(
 							return <Hello key={thing.id} />
 						});
 					`,
-					`					
+					`
 						things.map((thing) => (
 							React.cloneElement(thing, { key: thing.id })
 						));
 					`,
-					`					
+					`
 						things.map(function(thing) {
 							return React.cloneElement(thing, { key: thing.id })
 						});
@@ -217,19 +217,19 @@ test(
 					`
 						things.some((thing) => {
 							otherThings.push(<Hello key={thing.id} />);
-						});					
+						});
 					`,
 					`
 						things.some(function(thing) {
 							otherThings.push(<Hello key={thing.id} />);
-						});					
+						});
 					`,
-					`					
+					`
 						things.every((thing) => {
 							otherThings.push(<Hello key={thing.id} />);
 						});
 					`,
-					`					
+					`
 						things.every(function(thing) {
 							otherThings.push(<Hello key={thing.id} />);
 						});
@@ -254,12 +254,12 @@ test(
 							otherThings.push(<Hello key={thing.id} />);
 						});
 					`,
-					`					
+					`
 						things.reduce((collection, thing) => (
 							collection.concat(<Hello key={thing.id} />)
 						), []);
 					`,
-					`					
+					`
 						things.reduce(function(collection, thing) {
 							return collection.concat(<Hello key={thing.id} />)
 						}, []);

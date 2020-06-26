@@ -68,7 +68,7 @@ import ServerReporter from "./ServerReporter";
 import VirtualModules from "./fs/VirtualModules";
 import {DiagnosticsProcessorOptions} from "@romejs/diagnostics/DiagnosticsProcessor";
 import {toKebabCase} from "@romejs/string-utils";
-import Locker from "../common/utils/Locker";
+import {FilePathLocker} from "../common/utils/lockers";
 import {writeFile} from "@romejs/fs";
 
 const STDOUT_MAX_CHUNK_LENGTH = 100_000;
@@ -111,6 +111,28 @@ export type ServerMarker = ServerUnfinishedMarker & {
 };
 
 const disallowedFlagsWhenReviewing: Array<keyof ClientRequestFlags> = ["watch"];
+
+export function partialServerQueryResponseToFull(
+	partialQuery: PartialServerQueryRequest,
+): ServerQueryRequest {
+	const requestFlags: ClientRequestFlags = {
+		...DEFAULT_CLIENT_REQUEST_FLAGS,
+		...partialQuery.requestFlags,
+	};
+
+	return {
+		commandName: partialQuery.commandName,
+		args: partialQuery.args === undefined ? [] : partialQuery.args,
+		noData: partialQuery.noData === true,
+		requestFlags,
+		silent: partialQuery.silent === true || requestFlags.benchmark,
+		terminateWhenIdle: partialQuery.terminateWhenIdle === true,
+		commandFlags: partialQuery.commandFlags === undefined
+			? {}
+			: partialQuery.commandFlags,
+		cancelToken: partialQuery.cancelToken,
+	};
+}
 
 async function validateRequestFlags(
 	req: ServerRequest,
@@ -225,7 +247,7 @@ export default class Server {
 			},
 		);
 
-		this.fileLocker = new Locker();
+		this.requestFileLocker = new FilePathLocker();
 
 		this.connectedReporters = new ServerReporter(this);
 
@@ -282,7 +304,7 @@ export default class Server {
 	cache: Cache;
 	connectedReporters: ServerReporter;
 	logger: Logger;
-	fileLocker: Locker<string>;
+	requestFileLocker: FilePathLocker;
 	connectedClients: Set<ServerClient>;
 	connectedLSPServers: Set<LSPServer>;
 	connectedClientsListeningForLogs: Set<ServerClient>;
@@ -401,7 +423,7 @@ export default class Server {
 			this.logger.list(Array.from(paths, (path) => path.toMarkup()));
 		}
 
-		let teardown: undefined | (() => void);
+		let teardown: undefined | (() => Promise<void>);
 
 		const waitRefresh = new Promise((resolve) => {
 			const sub = this.refreshFileEvent.subscribe((path) => {
@@ -411,9 +433,7 @@ export default class Server {
 				}
 			});
 
-			teardown = () => {
-				sub.unsubscribe();
-			};
+			teardown = () => sub.unsubscribe();
 		});
 
 		try {
@@ -424,7 +444,7 @@ export default class Server {
 			await waitRefresh;
 		} finally {
 			if (teardown !== undefined) {
-				teardown();
+				await teardown();
 			}
 		}
 	}
@@ -462,7 +482,7 @@ export default class Server {
 		this.workerManager.end();
 	}
 
-	async attachToBridge(bridge: ServerBridge) {
+	async attachToBridge(bridge: ServerBridge): Promise<ServerClient> {
 		let profiler: undefined | Profiler;
 
 		// If we aren't a dedicated process then we should only expect a single connection
@@ -544,7 +564,7 @@ export default class Server {
 				`Client version ${client.version} does not match server version ${VERSION}. Goodbye lol.`,
 			);
 			client.bridge.end();
-			return;
+			return client;
 		}
 
 		bridge.query.subscribe(async (request) => {
@@ -562,6 +582,8 @@ export default class Server {
 		bridge.endServer.subscribe(async () => this.end());
 
 		await this.clientStartEvent.callOptional(client);
+
+		return client;
 	}
 
 	async createClient(bridge: ServerBridge): Promise<ServerClient> {
@@ -706,23 +728,9 @@ export default class Server {
 		client: ServerClient,
 		partialQuery: PartialServerQueryRequest,
 	): Promise<ServerQueryResponse> {
-		const requestFlags: ClientRequestFlags = {
-			...DEFAULT_CLIENT_REQUEST_FLAGS,
-			...partialQuery.requestFlags,
-		};
-
-		const query: ServerQueryRequest = {
-			commandName: partialQuery.commandName,
-			args: partialQuery.args === undefined ? [] : partialQuery.args,
-			noData: partialQuery.noData === true,
-			requestFlags,
-			silent: partialQuery.silent === true || requestFlags.benchmark,
-			terminateWhenIdle: partialQuery.terminateWhenIdle === true,
-			commandFlags: partialQuery.commandFlags === undefined
-				? {}
-				: partialQuery.commandFlags,
-			cancelToken: partialQuery.cancelToken,
-		};
+		const query: ServerQueryRequest = partialServerQueryResponseToFull(
+			partialQuery,
+		);
 
 		const {bridge} = client;
 

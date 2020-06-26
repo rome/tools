@@ -1,16 +1,14 @@
 .table-of-contents {
   margin-left: $unit;
 
-  ol{
+  ol {
     margin: 0;
     padding: 0;
 
-
-    ol{
+    ol {
       margin-left: $unit;
       @extend .sr-only;
     }
-
   }
 
   a {
@@ -24,25 +22,23 @@
     transition-property: background-color;
     transition-duration: 100ms;
 
+    &:hover {
+      color: var(--toc-link-color-hover);
+    }
+
     &.active {
       color: var(--toc-link-color-active);
       background-color: var(--toc-background-active);
       font-weight: bold;
     }
-
-  }
-
-  a:hover{
-    font-weight: bold;
   }
 
   li {
     list-style-type: none;
   }
-
 }
 
-.table-of-contents a.active + ol{
+.table-of-contents a.active + ol {
   @extend .not-sr-only;
   margin-left: $unit !important;
   @include transition-timing;

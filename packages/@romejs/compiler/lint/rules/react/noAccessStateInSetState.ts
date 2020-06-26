@@ -1,6 +1,7 @@
 import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
 import {doesNodeMatchPattern} from "@romejs/js-ast-utils";
+import {insideClassComponent} from "../../utils/react";
 
 export default {
 	name: "reactNoAccessStateInSetState",
@@ -50,7 +51,7 @@ export default {
 				}
 				return false;
 			});
-			if (hasThisState) {
+			if (hasThisState && insideClassComponent(path)) {
 				path.context.addNodeDiagnostic(
 					node,
 					descriptions.LINT.REACT_NO_ACCESS_STATE_IN_SET_STATE,

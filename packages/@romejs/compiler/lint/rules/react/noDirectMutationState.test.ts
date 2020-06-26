@@ -1,5 +1,5 @@
 import {test} from "rome";
-import {testLint} from "../testHelpers";
+import {testLint} from "../../utils/testing";
 
 test(
 	"Prevent direct mutation of this.state",
@@ -268,11 +268,10 @@ test(
                 };
               }
             }
-          `,
+					`,
 					`
             class Example extends SuperExample.Component {
               someOtherFunction(props) {
-                super(props);
                 this.state = {
                   count: 0
                 };

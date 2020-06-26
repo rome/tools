@@ -9,8 +9,13 @@ import {Path, REDUCE_REMOVE} from "@romejs/compiler";
 
 import {descriptions} from "@romejs/diagnostics";
 import {TransformExitResult} from "@romejs/compiler/types";
-import {doesNodeMatchPattern} from "@romejs/js-ast-utils";
 import {JSStringLiteral} from "@romejs/ast";
+import {
+	getCreateElementChildren,
+	getCreateElementProp,
+	getCreateElementType,
+	isCreateElement,
+} from "../../utils/react";
 
 const VOID_DOM_ELEMENTS = new Set([
 	"area",
@@ -34,54 +39,21 @@ const VOID_DOM_ELEMENTS = new Set([
 export default {
 	name: "reactVoidDomElementsNoChildren",
 	enter(path: Path): TransformExitResult {
-		const {node, context} = path;
+		const {node, context, scope} = path;
+		const elementType = getCreateElementType(node, scope);
 
 		if (
-			node.type === "JSCallExpression" &&
-			(doesNodeMatchPattern(node.callee, "React.createElement") ||
-			doesNodeMatchPattern(node.callee, "createElement")) &&
-			node.arguments[0].type === "JSStringLiteral" &&
-			VOID_DOM_ELEMENTS.has(node.arguments[0].value)
+			isCreateElement(node, scope) &&
+			elementType &&
+			VOID_DOM_ELEMENTS.has(elementType)
 		) {
-			if (node.arguments[1].type === "JSObjectExpression") {
-				const childrenNode = node.arguments[1].properties.find((property) =>
-					property.type === "JSObjectProperty" &&
-					property.key.value.type === "JSIdentifier" &&
-					property.key.value.name === "children"
-				);
-				if (childrenNode) {
-					context.addFixableDiagnostic(
-						{
-							old: childrenNode,
-							fixed: REDUCE_REMOVE,
-						},
-						descriptions.LINT.REACT_VOID_DOM_ELEMENTS_NO_CHILDREN(
-							node.arguments[0].value,
-							["children"],
-						),
-					);
-				}
-
-				const dangerNode = node.arguments[1].properties.find((property) =>
-					property.type === "JSObjectProperty" &&
-					property.key.value.type === "JSIdentifier" &&
-					property.key.value.name === "dangerouslySetInnerHTML"
-				);
-				if (dangerNode) {
-					context.addFixableDiagnostic(
-						{
-							old: dangerNode,
-							fixed: REDUCE_REMOVE,
-						},
-						descriptions.LINT.REACT_VOID_DOM_ELEMENTS_NO_CHILDREN(
-							node.arguments[0].value,
-							["dangerouslySetInnerHTML"],
-						),
-					);
-				}
-			}
-
-			if (node.arguments.length > 2) {
+			const childrenNode = getCreateElementChildren(node, scope);
+			const dangerNode = getCreateElementProp(
+				node,
+				scope,
+				"dangerouslySetInnerHTML",
+			);
+			if (Array.isArray(childrenNode)) {
 				context.addFixableDiagnostic(
 					{
 						target: node.arguments,
@@ -94,6 +66,30 @@ export default {
 					descriptions.LINT.REACT_VOID_DOM_ELEMENTS_NO_CHILDREN(
 						(node.arguments[0] as JSStringLiteral).value,
 						["children"],
+					),
+				);
+			} else if (elementType && childrenNode) {
+				context.addFixableDiagnostic(
+					{
+						old: childrenNode,
+						fixed: REDUCE_REMOVE,
+					},
+					descriptions.LINT.REACT_VOID_DOM_ELEMENTS_NO_CHILDREN(
+						elementType,
+						["children"],
+					),
+				);
+			}
+
+			if (elementType && dangerNode) {
+				context.addFixableDiagnostic(
+					{
+						old: dangerNode,
+						fixed: REDUCE_REMOVE,
+					},
+					descriptions.LINT.REACT_VOID_DOM_ELEMENTS_NO_CHILDREN(
+						elementType,
+						["dangerouslySetInnerHTML"],
 					),
 				);
 			}

@@ -8,7 +8,13 @@ import {
 	jsNumericLiteral,
 	jsStringLiteral,
 } from "@romejs/ast";
-import {LetBinding, Path, Scope, VarBinding} from "@romejs/compiler";
+import {
+	CompilerContext,
+	LetBinding,
+	Path,
+	Scope,
+	VarBinding,
+} from "@romejs/compiler";
 import {REDUCE_REMOVE} from "@romejs/compiler/constants";
 import {descriptions} from "@romejs/diagnostics";
 import {template, tryStaticEvaluation} from "@romejs/js-ast-utils";
@@ -63,8 +69,12 @@ function buildStringAssignment(
 	`;
 }
 
-function enumFill(node: TSEnumDeclaration, scope: Scope): AnyJSExpression {
-	const x = translateEnumValues(node, scope);
+function enumFill(
+	node: TSEnumDeclaration,
+	scope: Scope,
+	context: CompilerContext,
+): AnyJSExpression {
+	const x = translateEnumValues(node, scope, context);
 	const assignments = x.map(([memberName, memberValue]) =>
 		buildEnumMember(
 			typeof memberValue !== "string" && memberValue.type === "JSStringLiteral",
@@ -79,6 +89,7 @@ function enumFill(node: TSEnumDeclaration, scope: Scope): AnyJSExpression {
 function translateEnumValues(
 	node: TSEnumDeclaration,
 	scope: Scope,
+	context: CompilerContext,
 ): Array<[string, AnyJSExpression]> {
 	const seen: PreviousEnumMembers = new Map();
 	let prev: number | undefined = -1;
@@ -90,7 +101,26 @@ function translateEnumValues(
 			member.id.type === "JSIdentifier" ? member.id.name : member.id.value;
 
 		if (initializer) {
-			let {value: constValue, bailed} = tryStaticEvaluation(initializer, scope);
+			let {value: constValue, bailed} = tryStaticEvaluation(
+				initializer,
+				scope,
+				{
+					isNodeValid: (node, resolvedNode) => {
+						if (
+							node.type === "JSReferenceIdentifier" &&
+							resolvedNode.type !== "JSNumericLiteral"
+						) {
+							context.addNodeDiagnostic(
+								member,
+								descriptions.COMPILER.ENUM_COMPUTED_VALUES_UNSUPPORTED,
+							);
+							return false;
+						}
+						return true;
+					},
+				},
+			);
+
 			if (bailed && initializer.type === "JSReferenceIdentifier") {
 				constValue = seen.get(initializer.name);
 			}
@@ -143,7 +173,7 @@ export default {
 			return REDUCE_REMOVE;
 		}
 
-		const fill = enumFill(node, scope);
+		const fill = enumFill(node, scope, context);
 
 		switch (path.parent.type) {
 			case "JSBlockStatement":

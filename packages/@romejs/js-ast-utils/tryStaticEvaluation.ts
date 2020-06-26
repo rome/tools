@@ -12,7 +12,9 @@ export type EvalResult = {
 	bailed: boolean;
 };
 
-export type EvalOptions = {};
+export type EvalOptions = {
+	isNodeValid?: (node: AnyNode, resolvedNode: AnyNode) => boolean;
+};
 
 const BAILED: EvalResult = {
 	bailed: true,
@@ -160,16 +162,23 @@ export default function tryStaticEvaluation(
 
 	let res: EvalResult = BAILED;
 
-	({node, scope} = resolveIndirection(node, scope));
+	const {node: resolvedNode, scope: resolvedScope} = resolveIndirection(
+		node,
+		scope,
+	);
 
-	switch (node.type) {
+	if (opts.isNodeValid && !opts.isNodeValid(node, resolvedNode)) {
+		return res;
+	}
+
+	switch (resolvedNode.type) {
 		case "JSUnaryExpression": {
-			res = evalUnaryExpression(node, scope, opts);
+			res = evalUnaryExpression(resolvedNode, resolvedScope, opts);
 			break;
 		}
 
 		case "JSBinaryExpression": {
-			res = evalBinaryExpression(node, scope, opts);
+			res = evalBinaryExpression(resolvedNode, resolvedScope, opts);
 			break;
 		}
 
@@ -179,27 +188,27 @@ export default function tryStaticEvaluation(
 		}
 
 		case "JSBigIntLiteral": {
-			res = createResult(BigInt(node.value));
+			res = createResult(BigInt(resolvedNode.value));
 			break;
 		}
 
 		case "JSStringLiteral":
 		case "JSBooleanLiteral":
 		case "JSNumericLiteral": {
-			res = createResult(node.value);
+			res = createResult(resolvedNode.value);
 			break;
 		}
 
 		case "JSReferenceIdentifier": {
-			const binding = scope.getBinding(node.name);
-			if (binding === undefined && node.name === "undefined") {
+			const binding = resolvedScope.getBinding(resolvedNode.name);
+			if (binding === undefined && resolvedNode.name === "undefined") {
 				res = createResult(undefined);
 			}
 			break;
 		}
 
 		case "JSTemplateLiteral": {
-			res = evalTemplateLiteral(node, scope, opts);
+			res = evalTemplateLiteral(resolvedNode, resolvedScope, opts);
 			break;
 		}
 	}

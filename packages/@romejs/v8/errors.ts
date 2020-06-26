@@ -9,10 +9,15 @@ import {Position, SourceLocation} from "@romejs/parser-core";
 import {ErrorFrame, ErrorFrames} from "./types";
 import {isPlainObject} from "@romejs/typescript-helpers";
 import {ob1Number0, ob1Number0Neg1, ob1Number1} from "@romejs/ob1";
+import {convertPossibleNodeError} from "@romejs/node";
 
 export * from "./types";
 
-export const ERROR_FRAMES_PROP = Symbol();
+export const ERROR_FRAMES_PROP = "ERROR_FRAMES";
+
+export type ErrorWithFrames = NodeJS.ErrnoException & {
+	[ERROR_FRAMES_PROP]?: unknown;
+};
 
 export type StructuredError = {
 	name: string;
@@ -25,17 +30,18 @@ export function getErrorStructure(
 	err: unknown,
 	framesToShift: number = 0,
 ): StructuredError {
+	// Make some node errors more pretty
+	if (err instanceof Error) {
+		err = convertPossibleNodeError(err);
+	}
+
 	let name = "Error";
 	let message = "Unknown message";
 	let stack = undefined;
 	let frames: ErrorFrames = [];
 	let looksLikeValidError = false;
 
-	if (
-		isPlainObject<{
-			[ERROR_FRAMES_PROP]: unknown;
-		}>(err)
-	) {
+	if (isPlainObject<ErrorWithFrames>(err)) {
 		if (typeof err.name === "string") {
 			looksLikeValidError = true;
 			name = err.name;

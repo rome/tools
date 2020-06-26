@@ -2,12 +2,8 @@ import {CompilerContext, Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
 import {getJSXAttribute, hasJSXAttribute} from "@romejs/js-ast-utils";
 import getJSXElementName from "@romejs/js-ast-utils/getJSXElementName";
-import {
-	ARIAProperty,
-	ARIARoleDefinition,
-	roles,
-} from "@romejs/compiler/lint/rules/ariaHelpers";
 import {AnyNode, JSXAttribute, JSXElement} from "@romejs/ast";
+import {ARIAProperty, ARIARoleDefinition, roles} from "../../utils/aria";
 
 type CreateFixableDiagnostic = {
 	context: CompilerContext;

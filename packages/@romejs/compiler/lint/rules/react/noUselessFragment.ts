@@ -1,12 +1,9 @@
-import {Path, TransformExitResult} from "@romejs/compiler";
+import {Path, Scope, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
-import {
-	doesNodeMatchPattern,
-	hasJSXAttribute,
-	isFunctionNode,
-} from "@romejs/js-ast-utils";
+import {hasJSXAttribute, isFunctionNode} from "@romejs/js-ast-utils";
 import {AnyNode, JSXElement, JSXFragment} from "@romejs/ast";
 import {REDUCE_REMOVE} from "@romejs/compiler/constants";
+import {doesNodeMatchReactPattern} from "../../utils/react";
 
 function isChildOfHtmlElement(path: Path): boolean {
 	const parentNode = path.parent;
@@ -17,12 +14,12 @@ function isChildOfHtmlElement(path: Path): boolean {
 	);
 }
 
-function isFragment(node: JSXFragment | JSXElement): boolean {
+function isFragment(node: JSXFragment | JSXElement, scope: Scope): boolean {
 	return (
 		node.type === "JSXFragment" ||
 		(node.type === "JSXElement" &&
-		(doesNodeMatchPattern(node.name, "Fragment") ||
-		doesNodeMatchPattern(node.name, "React.Fragment")))
+		(doesNodeMatchReactPattern(node.name, scope, "Fragment") ||
+		doesNodeMatchReactPattern(node.name, scope, "React.Fragment")))
 	);
 }
 
@@ -45,7 +42,7 @@ function getChildrenNode(
 export default {
 	name: "noUselessFragment",
 	enter(path: Path): TransformExitResult {
-		const {node, context} = path;
+		const {node, context, scope} = path;
 
 		if (node.type !== "JSXFragment" && node.type !== "JSXElement") {
 			return node;
@@ -55,7 +52,7 @@ export default {
 			path.parent.type !== "JSReturnStatement" &&
 			path.parent.type !== "JSVariableDeclarator" &&
 			!isFunctionNode(path.parent) &&
-			isFragment(node) &&
+			isFragment(node, scope) &&
 			!(node.type === "JSXElement" && hasJSXAttribute(node, "key")) &&
 			(hasLessThanTwoChildren(node) || isChildOfHtmlElement(path))
 		) {

@@ -1,11 +1,11 @@
 import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
-import {doesNodeMatchPattern} from "@romejs/js-ast-utils";
+import {doesNodeMatchReactPattern} from "../../utils/react";
 
 export default {
 	name: "reactNoRedundantShouldComponentUpdate",
 	enter(path: Path): TransformExitResult {
-		const {node} = path;
+		const {node, scope} = path;
 
 		if (
 			node.type === "JSClassDeclaration" &&
@@ -15,8 +15,13 @@ export default {
 				member.key.value.type === "JSIdentifier" &&
 				member.key.value.name === "shouldComponentUpdate"
 			) &&
-			(doesNodeMatchPattern(node.meta.superClass, "React.PureComponent") ||
-			doesNodeMatchPattern(node.meta.superClass, "PureComponent"))
+			node.meta.superClass &&
+			(doesNodeMatchReactPattern(
+				node.meta.superClass,
+				scope,
+				"React.PureComponent",
+			) ||
+			doesNodeMatchReactPattern(node.meta.superClass, scope, "PureComponent"))
 		) {
 			path.context.addNodeDiagnostic(
 				node,

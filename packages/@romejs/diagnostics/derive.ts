@@ -113,11 +113,21 @@ export function deriveRootAdviceFromDiagnostic(
 		});
 	}
 
-	advice.push({
-		type: "log",
-		category: "error",
-		text: description.message.value,
-	});
+	const message = description.message.value;
+
+	if (message === "") {
+		advice.push({
+			type: "log",
+			category: "none",
+			text: "<dim>no diagnostic message specified</dim>",
+		});
+	} else {
+		advice.push({
+			type: "log",
+			category: "error",
+			text: message,
+		});
+	}
 
 	if (opts.skipFrame === false) {
 		if (location.start !== undefined && location.end !== undefined) {

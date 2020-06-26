@@ -32,6 +32,7 @@ import {
 	existsSync,
 	lstatSync,
 	readDirectorySync,
+	readFileText,
 	readFileTextSync,
 } from "@romejs/fs";
 import crypto = require("crypto");
@@ -40,6 +41,11 @@ import {parseSemverRange} from "@romejs/codec-semver";
 import {descriptions} from "@romejs/diagnostics";
 
 const IGNORE_FILENAMES = [".gitignore", ".hgignore"];
+
+type NormalizedPartial = {
+	partial: PartialProjectConfig;
+	meta: ProjectConfigMetaHard;
+};
 
 function categoryExists(consumer: Consumer): boolean {
 	if (!consumer.exists()) {
@@ -55,15 +61,18 @@ function categoryExists(consumer: Consumer): boolean {
 	return true;
 }
 
-export function loadCompleteProjectConfig(
+export async function loadCompleteProjectConfig(
 	projectFolder: AbsoluteFilePath,
 	configPath: AbsoluteFilePath,
-): {
+): Promise<{
 	meta: ProjectConfigMeta;
 	config: ProjectConfig;
-} {
+}> {
 	// TODO use consumer.capture somehow here to aggregate errors
-	const {partial, meta} = loadPartialProjectConfig(projectFolder, configPath);
+	const {partial, meta} = await loadPartialProjectConfig(
+		projectFolder,
+		configPath,
+	);
 	const {consumer} = meta;
 
 	// Produce a defaultConfig with some folder specific values
@@ -113,11 +122,11 @@ export function loadCompleteProjectConfig(
 	};
 }
 
-function loadPartialProjectConfig(
+async function loadPartialProjectConfig(
 	projectFolder: AbsoluteFilePath,
 	configPath: AbsoluteFilePath,
-): ReturnType<typeof normalizeProjectConfig> {
-	const configFile = readFileTextSync(configPath);
+): Promise<NormalizedPartial> {
+	const configFile = await readFileText(configPath);
 	const res = consumeJSONExtra({
 		path: configPath,
 		input: configFile,
@@ -126,15 +135,12 @@ function loadPartialProjectConfig(
 	return normalizeProjectConfig(res, configPath, configFile, projectFolder);
 }
 
-export function normalizeProjectConfig(
+export async function normalizeProjectConfig(
 	res: ConsumeJSONResult,
 	configPath: AbsoluteFilePath,
 	configFile: string,
 	projectFolder: AbsoluteFilePath,
-): {
-	partial: PartialProjectConfig;
-	meta: ProjectConfigMetaHard;
-} {
+): Promise<NormalizedPartial> {
 	let {consumer} = res;
 
 	let configSourceSubKey;
@@ -327,7 +333,7 @@ export function normalizeProjectConfig(
 	consumer.enforceUsedProperties("config property");
 
 	if (_extends.exists()) {
-		return extendProjectConfig(projectFolder, _extends, config, meta);
+		return await extendProjectConfig(projectFolder, _extends, config, meta);
 	}
 
 	return {
@@ -369,12 +375,12 @@ function normalizeTypeCheckingLibs(
 	};
 }
 
-function extendProjectConfig(
+async function extendProjectConfig(
 	projectFolder: AbsoluteFilePath,
 	extendsStrConsumer: Consumer,
 	config: PartialProjectConfig,
 	meta: ProjectConfigMetaHard,
-): ReturnType<typeof normalizeProjectConfig> {
+): Promise<NormalizedPartial> {
 	const extendsRelative = extendsStrConsumer.asString();
 
 	if (extendsRelative === "parent") {
@@ -382,7 +388,7 @@ function extendProjectConfig(
 	}
 
 	const extendsPath = projectFolder.resolve(extendsRelative);
-	const {partial: extendsObj, meta: extendsMeta} = loadPartialProjectConfig(
+	const {partial: extendsObj, meta: extendsMeta} = await loadPartialProjectConfig(
 		extendsPath.getParent(),
 		extendsPath,
 	);

@@ -6,7 +6,7 @@
  */
 
 import {test} from "rome";
-import {testLint} from "../testHelpers";
+import {testLint} from "../../utils/testing";
 
 test(
 	"disallow duplicate group names in regular expression",

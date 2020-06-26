@@ -196,7 +196,7 @@ const Hello = <><Foo /><Foo /></>;
   > 3 │       let bar = <React.Fragment><Foo /><Foo /></React.Fragment>;
       │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     4 │       return bar;
-    5 │      } 
+    5 │      }
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
@@ -232,7 +232,7 @@ function Foo() {
   > 3 │       let bar = <Fragment><Foo /><Foo /></Fragment>;
       │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     4 │       return bar;
-    5 │      } 
+    5 │      }
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 

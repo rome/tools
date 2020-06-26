@@ -897,7 +897,7 @@ things.filter((thing, index) => {
     2 │       things.some((thing, index) => {
   > 3 │        otherThings.push(<Hello key={index} />);
       │                         ^^^^^^^^^^^^^^^^^^^^^
-    4 │       });     
+    4 │       });
     5 │      
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.

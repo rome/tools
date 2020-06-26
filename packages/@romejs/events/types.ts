@@ -27,7 +27,7 @@ export type EventOptions = {
 };
 
 export type EventSubscription = {
-	unsubscribe: () => void;
+	unsubscribe: () => Promise<void>;
 };
 
 export type BridgeHandshakeMessage = {

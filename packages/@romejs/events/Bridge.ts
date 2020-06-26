@@ -21,6 +21,7 @@ import BridgeEvent, {BridgeEventOptions} from "./BridgeEvent";
 import Event from "./Event";
 import {
 	ERROR_FRAMES_PROP,
+	ErrorWithFrames,
 	StructuredError,
 	getErrorStructure,
 } from "@romejs/v8";
@@ -35,6 +36,7 @@ export default class Bridge {
 		this.errorTransports = new Map();
 
 		this.alive = true;
+		this.endError = undefined;
 		this.type = opts.type;
 		this.opts = opts;
 
@@ -90,6 +92,7 @@ export default class Bridge {
 	endEvent: Event<Error, void>;
 
 	alive: boolean;
+	endError: undefined | Error;
 	type: BridgeType;
 
 	messageIdCounter: number;
@@ -251,8 +254,8 @@ export default class Bridge {
 
 	//# Connection death
 	assertAlive(): void {
-		if (this.alive === false) {
-			throw new Error("Bridge is dead");
+		if (this.endError !== undefined) {
+			throw this.endError;
 		}
 	}
 
@@ -262,6 +265,7 @@ export default class Bridge {
 		}
 
 		this.alive = false;
+		this.endError = err;
 
 		// Reject any pending requests
 		for (const [, event] of this.events) {
@@ -286,9 +290,7 @@ export default class Bridge {
 	buildError(struct: StructuredError, data: JSONObject) {
 		const transport = this.errorTransports.get(struct.name);
 		if (transport === undefined) {
-			const err: Error & {
-				[ERROR_FRAMES_PROP]?: unknown;
-			} = new Error(struct.message);
+			const err: ErrorWithFrames = new Error(struct.message);
 			err.name = struct.name || "Error";
 			err.stack = struct.stack;
 			err[ERROR_FRAMES_PROP] = struct.frames;

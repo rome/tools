@@ -726,7 +726,13 @@ export default class TestServerRunner {
 							description: {
 								...errDiag.description,
 								// We don't care about the advice
-								advice: [],
+								advice: [
+									{
+										type: "log",
+										category: "info",
+										text: markup`Was executing test file <filelink emphasis target="${ref.filename}" />`,
+									},
+								],
 							},
 						});
 					} else {

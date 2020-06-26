@@ -28,10 +28,7 @@ import {
 	DiagnosticsPrinter,
 	DiagnosticsPrinterFlags,
 } from "@romejs/cli-diagnostics";
-import {
-	ProjectConfigCategoriesWithIgnore,
-	ProjectDefinition,
-} from "@romejs/project";
+import {ProjectDefinition} from "@romejs/project";
 import {ResolverOptions, ResolverQueryResponseFound} from "./fs/Resolver";
 import {BundlerConfig} from "../common/types/bundler";
 import ServerBridge, {
@@ -126,7 +123,6 @@ export type ServerRequestGetFilesOptions = Omit<
 	ignoreProjectIgnore?: boolean;
 	disabledDiagnosticCategory?: DiagnosticCategory;
 	advice?: DiagnosticAdvice;
-	configCategory?: ProjectConfigCategoriesWithIgnore;
 	verb?: string;
 	noun?: string;
 	args?: Array<string>;
@@ -589,10 +585,7 @@ export default class ServerRequest {
 
 	async watchFilesFromArgs(
 		opts: ServerRequestGetFilesOptions,
-		callback: (
-			result: ServerRequestGetFilesResult,
-			initial: boolean,
-		) => Promise<void>,
+		callback: (paths: AbsoluteFilePathSet, initial: boolean) => Promise<void>,
 	): Promise<EventSubscription> {
 		this.checkCancelled();
 
@@ -604,40 +597,30 @@ export default class ServerRequest {
 
 		let timeout: undefined | NodeJS.Timeout;
 		let runningCallback = false;
-		let unsubscribed = false;
-
-		let pendingResult: ServerRequestGetFilesResult = {
-			paths: new AbsoluteFilePathSet(),
-			projects: new Set(),
-		};
+		let pendingPaths = new AbsoluteFilePathSet();
 
 		async function flush(initial: boolean) {
-			if (unsubscribed) {
-				return;
-			}
-
-			if (!initial && pendingResult.paths.size === 0) {
+			if (!initial && pendingPaths.size === 0) {
 				return;
 			}
 
 			timeout = undefined;
 
-			const result = pendingResult;
-			pendingResult = {
-				paths: new AbsoluteFilePathSet(),
-				projects: new Set(),
-			};
+			const paths = pendingPaths;
+			pendingPaths = new AbsoluteFilePathSet();
 
 			runningCallback = true;
-			await callback(result, initial);
+			await callback(paths, initial);
 			runningCallback = false;
 
-			if (pendingResult.paths.size > 0) {
+			if (pendingPaths.size > 0) {
 				await flush(false);
 			}
 		}
 
-		const onChange = (path: AbsoluteFilePath) => {
+		const refreshFileEvent = this.server.refreshFileEvent.subscribe((
+			path: AbsoluteFilePath,
+		) => {
 			let matches = false;
 			for (const arg of resolvedArgs) {
 				if (arg.path.equal(path) || path.isRelativeTo(arg.path)) {
@@ -649,42 +632,43 @@ export default class ServerRequest {
 				return;
 			}
 
-			const project = this.server.projectManager.findProjectExisting(path);
-			if (project !== undefined) {
-				pendingResult.projects.add(project);
+			const paths = this.server.memoryFs.glob(path, opts);
+			for (const path of paths) {
+				pendingPaths.add(path);
 			}
-
-			pendingResult.paths.add(path);
 
 			// Buffer up evicted paths
 			if (!runningCallback && timeout === undefined) {
 				timeout = setTimeout(() => flush(false), 100);
 			}
-		};
+		});
 
-		const refreshFileEvent = this.server.refreshFileEvent.subscribe(onChange);
+		const endSubscription = this.endEvent.subscribe(() => {
+			sub.unsubscribe();
+		});
 
 		const sub = mergeEventSubscriptions([
 			refreshFileEvent,
 			{
-				unsubscribe() {
-					unsubscribed = true;
+				async unsubscribe() {
 					if (timeout !== undefined) {
 						clearTimeout(timeout);
+
+						// Run the timeout right now
+						await flush(false);
 					}
 				},
 			},
 		]);
 
-		this.endEvent.subscribe(() => {
-			sub.unsubscribe();
-		});
-
 		// Flush initial
-		pendingResult = await this.getFilesFromArgs(opts);
+		const pendingResult = await this.getFilesFromArgs(opts);
+		for (const path of pendingResult.paths) {
+			pendingPaths.add(path);
+		}
 		await flush(true);
 
-		return sub;
+		return mergeEventSubscriptions([endSubscription, sub]);
 	}
 
 	async getFilesFromArgs(
@@ -699,21 +683,13 @@ export default class ServerRequest {
 			opts.tryAlternateArg,
 		);
 
-		const extendedGlobOpts: MemoryFSGlobOptions = {...opts};
-
-		if (configCategory !== undefined) {
-			extendedGlobOpts.getProjectIgnore = (project) =>
-				ignoreProjectIgnore ? [] : project.config[configCategory].ignore
-			;
-		}
-
 		// Resolved arguments that resulted in no files
 		const noArgMatches: Set<ResolvedArg> = new Set();
 
 		// Match files
 		const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 		for (const arg of resolvedArgs) {
-			const matches = server.memoryFs.glob(arg.path, extendedGlobOpts);
+			const matches = server.memoryFs.glob(arg.path, opts);
 
 			if (matches.size === 0) {
 				if (!opts.ignoreArgumentMisses) {
@@ -851,7 +827,7 @@ export default class ServerRequest {
 		const {server} = this;
 		const owner = await server.fileAllocator.getOrAssignOwner(path);
 		const startMtime = server.memoryFs.maybeGetMtime(path);
-		const lock = await server.fileLocker.getLock(path.join());
+		const lock = await server.requestFileLocker.getLock(path);
 		const ref = server.projectManager.getTransportFileReference(path);
 
 		const marker = this.startMarker({
