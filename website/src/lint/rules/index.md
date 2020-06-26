@@ -74,6 +74,7 @@ showHero: false
 | anchor-has-content |  |
 | anchor-is-valid |  |
 | aria-props |  |
+| aria-proptypes |  |
 | aria-unsupported-elements |  |
 | click-events-have-key-events |  |
 | heading-has-content |  |
@@ -105,6 +106,7 @@ showHero: false
 | jsx-no-comment-text |  |
 | jsx-no-duplicate-props |  |
 | jsx-pascal-case |  |
+| jsx-props-no-spreading |  |
 | no-access-state-in-set-state |  |
 | no-array-index-key |  |
 | no-children-prop |  |
@@ -115,6 +117,7 @@ showHero: false
 | no-direct-mutation-state |  |
 | no-find-dom-node |  |
 | no-redundant-should-component-update |  |
+| no-render-return-value |  |
 | no-string-refs |  |
 | no-this-in-sfc |  |
 | no-unsafe |  |
