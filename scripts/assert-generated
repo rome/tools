@@ -17,8 +17,13 @@ require("./runtime-modules/update.cjs");
 require("./ast/update.cjs");
 require("./lint/update.cjs");
 
+//only .ts will be autofixed
+const filteredWrittenFiles = writtenFiles.filter(function(file){
+	return file.endsWith(".ts");
+});
+
 // Autofix them
-execDev(["lint", ...writtenFiles, "--save"]);
+execDev(["lint", ...filteredWrittenFiles, "--save"]);
 
 // Check that `git status` is fine
 const out = child_process
