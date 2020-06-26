@@ -30,7 +30,16 @@ function jsxMissingType(node: AnyNode, scope: Scope) {
 		return true;
 	}
 	const valueNode = getJSXAttribute(node, "type");
-	const {value} = tryStaticEvaluation(valueNode?.value, scope);
+	if (!valueNode || !valueNode.value) {
+		return false;
+	}
+
+	let valueTarget =
+		valueNode.value.type === "JSXExpressionContainer"
+			? valueNode.value.expression
+			: valueNode.value;
+
+	const {value} = tryStaticEvaluation(valueTarget, scope);
 	if (typeof value !== "string" || !BUTTON_TYPE_REGEX.test(value)) {
 		return true;
 	}
