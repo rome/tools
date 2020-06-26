@@ -51,7 +51,7 @@ export default {
 				}
 				return false;
 			});
-			if (insideClassComponent(path) && hasThisState) {
+			if (hasThisState && insideClassComponent(path)) {
 				path.context.addNodeDiagnostic(
 					node,
 					descriptions.LINT.REACT_NO_ACCESS_STATE_IN_SET_STATE,

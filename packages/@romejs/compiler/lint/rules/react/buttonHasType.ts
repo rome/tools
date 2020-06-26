@@ -5,6 +5,7 @@ import {
 	getJSXAttribute,
 	hasJSXAttribute,
 	isJSXElement,
+	tryStaticEvaluation,
 } from "@romejs/js-ast-utils";
 import {
 	analyzeCreateElementProp,
@@ -21,18 +22,16 @@ function createElementMissingType(node: AnyNode, scope: Scope) {
 	return typeof elementType !== "string" || !BUTTON_TYPE_REGEX.test(elementType);
 }
 
-function jsxMissingType(node: AnyNode) {
+function jsxMissingType(node: AnyNode, scope: Scope) {
 	if (!isJSXElement(node, "button")) {
 		return false;
 	}
 	if (!hasJSXAttribute(node, "type")) {
 		return true;
 	}
-	const valueNode = getJSXAttribute(node, "type")?.value;
-	if (
-		valueNode?.type === "JSStringLiteral" &&
-		!BUTTON_TYPE_REGEX.test(valueNode.value)
-	) {
+	const valueNode = getJSXAttribute(node, "type");
+	const {value} = tryStaticEvaluation(valueNode?.value, scope);
+	if (typeof value !== "string" || !BUTTON_TYPE_REGEX.test(value)) {
 		return true;
 	}
 	return false;
@@ -43,7 +42,7 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {node, scope} = path;
 
-		if (createElementMissingType(node, scope) || jsxMissingType(node)) {
+		if (createElementMissingType(node, scope) || jsxMissingType(node, scope)) {
 			path.context.addNodeDiagnostic(
 				(isJSXElement(node, "button") && getJSXAttribute(node, "type")) || node,
 				descriptions.LINT.REACT_BUTTON_HAS_TYPE,
