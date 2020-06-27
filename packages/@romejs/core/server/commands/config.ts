@@ -128,7 +128,7 @@ export default createServerCommand({
 							case "push-array": {
 								keyConsumer.setValue([
 									...keyConsumer.asArray(true).map((c) => c.asUnknown()),
-									...Array.isArray(value) ? value : [],
+									...(Array.isArray(value) ? value : []),
 								]);
 								break;
 							}
