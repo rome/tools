@@ -27,7 +27,7 @@
 ### `0: formatted`
 
 ```
-<img src='src' alt='photo content' />;
+<img src="src" alt="photo content" />;
 
 ```
 
@@ -54,7 +54,7 @@
 ### `1: formatted`
 
 ```
-<img src='src' alt='picture content' />;
+<img src="src" alt="picture content" />;
 
 ```
 
@@ -81,7 +81,7 @@
 ### `2: formatted`
 
 ```
-<img src='src' alt='image content' />;
+<img src="src" alt="image content" />;
 
 ```
 
@@ -108,7 +108,7 @@
 ### `3: formatted`
 
 ```
-<img src='src' alt='Photo content' />;
+<img src="src" alt="Photo content" />;
 
 ```
 
@@ -135,7 +135,7 @@
 ### `4: formatted`
 
 ```
-<img src='src' alt='Picture content' />;
+<img src="src" alt="Picture content" />;
 
 ```
 
@@ -162,7 +162,7 @@
 ### `5: formatted`
 
 ```
-<img src='src' alt='Image content' />;
+<img src="src" alt="Image content" />;
 
 ```
 
@@ -176,7 +176,7 @@
 ### `6: formatted`
 
 ```
-<img src='src' alt='alt' />;
+<img src="src" alt="alt" />;
 
 ```
 
@@ -190,6 +190,6 @@
 ### `7: formatted`
 
 ```
-<img src='src' alt={photo} />;
+<img src="src" alt={photo} />;
 
 ```

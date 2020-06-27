@@ -122,7 +122,7 @@
 ### `4: formatted`
 
 ```
-<audio><track kind='captions' {...props} /></audio>;
+<audio><track kind="captions" {...props} /></audio>;
 
 ```
 
@@ -136,7 +136,7 @@
 ### `5: formatted`
 
 ```
-<video><track kind='captions' {...props} /></video>;
+<video><track kind="captions" {...props} /></video>;
 
 ```
 

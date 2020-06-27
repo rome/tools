@@ -6,14 +6,13 @@
  */
 
 import {Path} from "@romejs/compiler";
-import {AnyNode} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 const SUGGESTION_DESCRIPTION = "This may be unsafe if you are relying on type coercion";
 
 export default {
 	name: "doubleEquals",
-	enter(path: Path): AnyNode {
+	enter(path: Path) {
 		const {node, context} = path;
 
 		if (
@@ -22,7 +21,7 @@ export default {
 			node.left.type !== "JSNullLiteral"
 		) {
 			if (node.operator === "!=") {
-				context.addFixableDiagnostic(
+				return context.addFixableDiagnostic(
 					{
 						old: node,
 						suggestions: [
@@ -41,7 +40,7 @@ export default {
 			}
 
 			if (node.operator === "==") {
-				context.addFixableDiagnostic(
+				return context.addFixableDiagnostic(
 					{
 						old: node,
 						suggestions: [

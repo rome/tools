@@ -26,7 +26,7 @@
 ### `0: formatted`
 
 ```
-<meta charset='UTF-8' aria-hidden='false' />;
+<meta charset="UTF-8" aria-hidden="false" />;
 
 ```
 
@@ -52,7 +52,7 @@
 ### `1: formatted`
 
 ```
-<meta charset='UTF-8' role='meta' />;
+<meta charset="UTF-8" role="meta" />;
 
 ```
 
@@ -78,7 +78,7 @@
 ### `2: formatted`
 
 ```
-<html aria-required='true' />;
+<html aria-required="true" />;
 
 ```
 
@@ -104,7 +104,7 @@
 ### `3: formatted`
 
 ```
-<html role='html'></html>;
+<html role="html"></html>;
 
 ```
 
@@ -130,7 +130,7 @@
 ### `4: formatted`
 
 ```
-<script aria-label='script'></script>;
+<script aria-label="script"></script>;
 
 ```
 
@@ -156,7 +156,7 @@
 ### `5: formatted`
 
 ```
-<script role='script'></script>;
+<script role="script"></script>;
 
 ```
 
@@ -208,7 +208,7 @@
 ### `7: formatted`
 
 ```
-<style role='style'></style>;
+<style role="style"></style>;
 
 ```
 
@@ -222,7 +222,7 @@
 ### `8: formatted`
 
 ```
-<meta charset='UTF-8' />;
+<meta charset="UTF-8" />;
 
 ```
 
@@ -236,7 +236,7 @@
 ### `9: formatted`
 
 ```
-<html maria='text'></html>;
+<html maria="text"></html>;
 
 ```
 

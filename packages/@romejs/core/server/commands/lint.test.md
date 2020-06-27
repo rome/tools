@@ -10,7 +10,7 @@
 
  project/index.js:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ The unknownVariable variable is undeclared.
+  ✖ The unknownVariable variable is undeclared
 
     unknownVariable
     ^^^^^^^^^^^^^^^
@@ -58,7 +58,7 @@ unknownVariable
 
  project/index.js:1:4 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ The unformatted variable is undeclared.
+  ✖ The unformatted variable is undeclared
 
   > 1 │ if (unformatted) {
       │     ^^^^^^^^^^^
@@ -67,7 +67,7 @@ unknownVariable
 
  project/index.js:2:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ The swag variable is undeclared.
+  ✖ The swag variable is undeclared
 
     1 │ if (unformatted) {
   > 2 │  swag;

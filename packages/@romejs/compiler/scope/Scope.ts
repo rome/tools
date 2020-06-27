@@ -76,6 +76,18 @@ export default class Scope {
 		return this.bindings;
 	}
 
+	getBindingNames(): Array<string> {
+		let bindingNames: Array<string> = [];
+
+		let scope: undefined | Scope = this;
+		while (scope !== undefined) {
+			bindingNames = [...bindingNames, ...scope.getOwnBindingNames()];
+			scope = scope.parentScope;
+		}
+
+		return Array.from(new Set(bindingNames));
+	}
+
 	getOwnBindingNames(): Array<string> {
 		return Array.from(this.bindings.keys());
 	}

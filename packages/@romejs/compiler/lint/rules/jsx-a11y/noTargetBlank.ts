@@ -46,7 +46,7 @@ function jsxAnchorHasExternalLink(node: AnyNode) {
 export default {
 	name: "jsxA11YNoTargetBlank",
 
-	enter(path: Path): AnyNode {
+	enter(path: Path) {
 		const {node} = path;
 
 		if (
@@ -55,14 +55,14 @@ export default {
 			!jsxAnchorHasNoReferrer(node) &&
 			jsxAnchorHasExternalLink(node)
 		) {
-			path.context.addFixableDiagnostic(
+			return path.context.addFixableDiagnostic(
 				{
 					target: getJSXAttribute(node, "target"),
 					old: node,
 					fixed: {
 						...node,
 						attributes: node.attributes.filter((attribute) =>
-							attribute.type === "JSXAttribute" &&
+							attribute.type !== "JSXAttribute" ||
 							attribute.name.name !== "target"
 						),
 					},

@@ -113,11 +113,13 @@ function setHandler(handler: ExtensionHandler) {
 const DEFAULT_HANDLERS: ExtensionsMap = new Map();
 
 const DEFAULT_ASSET_EXTENSIONS = [
+	"css",
 	// Images
 	"png",
 	"jpg",
 	"jpeg",
 	"gif",
+	"svg",
 	// Video
 	"webm",
 	"mp4",
@@ -135,7 +137,7 @@ const DEFAULT_ASSET_EXTENSIONS = [
 ];
 
 for (const ext of DEFAULT_ASSET_EXTENSIONS) {
-	setHandler({ext, ...assetHandler});
+	setHandler({...assetHandler, ext});
 }
 
 setHandler(jsHandler);

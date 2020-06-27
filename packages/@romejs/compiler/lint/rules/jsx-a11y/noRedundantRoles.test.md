@@ -29,7 +29,7 @@
 ### `0: formatted`
 
 ```
-<article role='article'></article>;
+<article role="article"></article>;
 
 ```
 
@@ -58,7 +58,7 @@
 ### `1: formatted`
 
 ```
-<button role='button'></button>;
+<button role="button"></button>;
 
 ```
 
@@ -87,7 +87,7 @@
 ### `2: formatted`
 
 ```
-<h1 role='heading' aria-level='1'></h1>;
+<h1 role="heading" aria-level="1"></h1>;
 
 ```
 
@@ -116,7 +116,7 @@
 ### `3: formatted`
 
 ```
-<h1 role='heading'></h1>;
+<h1 role="heading"></h1>;
 
 ```
 
@@ -145,7 +145,7 @@
 ### `4: formatted`
 
 ```
-<dialog role='dialog'></dialog>;
+<dialog role="dialog"></dialog>;
 
 ```
 
@@ -163,7 +163,7 @@
   Suggested fix: Remove the role attribute.
 
   - role='checkbox'
-  + <input type='checkbox' />
+  + <input type="checkbox" />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -174,7 +174,7 @@
 ### `5: formatted`
 
 ```
-<input type='checkbox' role='checkbox' />;
+<input type="checkbox" role="checkbox" />;
 
 ```
 
@@ -188,7 +188,7 @@
 ### `6: formatted`
 
 ```
-<article role='presentation'></article>;
+<article role="presentation"></article>;
 
 ```
 
@@ -202,7 +202,7 @@
 ### `7: formatted`
 
 ```
-<Button role='button'></Button>;
+<Button role="button"></Button>;
 
 ```
 

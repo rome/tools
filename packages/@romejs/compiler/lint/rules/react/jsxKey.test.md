@@ -319,7 +319,7 @@ Children.map(
 ### `10: formatted`
 
 ```
-const a = [<div key='a' />, <div key={"b"} />];
+const a = [<div key="a" />, <div key={"b"} />];
 
 ```
 

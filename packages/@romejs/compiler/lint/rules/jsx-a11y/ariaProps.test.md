@@ -18,6 +18,7 @@
   Suggested fix: ARIA Spelling Mistake
 
   - aria-labell=''
+  + aria-label=""
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -28,7 +29,7 @@
 ### `0: formatted`
 
 ```
-<input className='' aria-labell='' />;
+<input className="" aria-labell="" />;
 
 ```
 
@@ -52,7 +53,7 @@
 ### `1: formatted`
 
 ```
-<div aria-='foobar' />;
+<div aria-="foobar" />;
 
 ```
 
@@ -69,7 +70,8 @@
 
   Suggested fix: ARIA Spelling Mistake
 
-  + aria-labelledby='foobar'
+  - aria-labeledby='foobar'
+  + aria-labelledby="foobar"
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -80,7 +82,7 @@
 ### `2: formatted`
 
 ```
-<div aria-labeledby='foobar' />;
+<div aria-labeledby="foobar" />;
 
 ```
 
@@ -104,7 +106,7 @@
 ### `3: formatted`
 
 ```
-<div aria-skldjfaria-klajsd='foobar' />;
+<div aria-skldjfaria-klajsd="foobar" />;
 
 ```
 
@@ -146,7 +148,7 @@
 ### `6: formatted`
 
 ```
-<div aria='wee'></div>;
+<div aria="wee"></div>;
 
 ```
 
@@ -160,7 +162,7 @@
 ### `7: formatted`
 
 ```
-<div abcARIAdef='true'></div>;
+<div abcARIAdef="true"></div>;
 
 ```
 
@@ -174,7 +176,7 @@
 ### `8: formatted`
 
 ```
-<div fooaria-foobar='true'></div>;
+<div fooaria-foobar="true"></div>;
 
 ```
 
@@ -188,7 +190,7 @@
 ### `9: formatted`
 
 ```
-<div fooaria-hidden='true'></div>;
+<div fooaria-hidden="true"></div>;
 
 ```
 
@@ -202,6 +204,6 @@
 ### `10: formatted`
 
 ```
-<input type='text' aria-errormessage='foobar' />;
+<input type="text" aria-errormessage="foobar" />;
 
 ```

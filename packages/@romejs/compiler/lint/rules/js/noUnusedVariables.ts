@@ -15,6 +15,9 @@ const initialState: State = {
 	scope: undefined,
 };
 
+// Common variables that are sometimes impossible to avoid
+const ignoreVariables = ["React"];
+
 const provider = createHook<State, undefined, AnyNode>({
 	name: "noUnusedVariablesProvider",
 	initialState,
@@ -56,7 +59,11 @@ const provider = createHook<State, undefined, AnyNode>({
 			const used = state.usedBindings[name];
 			const binding = path.scope.getBinding(name);
 
-			if (used === false && binding !== undefined) {
+			if (
+				used === false &&
+				binding !== undefined &&
+				!ignoreVariables.includes(name)
+			) {
 				path.context.addNodeDiagnostic(
 					binding.node,
 					descriptions.LINT.JS_NO_UNUSED_VARIABLES(binding.kind, name),

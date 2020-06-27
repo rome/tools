@@ -325,7 +325,7 @@ export default async function cli() {
 				rage: true,
 			};
 
-			command = "_noop";
+			command = "noop";
 		},
 	});
 
@@ -339,7 +339,7 @@ export default async function cli() {
 				logs: true,
 			};
 
-			command = "_noop";
+			command = "noop";
 		},
 	});
 

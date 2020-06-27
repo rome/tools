@@ -32,8 +32,9 @@ export default createServerCommand({
 
 		const project = await req.assertClientCwdProject();
 
+		let mutation: "set" | "push-array" = "set";
 		let keyParts: string;
-		let value: boolean | string;
+		let value: boolean | string | Array<string>;
 
 		const [action, ...restArgs] = req.query.args;
 		switch (action) {
@@ -70,6 +71,13 @@ export default createServerCommand({
 				break;
 			}
 
+			case "push": {
+				req.expectArgumentLength(3, Infinity);
+				[keyParts, ...value] = restArgs;
+				mutation = "push-array";
+				break;
+			}
+
 			default:
 				throw req.throwDiagnosticFlagError({
 					description: descriptions.FLAGS.UNKNOWN_ACTION(action),
@@ -86,7 +94,7 @@ export default createServerCommand({
 				{
 					pre: (meta) => {
 						reporter.success(
-							`Setting <emphasis>${keyParts}</emphasis> to <emphasis>${escapeMarkup(
+							`${mutation === "set" ? "Setting" : "Adding"} <emphasis>${keyParts}</emphasis> to <emphasis>${escapeMarkup(
 								JSON.stringify(value),
 							)}</emphasis> in the project config ${meta.configPath.toMarkup({
 								emphasis: true,
@@ -110,7 +118,21 @@ export default createServerCommand({
 							}
 							keyConsumer = keyConsumer.get(key);
 						}
-						keyConsumer.setValue(value);
+
+						switch (mutation) {
+							case "set": {
+								keyConsumer.setValue(value);
+								break;
+							}
+
+							case "push-array": {
+								keyConsumer.setValue([
+									...keyConsumer.asArray(true).map((c) => c.asUnknown()),
+									...value,
+								]);
+								break;
+							}
+						}
 					},
 				},
 			);

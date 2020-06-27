@@ -21,11 +21,11 @@ import lsp from "./commands/lsp";
 import lint from "./commands/lint";
 import ci from "./commands/ci";
 import test from "./commands/test";
+import noop from "./commands/noop";
 
 // Hidden commands, useful for internal debugging but not much else
 import _evict from "./commands/_evict";
 import _moduleSignature from "./commands/_moduleSignature";
-import _noop from "./commands/_noop";
 import _projectDump from "./commands/_projectDump";
 
 //
@@ -70,5 +70,5 @@ serverCommands.set("format", format);
 serverCommands.set("lsp", lsp);
 serverCommands.set("_evict", _evict);
 serverCommands.set("_moduleSignature", _moduleSignature);
-serverCommands.set("_noop", _noop);
+serverCommands.set("noop", noop);
 serverCommands.set("_projectDump", _projectDump);

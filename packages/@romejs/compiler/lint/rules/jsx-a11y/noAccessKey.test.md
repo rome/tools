@@ -33,7 +33,7 @@
 ### `0: formatted`
 
 ```
-<input accessKey='key' />;
+<input />;
 
 ```
 
@@ -66,7 +66,7 @@
 ### `1: formatted`
 
 ```
-<input accessKey={key} />;
+<input />;
 
 ```
 

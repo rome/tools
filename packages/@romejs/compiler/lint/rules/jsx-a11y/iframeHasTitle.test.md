@@ -78,7 +78,7 @@
 ### `2: formatted`
 
 ```
-<iframe title='' />;
+<iframe title="" />;
 
 ```
 
@@ -248,7 +248,7 @@
 ### `9: formatted`
 
 ```
-<iframe title='title' />;
+<iframe title="title" />;
 
 ```
 

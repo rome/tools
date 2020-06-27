@@ -55,7 +55,7 @@ function createFixableDiagnostic(
 		}),
 	};
 
-	context.addFixableDiagnostic(
+	return context.addFixableDiagnostic(
 		{
 			target: [roleAttribute, ...ariaAttributesToRemove],
 			old: node,
@@ -125,6 +125,7 @@ export default {
 				}
 			}
 		}
+
 		return node;
 	},
 };
