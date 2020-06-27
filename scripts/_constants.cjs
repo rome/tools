@@ -28,6 +28,7 @@ exports.lintRulesDocFolder = path.join(
 	"..",
 	"website",
 	"src",
+	"docs",
 	"lint",
 	"rules",
 );
