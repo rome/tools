@@ -32,6 +32,7 @@ export default createServerCommand({
 
 		const project = await req.assertClientCwdProject();
 
+		let mutation: "set" | "push-array" = "set";
 		let keyParts: string;
 		let value: boolean | string;
 
@@ -67,6 +68,13 @@ export default createServerCommand({
 			case "set": {
 				req.expectArgumentLength(3);
 				[keyParts, value] = restArgs;
+				break;
+			}
+
+			case "push": {
+				req.expectArgumentLength(3);
+				[keyParts, value] = restArgs;
+				mutation = "push-array";
 				break;
 			}
 
@@ -110,7 +118,16 @@ export default createServerCommand({
 							}
 							keyConsumer = keyConsumer.get(key);
 						}
-						keyConsumer.setValue(value);
+
+						switch (mutation) {
+							case "set":
+								keyConsumer.setValue(value);
+								break;
+
+							case "push-array":
+								keyConsumer.setValue([...keyConsumer.asArray().map(c => c.asUnknown()), value]);
+								break;
+						}
 					},
 				},
 			);

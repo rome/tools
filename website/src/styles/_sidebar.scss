@@ -79,16 +79,13 @@
     }
 
     a:active {
-      padding-left: $unit / 1.5;
       text-decoration: dashed;
       opacity: 0.6;
     }
   }
 
   .external-links {
-
-    .open-collective{
-
+    .open-collective {
       .one {
         fill: var(--toc-link-color-hover);
       }
@@ -96,14 +93,13 @@
       .two {
         fill: var(--logo-font-color);
       }
-
     }
 
     @include desktop-only() {
       border-top: 1px solid var(--soft-border-color);
     }
 
-    ul{
+    ul {
       display: flex;
     }
 
@@ -145,5 +141,4 @@
     display: flex;
     width: 100%;
   }
-
 }
