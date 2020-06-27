@@ -80,6 +80,18 @@
 
   .external-links {
 
+    .open-collective{
+
+      .one {
+        fill: var(--toc-link-color-hover);
+      }
+
+      .two {
+        fill: var(--logo-font-color);
+      }
+
+    }
+
     @include desktop-only() {
       border-top: 1px solid var(--soft-border-color);
     }
