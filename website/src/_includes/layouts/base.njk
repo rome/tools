@@ -16,6 +16,7 @@
         </a>
         <div class="stretch"></div>
         <a href="#" class="mobile-handle">
+          <span class="sr-only">Mobile handle</span>
           {% include "./svg/mobile-handle.njk" %}
         </a>
       </div>
@@ -32,12 +33,14 @@
           <h2 id="external-links" class="sr-only">External Links</h2>
           <ul>
           <li>
-            <a target="_blank" href="https://github.com/romejs/rome">
+            <a target="_blank" rel="noopener" href="https://github.com/romejs/rome">
+              <span class="sr-only">GitHub Repo</span>
               {% include "./svg/github.njk" %}
             </a>
           </li>
           <li>
-            <a target="_blank" href="https://twitter.com/romejsdev">
+            <a target="_blank" rel="noopener" href="https://twitter.com/romejsdev">
+              <span class="sr-only">Twitter Account</span>
               {% include "./svg/twitter.njk" %}
             </a>
           </li>
