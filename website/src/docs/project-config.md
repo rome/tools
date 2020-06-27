@@ -9,11 +9,23 @@ layout: layouts/base.njk
 
 ### `name`
 
+```text
+name: "project-name"
+```
+
+This can also be configured via the [`rome config` command](/docs/cli/commands/config):
+
 ```bash
 rome config set name "project-name"
 ```
 
 ### `version`
+
+```text
+version: "^0.0.0"
+```
+
+This can also be configured via the [`rome config` command](/docs/cli/commands/config):
 
 ```bash
 rome config set version "^0.0.0"

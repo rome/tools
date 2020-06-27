@@ -5,7 +5,9 @@ layout: layouts/base.njk
 
 # `rome config`
 
-This command works with all Rome project config locations (see [](/docs/project-config#supported-locations)).
+This command works with all Rome project config locations (see [supported locations](/docs/project-config#supported-locations) for more info).
+
+When formatting a project config written with [RJSON](/docs/rjson), comments will be retained.
 
 ## Subcommands
 
