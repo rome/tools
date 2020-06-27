@@ -1,0 +1,130 @@
+.sidebar {
+  @include transition-timing;
+  width: $sidebar-width;
+  list-style: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-size: 0.95rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  border-right: 1px solid var(--soft-border-color);
+  border-left: 1px solid var(--soft-border-color);
+  transition-property: transform;
+  z-index: 2;
+  min-width: 256px;
+  display: flex;
+  flex-direction: column;
+
+  @include desktop-only() {
+    @include top-border;
+    border-top-width: 0;
+    transition-duration: 150ms;
+    padding-top: $unit * 2;
+  }
+
+  @include mobile-only() {
+    transform: translateX(-100%);
+    position: fixed;
+    min-width: 256px;
+    padding-top: 64px;
+    background: var(--background-color);
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+
+    &.visible {
+      transform: translateX(0);
+    }
+  }
+
+  .menu {
+    border-bottom: 1px solid var(--soft-border-color);
+    font-weight: bold;
+    padding: $unit 0 $unit $unit * 2;
+
+    ul {
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      list-style-type: none;
+    }
+
+    a {
+      @include transition-timing;
+      text-decoration: none;
+      font-size: 1.1em;
+      transition-duration: 100ms;
+      transition-property: color;
+      height: auto;
+      padding: $unit / 5 $unit / 2;
+      margin-left: $unit / 2;
+      display: inline-block;
+      color: var(--logo-font-color);
+      padding-left: 0;
+      margin-left: 0;
+    }
+
+    a:hover {
+      text-decoration: dashed;
+      opacity: 0.7;
+    }
+
+    a:active {
+      padding-left: $unit / 1.5;
+      text-decoration: dashed;
+      opacity: 0.6;
+    }
+  }
+
+  .external-links {
+
+    @include desktop-only() {
+      border-top: 1px solid var(--soft-border-color);
+    }
+
+    ul{
+      display: flex;
+    }
+
+    svg {
+      .cls-1 {
+        fill: var(--logo-font-color);
+      }
+    }
+
+    a{
+      margin-right: $unit / 3;
+    }
+
+    a:active {
+      padding-left: 0;
+    }
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .mode-switch {
+    text-align: center;
+    color: var(--background-color);
+    background: var(--logo-font-color);
+    border: 0;
+    padding: 5px 10px;
+    cursor: pointer;
+    width: 100%;
+    margin: auto $unit * 2 $unit $unit * 2;
+    font-weight: bold;
+  }
+
+  .mode-switch-container {
+    margin-top: $unit;
+    height: 100%;
+    display: flex;
+    width: 100%;
+  }
+
+}
