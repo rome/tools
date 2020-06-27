@@ -10,7 +10,7 @@ function createDiagnostic(path: Path, node: JSXElement, attribute: JSXAttribute)
 			fixed: {
 				...node,
 				attributes: node.attributes.filter((attribute) =>
-					attribute.type === "JSXAttribute" &&
+					attribute.type !== "JSXAttribute" ||
 					attribute.name.name !== "tabIndex"
 				),
 			},

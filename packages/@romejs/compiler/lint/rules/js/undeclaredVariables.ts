@@ -57,7 +57,10 @@ export default {
 			if (!isDefined) {
 				path.context.addNodeDiagnostic(
 					node,
-					descriptions.LINT.JS_UNDECLARED_VARIABLES(name),
+					descriptions.LINT.JS_UNDECLARED_VARIABLES(
+						name,
+						scope.getBindingNames(),
+					),
 					{
 						meta: {
 							identifierName: name,

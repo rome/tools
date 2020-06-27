@@ -27,7 +27,7 @@
 ### `0: formatted`
 
 ```
-<img src='foo' />;
+<img src="foo" />;
 
 ```
 
@@ -108,7 +108,7 @@
 ### `3: formatted`
 
 ```
-<img src='foo' role='presentation' />;
+<img src="foo" role="presentation" />;
 
 ```
 
@@ -135,7 +135,7 @@
 ### `4: formatted`
 
 ```
-<img src='foo' role='none' />;
+<img src="foo" role="none" />;
 
 ```
 
@@ -270,7 +270,7 @@
 ### `9: formatted`
 
 ```
-<input type='image' {...props} />;
+<input type="image" {...props} />;
 
 ```
 
@@ -297,7 +297,7 @@
 ### `10: formatted`
 
 ```
-<input type='image' {...props} alt={undefined} />;
+<input type="image" {...props} alt={undefined} />;
 
 ```
 
@@ -325,7 +325,7 @@
 ### `12: formatted`
 
 ```
-<img src='foo' alt='Foo eating a sandwich.' />;
+<img src="foo" alt="Foo eating a sandwich." />;
 
 ```
 
@@ -339,7 +339,7 @@
 ### `13: formatted`
 
 ```
-<img src='foo' alt={"Foo eating a sandwich."} />;
+<img src="foo" alt={"Foo eating a sandwich."} />;
 
 ```
 
@@ -353,7 +353,7 @@
 ### `14: formatted`
 
 ```
-<img src='foo' alt={altText} />;
+<img src="foo" alt={altText} />;
 
 ```
 
@@ -367,7 +367,7 @@
 ### `15: formatted`
 
 ```
-<img src='foo' alt={`${person} smiling`} />;
+<img src="foo" alt={`${person} smiling`} />;
 
 ```
 
@@ -381,7 +381,7 @@
 ### `16: formatted`
 
 ```
-<img src='foo' alt='' />;
+<img src="foo" alt="" />;
 
 ```
 
@@ -409,7 +409,7 @@
 ### `18: formatted`
 
 ```
-<object aria-label='foo' />;
+<object aria-label="foo" />;
 
 ```
 
@@ -423,7 +423,7 @@
 ### `19: formatted`
 
 ```
-<object aria-labelledby='id1' />;
+<object aria-labelledby="id1" />;
 
 ```
 
@@ -465,7 +465,7 @@
 ### `22: formatted`
 
 ```
-<object title='An object' />;
+<object title="An object" />;
 
 ```
 
@@ -493,7 +493,7 @@
 ### `24: formatted`
 
 ```
-<area aria-label='foo' />;
+<area aria-label="foo" />;
 
 ```
 
@@ -507,7 +507,7 @@
 ### `25: formatted`
 
 ```
-<area aria-labelledby='id1' />;
+<area aria-labelledby="id1" />;
 
 ```
 
@@ -521,7 +521,7 @@
 ### `26: formatted`
 
 ```
-<area alt='This is descriptive!' />;
+<area alt="This is descriptive!" />;
 
 ```
 
@@ -535,7 +535,7 @@
 ### `27: formatted`
 
 ```
-<input type='image' {...props} alt />;
+<input type="image" {...props} alt />;
 
 ```
 
@@ -549,7 +549,7 @@
 ### `28: formatted`
 
 ```
-<input type='image' alt='This is descriptive!' />;
+<input type="image" alt="This is descriptive!" />;
 
 ```
 
@@ -563,7 +563,7 @@
 ### `29: formatted`
 
 ```
-<input type='image' aria-label='foo' />;
+<input type="image" aria-label="foo" />;
 
 ```
 
@@ -577,6 +577,6 @@
 ### `30: formatted`
 
 ```
-<input type='image' aria-labelledby='id1' />;
+<input type="image" aria-labelledby="id1" />;
 
 ```

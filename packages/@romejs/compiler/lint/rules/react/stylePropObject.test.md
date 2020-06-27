@@ -104,7 +104,7 @@
 ### `3: formatted`
 
 ```
-<div style='color: &apos;red&apos;' />;
+<div style="color: &apos;red&apos;" />;
 
 ```
 

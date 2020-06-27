@@ -22,19 +22,22 @@ export default {
 				return node;
 			}
 
-			const expectedName = filenameToId(
-				createUnknownFilePath(node.source.value),
-				false,
-			);
-			if (expectedName === undefined) {
+			const filePath = createUnknownFilePath(node.source.value);
+			const expectedName = filenameToId(filePath, false);
+			const expectedNameCapital = filenameToId(filePath, true);
+			if (expectedName === undefined || expectedNameCapital === undefined) {
 				return node;
 			}
 
 			const localName = defaultSpecifier.local.name.name;
-			if (localName !== expectedName) {
+			if (localName !== expectedName && localName !== expectedNameCapital) {
 				path.context.addNodeDiagnostic(
 					node,
-					descriptions.LINT.JS_IMPORT_DEFAULT_BASENAME(localName, expectedName),
+					descriptions.LINT.JS_IMPORT_DEFAULT_BASENAME(
+						localName,
+						expectedName,
+						expectedNameCapital,
+					),
 				);
 			}
 		}

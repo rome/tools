@@ -21,9 +21,8 @@ export default function JSStringLiteral(
 	node: JSDirective | JSStringLiteral | TSStringLiteralTypeAnnotation,
 	parent: AnyNode,
 ): Token {
-	// JSX Attribute strings have ridiculous alternate semantics, should probably be a distinct AST node
 	const quotes =
-		parent.type === "JSXAttribute" || node.value.includes('"') ? "'" : '"';
+		parent.type === "JSXAttribute" || !node.value.includes('"') ? '"' : "'";
 
 	const value =
 		parent.type === "JSXAttribute"

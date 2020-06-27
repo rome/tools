@@ -32,7 +32,7 @@
 ### `0: formatted`
 
 ```
-<span tabIndex='5'>foo</span>;
+<span tabIndex="5">foo</span>;
 
 ```
 
@@ -138,7 +138,7 @@
 ### `5: formatted`
 
 ```
-<span tabIndex='-1'>baz</span>;
+<span tabIndex="-1">baz</span>;
 
 ```
 
@@ -152,7 +152,7 @@
 ### `6: formatted`
 
 ```
-<span tabIndex='0'>baz</span>;
+<span tabIndex="0">baz</span>;
 
 ```
 

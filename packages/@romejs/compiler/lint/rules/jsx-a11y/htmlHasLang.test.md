@@ -81,7 +81,7 @@
 ### `2: formatted`
 
 ```
-<html lang=''></html>;
+<html lang=""></html>;
 
 ```
 
@@ -257,7 +257,7 @@
 ### `9: formatted`
 
 ```
-<html lang='en'></html>;
+<html lang="en"></html>;
 
 ```
 

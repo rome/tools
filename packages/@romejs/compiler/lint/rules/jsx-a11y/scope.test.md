@@ -31,7 +31,7 @@
 ### `0: formatted`
 
 ```
-<div scope={scope} />;
+<div />;
 
 ```
 
@@ -62,7 +62,7 @@
 ### `1: formatted`
 
 ```
-<div scope='col' />;
+<div />;
 
 ```
 
@@ -90,6 +90,6 @@
 ### `3: formatted`
 
 ```
-<th scope='col'></th>;
+<th scope="col"></th>;
 
 ```

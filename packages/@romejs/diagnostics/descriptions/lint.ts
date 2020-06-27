@@ -526,17 +526,6 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	REACT_REACT_IN_JSX_SCOPE: {
-		category: "lint/react/reactInJsxScope",
-		message: "<emphasis>React</emphasis> must be in scope when using JSX.",
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: "The React JSX parser must be available in modules that use JSX syntax.",
-			},
-		],
-	},
 	REACT_STYLE_PROP_OBJECT: {
 		category: "lint/react/stylePropObject",
 		message: "The <emphasis>style</emphasis> prop value must be an object.",
@@ -561,13 +550,17 @@ export const lint = createDiagnosticsCategory({
 		properties: Array<string>,
 	) => ({
 		category: "lint/react/voidDomElementsNoChildren",
-		message: `<emphasis>${element}</emphasis> is a void element tag and must not have <emphasis>${orJoin(
+		message: markup`<emphasis>${element}</emphasis> is a void element tag and must not have <emphasis>${orJoin(
 			properties,
 		)}</emphasis>.`,
 	}),
-	JS_IMPORT_DEFAULT_BASENAME: (prev: string, basename: string) => ({
+	JS_IMPORT_DEFAULT_BASENAME: (
+		prev: string,
+		basename: string,
+		capitalBasename: string,
+	) => ({
 		category: "lint/js/importDefaultBasename",
-		message: `Use the basename <emphasis>${basename}</emphasis> when importing the default.`,
+		message: markup`Use the basename <emphasis>${basename}</emphasis> or <emphasis>${capitalBasename}</emphasis> when importing the default.`,
 		advice: [
 			{
 				type: "log",
@@ -637,9 +630,10 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
-	JS_UNDECLARED_VARIABLES: (name: string) => ({
+	JS_UNDECLARED_VARIABLES: (name: string, bindingsInScope: Array<string>) => ({
 		category: "lint/js/undeclaredVariables",
-		message: markup`The <emphasis>${name}</emphasis> variable is undeclared.`,
+		message: markup`The <emphasis>${name}</emphasis> variable is undeclared`,
+		advice: buildSuggestionAdvice(name, bindingsInScope),
 	}),
 	JS_VARIABLE_CAMEL_CASE: (name: string, camelCaseName: string) => ({
 		category: "lint/js/camelCase",

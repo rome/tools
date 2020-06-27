@@ -1,12 +1,12 @@
 import {descriptions} from "@romejs/diagnostics";
-import {AnyNode, JSXElement} from "@romejs/ast";
+import {JSXElement} from "@romejs/ast";
 import {Path} from "@romejs/compiler";
 import {hasJSXAttribute, isJSXElement} from "@romejs/js-ast-utils";
 
 export default {
 	name: "jsxA11YScope",
 
-	enter(path: Path): AnyNode {
+	enter(path: Path) {
 		const {node} = path;
 		const jsxNode = (node as JSXElement);
 
@@ -15,13 +15,13 @@ export default {
 			hasJSXAttribute(node, "scope") &&
 			!isJSXElement(node, "th")
 		) {
-			path.context.addFixableDiagnostic(
+			return path.context.addFixableDiagnostic(
 				{
 					old: jsxNode,
 					fixed: {
 						...jsxNode,
 						attributes: jsxNode.attributes.filter((attribute) =>
-							attribute.type === "JSXAttribute" &&
+							attribute.type !== "JSXAttribute" ||
 							attribute.name.name !== "scope"
 						),
 					},

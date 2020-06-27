@@ -54,7 +54,7 @@ export default {
 				"dangerouslySetInnerHTML",
 			);
 			if (Array.isArray(childrenNode)) {
-				context.addFixableDiagnostic(
+				return context.addFixableDiagnostic(
 					{
 						target: node.arguments,
 						old: node,
@@ -69,7 +69,7 @@ export default {
 					),
 				);
 			} else if (elementType && childrenNode) {
-				context.addFixableDiagnostic(
+				return context.addFixableDiagnostic(
 					{
 						old: childrenNode,
 						fixed: REDUCE_REMOVE,
@@ -82,7 +82,7 @@ export default {
 			}
 
 			if (elementType && dangerNode) {
-				context.addFixableDiagnostic(
+				return context.addFixableDiagnostic(
 					{
 						old: dangerNode,
 						fixed: REDUCE_REMOVE,
@@ -114,12 +114,13 @@ export default {
 					const property = attribute.name.name;
 					if (property === "children") {
 						properties.add("children");
+						continue;
 					} else if (property === "dangerouslySetInnerHTML") {
 						properties.add("dangerouslySetInnerHTML");
-					} else {
-						newAttributes.push(attribute);
+						continue;
 					}
 				}
+				newAttributes.push(attribute);
 			}
 
 			if (properties.size > 0) {

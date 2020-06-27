@@ -32,7 +32,7 @@
 ### `0: formatted`
 
 ```
-<input autoFocus />;
+<input />;
 
 ```
 
@@ -64,7 +64,7 @@
 ### `1: formatted`
 
 ```
-<input autoFocus='true' />;
+<input />;
 
 ```
 
@@ -96,7 +96,7 @@
 ### `2: formatted`
 
 ```
-<input autoFocus={"false"} />;
+<input />;
 
 ```
 

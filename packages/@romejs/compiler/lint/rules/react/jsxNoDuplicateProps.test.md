@@ -29,7 +29,7 @@
 ### `0: formatted`
 
 ```
-<Hello foo='bar' foo='baz' />;
+<Hello foo="bar" foo="baz" />;
 
 ```
 
@@ -70,7 +70,7 @@
 ### `1: formatted`
 
 ```
-<div style='{}' style='{}' id='foo' id='bar' />;
+<div style="{}" style="{}" id="foo" id="bar" />;
 
 ```
 
@@ -84,7 +84,7 @@
 ### `2: formatted`
 
 ```
-<Hello foo='bar' />;
+<Hello foo="bar" />;
 
 ```
 
@@ -98,6 +98,6 @@
 ### `3: formatted`
 
 ```
-<div style='{}' />;
+<div style="{}" />;
 
 ```

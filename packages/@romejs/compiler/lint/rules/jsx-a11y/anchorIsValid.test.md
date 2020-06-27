@@ -26,7 +26,7 @@
 ### `0: formatted`
 
 ```
-<a href='#' onClick={foo} />;
+<a href="#" onClick={foo} />;
 
 ```
 
@@ -130,7 +130,7 @@
 ### `4: formatted`
 
 ```
-<a href='javascript:void(0)' onClick={foo} />;
+<a href="javascript:void(0)" onClick={foo} />;
 
 ```
 
@@ -286,7 +286,7 @@
 ### `10: formatted`
 
 ```
-<a href='#' />;
+<a href="#" />;
 
 ```
 
@@ -364,7 +364,7 @@
 ### `13: formatted`
 
 ```
-<a href='javascript:void(0)' />;
+<a href="javascript:void(0)" />;
 
 ```
 
@@ -430,7 +430,7 @@
 ### `16: formatted`
 
 ```
-<a href='https://github.com' />;
+<a href="https://github.com" />;
 
 ```
 
@@ -444,7 +444,7 @@
 ### `17: formatted`
 
 ```
-<a href='#section' />;
+<a href="#section" />;
 
 ```
 
@@ -458,7 +458,7 @@
 ### `18: formatted`
 
 ```
-<a href='foo' />;
+<a href="foo" />;
 
 ```
 
@@ -472,7 +472,7 @@
 ### `19: formatted`
 
 ```
-<a href='/foo/bar' />;
+<a href="/foo/bar" />;
 
 ```
 
@@ -500,7 +500,7 @@
 ### `21: formatted`
 
 ```
-<a href='https://github.com' onClick={foo} />;
+<a href="https://github.com" onClick={foo} />;
 
 ```
 
@@ -514,7 +514,7 @@
 ### `22: formatted`
 
 ```
-<a href='#section' onClick={foo} />;
+<a href="#section" onClick={foo} />;
 
 ```
 
@@ -528,7 +528,7 @@
 ### `23: formatted`
 
 ```
-<a href='foo' onClick={foo} />;
+<a href="foo" onClick={foo} />;
 
 ```
 
@@ -542,7 +542,7 @@
 ### `24: formatted`
 
 ```
-<a href='/foo/bar' onClick={foo} />;
+<a href="/foo/bar" onClick={foo} />;
 
 ```
 

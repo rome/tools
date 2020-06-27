@@ -169,7 +169,7 @@
 ### `5: formatted`
 
 ```
-React.createElement("img", {children: "child"});
+;
 
 ```
 
@@ -197,7 +197,7 @@ React.createElement("img", {children: "child"});
 ### `6: formatted`
 
 ```
-React.createElement("img", {dangerouslySetInnerHTML: {__html: "child"}});
+;
 
 ```
 
@@ -226,7 +226,7 @@ React.createElement("img", {dangerouslySetInnerHTML: {__html: "child"}});
 ### `7: formatted`
 
 ```
-React.createElement("img", {}, "child");
+React.createElement("img", {});
 
 ```
 
@@ -254,7 +254,7 @@ React.createElement("img", {}, "child");
 ### `8: formatted`
 
 ```
-createElement("img", {children: "child"});
+;
 
 ```
 
@@ -282,7 +282,7 @@ createElement("img", {children: "child"});
 ### `9: formatted`
 
 ```
-createElement("img", {dangerouslySetInnerHTML: {__html: "child"}});
+;
 
 ```
 
@@ -311,7 +311,7 @@ createElement("img", {dangerouslySetInnerHTML: {__html: "child"}});
 ### `10: formatted`
 
 ```
-createElement("img", {}, "child");
+createElement("img", {});
 
 ```
 
@@ -339,7 +339,7 @@ createElement("img", {}, "child");
 ### `12: formatted`
 
 ```
-<div children='Children' />;
+<div children="Children" />;
 
 ```
 
@@ -367,7 +367,7 @@ createElement("img", {}, "child");
 ### `14: formatted`
 
 ```
-<br className='valid' />;
+<br className="valid" />;
 
 ```
 
