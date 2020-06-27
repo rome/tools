@@ -123,7 +123,6 @@ showHero: false
 | no-unsafe |  |
 | no-useless-fragment |  |
 | no-will-update-set-state |  |
-| react-in-jsx-scope |  |
 | require-render-return |  |
 | style-prop-object |  |
 | void-dom-elements-no-children |  |
