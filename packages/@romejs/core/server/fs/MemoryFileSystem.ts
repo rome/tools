@@ -839,10 +839,12 @@ export default class MemoryFileSystem {
 		};
 
 		// Give priority to package.json in case we want to derive something from the project config
-		for (const file of files) {
-			if (PRIORITY_FILES.has(file.getBasename())) {
-				files.delete(file);
-				await declareItem(file);
+		for (const priorityBasename of PRIORITY_FILES) {
+			for (const file of files) {
+				if (priorityBasename === file.getBasename()) {
+					files.delete(file);
+					await declareItem(file);
+				}
 			}
 		}
 
