@@ -10,7 +10,6 @@ import {createLocalCommand} from "../commands";
 import ClientRequest from "../ClientRequest";
 import {Dict} from "@romejs/typescript-helpers";
 import {exists, writeFile} from "@romejs/fs";
-import {VERSION} from "../../common/constants";
 import {stringifyRJSON} from "@romejs/codec-json";
 
 export default createLocalCommand({
@@ -35,9 +34,7 @@ export default createLocalCommand({
 			return false;
 		}
 
-		const config: Dict<unknown> = {
-			version: `^${VERSION}`,
-		};
+		const config: Dict<unknown> = {};
 		await writeConfig();
 
 		async function writeConfig() {

@@ -159,9 +159,7 @@ function buildOpeningElementAttributes(attribs: JSXElement["attributes"]) {
 	let _props: JSObjectProperties = [];
 	const objs: Array<AnyJSExpression> = [];
 
-	while (attribs.length > 0) {
-		const prop = attribs.shift()!;
-
+	for (const prop of attribs) {
 		if (prop.type === "JSXSpreadAttribute") {
 			_props = pushProps(_props, objs);
 			objs.push(prop.argument);
