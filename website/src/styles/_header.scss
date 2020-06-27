@@ -34,6 +34,10 @@
   @include mobile-only() {
     display: none;
   }
+
+  a:hover{
+    opacity: 1;
+  }
 }
 
 .logo {
@@ -43,6 +47,7 @@
   font-size: 44px;
   margin-left: $unit;
   margin-bottom: $unit * 2;
+  opacity: 1;
 
   svg {
     width: 1em;

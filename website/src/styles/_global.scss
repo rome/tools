@@ -60,6 +60,17 @@ h4 {
 
 a {
   color: inherit;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: none;
+  opacity: 0.7;
+}
+
+a:active {
+  color: var(--primary-color);
+  opacity: 1;
 }
 
 .sr-only {
