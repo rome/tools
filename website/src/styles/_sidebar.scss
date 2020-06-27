@@ -9,6 +9,7 @@
   top: 0;
   height: 100vh;
   border-right: 1px solid var(--soft-border-color);
+  border-left: 1px solid var(--soft-border-color);
   transition-property: transform;
   z-index: 2;
   min-width: 256px;
@@ -26,7 +27,7 @@
     transform: translateX(-100%);
     position: fixed;
     min-width: 256px;
-    padding-top: 64px + $unit;
+    padding-top: 64px;
     background: var(--background-color);
     height: 100%;
     -webkit-overflow-scrolling: touch;
@@ -37,11 +38,9 @@
   }
 
   .menu {
-    padding-bottom: $unit;
     border-bottom: 1px solid var(--soft-border-color);
-    margin-bottom: $unit;
     font-weight: bold;
-    padding-left: $unit * 2;
+    padding: $unit 0 $unit $unit * 2;
 
     ul {
       margin: 0;
@@ -80,6 +79,10 @@
   }
 
   .external-links {
+
+    @include desktop-only() {
+      border-top: 1px solid var(--soft-border-color);
+    }
 
     ul{
       display: flex;

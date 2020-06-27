@@ -40,7 +40,7 @@
 .main {
   overflow: hidden;
   width: 80%;
-
+  border-right: 1px solid var(--soft-border-color);
   @include mobile-only() {
     margin-top: $unit * 4;
     margin-left: 0;
