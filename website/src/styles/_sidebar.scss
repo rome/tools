@@ -47,6 +47,7 @@
       font-size: 0.8em;
       font-weight: bold;
       font-family: inherit;
+      color: var(--sub-text-color);
     }
 
     ul {
@@ -63,12 +64,10 @@
       text-decoration: none;
       font-size: 1.1em;
       transition-duration: 100ms;
-      transition-property: color;
+      transition-property: padding-left;
       height: auto;
       padding: $unit / 5 $unit / 2;
-      margin-left: $unit / 2;
       display: inline-block;
-      color: var(--logo-font-color);
       padding-left: 0;
       margin-left: 0;
     }
@@ -79,8 +78,9 @@
     }
 
     a:active {
+      padding-left: $unit / 2;
       text-decoration: dashed;
-      opacity: 0.6;
+      opacity: 1;
     }
   }
 
@@ -92,6 +92,12 @@
 
       .two {
         fill: var(--logo-font-color);
+      }
+    }
+
+    svg:active{
+      .cls-1, .one, .two{
+        fill: var(--primary-color);
       }
     }
 
@@ -131,7 +137,7 @@
     padding: 5px 10px;
     cursor: pointer;
     width: 100%;
-    margin: auto $unit * 2 $unit $unit * 2;
+    margin: auto $unit * 2 $unit * 2 $unit * 2;
     font-weight: bold;
   }
 

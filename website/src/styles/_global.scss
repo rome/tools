@@ -59,11 +59,18 @@ h4 {
 }
 
 a {
-  color: inherit;
+  color: var(--logo-font-color);
+  font-weight: bold;
+}
 
-  &:hover {
-    text-decoration: none;
-  }
+a:hover {
+  text-decoration: none;
+  opacity: 0.7;
+}
+
+a:active {
+  color: var(--primary-color);
+  opacity: 1;
 }
 
 .sr-only {
