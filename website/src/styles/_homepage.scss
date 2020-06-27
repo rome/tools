@@ -1,0 +1,41 @@
+.hero {
+  position: relative;
+  padding: $unit * 2;
+  border-bottom: 1px solid var(--soft-border-color);
+  @include pattern-white;
+
+  @include mobile-only() {
+    text-align: center;
+  }
+
+  h1, h2 {
+    line-height: 1.5em;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+ul.home-actions {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: stretch;
+  border: 1px solid red;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  border-radius: 5px;
+
+  li {
+    padding: 10px;
+    flex: 1;
+    text-align: center;
+    list-style: none;
+    border-right: 1px solid red;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+}

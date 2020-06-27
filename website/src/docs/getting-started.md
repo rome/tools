@@ -1,4 +1,25 @@
+---
+title: Getting Started
+layout: layouts/base.njk
+---
+
 # Getting Started
+
+## 1. Installation
+
+Rome is available for installation via [Yarn](https://yarnpkg.com/):
+
+```bash
+yarn add rome
+```
+
+or [npm](https://www.npmjs.com/):
+
+```bash
+npm install rome
+```
+
+## 2. Project Setup
 
 To get started with Rome navigate to your projects folder and run:
 
