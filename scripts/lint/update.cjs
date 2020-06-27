@@ -118,12 +118,12 @@ for (const {basename, category} of defs) {
 		const description = getDocRuleDescription(content);
 		if (!description) {
 			console.log(
-				`/lint/rules/${ruleNameKebabCase}.md is missing a description\n`,
+				`/docs/lint/rules/${ruleNameKebabCase}.md is missing a description\n`,
 			);
 		}
 
 		countExistingDocFiles += 1;
-		docTemplateTable += `| [${ruleNameKebabCase}](/lint/rules/${ruleNameKebabCase}) | ${description ||
+		docTemplateTable += `| [${ruleNameKebabCase}](/docs/lint/rules/${ruleNameKebabCase}) | ${description ||
 		""} |\n`;
 
 		continue;

@@ -1,19 +1,45 @@
 ---
-title: Rome JavaScript toolchain
 layout: layouts/base.njk
 showHero: true
 ---
 
-{% doc "Introduction.md" %}
+**Rome** is a JavaScript toolchain. It unifies functionality that has previously been completely separate tools in the JavaScript ecosystem.
 
-{% doc "Installation.md" %}
+Imagine tools like [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Webpack](https://webpack.js.org/), [Jest](https://jestjs.io/), and more, as a single tool. That is Rome except we have built these tools from the ground up in the same codebase.
 
-{% doc "Getting Started.md" %}
+Building upon a shared base allows us to provide a cohesive experience for processing JavaScript, displaying errors, parallelizing work, caching, and configuration.
 
-{% doc "Commands.md" %}
+**Rome is currently only supported as a linter.** As Rome's use as a linter stabilizes we will begin polishing the other pieces of Rome for release and usage.
 
-{% doc "Editor Integration.md" %}
+Rome aims to have implementations for the following:
 
-{% doc "Diagnostics.md" %}
+ - Bundling
+ - Compiling
+ - Documentation Generation
+ - Formatting
+ - Linting
+ - Minification
+ - Package Management
+ - Testing
+ - Type Checking
 
-{% doc "Contributing.md" %}
+**Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io) and [Yarn](https://yarnpkg.com). **Rome** is maintained by a [team of contributors](/contributing/team).
+
+<ul class="home-actions">
+	<li>
+		<a href="/docs/getting-started">Getting Started</a>
+	</li>
+</ul>
+
+
+<ul class="home-actions">
+	<li>
+		<a href="https://github.com/romejs/rome">GitHub</a>
+	</li>
+	<li>
+		<a href="https://opencollective.com/romejs">OpenCollective</a>
+	</li>
+	<li>
+		<a href="https://twitter.com/romejsdev">Twitter</a>
+	</li>
+</ul>

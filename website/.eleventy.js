@@ -3,9 +3,9 @@ const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
 const fs = require("fs");
 const pluginTOC = require('eleventy-plugin-nesting-toc');
+const path = require("path");
 
-
-const Options = {
+const opts = {
   dirInput: "src",
   staticPath: "static",
   docsPath: "_includes/docs",
@@ -20,7 +20,7 @@ module.exports = function (eleventyConfig) {
   // workaround to let eleventry rebuild when the css stylesheet gets rebuild.
   eleventyConfig.setUseGitIgnore(false);
 
-  eleventyConfig.addPassthroughCopy(Options.staticPath);
+  eleventyConfig.addPassthroughCopy(opts.staticPath);
 
   eleventyConfig.addPlugin(syntaxHighlight);
   eleventyConfig.addPlugin(pluginTOC);
@@ -35,8 +35,9 @@ module.exports = function (eleventyConfig) {
   });
 
   eleventyConfig.setLibrary("md", md);
-  eleventyConfig.addShortcode("doc", function (file) {
-    const relativeFilePath = `./${Options.dirInput}/${Options.docsPath}/${file}`;
+
+  eleventyConfig.addShortcode("rootmd", function (file) {
+    const relativeFilePath = path.join(__dirname, '..', file);
     const data = fs.readFileSync(relativeFilePath, function (err, contents) {
       if (err) {
         throw new Error(err);
@@ -48,8 +49,8 @@ module.exports = function (eleventyConfig) {
 
   return {
     dir: {
-      input: Options.dirInput,
-      output: Options.dirOutput,
+      input: opts.dirInput,
+      output: opts.dirOutput,
     },
     passthroughFileCopy: true,
     templateFormats: ["njk", "md", "css", "html", "yml"],

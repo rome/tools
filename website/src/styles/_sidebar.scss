@@ -42,6 +42,13 @@
     font-weight: bold;
     padding: $unit 0 $unit $unit * 2;
 
+    h2 {
+      text-transform: uppercase;
+      font-size: 0.8em;
+      font-weight: bold;
+      font-family: inherit;
+    }
+
     ul {
       margin: 0;
       padding: 0;

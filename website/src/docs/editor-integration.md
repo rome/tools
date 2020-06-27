@@ -1,6 +1,13 @@
+---
+title: Editor Integration
+layout: layouts/base.njk
+---
+
 # Editor Integration
 
 Rome implements the [Language Server Protocol (LSP)](https://microsoft.github.io/language-server-protocol/) implemented by [various editors](https://microsoft.github.io/language-server-protocol/implementors/tools/).
+
+When an editor extension is installed, it will find and start the version of Rome installed into your project. As we improve Rome any changes will automatically work with your editor!
 
 ## VSCode
 
