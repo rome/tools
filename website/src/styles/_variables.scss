@@ -16,9 +16,11 @@ $gray-7: lighten(#27272A, 75%);
 $gray-8: lighten(#27272A, 80%);
 
 :root {
+  --primary-color: #{$color-4};
   --logo-font-color: #{$gray-4};
   --background-color: #fff;
   --font-color: #{$gray-4};
+  --sub-text-color: #{$gray-6};
   --top-border-color: #{$gray-4};
   --soft-border-color: #{$gray-7};
   --pattern-color: #{rgba($gray-7, 0.6)};
