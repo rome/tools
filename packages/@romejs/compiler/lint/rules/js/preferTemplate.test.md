@@ -42,13 +42,13 @@ console.log(`${foo}baz`);
 
   ✖ Template literals are preferred over string concatenation.
 
-    console.log((1 * 2) + 'baz')
+    console.log((1 * 2) + 'foo')
                 ^^^^^^^^^^^^^^^
 
   ℹ Recommended fix
 
-  - (1 * 2) + 'baz'
-  + `${1 * 2}baz`
+  - (1 * 2) + 'foo'
+  + `${1 * 2}foo`
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -59,6 +59,262 @@ console.log(`${foo}baz`);
 ### `1: formatted`
 
 ```
-console.log(`${1 * 2}baz`);
+console.log(`${1 * 2}foo`);
+
+```
+
+### `2`
+
+```
+
+ unknown:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Template literals are preferred over string concatenation.
+
+    console.log(1 + 'foo' + 2 + 'bar' + 'baz' + 3)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Recommended fix
+
+  - 1 + 'foo' + 2 + 'bar' + 'baz' + 3
+  + `${1}foo${2}barbaz${3}`
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `2: formatted`
+
+```
+console.log(`${1}foo${2}barbaz${3}`);
+
+```
+
+### `3`
+
+```
+
+ unknown:1:13 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Template literals are preferred over string concatenation.
+
+    console.log((1 + 'foo') * 2)
+                 ^^^^^^^^^
+
+  ℹ Recommended fix
+
+  - 1 + 'foo'
+  + `${1}foo`
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `3: formatted`
+
+```
+console.log(`${1}foo` * 2);
+
+```
+
+### `4`
+
+```
+
+ unknown:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Template literals are preferred over string concatenation.
+
+    console.log((1 * (2 + 'foo')) + 'bar')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Recommended fix
+
+  - (1 * (2 + 'foo')) + 'bar'
+  + `${1 * (2 + "foo")}bar`
+
+ unknown:1:18 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Template literals are preferred over string concatenation.
+
+    console.log((1 * (2 + 'foo')) + 'bar')
+                      ^^^^^^^^^
+
+  ℹ Recommended fix
+
+  - 2 + 'foo'
+  + `${2}foo`
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 2 problems
+
+```
+
+### `4: formatted`
+
+```
+console.log(`${1 * `${2}foo`}bar`);
+
+```
+
+### `5`
+
+```
+
+ unknown:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Template literals are preferred over string concatenation.
+
+    console.log('foo' + 'bar')
+                ^^^^^^^^^^^^^
+
+  ℹ Recommended fix
+
+  - 'foo' + 'bar'
+  + "foobar"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `5: formatted`
+
+```
+console.log("foobar");
+
+```
+
+### `6`
+
+```
+
+ unknown:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Template literals are preferred over string concatenation.
+
+    console.log('foo' + '"bar')
+                ^^^^^^^^^^^^^^
+
+  ℹ Recommended fix
+
+  - 'foo' + '"bar'
+  + `foo"bar`
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `6: formatted`
+
+```
+console.log(`foo"bar`);
+
+```
+
+### `7`
+
+```
+
+ unknown:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Template literals are preferred over string concatenation.
+
+    console.log(`foo` + 1)
+                ^^^^^^^^^
+
+  ℹ Recommended fix
+
+  - `foo` + 1
+  + `foo${1}`
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `7: formatted`
+
+```
+console.log(`foo${1}`);
+
+```
+
+### `8`
+
+```
+
+ unknown:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Template literals are preferred over string concatenation.
+
+    console.log('foo' + `bar${`baz${'bat' + 'bam'}`}` + 'boo')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Recommended fix
+
+  - 'foo' + `bar${`baz${'bat' + 'bam'}`}` + 'boo'
+  + `foobarbaz${"bat" + "bam"}boo`
+
+ unknown:1:32 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Template literals are preferred over string concatenation.
+
+    console.log('foo' + `bar${`baz${'bat' + 'bam'}`}` + 'boo')
+                                    ^^^^^^^^^^^^^
+
+  ℹ Recommended fix
+
+  - 'bat' + 'bam'
+  + "batbam"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 2 problems
+
+```
+
+### `8: formatted`
+
+```
+console.log(`foobarbaz${"batbam"}boo`);
+
+```
+
+### `9`
+
+```
+
+ unknown:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Template literals are preferred over string concatenation.
+
+    console.log('foo' + 1 + 2)
+                ^^^^^^^^^^^^^
+
+  ℹ Recommended fix
+
+  - 'foo' + 1 + 2
+  + `foo${1}${2}`
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `9: formatted`
+
+```
+console.log(`foo${1}${2}`);
 
 ```
