@@ -4,6 +4,7 @@ import {getBindingIdentifiers} from "@romejs/js-ast-utils";
 import {Dict} from "@romejs/typescript-helpers";
 import {ArgumentsBinding} from "@romejs/compiler/scope/bindings";
 import {descriptions} from "@romejs/diagnostics";
+import {HookCallReturn} from "@romejs/compiler/api/createHook";
 
 type State = {
 	usedBindings: Dict<boolean>;
@@ -21,7 +22,7 @@ const ignoreVariables = ["React"];
 const provider = createHook<State, undefined, AnyNode>({
 	name: "noUnusedVariablesProvider",
 	initialState,
-	call(path: Path, state: State) {
+	call(path: Path, state: State): HookCallReturn<AnyNode, State> {
 		const {node} = path;
 		if (
 			node.type !== "JSReferenceIdentifier" &&
@@ -46,6 +47,7 @@ const provider = createHook<State, undefined, AnyNode>({
 			value: node,
 			state: {
 				...state,
+				// @ts-ignore https://github.com/microsoft/TypeScript/issues/39278
 				usedBindings: {
 					...state.usedBindings,
 					[node.name]: true,

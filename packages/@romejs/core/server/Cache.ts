@@ -18,7 +18,7 @@ import {AbsoluteFilePath, AbsoluteFilePathMap} from "@romejs/path";
 import {createDirectory, readFileText, removeFile, writeFile} from "@romejs/fs";
 import {stringifyJSON} from "@romejs/codec-json";
 
-type CacheEntry = {
+export type CacheEntry = {
 	version: string;
 	configHash: string;
 	projectDir: string;

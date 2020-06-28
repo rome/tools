@@ -7,6 +7,12 @@
 
 import {Path, TransformExitResult} from "@romejs/compiler";
 
+export type HookCallReturn<CallReturn, State> = {
+	bubble?: boolean;
+	value: CallReturn;
+	state: State;
+};
+
 export type HookDescriptor<State, CallArg, CallReturn> = {
 	name: string;
 	initialState: State extends void ? never : State;
@@ -14,11 +20,7 @@ export type HookDescriptor<State, CallArg, CallReturn> = {
 		path: Path,
 		state: State,
 		arg: CallArg,
-	) => {
-		bubble?: boolean;
-		value: CallReturn;
-		state: State;
-	};
+	) => HookCallReturn<CallReturn, State>;
 	exit?: (path: Path, state: State) => TransformExitResult;
 };
 
