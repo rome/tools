@@ -582,6 +582,8 @@ export default class TestServerRunner {
 			});
 		}
 
+		console.log(frames);
+
 		bridge.endWithError(
 			new BridgeDiagnosticsError(
 				deriveDiagnosticFromErrorStructure(
