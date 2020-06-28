@@ -973,7 +973,10 @@ export default class ServerRequest {
 
 		await cache.update(
 			path,
-			(cacheEntry) => ({
+			(
+				// @ts-ignore https://github.com/microsoft/TypeScript/issues/39278
+				cacheEntry,
+			) => ({
 				lint: {
 					...cacheEntry.lint,
 					[cacheKey]: res,
@@ -1039,7 +1042,10 @@ export default class ServerRequest {
 		// There's a race condition here between the file being opened and then rewritten
 		await cache.update(
 			path,
-			(cacheEntry) => ({
+			(
+				// @ts-ignore https://github.com/microsoft/TypeScript/issues/39278
+				cacheEntry,
+			) => ({
 				compile: {
 					...cacheEntry.compile,
 					[cacheKey]: {

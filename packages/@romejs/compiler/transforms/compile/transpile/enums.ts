@@ -1,10 +1,10 @@
 import {
 	AnyJSExpression,
-	AnyJSStatement,
 	JSBindingIdentifier,
-	JSFunctionExpression,
+	JSCallExpression,
 	TSEnumDeclaration,
 	jsCallExpression,
+	jsFunctionExpression,
 	jsNumericLiteral,
 	jsStringLiteral,
 } from "@romejs/ast";
@@ -25,15 +25,26 @@ type PreviousEnumMembers = Map<string, EvalResult["value"]>;
 function buildEnumWrapper(
 	id: JSBindingIdentifier,
 	assignments: Array<AnyJSExpression>,
-): AnyJSExpression {
-	const expressionStatement = jsCallExpression.assert(
-		template.expression`
-		(function (${id}) {})(${id} || (${id} = {}));
-	`,
+): JSCallExpression {
+	const call = jsCallExpression.assert(
+		template.expression`(function (${id}) {})(${id} || (${id} = {}));`,
 	);
-	const functionExpression = (expressionStatement.callee as JSFunctionExpression);
-	functionExpression.body.body = (assignments as Array<AnyJSStatement>);
-	return (expressionStatement as AnyJSExpression);
+
+	const func = jsFunctionExpression.assert(call.callee);
+
+	return {
+		...call,
+		callee: {
+			...func,
+			body: {
+				...func.body,
+				body: assignments.map((expression) => ({
+					type: "JSExpressionStatement",
+					expression,
+				})),
+			},
+		},
+	};
 }
 
 function buildEnumMember(
@@ -78,12 +89,12 @@ function enumFill(
 	const assignments = x.map(([memberName, memberValue]) =>
 		buildEnumMember(
 			typeof memberValue !== "string" && memberValue.type === "JSStringLiteral",
-			({...node.id} as JSBindingIdentifier),
+			{...node.id},
 			memberName,
 			memberValue,
 		)
 	);
-	return buildEnumWrapper(({...node.id} as JSBindingIdentifier), assignments);
+	return buildEnumWrapper({...node.id}, assignments);
 }
 
 function translateEnumValues(
