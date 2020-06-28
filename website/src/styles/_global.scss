@@ -79,6 +79,68 @@ a:active {
   opacity: 1;
 }
 
+
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.overlay{
+  transform: translateX(100%);
+  width: 100%;
+  height: 100%;
+
+  @include desktop-only() {
+    display: none;
+  }
+
+  @include mobile-only() {
+    @include transition-timing;
+    position: fixed;
+    background: #181818;
+    opacity: 0;
+    transition-property: opacity, transform;
+    display: block;
+    z-index: 1;
+    &.visible {
+      transform: translateX(0);
+      opacity: 0.6;
+    }
+  }
+}
+
+.main {
+  overflow: hidden;
+  width: 80%;
+  border-right: 1px solid var(--soft-border-color);
+  @include mobile-only() {
+    margin-top: $unit * 4;
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+.skip-to-content a {
+  @include transition-timing;
+  transition-property: top;
+  position: absolute;
+  right: 0;
+  top: -40px;
+  padding: $unit / 2 $unit;
+  z-index: 100;
+  background: var(--logo-font-color);
+  color: var(--background-color);
+  font-weight: bold;
+}
+
+.skip-to-content a:focus{
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: $unit;
+  z-index: 100;
+}
+
 .sr-only {
   position: absolute !important;
   width: 1px !important;
