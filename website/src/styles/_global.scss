@@ -101,3 +101,21 @@ a:active {
   clip: auto !important;
   white-space: normal !important;
 }
+
+.icon {
+
+    .path-1, .path-2 {
+      fill: var(--logo-font-color);
+    }
+
+    .path-2 {
+      opacity: 0.7;
+    }
+
+    &:active{
+      .path-1, .path-2{
+        fill: var(--primary-color);
+      }
+    }
+
+}

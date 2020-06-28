@@ -85,20 +85,10 @@
   }
 
   .external-links {
-    .open-collective {
-      .one {
-        fill: var(--toc-link-color-hover);
-      }
 
-      .two {
-        fill: var(--logo-font-color);
-      }
-    }
-
-    svg:active{
-      .cls-1, .one, .two{
-        fill: var(--primary-color);
-      }
+    svg{
+      width: 24px;
+      height: 24px;
     }
 
     @include desktop-only() {
@@ -107,12 +97,6 @@
 
     ul {
       display: flex;
-    }
-
-    svg {
-      .cls-1 {
-        fill: var(--logo-font-color);
-      }
     }
 
     a{
