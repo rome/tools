@@ -874,7 +874,7 @@ export default class TestServerRunner {
 			const folderPercent = percentInsideCoverageFolder(folder);
 
 			rows.push([
-				" ".repeat(depth) + `<emphasis>${name}</emphasis>`,
+				`${" ".repeat(depth)}<emphasis>${name}</emphasis>`,
 				formatPercent(folderPercent.functions),
 				formatPercent(folderPercent.branches),
 				formatPercent(folderPercent.lines),

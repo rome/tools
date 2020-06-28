@@ -110,10 +110,7 @@ readIndexFile(
 	[
 		{
 			iterator({language, category, nodeType}) {
-				return (
-					`import ${nodeType} from "./${language}/${category}/${nodeType}";\n` +
-					`builders.set("${nodeType}", ${nodeType});\n\n`
-				);
+				return `import ${nodeType} from "./${language}/${category}/${nodeType}";\nbuilders.set("${nodeType}", ${nodeType});\n\n`;
 			},
 		},
 	],
@@ -126,10 +123,7 @@ readIndexFile(
 		{
 			iterator({language, category, nodeType}) {
 				if (language === "js") {
-					return (
-						`import ${nodeType} from "./${category}/${nodeType}";\n` +
-						`evaluators.set("${nodeType}", ${nodeType});\n\n`
-					);
+					return `import ${nodeType} from "./${category}/${nodeType}";\nevaluators.set("${nodeType}", ${nodeType});\n\n`;
 				} else {
 					return "";
 				}

@@ -258,9 +258,7 @@ export default function buildMessageCodeFrame(
 	}
 
 	// Build up the line we display when source lines are omitted
-	const omittedLine =
-		`<emphasis><pad align="right" width="${maxGutterLength}">...</pad></emphasis>` +
-		GUTTER;
+	const omittedLine = `<emphasis><pad align="right" width="${maxGutterLength}">...</pad></emphasis>${GUTTER}`;
 
 	// Build the frame
 	const result = [];
@@ -273,8 +271,7 @@ export default function buildMessageCodeFrame(
 		const {pointer, gutter, line} = selection;
 
 		result.push(
-			`<pad align="right" width="${maxGutterLength}"><emphasis>${gutter}</emphasis></pad>` +
-			line,
+			`<pad align="right" width="${maxGutterLength}"><emphasis>${gutter}</emphasis></pad>${line}`,
 		);
 
 		if (pointer !== undefined) {

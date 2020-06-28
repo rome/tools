@@ -170,64 +170,6 @@ console.log(`${1 * `${2}foo`}bar`);
 
   ✖ Template literals are preferred over string concatenation.
 
-    console.log('foo' + 'bar')
-                ^^^^^^^^^^^^^
-
-  ℹ Recommended fix
-
-  - 'foo' + 'bar'
-  + "foobar"
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `5: formatted`
-
-```
-console.log("foobar");
-
-```
-
-### `6`
-
-```
-
- unknown:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Template literals are preferred over string concatenation.
-
-    console.log('foo' + '"bar')
-                ^^^^^^^^^^^^^^
-
-  ℹ Recommended fix
-
-  - 'foo' + '"bar'
-  + `foo"bar`
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `6: formatted`
-
-```
-console.log(`foo"bar`);
-
-```
-
-### `7`
-
-```
-
- unknown:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Template literals are preferred over string concatenation.
-
     console.log(`foo` + 1)
                 ^^^^^^^^^
 
@@ -242,14 +184,14 @@ console.log(`foo"bar`);
 
 ```
 
-### `7: formatted`
+### `5: formatted`
 
 ```
 console.log(`foo${1}`);
 
 ```
 
-### `8`
+### `6`
 
 ```
 
@@ -265,32 +207,20 @@ console.log(`foo${1}`);
   - 'foo' + `bar${`baz${'bat' + 'bam'}`}` + 'boo'
   + `foobarbaz${"bat" + "bam"}boo`
 
- unknown:1:32 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Template literals are preferred over string concatenation.
-
-    console.log('foo' + `bar${`baz${'bat' + 'bam'}`}` + 'boo')
-                                    ^^^^^^^^^^^^^
-
-  ℹ Recommended fix
-
-  - 'bat' + 'bam'
-  + "batbam"
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✖ Found 2 problems
+✖ Found 1 problem
 
 ```
 
-### `8: formatted`
+### `6: formatted`
 
 ```
-console.log(`foobarbaz${"batbam"}boo`);
+console.log(`foobarbaz${"bat" + "bam"}boo`);
 
 ```
 
-### `9`
+### `7`
 
 ```
 
@@ -312,9 +242,23 @@ console.log(`foobarbaz${"batbam"}boo`);
 
 ```
 
-### `9: formatted`
+### `7: formatted`
 
 ```
 console.log(`foo${1}${2}`);
+
+```
+
+### `8`
+
+```
+✔ No known problems!
+
+```
+
+### `8: formatted`
+
+```
+console.log("foo" + "bar");
 
 ```

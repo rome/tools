@@ -171,7 +171,7 @@ function formatFunction(val: Function, opts: FormatOptions): string {
 	let label = `Function ${name}`;
 
 	if (isNativeFunction(val)) {
-		label = `Native` + label;
+		label = `Native${label}`;
 	}
 
 	if (Object.keys(val).length === 0) {
