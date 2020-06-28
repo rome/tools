@@ -231,13 +231,26 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			return node;
 		}
 
-		finishNode<T extends AnyNode>(start: Position, node: T): T {
+		finishNode<T extends AnyNode>(
+			start: Position,
+			node: T,
+		): T & {
+			loc: SourceLocation;
+		} {
 			return this.finishNodeAt(start, this.getLastEndPosition(), node);
 		}
 
-		finishNodeAt<T extends AnyNode>(start: Position, end: Position, node: T): T {
+		finishNodeAt<T extends AnyNode>(
+			start: Position,
+			end: Position,
+			node: T,
+		): T & {
+			loc: SourceLocation;
+		} {
 			// Maybe mutating `node` is better...?
-			const newNode: T = {
+			const newNode: T & {
+				loc: SourceLocation;
+			} = {
 				...node,
 				loc: this.finishLocAt(start, end),
 			};

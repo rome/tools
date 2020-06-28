@@ -6,7 +6,6 @@
  */
 
 import {Builder, Token, concat, group, space} from "@romejs/formatter";
-
 import {TSTypeAliasTypeAnnotation} from "@romejs/ast";
 
 export default function TSTypeAliasTypeAnnotation(

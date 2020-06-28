@@ -106,7 +106,9 @@ JSRoot {
 										}
 									}
 									elementTypes: Array [
-										TSStringKeywordTypeAnnotation {
+										TSTupleElement {
+											name: undefined
+											optional: false
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -120,9 +122,26 @@ JSRoot {
 													line: 1
 												}
 											}
+											typeAnnotation: TSStringKeywordTypeAnnotation {
+												loc: Object {
+													filename: "input.ts"
+													end: Object {
+														column: 14
+														index: 14
+														line: 1
+													}
+													start: Object {
+														column: 8
+														index: 8
+														line: 1
+													}
+												}
+											}
 										}
 									]
-									rest: TSArrayType {
+									rest: TSTupleElement {
+										name: undefined
+										optional: false
 										loc: Object {
 											filename: "input.ts"
 											end: Object {
@@ -131,23 +150,38 @@ JSRoot {
 												line: 1
 											}
 											start: Object {
-												column: 19
-												index: 19
+												column: 16
+												index: 16
 												line: 1
 											}
 										}
-										elementType: TSNumberKeywordTypeAnnotation {
+										typeAnnotation: TSArrayType {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
-													column: 25
-													index: 25
+													column: 27
+													index: 27
 													line: 1
 												}
 												start: Object {
 													column: 19
 													index: 19
 													line: 1
+												}
+											}
+											elementType: TSNumberKeywordTypeAnnotation {
+												loc: Object {
+													filename: "input.ts"
+													end: Object {
+														column: 25
+														index: 25
+														line: 1
+													}
+													start: Object {
+														column: 19
+														index: 19
+														line: 1
+													}
 												}
 											}
 										}

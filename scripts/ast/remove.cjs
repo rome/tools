@@ -8,7 +8,6 @@
 require("../_setup.cjs");
 
 const path = require("path");
-const fs = require("fs");
 
 const filename = process.argv[2];
 if (filename === undefined) {
@@ -22,8 +21,10 @@ const {
 	astFolder,
 } = require("../_constants.cjs");
 
-fs.unlinkSync(path.join(formatterFolder, `${filename}.ts`));
-fs.unlinkSync(path.join(analysisFolder, `${filename}.ts`));
-fs.unlinkSync(path.join(astFolder, `${filename}.ts`));
+const {unlink} = require("../_utils.cjs");
+
+unlink(path.join(formatterFolder, `${filename}.ts`));
+unlink(path.join(analysisFolder, `${filename}.ts`));
+unlink(path.join(astFolder, `${filename}.ts`));
 
 require("./update.cjs");

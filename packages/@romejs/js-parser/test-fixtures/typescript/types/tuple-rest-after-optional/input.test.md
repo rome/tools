@@ -144,7 +144,9 @@ JSRoot {
 									line: 1
 								}
 							}
-							rest: TSArrayType {
+							rest: TSTupleElement {
+								name: undefined
+								optional: false
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -153,17 +155,17 @@ JSRoot {
 										line: 1
 									}
 									start: Object {
-										column: 43
-										index: 43
+										column: 40
+										index: 40
 										line: 1
 									}
 								}
-								elementType: TSNumberKeywordTypeAnnotation {
+								typeAnnotation: TSArrayType {
 									loc: Object {
 										filename: "input.ts"
 										end: Object {
-											column: 49
-											index: 49
+											column: 51
+											index: 51
 											line: 1
 										}
 										start: Object {
@@ -172,10 +174,27 @@ JSRoot {
 											line: 1
 										}
 									}
+									elementType: TSNumberKeywordTypeAnnotation {
+										loc: Object {
+											filename: "input.ts"
+											end: Object {
+												column: 49
+												index: 49
+												line: 1
+											}
+											start: Object {
+												column: 43
+												index: 43
+												line: 1
+											}
+										}
+									}
 								}
 							}
 							elementTypes: Array [
-								TSNumberKeywordTypeAnnotation {
+								TSTupleElement {
+									name: undefined
+									optional: false
 									loc: Object {
 										filename: "input.ts"
 										end: Object {
@@ -189,8 +208,25 @@ JSRoot {
 											line: 1
 										}
 									}
+									typeAnnotation: TSNumberKeywordTypeAnnotation {
+										loc: Object {
+											filename: "input.ts"
+											end: Object {
+												column: 29
+												index: 29
+												line: 1
+											}
+											start: Object {
+												column: 23
+												index: 23
+												line: 1
+											}
+										}
+									}
 								}
-								TSOptionalType {
+								TSTupleElement {
+									name: undefined
+									optional: true
 									loc: Object {
 										filename: "input.ts"
 										end: Object {

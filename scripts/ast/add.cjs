@@ -21,11 +21,7 @@ const {write, getBuilderName} = require("../_utils.cjs");
 const language = process.argv[2];
 const nodeType = process.argv[3];
 const category = process.argv[4];
-if (
-	language === undefined ||
-	nodeType === undefined ||
-	category === undefined
-) {
+if (language === undefined || nodeType === undefined || category === undefined) {
 	console.error("node scripts/ast/add.cjs [language] [node-type] [category]");
 	process.exit(1);
 }
@@ -33,7 +29,7 @@ if (
 const builderName = getBuilderName(nodeType);
 
 // Write AST def
-let file = `import {JSNodeBase} from "../index";
+let file = `import {JSNodeBase} from "../../index";
 import {createBuilder} from "../../utils";
 
 export type ${nodeType} = JSNodeBase & {
@@ -59,9 +55,8 @@ const builderDefFile = path.join(
 	category,
 	`${nodeType}.ts`,
 );
-const builderContent = `import Builder from "../../Builder";
-import {AnyNode, ${nodeType}} from "@romejs/js-ast";
-import {Token} from "../../tokens";
+const builderContent = `import {${nodeType}} from "@romejs/ast";
+import {Builder, Token} from "@romejs/formatter";
 
 export default function ${nodeType}(builder: Builder, node: ${nodeType}): Token {
 	throw new Error("unimplemented");
