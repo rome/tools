@@ -1,54 +1,60 @@
 name: CI
-on: [push, pull_request]
+on:
+	push:
+		branches:
+			- main
+	pull_request:
+		branches:
+			- main
 
 jobs:
-  typescript:
-    runs-on: ubuntu-latest
-    name: TypeScript check
+	typescript:
+		runs-on: ubuntu-latest
+		name: TypeScript check
 
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '13.x'
-      - name: Run TypeScript
-        run: node ./node_modules/.bin/tsc --noEmit
+		steps:
+			- uses: actions/checkout@v2
+			- uses: actions/setup-node@v1
+				with:
+					node-version: '13.x'
+			- name: Run TypeScript
+				run: node ./node_modules/.bin/tsc --noEmit
 
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
+	lint:
+		name: Lint
+		runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '13.x'
-      - name: Run Rome lint
-        run: node scripts/dev-rome lint
+		steps:
+			- uses: actions/checkout@v2
+			- uses: actions/setup-node@v1
+				with:
+					node-version: '13.x'
+			- name: Run Rome lint
+				run: node scripts/dev-rome lint
 
-  generated:
-    name: Generated files check
-    runs-on: ubuntu-latest
+	generated:
+		name: Generated files check
+		runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '13.x'
-      - name: Check if generated files need to be updated
-        run: node scripts/assert-generated
+		steps:
+			- uses: actions/checkout@v2
+			- uses: actions/setup-node@v1
+				with:
+					node-version: '13.x'
+			- name: Check if generated files need to be updated
+				run: node scripts/assert-generated
 
-  tests:
-    name: Tests
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+	tests:
+		name: Tests
+		runs-on: ${{ matrix.os }}
+		strategy:
+			matrix:
+				os: [ubuntu-latest, windows-latest, macos-latest]
 
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '13.x'
-      - name: Run Rome test
-        run: node scripts/dev-rome test --freeze-snapshots
+		steps:
+			- uses: actions/checkout@v2
+			- uses: actions/setup-node@v1
+				with:
+					node-version: '13.x'
+			- name: Run Rome test
+				run: node scripts/dev-rome test --freeze-snapshots
