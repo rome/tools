@@ -22,17 +22,77 @@ ul.home-actions {
   padding: 0;
   display: flex;
   align-items: stretch;
-  border: 1px solid red;
   font-size: 1.5em;
-  margin-bottom: 20px;
+  margin: $unit * 2 0;
   border-radius: 5px;
+  text-align: center;
+  justify-items: center;
+  white-space: nowrap;
+
+  @media only screen and (max-width: 900px) {
+    flex-direction: column;
+  }
+
+  svg{
+    width: 40px;
+    height: 40px;
+  }
+
+  a.getting-started{
+    border: var(--logo-font-color) 4px solid;
+    border-radius: 60px;
+    padding: 12px 32px;
+    padding-top: 6px;
+    perspective: inherit;
+    position: relative;
+    color: #27272A;
+    text-decoration: none;
+    display: inline;
+  }
+
+  a.getting-started:before{
+    content: " ";
+    position: absolute;
+    z-index: -1;
+    border-radius: 60px;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    background: var(--primary-color);
+  }
+
+  //align text to icon
+  a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  svg{
+    margin-right: 16px;
+  }
+
+  svg{
+    margin-right: 16px;
+  }
+
+  &:last-child{
+
+    margin-bottom: 0;
+
+  }
 
   li {
     padding: 10px;
     flex: 1;
     text-align: center;
     list-style: none;
-    border-right: 1px solid red;
+    border-right: 1px solid var(--soft-border-color);
+
+    @media only screen and (max-width: 900px) {
+      border-right: none;
+    }
 
     &:last-child {
       border-right: none;
