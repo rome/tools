@@ -81,6 +81,7 @@ import {DiagnosticsProcessorOptions} from "@romejs/diagnostics/DiagnosticsProces
 import {JSONObject} from "@romejs/codec-json";
 import {VCSClient} from "@romejs/vcs";
 import {InlineSnapshotUpdates} from "../test-worker/SnapshotManager";
+import {CacheEntry} from "./Cache";
 
 type ServerRequestOptions = {
 	server: Server;
@@ -973,13 +974,14 @@ export default class ServerRequest {
 
 		await cache.update(
 			path,
-			// @ts-ignore https://github.com/microsoft/TypeScript/issues/39278
-			(cacheEntry) => ({
-				lint: {
-					...cacheEntry.lint,
-					[cacheKey]: res,
-				},
-			}),
+			(cacheEntry) =>
+				({
+					lint: {
+						...cacheEntry.lint,
+						[cacheKey]: res,
+					},
+				} as CacheEntry)
+			,
 		);
 
 		return res;
@@ -1040,16 +1042,17 @@ export default class ServerRequest {
 		// There's a race condition here between the file being opened and then rewritten
 		await cache.update(
 			path,
-			// @ts-ignore https://github.com/microsoft/TypeScript/issues/39278
-			(cacheEntry) => ({
-				compile: {
-					...cacheEntry.compile,
-					[cacheKey]: {
-						...res,
-						cached: true,
+			(cacheEntry) =>
+				({
+					compile: {
+						...cacheEntry.compile,
+						[cacheKey]: {
+							...res,
+							cached: true,
+						},
 					},
-				},
-			}),
+				} as CacheEntry)
+			,
 		);
 
 		return res;
