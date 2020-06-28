@@ -45,6 +45,7 @@ import {
 	ConstTSAccessibility,
 	ConstTSModifier,
 	JSAmbiguousFlowTypeCastExpression,
+	JSBindingIdentifier,
 	JSClassDeclaration,
 	JSFunctionDeclaration,
 	JSIdentifier,
@@ -74,12 +75,12 @@ import {
 	TSModuleBlock,
 	TSModuleDeclaration,
 	TSNamespaceExportDeclaration,
-	TSOptionalType,
 	TSParenthesizedType,
 	TSPropertySignature,
 	TSSignatureDeclarationMeta,
 	TSTemplateLiteralTypeAnnotation,
 	TSThisType,
+	TSTupleElement,
 	TSTupleType,
 	TSTypeAliasTypeAnnotation,
 	TSTypeAssertion,
@@ -964,15 +965,15 @@ function parseTSTupleType(parser: JSParser): TSTupleType {
 
 	//   If there's a rest element, it must be at the end of the tuple
 	let seenOptionalElement = false;
-	const elementTypes: TSTupleType["elementTypes"] = [];
-	let rest: undefined | AnyTSPrimary;
+	const elementTypes: Array<TSTupleElement> = [];
+	let rest: undefined | TSTupleElement;
 	for (const {type, isRest} of elementDefs) {
 		if (rest !== undefined) {
 			// No elements should come after a rest, we should have already produced an error
 			continue;
 		}
 
-		if (type.type === "TSOptionalType") {
+		if (type.optional) {
 			seenOptionalElement = true;
 		} else if (seenOptionalElement && !isRest) {
 			parser.addDiagnostic({
@@ -998,44 +999,88 @@ function parseTSTupleType(parser: JSParser): TSTupleType {
 	);
 }
 
-function parseTSTupleElementType(
+function parseTSTupleElementTypeInner(
 	parser: JSParser,
 ): {
-	type: AnyTSPrimary | TSOptionalType;
-	isRest: boolean;
+	name: undefined | JSBindingIdentifier;
+	typeAnnotation: AnyTSPrimary;
+	optional: boolean;
 } {
-	// parses `...TsType[]`
-	if (parser.match(tt.ellipsis)) {
-		parser.next(); // skips ellipsis
-		const typeAnnotation = parseTSType(parser);
-		hasCommaAfterRest(parser);
+	let typeAnnotation = parseTSType(parser);
+	let optional = parser.eat(tt.question);
+	let name: undefined | JSBindingIdentifier;
 
-		return {
-			isRest: true,
-			type: typeAnnotation,
-		};
-	}
+	if (parser.eat(tt.colon)) {
+		if (
+			typeAnnotation.type === "TSTypeReference" &&
+			typeAnnotation.typeName.type === "JSReferenceIdentifier"
+		) {
+			name = toBindingIdentifier(parser, typeAnnotation.typeName);
+			typeAnnotation = parseTSType(parser);
+		} else {
+			parser.addDiagnostic({
+				loc: typeAnnotation.loc,
+				description: descriptions.JS_PARSER.TS_TUPLE_ELEMENT_LABEL_INCORRECT,
+			});
+		}
 
-	const typeAnnotation = parseTSType(parser);
-
-	// Parses `TsType?`
-	if (parser.eat(tt.question)) {
-		const start = parser.getLoc(typeAnnotation).start;
-		return {
-			isRest: false,
-			type: parser.finishNode(
-				start,
-				{
-					type: "TSOptionalType",
-					typeAnnotation,
-				},
-			),
-		};
+		if (parser.match(tt.question)) {
+			parser.addDiagnostic({
+				description: descriptions.JS_PARSER.TS_TUPLE_ELEMENT_OPTIONAL_TRAILING,
+			});
+			parser.next();
+			optional = true;
+		}
 	}
 
 	return {
-		isRest: false,
-		type: typeAnnotation,
+		typeAnnotation,
+		optional,
+		name,
+	};
+}
+
+function parseTSTupleElementType(
+	parser: JSParser,
+): {
+	type: TSTupleElement;
+	isRest: boolean;
+} {
+	const start = parser.getPosition();
+	let isRest = false;
+	let typeAnnotation;
+	let optional;
+	let name;
+
+	// parses `...TsType[]`
+	if (parser.eat(tt.ellipsis)) {
+		isRest = true;
+		({typeAnnotation, optional, name} = parseTSTupleElementTypeInner(parser));
+		hasCommaAfterRest(parser);
+	} else {
+		({typeAnnotation, optional, name} = parseTSTupleElementTypeInner(parser));
+	}
+
+	const elem = parser.finishNode(
+		start,
+		{
+			type: "TSTupleElement",
+			name,
+			optional,
+			typeAnnotation,
+		},
+	);
+
+	if (optional && isRest) {
+		parser.addDiagnostic({
+			loc: elem.loc,
+			description: descriptions.JS_PARSER.TS_TUPLE_ELEMENT_OPTIONAL_REST,
+		});
+	}
+
+	return {
+		isRest,
+		type: elem,
 	};
 }
 

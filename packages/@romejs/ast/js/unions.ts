@@ -267,7 +267,6 @@ export type AnyTSKeywordTypeAnnotation =
 	| n.TSUnknownKeywordTypeAnnotation;
 
 export type AnyTSPrimary =
-	| n.TSOptionalType
 	| n.TSTypeLiteral
 	| n.TSTypeReference
 	| n.TSThisType

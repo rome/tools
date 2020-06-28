@@ -107,7 +107,9 @@ JSRoot {
 										}
 									}
 									elementTypes: Array [
-										TSStringKeywordTypeAnnotation {
+										TSTupleElement {
+											name: undefined
+											optional: false
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -121,8 +123,25 @@ JSRoot {
 													line: 1
 												}
 											}
+											typeAnnotation: TSStringKeywordTypeAnnotation {
+												loc: Object {
+													filename: "input.ts"
+													end: Object {
+														column: 14
+														index: 14
+														line: 1
+													}
+													start: Object {
+														column: 8
+														index: 8
+														line: 1
+													}
+												}
+											}
 										}
-										TSOptionalType {
+										TSTupleElement {
+											name: undefined
+											optional: true
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -152,7 +171,9 @@ JSRoot {
 												}
 											}
 										}
-										TSOptionalType {
+										TSTupleElement {
+											name: undefined
+											optional: true
 											loc: Object {
 												filename: "input.ts"
 												end: Object {

@@ -107,7 +107,9 @@ JSRoot {
 										}
 									}
 									elementTypes: Array [
-										TSNumberKeywordTypeAnnotation {
+										TSTupleElement {
+											name: undefined
+											optional: false
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -121,8 +123,25 @@ JSRoot {
 													line: 1
 												}
 											}
+											typeAnnotation: TSNumberKeywordTypeAnnotation {
+												loc: Object {
+													filename: "input.ts"
+													end: Object {
+														column: 14
+														index: 14
+														line: 1
+													}
+													start: Object {
+														column: 8
+														index: 8
+														line: 1
+													}
+												}
+											}
 										}
-										TSNumberKeywordTypeAnnotation {
+										TSTupleElement {
+											name: undefined
+											optional: false
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -136,8 +155,25 @@ JSRoot {
 													line: 1
 												}
 											}
+											typeAnnotation: TSNumberKeywordTypeAnnotation {
+												loc: Object {
+													filename: "input.ts"
+													end: Object {
+														column: 22
+														index: 22
+														line: 1
+													}
+													start: Object {
+														column: 16
+														index: 16
+														line: 1
+													}
+												}
+											}
 										}
-										TSNumberKeywordTypeAnnotation {
+										TSTupleElement {
+											name: undefined
+											optional: false
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -149,6 +185,21 @@ JSRoot {
 													column: 24
 													index: 24
 													line: 1
+												}
+											}
+											typeAnnotation: TSNumberKeywordTypeAnnotation {
+												loc: Object {
+													filename: "input.ts"
+													end: Object {
+														column: 30
+														index: 30
+														line: 1
+													}
+													start: Object {
+														column: 24
+														index: 24
+														line: 1
+													}
 												}
 											}
 										}

@@ -7422,7 +7422,7 @@ function ___R$$priv$project$rome$$romejs$string$escape$unescapeJSONString_ts$une
 			this.onSubscriptionChange();
 
 			return {
-				unsubscribe: () => {
+				unsubscribe: async () => {
 					this.unsubscribe(callback);
 				},
 			};
@@ -8800,13 +8800,16 @@ const ___R$project$rome$$romejs$v8$types_ts = {};
 const ___R$project$rome$$romejs$node$errors_ts = {
 		convertPossibleNodeError: ___R$project$rome$$romejs$node$errors_ts$convertPossibleNodeError,
 	};
-
-
 	function ___R$$priv$project$rome$$romejs$node$errors_ts$changeMessage(
 		old,
 		msg,
 	) {
-		const err = new ___R$$priv$project$rome$$romejs$node$errors_ts$Error(msg);
+		const err = new Error(msg);
+
+		// Inherit some NodeJS.ErrnoException props
+		err.code = old.code;
+		err.path = old.path;
+		err.syscall = old.syscall;
 
 		// Without doing something jank we can't retain the original Error constructor ie. TypeError etc
 		// We probably don't need to or actually care
@@ -8882,7 +8885,7 @@ const ___R$project$rome$$romejs$v8$errors_ts = {
 			},
 		);
 	});
-	const ___R$project$rome$$romejs$v8$errors_ts$ERROR_FRAMES_PROP = Symbol();
+	const ___R$project$rome$$romejs$v8$errors_ts$ERROR_FRAMES_PROP = "ERROR_FRAMES";
 
 
 
@@ -14624,25 +14627,6 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSObjectKeywordTypeAnnotation_
 	);
 
 
-  // project-rome/@romejs/ast/js/typescript/TSOptionalType.ts
-const ___R$project$rome$$romejs$ast$js$typescript$TSOptionalType_ts = {
-		get tsOptionalType() {
-			return ___R$project$rome$$romejs$ast$js$typescript$TSOptionalType_ts$tsOptionalType;
-		},
-	};
-
-
-	const ___R$project$rome$$romejs$ast$js$typescript$TSOptionalType_ts$tsOptionalType = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
-		"TSOptionalType",
-		{
-			bindingKeys: {},
-			visitorKeys: {
-				typeAnnotation: true,
-			},
-		},
-	);
-
-
   // project-rome/@romejs/ast/js/typescript/TSParenthesizedType.ts
 const ___R$project$rome$$romejs$ast$js$typescript$TSParenthesizedType_ts = {
 		get tsParenthesizedType() {
@@ -14804,6 +14788,26 @@ const ___R$project$rome$$romejs$ast$js$typescript$TSThisType_ts = {
 		{
 			bindingKeys: {},
 			visitorKeys: {},
+		},
+	);
+
+
+  // project-rome/@romejs/ast/js/typescript/TSTupleElement.ts
+const ___R$project$rome$$romejs$ast$js$typescript$TSTupleElement_ts = {
+		get tsTupleElement() {
+			return ___R$project$rome$$romejs$ast$js$typescript$TSTupleElement_ts$tsTupleElement;
+		},
+	};
+
+
+	const ___R$project$rome$$romejs$ast$js$typescript$TSTupleElement_ts$tsTupleElement = ___R$project$rome$$romejs$ast$utils_ts$createBuilder(
+		"TSTupleElement",
+		{
+			bindingKeys: {},
+			visitorKeys: {
+				name: true,
+				typeAnnotation: true,
+			},
 		},
 	);
 
@@ -18061,22 +18065,6 @@ const ___R$project$rome$$romejs$ast$index_ts = {
 			},
 		);
 	});
-	Object.keys(___R$project$rome$$romejs$ast$js$typescript$TSOptionalType_ts).forEach(function(
-		key,
-	) {
-		if (key === "default") return undefined;
-		Object.defineProperty(
-			___R$project$rome$$romejs$ast$index_ts,
-			key,
-			{
-				enumerable: true,
-				configurable: true,
-				get: function get() {
-					return ___R$project$rome$$romejs$ast$js$typescript$TSOptionalType_ts[key];
-				},
-			},
-		);
-	});
 	Object.keys(
 		___R$project$rome$$romejs$ast$js$typescript$TSParenthesizedType_ts,
 	).forEach(function(key) {
@@ -18217,6 +18205,22 @@ const ___R$project$rome$$romejs$ast$index_ts = {
 				configurable: true,
 				get: function get() {
 					return ___R$project$rome$$romejs$ast$js$typescript$TSThisType_ts[key];
+				},
+			},
+		);
+	});
+	Object.keys(___R$project$rome$$romejs$ast$js$typescript$TSTupleElement_ts).forEach(function(
+		key,
+	) {
+		if (key === "default") return undefined;
+		Object.defineProperty(
+			___R$project$rome$$romejs$ast$index_ts,
+			key,
+			{
+				enumerable: true,
+				configurable: true,
+				get: function get() {
+					return ___R$project$rome$$romejs$ast$js$typescript$TSTupleElement_ts[key];
 				},
 			},
 		);
@@ -25401,6 +25405,18 @@ Error.stackTraceLimit = Infinity;
 			return this.bindings;
 		}
 
+		getBindingNames() {
+			let bindingNames = [];
+
+			let scope = this;
+			while (scope !== undefined) {
+				bindingNames = [...bindingNames, ...scope.getOwnBindingNames()];
+				scope = scope.parentScope;
+			}
+
+			return Array.from(new Set(bindingNames));
+		}
+
 		getOwnBindingNames() {
 			return Array.from(this.bindings.keys());
 		}
@@ -27272,14 +27288,36 @@ function ___R$$priv$project$rome$$romejs$compiler$transforms$compile$transpile$o
 		id,
 		assignments,
 	) {
-		const expressionStatement = ___R$project$rome$$romejs$ast$js$expressions$JSCallExpression_ts$jsCallExpression.assert(
-			___R$project$rome$$romejs$js$ast$utils$template_ts$default.expression`
-		(function (${id}) {})(${id} || (${id} = {}));
-	`,
+		const call = ___R$project$rome$$romejs$ast$js$expressions$JSCallExpression_ts$jsCallExpression.assert(
+			___R$project$rome$$romejs$js$ast$utils$template_ts$default.expression`(function (${id}) {})(${id} || (${id} = {}));`,
 		);
-		const functionExpression = (expressionStatement.callee);
-		functionExpression.body.body = (assignments);
-		return (expressionStatement);
+
+		const func = ___R$project$rome$$romejs$ast$js$expressions$JSFunctionExpression_ts$jsFunctionExpression.assert(
+			call.callee,
+		);
+
+		return Object.assign(
+			{},
+			call,
+			{
+				callee: Object.assign(
+					{},
+					func,
+					{
+						body: Object.assign(
+							{},
+							func.body,
+							{
+								body: assignments.map((expression) => ({
+									type: "JSExpressionStatement",
+									expression,
+								})),
+							},
+						),
+					},
+				),
+			},
+		);
 	}
 
 	function ___R$$priv$project$rome$$romejs$compiler$transforms$compile$transpile$enums_ts$buildEnumMember(
@@ -27341,13 +27379,13 @@ function ___R$$priv$project$rome$$romejs$compiler$transforms$compile$transpile$o
 			___R$$priv$project$rome$$romejs$compiler$transforms$compile$transpile$enums_ts$buildEnumMember(
 				typeof memberValue !== "string" &&
 				memberValue.type === "JSStringLiteral",
-				(Object.assign({}, node.id)),
+				Object.assign({}, node.id),
 				memberName,
 				memberValue,
 			)
 		);
 		return ___R$$priv$project$rome$$romejs$compiler$transforms$compile$transpile$enums_ts$buildEnumWrapper(
-			(Object.assign({}, node.id)),
+			Object.assign({}, node.id),
 			assignments,
 		);
 	}
@@ -27920,9 +27958,7 @@ function ___R$$priv$project$rome$$romejs$compiler$transforms$compile$jsx_ts$conv
 		let _props = [];
 		const objs = [];
 
-		while (attribs.length > 0) {
-			const prop = attribs.shift();
-
+		for (const prop of attribs) {
 			if (prop.type === "JSXSpreadAttribute") {
 				_props = ___R$$priv$project$rome$$romejs$compiler$transforms$compile$jsx_ts$pushProps(
 					_props,
@@ -34275,19 +34311,6 @@ function ___R$project$rome$$romejs$js$analysis$evaluators$typescript$TSObjectKey
 	}
 
 
-  // project-rome/@romejs/js-analysis/evaluators/typescript/TSOptionalType.ts
-function ___R$project$rome$$romejs$js$analysis$evaluators$typescript$TSOptionalType_ts$default(
-		node,
-		scope,
-	) {
-		node = ___R$project$rome$$romejs$ast$js$typescript$TSOptionalType_ts$tsOptionalType.assert(
-			node,
-		);
-		scope;
-		throw new Error("unimplemented");
-	}
-
-
   // project-rome/@romejs/js-analysis/evaluators/typescript/TSParenthesizedType.ts
 function ___R$project$rome$$romejs$js$analysis$evaluators$typescript$TSParenthesizedType_ts$default(
 		node,
@@ -34401,6 +34424,17 @@ function ___R$project$rome$$romejs$js$analysis$evaluators$typescript$TSThisType_
 			node,
 		);
 		scope;
+		throw new Error("unimplemented");
+	}
+
+
+  // project-rome/@romejs/js-analysis/evaluators/typescript/TSTupleElement.ts
+function ___R$project$rome$$romejs$js$analysis$evaluators$typescript$TSTupleElement_ts$default(
+		node,
+	) {
+		node = ___R$project$rome$$romejs$ast$js$typescript$TSTupleElement_ts$tsTupleElement.assert(
+			node,
+		);
 		throw new Error("unimplemented");
 	}
 
@@ -35528,11 +35562,6 @@ const ___R$$priv$project$rome$$romejs$js$analysis$evaluators$index_ts$evaluators
 	);
 
 	___R$$priv$project$rome$$romejs$js$analysis$evaluators$index_ts$evaluators.set(
-		"TSOptionalType",
-		___R$project$rome$$romejs$js$analysis$evaluators$typescript$TSOptionalType_ts$default,
-	);
-
-	___R$$priv$project$rome$$romejs$js$analysis$evaluators$index_ts$evaluators.set(
 		"TSParenthesizedType",
 		___R$project$rome$$romejs$js$analysis$evaluators$typescript$TSParenthesizedType_ts$default,
 	);
@@ -35575,6 +35604,11 @@ const ___R$$priv$project$rome$$romejs$js$analysis$evaluators$index_ts$evaluators
 	___R$$priv$project$rome$$romejs$js$analysis$evaluators$index_ts$evaluators.set(
 		"TSThisType",
 		___R$project$rome$$romejs$js$analysis$evaluators$typescript$TSThisType_ts$default,
+	);
+
+	___R$$priv$project$rome$$romejs$js$analysis$evaluators$index_ts$evaluators.set(
+		"TSTupleElement",
+		___R$project$rome$$romejs$js$analysis$evaluators$typescript$TSTupleElement_ts$default,
 	);
 
 	___R$$priv$project$rome$$romejs$js$analysis$evaluators$index_ts$evaluators.set(
@@ -37082,7 +37116,7 @@ function ___R$$priv$project$rome$$romejs$formatter$node$parentheses_ts$isClassEx
 			parent.type === "TSIntersectionTypeAnnotation" ||
 			parent.type === "TSUnionTypeAnnotation" ||
 			parent.type === "TSArrayType" ||
-			parent.type === "TSOptionalType"
+			(parent.type === "TSTupleElement" && parent.optional === true)
 		);
 	}
 
@@ -37098,7 +37132,10 @@ function ___R$$priv$project$rome$$romejs$formatter$node$parentheses_ts$isClassEx
 	___R$$priv$project$rome$$romejs$formatter$node$parentheses_ts$parens.set(
 		"TSInferType",
 		(node, parent) => {
-			return parent.type === "TSArrayType" || parent.type === "TSOptionalType";
+			return (
+				parent.type === "TSArrayType" ||
+				(parent.type === "TSTupleElement" && parent.optional === true)
+			);
 		},
 	);
 
@@ -51757,7 +51794,7 @@ const ___R$project$rome$$romejs$js$parser$parser$typescript_ts = {
 				continue;
 			}
 
-			if (type.type === "TSOptionalType") {
+			if (type.optional) {
 				seenOptionalElement = true;
 			} else if (seenOptionalElement && !isRest) {
 				parser.addDiagnostic({
@@ -51783,55 +51820,108 @@ const ___R$project$rome$$romejs$js$parser$parser$typescript_ts = {
 		);
 	}
 
-	function ___R$$priv$project$rome$$romejs$js$parser$parser$typescript_ts$parseTSTupleElementType(
+	function ___R$$priv$project$rome$$romejs$js$parser$parser$typescript_ts$parseTSTupleElementTypeInner(
 		parser,
 	) {
-		// parses `...TsType[]`
-		if (
-			parser.match(
-				___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.ellipsis,
-			)
-		) {
-			parser.next(); // skips ellipsis
-			const typeAnnotation = ___R$$priv$project$rome$$romejs$js$parser$parser$typescript_ts$parseTSType(
-				parser,
-			);
-			___R$project$rome$$romejs$js$parser$parser$lval_ts$hasCommaAfterRest(
-				parser,
-			);
-
-			return {
-				isRest: true,
-				type: typeAnnotation,
-			};
-		}
-
-		const typeAnnotation = ___R$$priv$project$rome$$romejs$js$parser$parser$typescript_ts$parseTSType(
+		let typeAnnotation = ___R$$priv$project$rome$$romejs$js$parser$parser$typescript_ts$parseTSType(
 			parser,
 		);
+		let optional = parser.eat(
+			___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.question,
+		);
+		let name;
 
-		// Parses `TsType?`
 		if (
 			parser.eat(
-				___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.question,
+				___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.colon,
 			)
 		) {
-			const start = parser.getLoc(typeAnnotation).start;
-			return {
-				isRest: false,
-				type: parser.finishNode(
-					start,
-					{
-						type: "TSOptionalType",
-						typeAnnotation,
-					},
-				),
-			};
+			if (
+				typeAnnotation.type === "TSTypeReference" &&
+				typeAnnotation.typeName.type === "JSReferenceIdentifier"
+			) {
+				name = ___R$project$rome$$romejs$js$parser$parser$expression_ts$toBindingIdentifier(
+					parser,
+					typeAnnotation.typeName,
+				);
+				typeAnnotation = ___R$$priv$project$rome$$romejs$js$parser$parser$typescript_ts$parseTSType(
+					parser,
+				);
+			} else {
+				parser.addDiagnostic({
+					loc: typeAnnotation.loc,
+					description: ___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.JS_PARSER.TS_TUPLE_ELEMENT_LABEL_INCORRECT,
+				});
+			}
+
+			if (
+				parser.match(
+					___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.question,
+				)
+			) {
+				parser.addDiagnostic({
+					description: ___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.JS_PARSER.TS_TUPLE_ELEMENT_OPTIONAL_TRAILING,
+				});
+				parser.next();
+				optional = true;
+			}
 		}
 
 		return {
-			isRest: false,
-			type: typeAnnotation,
+			typeAnnotation,
+			optional,
+			name,
+		};
+	}
+
+	function ___R$$priv$project$rome$$romejs$js$parser$parser$typescript_ts$parseTSTupleElementType(
+		parser,
+	) {
+		const start = parser.getPosition();
+		let isRest = false;
+		let typeAnnotation;
+		let optional;
+		let name;
+
+		// parses `...TsType[]`
+		if (
+			parser.eat(
+				___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.ellipsis,
+			)
+		) {
+			isRest = true;
+			({typeAnnotation, optional, name} = ___R$$priv$project$rome$$romejs$js$parser$parser$typescript_ts$parseTSTupleElementTypeInner(
+				parser,
+			));
+			___R$project$rome$$romejs$js$parser$parser$lval_ts$hasCommaAfterRest(
+				parser,
+			);
+		} else {
+			({typeAnnotation, optional, name} = ___R$$priv$project$rome$$romejs$js$parser$parser$typescript_ts$parseTSTupleElementTypeInner(
+				parser,
+			));
+		}
+
+		const elem = parser.finishNode(
+			start,
+			{
+				type: "TSTupleElement",
+				name,
+				optional,
+				typeAnnotation,
+			},
+		);
+
+		if (optional && isRest) {
+			parser.addDiagnostic({
+				loc: elem.loc,
+				description: ___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.JS_PARSER.TS_TUPLE_ELEMENT_OPTIONAL_REST,
+			});
+		}
+
+		return {
+			isRest,
+			type: elem,
 		};
 	}
 
@@ -61599,9 +61689,8 @@ function ___R$project$rome$$romejs$formatter$builders$js$literals$JSStringLitera
 		node,
 		parent,
 	) {
-		// JSX Attribute strings have ridiculous alternate semantics, should probably be a distinct AST node
 		const quotes =
-			parent.type === "JSXAttribute" || node.value.includes('"') ? "'" : '"';
+			parent.type === "JSXAttribute" || !node.value.includes('"') ? '"' : "'";
 
 		const value =
 			parent.type === "JSXAttribute"
@@ -64478,18 +64567,6 @@ function ___R$project$rome$$romejs$formatter$builders$js$typescript$TSObjectKeyw
 	}
 
 
-  // project-rome/@romejs/formatter/builders/js/typescript/TSOptionalType.ts
-function ___R$project$rome$$romejs$formatter$builders$js$typescript$TSOptionalType_ts$default(
-		builder,
-		node,
-	) {
-		return ___R$project$rome$$romejs$formatter$tokens_ts$concat([
-			builder.tokenize(node.typeAnnotation, node),
-			"?",
-		]);
-	}
-
-
   // project-rome/@romejs/formatter/builders/js/typescript/TSParenthesizedType.ts
 function ___R$project$rome$$romejs$formatter$builders$js$typescript$TSParenthesizedType_ts$default(
 		builder,
@@ -64608,6 +64685,32 @@ function ___R$project$rome$$romejs$formatter$builders$js$typescript$TSTemplateLi
   // project-rome/@romejs/formatter/builders/js/typescript/TSThisType.ts
 function ___R$project$rome$$romejs$formatter$builders$js$typescript$TSThisType_ts$default() {
 		return "this";
+	}
+
+
+  // project-rome/@romejs/formatter/builders/js/typescript/TSTupleElement.ts
+function ___R$project$rome$$romejs$formatter$builders$js$typescript$TSTupleElement_ts$default(
+		builder,
+		node,
+	) {
+		let tokens = [];
+
+		if (node.name) {
+			tokens.push(builder.tokenize(node.name, node));
+		}
+
+		if (node.optional) {
+			tokens.push("?");
+		}
+
+		if (node.name) {
+			tokens.push(":");
+			tokens.push(___R$project$rome$$romejs$formatter$tokens_ts$space);
+		}
+
+		tokens.push(builder.tokenize(node.typeAnnotation, node));
+
+		return ___R$project$rome$$romejs$formatter$tokens_ts$concat(tokens);
 	}
 
 
@@ -65871,11 +65974,6 @@ function ___R$project$rome$$romejs$formatter$builders$js$typescript$TSVoidKeywor
 	);
 
 	___R$$priv$project$rome$$romejs$formatter$builders$index_ts$builders.set(
-		"TSOptionalType",
-		___R$project$rome$$romejs$formatter$builders$js$typescript$TSOptionalType_ts$default,
-	);
-
-	___R$$priv$project$rome$$romejs$formatter$builders$index_ts$builders.set(
 		"TSParenthesizedType",
 		___R$project$rome$$romejs$formatter$builders$js$typescript$TSParenthesizedType_ts$default,
 	);
@@ -65918,6 +66016,11 @@ function ___R$project$rome$$romejs$formatter$builders$js$typescript$TSVoidKeywor
 	___R$$priv$project$rome$$romejs$formatter$builders$index_ts$builders.set(
 		"TSThisType",
 		___R$project$rome$$romejs$formatter$builders$js$typescript$TSThisType_ts$default,
+	);
+
+	___R$$priv$project$rome$$romejs$formatter$builders$index_ts$builders.set(
+		"TSTupleElement",
+		___R$project$rome$$romejs$formatter$builders$js$typescript$TSTupleElement_ts$default,
 	);
 
 	___R$$priv$project$rome$$romejs$formatter$builders$index_ts$builders.set(
@@ -66019,6 +66122,8 @@ const ___R$project$rome$$romejs$formatter$tokens_ts = {
 		join: ___R$project$rome$$romejs$formatter$tokens_ts$join,
 		lineSuffix: ___R$project$rome$$romejs$formatter$tokens_ts$lineSuffix,
 	};
+
+
 
 
 
@@ -67304,11 +67409,13 @@ const ___R$project$rome$$romejs$core$common$file$handlers$json_ts$jsonHandler = 
 	const ___R$$priv$project$rome$$romejs$core$common$file$handlers$index_ts$DEFAULT_HANDLERS = new Map();
 
 	const ___R$$priv$project$rome$$romejs$core$common$file$handlers$index_ts$DEFAULT_ASSET_EXTENSIONS = [
+		"css",
 		// Images
 		"png",
 		"jpg",
 		"jpeg",
 		"gif",
+		"svg",
 		// Video
 		"webm",
 		"mp4",
@@ -67328,8 +67435,9 @@ const ___R$project$rome$$romejs$core$common$file$handlers$json_ts$jsonHandler = 
 	for (const ext of ___R$$priv$project$rome$$romejs$core$common$file$handlers$index_ts$DEFAULT_ASSET_EXTENSIONS) {
 		___R$$priv$project$rome$$romejs$core$common$file$handlers$index_ts$setHandler(
 			Object.assign(
-				{ext},
+				{},
 				___R$$priv$project$rome$$romejs$core$common$file$handlers$index_ts$assetHandler,
+				{ext},
 			),
 		);
 	}
@@ -71337,7 +71445,7 @@ const ___R$$priv$project$rome$$romejs$compiler$lint$rules$js$doubleEquals_ts$SUG
 				node.left.type !== "JSNullLiteral"
 			) {
 				if (node.operator === "!=") {
-					context.addFixableDiagnostic(
+					return context.addFixableDiagnostic(
 						{
 							old: node,
 							suggestions: [
@@ -71353,7 +71461,7 @@ const ___R$$priv$project$rome$$romejs$compiler$lint$rules$js$doubleEquals_ts$SUG
 				}
 
 				if (node.operator === "==") {
-					context.addFixableDiagnostic(
+					return context.addFixableDiagnostic(
 						{
 							old: node,
 							suggestions: [
@@ -71636,23 +71744,29 @@ const ___R$project$rome$$romejs$compiler$lint$rules$js$importDefaultBasename_ts$
 					return node;
 				}
 
+				const filePath = ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(
+					node.source.value,
+				);
 				const expectedName = ___R$project$rome$$romejs$compiler$lint$rules$js$defaultExportSameBasename_ts$filenameToId(
-					___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(
-						node.source.value,
-					),
+					filePath,
 					false,
 				);
-				if (expectedName === undefined) {
+				const expectedNameCapital = ___R$project$rome$$romejs$compiler$lint$rules$js$defaultExportSameBasename_ts$filenameToId(
+					filePath,
+					true,
+				);
+				if (expectedName === undefined || expectedNameCapital === undefined) {
 					return node;
 				}
 
 				const localName = defaultSpecifier.local.name.name;
-				if (localName !== expectedName) {
+				if (localName !== expectedName && localName !== expectedNameCapital) {
 					path.context.addNodeDiagnostic(
 						node,
 						___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.JS_IMPORT_DEFAULT_BASENAME(
 							localName,
 							expectedName,
+							expectedNameCapital,
 						),
 					);
 				}
@@ -72775,6 +72889,11 @@ const ___R$project$rome$$romejs$compiler$lint$rules$js$noUnsafeFinally_ts$defaul
 		scope: undefined,
 	};
 
+	// Common variables that are sometimes impossible to avoid
+	const ___R$$priv$project$rome$$romejs$compiler$lint$rules$js$noUnusedVariables_ts$ignoreVariables = [
+		"React",
+	];
+
 	const ___R$$priv$project$rome$$romejs$compiler$lint$rules$js$noUnusedVariables_ts$provider = ___R$project$rome$$romejs$compiler$api$createHook_ts$default({
 		name: "noUnusedVariablesProvider",
 		initialState: ___R$$priv$project$rome$$romejs$compiler$lint$rules$js$noUnusedVariables_ts$initialState,
@@ -72805,6 +72924,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$js$noUnsafeFinally_ts$defaul
 					{},
 					state,
 					{
+						// @ts-ignore https://github.com/microsoft/TypeScript/issues/39278
 						usedBindings: Object.assign(
 							{},
 							state.usedBindings,
@@ -72820,7 +72940,13 @@ const ___R$project$rome$$romejs$compiler$lint$rules$js$noUnsafeFinally_ts$defaul
 				const used = state.usedBindings[name];
 				const binding = path.scope.getBinding(name);
 
-				if (used === false && binding !== undefined) {
+				if (
+					used === false &&
+					binding !== undefined &&
+					!___R$$priv$project$rome$$romejs$compiler$lint$rules$js$noUnusedVariables_ts$ignoreVariables.includes(
+						name,
+					)
+				) {
 					path.context.addNodeDiagnostic(
 						binding.node,
 						___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.JS_NO_UNUSED_VARIABLES(
@@ -73669,6 +73795,7 @@ const ___R$$priv$project$rome$$romejs$compiler$lint$rules$js$undeclaredVariables
 						node,
 						___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.JS_UNDECLARED_VARIABLES(
 							name,
+							scope.getBindingNames(),
 						),
 						{
 							meta: {
@@ -74049,7 +74176,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$anchorIsVa
 	};
 
 
-  // project-rome/@romejs/compiler/lint/rules/ariaHelpers.ts
+  // project-rome/@romejs/compiler/lint/utils/aria.ts
 
 
 
@@ -74066,7 +74193,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$anchorIsVa
 
 
 
-	const ___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$ariaPropsMap = new Map([
+	const ___R$project$rome$$romejs$compiler$lint$utils$aria_ts$ariaPropsMap = new Map([
 		[
 			"aria-activedescendant",
 			{
@@ -74384,7 +74511,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$anchorIsVa
 
 
 
-	const ___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$roles = new Map([
+	const ___R$project$rome$$romejs$compiler$lint$utils$aria_ts$roles = new Map([
 		[
 			"checkbox",
 			{
@@ -74631,19 +74758,19 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$anchorIsVa
 		],
 	]);
 
-	const ___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$elementsToConcepts = new Map();
-	const ___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$elementsToRoles = new Map();
+	const ___R$project$rome$$romejs$compiler$lint$utils$aria_ts$elementsToConcepts = new Map();
+	const ___R$project$rome$$romejs$compiler$lint$utils$aria_ts$elementsToRoles = new Map();
 
-	for (const [, attributes] of ___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$roles) {
+	for (const [, attributes] of ___R$project$rome$$romejs$compiler$lint$utils$aria_ts$roles) {
 		if (attributes.baseConcepts) {
 			attributes.baseConcepts.forEach(({module, concept}) => {
 				if (module === "HTML") {
 					if (
-						!___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$elementsToConcepts.has(
+						!___R$project$rome$$romejs$compiler$lint$utils$aria_ts$elementsToConcepts.has(
 							concept.name,
 						)
 					) {
-						___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$elementsToConcepts.set(
+						___R$project$rome$$romejs$compiler$lint$utils$aria_ts$elementsToConcepts.set(
 							concept.name,
 							new Set(attributes.superClassRole),
 						);
@@ -74652,16 +74779,16 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$anchorIsVa
 			});
 		}
 	}
-	for (const [, attributes] of ___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$roles) {
+	for (const [, attributes] of ___R$project$rome$$romejs$compiler$lint$utils$aria_ts$roles) {
 		if (attributes.baseConcepts) {
 			attributes.baseConcepts.forEach(({module, concept}) => {
 				if (module === "HTML") {
 					if (
-						!___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$elementsToConcepts.has(
+						!___R$project$rome$$romejs$compiler$lint$utils$aria_ts$elementsToConcepts.has(
 							concept.name,
 						)
 					) {
-						___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$elementsToConcepts.set(
+						___R$project$rome$$romejs$compiler$lint$utils$aria_ts$elementsToConcepts.set(
 							concept.name,
 							new Set(attributes.superClassRole),
 						);
@@ -74671,17 +74798,17 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$anchorIsVa
 		}
 	}
 
-	function ___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$isRoleInteractive(
+	function ___R$project$rome$$romejs$compiler$lint$utils$aria_ts$isRoleInteractive(
 		role,
 	) {
 		return role.superClassRole.includes("widget");
 	}
 
-	function ___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$isElementInteractive(
+	function ___R$project$rome$$romejs$compiler$lint$utils$aria_ts$isElementInteractive(
 		elementName,
 	) {
 		let role;
-		for (const [, roleInfo] of ___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$roles) {
+		for (const [, roleInfo] of ___R$project$rome$$romejs$compiler$lint$utils$aria_ts$roles) {
 			if (roleInfo.baseConcepts) {
 				const elementMatched = roleInfo.baseConcepts.some(({concept}) =>
 					concept.name === elementName
@@ -74694,7 +74821,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$anchorIsVa
 		}
 
 		if (role) {
-			return ___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$isRoleInteractive(
+			return ___R$project$rome$$romejs$compiler$lint$utils$aria_ts$isRoleInteractive(
 				role,
 			);
 		}
@@ -74714,7 +74841,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$ariaProps_ts$defaul
 				node.name.name.indexOf("aria-") === 0
 			) {
 				const ariaPropsArray = Array.from(
-					___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$ariaPropsMap,
+					___R$project$rome$$romejs$compiler$lint$utils$aria_ts$ariaPropsMap,
 				).map((ariaProps) => ariaProps[0]);
 
 				const closestMatch = ___R$project$rome$$romejs$string$utils$findClosestStringMatch_ts$findClosestStringMatch(
@@ -74873,7 +75000,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$ariaPropty
 					node.name.name.indexOf("aria-") === 0
 				) {
 					if (node.value) {
-						const ariaAttribute = ___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$ariaPropsMap.get(
+						const ariaAttribute = ___R$project$rome$$romejs$compiler$lint$utils$aria_ts$ariaPropsMap.get(
 							(node.name.name),
 						);
 						if (ariaAttribute) {
@@ -74956,7 +75083,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$ariaUnsupp
 			node.attributes.some((attr) =>
 				attr.type === "JSXAttribute" &&
 				attr.name.type === "JSXIdentifier" &&
-				___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$ariaPropsMap.has(
+				___R$project$rome$$romejs$compiler$lint$utils$aria_ts$ariaPropsMap.has(
 					(attr.name.name),
 				)
 			)
@@ -75932,7 +76059,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noAccessKey_ts$defa
 					"accessKey",
 				)
 			) {
-				path.context.addFixableDiagnostic(
+				return path.context.addFixableDiagnostic(
 					{
 						target: ___R$project$rome$$romejs$js$ast$utils$getJSXAttribute_ts$default(
 							node,
@@ -75944,7 +76071,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noAccessKey_ts$defa
 							node,
 							{
 								attributes: node.attributes.filter((attribute) =>
-									attribute.type === "JSXAttribute" &&
+									attribute.type !== "JSXAttribute" ||
 									attribute.name.name !== "accessKey"
 								),
 							},
@@ -75973,7 +76100,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noAutofocus_ts$defa
 					"autoFocus",
 				)
 			) {
-				path.context.addFixableDiagnostic(
+				return path.context.addFixableDiagnostic(
 					{
 						target: ___R$project$rome$$romejs$js$ast$utils$getJSXAttribute_ts$default(
 							node,
@@ -75985,7 +76112,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noAutofocus_ts$defa
 							node,
 							{
 								attributes: node.attributes.filter((attribute) =>
-									attribute.type === "JSXAttribute" &&
+									attribute.type !== "JSXAttribute" ||
 									attribute.name.name !== "autoFocus"
 								),
 							},
@@ -76079,15 +76206,15 @@ const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noNoninteractiveEle
 					roleAttribute.value &&
 					roleAttribute.value.type === "JSStringLiteral"
 				) {
-					const role = ___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$roles.get(
+					const role = ___R$project$rome$$romejs$compiler$lint$utils$aria_ts$roles.get(
 						roleAttribute.value.value,
 					);
 					if (role) {
 						if (
-							!___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$isElementInteractive(
+							!___R$project$rome$$romejs$compiler$lint$utils$aria_ts$isElementInteractive(
 								name,
 							) &&
-							___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$isRoleInteractive(
+							___R$project$rome$$romejs$compiler$lint$utils$aria_ts$isRoleInteractive(
 								role,
 							)
 						) {
@@ -76183,7 +76310,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noNoninter
 							"role",
 						)
 					) {
-						const elementToRole = ___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$elementsToConcepts.get(
+						const elementToRole = ___R$project$rome$$romejs$compiler$lint$utils$aria_ts$elementsToConcepts.get(
 							elementName,
 						);
 						// the element is not part of any role, so it's an error
@@ -76215,7 +76342,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noNoninter
 						"role",
 					);
 					if (attr && attr.value && attr.value.type === "JSStringLiteral") {
-						const role = ___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$roles.get(
+						const role = ___R$project$rome$$romejs$compiler$lint$utils$aria_ts$roles.get(
 							attr.value.value,
 						);
 						if (role) {
@@ -76226,7 +76353,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noNoninter
 						 * e.g. <article tabIndex="-1" /> is a valid statement
 						 */
 							if (
-								!___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$isRoleInteractive(
+								!___R$project$rome$$romejs$compiler$lint$utils$aria_ts$isRoleInteractive(
 									role,
 								) &&
 								tabIndexValue > -1
@@ -76346,7 +76473,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noOnChange_ts$defau
 			},
 		);
 
-		context.addFixableDiagnostic(
+		return context.addFixableDiagnostic(
 			{
 				target: [roleAttribute, ...ariaAttributesToRemove],
 				old: node,
@@ -76391,7 +76518,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noOnChange_ts$defau
 				) {
 					let elementHasARole;
 
-					const mappedRole = ___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$roles.get(
+					const mappedRole = ___R$project$rome$$romejs$compiler$lint$utils$aria_ts$roles.get(
 						roleAttribute.value.value,
 					);
 					// here we cover cases where "role" attribute and the element name differs in naming
@@ -76434,6 +76561,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noOnChange_ts$defau
 					}
 				}
 			}
+
 			return node;
 		},
 	};
@@ -76503,7 +76631,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noTargetBl
 					node,
 				)
 			) {
-				path.context.addFixableDiagnostic(
+				return path.context.addFixableDiagnostic(
 					{
 						target: ___R$project$rome$$romejs$js$ast$utils$getJSXAttribute_ts$default(
 							node,
@@ -76515,7 +76643,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$noTargetBl
 							node,
 							{
 								attributes: node.attributes.filter((attribute) =>
-									attribute.type === "JSXAttribute" &&
+									attribute.type !== "JSXAttribute" ||
 									attribute.name.name !== "target"
 								),
 							},
@@ -76548,7 +76676,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$roleHasRequiredAria
 					"role",
 				);
 				if (attr && attr.value && attr.value.type === "JSStringLiteral") {
-					const role = ___R$project$rome$$romejs$compiler$lint$rules$ariaHelpers_ts$roles.get(
+					const role = ___R$project$rome$$romejs$compiler$lint$utils$aria_ts$roles.get(
 						attr.value.value,
 					);
 					if (role) {
@@ -76606,7 +76734,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$scope_ts$default = 
 					"th",
 				)
 			) {
-				path.context.addFixableDiagnostic(
+				return path.context.addFixableDiagnostic(
 					{
 						old: jsxNode,
 						fixed: Object.assign(
@@ -76614,7 +76742,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$jsx$a11y$scope_ts$default = 
 							jsxNode,
 							{
 								attributes: jsxNode.attributes.filter((attribute) =>
-									attribute.type === "JSXAttribute" &&
+									attribute.type !== "JSXAttribute" ||
 									attribute.name.name !== "scope"
 								),
 							},
@@ -76643,7 +76771,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$tabindexNo
 					node,
 					{
 						attributes: node.attributes.filter((attribute) =>
-							attribute.type === "JSXAttribute" &&
+							attribute.type !== "JSXAttribute" ||
 							attribute.name.name !== "tabIndex"
 						),
 					},
@@ -76709,44 +76837,334 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$jsx$a11y$tabindexNo
 	};
 
 
+  // project-rome/@romejs/compiler/lint/utils/react/analyzeCreateElementProp.ts
+function ___R$project$rome$$romejs$compiler$lint$utils$react$analyzeCreateElementProp_ts$default(
+		node,
+		scope,
+		propName,
+	) {
+		const prop = ___R$project$rome$$romejs$compiler$lint$utils$react$getCreateElementProp_ts$default(
+			node,
+			scope,
+			propName,
+		);
+		if (!prop) {
+			return;
+		}
+		return ___R$project$rome$$romejs$js$ast$utils$tryStaticEvaluation_ts$default(
+			prop.value,
+			scope,
+		).value;
+	}
+
+
+  // project-rome/@romejs/compiler/lint/utils/react/doesNodeMatchReactPattern.ts
+
+
+	function ___R$project$rome$$romejs$compiler$lint$utils$react$doesNodeMatchReactPattern_ts$default(
+		node,
+		scope,
+		pattern,
+		config = {
+			packageName: "react",
+			importName: "React",
+		},
+	) {
+		if (___R$project$rome$$romejs$js$ast$utils$isIdentifierish_ts$default(node)) {
+			({node, scope} = ___R$project$rome$$romejs$js$ast$utils$resolveIndirection_ts$default(
+				node,
+				scope,
+			));
+			if (
+				!___R$project$rome$$romejs$js$ast$utils$isIdentifierish_ts$default(node)
+			) {
+				return false;
+			}
+
+			const reference = scope.getBinding(node.name);
+			return (
+				(!reference && node.name === pattern) ||
+				(reference instanceof
+				___R$project$rome$$romejs$compiler$scope$bindings_ts$ImportBinding &&
+				reference.meta.source === config.packageName &&
+				reference.meta.type === "name" &&
+				reference.meta.imported === pattern)
+			);
+		}
+
+		if (
+			node.type === "JSMemberExpression" ||
+			node.type === "JSXMemberExpression"
+		) {
+			const member = pattern.replace(
+				new RegExp("^" + config.importName + "."),
+				"",
+			);
+			const {node: objectNode, scope: objectScope} = ___R$project$rome$$romejs$js$ast$utils$resolveIndirection_ts$default(
+				node.object,
+				scope,
+			);
+			if (
+				!___R$project$rome$$romejs$js$ast$utils$isIdentifierish_ts$default(
+					objectNode,
+				)
+			) {
+				return false;
+			}
+
+			const reference = objectScope.getBinding(objectNode.name);
+			let identifier;
+			if (
+				node.property.type === "JSStaticMemberProperty" &&
+				node.property.value.type === "JSIdentifier"
+			) {
+				identifier = node.property.value;
+			} else if (node.property.type === "JSXIdentifier") {
+				identifier = node.property;
+			}
+			if (!identifier) {
+				return false;
+			}
+
+			return (
+				(!reference && objectNode.name + "." + identifier.name === pattern) ||
+				(reference instanceof
+				___R$project$rome$$romejs$compiler$scope$bindings_ts$ImportBinding &&
+				reference.meta.source === config.packageName &&
+				identifier.name === member)
+			);
+		}
+		return false;
+	}
+
+
+  // project-rome/@romejs/compiler/lint/utils/react/getCreateElementChildren.ts
+function ___R$project$rome$$romejs$compiler$lint$utils$react$getCreateElementChildren_ts$default(
+		node,
+		scope,
+	) {
+		if (
+			!___R$project$rome$$romejs$compiler$lint$utils$react$isCreateElement_ts$default(
+				node,
+				scope,
+			)
+		) {
+			return;
+		}
+		if (node.arguments.length > 2) {
+			return node.arguments.slice(2);
+		}
+		return ___R$project$rome$$romejs$compiler$lint$utils$react$getCreateElementProp_ts$default(
+			node,
+			scope,
+			"children",
+		);
+	}
+
+
+  // project-rome/@romejs/compiler/lint/utils/react/getCreateElementProp.ts
+function ___R$project$rome$$romejs$compiler$lint$utils$react$getCreateElementProp_ts$default(
+		node,
+		scope,
+		propName,
+	) {
+		if (
+			!___R$project$rome$$romejs$compiler$lint$utils$react$isCreateElement_ts$default(
+				node,
+				scope,
+			) ||
+			!node.arguments[1] ||
+			node.arguments[1].type !== "JSObjectExpression"
+		) {
+			return;
+		}
+
+		return (node.arguments[1].properties.find((prop) => {
+			return (
+				prop.type === "JSObjectProperty" &&
+				prop.key.value.type === "JSIdentifier" &&
+				prop.key.value.name === propName
+			);
+		}));
+	}
+
+
+  // project-rome/@romejs/compiler/lint/utils/react/getCreateElementType.ts
+function ___R$project$rome$$romejs$compiler$lint$utils$react$getCreateElementType_ts$default(
+		node,
+		scope,
+	) {
+		if (
+			!___R$project$rome$$romejs$compiler$lint$utils$react$isCreateElement_ts$default(
+				node,
+				scope,
+			) ||
+			!node.arguments[0]
+		) {
+			return;
+		}
+		const {bailed, value} = ___R$project$rome$$romejs$js$ast$utils$tryStaticEvaluation_ts$default(
+			node.arguments[0],
+			scope,
+		);
+		return !bailed && typeof value === "string" ? value : undefined;
+	}
+
+
+  // project-rome/@romejs/compiler/lint/utils/react/insideClassComponent.ts
+function ___R$$priv$project$rome$$romejs$compiler$lint$utils$react$insideClassComponent_ts$checkClassComponentAncestry(
+		{node, scope},
+	) {
+		return (
+			node.type === "JSClassHead" &&
+			node.superClass !== undefined &&
+			(___R$project$rome$$romejs$compiler$lint$utils$react$doesNodeMatchReactPattern_ts$default(
+				node.superClass,
+				scope,
+				"React.Component",
+			) ||
+			___R$project$rome$$romejs$compiler$lint$utils$react$doesNodeMatchReactPattern_ts$default(
+				node.superClass,
+				scope,
+				"Component",
+			) ||
+			___R$project$rome$$romejs$compiler$lint$utils$react$doesNodeMatchReactPattern_ts$default(
+				node.superClass,
+				scope,
+				"React.PureComponent",
+			) ||
+			___R$project$rome$$romejs$compiler$lint$utils$react$doesNodeMatchReactPattern_ts$default(
+				node.superClass,
+				scope,
+				"PureComponent",
+			))
+		);
+	}
+
+	function ___R$project$rome$$romejs$compiler$lint$utils$react$insideClassComponent_ts$default(
+		path,
+	) {
+		if (
+			___R$$priv$project$rome$$romejs$compiler$lint$utils$react$insideClassComponent_ts$checkClassComponentAncestry(
+				path,
+			)
+		) {
+			return true;
+		}
+		const ancestor = path.findAncestry(
+			___R$$priv$project$rome$$romejs$compiler$lint$utils$react$insideClassComponent_ts$checkClassComponentAncestry,
+		);
+		return !!ancestor;
+	}
+
+
+  // project-rome/@romejs/compiler/lint/utils/react/isCreateElement.ts
+function ___R$project$rome$$romejs$compiler$lint$utils$react$isCreateElement_ts$default(
+		node,
+		scope,
+	) {
+		let isCreateElement = false;
+
+		if (node.type !== "JSCallExpression") {
+			return isCreateElement;
+		}
+
+		if (
+			___R$project$rome$$romejs$js$ast$utils$isIdentifierish_ts$default(
+				node.callee,
+			)
+		) {
+			const {node: callee} = ___R$project$rome$$romejs$js$ast$utils$resolveIndirection_ts$default(
+				node.callee,
+				scope,
+			);
+			if (
+				!___R$project$rome$$romejs$js$ast$utils$isIdentifierish_ts$default(
+					callee,
+				)
+			) {
+				return isCreateElement;
+			}
+			const reference = scope.getBinding(callee.name);
+			isCreateElement =
+				(!reference && callee.name === "createElement") ||
+				(reference instanceof
+				___R$project$rome$$romejs$compiler$scope$bindings_ts$ImportBinding &&
+				reference.meta.source === "react" &&
+				reference.meta.type === "name" &&
+				reference.meta.imported === "createElement");
+		}
+
+		if (node.callee.type === "JSMemberExpression") {
+			if (
+				!___R$project$rome$$romejs$js$ast$utils$isIdentifierish_ts$default(
+					node.callee.object,
+				)
+			) {
+				return isCreateElement;
+			}
+			const {node: object} = ___R$project$rome$$romejs$js$ast$utils$resolveIndirection_ts$default(
+				node.callee.object,
+				scope,
+			);
+			if (
+				!___R$project$rome$$romejs$js$ast$utils$isIdentifierish_ts$default(
+					object,
+				)
+			) {
+				return isCreateElement;
+			}
+			const reference = scope.getBinding(object.name);
+			isCreateElement =
+				node.callee.property.type === "JSStaticMemberProperty" &&
+				node.callee.property.value.type === "JSIdentifier" &&
+				node.callee.property.value.name === "createElement" &&
+				((reference instanceof
+				___R$project$rome$$romejs$compiler$scope$bindings_ts$ImportBinding &&
+				reference.meta.source === "react") ||
+				(!reference && object.name === "React"));
+		}
+
+		return isCreateElement;
+	}
+
+
+  // project-rome/@romejs/compiler/lint/utils/react/index.ts
+
+
+
   // project-rome/@romejs/compiler/lint/rules/react/buttonHasType.ts
 const ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$buttonHasType_ts$BUTTON_TYPE_REGEX = /^(reset)|(submit)|(button)$/;
 
 	function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$buttonHasType_ts$createElementMissingType(
 		node,
+		scope,
 	) {
-		if (node.type !== "JSCallExpression") {
-			return false;
-		}
 		if (
-			(___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
-				node.callee,
-				"React.createElement",
-			) ||
-			___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
-				node.callee,
-				"createElement",
-			)) &&
-			node.arguments[0].type === "JSStringLiteral" &&
-			node.arguments[0].value === "button" &&
-			node.arguments[1].type === "JSObjectExpression" &&
-			!node.arguments[1].properties.find((prop) =>
-				prop.type === "JSObjectProperty" &&
-				prop.key.value.type === "JSIdentifier" &&
-				prop.key.value.name === "type" &&
-				prop.value.type === "JSStringLiteral" &&
-				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$buttonHasType_ts$BUTTON_TYPE_REGEX.test(
-					prop.value.value,
-				)
-			)
+			___R$project$rome$$romejs$compiler$lint$utils$react$getCreateElementType_ts$default(
+				node,
+				scope,
+			) !==
+			"button"
 		) {
-			return true;
+			return;
 		}
-		return false;
+		const elementType = ___R$project$rome$$romejs$compiler$lint$utils$react$analyzeCreateElementProp_ts$default(
+			node,
+			scope,
+			"type",
+		);
+		return (
+			typeof elementType !== "string" ||
+			!___R$$priv$project$rome$$romejs$compiler$lint$rules$react$buttonHasType_ts$BUTTON_TYPE_REGEX.test(
+				elementType,
+			)
+		);
 	}
 
 	function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$buttonHasType_ts$jsxMissingType(
 		node,
+		scope,
 	) {
 		if (
 			!___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(
@@ -76764,20 +77182,27 @@ const ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$buttonHasType_ts
 		) {
 			return true;
 		}
-		const valueNode =
-			___R$project$rome$$romejs$js$ast$utils$getJSXAttribute_ts$default(
-				node,
-				"type",
-			) == null
-				? undefined
-				: ___R$project$rome$$romejs$js$ast$utils$getJSXAttribute_ts$default(
-						node,
-						"type",
-					).value;
+		const valueNode = ___R$project$rome$$romejs$js$ast$utils$getJSXAttribute_ts$default(
+			node,
+			"type",
+		);
+		if (!valueNode || !valueNode.value) {
+			return false;
+		}
+
+		let valueTarget =
+			valueNode.value.type === "JSXExpressionContainer"
+				? valueNode.value.expression
+				: valueNode.value;
+
+		const {value} = ___R$project$rome$$romejs$js$ast$utils$tryStaticEvaluation_ts$default(
+			valueTarget,
+			scope,
+		);
 		if (
-			(valueNode == null ? undefined : valueNode.type) === "JSStringLiteral" &&
+			typeof value !== "string" ||
 			!___R$$priv$project$rome$$romejs$compiler$lint$rules$react$buttonHasType_ts$BUTTON_TYPE_REGEX.test(
-				valueNode.value,
+				value,
 			)
 		) {
 			return true;
@@ -76787,14 +77212,16 @@ const ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$buttonHasType_ts
 	const ___R$project$rome$$romejs$compiler$lint$rules$react$buttonHasType_ts$default = {
 		name: "reactButtonHasType",
 		enter(path) {
-			const {node} = path;
+			const {node, scope} = path;
 
 			if (
 				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$buttonHasType_ts$createElementMissingType(
 					node,
+					scope,
 				) ||
 				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$buttonHasType_ts$jsxMissingType(
 					node,
+					scope,
 				)
 			) {
 				path.context.addNodeDiagnostic(
@@ -76820,16 +77247,18 @@ const ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$buttonHasType_ts
 const ___R$project$rome$$romejs$compiler$lint$rules$react$jsxFragments_ts$default = {
 		name: "reactJsxFragments",
 		enter(path) {
-			const {node, context} = path;
+			const {node, context, scope} = path;
 
 			if (
 				node.type === "JSXElement" &&
-				(___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+				(___R$project$rome$$romejs$compiler$lint$utils$react$doesNodeMatchReactPattern_ts$default(
 					node.name,
+					scope,
 					"Fragment",
 				) ||
-				___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+				___R$project$rome$$romejs$compiler$lint$utils$react$doesNodeMatchReactPattern_ts$default(
 					node.name,
+					scope,
 					"React.Fragment",
 				)) &&
 				!___R$project$rome$$romejs$js$ast$utils$hasJSXAttribute_ts$default(
@@ -77156,7 +77585,12 @@ const ___R$project$rome$$romejs$compiler$lint$rules$react$noAccessStateInSetStat
 					}
 					return false;
 				});
-				if (hasThisState) {
+				if (
+					hasThisState &&
+					___R$project$rome$$romejs$compiler$lint$utils$react$insideClassComponent_ts$default(
+						path,
+					)
+				) {
 					path.context.addNodeDiagnostic(
 						node,
 						___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.REACT_NO_ACCESS_STATE_IN_SET_STATE,
@@ -77208,6 +77642,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexK
 
 	function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$getReactChildrenArrayMethod(
 		path,
+		scope,
 	) {
 		return path.findAncestry(({node}) => {
 			if (
@@ -77219,7 +77654,11 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexK
 				if (
 					expr.callee.type === "JSMemberExpression" &&
 					expr.callee.object.type === "JSReferenceIdentifier" &&
-					expr.callee.object.name === "Children" &&
+					___R$project$rome$$romejs$compiler$lint$utils$react$doesNodeMatchReactPattern_ts$default(
+						expr.callee.object,
+						scope,
+						"Children",
+					) &&
 					expr.callee.property.value.type === "JSIdentifier" &&
 					(expr.callee.property.value.name === "map" ||
 					expr.callee.property.value.name === "forEach")
@@ -77231,8 +77670,11 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexK
 				if (
 					expr.callee.type === "JSMemberExpression" &&
 					expr.callee.object.type === "JSMemberExpression" &&
-					expr.callee.object.object.type === "JSReferenceIdentifier" &&
-					expr.callee.object.object.name === "React" &&
+					___R$project$rome$$romejs$compiler$lint$utils$react$doesNodeMatchReactPattern_ts$default(
+						expr.callee.object,
+						scope,
+						"React.Children",
+					) &&
 					expr.callee.object.property.type === "JSStaticMemberProperty" &&
 					expr.callee.object.property.value.type === "JSIdentifier" &&
 					expr.callee.object.property.value.name === "Children" &&
@@ -77300,11 +77742,12 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexK
 	const ___R$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$default = {
 		name: "reactNoArrayIndexKey",
 		enter(path) {
-			const {node} = path;
+			const {node, scope} = path;
 
 			if (
-				___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+				___R$project$rome$$romejs$compiler$lint$utils$react$doesNodeMatchReactPattern_ts$default(
 					node,
+					scope,
 					"cloneElement",
 				)
 			) {
@@ -77317,6 +77760,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexK
 					);
 					const reactChildrenArrayMethod = ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$getReactChildrenArrayMethod(
 						memberExpressionPath,
+						scope,
 					);
 					const arrayMethod = ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$hasArrayMethod(
 						memberExpressionPath,
@@ -77345,8 +77789,9 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexK
 			}
 
 			if (
-				___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+				___R$project$rome$$romejs$compiler$lint$utils$react$doesNodeMatchReactPattern_ts$default(
 					node,
+					scope,
 					"React.cloneElement",
 				)
 			) {
@@ -77355,6 +77800,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexK
 				);
 				const reactChildrenArrayMethod = ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$getReactChildrenArrayMethod(
 					path,
+					scope,
 				);
 				const arrayMethod = ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noArrayIndexKey_ts$hasArrayMethod(
 					path,
@@ -77443,40 +77889,18 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noChildrenPro
 			)
 		);
 	}
-
-	function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noChildrenProp_ts$getCreateElementChildrenProp(
-		node,
-	) {
-		if (
-			node.type === "JSCallExpression" &&
-			(___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
-				node.callee,
-				"React.createElement",
-			) ||
-			___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
-				node.callee,
-				"createElement",
-			)) &&
-			node.arguments[1].type === "JSObjectExpression"
-		) {
-			return node.arguments[1].properties.find((property) =>
-				property.type === "JSObjectProperty" &&
-				property.key.value.type === "JSIdentifier" &&
-				property.key.value.name === "children"
-			);
-		}
-		return undefined;
-	}
 	const ___R$project$rome$$romejs$compiler$lint$rules$react$noChildrenProp_ts$default = {
 		name: "reactNoChildrenProp",
 		enter(path) {
-			const {node} = path;
+			const {node, scope} = path;
 			const childrenProp =
 				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noChildrenProp_ts$getJSXChildrenProp(
 					node,
 				) ||
-				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noChildrenProp_ts$getCreateElementChildrenProp(
+				___R$project$rome$$romejs$compiler$lint$utils$react$getCreateElementProp_ts$default(
 					node,
+					scope,
+					"children",
 				);
 			if (childrenProp) {
 				path.context.addNodeDiagnostic(
@@ -77502,40 +77926,18 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDanger_ts$g
 			)
 		);
 	}
-
-	function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDanger_ts$getCreateElementDangerProp(
-		node,
-	) {
-		if (
-			node.type === "JSCallExpression" &&
-			(___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
-				node.callee,
-				"React.createElement",
-			) ||
-			___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
-				node.callee,
-				"createElement",
-			)) &&
-			node.arguments[1].type === "JSObjectExpression"
-		) {
-			return node.arguments[1].properties.find((property) =>
-				property.type === "JSObjectProperty" &&
-				property.key.value.type === "JSIdentifier" &&
-				property.key.value.name === "dangerouslySetInnerHTML"
-			);
-		}
-		return undefined;
-	}
 	const ___R$project$rome$$romejs$compiler$lint$rules$react$noDanger_ts$default = {
 		name: "reactNoDanger",
 		enter(path) {
-			const {node} = path;
+			const {node, scope} = path;
 			const dangerProp =
 				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDanger_ts$getJSXDangerProp(
 					node,
 				) ||
-				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDanger_ts$getCreateElementDangerProp(
+				___R$project$rome$$romejs$compiler$lint$utils$react$getCreateElementProp_ts$default(
 					node,
+					scope,
+					"dangerouslySetInnerHTML",
 				);
 			if (dangerProp) {
 				path.context.addNodeDiagnostic(
@@ -77586,79 +77988,25 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDangerWithC
 
 	function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDangerWithChildren_ts$createElementDangerWithChildren(
 		node,
+		scope,
 	) {
-		if (node.type !== "JSCallExpression") {
-			return false;
-		}
-
-		const propsArgument = node.arguments[node.arguments.length - 2];
-
 		return (
-			(___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
-				node.callee,
-				"React.createElement",
-			) ||
-			___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
-				node.callee,
-				"createElement",
-			)) &&
-			node.arguments.length === 3 &&
-			propsArgument.type === "JSObjectExpression" &&
-			propsArgument.properties.some((prop) =>
-				prop.type === "JSObjectProperty" &&
-				prop.key.type === "JSStaticPropertyKey" &&
-				prop.key.value.type === "JSIdentifier" &&
-				prop.key.value.name === "dangerouslySetInnerHTML"
+			!!___R$project$rome$$romejs$compiler$lint$utils$react$getCreateElementChildren_ts$default(
+				node,
+				scope,
+			) &&
+			!!___R$project$rome$$romejs$compiler$lint$utils$react$getCreateElementProp_ts$default(
+				node,
+				scope,
+				"dangerouslySetInnerHTML",
 			)
-		);
-	}
-
-	function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDangerWithChildren_ts$createElementDangerWithPropChildren(
-		node,
-	) {
-		if (node.type !== "JSCallExpression") {
-			return false;
-		}
-
-		const propsArgument = node.arguments[1];
-
-		function hasDangerAttribute(node) {
-			return node.properties.some((prop) =>
-				prop.type === "JSObjectProperty" &&
-				prop.key.type === "JSStaticPropertyKey" &&
-				prop.key.value.type === "JSIdentifier" &&
-				prop.key.value.name === "dangerouslySetInnerHTML"
-			);
-		}
-
-		function hasChildrenAttribute(node) {
-			return node.properties.some((prop) =>
-				prop.type === "JSObjectProperty" &&
-				prop.key.type === "JSStaticPropertyKey" &&
-				prop.key.value.type === "JSIdentifier" &&
-				prop.key.value.name === "children"
-			);
-		}
-
-		return (
-			(___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
-				node.callee,
-				"React.createElement",
-			) ||
-			___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
-				node.callee,
-				"createElement",
-			)) &&
-			propsArgument.type === "JSObjectExpression" &&
-			hasDangerAttribute(propsArgument) &&
-			hasChildrenAttribute(propsArgument)
 		);
 	}
 	const ___R$project$rome$$romejs$compiler$lint$rules$react$noDangerWithChildren_ts$default = {
 		name: "reactNoDangerWithChildren",
 
 		enter(path) {
-			const {node} = path;
+			const {node, scope} = path;
 
 			if (
 				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDangerWithChildren_ts$jsxDangerWithChildren(
@@ -77669,9 +78017,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDangerWithC
 				) ||
 				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDangerWithChildren_ts$createElementDangerWithChildren(
 					node,
-				) ||
-				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDangerWithChildren_ts$createElementDangerWithPropChildren(
-					node,
+					scope,
 				)
 			) {
 				path.context.addNodeDiagnostic(
@@ -77709,6 +78055,9 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDidMountSet
 			const {node} = path;
 
 			if (
+				___R$project$rome$$romejs$compiler$lint$utils$react$insideClassComponent_ts$default(
+					path,
+				) &&
 				___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
 					node,
 					"this.setState",
@@ -77752,6 +78101,9 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDidUpdateSe
 			const {node} = path;
 
 			if (
+				___R$project$rome$$romejs$compiler$lint$utils$react$insideClassComponent_ts$default(
+					path,
+				) &&
 				___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
 					node,
 					"this.setState",
@@ -77772,36 +78124,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDidUpdateSe
 
 
   // project-rome/@romejs/compiler/lint/rules/react/noDirectMutationState.ts
-// Checks if the current class extends React.Component
-	function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDirectMutationState_ts$isReactComponent(
-		path,
-	) {
-		const ancestor = path.findAncestry(({node}) =>
-		// Check if it extends React.Component or Component, and React.PureCompnent and PureComponent
-			node.type === "JSClassHead" &&
-			node.superClass !== undefined &&
-			(___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
-				node.superClass,
-				"React.Component",
-			) ||
-			___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
-				node.superClass,
-				"Component",
-			) ||
-			___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
-				node.superClass,
-				"React.PureComponent",
-			) ||
-			___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
-				node.superClass,
-				"PureComponent",
-			))
-		);
-
-		return ancestor !== undefined;
-	}
-
-	// Check if this.state mutation was in the constructor
+// Check if this.state mutation was in the constructor
 	function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDirectMutationState_ts$isMutationInConstructor(
 		path,
 	) {
@@ -77880,7 +78203,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDidUpdateSe
 				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDirectMutationState_ts$isStateMutated(
 					node,
 				) &&
-				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDirectMutationState_ts$isReactComponent(
+				___R$project$rome$$romejs$compiler$lint$utils$react$insideClassComponent_ts$default(
 					path,
 				) &&
 				!___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDirectMutationState_ts$isMutationInConstructor(
@@ -77899,45 +78222,33 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noDidUpdateSe
 
 
   // project-rome/@romejs/compiler/lint/rules/react/noFindDOMNode.ts
-function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noFindDOMNode_ts$hasFindMemberProperty(
-		node,
-	) {
-		return (
-			node.type === "JSStaticMemberProperty" &&
-			___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
-				node.value,
-				"findDOMNode",
-			)
-		);
-	}
-
-	function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noFindDOMNode_ts$hasFindCallExpression(
-		node,
-	) {
-		return (
-			node.type === "JSCallExpression" &&
-			___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
-				node.callee,
-				"findDOMNode",
-			)
-		);
-	}
+const ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noFindDOMNode_ts$reactDOMConfig = {
+		packageName: "react-dom",
+		importName: "ReactDOM",
+	};
 	const ___R$project$rome$$romejs$compiler$lint$rules$react$noFindDOMNode_ts$default = {
 		name: "reactNoFindDOMNode",
 
 		enter(path) {
-			const {node} = path;
+			const {node, scope} = path;
 
 			if (
-				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noFindDOMNode_ts$hasFindMemberProperty(
-					node,
+				node.type === "JSCallExpression" &&
+				(___R$project$rome$$romejs$compiler$lint$utils$react$doesNodeMatchReactPattern_ts$default(
+					node.callee,
+					scope,
+					"findDOMNode",
+					___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noFindDOMNode_ts$reactDOMConfig,
 				) ||
-				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noFindDOMNode_ts$hasFindCallExpression(
-					node,
-				)
+				___R$project$rome$$romejs$compiler$lint$utils$react$doesNodeMatchReactPattern_ts$default(
+					node.callee,
+					scope,
+					"ReactDOM.findDOMNode",
+					___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noFindDOMNode_ts$reactDOMConfig,
+				))
 			) {
 				path.context.addNodeDiagnostic(
-					node,
+					node.callee,
 					___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.REACT_NO_FIND_DOM_NODE,
 				);
 			}
@@ -77951,7 +78262,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noFindDOMNode
 const ___R$project$rome$$romejs$compiler$lint$rules$react$noRedundantShouldComponentUpdate_ts$default = {
 		name: "reactNoRedundantShouldComponentUpdate",
 		enter(path) {
-			const {node} = path;
+			const {node, scope} = path;
 
 			if (
 				node.type === "JSClassDeclaration" &&
@@ -77961,12 +78272,15 @@ const ___R$project$rome$$romejs$compiler$lint$rules$react$noRedundantShouldCompo
 					member.key.value.type === "JSIdentifier" &&
 					member.key.value.name === "shouldComponentUpdate"
 				) &&
-				(___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+				node.meta.superClass &&
+				(___R$project$rome$$romejs$compiler$lint$utils$react$doesNodeMatchReactPattern_ts$default(
 					node.meta.superClass,
+					scope,
 					"React.PureComponent",
 				) ||
-				___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+				___R$project$rome$$romejs$compiler$lint$utils$react$doesNodeMatchReactPattern_ts$default(
 					node.meta.superClass,
+					scope,
 					"PureComponent",
 				))
 			) {
@@ -77986,13 +78300,18 @@ const ___R$project$rome$$romejs$compiler$lint$rules$react$noRenderReturnValue_ts
 		name: "reactNoRenderReturnValue",
 
 		enter(path) {
-			const {node, parent} = path;
+			const {node, parent, scope} = path;
 
 			if (
 				node.type === "JSCallExpression" &&
-				___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+				___R$project$rome$$romejs$compiler$lint$utils$react$doesNodeMatchReactPattern_ts$default(
 					node.callee,
+					scope,
 					"ReactDOM.render",
+					{
+						packageName: "react-dom",
+						importName: "ReactDOM",
+					},
 				) &&
 				parent.type !== "JSExpressionStatement"
 			) {
@@ -78008,19 +78327,7 @@ const ___R$project$rome$$romejs$compiler$lint$rules$react$noRenderReturnValue_ts
 
 
   // project-rome/@romejs/compiler/lint/rules/react/noStringRefs.ts
-function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noStringRefs_ts$inClassComponent(
-		path,
-	) {
-		return (
-			path.findAncestry(({node}) =>
-				node.type === "JSClassMethod" &&
-				node.key.type === "JSStaticPropertyKey" &&
-				node.key.value.type === "JSIdentifier"
-			) !== undefined
-		);
-	}
-
-	function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noStringRefs_ts$containsStringLiteral(
+function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noStringRefs_ts$containsStringLiteral(
 		attribute,
 	) {
 		return (
@@ -78052,7 +78359,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noStringRefs_
 			const {context, node} = path;
 
 			if (
-				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noStringRefs_ts$inClassComponent(
+				___R$project$rome$$romejs$compiler$lint$utils$react$insideClassComponent_ts$default(
 					path,
 				) &&
 				___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
@@ -78231,16 +78538,19 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noUselessFrag
 
 	function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noUselessFragment_ts$isFragment(
 		node,
+		scope,
 	) {
 		return (
 			node.type === "JSXFragment" ||
 			(node.type === "JSXElement" &&
-			(___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+			(___R$project$rome$$romejs$compiler$lint$utils$react$doesNodeMatchReactPattern_ts$default(
 				node.name,
+				scope,
 				"Fragment",
 			) ||
-			___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
+			___R$project$rome$$romejs$compiler$lint$utils$react$doesNodeMatchReactPattern_ts$default(
 				node.name,
+				scope,
 				"React.Fragment",
 			)))
 		);
@@ -78266,7 +78576,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noUselessFrag
 	const ___R$project$rome$$romejs$compiler$lint$rules$react$noUselessFragment_ts$default = {
 		name: "noUselessFragment",
 		enter(path) {
-			const {node, context} = path;
+			const {node, context, scope} = path;
 
 			if (node.type !== "JSXFragment" && node.type !== "JSXElement") {
 				return node;
@@ -78280,6 +78590,7 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noUselessFrag
 				) &&
 				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noUselessFragment_ts$isFragment(
 					node,
+					scope,
 				) &&
 				!(node.type === "JSXElement" &&
 				___R$project$rome$$romejs$js$ast$utils$hasJSXAttribute_ts$default(
@@ -78334,6 +78645,9 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noWillUpdateS
 			const {node} = path;
 
 			if (
+				___R$project$rome$$romejs$compiler$lint$utils$react$insideClassComponent_ts$default(
+					path,
+				) &&
 				___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
 					node,
 					"this.setState",
@@ -78346,28 +78660,6 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$noWillUpdateS
 					node,
 					___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.REACT_NO_WILL_UPDATE_SET_STATE,
 				);
-			}
-
-			return node;
-		},
-	};
-
-
-  // project-rome/@romejs/compiler/lint/rules/react/reactInJsxScope.ts
-const ___R$project$rome$$romejs$compiler$lint$rules$react$reactInJsxScope_ts$default = {
-		name: "reactInJsxScope",
-		enter(path) {
-			const {node, scope, context} = path;
-
-			if (node.type === "JSXElement") {
-				const reactIsInScope = scope.getBinding("React") !== undefined;
-
-				if (!reactIsInScope) {
-					context.addNodeDiagnostic(
-						node,
-						___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.REACT_REACT_IN_JSX_SCOPE,
-					);
-				}
 			}
 
 			return node;
@@ -78402,34 +78694,14 @@ function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$requireRender
 		}
 		return undefined;
 	}
-
-	const ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$requireRenderReturn_ts$REACT_COMPONENT_PATTERNS = [
-		"React.Component",
-		"Component",
-		"React.PureComponent",
-		"PureComponent",
-	];
-
-	function ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$requireRenderReturn_ts$isExtendingReactComponent(
-		node,
-	) {
-		return ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$requireRenderReturn_ts$REACT_COMPONENT_PATTERNS.some((
-			pattern,
-		) =>
-			___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
-				node.superClass,
-				pattern,
-			)
-		);
-	}
 	const ___R$project$rome$$romejs$compiler$lint$rules$react$requireRenderReturn_ts$default = {
 		name: "requireRenderReturn",
 		enter(path) {
 			const {node} = path;
 			if (
 				node.type === "JSClassHead" &&
-				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$requireRenderReturn_ts$isExtendingReactComponent(
-					node,
+				___R$project$rome$$romejs$compiler$lint$utils$react$insideClassComponent_ts$default(
+					path,
 				)
 			) {
 				const renderMember = node.body.find(({key}) =>
@@ -78507,63 +78779,33 @@ const ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$voidDomElementsN
 	const ___R$project$rome$$romejs$compiler$lint$rules$react$voidDomElementsNoChildren_ts$default = {
 		name: "reactVoidDomElementsNoChildren",
 		enter(path) {
-			const {node, context} = path;
+			const {node, context, scope} = path;
+			const elementType = ___R$project$rome$$romejs$compiler$lint$utils$react$getCreateElementType_ts$default(
+				node,
+				scope,
+			);
 
 			if (
-				node.type === "JSCallExpression" &&
-				(___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
-					node.callee,
-					"React.createElement",
-				) ||
-				___R$project$rome$$romejs$js$ast$utils$doesNodeMatchPattern_ts$default(
-					node.callee,
-					"createElement",
-				)) &&
-				node.arguments[0].type === "JSStringLiteral" &&
+				___R$project$rome$$romejs$compiler$lint$utils$react$isCreateElement_ts$default(
+					node,
+					scope,
+				) &&
+				elementType &&
 				___R$$priv$project$rome$$romejs$compiler$lint$rules$react$voidDomElementsNoChildren_ts$VOID_DOM_ELEMENTS.has(
-					node.arguments[0].value,
+					elementType,
 				)
 			) {
-				if (node.arguments[1].type === "JSObjectExpression") {
-					const childrenNode = node.arguments[1].properties.find((property) =>
-						property.type === "JSObjectProperty" &&
-						property.key.value.type === "JSIdentifier" &&
-						property.key.value.name === "children"
-					);
-					if (childrenNode) {
-						context.addFixableDiagnostic(
-							{
-								old: childrenNode,
-								fixed: ___R$project$rome$$romejs$compiler$constants_ts$REDUCE_REMOVE,
-							},
-							___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.REACT_VOID_DOM_ELEMENTS_NO_CHILDREN(
-								node.arguments[0].value,
-								["children"],
-							),
-						);
-					}
-
-					const dangerNode = node.arguments[1].properties.find((property) =>
-						property.type === "JSObjectProperty" &&
-						property.key.value.type === "JSIdentifier" &&
-						property.key.value.name === "dangerouslySetInnerHTML"
-					);
-					if (dangerNode) {
-						context.addFixableDiagnostic(
-							{
-								old: dangerNode,
-								fixed: ___R$project$rome$$romejs$compiler$constants_ts$REDUCE_REMOVE,
-							},
-							___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.REACT_VOID_DOM_ELEMENTS_NO_CHILDREN(
-								node.arguments[0].value,
-								["dangerouslySetInnerHTML"],
-							),
-						);
-					}
-				}
-
-				if (node.arguments.length > 2) {
-					context.addFixableDiagnostic(
+				const childrenNode = ___R$project$rome$$romejs$compiler$lint$utils$react$getCreateElementChildren_ts$default(
+					node,
+					scope,
+				);
+				const dangerNode = ___R$project$rome$$romejs$compiler$lint$utils$react$getCreateElementProp_ts$default(
+					node,
+					scope,
+					"dangerouslySetInnerHTML",
+				);
+				if (Array.isArray(childrenNode)) {
+					return context.addFixableDiagnostic(
 						{
 							target: node.arguments,
 							old: node,
@@ -78576,6 +78818,30 @@ const ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$voidDomElementsN
 						___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.REACT_VOID_DOM_ELEMENTS_NO_CHILDREN(
 							(node.arguments[0]).value,
 							["children"],
+						),
+					);
+				} else if (elementType && childrenNode) {
+					return context.addFixableDiagnostic(
+						{
+							old: childrenNode,
+							fixed: ___R$project$rome$$romejs$compiler$constants_ts$REDUCE_REMOVE,
+						},
+						___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.REACT_VOID_DOM_ELEMENTS_NO_CHILDREN(
+							elementType,
+							["children"],
+						),
+					);
+				}
+
+				if (elementType && dangerNode) {
+					return context.addFixableDiagnostic(
+						{
+							old: dangerNode,
+							fixed: ___R$project$rome$$romejs$compiler$constants_ts$REDUCE_REMOVE,
+						},
+						___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.LINT.REACT_VOID_DOM_ELEMENTS_NO_CHILDREN(
+							elementType,
+							["dangerouslySetInnerHTML"],
 						),
 					);
 				}
@@ -78602,12 +78868,13 @@ const ___R$$priv$project$rome$$romejs$compiler$lint$rules$react$voidDomElementsN
 						const property = attribute.name.name;
 						if (property === "children") {
 							properties.add("children");
+							continue;
 						} else if (property === "dangerouslySetInnerHTML") {
 							properties.add("dangerouslySetInnerHTML");
-						} else {
-							newAttributes.push(attribute);
+							continue;
 						}
 					}
+					newAttributes.push(attribute);
 				}
 
 				if (properties.size > 0) {
@@ -78750,7 +79017,6 @@ const ___R$project$rome$$romejs$compiler$lint$rules$index_ts$lintTransforms = [
 		___R$project$rome$$romejs$compiler$lint$rules$react$noUnsafe_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$noUselessFragment_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$noWillUpdateSetState_ts$default,
-		___R$project$rome$$romejs$compiler$lint$rules$react$reactInJsxScope_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$requireRenderReturn_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$stylePropObject_ts$default,
 		___R$project$rome$$romejs$compiler$lint$rules$react$voidDomElementsNoChildren_ts$default,
@@ -80329,6 +80595,8 @@ const ___R$$priv$project$rome$$romejs$compiler$api$analyzeDependencies$index_ts$
 
 
   // project-rome/@romejs/compiler/api/createHook.ts
+
+
 
 
 
@@ -83639,6 +83907,7 @@ const ___R$$priv$project$rome$$romejs$v8$CoverageCollector_ts$inspector = requir
 			this.errorTransports = new Map();
 
 			this.alive = true;
+			this.endError = undefined;
 			this.type = opts.type;
 			this.opts = opts;
 
@@ -83829,8 +84098,8 @@ const ___R$$priv$project$rome$$romejs$v8$CoverageCollector_ts$inspector = requir
 
 		//# Connection death
 		assertAlive() {
-			if (this.alive === false) {
-				throw new Error("Bridge is dead");
+			if (this.endError !== undefined) {
+				throw this.endError;
 			}
 		}
 
@@ -83840,6 +84109,7 @@ const ___R$$priv$project$rome$$romejs$v8$CoverageCollector_ts$inspector = requir
 			}
 
 			this.alive = false;
+			this.endError = err;
 
 			// Reject any pending requests
 			for (const [, event] of this.events) {
@@ -84383,9 +84653,9 @@ const ___R$project$rome$$romejs$events$utils_ts = {
 		subs,
 	) {
 		return {
-			unsubscribe() {
+			async unsubscribe() {
 				for (const sub of subs) {
-					sub.unsubscribe();
+					await sub.unsubscribe();
 				}
 			},
 		};
@@ -101936,6 +102206,9 @@ function ___R$$priv$project$rome$$romejs$diagnostics$descriptions$jsParser_ts$bu
 		TS_UNEXPECTED_CAST_IN_PARAMETER_POSITION: "Unexpected type cast in parameter position",
 		TS_DISABLED_BUT_ACCESSIBILITY_OR_READONLY: "Accessibility and readonly syntax found but TS is not enabled",
 		TS_PARAMETER_PROPERTY_BINDING_PATTERN: "A parameter property may not be declared using a binding pattern.",
+		TS_TUPLE_ELEMENT_LABEL_INCORRECT: "Only an identifier can be a tuple element label but this is something more complex",
+		TS_TUPLE_ELEMENT_OPTIONAL_REST: "A tuple member cannot be both optional and rest.",
+		TS_TUPLE_ELEMENT_OPTIONAL_TRAILING: "A labeled tuple element is declared as optional with a question mark after the name and before the colon, rather than after the type.",
 		TYPE_ANNOTATION_AFTER_ASSIGNMENT: "Type annotations must come before default assignments, e.g. instead of `age = 25: number` use `age: number = 25`",
 		TYPE_BINDING_PARAMETER_OPTIONAL: "A binding pattern parameter cannot be optional in an implementation signature.",
 		ILLEGAL_FUNCTION_IN_STRICT: "In strict mode code, functions can only be declared at top level or inside a block",
@@ -102934,17 +103207,6 @@ const ___R$project$rome$$romejs$diagnostics$descriptions$lint_ts$lint = ___R$pro
 				},
 			],
 		},
-		REACT_REACT_IN_JSX_SCOPE: {
-			category: "lint/react/reactInJsxScope",
-			message: "<emphasis>React</emphasis> must be in scope when using JSX.",
-			advice: [
-				{
-					type: "log",
-					category: "info",
-					text: "The React JSX parser must be available in modules that use JSX syntax.",
-				},
-			],
-		},
 		REACT_STYLE_PROP_OBJECT: {
 			category: "lint/react/stylePropObject",
 			message: "The <emphasis>style</emphasis> prop value must be an object.",
@@ -102966,19 +103228,13 @@ const ___R$project$rome$$romejs$diagnostics$descriptions$lint_ts$lint = ___R$pro
 		},
 		REACT_VOID_DOM_ELEMENTS_NO_CHILDREN: (element, properties) => ({
 			category: "lint/react/voidDomElementsNoChildren",
-			message: "<emphasis>" +
-			element +
-			"</emphasis> is a void element tag and must not have <emphasis>" +
-			___R$project$rome$$romejs$diagnostics$descriptions$index_ts$orJoin(
+			message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`<emphasis>${element}</emphasis> is a void element tag and must not have <emphasis>${___R$project$rome$$romejs$diagnostics$descriptions$index_ts$orJoin(
 				properties,
-			) +
-			"</emphasis>.",
+			)}</emphasis>.`,
 		}),
-		JS_IMPORT_DEFAULT_BASENAME: (prev, basename) => ({
+		JS_IMPORT_DEFAULT_BASENAME: (prev, basename, capitalBasename) => ({
 			category: "lint/js/importDefaultBasename",
-			message: "Use the basename <emphasis>" +
-			basename +
-			"</emphasis> when importing the default.",
+			message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Use the basename <emphasis>${basename}</emphasis> or <emphasis>${capitalBasename}</emphasis> when importing the default.`,
 			advice: [
 				{
 					type: "log",
@@ -103048,9 +103304,13 @@ const ___R$project$rome$$romejs$diagnostics$descriptions$lint_ts$lint = ___R$pro
 				},
 			],
 		}),
-		JS_UNDECLARED_VARIABLES: (name) => ({
+		JS_UNDECLARED_VARIABLES: (name, bindingsInScope) => ({
 			category: "lint/js/undeclaredVariables",
-			message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`The <emphasis>${name}</emphasis> variable is undeclared.`,
+			message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`The <emphasis>${name}</emphasis> variable is undeclared`,
+			advice: ___R$project$rome$$romejs$diagnostics$helpers_ts$buildSuggestionAdvice(
+				name,
+				bindingsInScope,
+			),
 		}),
 		JS_VARIABLE_CAMEL_CASE: (name, camelCaseName) => ({
 			category: "lint/js/camelCase",
@@ -104016,11 +104276,21 @@ const ___R$project$rome$$romejs$diagnostics$derive_ts = {
 			});
 		}
 
-		advice.push({
-			type: "log",
-			category: "error",
-			text: description.message.value,
-		});
+		const message = description.message.value;
+
+		if (message === "") {
+			advice.push({
+				type: "log",
+				category: "none",
+				text: "<dim>no diagnostic message specified</dim>",
+			});
+		} else {
+			advice.push({
+				type: "log",
+				category: "error",
+				text: message,
+			});
+		}
 
 		if (opts.skipFrame === false) {
 			if (location.start !== undefined && location.end !== undefined) {
@@ -104723,11 +104993,11 @@ const ___R$project$rome$ackage_json$default = {
 		"dependencies": {},
 		"///": "Only used for static type checking",
 		"devDependencies": {
-			"@types/node": "^13.13.5",
-			"@types/react": "^16.9.34",
-			"@types/react-dom": "^16.9.7",
-			"@types/vscode": "^1.45.0",
-			"typescript": "^3.8.3",
+			"@types/node": "^14.0.14",
+			"@types/react": "^16.9.41",
+			"@types/react-dom": "^16.9.8",
+			"@types/vscode": "^1.46.0",
+			"typescript": "^4.0.0-beta",
 		},
 		"romeLSPBin": "./scripts/vendor-rome",
 		"scripts": {
@@ -104919,10 +105189,7 @@ const ___R$project$rome$$romejs$core$client$commands$init_ts$default = ___R$proj
 				return false;
 			}
 
-			const config = {
-				version: "^" +
-				___R$project$rome$$romejs$core$common$constants_ts$VERSION,
-			};
+			const config = {};
 			await writeConfig();
 
 			async function writeConfig() {
@@ -105843,40 +106110,28 @@ const ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$crypto = requ
 
 			let timeout;
 			let runningCallback = false;
-			let unsubscribed = false;
-
-			let pendingResult = {
-				paths: new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet(),
-				projects: new Set(),
-			};
+			let pendingPaths = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet();
 
 			async function flush(initial) {
-				if (unsubscribed) {
-					return;
-				}
-
-				if (!initial && pendingResult.paths.size === 0) {
+				if (!initial && pendingPaths.size === 0) {
 					return;
 				}
 
 				timeout = undefined;
 
-				const result = pendingResult;
-				pendingResult = {
-					paths: new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet(),
-					projects: new Set(),
-				};
+				const paths = pendingPaths;
+				pendingPaths = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet();
 
 				runningCallback = true;
-				await callback(result, initial);
+				await callback(paths, initial);
 				runningCallback = false;
 
-				if (pendingResult.paths.size > 0) {
+				if (pendingPaths.size > 0) {
 					await flush(false);
 				}
 			}
 
-			const onChange = (path) => {
+			const refreshFileEvent = this.server.refreshFileEvent.subscribe((path) => {
 				let matches = false;
 				for (const arg of resolvedArgs) {
 					if (arg.path.equal(path) || path.isRelativeTo(arg.path)) {
@@ -105888,42 +106143,46 @@ const ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$crypto = requ
 					return;
 				}
 
-				const project = this.server.projectManager.findProjectExisting(path);
-				if (project !== undefined) {
-					pendingResult.projects.add(project);
+				const paths = this.server.memoryFs.glob(path, opts);
+				for (const path of paths) {
+					pendingPaths.add(path);
 				}
-
-				pendingResult.paths.add(path);
 
 				// Buffer up evicted paths
 				if (!runningCallback && timeout === undefined) {
 					timeout = setTimeout(() => flush(false), 100);
 				}
-			};
+			});
 
-			const refreshFileEvent = this.server.refreshFileEvent.subscribe(onChange);
+			const endSubscription = this.endEvent.subscribe(() => {
+				sub.unsubscribe();
+			});
 
 			const sub = ___R$project$rome$$romejs$events$utils_ts$mergeEventSubscriptions([
 				refreshFileEvent,
 				{
-					unsubscribe() {
-						unsubscribed = true;
+					async unsubscribe() {
 						if (timeout !== undefined) {
 							clearTimeout(timeout);
+
+							// Run the timeout right now
+							await flush(false);
 						}
 					},
 				},
 			]);
 
-			this.endEvent.subscribe(() => {
-				sub.unsubscribe();
-			});
-
 			// Flush initial
-			pendingResult = await this.getFilesFromArgs(opts);
+			const pendingResult = await this.getFilesFromArgs(opts);
+			for (const path of pendingResult.paths) {
+				pendingPaths.add(path);
+			}
 			await flush(true);
 
-			return sub;
+			return ___R$project$rome$$romejs$events$utils_ts$mergeEventSubscriptions([
+				endSubscription,
+				sub,
+			]);
 		}
 
 		async getFilesFromArgs(opts = {}) {
@@ -105936,21 +106195,13 @@ const ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$crypto = requ
 				opts.tryAlternateArg,
 			);
 
-			const extendedGlobOpts = Object.assign({}, opts);
-
-			if (configCategory !== undefined) {
-				extendedGlobOpts.getProjectIgnore = (project) =>
-					ignoreProjectIgnore ? [] : project.config[configCategory].ignore
-				;
-			}
-
 			// Resolved arguments that resulted in no files
 			const noArgMatches = new Set();
 
 			// Match files
 			const paths = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet();
 			for (const arg of resolvedArgs) {
-				const matches = server.memoryFs.glob(arg.path, extendedGlobOpts);
+				const matches = server.memoryFs.glob(arg.path, opts);
 
 				if (matches.size === 0) {
 					if (!opts.ignoreArgumentMisses) {
@@ -106227,9 +106478,11 @@ const ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$crypto = requ
 
 			await cache.update(
 				path,
-				(cacheEntry) => ({
-					lint: Object.assign({}, cacheEntry.lint, {[cacheKey]: res}),
-				}),
+				(cacheEntry) =>
+					({
+						lint: Object.assign({}, cacheEntry.lint, {[cacheKey]: res}),
+					})
+				,
 			);
 
 			return res;
@@ -106286,13 +106539,15 @@ const ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$crypto = requ
 			// There's a race condition here between the file being opened and then rewritten
 			await cache.update(
 				path,
-				(cacheEntry) => ({
-					compile: Object.assign(
-						{},
-						cacheEntry.compile,
-						{[cacheKey]: Object.assign({}, res, {cached: true})},
-					),
-				}),
+				(cacheEntry) =>
+					({
+						compile: Object.assign(
+							{},
+							cacheEntry.compile,
+							{[cacheKey]: Object.assign({}, res, {cached: true})},
+						),
+					})
+				,
 			);
 
 			return res;
@@ -107548,10 +107803,10 @@ const ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$crypto = requ
 	}
 
 
-  // project-rome/@romejs/core/common/utils/locker.ts
+  // project-rome/@romejs/core/common/utils/lockers.ts
 
 
-	class ___R$$priv$project$rome$$romejs$core$common$utils$locker_ts$Lock {
+	class ___R$$priv$project$rome$$romejs$core$common$utils$lockers_ts$Lock {
 		constructor(locker, rawKey, mapKey) {
 			this.locker = locker;
 			this.resolves = [];
@@ -107578,7 +107833,7 @@ const ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$crypto = requ
 		}
 	}
 
-	class ___R$$priv$project$rome$$romejs$core$common$utils$locker_ts$LockerNormalized {
+	class ___R$$priv$project$rome$$romejs$core$common$utils$lockers_ts$LockerNormalized {
 		constructor() {
 			this.locks = new Map();
 		}
@@ -107597,7 +107852,7 @@ const ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$crypto = requ
 				throw new Error("Expected no lock to exist");
 			}
 
-			const lock = new ___R$$priv$project$rome$$romejs$core$common$utils$locker_ts$Lock(
+			const lock = new ___R$$priv$project$rome$$romejs$core$common$utils$lockers_ts$Lock(
 				this,
 				rawKey,
 				mapKey,
@@ -107636,15 +107891,15 @@ const ___R$$priv$project$rome$$romejs$core$server$ServerRequest_ts$crypto = requ
 		}
 	}
 
-	class ___R$project$rome$$romejs$core$common$utils$locker_ts$Locker
-		extends ___R$$priv$project$rome$$romejs$core$common$utils$locker_ts$LockerNormalized {
+	class ___R$project$rome$$romejs$core$common$utils$lockers_ts$Locker
+		extends ___R$$priv$project$rome$$romejs$core$common$utils$lockers_ts$LockerNormalized {
 		normalizeKey(key) {
 			return key;
 		}
 	}
 
-	class ___R$project$rome$$romejs$core$common$utils$locker_ts$FilePathLocker
-		extends ___R$$priv$project$rome$$romejs$core$common$utils$locker_ts$LockerNormalized {
+	class ___R$project$rome$$romejs$core$common$utils$lockers_ts$FilePathLocker
+		extends ___R$$priv$project$rome$$romejs$core$common$utils$lockers_ts$LockerNormalized {
 		normalizeKey(path) {
 			return path.join();
 		}
@@ -107741,7 +107996,7 @@ class ___R$project$rome$$romejs$core$common$FileNotFound_ts$FileNotFound
 			this.nodes = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
 			this.resolverOpts = resolverOpts;
 
-			this.locker = new ___R$project$rome$$romejs$core$common$utils$locker_ts$Locker();
+			this.locker = new ___R$project$rome$$romejs$core$common$utils$lockers_ts$Locker();
 			this.closeEvent = new ___R$project$rome$$romejs$events$Event_ts$default({
 				name: "DependencyGraph.closeEvent",
 			});
@@ -116960,6 +117215,7 @@ const ___R$project$rome$$romejs$core$server$commands$config_ts$default = ___R$pr
 
 			const project = await req.assertClientCwdProject();
 
+			let mutation = "set";
 			let keyParts;
 			let value;
 
@@ -117002,6 +117258,13 @@ const ___R$project$rome$$romejs$core$server$commands$config_ts$default = ___R$pr
 					break;
 				}
 
+				case "push": {
+					req.expectArgumentLength(3, Infinity);
+					[keyParts, ...value] = restArgs;
+					mutation = "push-array";
+					break;
+				}
+
 				default:
 					throw req.throwDiagnosticFlagError({
 						description: ___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.FLAGS.UNKNOWN_ACTION(
@@ -117020,7 +117283,8 @@ const ___R$project$rome$$romejs$core$server$commands$config_ts$default = ___R$pr
 					{
 						pre: (meta) => {
 							reporter.success(
-								"Setting <emphasis>" +
+								(mutation === "set" ? "Setting" : "Adding") +
+								" <emphasis>" +
 								keyParts +
 								"</emphasis> to <emphasis>" +
 								___R$project$rome$$romejs$string$markup$escape_ts$escapeMarkup(
@@ -117051,7 +117315,21 @@ const ___R$project$rome$$romejs$core$server$commands$config_ts$default = ___R$pr
 								}
 								keyConsumer = keyConsumer.get(key);
 							}
-							keyConsumer.setValue(value);
+
+							switch (mutation) {
+								case "set": {
+									keyConsumer.setValue(value);
+									break;
+								}
+
+								case "push-array": {
+									keyConsumer.setValue([
+										...keyConsumer.asArray(true).map((c) => c.asUnknown()),
+										...(Array.isArray(value) ? value : []),
+									]);
+									break;
+								}
+							}
 						},
 					},
 				);
@@ -117839,7 +118117,7 @@ const ___R$project$rome$$romejs$core$server$commands$resolve_ts$default = ___R$p
 
 			return this.request.watchFilesFromArgs(
 				this.getFileArgOptions(),
-				async ({paths: evictedPaths}, initial) => {
+				async (evictedPaths, initial) => {
 					const processor = this.createDiagnosticsProcessor(
 						evictedPaths,
 						runner,
@@ -117928,7 +118206,7 @@ const ___R$project$rome$$romejs$core$server$commands$resolve_ts$default = ___R$p
 				},
 			});
 
-			watchEvent.unsubscribe();
+			await watchEvent.unsubscribe();
 
 			const printer = ___R$$priv$project$rome$$romejs$core$server$linter$Linter_ts$createDiagnosticsPrinter(
 				request,
@@ -120040,6 +120318,21 @@ async function ___R$$priv$project$rome$$romejs$core$server$commands$ci_ts$runChi
 	});
 
 
+  // project-rome/@romejs/core/server/commands/noop.ts
+const ___R$project$rome$$romejs$core$server$commands$noop_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
+		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.INTERNAL,
+		description: "TODO",
+		usage: "",
+		examples: [],
+		defineFlags() {
+			return {};
+		},
+		async callback(req) {
+			req;
+		},
+	});
+
+
   // project-rome/@romejs/core/server/commands/_evict.ts
 const ___R$project$rome$$romejs$core$server$commands$_evict_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
 		description: "evict a file from the memory cache",
@@ -120083,21 +120376,6 @@ const ___R$project$rome$$romejs$core$server$commands$_moduleSignature_ts$default
 			const {reporter} = req;
 			const filename = await req.resolveEntryAssertPathArg(0);
 			reporter.inspect(await req.requestWorkerModuleSignature(filename, {}));
-		},
-	});
-
-
-  // project-rome/@romejs/core/server/commands/_noop.ts
-const ___R$project$rome$$romejs$core$server$commands$_noop_ts$default = ___R$project$rome$$romejs$core$server$commands_ts$createServerCommand({
-		category: ___R$project$rome$$romejs$core$common$commands_ts$commandCategories.INTERNAL,
-		description: "TODO",
-		usage: "",
-		examples: [],
-		defineFlags() {
-			return {};
-		},
-		async callback(req) {
-			req;
 		},
 	});
 
@@ -120216,8 +120494,8 @@ const ___R$project$rome$$romejs$core$server$commands$_projectDump_ts$default = _
 		___R$project$rome$$romejs$core$server$commands$_moduleSignature_ts$default,
 	);
 	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
-		"_noop",
-		___R$project$rome$$romejs$core$server$commands$_noop_ts$default,
+		"noop",
+		___R$project$rome$$romejs$core$server$commands$noop_ts$default,
 	);
 	___R$project$rome$$romejs$core$server$commands_ts$serverCommands.set(
 		"_projectDump",
@@ -120428,17 +120706,14 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 
 
 
-
-
 	class ___R$project$rome$$romejs$core$server$project$ProjectManager_ts$default {
 		constructor(server) {
 			this.server = server;
 
 			this.projectIdCounter = 0;
-			this.projectFolderToId = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
 			this.projectConfigDependenciesToIds = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
-			this.projectLoadingLocks = new ___R$project$rome$$romejs$core$common$utils$locker_ts$FilePathLocker();
-			this.fileToProject = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
+			this.projectLoadingLocks = new ___R$project$rome$$romejs$core$common$utils$lockers_ts$FilePathLocker();
+			this.projectFolderToProject = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
 			this.projects = new Map();
 
 			// We maintain these maps so we can reverse any uids, and protect against collisions
@@ -120462,11 +120737,10 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 			await ___R$project$rome$$romejs$fs$index_ts$createDirectory(
 				defaultVendorPath,
 			);
-			await this.addProjectWithConfig({
+			await this.declareProject({
 				projectFolder: defaultVendorPath,
 				meta: ___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfigMeta(),
 				config: vendorProjectConfig,
-				watch: true,
 			});
 			await this.server.memoryFs.watch(defaultVendorPath);
 		}
@@ -120475,7 +120749,6 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 			const filename = path.join();
 
 			this.projectConfigDependenciesToIds.delete(path);
-			this.fileToProject.delete(path);
 
 			// Remove uids
 			const uid = this.filenameToUid.get(path);
@@ -120688,7 +120961,7 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 		async evictProject(project) {
 			const evictProjectId = project.id;
 
-			// Remove the config locs from 'our internal map that belong to this project
+			// Remove the config locs from our internal map that belong to this project
 			for (const [configLoc, projectIds] of this.projectConfigDependenciesToIds) {
 				if (projectIds.has(evictProjectId)) {
 					projectIds.delete(evictProjectId);
@@ -120726,15 +120999,13 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 
 			// Delete the project from 'our internal map
 			this.projects.delete(evictProjectId);
-			this.projectFolderToId.delete(project.folder);
+			this.projectFolderToProject.delete(project.folder);
 
 			// Evict all files that belong to this project and delete their project mapping
 			const ownedFiles = [];
-			for (const {projectId, path} of this.fileToProject.values()) {
-				if (evictProjectId === projectId) {
-					this.handleDeleted(path);
-					ownedFiles.push(path);
-				}
+			for (const path of this.server.memoryFs.glob(project.folder)) {
+				this.handleDeleted(path);
+				ownedFiles.push(path);
 			}
 			await Promise.all(
 				ownedFiles.map((path) => this.server.fileAllocator.evict(path)),
@@ -120812,61 +121083,31 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 			);
 		}
 
-		// We don't want to do file watching inside of the project loading lock since the memory file system can trigger projects to be loaded
-		// There's separate locks there to handle the initial watch
-		maybeWatchProject(opts, promise) {
-			return promise.then((project) => {
-				if (opts.watch) {
-					return this.server.memoryFs.watch(opts.projectFolder).then(() =>
-						project
-					);
-				} else {
-					return project;
-				}
-			});
-		}
-
-		addProject(opts) {
+		addDiskProject(opts) {
 			const {projectFolder, configPath} = opts;
 
-			return this.maybeWatchProject(
-				opts,
-				this.projectLoadingLocks.wrapLock(
-					projectFolder,
-					async () => {
-						if (this.hasLoadedProjectFolder(projectFolder)) {
-							return this.assertProjectExisting(projectFolder);
-						}
+			return this.projectLoadingLocks.wrapLock(
+				projectFolder,
+				async () => {
+					if (this.hasLoadedProjectFolder(projectFolder)) {
+						return;
+					}
 
-						const {config, meta} = await ___R$project$rome$$romejs$project$load_ts$loadCompleteProjectConfig(
-							projectFolder,
-							configPath,
-						);
+					const {config, meta} = await ___R$project$rome$$romejs$project$load_ts$loadCompleteProjectConfig(
+						projectFolder,
+						configPath,
+					);
 
-						return this._addProjectWithConfig({
-							projectFolder: opts.projectFolder,
-							meta,
-							config,
-
-							// Doesn't do anything
-							watch: false,
-						});
-					},
-				),
+					await this.declareProject({
+						projectFolder: opts.projectFolder,
+						meta,
+						config,
+					});
+				},
 			);
 		}
 
-		addProjectWithConfig(opts) {
-			return this.maybeWatchProject(
-				opts,
-				this.projectLoadingLocks.wrapLock(
-					opts.projectFolder,
-					() => this._addProjectWithConfig(opts),
-				),
-			);
-		}
-
-		_addProjectWithConfig(
+		async declareProject(
 			{
 				projectFolder,
 				meta,
@@ -120880,9 +121121,9 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 						"Conflicting project name " +
 						config.name +
 						". " +
-						projectFolder +
+						projectFolder.join() +
 						" and " +
-						project.folder,
+						project.folder.join(),
 					);
 				}
 			}
@@ -120901,14 +121142,7 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 			};
 
 			this.projects.set(project.id, project);
-			this.fileToProject.set(
-				projectFolder,
-				{
-					path: projectFolder,
-					projectId: project.id,
-				},
-			);
-			this.projectFolderToId.set(projectFolder, project.id);
+			this.projectFolderToProject.set(projectFolder, project);
 
 			if (parentProject !== undefined) {
 				parentProject.children.add(project);
@@ -120924,8 +121158,6 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 
 			// Notify other pieces of our creation
 			this.server.workerManager.onNewProject(project);
-
-			return project;
 		}
 
 		declareManifest(project, isProjectPackage, def, diagnostics) {
@@ -121010,17 +121242,9 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 		}
 
 		async assertProject(path, location) {
-			// We won't recurse up and check a parent project if we've already visited it
-			const syncProject = this.findProjectExisting(path);
-			const project = syncProject || (await this.findProject(path));
-
+			const project =
+				this.findProjectExisting(path) || (await this.findProject(path));
 			if (project) {
-				// Continue searching for projects up the directory
-				// We don't do this for root projects since it would be a waste, but there's no implications other than some unnecessary work if we did
-				if (project.config.root === false && syncProject === undefined) {
-					await this.findProject(project.folder.getParent());
-				}
-
 				return project;
 			}
 
@@ -121033,22 +121257,16 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 					" for " +
 					path.join(),
 				);
+			} else {
+				throw ___R$project$rome$$romejs$diagnostics$errors_ts$createSingleDiagnosticError({
+					location,
+					description: ___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.PROJECT_MANAGER.NOT_FOUND,
+				});
 			}
-
-			throw ___R$project$rome$$romejs$diagnostics$errors_ts$createSingleDiagnosticError({
-				location,
-				description: ___R$project$rome$$romejs$diagnostics$descriptions$index_ts$descriptions.PROJECT_MANAGER.NOT_FOUND,
-			});
 		}
 
 		hasLoadedProjectFolder(path) {
-			for (const project of this.getProjects()) {
-				if (project.folder.equal(path)) {
-					return true;
-				}
-			}
-
-			return false;
+			return this.projectFolderToProject.has(path);
 		}
 
 		// Convenience method to get the project config and pass it to the file handler class
@@ -121094,31 +121312,23 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 		assertProjectExisting(path) {
 			const project = this.findProjectExisting(path);
 			if (project === undefined) {
-				throw new Error("Expected existing project for " + path.join());
+				throw new Error(
+					"Expected existing project for " +
+					path.join() +
+					" only have " +
+					Array.from(
+						this.projectFolderToProject.keys(),
+						(folder) => folder.join(),
+					).join(", "),
+				);
 			}
 			return project;
 		}
 
-		findProjectExisting(cwd, cache = true) {
-			const tried = [];
-
-			for (const dir of cwd.getChain()) {
-				const cached = this.fileToProject.get(dir);
-				if (cached === undefined) {
-					tried.push(dir);
-				} else {
-					if (cache) {
-						for (const dir of tried) {
-							this.fileToProject.set(dir, cached);
-						}
-					}
-
-					const project = this.projects.get(cached.projectId);
-					if (project === undefined) {
-						throw new Error(
-							"Expected project from project id found in fileToProject",
-						);
-					}
+		findProjectExisting(path) {
+			for (const dir of path.getChain()) {
+				const project = this.projectFolderToProject.get(dir);
+				if (project !== undefined) {
 					return project;
 				}
 			}
@@ -121126,6 +121336,7 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 			return undefined;
 		}
 
+		// Attempt to find a project on the real disk and seed it into the memory file system
 		async findProject(cwd) {
 			// Check if we have an existing project
 			const syncProject = this.findProjectExisting(cwd);
@@ -121136,7 +121347,7 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 			const parentDirectories = cwd.getChain();
 
 			// If not then let's access the file system and try to find one
-			for (const dir of parentDirectories) {
+			for (const dir of parentDirectories.slice().reverse()) {
 				// Check for dedicated project configs
 				for (const configFilename of ___R$project$rome$$romejs$project$constants_ts$ROME_CONFIG_FILENAMES) {
 					// Check in root
@@ -121144,7 +121355,8 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 
 					const hasProject = await this.server.memoryFs.existsHard(configPath);
 					if (hasProject) {
-						return this.addProject({projectFolder: dir, configPath, watch: true});
+						await this.server.memoryFs.watch(dir);
+						return this.assertProjectExisting(cwd);
 					}
 				}
 
@@ -121163,11 +121375,8 @@ function ___R$$priv$project$rome$$romejs$core$server$project$ProjectManager_ts$c
 							___R$project$rome$$romejs$project$constants_ts$ROME_CONFIG_PACKAGE_JSON_FIELD,
 						)
 					) {
-						return this.addProject({
-							projectFolder: dir,
-							configPath: packagePath,
-							watch: true,
-						});
+						await this.server.memoryFs.watch(dir);
+						return this.assertProjectExisting(cwd);
 					}
 				}
 			}
@@ -121232,7 +121441,7 @@ const ___R$$priv$project$rome$$romejs$core$server$WorkerManager_ts$child = requi
 				onError: server.onFatalErrorBound,
 			});
 			this.selfWorker = true;
-			this.locker = new ___R$project$rome$$romejs$core$common$utils$locker_ts$Locker();
+			this.locker = new ___R$project$rome$$romejs$core$common$utils$lockers_ts$Locker();
 			this.workers = new Map();
 			this.idCounter = 0;
 		}
@@ -122548,7 +122757,6 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$https = require
 			// Find the project
 			const project = this.server.projectManager.findProjectExisting(
 				query.origin,
-				false,
 			);
 			if (project === undefined) {
 				return undefined;
@@ -122683,10 +122891,7 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$Resolver_ts$https = require
 			const {origin, source} = query;
 
 			// Get project for the origin
-			const project = this.server.projectManager.findProjectExisting(
-				origin,
-				false,
-			);
+			const project = this.server.projectManager.findProjectExisting(origin);
 
 			// Get all the parent directories for when we crawl up
 			const parentDirectories = this.getOriginFolder(query).getChain();
@@ -122757,10 +122962,7 @@ class ___R$project$rome$$romejs$core$server$fs$FileAllocator_ts$default {
 		constructor(server) {
 			this.server = server;
 			this.fileToWorker = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
-			this.locker = new ___R$project$rome$$romejs$core$common$utils$locker_ts$FilePathLocker();
-			this.evictEvent = new ___R$project$rome$$romejs$events$Event_ts$default({
-				name: "evict",
-			});
+			this.locker = new ___R$project$rome$$romejs$core$common$utils$lockers_ts$FilePathLocker();
 		}
 
 		init() {
@@ -122841,7 +123043,6 @@ class ___R$project$rome$$romejs$core$server$fs$FileAllocator_ts$default {
 			await worker.bridge.evict.call({
 				filename,
 			});
-			this.evictEvent.send(path);
 
 			this.server.logger.info("[FileAllocator] Evicted %s", path.toMarkup());
 		}
@@ -123041,9 +123242,10 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 	}
 
 	// Whenever we're performing an operation on a set of files, always do these first as they may influence how the rest are processed
-	const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$PRIORITY_FILES = new Set(
-		___R$project$rome$$romejs$project$constants_ts$ROME_CONFIG_FILENAMES,
-	);
+	const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$PRIORITY_FILES = new Set([
+		...___R$project$rome$$romejs$project$constants_ts$ROME_CONFIG_FILENAMES,
+		"package.json",
+	]);
 
 
 
@@ -123108,12 +123310,12 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 							]);
 
 							if (newStats.type === "file") {
-								memoryFs.handleFileChange(
+								memoryFs.addFile(
 									path,
 									newStats,
 									{
+										reason: "watch",
 										diagnostics,
-										crawl: true,
 									},
 								);
 							} else if (newStats.type === "directory") {
@@ -123121,7 +123323,7 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 									path,
 									newStats,
 									{
-										crawl: true,
+										reason: "watch",
 										diagnostics,
 										onFoundDirectory,
 									},
@@ -123147,9 +123349,9 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 				projectFolder,
 				stats,
 				{
-					crawl: true,
 					diagnostics,
 					onFoundDirectory,
+					reason: "initial",
 				},
 			);
 			logger.info(
@@ -123327,8 +123529,12 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 				"[MemoryFileSystem] File deleted:",
 				path.toMarkup(),
 			);
-			await this.deletedFileEvent.call(path);
-			this.server.refreshFileEvent.send(path);
+
+			// Only emit these events for files
+			if (folderInfo === undefined) {
+				await this.deletedFileEvent.call(path);
+				this.server.refreshFileEvent.send(path);
+			}
 
 			// Remove from 'all possible caches
 			this.files.delete(path);
@@ -123355,24 +123561,9 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 			}
 		}
 
-		async handleFileChange(path, stats, opts) {
-			const oldStats = this.getFileStats(path);
-			const changed = await this.addFile(path, stats, opts);
-			if (changed) {
-				const newStats = this.getFileStatsAssert(path);
-				this.server.logger.info(
-					"[MemoryFileSystem] File change:",
-					path.toMarkup(),
-				);
-				this.server.refreshFileEvent.send(path);
-				this.changedFileEvent.send({path, oldStats, newStats});
-			}
-			return changed;
-		}
-
 		async waitIfInitializingWatch(projectFolderPath) {
 			// Defer if we're initializing a parent folder
-			for (const {promise, path} of this.watchPromises.values()) {
+			for (const [path, promise] of this.watchPromises) {
 				if (projectFolderPath.isRelativeTo(path)) {
 					await promise;
 					return;
@@ -123380,7 +123571,7 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 			}
 
 			// Wait if we're initializing descendents
-			for (const {path, promise} of this.watchPromises.values()) {
+			for (const [path, promise] of this.watchPromises) {
 				if (path.isRelativeTo(projectFolderPath)) {
 					await promise;
 				}
@@ -123446,13 +123637,7 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 				diagnostics,
 				projectFolder,
 			);
-			this.watchPromises.set(
-				projectFolder,
-				{
-					path: projectFolder,
-					promise,
-				},
-			);
+			this.watchPromises.set(projectFolder, promise);
 
 			const watcherClose = await promise;
 			this.watchers.set(
@@ -123522,10 +123707,7 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 		}
 
 		isIgnored(path, type) {
-			const project = this.server.projectManager.findProjectExisting(
-				path,
-				false,
-			);
+			const project = this.server.projectManager.findProjectExisting(path);
 			if (project === undefined) {
 				return false;
 			}
@@ -123626,10 +123808,9 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 					___R$project$rome$$romejs$project$constants_ts$ROME_CONFIG_PACKAGE_JSON_FIELD,
 				)
 			) {
-				await projectManager.addProject({
+				await projectManager.addDiskProject({
 					projectFolder: folder,
 					configPath: path,
-					watch: false,
 				});
 			}
 
@@ -123650,7 +123831,7 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 		}
 
 		glob(cwd, opts = {}) {
-			const {extensions, getProjectIgnore, test, overrideIgnore = []} = opts;
+			const {extensions, configCategory, test, overrideIgnore = []} = opts;
 
 			const paths = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet();
 
@@ -123661,17 +123842,18 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 			while (crawl.length > 0) {
 				const path = crawl.pop();
 
-				const project = this.server.projectManager.assertProjectExisting(path);
+				// `cache: false` to allow calling us with deleted paths
+				const project = this.server.projectManager.findProjectExisting(path);
 
 				let ignore = overrideIgnore;
 
 				// Get ignore patterns
-				if (getProjectIgnore !== undefined) {
+				if (configCategory !== undefined && project !== undefined) {
 					const projectIgnore = ignoresByProject.get(project);
 					if (projectIgnore === undefined) {
 						ignore = ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$concatGlobIgnore([
 							...ignore,
-							...getProjectIgnore(project),
+							...project.config[configCategory].ignore,
 						]);
 						ignoresByProject.set(project, ignore);
 					} else {
@@ -123785,37 +123967,33 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 				opts.onFoundDirectory(folderPath);
 			}
 
-			if (opts.crawl) {
-				// Crawl the folder
-				const files = await ___R$project$rome$$romejs$fs$index_ts$readDirectory(
-					folderPath,
-				);
+			// Crawl the folder
+			const files = await ___R$project$rome$$romejs$fs$index_ts$readDirectory(
+				folderPath,
+			);
 
-				// Declare the file
-				const declareItem = async (path) => {
-					const stats = await this.hardStat(path);
-					if (stats.type === "file") {
-						await this.addFile(path, stats, opts);
-					} else if (stats.type === "directory") {
-						await this.addDirectory(path, stats, opts);
-					}
-				};
+			// Declare the file
+			const declareItem = async (path) => {
+				const stats = await this.hardStat(path);
+				if (stats.type === "file") {
+					await this.addFile(path, stats, opts);
+				} else if (stats.type === "directory") {
+					await this.addDirectory(path, stats, opts);
+				}
+			};
 
-				// Give priority to package.json in case we want to derive something from the project config
+			// Give priority to package.json in case we want to derive something from the project config
+			for (const priorityBasename of ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$PRIORITY_FILES) {
 				for (const file of files) {
-					if (
-						___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$PRIORITY_FILES.has(
-							file.getBasename(),
-						)
-					) {
+					if (priorityBasename === file.getBasename()) {
 						files.delete(file);
 						await declareItem(file);
 					}
 				}
-
-				// Add the rest of the items
-				await Promise.all(Array.from(files, declareItem));
 			}
+
+			// Add the rest of the items
+			await Promise.all(Array.from(files, declareItem));
 
 			return true;
 		}
@@ -123827,7 +124005,7 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 			}
 
 			// If we're still performing an initial crawl of any path higher in the tree then we don't know if it exists yet
-			for (const {path: projectFolder} of this.watchPromises.values()) {
+			for (const projectFolder of this.watchPromises.keys()) {
 				if (path.isRelativeTo(projectFolder)) {
 					return undefined;
 				}
@@ -123881,10 +124059,9 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 					basename,
 				)
 			) {
-				await projectManager.addProject({
+				await projectManager.addDiskProject({
 					projectFolder: dirname,
 					configPath: path,
-					watch: false,
 				});
 			}
 
@@ -123900,12 +124077,24 @@ const ___R$$priv$project$rome$$romejs$core$server$fs$MemoryFileSystem_ts$crypto 
 				});
 			}
 
+			// Detect file changes
+			const oldStats = this.getFileStats(path);
+			if (oldStats !== undefined && opts.reason === "watch") {
+				this.server.logger.info(
+					"[MemoryFileSystem] File change:",
+					path.toMarkup(),
+				);
+				this.server.refreshFileEvent.send(path);
+				this.changedFileEvent.send({path, oldStats, newStats: stats});
+			}
+
 			return true;
 		}
 	}
 
 
   // project-rome/@romejs/core/server/Cache.ts
+
 
 	// Basic checks to determine if we can consider a and b to be mergable
 	function ___R$$priv$project$rome$$romejs$core$server$Cache_ts$areEntriesEqual(
@@ -124311,11 +124500,10 @@ class ___R$project$rome$$romejs$core$server$fs$VirtualModules_ts$default {
 				___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfig(),
 				{name: "rome-runtime"},
 			);
-			await this.server.projectManager.addProjectWithConfig({
+			await this.server.projectManager.declareProject({
 				projectFolder: runtimeModulesPath,
 				meta: ___R$project$rome$$romejs$project$types_ts$createDefaultProjectConfigMeta(),
 				config: projectConfig,
-				watch: true,
 			});
 			await this.server.memoryFs.watch(runtimeModulesPath);
 		}
@@ -124348,6 +124536,29 @@ const ___R$$priv$project$rome$$romejs$core$server$Server_ts$STDOUT_MAX_CHUNK_LEN
 	const ___R$$priv$project$rome$$romejs$core$server$Server_ts$disallowedFlagsWhenReviewing = [
 		"watch",
 	];
+
+	function ___R$project$rome$$romejs$core$server$Server_ts$partialServerQueryResponseToFull(
+		partialQuery,
+	) {
+		const requestFlags = Object.assign(
+			{},
+			___R$project$rome$$romejs$core$common$types$client_ts$DEFAULT_CLIENT_REQUEST_FLAGS,
+			partialQuery.requestFlags,
+		);
+
+		return {
+			commandName: partialQuery.commandName,
+			args: partialQuery.args === undefined ? [] : partialQuery.args,
+			noData: partialQuery.noData === true,
+			requestFlags,
+			silent: partialQuery.silent === true || requestFlags.benchmark,
+			terminateWhenIdle: partialQuery.terminateWhenIdle === true,
+			commandFlags: partialQuery.commandFlags === undefined
+				? {}
+				: partialQuery.commandFlags,
+			cancelToken: partialQuery.cancelToken,
+		};
+	}
 
 	async function ___R$$priv$project$rome$$romejs$core$server$Server_ts$validateRequestFlags(
 		req,
@@ -124475,7 +124686,7 @@ const ___R$$priv$project$rome$$romejs$core$server$Server_ts$STDOUT_MAX_CHUNK_LEN
 				},
 			);
 
-			this.requestFileLocker = new ___R$project$rome$$romejs$core$common$utils$locker_ts$FilePathLocker();
+			this.requestFileLocker = new ___R$project$rome$$romejs$core$common$utils$lockers_ts$FilePathLocker();
 
 			this.connectedReporters = new ___R$project$rome$$romejs$core$server$ServerReporter_ts$default(
 				this,
@@ -124642,9 +124853,7 @@ const ___R$$priv$project$rome$$romejs$core$server$Server_ts$STDOUT_MAX_CHUNK_LEN
 					}
 				});
 
-				teardown = () => {
-					sub.unsubscribe();
-				};
+				teardown = () => sub.unsubscribe();
 			});
 
 			try {
@@ -124655,7 +124864,7 @@ const ___R$$priv$project$rome$$romejs$core$server$Server_ts$STDOUT_MAX_CHUNK_LEN
 				await waitRefresh;
 			} finally {
 				if (teardown !== undefined) {
-					teardown();
+					await teardown();
 				}
 			}
 		}
@@ -124784,7 +124993,7 @@ const ___R$$priv$project$rome$$romejs$core$server$Server_ts$STDOUT_MAX_CHUNK_LEN
 					". Goodbye lol.",
 				);
 				client.bridge.end();
-				return;
+				return client;
 			}
 
 			bridge.query.subscribe(async (request) => {
@@ -124802,6 +125011,8 @@ const ___R$$priv$project$rome$$romejs$core$server$Server_ts$STDOUT_MAX_CHUNK_LEN
 			bridge.endServer.subscribe(async () => this.end());
 
 			await this.clientStartEvent.callOptional(client);
+
+			return client;
 		}
 
 		async createClient(bridge) {
@@ -124959,24 +125170,9 @@ const ___R$$priv$project$rome$$romejs$core$server$Server_ts$STDOUT_MAX_CHUNK_LEN
 		}
 
 		async handleRequest(client, partialQuery) {
-			const requestFlags = Object.assign(
-				{},
-				___R$project$rome$$romejs$core$common$types$client_ts$DEFAULT_CLIENT_REQUEST_FLAGS,
-				partialQuery.requestFlags,
+			const query = ___R$project$rome$$romejs$core$server$Server_ts$partialServerQueryResponseToFull(
+				partialQuery,
 			);
-
-			const query = {
-				commandName: partialQuery.commandName,
-				args: partialQuery.args === undefined ? [] : partialQuery.args,
-				noData: partialQuery.noData === true,
-				requestFlags,
-				silent: partialQuery.silent === true || requestFlags.benchmark,
-				terminateWhenIdle: partialQuery.terminateWhenIdle === true,
-				commandFlags: partialQuery.commandFlags === undefined
-					? {}
-					: partialQuery.commandFlags,
-				cancelToken: partialQuery.cancelToken,
-			};
 
 			const {bridge} = client;
 
@@ -126099,7 +126295,7 @@ const ___R$$priv$project$rome$$romejs$core$client$Client_ts$stream = require(
 			);
 			const status = {bridge, server, dedicated: false};
 
-			await Promise.all([
+			const [serverClient] = await Promise.all([
 				server.attachToBridge(bridge),
 				this.attachBridge(status),
 			]);
@@ -126108,7 +126304,7 @@ const ___R$$priv$project$rome$$romejs$core$client$Client_ts$stream = require(
 				await server.end();
 			});
 
-			return status;
+			return {serverClient, bridge, server};
 		}
 
 		async forceStartDaemon() {
@@ -126494,12 +126690,27 @@ const ___R$project$rome$$romejs$core$common$types$files_ts = {
 				return ___R$project$rome$$romejs$core$common$types$analyzeDependencies_ts$UNKNOWN_ANALYZE_DEPENDENCIES_RESULT;
 			}
 
-			return await analyzeDependencies({
-				file: ref,
-				project,
-				worker: this.worker,
-				parseOptions,
-			});
+			const {value, diagnostics} = await ___R$project$rome$$romejs$diagnostics$wrap_ts$catchDiagnostics(() =>
+				analyzeDependencies({
+					file: ref,
+					project,
+					worker: this.worker,
+					parseOptions,
+				})
+			);
+
+			if (diagnostics !== undefined) {
+				return Object.assign(
+					{},
+					___R$project$rome$$romejs$core$common$types$analyzeDependencies_ts$UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
+					{diagnostics},
+				);
+			}
+			if (value === undefined) {
+				return ___R$project$rome$$romejs$core$common$types$analyzeDependencies_ts$UNKNOWN_ANALYZE_DEPENDENCIES_RESULT;
+			}
+
+			return value;
 		}
 
 		async workerCompilerOptionsToCompilerOptions(
@@ -128284,7 +128495,7 @@ function ___R$$priv$project$rome$$romejs$core$test$worker$SnapshotManager_ts$cle
 			this.runner = runner;
 			this.options = runner.options;
 			this.snapshots = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
-			this.fileLocker = new ___R$project$rome$$romejs$core$common$utils$locker_ts$FilePathLocker();
+			this.fileLocker = new ___R$project$rome$$romejs$core$common$utils$lockers_ts$FilePathLocker();
 			this.inlineSnapshotsUpdates = [];
 			this.snapshotCounts = {
 				deleted: 0,
@@ -128705,8 +128916,8 @@ const ___R$$priv$project$rome$$romejs$core$test$worker$TestWorkerRunner_ts$MAX_R
 		if (latestTestWorkerFrame === undefined) {
 			latestTestWorkerFrame = frames.find((frame) => {
 				return (
-					frame.typeName !== undefined &&
-					frame.typeName.includes("$TestWorkerRunner")
+					frame.filename !== undefined &&
+					frame.filename.includes("TestWorkerRunner")
 				);
 			});
 		}
@@ -128769,7 +128980,11 @@ const ___R$$priv$project$rome$$romejs$core$test$worker$TestWorkerRunner_ts$MAX_R
 						)
 					);
 				}
-				const text = textParts.join(" ");
+				let text = textParts.join(" ");
+
+				if (text === "") {
+					text = "<dim>empty log</dim>";
+				}
 
 				const err = new Error();
 
@@ -130010,7 +130225,7 @@ const ___R$$priv$project$rome$$romejs$cli$cli_ts$fs = require("fs");
 					rage: true,
 				};
 
-				command = "_noop";
+				command = "noop";
 			},
 		});
 
@@ -130024,7 +130239,7 @@ const ___R$$priv$project$rome$$romejs$cli$cli_ts$fs = require("fs");
 					logs: true,
 				};
 
-				command = "_noop";
+				command = "noop";
 			},
 		});
 

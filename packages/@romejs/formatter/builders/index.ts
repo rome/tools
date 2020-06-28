@@ -572,9 +572,6 @@ builders.set("TSNumericLiteralTypeAnnotation", TSNumericLiteralTypeAnnotation);
 import TSObjectKeywordTypeAnnotation from "./js/typescript/TSObjectKeywordTypeAnnotation";
 builders.set("TSObjectKeywordTypeAnnotation", TSObjectKeywordTypeAnnotation);
 
-import TSOptionalType from "./js/typescript/TSOptionalType";
-builders.set("TSOptionalType", TSOptionalType);
-
 import TSParenthesizedType from "./js/typescript/TSParenthesizedType";
 builders.set("TSParenthesizedType", TSParenthesizedType);
 
@@ -601,6 +598,9 @@ builders.set("TSTemplateLiteralTypeAnnotation", TSTemplateLiteralTypeAnnotation)
 
 import TSThisType from "./js/typescript/TSThisType";
 builders.set("TSThisType", TSThisType);
+
+import TSTupleElement from "./js/typescript/TSTupleElement";
+builders.set("TSTupleElement", TSTupleElement);
 
 import TSTupleType from "./js/typescript/TSTupleType";
 builders.set("TSTupleType", TSTupleType);

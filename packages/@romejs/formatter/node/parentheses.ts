@@ -352,7 +352,7 @@ function needsParenUnionTypeAnnotation(
 		parent.type === "TSIntersectionTypeAnnotation" ||
 		parent.type === "TSUnionTypeAnnotation" ||
 		parent.type === "TSArrayType" ||
-		parent.type === "TSOptionalType"
+		(parent.type === "TSTupleElement" && parent.optional === true)
 	);
 }
 
@@ -362,7 +362,10 @@ parens.set("TSIntersectionTypeAnnotation", needsParenUnionTypeAnnotation);
 parens.set(
 	"TSInferType",
 	(node: TSInferType, parent: AnyNode): boolean => {
-		return parent.type === "TSArrayType" || parent.type === "TSOptionalType";
+		return (
+			parent.type === "TSArrayType" ||
+			(parent.type === "TSTupleElement" && parent.optional === true)
+		);
 	},
 );
 

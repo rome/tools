@@ -130,7 +130,9 @@ JSRoot {
 											line: 1
 										}
 									}
-									rest: TSArrayType {
+									rest: TSTupleElement {
+										name: undefined
+										optional: false
 										loc: Object {
 											filename: "input.ts"
 											end: Object {
@@ -139,23 +141,38 @@ JSRoot {
 												line: 1
 											}
 											start: Object {
-												column: 11
-												index: 11
+												column: 8
+												index: 8
 												line: 1
 											}
 										}
-										elementType: TSNumberKeywordTypeAnnotation {
+										typeAnnotation: TSArrayType {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
-													column: 17
-													index: 17
+													column: 19
+													index: 19
 													line: 1
 												}
 												start: Object {
 													column: 11
 													index: 11
 													line: 1
+												}
+											}
+											elementType: TSNumberKeywordTypeAnnotation {
+												loc: Object {
+													filename: "input.ts"
+													end: Object {
+														column: 17
+														index: 17
+														line: 1
+													}
+													start: Object {
+														column: 11
+														index: 11
+														line: 1
+													}
 												}
 											}
 										}
