@@ -53,6 +53,19 @@ exports.write = function(loc, content) {
 	fs.writeFileSync(loc, content);
 };
 
+exports.getBuilderName = function(name) {
+	const [startingCapitals] = name.match(/^([A-Z]+)/);
+
+	if (startingCapitals.length === 1) {
+		// Only one capital
+		return name[0].toLowerCase() + name.slice(1);
+	} else {
+		// Take all and capitalize the first lowercase
+		const rest = name.slice(startingCapitals.length - 1);
+		return startingCapitals.slice(0, -1).toLowerCase() + rest;
+	}
+};
+
 exports.heading = function(str) {
 	console.log(`\u001b[7m ${str} \u001b[27m`);
 };

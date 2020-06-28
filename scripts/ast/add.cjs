@@ -16,26 +16,25 @@ const {
 	astFolder,
 } = require("../_constants.cjs");
 
-const {write} = require("../_utils.cjs");
+const {write, getBuilderName} = require("../_utils.cjs");
 
 const language = process.argv[2];
-const rawNodeType = process.argv[3];
+const nodeType = process.argv[3];
 const category = process.argv[4];
 if (
 	language === undefined ||
-	rawNodeType === undefined ||
+	nodeType === undefined ||
 	category === undefined
 ) {
 	console.error("node scripts/ast/add.cjs [language] [node-type] [category]");
 	process.exit(1);
 }
 
-const builderName = `${language}${nodeType}`;
-const nodeType = `${language.toUpperCase()}${rawNodeType}`;
+const builderName = getBuilderName(nodeType);
 
 // Write AST def
 let file = `import {JSNodeBase} from "../index";
-import {createBuilder} from "../utils";
+import {createBuilder} from "../../utils";
 
 export type ${nodeType} = JSNodeBase & {
 	type: "${nodeType}";
