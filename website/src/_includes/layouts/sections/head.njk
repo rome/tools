@@ -1,7 +1,11 @@
 <head>
 	<title>{{ title }}{{ " — " if title }}Rome JavaScript toolchain</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" href="{{ '/static/img/favicon.ico' | url }}">
+
+  <link rel="mask-icon" href="{{ '/static/img/pinned-rome-logo.svg' | url }}" color="#000000">
+  <link rel="alternate icon" type="image/png" href="{{ '/static/img/favicon.png' | url }}">
+	<link rel="icon" type="image/svg+xml" href="{{ '/static/img/favicon.svg' | url }}">
+
 	<meta name="description" content="{{ config.description }}">
 	<meta property="og:title" content="{{ config.og.title }}">
 	<meta property="og:description" content="{{ config.og.description }}">
@@ -14,16 +18,18 @@
 	<link rel="stylesheet" href="{{ '/static/styles.css' | url }}">
 	<script>
 
-		// Fix white flickering when on dark mode
 		(function () {
-			const themeInStorage = window.localStorage.getItem('data-theme');
+			// Fix white flickering when on dark mode and respect color scheme preference
+			let currentTheme = window.localStorage.getItem('data-theme');
 			const $doc = document.documentElement;
+			const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-			if(!themeInStorage)	{
-				window.localStorage.setItem('data-theme', 'light');
+			if(!currentTheme)	{
+				currentTheme = prefersDarkMode ? 'dark' : 'light';
 			}
 
-			$doc.setAttribute("data-theme", themeInStorage);
+			window.localStorage.setItem('data-theme', currentTheme);
+			$doc.setAttribute("data-theme", currentTheme);
 		})();
 
 	</script>
