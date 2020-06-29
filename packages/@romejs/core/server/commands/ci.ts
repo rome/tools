@@ -9,7 +9,7 @@ import {DiagnosticsPrinter} from "@romejs/cli-diagnostics";
 import {ServerRequest} from "@romejs/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import lint from "./lint";
+import check from "./check";
 import test from "./test";
 import {Consumer} from "@romejs/consume";
 
@@ -55,12 +55,12 @@ export default createServerCommand({
 		await runChildCommand(
 			req,
 			async () => {
-				await lint.callback(
+				await check.callback(
 					req,
 					{
 						formatOnly: false,
 						decisions: [],
-						save: flags.fix,
+						apply: flags.fix,
 						changed: undefined,
 					},
 				);

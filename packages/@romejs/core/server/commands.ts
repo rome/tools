@@ -18,7 +18,7 @@ import parse from "./commands/parse";
 import bundle from "./commands/bundle";
 import format from "./commands/format";
 import lsp from "./commands/lsp";
-import lint from "./commands/lint";
+import check from "./commands/check";
 import ci from "./commands/ci";
 import test from "./commands/test";
 import noop from "./commands/noop";
@@ -53,7 +53,7 @@ export function createServerCommand<Flags extends Dict<unknown>>(
 // rome-ignore lint/js/noExplicitAny
 export const serverCommands: Map<string, ServerCommand<any>> = new Map();
 serverCommands.set("test", test);
-serverCommands.set("lint", lint);
+serverCommands.set("check", check);
 serverCommands.set("config", config);
 serverCommands.set("bundle", bundle);
 serverCommands.set("parse", parse);

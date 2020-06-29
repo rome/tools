@@ -84,7 +84,7 @@ async function testLintExpect(
 	});
 
 	const res = await lint({
-		applyFixes: true,
+		applyRecommendedFixes: true,
 		options: {},
 		ast,
 		sourceText: input,

@@ -39,7 +39,7 @@ type LintWatchChanges = Array<{
 export type LinterCompilerOptionsPerFile = Dict<Required<LintCompilerOptions>>;
 
 export type LinterOptions = {
-	save: boolean;
+	apply: boolean;
 	args?: Array<string>;
 	hasDecisions: boolean;
 	formatOnly: boolean;
@@ -95,7 +95,7 @@ function createDiagnosticsPrinter(
 				reporter.info(
 					"Fixes available. To apply recommended fixes and formatting run",
 				);
-				reporter.command("rome lint --save");
+				reporter.command("rome lint --apply");
 				reporter.info("To choose fix suggestions run");
 				reporter.command("rome lint --review");
 			}
@@ -212,7 +212,7 @@ class LintRunner {
 						path,
 						{
 							save: shouldSave,
-							applyFixes: shouldApplyFixes,
+							applyRecommendedFixes: shouldApplyFixes,
 							compilerOptions,
 						},
 					)
@@ -443,8 +443,8 @@ export default class Linter {
 	}
 
 	shouldSave(): boolean {
-		const {save, hasDecisions} = this.options;
-		return save || hasDecisions || this.shouldOnlyFormat();
+		const {apply, hasDecisions} = this.options;
+		return apply || hasDecisions || this.shouldOnlyFormat();
 	}
 
 	getFileArgOptions(): ServerRequestGetFilesOptions {

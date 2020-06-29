@@ -23,7 +23,7 @@ const filteredWrittenFiles = writtenFiles.filter(function(file){
 });
 
 // Autofix them
-execDev(["lint", ...filteredWrittenFiles, "--save"]);
+execDev(["check", ...filteredWrittenFiles, "--apply"]);
 
 // Check that `git status` is fine
 const out = child_process

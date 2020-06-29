@@ -57,7 +57,7 @@ Object {
 				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "You cannot use CommonJS exports in an ES module"}
 				advice: Array [
 					action {
-						command: "lint"
+						command: "check"
 						extra: undefined
 						hidden: true
 						instruction: "To suppress this error run"
@@ -68,7 +68,7 @@ Object {
 					}
 					action {
 						args: Array []
-						command: "lint"
+						command: "check"
 						extra: true
 						hidden: true
 						instruction: "To add suppression comments for ALL files with this category run"

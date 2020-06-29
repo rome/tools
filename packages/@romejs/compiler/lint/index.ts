@@ -21,9 +21,9 @@ export type LintResult = {
 const lintCache: Cache<LintResult> = new Cache();
 
 export default async function lint(req: LintRequest): Promise<LintResult> {
-	const {ast, sourceText, project, applyFixes, options} = req;
+	const {ast, sourceText, project, applyRecommendedFixes, options} = req;
 
-	const query = Cache.buildQuery(req, {applyFixes});
+	const query = Cache.buildQuery(req, {applyRecommendedFixes});
 	const cached = lintCache.get(query);
 	if (cached) {
 		return cached;
@@ -38,12 +38,12 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 		project,
 		frozen: false,
 		origin: {
-			category: "lint",
+			category: "check",
 		},
 	});
 
 	let formatAst = ast;
-	if (applyFixes) {
+	if (applyRecommendedFixes) {
 		formatAst = formatContext.reduceRoot(ast, lintTransforms);
 		formatAst = addSuppressions(formatContext, formatAst);
 	}
@@ -65,7 +65,7 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 		project,
 		options,
 		origin: {
-			category: "lint",
+			category: "check",
 		},
 		frozen: true,
 	});

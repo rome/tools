@@ -10,7 +10,7 @@ test(
 			},
 		},
 		async (t, {client}) => {
-			await client.query({commandName: "lint"});
+			await client.query({commandName: "check"});
 		},
 	),
 );
@@ -24,7 +24,7 @@ test(
 			},
 		},
 		async (t, {client}) => {
-			await client.query({commandName: "lint", commandFlags: {save: true}});
+			await client.query({commandName: "check", commandFlags: {apply: true}});
 		},
 	),
 );
