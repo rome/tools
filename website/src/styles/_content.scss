@@ -1,7 +1,7 @@
 .content {
   max-width: $container-width;
   margin: 0 auto;
-  padding: 0 $unit * 2 $unit * 4 $unit * 2;
+  padding: 0 $unit * 2 $unit * 2 $unit * 2;
 
   .header-anchor {
     display: none;
@@ -35,27 +35,27 @@
     padding: $unit / 4 0;
   }
 
-}
-
-table {
-  border-collapse: collapse;
-}
-
-tbody td {
-  padding: $unit / 2;
-  border: 1px solid var(--soft-border-color);
-}
-
-tbody tr:nth-child(even) {
-  background-color: var(--toc-background-active);
-}
-
-blockquote {
-  border-left: $unit * 0.5 solid var(--blockquote-color);
-  margin: $unit 0 $unit * 1.5 0;
-  padding: $unit;
-
-  > p {
-    margin: 0;
+  table {
+    border-collapse: collapse;
   }
+
+  tbody td {
+    padding: $unit / 2;
+    border: 1px solid var(--soft-border-color);
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: var(--toc-background-active);
+  }
+
+  blockquote {
+    border-left: $unit * 0.5 solid var(--blockquote-color);
+    margin: $unit 0 $unit * 1.5 0;
+    padding: $unit;
+
+    > p {
+      margin: 0;
+    }
+  }
+
 }

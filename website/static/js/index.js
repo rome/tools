@@ -3,10 +3,12 @@ const elements = {
   toc: document.getElementsByClassName('toc-container')[0],
   tocLinks: [...document.querySelectorAll('.toc-container a')],
   sidebar: document.getElementsByClassName('sidebar')[0],
+  sidebarRight: document.querySelectorAll('.sidebar.right')[0],
   overlay: document.getElementsByClassName('overlay')[0],
-  headings: [...document.querySelectorAll('.content h1, .content h2, .content h3')],
+  headings: [...document.querySelectorAll('.content h1, .content h2')],
   headerMobile: document.getElementsByClassName('header-mobile')[0],
-  modeSwitch: document.getElementById('mode-switch')
+  colorSchemeSwitch: document.getElementById('color-scheme-switch'),
+  colorSchemeSwitchText: document.getElementById('color-scheme-switch-text'),
 };
 
 function isMobile(){
@@ -53,24 +55,6 @@ const toc = {
 
         link.classList.add('active');
 
-        if(toc.currentH1Link){
-          if(toc.currentH1Link.parentElement.lastElementChild.tagName == 'OL'){
-            toc.currentH1Link.parentElement.lastElementChild.classList.remove('not-sr-only');
-          }
-        }
-
-        if(element.tagName === 'H2'){
-
-          toc.currentH1Link = link // link inside a level 2 OL
-                              .parentElement // li
-                              .parentElement // ol
-                              .parentElement // Level one ol
-                              .firstElementChild; // h1 link
-
-          link.parentElement.parentElement.classList.add('not-sr-only');
-
-        }
-
       } else {
 
         link.classList.remove('active');
@@ -101,7 +85,7 @@ const toc = {
 }
 
 function scrollToHeading(hash){
-  const heading = document.querySelector(hash);
+  const heading = document.getElementById(hash);
 
   if(!heading) return null;
 
@@ -132,6 +116,7 @@ function mobileToggleEvent(event){
   const bodyClassList = document.body.classList;
   event.preventDefault();
   elements.sidebar.classList.toggle('visible');
+  elements.sidebarRight.classList.toggle('visible');
   elements.overlay.classList.toggle('visible');
   bodyClassList.toggle('no-scroll');
   toc.highlight();
@@ -143,10 +128,10 @@ function modeSwitch(event){
   let theme = $doc.getAttribute('data-theme');
 
   if(theme === 'light'){
-    elements.modeSwitch.innerText = "Light Mode";
+    elements.colorSchemeSwitchText.innerText = "Light Mode";
     theme = 'dark';
   } else {
-    elements.modeSwitch.innerText = "Dark Mode";
+    elements.colorSchemeSwitchText.innerText = "Dark Mode";
     theme = 'light';
   }
 
@@ -160,7 +145,7 @@ const themeInStorage = window.localStorage.getItem('data-theme');
 if(themeInStorage){
 
   if (themeInStorage === "dark") {
-    elements.modeSwitch.innerText = "Light Mode";
+    elements.colorSchemeSwitchText.innerText = "Light Mode";
   }
 
 }
@@ -197,4 +182,4 @@ elements.overlay.addEventListener('click', mobileToggleEvent, false);
 elements.overlay.addEventListener("touchstart", mobileToggleEvent, false);
 window.addEventListener('scroll', handleScroll, false);
 
-elements.modeSwitch.addEventListener('click', modeSwitch, false);
+elements.colorSchemeSwitch.addEventListener('click', modeSwitch, false);
