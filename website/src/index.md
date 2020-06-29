@@ -5,11 +5,11 @@ showHero: true
 
 **Rome** is a linter, compiler, bundler, and [more](#responsibilities). It unifies functionality that have previously been completely separate tools. We have full support for JavaScript, TypeScript and JSX syntax.
 
-[Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Webpack](https://webpack.js.org/), [Jest](https://jestjs.io/), and other related tooling have a large overlap in implementation and responsibilities.
+[Babel](https://babeljs.io/), [Webpack](https://webpack.js.org/), [Jest](https://jestjs.io/), [ESLint](https://eslint.org/), and other JavaScript language tooling have a significant overlap in responsibilities and implementation.
 
 There is value in these being a single tool. Building upon a shared base allows us to provide a cohesive experience for processing JavaScript, displaying errors, parallelizing work, caching, and configuration.
 
-**Rome** is opinionated. We aim to have minimal configuration. By using Rome you accept the conventions we have set. Read more about our philosophy [here](/contributing/philosophy).
+**Rome** has strong conventions and we aim to have minimal configuration. By using Rome you accept the conventions we have set. Read more about our philosophy [here](/contributing/philosophy).
 
 **Rome** is maintained by a [team of contributors](/contributing/team). **Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io) and [Yarn](https://yarnpkg.com).
 
