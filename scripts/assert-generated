@@ -32,5 +32,8 @@ const out = child_process
 if (out !== "") {
 	console.error("Modified files:");
 	console.error(out);
+	console.log();
+	console.log("To fix this run `node scripts/assert-generated` and commit the results");
+	console.log();
 	process.exit(1);
 }
