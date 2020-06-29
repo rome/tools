@@ -64,7 +64,7 @@ export type WorkerAnalyzeDependencyResult = AnalyzeDependencyResult & {
 export type WorkerLintOptions = {
 	compilerOptions?: LintCompilerOptions;
 	prefetchedModuleSignatures: PrefetchedModuleSignatures;
-	applyFixes: boolean;
+	applyRecommendedFixes: boolean;
 	save: boolean;
 };
 

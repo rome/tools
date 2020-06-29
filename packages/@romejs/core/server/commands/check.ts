@@ -23,7 +23,7 @@ import {LINTABLE_EXTENSIONS} from "@romejs/core/common/file-handlers";
 
 type Flags = {
 	decisions: Array<string>;
-	save: boolean;
+	apply: boolean;
 	changed: undefined | string;
 	formatOnly: boolean;
 };
@@ -39,7 +39,7 @@ export default createServerCommand<Flags>({
 			decisions: consumer.get("decisions").asImplicitArray().map((item) =>
 				item.asString()
 			),
-			save: consumer.get("save").asBoolean(false),
+			apply: consumer.get("apply").asBoolean(false),
 			formatOnly: consumer.get("formatOnly").asBoolean(false),
 			changed: consumer.get("changed").asStringOrVoid(),
 		};
@@ -99,7 +99,7 @@ export default createServerCommand<Flags>({
 			hasDecisions: flags.decisions.length > 0,
 			lintCompilerOptionsPerFile,
 			globalDecisions,
-			save: flags.save,
+			apply: flags.apply,
 			formatOnly: flags.formatOnly,
 			args,
 		};
