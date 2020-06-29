@@ -265,9 +265,20 @@ export default {
 						// Add after error
 						position = "after";
 					}
+
+					let errorNode = toMove.node;
+
+					// Make the warning message point to the function name
+					if (
+						toMove.node.type === "JSClassMethod" ||
+						toMove.node.type === "JSClassProperty"
+					) {
+						errorNode = toMove.node.key;
+					}
+
 					// Add diagnostics to the node
 					path.context.addNodeDiagnostic(
-						toMove.node,
+						errorNode,
 						descriptions.LINT.REACT_SORT_COMP(
 							inOrder.name,
 							toMove.name,

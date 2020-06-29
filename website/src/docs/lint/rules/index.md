@@ -124,6 +124,7 @@ showHero: false
 | no-useless-fragment |  |
 | no-will-update-set-state |  |
 | require-render-return |  |
+| sort-comp |  |
 | style-prop-object |  |
 | void-dom-elements-no-children |  |
 
