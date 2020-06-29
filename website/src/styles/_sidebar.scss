@@ -26,15 +26,46 @@
   @include mobile-only() {
     transform: translateX(-100%);
     position: fixed;
-    min-width: 256px;
     padding-top: 64px;
     background: var(--background-color);
     height: 100%;
+    width: 50%;
+    min-width: auto;
     -webkit-overflow-scrolling: touch;
 
     &.visible {
       transform: translateX(0);
     }
+
+  }
+
+  &.right{
+    border-right: 1px solid var(--soft-border-color);
+    border-left: none;
+
+    @include desktop-only() {
+      padding-top: 0;
+    }
+
+    h2{
+      text-transform: uppercase;
+      font-size: .8em;
+      font-weight: bold;
+      font-family: inherit;
+      color: var(--sub-text-color);
+      margin-bottom: $unit;
+    }
+
+    @include mobile-only() {
+      right: 0;
+      transform: translateX(100%);
+
+      &.visible {
+        transform: translateX(0);
+      }
+
+    }
+
   }
 
   .menu {

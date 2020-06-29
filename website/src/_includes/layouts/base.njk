@@ -70,7 +70,7 @@
             </li>
           </ul>
         </nav>
-        
+
         <nav aria-labelledby="site-navigation" class="menu">
           <h2 id="site-navigation">Components</h2>
           <ul>
@@ -101,13 +101,6 @@
           </ul>
         </nav>
 
-        <nav aria-labelledby="page-navigation" class="table-of-contents">
-          <h2 id="page-navigation" class="sr-only">Page Navigation</h2>
-          <div class="toc-container">
-            {{ content | toc(tags=['h1', 'h2'], wrapper='div  ', wrapperClass='fixed toc')  | safe }}
-          </div>
-        </nav>
-
         <div class="mode-switch-container">
           <button id="mode-switch" class="mode-switch">
             Dark Mode
@@ -124,6 +117,15 @@
         <main id="main-content" class="content">
           {{ content | safe }}
         </main>
+      </div>
+      <div class="sidebar right">
+        <nav aria-labelledby="table-of-content" class="table-of-contents">
+          <h2 id="table-of-content">Table of Contents</h2>
+          <div class="toc-container">
+            {{ content | toc(tags=['h1', 'h2'], wrapper='div  ', wrapperClass='fixed toc')  | safe }}
+          </div>
+        </nav>
+
       </div>
     </div>
 

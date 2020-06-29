@@ -3,6 +3,7 @@ const elements = {
   toc: document.getElementsByClassName('toc-container')[0],
   tocLinks: [...document.querySelectorAll('.toc-container a')],
   sidebar: document.getElementsByClassName('sidebar')[0],
+  sidebarRight: document.querySelectorAll('.sidebar.right')[0],
   overlay: document.getElementsByClassName('overlay')[0],
   headings: [...document.querySelectorAll('.content h1, .content h2, .content h3')],
   headerMobile: document.getElementsByClassName('header-mobile')[0],
@@ -132,6 +133,7 @@ function mobileToggleEvent(event){
   const bodyClassList = document.body.classList;
   event.preventDefault();
   elements.sidebar.classList.toggle('visible');
+  elements.sidebarRight.classList.toggle('visible');
   elements.overlay.classList.toggle('visible');
   bodyClassList.toggle('no-scroll');
   toc.highlight();

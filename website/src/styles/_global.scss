@@ -104,7 +104,7 @@ a:active {
     z-index: 1;
     &.visible {
       transform: translateX(0);
-      opacity: 0.6;
+      opacity: 0;
     }
   }
 }
