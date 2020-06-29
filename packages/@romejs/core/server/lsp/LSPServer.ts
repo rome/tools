@@ -403,7 +403,7 @@ export default class LSPServer {
 		const linter = new Linter(
 			req,
 			{
-				save: false,
+				apply: false,
 				hasDecisions: false,
 				formatOnly: false,
 			},

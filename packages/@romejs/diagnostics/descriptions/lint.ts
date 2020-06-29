@@ -1036,19 +1036,19 @@ export const lint = createDiagnosticsCategory({
 			},
 			({
 				type: "action",
-				command: "lint",
+				command: "check",
 				shortcut: "f",
 				instruction: "To apply fixes and formatting run",
 				noun: "Apply fixes and format",
 				args: [relativeFilename],
 				commandFlags: {
-					save: true,
+					apply: true,
 				},
 			} as DiagnosticAdviceAction),
 			({
 				type: "action",
 				hidden: true,
-				command: "lint",
+				command: "check",
 				shortcut: "o",
 				instruction: "To format this file without any fixes run",
 				noun: "Only format",
