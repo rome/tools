@@ -1,3 +1,7 @@
+.toc-container{
+  font-size: 0.9em;
+}
+
 .table-of-contents {
   margin-left: $unit;
   margin-top: $unit;
@@ -29,7 +33,6 @@
 
     &.active {
       color: var(--toc-link-color-active);
-      background-color: var(--toc-background-active);
       font-weight: bold;
     }
   }

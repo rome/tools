@@ -100,12 +100,6 @@
             </li>
           </ul>
         </nav>
-
-        <div class="mode-switch-container">
-          <button id="mode-switch" class="mode-switch">
-            Dark Mode
-          </button>
-        </div>
       </div>
       <div class="main">
         <div class="overlay"></div>
@@ -125,6 +119,13 @@
             {{ content | toc(tags=['h1', 'h2'], wrapper='div  ', wrapperClass='fixed toc')  | safe }}
           </div>
         </nav>
+
+        <div class="color-scheme-switch-container">
+          <button id="color-scheme-switch" class="color-scheme-switch">
+            <span id="color-scheme-switch-text" class="sr-only">
+            </span>
+          </button>
+        </div>
 
       </div>
     </div>
