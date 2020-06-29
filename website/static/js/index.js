@@ -85,7 +85,7 @@ const toc = {
 }
 
 function scrollToHeading(hash){
-  const heading = document.getElementById(hash);
+  const heading = document.getElementById(hash.replace(/^(#)/,''));
 
   if(!heading) return null;
 
