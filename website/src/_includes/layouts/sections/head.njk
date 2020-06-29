@@ -1,7 +1,11 @@
 <head>
 	<title>{{ title }}{{ " — " if title }}Rome JavaScript toolchain</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" href="{{ '/static/img/favicon.ico' | url }}">
+
+  <link rel="mask-icon" href="{{ '/static/img/pinned-rome-logo.svg' | url }}" color="#000000">
+  <link rel="alternate icon" type="image/png" href="{{ '/static/img/favicon.png' | url }}">
+	<link rel="icon" type="image/svg+xml" href="{{ '/static/img/favicon.svg' | url }}">
+
 	<meta name="description" content="{{ config.description }}">
 	<meta property="og:title" content="{{ config.og.title }}">
 	<meta property="og:description" content="{{ config.og.description }}">
