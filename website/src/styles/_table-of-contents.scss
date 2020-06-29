@@ -8,7 +8,6 @@
 
     ol {
       margin-left: $unit;
-      @extend .sr-only;
     }
   }
 
@@ -38,16 +37,4 @@
   li {
     list-style-type: none;
   }
-}
-
-.table-of-contents a.active + ol {
-  @extend .not-sr-only;
-  margin-left: $unit !important;
-  @include transition-timing;
-  transition-property: all;
-}
-
-.table-of-contents a + ol.not-sr-only {
-  @extend .not-sr-only;
-  margin-left: $unit !important;
 }
