@@ -38,7 +38,7 @@ Refer to [Project Configuration](/docs/project-config) for more details.
 ### Run some commands
 
 ```bash
-rome lint
+rome check
 ```
 
 ### Install an editor extension

@@ -31,7 +31,7 @@ This can also be configured via the [`rome config` command](/docs/cli/commands/c
 rome config set version "^0.0.0"
 ```
 
-### `lint`
+### `check`
 
 See [Linting](/docs/lint#project-config) for lint config options.
 

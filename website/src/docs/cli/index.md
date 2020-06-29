@@ -9,7 +9,7 @@ layout: layouts/base.njk
 
 - [`config`](/docs/cli/commands/config)
 - [`init`](/docs/cli/commands/init)
-- [`lint`](/docs/cli/commands/lint)
+- [`check`](/docs/cli/commands/check)
 - [`logs`](/docs/cli/commands/logs)
 - [`lsp`](/docs/cli/commands/lsp)
 - [`noop`](/docs/cli/commands/noop)
