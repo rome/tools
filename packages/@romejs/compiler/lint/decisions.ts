@@ -196,7 +196,7 @@ export function buildLintDecisionAdviceAction(
 		type: "action",
 		extra,
 		hidden: true,
-		command: "lint",
+		command: "check",
 		shortcut,
 		args: filename === undefined ? [] : [escapeFilename(filename)],
 		noun,
