@@ -31,7 +31,7 @@ test(
 					"<span role='combobox' aria-expanded='true'></span>",
 					"<span role='combobox' aria-controls='true'></span>",
 					"<span role='menuitemcheckbox' ></span>",
-					"<span role='menuitemradio' ></span>"
+					"<span role='menuitemradio' ></span>",
 				],
 				valid: [
 					"<span role='checkbox' aria-checked='true'></span>",
