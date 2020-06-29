@@ -1,11 +1,11 @@
 import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
 import isEmptyTemplateLiteral from "@romejs/js-ast-utils/isEmptyTemplateLiteral";
+import {ariaPropsMap} from "../../utils/aria";
 import {
 	ARIAProperty,
 	ARIAPropertyDefinition,
-	ariaPropsMap,
-} from "../../utils/aria";
+} from "@romejs/compiler/lint/utils/aria/types";
 
 function isCorrectValue(
 	attribute: ARIAPropertyDefinition,

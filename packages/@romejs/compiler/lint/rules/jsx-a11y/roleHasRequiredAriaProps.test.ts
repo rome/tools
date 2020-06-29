@@ -30,6 +30,8 @@ test(
 					"<span role='combobox'></span>",
 					"<span role='combobox' aria-expanded='true'></span>",
 					"<span role='combobox' aria-controls='true'></span>",
+					"<span role='menuitemcheckbox' ></span>",
+					"<span role='menuitemradio' ></span>"
 				],
 				valid: [
 					"<span role='checkbox' aria-checked='true'></span>",
@@ -42,6 +44,8 @@ test(
 					"<span role='option' aria-selected='true'></span>",
 					"<span role='heading' aria-level='1'></span>",
 					"<span role='combobox' aria-controls='true' aria-expanded='true'></span>",
+					"<span role='menuitemcheckbox' aria-checked='true'></span>",
+					"<span role='menuitemradio' aria-checked='true'></span>",
 				],
 			},
 			{category: "lint/jsx-a11y/roleHasRequiredAriaProps"},

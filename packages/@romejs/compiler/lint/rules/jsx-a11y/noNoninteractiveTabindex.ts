@@ -3,7 +3,11 @@ import {descriptions} from "@romejs/diagnostics";
 import {getJSXAttribute, hasJSXAttribute} from "@romejs/js-ast-utils";
 import getJSXElementName from "@romejs/js-ast-utils/getJSXElementName";
 import {JSXAttribute} from "@romejs/ast";
-import {elementsToConcepts, isRoleInteractive, roles} from "../../utils/aria";
+import {
+	ariaRolesMap,
+	elementsToConceptsMap,
+	isRoleInteractive,
+} from "@romejs/compiler/lint/utils/aria";
 
 function hasValidTabIndexValue(
 	node: JSXAttribute | undefined,
@@ -64,7 +68,7 @@ export default {
 				 * e.g. <div tabIndex="0"></div>
 				 */
 				if (!hasJSXAttribute(node, "role")) {
-					const elementToRole = elementsToConcepts.get(elementName);
+					const elementToRole = elementsToConceptsMap.get(elementName);
 					// the element is not part of any role, so it's an error
 					// e.g. div, span, etc.
 					if (elementToRole) {
@@ -91,7 +95,7 @@ export default {
 				}
 				const attr = getJSXAttribute(node, "role");
 				if (attr && attr.value && attr.value.type === "JSStringLiteral") {
-					const role = roles.get(attr.value.value);
+					const role = ariaRolesMap.get(attr.value.value);
 					if (role) {
 						/**
 						 * Some roles are not interactive (e.g. article),

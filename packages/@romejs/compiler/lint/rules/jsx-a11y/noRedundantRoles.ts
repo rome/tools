@@ -3,7 +3,7 @@ import {descriptions} from "@romejs/diagnostics";
 import {getJSXAttribute, hasJSXAttribute} from "@romejs/js-ast-utils";
 import getJSXElementName from "@romejs/js-ast-utils/getJSXElementName";
 import {AnyNode, JSXAttribute, JSXElement} from "@romejs/ast";
-import {ARIAProperty, ARIARoleDefinition, roles} from "../../utils/aria";
+import {ARIAProperty, ARIARoleDefinition, ariaRolesMap} from "../../utils/aria";
 
 type CreateFixableDiagnostic = {
 	context: CompilerContext;
@@ -87,7 +87,7 @@ export default {
 			) {
 				let elementHasARole;
 
-				const mappedRole = roles.get(roleAttribute.value.value);
+				const mappedRole = ariaRolesMap.get(roleAttribute.value.value);
 				// here we cover cases where "role" attribute and the element name differs in naming
 				// e.g. h1 and role="heading"
 				if (mappedRole && mappedRole.baseConcepts) {
