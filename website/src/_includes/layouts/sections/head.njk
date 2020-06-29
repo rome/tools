@@ -18,16 +18,18 @@
 	<link rel="stylesheet" href="{{ '/static/styles.css' | url }}">
 	<script>
 
-		// Fix white flickering when on dark mode
 		(function () {
-			const themeInStorage = window.localStorage.getItem('data-theme');
+			// Fix white flickering when on dark mode and respect color scheme preference
+			let currentTheme = window.localStorage.getItem('data-theme');
 			const $doc = document.documentElement;
+			const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-			if(!themeInStorage)	{
-				window.localStorage.setItem('data-theme', 'light');
+			if(!currentTheme)	{
+				currentTheme = prefersDarkMode ? 'dark' : 'light';
 			}
 
-			$doc.setAttribute("data-theme", themeInStorage);
+			window.localStorage.setItem('data-theme', currentTheme);
+			$doc.setAttribute("data-theme", currentTheme);
 		})();
 
 	</script>
