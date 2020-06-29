@@ -8,18 +8,6 @@ on:
       - main
 
 jobs:
-  typescript:
-    runs-on: ubuntu-latest
-    name: TypeScript check
-
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '13.x'
-      - name: Run TypeScript
-        run: node ./node_modules/.bin/tsc --noEmit
-
   lint:
     name: rome check
     runs-on: ubuntu-latest
@@ -31,18 +19,6 @@ jobs:
           node-version: '13.x'
       - name: rome check
         run: node scripts/dev-rome check
-
-  generated:
-    name: Generated files check
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '13.x'
-      - name: Check if generated files need to be updated
-        run: node scripts/assert-generated
 
   tests:
     name: rome test
@@ -58,3 +34,27 @@ jobs:
           node-version: '13.x'
       - name: rome test
         run: node scripts/dev-rome test --freeze-snapshots
+
+  typescript:
+    runs-on: ubuntu-latest
+    name: TypeScript check
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '13.x'
+      - name: Run TypeScript
+        run: node ./node_modules/.bin/tsc --noEmit
+
+  generated:
+    name: Generated files check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '13.x'
+      - name: Check if generated files need to be updated
+        run: node scripts/assert-generated
