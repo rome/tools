@@ -3,17 +3,15 @@ layout: layouts/base.njk
 showHero: true
 ---
 
-**Rome** is a JavaScript toolchain. It unifies functionality that has previously been completely separate tools. **Rome** is a linter, compiler, bundler, and [more](#responsibilities).
+**Rome** is a linter, compiler, bundler, and [more](#responsibilities). It unifies functionality that have previously been completely separate tools. We have full support for JavaScript, TypeScript and JSX syntax.
 
-Project such as [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Webpack](https://webpack.js.org/), [Jest](https://jestjs.io/), and related tooling have a large overlap in implementation and responsibilities.
+[Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Webpack](https://webpack.js.org/), [Jest](https://jestjs.io/), and other related tooling have a large overlap in implementation and responsibilities.
 
 There is value in these being a single tool. Building upon a shared base allows us to provide a cohesive experience for processing JavaScript, displaying errors, parallelizing work, caching, and configuration.
 
 **Rome** is opinionated. We aim to have minimal configuration. By using Rome you accept the conventions we have set. Read more about our philosophy [here](/contributing/philosophy).
 
-**Rome** supports regular JavaScript, TypeScript and JSX.
-
-**Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io) and [Yarn](https://yarnpkg.com). **Rome** is maintained by a [team of contributors](/contributing/team).
+**Rome** is maintained by a [team of contributors](/contributing/team). **Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io) and [Yarn](https://yarnpkg.com).
 
 ## Development status
 
@@ -45,7 +43,6 @@ Rome aims to have the following responsibilities:
 		<img  src="/static/img/screenshots/2.png" alt="Rome Lint Sample - variable undeclared/unused" />
 	</div>
 </div>
-
 
 <ul class="home-actions">
 	<li>
