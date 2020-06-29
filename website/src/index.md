@@ -33,8 +33,19 @@ Rome aims to have the following responsibilities:
 
 ## Learn more
 
-![One](/static/img/screenshots/1.png)
-![Two](/static/img/screenshots/2.png)
+
+<div class="image-horizontal-overflow" >
+	<div class="image-scroll" >
+		<img  src="/static/img/screenshots/1.png" alt="Rome Lint Sample - alt missing" />
+	</div>
+</div>
+
+<div class="image-horizontal-overflow" >
+	<div class="image-scroll" >
+		<img  src="/static/img/screenshots/2.png" alt="Rome Lint Sample - variable undeclared/unused" />
+	</div>
+</div>
+
 
 <ul class="home-actions">
 	<li>
