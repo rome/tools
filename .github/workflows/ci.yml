@@ -21,7 +21,7 @@ jobs:
         run: node ./node_modules/.bin/tsc --noEmit
 
   lint:
-    name: Lint
+    name: rome check
     runs-on: ubuntu-latest
 
     steps:
@@ -29,8 +29,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '13.x'
-      - name: Run Rome lint
-        run: node scripts/dev-rome lint
+      - name: rome check
+        run: node scripts/dev-rome check
 
   generated:
     name: Generated files check
@@ -45,7 +45,7 @@ jobs:
         run: node scripts/assert-generated
 
   tests:
-    name: Tests
+    name: rome test
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -56,5 +56,5 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '13.x'
-      - name: Run Rome test
+      - name: rome test
         run: node scripts/dev-rome test --freeze-snapshots
