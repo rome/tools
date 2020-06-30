@@ -526,6 +526,17 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
+	REACT_SORT_COMP: (right: string, wrong: string, position: "before" | "after") => ({
+		category: "lint/react/sortComp",
+		message: `<emphasis>${wrong}</emphasis> should be placed ${position} <emphasis>${right}</emphasis>.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "When creating React components it is more convenient to always follow the same organisation for method order to help you easily find lifecycle methods, event handlers, etc.",
+			},
+		],
+	}),
 	REACT_STYLE_PROP_OBJECT: {
 		category: "lint/react/stylePropObject",
 		message: "The <emphasis>style</emphasis> prop value must be an object.",
