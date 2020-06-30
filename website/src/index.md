@@ -13,6 +13,10 @@ There is value in these being a single tool. Building upon a shared base allows 
 
 **Rome** is maintained by a [team of contributors](/contributing/team). **Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io) and [Yarn](https://yarnpkg.com).
 
+## Preview
+
+{% rootmd "website/src/_includes/homepage-screenshot.md" %}
+
 ## Development status
 
 **Rome is currently only supported as a [linter](/docs/lint).** As Rome's use as a linter stabilizes we will begin polishing the other components for release and usage.
@@ -30,19 +34,6 @@ Rome aims to have the following responsibilities:
  - Type Checking
 
 ## Learn more
-
-
-<div class="image-horizontal-overflow" >
-	<div class="image-scroll" >
-		<img  src="/static/img/screenshots/1.png" alt="Rome Lint Sample - alt missing" />
-	</div>
-</div>
-
-<div class="image-horizontal-overflow" >
-	<div class="image-scroll" >
-		<img  src="/static/img/screenshots/2.png" alt="Rome Lint Sample - variable undeclared/unused" />
-	</div>
-</div>
 
 <ul class="home-actions">
 	<li>

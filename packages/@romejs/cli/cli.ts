@@ -8,6 +8,7 @@
 import {
 	Client,
 	ClientFlags,
+	ClientReporterOverrides,
 	ClientRequestFlags,
 	DEFAULT_CLIENT_FLAGS,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
@@ -54,6 +55,7 @@ export default async function cli() {
 		defineFlags(
 			c: Consumer,
 		): {
+			reporterOverrides: ClientReporterOverrides;
 			cliFlags: CLIFlags;
 			clientFlags: ClientFlags;
 			requestFlags: ClientRequestFlags;
@@ -69,6 +71,26 @@ export default async function cli() {
 				).asAbsoluteFilePathOrVoid() || createAbsoluteFilePath(process.cwd());
 
 			return {
+				reporterOverrides: {
+					format: c.get(
+						"consoleFormat",
+						{
+							description: "Change the output format. By default it is automatically inferred from terminal settings.",
+						},
+					).asStringSetOrVoid(["ansi", "html", "none"]),
+					columns: c.get(
+						"consoleColumns",
+						{
+							description: "Change the display width. By default it is automatically inferred and updated from the terminal.",
+						},
+					).asNumberFromStringOrVoid(),
+					redirectError: c.get(
+						"consoleRedirectError",
+						{
+							description: "Redirect stderr to stdout.",
+						},
+					).asBooleanOrVoid(),
+				},
 				clientFlags: {
 					clientName: "cli",
 					cwd,
@@ -344,7 +366,7 @@ export default async function cli() {
 	});
 
 	// Initialize flags
-	let {clientFlags, cliFlags, requestFlags} = await p.init();
+	let {reporterOverrides, clientFlags, cliFlags, requestFlags} = await p.init();
 
 	// Force collection of markers if markersPath or we are raging
 	if (cliFlags.markersPath || cliFlags.rage) {
@@ -359,6 +381,7 @@ export default async function cli() {
 	p.commandRequired();
 
 	const client = new Client({
+		reporterOverrides,
 		globalErrorHandlers: true,
 		flags: clientFlags,
 		stdin: process.stdin,

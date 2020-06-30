@@ -284,19 +284,127 @@ while (x) {
 
   ✖ Block statements are preferred in this position.
 
-    with (x);with (x);
-    ^^^^^^^^^
+  ✖ Encountered an error displaying this diagnostic
+  ✖ DiagnosticsError: <emphasis>bg</emphasis> is not a valid attribute name for
+    <emphasis>token</emphasis>
+    
+     unknown parse/stringMarkup
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    
+      ✖ bg is not a valid attribute name for token
+    
+      > 1 │ <nobr>  <token type="keyword">with</token> <token type="punctuation">(</token><token
+    type="variable">x</token><token type="punctuation">)</token><token
+    type="punctuation">;</token><emphasis><token bg="red">with (x);</token></emphasis>
+          │                                                                                         
+                                                                                                    
+               ^
+        2 │  
+    <error><emphasis>^^^^^^^^^</emphasis></error></nobr>
+    
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    ━━━
+    
+    ✖ Found 1 problem
+    
+      at ___R$project$rome$$romejs$diagnostics$errors_ts$createSingleDiagnosticError
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:68896:9) generated source location
+      at StringMarkupParser.unexpected
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:73089:10) generated source location
+      at StringMarkupParser.parseTag
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:3265:18) generated source location
+      at StringMarkupParser.parseChild
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:3407:17) generated source location
+      at StringMarkupParser.parseTag
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:3329:25) generated source location
+      at StringMarkupParser.parseChild
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:3407:17) generated source location
+      at StringMarkupParser.parseTag
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:3329:25) generated source location
+      at StringMarkupParser.parseChild
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:3407:17) generated source location
+      at StringMarkupParser.parse
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:3418:24) generated source location
+      at ___R$project$rome$$romejs$string$markup$parse_ts$parseMarkup
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:3432:6) generated source location
+      at ___R$$priv$project$rome$$romejs$string$markup$format_ts$renderGrid
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:49437:3) generated source location
+      at ___R$project$rome$$romejs$string$markup$format_ts$markupToPlainText
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:49459:9) generated source location
+      at ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default.markupify
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:52453:12) generated source location
+      at ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default.logOne
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:52483:24) generated source location
+      at ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default.logAll
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:52468:9) generated source location
+      at ___R$$priv$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printFrame
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:56491:11) generated source location
+      at ___R$project$rome$$romejs$cli$diagnostics$printAdvice_ts$default
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:56194:11) generated source location
+      at <anonymous>
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:68656:17) generated source location
+      at ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default.indent
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:52188:3) generated source location
+      at ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default.displayDiagnostic
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:68650:12) generated source location
+      at <anonymous>
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:68521:30) generated source location
+      at ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default.wrapError
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:68502:4) generated source location
+      at ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default.displayDiagnostics
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:68521:9) generated source location
+      at ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default.print
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:68496:8) generated source location
+      at ___R$project$rome$$romejs$cli$diagnostics$index_ts$printDiagnostics
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:68841:10) generated source location
+      at ___R$project$rome$$romejs$cli$diagnostics$index_ts$printDiagnosticsToString
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:68853:2) generated source location
+      at ___R$$priv$project$rome$$romejs$compiler$lint$utils$testing_ts$testLintExpect
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:107377:3) generated source location
+      at process.processTicksAndRejections (internal/process/task_queues.js:97:4) generated source
+    location
+      at ___R$project$rome$$romejs$compiler$lint$utils$testing_ts$testLint
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:107285:3) generated source location
+      at <anonymous>
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
+    ents.test.ts:107396:3) generated source location
+      at <anonymous> (project-rome/@romejs/core/test-worker/TestWorkerRunner.ts:499:5)
+      at ___R$project$rome$$romejs$diagnostics$wrap_ts$catchDiagnostics
+    (project-rome/@romejs/diagnostics/wrap.ts:28:16)
+      at ___R$project$rome$$romejs$core$test$worker$TestWorkerRunner_ts$default.runTest
+    (project-rome/@romejs/core/test-worker/TestWorkerRunner.ts:494:25)
 
-  ℹ Recommended fix
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    1  │ - with (x);
-     1 │ + with (x) {
-     2 │ + 
-     3 │ + }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+  ✖ Found 1 problem
 
 ```
 

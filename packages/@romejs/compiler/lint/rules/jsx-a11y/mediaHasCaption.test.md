@@ -15,8 +15,8 @@
     <audio {...props} />
     ^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Captions support users with hearing-impairments. They should be a transcription or translationof
-    the dialogue, sound effects, musical cues, and other relevant audio information.
+  ℹ Captions support users with hearing-impairments. They should be a transcription or translation
+    of the dialogue, sound effects, musical cues, and other relevant audio information.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -42,8 +42,8 @@
     <video {...props} />
     ^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Captions support users with hearing-impairments. They should be a transcription or translationof
-    the dialogue, sound effects, musical cues, and other relevant audio information.
+  ℹ Captions support users with hearing-impairments. They should be a transcription or translation
+    of the dialogue, sound effects, musical cues, and other relevant audio information.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -69,8 +69,8 @@
     <audio>child</audio>
     ^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Captions support users with hearing-impairments. They should be a transcription or translationof
-    the dialogue, sound effects, musical cues, and other relevant audio information.
+  ℹ Captions support users with hearing-impairments. They should be a transcription or translation
+    of the dialogue, sound effects, musical cues, and other relevant audio information.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -96,8 +96,8 @@
     <video>child</audio>
     ^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Captions support users with hearing-impairments. They should be a transcription or translationof
-    the dialogue, sound effects, musical cues, and other relevant audio information.
+  ℹ Captions support users with hearing-impairments. They should be a transcription or translation
+    of the dialogue, sound effects, musical cues, and other relevant audio information.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

@@ -7,6 +7,7 @@
 
 import {
 	Children,
+	GridOutputFormat,
 	MarkupFormatGridOptions,
 	MarkupFormatNormalizeOptions,
 	MarkupLinesAndWidth,
@@ -14,14 +15,14 @@ import {
 } from "./types";
 import {parseMarkup} from "./parse";
 import {escapeMarkup} from "./escape";
-import Grid from "./Grid";
+import Grid from "./grid/Grid";
 import {ob1Get1} from "@romejs/ob1";
 import {sliceEscaped} from "@romejs/string-utils";
 import {
 	formatGrammarNumber,
 	getFileLinkFilename,
 	getFileLinkText,
-} from "./tagFormatters";
+} from "./grid/tagFormatters";
 
 function buildTag(
 	tag: TagNode,
@@ -128,6 +129,19 @@ function normalizeMarkupChildren(
 	};
 }
 
+function renderGrid(
+	input: string,
+	opts: MarkupFormatGridOptions = {},
+	format: GridOutputFormat,
+): MarkupLinesAndWidth {
+	const grid = new Grid(opts);
+	grid.drawRoot(parseMarkup(input));
+	return {
+		width: ob1Get1(grid.getWidth()),
+		lines: grid.getLines(format),
+	};
+}
+
 export function markupToPlainTextString(
 	input: string,
 	opts: MarkupFormatGridOptions = {},
@@ -139,26 +153,21 @@ export function markupToPlainText(
 	input: string,
 	opts: MarkupFormatGridOptions = {},
 ): MarkupLinesAndWidth {
-	const grid = new Grid(opts);
-	grid.drawRoot(parseMarkup(input));
-	return {
-		width: ob1Get1(grid.getWidth()),
-		lines: grid.getLines(),
-	};
+	return renderGrid(input, opts, "none");
 }
 
 export function markupToAnsi(
 	input: string,
 	opts: MarkupFormatGridOptions = {},
 ): MarkupLinesAndWidth {
-	const grid = new Grid(opts);
+	return renderGrid(input, opts, "ansi");
+}
 
-	grid.drawRoot(parseMarkup(input));
-
-	return {
-		width: ob1Get1(grid.getWidth()),
-		lines: grid.getFormattedLines(),
-	};
+export function markupToHtml(
+	input: string,
+	opts: MarkupFormatGridOptions = {},
+): MarkupLinesAndWidth {
+	return renderGrid(input, opts, "html");
 }
 
 export function normalizeMarkup(

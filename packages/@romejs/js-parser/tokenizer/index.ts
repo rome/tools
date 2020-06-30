@@ -333,10 +333,12 @@ function pushComment(
 	}
 
 	if (parser.shouldCreateToken()) {
-		/*parser.pushToken({
-      type: tt.comment,
-      loc,
-    });*/
+		parser.pushToken({
+			type: tt.comment,
+			start: opts.startPos.index,
+			end: opts.endPos.index,
+			loc,
+		});
 	}
 
 	return comment;

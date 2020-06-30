@@ -8,6 +8,7 @@
 import {
 	ClientFlags,
 	ClientFlagsJSON,
+	ClientReporterOverrides,
 	DEFAULT_CLIENT_FLAGS,
 } from "../common/types/client";
 import ClientRequest, {ClientRequestType} from "./ClientRequest";
@@ -47,6 +48,7 @@ export function getFilenameTimestamp(): string {
 const NEW_SERVER_INIT_TIMEOUT = 10_000;
 
 type ClientOptions = {
+	reporterOverrides?: ClientReporterOverrides;
 	globalErrorHandlers?: boolean;
 	stdout?: stream.Writable;
 	stderr?: stream.Writable;
@@ -103,6 +105,7 @@ export default class Client {
 			stdin: opts.stdin,
 			verbose: this.flags.verbose === true,
 			markupOptions: {
+				userConfig: this.userConfig,
 				cwd: this.flags.cwd,
 			},
 		});
@@ -117,6 +120,7 @@ export default class Client {
 		this.derivedReporterStreams = this.reporter.attachStdoutStreams(
 			stdout,
 			opts.stderr,
+			this.options.reporterOverrides,
 		);
 
 		this.endEvent.subscribe(() => {
@@ -461,6 +465,7 @@ export default class Client {
 
 	async attachBridge(status: BridgeStatus) {
 		const {stdout, stderr, columnsUpdated} = this.derivedReporterStreams;
+		const {reporterOverrides = {}} = this.options;
 
 		if (this.bridgeStatus !== undefined) {
 			throw new Error("Already attached bridge to API");
@@ -471,7 +476,11 @@ export default class Client {
 		const {bridge} = status;
 
 		bridge.stderr.subscribe((chunk) => {
-			stderr.write(chunk);
+			if (reporterOverrides.redirectError) {
+				stdout.write(chunk);
+			} else {
+				stderr.write(chunk);
+			}
 		});
 
 		bridge.stdout.subscribe((chunk) => {

@@ -24,39 +24,83 @@ import {isEscaped} from "@romejs/string-utils";
 import {Number0, ob1Add, ob1Get0, ob1Inc} from "@romejs/ob1";
 import {descriptions} from "@romejs/diagnostics";
 import {unescapeTextValue} from "./escape";
+import {normalizeColor, normalizeTokenType} from "./grid/tagFormatters";
 
-const globalAttributes: Array<string> = ["emphasis", "dim"];
+type AttributeValidator = (value: string) => undefined | string;
+type AttributeValidators = Map<string, AttributeValidator>;
 
-// Tags and their corresponding supported attributes
-const tags: Map<MarkupTagName, Array<string>> = new Map();
-tags.set("emphasis", []);
-tags.set("number", ["approx", "pluralSuffix", "singularSuffix"]);
-tags.set("grammarNumber", ["plural", "singular", "none"]);
-tags.set("hyperlink", ["target"]);
-tags.set("filelink", ["target", "column", "line"]);
-tags.set("inverse", []);
-tags.set("dim", []);
-tags.set("filesize", []);
-tags.set("duration", ["approx"]);
-tags.set("italic", []);
-tags.set("underline", []);
-tags.set("strike", []);
-tags.set("error", []);
-tags.set("success", []);
-tags.set("warn", []);
-tags.set("info", []);
-tags.set("command", []);
-tags.set("color", ["fg", "bg"]);
-tags.set("highlight", ["i", "legend"]);
-tags.set("table", []);
-tags.set("tr", []);
-tags.set("td", ["align"]);
-tags.set("hr", []);
-tags.set("pad", ["width", "align"]);
-tags.set("nobr", []);
-tags.set("li", []);
-tags.set("ul", []);
-tags.set("ol", ["reversed", "start"]);
+const noopValidator: AttributeValidator = (value) => value;
+const booleanValidator: AttributeValidator = (value) =>
+	value === "false" || value === "true" ? value : undefined
+;
+const numberValidator: AttributeValidator = (value) =>
+	isNaN(Number(value)) ? undefined : value
+;
+
+const globalAttributes: AttributeValidators = new Map([
+	["emphasis", booleanValidator],
+	["dim", booleanValidator],
+]);
+
+// Tags and their corresponding supported attributes and validators
+const tags: Map<MarkupTagName, AttributeValidators> = new Map();
+
+tags.set("emphasis", new Map());
+tags.set(
+	"number",
+	new Map([
+		["approx", booleanValidator],
+		["pluralSuffix", noopValidator],
+		["singularSuffix", noopValidator],
+	]),
+);
+tags.set(
+	"grammarNumber",
+	new Map([
+		["plural", noopValidator],
+		["singular", noopValidator],
+		["none", noopValidator],
+	]),
+);
+tags.set("hyperlink", new Map([["target", noopValidator]]));
+tags.set(
+	"filelink",
+	new Map([
+		["target", noopValidator],
+		["column", numberValidator],
+		["line", numberValidator],
+	]),
+);
+tags.set("inverse", new Map());
+tags.set("dim", new Map());
+tags.set("filesize", new Map());
+tags.set("duration", new Map([["approx", booleanValidator]]));
+tags.set("italic", new Map());
+tags.set("underline", new Map());
+tags.set("strike", new Map());
+tags.set("token", new Map([["type", normalizeTokenType]]));
+tags.set("error", new Map());
+tags.set("success", new Map());
+tags.set("warn", new Map());
+tags.set("info", new Map());
+tags.set("command", new Map());
+tags.set("color", new Map([["fg", normalizeColor], ["bg", normalizeColor]]));
+tags.set(
+	"highlight",
+	new Map([["i", noopValidator], ["legend", booleanValidator]]),
+);
+tags.set("table", new Map());
+tags.set("tr", new Map());
+tags.set("td", new Map([["align", noopValidator]]));
+tags.set("hr", new Map());
+tags.set("pad", new Map([["width", numberValidator], ["align", noopValidator]]));
+tags.set("nobr", new Map());
+tags.set("li", new Map());
+tags.set("ul", new Map());
+tags.set(
+	"ol",
+	new Map([["reversed", booleanValidator], ["start", numberValidator]]),
+);
 
 // Tags that only support certain other tags as their children
 const tagsToOnlyChildren: Map<MarkupTagName, Array<MarkupTagName>> = new Map();
@@ -264,15 +308,14 @@ const createStringMarkupParser = createParser((ParserCore) =>
 				if (keyToken.type === "Word") {
 					key = keyToken.value;
 
-					if (
-						!allowedAttributes.includes(key) &&
-						!globalAttributes.includes(key)
-					) {
+					const validator =
+						allowedAttributes.get(key) || globalAttributes.get(key);
+					if (validator === undefined) {
 						throw this.unexpected({
 							description: descriptions.STRING_MARKUP.INVALID_ATTRIBUTE_NAME_FOR_TAG(
 								tagName,
 								key,
-								[...allowedAttributes, ...globalAttributes],
+								[...allowedAttributes.keys(), ...globalAttributes.keys()],
 							),
 						});
 					}
@@ -295,7 +338,17 @@ const createStringMarkupParser = createParser((ParserCore) =>
 					if (valueToken.type !== "String") {
 						throw new Error("Expected String");
 					}
-					const value = valueToken.value;
+					const value = validator(valueToken.value);
+
+					if (value === undefined) {
+						throw this.unexpected({
+							description: descriptions.STRING_MARKUP.INVALID_ATTRIBUTE_VALUE(
+								tagName,
+								key,
+								valueToken.value,
+							),
+						});
+					}
 
 					attributes[key] = value;
 				} else if (keyToken.type === "Slash") {

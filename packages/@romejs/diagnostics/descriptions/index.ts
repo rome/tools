@@ -35,6 +35,7 @@ import {consume} from "./consume";
 import {manifest} from "./manifest";
 import {projectConfig} from "./projectConfig";
 import {lint} from "./lint";
+import {userConfig} from "./userConfig";
 
 type DiagnosticMetadataString = Omit<Partial<DiagnosticDescription>, "message"> & {
 	message: string;
@@ -173,4 +174,5 @@ export const descriptions = {
 	CONSUME: consume,
 	MANIFEST: manifest,
 	PROJECT_CONFIG: projectConfig,
+	USER_CONFIG: userConfig,
 };

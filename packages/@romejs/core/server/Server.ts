@@ -223,6 +223,7 @@ export default class Server {
 					},
 				],
 				markupOptions: {
+					userConfig: this.userConfig,
 					humanizeFilename: (filename) => {
 						const path = createUnknownFilePath(filename);
 						if (path.isAbsolute()) {
@@ -645,8 +646,8 @@ export default class Server {
 			streams: [outStream, errStream],
 			verbose: flags.verbose,
 			markupOptions: {
-				cwd: flags.cwd,
 				...this.logger.markupOptions,
+				cwd: flags.cwd,
 			},
 			useRemoteProgressBars: useRemoteReporter,
 		});

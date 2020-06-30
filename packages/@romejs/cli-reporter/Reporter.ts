@@ -37,6 +37,7 @@ import {Event} from "@romejs/events";
 import readline = require("readline");
 import select from "./select";
 import {onKeypress} from "./util";
+import {markupToHtml} from "@romejs/string-markup/format";
 
 type ListOptions = {
 	reverse?: boolean;
@@ -140,11 +141,23 @@ export default class Reporter {
 
 	static DEFAULT_COLUMNS = 100;
 
-	attachStdoutStreams(stdout?: Stdout, stderr?: Stdout): ReporterDerivedStreams {
-		const columns =
+	attachStdoutStreams(
+		stdout?: Stdout,
+		stderr?: Stdout,
+		force: {
+			columns?: number;
+			format?: ReporterStream["format"];
+		} = {},
+	): ReporterDerivedStreams {
+		let columns =
 			stdout === undefined || stdout.columns === undefined
 				? Reporter.DEFAULT_COLUMNS
 				: stdout.columns;
+
+		// Force set columns
+		if (force.columns !== undefined) {
+			columns = force.columns;
+		}
 
 		const columnsUpdated: Event<number, void> = new Event({
 			name: "columnsUpdated",
@@ -158,7 +171,7 @@ export default class Reporter {
 
 		const outStream: ReporterStream = {
 			type: "out",
-			format: getStreamFormat(stdout),
+			format: force.format || getStreamFormat(stdout),
 			columns,
 			unicode,
 			write(chunk) {
@@ -171,7 +184,7 @@ export default class Reporter {
 
 		const errStream: ReporterStream = {
 			type: "error",
-			format: getStreamFormat(stderr),
+			format: force.format || getStreamFormat(stderr),
 			columns,
 			unicode,
 			write(chunk) {
@@ -181,8 +194,12 @@ export default class Reporter {
 			},
 		};
 
-		// Watch for resizing
-		if (outStream.format === "ansi" && stdout !== undefined) {
+		// Watch for resizing, unless force.columns has been set and we'll consider it to be fixed
+		if (
+			outStream.format === "ansi" &&
+			stdout !== undefined &&
+			force.columns !== undefined
+		) {
 			const onStdoutResize = () => {
 				if (stdout?.columns !== undefined) {
 					const {columns} = stdout;
@@ -888,8 +905,7 @@ export default class Reporter {
 				return markupToAnsi(str, gridMarkupOptions);
 
 			case "html":
-				// TODO
-				return markupToPlainText(str, gridMarkupOptions);
+				return markupToHtml(str, gridMarkupOptions);
 
 			case "none":
 				return markupToPlainText(str, gridMarkupOptions);

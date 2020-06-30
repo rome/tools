@@ -8,12 +8,12 @@
 import {
 	ChildNode,
 	Children,
+	GridOutputFormat,
 	MarkupFormatGridOptions,
-	MarkupFormatOptions,
 	MarkupTagName,
 	TagNode,
 	TextNode,
-} from "./types";
+} from "../types";
 import {
 	Number1,
 	ob1Add,
@@ -24,7 +24,7 @@ import {
 	ob1Number1,
 	ob1Sub,
 } from "@romejs/ob1";
-import {formatAnsi} from "./ansi";
+import {formatAnsi} from "../ansi";
 import {
 	humanizeFileSize,
 	humanizeNumber,
@@ -37,6 +37,9 @@ import {
 	getFileLinkFilename,
 	getFileLinkText,
 } from "./tagFormatters";
+import {escapeXHTMLEntities} from "@romejs/js-parser";
+import {ansiFormatText} from "./ansi";
+import {htmlFormatText} from "./html";
 
 type Cursor = {
 	line: Number1;
@@ -189,11 +192,30 @@ export default class Grid {
 		return {...this.cursor};
 	}
 
-	getLines(): Array<string> {
+	getLines(format: GridOutputFormat): Array<string> {
+		switch (format) {
+			case "ansi":
+				return this.getFormattedAnsiLines();
+
+			case "html":
+				return this.getFormattedHtmlLines();
+
+			case "none":
+				return this.getUnformattedLines();
+		}
+	}
+
+	getUnformattedLines(): Array<string> {
 		return this.lines.map(({columns}) => columns.join(""));
 	}
 
-	getFormattedLines(): Array<string> {
+	getFormattedLines(
+		opts: {
+			normalizeText: (text: string) => string;
+			formatTag: (tag: TagNode, inner: string) => string;
+			wrapRange: (inner: string) => string;
+		},
+	): Array<string> {
 		const lines = [];
 
 		for (const {ranges, columns} of this.lines) {
@@ -203,16 +225,15 @@ export default class Grid {
 			const sortedRanges = ranges.sort((a, b) => b.end - a.end);
 
 			for (const {start, end, ancestry} of sortedRanges) {
-				let substr = content.slice(start, end);
+				let substr = opts.normalizeText(content.slice(start, end));
 
 				// Format tags in reverse
 				for (let i = ancestry.length - 1; i >= 0; i--) {
 					const tag = ancestry[i];
-					substr = ansiFormatText(tag, substr, this.markupOptions);
+					substr = opts.formatTag(tag, substr);
 				}
 
-				substr = formatAnsi.reset(substr);
-
+				substr = opts.wrapRange(substr);
 				content = content.slice(0, start) + substr + content.slice(end);
 			}
 
@@ -220,6 +241,22 @@ export default class Grid {
 		}
 
 		return lines;
+	}
+
+	getFormattedHtmlLines(): Array<string> {
+		return this.getFormattedLines({
+			normalizeText: (text) => escapeXHTMLEntities(text),
+			formatTag: (tag, inner) => htmlFormatText(tag, inner),
+			wrapRange: (inner) => inner,
+		});
+	}
+
+	getFormattedAnsiLines(): Array<string> {
+		return this.getFormattedLines({
+			normalizeText: (text) => text,
+			formatTag: (tag, inner) => ansiFormatText(tag, inner, this.markupOptions),
+			wrapRange: (inner) => formatAnsi.reset(inner),
+		});
 	}
 
 	fillCursor(cursor: Cursor) {
@@ -314,6 +351,8 @@ export default class Grid {
 
 		const words = text.split(" ");
 
+		let forceNextWordOverflow = false;
+
 		for (let i = 0; i < words.length; i++) {
 			const word = words[i];
 			const isLastWord = i === words.length - 1;
@@ -322,11 +361,13 @@ export default class Grid {
 			// If the whole word itself wouldn't fit on it's own line then we will
 			// perform hard line wrapping in writeChar
 			const willOverflow =
-				this.doesOverflowViewport(ob1Add(this.cursor.column, word.length - 1)) &&
-				!this.doesOverflowViewport(ob1Coerce1(word.length));
+				forceNextWordOverflow ||
+				(this.doesOverflowViewport(ob1Add(this.cursor.column, word.length - 1)) &&
+				!this.doesOverflowViewport(ob1Coerce1(word.length)));
 			if (willOverflow) {
 				this.newline();
 			}
+			forceNextWordOverflow = false;
 
 			for (const char of word) {
 				this.writeChar(char);
@@ -350,6 +391,7 @@ export default class Grid {
 				this.doesOverflowViewport(ob1Add(this.cursor.column, nextWord.length))
 			) {
 				ignoreTrailingSpace = true;
+				forceNextWordOverflow = true;
 			}
 
 			if (isLastWord) {
@@ -892,192 +934,3 @@ hooks.set(
 		},
 	},
 );
-
-function ansiFormatText(
-	{name: tagName, attributes}: TagNode,
-	value: string,
-	opts: MarkupFormatOptions,
-): string {
-	switch (tagName) {
-		case "hyperlink": {
-			return formatAnsi.hyperlink(attributes.target || "", value);
-		}
-
-		case "filelink": {
-			const filename = getFileLinkFilename(attributes, opts);
-			return formatAnsi.hyperlink(value, `file://${filename}`);
-		}
-
-		case "inverse":
-			return formatAnsi.inverse(value);
-
-		case "emphasis":
-			return formatAnsi.bold(value);
-
-		case "dim":
-			return formatAnsi.dim(value);
-
-		case "italic":
-			return formatAnsi.italic(value);
-
-		case "underline":
-			return formatAnsi.underline(value);
-
-		case "strike":
-			return formatAnsi.strikethrough(value);
-
-		case "error":
-			return formatAnsi.red(value);
-
-		case "success":
-			return formatAnsi.green(value);
-
-		case "warn":
-			return formatAnsi.yellow(value);
-
-		case "info":
-			return formatAnsi.blue(value);
-
-		case "command":
-			return formatAnsi.italic(value);
-
-		case "highlight": {
-			const index = Math.min(0, Number(attributes.i) || 0);
-			const fn = ansiHighlightFactories[index % ansiHighlightFactories.length];
-			return fn(value);
-		}
-
-		case "color":
-			return formatAnsiBackground(
-				attributes.bg,
-				formatAnsiForeground(attributes.fg, value),
-			);
-
-		default:
-			return value;
-	}
-}
-
-// TODO fill this
-const ansiHighlightFactories: Array<(str: string) => string> = [
-	formatAnsi.magenta,
-	formatAnsi.cyan,
-];
-
-function formatAnsiBackground(bg: undefined | string, text: string): string {
-	if (bg === undefined) {
-		return text;
-	}
-
-	switch (bg) {
-		case "black":
-			return formatAnsi.bgBlack(text);
-
-		case "brightBlack":
-			return formatAnsi.bgBrightBlack(text);
-
-		case "red":
-			return formatAnsi.bgRed(text);
-
-		case "brightRed":
-			return formatAnsi.bgBrightRed(text);
-
-		case "green":
-			return formatAnsi.bgGreen(text);
-
-		case "brightGreen":
-			return formatAnsi.bgBrightGreen(text);
-
-		case "yellow":
-			return formatAnsi.bgYellow(text);
-
-		case "brightYellow":
-			return formatAnsi.bgBrightYellow(text);
-
-		case "blue":
-			return formatAnsi.bgBlue(text);
-
-		case "brightBlue":
-			return formatAnsi.bgBrightBlue(text);
-
-		case "magenta":
-			return formatAnsi.bgMagenta(text);
-
-		case "brightMagenta":
-			return formatAnsi.bgBrightMagenta(text);
-
-		case "cyan":
-			return formatAnsi.bgCyan(text);
-
-		case "brightCyan":
-			return formatAnsi.bgBrightCyan(text);
-
-		case "white":
-			return formatAnsi.bgWhite(text);
-
-		case "brightWhite":
-			return formatAnsi.bgBrightWhite(text);
-
-		default:
-			return text;
-	}
-}
-
-function formatAnsiForeground(fg: undefined | string, text: string): string {
-	if (fg === undefined) {
-		return text;
-	}
-
-	switch (fg) {
-		case "black":
-			return formatAnsi.black(text);
-
-		case "brightBlack":
-			return formatAnsi.brightBlack(text);
-
-		case "red":
-			return formatAnsi.red(text);
-
-		case "brightRed":
-			return formatAnsi.brightRed(text);
-
-		case "green":
-			return formatAnsi.green(text);
-
-		case "brightGreen":
-			return formatAnsi.brightGreen(text);
-
-		case "yellow":
-			return formatAnsi.yellow(text);
-
-		case "brightYellow":
-			return formatAnsi.brightYellow(text);
-
-		case "blue":
-			return formatAnsi.blue(text);
-
-		case "brightBlue":
-			return formatAnsi.brightBlue(text);
-
-		case "magenta":
-			return formatAnsi.magenta(text);
-
-		case "brightMagenta":
-			return formatAnsi.brightMagenta(text);
-
-		case "cyan":
-			return formatAnsi.cyan(text);
-
-		case "brightCyan":
-			return formatAnsi.brightCyan(text);
-
-		case "white":
-			return formatAnsi.white(text);
-
-		case "brightWhite":
-			return formatAnsi.brightWhite(text);
-
-		default:
-			return text;
-	}
-}

@@ -34,29 +34,11 @@ export const formatAnsi = {
 	hyperlink(name: string, href: string): string {
 		return `\u001b]8;;${href}\u0007${name}\u001b]8;;\u0007`;
 	},
-	rgb(
-		str: string,
-		color: {
-			r: number;
-			g: number;
-			b: number;
-		},
-	): string {
-		return `\u001b[38;2;${String(color.r)};${String(color.g)};${String(color.b)}m${str}${createEscape(
-			39,
-		)}`;
+	rgb(str: string, color: [number, number, number]): string {
+		return `\u001b[38;2;${color.join(";")}m${str}${createEscape(39)}`;
 	},
-	bgRgb(
-		str: string,
-		color: {
-			r: number;
-			g: number;
-			b: number;
-		},
-	): string {
-		return `\u001b[48;2;${String(color.r)};${String(color.g)};${String(color.b)}m${str}${createEscape(
-			49,
-		)}`;
+	bgRgb(str: string, color: [number, number, number]): string {
+		return `\u001b[48;2;${color.join(";")}m${str}${createEscape(49)}`;
 	},
 	bold(str: string): string {
 		return createEscape(1) + str + createEscape(22);

@@ -27,7 +27,8 @@ body {
 }
 
 code {
-  font-family: monospace;
+  font-family: "Fira Code", monospace !important;
+  tab-size: 2 !important;
   background-color: rgba(0, 0, 0, 0.08);
   padding: 5px;
 }

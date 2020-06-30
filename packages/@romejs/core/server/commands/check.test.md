@@ -8,14 +8,14 @@
 
 ```
 
- project/index.js:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ index.js:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The unknownVariable variable is undeclared
 
     unknownVariable
     ^^^^^^^^^^^^^^^
 
- project/index.js lint/pendingFixes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ index.js lint/pendingFixes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Pending formatting and recommended autofixes
 
@@ -40,54 +40,6 @@ $ rome lint --review
 ```
 # index.js
 unknownVariable
-
-# rome.json
-{
-	"files": {
-		"vendorPath": "../remote"
-	}
-}
-
-```
-
-## `smoke save`
-
-### `console`
-
-```
-
- project/index.js:1:4 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ The unformatted variable is undeclared
-
-  > 1 │ if (unformatted) {
-      │     ^^^^^^^^^^^
-    2 │  swag;
-    3 │ }
-
- project/index.js:2:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ The swag variable is undeclared
-
-    1 │ if (unformatted) {
-  > 2 │  swag;
-      │  ^^^^
-    3 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✔ 1 file updated
-✖ Found 2 problems
-
-```
-
-### `files`
-
-```
-# index.js
-if (unformatted) {
-	swag;
-}
 
 # rome.json
 {

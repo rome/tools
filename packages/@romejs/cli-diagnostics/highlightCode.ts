@@ -12,6 +12,7 @@ import {ConstSourceType} from "@romejs/ast";
 import {tokenizeJSON} from "@romejs/codec-json";
 import {UnknownFilePath, createUnknownFilePath} from "@romejs/path";
 import {escapeMarkup, markupTag} from "@romejs/string-markup";
+import {MarkupTokenType} from "@romejs/string-markup/types";
 
 // 100KB
 const FILE_SIZE_MAX = 100_000;
@@ -51,12 +52,18 @@ function reduce<Token extends {
 }>(
 	input: string,
 	tokens: Array<Token>,
-	callback: (token: Token, line: string) => string,
+	callback: (
+		token: Token,
+		line: string,
+		prev: undefined | Token,
+		next: undefined | Token,
+	) => string,
 ): string {
 	let prevEnd = 0;
 	let buff = "";
 
-	for (const token of tokens) {
+	for (let i = 0; i < tokens.length; i++) {
+		const token = tokens[i];
 		const start = ob1Get0(token.start);
 		const end = ob1Get0(token.end);
 		let value = input.slice(start, end);
@@ -69,7 +76,9 @@ function reduce<Token extends {
 		const lines = value.split("\n");
 
 		const values: Array<string> = lines.map((line) => {
-			return line === "" ? "" : callback(token, escapeMarkup(line));
+			return line === ""
+				? ""
+				: callback(token, escapeMarkup(line), tokens[i - 1], tokens[i + 1]);
 		});
 
 		buff += values.join("\n");
@@ -79,7 +88,7 @@ function reduce<Token extends {
 }
 
 function invalidHighlight(line: string): string {
-	return markupTag("emphasis", markupTag("color", line, {bg: "red"}));
+	return markupTag("emphasis", markupTag("token", line, {bg: "red"}));
 }
 
 function highlightJSON(path: UnknownFilePath, input: string): string {
@@ -97,20 +106,20 @@ function highlightJSON(path: UnknownFilePath, input: string): string {
 			switch (token.type) {
 				case "BlockComment":
 				case "LineComment":
-					return markupTag("color", value, {fg: "brightBlack"});
+					return markupTag("token", value, {type: "comment"});
 
 				case "String":
-					return markupTag("color", value, {fg: "green"});
+					return markupTag("token", value, {type: "string"});
 
 				case "Number":
-					return markupTag("color", value, {fg: "magenta"});
+					return markupTag("token", value, {type: "number"});
 
 				case "Word":
 					switch (token.value) {
 						case "true":
 						case "false":
 						case "null":
-							return markupTag("color", value, {fg: "cyan"});
+							return markupTag("token", value, {type: "boolean"});
 
 						default:
 							return value;
@@ -119,7 +128,7 @@ function highlightJSON(path: UnknownFilePath, input: string): string {
 				case "Comma":
 				case "Colon":
 				case "Dot":
-					return markupTag("color", value, {fg: "yellow"});
+					return markupTag("token", value, {type: "operator"});
 
 				case "BracketOpen":
 				case "BracketClose":
@@ -154,8 +163,10 @@ function highlightJS(input: string, sourceType: ConstSourceType): string {
 	return reduce(
 		input,
 		tokens,
-		(token, value) => {
+		(token, value, prev) => {
 			const {type} = token;
+
+			let tokenType: MarkupTokenType;
 
 			switch (type.label) {
 				case "break":
@@ -192,26 +203,36 @@ function highlightJS(input: string, sourceType: ConstSourceType): string {
 				case "instanceof":
 				case "typeof":
 				case "void":
-				case "delete":
-					return markupTag("color", value, {fg: "cyan"});
+				case "delete": {
+					tokenType = "keyword";
+					break;
+				}
 
 				case "num":
-				case "bigint":
-					return markupTag("color", value, {fg: "magenta"});
+				case "bigint": {
+					tokenType = "number";
+					break;
+				}
 
-				case "regexp":
-					return markupTag("color", value, {fg: "magenta"});
+				case "regexp": {
+					tokenType = "regex";
+					break;
+				}
 
 				case "string":
 				case "template":
-				case "`":
-					return markupTag("color", value, {fg: "green"});
+				case "`": {
+					tokenType = "string";
+					break;
+				}
 
 				case "invalid":
 					return invalidHighlight(value);
 
-				case "comment":
-					return markupTag("color", value, {fg: "brightBlack"});
+				case "comment": {
+					tokenType = "comment";
+					break;
+				}
 
 				case ",":
 				case ";":
@@ -221,8 +242,6 @@ function highlightJS(input: string, sourceType: ConstSourceType): string {
 				case ".":
 				case "?":
 				case "?.":
-					return markupTag("color", value, {fg: "yellow"});
-
 				case "[":
 				case "]":
 				case "{":
@@ -230,8 +249,24 @@ function highlightJS(input: string, sourceType: ConstSourceType): string {
 				case "}":
 				case "|}":
 				case "(":
-				case ")":
-					return value;
+				case ")": {
+					tokenType = "punctuation";
+					break;
+				}
+
+				case "name": {
+					tokenType = value === "from" ? "keyword" : "variable";
+					break;
+				}
+
+				case "jsxName": {
+					tokenType =
+						prev !== undefined &&
+						(prev.type.label === "jsxTagStart" || prev.type.label === "/")
+							? "variable"
+							: "attr-name";
+					break;
+				}
 
 				case "=>":
 				case "...":
@@ -255,15 +290,19 @@ function highlightJS(input: string, sourceType: ConstSourceType): string {
 				case "%":
 				case "*":
 				case "/":
-				case "**":
-				case "jsxName":
+				case "**": {
+					tokenType = "operator";
+					break;
+				}
+
 				case "jsxText":
 				case "jsxTagStart":
 				case "jsxTagEnd":
-				case "name":
 				case "eof":
 					return value;
 			}
+
+			return markupTag("token", value, {type: tokenType});
 		},
 	);
 }
