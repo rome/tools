@@ -22,14 +22,13 @@ ul.home-actions {
   padding: 0;
   display: flex;
   align-items: stretch;
-  font-size: 1.5em;
+  font-size: 1.4em;
   margin: $unit * 2 0;
   border-radius: 5px;
   text-align: center;
   justify-items: center;
-  white-space: nowrap;
 
-  @media only screen and (max-width: 900px) {
+  @media only screen and (max-width: 1060px) {
     flex-direction: column;
   }
 
@@ -48,6 +47,11 @@ ul.home-actions {
     color: #27272A;
     text-decoration: none;
     display: inline;
+
+    &:hover{
+      background: var(--logo-font-color);
+      color: var(--background-color);
+    }
   }
 
   a.getting-started:before {
@@ -60,6 +64,7 @@ ul.home-actions {
     right: 4px;
     bottom: 4px;
     background: var(--primary-color);
+
   }
 
   //align text to icon
@@ -67,6 +72,7 @@ ul.home-actions {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-weight: bold;
   }
 
   svg {
@@ -83,8 +89,9 @@ ul.home-actions {
     text-align: center;
     list-style: none;
     border-right: 1px solid var(--soft-border-color);
+    white-space: nowrap;
 
-    @media only screen and (max-width: 900px) {
+    @media only screen and (max-width: 1060px) {
       border-right: none;
     }
 
