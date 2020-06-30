@@ -6,7 +6,7 @@
  */
 
 import {TestHelper, test} from "rome";
-import Parser from "./Parser";
+import Parser, {ParserOptions} from "./Parser";
 import {Reporter} from "@romejs/cli-reporter";
 import {Consumer} from "@romejs/consume";
 import {catchDiagnostics} from "@romejs/diagnostics";
@@ -18,10 +18,12 @@ async function testParser<T>(
 		defineFlags,
 		args,
 		callback,
+		options: opts,
 	}: {
 		defineFlags: (consumer: Consumer) => T;
 		args: Array<string>;
 		callback?: (parser: Parser<T>, flags: T) => void;
+		options?: Partial<ParserOptions<T>>;
 	},
 ) {
 	const reporter = new Reporter();
@@ -30,6 +32,7 @@ async function testParser<T>(
 	const parser = new Parser(
 		reporter,
 		{
+			...opts,
 			programName: "test",
 			defineFlags,
 		},
@@ -274,6 +277,72 @@ test(
 					};
 				},
 				args: ["--no-run"],
+			},
+		);
+	},
+);
+
+test(
+	"command required with missing command",
+	async (t) => {
+		await testParser(
+			t,
+			{
+				options: {
+					commandRequired: true,
+				},
+				defineFlags: () => {
+					return {};
+				},
+				args: [],
+			},
+		);
+	},
+);
+
+test(
+	"command required with wrong command",
+	async (t) => {
+		await testParser(
+			t,
+			{
+				options: {
+					commandRequired: true,
+				},
+				defineFlags: () => {
+					return {};
+				},
+				args: ["foo"],
+				callback(p) {
+					p.addCommand({
+						name: "foobar",
+						callback() {},
+					});
+				},
+			},
+		);
+	},
+);
+
+test(
+	"command required with wrong command and suggestion",
+	async (t) => {
+		await testParser(
+			t,
+			{
+				options: {
+					commandRequired: true,
+					commandSuggestions: {
+						foo: {
+							commandName: "foobar",
+							description: "A much cooler command",
+						},
+					},
+				},
+				defineFlags: () => {
+					return {};
+				},
+				args: ["foo"],
 			},
 		);
 	},
