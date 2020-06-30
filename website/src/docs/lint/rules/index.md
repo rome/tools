@@ -101,6 +101,7 @@ showHero: false
 | Rule | Description |
 | ------------- | ------------- |
 | button-has-type |  |
+| filename-extension |  |
 | jsx-fragments |  |
 | jsx-key |  |
 | jsx-no-comment-text |  |

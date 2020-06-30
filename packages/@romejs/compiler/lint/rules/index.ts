@@ -81,6 +81,7 @@ import roleHasRequiredAriaProps from "./jsx-a11y/roleHasRequiredAriaProps";
 import scope from "./jsx-a11y/scope";
 import tabindexNoPositive from "./jsx-a11y/tabindexNoPositive";
 import buttonHasType from "./react/buttonHasType";
+import filenameExtension from "./react/filenameExtension";
 import jsxFragments from "./react/jsxFragments";
 import jsxKey from "./react/jsxKey";
 import jsxNoCommentText from "./react/jsxNoCommentText";
@@ -184,6 +185,7 @@ export const lintTransforms = [
 	scope,
 	tabindexNoPositive,
 	buttonHasType,
+	filenameExtension,
 	jsxFragments,
 	jsxKey,
 	jsxNoCommentText,
