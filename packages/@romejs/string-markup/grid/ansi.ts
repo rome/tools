@@ -96,6 +96,7 @@ const tokenTypeToScope: Dict<MarkupTokenType> = {
 	"string.regexp": "regex",
 	"string": "string",
 	"comment": "comment",
+	"entity.name.function": "function",
 	//"": "operator",
 	//"": "punctuation",
 	"variable": "variable",
