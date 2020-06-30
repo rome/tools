@@ -7,7 +7,7 @@
 
 require("../_setup.cjs");
 
-const {readGeneratedFile, write, camelCaseToKebabCase} = require(
+const {readGeneratedFile, write, readFile, camelCaseToKebabCase} = require(
 	"../_utils.cjs",
 );
 const {lintRulesFolder, categoriesFile, lintRulesDocFolder} = require(
@@ -114,7 +114,7 @@ for (const {basename, category} of defs) {
 	const ruleDocFile = path.join(lintRulesDocFolder, `${ruleNameKebabCase}.md`);
 
 	if (fs.existsSync(ruleDocFile)) {
-		const content = fs.readFileSync(ruleDocFile).toString();
+		const content = readFile(ruleDocFile).toString();
 		const description = getDocRuleDescription(content);
 		if (!description) {
 			console.log(

@@ -7,10 +7,9 @@
 
 require("../_setup.cjs");
 
-const {toCamelCase, write} = require("../_utils.cjs");
+const {toCamelCase, write, readFile} = require("../_utils.cjs");
 const {lintRulesFolder, descriptionsFolder} = require("../_constants.cjs");
 const path = require("path");
-const fs = require("fs");
 
 const ruleName = process.argv[2];
 const category = process.argv[3];
@@ -81,7 +80,7 @@ test(
 
 // Add description
 const descriptionsFile = path.join(descriptionsFolder, "lint.ts");
-let descriptions = fs.readFileSync(descriptionsFile, "utf8");
+let descriptions = readFile(descriptionsFile, "utf8");
 descriptions = descriptions.replace(
 	"createDiagnosticsCategory({",
 	`createDiagnosticsCategory({\n	${descriptionKey}: {
