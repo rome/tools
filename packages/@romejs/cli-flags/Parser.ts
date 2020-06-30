@@ -6,7 +6,7 @@
  */
 
 import {Reporter, ReporterTableField} from "@romejs/cli-reporter";
-import {SerializeCLITarget, serializeCLIFlags} from "./serializeCLIFlags";
+import {serializeCLIFlags} from "./serializeCLIFlags";
 import {
 	ConsumePath,
 	ConsumePropertyDefinition,
