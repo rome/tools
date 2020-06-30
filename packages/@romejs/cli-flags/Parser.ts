@@ -6,7 +6,7 @@
  */
 
 import {Reporter, ReporterTableField} from "@romejs/cli-reporter";
-import {serializeCLIFlags} from "./serializeCLIFlags";
+import {SerializeCLITarget, serializeCLIFlags} from "./serializeCLIFlags";
 import {
 	ConsumePath,
 	ConsumePropertyDefinition,
@@ -23,13 +23,19 @@ import {
 import {createUnknownFilePath} from "@romejs/path";
 import {Dict} from "@romejs/typescript-helpers";
 import {markup} from "@romejs/string-markup";
-import {descriptions} from "@romejs/diagnostics";
+import {Diagnostic, DiagnosticsError, descriptions} from "@romejs/diagnostics";
 import {JSONObject} from "@romejs/codec-json";
 
 export type Examples = Array<{
 	description: string;
 	command: string;
 }>;
+
+type FlagsConsumer = {
+	flags: Consumer;
+	defaultFlags: Dict<FlagValue>;
+	rawFlags: Dict<FlagValue>;
+};
 
 type CommandOptions<T extends JSONObject> = {
 	name: string;
@@ -62,6 +68,7 @@ export type ParserOptions<T> = {
 	description?: string;
 	version?: string;
 	ignoreFlags?: Array<string>;
+	commandRequired?: boolean;
 	defineFlags: (consumer: Consumer) => T;
 };
 
@@ -199,7 +206,7 @@ export default class Parser<T> {
 		}
 	}
 
-	getFlagsConsumer(): Consumer {
+	getFlagsConsumer(): FlagsConsumer {
 		const defaultFlags: Dict<FlagValue> = {};
 
 		const flags: Dict<FlagValue> = {};
@@ -207,7 +214,7 @@ export default class Parser<T> {
 			flags[toCamelCase(key)] = value;
 		}
 
-		return consume({
+		const consumer = consume({
 			filePath: createUnknownFilePath("argv"),
 			value: flags,
 			onDefinition: (def, valueConsumer) => {
@@ -267,11 +274,9 @@ export default class Parser<T> {
 					keys: ConsumePath,
 					target: ConsumeSourceLocationRequestTarget,
 				) => {
-					const {programName} = this.opts;
-
 					return serializeCLIFlags(
 						{
-							programName,
+							programName: this.opts.programName,
 							commandName: this.currentCommand,
 							args: this.args,
 							defaultFlags,
@@ -288,6 +293,8 @@ export default class Parser<T> {
 				},
 			},
 		});
+
+		return {flags: consumer, defaultFlags, rawFlags: flags};
 	}
 
 	hasArg(name: string): boolean {
@@ -358,12 +365,13 @@ export default class Parser<T> {
 	}
 
 	async init(): Promise<T> {
-		const consumer = this.getFlagsConsumer();
+		const flagsConsumer = this.getFlagsConsumer();
+		const {flags} = flagsConsumer;
 
 		// Show help for --version
 		const version = this.opts.version;
 		if (version !== undefined) {
-			const shouldDisplayVersion = consumer.get(
+			const shouldDisplayVersion = flags.get(
 				"version",
 				{
 					description: "Show the version",
@@ -377,7 +385,7 @@ export default class Parser<T> {
 
 		// i could add a flag for dev-rome itself
 		// i could take the input command name from the flag
-		const generateAutocomplete: undefined | SupportedAutocompleteShells = consumer.get(
+		const generateAutocomplete: undefined | SupportedAutocompleteShells = flags.get(
 			"generateAutocomplete",
 			{
 				description: "Generate a shell autocomplete",
@@ -390,7 +398,7 @@ export default class Parser<T> {
 		}
 
 		// Show help for --help
-		const shouldShowHelp = consumer.get(
+		const shouldShowHelp = flags.get(
 			"help",
 			{
 				description: "Show this help screen",
@@ -399,7 +407,7 @@ export default class Parser<T> {
 
 		let definedCommand: undefined | DefinedCommand;
 
-		const rootFlags = await consumer.bufferDiagnostics(async (consumer) => {
+		const rootFlags = await flags.bufferDiagnostics(async (consumer) => {
 			const rootFlags = this.opts.defineFlags(consumer);
 
 			for (const [key, command] of this.commands) {
@@ -419,6 +427,10 @@ export default class Parser<T> {
 			}
 
 			this.currentCommand = undefined;
+
+			if (this.opts.commandRequired) {
+				this.commandRequired(definedCommand !== undefined, flagsConsumer);
+			}
 
 			return rootFlags;
 		});
@@ -607,7 +619,7 @@ export default class Parser<T> {
 		// Execute all command defineFlags. Only one is usually ran when the arguments match the command name.
 		// But to generate autocomplete we want all the flags to be declared for all commands.
 
-		const flags = this.getFlagsConsumer();
+		const {flags} = this.getFlagsConsumer();
 		for (const command of this.commands.values()) {
 			// capture() will cause diagnostics to be suppressed
 			const {consumer} = flags.capture();
@@ -853,24 +865,39 @@ export default class Parser<T> {
 		);
 	}
 
-	commandRequired() {
-		if (this.ranCommand) {
+	commandRequired(
+		foundCommand: boolean,
+		{defaultFlags, rawFlags}: FlagsConsumer,
+	) {
+		if (foundCommand) {
 			return;
 		}
 
-		if (this.args.length === 0) {
-			this.reporter.error(
-				"No command specified. Run --help to see available commands.",
-			);
-		} else {
-			// TODO command name is not sanitized for markup
-			// TODO produce a diagnostic instead
-			this.reporter.error(
-				`Unknown command <emphasis>${this.args.join(" ")}</emphasis>. Run --help to see available commands.`,
-			);
-		}
+		const {programName} = this.opts;
+		const {args} = this;
 
-		process.exit(1);
+		const diag: Diagnostic = {
+			description: descriptions.FLAGS.COMMAND_REQUIRED(
+				programName,
+				args.length === 0,
+			),
+			location: serializeCLIFlags(
+				{
+					programName,
+					commandName: this.args.join(" "),
+					args: [],
+					defaultFlags,
+					flags: rawFlags,
+					incorrectCaseFlags: this.incorrectCaseFlags,
+					shorthandFlags: this.shorthandFlags,
+				},
+				{
+					type: "command",
+				},
+			),
+		};
+
+		throw new DiagnosticsError("Unknown command", [diag]);
 	}
 
 	addCommand(opts: AnyCommandOptions) {
@@ -915,10 +942,6 @@ export class ParserInterface<T> {
 
 	getArgs(): Array<string> {
 		return this.parser.args;
-	}
-
-	commandRequired() {
-		this.parser.commandRequired();
 	}
 
 	command(opts: AnyCommandOptions) {

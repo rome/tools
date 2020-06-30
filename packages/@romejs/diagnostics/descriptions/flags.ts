@@ -36,4 +36,19 @@ export const flags = createDiagnosticsCategory({
 	NO_FILES_FOUND: (noun: undefined | string) => ({
 		message: noun === undefined ? "No files found" : `No files to ${noun} found`,
 	}),
+	COMMAND_REQUIRED: (programName: string, missing: boolean) => ({
+		category: "flags/invalid",
+		message: missing ? "No command specified" : "Unknown command",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "To see available commands run",
+			},
+			{
+				type: "command",
+				command: `${programName} --help`,
+			},
+		],
+	}),
 });
