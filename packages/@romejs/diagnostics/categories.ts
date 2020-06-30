@@ -193,6 +193,7 @@ type LintDiagnosticCategory =
 	| "lint/react/noUselessFragment"
 	| "lint/react/noWillUpdateSetState"
 	| "lint/react/requireRenderReturn"
+	| "lint/react/sortComp"
 	| "lint/react/stylePropObject"
 	| "lint/react/voidDomElementsNoChildren"
 	| "lint/ts/noExplicitAny";
