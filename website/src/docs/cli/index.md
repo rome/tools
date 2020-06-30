@@ -7,9 +7,9 @@ layout: layouts/base.njk
 
 ## Commands
 
+- [`check`](/docs/cli/commands/check)
 - [`config`](/docs/cli/commands/config)
 - [`init`](/docs/cli/commands/init)
-- [`check`](/docs/cli/commands/check)
 - [`logs`](/docs/cli/commands/logs)
 - [`lsp`](/docs/cli/commands/lsp)
 - [`noop`](/docs/cli/commands/noop)

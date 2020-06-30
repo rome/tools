@@ -29,7 +29,7 @@ exports.lintRulesDocFolder = path.join(
 	"website",
 	"src",
 	"docs",
-	"lint",
+	"check",
 	"rules",
 );
 exports.categoriesFile = path.join(
