@@ -608,14 +608,9 @@ export default class DiagnosticsPrinter extends Error {
 
 					const pallete = banner.palettes[palleteIndex];
 					stream.write(
-						formatAnsi.bgRgb(
-							" ",
-							{
-								r: pallete[0],
-								g: pallete[1],
-								b: pallete[2],
-							},
-						).repeat(times),
+						formatAnsi.bgRgb(" ", [pallete[0], pallete[1], pallete[2]]).repeat(
+							times,
+						),
 					);
 				}
 				stream.write("\n");

@@ -309,10 +309,10 @@ while (x) {
     
       at ___R$project$rome$$romejs$diagnostics$errors_ts$createSingleDiagnosticError
     (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
-    ents.test.ts:68896:9) generated source location
+    ents.test.ts:68892:9) generated source location
       at StringMarkupParser.unexpected
     (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
-    ents.test.ts:73089:10) generated source location
+    ents.test.ts:73085:10) generated source location
       at StringMarkupParser.parseTag
     (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
     ents.test.ts:3265:18) generated source location
@@ -381,21 +381,21 @@ while (x) {
     ents.test.ts:68496:8) generated source location
       at ___R$project$rome$$romejs$cli$diagnostics$index_ts$printDiagnostics
     (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
-    ents.test.ts:68841:10) generated source location
+    ents.test.ts:68837:10) generated source location
       at ___R$project$rome$$romejs$cli$diagnostics$index_ts$printDiagnosticsToString
     (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
-    ents.test.ts:68853:2) generated source location
+    ents.test.ts:68849:2) generated source location
       at ___R$$priv$project$rome$$romejs$compiler$lint$utils$testing_ts$testLintExpect
     (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
-    ents.test.ts:107377:3) generated source location
+    ents.test.ts:107373:3) generated source location
       at process.processTicksAndRejections (internal/process/task_queues.js:97:4) generated source
     location
       at ___R$project$rome$$romejs$compiler$lint$utils$testing_ts$testLint
     (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
-    ents.test.ts:107285:3) generated source location
+    ents.test.ts:107281:3) generated source location
       at <anonymous>
     (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/preferBlockStatem
-    ents.test.ts:107396:3) generated source location
+    ents.test.ts:107392:3) generated source location
       at <anonymous> (project-rome/@romejs/core/test-worker/TestWorkerRunner.ts:499:5)
       at ___R$project$rome$$romejs$diagnostics$wrap_ts$catchDiagnostics
     (project-rome/@romejs/diagnostics/wrap.ts:28:16)
