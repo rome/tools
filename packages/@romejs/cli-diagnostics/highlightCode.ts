@@ -163,7 +163,7 @@ function highlightJS(input: string, sourceType: ConstSourceType): string {
 	return reduce(
 		input,
 		tokens,
-		(token, value, prev) => {
+		(token, value, prev, next) => {
 			const {type} = token;
 
 			let tokenType: MarkupTokenType;
@@ -255,7 +255,15 @@ function highlightJS(input: string, sourceType: ConstSourceType): string {
 				}
 
 				case "name": {
-					tokenType = value === "from" ? "keyword" : "variable";
+					tokenType = "variable";
+
+					if (value === "from") {
+						tokenType = "keyword";
+					}
+
+					if (next !== undefined && next.type.label === "(") {
+						tokenType = "function";
+					}
 					break;
 				}
 

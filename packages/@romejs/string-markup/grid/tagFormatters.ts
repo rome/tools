@@ -27,6 +27,7 @@ export function normalizeTokenType(
 		case "punctuation":
 		case "variable":
 		case "attr-name":
+		case "function":
 			return type;
 
 		default:
