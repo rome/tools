@@ -54,6 +54,7 @@ import {Consumer} from "@romejs/consume";
 import {consumeJSON} from "@romejs/codec-json";
 import {VCSClient, getVCSClient} from "@romejs/vcs";
 import {FilePathLocker} from "@romejs/core/common/utils/lockers";
+import {FileNotFound} from "@romejs/core/common/FileNotFound";
 
 function cleanUidParts(parts: Array<string>): string {
 	let uid = "";
@@ -253,6 +254,13 @@ export default class ProjectManager {
 	}
 
 	getUid(path: AbsoluteFilePath): string {
+		// We maintain a map of file paths to UIDs
+		// We clear the UID when a path is deleted.
+		// If getUid is called on a file that doesn't exist then we'll populate it and it will exist forever.
+		if (!this.server.memoryFs.exists(path)) {
+			throw new FileNotFound(path);
+		}
+
 		// Allow passing in a UID
 		const filename = path.join();
 		if (this.uidToFilename.has(filename)) {

@@ -12,10 +12,13 @@ import {
 	Diagnostics,
 	DiagnosticsProcessor,
 } from "@romejs/diagnostics";
-import {FileReference} from "@romejs/core/common/types/files";
 import {EventSubscription} from "@romejs/events";
 import {ServerRequestGetFilesOptions} from "../ServerRequest";
-import {AbsoluteFilePathMap, AbsoluteFilePathSet} from "@romejs/path";
+import {
+	AbsoluteFilePath,
+	AbsoluteFilePathMap,
+	AbsoluteFilePathSet,
+} from "@romejs/path";
 import {DiagnosticsPrinter} from "@romejs/cli-diagnostics";
 import DependencyGraph from "../dependencies/DependencyGraph";
 import {ReporterProgress, ReporterProgressOptions} from "@romejs/cli-reporter";
@@ -31,8 +34,8 @@ import {Dict} from "@romejs/typescript-helpers";
 import {FileNotFound} from "@romejs/core/common/FileNotFound";
 
 type LintWatchChanges = Array<{
+	type: "absolute" | "unknown";
 	filename: undefined | string;
-	ref: undefined | FileReference;
 	diagnostics: Diagnostics;
 }>;
 
@@ -154,6 +157,10 @@ class LintRunner {
 	graph: DependencyGraph;
 	options: LinterOptions;
 
+	clearCompilerDiagnosticsForPath(path: AbsoluteFilePath) {
+		this.compilerDiagnosticsCache.set(path, {suppressions: [], diagnostics: []});
+	}
+
 	async runLint(
 		{
 			evictedPaths,
@@ -219,12 +226,7 @@ class LintRunner {
 				,
 			);
 
-			// Deleted
-			if (res === undefined) {
-				this.compilerDiagnosticsCache.set(
-					path,
-					{suppressions: [], diagnostics: []},
-				);
+			if (res.missing) {
 				return;
 			}
 
@@ -232,7 +234,7 @@ class LintRunner {
 				diagnostics,
 				suppressions,
 				save,
-			} = res;
+			} = res.value;
 			processor.addSuppressions(suppressions);
 			processor.addDiagnostics(diagnostics);
 			this.compilerDiagnosticsCache.set(path, {suppressions, diagnostics});
@@ -300,10 +302,10 @@ class LintRunner {
 		// Build a list of dependents to recheck
 		for (const path of evictedPaths) {
 			const newNode = graph.maybeGetNode(path);
-
 			if (newNode === undefined) {
 				continue;
 			}
+
 			validatedDependencyPaths.add(path);
 
 			// Get the previous node and see if the exports have actually changed
@@ -362,6 +364,14 @@ class LintRunner {
 			...validatedDependencyPaths,
 		]);
 
+		// Deleted paths wont show up in validatedDependencyPaths so we need to readd them
+		for (const path of evictedPaths) {
+			if (!server.memoryFs.exists(path)) {
+				updatedPaths.add(path);
+				this.clearCompilerDiagnosticsForPath(path);
+			}
+		}
+
 		const diagnosticsByFilename = processor.getDiagnosticsByFilename();
 
 		// In case we pushed on any diagnostics that aren't from the input paths, try to resolve them
@@ -372,7 +382,9 @@ class LintRunner {
 			updatedPaths.add(path);
 		}
 
-		// If we validated the diagnostics of the dependents, then we need to also push their previous compiler diagnostics
+		// validatedDependencyPaths can include paths that weren't changed, but needed to be recomputed
+		// as they were dependents of one of the files that was
+		// In that case we need to push their previous compiler diagnostics
 		for (const path of validatedDependencyPaths) {
 			if (!evictedPaths.has(path)) {
 				const compilerDiagnostics = this.compilerDiagnosticsCache.get(path);
@@ -385,16 +397,11 @@ class LintRunner {
 
 		// We can't just use getDiagnosticFilenames as we need to produce empty arrays for removed diagnostics
 		for (const path of updatedPaths) {
-			const ref = this.request.server.projectManager.getFileReference(path);
-			const diagnostics: Diagnostics = [
-				...(diagnosticsByFilename.get(ref.uid) || []),
-				...(diagnosticsByFilename.get(ref.real.join()) || []),
-			];
-
+			const filename = path.join();
 			changes.push({
-				filename: ref.uid,
-				ref,
-				diagnostics,
+				type: "absolute",
+				filename,
+				diagnostics: diagnosticsByFilename.get(filename) || [],
 			});
 		}
 
@@ -403,8 +410,8 @@ class LintRunner {
 		// These filenames may be relative or undefined
 		for (const filename of includedFilenamesInDiagnostics.others) {
 			changes.push({
+				type: "unknown",
 				filename,
-				ref: undefined,
 				diagnostics: diagnosticsByFilename.get(filename) || [],
 			});
 		}
