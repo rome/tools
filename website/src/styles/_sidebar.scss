@@ -105,14 +105,11 @@
     }
 
     a:hover {
-      text-decoration: dashed;
-      opacity: 0.7;
+      text-decoration: underline;
     }
 
     a:active {
       padding-left: $unit / 2;
-      text-decoration: dashed;
-      opacity: 1;
     }
   }
 
