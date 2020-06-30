@@ -1,8 +1,8 @@
 import {
+	ARIARoleDefinition,
 	ariaRolesMap,
 	isRoleInteractive,
-} from "@romejs/compiler/lint/utils/aria/index";
-import {ARIARoleDefinition} from "@romejs/compiler/lint/utils/aria/types";
+} from "@romejs/compiler/lint/utils/aria";
 
 export default function isElementInteractive(elementName: string) {
 	let role: ARIARoleDefinition | undefined;

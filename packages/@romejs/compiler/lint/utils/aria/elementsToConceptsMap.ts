@@ -1,5 +1,4 @@
-import {ARIARole} from "@romejs/compiler/lint/utils/aria/types";
-import {ariaRolesMap} from "@romejs/compiler/lint/utils/aria/index";
+import {ARIARole, ariaRolesMap} from "@romejs/compiler/lint/utils/aria";
 
 export type MapOfElementsToConcepts = Map<string, Set<ARIARole>>;
 
