@@ -12,123 +12,14 @@
 
   ✖ Avoid duplicate function arguments. Check the a argument.
 
-  ✖ Encountered an error displaying this diagnostic
-  ✖ DiagnosticsError: <emphasis>bg</emphasis> is not a valid attribute name for
-    <emphasis>token</emphasis>
-    
-     unknown parse/stringMarkup
-    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    
-      ✖ bg is not a valid attribute name for token
-    
-        2 │ <pad align="right" width="6"><emphasis> │ </emphasis></pad>                 
-    <error><emphasis>^</emphasis></error>
-        3 │ <pad align="right" width="6"><emphasis>  2 │ </emphasis></pad> <token
-    type="comment">//</token>
-      > 4 │ <pad align="right" width="6"><emphasis>  3 │ </emphasis></pad><token
-    type="punctuation">}</token><emphasis><token bg="red">a</token></emphasis></nobr>
-          │                                                                                         
-                            
-    ^
-    
-    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    ━━━
-    
-    ✖ Found 1 problem
-    
-      at ___R$project$rome$$romejs$diagnostics$errors_ts$createSingleDiagnosticError
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68892:9) generated source location
-      at StringMarkupParser.unexpected
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:73085:10) generated source location
-      at StringMarkupParser.parseTag
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3265:18) generated source location
-      at StringMarkupParser.parseChild
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3407:17) generated source location
-      at StringMarkupParser.parseTag
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3329:25) generated source location
-      at StringMarkupParser.parseChild
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3407:17) generated source location
-      at StringMarkupParser.parseTag
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3329:25) generated source location
-      at StringMarkupParser.parseChild
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3407:17) generated source location
-      at StringMarkupParser.parse
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3418:24) generated source location
-      at ___R$project$rome$$romejs$string$markup$parse_ts$parseMarkup
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3432:6) generated source location
-      at ___R$$priv$project$rome$$romejs$string$markup$format_ts$renderGrid
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:49437:3) generated source location
-      at ___R$project$rome$$romejs$string$markup$format_ts$markupToPlainText
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:49459:9) generated source location
-      at ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default.markupify
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:52453:12) generated source location
-      at ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default.logOne
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:52483:24) generated source location
-      at ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default.logAll
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:52468:9) generated source location
-      at ___R$$priv$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printFrame
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:56491:11) generated source location
-      at ___R$project$rome$$romejs$cli$diagnostics$printAdvice_ts$default
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:56194:11) generated source location
-      at <anonymous>
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68656:17) generated source location
-      at ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default.indent
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:52188:3) generated source location
-      at ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default.displayDiagnostic
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68650:12) generated source location
-      at <anonymous>
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68521:30) generated source location
-      at ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default.wrapError
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68502:4) generated source location
-      at ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default.displayDiagnostics
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68521:9) generated source location
-      at ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default.print
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68496:8) generated source location
-      at ___R$project$rome$$romejs$cli$diagnostics$index_ts$printDiagnostics
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68837:10) generated source location
-      at ___R$project$rome$$romejs$cli$diagnostics$index_ts$printDiagnosticsToString
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68849:2) generated source location
-      at ___R$$priv$project$rome$$romejs$compiler$lint$utils$testing_ts$testLintExpect
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:107373:3) generated source location
-      at process.processTicksAndRejections (internal/process/task_queues.js:97:4) generated source
-    location
-      at ___R$project$rome$$romejs$compiler$lint$utils$testing_ts$testLint
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:107281:3) generated source location
-      at <anonymous>
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:107390:3) generated source location
+  > 1 │ function hello(a, a) {
+      │                   ^
+    2 │  //
+    3 │ }a
 
-  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Found 1 problem
+✖ Found 1 problem
 
 ```
 
@@ -149,128 +40,14 @@ function hello(a, a) {
 
   ✖ Avoid duplicate function arguments. Check the a argument.
 
-  ✖ Encountered an error displaying this diagnostic
-  ✖ DiagnosticsError: <emphasis>bg</emphasis> is not a valid attribute name for
-    <emphasis>token</emphasis>
-    
-     unknown parse/stringMarkup
-    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    
-      ✖ bg is not a valid attribute name for token
-    
-        2 │ <pad align="right" width="6"><emphasis> │ </emphasis></pad>                 
-    <error><emphasis>^</emphasis></error>
-        3 │ <pad align="right" width="6"><emphasis>  2 │ </emphasis></pad> <token
-    type="comment">//</token>
-      > 4 │ <pad align="right" width="6"><emphasis>  3 │ </emphasis></pad><token
-    type="punctuation">}</token><emphasis><token bg="red">a</token></emphasis></nobr>
-          │                                                                                         
-                            
-    ^
-    
-    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    ━━━
-    
-    ✖ Found 1 problem
-    
-      at ___R$project$rome$$romejs$diagnostics$errors_ts$createSingleDiagnosticError
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68892:9) generated source location
-      at StringMarkupParser.unexpected
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:73085:10) generated source location
-      at StringMarkupParser.parseTag
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3265:18) generated source location
-      at StringMarkupParser.parseChild
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3407:17) generated source location
-      at StringMarkupParser.parseTag
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3329:25) generated source location
-      at StringMarkupParser.parseChild
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3407:17) generated source location
-      at StringMarkupParser.parseTag
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3329:25) generated source location
-      at StringMarkupParser.parseChild
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3407:17) generated source location
-      at StringMarkupParser.parse
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3418:24) generated source location
-      at ___R$project$rome$$romejs$string$markup$parse_ts$parseMarkup
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3432:6) generated source location
-      at ___R$$priv$project$rome$$romejs$string$markup$format_ts$renderGrid
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:49437:3) generated source location
-      at ___R$project$rome$$romejs$string$markup$format_ts$markupToPlainText
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:49459:9) generated source location
-      at ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default.markupify
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:52453:12) generated source location
-      at ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default.logOne
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:52483:24) generated source location
-      at ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default.logAll
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:52468:9) generated source location
-      at ___R$$priv$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printFrame
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:56491:11) generated source location
-      at ___R$project$rome$$romejs$cli$diagnostics$printAdvice_ts$default
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:56194:11) generated source location
-      at <anonymous>
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68656:17) generated source location
-      at ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default.indent
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:52188:3) generated source location
-      at ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default.displayDiagnostic
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68650:12) generated source location
-      at <anonymous>
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68521:30) generated source location
-      at ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default.wrapError
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68502:4) generated source location
-      at ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default.displayDiagnostics
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68521:9) generated source location
-      at ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default.print
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68496:8) generated source location
-      at ___R$project$rome$$romejs$cli$diagnostics$index_ts$printDiagnostics
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68837:10) generated source location
-      at ___R$project$rome$$romejs$cli$diagnostics$index_ts$printDiagnosticsToString
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68849:2) generated source location
-      at ___R$$priv$project$rome$$romejs$compiler$lint$utils$testing_ts$testLintExpect
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:107373:3) generated source location
-      at process.processTicksAndRejections (internal/process/task_queues.js:97:4) generated source
-    location
-      at ___R$project$rome$$romejs$compiler$lint$utils$testing_ts$testLint
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:107281:3) generated source location
-      at <anonymous>
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:107390:3) generated source location
-      at <anonymous> (project-rome/@romejs/core/test-worker/TestWorkerRunner.ts:499:5)
-      at ___R$project$rome$$romejs$diagnostics$wrap_ts$catchDiagnostics
-    (project-rome/@romejs/diagnostics/wrap.ts:28:16)
-      at ___R$project$rome$$romejs$core$test$worker$TestWorkerRunner_ts$default.runTest
-    (project-rome/@romejs/core/test-worker/TestWorkerRunner.ts:494:25)
+  > 1 │ const hello = (a, a) => {
+      │                   ^
+    2 │  //
+    3 │ }a
 
-  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Found 1 problem
+✖ Found 1 problem
 
 ```
 
@@ -291,128 +68,14 @@ function hello(a, a) {
 
   ✖ Avoid duplicate function arguments. Check the a argument.
 
-  ✖ Encountered an error displaying this diagnostic
-  ✖ DiagnosticsError: <emphasis>bg</emphasis> is not a valid attribute name for
-    <emphasis>token</emphasis>
-    
-     unknown parse/stringMarkup
-    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    
-      ✖ bg is not a valid attribute name for token
-    
-        2 │ <pad align="right" width="6"><emphasis> │ </emphasis></pad>                          
-    <error><emphasis>^</emphasis></error>
-        3 │ <pad align="right" width="6"><emphasis>  2 │ </emphasis></pad> <token
-    type="comment">//</token>
-      > 4 │ <pad align="right" width="6"><emphasis>  3 │ </emphasis></pad><token
-    type="punctuation">}</token><emphasis><token bg="red">a</token></emphasis></nobr>
-          │                                                                                         
-                            
-    ^
-    
-    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    ━━━
-    
-    ✖ Found 1 problem
-    
-      at ___R$project$rome$$romejs$diagnostics$errors_ts$createSingleDiagnosticError
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68892:9) generated source location
-      at StringMarkupParser.unexpected
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:73085:10) generated source location
-      at StringMarkupParser.parseTag
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3265:18) generated source location
-      at StringMarkupParser.parseChild
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3407:17) generated source location
-      at StringMarkupParser.parseTag
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3329:25) generated source location
-      at StringMarkupParser.parseChild
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3407:17) generated source location
-      at StringMarkupParser.parseTag
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3329:25) generated source location
-      at StringMarkupParser.parseChild
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3407:17) generated source location
-      at StringMarkupParser.parse
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3418:24) generated source location
-      at ___R$project$rome$$romejs$string$markup$parse_ts$parseMarkup
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:3432:6) generated source location
-      at ___R$$priv$project$rome$$romejs$string$markup$format_ts$renderGrid
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:49437:3) generated source location
-      at ___R$project$rome$$romejs$string$markup$format_ts$markupToPlainText
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:49459:9) generated source location
-      at ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default.markupify
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:52453:12) generated source location
-      at ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default.logOne
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:52483:24) generated source location
-      at ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default.logAll
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:52468:9) generated source location
-      at ___R$$priv$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printFrame
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:56491:11) generated source location
-      at ___R$project$rome$$romejs$cli$diagnostics$printAdvice_ts$default
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:56194:11) generated source location
-      at <anonymous>
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68656:17) generated source location
-      at ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default.indent
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:52188:3) generated source location
-      at ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default.displayDiagnostic
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68650:12) generated source location
-      at <anonymous>
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68521:30) generated source location
-      at ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default.wrapError
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68502:4) generated source location
-      at ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default.displayDiagnostics
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68521:9) generated source location
-      at ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default.print
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68496:8) generated source location
-      at ___R$project$rome$$romejs$cli$diagnostics$index_ts$printDiagnostics
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68837:10) generated source location
-      at ___R$project$rome$$romejs$cli$diagnostics$index_ts$printDiagnosticsToString
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:68849:2) generated source location
-      at ___R$$priv$project$rome$$romejs$compiler$lint$utils$testing_ts$testLintExpect
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:107373:3) generated source location
-      at process.processTicksAndRejections (internal/process/task_queues.js:97:4) generated source
-    location
-      at ___R$project$rome$$romejs$compiler$lint$utils$testing_ts$testLint
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:107281:3) generated source location
-      at <anonymous>
-    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/compiler/lint/rules/js/noDupeArgs.test.t
-    s:107390:3) generated source location
-      at <anonymous> (project-rome/@romejs/core/test-worker/TestWorkerRunner.ts:499:5)
-      at ___R$project$rome$$romejs$diagnostics$wrap_ts$catchDiagnostics
-    (project-rome/@romejs/diagnostics/wrap.ts:28:16)
-      at ___R$project$rome$$romejs$core$test$worker$TestWorkerRunner_ts$default.runTest
-    (project-rome/@romejs/core/test-worker/TestWorkerRunner.ts:494:25)
+  > 1 │ const hello = function (a, a) {
+      │                            ^
+    2 │  //
+    3 │ }a
 
-  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Found 1 problem
+✖ Found 1 problem
 
 ```
 

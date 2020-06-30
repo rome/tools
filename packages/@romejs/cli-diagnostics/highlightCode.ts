@@ -88,7 +88,7 @@ function reduce<Token extends {
 }
 
 function invalidHighlight(line: string): string {
-	return markupTag("emphasis", markupTag("token", line, {bg: "red"}));
+	return markupTag("emphasis", markupTag("color", line, {bg: "red"}));
 }
 
 function highlightJSON(path: UnknownFilePath, input: string): string {
