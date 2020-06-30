@@ -24,6 +24,22 @@ file within Rome. You can find more information on this process [here](https://h
 
 Refer to [Getting Started](https://romejs.dev/docs/introduction/getting-started/) for more usage documentation.
 
+## Linting
+
+You can run the linter with the following command:
+
+```bash
+./scripts/dev-rome check
+```
+
+This will run all the lint rules and verify formatting.
+
+Many of the lint rules are autofixable and formatting can also be automatically applied by running:
+
+```bash
+./scripts/dev-rome check --apply
+```
+
 ## Testing
 
 You can run the test suite with the following command:

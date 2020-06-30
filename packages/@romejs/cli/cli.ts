@@ -52,6 +52,7 @@ export default async function cli() {
 		programName: process.env.ROME_DEV === "1" ? "dev-rome" : "rome",
 		usage: "[command] [flags]",
 		version: VERSION,
+		commandRequired: true,
 		defineFlags(
 			c: Consumer,
 		): {
@@ -377,8 +378,6 @@ export default async function cli() {
 	if (cliFlags.logPath !== undefined || cliFlags.logWorkers === true) {
 		cliFlags.logs = true;
 	}
-
-	p.commandRequired();
 
 	const client = new Client({
 		reporterOverrides,

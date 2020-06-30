@@ -18,7 +18,7 @@
   "scripts": {
     "dev-rome": "node ./scripts/dev-rome",
     "test": "node ./scripts/dev-rome test",
-    "lint": "node ./scripts/dev-rome lint",
+    "lint": "node ./scripts/dev-rome check",
     "fix": "node ./scripts/dev-rome --fix"
   },
   "rome": {
