@@ -1,5 +1,15 @@
 import {AbsoluteFilePath} from "@romejs/path";
 
+type MissingReturn<T> =
+	| {
+			missing: false;
+			value: T;
+		}
+	| {
+			missing: true;
+			value: undefined;
+		};
+
 export class FileNotFound extends Error {
 	constructor(path: AbsoluteFilePath, message?: string) {
 		super(message === undefined ? path.join() : `${path.join()}: ${message}`);
@@ -13,23 +23,29 @@ export class FileNotFound extends Error {
 		allow: undefined | boolean,
 		path: AbsoluteFilePath,
 		factory: () => T | Promise<T>,
-	): Promise<undefined | T> {
+	): Promise<MissingReturn<T>> {
 		if (allow) {
 			return FileNotFound.allowMissing(path, factory);
 		} else {
-			return factory();
+			return {
+				value: await factory(),
+				missing: false,
+			};
 		}
 	}
 
 	static async allowMissing<T>(
 		path: AbsoluteFilePath,
 		factory: () => T | Promise<T>,
-	): Promise<undefined | T> {
+	): Promise<MissingReturn<T>> {
 		try {
-			return await factory();
+			return {
+				value: await factory(),
+				missing: false,
+			};
 		} catch (err) {
 			if (err instanceof FileNotFound && err.path.equal(path)) {
-				return undefined;
+				return {missing: true, value: undefined};
 			} else {
 				throw err;
 			}

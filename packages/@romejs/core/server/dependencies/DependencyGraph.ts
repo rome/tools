@@ -195,7 +195,7 @@ export default class DependencyGraph {
 		});
 
 		// Add initial queue items
-		const roots: Array<undefined | DependencyNode> = await Promise.all(
+		const roots = await Promise.all(
 			paths.map((path) =>
 				FileNotFound.maybeAllowMissing(
 					allowFileNotFound,
@@ -224,8 +224,9 @@ export default class DependencyGraph {
 		}
 
 		if (validate) {
-			for (const root of roots) {
-				if (root !== undefined) {
+			for (const ret of roots) {
+				if (!ret.missing) {
+					const root = ret.value;
 					await FileNotFound.maybeAllowMissing(
 						allowFileNotFound,
 						root.path,

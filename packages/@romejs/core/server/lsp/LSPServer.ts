@@ -415,9 +415,9 @@ export default class LSPServer {
 				return this.createProgress();
 			},
 			onChanges: ({changes}) => {
-				for (const {ref, diagnostics} of changes) {
-					if (ref === undefined) {
-						// Cannot display diagnostics without a reference
+				for (const {type, filename, diagnostics} of changes) {
+					if (filename === undefined || type !== "absolute") {
+						// Can only display absolute path diagnostics
 						continue;
 					}
 
@@ -431,7 +431,7 @@ export default class LSPServer {
 					this.write({
 						method: "textDocument/publishDiagnostics",
 						params: {
-							uri: `file://${ref.real.join()}`,
+							uri: `file://${filename}`,
 							diagnostics: convertDiagnosticsToLSP(
 								processor.getDiagnostics(),
 								this.server,
