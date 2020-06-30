@@ -53,6 +53,12 @@ export default async function cli() {
 		usage: "[command] [flags]",
 		version: VERSION,
 		commandRequired: true,
+		commandSuggestions: {
+			lint: {
+				commandName: "check",
+				description: "The <emphasis>check</emphasis> command covers linting, formatting, and more",
+			},
+		},
 		defineFlags(
 			c: Consumer,
 		): {

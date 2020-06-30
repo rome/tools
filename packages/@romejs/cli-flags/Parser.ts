@@ -69,6 +69,10 @@ export type ParserOptions<T> = {
 	version?: string;
 	ignoreFlags?: Array<string>;
 	commandRequired?: boolean;
+	commandSuggestions?: Dict<{
+		commandName: string;
+		description: string;
+	}>;
 	defineFlags: (consumer: Consumer) => T;
 };
 
@@ -873,19 +877,54 @@ export default class Parser<T> {
 			return;
 		}
 
-		const {programName} = this.opts;
-		const {args} = this;
+		const {programName, commandSuggestions} = this.opts;
+		let {args} = this;
+		let commandName = args.join(" ");
+		let description = descriptions.FLAGS.COMMAND_REQUIRED(
+			programName,
+			commandName,
+			Array.from(this.commands.keys()),
+		);
+
+		// If we were provided with a list of command suggestions, try and find one
+		if (commandSuggestions !== undefined) {
+			for (let i = 0; i < args.length; i++) {
+				const possibleCommandName = args.slice(0, i + 1).join(" ");
+				const suggestion = commandSuggestions[possibleCommandName];
+				if (suggestion !== undefined) {
+					commandName = possibleCommandName;
+					args = args.slice(i + 1);
+					description = descriptions.FLAGS.UNKNOWN_COMMAND_SUGGESTED(
+						commandName,
+						suggestion.commandName,
+						suggestion.description,
+						serializeCLIFlags(
+							{
+								programName,
+								commandName: suggestion.commandName,
+								args,
+								defaultFlags,
+								flags: rawFlags,
+								incorrectCaseFlags: this.incorrectCaseFlags,
+								shorthandFlags: this.shorthandFlags,
+							},
+							{
+								type: "none",
+							},
+						).sourceText,
+					);
+					break;
+				}
+			}
+		}
 
 		const diag: Diagnostic = {
-			description: descriptions.FLAGS.COMMAND_REQUIRED(
-				programName,
-				args.length === 0,
-			),
+			description,
 			location: serializeCLIFlags(
 				{
 					programName,
-					commandName: this.args.join(" "),
-					args: [],
+					commandName,
+					args,
 					defaultFlags,
 					flags: rawFlags,
 					incorrectCaseFlags: this.incorrectCaseFlags,

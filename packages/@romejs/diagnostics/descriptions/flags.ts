@@ -1,6 +1,7 @@
 import {createDiagnosticsCategory} from "./index";
 import {markup} from "@romejs/string-markup";
 import {toKebabCase} from "@romejs/string-utils";
+import {buildSuggestionAdvice} from "../helpers";
 
 export const flags = createDiagnosticsCategory({
 	UNSUPPORTED_SHORTHANDS: `Shorthand flags are not supported`,
@@ -36,10 +37,39 @@ export const flags = createDiagnosticsCategory({
 	NO_FILES_FOUND: (noun: undefined | string) => ({
 		message: noun === undefined ? "No files found" : `No files to ${noun} found`,
 	}),
-	COMMAND_REQUIRED: (programName: string, missing: boolean) => ({
+	UNKNOWN_COMMAND_SUGGESTED: (
+		unknownCommandName: string,
+		commandName: string,
+		description: undefined | string,
+		command: string,
+	) => ({
 		category: "flags/invalid",
-		message: missing ? "No command specified" : "Unknown command",
+		message: markup`Unknown command <emphasis>${unknownCommandName}</emphasis>`,
 		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Did you mean <emphasis>${commandName}</emphasis> instead?` +
+				(description === undefined ? "" : ` ${description}`),
+			},
+			{
+				type: "code",
+				language: "shell",
+				code: command,
+			},
+		],
+	}),
+	COMMAND_REQUIRED: (
+		programName: string,
+		commandName: string,
+		knownCommands: Array<string>,
+	) => ({
+		category: "flags/invalid",
+		message: commandName === ""
+			? "No command specified"
+			: markup`Unknown command <emphasis>${commandName}</emphasis>`,
+		advice: [
+			...buildSuggestionAdvice(commandName, knownCommands),
 			{
 				type: "log",
 				category: "info",

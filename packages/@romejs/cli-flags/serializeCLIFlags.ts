@@ -13,8 +13,8 @@ import {Dict, RequiredProps} from "@romejs/typescript-helpers";
 import {FlagValue} from "./Parser";
 
 type SerializeCLIData = {
-	programName: undefined | string;
-	commandName: undefined | string;
+	programName?: string;
+	commandName?: string;
 	args?: Array<string>;
 	defaultFlags?: Dict<FlagValue>;
 	flags?: Dict<FlagValue>;
@@ -188,20 +188,29 @@ export function serializeCLIFlags(
 		endColumn = startColumn;
 	}
 
+	let start: DiagnosticLocation["start"] = {
+		line: ob1Number1,
+		column: startColumn,
+		index: startColumn,
+	};
+
+	let end: DiagnosticLocation["end"] = {
+		line: ob1Number1,
+		column: endColumn,
+		index: endColumn,
+	};
+
+	if (target.type === "none") {
+		start = undefined;
+		end = undefined;
+	}
+
 	return {
 		language: "shell",
 		mtime: undefined,
 		sourceText: code,
 		filename: "argv",
-		start: {
-			line: ob1Number1,
-			column: startColumn,
-			index: startColumn,
-		},
-		end: {
-			line: ob1Number1,
-			column: endColumn,
-			index: endColumn,
-		},
+		start,
+		end,
 	};
 }
