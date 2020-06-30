@@ -1,4 +1,4 @@
-import {MapOfARIAPropertyDefinitions} from "@romejs/compiler/lint/utils/aria/types";
+import {MapOfARIAPropertyDefinitions} from "@romejs/compiler/lint/utils/aria";
 
 const ariaPropsMap: MapOfARIAPropertyDefinitions = new Map([
 	[

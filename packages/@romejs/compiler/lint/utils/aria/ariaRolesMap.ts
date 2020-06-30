@@ -1,4 +1,4 @@
-import {ARIARoleDefinition} from "@romejs/compiler/lint/utils/aria/types";
+import {ARIARoleDefinition} from "@romejs/compiler/lint/utils/aria";
 
 export type MapOfAriaRoles = Map<string, ARIARoleDefinition>;
 
