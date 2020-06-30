@@ -13,8 +13,8 @@ import {Dict, RequiredProps} from "@romejs/typescript-helpers";
 import {FlagValue} from "./Parser";
 
 type SerializeCLIData = {
-	programName: string;
-	commandName: string;
+	programName?: string;
+	commandName?: string;
 	args?: Array<string>;
 	defaultFlags?: Dict<FlagValue>;
 	flags?: Dict<FlagValue>;
