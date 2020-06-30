@@ -70,12 +70,11 @@ a {
 
 a:hover {
   text-decoration: none;
-  opacity: 0.7;
+  color: var(--link-hover-color);
 }
 
 a:active {
   color: var(--primary-color);
-  opacity: 1;
 }
 
 

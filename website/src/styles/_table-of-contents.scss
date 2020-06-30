@@ -27,8 +27,8 @@
     transition-duration: 100ms;
     font-weight: normal;
 
-    &:hover {
-      color: var(--toc-link-color-hover);
+    &:hover{
+      text-decoration: underline;
     }
 
     &.active {
