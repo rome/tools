@@ -183,3 +183,10 @@ elements.overlay.addEventListener("touchstart", mobileToggleEvent, false);
 window.addEventListener('scroll', handleScroll, false);
 
 elements.colorSchemeSwitch.addEventListener('click', modeSwitch, false);
+
+const homepageExample = document.querySelector(".homepage-example");
+if (homepageExample !== undefined) {
+  homepageExample.addEventListener("click", () => {
+    homepageExample.classList.remove("collapsed");
+  });
+}

@@ -16,8 +16,8 @@
     <input accessKey="key" />
            ^^^^^^^^^^^^^^^
 
-  ℹ Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboardactions
-    across applications.
+  ℹ Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboard
+    actions across applications.
 
   ℹ Recommended fix
 
@@ -49,8 +49,8 @@
     <input accessKey={key} />
            ^^^^^^^^^^^^^^^
 
-  ℹ Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboardactions
-    across applications.
+  ℹ Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboard
+    actions across applications.
 
   ℹ Recommended fix
 

@@ -8,6 +8,7 @@
 import {BaseTokens, SimpleToken, ValueToken} from "@romejs/parser-core";
 import {Dict} from "@romejs/typescript-helpers";
 import {AbsoluteFilePath} from "@romejs/path";
+import {UserConfig} from "@romejs/core/common/userConfig";
 
 export type Tokens = BaseTokens & {
 	Text: ValueToken<"Text", string>;
@@ -39,6 +40,7 @@ export type ChildNode = TextNode | TagNode;
 export type Children = Array<ChildNode>;
 
 export type MarkupTagName =
+	| "token"
 	| "hr"
 	| "pad"
 	| "grammarNumber"
@@ -75,6 +77,7 @@ export type MarkupFormatFilenameHumanizer = (
 ) => undefined | string;
 
 export type MarkupFormatOptions = {
+	userConfig?: UserConfig;
 	normalizeFilename?: MarkupFormatFilenameNormalizer;
 	humanizeFilename?: MarkupFormatFilenameHumanizer;
 	cwd?: AbsoluteFilePath;
@@ -92,3 +95,34 @@ export type MarkupLinesAndWidth = {
 	width: number;
 	lines: Array<string>;
 };
+
+export type GridOutputFormat = "ansi" | "html" | "none";
+
+export type MarkupTokenType =
+	| "keyword"
+	| "number"
+	| "regex"
+	| "string"
+	| "comment"
+	| "operator"
+	| "punctuation"
+	| "variable"
+	| "attr-name";
+
+export type MarkupColor =
+	| "black"
+	| "brightBlack"
+	| "red"
+	| "brightRed"
+	| "green"
+	| "brightGreen"
+	| "yellow"
+	| "brightYellow"
+	| "blue"
+	| "brightBlue"
+	| "magenta"
+	| "brightMagenta"
+	| "cyan"
+	| "brightCyan"
+	| "white"
+	| "brightWhite";

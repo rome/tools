@@ -310,7 +310,7 @@ export const lint = createDiagnosticsCategory({
 			{
 				type: "log",
 				category: "info",
-				text: "Meaningful alternative text on elements that require it helps users relying on screen readers to understand content's purpose within a page.",
+				text: "Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.",
 			},
 		],
 	},
@@ -626,7 +626,7 @@ export const lint = createDiagnosticsCategory({
 			{
 				type: "log",
 				category: "info",
-				text: "Unused variables are dead code and usually result from incomplete refactoring.",
+				text: "Unused variables are dead code and usually the result of incomplete refactoring.",
 			},
 		],
 	}),

@@ -22,6 +22,13 @@ export const stringMarkup = createDiagnosticsCategory({
 			},
 		],
 	}),
+	INVALID_ATTRIBUTE_VALUE: (
+		tagName: string,
+		attributeName: string,
+		attributeValue: string,
+	) => ({
+		message: markup`<emphasis>${attributeValue}</emphasis> is not a valid attribute value for <emphasis>${attributeName}</emphasis> in a <emphasis>${tagName}</emphasis>`,
+	}),
 	INVALID_ATTRIBUTE_NAME_FOR_TAG: (
 		tagName: string,
 		attributeName: string,

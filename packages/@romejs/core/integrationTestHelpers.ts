@@ -79,6 +79,7 @@ export function createIntegrationTest(
 		const userConfig: UserConfig = {
 			cachePath,
 			runtimeModulesPath: virtualModulesPath,
+			syntaxTheme: undefined,
 		};
 
 		try {

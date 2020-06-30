@@ -11,6 +11,7 @@ import {
 } from "@romejs/cli-diagnostics";
 import {Platform} from "./platform";
 import {AbsoluteFilePath, CWD_PATH} from "@romejs/path";
+import {ReporterStream} from "@romejs/cli-reporter";
 
 export const DEFAULT_CLIENT_FLAGS: ClientFlags = {
 	clientName: "unknown",
@@ -47,6 +48,12 @@ export type ClientRequestFlags = DiagnosticsPrinterFlags & {
 	resolverPlatform: undefined | Platform;
 	resolverScale: undefined | number;
 	resolverMocks: boolean;
+};
+
+export type ClientReporterOverrides = {
+	redirectError?: boolean;
+	format?: ReporterStream["format"];
+	columns?: number;
 };
 
 export type ClientFlags = {

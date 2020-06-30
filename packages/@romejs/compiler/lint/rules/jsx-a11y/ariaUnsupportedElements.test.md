@@ -10,7 +10,8 @@
 
  unknown:1 lint/jsx-a11y/ariaUnsupportedElements ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and styleelements.
+  ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
+    elements.
 
     <meta charset='UTF-8' aria-hidden='false' />
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -36,7 +37,8 @@
 
  unknown:1 lint/jsx-a11y/ariaUnsupportedElements ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and styleelements.
+  ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
+    elements.
 
     <meta charset='UTF-8' role='meta' />
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -62,7 +64,8 @@
 
  unknown:1 lint/jsx-a11y/ariaUnsupportedElements ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and styleelements.
+  ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
+    elements.
 
     <html aria-required='true' />
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -88,7 +91,8 @@
 
  unknown:1 lint/jsx-a11y/ariaUnsupportedElements ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and styleelements.
+  ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
+    elements.
 
     <html role='html'></html>
     ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -114,7 +118,8 @@
 
  unknown:1 lint/jsx-a11y/ariaUnsupportedElements ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and styleelements.
+  ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
+    elements.
 
     <script aria-label='script'></script>
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -140,7 +145,8 @@
 
  unknown:1 lint/jsx-a11y/ariaUnsupportedElements ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and styleelements.
+  ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
+    elements.
 
     <script role='script'></script>
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -166,7 +172,8 @@
 
  unknown:1 lint/jsx-a11y/ariaUnsupportedElements ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and styleelements.
+  ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
+    elements.
 
     <style aria-labelledby></style>
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -192,7 +199,8 @@
 
  unknown:1 lint/jsx-a11y/ariaUnsupportedElements ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and styleelements.
+  ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
+    elements.
 
     <style role='style'></style>
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

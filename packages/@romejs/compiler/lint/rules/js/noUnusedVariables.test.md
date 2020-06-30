@@ -15,7 +15,7 @@
     const a = 4;
           ^
 
-  ℹ Unused variables are dead code and usually result from incomplete refactoring.
+  ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -41,7 +41,7 @@ const a = 4;
     let a = 4;
         ^
 
-  ℹ Unused variables are dead code and usually result from incomplete refactoring.
+  ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -69,7 +69,7 @@ let a = 4;
     2 │  console.log("foo");
     3 │ };
 
-  ℹ Unused variables are dead code and usually result from incomplete refactoring.
+  ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
  unknown:1:13 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -80,7 +80,7 @@ let a = 4;
     2 │  console.log("foo");
     3 │ };
 
-  ℹ Unused variables are dead code and usually result from incomplete refactoring.
+  ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -110,7 +110,7 @@ function foo(myVar) {
     2 │  console.log("foo");
     3 │ }
 
-  ℹ Unused variables are dead code and usually result from incomplete refactoring.
+  ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -141,7 +141,7 @@ foo();
     2 │  console.log("foo");
     3 │ };
 
-  ℹ Unused variables are dead code and usually result from incomplete refactoring.
+  ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
  unknown:1:13 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -152,7 +152,7 @@ foo();
     2 │  console.log("foo");
     3 │ };
 
-  ℹ Unused variables are dead code and usually result from incomplete refactoring.
+  ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

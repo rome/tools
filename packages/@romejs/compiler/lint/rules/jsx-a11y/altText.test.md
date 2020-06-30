@@ -15,8 +15,8 @@
     <img src='foo' />
     ^^^^^^^^^^^^^^^^^
 
-  ℹ Meaningful alternative text on elements that require it helps users relying on screen readers to
-    understand content's purpose within a page.
+  ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
+    content's purpose within a page.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -42,8 +42,8 @@
     <img {...props} />
     ^^^^^^^^^^^^^^^^^^
 
-  ℹ Meaningful alternative text on elements that require it helps users relying on screen readers to
-    understand content's purpose within a page.
+  ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
+    content's purpose within a page.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -69,8 +69,8 @@
     <img {...props} alt={undefined} />
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Meaningful alternative text on elements that require it helps users relying on screen readers to
-    understand content's purpose within a page.
+  ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
+    content's purpose within a page.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -96,8 +96,8 @@
     <img src='foo' role='presentation' />
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Meaningful alternative text on elements that require it helps users relying on screen readers to
-    understand content's purpose within a page.
+  ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
+    content's purpose within a page.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -123,8 +123,8 @@
     <img src='foo' role='none' />
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Meaningful alternative text on elements that require it helps users relying on screen readers to
-    understand content's purpose within a page.
+  ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
+    content's purpose within a page.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -150,8 +150,8 @@
     <object {...props} />
     ^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Meaningful alternative text on elements that require it helps users relying on screen readers to
-    understand content's purpose within a page.
+  ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
+    content's purpose within a page.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -177,8 +177,8 @@
     <object aria-label={undefined} />
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Meaningful alternative text on elements that require it helps users relying on screen readers to
-    understand content's purpose within a page.
+  ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
+    content's purpose within a page.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -204,8 +204,8 @@
     <area {...props} />
     ^^^^^^^^^^^^^^^^^^^
 
-  ℹ Meaningful alternative text on elements that require it helps users relying on screen readers to
-    understand content's purpose within a page.
+  ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
+    content's purpose within a page.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -231,8 +231,8 @@
     <area alt={undefined} />
     ^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Meaningful alternative text on elements that require it helps users relying on screen readers to
-    understand content's purpose within a page.
+  ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
+    content's purpose within a page.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -258,8 +258,8 @@
     <input type='image' {...props} />
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Meaningful alternative text on elements that require it helps users relying on screen readers to
-    understand content's purpose within a page.
+  ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
+    content's purpose within a page.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -285,8 +285,8 @@
     <input type='image' {...props} alt={undefined} />
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Meaningful alternative text on elements that require it helps users relying on screen readers to
-    understand content's purpose within a page.
+  ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
+    content's purpose within a page.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

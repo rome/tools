@@ -19,8 +19,8 @@
     5 │               return <div>Hello {this.props.name}</div>;
     6 │             }
 
-  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. Theonly
-    place you may set this.state directly is in a constructor of a react class component.
+  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
+    only place you may set this.state directly is in a constructor of a react class component.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -55,8 +55,8 @@ class Hello extends React.Component {
     5 │               return <div>Hello {this.props.name}</div>;
     6 │             }
 
-  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. Theonly
-    place you may set this.state directly is in a constructor of a react class component.
+  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
+    only place you may set this.state directly is in a constructor of a react class component.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -91,8 +91,8 @@ class Hello extends React.Component {
     5 │               return <div>Hello {this.props.name}</div>;
     6 │             }
 
-  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. Theonly
-    place you may set this.state directly is in a constructor of a react class component.
+  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
+    only place you may set this.state directly is in a constructor of a react class component.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -127,8 +127,8 @@ class Hello extends React.Component {
     5 │               return <div>Hello {this.props.name}</div>;
     6 │             }
 
-  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. Theonly
-    place you may set this.state directly is in a constructor of a react class component.
+  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
+    only place you may set this.state directly is in a constructor of a react class component.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -163,8 +163,8 @@ class Hello extends React.Component {
     5 │                 return <div>Hello</div>;
     6 │               }
 
-  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. Theonly
-    place you may set this.state directly is in a constructor of a react class component.
+  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
+    only place you may set this.state directly is in a constructor of a react class component.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -199,8 +199,8 @@ class Hello extends React.Component {
     5 │                 this.state.person.name.last = "baz";
     6 │                 return <div>Hello</div>;
 
-  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. Theonly
-    place you may set this.state directly is in a constructor of a react class component.
+  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
+    only place you may set this.state directly is in a constructor of a react class component.
 
  unknown:5:16 lint/react/noDirectMutationState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -213,8 +213,8 @@ class Hello extends React.Component {
     6 │                 return <div>Hello</div>;
     7 │               }
 
-  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. Theonly
-    place you may set this.state directly is in a constructor of a react class component.
+  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
+    only place you may set this.state directly is in a constructor of a react class component.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -250,8 +250,8 @@ class Hello extends React.Component {
     8 │               }
     9 │             }
 
-  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. Theonly
-    place you may set this.state directly is in a constructor of a react class component.
+  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
+    only place you may set this.state directly is in a constructor of a react class component.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -288,8 +288,8 @@ class Hello extends React.Component {
     7 │                 });
     8 │               }
 
-  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. Theonly
-    place you may set this.state directly is in a constructor of a react class component.
+  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
+    only place you may set this.state directly is in a constructor of a react class component.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -326,8 +326,8 @@ class Hello extends React.Component {
     5 │               }
     6 │             }
 
-  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. Theonly
-    place you may set this.state directly is in a constructor of a react class component.
+  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
+    only place you may set this.state directly is in a constructor of a react class component.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -361,8 +361,8 @@ class Hello extends React.Component {
     5 │               }
     6 │             }
 
-  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. Theonly
-    place you may set this.state directly is in a constructor of a react class component.
+  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
+    only place you may set this.state directly is in a constructor of a react class component.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -396,8 +396,8 @@ class Hello extends React.Component {
     5 │               }
     6 │             }
 
-  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. Theonly
-    place you may set this.state directly is in a constructor of a react class component.
+  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
+    only place you may set this.state directly is in a constructor of a react class component.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -431,8 +431,8 @@ class Hello extends React.Component {
     5 │               }
     6 │             }
 
-  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. Theonly
-    place you may set this.state directly is in a constructor of a react class component.
+  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
+    only place you may set this.state directly is in a constructor of a react class component.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -466,8 +466,8 @@ class Hello extends React.Component {
     5 │               }
     6 │             }
 
-  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. Theonly
-    place you may set this.state directly is in a constructor of a react class component.
+  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
+    only place you may set this.state directly is in a constructor of a react class component.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -501,8 +501,8 @@ class Hello extends React.Component {
     5 │               }
     6 │             }
 
-  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. Theonly
-    place you may set this.state directly is in a constructor of a react class component.
+  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
+    only place you may set this.state directly is in a constructor of a react class component.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -536,8 +536,8 @@ class Hello extends React.Component {
     5 │               }
     6 │             }
 
-  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. Theonly
-    place you may set this.state directly is in a constructor of a react class component.
+  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
+    only place you may set this.state directly is in a constructor of a react class component.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -571,8 +571,8 @@ class Hello extends React.Component {
     5 │               }
     6 │             }
 
-  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. Theonly
-    place you may set this.state directly is in a constructor of a react class component.
+  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
+    only place you may set this.state directly is in a constructor of a react class component.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -606,8 +606,8 @@ class Hello extends Component {
     5 │               }
     6 │             }
 
-  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. Theonly
-    place you may set this.state directly is in a constructor of a react class component.
+  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
+    only place you may set this.state directly is in a constructor of a react class component.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -641,8 +641,8 @@ class Hello extends React.PureComponent {
     5 │               }
     6 │             }
 
-  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. Theonly
-    place you may set this.state directly is in a constructor of a react class component.
+  ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
+    only place you may set this.state directly is in a constructor of a react class component.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

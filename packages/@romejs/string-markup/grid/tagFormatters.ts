@@ -5,9 +5,61 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MarkupFormatOptions, TagAttributes} from "./types";
+import {
+	MarkupColor,
+	MarkupFormatOptions,
+	MarkupTokenType,
+	TagAttributes,
+} from "../types";
 import {humanizeNumber} from "@romejs/string-utils";
 import {createUnknownFilePath} from "@romejs/path";
+
+export function normalizeTokenType(
+	type: undefined | string,
+): undefined | MarkupTokenType {
+	switch (type) {
+		case "keyword":
+		case "number":
+		case "regex":
+		case "string":
+		case "comment":
+		case "operator":
+		case "punctuation":
+		case "variable":
+		case "attr-name":
+			return type;
+
+		default:
+			return undefined;
+	}
+}
+
+export function normalizeColor(
+	color: undefined | string,
+): undefined | MarkupColor {
+	switch (color) {
+		case "black":
+		case "brightBlack":
+		case "red":
+		case "brightRed":
+		case "green":
+		case "brightGreen":
+		case "yellow":
+		case "brightYellow":
+		case "blue":
+		case "brightBlue":
+		case "magenta":
+		case "brightMagenta":
+		case "cyan":
+		case "brightCyan":
+		case "white":
+		case "brightWhite":
+			return color;
+
+		default:
+			return undefined;
+	}
+}
 
 export function humanizeMarkupFilename(
 	filename: string,

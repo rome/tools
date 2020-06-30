@@ -37,6 +37,7 @@ export type DiagnosticCategory =
 	| "parse/stringMarkup"
 	| "parse/url"
 	| "parse/url/query"
+	| "parse/vscodeTheme"
 	| "projectManager/incorrectConfigFilename"
 	| "projectManager/missing"
 	| "projectManager/nameCollision"

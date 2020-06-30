@@ -19,8 +19,8 @@
     4 │    name: 'John'
     5 │   });
 
-  ℹ Updating state immediately before a scheduled render causes a second render that can causevisual
-    layout thrashing.
+  ℹ Updating state immediately before a scheduled render causes a second render that can cause
+    visual layout thrashing.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -56,8 +56,8 @@ class Hello extends React.Component {
     5 │    name: 'John'
     6 │   });
 
-  ℹ Updating state immediately before a scheduled render causes a second render that can causevisual
-    layout thrashing.
+  ℹ Updating state immediately before a scheduled render causes a second render that can cause
+    visual layout thrashing.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -94,8 +94,8 @@ class Hello extends React.Component {
     4 │    name: 'John'
     5 │   });
 
-  ℹ Updating state immediately before a scheduled render causes a second render that can causevisual
-    layout thrashing.
+  ℹ Updating state immediately before a scheduled render causes a second render that can cause
+    visual layout thrashing.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -131,8 +131,8 @@ class Hello extends Component {
     5 │    name: 'John'
     6 │   });
 
-  ℹ Updating state immediately before a scheduled render causes a second render that can causevisual
-    layout thrashing.
+  ℹ Updating state immediately before a scheduled render causes a second render that can cause
+    visual layout thrashing.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -169,8 +169,8 @@ class Hello extends Component {
     4 │    name: 'John'
     5 │   });
 
-  ℹ Updating state immediately before a scheduled render causes a second render that can causevisual
-    layout thrashing.
+  ℹ Updating state immediately before a scheduled render causes a second render that can cause
+    visual layout thrashing.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -206,8 +206,8 @@ class Hello extends React.Component {
     4 │    name: 'John'
     5 │   });
 
-  ℹ Updating state immediately before a scheduled render causes a second render that can causevisual
-    layout thrashing.
+  ℹ Updating state immediately before a scheduled render causes a second render that can cause
+    visual layout thrashing.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
