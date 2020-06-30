@@ -95,9 +95,9 @@ function createDiagnosticsPrinter(
 				reporter.info(
 					"Fixes available. To apply recommended fixes and formatting run",
 				);
-				reporter.command("rome lint --apply");
+				reporter.command("rome check --apply");
 				reporter.info("To choose fix suggestions run");
-				reporter.command("rome lint --review");
+				reporter.command("rome check --review");
 			}
 		}
 

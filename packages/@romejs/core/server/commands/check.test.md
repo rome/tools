@@ -28,9 +28,9 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ℹ Fixes available. To apply recommended fixes and formatting run
-$ rome lint --apply
+$ rome check --apply
 ℹ To choose fix suggestions run
-$ rome lint --review
+$ rome check --review
 ✖ Found 2 problems
 
 ```
