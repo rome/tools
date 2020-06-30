@@ -1,6 +1,6 @@
 ---
-title: rome lint
+title: rome check
 layout: layouts/base.njk
 ---
 
-# `rome lint`
+# `rome check`
