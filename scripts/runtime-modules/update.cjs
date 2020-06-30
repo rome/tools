@@ -12,7 +12,7 @@ const path = require("path");
 const fs = require("fs");
 
 const {root, packages} = require("../_constants.cjs");
-const {readGeneratedFile, write} = require("../_utils.cjs");
+const {readGeneratedFile, write, readFile} = require("../_utils.cjs");
 
 const runtimeModules = path.join(root, "packages", "@romejs-runtime");
 const runtimeIndex = path.join(
@@ -31,7 +31,7 @@ for (const packageName of fs.readdirSync(runtimeModules)) {
 	for (const filename of fs.readdirSync(packageLoc)) {
 		files.push([
 			filename,
-			fs.readFileSync(path.join(packageLoc, filename), "utf8"),
+			readFile(path.join(packageLoc, filename), "utf8"),
 		]);
 	}
 
