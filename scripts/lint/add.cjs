@@ -10,7 +10,6 @@ require("../_setup.cjs");
 const {toCamelCase, write, readFile} = require("../_utils.cjs");
 const {lintRulesFolder, descriptionsFolder} = require("../_constants.cjs");
 const path = require("path");
-const fs = require("fs");
 
 const ruleName = process.argv[2];
 const category = process.argv[3];

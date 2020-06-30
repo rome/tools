@@ -29,10 +29,7 @@ for (const packageName of fs.readdirSync(runtimeModules)) {
 	const packageLoc = path.join(runtimeModules, packageName);
 	const files = [];
 	for (const filename of fs.readdirSync(packageLoc)) {
-		files.push([
-			filename,
-			readFile(path.join(packageLoc, filename), "utf8"),
-		]);
+		files.push([filename, readFile(path.join(packageLoc, filename), "utf8")]);
 	}
 
 	runtimeIndexFile += `modules.set("${packageName}", new Map(${JSON.stringify(
