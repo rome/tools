@@ -8,12 +8,32 @@
 import {ServerRequest} from "@romejs/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import {assertHardMeta, modifyProjectConfig} from "@romejs/project";
-import {createUnknownFilePath} from "@romejs/path";
+import {assertHardMeta, normalizeProjectConfig} from "@romejs/project";
+import {AbsoluteFilePath, HOME_PATH, createUnknownFilePath} from "@romejs/path";
 import {escapeMarkup, markup} from "@romejs/string-markup";
-import {descriptions} from "@romejs/diagnostics";
+import {
+	DiagnosticsError,
+	DiagnosticsProcessor,
+	catchDiagnosticsSync,
+	descriptions,
+} from "@romejs/diagnostics";
+import {Consumer} from "@romejs/consume";
+import {
+	ConsumeJSONResult,
+	consumeJSONExtra,
+	stringifyJSONExtra,
+} from "@romejs/codec-json";
+import {readFileText, writeFile} from "@romejs/fs";
+import {
+	loadUserConfig,
+	normalizeUserConfig,
+} from "@romejs/core/common/userConfig";
 
-export default createServerCommand({
+type Flags = {
+	user: boolean;
+};
+
+export default createServerCommand<Flags>({
 	category: commandCategories.PROJECT_MANAGEMENT,
 	description: "Modify a project config",
 	usage: "(enable|disable|set) key [value]",
@@ -23,43 +43,48 @@ export default createServerCommand({
 			description: "Set the project name",
 		},
 	],
-	defineFlags() {
-		return {};
+	defineFlags(c) {
+		return {
+			user: c.get("user").asBoolean(false),
+		};
 	},
-	async callback(req: ServerRequest): Promise<void> {
+	async callback(req: ServerRequest, flags: Flags): Promise<void> {
 		const {reporter} = req;
 		req.expectArgumentLength(2, 3);
 
-		const project = await req.assertClientCwdProject();
+		// This is a bit janky because we want to allow calling `--user` outside a project
+		const project = await req.server.projectManager.findProject(
+			req.client.flags.cwd,
+		);
+		const cwd = project?.folder || HOME_PATH;
 
-		let mutation: "set" | "push-array" = "set";
-		let keyParts: string;
-		let value: boolean | string | Array<string>;
-
-		const [action, ...restArgs] = req.query.args;
+		const [action, keyParts, ...values] = req.query.args;
+		let value: boolean | string | Array<string> = values[0];
 		switch (action) {
+			case "location": {
+				req.expectArgumentLength(1);
+				break;
+			}
+
 			case "enable": {
 				req.expectArgumentLength(2);
-				keyParts = req.query.args[1];
 				value = true;
 				break;
 			}
 
 			case "disable": {
 				req.expectArgumentLength(2);
-				keyParts = req.query.args[1];
 				value = false;
 				break;
 			}
 
 			case "set-directory": {
 				req.expectArgumentLength(3);
-				[keyParts, value] = restArgs;
 
 				// If the value is an absolute path, then make it relative to the project folder
 				const path = createUnknownFilePath(value);
 				if (path.isAbsolute()) {
-					value = assertHardMeta(project.meta).projectFolder.relative(path).join();
+					value = cwd.relative(path).join();
 				}
 
 				break;
@@ -67,14 +92,12 @@ export default createServerCommand({
 
 			case "set": {
 				req.expectArgumentLength(3);
-				[keyParts, value] = restArgs;
 				break;
 			}
 
 			case "push": {
 				req.expectArgumentLength(3, Infinity);
-				[keyParts, ...value] = restArgs;
-				mutation = "push-array";
+				value = values;
 				break;
 			}
 
@@ -88,57 +111,142 @@ export default createServerCommand({
 				});
 		}
 
-		try {
-			await modifyProjectConfig(
-				project.meta,
-				{
-					pre: (meta) => {
-						reporter.success(
-							`${mutation === "set" ? "Setting" : "Adding"} <emphasis>${keyParts}</emphasis> to <emphasis>${escapeMarkup(
-								JSON.stringify(value),
-							)}</emphasis> in the project config ${meta.configPath.toMarkup({
-								emphasis: true,
-							})}`,
-						);
+		function modify(consumer: Consumer) {
+			// Set the specified value
+			let keyConsumer = consumer;
+			for (const key of keyParts.split(".")) {
+				if (!keyConsumer.exists()) {
+					keyConsumer.setValue({});
+				}
+				keyConsumer = keyConsumer.get(key);
+			}
 
-						if (value === "true" || value === "false") {
-							const suggestedCommand = value === "true" ? "enable" : "disable";
-							reporter.warn(
-								markup`Value is the string <emphasis>${value}</emphasis> but it looks like a boolean. You probably meant to use the command:`,
-							);
-							reporter.command(markup`config ${suggestedCommand} ${keyParts}`);
-						}
-					},
-					modify: (consumer) => {
-						// Set the specified value
-						let keyConsumer = consumer;
-						for (const key of keyParts.split(".")) {
-							if (!keyConsumer.exists()) {
-								keyConsumer.setValue({});
-							}
-							keyConsumer = keyConsumer.get(key);
-						}
+			switch (action) {
+				case "push": {
+					keyConsumer.setValue([
+						...keyConsumer.asArray(true).map((c) => c.asUnknown()),
+						...(Array.isArray(value) ? value : []),
+					]);
+					break;
+				}
 
-						switch (mutation) {
-							case "set": {
-								keyConsumer.setValue(value);
-								break;
-							}
+				default: {
+					keyConsumer.setValue(value);
+					break;
+				}
+			}
+		}
 
-							case "push-array": {
-								keyConsumer.setValue([
-									...keyConsumer.asArray(true).map((c) => c.asUnknown()),
-									...(Array.isArray(value) ? value : []),
-								]);
-								break;
-							}
-						}
-					},
-				},
+		async function handleConfig(
+			configPath: AbsoluteFilePath,
+			subKey: string | undefined,
+			validate: (res: ConsumeJSONResult, stringified: string) => void,
+		) {
+			if (action === "location") {
+				reporter.logAllNoMarkup(configPath.join());
+				return;
+			}
+
+			reporter.success(
+				`${action === "push" ? "Adding" : "Setting"} <emphasis>${keyParts}</emphasis> to <emphasis>${escapeMarkup(
+					JSON.stringify(value),
+				)}</emphasis> in the config <emphasis>${configPath.toMarkup()}</emphasis>`,
 			);
+
+			if (value === "true" || value === "false") {
+				const suggestedCommand = value === "true" ? "enable" : "disable";
+				reporter.warn(
+					markup`Value is the string <emphasis>${value}</emphasis> but it looks like a boolean. You probably meant to use the command:`,
+				);
+				reporter.command(markup`config ${suggestedCommand} ${keyParts}`);
+			}
+
+			// Load the config file again
+			const configFile = await readFileText(configPath);
+			const res = consumeJSONExtra({
+				path: configPath,
+				input: configFile,
+			});
+
+			const {consumer} = res;
+			if (subKey === undefined) {
+				modify(consumer);
+			} else {
+				modify(consumer.get(subKey));
+			}
+
+			// Stringify the config
+			const stringified = stringifyJSONExtra(res);
+
+			// Test if this project config doesn't result in errors
+			let {diagnostics} = catchDiagnosticsSync(() => {
+				// Reconsume with new stringified config
+				const res = consumeJSONExtra({
+					path: configPath,
+					input: stringified,
+				});
+
+				validate(res, stringified);
+			});
+
+			if (diagnostics !== undefined) {
+				const processor = new DiagnosticsProcessor();
+				processor.normalizer.setInlineSourceText(configPath.join(), stringified);
+				processor.addDiagnostics(diagnostics);
+
+				throw new DiagnosticsError(
+					"Diagnostics produced while testing new project config",
+					processor.getDiagnostics(),
+				);
+			}
+
+			// Write it out
+			await writeFile(configPath, stringified);
+		}
+
+		try {
+			if (flags.user) {
+				let {configPath: existingConfigPath} = loadUserConfig();
+
+				let configPath: AbsoluteFilePath;
+				if (existingConfigPath === undefined) {
+					configPath = HOME_PATH.append([".config", "rome.rjson"]);
+					await writeFile(configPath, "");
+					reporter.info(
+						`Created user config at <emphasis>${configPath.toMarkup()}</emphasis> as it did not exist`,
+					);
+				} else {
+					configPath = existingConfigPath;
+				}
+
+				await handleConfig(
+					configPath,
+					undefined,
+					(res) => {
+						normalizeUserConfig(res.consumer, configPath);
+					},
+				);
+			} else {
+				const project = await req.assertClientCwdProject();
+				const meta = assertHardMeta(project.meta);
+				const {configPath, configSourceSubKey} = meta;
+
+				await handleConfig(
+					configPath,
+					configSourceSubKey,
+					(res, stringified) => {
+						normalizeProjectConfig(
+							res,
+							meta.configPath,
+							stringified,
+							meta.projectFolder,
+						);
+					},
+				);
+			}
 		} catch (err) {
-			reporter.error(
-				"Error occured while testing new project config. Your changes have not been saved.",
+			reporter.warn(
+				"Error occured while validating new config. Your changes have not been saved. Listed locations are not accurate.",
 			);
 			throw err;
 		}
