@@ -37,7 +37,7 @@ Rome aims to have the following responsibilities:
 
 <ul class="home-actions">
 	<li>
-		<a class="getting-started" href="/docs/getting-started">Getting Started</a>
+		<a class="getting-started" href="/docs/getting-started">Get Started</a>
 	</li>
 </ul>
 
