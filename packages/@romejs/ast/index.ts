@@ -189,6 +189,7 @@ export * from "./js/typescript/TSNullKeywordTypeAnnotation";
 export * from "./js/typescript/TSNumberKeywordTypeAnnotation";
 export * from "./js/typescript/TSNumericLiteralTypeAnnotation";
 export * from "./js/typescript/TSObjectKeywordTypeAnnotation";
+export * from "./js/typescript/TSObjectTypeAnnotation";
 export * from "./js/typescript/TSParenthesizedType";
 export * from "./js/typescript/TSPropertySignature";
 export * from "./js/typescript/TSQualifiedName";
@@ -202,7 +203,6 @@ export * from "./js/typescript/TSTupleElement";
 export * from "./js/typescript/TSTupleType";
 export * from "./js/typescript/TSTypeAlias";
 export * from "./js/typescript/TSTypeAssertion";
-export * from "./js/typescript/TSObjectTypeAnnotation";
 export * from "./js/typescript/TSTypeOperator";
 export * from "./js/typescript/TSTypeParameter";
 export * from "./js/typescript/TSTypeParameterDeclaration";
@@ -398,6 +398,7 @@ export type AnyNode =
 	| n.TSNumberKeywordTypeAnnotation
 	| n.TSNumericLiteralTypeAnnotation
 	| n.TSObjectKeywordTypeAnnotation
+	| n.TSObjectTypeAnnotation
 	| n.TSParenthesizedType
 	| n.TSPropertySignature
 	| n.TSQualifiedName
@@ -411,7 +412,6 @@ export type AnyNode =
 	| n.TSTupleType
 	| n.TSTypeAlias
 	| n.TSTypeAssertion
-	| n.TSObjectTypeAnnotation
 	| n.TSTypeOperator
 	| n.TSTypeParameter
 	| n.TSTypeParameterDeclaration

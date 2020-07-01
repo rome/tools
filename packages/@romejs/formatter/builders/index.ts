@@ -572,6 +572,9 @@ builders.set("TSNumericLiteralTypeAnnotation", TSNumericLiteralTypeAnnotation);
 import TSObjectKeywordTypeAnnotation from "./js/typescript/TSObjectKeywordTypeAnnotation";
 builders.set("TSObjectKeywordTypeAnnotation", TSObjectKeywordTypeAnnotation);
 
+import TSObjectTypeAnnotation from "./js/typescript/TSObjectTypeAnnotation";
+builders.set("TSObjectTypeAnnotation", TSObjectTypeAnnotation);
+
 import TSParenthesizedType from "./js/typescript/TSParenthesizedType";
 builders.set("TSParenthesizedType", TSParenthesizedType);
 
@@ -610,9 +613,6 @@ builders.set("TSTypeAlias", TSTypeAlias);
 
 import TSTypeAssertion from "./js/typescript/TSTypeAssertion";
 builders.set("TSTypeAssertion", TSTypeAssertion);
-
-import TSObjectTypeAnnotation from "./js/typescript/TSObjectTypeAnnotation";
-builders.set("TSObjectTypeAnnotation", TSObjectTypeAnnotation);
 
 import TSTypeOperator from "./js/typescript/TSTypeOperator";
 builders.set("TSTypeOperator", TSTypeOperator);

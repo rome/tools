@@ -579,6 +579,9 @@ evaluators.set("TSNumericLiteralTypeAnnotation", TSNumericLiteralTypeAnnotation)
 import TSObjectKeywordTypeAnnotation from "./typescript/TSObjectKeywordTypeAnnotation";
 evaluators.set("TSObjectKeywordTypeAnnotation", TSObjectKeywordTypeAnnotation);
 
+import TSObjectTypeAnnotation from "./typescript/TSObjectTypeAnnotation";
+evaluators.set("TSObjectTypeAnnotation", TSObjectTypeAnnotation);
+
 import TSParenthesizedType from "./typescript/TSParenthesizedType";
 evaluators.set("TSParenthesizedType", TSParenthesizedType);
 
@@ -620,9 +623,6 @@ evaluators.set("TSTypeAlias", TSTypeAlias);
 
 import TSTypeAssertion from "./typescript/TSTypeAssertion";
 evaluators.set("TSTypeAssertion", TSTypeAssertion);
-
-import TSObjectTypeAnnotation from "./typescript/TSObjectTypeAnnotation";
-evaluators.set("TSObjectTypeAnnotation", TSObjectTypeAnnotation);
 
 import TSTypeOperator from "./typescript/TSTypeOperator";
 evaluators.set("TSTypeOperator", TSTypeOperator);
