@@ -30,7 +30,7 @@ JSRoot {
 		}
 	}
 	body: Array [
-		TSTypeAliasTypeAnnotation {
+		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "MyType"
 				loc: Object {
@@ -225,7 +225,7 @@ JSRoot {
 				}
 			}
 		}
-		TSTypeAliasTypeAnnotation {
+		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "AnotherType"
 				loc: Object {

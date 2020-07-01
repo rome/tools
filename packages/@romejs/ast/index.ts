@@ -200,9 +200,9 @@ export * from "./js/typescript/TSTemplateLiteralTypeAnnotation";
 export * from "./js/typescript/TSThisType";
 export * from "./js/typescript/TSTupleElement";
 export * from "./js/typescript/TSTupleType";
-export * from "./js/typescript/TSTypeAliasTypeAnnotation";
+export * from "./js/typescript/TSTypeAlias";
 export * from "./js/typescript/TSTypeAssertion";
-export * from "./js/typescript/TSTypeLiteral";
+export * from "./js/typescript/TSObjectTypeAnnotation";
 export * from "./js/typescript/TSTypeOperator";
 export * from "./js/typescript/TSTypeParameter";
 export * from "./js/typescript/TSTypeParameterDeclaration";
@@ -409,9 +409,9 @@ export type AnyNode =
 	| n.TSThisType
 	| n.TSTupleElement
 	| n.TSTupleType
-	| n.TSTypeAliasTypeAnnotation
+	| n.TSTypeAlias
 	| n.TSTypeAssertion
-	| n.TSTypeLiteral
+	| n.TSObjectTypeAnnotation
 	| n.TSTypeOperator
 	| n.TSTypeParameter
 	| n.TSTypeParameterDeclaration

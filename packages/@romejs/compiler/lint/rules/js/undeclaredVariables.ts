@@ -6,7 +6,6 @@
  */
 
 import {Path} from "@romejs/compiler";
-import {isInTypeAnnotation} from "@romejs/js-ast-utils";
 import {AnyNode} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
@@ -35,15 +34,45 @@ const BROWSER_VARIABLES = [
 	"performance",
 ];
 
+// This is gross...
+const TS_VARIABLES = [
+	"MethodDecorator",
+	"ParameterDecorator",
+	"PromiseConstructorLike",
+	"PromiseLike",
+	"Promise",
+	"ArrayLike",
+	"Partial",
+	"Required",
+	"Readonly",
+	"Pick",
+	"Record",
+	"Exclude",
+	"Extract",
+	"Omit",
+	"NonNullable",
+	"Parameters",
+	"ConstructorParameters",
+	"ReturnType",
+	"InstanceType",
+	"ThisType",
+	"NodeJS",
+	"Iterable",
+	"Iterator",
+	"TemplateStringsArray",
+	"BufferEncoding",
+	"Console",
+	"Thenable",
+];
+
 export default {
 	name: "undeclaredVariables",
 	enter(path: Path): AnyNode {
 		const {node, scope} = path;
 
 		if (
-			(node.type === "JSReferenceIdentifier" ||
-			node.type === "JSXReferenceIdentifier") &&
-			!isInTypeAnnotation(path)
+			node.type === "JSReferenceIdentifier" ||
+			node.type === "JSXReferenceIdentifier"
 		) {
 			const {name} = node;
 			const binding = scope.getBinding(name);
@@ -52,7 +81,8 @@ export default {
 				binding !== undefined ||
 				scope.isGlobal(name) ||
 				BROWSER_VARIABLES.includes(name) ||
-				NODE_VARIABLES.includes(name);
+				NODE_VARIABLES.includes(name) ||
+				TS_VARIABLES.includes(name);
 
 			if (!isDefined) {
 				path.context.addNodeDiagnostic(

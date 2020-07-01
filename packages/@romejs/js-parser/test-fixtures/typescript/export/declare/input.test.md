@@ -554,7 +554,7 @@ JSRoot {
 									line: 5
 								}
 							}
-							declaration: TSTypeAliasTypeAnnotation {
+							declaration: TSTypeAlias {
 								id: JSBindingIdentifier {
 									name: "T"
 									loc: Object {

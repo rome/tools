@@ -111,7 +111,7 @@ JSRoot {
 				]
 			}
 		}
-		TSTypeAliasTypeAnnotation {
+		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "X"
 				loc: Object {

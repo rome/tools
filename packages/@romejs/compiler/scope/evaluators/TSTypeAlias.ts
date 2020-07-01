@@ -6,13 +6,13 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, tsInterfaceDeclaration} from "@romejs/ast";
 import {TypeBinding} from "@romejs/compiler";
+import {AnyNode, tsTypeAlias} from "@romejs/ast";
 import {createScopeEvaluator} from "./index";
 
 export default createScopeEvaluator({
 	inject(node: AnyNode, parent: AnyNode, scope: Scope) {
-		node = tsInterfaceDeclaration.assert(node);
+		node = tsTypeAlias.assert(node);
 		scope.addBinding(
 			new TypeBinding(
 				{
@@ -21,13 +21,13 @@ export default createScopeEvaluator({
 					scope,
 				},
 				node,
-				"interface",
+				"alias",
 			),
 		);
 	},
 
 	enter(node: AnyNode, parent: AnyNode, scope: Scope) {
-		node = tsInterfaceDeclaration.assert(node);
+		node = tsTypeAlias.assert(node);
 		const newScope = scope.fork("type-generic", node);
 		newScope.injectEvaluate(node.typeParameters);
 		return newScope;

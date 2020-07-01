@@ -75,6 +75,7 @@ import {
 	TSModuleBlock,
 	TSModuleDeclaration,
 	TSNamespaceExportDeclaration,
+	TSObjectTypeAnnotation,
 	TSParenthesizedType,
 	TSPropertySignature,
 	TSSignatureDeclarationMeta,
@@ -82,9 +83,8 @@ import {
 	TSThisType,
 	TSTupleElement,
 	TSTupleType,
-	TSTypeAliasTypeAnnotation,
+	TSTypeAlias,
 	TSTypeAssertion,
-	TSTypeLiteral,
 	TSTypeOperator,
 	TSTypeParameter,
 	TSTypeParameterDeclaration,
@@ -827,13 +827,13 @@ function tsIsStartOfConstructSignature(parser: JSParser) {
 	return parser.match(tt.parenL) || parser.isRelational("<");
 }
 
-function parseTSTypeLiteral(parser: JSParser): TSTypeLiteral {
+function parseTSObjectTypeAnnotation(parser: JSParser): TSObjectTypeAnnotation {
 	const start = parser.getPosition();
 	const members = parseTSObjectTypeMembers(parser);
 	return parser.finishNode(
 		start,
 		{
-			type: "TSTypeLiteral",
+			type: "TSObjectTypeAnnotation",
 			members,
 		},
 	);
@@ -1205,7 +1205,7 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
 		case tt._true:
 		case tt._false:
 		case tt.plusMin:
-			return parseTSTypeLiteralAnnotation(parser);
+			return parseTSObjectTypeAnnotationAnnotation(parser);
 
 		case tt._this: {
 			const thisKeyword = parseTSThisTypeNode(parser);
@@ -1226,7 +1226,7 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
 			if (lookaheadTS(parser, tsIsStartOfMappedType)) {
 				return parseTSMappedType(parser);
 			} else {
-				return parseTSTypeLiteral(parser);
+				return parseTSObjectTypeAnnotation(parser);
 			}
 
 		case tt.bracketL:
@@ -1256,7 +1256,7 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
 	);
 }
 
-function parseTSTypeLiteralAnnotation(
+function parseTSObjectTypeAnnotationAnnotation(
 	parser: JSParser,
 ): AnyTSLiteralTypeAnnotation {
 	const start = parser.getPosition();
@@ -1359,7 +1359,7 @@ function parseTSTypeLiteralAnnotation(
 					);
 				}
 
-				return parseTSTypeLiteralAnnotation(parser);
+				return parseTSObjectTypeAnnotationAnnotation(parser);
 			}
 		}
 
@@ -1875,10 +1875,7 @@ export function parseTSInterfaceDeclaration(
 	);
 }
 
-export function parseTSTypeAlias(
-	parser: JSParser,
-	start: Position,
-): TSTypeAliasTypeAnnotation {
+export function parseTSTypeAlias(parser: JSParser, start: Position): TSTypeAlias {
 	const id = parseBindingIdentifier(parser);
 	const typeParameters = tryParseTSTypeParameters(parser);
 	const typeAnnotation = tsExpectThenParseType(parser, tt.eq);
@@ -1886,7 +1883,7 @@ export function parseTSTypeAlias(
 	return parser.finishNode(
 		start,
 		{
-			type: "TSTypeAliasTypeAnnotation",
+			type: "TSTypeAlias",
 			id,
 			typeParameters,
 			right: typeAnnotation,
@@ -2180,7 +2177,7 @@ export type TSDeclareNode =
 	| JSVariableDeclarationStatement
 	| TSDeclareFunction
 	| TSModuleDeclaration
-	| TSTypeAliasTypeAnnotation
+	| TSTypeAlias
 	| TSInterfaceDeclaration;
 
 export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode {
@@ -2248,7 +2245,7 @@ export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode
 
 				if (
 					decl.type !== "TSInterfaceDeclaration" &&
-					decl.type !== "TSTypeAliasTypeAnnotation" &&
+					decl.type !== "TSTypeAlias" &&
 					decl.type !== "TSEnumDeclaration" &&
 					decl.type !== "JSFunctionDeclaration" &&
 					decl.type !== "JSClassDeclaration" &&
@@ -2298,11 +2295,7 @@ export function parseTSTypeExpressionStatement(
 	parser: JSParser,
 	start: Position,
 	expr: AnyJSExpression,
-):
-	| undefined
-	| TSDeclareNode
-	| TSTypeAliasTypeAnnotation
-	| TSInterfaceDeclaration {
+): undefined | TSDeclareNode | TSTypeAlias | TSInterfaceDeclaration {
 	// TODO TypeScript does not like parser.isLineTerminator()
 	if (expr.type !== "JSReferenceIdentifier") {
 		return undefined;

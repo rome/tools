@@ -119,7 +119,7 @@ export default {
 					if (
 						declaration.type === "TSModuleDeclaration" ||
 						declaration.type === "TSEnumDeclaration" ||
-						declaration.type === "TSTypeAliasTypeAnnotation" ||
+						declaration.type === "TSTypeAlias" ||
 						declaration.type === "TSInterfaceDeclaration" ||
 						declaration.type === "TSDeclareFunction"
 					) {

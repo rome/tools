@@ -16,6 +16,10 @@ import {buildSuggestionAdvice} from "../helpers";
 import {createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	TS_PREFER_INTERFACES: {
+		category: "lint/ts/preferInterfaces",
+		message: "Use an interface instead of an object type alias",
+	},
 	REACT_JSX_PROPS_NO_SPREADING: {
 		category: "lint/react/jsxPropsNoSpreading",
 		message: "Avoid using property spreading in JSX components.",

@@ -41,35 +41,64 @@ export default function getNodeReferenceParts(node: undefined | AnyNode): Result
 		if (isIdentifierish(node)) {
 			parts.push({node, value: node.name});
 			return false;
-		} else if (node.type === "JSThisExpression") {
-			parts.push({node, value: "this"});
-			return false;
-		} else if (node.type === "JSStringLiteral") {
-			parts.push({node, value: node.value});
-			return false;
-		} else if (node.type === "JSMetaProperty") {
-			parts.push({node, value: node.meta.name});
-			parts.push({node, value: node.property.name});
-			return false;
-		} else if (
-			node.type === "JSMemberExpression" ||
-			node.type === "JSXMemberExpression"
-		) {
-			const stop = add(node.object);
-			if (stop) {
-				return true;
-			} else {
-				return add(node.property);
+		}
+
+		switch (node.type) {
+			case "JSThisExpression": {
+				parts.push({node, value: "this"});
+				return false;
 			}
-		} else if (
-			node.type === "JSComputedMemberProperty" &&
-			node.value.type === "JSStringLiteral"
-		) {
-			return add(node.value);
-		} else if (node.type === "JSStaticMemberProperty") {
-			return add(node.value);
-		} else {
-			return true;
+
+			case "JSComputedMemberProperty": {
+				if (node.value.type === "JSStringLiteral") {
+					return add(node.value);
+				} else {
+					return true;
+				}
+			}
+			
+			case "TSStringLiteralTypeAnnotation":
+			case "JSStringLiteral": {
+				parts.push({node, value: node.value});
+				return false;
+			}
+
+			case "JSMetaProperty": {
+				parts.push({node, value: node.meta.name});
+				parts.push({node, value: node.property.name});
+				return false;
+			}
+
+			case "TSQualifiedName": {
+				add(node.left);
+				add(node.right);
+				return false;
+			}
+
+			case "TSIndexedAccessType": {
+				const stop = add(node.objectType);
+				if (stop) {
+					return true;
+				} else {
+					return add(node.indexType);
+				}
+			}
+
+			case "JSMemberExpression":
+			case "JSXMemberExpression": {
+				const stop = add(node.object);
+				if (stop) {
+					return true;
+				} else {
+					return add(node.property);
+				}
+			}
+
+			case "JSStaticMemberProperty":
+				return add(node.value);
+
+			default:
+				return true;
 		}
 	}
 

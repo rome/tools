@@ -605,14 +605,14 @@ builders.set("TSTupleElement", TSTupleElement);
 import TSTupleType from "./js/typescript/TSTupleType";
 builders.set("TSTupleType", TSTupleType);
 
-import TSTypeAliasTypeAnnotation from "./js/typescript/TSTypeAliasTypeAnnotation";
-builders.set("TSTypeAliasTypeAnnotation", TSTypeAliasTypeAnnotation);
+import TSTypeAlias from "./js/typescript/TSTypeAlias";
+builders.set("TSTypeAlias", TSTypeAlias);
 
 import TSTypeAssertion from "./js/typescript/TSTypeAssertion";
 builders.set("TSTypeAssertion", TSTypeAssertion);
 
-import TSTypeLiteral from "./js/typescript/TSTypeLiteral";
-builders.set("TSTypeLiteral", TSTypeLiteral);
+import TSObjectTypeAnnotation from "./js/typescript/TSObjectTypeAnnotation";
+builders.set("TSObjectTypeAnnotation", TSObjectTypeAnnotation);
 
 import TSTypeOperator from "./js/typescript/TSTypeOperator";
 builders.set("TSTypeOperator", TSTypeOperator);

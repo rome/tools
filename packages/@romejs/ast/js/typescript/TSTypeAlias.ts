@@ -13,16 +13,16 @@ import {
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSTypeAliasTypeAnnotation = JSNodeBase & {
-	type: "TSTypeAliasTypeAnnotation";
+export type TSTypeAlias = JSNodeBase & {
+	type: "TSTypeAlias";
 	id: JSBindingIdentifier;
 	typeParameters?: TSTypeParameterDeclaration;
 	right: AnyTSPrimary;
 	declare?: boolean | undefined;
 };
 
-export const tsTypeAliasTypeAnnotation = createBuilder<TSTypeAliasTypeAnnotation>(
-	"TSTypeAliasTypeAnnotation",
+export const tsTypeAlias = createBuilder<TSTypeAlias>(
+	"TSTypeAlias",
 	{
 		bindingKeys: {
 			id: true,

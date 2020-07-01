@@ -27,7 +27,7 @@ export default function TSInterfaceDeclaration(
 		builder.tokenize(node.typeParameters, node),
 	);
 
-	if (node.extends) {
+	if (node.extends !== undefined && node.extends.length > 0) {
 		tokens.push(
 			space,
 			"extends",

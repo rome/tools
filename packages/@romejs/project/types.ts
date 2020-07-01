@@ -101,10 +101,8 @@ type ProjectConfigJSONPropertyReducer<Type> = Type extends AbsoluteFilePath
 					? ProjectConfigJSONObjectReducer<Type>
 					: Type;
 
-type ProjectConfigJSONObjectReducer<Object> = {
-	[PropertyKey in keyof Object]: ProjectConfigJSONPropertyReducer<
-		Object[PropertyKey]
-	>
+type ProjectConfigJSONObjectReducer<Obj> = {
+	[PropertyKey in keyof Obj]: ProjectConfigJSONPropertyReducer<Obj[PropertyKey]>
 };
 
 // Base of a project config without any objects

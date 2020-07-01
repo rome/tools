@@ -89,6 +89,7 @@ type TokenFormat = {
 	fontStyle?: FontStyle;
 };
 
+// rome-ignore lint/js/noUnusedVariables
 type TokenFormats = {[type in MarkupTokenType]?: TokenFormat};
 
 const tokenTypeToScope: Dict<MarkupTokenType> = {

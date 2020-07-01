@@ -67,5 +67,5 @@ export default function TSIntersectionTypeAnnotation(
 }
 
 function isObjectType(node: AnyNode): boolean {
-	return node.type === "TSMappedType" || node.type === "TSTypeLiteral";
+	return node.type === "TSMappedType" || node.type === "TSObjectTypeAnnotation";
 }

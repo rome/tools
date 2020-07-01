@@ -219,7 +219,7 @@ export function parseExport(
 			declaration.type !== "JSFunctionDeclaration" &&
 			declaration.type !== "TSModuleDeclaration" &&
 			declaration.type !== "TSEnumDeclaration" &&
-			declaration.type !== "TSTypeAliasTypeAnnotation" &&
+			declaration.type !== "TSTypeAlias" &&
 			declaration.type !== "TSInterfaceDeclaration" &&
 			declaration.type !== "TSDeclareFunction"
 		) {

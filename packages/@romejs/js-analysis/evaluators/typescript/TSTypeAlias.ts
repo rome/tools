@@ -6,14 +6,10 @@
  */
 
 import {Scope} from "../../scopes";
-import {
-	AnyNode,
-	TSTypeAliasTypeAnnotation,
-	tsTypeAliasTypeAnnotation,
-} from "@romejs/ast";
+import {AnyNode, TSTypeAlias, tsTypeAlias} from "@romejs/ast";
 
-export default function TSTypeAliasTypeAnnotation(node: AnyNode, scope: Scope) {
-	node = tsTypeAliasTypeAnnotation.assert(node);
+export default function TSTypeAlias(node: AnyNode, scope: Scope) {
+	node = tsTypeAlias.assert(node);
 
 	const typeScope = scope.fork();
 	if (node.typeParameters) {

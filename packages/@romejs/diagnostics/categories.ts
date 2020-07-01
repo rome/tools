@@ -196,4 +196,5 @@ type LintDiagnosticCategory =
 	| "lint/react/sortComp"
 	| "lint/react/stylePropObject"
 	| "lint/react/voidDomElementsNoChildren"
-	| "lint/ts/noExplicitAny";
+	| "lint/ts/noExplicitAny"
+	| "lint/ts/preferInterfaces";

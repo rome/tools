@@ -28,6 +28,7 @@ export type TransformStageFactory = (
 	options: Object,
 ) => Transforms;
 
+// rome-ignore lint/js/noUnusedVariables
 export type TransformStageFactories = {
 	[key in TransformStageName]: TransformStageFactory
 };

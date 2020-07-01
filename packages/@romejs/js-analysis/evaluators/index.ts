@@ -615,14 +615,14 @@ evaluators.set("TSTupleElement", TSTupleElement);
 import TSTupleType from "./typescript/TSTupleType";
 evaluators.set("TSTupleType", TSTupleType);
 
-import TSTypeAliasTypeAnnotation from "./typescript/TSTypeAliasTypeAnnotation";
-evaluators.set("TSTypeAliasTypeAnnotation", TSTypeAliasTypeAnnotation);
+import TSTypeAlias from "./typescript/TSTypeAlias";
+evaluators.set("TSTypeAlias", TSTypeAlias);
 
 import TSTypeAssertion from "./typescript/TSTypeAssertion";
 evaluators.set("TSTypeAssertion", TSTypeAssertion);
 
-import TSTypeLiteral from "./typescript/TSTypeLiteral";
-evaluators.set("TSTypeLiteral", TSTypeLiteral);
+import TSObjectTypeAnnotation from "./typescript/TSObjectTypeAnnotation";
+evaluators.set("TSObjectTypeAnnotation", TSObjectTypeAnnotation);
 
 import TSTypeOperator from "./typescript/TSTypeOperator";
 evaluators.set("TSTypeOperator", TSTypeOperator);

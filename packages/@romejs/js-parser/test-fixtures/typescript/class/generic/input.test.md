@@ -124,7 +124,7 @@ JSRoot {
 									}
 								}
 							}
-							default: TSTypeLiteral {
+							default: TSObjectTypeAnnotation {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {

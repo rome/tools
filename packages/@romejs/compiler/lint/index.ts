@@ -30,20 +30,20 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 	}
 
 	// Perform autofixes
-	const formatContext = new CompilerContext({
-		ref: req.ref,
-		sourceText: req.sourceText,
-		options,
-		ast,
-		project,
-		frozen: false,
-		origin: {
-			category: "check",
-		},
-	});
-
 	let formatAst = ast;
 	if (applyRecommendedFixes) {
+		const formatContext = new CompilerContext({
+			ref: req.ref,
+			sourceText: req.sourceText,
+			options,
+			ast,
+			project,
+			frozen: false,
+			origin: {
+				category: "check",
+			},
+		});
+
 		formatAst = formatContext.reduceRoot(ast, lintTransforms);
 		formatAst = addSuppressions(formatContext, formatAst);
 	}
@@ -69,7 +69,10 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 		},
 		frozen: true,
 	});
-	context.reduceRoot(ast, lintTransforms);
+	const newAst = context.reduceRoot(ast, lintTransforms);
+	if (ast !== newAst) {
+		throw new Error("Expected the same ast. `frozen: true` is broken");
+	}
 
 	const diagnostics = context.diagnostics.getDiagnostics();
 	const result: LintResult = {
