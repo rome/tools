@@ -7,8 +7,7 @@ test(
 		await testLint(
 			t,
 			{
-				invalid: [""],
-				valid: [""],
+				// TODO
 			},
 			{category: "lint/ts/preferInterfaces"},
 		);

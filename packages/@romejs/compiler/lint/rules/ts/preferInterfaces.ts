@@ -1,12 +1,11 @@
 import {Path, Scope, TransformExitResult} from "@romejs/compiler";
-import {descriptions} from "@romejs/diagnostics";
 import {
 	AnyTSTypeElement,
 	TSExpressionWithTypeArguments,
 	TSTypeAlias,
 } from "@romejs/ast";
-import { getTSQualifiedBaseFromEntityName } from "@romejs/js-ast-utils";
-import { TypeBinding } from "@romejs/compiler/scope/bindings";
+import {getTSQualifiedBaseFromEntityName} from "@romejs/js-ast-utils";
+import {TypeBinding} from "@romejs/compiler/scope/bindings";
 
 function extractObjects(
 	typeAlias: TSTypeAlias,
@@ -38,7 +37,10 @@ function extractObjects(
 			const base = getTSQualifiedBaseFromEntityName(node.typeName);
 			const binding = scope.getBinding(base.name);
 
-			if (binding === undefined || (binding instanceof TypeBinding && binding.typeKind === "parameter")) {
+			if (
+				binding === undefined ||
+				(binding instanceof TypeBinding && binding.typeKind === "parameter")
+			) {
 				// `extends` can only access a static type
 				return undefined;
 			}
@@ -65,25 +67,27 @@ export default {
 		if (node.type === "TSTypeAlias") {
 			const extracted = extractObjects(node, path.scope);
 
-			if (extracted !== undefined && extracted.extends.length === 0) {
-				return path.context.addFixableDiagnostic(
+			if (extracted !== undefined) {
+				/*return path.context.addFixableDiagnostic(
 					{
 						old: node,
-						fixed: {
-							type: "TSInterfaceDeclaration",
-							loc: node.loc,
-							id: node.id,
-							typeParameters: node.typeParameters,
-							declare: node.declare,
-							extends: extracted.extends,
-							body: {
-								type: "TSInterfaceBody",
-								body: extracted.members,
+						suggestions: [{
+							fixed: {
+								type: "TSInterfaceDeclaration",
+								loc: node.loc,
+								id: node.id,
+								typeParameters: node.typeParameters,
+								declare: node.declare,
+								extends: extracted.extends,
+								body: {
+									type: "TSInterfaceBody",
+									body: extracted.members,
+								},
 							},
-						},
+						}]
 					},
 					descriptions.LINT.TS_PREFER_INTERFACES,
-				);
+				);*/
 			}
 		}
 
