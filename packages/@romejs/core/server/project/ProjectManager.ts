@@ -253,11 +253,11 @@ export default class ProjectManager {
 		this.filenameToUid.set(path, uid);
 	}
 
-	getUid(path: AbsoluteFilePath): string {
+	getUid(path: AbsoluteFilePath, allowMissing: boolean = false): string {
 		// We maintain a map of file paths to UIDs
 		// We clear the UID when a path is deleted.
 		// If getUid is called on a file that doesn't exist then we'll populate it and it will exist forever.
-		if (!this.server.memoryFs.exists(path)) {
+		if (!this.server.memoryFs.exists(path) && !allowMissing) {
 			throw new FileNotFound(path);
 		}
 
@@ -307,7 +307,9 @@ export default class ProjectManager {
 		}
 
 		const uid = cleanUidParts(parts);
-		this.setUid(path, uid);
+		if (!allowMissing) {
+			this.setUid(path, uid);
+		}
 		return uid;
 	}
 

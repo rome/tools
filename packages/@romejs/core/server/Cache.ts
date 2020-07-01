@@ -169,7 +169,7 @@ export default class Cache {
 	}
 
 	getCacheFilename(path: AbsoluteFilePath): AbsoluteFilePath {
-		const uid = this.server.projectManager.getUid(path);
+		const uid = this.server.projectManager.getUid(path, true);
 		return this.cachePath.append(uid);
 	}
 
