@@ -361,7 +361,7 @@ export default class Bundler {
 		options: BundleOptions = {},
 		reporter: Reporter = this.reporter,
 	): Promise<BundleResult> {
-		reporter.info(`Bundling ${resolvedEntry.toMarkup({emphasis: true})}`);
+		reporter.info(`Bundling <emphasis>${resolvedEntry.toMarkup()}</emphasis>`);
 
 		const req = this.createBundleRequest(resolvedEntry, options, reporter);
 		const res = await req.bundle();

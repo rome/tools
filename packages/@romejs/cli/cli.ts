@@ -427,9 +427,7 @@ export default async function cli() {
 					await writeFile(resolvedProfilePath, str);
 
 					client.reporter.success(
-						markup`Wrote CPU profile to ${resolvedProfilePath.toMarkup({
-							emphasis: true,
-						})}`,
+						markup`Wrote CPU profile to <emphasis>${resolvedProfilePath.toMarkup()}</emphasis>`,
 					);
 				},
 			);
@@ -490,7 +488,7 @@ export default async function cli() {
 			await writeFile(markersPath, stringifyJSON(res.markers));
 
 			client.reporter.success(
-				markup`Wrote markers to ${markersPath.toMarkup({emphasis: true})}`,
+				markup`Wrote markers to <emphasis>${markersPath.toMarkup()}</emphasis>`,
 			);
 		}
 	}

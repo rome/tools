@@ -65,6 +65,14 @@ export function stringifyRJSONFromConsumer(
 	return stringifyRootConsumer(opts.consumer, opts.comments);
 }
 
+export function stringifyJSONExtra(res: ConsumeJSONResult): string {
+	if (res.hasExtensions) {
+		return stringifyRJSONFromConsumer(res);
+	} else {
+		return stringifyJSON(res.consumer.asUnknown());
+	}
+}
+
 export function stringifyRJSON(value: unknown): string {
 	return stringifyRootConsumer(consumeUnknown(value, "parse/json"), new Map());
 }

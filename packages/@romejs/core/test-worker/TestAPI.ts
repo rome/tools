@@ -729,18 +729,14 @@ export default class TestAPI implements TestHelper {
 				);
 
 				if (message === undefined) {
-					message = `Snapshot ${escapeMarkup(entryName)} at ${this.snapshotManager.defaultSnapshotPath.toMarkup({
-						emphasis: true,
-					})} doesn't match`;
+					message = `Snapshot ${escapeMarkup(entryName)} at <emphasis>${this.snapshotManager.defaultSnapshotPath.toMarkup()}</emphasis> doesn't match`;
 				} else {
 					message = escapeMarkup(message);
 
 					advice.push({
 						type: "log",
 						category: "info",
-						text: `Snapshot can be found at ${this.snapshotManager.defaultSnapshotPath.toMarkup({
-							emphasis: true,
-						})}`,
+						text: `Snapshot can be found at <emphasis>${this.snapshotManager.defaultSnapshotPath.toMarkup()}</emphasis>`,
 					});
 				}
 

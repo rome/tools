@@ -68,17 +68,8 @@ class BaseFilePath<Super extends UnknownFilePath> {
 		return `Path<${this.type}> ${this.join()}`;
 	}
 
-	toMarkup(
-		{emphasis}: {
-			emphasis: boolean;
-		} = {emphasis: false},
-	): string {
-		let markup = `<filelink `;
-		if (emphasis) {
-			markup += `emphasis `;
-		}
-		markup += `target="${escapeMarkup(this.join())}" />`;
-		return markup;
+	toMarkup(): string {
+		return `<filelink target="${escapeMarkup(this.join())}" />`;
 	}
 
 	getParsed(): ParsedPath {
