@@ -9,7 +9,7 @@ function getAttributeKey(node: JSXAttribute): string {
 }
 
 export default {
-	name: "reactJsxNoDuplicateProps",
+	name: "jsxNoDuplicateProps",
 
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
@@ -20,7 +20,7 @@ export default {
 
 		const duplicates = new DiagnosticsDuplicateHelper(
 			context,
-			descriptions.LINT.REACT_JSX_NO_DUPLICATE_PROPS,
+			descriptions.LINT.JSX_NO_DUPLICATE_PROPS,
 		);
 
 		for (const attr of node.attributes) {

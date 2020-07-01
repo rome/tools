@@ -18,7 +18,7 @@ test(
 					"<img src={src} alt={alt} />",
 				],
 			},
-			{category: "lint/react/jsxPropsNoSpreading"},
+			{category: "lint/jsx/propsNoSpreading"},
 		);
 	},
 );

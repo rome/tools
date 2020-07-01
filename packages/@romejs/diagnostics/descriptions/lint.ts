@@ -20,8 +20,8 @@ export const lint = createDiagnosticsCategory({
 		category: "lint/ts/preferInterfaces",
 		message: "Use an interface instead of an object type alias",
 	},
-	REACT_JSX_PROPS_NO_SPREADING: {
-		category: "lint/react/jsxPropsNoSpreading",
+	JSX_PROPS_NO_SPREADING: {
+		category: "lint/jsx/propsNoSpreading",
 		message: "Avoid using property spreading in JSX components.",
 		advice: [
 			{
@@ -89,8 +89,8 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
-	REACT_JSX_PASCAL_CASE: (oldName: string, newName: string) => ({
-		category: "lint/react/jsxPascalCase",
+	JSX_PASCAL_CASE: (oldName: string, newName: string) => ({
+		category: "lint/jsx/pascalCase",
 		message: `Switch <emphasis>${oldName}</emphasis> to <emphasis>${newName}</emphasis>.`,
 		advice: [
 			{
@@ -163,8 +163,8 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	REACT_JSX_NO_DUPLICATE_PROPS: (key: string) => ({
-		category: "lint/react/jsxNoDuplicateProps",
+	JSX_NO_DUPLICATE_PROPS: (key: string) => ({
+		category: "lint/jsx/noDuplicateProps",
 		message: `Avoid duplicate component props. Check the <emphasis>${key}</emphasis> prop.`,
 	}),
 	REACT_NO_STRING_REFS: (details: string) => ({
@@ -453,8 +453,8 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
-	REACT_JSX_NO_COMMENT_TEXT: {
-		category: "lint/react/jsxNoCommentText",
+	JSX_NO_COMMENT_TEXT: {
+		category: "lint/jsx/noCommentText",
 		message: "Wrap <emphasis>comments</emphasis> inside children within <emphasis>braces</emphasis>.",
 		advice: [
 			{

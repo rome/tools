@@ -18,7 +18,7 @@ test(
 					"<FooComponent />",
 				],
 			},
-			{category: "lint/react/jsxPascalCase"},
+			{category: "lint/jsx/pascalCase"},
 		);
 	},
 );

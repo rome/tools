@@ -12,7 +12,7 @@ import {descriptions} from "@romejs/diagnostics";
 const commentPattern = /(^(\/\*\*|\/\*|\/\/)|\*\/$)/gm;
 
 export default {
-	name: "reactJsxNoCommentText",
+	name: "jsxNoCommentText",
 	enter(path: Path): AnyNode {
 		const {node} = path;
 
@@ -26,7 +26,7 @@ export default {
 							value: `{/**${node.value.replace(commentPattern, "")}*/}`,
 						},
 					},
-					descriptions.LINT.REACT_JSX_NO_COMMENT_TEXT,
+					descriptions.LINT.JSX_NO_COMMENT_TEXT,
 				);
 			}
 		}

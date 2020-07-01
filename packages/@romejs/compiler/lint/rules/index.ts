@@ -80,13 +80,13 @@ import noTargetBlank from "./jsx-a11y/noTargetBlank";
 import roleHasRequiredAriaProps from "./jsx-a11y/roleHasRequiredAriaProps";
 import scope from "./jsx-a11y/scope";
 import tabindexNoPositive from "./jsx-a11y/tabindexNoPositive";
+import noCommentText from "./jsx/noCommentText";
+import noDuplicateProps from "./jsx/noDuplicateProps";
+import pascalCase from "./jsx/pascalCase";
+import propsNoSpreading from "./jsx/propsNoSpreading";
 import buttonHasType from "./react/buttonHasType";
 import jsxFragments from "./react/jsxFragments";
 import jsxKey from "./react/jsxKey";
-import jsxNoCommentText from "./react/jsxNoCommentText";
-import jsxNoDuplicateProps from "./react/jsxNoDuplicateProps";
-import jsxPascalCase from "./react/jsxPascalCase";
-import jsxPropsNoSpreading from "./react/jsxPropsNoSpreading";
 import noAccessStateInSetState from "./react/noAccessStateInSetState";
 import noArrayIndexKey from "./react/noArrayIndexKey";
 import noChildrenProp from "./react/noChildrenProp";
@@ -185,13 +185,13 @@ export const lintTransforms = [
 	roleHasRequiredAriaProps,
 	scope,
 	tabindexNoPositive,
+	noCommentText,
+	noDuplicateProps,
+	pascalCase,
+	propsNoSpreading,
 	buttonHasType,
 	jsxFragments,
 	jsxKey,
-	jsxNoCommentText,
-	jsxNoDuplicateProps,
-	jsxPascalCase,
-	jsxPropsNoSpreading,
 	noAccessStateInSetState,
 	noArrayIndexKey,
 	noChildrenProp,
