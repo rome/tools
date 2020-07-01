@@ -101,18 +101,19 @@
 
 ```
 
- unknown lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using unnecessary Fragment.
+
+    <React.Fragment>foo</React.Fragment>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html element,
     and is not a keyed fragment.
 
   ℹ Recommended fix
 
-  + foo
-
-  ✖ Unable to find target location
+  - <React.Fragment>foo</React.Fragment>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -131,18 +132,19 @@ foo;
 
 ```
 
- unknown lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using unnecessary Fragment.
+
+    <Fragment>foo</Fragment>
+    ^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html element,
     and is not a keyed fragment.
 
   ℹ Recommended fix
 
-  + foo
-
-  ✖ Unable to find target location
+  - <Fragment>foo</Fragment>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

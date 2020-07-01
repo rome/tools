@@ -1,6 +1,8 @@
-import { AnyTSEntityName, JSReferenceIdentifier} from "@romejs/ast";
+import {AnyTSEntityName, JSReferenceIdentifier} from "@romejs/ast";
 
-export default function getTSQualifiedBaseFromEntityName(entity: AnyTSEntityName): JSReferenceIdentifier {
+export default function getTSQualifiedBaseFromEntityName(
+	entity: AnyTSEntityName,
+): JSReferenceIdentifier {
 	switch (entity.type) {
 		case "TSQualifiedName":
 			return getTSQualifiedBaseFromEntityName(entity.left);

@@ -56,7 +56,7 @@ export default function getNodeReferenceParts(node: undefined | AnyNode): Result
 					return true;
 				}
 			}
-			
+
 			case "TSStringLiteralTypeAnnotation":
 			case "JSStringLiteral": {
 				parts.push({node, value: node.value});
