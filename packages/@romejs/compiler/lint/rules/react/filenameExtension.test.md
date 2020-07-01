@@ -8,9 +8,9 @@
 
 ```
 
- foo.js:1:32 lint/react/filenameExtension ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ foo.js:1 lint/react/filenameExtension ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ The file extension is not allowed for React components.
+  ✖ The file extension .js is not allowed to contain a React component.
 
   ℹ Consider changing the extension of your file to .jsx or .tsx.
 
@@ -49,9 +49,9 @@ class MyComponent extends React.Component {
 
 ```
 
- foo.ts:1:32 lint/react/filenameExtension ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ foo.ts:1 lint/react/filenameExtension ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ The file extension is not allowed for React components.
+  ✖ The file extension .ts is not allowed to contain a React component.
 
   ℹ Consider changing the extension of your file to .jsx or .tsx.
 

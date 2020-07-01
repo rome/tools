@@ -16,9 +16,9 @@ import {buildSuggestionAdvice} from "../helpers";
 import {createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
-	REACT_FILENAME_EXTENSION: {
+	REACT_FILENAME_EXTENSION: (extension: string) => ({
 		category: "lint/react/filenameExtension",
-		message: "The file extension is not allowed for React components.",
+		message: `The file extension <emphasis>${extension}</emphasis> is not allowed to contain a React component.`,
 		advice: [
 			{
 				type: "log",
@@ -26,7 +26,7 @@ export const lint = createDiagnosticsCategory({
 				text: "Consider changing the extension of your file to <emphasis>.jsx</emphasis> or <emphasis>.tsx</emphasis>.",
 			},
 		],
-	},
+	}),
 	REACT_JSX_PROPS_NO_SPREADING: {
 		category: "lint/react/jsxPropsNoSpreading",
 		message: "Avoid using property spreading in JSX components.",
