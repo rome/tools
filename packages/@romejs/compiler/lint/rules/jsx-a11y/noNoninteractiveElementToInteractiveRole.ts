@@ -2,7 +2,11 @@ import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
 import {getJSXAttribute, hasJSXAttribute} from "@romejs/js-ast-utils";
 import getJSXElementName from "@romejs/js-ast-utils/getJSXElementName";
-import {isElementInteractive, isRoleInteractive, roles} from "../../utils/aria";
+import {
+	ariaRolesMap,
+	isElementInteractive,
+	isRoleInteractive,
+} from "@romejs/compiler/lint/utils/aria";
 
 export default {
 	name: "jsxA11YNoNoninteractiveElementToInteractiveRole",
@@ -17,7 +21,7 @@ export default {
 				roleAttribute.value &&
 				roleAttribute.value.type === "JSStringLiteral"
 			) {
-				const role = roles.get(roleAttribute.value.value);
+				const role = ariaRolesMap.get(roleAttribute.value.value);
 				if (role) {
 					if (!isElementInteractive(name) && isRoleInteractive(role)) {
 						path.context.addNodeDiagnostic(

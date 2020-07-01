@@ -1,7 +1,7 @@
 import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
 import {getJSXAttribute, hasJSXAttribute} from "@romejs/js-ast-utils";
-import {roles} from "../../utils/aria";
+import {ariaRolesMap} from "@romejs/compiler/lint/utils/aria";
 
 export default {
 	name: "jsxA11YRoleHasRequiredAriaProps",
@@ -11,7 +11,7 @@ export default {
 		if (node.type === "JSXElement" && hasJSXAttribute(node, "role")) {
 			const attr = getJSXAttribute(node, "role");
 			if (attr && attr.value && attr.value.type === "JSStringLiteral") {
-				const role = roles.get(attr.value.value);
+				const role = ariaRolesMap.get(attr.value.value);
 				if (role) {
 					const hasAllProps = role.requiredProps.every((prop) => {
 						return hasJSXAttribute(node, prop);

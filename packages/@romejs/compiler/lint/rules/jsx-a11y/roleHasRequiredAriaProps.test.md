@@ -618,28 +618,52 @@ aria-orientation="horizontal"></span>;
 ### `22`
 
 ```
-✔ No known problems!
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with the menuitemcheckbox ARIA role does not have the required ARIA attributes.
+
+    <span role='menuitemcheckbox' ></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-checked
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `22: formatted`
 
 ```
-<span role="checkbox" aria-checked="true"></span>;
+<span role="menuitemcheckbox"></span>;
 
 ```
 
 ### `23`
 
 ```
-✔ No known problems!
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with the menuitemradio ARIA role does not have the required ARIA attributes.
+
+    <span role='menuitemradio' ></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-checked
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `23: formatted`
 
 ```
-<span role="switch" aria-checked="true"></span>;
+<span role="menuitemradio"></span>;
 
 ```
 
@@ -653,10 +677,7 @@ aria-orientation="horizontal"></span>;
 ### `24: formatted`
 
 ```
-<span role="spinbutton"
-aria-valuemax="100"
-aria-valuemin="0"
-aria-valuenow="50"></span>;
+<span role="checkbox" aria-checked="true"></span>;
 
 ```
 
@@ -670,7 +691,7 @@ aria-valuenow="50"></span>;
 ### `25: formatted`
 
 ```
-<span role="slider" aria-valuemax="100" aria-valuemin="0" aria-valuenow="50"></span>;
+<span role="switch" aria-checked="true"></span>;
 
 ```
 
@@ -684,7 +705,10 @@ aria-valuenow="50"></span>;
 ### `26: formatted`
 
 ```
-<span role="separator" aria-valuemax="100" aria-valuemin="0" aria-valuenow="50"></span>;
+<span role="spinbutton"
+aria-valuemax="100"
+aria-valuemin="0"
+aria-valuenow="50"></span>;
 
 ```
 
@@ -698,12 +722,7 @@ aria-valuenow="50"></span>;
 ### `27: formatted`
 
 ```
-<span role="scrollbar"
-aria-valuemax="100"
-aria-valuemin="0"
-aria-valuenow="50"
-aria-orientation="horizontal"
-aria-controls="123"></span>;
+<span role="slider" aria-valuemax="100" aria-valuemin="0" aria-valuenow="50"></span>;
 
 ```
 
@@ -717,7 +736,7 @@ aria-controls="123"></span>;
 ### `28: formatted`
 
 ```
-<span role="radio" aria-checked="true"></span>;
+<span role="separator" aria-valuemax="100" aria-valuemin="0" aria-valuenow="50"></span>;
 
 ```
 
@@ -731,7 +750,12 @@ aria-controls="123"></span>;
 ### `29: formatted`
 
 ```
-<span role="option" aria-selected="true"></span>;
+<span role="scrollbar"
+aria-valuemax="100"
+aria-valuemin="0"
+aria-valuenow="50"
+aria-orientation="horizontal"
+aria-controls="123"></span>;
 
 ```
 
@@ -745,7 +769,7 @@ aria-controls="123"></span>;
 ### `30: formatted`
 
 ```
-<span role="heading" aria-level="1"></span>;
+<span role="radio" aria-checked="true"></span>;
 
 ```
 
@@ -759,6 +783,62 @@ aria-controls="123"></span>;
 ### `31: formatted`
 
 ```
+<span role="option" aria-selected="true"></span>;
+
+```
+
+### `32`
+
+```
+✔ No known problems!
+
+```
+
+### `32: formatted`
+
+```
+<span role="heading" aria-level="1"></span>;
+
+```
+
+### `33`
+
+```
+✔ No known problems!
+
+```
+
+### `33: formatted`
+
+```
 <span role="combobox" aria-controls="true" aria-expanded="true"></span>;
+
+```
+
+### `34`
+
+```
+✔ No known problems!
+
+```
+
+### `34: formatted`
+
+```
+<span role="menuitemcheckbox" aria-checked="true"></span>;
+
+```
+
+### `35`
+
+```
+✔ No known problems!
+
+```
+
+### `35: formatted`
+
+```
+<span role="menuitemradio" aria-checked="true"></span>;
 
 ```

@@ -5,7 +5,7 @@ import {
 	ARIAProperty,
 	ARIAPropertyDefinition,
 	ariaPropsMap,
-} from "../../utils/aria";
+} from "@romejs/compiler/lint/utils/aria";
 
 function isCorrectValue(
 	attribute: ARIAPropertyDefinition,
