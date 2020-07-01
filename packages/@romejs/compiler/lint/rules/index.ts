@@ -80,6 +80,7 @@ import noTargetBlank from "./jsx-a11y/noTargetBlank";
 import roleHasRequiredAriaProps from "./jsx-a11y/roleHasRequiredAriaProps";
 import scope from "./jsx-a11y/scope";
 import tabindexNoPositive from "./jsx-a11y/tabindexNoPositive";
+import fileExtension from "./jsx/fileExtension";
 import noCommentText from "./jsx/noCommentText";
 import noDuplicateProps from "./jsx/noDuplicateProps";
 import pascalCase from "./jsx/pascalCase";
@@ -185,6 +186,7 @@ export const lintTransforms = [
 	roleHasRequiredAriaProps,
 	scope,
 	tabindexNoPositive,
+	fileExtension,
 	noCommentText,
 	noDuplicateProps,
 	pascalCase,

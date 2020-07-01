@@ -16,6 +16,17 @@ import {buildSuggestionAdvice} from "../helpers";
 import {createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	JSX_FILE_EXTENSION: (ext: string, basename: string) => ({
+		category: "lint/jsx/fileExtension",
+		message: `Files with the <emphasis>${ext}</emphasis> extension cannot contain JSX elements.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: `Change the <emphasis>${basename}${ext}</emphasis> file extension to <emphasis>.jsx</emphasis> or <emphasis>.tsx</emphasis>.`,
+			},
+		],
+	}),
 	TS_PREFER_INTERFACES: {
 		category: "lint/ts/preferInterfaces",
 		message: "Use an interface instead of an object type alias",

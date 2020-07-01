@@ -95,6 +95,7 @@ showHero: false
 | role-has-required-aria-props |  |
 | scope |  |
 | tabindex-no-positive |  |
+| file-extension |  |
 | no-comment-text |  |
 | no-duplicate-props |  |
 | pascal-case |  |
