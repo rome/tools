@@ -34,7 +34,6 @@ if (out !== "") {
 	console.error(out);
 	console.log();
 	console.log("To fix this run `node scripts/assert-generated` and commit the results");
-	console.log("JavaScript, HTML, and CSS toolkit may be accurate. Really tough for this type of project.")
 	console.log();
 	process.exit(1);
 }
