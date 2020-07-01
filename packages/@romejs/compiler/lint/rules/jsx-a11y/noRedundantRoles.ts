@@ -3,7 +3,11 @@ import {descriptions} from "@romejs/diagnostics";
 import {getJSXAttribute, hasJSXAttribute} from "@romejs/js-ast-utils";
 import getJSXElementName from "@romejs/js-ast-utils/getJSXElementName";
 import {AnyNode, JSXAttribute, JSXElement} from "@romejs/ast";
-import {ARIAProperty, ARIARoleDefinition, ariaRolesMap} from "../../utils/aria";
+import {
+	ARIAProperty,
+	ARIARoleDefinition,
+	ariaRolesMap,
+} from "@romejs/compiler/lint/utils/aria";
 
 type CreateFixableDiagnostic = {
 	context: CompilerContext;
