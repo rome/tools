@@ -25,7 +25,7 @@ test(
 					'const a = <div className={"cls" /* comment */}></div>',
 				],
 			},
-			{category: "lint/react/jsxNoCommentText"},
+			{category: "lint/jsx/noCommentText"},
 		);
 	},
 );

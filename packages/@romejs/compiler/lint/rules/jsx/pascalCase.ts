@@ -3,7 +3,7 @@ import {descriptions} from "@romejs/diagnostics";
 import {toCamelCase} from "@romejs/string-utils";
 
 export default {
-	name: "reactJsxPascalCase",
+	name: "jsxPascalCase",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 
@@ -15,10 +15,7 @@ export default {
 			if (node.name.name !== pascalCaseName) {
 				path.context.addNodeDiagnostic(
 					node,
-					descriptions.LINT.REACT_JSX_PASCAL_CASE(
-						node.name.name,
-						pascalCaseName,
-					),
+					descriptions.LINT.JSX_PASCAL_CASE(node.name.name, pascalCaseName),
 				);
 			}
 		}

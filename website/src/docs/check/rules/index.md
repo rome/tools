@@ -95,6 +95,10 @@ showHero: false
 | role-has-required-aria-props |  |
 | scope |  |
 | tabindex-no-positive |  |
+| no-comment-text |  |
+| no-duplicate-props |  |
+| pascal-case |  |
+| props-no-spreading |  |
 
 ## React
 
@@ -103,10 +107,6 @@ showHero: false
 | button-has-type |  |
 | jsx-fragments |  |
 | jsx-key |  |
-| jsx-no-comment-text |  |
-| jsx-no-duplicate-props |  |
-| jsx-pascal-case |  |
-| jsx-props-no-spreading |  |
 | no-access-state-in-set-state |  |
 | no-array-index-key |  |
 | no-children-prop |  |

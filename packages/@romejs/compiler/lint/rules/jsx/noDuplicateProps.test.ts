@@ -13,7 +13,7 @@ test(
 				],
 				valid: ['<Hello foo="bar" />', '<div  style="{}" />'],
 			},
-			{category: "lint/react/jsxNoDuplicateProps"},
+			{category: "lint/jsx/noDuplicateProps"},
 		);
 	},
 );
