@@ -169,6 +169,7 @@ type LintDiagnosticCategory =
 	| "lint/jsx-a11y/roleHasRequiredAriaProps"
 	| "lint/jsx-a11y/scope"
 	| "lint/jsx-a11y/tabindexNoPositive"
+	| "lint/jsx/fileExtension"
 	| "lint/jsx/noCommentText"
 	| "lint/jsx/noDuplicateProps"
 	| "lint/jsx/pascalCase"
