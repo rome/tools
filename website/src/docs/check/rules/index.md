@@ -125,6 +125,7 @@ showHero: false
 | no-will-update-set-state |  |
 | require-render-return |  |
 | sort-comp |  |
+| state-in-constructor |  |
 | style-prop-object |  |
 | void-dom-elements-no-children |  |
 
