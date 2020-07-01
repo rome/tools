@@ -1,7 +1,7 @@
 import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
 import {doesNodeMatchPattern} from "@romejs/js-ast-utils";
-import { insideClassComponent } from "../../utils/react";
+import {insideClassComponent} from "../../utils/react";
 
 function isInConstructor(path: Path) {
 	const ancestor = path.findAncestry(({node}) =>
