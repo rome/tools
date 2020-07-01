@@ -57,3 +57,27 @@ class Foo extends React.Component {
 }
 
 ```
+
+### `2`
+
+```
+✔ No known problems!
+
+```
+
+### `2: formatted`
+
+```
+class Foo extends Component {
+	constructor() {
+		this.state = {text: "foo"};
+	}
+
+	render() {
+		const {state} = this;
+		const {text} = state;
+		return <span>{text}</span>;
+	}
+}
+
+```

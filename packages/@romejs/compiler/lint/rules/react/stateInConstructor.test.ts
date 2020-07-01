@@ -30,6 +30,21 @@ test(
                             }
                         }
 					`,
+					dedent`
+						class Foo extends Component {
+							constructor() {
+								this.state = { text: "foo" }
+							}
+
+							render() {
+							const { state } = this;
+							const { text } = state;
+							return (
+								<span>{text}</span>
+							)
+							}	
+						}
+					`,
 				],
 			},
 			{category: "lint/react/stateInConstructor"},
