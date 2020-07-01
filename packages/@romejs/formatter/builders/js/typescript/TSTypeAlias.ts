@@ -6,12 +6,9 @@
  */
 
 import {Builder, Token, concat, group, space} from "@romejs/formatter";
-import {TSTypeAliasTypeAnnotation} from "@romejs/ast";
+import {TSTypeAlias} from "@romejs/ast";
 
-export default function TSTypeAliasTypeAnnotation(
-	builder: Builder,
-	node: TSTypeAliasTypeAnnotation,
-): Token {
+export default function TSTypeAlias(builder: Builder, node: TSTypeAlias): Token {
 	return group(
 		concat([
 			"type",

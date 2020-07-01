@@ -133,4 +133,5 @@ showHero: false
 | Rule | Description |
 | ------------- | ------------- |
 | no-explicit-any |  |
+| prefer-interfaces |  |
 

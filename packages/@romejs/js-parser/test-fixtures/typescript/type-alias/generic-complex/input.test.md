@@ -30,7 +30,7 @@ JSRoot {
 		}
 	}
 	body: Array [
-		TSTypeAliasTypeAnnotation {
+		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "T"
 				loc: Object {
@@ -188,7 +188,7 @@ JSRoot {
 								}
 							}
 						}
-						default: TSTypeLiteral {
+						default: TSObjectTypeAnnotation {
 							loc: Object {
 								filename: "input.ts"
 								end: Object {

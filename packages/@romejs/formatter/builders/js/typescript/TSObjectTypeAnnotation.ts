@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSTypeLiteral} from "@romejs/ast";
+import {TSObjectTypeAnnotation} from "@romejs/ast";
 import {Builder, Token} from "@romejs/formatter";
 
 import {printTSBraced} from "../utils";
 
-export default function TSTypeLiteral(
+export default function TSObjectTypeAnnotation(
 	builder: Builder,
-	node: TSTypeLiteral,
+	node: TSObjectTypeAnnotation,
 ): Token {
 	return printTSBraced(builder, node, node.members);
 }

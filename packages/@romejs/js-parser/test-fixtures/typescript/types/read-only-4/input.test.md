@@ -72,7 +72,7 @@ JSRoot {
 		}
 	]
 	body: Array [
-		TSTypeAliasTypeAnnotation {
+		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "T33"
 				loc: Object {

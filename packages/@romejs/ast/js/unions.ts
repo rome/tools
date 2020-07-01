@@ -239,7 +239,7 @@ export type AnyJSDeclaration =
 	| n.JSExportDefaultDeclaration
 	| n.JSExportExternalDeclaration
 	| n.JSExportAllDeclaration
-	| n.TSTypeAliasTypeAnnotation
+	| n.TSTypeAlias
 	| n.TSEnumDeclaration
 	| n.TSInterfaceDeclaration
 	| n.TSNamespaceExportDeclaration
@@ -267,7 +267,7 @@ export type AnyTSKeywordTypeAnnotation =
 	| n.TSUnknownKeywordTypeAnnotation;
 
 export type AnyTSPrimary =
-	| n.TSTypeLiteral
+	| n.TSObjectTypeAnnotation
 	| n.TSTypeReference
 	| n.TSThisType
 	| n.TSParenthesizedType

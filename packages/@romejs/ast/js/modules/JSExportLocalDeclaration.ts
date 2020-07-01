@@ -16,7 +16,7 @@ import {
 	TSEnumDeclaration,
 	TSInterfaceDeclaration,
 	TSModuleDeclaration,
-	TSTypeAliasTypeAnnotation,
+	TSTypeAlias,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
@@ -29,7 +29,7 @@ export type JSExportLocalDeclaration = JSNodeBase & {
 		| JSClassDeclaration
 		| TSModuleDeclaration
 		| TSEnumDeclaration
-		| TSTypeAliasTypeAnnotation
+		| TSTypeAlias
 		| TSInterfaceDeclaration
 		| TSDeclareFunction;
 	specifiers?: Array<JSExportLocalSpecifier>;

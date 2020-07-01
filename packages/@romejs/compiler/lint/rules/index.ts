@@ -108,6 +108,7 @@ import sortComp from "./react/sortComp";
 import stylePropObject from "./react/stylePropObject";
 import voidDomElementsNoChildren from "./react/voidDomElementsNoChildren";
 import noExplicitAny from "./ts/noExplicitAny";
+import preferInterfaces from "./ts/preferInterfaces";
 
 export const lintTransforms = [
 	camelCase,
@@ -212,4 +213,5 @@ export const lintTransforms = [
 	stylePropObject,
 	voidDomElementsNoChildren,
 	noExplicitAny,
+	preferInterfaces,
 ];

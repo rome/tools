@@ -25,7 +25,7 @@ export default function isDeclaration(
 		case "JSExportExternalDeclaration":
 		case "TSDeclareFunction":
 		case "TSEnumDeclaration":
-		case "TSTypeAliasTypeAnnotation":
+		case "TSTypeAlias":
 		case "TSExportAssignment":
 		case "TSImportEqualsDeclaration":
 		case "TSInterfaceDeclaration":

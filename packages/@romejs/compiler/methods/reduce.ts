@@ -106,6 +106,10 @@ function runExit<State>(
 	// Call transformer
 	let transformedNode = callback(path, state);
 
+	if (path.context.frozen) {
+		return [KEEP_EXIT, path];
+	}
+
 	// Validate the node
 	validateTransformReturn(name, transformedNode, path);
 
@@ -141,22 +145,24 @@ export default function reduce(
 		// Call transformer
 		let transformedNode = enter(path);
 
-		// When returning this symbol, it indicates we should skip the subtree
-		if (transformedNode === REDUCE_SKIP_SUBTREE) {
-			return origNode;
-		}
+		if (!path.context.frozen) {
+			// When returning this symbol, it indicates we should skip the subtree
+			if (transformedNode === REDUCE_SKIP_SUBTREE) {
+				return origNode;
+			}
 
-		// Validate the return value
-		validateTransformReturn(visitor.name, transformedNode, path);
+			// Validate the return value
+			validateTransformReturn(visitor.name, transformedNode, path);
 
-		// Check if we need to bail out. See the comment for shouldBailReduce on what that means
-		if (shouldBailReduce(transformedNode)) {
-			return transformedNode;
-		}
+			// Check if we need to bail out. See the comment for shouldBailReduce on what that means
+			if (shouldBailReduce(transformedNode)) {
+				return transformedNode;
+			}
 
-		// Create new path if node has been changed
-		if (transformedNode !== path.node) {
-			path = path.fork(transformedNode);
+			// Create new path if node has been changed
+			if (transformedNode !== path.node) {
+				path = path.fork(transformedNode);
+			}
 		}
 	}
 

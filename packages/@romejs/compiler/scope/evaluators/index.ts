@@ -6,10 +6,12 @@
  */
 
 import Scope from "../Scope";
+import TSTypeParameterDeclaration from "./TSTypeParameterDeclaration";
+import TSTypeParameter from "./TSTypeParameter";
 import JSClassDeclaration from "./JSClassDeclaration";
 import JSFunctionDeclaration from "./JSFunctionDeclaration";
 import JSVariableDeclaration from "./JSVariableDeclaration";
-import TSTypeAliasTypeAnnotation from "./TSTypeAliasTypeAnnotation";
+import TSTypeAlias from "./TSTypeAlias";
 import JSExportDefaultDeclaration from "./JSExportDefaultDeclaration";
 import JSExportLocalDeclaration from "./JSExportLocalDeclaration";
 import JSImportDeclaration from "./JSImportDeclaration";
@@ -32,6 +34,7 @@ import JSObjectMethod from "./JSObjectMethod";
 import JSClassMethod from "./JSClassMethod";
 import TSDeclareMethod from "./TSDeclareMethod";
 import JSForInStatement from "./JSForInStatement";
+import TSMappedType from "./TSMappedType";
 import {AnyNode} from "@romejs/ast";
 
 export type ScopeEvaluator = {
@@ -45,6 +48,9 @@ export function createScopeEvaluator<T extends ScopeEvaluator>(obj: T): T {
 
 const evaluators: Map<string, ScopeEvaluator> = new Map();
 
+evaluators.set("TSMappedType", TSMappedType);
+evaluators.set("TSTypeParameter", TSTypeParameter);
+evaluators.set("TSTypeParameterDeclaration", TSTypeParameterDeclaration);
 evaluators.set("TSDeclareMethod", TSDeclareMethod);
 evaluators.set("TSDeclareFunction", TSDeclareFunction);
 evaluators.set("JSClassDeclaration", JSClassDeclaration);
@@ -57,7 +63,7 @@ evaluators.set("JSFunctionExpression", JSFunctionExpression);
 evaluators.set("JSImportDeclaration", JSImportDeclaration);
 evaluators.set("JSSwitchCase", JSSwitchCase);
 evaluators.set("JSSwitchStatement", JSSwitchStatement);
-evaluators.set("TSTypeAliasTypeAnnotation", TSTypeAliasTypeAnnotation);
+evaluators.set("TSTypeAlias", TSTypeAlias);
 evaluators.set("TSImportEqualsDeclaration", TSImportEqualsDeclaration);
 evaluators.set("JSArrowFunctionExpression", JSArrowFunctionExpression);
 evaluators.set("JSBlockStatement", JSBlockStatement);

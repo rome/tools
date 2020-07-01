@@ -309,7 +309,7 @@ JSRoot {
 															line: 2
 														}
 													}
-													constraint: TSTypeLiteral {
+													constraint: TSObjectTypeAnnotation {
 														loc: Object {
 															filename: "input.ts"
 															end: Object {

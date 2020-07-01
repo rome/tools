@@ -222,7 +222,7 @@ JSRoot {
 										line: 1
 									}
 								}
-								typeAnnotation: TSTypeLiteral {
+								typeAnnotation: TSObjectTypeAnnotation {
 									loc: Object {
 										filename: "input.ts"
 										end: Object {

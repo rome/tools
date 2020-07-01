@@ -8,13 +8,13 @@
 import {AnyTSTypeElement, JSNodeBase} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSTypeLiteral = JSNodeBase & {
-	type: "TSTypeLiteral";
+export type TSObjectTypeAnnotation = JSNodeBase & {
+	type: "TSObjectTypeAnnotation";
 	members: Array<AnyTSTypeElement>;
 };
 
-export const tsTypeLiteral = createBuilder<TSTypeLiteral>(
-	"TSTypeLiteral",
+export const tsObjectTypeAnnotation = createBuilder<TSObjectTypeAnnotation>(
+	"TSObjectTypeAnnotation",
 	{
 		bindingKeys: {},
 		visitorKeys: {

@@ -6,10 +6,14 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSTypeLiteral, tsTypeLiteral} from "@romejs/ast";
+import {
+	AnyNode,
+	TSObjectTypeAnnotation,
+	tsObjectTypeAnnotation,
+} from "@romejs/ast";
 
-export default function TSTypeLiteral(node: AnyNode, scope: Scope) {
-	node = tsTypeLiteral.assert(node);
+export default function TSObjectTypeAnnotation(node: AnyNode, scope: Scope) {
+	node = tsObjectTypeAnnotation.assert(node);
 	scope;
 	throw new Error("unimplemented");
 }

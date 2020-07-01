@@ -107,7 +107,7 @@ export default class Consumer {
 	hasHandledUnexpected: boolean;
 	forceDiagnosticTarget: undefined | ConsumeSourceLocationRequestTarget;
 
-	capture<T>(): {
+	capture(): {
 		consumer: Consumer;
 		definitions: Array<ConsumePropertyDefinition>;
 		diagnostics: Diagnostics;
