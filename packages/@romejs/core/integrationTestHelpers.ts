@@ -77,6 +77,7 @@ export function createIntegrationTest(
 		await createDirectory(remotePath);
 
 		const userConfig: UserConfig = {
+			configPath: undefined,
 			cachePath,
 			runtimeModulesPath: virtualModulesPath,
 			syntaxTheme: undefined,
