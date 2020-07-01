@@ -105,6 +105,7 @@ import noUselessFragment from "./react/noUselessFragment";
 import noWillUpdateSetState from "./react/noWillUpdateSetState";
 import requireRenderReturn from "./react/requireRenderReturn";
 import sortComp from "./react/sortComp";
+import stateInConstructor from "./react/stateInConstructor";
 import stylePropObject from "./react/stylePropObject";
 import voidDomElementsNoChildren from "./react/voidDomElementsNoChildren";
 import noExplicitAny from "./ts/noExplicitAny";
@@ -210,6 +211,7 @@ export const lintTransforms = [
 	noWillUpdateSetState,
 	requireRenderReturn,
 	sortComp,
+	stateInConstructor,
 	stylePropObject,
 	voidDomElementsNoChildren,
 	noExplicitAny,

@@ -194,6 +194,7 @@ type LintDiagnosticCategory =
 	| "lint/react/noWillUpdateSetState"
 	| "lint/react/requireRenderReturn"
 	| "lint/react/sortComp"
+	| "lint/react/stateInConstructor"
 	| "lint/react/stylePropObject"
 	| "lint/react/voidDomElementsNoChildren"
 	| "lint/ts/noExplicitAny"

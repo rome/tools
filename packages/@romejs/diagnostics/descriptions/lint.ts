@@ -556,6 +556,10 @@ export const lint = createDiagnosticsCategory({
 		category: "lint/react/requireRenderReturn",
 		message: "The <emphasis>render</emphasis> method on a component must return content.",
 	},
+	REACT_STATE_IN_CONSTRUCTOR: {
+		category: "lint/react/stateInConstructor",
+		message: "state should be initalised in the constructor",
+	},
 	REACT_NO_RENDER_RETURN_VALUE: {
 		category: "lint/react/noRenderReturnValue",
 		message: "Do not depend on the return value from <emphasis>ReactDOM.render()</emphasis>.",
