@@ -1,5 +1,5 @@
 ---
-title: Rome - A JavaScript toolchain
+title: Rome
 layout: layouts/base.njk
 showHero: false
 ---

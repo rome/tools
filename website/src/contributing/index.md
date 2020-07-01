@@ -1,5 +1,5 @@
 ---
-title: Contributing - Rome JavaScript toolchain
+title: Contributing
 layout: layouts/base.njk
 showHero: false
 ---

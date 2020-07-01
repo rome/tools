@@ -2,19 +2,19 @@
   <img alt="Rome, logo of an ancient Greek spartan helmet" src="https://github.com/romejs/rome/raw/main/assets/PNG/logo_transparent.png" width="700">
 </p>
 
-**Rome** is an experimental JavaScript toolchain. It includes a compiler, linter, formatter, bundler, testing framework and more. It aims to be a comprehensive tool for anything related to the processing of JavaScript source code.
+**Rome** is a linter, compiler, bundler, and more for JavaScript, HTML, and CSS. It unifies functionality that have previously been completely separate tools. We have support for JavaScript flavors such as TypeScript and JSX.
 
-**Rome** is not a collection of existing tools. All components are custom and use no third-party dependencies.
+[Babel](https://babeljs.io/), [Webpack](https://webpack.js.org/), [Jest](https://jestjs.io/), [ESLint](https://eslint.org/), and other frontend tooling have a significant overlap in responsibilities and implementation. There is value in these being a single tool.
 
-**Rome** is experimental and in active development. It's open for contributors and those interested in experimental tools. **It is not ready for production usage. The only way to use it is to build from source.**
+Building upon a shared base allows us to provide a cohesive experience for processing code, displaying errors, parallelizing work, caching, and configuration.
 
-**Rome** aims to be a replacement for many existing JavaScript tools. We will, however, offer integrations for components in other tools. For example, using the Rome compiler as a plugin for another bundler.
+**Rome** has strong conventions and we aim to have minimal configuration. By using Rome you accept the conventions we have set. Read more about our philosophy [here](/contributing/philosophy).
+
+**Rome** is maintained by a [team of contributors](/contributing/team). **Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io) and [Yarn](https://yarnpkg.com).
 
 **Rome** is [MIT licensed](LICENSE), and the project managed under the [Contributor Covenant Code of Conduct](./CODE_OF_CONDUCT.md).
 
 ## History
-
-**Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io) and [Yarn](https://yarnpkg.com).
 
 **Rome** gets its name from proverbs such as "All Roads Lead to Rome", "Rome wasn't built in a day" and "When in Rome, do as the Romans do". This refers to the expansive scope and the desire for conformity across the project. It started as a joke at the office.
 

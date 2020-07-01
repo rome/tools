@@ -1,5 +1,5 @@
 ---
-title: Team - Rome JavaScript toolchain
+title: Team
 layout: layouts/base.njk
 showHero: false
 ---

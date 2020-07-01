@@ -1,5 +1,5 @@
 ---
-title: Governance - Rome JavaScript toolchain
+title: Governance
 layout: layouts/base.njk
 showHero: false
 ---
