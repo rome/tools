@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, JSVariableDeclaration} from "@romejs/ast";
+import {NodeBaseWithComments, JSVariableDeclaration} from "@romejs/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSVariableDeclarationStatement = JSNodeBase & {
+export type JSVariableDeclarationStatement = NodeBaseWithComments & {
 	type: "JSVariableDeclarationStatement";
 	declaration: JSVariableDeclaration;
 	declare?: boolean;

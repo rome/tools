@@ -10,7 +10,7 @@ import {
 	JSExportDefaultSpecifier,
 	JSExportExternalSpecifier,
 	JSExportNamespaceSpecifier,
-	JSNodeBase,
+	NodeBaseWithComments,
 	JSStringLiteral,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
@@ -20,7 +20,7 @@ export type AnyExportExternalSpecifier =
 	| JSExportDefaultSpecifier
 	| JSExportExternalSpecifier;
 
-export type JSExportExternalDeclaration = JSNodeBase & {
+export type JSExportExternalDeclaration = NodeBaseWithComments & {
 	type: "JSExportExternalDeclaration";
 	defaultSpecifier?: JSExportDefaultSpecifier;
 	namespaceSpecifier?: JSExportNamespaceSpecifier;

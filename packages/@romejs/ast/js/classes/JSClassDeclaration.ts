@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSBindingIdentifier, JSClassHead, JSNodeBase} from "@romejs/ast";
+import {JSBindingIdentifier, JSClassHead, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSClassDeclaration = JSNodeBase & {
+export type JSClassDeclaration = NodeBaseWithComments & {
 	type: "JSClassDeclaration";
 	id: JSBindingIdentifier;
 	meta: JSClassHead;

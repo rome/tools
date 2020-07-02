@@ -1,7 +1,7 @@
-import {JSNodeBase} from "../../index";
+import {NodeBaseWithComments} from "../../index";
 import {createBuilder} from "../../utils";
 
-export type CSSFrequencyType = JSNodeBase & {
+export type CSSFrequencyType = NodeBaseWithComments & {
 	type: "CSSFrequencyType";
 };
 

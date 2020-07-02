@@ -9,13 +9,13 @@ import {
 	AnyJSExpression,
 	JSClassDeclaration,
 	JSFunctionDeclaration,
-	JSNodeBase,
+	NodeBaseWithComments,
 	TSInterfaceDeclaration,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 import {TSDeclareFunction} from "../typescript/TSDeclareFunction";
 
-export type JSExportDefaultDeclaration = JSNodeBase & {
+export type JSExportDefaultDeclaration = NodeBaseWithComments & {
 	type: "JSExportDefaultDeclaration";
 	declaration:
 		| JSFunctionDeclaration

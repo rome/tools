@@ -10,12 +10,12 @@ import {
 	JSBindingArrayPattern,
 	JSBindingIdentifier,
 	JSBindingObjectPattern,
-	JSNodeBase,
+	NodeBaseWithComments,
 	TSTypeParameterDeclaration,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSSignatureDeclarationMeta = JSNodeBase & {
+export type TSSignatureDeclarationMeta = NodeBaseWithComments & {
 	type: "TSSignatureDeclarationMeta";
 	parameters: Array<
 		JSBindingIdentifier | JSBindingObjectPattern | JSBindingArrayPattern

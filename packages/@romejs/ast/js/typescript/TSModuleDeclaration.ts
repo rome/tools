@@ -7,13 +7,13 @@
 
 import {
 	JSBindingIdentifier,
-	JSNodeBase,
+	NodeBaseWithComments,
 	JSStringLiteral,
 	TSModuleBlock,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSModuleDeclaration = JSNodeBase & {
+export type TSModuleDeclaration = NodeBaseWithComments & {
 	type: "TSModuleDeclaration";
 	id: JSBindingIdentifier | JSStringLiteral;
 	global?: boolean;

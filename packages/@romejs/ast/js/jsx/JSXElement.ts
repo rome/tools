@@ -6,7 +6,7 @@
  */
 
 import {
-	JSNodeBase,
+	NodeBaseWithComments,
 	JSXAttribute,
 	JSXExpressionContainer,
 	JSXFragment,
@@ -21,7 +21,7 @@ import {
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSXElement = JSNodeBase & {
+export type JSXElement = NodeBaseWithComments & {
 	type: "JSXElement";
 	name:
 		| JSXReferenceIdentifier

@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSBlockStatement, JSNodeBase} from "@romejs/ast";
+import {JSBlockStatement, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSDoExpression = JSNodeBase & {
+export type JSDoExpression = NodeBaseWithComments & {
 	type: "JSDoExpression";
 	body: JSBlockStatement;
 };

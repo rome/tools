@@ -7,12 +7,12 @@
 
 import {
 	AnyTSPrimary,
-	JSNodeBase,
+	NodeBaseWithComments,
 	TSSignatureDeclarationMeta,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSConstructSignatureDeclaration = JSNodeBase & {
+export type TSConstructSignatureDeclaration = NodeBaseWithComments & {
 	type: "TSConstructSignatureDeclaration";
 	meta: TSSignatureDeclarationMeta;
 	typeAnnotation?: AnyTSPrimary;

@@ -12,12 +12,12 @@ import {
 	ConstSourceType,
 	JSDirective,
 	JSInterpreterDirective,
-	JSNodeBase,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {Diagnostics} from "@romejs/diagnostics";
 import {createBuilder} from "../../utils";
 
-export type JSRoot = JSNodeBase & {
+export type JSRoot = NodeBaseWithComments & {
 	type: "JSRoot";
 	directives: Array<JSDirective>;
 	body: Array<AnyJSStatement>;

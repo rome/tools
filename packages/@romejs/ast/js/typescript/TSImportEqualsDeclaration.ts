@@ -8,11 +8,11 @@
 import {
 	AnyTSModuleReference,
 	JSBindingIdentifier,
-	JSNodeBase,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSImportEqualsDeclaration = JSNodeBase & {
+export type TSImportEqualsDeclaration = NodeBaseWithComments & {
 	type: "TSImportEqualsDeclaration";
 	id: JSBindingIdentifier;
 	moduleReference: AnyTSModuleReference;

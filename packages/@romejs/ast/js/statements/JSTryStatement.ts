@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSBlockStatement, JSCatchClause, JSNodeBase} from "@romejs/ast";
+import {JSBlockStatement, JSCatchClause, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSTryStatement = JSNodeBase & {
+export type JSTryStatement = NodeBaseWithComments & {
 	type: "JSTryStatement";
 	block: JSBlockStatement;
 	handler: undefined | JSCatchClause;

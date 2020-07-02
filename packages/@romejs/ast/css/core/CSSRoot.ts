@@ -1,7 +1,7 @@
-import {JSNodeBase} from "../../index";
+import {NodeBaseWithComments} from "../../index";
 import {createBuilder} from "../../utils";
 
-export type CSSRoot = JSNodeBase & {
+export type CSSRoot = NodeBaseWithComments & {
 	type: "CSSRoot";
 };
 

@@ -9,11 +9,11 @@ import {
 	JSBindingIdentifier,
 	JSBlockStatement,
 	JSFunctionHead,
-	JSNodeBase,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSFunctionExpression = JSNodeBase & {
+export type JSFunctionExpression = NodeBaseWithComments & {
 	type: "JSFunctionExpression";
 	id?: JSBindingIdentifier;
 	head: JSFunctionHead;

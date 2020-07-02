@@ -8,12 +8,12 @@
 import {
 	AnyJSExpression,
 	JSComputedPropertyKey,
-	JSNodeBase,
+	NodeBaseWithComments,
 	JSStaticPropertyKey,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSObjectProperty = JSNodeBase & {
+export type JSObjectProperty = NodeBaseWithComments & {
 	type: "JSObjectProperty";
 	key: JSStaticPropertyKey | JSComputedPropertyKey;
 	value: AnyJSExpression;

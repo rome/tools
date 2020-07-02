@@ -1,7 +1,7 @@
-import {JSNodeBase} from "../../index";
+import {NodeBaseWithComments} from "../../index";
 import {createBuilder} from "../../utils";
 
-export type CSSKeyframesAtStatement = JSNodeBase & {
+export type CSSKeyframesAtStatement = NodeBaseWithComments & {
 	type: "CSSKeyframesAtStatement";
 };
 

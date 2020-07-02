@@ -10,11 +10,11 @@ import {
 	AnyJSObjectPropertyKey,
 	AnyTSPrimary,
 	JSClassPropertyMeta,
-	JSNodeBase,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSClassProperty = JSNodeBase & {
+export type JSClassProperty = NodeBaseWithComments & {
 	type: "JSClassProperty";
 	key: AnyJSObjectPropertyKey;
 	meta: JSClassPropertyMeta;

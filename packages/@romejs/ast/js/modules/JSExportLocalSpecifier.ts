@@ -8,12 +8,12 @@
 import {
 	ConstExportModuleKind,
 	JSIdentifier,
-	JSNodeBase,
+	NodeBaseWithComments,
 	JSReferenceIdentifier,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSExportLocalSpecifier = JSNodeBase & {
+export type JSExportLocalSpecifier = NodeBaseWithComments & {
 	type: "JSExportLocalSpecifier";
 	exported: JSIdentifier;
 	local: JSReferenceIdentifier;

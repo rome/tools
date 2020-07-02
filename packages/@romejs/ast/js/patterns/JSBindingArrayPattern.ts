@@ -7,12 +7,12 @@
 	AnyJSParamBindingPattern,
 	AnyJSTargetBindingPattern,
 	JSArrayHole,
-	JSNodeBase,
+	NodeBaseWithComments,
 	JSPatternMeta,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSBindingArrayPattern = JSNodeBase & {
+export type JSBindingArrayPattern = NodeBaseWithComments & {
 	type: "JSBindingArrayPattern";
 	meta?: JSPatternMeta;
 	elements: Array<JSArrayHole | AnyJSParamBindingPattern>;

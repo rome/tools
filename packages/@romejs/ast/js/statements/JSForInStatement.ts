@@ -9,12 +9,12 @@ import {
 	AnyJSExpression,
 	AnyJSStatement,
 	AnyJSTargetAssignmentPattern,
-	JSNodeBase,
+	NodeBaseWithComments,
 	JSVariableDeclaration,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSForInStatement = JSNodeBase & {
+export type JSForInStatement = NodeBaseWithComments & {
 	type: "JSForInStatement";
 	left: JSVariableDeclaration | AnyJSTargetAssignmentPattern;
 	right: AnyJSExpression;

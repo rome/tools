@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSStatement, JSNodeBase} from "@romejs/ast";
+import {AnyJSStatement, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSModuleBlock = JSNodeBase & {
+export type TSModuleBlock = NodeBaseWithComments & {
 	type: "TSModuleBlock";
 	body: Array<AnyJSStatement>;
 };

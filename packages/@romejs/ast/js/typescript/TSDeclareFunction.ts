@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSBindingIdentifier, JSFunctionHead, JSNodeBase} from "@romejs/ast";
+import {JSBindingIdentifier, JSFunctionHead, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSDeclareFunction = JSNodeBase & {
+export type TSDeclareFunction = NodeBaseWithComments & {
 	type: "TSDeclareFunction";
 	id: JSBindingIdentifier;
 	head: JSFunctionHead;

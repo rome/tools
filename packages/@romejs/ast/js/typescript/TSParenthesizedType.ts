@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSPrimary, JSNodeBase} from "@romejs/ast";
+import {AnyTSPrimary, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSParenthesizedType = JSNodeBase & {
+export type TSParenthesizedType = NodeBaseWithComments & {
 	type: "TSParenthesizedType";
 	typeAnnotation: AnyTSPrimary;
 };

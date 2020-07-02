@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from "@romejs/ast";
+import {NodeBaseWithComments} from "@romejs/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSNumericLiteral = JSNodeBase & {
+export type JSNumericLiteral = NodeBaseWithComments & {
 	type: "JSNumericLiteral";
 	value: number;
 	format?: "octal" | "binary" | "hex";

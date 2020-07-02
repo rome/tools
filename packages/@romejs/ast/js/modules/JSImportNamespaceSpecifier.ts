@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSImportSpecifierLocal, JSNodeBase} from "@romejs/ast";
+import {JSImportSpecifierLocal, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSImportNamespaceSpecifier = JSNodeBase & {
+export type JSImportNamespaceSpecifier = NodeBaseWithComments & {
 	type: "JSImportNamespaceSpecifier";
 	local: JSImportSpecifierLocal;
 };

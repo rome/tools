@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSPrimary, JSNodeBase} from "@romejs/ast";
+import {AnyTSPrimary, NodeBaseWithComments} from "@romejs/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSPatternMeta = JSNodeBase & {
+export type JSPatternMeta = NodeBaseWithComments & {
 	type: "JSPatternMeta";
 	typeAnnotation?: AnyTSPrimary;
 	optional?: boolean;

@@ -10,7 +10,7 @@ import {
 	JSClassDeclaration,
 	JSExportLocalSpecifier,
 	JSFunctionDeclaration,
-	JSNodeBase,
+	NodeBaseWithComments,
 	JSVariableDeclarationStatement,
 	TSDeclareFunction,
 	TSEnumDeclaration,
@@ -20,7 +20,7 @@ import {
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSExportLocalDeclaration = JSNodeBase & {
+export type JSExportLocalDeclaration = NodeBaseWithComments & {
 	type: "JSExportLocalDeclaration";
 	declaration?:
 		| undefined

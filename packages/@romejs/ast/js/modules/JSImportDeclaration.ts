@@ -10,7 +10,7 @@ import {
 	JSImportDefaultSpecifier,
 	JSImportNamespaceSpecifier,
 	JSImportSpecifier,
-	JSNodeBase,
+	NodeBaseWithComments,
 	JSStringLiteral,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
@@ -20,7 +20,7 @@ export type AnyImportSpecifier =
 	| JSImportNamespaceSpecifier
 	| JSImportSpecifier;
 
-export type JSImportDeclaration = JSNodeBase & {
+export type JSImportDeclaration = NodeBaseWithComments & {
 	type: "JSImportDeclaration";
 	defaultSpecifier?: JSImportDefaultSpecifier;
 	namespaceSpecifier?: JSImportNamespaceSpecifier;

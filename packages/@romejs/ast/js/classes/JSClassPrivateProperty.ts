@@ -9,12 +9,12 @@ import {
 	AnyJSExpression,
 	AnyTSPrimary,
 	JSClassPropertyMeta,
-	JSNodeBase,
+	NodeBaseWithComments,
 	JSPrivateName,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSClassPrivateProperty = JSNodeBase & {
+export type JSClassPrivateProperty = NodeBaseWithComments & {
 	type: "JSClassPrivateProperty";
 	key: JSPrivateName;
 	meta: JSClassPropertyMeta;

@@ -8,12 +8,12 @@
 import {
 	AnyJSExpression,
 	JSArrayHole,
-	JSNodeBase,
+	NodeBaseWithComments,
 	JSSpreadElement,
 } from "@romejs/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSArrayExpression = JSNodeBase & {
+export type JSArrayExpression = NodeBaseWithComments & {
 	type: "JSArrayExpression";
 	elements: Array<JSArrayHole | AnyJSExpression | JSSpreadElement>;
 };

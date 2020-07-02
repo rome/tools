@@ -1,7 +1,7 @@
-import {JSNodeBase} from "../../index";
+import {NodeBaseWithComments} from "../../index";
 import {createBuilder} from "../../utils";
 
-export type CSSDimensionType = JSNodeBase & {
+export type CSSDimensionType = NodeBaseWithComments & {
 	type: "CSSDimensionType";
 };
 

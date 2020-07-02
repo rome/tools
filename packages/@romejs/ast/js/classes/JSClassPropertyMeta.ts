@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ConstTSAccessibility, JSNodeBase} from "@romejs/ast";
+import {ConstTSAccessibility, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSClassPropertyMeta = JSNodeBase & {
+export type JSClassPropertyMeta = NodeBaseWithComments & {
 	type: "JSClassPropertyMeta";
 	static?: boolean;
 	accessibility?: ConstTSAccessibility;

@@ -7,14 +7,14 @@
 
 import {
 	AnyJSExpression,
-	JSNodeBase,
+	NodeBaseWithComments,
 	JSSpreadElement,
 	JSSuper,
 	TSTypeParameterInstantiation,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSNewExpression = JSNodeBase & {
+export type JSNewExpression = NodeBaseWithComments & {
 	type: "JSNewExpression";
 	callee: AnyJSExpression | JSSuper;
 	arguments: Array<AnyJSExpression | JSSpreadElement>;

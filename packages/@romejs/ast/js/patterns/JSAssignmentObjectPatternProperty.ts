@@ -8,11 +8,11 @@
 import {
 	AnyJSAssignmentPattern,
 	AnyJSObjectPropertyKey,
-	JSNodeBase,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSAssignmentObjectPatternProperty = JSNodeBase & {
+export type JSAssignmentObjectPatternProperty = NodeBaseWithComments & {
 	type: "JSAssignmentObjectPatternProperty";
 	key: AnyJSObjectPropertyKey;
 	value: AnyJSAssignmentPattern;

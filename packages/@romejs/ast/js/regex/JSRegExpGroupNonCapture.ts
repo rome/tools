@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSRegExpExpression, JSNodeBase} from "@romejs/ast";
+import {AnyJSRegExpExpression, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSRegExpGroupNonCapture = JSNodeBase & {
+export type JSRegExpGroupNonCapture = NodeBaseWithComments & {
 	type: "JSRegExpGroupNonCapture";
 	expression: AnyJSRegExpExpression;
 	kind?:

@@ -9,12 +9,12 @@ import {
 	JSBlockStatement,
 	JSClassPropertyMeta,
 	JSFunctionHead,
-	JSNodeBase,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 import {AnyJSObjectPropertyKey} from "../unions";
 
-export type JSClassMethod = JSNodeBase & {
+export type JSClassMethod = NodeBaseWithComments & {
 	type: "JSClassMethod";
 	meta: JSClassPropertyMeta;
 	key: AnyJSObjectPropertyKey;

@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSObjectPropertyKey, AnyTSPrimary, JSNodeBase} from "@romejs/ast";
+import {AnyJSObjectPropertyKey, AnyTSPrimary, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSPropertySignature = JSNodeBase & {
+export type TSPropertySignature = NodeBaseWithComments & {
 	type: "TSPropertySignature";
 	key: AnyJSObjectPropertyKey;
 	optional?: boolean;

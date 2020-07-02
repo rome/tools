@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from "@romejs/ast";
+import {NodeBaseWithComments} from "@romejs/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSAssignmentIdentifier = JSNodeBase & {
+export type JSAssignmentIdentifier = NodeBaseWithComments & {
 	type: "JSAssignmentIdentifier";
 	name: string;
 	definite?: boolean;

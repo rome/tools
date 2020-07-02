@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, TSTypeParameter} from "@romejs/ast";
+import {NodeBaseWithComments, TSTypeParameter} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSInferType = JSNodeBase & {
+export type TSInferType = NodeBaseWithComments & {
 	type: "TSInferType";
 	typeParameter: TSTypeParameter;
 };

@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSBindingIdentifier, JSNodeBase} from "@romejs/ast";
+import {JSBindingIdentifier, NodeBaseWithComments} from "@romejs/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSImportSpecifierLocal = JSNodeBase & {
+export type JSImportSpecifierLocal = NodeBaseWithComments & {
 	type: "JSImportSpecifierLocal";
 	name: JSBindingIdentifier;
 };

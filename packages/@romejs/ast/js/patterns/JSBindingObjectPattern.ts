@@ -8,12 +8,12 @@
 import {
 	JSBindingIdentifier,
 	JSBindingObjectPatternProperty,
-	JSNodeBase,
+	NodeBaseWithComments,
 	JSPatternMeta,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSBindingObjectPattern = JSNodeBase & {
+export type JSBindingObjectPattern = NodeBaseWithComments & {
 	meta?: JSPatternMeta;
 	type: "JSBindingObjectPattern";
 	properties: Array<JSBindingObjectPatternProperty>;

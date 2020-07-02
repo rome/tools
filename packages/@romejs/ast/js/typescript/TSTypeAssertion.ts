@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSExpression, AnyTSPrimary, JSNodeBase} from "@romejs/ast";
+import {AnyJSExpression, AnyTSPrimary, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSTypeAssertion = JSNodeBase & {
+export type TSTypeAssertion = NodeBaseWithComments & {
 	type: "TSTypeAssertion";
 	expression: AnyJSExpression;
 	typeAnnotation: AnyTSPrimary;

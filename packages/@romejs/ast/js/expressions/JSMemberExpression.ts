@@ -8,13 +8,13 @@
 import {
 	AnyJSExpression,
 	JSComputedMemberProperty,
-	JSNodeBase,
+	NodeBaseWithComments,
 	JSStaticMemberProperty,
 	JSSuper,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSMemberExpression = JSNodeBase & {
+export type JSMemberExpression = NodeBaseWithComments & {
 	type: "JSMemberExpression";
 	object: AnyJSExpression | JSSuper;
 	property: JSStaticMemberProperty | JSComputedMemberProperty;

@@ -7,12 +7,12 @@
 
 import {
 	AnyTSEntityName,
-	JSNodeBase,
+	NodeBaseWithComments,
 	TSTypeParameterInstantiation,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSExpressionWithTypeArguments = JSNodeBase & {
+export type TSExpressionWithTypeArguments = NodeBaseWithComments & {
 	type: "TSExpressionWithTypeArguments";
 	expression: AnyTSEntityName;
 	typeParameters?: TSTypeParameterInstantiation;

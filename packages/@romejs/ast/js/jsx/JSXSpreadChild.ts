@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSExpression, JSNodeBase} from "@romejs/ast";
+import {AnyJSExpression, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSXSpreadChild = JSNodeBase & {
+export type JSXSpreadChild = NodeBaseWithComments & {
 	type: "JSXSpreadChild";
 	expression: AnyJSExpression;
 };

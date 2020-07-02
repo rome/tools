@@ -1,7 +1,7 @@
-import {JSNodeBase} from "../../index";
+import {NodeBaseWithComments} from "../../index";
 import {createBuilder} from "../../utils";
 
-export type CSSSelectorChain = JSNodeBase & {
+export type CSSSelectorChain = NodeBaseWithComments & {
 	type: "CSSSelectorChain";
 };
 

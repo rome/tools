@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSExpression, JSNodeBase, JSTemplateElement} from "@romejs/ast";
+import {AnyJSExpression, NodeBaseWithComments, JSTemplateElement} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSTemplateLiteral = JSNodeBase & {
+export type JSTemplateLiteral = NodeBaseWithComments & {
 	type: "JSTemplateLiteral";
 	quasis: Array<JSTemplateElement>;
 	expressions: Array<AnyJSExpression>;

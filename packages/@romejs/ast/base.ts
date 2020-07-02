@@ -7,7 +7,7 @@
 
 import {NodeBase} from "@romejs/parser-core";
 
-export type JSNodeBase = NodeBase & {
+export type NodeBaseWithComments = NodeBase & {
 	leadingComments?: Array<string>;
 	trailingComments?: Array<string>;
 	innerComments?: Array<string>;

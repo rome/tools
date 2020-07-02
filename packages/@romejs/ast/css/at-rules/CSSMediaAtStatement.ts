@@ -1,7 +1,7 @@
-import {JSNodeBase} from "../../index";
+import {NodeBaseWithComments} from "../../index";
 import {createBuilder} from "../../utils";
 
-export type CSSMediaAtStatement = JSNodeBase & {
+export type CSSMediaAtStatement = NodeBaseWithComments & {
 	type: "CSSMediaAtStatement";
 };
 

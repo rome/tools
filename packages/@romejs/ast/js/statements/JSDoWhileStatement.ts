@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSExpression, AnyJSStatement, JSNodeBase} from "@romejs/ast";
+import {AnyJSExpression, AnyJSStatement, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSDoWhileStatement = JSNodeBase & {
+export type JSDoWhileStatement = NodeBaseWithComments & {
 	type: "JSDoWhileStatement";
 	body: AnyJSStatement;
 	test: AnyJSExpression;

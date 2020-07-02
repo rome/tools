@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSBindingIdentifier, JSNodeBase, TSEnumMember} from "@romejs/ast";
+import {JSBindingIdentifier, NodeBaseWithComments, TSEnumMember} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSEnumDeclaration = JSNodeBase & {
+export type TSEnumDeclaration = NodeBaseWithComments & {
 	type: "TSEnumDeclaration";
 	id: JSBindingIdentifier;
 	const?: boolean;

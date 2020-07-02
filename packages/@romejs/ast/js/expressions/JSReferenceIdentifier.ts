@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, JSPatternMeta} from "@romejs/ast";
+import {NodeBaseWithComments, JSPatternMeta} from "@romejs/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSReferenceIdentifier = JSNodeBase & {
+export type JSReferenceIdentifier = NodeBaseWithComments & {
 	type: "JSReferenceIdentifier";
 	name: string;
 	definite?: boolean;

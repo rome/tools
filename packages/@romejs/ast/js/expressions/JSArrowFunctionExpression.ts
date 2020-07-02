@@ -9,11 +9,11 @@ import {
 	AnyJSExpression,
 	JSBlockStatement,
 	JSFunctionHead,
-	JSNodeBase,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSArrowFunctionExpression = JSNodeBase & {
+export type JSArrowFunctionExpression = NodeBaseWithComments & {
 	type: "JSArrowFunctionExpression";
 	head: JSFunctionHead;
 	body: JSBlockStatement | AnyJSExpression;

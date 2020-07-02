@@ -8,12 +8,12 @@
 import {
 	AnyJSExpression,
 	AnyJSTargetBindingPattern,
-	JSNodeBase,
+	NodeBaseWithComments,
 	JSPatternMeta,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSBindingAssignmentPattern = JSNodeBase & {
+export type JSBindingAssignmentPattern = NodeBaseWithComments & {
 	type: "JSBindingAssignmentPattern";
 	left: AnyJSTargetBindingPattern;
 	right: AnyJSExpression;

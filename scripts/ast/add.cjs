@@ -29,10 +29,10 @@ if (language === undefined || nodeType === undefined || category === undefined) 
 const builderName = getBuilderName(nodeType);
 
 // Write AST def
-let file = `import {JSNodeBase} from "../../index";
+let file = `import {NodeBaseWithComments} from "../../index";
 import {createBuilder} from "../../utils";
 
-export type ${nodeType} = JSNodeBase & {
+export type ${nodeType} = NodeBaseWithComments & {
 	type: "${nodeType}";
 };
 

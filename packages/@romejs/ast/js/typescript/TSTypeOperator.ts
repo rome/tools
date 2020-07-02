@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSPrimary, JSNodeBase} from "@romejs/ast";
+import {AnyTSPrimary, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSTypeOperator = JSNodeBase & {
+export type TSTypeOperator = NodeBaseWithComments & {
 	type: "TSTypeOperator";
 	operator: "keyof" | "unique" | "readonly";
 	typeAnnotation: AnyTSPrimary;

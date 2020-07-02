@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ConstExportModuleKind, JSNodeBase, JSStringLiteral} from "@romejs/ast";
+import {ConstExportModuleKind, NodeBaseWithComments, JSStringLiteral} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSExportAllDeclaration = JSNodeBase & {
+export type JSExportAllDeclaration = NodeBaseWithComments & {
 	type: "JSExportAllDeclaration";
 	source: JSStringLiteral;
 	exportKind?: ConstExportModuleKind;

@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ConstExportModuleKind, JSIdentifier, JSNodeBase} from "@romejs/ast";
+import {ConstExportModuleKind, JSIdentifier, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSExportExternalSpecifier = JSNodeBase & {
+export type JSExportExternalSpecifier = NodeBaseWithComments & {
 	type: "JSExportExternalSpecifier";
 	exported: JSIdentifier;
 	local: JSIdentifier;

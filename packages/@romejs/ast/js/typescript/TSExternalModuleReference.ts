@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, JSStringLiteral} from "@romejs/ast";
+import {NodeBaseWithComments, JSStringLiteral} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSExternalModuleReference = JSNodeBase & {
+export type TSExternalModuleReference = NodeBaseWithComments & {
 	type: "TSExternalModuleReference";
 	expression: JSStringLiteral;
 };

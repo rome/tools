@@ -8,12 +8,12 @@
 import {
 	JSAssignmentIdentifier,
 	JSAssignmentObjectPatternProperty,
-	JSNodeBase,
+	NodeBaseWithComments,
 	JSPatternMeta,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSAssignmentObjectPattern = JSNodeBase & {
+export type JSAssignmentObjectPattern = NodeBaseWithComments & {
 	type: "JSAssignmentObjectPattern";
 	meta?: JSPatternMeta;
 	properties: Array<JSAssignmentObjectPatternProperty>;

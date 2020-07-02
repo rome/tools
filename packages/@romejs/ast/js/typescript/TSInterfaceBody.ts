@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSTypeElement, JSNodeBase} from "@romejs/ast";
+import {AnyTSTypeElement, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSInterfaceBody = JSNodeBase & {
+export type TSInterfaceBody = NodeBaseWithComments & {
 	type: "TSInterfaceBody";
 	body: Array<AnyTSTypeElement>;
 };

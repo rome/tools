@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSTypeElement, JSNodeBase} from "@romejs/ast";
+import {AnyTSTypeElement, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSObjectTypeAnnotation = JSNodeBase & {
+export type TSObjectTypeAnnotation = NodeBaseWithComments & {
 	type: "TSObjectTypeAnnotation";
 	members: Array<AnyTSTypeElement>;
 };

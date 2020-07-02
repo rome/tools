@@ -7,14 +7,14 @@
 
 import {
 	JSBindingIdentifier,
-	JSNodeBase,
+	NodeBaseWithComments,
 	TSExpressionWithTypeArguments,
 	TSInterfaceBody,
 	TSTypeParameterDeclaration,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSInterfaceDeclaration = JSNodeBase & {
+export type TSInterfaceDeclaration = NodeBaseWithComments & {
 	type: "TSInterfaceDeclaration";
 	id: JSBindingIdentifier;
 	body: TSInterfaceBody;

@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSIdentifier, JSNodeBase} from "@romejs/ast";
+import {JSIdentifier, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSExportNamespaceSpecifier = JSNodeBase & {
+export type JSExportNamespaceSpecifier = NodeBaseWithComments & {
 	type: "JSExportNamespaceSpecifier";
 	exported: JSIdentifier;
 };
