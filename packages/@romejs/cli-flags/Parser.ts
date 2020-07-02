@@ -432,7 +432,7 @@ export default class Parser<T> {
 
 			this.currentCommand = undefined;
 
-			if (this.opts.commandRequired) {
+			if (this.opts.commandRequired && !shouldShowHelp) {
 				this.commandRequired(definedCommand !== undefined, flagsConsumer);
 			}
 
