@@ -7,8 +7,8 @@
 
 import {
 	AnyJSRegExpExpression,
-	NodeBaseWithComments,
 	JSRegExpSubExpression,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 

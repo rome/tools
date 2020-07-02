@@ -9,8 +9,8 @@ import {
 	AnyJSExpression,
 	AnyTSPrimary,
 	JSClassPropertyMeta,
-	NodeBaseWithComments,
 	JSPrivateName,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 

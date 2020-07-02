@@ -7,8 +7,8 @@
 	AnyJSAssignmentPattern,
 	AnyJSTargetAssignmentPattern,
 	JSArrayHole,
-	NodeBaseWithComments,
 	JSPatternMeta,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 

@@ -6,9 +6,9 @@
  */
 
 import {
-	NodeBaseWithComments,
 	JSRegExpAlternation,
 	JSRegExpSubExpression,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 

@@ -1,4 +1,8 @@
-import {AnyTSPrimary, JSBindingIdentifier, NodeBaseWithComments} from "../../index";
+import {
+	AnyTSPrimary,
+	JSBindingIdentifier,
+	NodeBaseWithComments,
+} from "../../index";
 import {createBuilder} from "../../utils";
 
 export type TSTupleElement = NodeBaseWithComments & {

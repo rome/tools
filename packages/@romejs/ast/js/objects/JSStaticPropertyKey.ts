@@ -7,10 +7,10 @@
 
 import {
 	JSIdentifier,
-	NodeBaseWithComments,
 	JSNumericLiteral,
 	JSPrivateName,
 	JSStringLiteral,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createQuickBuilder} from "../../utils";
 

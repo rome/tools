@@ -8,8 +8,8 @@
 import {
 	AnyJSExpression,
 	AnyJSStatement,
-	NodeBaseWithComments,
 	JSVariableDeclaration,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 

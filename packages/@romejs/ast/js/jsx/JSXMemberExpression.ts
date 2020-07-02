@@ -6,10 +6,10 @@
  */
 
 import {
-	NodeBaseWithComments,
 	JSXIdentifier,
 	JSXNamespacedName,
 	JSXReferenceIdentifier,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 

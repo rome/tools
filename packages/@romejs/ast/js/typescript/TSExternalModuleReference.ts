@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {NodeBaseWithComments, JSStringLiteral} from "@romejs/ast";
+import {JSStringLiteral, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
 export type TSExternalModuleReference = NodeBaseWithComments & {

@@ -8,8 +8,8 @@
 import {
 	AnyJSExpression,
 	AnyTSPrimary,
-	NodeBaseWithComments,
 	JSSpreadElement,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 

@@ -9,8 +9,8 @@ import {
 	AnyJSExpression,
 	AnyJSStatement,
 	AnyJSTargetAssignmentPattern,
-	NodeBaseWithComments,
 	JSVariableDeclaration,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 

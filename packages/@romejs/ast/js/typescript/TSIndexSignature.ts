@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSPrimary, JSBindingIdentifier, NodeBaseWithComments} from "@romejs/ast";
+import {
+	AnyTSPrimary,
+	JSBindingIdentifier,
+	NodeBaseWithComments,
+} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
 export type TSIndexSignature = NodeBaseWithComments & {

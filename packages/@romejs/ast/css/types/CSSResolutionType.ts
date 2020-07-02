@@ -3,6 +3,7 @@ import {createBuilder} from "../../utils";
 
 export type CSSResolutionType = NodeBaseWithComments & {
 	type: "CSSResolutionType";
+	// TODO
 };
 
 export const cssResolutionType = createBuilder<CSSResolutionType>(

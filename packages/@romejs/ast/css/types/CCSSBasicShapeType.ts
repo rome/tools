@@ -3,6 +3,7 @@ import {createBuilder} from "../../utils";
 
 export type CCSSBasicShapeType = NodeBaseWithComments & {
 	type: "CCSSBasicShapeType";
+	// TODO
 };
 
 export const ccssBasicShapeType = createBuilder<CCSSBasicShapeType>(

@@ -56,6 +56,9 @@ builders.set("CSSIdentifierType", CSSIdentifierType);
 import CSSImageType from "./css/types/CSSImageType";
 builders.set("CSSImageType", CSSImageType);
 
+import CSSImportAtStatement from "./css/at-rules/CSSImportAtStatement";
+builders.set("CSSImportAtStatement", CSSImportAtStatement);
+
 import CSSIntegerType from "./css/types/CSSIntegerType";
 builders.set("CSSIntegerType", CSSIntegerType);
 
@@ -157,9 +160,6 @@ builders.set("CSSTransformFunctionType", CSSTransformFunctionType);
 
 import CSSURLType from "./css/types/CSSURLType";
 builders.set("CSSURLType", CSSURLType);
-
-import CSSURLTypeAtStatement from "./css/at-rules/CSSURLTypeAtStatement";
-builders.set("CSSURLTypeAtStatement", CSSURLTypeAtStatement);
 
 import CSSViewportAtStatement from "./css/at-rules/CSSViewportAtStatement";
 builders.set("CSSViewportAtStatement", CSSViewportAtStatement);

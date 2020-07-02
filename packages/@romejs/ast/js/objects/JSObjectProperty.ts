@@ -8,8 +8,8 @@
 import {
 	AnyJSExpression,
 	JSComputedPropertyKey,
-	NodeBaseWithComments,
 	JSStaticPropertyKey,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 

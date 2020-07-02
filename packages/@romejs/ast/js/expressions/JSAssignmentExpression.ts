@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSAssignmentPattern, AnyJSExpression, NodeBaseWithComments} from "@romejs/ast";
+import {
+	AnyJSAssignmentPattern,
+	AnyJSExpression,
+	NodeBaseWithComments,
+} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
 export type JSAssignmentExpression = NodeBaseWithComments & {

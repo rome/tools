@@ -10,8 +10,8 @@ import {
 	JSExportDefaultSpecifier,
 	JSExportExternalSpecifier,
 	JSExportNamespaceSpecifier,
-	NodeBaseWithComments,
 	JSStringLiteral,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 

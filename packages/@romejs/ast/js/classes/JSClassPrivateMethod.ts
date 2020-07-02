@@ -10,8 +10,8 @@ import {
 	JSClassMethodKind,
 	JSClassPropertyMeta,
 	JSFunctionHead,
-	NodeBaseWithComments,
 	JSPrivateName,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 

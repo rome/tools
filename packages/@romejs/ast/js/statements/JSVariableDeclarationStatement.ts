@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {NodeBaseWithComments, JSVariableDeclaration} from "@romejs/ast";
+import {JSVariableDeclaration, NodeBaseWithComments} from "@romejs/ast";
 import {createQuickBuilder} from "../../utils";
 
 export type JSVariableDeclarationStatement = NodeBaseWithComments & {

@@ -6,7 +6,6 @@
  */
 
 import {
-	NodeBaseWithComments,
 	JSXAttribute,
 	JSXExpressionContainer,
 	JSXFragment,
@@ -17,6 +16,7 @@ import {
 	JSXSpreadAttribute,
 	JSXSpreadChild,
 	JSXText,
+	NodeBaseWithComments,
 	TSTypeParameterInstantiation,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";

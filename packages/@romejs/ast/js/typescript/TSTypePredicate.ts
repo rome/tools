@@ -5,7 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSPrimary, JSIdentifier, NodeBaseWithComments, TSThisType} from "@romejs/ast";
+import {
+	AnyTSPrimary,
+	JSIdentifier,
+	NodeBaseWithComments,
+	TSThisType,
+} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
 export type TSTypePredicate = NodeBaseWithComments & {

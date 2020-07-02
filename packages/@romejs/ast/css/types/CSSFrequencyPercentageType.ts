@@ -3,6 +3,7 @@ import {createBuilder} from "../../utils";
 
 export type CSSFrequencyPercentageType = NodeBaseWithComments & {
 	type: "CSSFrequencyPercentageType";
+	// TODO
 };
 
 export const cssFrequencyPercentageType = createBuilder<CSSFrequencyPercentageType>(

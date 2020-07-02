@@ -7,8 +7,8 @@
 
 import {
 	JSBindingIdentifier,
-	NodeBaseWithComments,
 	JSStringLiteral,
+	NodeBaseWithComments,
 	TSModuleBlock,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";

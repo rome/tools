@@ -8,9 +8,9 @@
 import {
 	AnyJSExpression,
 	JSComputedMemberProperty,
-	NodeBaseWithComments,
 	JSStaticMemberProperty,
 	JSSuper,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 

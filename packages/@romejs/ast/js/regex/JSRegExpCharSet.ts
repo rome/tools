@@ -7,8 +7,8 @@
 
 import {
 	AnyJSRegExpEscapedCharacter,
-	NodeBaseWithComments,
 	JSRegExpCharSetRange,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 

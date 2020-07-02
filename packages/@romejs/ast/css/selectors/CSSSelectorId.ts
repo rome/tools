@@ -1,14 +1,18 @@
-import {NodeBaseWithComments} from "../../index";
+import {CSSIdentifierType, NodeBaseWithComments} from "../../index";
 import {createBuilder} from "../../utils";
 
+// #foo
 export type CSSSelectorId = NodeBaseWithComments & {
 	type: "CSSSelectorId";
+	id: CSSIdentifierType;
 };
 
 export const cssSelectorId = createBuilder<CSSSelectorId>(
 	"CSSSelectorId",
 	{
 		bindingKeys: {},
-		visitorKeys: {},
+		visitorKeys: {
+			id: true,
+		},
 	},
 );

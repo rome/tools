@@ -8,8 +8,8 @@
 import {
 	AnyJSExpression,
 	AnyJSTargetAssignmentPattern,
-	NodeBaseWithComments,
 	JSPatternMeta,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 

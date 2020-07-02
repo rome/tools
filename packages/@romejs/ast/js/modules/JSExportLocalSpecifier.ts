@@ -8,8 +8,8 @@
 import {
 	ConstExportModuleKind,
 	JSIdentifier,
-	NodeBaseWithComments,
 	JSReferenceIdentifier,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 

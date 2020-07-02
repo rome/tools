@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, NodeBaseWithComments, MOCK_PROGRAM} from "@romejs/ast";
+import {AnyNode, MOCK_PROGRAM, NodeBaseWithComments} from "@romejs/ast";
 import {createDefaultProjectConfig} from "@romejs/project";
 import {CompilerContext, Path, TransformVisitors} from "@romejs/compiler";
 import {SourceLocation} from "@romejs/parser-core";

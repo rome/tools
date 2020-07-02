@@ -3,6 +3,7 @@ import {createBuilder} from "../../utils";
 
 export type CSSAnglePercentageType = NodeBaseWithComments & {
 	type: "CSSAnglePercentageType";
+	// TODO
 };
 
 export const cssAnglePercentageType = createBuilder<CSSAnglePercentageType>(

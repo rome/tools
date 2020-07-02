@@ -3,6 +3,7 @@ import {createBuilder} from "../../utils";
 
 export type CSSLengthPercentageType = NodeBaseWithComments & {
 	type: "CSSLengthPercentageType";
+	// TODO
 };
 
 export const cssLengthPercentageType = createBuilder<CSSLengthPercentageType>(
