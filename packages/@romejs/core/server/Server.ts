@@ -481,6 +481,10 @@ export default class Server {
 		// We should remove everything that has an external dependency like a socket or process
 		await this.endEvent.callOptional();
 		this.workerManager.end();
+
+		if (this.options.dedicated) {
+			process.exit();
+		}
 	}
 
 	async attachToBridge(bridge: ServerBridge): Promise<ServerClient> {

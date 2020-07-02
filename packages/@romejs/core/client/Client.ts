@@ -67,6 +67,7 @@ type BridgeStatus = BridgeStatusDedicated | BridgeStatusLocal;
 type BridgeStatusDedicated = {
 	bridge: ServerBridge;
 	dedicated: true;
+	socket: net.Socket;
 };
 
 type BridgeStatusLocal = {
@@ -443,24 +444,36 @@ export default class Client {
 		return this.bridgeStatus;
 	}
 
-	async end() {
-		await this.endEvent.callOptional();
-
+	async shutdownServer() {
 		const status = this.bridgeStatus;
-		if (status !== undefined) {
-			if (status.bridge.alive) {
-				try {
-					await status.bridge.endServer.call();
-				} catch (err) {
-					// Swallow BridgeErrors since we expect one to be emitted as the endServer call will be an unanswered request
-					// when the server ends all client sockets
-					if (!(err instanceof BridgeError)) {
-						throw err;
-					}
+		if (status !== undefined && status.bridge.alive) {
+			try {
+				await status.bridge.endServer.call();
+			} catch (err) {
+				// Swallow BridgeErrors since we expect one to be emitted as the endServer call will be an unanswered request
+				// when the server ends all client sockets
+				if (!(err instanceof BridgeError)) {
+					throw err;
 				}
 			}
-			this.bridgeStatus = undefined;
 		}
+
+		await this.end();
+	}
+
+	async end() {
+		await this.endEvent.callOptional();
+		const status = this.bridgeStatus;
+
+		if (status !== undefined && status.bridge.alive) {
+			if (status.dedicated) {
+				status.socket.end();
+			} else {
+				await this.shutdownServer();
+			}
+		}
+
+		this.bridgeStatus = undefined;
 	}
 
 	async attachBridge(status: BridgeStatus) {
@@ -657,6 +670,10 @@ export default class Client {
 	}
 
 	async tryConnectToExistingDaemon(): Promise<undefined | ServerBridge> {
+		if (this.bridgeStatus !== undefined) {
+			return this.bridgeStatus.bridge;
+		}
+
 		const promise: Promise<undefined | net.Socket> = new Promise((
 			resolve,
 			reject,
@@ -698,7 +715,7 @@ export default class Client {
 				type: "server",
 			},
 		);
-		await this.attachBridge({bridge, dedicated: true});
+		await this.attachBridge({socket, bridge, dedicated: true});
 		this.reporter.success("Connected to daemon");
 		return bridge;
 	}
