@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, JSXElement} from "@romejs/ast";
+import {JSXElement, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSXFragment = JSNodeBase & {
+export type JSXFragment = NodeBaseWithComments & {
 	type: "JSXFragment";
 	children: JSXElement["children"];
 };

@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSRegExpBodyItem, JSNodeBase} from "@romejs/ast";
+import {AnyJSRegExpBodyItem, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSRegExpQuantified = JSNodeBase & {
+export type JSRegExpQuantified = NodeBaseWithComments & {
 	type: "JSRegExpQuantified";
 	target: AnyJSRegExpBodyItem;
 	lazy?: boolean;

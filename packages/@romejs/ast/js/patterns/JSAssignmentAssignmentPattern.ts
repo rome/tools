@@ -8,12 +8,12 @@
 import {
 	AnyJSExpression,
 	AnyJSTargetAssignmentPattern,
-	JSNodeBase,
 	JSPatternMeta,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSAssignmentAssignmentPattern = JSNodeBase & {
+export type JSAssignmentAssignmentPattern = NodeBaseWithComments & {
 	type: "JSAssignmentAssignmentPattern";
 	left: AnyJSTargetAssignmentPattern;
 	right: AnyJSExpression;

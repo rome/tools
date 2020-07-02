@@ -9,13 +9,13 @@ import {ServerRequest} from "@romejs/core";
 import {Consumer} from "@romejs/consume";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import {ConstSourceType, jsRoot} from "@romejs/ast";
+import {ConstJSSourceType, jsRoot} from "@romejs/ast";
 import {removeLoc} from "@romejs/js-ast-utils";
 
 type Flags = {
 	allowDiagnostics: boolean;
 	compact: boolean;
-	sourceType: undefined | ConstSourceType;
+	sourceType: undefined | ConstJSSourceType;
 };
 
 export default createServerCommand({

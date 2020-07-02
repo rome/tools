@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSEntityName, JSIdentifier, JSNodeBase} from "@romejs/ast";
+import {AnyTSEntityName, JSIdentifier, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSQualifiedName = JSNodeBase & {
+export type TSQualifiedName = NodeBaseWithComments & {
 	type: "TSQualifiedName";
 	left: AnyTSEntityName;
 	right: JSIdentifier;

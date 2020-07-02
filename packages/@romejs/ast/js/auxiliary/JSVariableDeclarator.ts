@@ -8,11 +8,11 @@
 import {
 	AnyJSExpression,
 	AnyJSTargetBindingPattern,
-	JSNodeBase,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSVariableDeclarator = JSNodeBase & {
+export type JSVariableDeclarator = NodeBaseWithComments & {
 	type: "JSVariableDeclarator";
 	id: AnyJSTargetBindingPattern;
 	init?: AnyJSExpression;

@@ -7,7 +7,7 @@
 
 import DependencyGraph from "./DependencyGraph";
 import {BundleCompileResolvedImports} from "@romejs/compiler";
-import {ConstImportModuleKind} from "@romejs/ast";
+import {ConstJSImportModuleKind} from "@romejs/ast";
 import {SourceLocation} from "@romejs/parser-core";
 import {
 	Diagnostic,
@@ -23,7 +23,6 @@ import {getFileHandler} from "../../common/file-handlers/index";
 import {ExtensionHandler} from "../../common/file-handlers/types";
 import {
 	AnalyzeDependency,
-	AnalyzeDependencyName,
 	AnalyzeExportLocal,
 	AnalyzeModuleType,
 	AnyAnalyzeExport,
@@ -47,7 +46,7 @@ type ResolvedImport = ResolvedImportFound | ResolvedImportNotFound;
 
 function equalKind(
 	producer: AnyAnalyzeExport,
-	consumerKind: ConstImportModuleKind,
+	consumerKind: ConstJSImportModuleKind,
 ): boolean {
 	// Allow importing functions and classes as `type` and `typeof`
 	if (
@@ -241,7 +240,7 @@ export default class DependencyNode {
 	}
 
 	getExportedNames(
-		kind: ConstImportModuleKind,
+		kind: ConstJSImportModuleKind,
 		seen: Set<DependencyNode> = new Set(),
 	): Set<string> {
 		if (seen.has(this)) {
@@ -296,7 +295,7 @@ export default class DependencyNode {
 	}
 
 	buildDiagnosticForUnknownExport(
-		kind: ConstImportModuleKind,
+		kind: ConstJSImportModuleKind,
 		resolved: ResolvedImportNotFound,
 	): Diagnostic {
 		const location: DiagnosticLocation = {
@@ -356,29 +355,6 @@ export default class DependencyNode {
 		};
 	}
 
-	buildDiagnosticForTypeMismatch(
-		resolved: ResolvedImportFound,
-		node: DependencyNode,
-		nameInfo: AnalyzeDependencyName,
-	): Diagnostic {
-		const {name, kind, loc} = nameInfo;
-		const {record} = resolved;
-
-		return {
-			description: descriptions.RESOLVER.IMPORT_TYPE_MISMATCH(
-				name,
-				node.uid,
-				kind,
-				record.kind,
-				record.loc,
-			),
-			location: {
-				...loc,
-				mtime: this.getMtime(),
-			},
-		};
-	}
-
 	resolveImports(): ResolveImportsResult {
 		const cached = this.resolveImportsCache;
 		if (cached !== undefined) {
@@ -394,7 +370,6 @@ export default class DependencyNode {
 		const diagnostics: Diagnostics = [];
 
 		// Go through all of our dependencies and check if they have any external exports to forward
-		const allowTypeImportsAsValue = this.analyze.syntax.includes("ts");
 		for (const absolute of this.relativeToAbsolutePath.values()) {
 			const mod = graph.getNode(absolute);
 
@@ -418,14 +393,6 @@ export default class DependencyNode {
 				// Unknown import
 				if (resolved.type === "NOT_FOUND") {
 					diagnostics.push(this.buildDiagnosticForUnknownExport(kind, resolved));
-					continue;
-				}
-
-				// Flag imports of the wrong type
-				if (!allowTypeImportsAsValue && !equalKind(resolved.record, kind)) {
-					diagnostics.push(
-						this.buildDiagnosticForTypeMismatch(resolved, mod, nameInfo),
-					);
 					continue;
 				}
 

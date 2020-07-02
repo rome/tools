@@ -6,17 +6,17 @@
  */
 
 import {
-	JSNodeBase,
 	JSStringLiteral,
 	JSXElement,
 	JSXExpressionContainer,
 	JSXFragment,
 	JSXIdentifier,
 	JSXNamespacedName,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSXAttribute = JSNodeBase & {
+export type JSXAttribute = NodeBaseWithComments & {
 	type: "JSXAttribute";
 	name: JSXIdentifier | JSXNamespacedName;
 	value?:

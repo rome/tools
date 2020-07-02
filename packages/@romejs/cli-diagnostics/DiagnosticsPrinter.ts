@@ -256,7 +256,7 @@ export default class DiagnosticsPrinter extends Error {
 		for (const {
 			dependencies,
 			description: {advice},
-			location: {language, sourceType, mtime, filename},
+			location: {language, sourceTypeJS: sourceType, mtime, filename},
 		} of diagnostics) {
 			if (filename !== undefined) {
 				deps.push({
@@ -289,7 +289,7 @@ export default class DiagnosticsPrinter extends Error {
 							type: "reference",
 							path: this.createFilePath(location.filename),
 							language: location.language,
-							sourceType: location.sourceType,
+							sourceType: location.sourceTypeJS,
 							mtime: location.mtime,
 						});
 					}

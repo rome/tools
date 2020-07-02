@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ConstProgramSyntax, ConstSourceType} from "@romejs/ast";
+import {ConstJSProgramSyntax, ConstJSSourceType} from "@romejs/ast";
 import {ParserOptionsWithRequiredPath} from "@romejs/parser-core";
 
 type UserOptionsBase = {
-	syntax?: Array<ConstProgramSyntax>;
-	sourceType?: ConstSourceType;
+	syntax?: Array<ConstJSProgramSyntax>;
+	sourceType?: ConstJSSourceType;
 	tokens?: boolean;
 	allowReturnOutsideFunction?: boolean;
 	manifestPath?: undefined | string;

@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSStatement, JSIdentifier, JSNodeBase} from "@romejs/ast";
+import {AnyJSStatement, JSIdentifier, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSLabeledStatement = JSNodeBase & {
+export type JSLabeledStatement = NodeBaseWithComments & {
 	type: "JSLabeledStatement";
 	label: JSIdentifier;
 	body: AnyJSStatement;

@@ -8,12 +8,12 @@
 import {
 	AnyTSPrimary,
 	JSBindingIdentifier,
-	JSNodeBase,
+	NodeBaseWithComments,
 	TSTypeParameterDeclaration,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSTypeAlias = JSNodeBase & {
+export type TSTypeAlias = NodeBaseWithComments & {
 	type: "TSTypeAlias";
 	id: JSBindingIdentifier;
 	typeParameters?: TSTypeParameterDeclaration;

@@ -6,12 +6,12 @@
  */
 
 import {
-	ConstExportModuleKind,
+	ConstJSExportModuleKind,
 	JSExportDefaultSpecifier,
 	JSExportExternalSpecifier,
 	JSExportNamespaceSpecifier,
-	JSNodeBase,
 	JSStringLiteral,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
@@ -20,13 +20,13 @@ export type AnyExportExternalSpecifier =
 	| JSExportDefaultSpecifier
 	| JSExportExternalSpecifier;
 
-export type JSExportExternalDeclaration = JSNodeBase & {
+export type JSExportExternalDeclaration = NodeBaseWithComments & {
 	type: "JSExportExternalDeclaration";
 	defaultSpecifier?: JSExportDefaultSpecifier;
 	namespaceSpecifier?: JSExportNamespaceSpecifier;
 	namedSpecifiers: Array<JSExportExternalSpecifier>;
 	source: JSStringLiteral;
-	exportKind?: ConstExportModuleKind;
+	exportKind?: ConstJSExportModuleKind;
 };
 
 export const jsExportExternalDeclaration = createBuilder<JSExportExternalDeclaration>(

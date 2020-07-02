@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSTargetAssignmentPattern, JSNodeBase} from "@romejs/ast";
+import {AnyJSTargetAssignmentPattern, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSAssignmentNonNullExpression = JSNodeBase & {
+export type TSAssignmentNonNullExpression = NodeBaseWithComments & {
 	type: "TSAssignmentNonNullExpression";
 	expression: AnyJSTargetAssignmentPattern;
 };

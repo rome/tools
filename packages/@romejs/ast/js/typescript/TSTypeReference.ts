@@ -7,12 +7,12 @@
 
 import {
 	AnyTSEntityName,
-	JSNodeBase,
+	NodeBaseWithComments,
 	TSTypeParameterInstantiation,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSTypeReference = JSNodeBase & {
+export type TSTypeReference = NodeBaseWithComments & {
 	type: "TSTypeReference";
 	typeName: AnyTSEntityName;
 	typeParameters?: TSTypeParameterInstantiation;

@@ -7,12 +7,12 @@
 
 import {
 	AnyJSRegExpEscapedCharacter,
-	JSNodeBase,
 	JSRegExpCharSetRange,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSRegExpCharSet = JSNodeBase & {
+export type JSRegExpCharSet = NodeBaseWithComments & {
 	type: "JSRegExpCharSet";
 	invert?: boolean;
 	body: Array<JSRegExpCharSetRange | AnyJSRegExpEscapedCharacter>;

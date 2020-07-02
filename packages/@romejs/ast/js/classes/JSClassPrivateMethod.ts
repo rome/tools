@@ -10,12 +10,12 @@ import {
 	JSClassMethodKind,
 	JSClassPropertyMeta,
 	JSFunctionHead,
-	JSNodeBase,
 	JSPrivateName,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSClassPrivateMethod = JSNodeBase & {
+export type JSClassPrivateMethod = NodeBaseWithComments & {
 	type: "JSClassPrivateMethod";
 	kind: JSClassMethodKind;
 	key: JSPrivateName;

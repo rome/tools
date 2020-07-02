@@ -8,12 +8,12 @@
 import {
 	AnyJSObjectPropertyKey,
 	AnyTSPrimary,
-	JSNodeBase,
+	NodeBaseWithComments,
 	TSSignatureDeclarationMeta,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSMethodSignature = JSNodeBase & {
+export type TSMethodSignature = NodeBaseWithComments & {
 	key: AnyJSObjectPropertyKey;
 	type: "TSMethodSignature";
 	optional?: boolean;

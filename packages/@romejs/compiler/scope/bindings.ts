@@ -6,7 +6,7 @@
  */
 
 import Scope from "./Scope";
-import {AnyNode, ConstImportModuleKind} from "@romejs/ast";
+import {AnyNode, ConstJSImportModuleKind} from "@romejs/ast";
 
 type BindingOpts = {
 	scope: Scope;
@@ -40,12 +40,12 @@ export type ImportBindingMeta =
 			type: "name";
 			imported: string;
 			source: string;
-			kind: ConstImportModuleKind;
+			kind: ConstJSImportModuleKind;
 		}
 	| {
 			type: "namespace";
 			source: string;
-			kind: ConstImportModuleKind;
+			kind: ConstJSImportModuleKind;
 		};
 
 export class ConstBinding extends Binding {

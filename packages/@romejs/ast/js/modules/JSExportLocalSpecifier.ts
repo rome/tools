@@ -6,18 +6,18 @@
  */
 
 import {
-	ConstExportModuleKind,
+	ConstJSExportModuleKind,
 	JSIdentifier,
-	JSNodeBase,
 	JSReferenceIdentifier,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSExportLocalSpecifier = JSNodeBase & {
+export type JSExportLocalSpecifier = NodeBaseWithComments & {
 	type: "JSExportLocalSpecifier";
 	exported: JSIdentifier;
 	local: JSReferenceIdentifier;
-	exportKind?: ConstExportModuleKind;
+	exportKind?: ConstJSExportModuleKind;
 };
 
 export const jsExportLocalSpecifier = createBuilder<JSExportLocalSpecifier>(

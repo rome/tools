@@ -8,7 +8,7 @@
 import {assertSingleNode, inheritLoc} from "@romejs/js-ast-utils";
 import {NodeBase} from "@romejs/parser-core";
 import {AnyNode} from "./index";
-import {JSNodeBase} from "./js/base";
+import {NodeBaseWithComments} from "./base";
 import {TransformExitResult} from "@romejs/compiler";
 
 export const bindingKeys: Map<string, Array<string>> = new Map();
@@ -26,7 +26,7 @@ type JustNodeKeys<T> = ExcludeCoreNodeKeys<
 	{[K in keyof T]: JustNodeKeysProp<K, NonNullable<T[K]>>}[keyof T]
 >;
 
-type ExcludeCoreNodeKeys<T> = Exclude<T, keyof JSNodeBase>;
+type ExcludeCoreNodeKeys<T> = Exclude<T, keyof NodeBaseWithComments>;
 
 // rome-ignore lint/js/noUnusedVariables
 type VisitorKeys<T> = {[K in JustNodeKeys<T>]: true};

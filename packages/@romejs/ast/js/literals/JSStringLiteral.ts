@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from "@romejs/ast";
+import {NodeBaseWithComments} from "@romejs/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSStringLiteral = JSNodeBase & {
+export type JSStringLiteral = NodeBaseWithComments & {
 	type: "JSStringLiteral";
 	value: string;
 };

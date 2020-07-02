@@ -7,7 +7,7 @@
 
 import {parseJS} from "@romejs/js-parser";
 import {createFixtureTests} from "@romejs/test-helpers";
-import {ConstProgramSyntax} from "@romejs/ast";
+import {ConstJSProgramSyntax} from "@romejs/ast";
 import {removeCarriageReturn} from "@romejs/string-utils";
 
 const promise = createFixtureTests(async (fixture, t) => {
@@ -36,9 +36,9 @@ const promise = createFixtureTests(async (fixture, t) => {
 	);
 	const filename = inputFile.relative;
 
-	const syntax: Array<ConstProgramSyntax> = options.get("syntax").asArray(true).map((
-		item,
-	) => {
+	const syntax: Array<ConstJSProgramSyntax> = options.get("syntax").asArray(
+		true,
+	).map((item) => {
 		return item.asStringSet(["jsx", "ts"]);
 	});
 

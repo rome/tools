@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from "@romejs/ast";
+import {NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSCommentLine = JSNodeBase & {
+export type JSCommentLine = NodeBaseWithComments & {
 	type: "JSCommentLine";
 	value: string;
 	id: string;

@@ -7,8 +7,8 @@
 
 import {
 	AnyNode,
-	ConstProgramSyntax,
-	ConstSourceType,
+	ConstJSProgramSyntax,
+	ConstJSSourceType,
 	JSIdentifier,
 	JSRoot,
 	JSStringLiteral,
@@ -125,8 +125,8 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 
 		comments: CommentsConsumer;
 		options: JSParserOptions;
-		sourceType: ConstSourceType;
-		syntax: Set<ConstProgramSyntax>;
+		sourceType: ConstJSSourceType;
+		syntax: Set<ConstJSProgramSyntax>;
 		isTrackingTokens: boolean;
 		inModule: boolean;
 		isLookahead: boolean;
@@ -421,7 +421,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 				},
 				location: {
 					filename: this.filename,
-					sourceType: this.sourceType,
+					sourceTypeJS: this.sourceType,
 					mtime: this.mtime,
 					start,
 					end,
@@ -433,11 +433,11 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			return !this.isSyntaxEnabled("ts") || this.isSyntaxEnabled("jsx");
 		}
 
-		isSyntaxEnabled(syntax: ConstProgramSyntax): boolean {
+		isSyntaxEnabled(syntax: ConstJSProgramSyntax): boolean {
 			return this.syntax.has(syntax);
 		}
 
-		expectSyntaxEnabled(syntax: ConstProgramSyntax) {
+		expectSyntaxEnabled(syntax: ConstJSProgramSyntax) {
 			if (!this.isSyntaxEnabled(syntax)) {
 				this.addDiagnostic({
 					description: descriptions.JS_PARSER.EXPECTED_ENABLE_SYNTAX(syntax),

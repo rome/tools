@@ -5,10 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSExpression, AnyJSStatement, JSNodeBase} from "@romejs/ast";
+import {
+	AnyJSExpression,
+	AnyJSStatement,
+	NodeBaseWithComments,
+} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSIfStatement = JSNodeBase & {
+export type JSIfStatement = NodeBaseWithComments & {
 	type: "JSIfStatement";
 	test: AnyJSExpression;
 	consequent: AnyJSStatement;

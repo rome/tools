@@ -6,11 +6,7 @@
  */
 
 import {Diagnostics} from "@romejs/diagnostics";
-import {
-	ConstExportModuleKind,
-	ConstImportModuleKind,
-	ConstProgramSyntax,
-} from "@romejs/ast";
+import {ConstJSExportModuleKind, ConstJSImportModuleKind} from "@romejs/ast";
 import {SourceLocation} from "@romejs/parser-core";
 import {Dict} from "@romejs/typescript-helpers";
 
@@ -18,7 +14,7 @@ export type AnalyzeModuleType = "es" | "cjs" | "unknown";
 
 export type AnalyzeDependencyName = {
 	name: string;
-	kind: ConstImportModuleKind;
+	kind: ConstJSImportModuleKind;
 	loc?: SourceLocation;
 };
 
@@ -27,7 +23,7 @@ export type AnalyzeExportValueType = "class" | "function" | "other";
 export type AnalyzeExportLocal = {
 	type: "local";
 	loc?: SourceLocation;
-	kind: ConstExportModuleKind;
+	kind: ConstJSExportModuleKind;
 	valueType: AnalyzeExportValueType;
 	name: string;
 };
@@ -36,14 +32,14 @@ export type AnyAnalyzeExport =
 	| AnalyzeExportLocal
 	| {
 			type: "externalNamespace";
-			kind: ConstImportModuleKind;
+			kind: ConstJSImportModuleKind;
 			loc?: SourceLocation;
 			exported: string;
 			source: string;
 		}
 	| {
 			type: "external";
-			kind: ConstImportModuleKind;
+			kind: ConstJSImportModuleKind;
 			loc?: SourceLocation;
 			imported: string;
 			exported: string;
@@ -52,14 +48,14 @@ export type AnyAnalyzeExport =
 	| {
 			type: "externalAll";
 			loc?: SourceLocation;
-			kind: ConstImportModuleKind;
+			kind: ConstJSImportModuleKind;
 			source: string;
 		};
 
 export type AnalyzeDependency = {
 	names: Array<AnalyzeDependencyName>;
 	async: boolean;
-	kind: ConstImportModuleKind;
+	kind: ConstJSImportModuleKind;
 	type: AnalyzeModuleType;
 	loc?: SourceLocation;
 	all: boolean;
@@ -72,7 +68,7 @@ export type AnalyzeDependencyImportUsageItem = {
 	local: string;
 	source: string;
 	loc?: SourceLocation;
-	kind: ConstImportModuleKind;
+	kind: ConstJSImportModuleKind;
 };
 
 export type AnalyzeDependencyImportFirstUsage = Array<AnalyzeDependencyImportUsageItem>;
@@ -82,10 +78,9 @@ export type AnalyzeDependencyTopLevelLocalBindings = Dict<
 >;
 
 export type AnalyzeDependencyResult = {
-	topLevelLocalBindings: AnalyzeDependencyTopLevelLocalBindings;
 	moduleType: AnalyzeModuleType;
-	syntax: Array<ConstProgramSyntax>;
 	diagnostics: Diagnostics;
+	topLevelLocalBindings: AnalyzeDependencyTopLevelLocalBindings;
 	firstTopAwaitLocation: undefined | SourceLocation;
 	importFirstUsage: AnalyzeDependencyImportFirstUsage;
 	exports: Array<AnyAnalyzeExport>;
@@ -95,7 +90,6 @@ export type AnalyzeDependencyResult = {
 export const UNKNOWN_ANALYZE_DEPENDENCIES_RESULT: AnalyzeDependencyResult = {
 	topLevelLocalBindings: {},
 	moduleType: "unknown",
-	syntax: [],
 	diagnostics: [],
 	firstTopAwaitLocation: undefined,
 	importFirstUsage: [],

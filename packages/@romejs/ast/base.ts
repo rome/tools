@@ -5,10 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {AnyJSComment} from "@romejs/ast";
+import {Diagnostics} from "@romejs/diagnostics";
 import {NodeBase} from "@romejs/parser-core";
 
-export type JSNodeBase = NodeBase & {
+export type NodeBaseWithComments = NodeBase & {
 	leadingComments?: Array<string>;
 	trailingComments?: Array<string>;
 	innerComments?: Array<string>;
+};
+
+export type RootBase = {
+	comments: Array<AnyJSComment>;
+	filename: string;
+	diagnostics: Diagnostics;
+	mtime: undefined | number;
+	corrupt: boolean;
 };

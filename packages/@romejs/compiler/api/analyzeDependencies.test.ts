@@ -9,11 +9,11 @@ import analyzeDependencies from "./analyzeDependencies";
 import {createDefaultProjectConfig} from "@romejs/project";
 import {test} from "rome";
 import {parseJS} from "@romejs/js-parser";
-import {ConstSourceType} from "@romejs/ast";
+import {ConstJSSourceType} from "@romejs/ast";
 import {createUnknownFilePath} from "@romejs/path";
 import {dedent} from "@romejs/string-utils";
 
-async function testAnalyzeDeps(input: string, sourceType: ConstSourceType) {
+async function testAnalyzeDeps(input: string, sourceType: ConstJSSourceType) {
 	return await analyzeDependencies({
 		options: {},
 		ast: parseJS({input, sourceType, path: createUnknownFilePath("unknown")}),

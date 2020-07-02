@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, JSObjectProperties} from "@romejs/ast";
+import {JSObjectProperties, NodeBaseWithComments} from "@romejs/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSObjectExpression = JSNodeBase & {
+export type JSObjectExpression = NodeBaseWithComments & {
 	type: "JSObjectExpression";
 	properties: JSObjectProperties;
 };

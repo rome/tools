@@ -8,12 +8,12 @@
 import {
 	AnyJSExpression,
 	AnyTSPrimary,
-	JSNodeBase,
 	JSSpreadElement,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSAmbiguousFlowTypeCastExpression = JSNodeBase & {
+export type JSAmbiguousFlowTypeCastExpression = NodeBaseWithComments & {
 	type: "JSAmbiguousFlowTypeCastExpression";
 	expression: AnyJSExpression | JSSpreadElement;
 	typeAnnotation?: AnyTSPrimary;

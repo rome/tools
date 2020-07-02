@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSExpression, JSNodeBase} from "@romejs/ast";
+import {AnyJSExpression, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSSpreadProperty = JSNodeBase & {
+export type JSSpreadProperty = NodeBaseWithComments & {
 	type: "JSSpreadProperty";
 	argument: AnyJSExpression;
 };

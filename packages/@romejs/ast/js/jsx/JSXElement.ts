@@ -6,7 +6,6 @@
  */
 
 import {
-	JSNodeBase,
 	JSXAttribute,
 	JSXExpressionContainer,
 	JSXFragment,
@@ -17,11 +16,12 @@ import {
 	JSXSpreadAttribute,
 	JSXSpreadChild,
 	JSXText,
+	NodeBaseWithComments,
 	TSTypeParameterInstantiation,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSXElement = JSNodeBase & {
+export type JSXElement = NodeBaseWithComments & {
 	type: "JSXElement";
 	name:
 		| JSXReferenceIdentifier

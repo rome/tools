@@ -7,7 +7,7 @@
 
 import {Position, SourceLocation} from "@romejs/parser-core";
 import {Diffs} from "@romejs/string-diff";
-import {ConstSourceType} from "@romejs/ast";
+import {ConstJSSourceType} from "@romejs/ast";
 import {Number0, Number1} from "@romejs/ob1";
 import {JSONPropertyValue} from "@romejs/codec-json";
 import {DiagnosticCategory} from "./categories";
@@ -43,7 +43,7 @@ export type DiagnosticLocation = {
 	mtime?: number;
 	marker?: string;
 	language?: DiagnosticLanguage;
-	sourceType?: DiagnosticSourceType;
+	sourceTypeJS?: DiagnosticSourceType;
 	filename?: string;
 	start?: Position;
 	end?: Position;
@@ -56,9 +56,16 @@ export type DiagnosticOrigin = {
 
 export type DiagnosticLogCategory = "none" | "info" | "warn" | "error";
 
-export type DiagnosticLanguage = "json" | "js" | "url" | "shell" | "unknown";
+export type DiagnosticLanguage =
+	| "json"
+	| "js"
+	| "url"
+	| "shell"
+	| "css"
+	| "html"
+	| "unknown";
 
-export type DiagnosticSourceType = "unknown" | ConstSourceType;
+export type DiagnosticSourceType = "unknown" | ConstJSSourceType;
 
 export type DiagnosticsMeta = {
 	identifierName?: string;
@@ -150,7 +157,7 @@ export type DiagnosticAdviceAction = {
 export type DiagnosticAdviceCode = {
 	type: "code";
 	code: string;
-	sourceType?: ConstSourceType;
+	sourceType?: ConstJSSourceType;
 	language?: DiagnosticLanguage;
 };
 

@@ -9,11 +9,11 @@ import {
 	JSBindingIdentifier,
 	JSBlockStatement,
 	JSFunctionHead,
-	JSNodeBase,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSFunctionDeclaration = JSNodeBase & {
+export type JSFunctionDeclaration = NodeBaseWithComments & {
 	type: "JSFunctionDeclaration";
 	id: JSBindingIdentifier;
 	declare?: boolean;

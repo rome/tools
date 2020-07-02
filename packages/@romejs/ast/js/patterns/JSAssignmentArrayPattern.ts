@@ -7,12 +7,12 @@
 	AnyJSAssignmentPattern,
 	AnyJSTargetAssignmentPattern,
 	JSArrayHole,
-	JSNodeBase,
 	JSPatternMeta,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSAssignmentArrayPattern = JSNodeBase & {
+export type JSAssignmentArrayPattern = NodeBaseWithComments & {
 	type: "JSAssignmentArrayPattern";
 	meta?: JSPatternMeta;
 	elements: Array<JSArrayHole | AnyJSAssignmentPattern>;

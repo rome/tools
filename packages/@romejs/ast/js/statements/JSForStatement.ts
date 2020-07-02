@@ -8,12 +8,12 @@
 import {
 	AnyJSExpression,
 	AnyJSStatement,
-	JSNodeBase,
 	JSVariableDeclaration,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSForStatement = JSNodeBase & {
+export type JSForStatement = NodeBaseWithComments & {
 	type: "JSForStatement";
 	init?: JSVariableDeclaration | AnyJSExpression;
 	test?: AnyJSExpression;

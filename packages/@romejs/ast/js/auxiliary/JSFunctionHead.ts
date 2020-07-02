@@ -10,12 +10,12 @@ import {
 	AnyJSTargetBindingPattern,
 	AnyTSPrimary,
 	JSBindingIdentifier,
-	JSNodeBase,
+	NodeBaseWithComments,
 	TSTypeParameterDeclaration,
 } from "@romejs/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSFunctionHead = JSNodeBase & {
+export type JSFunctionHead = NodeBaseWithComments & {
 	type: "JSFunctionHead";
 	params: Array<AnyJSParamBindingPattern>;
 	rest?: AnyJSTargetBindingPattern;

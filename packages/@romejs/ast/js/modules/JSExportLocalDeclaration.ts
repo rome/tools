@@ -6,12 +6,12 @@
  */
 
 import {
-	ConstExportModuleKind,
+	ConstJSExportModuleKind,
 	JSClassDeclaration,
 	JSExportLocalSpecifier,
 	JSFunctionDeclaration,
-	JSNodeBase,
 	JSVariableDeclarationStatement,
+	NodeBaseWithComments,
 	TSDeclareFunction,
 	TSEnumDeclaration,
 	TSInterfaceDeclaration,
@@ -20,7 +20,7 @@ import {
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSExportLocalDeclaration = JSNodeBase & {
+export type JSExportLocalDeclaration = NodeBaseWithComments & {
 	type: "JSExportLocalDeclaration";
 	declaration?:
 		| undefined
@@ -33,7 +33,7 @@ export type JSExportLocalDeclaration = JSNodeBase & {
 		| TSInterfaceDeclaration
 		| TSDeclareFunction;
 	specifiers?: Array<JSExportLocalSpecifier>;
-	exportKind?: ConstExportModuleKind;
+	exportKind?: ConstJSExportModuleKind;
 	declare?: boolean;
 };
 

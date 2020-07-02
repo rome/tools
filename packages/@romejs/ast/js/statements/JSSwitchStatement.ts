@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSExpression, JSNodeBase, JSSwitchCase} from "@romejs/ast";
+import {AnyJSExpression, JSSwitchCase, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSSwitchStatement = JSNodeBase & {
+export type JSSwitchStatement = NodeBaseWithComments & {
 	type: "JSSwitchStatement";
 	discriminant: AnyJSExpression;
 	cases: Array<JSSwitchCase>;

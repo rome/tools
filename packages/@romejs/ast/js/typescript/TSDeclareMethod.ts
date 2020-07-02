@@ -10,11 +10,11 @@ import {
 	JSClassMethodKind,
 	JSClassPropertyMeta,
 	JSFunctionHead,
-	JSNodeBase,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSDeclareMethod = JSNodeBase & {
+export type TSDeclareMethod = NodeBaseWithComments & {
 	type: "TSDeclareMethod";
 	meta: JSClassPropertyMeta;
 	kind: JSClassMethodKind;

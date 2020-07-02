@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSPrimary, JSNodeBase, TSTypeParameter} from "@romejs/ast";
+import {AnyTSPrimary, NodeBaseWithComments, TSTypeParameter} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
 export type TSMappedTypeBoolean = undefined | boolean | "+" | "-";
 
-export type TSMappedType = JSNodeBase & {
+export type TSMappedType = NodeBaseWithComments & {
 	type: "TSMappedType";
 	typeParameter: TSTypeParameter;
 	typeAnnotation?: AnyTSPrimary;

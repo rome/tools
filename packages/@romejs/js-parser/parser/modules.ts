@@ -12,8 +12,8 @@ import {
 	AnyExportExternalSpecifier,
 	AnyJSStatement,
 	AnyNode,
-	ConstExportModuleKind,
-	ConstImportModuleKind,
+	ConstJSExportModuleKind,
+	ConstJSImportModuleKind,
 	JSBindingIdentifier,
 	JSExportAllDeclaration,
 	JSExportDefaultDeclaration,
@@ -80,7 +80,7 @@ export function parseExport(
 		return tsNode;
 	}
 
-	let exportKind: ConstExportModuleKind = "value";
+	let exportKind: ConstJSExportModuleKind = "value";
 	let declaration: undefined | AnyJSStatement;
 	let localSpecifiers: undefined | Array<JSExportLocalSpecifier>;
 
@@ -250,7 +250,7 @@ function createExportExternalDeclaration(
 	namespaceSpecifier: undefined | JSExportNamespaceSpecifier,
 	namedSpecifiers: Array<JSExportLocalSpecifier>,
 	source: JSStringLiteral,
-	exportKind?: ConstExportModuleKind,
+	exportKind?: ConstJSExportModuleKind,
 ): JSExportExternalDeclaration {
 	checkExport(
 		parser,
@@ -342,7 +342,7 @@ function parseExportDefaultExpression(
 function parseExportDeclaration(
 	parser: JSParser,
 ): {
-	exportKind: ConstExportModuleKind;
+	exportKind: ConstJSExportModuleKind;
 	declaration?: AnyJSStatement;
 	localSpecifiers?: Array<JSExportLocalSpecifier>;
 	source?: JSStringLiteral;
@@ -492,7 +492,7 @@ function parseExportStar(
 	| JSExportAllDeclaration
 	| JSExportLocalDeclaration
 	| JSExportExternalDeclaration {
-	let exportKind: undefined | ConstExportModuleKind;
+	let exportKind: undefined | ConstJSExportModuleKind;
 	if (parser.eatContextual("type")) {
 		exportKind = "type";
 	}
@@ -532,7 +532,7 @@ function parseExportStar(
 
 function parseExportNamespace(
 	parser: JSParser,
-	exportKind: undefined | ConstExportModuleKind,
+	exportKind: undefined | ConstJSExportModuleKind,
 ): {
 	source: JSStringLiteral;
 	namespaceSpecifier: JSExportNamespaceSpecifier;
@@ -740,7 +740,7 @@ export function parseImport(
 	let namespaceSpecifier: undefined | JSImportNamespaceSpecifier;
 	let defaultSpecifier: undefined | JSImportDefaultSpecifier;
 	let source: JSStringLiteral;
-	let importKind: undefined | ConstImportModuleKind;
+	let importKind: undefined | ConstJSImportModuleKind;
 
 	// import '...'
 	if (parser.match(tt.string)) {
@@ -786,7 +786,7 @@ export function parseImport(
 
 function shouldParseDefaultImport(
 	parser: JSParser,
-	kind: undefined | ConstImportModuleKind,
+	kind: undefined | ConstJSImportModuleKind,
 ): boolean {
 	if (hasTypeImportKind(kind)) {
 		return isMaybeDefaultImport(parser.state);
@@ -803,14 +803,14 @@ export function isMaybeDefaultImport(state: State): boolean {
 }
 
 export function hasTypeImportKind(
-	kind: undefined | ConstImportModuleKind,
+	kind: undefined | ConstJSImportModuleKind,
 ): boolean {
 	return kind === "type" || kind === "typeof";
 }
 
 function parseImportSpecifierLocal(
 	parser: JSParser,
-	importKind: undefined | ConstImportModuleKind,
+	importKind: undefined | ConstJSImportModuleKind,
 	contextDescription: string,
 ): JSImportSpecifierLocal {
 	const start = parser.getPosition();
@@ -837,9 +837,9 @@ function parseImportSpecifiers(
 	namedSpecifiers: Array<JSImportSpecifier>;
 	namespaceSpecifier: undefined | JSImportNamespaceSpecifier;
 	defaultSpecifier: undefined | JSImportDefaultSpecifier;
-	importKind: undefined | ConstImportModuleKind;
+	importKind: undefined | ConstJSImportModuleKind;
 } {
-	let importKind: undefined | ConstImportModuleKind = undefined;
+	let importKind: undefined | ConstJSImportModuleKind = undefined;
 
 	// Ensure that when parsing `import from './type.js` we don't mistakenly think it's an import type';
 
@@ -963,7 +963,7 @@ function parseImportSpecifiers(
 
 function parseImportSpecifier(
 	parser: JSParser,
-	nodeKind: undefined | ConstImportModuleKind,
+	nodeKind: undefined | ConstJSImportModuleKind,
 ): JSImportSpecifier {
 	const start = parser.getPosition();
 	const firstIdentPos = parser.state.startPos;
@@ -971,7 +971,7 @@ function parseImportSpecifier(
 
 	let imported;
 	let local: JSBindingIdentifier;
-	let importKind: undefined | ConstImportModuleKind = undefined;
+	let importKind: undefined | ConstJSImportModuleKind = undefined;
 	if (firstIdent.name === "type") {
 		importKind = "type";
 	} else if (firstIdent.name === "typeof") {

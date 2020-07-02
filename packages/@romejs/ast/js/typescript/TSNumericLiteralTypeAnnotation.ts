@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, JSNumericLiteral} from "@romejs/ast";
+import {JSNumericLiteral, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSNumericLiteralTypeAnnotation = JSNodeBase & {
+export type TSNumericLiteralTypeAnnotation = NodeBaseWithComments & {
 	type: "TSNumericLiteralTypeAnnotation";
 	value: number;
 	format?: JSNumericLiteral["format"];

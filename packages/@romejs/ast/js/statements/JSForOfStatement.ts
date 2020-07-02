@@ -9,12 +9,12 @@ import {
 	AnyJSExpression,
 	AnyJSStatement,
 	AnyJSTargetAssignmentPattern,
-	JSNodeBase,
 	JSVariableDeclaration,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSForOfStatement = JSNodeBase & {
+export type JSForOfStatement = NodeBaseWithComments & {
 	type: "JSForOfStatement";
 	await?: boolean;
 	left: JSVariableDeclaration | AnyJSTargetAssignmentPattern;

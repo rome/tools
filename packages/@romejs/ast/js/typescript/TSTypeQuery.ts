@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSEntityName, JSNodeBase, TSImportType} from "@romejs/ast";
+import {AnyTSEntityName, NodeBaseWithComments, TSImportType} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSTypeQuery = JSNodeBase & {
+export type TSTypeQuery = NodeBaseWithComments & {
 	type: "TSTypeQuery";
 	exprName: TSImportType | AnyTSEntityName;
 };

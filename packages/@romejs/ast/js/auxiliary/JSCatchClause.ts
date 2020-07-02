@@ -5,10 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSBindingPattern, JSBlockStatement, JSNodeBase} from "@romejs/ast";
+import {
+	AnyJSBindingPattern,
+	JSBlockStatement,
+	NodeBaseWithComments,
+} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSCatchClause = JSNodeBase & {
+export type JSCatchClause = NodeBaseWithComments & {
 	type: "JSCatchClause";
 	param?: AnyJSBindingPattern;
 	body: JSBlockStatement;

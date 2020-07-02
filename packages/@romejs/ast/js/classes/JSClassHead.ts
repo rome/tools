@@ -8,14 +8,14 @@
 import {
 	AnyJSClassMember,
 	AnyJSExpression,
-	JSNodeBase,
+	NodeBaseWithComments,
 	TSExpressionWithTypeArguments,
 	TSTypeParameterDeclaration,
 	TSTypeParameterInstantiation,
 } from "@romejs/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSClassHead = JSNodeBase & {
+export type JSClassHead = NodeBaseWithComments & {
 	type: "JSClassHead";
 	superClass?: AnyJSExpression;
 	body: Array<AnyJSClassMember>;

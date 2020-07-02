@@ -9,14 +9,14 @@ import {
 	JSBlockStatement,
 	JSComputedPropertyKey,
 	JSFunctionHead,
-	JSNodeBase,
 	JSStaticPropertyKey,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
 export type JSObjectMethodKind = "get" | "set" | "method";
 
-export type JSObjectMethod = JSNodeBase & {
+export type JSObjectMethod = NodeBaseWithComments & {
 	key: JSComputedPropertyKey | JSStaticPropertyKey;
 	type: "JSObjectMethod";
 	kind: JSObjectMethodKind;

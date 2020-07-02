@@ -8,12 +8,12 @@
 import {
 	AnyJSExpression,
 	JSIdentifier,
-	JSNodeBase,
 	JSStringLiteral,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSEnumMember = JSNodeBase & {
+export type TSEnumMember = NodeBaseWithComments & {
 	type: "TSEnumMember";
 	id: JSStringLiteral | JSIdentifier;
 	initializer?: AnyJSExpression;

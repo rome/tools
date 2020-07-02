@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, TSTupleElement} from "@romejs/ast";
+import {NodeBaseWithComments, TSTupleElement} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSTupleType = JSNodeBase & {
+export type TSTupleType = NodeBaseWithComments & {
 	type: "TSTupleType";
 	elementTypes: Array<TSTupleElement>;
 	rest?: TSTupleElement;

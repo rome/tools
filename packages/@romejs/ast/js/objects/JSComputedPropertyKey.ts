@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSExpression, JSNodeBase} from "@romejs/ast";
+import {AnyJSExpression, NodeBaseWithComments} from "@romejs/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSComputedPropertyKey = JSNodeBase & {
+export type JSComputedPropertyKey = NodeBaseWithComments & {
 	type: "JSComputedPropertyKey";
 	value: AnyJSExpression;
 };

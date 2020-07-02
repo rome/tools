@@ -10,7 +10,6 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "es"
-	syntax: Array []
 	topLevelLocalBindings: Object {}
 	exports: Array [
 		local {
@@ -40,7 +39,7 @@ Object {
 				language: "js"
 				marker: undefined
 				mtime: undefined
-				sourceType: "module"
+				sourceTypeJS: "module"
 				end: Object {
 					column: 19
 					index: 19
@@ -92,7 +91,6 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "es"
-	syntax: Array []
 	topLevelLocalBindings: Object {
 		foo: Object {
 			filename: "unknown"
@@ -142,7 +140,6 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "es"
-	syntax: Array []
 	topLevelLocalBindings: Object {}
 	dependencies: Array [
 		es {
@@ -180,7 +177,6 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "es"
-	syntax: Array []
 	topLevelLocalBindings: Object {}
 }
 ```
@@ -194,7 +190,6 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "es"
-	syntax: Array []
 	topLevelLocalBindings: Object {
 		bar: Object {
 			filename: "unknown"
@@ -276,7 +271,6 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "cjs"
-	syntax: Array []
 	topLevelLocalBindings: Object {
 		foo: Object {
 			filename: "unknown"
@@ -313,7 +307,7 @@ Object {
 			location: Object {
 				filename: "unknown"
 				mtime: undefined
-				sourceType: "script"
+				sourceTypeJS: "script"
 				end: Object {
 					column: 25
 					index: 25
@@ -384,7 +378,6 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "es"
-	syntax: Array []
 	topLevelLocalBindings: Object {
 		yes: Object {
 			filename: "unknown"
@@ -457,7 +450,6 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "cjs"
-	syntax: Array []
 	topLevelLocalBindings: Object {}
 	exports: Array [
 		local {
@@ -497,7 +489,6 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "cjs"
-	syntax: Array []
 	topLevelLocalBindings: Object {}
 	exports: Array [
 		local {
@@ -537,7 +528,6 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "es"
-	syntax: Array []
 	topLevelLocalBindings: Object {
 		Bar: Object {
 			filename: "unknown"
@@ -653,7 +643,6 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "es"
-	syntax: Array []
 	topLevelLocalBindings: Object {}
 	exports: Array [
 		local {
@@ -686,7 +675,6 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "es"
-	syntax: Array []
 	topLevelLocalBindings: Object {}
 	exports: Array [
 		external {
@@ -865,7 +853,6 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "es"
-	syntax: Array []
 	topLevelLocalBindings: Object {}
 	exports: Array [
 		externalAll {
@@ -921,7 +908,6 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "es"
-	syntax: Array []
 	topLevelLocalBindings: Object {
 		bar: Object {
 			filename: "unknown"
@@ -990,7 +976,6 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "es"
-	syntax: Array []
 	topLevelLocalBindings: Object {
 		bar: Object {
 			filename: "unknown"
@@ -1149,7 +1134,6 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "es"
-	syntax: Array []
 	topLevelLocalBindings: Object {}
 	dependencies: Array [
 		es {
@@ -1186,7 +1170,6 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "es"
-	syntax: Array []
 	topLevelLocalBindings: Object {}
 	exports: Array [
 		local {
@@ -1259,7 +1242,6 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "es"
-	syntax: Array []
 	topLevelLocalBindings: Object {
 		yeah: Object {
 			filename: "unknown"
@@ -1332,7 +1314,6 @@ Object {
 	exports: Array []
 	importFirstUsage: Array []
 	moduleType: "es"
-	syntax: Array []
 	topLevelLocalBindings: Object {}
 	firstTopAwaitLocation: Object {
 		filename: "unknown"
@@ -1359,7 +1340,6 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "cjs"
-	syntax: Array []
 	exports: Array [
 		local {
 			kind: "value"
@@ -1397,7 +1377,6 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "es"
-	syntax: Array []
 	topLevelLocalBindings: Object {}
 }
 ```

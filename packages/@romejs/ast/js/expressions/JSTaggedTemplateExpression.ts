@@ -7,13 +7,13 @@
 
 import {
 	AnyJSExpression,
-	JSNodeBase,
 	JSTemplateLiteral,
+	NodeBaseWithComments,
 	TSTypeParameterInstantiation,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSTaggedTemplateExpression = JSNodeBase & {
+export type JSTaggedTemplateExpression = NodeBaseWithComments & {
 	type: "JSTaggedTemplateExpression";
 	tag: AnyJSExpression;
 	quasi: JSTemplateLiteral;

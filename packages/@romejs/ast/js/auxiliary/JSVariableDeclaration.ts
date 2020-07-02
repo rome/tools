@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, JSVariableDeclarator} from "@romejs/ast";
+import {JSVariableDeclarator, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
 export type JSVariableDeclarationKind = "var" | "let" | "const";
 
-export type JSVariableDeclaration = JSNodeBase & {
+export type JSVariableDeclaration = NodeBaseWithComments & {
 	type: "JSVariableDeclaration";
 	kind: JSVariableDeclarationKind;
 	declarations: Array<JSVariableDeclarator>;

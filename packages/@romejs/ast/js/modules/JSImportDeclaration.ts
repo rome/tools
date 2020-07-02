@@ -6,12 +6,12 @@
  */
 
 import {
-	ConstImportModuleKind,
+	ConstJSImportModuleKind,
 	JSImportDefaultSpecifier,
 	JSImportNamespaceSpecifier,
 	JSImportSpecifier,
-	JSNodeBase,
 	JSStringLiteral,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
@@ -20,13 +20,13 @@ export type AnyImportSpecifier =
 	| JSImportNamespaceSpecifier
 	| JSImportSpecifier;
 
-export type JSImportDeclaration = JSNodeBase & {
+export type JSImportDeclaration = NodeBaseWithComments & {
 	type: "JSImportDeclaration";
 	defaultSpecifier?: JSImportDefaultSpecifier;
 	namespaceSpecifier?: JSImportNamespaceSpecifier;
 	namedSpecifiers: Array<JSImportSpecifier>;
 	source: JSStringLiteral;
-	importKind?: ConstImportModuleKind;
+	importKind?: ConstJSImportModuleKind;
 };
 
 export const jsImportDeclaration = createBuilder<JSImportDeclaration>(

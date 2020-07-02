@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSRegExpEscapedCharacter, JSNodeBase} from "@romejs/ast";
+import {AnyJSRegExpEscapedCharacter, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSRegExpCharSetRange = JSNodeBase & {
+export type JSRegExpCharSetRange = NodeBaseWithComments & {
 	type: "JSRegExpCharSetRange";
 	start: AnyJSRegExpEscapedCharacter;
 	end: AnyJSRegExpEscapedCharacter;

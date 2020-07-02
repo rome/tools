@@ -8,12 +8,12 @@
 import {
 	AnyJSExpression,
 	AnyTSEntityName,
-	JSNodeBase,
+	NodeBaseWithComments,
 	TSTypeParameterInstantiation,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSImportType = JSNodeBase & {
+export type TSImportType = NodeBaseWithComments & {
 	type: "TSImportType";
 	argument: AnyJSExpression;
 	typeParameters?: TSTypeParameterInstantiation;

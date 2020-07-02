@@ -8,11 +8,11 @@
 import {
 	AnyJSTargetAssignmentPattern,
 	AnyTSPrimary,
-	JSNodeBase,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSAssignmentTypeAssertion = JSNodeBase & {
+export type TSAssignmentTypeAssertion = NodeBaseWithComments & {
 	type: "TSAssignmentTypeAssertion";
 	typeAnnotation: AnyTSPrimary;
 	expression: AnyJSTargetAssignmentPattern;

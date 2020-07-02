@@ -6,14 +6,14 @@
  */
 
 import {
-	JSNodeBase,
 	JSXIdentifier,
 	JSXNamespacedName,
 	JSXReferenceIdentifier,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSXMemberExpression = JSNodeBase & {
+export type JSXMemberExpression = NodeBaseWithComments & {
 	type: "JSXMemberExpression";
 	object:
 		| JSXMemberExpression

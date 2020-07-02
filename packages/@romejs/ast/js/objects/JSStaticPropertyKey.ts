@@ -7,14 +7,14 @@
 
 import {
 	JSIdentifier,
-	JSNodeBase,
 	JSNumericLiteral,
 	JSPrivateName,
 	JSStringLiteral,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSStaticPropertyKey = JSNodeBase & {
+export type JSStaticPropertyKey = NodeBaseWithComments & {
 	type: "JSStaticPropertyKey";
 	value: JSIdentifier | JSPrivateName | JSStringLiteral | JSNumericLiteral;
 };

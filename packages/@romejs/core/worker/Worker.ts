@@ -13,7 +13,7 @@ import WorkerBridge, {
 	WorkerPartialManifests,
 	WorkerProjects,
 } from "../common/bridges/WorkerBridge";
-import {AnyRoot, ConstSourceType, JSRoot} from "@romejs/ast";
+import {AnyRoot, ConstJSSourceType, JSRoot} from "@romejs/ast";
 import Logger, {PartialLoggerOptions} from "../common/utils/Logger";
 import {Profiler} from "@romejs/v8";
 
@@ -359,24 +359,24 @@ export default class Worker {
 		}
 
 		// Get source type
-		let sourceType: undefined | ConstSourceType;
+		let sourceTypeJS: undefined | ConstJSSourceType;
 		if (options.sourceType !== undefined) {
-			sourceType = options.sourceType;
-		} else if (handler.sourceType !== undefined) {
-			sourceType = handler.sourceType;
+			sourceTypeJS = options.sourceType;
+		} else if (handler.sourceTypeJS !== undefined) {
+			sourceTypeJS = handler.sourceTypeJS;
 		} else {
-			sourceType = "script";
+			sourceTypeJS = "script";
 
 			if (ref.manifest !== undefined) {
 				const manifest = this.getPartialManifest(ref.manifest);
 				if (manifest.type === "module") {
-					sourceType = "module";
+					sourceTypeJS = "module";
 				}
 			}
 		}
 
 		if (project.config.bundler.mode === "legacy") {
-			sourceType = "module";
+			sourceTypeJS = "module";
 		}
 
 		const cacheEnabled = options.cache !== false;
@@ -388,7 +388,10 @@ export default class Worker {
 			if (cachedResult !== undefined) {
 				let useCached = true;
 
-				if (cachedResult.ast.sourceType !== sourceType) {
+				if (
+					cachedResult.ast.type === "JSRoot" &&
+					cachedResult.ast.sourceType !== sourceTypeJS
+				) {
 					useCached = false;
 				}
 
@@ -414,7 +417,7 @@ export default class Worker {
 		}
 
 		const {sourceText, generated, ast} = await handler.parse({
-			sourceType,
+			sourceTypeJS,
 			path: createUnknownFilePath(uid),
 			manifestPath,
 			stat,

@@ -6,13 +6,13 @@
  */
 
 import {
-	JSNodeBase,
 	JSRegExpAlternation,
 	JSRegExpSubExpression,
+	NodeBaseWithComments,
 } from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSRegExpLiteral = JSNodeBase & {
+export type JSRegExpLiteral = NodeBaseWithComments & {
 	type: "JSRegExpLiteral";
 	expression: JSRegExpSubExpression | JSRegExpAlternation;
 	global?: boolean;

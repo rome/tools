@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSStatement, JSDirective, JSNodeBase} from "@romejs/ast";
+import {AnyJSStatement, JSDirective, NodeBaseWithComments} from "@romejs/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSBlockStatement = JSNodeBase & {
+export type JSBlockStatement = NodeBaseWithComments & {
 	type: "JSBlockStatement";
 	body: Array<AnyJSStatement>;
 	directives?: Array<JSDirective>;

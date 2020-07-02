@@ -302,7 +302,7 @@ function printFrame(
 		lines = toLines({
 			path,
 			input: sourceText,
-			sourceType: item.location.sourceType,
+			sourceType: item.location.sourceTypeJS,
 			language: item.location.language,
 		});
 	} else if (filename !== undefined) {
@@ -436,7 +436,7 @@ function printStacktrace(
 						location: {
 							language,
 							filename,
-							sourceType: "module",
+							sourceTypeJS: "module",
 							start: pos,
 							end: pos,
 							sourceText: code,

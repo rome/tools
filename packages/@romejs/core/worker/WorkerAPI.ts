@@ -6,7 +6,7 @@
  */
 
 import {FileReference, Worker} from "@romejs/core";
-import {AnyNode, JSRoot} from "@romejs/ast";
+import {AnyNode, AnyRoot} from "@romejs/ast";
 import {Diagnostics, catchDiagnostics, descriptions} from "@romejs/diagnostics";
 import {
 	CompileResult,
@@ -89,6 +89,12 @@ export default class WorkerAPI {
 
 	async moduleSignatureJS(ref: FileReference, parseOptions: WorkerParseOptions) {
 		const {ast, project} = await this.worker.parse(ref, parseOptions);
+
+		if (ast.type !== "JSRoot") {
+			throw new Error(
+				`Expected a JSRoot for moduleSignatureJS but got ${ast.type}`,
+			);
+		}
 
 		this.logger.info(`Generating module signature:`, ref.real.toMarkup());
 
@@ -282,7 +288,7 @@ export default class WorkerAPI {
 		);
 	}
 
-	async parse(ref: FileReference, opts: WorkerParseOptions): Promise<JSRoot> {
+	async parse(ref: FileReference, opts: WorkerParseOptions): Promise<AnyRoot> {
 		let {ast, generated} = await this.worker.parse(
 			ref,
 			{

@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSPrimary, JSNodeBase} from "@romejs/ast";
+import {AnyTSPrimary, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type TSTypeParameterInstantiation = JSNodeBase & {
+export type TSTypeParameterInstantiation = NodeBaseWithComments & {
 	type: "TSTypeParameterInstantiation";
 	params: Array<AnyTSPrimary>;
 };
