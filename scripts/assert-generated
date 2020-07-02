@@ -23,17 +23,18 @@ const filteredWrittenFiles = writtenFiles.filter(function(file){
 });
 
 // Autofix them
-execDev(["check", ...filteredWrittenFiles, "--apply"]);
+execDev(["check", ...filteredWrittenFiles, "--apply"]).finally(() => {
+	// Check that `git status` is fine
+	const out = child_process
+		.spawnSync("git", ["ls-files", "-m"])
+		.stdout.toString();
+	if (out !== "") {
+		console.error("Modified files:");
+		console.error(out);
+		console.log();
+		console.log("To fix this run `node scripts/assert-generated` and commit the results");
+		console.log();
+		process.exit(1);
+	}
+});
 
-// Check that `git status` is fine
-const out = child_process
-	.spawnSync("git", ["ls-files", "-m"])
-	.stdout.toString();
-if (out !== "") {
-	console.error("Modified files:");
-	console.error(out);
-	console.log();
-	console.log("To fix this run `node scripts/assert-generated` and commit the results");
-	console.log();
-	process.exit(1);
-}
