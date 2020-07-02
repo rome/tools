@@ -17,12 +17,14 @@ async function testParser<T>(
 	{
 		defineFlags,
 		args,
-		callback,
+		preInit,
+		postInit,
 		options: opts,
 	}: {
 		defineFlags: (consumer: Consumer) => T;
 		args: Array<string>;
-		callback?: (parser: Parser<T>, flags: T) => void;
+		preInit?: (parser: Parser<T>) => void;
+		postInit?: (parser: Parser<T>, flags: T) => void;
 		options?: Partial<ParserOptions<T>>;
 	},
 ) {
@@ -40,10 +42,13 @@ async function testParser<T>(
 	);
 
 	const {diagnostics} = await catchDiagnostics(async () => {
+		if (preInit !== undefined) {
+			preInit(parser);
+		}
 		const flags = await parser.init();
 		t.namedSnapshot("flags", flags);
-		if (callback !== undefined) {
-			callback(parser, flags);
+		if (postInit !== undefined) {
+			postInit(parser, flags);
 		}
 	});
 
@@ -301,6 +306,35 @@ test(
 );
 
 test(
+	"command required with no command but with --help flag",
+	async (t) => {
+		await testParser(
+			t,
+			{
+				options: {
+					commandRequired: true,
+					noProcessExit: true,
+				},
+				defineFlags: () => {
+					return {};
+				},
+				args: ["--help"],
+				preInit(p) {
+					p.addCommand({
+						name: "foo",
+						callback() {},
+					});
+					p.addCommand({
+						name: "bar",
+						callback() {},
+					});
+				},
+			},
+		);
+	},
+);
+
+test(
 	"command required with wrong command",
 	async (t) => {
 		await testParser(
@@ -313,7 +347,7 @@ test(
 					return {};
 				},
 				args: ["foo"],
-				callback(p) {
+				preInit(p) {
 					p.addCommand({
 						name: "foobar",
 						callback() {},

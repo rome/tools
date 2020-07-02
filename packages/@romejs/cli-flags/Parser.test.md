@@ -46,6 +46,62 @@
 
 ```
 
+## `command required with no command but with --help flag`
+
+### `flags`
+
+```javascript
+Object {}
+```
+
+### `help`
+
+```
+
+ Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  $ test [flags]
+
+ Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
+                           --help Show this help screen
+
+ Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  - bar 
+  - foo 
+
+  ℹ To view help for a specific command run
+  $ test command_name --help
+
+
+```
+
+### `output`
+
+```
+
+ Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  $ test [flags]
+
+ Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
+                           --help Show this help screen
+
+ Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  - bar 
+  - foo 
+
+  ℹ To view help for a specific command run
+  $ test command_name --help
+
+
+```
+
 ## `command required with wrong command`
 
 ### `help`
@@ -63,6 +119,8 @@
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  - foobar 
+
   ℹ To view help for a specific command run
   $ test command_name --help
 
@@ -79,6 +137,10 @@
 
     $ test foo foo 
            ^^^
+
+  ℹ Did you mean foobar?
+
+  + foobar
 
   ℹ To see available commands run
 
