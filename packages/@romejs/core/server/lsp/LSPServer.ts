@@ -525,6 +525,14 @@ export default class LSPServer {
 					return null;
 				}
 
+				if (!this.lintSessions.has(project.folder)) {
+					this.logMessage(
+						path,
+						"Formatting unavailable while initializing project.",
+					);
+					return null;
+				}
+
 				const {value, diagnostics} = await catchDiagnostics(async () => {
 					return this.request.requestWorkerFormat(path, {});
 				});
