@@ -1,9 +1,5 @@
-import {CSSKeyframesToKeyword} from "@romejs/ast";
-import {Builder, Token} from "@romejs/formatter";
+import {Token} from "@romejs/formatter";
 
-export default function CSSKeyframesToKeyword(
-	builder: Builder,
-	node: CSSKeyframesToKeyword,
-): Token {
-	throw new Error("unimplemented");
+export default function CSSKeyframesToKeyword(): Token {
+	return "to";
 }

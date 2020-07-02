@@ -7,9 +7,8 @@
 
 import {
 	AnyNode,
-	ConstExportModuleKind,
-	ConstImportModuleKind,
-	ConstProgramSyntax,
+	ConstJSExportModuleKind,
+	ConstJSImportModuleKind,
 	JSBindingIdentifier,
 	JSReferenceIdentifier,
 } from "@romejs/ast";
@@ -39,27 +38,27 @@ export function isOptional(path: Path): boolean {
 	return false;
 }
 
-export function isTypeKind(kind: undefined | ConstImportModuleKind): boolean {
+export function isTypeKind(kind: undefined | ConstJSImportModuleKind): boolean {
 	return kind === "type" || kind === "typeof";
 }
 
 export function getImportKind(
-	kind: undefined | ConstImportModuleKind,
-): ConstImportModuleKind {
+	kind: undefined | ConstJSImportModuleKind,
+): ConstJSImportModuleKind {
 	return kind === undefined ? "value" : kind;
 }
 
 export function getExportKind(
-	kind: undefined | ConstExportModuleKind,
-): ConstExportModuleKind {
+	kind: undefined | ConstJSExportModuleKind,
+): ConstJSExportModuleKind {
 	return kind === undefined ? "value" : kind;
 }
 
 export function maybeTypeBinding(
-	kind: ConstExportModuleKind,
+	kind: ConstJSExportModuleKind,
 	scope: Scope,
 	id: JSBindingIdentifier | JSReferenceIdentifier,
-): ConstExportModuleKind {
+): ConstJSExportModuleKind {
 	const binding = scope.getBinding(id.name);
 	if (kind === "value" && binding instanceof TypeBinding) {
 		return "type";
@@ -69,10 +68,10 @@ export function maybeTypeBinding(
 }
 
 export function getKindWithSpecifiers(
-	rawKind: undefined | ConstImportModuleKind,
-	specifierKinds: Array<ConstImportModuleKind>,
-): ConstImportModuleKind {
-	const kind: ConstImportModuleKind = getImportKind(rawKind);
+	rawKind: undefined | ConstJSImportModuleKind,
+	specifierKinds: Array<ConstJSImportModuleKind>,
+): ConstJSImportModuleKind {
+	const kind: ConstJSImportModuleKind = getImportKind(rawKind);
 	if (isTypeKind(kind) || specifierKinds.length === 0) {
 		return kind;
 	}
@@ -161,10 +160,6 @@ function arraySame<T>(
 	return true;
 }
 
-function syntaxSame(a: ConstProgramSyntax, b: ConstProgramSyntax): boolean {
-	return a === b;
-}
-
 function exportsSame(a: AnyAnalyzeExport, b: AnyAnalyzeExport): boolean {
 	if (a.type !== b.type) {
 		return false;
@@ -231,10 +226,6 @@ export function areAnalyzeDependencyResultsEqual(
 	}
 
 	if (a.moduleType !== b.moduleType) {
-		return false;
-	}
-
-	if (!arraySame(a.syntax, b.syntax, syntaxSame)) {
 		return false;
 	}
 

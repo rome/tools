@@ -6,12 +6,12 @@
  */
 
 import {TransformProjectDefinition, TransformRequest} from "../types";
-import {JSRoot} from "@romejs/ast";
+import {AnyRoot} from "@romejs/ast";
 import {JSONObject} from "@romejs/codec-json";
 
 type CacheQuery = {
 	key: string;
-	ast: JSRoot;
+	ast: AnyRoot;
 };
 
 let projectIdCounter = 0;
@@ -22,7 +22,7 @@ export default class Cache<Result> {
 		this.cache = new WeakMap();
 	}
 
-	cache: WeakMap<JSRoot, Map<string, Result>>;
+	cache: WeakMap<AnyRoot, Map<string, Result>>;
 
 	static buildQuery(
 		req: TransformRequest,

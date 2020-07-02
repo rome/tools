@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSComment, AnyNode, JSRoot} from "@romejs/ast";
+import {AnyJSComment, AnyNode, AnyRoot} from "@romejs/ast";
 import {CompilerContext} from "@romejs/compiler";
 import {Number1, ob1Get1} from "@romejs/ob1";
 import Path from "../lib/Path";
@@ -26,7 +26,7 @@ function buildSuppressionCommentValue(categories: Set<string>): string {
 	return `${SUPPRESSION_START} ${Array.from(categories).join(" ")}`;
 }
 
-export function addSuppressions(context: CompilerContext, ast: JSRoot): JSRoot {
+export function addSuppressions(context: CompilerContext, ast: AnyRoot): AnyRoot {
 	if (!context.hasLintDecisions()) {
 		return ast;
 	}

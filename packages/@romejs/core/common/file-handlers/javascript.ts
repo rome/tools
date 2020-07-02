@@ -7,7 +7,7 @@
 
 import * as compiler from "@romejs/compiler";
 import {check as typeCheck} from "@romejs/js-analysis";
-import {ConstProgramSyntax, ConstSourceType} from "@romejs/ast";
+import {ConstJSProgramSyntax, ConstJSSourceType} from "@romejs/ast";
 import {formatAST} from "@romejs/formatter";
 import {
 	ExtensionHandler,
@@ -31,25 +31,25 @@ export const JS_EXTENSIONS: Array<string> = [];
 
 function buildJSHandler(
 	ext: string,
-	syntax: Array<ConstProgramSyntax>,
-	sourceType?: ConstSourceType,
+	syntax: Array<ConstJSProgramSyntax>,
+	sourceTypeJS?: ConstJSSourceType,
 ): ExtensionHandler {
 	JS_EXTENSIONS.push(ext);
 
 	return {
 		ext,
-		sourceType,
+		sourceTypeJS,
 
-		async parse({stat, sourceType, manifestPath, path, file, worker}) {
+		async parse({stat, sourceTypeJS, manifestPath, path, file, worker}) {
 			const sourceText = await worker.readFile(file.real);
 			const ast = parseJS({
 				input: sourceText,
 				mtime: stat.mtimeMs,
 				manifestPath,
 				path,
-				sourceType,
+				sourceType: sourceTypeJS,
 				syntax,
-				allowReturnOutsideFunction: sourceType === "script",
+				allowReturnOutsideFunction: sourceTypeJS === "script",
 			});
 			return {
 				sourceText,
@@ -134,7 +134,7 @@ function buildJSHandler(
 			}
 
 			// Run type checking if necessary
-			if (typeCheckingEnabled) {
+			if (typeCheckingEnabled && ast.type === "JSRoot") {
 				const typeCheckProvider = await worker.getTypeCheckProvider(
 					ref.project,
 					options.prefetchedModuleSignatures,

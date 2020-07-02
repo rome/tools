@@ -6,7 +6,7 @@
  */
 
 import {
-	ConstExportModuleKind,
+	ConstJSExportModuleKind,
 	JSIdentifier,
 	JSReferenceIdentifier,
 	NodeBaseWithComments,
@@ -17,7 +17,7 @@ export type JSExportLocalSpecifier = NodeBaseWithComments & {
 	type: "JSExportLocalSpecifier";
 	exported: JSIdentifier;
 	local: JSReferenceIdentifier;
-	exportKind?: ConstExportModuleKind;
+	exportKind?: ConstJSExportModuleKind;
 };
 
 export const jsExportLocalSpecifier = createBuilder<JSExportLocalSpecifier>(

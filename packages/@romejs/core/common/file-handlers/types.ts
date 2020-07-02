@@ -10,7 +10,7 @@ import {WorkerLintOptions, WorkerParseOptions} from "../bridges/WorkerBridge";
 import Worker from "../../worker/Worker";
 import {DiagnosticSuppressions, Diagnostics} from "@romejs/diagnostics";
 import * as compiler from "@romejs/compiler";
-import {AnyRoot, ConstSourceType} from "@romejs/ast";
+import {AnyRoot, ConstJSSourceType} from "@romejs/ast";
 import {AnalyzeDependencyResult} from "../types/analyzeDependencies";
 import fs = require("fs");
 import {UnknownFilePath} from "@romejs/path";
@@ -34,14 +34,14 @@ export type ExtensionHandlerMethodInfo = {
 };
 
 export type ExtensionParseInfo = ExtensionHandlerMethodInfo & {
-	sourceType: ConstSourceType;
+	sourceTypeJS: ConstJSSourceType;
 	stat: fs.Stats;
 	manifestPath: undefined | string;
 	path: UnknownFilePath;
 };
 
 export type PartialExtensionHandler = {
-	sourceType?: ConstSourceType;
+	sourceTypeJS?: ConstJSSourceType;
 	isAsset?: boolean;
 	canHaveScale?: boolean;
 	lint?: (info: ExtensionLintInfo) => Promise<ExtensionLintResult>;

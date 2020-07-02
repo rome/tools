@@ -7,7 +7,7 @@
 
 import {
 	AnyNode,
-	ConstExportModuleKind,
+	ConstJSExportModuleKind,
 	JSReferenceIdentifier,
 } from "@romejs/ast";
 import {SourceLocation} from "@romejs/parser-core";
@@ -66,14 +66,14 @@ export class CJSVarRefRecord extends Record {
 }
 
 export class ESExportRecord extends Record {
-	constructor(kind: ConstExportModuleKind, node: AnyNode) {
+	constructor(kind: ConstJSExportModuleKind, node: AnyNode) {
 		super();
 		this.node = node;
 		this.kind = kind;
 	}
 
 	node: AnyNode;
-	kind: ConstExportModuleKind;
+	kind: ConstJSExportModuleKind;
 }
 
 // Whenever we encounter a top level await

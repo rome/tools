@@ -6,7 +6,7 @@
  */
 
 import {
-	ConstImportModuleKind,
+	ConstJSImportModuleKind,
 	JSImportDefaultSpecifier,
 	JSImportNamespaceSpecifier,
 	JSImportSpecifier,
@@ -26,7 +26,7 @@ export type JSImportDeclaration = NodeBaseWithComments & {
 	namespaceSpecifier?: JSImportNamespaceSpecifier;
 	namedSpecifiers: Array<JSImportSpecifier>;
 	source: JSStringLiteral;
-	importKind?: ConstImportModuleKind;
+	importKind?: ConstJSImportModuleKind;
 };
 
 export const jsImportDeclaration = createBuilder<JSImportDeclaration>(

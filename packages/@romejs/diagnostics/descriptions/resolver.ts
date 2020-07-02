@@ -39,27 +39,6 @@ export const resolver = createDiagnosticsCategory({
 			category,
 		};
 	},
-	IMPORT_TYPE_MISMATCH: (
-		exportName: string,
-		source: string,
-		importedAsKing: string,
-		actualKind: string,
-		exportLoc: undefined | SourceLocation,
-	) => ({
-		category: "resolver/importTypeMismatch",
-		message: `The export <emphasis>${exportName}</emphasis> in <filelink emphasis target="${source}" /> was incorrectly imported as a <emphasis>${importedAsKing}</emphasis> when it's actually a <emphasis>${actualKind}</emphasis>`,
-		advice: exportLoc && [
-			{
-				type: "log",
-				category: "info",
-				text: `Export was defined here in <filelink emphasis target="${exportLoc.filename}" />`,
-			},
-			{
-				type: "frame",
-				location: exportLoc,
-			},
-		],
-	}),
 	UNKNOWN_EXPORT: (
 		name: string,
 		source: string,

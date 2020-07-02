@@ -5,5 +5,5 @@ export default function CSSSelectorTag(
 	builder: Builder,
 	node: CSSSelectorTag,
 ): Token {
-	throw new Error("unimplemented");
+	return builder.tokenize(node.tagName, node);
 }

@@ -5,13 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	AnyJSComment,
-	AnyNode,
-	AnyRoot,
-	ConstSourceType,
-	JSRoot,
-} from "@romejs/ast";
+import {AnyJSComment, AnyNode, AnyRoot, ConstJSSourceType} from "@romejs/ast";
 import {
 	SourceLocation,
 	extractSourceLocationRangeFromNodes,
@@ -27,6 +21,7 @@ import {
 	Diagnostic,
 	DiagnosticCategory,
 	DiagnosticDescription,
+	DiagnosticLanguage,
 	DiagnosticLocation,
 	DiagnosticOrigin,
 	DiagnosticSuppressions,
@@ -62,7 +57,7 @@ import {
 import {isRoot} from "@romejs/ast-utils";
 
 export type ContextArg = {
-	ast: JSRoot;
+	ast: AnyRoot;
 	suppressions?: DiagnosticSuppressions;
 	ref?: FileReference;
 	sourceText?: string;
@@ -132,7 +127,8 @@ export default class CompilerContext {
 		this.options = options;
 		this.origin = origin;
 		this.cacheDependencies = new Set();
-		this.sourceType = ast.sourceType;
+		this.language = ast.type === "JSRoot" ? "js" : "css";
+		this.sourceTypeJS = ast.type === "JSRoot" ? ast.sourceType : undefined;
 		this.rootScope = new RootScope(this, ast);
 
 		this.comments = new CommentsConsumer(ast.comments);
@@ -156,8 +152,10 @@ export default class CompilerContext {
 	project: TransformProjectDefinition;
 	sourceText: string;
 
+	language: DiagnosticLanguage;
+	sourceTypeJS: undefined | ConstJSSourceType;
+
 	comments: CommentsConsumer;
-	sourceType: ConstSourceType;
 	cacheDependencies: Set<string>;
 	records: Array<Record>;
 	diagnostics: DiagnosticsProcessor;
@@ -501,8 +499,8 @@ export default class CompilerContext {
 				filename: this.filename,
 				start: loc === undefined ? undefined : loc.start,
 				end: loc === undefined ? undefined : loc.end,
-				language: "js",
-				sourceType: this.sourceType,
+				language: this.language,
+				sourceTypeJS: this.sourceTypeJS,
 			},
 			origins,
 		});

@@ -11,7 +11,7 @@ import {
 	FileReference,
 } from "@romejs/core";
 import {Path, REDUCE_REMOVE} from "@romejs/compiler";
-import {AnyNode, JSRoot} from "@romejs/ast";
+import {AnyNode, AnyRoot} from "@romejs/ast";
 import {ProjectConfig} from "@romejs/project";
 import {REDUCE_SKIP_SUBTREE} from "./constants";
 import CompilerContext from "./lib/CompilerContext";
@@ -73,7 +73,7 @@ export type TransformProjectDefinition = {
 export type TransformRequest = {
 	ref?: FileReference;
 	sourceText: string;
-	ast: JSRoot;
+	ast: AnyRoot;
 	project: TransformProjectDefinition;
 	options: CompilerOptions;
 	stage?: TransformStageName;

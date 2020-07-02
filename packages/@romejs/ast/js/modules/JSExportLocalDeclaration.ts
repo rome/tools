@@ -6,7 +6,7 @@
  */
 
 import {
-	ConstExportModuleKind,
+	ConstJSExportModuleKind,
 	JSClassDeclaration,
 	JSExportLocalSpecifier,
 	JSFunctionDeclaration,
@@ -33,7 +33,7 @@ export type JSExportLocalDeclaration = NodeBaseWithComments & {
 		| TSInterfaceDeclaration
 		| TSDeclareFunction;
 	specifiers?: Array<JSExportLocalSpecifier>;
-	exportKind?: ConstExportModuleKind;
+	exportKind?: ConstJSExportModuleKind;
 	declare?: boolean;
 };
 

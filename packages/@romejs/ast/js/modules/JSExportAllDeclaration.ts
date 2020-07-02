@@ -6,7 +6,7 @@
  */
 
 import {
-	ConstExportModuleKind,
+	ConstJSExportModuleKind,
 	JSStringLiteral,
 	NodeBaseWithComments,
 } from "@romejs/ast";
@@ -15,7 +15,7 @@ import {createBuilder} from "../../utils";
 export type JSExportAllDeclaration = NodeBaseWithComments & {
 	type: "JSExportAllDeclaration";
 	source: JSStringLiteral;
-	exportKind?: ConstExportModuleKind;
+	exportKind?: ConstJSExportModuleKind;
 	declare?: boolean;
 };
 

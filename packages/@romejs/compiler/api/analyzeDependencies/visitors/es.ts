@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ConstExportModuleKind, ConstImportModuleKind} from "@romejs/ast";
+import {ConstJSExportModuleKind, ConstJSImportModuleKind} from "@romejs/ast";
 import {ImportBinding, Path} from "@romejs/compiler";
 import {AnalyzeDependencyName} from "@romejs/core";
 import {
@@ -74,7 +74,7 @@ export default {
 			const {specifiers} = node;
 			if (specifiers !== undefined) {
 				for (const specifier of specifiers) {
-					const kind: ConstExportModuleKind = maybeTypeBinding(
+					const kind: ConstJSExportModuleKind = maybeTypeBinding(
 						getExportKind(specifier.exportKind || node.exportKind),
 						scope,
 						specifier.local,
@@ -110,7 +110,7 @@ export default {
 		// export {} from '';
 		if (node.type === "JSExportExternalDeclaration") {
 			const {source} = node;
-			const specifiersKinds: Array<ConstImportModuleKind> = [];
+			const specifiersKinds: Array<ConstJSImportModuleKind> = [];
 			const exportedNames: Array<AnalyzeDependencyName> = [];
 
 			const {namedSpecifiers, defaultSpecifier, namespaceSpecifier} = node;
@@ -233,7 +233,7 @@ export default {
 		// import * as foo from '';
 		if (node.type === "JSImportDeclaration") {
 			let hasNamespaceSpecifier = false;
-			const specifierKinds: Array<ConstImportModuleKind> = [];
+			const specifierKinds: Array<ConstJSImportModuleKind> = [];
 			const names: Array<AnalyzeDependencyName> = [];
 
 			for (const specifier of getImportSpecifiers(node)) {
@@ -242,7 +242,7 @@ export default {
 					break;
 				}
 
-				const kind: ConstImportModuleKind = getImportKind(node.importKind);
+				const kind: ConstJSImportModuleKind = getImportKind(node.importKind);
 				specifierKinds.push(kind);
 
 				if (specifier.type === "JSImportDefaultSpecifier") {
@@ -308,7 +308,7 @@ export default {
 				);
 				const isTop = deferredExecution === undefined;
 
-				let kind: ConstImportModuleKind = getImportKind(meta.kind);
+				let kind: ConstJSImportModuleKind = getImportKind(meta.kind);
 				if (isInTypeAnnotation(path)) {
 					kind = "type";
 				}

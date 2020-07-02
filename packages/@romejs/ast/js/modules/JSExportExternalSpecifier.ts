@@ -6,7 +6,7 @@
  */
 
 import {
-	ConstExportModuleKind,
+	ConstJSExportModuleKind,
 	JSIdentifier,
 	NodeBaseWithComments,
 } from "@romejs/ast";
@@ -16,7 +16,7 @@ export type JSExportExternalSpecifier = NodeBaseWithComments & {
 	type: "JSExportExternalSpecifier";
 	exported: JSIdentifier;
 	local: JSIdentifier;
-	exportKind?: ConstExportModuleKind;
+	exportKind?: ConstJSExportModuleKind;
 };
 
 export const jsExportExternalSpecifier = createBuilder<JSExportExternalSpecifier>(

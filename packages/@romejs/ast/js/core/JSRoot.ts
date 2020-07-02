@@ -6,31 +6,26 @@
  */
 
 import {
-	AnyJSComment,
 	AnyJSStatement,
-	ConstProgramSyntax,
-	ConstSourceType,
+	ConstJSProgramSyntax,
+	ConstJSSourceType,
 	JSDirective,
 	JSInterpreterDirective,
 	NodeBaseWithComments,
+	RootBase,
 } from "@romejs/ast";
-import {Diagnostics} from "@romejs/diagnostics";
 import {createBuilder} from "../../utils";
 
-export type JSRoot = NodeBaseWithComments & {
-	type: "JSRoot";
-	directives: Array<JSDirective>;
-	body: Array<AnyJSStatement>;
-	filename: string;
-	interpreter: undefined | JSInterpreterDirective;
-	mtime: undefined | number;
-	corrupt: boolean;
-	sourceType: ConstSourceType;
-	diagnostics: Diagnostics;
-	comments: Array<AnyJSComment>;
-	syntax: Array<ConstProgramSyntax>;
-	hasHoistedVars: boolean;
-};
+export type JSRoot = NodeBaseWithComments &
+	RootBase & {
+		type: "JSRoot";
+		directives: Array<JSDirective>;
+		body: Array<AnyJSStatement>;
+		interpreter: undefined | JSInterpreterDirective;
+		sourceType: ConstJSSourceType;
+		syntax: Array<ConstJSProgramSyntax>;
+		hasHoistedVars: boolean;
+	};
 
 export const MOCK_PROGRAM: JSRoot = {
 	type: "JSRoot",

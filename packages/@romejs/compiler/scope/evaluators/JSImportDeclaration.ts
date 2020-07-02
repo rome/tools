@@ -7,7 +7,11 @@
 
 import Scope from "../Scope";
 import {ImportBinding, ImportBindingMeta} from "@romejs/compiler";
-import {AnyNode, ConstImportModuleKind, jsImportDeclaration} from "@romejs/ast";
+import {
+	AnyNode,
+	ConstJSImportModuleKind,
+	jsImportDeclaration,
+} from "@romejs/ast";
 import {getImportSpecifiers} from "@romejs/js-ast-utils";
 import {createScopeEvaluator} from "./index";
 
@@ -18,7 +22,7 @@ export default createScopeEvaluator({
 		const source = node.source.value;
 
 		for (const specifier of getImportSpecifiers(node)) {
-			let kind: ConstImportModuleKind = node.importKind || "value";
+			let kind: ConstJSImportModuleKind = node.importKind || "value";
 			let meta: undefined | ImportBindingMeta;
 
 			if (specifier.type === "JSImportNamespaceSpecifier") {

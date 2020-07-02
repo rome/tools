@@ -6,7 +6,7 @@
  */
 
 import {
-	ConstExportModuleKind,
+	ConstJSExportModuleKind,
 	JSExportDefaultSpecifier,
 	JSExportExternalSpecifier,
 	JSExportNamespaceSpecifier,
@@ -26,7 +26,7 @@ export type JSExportExternalDeclaration = NodeBaseWithComments & {
 	namespaceSpecifier?: JSExportNamespaceSpecifier;
 	namedSpecifiers: Array<JSExportExternalSpecifier>;
 	source: JSStringLiteral;
-	exportKind?: ConstExportModuleKind;
+	exportKind?: ConstJSExportModuleKind;
 };
 
 export const jsExportExternalDeclaration = createBuilder<JSExportExternalDeclaration>(

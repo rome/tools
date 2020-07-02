@@ -1,9 +1,9 @@
 import {CSSSelectorPseudoElementSelector} from "@romejs/ast";
-import {Builder, Token} from "@romejs/formatter";
+import {Builder, Token, concat} from "@romejs/formatter";
 
 export default function CSSSelectorPseudoElementSelector(
 	builder: Builder,
 	node: CSSSelectorPseudoElementSelector,
 ): Token {
-	throw new Error("unimplemented");
+	return concat(["::", builder.tokenize(node.name, node)]);
 }

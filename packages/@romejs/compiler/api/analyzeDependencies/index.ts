@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, ConstImportModuleKind} from "@romejs/ast";
+import {AnyNode, ConstJSImportModuleKind} from "@romejs/ast";
 import {SourceLocation} from "@romejs/parser-core";
 import {TransformRequest} from "../../types";
 import {
@@ -141,7 +141,7 @@ export default async function analyzeDependencies(
 			if (existing === undefined) {
 				dependenciesBySource.set(data.source, data);
 			} else {
-				let kind: ConstImportModuleKind;
+				let kind: ConstJSImportModuleKind;
 				if (data.kind === existing.kind) {
 					kind = data.kind;
 				} else {
@@ -208,7 +208,11 @@ export default async function analyzeDependencies(
 	);
 
 	// Infer the module type
-	let moduleType: AnalyzeModuleType = ast.sourceType === "script" ? "cjs" : "es";
+	let moduleType: AnalyzeModuleType = "unknown";
+
+	if (ast.type === "JSRoot") {
+		moduleType = ast.sourceType === "script" ? "cjs" : "es";
+	}
 
 	// Infer module type in legacy mode
 	if (project.config.bundler.mode === "legacy") {
@@ -269,7 +273,6 @@ export default async function analyzeDependencies(
 		exports,
 		dependencies,
 		importFirstUsage,
-		syntax: ast.syntax,
 		diagnostics: [...ast.diagnostics, ...context.diagnostics.getDiagnostics()],
 	};
 	analyzeCache.set(query, res);

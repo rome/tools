@@ -10,7 +10,7 @@ import {PartialExtensionHandler} from "./types";
 import {parseJS} from "@romejs/js-parser";
 
 export const textHandler: PartialExtensionHandler = {
-	sourceType: "module",
+	sourceTypeJS: "module",
 
 	// Mock a single default export
 	// We could always just pass this through to analyzeDependencies and get the same result due to the toJavaScript call below,

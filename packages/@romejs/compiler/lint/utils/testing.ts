@@ -10,14 +10,14 @@ import lint from "../index";
 import {parseJS} from "@romejs/js-parser";
 import {UnknownFilePath, createUnknownFilePath} from "@romejs/path";
 import {createDefaultProjectConfig} from "@romejs/project";
-import {ConstProgramSyntax, ConstSourceType} from "@romejs/ast";
+import {ConstJSProgramSyntax, ConstJSSourceType} from "@romejs/ast";
 import {DiagnosticCategory, DiagnosticsProcessor} from "@romejs/diagnostics";
 import {printDiagnosticsToString} from "@romejs/cli-diagnostics";
 
 type TestLintOptions = {
 	category: undefined | DiagnosticCategory;
-	sourceType?: ConstSourceType;
-	syntax?: Array<ConstProgramSyntax>;
+	sourceType?: ConstJSSourceType;
+	syntax?: Array<ConstJSProgramSyntax>;
 	path?: UnknownFilePath | string;
 };
 

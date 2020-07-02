@@ -52,7 +52,7 @@ import {
 	SerializeCLITarget,
 	serializeCLIFlags,
 } from "@romejs/cli-flags";
-import {JSRoot} from "@romejs/ast";
+import {AnyRoot} from "@romejs/ast";
 import {TransformStageName} from "@romejs/compiler";
 import WorkerBridge, {
 	PrefetchedModuleSignatures,
@@ -916,7 +916,7 @@ export default class ServerRequest {
 	async requestWorkerParse(
 		path: AbsoluteFilePath,
 		opts: WorkerParseOptions,
-	): Promise<JSRoot> {
+	): Promise<AnyRoot> {
 		this.checkCancelled();
 
 		return this.wrapRequestDiagnostic(

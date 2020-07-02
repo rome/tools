@@ -1,9 +1,9 @@
 import {CSSSelectorId} from "@romejs/ast";
-import {Builder, Token} from "@romejs/formatter";
+import {Builder, Token, concat} from "@romejs/formatter";
 
 export default function CSSSelectorId(
 	builder: Builder,
 	node: CSSSelectorId,
 ): Token {
-	throw new Error("unimplemented");
+	return concat(["#", builder.tokenize(node.id, node)]);
 }

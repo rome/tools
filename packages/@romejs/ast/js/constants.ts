@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export type ConstSourceType = "script" | "module" | "template";
+export type ConstJSSourceType = "script" | "module" | "template";
 
-export type ConstExportModuleKind = "type" | "value";
+export type ConstJSExportModuleKind = "type" | "value";
 
-export type ConstImportModuleKind = "typeof" | ConstExportModuleKind;
+export type ConstJSImportModuleKind = "typeof" | ConstJSExportModuleKind;
 
 export type ConstTSModifier =
 	| "readonly"
@@ -21,4 +21,4 @@ export type ConstTSModifier =
 
 export type ConstTSAccessibility = "public" | "protected" | "private";
 
-export type ConstProgramSyntax = "ts" | "jsx";
+export type ConstJSProgramSyntax = "ts" | "jsx";
