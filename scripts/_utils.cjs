@@ -6,9 +6,12 @@
  */
 
 const {root, devFolder} = require("./_constants.cjs");
+const packageJson = require("../package.json");
 const child = require("child_process");
 const path = require("path");
+const net = require("net");
 const fs = require("fs");
+const os = require("os");
 
 exports.unlink = function(loc) {
 	if (!fs.existsSync(loc)) {
@@ -75,8 +78,35 @@ exports.heading = function(str) {
 	console.log(`\u001b[7m ${str} \u001b[27m`);
 };
 
-exports.execDev = function(argv) {
-	exports.buildTrunk();
+exports.isDevDaemonRunning = function() {
+	// Path and version logic copied from packages/@romejs/core/common/constants.ts
+	// If there is a running daemon then we shouldn't build and just use the existing bundle
+	// We'll log to let the developer know what's going on
+	const version = `${packageJson.version}-dev`;
+	const socketPath = path.join(os.tmpdir(), `rome-${version}.sock`);
+
+	return new Promise((resolve) => {
+		const socket = net.createConnection(
+			{
+				path: socketPath,
+			},
+			() => {
+				resolve(true);
+				socket.end();
+			},
+		);
+
+		socket.on(
+			"error",
+			() => {
+				resolve(false);
+			},
+		);
+	});
+};
+
+exports.execDev = async function(argv) {
+	await exports.buildTrunk();
 	process.env.ROME_CACHE = "0";
 	exports.heading("Executing trunk");
 	exports.execNode([path.join(devFolder, "index.js"), ...argv]);
@@ -91,7 +121,19 @@ exports.buildRelease = function(argv) {
 	]);
 };
 
-exports.buildTrunk = function() {
+exports.buildTrunk = async function() {
+	if (await exports.isDevDaemonRunning()) {
+		console.log(
+			`\x1b[1m\x1b[33m!!!! A dev daemon is currently running. Skipping new build. !!!!\x1b[39m\x1b[22m`,
+		);
+		console.log(
+			"\x1b[34mIf you want to run new code and stop the daemon you can stop the daemon with:\x1b[39m",
+		);
+		console.log("\x1b[2m$ ./scripts/dev-rome stop\x1b[22m");
+		console.log();
+		return;
+	}
+
 	exports.unlink(devFolder);
 	fs.mkdirSync(devFolder);
 

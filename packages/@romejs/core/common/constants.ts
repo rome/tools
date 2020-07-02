@@ -25,7 +25,13 @@ export const MAX_WORKER_BYTES_BEFORE_ADD = 1 * MEGABYTE;
 const CPU_COUNT: number = os.cpus().length;
 export const MAX_WORKER_COUNT = Math.min(CPU_COUNT, 4);
 
-export const VERSION = String(packageJson.version);
+export let VERSION = String(packageJson.version);
+
+// Vendor Rome and Trunk Rome could have the same version number if there was no release in between
+// Ensure they are properly namespaced to avoid having daemon socket conflicts
+if (process.env.ROME_DEV === "1") {
+	VERSION += "-dev";
+}
 
 export const SOCKET_PATH = TEMP_PATH.append(`rome-${VERSION}.sock`);
 

@@ -14,19 +14,23 @@ const os = require("os");
 
 const outFolder = path.join(os.tmpdir(), "rome-vscode-dev");
 
-buildTrunk();
+async function main() {
+  await buildTrunk();
 
-heading("Bundling Extension");
-execDev([
-  "bundle",
-  "@romejs-integration/vscode",
-  outFolder,
-]);
+  heading("Bundling Extension");
+  await execDev([
+    "bundle",
+    "@romejs-integration/vscode",
+    outFolder,
+  ]);
+  
+  heading("Running VSCode");
+  exec("code", [
+    "--extensionDevelopmentPath",
+    outFolder,
+    "--disable-extensions",
+    ...argv,
+  ]);
+}
 
-heading("Running VSCode");
-exec("code", [
-  "--extensionDevelopmentPath",
-  outFolder,
-  "--disable-extensions",
-  ...argv,
-]);
+main();
