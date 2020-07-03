@@ -17,8 +17,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '13.x'
-      - name: npm install website
-        run: cd website && npm install
       - name: rome check
         run: node scripts/dev-rome check
 
