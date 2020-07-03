@@ -38,9 +38,9 @@
 				"type-libs",
 				"lib/modules.js",
 				"prelude.ts",
-				"website",
 				"@romejs-web",
 				"out",
+				"website/.eleventy.js",
 				"vscode/node_modules"
 			]
 		}
