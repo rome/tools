@@ -5,17 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as compiler from "@romejs/compiler";
-import {check as typeCheck} from "@romejs/js-analysis";
 import {ConstJSProgramSyntax, ConstJSSourceType} from "@romejs/ast";
-import {formatAST} from "@romejs/formatter";
-import {
-	ExtensionHandler,
-	ExtensionHandlerMethodInfo,
-	ExtensionLintInfo,
-	ExtensionLintResult,
-} from "./types";
-import {ParseResult} from "@romejs/core/worker/Worker";
+import {ExtensionHandler} from "./types";
 import {parseJS} from "@romejs/js-parser";
 
 // These are extensions that be implicitly tried when a file is referenced
@@ -39,6 +30,8 @@ function buildJSHandler(
 	return {
 		ext,
 		sourceTypeJS,
+		canLint: true,
+		canFormat: true,
 
 		async parse({stat, sourceTypeJS, manifestPath, path, file, worker}) {
 			const sourceText = await worker.readFile(file.real);
@@ -54,109 +47,8 @@ function buildJSHandler(
 			return {
 				sourceText,
 				ast,
-				generated: false,
+				astModifiedFromSource: false,
 			};
-		},
-
-		async analyzeDependencies({file, worker, parseOptions}) {
-			const {ast, sourceText, project, generated} = await worker.parse(
-				file,
-				parseOptions,
-			);
-			worker.logger.info(`Analyzing:`, file.real.toMarkup());
-
-			return worker.api.interceptAndAddGeneratedToDiagnostics(
-				await compiler.analyzeDependencies({
-					ref: file,
-					ast,
-					sourceText,
-					project,
-					options: {},
-				}),
-				generated,
-			);
-		},
-
-		async format(info: ExtensionHandlerMethodInfo): Promise<ExtensionLintResult> {
-			const {file: ref, parseOptions, worker} = info;
-
-			const {ast, sourceText, generated}: ParseResult = await worker.parse(
-				ref,
-				parseOptions,
-			);
-
-			const out = formatAST(
-				ast,
-				{
-					sourceText,
-				},
-			);
-
-			return worker.api.interceptAndAddGeneratedToDiagnostics(
-				{
-					formatted: out.code,
-					sourceText,
-					suppressions: [],
-					diagnostics: ast.diagnostics,
-				},
-				generated,
-			);
-		},
-
-		async lint(info: ExtensionLintInfo): Promise<ExtensionLintResult> {
-			const {file: ref, project, parseOptions, options, worker} = info;
-
-			const {ast, sourceText, generated}: ParseResult = await worker.parse(
-				ref,
-				parseOptions,
-			);
-
-			// Run the compiler in lint-mode which is where all the rules are actually ran
-			const res = await compiler.lint({
-				applyRecommendedFixes: options.applyRecommendedFixes,
-				ref,
-				options: {
-					lint: options.compilerOptions,
-				},
-				ast,
-				project,
-				sourceText,
-			});
-
-			// Extract lint diagnostics
-			let {diagnostics} = res;
-
-			// Only enable typechecking if enabled in .romeconfig
-			let typeCheckingEnabled = project.config.typeCheck.enabled === true;
-			if (project.config.typeCheck.libs.has(ref.real)) {
-				// don't typecheck lib files
-				typeCheckingEnabled = false;
-			}
-
-			// Run type checking if necessary
-			if (typeCheckingEnabled && ast.type === "JSRoot") {
-				const typeCheckProvider = await worker.getTypeCheckProvider(
-					ref.project,
-					options.prefetchedModuleSignatures,
-					parseOptions,
-				);
-				const typeDiagnostics = await typeCheck({
-					ast,
-					provider: typeCheckProvider,
-					project,
-				});
-				diagnostics = [...diagnostics, ...typeDiagnostics];
-			}
-
-			return worker.api.interceptAndAddGeneratedToDiagnostics(
-				{
-					suppressions: res.suppressions,
-					diagnostics,
-					sourceText,
-					formatted: res.src,
-				},
-				generated,
-			);
 		},
 	};
 }

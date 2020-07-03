@@ -11,7 +11,6 @@ import Worker from "../../worker/Worker";
 import {DiagnosticSuppressions, Diagnostics} from "@romejs/diagnostics";
 import * as compiler from "@romejs/compiler";
 import {AnyRoot, ConstJSSourceType} from "@romejs/ast";
-import {AnalyzeDependencyResult} from "../types/analyzeDependencies";
 import fs = require("fs");
 import {UnknownFilePath} from "@romejs/path";
 
@@ -44,20 +43,21 @@ export type PartialExtensionHandler = {
 	sourceTypeJS?: ConstJSSourceType;
 	isAsset?: boolean;
 	canHaveScale?: boolean;
-	lint?: (info: ExtensionLintInfo) => Promise<ExtensionLintResult>;
-	format?: (info: ExtensionHandlerMethodInfo) => Promise<ExtensionLintResult>;
+
+	canLint: boolean;
+	canFormat: boolean;
+
+	customFormat?: (
+		info: ExtensionHandlerMethodInfo,
+	) => Promise<ExtensionLintResult>;
 
 	parse: (
 		opts: ExtensionParseInfo,
 	) => Promise<{
 		sourceText: string;
-		generated: boolean;
+		astModifiedFromSource: boolean;
 		ast: AnyRoot;
 	}>;
-
-	analyzeDependencies?: (
-		opts: ExtensionHandlerMethodInfo,
-	) => Promise<AnalyzeDependencyResult>;
 };
 
 export type ExtensionHandler = PartialExtensionHandler & {

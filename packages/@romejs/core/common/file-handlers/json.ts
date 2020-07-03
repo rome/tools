@@ -17,16 +17,16 @@ import {
 	ExtensionHandlerMethodInfo,
 	ExtensionLintResult,
 } from "./types";
-import {textHandler} from "./text";
 import {parseJS} from "@romejs/js-parser";
 
 export const jsonHandler: ExtensionHandler = {
 	ext: "json",
+	canLint: false,
+	canFormat: true,
 
-	// analyzeDependencies shim
-	...textHandler,
-
-	async format(info: ExtensionHandlerMethodInfo): Promise<ExtensionLintResult> {
+	async customFormat(
+		info: ExtensionHandlerMethodInfo,
+	): Promise<ExtensionLintResult> {
 		const {file, worker} = info;
 		const {uid} = file;
 
@@ -80,7 +80,7 @@ export const jsonHandler: ExtensionHandler = {
 			// Shouldn't error
 			ast: parseJS({input: sourceText, sourceType: "module", path}),
 			sourceText,
-			generated: true,
+			astModifiedFromSource: true,
 		};
 	},
 };

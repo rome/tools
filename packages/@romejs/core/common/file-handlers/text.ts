@@ -5,32 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {UNKNOWN_ANALYZE_DEPENDENCIES_RESULT} from "../types/analyzeDependencies";
 import {PartialExtensionHandler} from "./types";
 import {parseJS} from "@romejs/js-parser";
 
 export const textHandler: PartialExtensionHandler = {
 	sourceTypeJS: "module",
-
-	// Mock a single default export
-	// We could always just pass this through to analyzeDependencies and get the same result due to the toJavaScript call below,
-	// but the return value is predictable so we inline it
-	async analyzeDependencies() {
-		return {
-			...UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
-			moduleType: "es",
-			exports: [
-				{
-					type: "local",
-					// TODO we could fake this?
-					loc: undefined,
-					kind: "value",
-					valueType: "other",
-					name: "default",
-				},
-			],
-		};
-	},
+	canLint: false,
+	canFormat: false,
 
 	async parse({path, file, worker}) {
 		const src = await worker.readFile(file.real);
@@ -41,7 +22,7 @@ export const textHandler: PartialExtensionHandler = {
 			// Shouldn't error
 			ast: parseJS({input: sourceText, sourceType: "module", path}),
 			sourceText,
-			generated: true,
+			astModifiedFromSource: true,
 		};
 	},
 };

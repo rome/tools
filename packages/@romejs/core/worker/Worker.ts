@@ -44,7 +44,7 @@ export type ParseResult = {
 	path: AbsoluteFilePath;
 	lastAccessed: number;
 	sourceText: string;
-	generated: boolean;
+	astModifiedFromSource: boolean;
 };
 
 type WorkerOptions = {
@@ -416,7 +416,7 @@ export default class Worker {
 			manifestPath = this.getPartialManifest(ref.manifest).path;
 		}
 
-		const {sourceText, generated, ast} = await handler.parse({
+		const {sourceText, astModifiedFromSource, ast} = await handler.parse({
 			sourceTypeJS,
 			path: createUnknownFilePath(uid),
 			manifestPath,
@@ -447,7 +447,7 @@ export default class Worker {
 			sourceText,
 			project,
 			path,
-			generated,
+			astModifiedFromSource,
 		};
 
 		if (cacheEnabled) {
