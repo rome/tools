@@ -20,8 +20,8 @@ This command generates static content into the build directory and can be served
 
 ## Lint rules documentation
 
-The page with the list of rules is auto generated when `../script/assert-generated` is run. The script checks for rules inside `packages\@romejs\compiler\lint\rules` and generate a list with the rule names in kebab-case (eg. noFindDOMNode turns into no-find-dom-node).
+The page with the list of rules is auto generated when `scripts/assert-generated` is run. The script checks for rules inside `packages\@romejs\compiler\lint\rules` and generate a list with the rule names in kebab-case (eg. noFindDOMNode turns into no-find-dom-node).
 
 The script also looks for [kebab-case-rule-name].md files inside `website\src\docs\check\rules`. If a file is found, a link for it will be created in the rules page (if there's not link, there's not documentation yet). The script also looks for a description key at the front matter that each .md file should have, if there's not description, it will warning you about that.
 
-If a new rule was added and the script was not run, the Generated files check will fail.
+If a new rule was added and the script was not ran, the check on the generated files will fail.
