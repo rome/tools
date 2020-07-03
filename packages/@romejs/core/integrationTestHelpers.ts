@@ -98,7 +98,7 @@ export function createIntegrationTest(
 			// Add serialized project config. We skip this if there's already a project config files entry to allow
 			// some flexibility if we want invalid project config tests.
 			if (files["rome.json"] === undefined && files["rome.rjson"] === undefined) {
-				files["rome.json"] = stringifyJSON(projectConfig);
+				files["rome.json"] = stringifyJSON(projectConfig) + "\n";
 			}
 
 			// Materialize files
