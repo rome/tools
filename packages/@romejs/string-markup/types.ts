@@ -108,7 +108,8 @@ export type MarkupTokenType =
 	| "punctuation"
 	| "variable"
 	| "attr-name"
-	| "function";
+	| "function"
+	| "boolean";
 
 export type MarkupColor =
 	| "black"

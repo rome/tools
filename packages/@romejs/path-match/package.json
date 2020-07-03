@@ -1,6 +1,6 @@
 {
-  "name": "@romejs/path-match",
-  "private": true,
-  "type": "module",
-  "main": "index.ts"
+	"name": "@romejs/path-match",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
 }

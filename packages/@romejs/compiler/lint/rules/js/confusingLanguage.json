@@ -1,26 +1,26 @@
 [
-  {
-    "description": "The word <emphasis>whitelist</emphasis> can be considered racially charged language.",
-    "word": "whitelist",
-    "suggestion": "allowlist",
-    "advice": [
-      {
-        "type": "log",
-        "category": "info",
-        "text": "See <hyperlink target=\"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/\" /> for a more detailed explanation."
-      }
-    ]
-  },
-  {
-    "description": "The word <emphasis>blacklist</emphasis> can be considered racially charged language.",
-    "word": "blacklist",
-    "suggestion": "denylist",
-    "advice": [
-      {
-        "type": "log",
-        "category": "info",
-        "text": "See <hyperlink target=\"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/\" /> for a more detailed explanation."
-      }
-    ]
-  }
+	{
+		"description": "The word <emphasis>whitelist</emphasis> can be considered racially charged language.",
+		"word": "whitelist",
+		"suggestion": "allowlist",
+		"advice": [
+			{
+				"type": "log",
+				"category": "info",
+				"text": "See <hyperlink target=\"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/\" /> for a more detailed explanation."
+			}
+		]
+	},
+	{
+		"description": "The word <emphasis>blacklist</emphasis> can be considered racially charged language.",
+		"word": "blacklist",
+		"suggestion": "denylist",
+		"advice": [
+			{
+				"type": "log",
+				"category": "info",
+				"text": "See <hyperlink target=\"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/\" /> for a more detailed explanation."
+			}
+		]
+	}
 ]

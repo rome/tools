@@ -1,6 +1,6 @@
 {
-  "name": "@romejs/codec-websocket",
-  "private": true,
-  "type": "module",
-  "main": "index.ts"
+	"name": "@romejs/codec-websocket",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
 }

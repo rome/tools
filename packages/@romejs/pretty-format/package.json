@@ -1,6 +1,6 @@
 {
-  "name": "@romejs/pretty-format",
-  "private": true,
-  "type": "module",
-  "main": "index.ts"
+	"name": "@romejs/pretty-format",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
 }

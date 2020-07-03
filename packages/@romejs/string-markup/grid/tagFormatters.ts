@@ -18,6 +18,7 @@ export function normalizeTokenType(
 	type: undefined | string,
 ): undefined | MarkupTokenType {
 	switch (type) {
+		case "boolean":
 		case "keyword":
 		case "number":
 		case "regex":

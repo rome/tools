@@ -1,6 +1,6 @@
 {
-  "name": "@romejs/core",
-  "type": "module",
-  "private": true,
-  "main": "index.ts"
+	"name": "@romejs/core",
+	"type": "module",
+	"private": true,
+	"main": "index.ts"
 }

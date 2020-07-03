@@ -1,6 +1,6 @@
 {
-  "name": "@romejs/cli-reporter",
-  "private": true,
-  "type": "module",
-  "main": "index.ts"
+	"name": "@romejs/cli-reporter",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
 }
