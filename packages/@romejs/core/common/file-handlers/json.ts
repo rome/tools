@@ -49,9 +49,11 @@ export const jsonHandler: ExtensionHandler = {
 			});
 
 			if (hasExtensions) {
-				formatted = stringifyRJSONFromConsumer({consumer, comments});
+				formatted = `${stringifyRJSONFromConsumer({consumer, comments})}
+`;
 			} else {
-				formatted = String(stringifyJSON(consumer.asUnknown()));
+				formatted = `${String(stringifyJSON(consumer.asUnknown()))}
+`;
 			}
 		}
 
