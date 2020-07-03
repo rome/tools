@@ -18,7 +18,7 @@ modules.set(
 		],
 		[
 			"package.json",
-			'{\n\t"name": "@romejs-runtime/rome",\n\t"type": "module",\n\t"private": true,\n\t"main": "index.ts"\n}',
+			'{\n\t"name": "@romejs-runtime/rome",\n\t"type": "module",\n\t"private": true,\n\t"main": "index.ts"\n}\n',
 		],
 		[
 			"test.ts",

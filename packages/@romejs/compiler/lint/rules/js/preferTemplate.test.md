@@ -262,3 +262,17 @@ console.log(`foo${1}${2}`);
 console.log("foo" + "bar");
 
 ```
+
+### `9`
+
+```
+✔ No known problems!
+
+```
+
+### `9: formatted`
+
+```
+console.log(foo() + "\n");
+
+```

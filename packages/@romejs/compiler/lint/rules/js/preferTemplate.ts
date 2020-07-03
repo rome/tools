@@ -51,11 +51,19 @@ function isUnnecessaryStringConcatExpression(
 		}
 	}
 
-	if (node.left.type === "JSStringLiteral" && !node.left.value.includes("`")) {
+	if (
+		node.left.type === "JSStringLiteral" &&
+		!node.left.value.includes("`") &&
+		!node.left.value.includes("\n")
+	) {
 		return true;
 	}
 
-	if (node.right.type === "JSStringLiteral" && !node.right.value.includes("`")) {
+	if (
+		node.right.type === "JSStringLiteral" &&
+		!node.right.value.includes("`") &&
+		!node.right.value.includes("\n")
+	) {
 		return true;
 	}
 

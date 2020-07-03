@@ -14,7 +14,7 @@ test(
 		await testLint(
 			t,
 			{
-				valid: [`console.log('foo' + 'bar')`],
+				valid: [`console.log('foo' + 'bar')`, `console.log(foo() + '\n')`],
 				invalid: [
 					`const foo = 'bar'; console.log(foo + 'baz')`,
 					`console.log((1 * 2) + 'foo')`,
