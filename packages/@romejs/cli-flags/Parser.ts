@@ -68,6 +68,7 @@ export type ParserOptions<T> = {
 	description?: string;
 	version?: string;
 	ignoreFlags?: Array<string>;
+	noProcessExit?: boolean;
 	commandRequired?: boolean;
 	commandSuggestions?: Dict<{
 		commandName: string;
@@ -383,7 +384,7 @@ export default class Parser<T> {
 			).asBoolean(false);
 			if (shouldDisplayVersion) {
 				this.reporter.logAll(version);
-				process.exit(0);
+				this.exit(0);
 			}
 		}
 
@@ -398,7 +399,7 @@ export default class Parser<T> {
 		).asStringSetOrVoid(["fish", "bash"]);
 		if (generateAutocomplete !== undefined) {
 			await this.generateAutocomplete(generateAutocomplete);
-			process.exit(0);
+			this.exit(0);
 		}
 
 		// Show help for --help
@@ -432,7 +433,7 @@ export default class Parser<T> {
 
 			this.currentCommand = undefined;
 
-			if (this.opts.commandRequired) {
+			if (this.opts.commandRequired && !shouldShowHelp) {
 				this.commandRequired(definedCommand !== undefined, flagsConsumer);
 			}
 
@@ -444,7 +445,7 @@ export default class Parser<T> {
 			await this.showHelp(
 				definedCommand === undefined ? undefined : definedCommand.command,
 			);
-			process.exit(1);
+			this.exit(1);
 		}
 
 		if (definedCommand !== undefined) {
@@ -961,6 +962,12 @@ export default class Parser<T> {
 		this.currentCommand = undefined;
 
 		return flags;
+	}
+
+	exit(code: number) {
+		if (!this.opts.noProcessExit) {
+			process.exit(code);
+		}
 	}
 }
 
