@@ -60,6 +60,15 @@ export * from "./css/types/CSSTimeType";
 export * from "./css/types/CSSTransformFunctionType";
 export * from "./css/types/CSSURLType";
 export * from "./css/at-rules/CSSViewportAtStatement";
+export * from "./html/attributes/HTMLAriaAttribute";
+export * from "./html/attributes/HTMLAttribute";
+export * from "./html/core/HTMLCommentBlock";
+export * from "./html/attributes/HTMLDataAttribute";
+export * from "./html/tags/HTMLDoctypeTag";
+export * from "./html/core/HTMLRoot";
+export * from "./html/tags/HTMLTag";
+export * from "./html/core/HTMLText";
+export * from "./html/tags/HTMLXmlTag";
 export * from "./js/temp/JSAmbiguousFlowTypeCastExpression";
 export * from "./js/expressions/JSArrayExpression";
 export * from "./js/auxiliary/JSArrayHole";
@@ -318,6 +327,15 @@ export type AnyNode =
 	| n.CSSTransformFunctionType
 	| n.CSSURLType
 	| n.CSSViewportAtStatement
+	| n.HTMLAriaAttribute
+	| n.HTMLAttribute
+	| n.HTMLCommentBlock
+	| n.HTMLDataAttribute
+	| n.HTMLDoctypeTag
+	| n.HTMLRoot
+	| n.HTMLTag
+	| n.HTMLText
+	| n.HTMLXmlTag
 	| n.JSAmbiguousFlowTypeCastExpression
 	| n.JSArrayExpression
 	| n.JSArrayHole
