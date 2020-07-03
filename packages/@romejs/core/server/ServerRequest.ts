@@ -601,11 +601,11 @@ export default class ServerRequest {
 		let pendingPaths = new AbsoluteFilePathSet();
 
 		async function flush(initial: boolean) {
+			timeout = undefined;
+
 			if (!initial && pendingPaths.size === 0) {
 				return;
 			}
-
-			timeout = undefined;
 
 			const paths = pendingPaths;
 			pendingPaths = new AbsoluteFilePathSet();
