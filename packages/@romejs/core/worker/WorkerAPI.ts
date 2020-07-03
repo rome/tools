@@ -14,7 +14,9 @@ import {
 	CompilerOptions,
 	Path,
 	TransformStageName,
+	analyzeDependencies,
 	compile,
+	lint,
 } from "@romejs/compiler";
 import {
 	WorkerCompilerOptions,
@@ -60,10 +62,15 @@ export default class WorkerAPI {
 	worker: Worker;
 	logger: Logger;
 
-	interceptAndAddGeneratedToDiagnostics<T extends {
+	interceptDiagnostics<T extends {
 		diagnostics: Diagnostics;
-	}>(val: T, generated: boolean): T {
-		if (generated) {
+	}>(
+		val: T,
+		{astModifiedFromSource}: {
+			astModifiedFromSource: boolean;
+		},
+	): T {
+		if (astModifiedFromSource) {
 			const diagnostics = val.diagnostics.map((diag) => {
 				return {
 					...diag,
@@ -74,7 +81,7 @@ export default class WorkerAPI {
 							{
 								type: "log",
 								category: "warn",
-								text: "This diagnostic was generated on a file that has been converted to JavaScript. The source locations are most likely incorrect",
+								text: "We manipulated this file before parsing it so the source locations are likely incorrect",
 							},
 						],
 					},
@@ -211,26 +218,30 @@ export default class WorkerAPI {
 		parseOptions: WorkerParseOptions,
 	): Promise<AnalyzeDependencyResult> {
 		const project = this.worker.getProject(ref.project);
-		const {handler} = getFileHandlerAssert(ref.real, project.config);
 		this.logger.info(`Analyze dependencies:`, ref.real.toMarkup());
 
-		const {analyzeDependencies} = handler;
-		if (analyzeDependencies === undefined) {
-			return UNKNOWN_ANALYZE_DEPENDENCIES_RESULT;
-		}
+		const {ast, sourceText, astModifiedFromSource} = await this.worker.parse(
+			ref,
+			parseOptions,
+		);
 
-		const {value, diagnostics} = await catchDiagnostics(() =>
-			analyzeDependencies({
-				file: ref,
-				project,
-				worker: this.worker,
-				parseOptions,
-			})
+		const {value, diagnostics} = await catchDiagnostics(async () =>
+			this.interceptDiagnostics(
+				await analyzeDependencies({
+					ref,
+					ast,
+					sourceText,
+					project,
+					options: {},
+				}),
+				{astModifiedFromSource},
+			)
 		);
 
 		if (diagnostics !== undefined) {
 			return {...UNKNOWN_ANALYZE_DEPENDENCIES_RESULT, diagnostics};
 		}
+
 		if (value === undefined) {
 			return UNKNOWN_ANALYZE_DEPENDENCIES_RESULT;
 		}
@@ -264,7 +275,7 @@ export default class WorkerAPI {
 		options: WorkerCompilerOptions,
 		parseOptions: WorkerParseOptions,
 	): Promise<CompileResult> {
-		const {ast, project, sourceText, generated} = await this.worker.parse(
+		const {ast, project, sourceText, astModifiedFromSource} = await this.worker.parse(
 			ref,
 			parseOptions,
 		);
@@ -275,7 +286,7 @@ export default class WorkerAPI {
 			options,
 			parseOptions,
 		);
-		return this.interceptAndAddGeneratedToDiagnostics(
+		return this.interceptDiagnostics(
 			await compile({
 				ref,
 				ast,
@@ -284,12 +295,12 @@ export default class WorkerAPI {
 				project,
 				stage,
 			}),
-			generated,
+			{astModifiedFromSource},
 		);
 	}
 
 	async parse(ref: FileReference, opts: WorkerParseOptions): Promise<AnyRoot> {
-		let {ast, generated} = await this.worker.parse(
+		let {ast, astModifiedFromSource} = await this.worker.parse(
 			ref,
 			{
 				...opts,
@@ -298,7 +309,7 @@ export default class WorkerAPI {
 			},
 		);
 
-		return this.interceptAndAddGeneratedToDiagnostics(ast, generated);
+		return this.interceptDiagnostics(ast, {astModifiedFromSource});
 	}
 
 	async format(
@@ -325,19 +336,42 @@ export default class WorkerAPI {
 		this.logger.info(`Formatting:`, ref.real.toMarkup());
 
 		const {handler} = getFileHandlerAssert(ref.real, project.config);
-		const {format} = handler;
-		if (format === undefined) {
+
+		if (!handler.canFormat) {
 			return;
 		}
 
-		const res = await format({
-			file: ref,
-			project,
-			worker: this.worker,
-			parseOptions,
-		});
+		const {customFormat} = handler;
+		if (customFormat !== undefined) {
+			return await customFormat({
+				file: ref,
+				project,
+				worker: this.worker,
+				parseOptions,
+			});
+		}
 
-		return res;
+		const {ast, sourceText, astModifiedFromSource} = await this.worker.parse(
+			ref,
+			parseOptions,
+		);
+
+		const out = formatAST(
+			ast,
+			{
+				sourceText,
+			},
+		);
+
+		return this.interceptDiagnostics(
+			{
+				formatted: out.code,
+				sourceText,
+				suppressions: [],
+				diagnostics: ast.diagnostics,
+			},
+			{astModifiedFromSource},
+		);
 	}
 
 	async lint(
@@ -351,8 +385,7 @@ export default class WorkerAPI {
 		// Get the extension handler
 		const {handler} = getFileHandlerAssert(ref.real, project.config);
 
-		const {lint} = handler;
-		if (lint === undefined && handler.format === undefined) {
+		if (!handler.canLint && !handler.canFormat) {
 			return {
 				save: undefined,
 				diagnostics: [],
@@ -363,16 +396,10 @@ export default class WorkerAPI {
 		// Catch any diagnostics, in the case of syntax errors etc
 		const res = await catchDiagnostics(
 			() => {
-				if (lint === undefined) {
-					return this._format(ref, parseOptions);
+				if (handler.canLint) {
+					return this.compilerLint(ref, options, parseOptions);
 				} else {
-					return lint({
-						file: ref,
-						project,
-						worker: this.worker,
-						options,
-						parseOptions,
-					});
+					return this._format(ref, parseOptions);
 				}
 			},
 			{
@@ -451,5 +478,63 @@ export default class WorkerAPI {
 				},
 			],
 		};
+	}
+
+	async compilerLint(
+		ref: FileReference,
+		options: WorkerLintOptions,
+		parseOptions: WorkerParseOptions,
+	): Promise<ExtensionLintResult> {
+		const {ast, sourceText, project, astModifiedFromSource} = await this.worker.parse(
+			ref,
+			parseOptions,
+		);
+
+		// Run the compiler in lint-mode which is where all the rules are actually ran
+		const res = await lint({
+			applyRecommendedFixes: options.applyRecommendedFixes,
+			ref,
+			options: {
+				lint: options.compilerOptions,
+			},
+			ast,
+			project,
+			sourceText,
+		});
+
+		// Extract lint diagnostics
+		let {diagnostics} = res;
+
+		// Only enable typechecking if enabled in .romeconfig
+		let typeCheckingEnabled = project.config.typeCheck.enabled === true;
+		if (project.config.typeCheck.libs.has(ref.real)) {
+			// don't typecheck lib files
+			typeCheckingEnabled = false;
+		}
+
+		// Run type checking if necessary
+		if (typeCheckingEnabled && ast.type === "JSRoot") {
+			const typeCheckProvider = await this.worker.getTypeCheckProvider(
+				ref.project,
+				options.prefetchedModuleSignatures,
+				parseOptions,
+			);
+			const typeDiagnostics = await jsAnalysis.check({
+				ast,
+				provider: typeCheckProvider,
+				project,
+			});
+			diagnostics = [...diagnostics, ...typeDiagnostics];
+		}
+
+		return this.interceptDiagnostics(
+			{
+				suppressions: res.suppressions,
+				diagnostics,
+				sourceText,
+				formatted: res.src,
+			},
+			{astModifiedFromSource},
+		);
 	}
 }

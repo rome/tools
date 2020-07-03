@@ -1,6 +1,6 @@
 {
-  "name": "@romejs/string-charcodes",
-  "private": true,
-  "type": "module",
-  "main": "index.ts"
+	"name": "@romejs/string-charcodes",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
 }

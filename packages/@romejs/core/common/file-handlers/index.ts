@@ -76,6 +76,7 @@ const assetHandler: ExtensionHandler = {
 	ext: "unknown",
 	canHaveScale: true,
 	isAsset: true,
+
 	async parse({path}) {
 		// This exists just so analyzeDependencies has something to look at
 		// When bundling we'll have custom logic in the compiler to handle assets and inject the correct string
@@ -84,7 +85,7 @@ const assetHandler: ExtensionHandler = {
 		return {
 			// Shouldn't error
 			ast: parseJS({input: sourceText, sourceType: "module", path}),
-			generated: true,
+			astModifiedFromSource: true,
 			sourceText,
 		};
 	},
@@ -99,11 +100,11 @@ export const FORMATTABLE_EXTENSIONS: Array<string> = [];
 function setHandler(handler: ExtensionHandler) {
 	const {ext} = handler;
 
-	if (handler.lint !== undefined) {
+	if (handler.canLint || handler.canFormat) {
 		LINTABLE_EXTENSIONS.push(ext);
 	}
 
-	if (handler.format !== undefined) {
+	if (handler.canFormat) {
 		FORMATTABLE_EXTENSIONS.push(ext);
 	}
 

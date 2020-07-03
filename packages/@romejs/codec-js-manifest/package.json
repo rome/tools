@@ -1,6 +1,6 @@
 {
-  "name": "@romejs/codec-js-manifest",
-  "private": true,
-  "type": "module",
-  "main": "index.ts"
+	"name": "@romejs/codec-js-manifest",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
 }
