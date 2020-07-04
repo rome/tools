@@ -220,12 +220,20 @@ export default class WorkerAPI {
 		const project = this.worker.getProject(ref.project);
 		this.logger.info(`Analyze dependencies:`, ref.real.toMarkup());
 
-		const {ast, sourceText, astModifiedFromSource} = await this.worker.parse(
-			ref,
-			parseOptions,
+		const parseResult = await catchDiagnostics(async () =>
+			this.worker.parse(ref, parseOptions)
 		);
 
-		const {value, diagnostics} = await catchDiagnostics(async () =>
+		if (parseResult.diagnostics !== undefined) {
+			return {
+				...UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
+				diagnostics: parseResult.diagnostics,
+			};
+		}
+
+		const {ast, sourceText, astModifiedFromSource} = parseResult.value;
+
+		const analyzeResult = await catchDiagnostics(async () =>
 			this.interceptDiagnostics(
 				await analyzeDependencies({
 					ref,
@@ -238,15 +246,14 @@ export default class WorkerAPI {
 			)
 		);
 
-		if (diagnostics !== undefined) {
-			return {...UNKNOWN_ANALYZE_DEPENDENCIES_RESULT, diagnostics};
+		if (analyzeResult.diagnostics !== undefined) {
+			return {
+				...UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
+				diagnostics: analyzeResult.diagnostics,
+			};
 		}
 
-		if (value === undefined) {
-			return UNKNOWN_ANALYZE_DEPENDENCIES_RESULT;
-		}
-
-		return value;
+		return analyzeResult.value;
 	}
 
 	async workerCompilerOptionsToCompilerOptions(
