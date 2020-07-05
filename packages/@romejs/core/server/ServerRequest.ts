@@ -115,6 +115,10 @@ type GetFilesTryAlternateArg = (
 	path: UnknownFilePath,
 ) => undefined | UnknownFilePath;
 
+type WrapRequestDiagnosticOpts = {
+	noRetry?: boolean;
+};
+
 export type ServerRequestGetFilesOptions = Omit<
 	MemoryFSGlobOptions,
 	"getProjectIgnore"
@@ -824,6 +828,7 @@ export default class ServerRequest {
 		method: string,
 		path: AbsoluteFilePath,
 		factory: (bridge: WorkerBridge, ref: JSONFileReference) => Promise<T>,
+		opts: WrapRequestDiagnosticOpts = {},
 	): Promise<T> {
 		const {server} = this;
 		const owner = await server.fileAllocator.getOrAssignOwner(path);
@@ -876,7 +881,7 @@ export default class ServerRequest {
 			lock.release();
 
 			const endMtime = this.server.memoryFs.maybeGetMtime(path);
-			if (endMtime !== startMtime) {
+			if (endMtime !== startMtime && !opts.noRetry) {
 				return this.wrapRequestDiagnostic(method, path, factory);
 			}
 		}
@@ -896,6 +901,7 @@ export default class ServerRequest {
 				this.server.memoryFs.addBuffer(path, content);
 				this.server.refreshFileEvent.send(path);
 			},
+			{noRetry: true},
 		);
 	}
 
@@ -910,6 +916,7 @@ export default class ServerRequest {
 				this.server.memoryFs.clearBuffer(path);
 				this.server.refreshFileEvent.send(path);
 			},
+			{noRetry: true},
 		);
 	}
 
