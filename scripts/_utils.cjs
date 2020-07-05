@@ -108,12 +108,15 @@ exports.isDevDaemonRunning = function() {
 exports.execDev = async function(argv) {
 	await exports.buildTrunk();
 	exports.heading("Executing trunk");
-	exports.execNode([path.join(devFolder, "index.js"), ...argv], {
-		env: {
-			...process.env,
-			ROME_DEV: "1",
-		}
-	});
+	exports.execNode(
+		[path.join(devFolder, "index.js"), ...argv],
+		{
+			env: {
+				...process.env,
+				ROME_DEV: "1",
+			},
+		},
+	);
 };
 
 exports.buildRelease = function(argv) {
