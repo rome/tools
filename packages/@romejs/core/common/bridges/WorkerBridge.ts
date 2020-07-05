@@ -122,7 +122,7 @@ export type WorkerLintResult = {
 export default class WorkerBridge extends Bridge {
 	log = this.createEvent<string, void>({
 		name: "log",
-		direction: "server->client",
+		direction: "server<-client",
 	});
 
 	updateProjects = this.createEvent<
