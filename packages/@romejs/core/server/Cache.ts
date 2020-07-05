@@ -61,7 +61,8 @@ export default class Cache {
 		this.server = server;
 		this.loadedEntries = new AbsoluteFilePathMap();
 		this.disabled =
-			!server.options.forceCacheEnabled && process.env.ROME_CACHE === "0";
+			!server.options.forceCacheEnabled &&
+			(process.env.ROME_CACHE === "0" || process.env.ROME_DEV === "1");
 		this.cachePath = server.userConfig.cachePath;
 
 		this.runningWritePromise = undefined;

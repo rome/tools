@@ -107,7 +107,6 @@ exports.isDevDaemonRunning = function() {
 
 exports.execDev = async function(argv) {
 	await exports.buildTrunk();
-	process.env.ROME_CACHE = "0";
 	exports.heading("Executing trunk");
 	exports.execNode([path.join(devFolder, "index.js"), ...argv]);
 };
