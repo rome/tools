@@ -29,13 +29,13 @@ exports.unlink = function(loc) {
 	}
 };
 
-exports.exec = function(cmd, args, cwd) {
+exports.exec = function(cmd, args, opts) {
 	const res = child.spawnSync(
 		cmd,
 		args,
 		{
 			stdio: "inherit",
-			cwd,
+			...opts,
 		},
 	);
 	if (res.status !== 0) {
@@ -43,8 +43,8 @@ exports.exec = function(cmd, args, cwd) {
 	}
 };
 
-exports.execNode = function(args) {
-	exports.exec(process.execPath, [...process.execArgv, ...args]);
+exports.execNode = function(args, opts) {
+	exports.exec(process.execPath, [...process.execArgv, ...args], opts);
 };
 
 exports.writtenFiles = [];
@@ -107,9 +107,16 @@ exports.isDevDaemonRunning = function() {
 
 exports.execDev = async function(argv) {
 	await exports.buildTrunk();
-	process.env.ROME_CACHE = "0";
 	exports.heading("Executing trunk");
-	exports.execNode([path.join(devFolder, "index.js"), ...argv]);
+	exports.execNode(
+		[path.join(devFolder, "index.js"), ...argv],
+		{
+			env: {
+				...process.env,
+				ROME_DEV: "1",
+			},
+		},
+	);
 };
 
 exports.buildRelease = function(argv) {

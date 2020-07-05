@@ -264,8 +264,6 @@ export default class Server {
 		this.resolver = new Resolver(this);
 		this.cache = new Cache(this);
 
-		this.warnedCacheClients = new WeakSet();
-
 		this.clientIdCounter = 0;
 
 		this.requestRunningCounter = 0;
@@ -295,7 +293,6 @@ export default class Server {
 	profiling: undefined | ProfilingStartData;
 	options: ServerOptions;
 
-	warnedCacheClients: WeakSet<ServerBridge>;
 	memoryFs: MemoryFileSystem;
 	virtualModules: VirtualModules;
 	resolver: Resolver;
@@ -670,6 +667,13 @@ export default class Server {
 		}
 		this.connectedReporters.addStream(errStream);
 
+		// Warn about disabled disk caching
+		if (this.cache.disabled) {
+			reporter.warn(
+				"Disk caching has been disabled due to the <emphasis>ROME_CACHE=0</emphasis> environment variable",
+			);
+		}
+
 		const client: ServerClient = {
 			id: this.clientIdCounter++,
 			bridge,
@@ -845,7 +849,7 @@ export default class Server {
 		bridgeEndPromise: Promise<void>,
 		origins: Array<string>,
 	): Promise<ServerQueryResponse> {
-		const {query, reporter, bridge} = req;
+		const {query} = req;
 		const {requestFlags} = query;
 
 		if (requestFlags.benchmark && !origins.includes("benchmark")) {
@@ -892,14 +896,6 @@ export default class Server {
 				query.commandName,
 			);
 			if (serverCommand) {
-				// Warn about disabled disk caching
-				if (this.cache.disabled && !this.warnedCacheClients.has(bridge)) {
-					reporter.warn(
-						"Disk caching has been disabled due to the <emphasis>ROME_CACHE=0</emphasis> environment variable",
-					);
-					this.warnedCacheClients.add(bridge);
-				}
-
 				await validateRequestFlags(req, serverCommand);
 
 				let commandFlags;

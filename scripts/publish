@@ -20,7 +20,7 @@ function setName(name) {
 }
 
 function publishRegistry(registry) {
-  exec("npm", ["publish", "--registry", registry], releaseFolder);
+  exec("npm", ["publish", "--registry", registry], {cwd: releaseFolder});
 }
 
 try {
