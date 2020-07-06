@@ -29,7 +29,7 @@ JSRoot {
 		}
 	}
 	comments: Array [
-		JSCommentLine {
+		CommentLine {
 			id: "0"
 			value: " `export abstract class {}` is not valid TypeScript."
 			loc: Object {
@@ -46,7 +46,7 @@ JSRoot {
 				}
 			}
 		}
-		JSCommentLine {
+		CommentLine {
 			id: "1"
 			value: " `abstract class` is not valid as an expression."
 			loc: Object {

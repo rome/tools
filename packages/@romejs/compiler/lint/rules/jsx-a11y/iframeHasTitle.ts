@@ -2,11 +2,11 @@ import {descriptions} from "@romejs/diagnostics";
 import {
 	getJSXAttribute,
 	hasJSXAttribute,
+	isEmptyTemplateLiteral,
 	isJSXElement,
 } from "@romejs/js-ast-utils";
 import {AnyNode, JSXElement} from "@romejs/ast";
 import {Path} from "@romejs/compiler";
-import isEmptyTemplateLiteral from "@romejs/js-ast-utils/isEmptyTemplateLiteral";
 
 function validTitle(node: JSXElement) {
 	if (hasJSXAttribute(node, "title")) {

@@ -32,7 +32,7 @@ JSRoot {
 		}
 	}
 	comments: Array [
-		JSCommentLine {
+		CommentLine {
 			id: "0"
 			value: " Same as `generic`. Verify that JSX doesn't change things."
 			loc: Object {

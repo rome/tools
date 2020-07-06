@@ -140,9 +140,9 @@ function readOctalCode(
 }
 
 export const createRegExpParser = createParser((ParserCore) =>
-	class RegExpParser extends ParserCore<Tokens, void> {
+	class RegExpParser extends ParserCore<Tokens> {
 		constructor(opts: RegExpParserOptions) {
-			super(opts, "parse/regex");
+			super(opts, "parse/regex", {});
 			this.diagnostics = [];
 			this.unicode = opts.unicode;
 		}

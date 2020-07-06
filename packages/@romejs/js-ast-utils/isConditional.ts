@@ -7,7 +7,7 @@
 
 import {AnyNode, JSConditionalExpression, JSIfStatement} from "@romejs/ast";
 
-export default function isConditional(
+export function isConditional(
 	node: undefined | AnyNode,
 ): node is JSConditionalExpression | JSIfStatement {
 	if (node === undefined) {

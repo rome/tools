@@ -7,7 +7,7 @@
 
 import {AnyJSFunction, AnyNode} from "@romejs/ast";
 
-export default function isFunctionNode(node: AnyNode): node is AnyJSFunction {
+export function isFunctionNode(node: AnyNode): node is AnyJSFunction {
 	return (
 		node.type === "JSFunctionDeclaration" ||
 		node.type === "JSFunctionExpression" ||

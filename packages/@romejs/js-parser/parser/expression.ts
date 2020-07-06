@@ -157,7 +157,7 @@ export function checkPropClash(
 
 	if (name === "__proto__") {
 		if (props.has("proto")) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				description: descriptions.JS_PARSER.PROTO_PROP_REDEFINITION,
 				loc: key.loc,
 			});
@@ -264,7 +264,7 @@ export function parseMaybeAssign<T extends AnyNode = AnyJSExpression>(
 					typeParameters,
 				};
 			} else {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					loc: typeParameters.loc,
 					description: descriptions.JS_PARSER.EXPECTED_ARROW_AFTER_TYPE_PARAMS,
 				});
@@ -475,7 +475,7 @@ export function parseConditional(
 	parser.state.noArrowAt = originalNoArrowAt;
 
 	if (!parser.eat(tt.colon)) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.MISSING_CONDITIONAL_SEPARATOR,
 		});
 	}
@@ -616,7 +616,7 @@ export function parseExpressionOp(
 				left.type === "JSUnaryExpression" &&
 				!parser.isParenthesized(left)
 			) {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					loc: left.argument.loc,
 					description: descriptions.JS_PARSER.WRAP_EXPONENTIATION,
 				});
@@ -713,7 +713,7 @@ export function parseMaybeUnary(
 			checkLVal(parser, argument, undefined, undefined, "prefix operation");
 		} else if (parser.inScope("STRICT") && operator === "delete") {
 			if (argument.type === "JSReferenceIdentifier") {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					loc: argument.loc,
 					description: descriptions.JS_PARSER.DELETE_LOCAL_VARIABLE_IN_STRICT,
 				});
@@ -721,7 +721,7 @@ export function parseMaybeUnary(
 				argument.type === "JSMemberExpression" &&
 				argument.property.value.type === "JSPrivateName"
 			) {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					loc: argument.property.loc,
 					description: descriptions.JS_PARSER.DELETE_PRIVATE_FIELD,
 				});
@@ -882,7 +882,7 @@ export function parseAsyncArrowWithTypeParameters(
 
 	const {returnType, valid} = parseArrowHead(parser);
 	if (!valid) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.INVALID_ASYNC_ARROW_WITH_TYPE_PARAMS,
 		});
 		return undefined;
@@ -1230,7 +1230,7 @@ export function parseTaggedTemplateExpression(
 	typeArguments?: TSTypeParameterInstantiation,
 ): JSTaggedTemplateExpression {
 	if (state.optionalChainMember) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.TAGGED_TEMPLATE_IN_OPTIONAL_CHAIN,
 		});
 	}
@@ -1253,14 +1253,14 @@ export function checkYieldAwaitInDefaultParams(parser: JSParser) {
 		(parser.state.awaitPos === ob1Number0 ||
 		parser.state.yieldPos < parser.state.awaitPos)
 	) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			index: parser.state.yieldPos,
 			description: descriptions.JS_PARSER.YIELD_IN_GENERATOR_PARAMS,
 		});
 	}
 
 	if (ob1Get0(parser.state.awaitPos) > 0) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			index: parser.state.awaitPos,
 			description: descriptions.JS_PARSER.AWAIT_IN_ASYNC_PARAMS,
 		});
@@ -1351,7 +1351,7 @@ export function parseCallExpressionArguments(
 
 				funcParams.push(elt);
 			} else {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					description: descriptions.JS_PARSER.CONFUSING_CALL_ARGUMENT,
 					loc: elt.loc,
 				});
@@ -1367,7 +1367,7 @@ export function parseCallExpressionArguments(
 	}
 
 	if (forceAsyncArrow && !shouldParseAsyncArrow(parser)) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.EXPECTED_ARROW_AFTER_ASYNC_TYPE_PARAMS,
 		});
 	}
@@ -1378,7 +1378,7 @@ export function parseCallExpressionArguments(
 		innerParenStart !== undefined &&
 		shouldParseAsyncArrow(parser)
 	) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			start: innerParenStart,
 			description: descriptions.JS_PARSER.PARENTHESIZED_FUNCTION_PARAMS,
 		});
@@ -1648,7 +1648,7 @@ export function parseExpressionAtom(
 
 		default: {
 			const start = parser.getPosition();
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				description: descriptions.JS_PARSER.UNKNOWN_EXPRESSION_ATOM_START(
 					context,
 				),
@@ -1748,7 +1748,7 @@ export function parseMetaProperty(
 	if (property.name === propertyName) {
 		parser.banUnicodeEscape(escapePosition, propertyName);
 	} else {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc: property.loc,
 			description: descriptions.JS_PARSER.INVALID_META_PROPERTY(
 				meta.name,
@@ -1774,7 +1774,7 @@ export function parseImportMetaProperty(parser: JSParser): JSMetaProperty {
 	const node = parseMetaProperty(parser, start, id, "meta");
 
 	if (!parser.inModule) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc: node.loc,
 			description: descriptions.JS_PARSER.IMPORT_META_OUTSIDE_MODULE,
 		});
@@ -1892,7 +1892,7 @@ export function parseParenAndDistinguishExpression(
 
 			for (const param of exprList) {
 				if (parser.isParenthesized(param)) {
-					parser.addDiagnostic({
+					parser.unexpectedDiagnostic({
 						loc: param.loc,
 						description: descriptions.JS_PARSER.PARENTHESIZED_FUNCTION_PARAMS,
 					});
@@ -1926,7 +1926,7 @@ export function parseParenAndDistinguishExpression(
 	parser.state.awaitPos = oldAwaitPos || parser.state.awaitPos;
 
 	if (exprList.length === 0) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			start: innerStart,
 			end: innerEnd,
 			description: descriptions.JS_PARSER.EMPTY_PARENTHESIZED_EXPRESSION,
@@ -2094,7 +2094,7 @@ export function parseNew(parser: JSParser): JSNewExpression | JSMetaProperty {
 			!parser.inScope("NON_ARROW_FUNCTION") &&
 			!parser.inScope("CLASS_PROPERTY")
 		) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: metaProp.loc,
 				description: descriptions.JS_PARSER.NEW_TARGET_OUTSIDE_CLASS,
 			});
@@ -2106,7 +2106,7 @@ export function parseNew(parser: JSParser): JSNewExpression | JSMetaProperty {
 	const callee = parseNoCallExpr(parser, "new callee");
 
 	if (callee.type === "JSImportCall") {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc: callee.loc,
 			description: descriptions.JS_PARSER.SUPER_OUTSIDE_METHOD,
 		});
@@ -2116,13 +2116,13 @@ export function parseNew(parser: JSParser): JSNewExpression | JSMetaProperty {
 	if (optionalMember !== undefined) {
 		const memberLoc = parser.getLoc(optionalMember);
 
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.NEW_IN_OPTIONAL_CHAIN(memberLoc),
 		});
 	}
 
 	if (parser.eat(tt.questionDot)) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.NEW_IN_OPTIONAL_CHAIN(),
 		});
 	}
@@ -2151,7 +2151,7 @@ export function parseNew(parser: JSParser): JSNewExpression | JSMetaProperty {
 		);
 		args = toReferencedList(parser, args);
 	} else if (parser.isSyntaxEnabled("ts") && typeArguments !== undefined) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.NEW_WITH_TYPESCRIPT_TYPE_ARGUMENTS_NO_PARENS,
 		});
 	}
@@ -2200,7 +2200,7 @@ export function parseTemplateElement(
 		if (isTagged) {
 			parser.state.invalidTemplateEscapePosition = undefined;
 		} else {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				index: parser.state.invalidTemplateEscapePosition,
 				description: descriptions.JS_PARSER.INVALID_TEMPLATE_ESCAPE,
 			});
@@ -2335,7 +2335,7 @@ export function parseObjectExpression(
 				};
 			} else {
 				if (parser.hasPrecedingLineBreak()) {
-					parser.addDiagnostic({
+					parser.unexpectedDiagnostic({
 						description: descriptions.JS_PARSER.ASYNC_OBJECT_METHOD_LINE_BREAK,
 					});
 				}
@@ -2428,7 +2428,7 @@ export function parseObjectPattern(
 			rest = argument;
 
 			if (firstRestLocation !== undefined) {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					loc: argument.loc,
 					description: descriptions.JS_PARSER.MULTIPLE_DESTRUCTURING_RESTS,
 				});
@@ -2442,7 +2442,7 @@ export function parseObjectPattern(
 				parser.match(tt.comma) &&
 				parser.lookaheadState().tokenType === tt.braceR
 			) {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					description: descriptions.JS_PARSER.TRAILING_COMMA_AFTER_REST,
 				});
 				parser.eat(tt.comma);
@@ -2476,7 +2476,7 @@ export function parseObjectPattern(
 		checkPropClash(parser, prop, propHash);
 
 		if (prop.type !== "JSBindingObjectPatternProperty") {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				description: descriptions.JS_PARSER.INVALID_OBJECT_PATTERN_PROP,
 				loc: prop.loc,
 			});
@@ -2542,19 +2542,19 @@ export function checkGetterSetterParamCount(
 
 	if (kind === "get") {
 		if (head.rest !== undefined || head.params.length !== 0) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: method.loc,
 				description: descriptions.JS_PARSER.GETTER_WITH_PARAMS,
 			});
 		}
 	} else if (kind === "set") {
 		if (head.rest !== undefined) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: head.rest.loc,
 				description: descriptions.JS_PARSER.SETTER_WITH_REST,
 			});
 		} else if (head.params.length !== 1) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: method.loc,
 				description: descriptions.JS_PARSER.SETTER_NOT_ONE_PARAM,
 			});
@@ -2584,7 +2584,7 @@ export function parseObjectMethod(
 ): undefined | JSObjectMethod {
 	if (isAsync || isGenerator || parser.match(tt.parenL)) {
 		if (isPattern) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				description: descriptions.JS_PARSER.OBJECT_METHOD_IN_PATTERN,
 			});
 		}
@@ -2619,13 +2619,13 @@ export function parseObjectMethod(
 
 	if (isGetterOrSetterMethod(parser, key, key.value, isPattern)) {
 		if (isAsync) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				description: descriptions.JS_PARSER.ASYNC_GETTER_SETTER,
 			});
 		}
 
 		if (isGenerator) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				description: descriptions.JS_PARSER.GENERATOR_GETTER_SETTER,
 			});
 		}
@@ -2817,7 +2817,7 @@ export function parseObjectPropertyValue(
 			node.type === "JSObjectProperty" ||
 			node.type === "JSBindingObjectPatternProperty"
 		) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: typeParameters.loc,
 				description: descriptions.JS_PARSER.OBJECT_PROPERTY_WITH_TYPE_PARAMETERS,
 			});
@@ -2989,7 +2989,7 @@ export function parseArrowExpression(
 	// if we got there, it's no more "yield in possible arrow parameters";
 	// it's just "yield in arrow parameters"
 	if (parser.state.yieldInPossibleArrowParameters) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			start: parser.state.yieldInPossibleArrowParameters,
 			description: descriptions.JS_PARSER.YIELD_NAME_IN_GENERATOR,
 		});
@@ -3258,7 +3258,7 @@ export function checkFunctionNameAndParams(
 	) {
 		const firstDirective = body.directives[0];
 		if (firstDirective !== undefined && firstDirective.value === "use strict") {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: firstDirective.loc,
 				description: descriptions.JS_PARSER.STRICT_DIRECTIVE_IN_NON_SIMPLE_PARAMS,
 			});
@@ -3294,7 +3294,7 @@ export function checkFunctionNameAndParams(
 
 		for (const param of params) {
 			if (_isStrictBody && param.type !== "JSBindingIdentifier") {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					loc: param.loc,
 					description: descriptions.JS_PARSER.NON_SIMPLE_PARAM_IN_EXPLICIT_STRICT_FUNCTION,
 				});
@@ -3538,7 +3538,7 @@ export function parseIdentifierName(
 			parser.state.context.pop();
 		}
 	} else {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.EXPECTED_IDENTIFIER,
 		});
 		name = "";
@@ -3573,28 +3573,28 @@ export function checkReservedWord(
 	}
 
 	if (parser.inScope("GENERATOR") && word === "yield") {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc,
 			description: descriptions.JS_PARSER.YIELD_NAME_IN_GENERATOR,
 		});
 	}
 
 	if (parser.inScope("ASYNC") && word === "await") {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc,
 			description: descriptions.JS_PARSER.AWAIT_NAME_IN_ASYNC,
 		});
 	}
 
 	if (parser.inScope("CLASS_PROPERTY") && word === "arguments") {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc,
 			description: descriptions.JS_PARSER.ARGUMENTS_IN_CLASS_FIELD,
 		});
 	}
 
 	if (checkKeywords && isKeyword(word)) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc,
 			description: descriptions.JS_PARSER.UNEXPECTED_KEYWORD(word),
 		});
@@ -3613,12 +3613,12 @@ export function checkReservedWord(
 
 	if (isReserved) {
 		if (!parser.inScope("ASYNC") && word === "await") {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc,
 				description: descriptions.JS_PARSER.AWAIT_OUTSIDE_ASYNC,
 			});
 		} else {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc,
 				description: descriptions.JS_PARSER.RESERVED_WORD(word),
 			});
@@ -3633,7 +3633,7 @@ export function parseAwait(parser: JSParser): JSAwaitExpression {
 	}
 
 	if (!parser.inScope("ASYNC")) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.AWAIT_OUTSIDE_ASYNC,
 		});
 	}
@@ -3642,13 +3642,13 @@ export function parseAwait(parser: JSParser): JSAwaitExpression {
 	parser.next();
 
 	if (parser.inScope("PARAMETERS")) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.AWAIT_IN_ASYNC_PARAMS,
 		});
 	}
 
 	if (parser.eat(tt.star)) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			start,
 			description: descriptions.JS_PARSER.AWAIT_STAR,
 		});
@@ -3667,7 +3667,7 @@ export function parseYield(parser: JSParser, noIn?: boolean): JSYieldExpression 
 	const start = parser.getPosition();
 
 	if (parser.inScope("PARAMETERS")) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			start,
 			description: descriptions.JS_PARSER.YIELD_IN_GENERATOR_PARAMS,
 		});
@@ -3783,7 +3783,7 @@ function parseRegExpLiteral(parser: JSParser): JSRegExpLiteral {
 	const {diagnostics, expression} = regexParser.parse();
 
 	for (const diagnostic of diagnostics) {
-		parser.addDiagnostic(diagnostic);
+		parser.unexpectedDiagnostic(diagnostic);
 	}
 
 	return parser.finishNode(
@@ -3820,7 +3820,7 @@ function parseImportCall(parser: JSParser): JSImportCall {
 	let argument: ReturnType<typeof parseCallArgument>;
 
 	if (parser.match(tt.parenR)) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.IMPORT_EXACT_ARGUMENTS,
 		});
 
@@ -3841,7 +3841,7 @@ function parseImportCall(parser: JSParser): JSImportCall {
 
 	// TODO warn on multiple arguments
 	if (parser.eat(tt.comma)) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			start: parser.state.lastStartPos,
 			end: parser.state.lastEndPos,
 			description: descriptions.JS_PARSER.IMPORT_TRAILING_COMMA,
@@ -3849,7 +3849,7 @@ function parseImportCall(parser: JSParser): JSImportCall {
 	}
 
 	if (argument.type === "JSSpreadElement") {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc: argument.loc,
 			description: descriptions.JS_PARSER.IMPORT_SPREAD,
 		});
@@ -3876,7 +3876,7 @@ function parseSuper(parser: JSParser): JSSuper {
 		!parser.inScope("CLASS_PROPERTY") &&
 		parser.sourceType !== "template"
 	) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.SUPER_OUTSIDE_METHOD,
 		});
 	}
@@ -3889,7 +3889,7 @@ function parseSuper(parser: JSParser): JSSuper {
 		!parser.match(tt.bracketL) &&
 		!parser.match(tt.dot)
 	) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.INVALID_SUPER_SUFFIX,
 		});
 	}
@@ -3902,7 +3902,7 @@ function parseSuper(parser: JSParser): JSSuper {
 		parser.getLastScope("CLASS") !== "derived") &&
 		parser.sourceType !== "template"
 	) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc,
 			description: descriptions.JS_PARSER.SUPER_CALL_OUTSIDE_CONSTRUCTOR,
 		});

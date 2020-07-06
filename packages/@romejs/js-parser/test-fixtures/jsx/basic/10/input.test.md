@@ -32,7 +32,7 @@ JSRoot {
 		}
 	}
 	comments: Array [
-		JSCommentBlock {
+		CommentBlock {
 			id: "1"
 			value: " this is a comment "
 			loc: Object {

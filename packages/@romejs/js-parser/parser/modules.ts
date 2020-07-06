@@ -179,7 +179,7 @@ export function parseExport(
 	) {
 		const next = parser.lookaheadState();
 
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			start: next.startPos,
 			end: next.endPos,
 			description: descriptions.JS_PARSER.EXPORT_ASYNC_NO_FUNCTION_KEYWORD,
@@ -223,7 +223,7 @@ export function parseExport(
 			declaration.type !== "TSInterfaceDeclaration" &&
 			declaration.type !== "TSDeclareFunction"
 		) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: declaration.loc,
 				description: descriptions.JS_PARSER.INVALID_EXPORT_DECLARATION,
 			});
@@ -329,7 +329,7 @@ function parseExportDefaultExpression(
 	}
 
 	if (parser.match(tt._const) || parser.match(tt._var) || isLetStart(parser)) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.INVALID_EXPORT_DEFAULT,
 		});
 	}
@@ -449,7 +449,7 @@ function parseExportFrom(
 		} else {
 			const expr = parseExpressionAtom(parser, "export from");
 
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: expr.loc,
 				description: descriptions.JS_PARSER.EXPORT_FROM_NOT_STRING,
 			});
@@ -461,7 +461,7 @@ function parseExportFrom(
 			};
 		}
 	} else if (expect) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.EXPORT_MISSING_FROM,
 		});
 
@@ -539,7 +539,7 @@ function parseExportNamespace(
 	namedSpecifiers: Array<JSExportExternalSpecifier>;
 } {
 	if (exportKind === "type") {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.EXPORT_TYPE_NAMESPACE,
 		});
 	}
@@ -669,7 +669,7 @@ function checkDuplicateExports(
 
 	const existing = parser.state.exportedIdentifiers.get(name);
 	if (existing !== undefined) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc: node.loc,
 			description: descriptions.JS_PARSER.DUPLICATE_EXPORT(name, existing),
 		});
@@ -756,7 +756,7 @@ export function parseImport(
 		if (parser.expectContextual("from") && parser.match(tt.string)) {
 			source = parseStringLiteral(parser);
 		} else {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				description: descriptions.JS_PARSER.IMPORT_MISSING_SOURCE,
 			});
 
@@ -858,7 +858,7 @@ function parseImportSpecifiers(
 
 	if (importKind) {
 		if (importKind === "type" && lh.tokenType === tt.star) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				start: lh.startPos,
 				description: descriptions.JS_PARSER.IMPORT_TYPE_STAR,
 			});
@@ -943,7 +943,7 @@ function parseImportSpecifiers(
 		} else {
 			// Detect an attempt to deep destructure
 			if (parser.eat(tt.colon)) {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					description: descriptions.JS_PARSER.DESTRUCTURING_IN_IMPORT,
 				});
 			}
@@ -1018,7 +1018,7 @@ function parseImportSpecifier(
 	const specifierIsTypeImport = hasTypeImportKind(importKind);
 
 	if (nodeIsTypeImport && specifierIsTypeImport) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			start: firstIdentPos,
 			description: descriptions.JS_PARSER.IMPORT_KIND_SPECIFIER_ON_IMPORT_DECLARATION_WITH_KIND,
 		});

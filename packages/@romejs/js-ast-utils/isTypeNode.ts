@@ -7,7 +7,7 @@
 
 import {AnyNode} from "@romejs/ast";
 
-export default function isTypeNode(node: AnyNode): boolean {
+export function isTypeNode(node: AnyNode): boolean {
 	if (
 		node.type.startsWith("Flow") ||
 		node.type.startsWith("TS") ||

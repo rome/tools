@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSComment, AnyNode, AnyRoot} from "@romejs/ast";
+import {AnyComment, AnyNode, AnyRoot} from "@romejs/ast";
 import {
 	DiagnosticLocation,
 	DiagnosticSuppression,
@@ -23,11 +23,11 @@ type ExtractedSuppressions = {
 	diagnostics: Diagnostics;
 };
 
-type NodeToComment = Map<AnyJSComment, AnyNode>;
+type NodeToComment = Map<AnyComment, AnyNode>;
 
 function extractSuppressionsFromComment(
 	context: CompilerContext,
-	comment: AnyJSComment,
+	comment: AnyComment,
 	nodeToComment: NodeToComment,
 ): undefined | ExtractedSuppressions {
 	const commentLocation = comment.loc;

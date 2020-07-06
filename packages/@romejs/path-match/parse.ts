@@ -24,9 +24,9 @@ function isntNewline(char: string): boolean {
 }
 
 const createPathMatchParser = createParser((ParserCore) =>
-	class PathMatchParser extends ParserCore<Tokens, void> {
+	class PathMatchParser extends ParserCore<Tokens> {
 		constructor(opts: PathMatchParserOptions) {
-			super(opts, "parse/patchMatch");
+			super(opts, "parse/patchMatch", {});
 		}
 
 		isWordCharacter(char: string, index: Number0, input: string): boolean {

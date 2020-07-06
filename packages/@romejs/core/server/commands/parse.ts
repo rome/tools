@@ -9,8 +9,8 @@ import {ServerRequest} from "@romejs/core";
 import {Consumer} from "@romejs/consume";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import {ConstJSSourceType, jsRoot} from "@romejs/ast";
-import {removeLoc} from "@romejs/js-ast-utils";
+import {ConstJSSourceType} from "@romejs/ast";
+import {assertRoot, removeLoc} from "@romejs/ast-utils";
 
 type Flags = {
 	allowDiagnostics: boolean;
@@ -43,7 +43,7 @@ export default createServerCommand({
 		);
 
 		if (flags.compact) {
-			ast = jsRoot.assert(removeLoc(ast));
+			ast = assertRoot(removeLoc(ast));
 		}
 
 		reporter.inspect(ast);

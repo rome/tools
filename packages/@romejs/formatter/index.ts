@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSComment, AnyNode, MOCK_PARENT} from "@romejs/ast";
+import {AnyComment, AnyNode, MOCK_PARENT} from "@romejs/ast";
 import Builder from "./Builder";
 import {PrinterOutput, printTokenToString} from "./Printer";
 
@@ -17,7 +17,7 @@ export type FormatterOptions = {
 	typeAnnotations?: boolean;
 	format?: "pretty" | "compact";
 	indent?: number;
-	comments?: Array<AnyJSComment>;
+	comments?: Array<AnyComment>;
 	sourceMaps?: boolean;
 	sourceText?: string;
 	allowInterpreterDirective?: boolean;

@@ -171,7 +171,8 @@ export default class Cache {
 
 	getCacheFilename(path: AbsoluteFilePath): AbsoluteFilePath {
 		const uid = this.server.projectManager.getUid(path, true);
-		return this.cachePath.append(uid);
+		// We add a single underscore to prevent the extension from being registered
+		return this.cachePath.append(`${uid}_`);
 	}
 
 	async handleDeleted(path: AbsoluteFilePath) {

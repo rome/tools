@@ -29,7 +29,7 @@ JSRoot {
 		}
 	}
 	comments: Array [
-		JSCommentLine {
+		CommentLine {
 			id: "0"
 			value: "      ^ That's a U+2029 PARAGRAPH SEPARATOR UTF-16 char (between 'before' and 'after')"
 			loc: Object {

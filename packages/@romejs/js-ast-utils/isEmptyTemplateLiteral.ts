@@ -1,6 +1,6 @@
 import {JSTemplateLiteral} from "@romejs/ast";
 
-export default function isEmptyTemplateLiteral(node: JSTemplateLiteral) {
+export function isEmptyTemplateLiteral(node: JSTemplateLiteral) {
 	if (!node.quasis || node.quasis.length === 0) {
 		return false;
 	}

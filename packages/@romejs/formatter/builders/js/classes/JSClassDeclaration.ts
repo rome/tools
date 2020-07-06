@@ -15,7 +15,7 @@ import {
 	space,
 } from "@romejs/formatter";
 
-import {hasInnerComments} from "../comments";
+import {hasInnerComments} from "../../comments";
 
 export default function JSClassDeclaration(
 	builder: Builder,

@@ -6,8 +6,8 @@
  */
 
 import {AnyNode} from "@romejs/ast";
-import getNodeReferenceParts from "./getNodeReferenceParts";
-import isIdentifierish from "./isIdentifierish";
+import {getNodeReferenceParts} from "./getNodeReferenceParts";
+import {isIdentifierish} from "./isIdentifierish";
 
 const splitCache: Map<string, SplitResult> = new Map();
 
@@ -37,7 +37,7 @@ function split(str: string): SplitResult {
 	return result;
 }
 
-export default function doesNodeMatchPattern(
+export function doesNodeMatchPattern(
 	node: undefined | AnyNode,
 	match: string,
 ): boolean {

@@ -22,8 +22,7 @@ import {
 	lineOrSpace,
 	softline,
 } from "@romejs/formatter";
-
-import {hasInnerComments} from "../comments";
+import {hasInnerComments} from "../../comments";
 
 export default function JSObjectExpression(
 	builder: Builder,

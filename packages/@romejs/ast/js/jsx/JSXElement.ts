@@ -30,7 +30,7 @@ export type JSXElement = NodeBaseWithComments & {
 		| JSXMemberExpression;
 	typeArguments?: TSTypeParameterInstantiation;
 	attributes: Array<JSXSpreadAttribute | JSXAttribute>;
-	selfClosing: boolean;
+	selfClosing?: boolean;
 	children: Array<
 		JSXText | JSXExpressionContainer | JSXSpreadChild | JSXElement | JSXFragment
 	>;

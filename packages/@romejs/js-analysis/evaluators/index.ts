@@ -117,12 +117,6 @@ evaluators.set("JSClassProperty", JSClassProperty);
 import JSClassPropertyMeta from "./classes/JSClassPropertyMeta";
 evaluators.set("JSClassPropertyMeta", JSClassPropertyMeta);
 
-import JSCommentBlock from "./core/JSCommentBlock";
-evaluators.set("JSCommentBlock", JSCommentBlock);
-
-import JSCommentLine from "./core/JSCommentLine";
-evaluators.set("JSCommentLine", JSCommentLine);
-
 import JSComputedMemberProperty from "./auxiliary/JSComputedMemberProperty";
 evaluators.set("JSComputedMemberProperty", JSComputedMemberProperty);
 
@@ -233,9 +227,6 @@ evaluators.set("JSMemberExpression", JSMemberExpression);
 
 import JSMetaProperty from "./expressions/JSMetaProperty";
 evaluators.set("JSMetaProperty", JSMetaProperty);
-
-import JSMockParent from "./temp/JSMockParent";
-evaluators.set("JSMockParent", JSMockParent);
 
 import JSNewExpression from "./expressions/JSNewExpression";
 evaluators.set("JSNewExpression", JSNewExpression);

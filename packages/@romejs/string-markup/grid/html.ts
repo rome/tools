@@ -1,5 +1,5 @@
 import {TagNode} from "../types";
-import {escapeXHTMLEntities} from "@romejs/js-parser";
+import {escapeXHTMLEntities} from "@romejs/html-parser";
 import {normalizeColor} from "./tagFormatters";
 
 export function htmlFormatText(

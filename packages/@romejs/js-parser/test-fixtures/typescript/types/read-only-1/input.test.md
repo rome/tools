@@ -28,7 +28,7 @@ JSRoot {
 		}
 	}
 	comments: Array [
-		JSCommentLine {
+		CommentLine {
 			id: "0"
 			value: " Error"
 			loc: Object {
@@ -48,7 +48,7 @@ JSRoot {
 	]
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "js-parser"}]
+			origins: Array [Object {category: "parse/js"}]
 			description: Object {
 				advice: Array []
 				category: "parse/js"
@@ -57,7 +57,7 @@ JSRoot {
 			location: Object {
 				filename: "input.ts"
 				mtime: undefined
-				sourceTypeJS: "module"
+				sourceText: undefined
 				end: Object {
 					column: 26
 					index: 26

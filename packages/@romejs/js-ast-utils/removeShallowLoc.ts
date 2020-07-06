@@ -7,7 +7,7 @@
 
 import {AnyNode} from "@romejs/ast";
 
-export default function removeShallowLoc<T extends AnyNode>(node: T): T {
+export function removeShallowLoc<T extends AnyNode>(node: T): T {
 	return {
 		...node,
 		loc: undefined,

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import isValidIdentifierName from "./isValidIdentifierName";
+import {isValidIdentifierName} from "./isValidIdentifierName";
 import {
 	JSIdentifier,
 	JSStringLiteral,
@@ -13,9 +13,7 @@ import {
 	jsStringLiteral,
 } from "@romejs/ast";
 
-export default function createPropertyKey(
-	name: string,
-): JSIdentifier | JSStringLiteral {
+export function createPropertyKey(name: string): JSIdentifier | JSStringLiteral {
 	if (isValidIdentifierName(name)) {
 		return jsIdentifier.quick(name);
 	} else {

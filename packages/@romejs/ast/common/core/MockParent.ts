@@ -8,18 +8,18 @@
 import {NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSMockParent = NodeBaseWithComments & {
-	type: "JSMockParent";
+export type MockParent = NodeBaseWithComments & {
+	type: "MockParent";
 };
 
-export const jsMockParent = createBuilder<JSMockParent>(
-	"JSMockParent",
+export const jsMockParent = createBuilder<MockParent>(
+	"MockParent",
 	{
 		bindingKeys: {},
 		visitorKeys: {},
 	},
 );
 
-export const MOCK_PARENT: JSMockParent = {
-	type: "JSMockParent",
+export const MOCK_PARENT: MockParent = {
+	type: "MockParent",
 };

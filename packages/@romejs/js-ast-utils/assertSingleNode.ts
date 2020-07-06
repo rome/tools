@@ -8,7 +8,7 @@
 import {TransformExitResult} from "@romejs/compiler";
 import {AnyNode} from "@romejs/ast";
 
-export default function assertSingleNode(result: TransformExitResult): AnyNode {
+export function assertSingleNode(result: TransformExitResult): AnyNode {
 	if (Array.isArray(result)) {
 		if (result.length !== 1) {
 			throw new Error(`Expected node list length of 1 but got ${result.length}`);

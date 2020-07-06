@@ -7,6 +7,6 @@
 
 import {Token} from "@romejs/formatter";
 
-export default function JSCommentLine(): Token {
+export default function CommentBlock(): Token {
 	throw new Error("unimplemented");
 }

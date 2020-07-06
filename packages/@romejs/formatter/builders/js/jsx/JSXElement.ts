@@ -35,7 +35,7 @@ export default function JSXElement(builder: Builder, node: JSXElement): Token {
 		);
 	}
 
-	if (node.selfClosing === true && node.children.length === 0) {
+	if (node.selfClosing !== false && node.children.length === 0) {
 		return group(concat([concat(tokens), space, "/>"]));
 	} else {
 		return concat([

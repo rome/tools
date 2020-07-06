@@ -130,7 +130,7 @@ function _getCompletionRecords(node: AnyNode): undefined | Records {
 	return undefined;
 }
 
-export default function getCompletionRecords(node: AnyNode): Records {
+export function getCompletionRecords(node: AnyNode): Records {
 	const records = _getCompletionRecords(node);
 	if (records === undefined) {
 		return [

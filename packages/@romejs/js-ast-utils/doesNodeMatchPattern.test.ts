@@ -6,8 +6,8 @@
  */
 
 import {test} from "rome";
-import doesNodeMatchPattern from "./doesNodeMatchPattern";
-import template from "./template";
+import {doesNodeMatchPattern} from "./doesNodeMatchPattern";
+import {template} from "./template";
 
 test(
 	"doesNodeMatchPattern",

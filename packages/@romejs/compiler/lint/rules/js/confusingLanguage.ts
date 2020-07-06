@@ -111,7 +111,7 @@ export default {
 		if (loc !== undefined) {
 			// Infer a string to check
 			let value: undefined | string;
-			if (node.type === "JSCommentBlock" || node.type === "JSCommentLine") {
+			if (node.type === "CommentBlock" || node.type === "CommentLine") {
 				value = node.value;
 			}
 			if (isIdentifierish(node)) {
@@ -140,7 +140,7 @@ export default {
 
 				// Autofix if not suppressed
 				if (results.length > 0 && !suppressed) {
-					if (node.type === "JSCommentBlock" || node.type === "JSCommentLine") {
+					if (node.type === "CommentBlock" || node.type === "CommentLine") {
 						return {
 							...node,
 							value: fixed,

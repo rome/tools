@@ -14,20 +14,14 @@ import {
 	JSStringLiteral,
 } from "@romejs/ast";
 import {
+	ParserCoreState,
 	ParserOptionsWithRequiredPath,
+	ParserUnexpectedOptions,
 	Position,
-	SourceLocation,
 	createParser,
 } from "@romejs/parser-core";
 import {JSParserOptions} from "./options";
-import {
-	DiagnosticDescription,
-	DiagnosticFilter,
-	DiagnosticLocation,
-	Diagnostics,
-	DiagnosticsProcessor,
-	descriptions,
-} from "@romejs/diagnostics";
+import {DiagnosticDescription, descriptions} from "@romejs/diagnostics";
 import ParserBranchFinder from "./ParserBranchFinder";
 import {Token, nextToken} from "./tokenizer/index";
 import {TokenType, types as tt} from "./tokenizer/types";
@@ -36,8 +30,6 @@ import {parseTopLevel} from "./parser/index";
 import {State, createInitialState} from "./tokenizer/state";
 import {Number0, ob1Number0, ob1Sub} from "@romejs/ob1";
 import {Dict, OptionalProps} from "@romejs/typescript-helpers";
-import {attachComments} from "./parser/comments";
-import CommentsConsumer from "./CommentsConsumer";
 
 const TOKEN_MISTAKES: Dict<string> = {
 	";": ":",
@@ -116,14 +108,12 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 				this.options.sourceType === "template" ||
 				this.options.sourceType === "module";
 			this.parenthesized = new Set();
-			this.comments = new CommentsConsumer();
 
 			// Turn options.syntax into a Set, probably faster than doing `includes` on the array
 			// We may also push stuff to it as we read comments such as `@\flow`
 			this.syntax = new Set(options.syntax);
 		}
 
-		comments: CommentsConsumer;
 		options: JSParserOptions;
 		sourceType: ConstJSSourceType;
 		syntax: Set<ConstJSProgramSyntax>;
@@ -197,6 +187,11 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			this.state = newState;
 		}
 
+		// Overrides ParserCore#getCommentsState
+		getCommentsState(): ParserCoreState {
+			return this.state;
+		}
+
 		atEOF(): boolean {
 			return this.match(tt.eof);
 		}
@@ -213,48 +208,6 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			} else {
 				return undefined;
 			}
-		}
-
-		finalizeNode<T extends AnyNode>(node: T): T {
-			attachComments(this, node);
-			return node;
-		}
-
-		// Sometimes we want to pretend we're in different locations to consume the comments of other nodes
-		finishNodeWithCommentStarts<T extends AnyNode>(
-			starts: Array<Position>,
-			node: T,
-		): T {
-			for (const start of starts) {
-				node = this.finishNode(start, node);
-			}
-			return node;
-		}
-
-		finishNode<T extends AnyNode>(
-			start: Position,
-			node: T,
-		): T & {
-			loc: SourceLocation;
-		} {
-			return this.finishNodeAt(start, this.getLastEndPosition(), node);
-		}
-
-		finishNodeAt<T extends AnyNode>(
-			start: Position,
-			end: Position,
-			node: T,
-		): T & {
-			loc: SourceLocation;
-		} {
-			// Maybe mutating `node` is better...?
-			const newNode: T & {
-				loc: SourceLocation;
-			} = {
-				...node,
-				loc: this.finishLocAt(start, end),
-			};
-			return this.finalizeNode(newNode);
 		}
 
 		createUnknownIdentifier(
@@ -289,38 +242,12 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			const {state} = this;
 
 			if (state.startPos.index > state.lastEndPos.index) {
-				this.addDiagnostic({
+				this.unexpectedDiagnostic({
 					start: state.lastEndPos,
 					end: state.lastEndPos,
 					description: _metadata,
 				});
 			}
-		}
-
-		getDiagnostics(): Diagnostics {
-			const collector = new DiagnosticsProcessor({
-				origins: [
-					{
-						category: "js-parser",
-					},
-				],
-				//unique: ['start.line'],
-			});
-
-			for (const filter of this.state.diagnosticFilters) {
-				collector.addFilter(filter);
-			}
-
-			// TODO remove any trailing "eof" diagnostic
-			return collector.addDiagnostics(this.state.diagnostics).slice(0, 1);
-		}
-
-		addDiagnosticFilter(diag: DiagnosticFilter) {
-			this.state.diagnosticFilters.push(diag);
-		}
-
-		addCompleteDiagnostic(diags: Diagnostics) {
-			this.state.diagnostics = [...this.state.diagnostics, ...diags];
 		}
 
 		shouldCreateToken() {
@@ -355,16 +282,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			this.state.tokens.push(token);
 		}
 
-		addDiagnostic(
-			opts: {
-				description: Omit<DiagnosticDescription, "category">;
-				start?: Position;
-				end?: Position;
-				loc?: SourceLocation;
-				index?: Number0;
-				location?: DiagnosticLocation;
-			},
-		): void {
+		unexpectedDiagnostic(opts: ParserUnexpectedOptions): void {
 			if (this.isLookahead) {
 				return;
 			}
@@ -379,54 +297,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 				}
 			}
 
-			if (this.state.diagnostics.length > 0) {
-				//return;
-			}
-
-			let {start, end} = opts;
-
-			if (opts.index !== undefined) {
-				start = this.getPositionFromIndex(opts.index);
-				end = start;
-			}
-
-			if (opts.location !== undefined) {
-				start = opts.location.start;
-				end = opts.location.end;
-			}
-
-			if (start === undefined && end === undefined && opts.loc !== undefined) {
-				start = opts.loc.start;
-				end = opts.loc.end;
-			}
-
-			// If we weren't given a start then default to the provided end, or the current token start
-			if (start === undefined && end === undefined) {
-				start = this.getPosition();
-				end = this.getLastEndPosition();
-			}
-
-			if (start === undefined && end !== undefined) {
-				start = end;
-			}
-
-			if (start !== undefined && end === undefined) {
-				end = start;
-			}
-
-			this.state.diagnostics.push({
-				description: {
-					category: "parse/js",
-					...opts.description,
-				},
-				location: {
-					filename: this.filename,
-					sourceTypeJS: this.sourceType,
-					mtime: this.mtime,
-					start,
-					end,
-				},
-			});
+			super.unexpectedDiagnostic(opts);
 		}
 
 		shouldTokenizeJSX(): boolean {
@@ -439,7 +310,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 
 		expectSyntaxEnabled(syntax: ConstJSProgramSyntax) {
 			if (!this.isSyntaxEnabled(syntax)) {
-				this.addDiagnostic({
+				this.unexpectedDiagnostic({
 					description: descriptions.JS_PARSER.EXPECTED_ENABLE_SYNTAX(syntax),
 				});
 			}
@@ -453,7 +324,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			if (this.eatRelational(op)) {
 				return true;
 			} else {
-				this.addDiagnostic({
+				this.unexpectedDiagnostic({
 					description: descriptions.JS_PARSER.EXPECTED_RELATIONAL_OPERATOR,
 				});
 				return false;
@@ -467,7 +338,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 
 		banUnicodeEscape(index: undefined | Number0, name: string) {
 			if (index !== undefined) {
-				this.addDiagnostic({
+				this.unexpectedDiagnostic({
 					index,
 					description: descriptions.JS_PARSER.ESCAPE_SEQUENCE_IN_WORD(name),
 				});
@@ -522,7 +393,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			if (this.eatContextual(name)) {
 				return true;
 			} else {
-				this.addDiagnostic({
+				this.unexpectedDiagnostic({
 					description: _metadata,
 				});
 				return false;
@@ -549,18 +420,16 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		}
 
 		// Consume a semicolon, or, failing that, see if we are allowed to
-
 		// pretend that there is a semicolon at this position.
 		semicolon(): void {
 			if (!this.isLineTerminator()) {
-				this.addDiagnostic({
+				this.unexpectedDiagnostic({
 					description: descriptions.JS_PARSER.EXPECTED_SEMI_OR_LINE_TERMINATOR,
 				});
 			}
 		}
 
 		// Expect a token of a given type. If found, consume it, otherwise,
-
 		// raise an unexpected token error at given pos.
 		expect(type: TokenType, pos?: Position): boolean {
 			if (this.eat(type)) {
@@ -595,7 +464,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			} else {
 				const currPos = this.getPosition();
 
-				this.addDiagnostic({
+				this.unexpectedDiagnostic({
 					description: descriptions.JS_PARSER.EXPECTED_CLOSING(
 						context.name,
 						context.close.label,
@@ -614,7 +483,6 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		}
 
 		// Raise an unexpected token error. Can take the expected token type
-
 		// instead of a message string.
 		unexpectedToken(pos?: Position, tokenType?: TokenType) {
 			let expectedToken: undefined | string;
@@ -629,7 +497,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 					possibleMistake === this.state.tokenType.label;
 			}
 
-			this.addDiagnostic({
+			this.unexpectedDiagnostic({
 				description: descriptions.JS_PARSER.UNEXPECTED_TOKEN(
 					expectedToken,
 					possibleShiftMistake,

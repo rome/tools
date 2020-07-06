@@ -1,7 +1,10 @@
 import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
-import {getJSXAttribute, hasJSXAttribute} from "@romejs/js-ast-utils";
-import getJSXElementName from "@romejs/js-ast-utils/getJSXElementName";
+import {
+	getJSXAttribute,
+	getJSXElementName,
+	hasJSXAttribute,
+} from "@romejs/js-ast-utils";
 import {
 	ariaRolesMap,
 	isElementInteractive,

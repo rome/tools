@@ -21,7 +21,7 @@ function isEmptyAttributeValue(
 	}
 }
 
-export default function getJSXAttribute(
+export function getJSXAttribute(
 	tag: JSXElement,
 	name: string,
 	allowEmpty: boolean = false,

@@ -4,9 +4,9 @@ import {Path} from "@romejs/compiler";
 import {
 	getJSXAttribute,
 	hasJSXAttribute,
+	isEmptyTemplateLiteral,
 	isJSXElement,
 } from "@romejs/js-ast-utils";
-import isEmptyTemplateLiteral from "@romejs/js-ast-utils/isEmptyTemplateLiteral";
 
 function validLang(node: JSXElement) {
 	if (hasJSXAttribute(node, "lang")) {

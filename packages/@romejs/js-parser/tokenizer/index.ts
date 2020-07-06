@@ -6,13 +6,13 @@
  */
 
 import {
-	AnyJSComment,
+	AnyComment,
 	JSInterpreterDirective,
 	JSNumericLiteral,
 } from "@romejs/ast";
 import {Position, SourceLocation} from "@romejs/parser-core";
 import {JSParser} from "../parser";
-import {xhtmlEntityNameToChar} from "../xhtmlEntities";
+import {xhtmlEntityNameToChar} from "@romejs/html-parser";
 import {
 	getFullCharCodeAt,
 	isIdentifierChar,
@@ -30,7 +30,6 @@ import {
 	types as tt,
 } from "./types";
 import {TokContext, types as ct} from "./context";
-import {addComment} from "../parser/index";
 import {ASCII_NAMES, UNICODE_MISTAKES} from "./unicodeMistakes";
 import * as charCodes from "@romejs/string-charcodes";
 import {descriptions} from "@romejs/diagnostics";
@@ -305,18 +304,18 @@ function pushComment(
 		startPos: Position;
 		endPos: Position;
 	},
-): AnyJSComment {
+): AnyComment {
 	const loc = parser.finishLocAt(opts.startPos, opts.endPos);
-	let comment: AnyJSComment;
+	let comment: AnyComment;
 	if (opts.block) {
 		comment = parser.comments.addComment({
-			type: "JSCommentBlock",
+			type: "CommentBlock",
 			value: removeCarriageReturn(opts.text),
 			loc,
 		});
 	} else {
 		comment = parser.comments.addComment({
-			type: "JSCommentLine",
+			type: "CommentLine",
 			value: opts.text,
 			loc,
 		});
@@ -328,8 +327,7 @@ function pushComment(
 	}
 
 	if (parser.isLookahead === false) {
-		parser.state.comments.push(comment);
-		addComment(parser, comment);
+		parser.addComment(comment);
 	}
 
 	if (parser.shouldCreateToken()) {
@@ -352,7 +350,7 @@ function skipBlockComment(parser: JSParser): void {
 	const endIndex = ob1Coerce0(parser.input.indexOf("*/", getIndex(parser)));
 
 	if (endIndex === ob1Number0Neg1) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			end: parser.getPositionFromIndex(ob1Sub(parser.state.index, 2)),
 			description: descriptions.JS_PARSER.UNTERMINATED_BLOCK_COMMENT,
 		});
@@ -421,10 +419,7 @@ function parseLineComment(
 	};
 }
 
-export function skipLineComment(
-	parser: JSParser,
-	startSkip: number,
-): AnyJSComment {
+export function skipLineComment(parser: JSParser, startSkip: number): AnyComment {
 	const lineComment = parseLineComment(parser, startSkip);
 	return pushComment(
 		parser,
@@ -804,7 +799,7 @@ function readTokenNumberSign(parser: JSParser): void {
 	}
 
 	// TODO make this a diagnostic, and advance to the next line if suspected hashbang
-	parser.addDiagnostic({
+	parser.unexpectedDiagnostic({
 		description: descriptions.JS_PARSER.UNEXPECTED_HASH(
 			parser.input[getIndex(parser) + 1] === "!",
 		),
@@ -1024,7 +1019,7 @@ function getTokenFromCode(parser: JSParser, code: number): void {
 			throw new Error(`Expected ASCII name for ${equivalentChar}`);
 		}
 
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.UNEXPECTED_UNICODE_CHARACTER(
 				char,
 				unicodeName,
@@ -1038,7 +1033,7 @@ function getTokenFromCode(parser: JSParser, code: number): void {
 		return;
 	}
 
-	parser.addDiagnostic({
+	parser.unexpectedDiagnostic({
 		description: descriptions.PARSER_CORE.UNEXPECTED_CHARACTER(
 			codePointToString(code),
 		),
@@ -1064,7 +1059,7 @@ export function readRegexp(parser: JSParser): void {
 	let inClass;
 	while (true) {
 		if (parser.state.index >= parser.length) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				end: parser.getPositionFromIndex(parser.state.index),
 				description: descriptions.JS_PARSER.UNTERMINATED_REGEX,
 			});
@@ -1083,13 +1078,13 @@ export function readRegexp(parser: JSParser): void {
 				const backslashIndex = line.lastIndexOf(
 					String.fromCharCode(charCodes.backslash),
 				);
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					end: parser.getPositionFromIndex(ob1Coerce0(backslashIndex)),
 					description: descriptions.JS_PARSER.DANGLING_BACKSLASH_IN_REGEX,
 				});
 				break;
 			}
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				end: parser.getPositionFromIndex(parser.state.index),
 				description: descriptions.JS_PARSER.UNTERMINATED_REGEX,
 			});
@@ -1118,7 +1113,7 @@ export function readRegexp(parser: JSParser): void {
 
 	const rawMods = readWord1(parser);
 	if (parser.state.escapePosition !== undefined) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			index: parser.state.escapePosition,
 			description: descriptions.JS_PARSER.UNICODE_ESCAPE_IN_REGEX_FLAGS,
 		});
@@ -1126,7 +1121,7 @@ export function readRegexp(parser: JSParser): void {
 	const mods = validateRegexFlags(
 		rawMods,
 		(metadata, flagPosition) => {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				index: ob1Add(
 					ob1Coerce0(getIndex(parser) - rawMods.length),
 					flagPosition,
@@ -1174,7 +1169,7 @@ function readInt(
 		const next = parser.input.charCodeAt(getIndex(parser) + 1);
 		if (code === charCodes.underscore) {
 			if (allowedSiblings.indexOf(next) === -1) {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					description: descriptions.JS_PARSER.INVALID_INT_TOKEN,
 				});
 			}
@@ -1184,7 +1179,7 @@ function readInt(
 				forbiddenSiblings.indexOf(next) > -1 ||
 				Number.isNaN(next)
 			) {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					description: descriptions.JS_PARSER.INVALID_INT_TOKEN,
 				});
 			}
@@ -1233,7 +1228,7 @@ function readRadixNumber(
 	parser.state.index = ob1Add(parser.state.index, 2); // 0x
 	let val = readInt(parser, radix);
 	if (val === undefined) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			index: ob1Add(start, 2),
 			description: descriptions.JS_PARSER.EXPECTED_NUMBER_IN_RADIX(radix),
 		});
@@ -1246,7 +1241,7 @@ function readRadixNumber(
 	}
 
 	if (isIdentifierStart(fullCharCodeAtPos(parser))) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			index: parser.state.index,
 			description: descriptions.JS_PARSER.IDENTIFIER_AFTER_NUMBER,
 		});
@@ -1271,7 +1266,7 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
 	let isBigInt = false;
 
 	if (!startsWithDot && readInt(parser, 10) === undefined) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			index: parser.state.index,
 			description: descriptions.JS_PARSER.INVALID_NUMBER,
 		});
@@ -1282,7 +1277,7 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
 		parser.input.charCodeAt(ob1Get0(start.index)) === charCodes.digit0;
 	if (isOctal) {
 		if (parser.inScope("STRICT")) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				index: parser.state.index,
 				description: descriptions.JS_PARSER.LEGACY_OCTAL_IN_STRICT_MODE,
 			});
@@ -1312,7 +1307,7 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
 		}
 
 		if (readInt(parser, 10) === undefined) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				index: parser.state.index,
 				description: descriptions.JS_PARSER.INVALID_NUMBER,
 			});
@@ -1325,14 +1320,14 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
 	if (next === charCodes.lowercaseN) {
 		// Disallow floats and legacy octal syntax, new style octal ("0o") is handled in readRadixNumber
 		if (isFloat) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				index: parser.state.index,
 				description: descriptions.JS_PARSER.DECIMAL_BIGINT,
 			});
 		}
 
 		if (isOctal) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				index: parser.state.index,
 				description: descriptions.JS_PARSER.OCTAL_BIGINT,
 			});
@@ -1343,7 +1338,7 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
 	}
 
 	if (isIdentifierStart(parser.input.codePointAt(getIndex(parser)))) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			index: parser.state.index,
 			description: descriptions.JS_PARSER.IDENTIFIER_AFTER_NUMBER,
 		});
@@ -1390,7 +1385,7 @@ function readCodePoint(
 			parser.state.invalidTemplateEscapePosition--; // to point to the '\'' instead of the 'u'
 		} else if (code > 1_114_111) {
 			if (throwOnInvalid) {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					index: codePos,
 					description: descriptions.JS_PARSER.OUT_OF_BOUND_CODE_POINT,
 				});
@@ -1411,7 +1406,7 @@ function readString(parser: JSParser, quote: number): void {
 
 	while (true) {
 		if (parser.state.index >= parser.length) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				end: parser.getPositionFromIndex(parser.state.index),
 				description: descriptions.JS_PARSER.UNTERMINATED_STRING,
 			});
@@ -1435,7 +1430,7 @@ function readString(parser: JSParser, quote: number): void {
 			parser.state.curLine = ob1Inc(parser.state.curLine);
 		} else {
 			if (isNewLine(ch)) {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					end: parser.getPositionFromIndex(parser.state.index),
 					description: descriptions.JS_PARSER.UNTERMINATED_STRING,
 				});
@@ -1457,7 +1452,7 @@ export function readTemplateToken(parser: JSParser): void {
 
 	while (true) {
 		if (parser.state.index >= parser.length) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				end: parser.getPositionFromIndex(parser.state.index),
 				description: descriptions.JS_PARSER.UNTERMINATED_TEMPLATE,
 			});
@@ -1602,7 +1597,7 @@ function readEscapedChar(
 						parser.state.invalidTemplateEscapePosition = codePos;
 						return undefined;
 					} else if (parser.inScope("STRICT")) {
-						parser.addDiagnostic({
+						parser.unexpectedDiagnostic({
 							index: codePos,
 							description: descriptions.JS_PARSER.OCTAL_IN_STRICT_MODE,
 						});
@@ -1634,7 +1629,7 @@ function readHexChar(
 
 	if (n === undefined) {
 		if (throwOnInvalid) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				index: start,
 				description: descriptions.JS_PARSER.BAD_HEX_ESCAPE,
 			});
@@ -1676,7 +1671,7 @@ function readWord1(parser: JSParser): string {
 				parser.input.charCodeAt(ob1Get0(bumpIndex(parser))) !==
 				charCodes.lowercaseU
 			) {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					index: parser.state.index,
 					description: descriptions.JS_PARSER.EXPECTED_UNICODE_ESCAPE,
 				});
@@ -1691,7 +1686,7 @@ function readWord1(parser: JSParser): string {
 
 			const isValid = first ? isIdentifierStart : isIdentifierChar;
 			if (isValid(esc) === false) {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					index: parser.state.index,
 					description: descriptions.JS_PARSER.INVALID_UNICODE_ESCAPE,
 				});
@@ -1718,14 +1713,14 @@ function readWord(parser: JSParser): void {
 	let type: TokenTypes = keywordTypes.get(word) || tt.name;
 
 	if (type.keyword !== undefined && parser.state.escapePosition !== undefined) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			index: parser.state.escapePosition,
 			description: descriptions.JS_PARSER.ESCAPE_SEQUENCE_IN_KEYWORD(word),
 		});
 	}
 
 	if (parser.state.isIterator && (!isIterator(word) || !parser.inScope("TYPE"))) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.INVALID_IDENTIFIER_NAME(word),
 		});
 	}
@@ -1896,7 +1891,7 @@ function readTokenJsxString(parser: JSParser, quote: number): void {
 	let chunkStart = bumpIndex(parser);
 	while (true) {
 		if (parser.state.index >= parser.length) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				end: parser.getPositionFromIndex(parser.state.index),
 				description: descriptions.JS_PARSER.UNTERMINATED_JSX_STRING,
 			});

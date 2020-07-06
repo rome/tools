@@ -22,7 +22,7 @@ import {
 	space,
 } from "@romejs/formatter";
 
-import {hasInnerComments} from "../comments";
+import {hasInnerComments} from "../../comments";
 import {printCommaList} from "../utils";
 
 export default function JSExportLocalDeclaration(

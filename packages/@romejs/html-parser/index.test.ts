@@ -1,0 +1,29 @@
+import {parseHTML} from "@romejs/html-parser";
+import {createFixtureTests} from "@romejs/test-helpers";
+import {removeCarriageReturn} from "@romejs/string-utils";
+
+const promise = createFixtureTests(async (fixture, t) => {
+	const {files} = fixture;
+
+	const inputFile = files.get("input.html");
+	if (inputFile === undefined) {
+		throw new Error(`The fixture ${fixture.dir} did not have an input.html`);
+	}
+
+	const filename = inputFile.relative;
+
+	const inputContent = removeCarriageReturn(inputFile.content.toString());
+
+	const ast = parseHTML({
+		input: inputContent,
+		path: filename,
+	});
+
+	const outputFile = inputFile.absolute.getParent().append(
+		inputFile.absolute.getExtensionlessBasename(),
+	).join();
+	t.snapshot(ast, undefined, {filename: outputFile});
+});
+
+// @ts-ignore Doesn't support top-level await lol
+await promise;

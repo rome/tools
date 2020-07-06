@@ -24,10 +24,10 @@ import {
 	jsStaticPropertyKey,
 	jsStringLiteral,
 } from "@romejs/ast";
-import createPropertyKey from "./createPropertyKey";
+import {createPropertyKey} from "./createPropertyKey";
 import {UnknownObject} from "@romejs/typescript-helpers";
 
-export default function valueToNode(
+export function valueToNode(
 	value: unknown,
 	ancestry: Array<unknown> = [],
 ):

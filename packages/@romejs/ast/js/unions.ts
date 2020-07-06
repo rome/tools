@@ -86,7 +86,6 @@ export type AnyJSAuxiliary =
 	| n.JSXReferenceIdentifier
 	| AnyJSBindingPattern
 	| AnyJSAssignmentPattern
-	| AnyJSComment
 	| n.JSIdentifier
 	| n.JSVariableDeclaration
 	| n.JSCatchClause
@@ -105,13 +104,11 @@ export type AnyJSAuxiliary =
 	| n.JSTemplateElement
 	| n.JSVariableDeclarator
 	| n.JSAmbiguousFlowTypeCastExpression
-	| n.JSMockParent;
+	| n.MockParent;
 
-export type AnyJSComment = n.JSCommentBlock | n.JSCommentLine;
-
-export type AnyJSCommentOptionalId =
-	| OptionalProps<n.JSCommentBlock, "id">
-	| OptionalProps<n.JSCommentLine, "id">;
+export type AnyCommentOptionalId =
+	| OptionalProps<n.CommentBlock, "id">
+	| OptionalProps<n.CommentLine, "id">;
 
 export type AnyJSIdentifier =
 	| n.JSIdentifier

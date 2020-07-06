@@ -37,7 +37,7 @@ import {
 	getFileLinkFilename,
 	getFileLinkText,
 } from "./tagFormatters";
-import {escapeXHTMLEntities} from "@romejs/js-parser";
+import {escapeXHTMLEntities} from "@romejs/html-parser";
 import {ansiFormatText} from "./ansi";
 import {htmlFormatText} from "./html";
 

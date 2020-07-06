@@ -8,7 +8,7 @@
 import {AnyNode} from "@romejs/ast";
 import {Scope} from "@romejs/compiler";
 
-export default function hasPotentialSideEffects(
+export function hasPotentialSideEffects(
 	node: undefined | AnyNode,
 	scope: Scope,
 ): boolean {

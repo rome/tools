@@ -28,7 +28,7 @@ const PRECEDENCE = {
 	"**": 10,
 };
 
-export default function getPrecedence(
+export function getPrecedence(
 	operator: BinaryOperator | LogicalOperator,
 ): number {
 	return PRECEDENCE[operator];

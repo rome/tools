@@ -23,7 +23,7 @@ import {
 } from "@romejs/formatter";
 
 import {printCommaList} from "../utils";
-import {hasInnerComments} from "../comments";
+import {hasInnerComments} from "../../comments";
 
 type AnyCallableExpression =
 	| JSCallExpression

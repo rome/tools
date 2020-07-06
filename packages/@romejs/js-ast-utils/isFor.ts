@@ -12,7 +12,7 @@ import {
 	JSForStatement,
 } from "@romejs/ast";
 
-export default function isFor(
+export function isFor(
 	node: undefined | AnyNode,
 ): node is JSForStatement | JSForInStatement | JSForOfStatement {
 	if (node === undefined) {

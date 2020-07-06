@@ -18,6 +18,7 @@ import {
 } from "./javascript";
 import {textHandler} from "./text";
 import {jsonHandler, rjsonHandler} from "./json";
+import {htmHandler, htmlHandler} from "./html";
 import {parseJS} from "@romejs/js-parser";
 
 type ExtensionsMap = Map<string, ExtensionHandler>;
@@ -149,3 +150,5 @@ setHandler(tsHandler);
 setHandler(tsxHandler);
 setHandler(jsonHandler);
 setHandler(rjsonHandler);
+setHandler(htmlHandler);
+setHandler(htmHandler);

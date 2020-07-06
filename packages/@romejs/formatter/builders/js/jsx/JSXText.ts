@@ -6,9 +6,8 @@
  */
 
 import {Builder, Token} from "@romejs/formatter";
-
 import {JSXText} from "@romejs/ast";
-import {escapeXHTMLEntities} from "@romejs/js-parser";
+import {escapeXHTMLEntities} from "@romejs/html-parser";
 
 export default function JSXText(builder: Builder, node: JSXText): Token {
 	return escapeXHTMLEntities(node.value);

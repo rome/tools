@@ -290,7 +290,7 @@ function parseClassMember(
 		}
 
 		if (escapePosition !== undefined) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				index: escapePosition,
 				description: descriptions.JS_PARSER.ESCAPE_SEQUENCE_IN_WORD("static"),
 			});
@@ -382,7 +382,7 @@ function parseClassMemberWithIsStatic(
 		}
 
 		if (isNonstaticConstructor(parser, key, meta)) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: key.loc,
 				description: descriptions.JS_PARSER.GENERATOR_CLASS_CONSTRUCTOR,
 			});
@@ -431,7 +431,7 @@ function parseClassMemberWithIsStatic(
 
 			// TypeScript allows multiple overloaded constructor declarations
 			if (state.hadConstructor && !parser.isSyntaxEnabled("ts")) {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					loc: key.loc,
 					description: descriptions.JS_PARSER.DUPLICATE_CLASS_CONSTRUCTOR,
 				});
@@ -506,7 +506,7 @@ function parseClassMemberWithIsStatic(
 			);
 
 			if (isNonstaticConstructor(parser, key, meta)) {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					loc: key.loc,
 					description: descriptions.JS_PARSER.ASYNC_CLASS_CONSTRUCTOR,
 				});
@@ -561,7 +561,7 @@ function parseClassMemberWithIsStatic(
 			);
 
 			if (isNonstaticConstructor(parser, key, meta)) {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					loc: methodKey.loc,
 					description: descriptions.JS_PARSER.GET_SET_CLASS_CONSTRUCTOR,
 				});
@@ -581,7 +581,7 @@ function parseClassMemberWithIsStatic(
 		}
 	}
 
-	parser.addDiagnostic({
+	parser.unexpectedDiagnostic({
 		description: descriptions.JS_PARSER.UNKNOWN_CLASS_PROPERTY_START,
 	});
 	return undefined;
@@ -613,14 +613,14 @@ function parseClassPropertyMeta(
 		key.value.type === "JSIdentifier" &&
 		key.value.name === "prototype"
 	) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc: key.loc,
 			description: descriptions.JS_PARSER.CLASS_STATIC_PROTOTYPE_PROPERTY,
 		});
 	}
 
 	if (key.value.type === "JSPrivateName" && key.value.id.name === "constructor") {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc: key.loc,
 			description: descriptions.JS_PARSER.CLASS_PRIVATE_FIELD_NAMED_CONSTRUCTOR,
 		});
@@ -655,7 +655,7 @@ function pushClassProperty(
 ): JSClassProperty {
 	// This only affects properties, not methods.
 	if (isNonstaticConstructor(parser, key, meta)) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc: key.loc,
 			description: descriptions.JS_PARSER.CLASS_PROPERTY_NAME_CONSTRUCTOR,
 		});
@@ -871,7 +871,7 @@ function parseClassId(
 		if (parser.match(tt.name)) {
 			id = parseBindingIdentifier(parser);
 		} else if (!optionalId) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				description: descriptions.JS_PARSER.REQUIRED_CLASS_NAME,
 			});
 			id = toBindingIdentifier(

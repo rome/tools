@@ -230,7 +230,7 @@ function expectTSEnabled(
 		return;
 	}
 
-	parser.addDiagnostic({
+	parser.unexpectedDiagnostic({
 		start,
 		description: descriptions.JS_PARSER.TS_REQUIRED(label),
 	});
@@ -325,7 +325,7 @@ function parseTSImportType(parser: JSParser): TSImportType {
 	);
 
 	if (!parser.match(tt.string)) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.TS_IMPORT_ARG_NOT_STRING,
 		});
 	}
@@ -583,7 +583,7 @@ export function tsCheckLiteralForConstantContext(
 		}
 
 		default:
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: node.loc,
 				description: descriptions.JS_PARSER.TS_CONSTANT_NOT_LITERAL,
 			});
@@ -649,7 +649,7 @@ function parseTSBindingListForSignature(
 		) {
 			validPatterns.push(pattern);
 		} else {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: pattern.loc,
 				description: descriptions.JS_PARSER.TS_INVALID_SIGNATURE_BINDING_NODE,
 			});
@@ -976,7 +976,7 @@ function parseTSTupleType(parser: JSParser): TSTupleType {
 		if (type.optional) {
 			seenOptionalElement = true;
 		} else if (seenOptionalElement && !isRest) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: type.loc,
 				description: descriptions.JS_PARSER.TS_REQUIRED_FOLLOWS_OPTIONAL,
 			});
@@ -1018,14 +1018,14 @@ function parseTSTupleElementTypeInner(
 			name = toBindingIdentifier(parser, typeAnnotation.typeName);
 			typeAnnotation = parseTSType(parser);
 		} else {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: typeAnnotation.loc,
 				description: descriptions.JS_PARSER.TS_TUPLE_ELEMENT_LABEL_INCORRECT,
 			});
 		}
 
 		if (parser.match(tt.question)) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				description: descriptions.JS_PARSER.TS_TUPLE_ELEMENT_OPTIONAL_TRAILING,
 			});
 			parser.next();
@@ -1072,7 +1072,7 @@ function parseTSTupleElementType(
 	);
 
 	if (optional && isRest) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc: elem.loc,
 			description: descriptions.JS_PARSER.TS_TUPLE_ELEMENT_OPTIONAL_REST,
 		});
@@ -1156,7 +1156,7 @@ function parseTSTemplateLiteralType(
 	const templateNode = parseTemplate(parser, false);
 
 	if (templateNode.expressions.length > 0) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc: parser.getLoc(templateNode.expressions[0]),
 			description: descriptions.JS_PARSER.TS_TEMPLATE_LITERAL_WITH_SUBSTITUION,
 		});
@@ -1239,7 +1239,7 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
 			return parseTSTemplateLiteralType(parser);
 	}
 
-	parser.addDiagnostic({
+	parser.unexpectedDiagnostic({
 		description: descriptions.JS_PARSER.TS_UNKNOWN_NON_ARRAY_START,
 	});
 	parser.next();
@@ -1311,7 +1311,7 @@ function parseTSObjectTypeAnnotationAnnotation(
 				parser.next();
 
 				if (!parser.match(tt.num)) {
-					parser.addDiagnostic({
+					parser.unexpectedDiagnostic({
 						description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_EXPECTED,
 					});
 					parser.next();
@@ -1340,13 +1340,13 @@ function parseTSObjectTypeAnnotationAnnotation(
 					},
 				);
 			} else {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_PLUS,
 				});
 				parser.next();
 
 				if (!parser.match(tt.num)) {
-					parser.addDiagnostic({
+					parser.unexpectedDiagnostic({
 						description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_EXPECTED,
 					});
 					parser.next();
@@ -1435,7 +1435,7 @@ function tsCheckTypeAnnotationForReadOnly(parser: JSParser, node: AnyTSPrimary) 
 			return;
 
 		default: {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: node.loc,
 				description: descriptions.JS_PARSER.TS_INVALID_READONLY_MODIFIER,
 			});
@@ -1803,7 +1803,7 @@ export function parseTSHeritageClause(
 	);
 
 	if (delimitedList.length === 0) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			start: originalStart,
 			description: descriptions.JS_PARSER.TS_EMPTY_LIST(descriptor),
 		});
@@ -2118,7 +2118,7 @@ function parseTSExternalModuleReference(
 	if (parser.match(tt.string)) {
 		expression = parseStringLiteral(parser);
 	} else {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.TS_EXTERNAL_MODULE_REFERENCE_ARG_NOT_STRING,
 		});
 
@@ -2263,7 +2263,7 @@ export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode
 		}
 	}
 
-	parser.addDiagnostic({
+	parser.unexpectedDiagnostic({
 		description: descriptions.JS_PARSER.TS_UNKNOWN_DECLARE_START,
 	});
 

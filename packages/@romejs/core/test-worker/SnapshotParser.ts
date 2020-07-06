@@ -73,9 +73,9 @@ function unescapeTicks(code: string): string {
 }
 
 export const createSnapshotParser = createParser((ParserCore) =>
-	class SnapshotParser extends ParserCore<Tokens, void> {
+	class SnapshotParser extends ParserCore<Tokens> {
 		constructor(opts: ParserOptions) {
-			super(opts, "parse/snapshots");
+			super(opts, "parse/snapshots", {});
 			this.ignoreWhitespaceTokens = true;
 		}
 

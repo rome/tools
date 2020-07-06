@@ -7,8 +7,8 @@
 
 import {Path, createHook} from "@romejs/compiler";
 import {
-	AnyJSComment,
-	AnyJSCommentOptionalId,
+	AnyComment,
+	AnyCommentOptionalId,
 	AnyJSExpression,
 	AnyNode,
 	JSAssignmentIdentifier,
@@ -104,10 +104,10 @@ export const variableInjectorVisitor = {
 };
 
 type CommentInjectorState = {
-	comments: Array<AnyJSComment>;
+	comments: Array<AnyComment>;
 };
 
-type CommentInjectorArg = AnyJSCommentOptionalId;
+type CommentInjectorArg = AnyCommentOptionalId;
 
 export const commentInjector = createHook<
 	CommentInjectorState,
@@ -119,7 +119,7 @@ export const commentInjector = createHook<
 		comments: [],
 	},
 	call(path: Path, state: CommentInjectorState, comment: CommentInjectorArg) {
-		let commentWithId: AnyJSComment;
+		let commentWithId: AnyComment;
 		let comments = state.comments;
 
 		const {id} = comment;
@@ -163,7 +163,7 @@ export const commentInjectorVisitor = {
 	enter(path: Path) {
 		const {node, context} = path;
 
-		if (node.type === "JSCommentBlock" || node.type === "JSCommentLine") {
+		if (node.type === "CommentBlock" || node.type === "CommentLine") {
 			context.comments.updateComment(node);
 		}
 

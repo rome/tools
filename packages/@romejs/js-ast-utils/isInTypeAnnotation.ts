@@ -7,8 +7,8 @@
 
 import {AnyNode} from "@romejs/ast";
 import {Path} from "@romejs/compiler";
-import isTypeNode from "./isTypeNode";
-import isTypeExpressionWrapperNode from "./isTypeExpressionWrapperNode";
+import {isTypeNode} from "./isTypeNode";
+import {isTypeExpressionWrapperNode} from "./isTypeExpressionWrapperNode";
 
 // Is this honestly the best heuristics?
 function getTypeNode(path: Path): undefined | AnyNode {
@@ -28,7 +28,7 @@ function getTypeNode(path: Path): undefined | AnyNode {
 	return undefined;
 }
 
-export default function isInTypeAnnotation(path: Path): boolean {
+export function isInTypeAnnotation(path: Path): boolean {
 	const match = getTypeNode(path);
 	if (match === undefined) {
 		return false;

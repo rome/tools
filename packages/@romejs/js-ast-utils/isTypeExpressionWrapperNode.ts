@@ -12,7 +12,7 @@ import {
 	TSTypeAssertion,
 } from "@romejs/ast";
 
-export default function isTypeExpressionWrapperNode(
+export function isTypeExpressionWrapperNode(
 	node: AnyNode,
 ): node is TSAsExpression | TSTypeAssertion | TSNonNullExpression {
 	return (

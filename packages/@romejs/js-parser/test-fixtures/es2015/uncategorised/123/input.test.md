@@ -47,7 +47,7 @@ JSRoot {
 	]
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "js-parser"}]
+			origins: Array [Object {category: "parse/js"}]
 			description: Object {
 				category: "parse/js"
 				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "super() is only valid inside a class constructor of a subclass"}
@@ -61,7 +61,7 @@ JSRoot {
 			location: Object {
 				filename: "input.js"
 				mtime: undefined
-				sourceTypeJS: "script"
+				sourceText: undefined
 				end: Object {
 					column: 45
 					index: 45

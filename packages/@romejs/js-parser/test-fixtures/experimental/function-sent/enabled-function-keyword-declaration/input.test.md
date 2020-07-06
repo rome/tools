@@ -30,7 +30,7 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "js-parser"}]
+			origins: Array [Object {category: "parse/js"}]
 			description: Object {
 				advice: Array []
 				category: "parse/js"
@@ -39,7 +39,7 @@ JSRoot {
 			location: Object {
 				filename: "input.js"
 				mtime: undefined
-				sourceTypeJS: "script"
+				sourceText: undefined
 				end: Object {
 					column: 17
 					index: 35

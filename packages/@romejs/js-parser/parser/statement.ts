@@ -115,20 +115,16 @@ export function parseTopLevel(parser: JSParser): JSRoot {
 
 	return parser.finishNode(
 		start,
-		{
+		parser.finishRoot({
 			type: "JSRoot",
 			corrupt: parser.state.corrupt,
 			body,
 			directives,
-			mtime: parser.mtime,
-			diagnostics: parser.getDiagnostics(),
-			filename: parser.filename,
-			comments: parser.state.comments,
 			sourceType: parser.sourceType,
 			interpreter,
 			syntax: Array.from(parser.syntax),
 			hasHoistedVars: parser.state.hasHoistedVars,
-		},
+		}),
 	);
 }
 
@@ -191,11 +187,8 @@ export function isLetStart(parser: JSParser, context?: string): boolean {
 	const nextCh = parser.input.charCodeAt(ob1Get0(next));
 
 	// For ambiguous cases, determine if a LexicalDeclaration (or only a
-
 	// Statement) is allowed here. If context is not empty then only a Statement
-
 	// is allowed. However, `let [` is an explicit negative lookahead for
-
 	// JSExpressionStatement, so special-case it first.
 	if (nextCh === charCodes.leftSquareBracket) {
 		return true;
@@ -292,11 +285,11 @@ export function parseStatement(
 
 			if (context !== undefined) {
 				if (parser.inScope("STRICT")) {
-					parser.addDiagnostic({
+					parser.unexpectedDiagnostic({
 						description: descriptions.JS_PARSER.ILLEGAL_FUNCTION_IN_STRICT,
 					});
 				} else if (context !== "if" && context !== "label") {
-					parser.addDiagnostic({
+					parser.unexpectedDiagnostic({
 						description: descriptions.JS_PARSER.ILLEGAL_FUNCTION_IN_NON_STRICT,
 					});
 				}
@@ -307,7 +300,7 @@ export function parseStatement(
 			const result = parseFunctionDeclaration(parser, start, false);
 
 			if (context !== undefined && result.head.generator === true) {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					description: descriptions.JS_PARSER.ILLEGAL_GENERATOR_DEFINITION,
 					loc: result.loc,
 				});
@@ -345,7 +338,7 @@ export function parseStatement(
 					? assertVarKind(String(parser.state.tokenValue))
 					: kind;
 			if (context !== undefined && kind !== "var") {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					description: descriptions.JS_PARSER.LEXICAL_DECLARATION_IN_SINGLE_STATEMENT_CONTEXT,
 				});
 			}
@@ -381,7 +374,7 @@ export function parseStatement(
 			}
 
 			if (!topLevel) {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					description: descriptions.JS_PARSER.IMPORT_EXPORT_MUST_TOP_LEVEL,
 				});
 			}
@@ -394,7 +387,7 @@ export function parseStatement(
 		case tt.name:
 			if (isAsyncFunctionDeclarationStart(parser)) {
 				if (context !== undefined) {
-					parser.addDiagnostic({
+					parser.unexpectedDiagnostic({
 						description: descriptions.JS_PARSER.ILLEGAL_ASYNC_DEFINITION,
 					});
 				}
@@ -470,7 +463,7 @@ export function assertModuleNodeAllowed(parser: JSParser, node: AnyNode): void {
 	}
 
 	if (!parser.inModule) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc: node.loc,
 			description: descriptions.JS_PARSER.IMPORT_EXPORT_IN_SCRIPT(
 				parser.options.manifestPath,
@@ -513,7 +506,7 @@ export function parseBreakContinueStatement(
 		}
 	}
 	if (i === parser.state.labels.length) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			start,
 			description: descriptions.JS_PARSER.UNKNOWN_LABEL(label && label.name),
 		});
@@ -615,7 +608,7 @@ export function parseForStatement(
 		}
 
 		if (awaitAt !== undefined) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				start: awaitAt,
 				description: descriptions.JS_PARSER.REGULAR_FOR_AWAIT,
 			});
@@ -643,7 +636,7 @@ export function parseForStatement(
 	}
 
 	if (awaitAt !== undefined) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			start: awaitAt,
 			description: descriptions.JS_PARSER.REGULAR_FOR_AWAIT,
 		});
@@ -690,7 +683,7 @@ export function parseReturnStatement(
 		parser.sourceType !== "template" &&
 		!parser.options.allowReturnOutsideFunction
 	) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.RETURN_OUTSIDE_FUNCTION,
 		});
 	}
@@ -779,7 +772,7 @@ export function parseSwitchStatement(
 				} else {
 					if (sawDefault) {
 						// TODO point to other default
-						parser.addDiagnostic({
+						parser.unexpectedDiagnostic({
 							start: parser.state.lastStartPos,
 							description: descriptions.JS_PARSER.MULTIPLE_DEFAULT_CASE,
 						});
@@ -797,7 +790,7 @@ export function parseSwitchStatement(
 			} else {
 				const stmt = parseStatement(parser, undefined);
 				if (cur === undefined) {
-					parser.addDiagnostic({
+					parser.unexpectedDiagnostic({
 						loc: stmt.loc,
 						description: descriptions.JS_PARSER.SWITCH_STATEMENT_OUTSIDE_CASE,
 					});
@@ -836,7 +829,7 @@ export function parseThrowStatement(
 			),
 		)
 	) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			start: parser.state.lastEndPos,
 			description: descriptions.JS_PARSER.NEWLINE_AFTER_THROW,
 		});
@@ -893,7 +886,7 @@ export function parseTryStatement(
 	const finalizer = parser.eat(tt._finally) ? parseBlock(parser) : undefined;
 
 	if (!handler && !finalizer) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			start,
 			description: descriptions.JS_PARSER.TRY_MISSING_FINALLY_OR_CATCH,
 		});
@@ -955,7 +948,7 @@ export function parseWithStatement(
 	const body = parseStatement(parser, "with");
 
 	if (parser.inScope("STRICT")) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc: parser.finishLoc(start),
 			description: descriptions.JS_PARSER.WITH_IN_STRICT,
 		});
@@ -988,7 +981,7 @@ export function parseLabeledStatement(
 ): JSLabeledStatement {
 	for (const label of parser.state.labels) {
 		if (label.name === maybeName) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: expr.loc,
 				description: descriptions.JS_PARSER.DUPLICATE_LABEL(
 					maybeName,
@@ -1042,7 +1035,7 @@ export function parseLabeledStatement(
 		body.head.generator === true ||
 		body.head.async === true))
 	) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc: body.loc,
 			description: descriptions.JS_PARSER.INVALID_LABEL_DECLARATION,
 		});
@@ -1174,7 +1167,7 @@ export function parseBlockOrModuleBlockBody(
 				didSetStrict = true;
 
 				if (octalPosition !== undefined) {
-					parser.addDiagnostic({
+					parser.unexpectedDiagnostic({
 						index: octalPosition,
 						description: descriptions.JS_PARSER.OCTAL_IN_STRICT,
 					});
@@ -1240,7 +1233,7 @@ export function parseForIn(
 
 	const isAwait = awaitAt !== undefined;
 	if (isForIn && isAwait) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			start: awaitAt,
 			description: descriptions.JS_PARSER.REGULAR_FOR_AWAIT,
 		});
@@ -1254,7 +1247,7 @@ export function parseForIn(
 		init.kind !== "var" ||
 		init.declarations[0].id.type !== "JSBindingIdentifier")
 	) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc: init.loc,
 			description: descriptions.JS_PARSER.FOR_IN_OF_WITH_INITIALIZER,
 		});
@@ -1322,7 +1315,7 @@ export function parseVar(
 				// `const` with no initializer is allowed in TypeScript.
 				// It could be a declaration like `const x: number;`.
 				if (!parser.isSyntaxEnabled("ts")) {
-					parser.addDiagnostic({
+					parser.unexpectedDiagnostic({
 						description: descriptions.JS_PARSER.CONST_WITHOUT_INITIALIZER,
 						loc: id.loc,
 					});
@@ -1335,7 +1328,7 @@ export function parseVar(
 				id.type !== "JSBindingIdentifier" &&
 				!(isFor && (parser.match(tt._in) || parser.isContextual("of")))
 			) {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					start: parser.state.lastEndPos,
 					description: descriptions.JS_PARSER.COMPLEX_BINDING_WITHOUT_INITIALIZER,
 				});
@@ -1636,7 +1629,7 @@ export function parseFunctionParams(
 		typeParameters = maybeParseTSTypeParameters(parser);
 
 		if (typeParameters !== undefined && (kind === "get" || kind === "set")) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: typeParameters.loc,
 				description: descriptions.JS_PARSER.ACCESSOR_WITH_TYPE_PARAMS,
 			});

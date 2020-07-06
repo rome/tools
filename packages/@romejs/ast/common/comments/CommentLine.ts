@@ -8,14 +8,14 @@
 import {NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
-export type JSCommentBlock = NodeBaseWithComments & {
-	type: "JSCommentBlock";
+export type CommentLine = NodeBaseWithComments & {
+	type: "CommentLine";
 	value: string;
 	id: string;
 };
 
-export const jsCommentBlock = createBuilder<JSCommentBlock>(
-	"JSCommentBlock",
+export const jsCommentLine = createBuilder<CommentLine>(
+	"CommentLine",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

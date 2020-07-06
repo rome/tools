@@ -7,7 +7,7 @@
 
 import {AnyJSDeclaration, AnyNode} from "@romejs/ast";
 
-export default function isDeclaration(
+export function isDeclaration(
 	node: undefined | AnyNode,
 ): node is AnyJSDeclaration {
 	if (node === undefined) {

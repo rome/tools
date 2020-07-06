@@ -6,6 +6,7 @@
  */
 
 import {
+	ParserCoreState,
 	ParserOptions,
 	Position,
 	TokenValues,
@@ -133,7 +134,7 @@ export function isTagStartChar(index: Number0, input: string): boolean {
 	return input[i] === "<" && !isEscaped(index, input);
 }
 
-type State = {
+type State = ParserCoreState & {
 	inTagHead: boolean;
 };
 
@@ -212,6 +213,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
 				if (char === ">") {
 					return {
 						state: {
+							...state,
 							inTagHead: false,
 						},
 						token: this.finishToken("Greater"),
@@ -222,6 +224,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
 			if (isTagStartChar(index, input)) {
 				return {
 					state: {
+						...state,
 						inTagHead: true,
 					},
 					token: this.finishToken("Less"),

@@ -289,7 +289,7 @@ Object {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "js-parser"}]
+			origins: Array [Object {category: "parse/js"}]
 			description: Object {
 				category: "parse/js"
 				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
@@ -307,7 +307,7 @@ Object {
 			location: Object {
 				filename: "unknown"
 				mtime: undefined
-				sourceTypeJS: "script"
+				sourceText: undefined
 				end: Object {
 					column: 25
 					index: 25

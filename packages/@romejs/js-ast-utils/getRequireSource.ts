@@ -7,9 +7,9 @@
 
 import {Scope} from "@romejs/compiler";
 import {AnyNode} from "@romejs/ast";
-import doesNodeMatchPattern from "./doesNodeMatchPattern";
+import {doesNodeMatchPattern} from "./doesNodeMatchPattern";
 
-export default function getRequireSource(
+export function getRequireSource(
 	node: undefined | AnyNode,
 	scope: Scope,
 	allowStaticMember: boolean = false,

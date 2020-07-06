@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSComment, AnyNode, AnyRoot, ConstJSSourceType} from "@romejs/ast";
+import {AnyComment, AnyNode, AnyRoot, ConstJSSourceType} from "@romejs/ast";
 import {
 	SourceLocation,
 	extractSourceLocationRangeFromNodes,
@@ -178,7 +178,7 @@ export default class CompilerContext {
 		);
 	}
 
-	getComments(ids: undefined | Array<string>): Array<AnyJSComment> {
+	getComments(ids: undefined | Array<string>): Array<AnyComment> {
 		return this.comments.getCommentsFromIds(ids);
 	}
 

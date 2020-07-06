@@ -7,7 +7,7 @@
 
 import {AnyImportSpecifier, JSImportDeclaration} from "@romejs/ast";
 
-export default function getImportSpecifiers(
+export function getImportSpecifiers(
 	node: JSImportDeclaration,
 ): Array<AnyImportSpecifier> {
 	let specifiers: Array<AnyImportSpecifier> = [];

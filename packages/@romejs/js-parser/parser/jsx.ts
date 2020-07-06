@@ -31,7 +31,7 @@ import {descriptions} from "@romejs/diagnostics";
 import {isValidIdentifierName} from "@romejs/js-ast-utils";
 
 // Indicates whether we should create a JSXIdentifier or a JSXReferenceIdentifier
-function isHTMLTagName(tagName: string): boolean {
+function isHTMLElementName(tagName: string): boolean {
 	return /^[a-z]|-/.test(tagName) && isValidIdentifierName(tagName);
 }
 
@@ -67,7 +67,7 @@ function parseJSXIdentifier(parser: JSParser): JSXIdentifier {
 	} else if (parser.state.tokenType.keyword !== undefined) {
 		name = parser.state.tokenType.keyword;
 	} else {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.JSX_UNKNOWN_IDENTIFIER_TOKEN,
 		});
 		name = "";
@@ -115,7 +115,7 @@ function parseJSXElementName(parser: JSParser): JSXElement["name"] {
 	let node: JSXElement["name"];
 	if (
 		namespacedName.type === "JSXIdentifier" &&
-		!isHTMLTagName(namespacedName.name)
+		!isHTMLElementName(namespacedName.name)
 	) {
 		node = {
 			...namespacedName,
@@ -149,7 +149,7 @@ function parseJSXAttributeValue(
 		case tt.braceL: {
 			node = parseJSXExpressionContainer(parser);
 			if (node.expression.type === "JSXEmptyExpression") {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					loc: node.loc,
 					description: descriptions.JS_PARSER.JSX_EMPTY_ATTRIBUTE_VALUE,
 				});
@@ -164,7 +164,7 @@ function parseJSXAttributeValue(
 			return parseStringLiteral(parser);
 
 		default: {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				description: descriptions.JS_PARSER.JSX_INVALID_ATTRIBUTE_VALUE,
 			});
 			return parser.finishNode(
@@ -303,7 +303,7 @@ function parseJSXOpeningElementAt(
 	let typeArguments;
 	if (parser.isRelational("<")) {
 		if (!parser.isSyntaxEnabled("ts")) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				description: descriptions.JS_PARSER.JSX_ELEM_TYPE_ARGUMENTS_OUTSIDE_TS,
 			});
 		}
@@ -323,7 +323,7 @@ function parseJSXOpeningElementAt(
 	}
 	const selfClosing = parser.eat(tt.slash);
 	if (!parser.eat(tt.jsxTagEnd)) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.JSX_UNCLOSED_SELF_CLOSING_TAG,
 		});
 	}
@@ -347,7 +347,7 @@ function parseJSXClosingElementAt(
 	const name = parseJSXElementName(parser);
 
 	if (!parser.eat(tt.jsxTagEnd)) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.JSX_UNCLOSED_CLOSING_TAG,
 		});
 	}
@@ -408,7 +408,7 @@ function parseJSXElementAt(
 				}
 
 				case tt.eof: {
-					parser.addDiagnostic({
+					parser.unexpectedDiagnostic({
 						description: descriptions.JS_PARSER.JSX_UNCLOSED_ELEMENT(
 							getQualifiedJSXName(openingDef.name),
 							openingDef.loc,
@@ -418,7 +418,7 @@ function parseJSXElementAt(
 				}
 
 				default: {
-					parser.addDiagnostic({
+					parser.unexpectedDiagnostic({
 						description: descriptions.JS_PARSER.JSX_UNKNOWN_CHILD_START(
 							getQualifiedJSXName(openingDef.name),
 							openingDef.loc,
@@ -441,7 +441,7 @@ function parseJSXElementAt(
 
 		// Fragment open, element close
 		if (openingDef.name === undefined && closingName !== undefined) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: openingDef.loc,
 				description: descriptions.JS_PARSER.JSX_EXPECTED_CLOSING_FRAGMENT_TAG(
 					getQualifiedJSXName(openingDef.name),
@@ -452,7 +452,7 @@ function parseJSXElementAt(
 
 		// Element open, fragment close
 		if (openingDef.name !== undefined && closingName === undefined) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: openingDef.loc,
 				description: descriptions.JS_PARSER.JSX_EXPECTED_CLOSING_TAG(
 					getQualifiedJSXName(openingDef.name),
@@ -467,7 +467,7 @@ function parseJSXElementAt(
 				getQualifiedJSXName(closingName) !==
 				getQualifiedJSXName(openingDef.name)
 			) {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					loc: openingDef.loc,
 					description: descriptions.JS_PARSER.JSX_EXPECTED_CLOSING_TAG(
 						getQualifiedJSXName(openingDef.name),
@@ -506,7 +506,7 @@ function parseJSXElementAt(
 
 function checkAccidentalFragment(parser: JSParser) {
 	if (parser.match(tt.relational) && parser.state.tokenValue === "<") {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.UNWRAPPED_ADJACENT_JHX,
 		});
 	}
@@ -531,11 +531,11 @@ export function parseJSXElement(parser: JSParser): JSXElement | JSXFragment {
 	// Only necessary here as this is the only JSX entry point
 	if (!parser.isSyntaxEnabled("jsx")) {
 		if (parser.isSyntaxEnabled("ts")) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				description: descriptions.JS_PARSER.JSX_IN_TS_EXTENSION,
 			});
 		} else {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				description: descriptions.JS_PARSER.JSX_DISABLED,
 			});
 		}
