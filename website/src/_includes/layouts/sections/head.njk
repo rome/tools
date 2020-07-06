@@ -6,15 +6,9 @@
   <link rel="alternate icon" type="image/png" href="{{ '/static/img/favicon.png' | url }}">
 	<link rel="icon" type="image/svg+xml" href="{{ '/static/img/favicon.svg' | url }}">
 
-	<meta name="description" content="{{ config.description }}">
-
-	{% if title %}
-		<meta property="og:title" content="{{ title }}">
-		<meta property="og:description" content="The Rome Frontend Toolchain. Standardizing the web development experience.">
-	{% else %}
-		<meta property="og:title" content="The Rome Frontend Toolchain">
-		<meta property="og:description" content="Standardizing the web development experience.">
-	{% endif %}
+	<meta name="description" content="Standardizing the web development experience.">
+	<meta property="og:title" content="{{ title }}{{ " — " if title }}Rome Frontend Toolchain">
+	<meta property="og:description" content="Standardizing the web development experience.">
 	<meta property="og:image" content="/static/img/rome-logo-black.svg"">
 	<meta property="twitter:image" content="/static/img/rome-logo-black.svg">
 	<meta name="twitter:image:alt" content="Logo for the Rome Frontend Toolchain Project">
