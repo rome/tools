@@ -257,7 +257,7 @@ export default class Worker {
 	getFileBuffers() {
 		return Array.from(
 			this.buffers,
-			([path, content]) => ({file: path.join(), content}),
+			([path, content]) => ({filename: path.join(), content}),
 		);
 	}
 

@@ -242,7 +242,7 @@ export default class WorkerBridge extends Bridge {
 	getFileBuffers = this.createEvent<
 		void,
 		Array<{
-			file: string;
+			filename: string;
 			content: string;
 		}>
 	>({

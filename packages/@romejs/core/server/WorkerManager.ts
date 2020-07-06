@@ -173,10 +173,10 @@ export default class WorkerManager {
 			// Transfer buffers to the new worker
 			const buffers = await serverWorker.bridge.getFileBuffers.call();
 
-			for (const {file, content} of buffers) {
+			for (const {filename, content} of buffers) {
 				await newWorker.bridge.updateBuffer.call({
 					file: this.server.projectManager.getTransportFileReference(
-						createAbsoluteFilePath(file),
+						createAbsoluteFilePath(filename),
 					),
 					content,
 				});
