@@ -66,7 +66,7 @@ JSRoot {
 	]
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "js-parser"}]
+			origins: Array [Object {category: "parse/js"}]
 			location: Object {
 				filename: "input.js"
 				mtime: undefined

@@ -1,4 +1,4 @@
-import {NodeBaseWithComments, HTMLAttribute} from "@romejs/ast";
+import {HTMLAttribute, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
 export type HTMLTag = NodeBaseWithComments & {

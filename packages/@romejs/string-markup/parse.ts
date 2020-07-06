@@ -6,12 +6,12 @@
  */
 
 import {
+	ParserCoreState,
 	ParserOptions,
 	Position,
 	TokenValues,
 	createParser,
 	isAlpha,
-	ParserCoreState,
 } from "@romejs/parser-core";
 import {
 	ChildNode,

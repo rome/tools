@@ -6,7 +6,12 @@
  */
 
 import {ScopeType} from "../parser";
-import {Position, SourceLocation, ParserCoreState, ParserCore} from "@romejs/parser-core";
+import {
+	ParserCore,
+	ParserCoreState,
+	Position,
+	SourceLocation,
+} from "@romejs/parser-core";
 import {TokContext, types as ct} from "./context";
 import {TokenTypes, types as tt} from "./types";
 import {Token} from "..";

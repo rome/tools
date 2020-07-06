@@ -14,11 +14,11 @@ import {
 	JSStringLiteral,
 } from "@romejs/ast";
 import {
+	ParserCoreState,
 	ParserOptionsWithRequiredPath,
 	Position,
 	SourceLocation,
 	createParser,
-	ParserCoreState,
 } from "@romejs/parser-core";
 import {JSParserOptions} from "./options";
 import {

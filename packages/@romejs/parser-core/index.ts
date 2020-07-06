@@ -22,13 +22,13 @@ import {
 	Diagnostic,
 	DiagnosticCategory,
 	DiagnosticDescription,
+	DiagnosticFilter,
+	Diagnostics,
 	DiagnosticsError,
+	DiagnosticsProcessor,
 	catchDiagnosticsSync,
 	createSingleDiagnosticError,
 	descriptions,
-	DiagnosticsProcessor,
-	Diagnostics,
-	DiagnosticFilter,
 } from "@romejs/diagnostics";
 import {
 	Number0,
@@ -44,7 +44,7 @@ import {
 import {UnknownFilePath, createUnknownFilePath} from "@romejs/path";
 import {Class, OptionalProps} from "@romejs/typescript-helpers";
 import {removeCarriageReturn} from "@romejs/string-utils";
-import { AnyNode, AnyComment, RootBase } from "@romejs/ast";
+import {AnyComment, AnyNode, RootBase} from "@romejs/ast";
 import {attachComments} from "./comments";
 import CommentsConsumer from "@romejs/js-parser/CommentsConsumer";
 
@@ -138,7 +138,10 @@ export type ParserCoreState = {
 
 export type AnyParserCore = ParserCore<TokensShape, ParserCoreState>;
 
-export class ParserCore<Tokens extends TokensShape, State extends ParserCoreState = ParserCoreState> {
+export class ParserCore<
+	Tokens extends TokensShape,
+	State extends ParserCoreState = ParserCoreState
+> {
 	constructor(
 		opts: ParserOptions,
 		diagnosticCategory: DiagnosticCategory,
@@ -755,7 +758,7 @@ export class ParserCore<Tokens extends TokensShape, State extends ParserCoreStat
 		// TODO remove any trailing "eof" diagnostic
 		return collector.addDiagnostics(this.state.diagnostics).slice(0, 1);
 	}
-	
+
 	addDiagnosticFilter(diag: DiagnosticFilter) {
 		this.state.diagnosticFilters.push(diag);
 	}
@@ -773,8 +776,10 @@ export class ParserCore<Tokens extends TokensShape, State extends ParserCoreStat
 	}
 }
 
-export class ParserWithRequiredPath<Tokens extends TokensShape, State extends ParserCoreState>
-	extends ParserCore<Tokens, State> {
+export class ParserWithRequiredPath<
+	Tokens extends TokensShape,
+	State extends ParserCoreState
+> extends ParserCore<Tokens, State> {
 	constructor(
 		opts: ParserOptionsWithRequiredPath,
 		diagnosticCategory: DiagnosticCategory,

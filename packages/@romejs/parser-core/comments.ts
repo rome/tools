@@ -29,7 +29,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import {SourceLocation, AnyParserCore} from "@romejs/parser-core";
+import {AnyParserCore, SourceLocation} from "@romejs/parser-core";
 import {AnyComment, AnyNode} from "@romejs/ast";
 import {Number0} from "@romejs/ob1";
 
