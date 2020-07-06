@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, AnyNode} from "@romejs/ast";
+import {AnyComment, AnyNode, AnyRoot} from "@romejs/ast";
 import {getLinesBetween} from "../../node";
 import {
 	Token,
@@ -22,35 +22,33 @@ export function hasInnerComments(node: AnyNode): boolean {
 	return node.innerComments !== undefined && node.innerComments.length > 0;
 }
 
-export function printComment(node: AnyComment): Token {
-	switch (node.type) {
-		case "CommentBlock": {
-			const lines = node.value.split("\n");
-			if (lines.every((line) => line.trimStart().charAt(0) === "*")) {
-				return comment(
-					concat([
-						"/*",
-						join(
-							hardline,
-							lines.map((line, index) =>
-								index === 0
-									? line.trimEnd()
-									: ` ${index < lines.length - 1
-											? line.trim()
-											: line.trimStart()}`
-							),
-						),
-						"*/",
-					]),
-				);
-			} else {
-				return comment(`/*${node.value}*/`);
-			}
-		}
+export function printComment(
+	node: AnyComment,
+	rootType: undefined | AnyRoot["type"],
+): Token {
+	// Only JS can have line comments
+	if (rootType === "JSRoot" && node.type === "CommentLine") {
+		return comment(`//${node.value.trimEnd()}`);
+	}
 
-		case "CommentLine": {
-			return comment(`//${node.value.trimEnd()}`);
-		}
+	const lines = node.value.split("\n");
+	if (lines.every((line) => line.trimStart().charAt(0) === "*")) {
+		return comment(
+			concat([
+				"/*",
+				join(
+					hardline,
+					lines.map((line, index) =>
+						index === 0
+							? line.trimEnd()
+							: ` ${index < lines.length - 1 ? line.trim() : line.trimStart()}`
+					),
+				),
+				"*/",
+			]),
+		);
+	} else {
+		return comment(`/*${node.value}*/`);
 	}
 }
 
@@ -63,8 +61,12 @@ function printCommentSeparator(left: AnyNode, right: AnyNode): Token {
 			: concat([hardline, hardline]);
 }
 
-export function printLeadingComment(node: AnyComment, next: AnyNode): Token {
-	const comment = printComment(node);
+export function printLeadingComment(
+	node: AnyComment,
+	next: AnyNode,
+	rootType: undefined | AnyRoot["type"],
+): Token {
+	const comment = printComment(node, rootType);
 	if (node.type === "CommentLine") {
 		return concat([comment, hardline]);
 	} else {
@@ -72,8 +74,12 @@ export function printLeadingComment(node: AnyComment, next: AnyNode): Token {
 	}
 }
 
-export function printTrailingComment(node: AnyComment, previous: AnyNode): Token {
-	const comment = printComment(node);
+export function printTrailingComment(
+	node: AnyComment,
+	previous: AnyNode,
+	rootType: undefined | AnyRoot["type"],
+): Token {
+	const comment = printComment(node, rootType);
 	const linesBetween = getLinesBetween(previous, node);
 
 	if (linesBetween >= 1) {

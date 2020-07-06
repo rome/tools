@@ -14,18 +14,14 @@ import {
 	JSStringLiteral,
 } from "@romejs/ast";
 import {
+	ParserCoreAddDiagnosticsOptions,
 	ParserCoreState,
 	ParserOptionsWithRequiredPath,
 	Position,
-	SourceLocation,
 	createParser,
 } from "@romejs/parser-core";
 import {JSParserOptions} from "./options";
-import {
-	DiagnosticDescription,
-	DiagnosticLocation,
-	descriptions,
-} from "@romejs/diagnostics";
+import {DiagnosticDescription, descriptions} from "@romejs/diagnostics";
 import ParserBranchFinder from "./ParserBranchFinder";
 import {Token, nextToken} from "./tokenizer/index";
 import {TokenType, types as tt} from "./tokenizer/types";
@@ -286,16 +282,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			this.state.tokens.push(token);
 		}
 
-		addDiagnostic(
-			opts: {
-				description: Omit<DiagnosticDescription, "category">;
-				start?: Position;
-				end?: Position;
-				loc?: SourceLocation;
-				index?: Number0;
-				location?: DiagnosticLocation;
-			},
-		): void {
+		addDiagnostic(opts: ParserCoreAddDiagnosticsOptions): void {
 			if (this.isLookahead) {
 				return;
 			}
@@ -310,50 +297,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 				}
 			}
 
-			let {start, end} = opts;
-
-			if (opts.index !== undefined) {
-				start = this.getPositionFromIndex(opts.index);
-				end = start;
-			}
-
-			if (opts.location !== undefined) {
-				start = opts.location.start;
-				end = opts.location.end;
-			}
-
-			if (start === undefined && end === undefined && opts.loc !== undefined) {
-				start = opts.loc.start;
-				end = opts.loc.end;
-			}
-
-			// If we weren't given a start then default to the provided end, or the current token start
-			if (start === undefined && end === undefined) {
-				start = this.getPosition();
-				end = this.getLastEndPosition();
-			}
-
-			if (start === undefined && end !== undefined) {
-				start = end;
-			}
-
-			if (start !== undefined && end === undefined) {
-				end = start;
-			}
-
-			this.state.diagnostics.push({
-				description: {
-					category: "parse/js",
-					...opts.description,
-				},
-				location: {
-					filename: this.filename,
-					sourceTypeJS: this.sourceType,
-					mtime: this.mtime,
-					start,
-					end,
-				},
-			});
+			super.addDiagnostic(opts);
 		}
 
 		shouldTokenizeJSX(): boolean {
@@ -476,7 +420,6 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		}
 
 		// Consume a semicolon, or, failing that, see if we are allowed to
-
 		// pretend that there is a semicolon at this position.
 		semicolon(): void {
 			if (!this.isLineTerminator()) {
@@ -487,7 +430,6 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		}
 
 		// Expect a token of a given type. If found, consume it, otherwise,
-
 		// raise an unexpected token error at given pos.
 		expect(type: TokenType, pos?: Position): boolean {
 			if (this.eat(type)) {
@@ -541,7 +483,6 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		}
 
 		// Raise an unexpected token error. Can take the expected token type
-
 		// instead of a message string.
 		unexpectedToken(pos?: Position, tokenType?: TokenType) {
 			let expectedToken: undefined | string;

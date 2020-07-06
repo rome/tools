@@ -307,7 +307,6 @@ Object {
 			location: Object {
 				filename: "unknown"
 				mtime: undefined
-				sourceTypeJS: "script"
 				end: Object {
 					column: 25
 					index: 25

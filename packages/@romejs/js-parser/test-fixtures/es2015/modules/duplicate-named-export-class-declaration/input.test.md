@@ -34,7 +34,6 @@ JSRoot {
 			location: Object {
 				filename: "input.js"
 				mtime: undefined
-				sourceTypeJS: "module"
 				end: Object {
 					column: 19
 					index: 35

@@ -23,6 +23,7 @@ import {
 	DiagnosticCategory,
 	DiagnosticDescription,
 	DiagnosticFilter,
+	DiagnosticLocation,
 	Diagnostics,
 	DiagnosticsError,
 	DiagnosticsProcessor,
@@ -73,6 +74,15 @@ export type ParserUnexpectedOptions = {
 export type TokenValues<Tokens extends TokensShape> =
 	| Tokens[keyof Tokens]
 	| BaseTokens[keyof BaseTokens];
+
+export type ParserCoreAddDiagnosticsOptions = {
+	description: Omit<DiagnosticDescription, "category">;
+	start?: Position;
+	end?: Position;
+	loc?: SourceLocation;
+	index?: Number0;
+	location?: DiagnosticLocation;
+};
 
 export function tryParseWithOptionalOffsetPosition<
 	Opts extends ParserOptions,
@@ -757,6 +767,53 @@ export class ParserCore<
 
 		// TODO remove any trailing "eof" diagnostic
 		return collector.addDiagnostics(this.state.diagnostics).slice(0, 1);
+	}
+
+	addDiagnostic(opts: ParserCoreAddDiagnosticsOptions) {
+		let {start, end} = opts;
+
+		if (opts.index !== undefined) {
+			start = this.getPositionFromIndex(opts.index);
+			end = start;
+		}
+
+		if (opts.location !== undefined) {
+			start = opts.location.start;
+			end = opts.location.end;
+		}
+
+		if (start === undefined && end === undefined && opts.loc !== undefined) {
+			start = opts.loc.start;
+			end = opts.loc.end;
+		}
+
+		// If we weren't given a start then default to the provided end, or the current token start
+		if (start === undefined && end === undefined) {
+			start = this.getPosition();
+			end = this.getLastEndPosition();
+		}
+
+		if (start === undefined && end !== undefined) {
+			start = end;
+		}
+
+		if (start !== undefined && end === undefined) {
+			end = start;
+		}
+
+		this.state.diagnostics.push({
+			description: {
+				category: "parse/js",
+				...opts.description,
+			},
+			location: {
+				filename: this.filename,
+				//sourceTypeJS: this.sourceType,
+				mtime: this.mtime,
+				start,
+				end,
+			},
+		});
 	}
 
 	addDiagnosticFilter(diag: DiagnosticFilter) {

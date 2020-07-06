@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, AnyNode} from "@romejs/ast";
+import {AnyComment, AnyNode, AnyRoot} from "@romejs/ast";
 import {isTypeExpressionWrapperNode, isTypeNode} from "@romejs/js-ast-utils";
 import CommentsConsumer from "@romejs/js-parser/CommentsConsumer";
 import {
@@ -17,6 +17,7 @@ import builders from "./builders/index";
 import * as n from "./node/index";
 import {Token, concat, hardline, indent, join, mark} from "./tokens";
 import {ob1Get1} from "@romejs/ob1";
+import {isRoot} from "@romejs/ast-utils";
 
 export type BuilderMethod<T extends AnyNode = AnyNode> = (
 	builder: Builder,
@@ -38,8 +39,10 @@ export default class Builder {
 		this.comments = new CommentsConsumer(comments);
 		this.printedComments = new Set();
 		this.printStack = [];
+		this.rootType = undefined;
 	}
 
+	rootType: undefined | AnyRoot["type"];
 	options: BuilderOptions;
 	comments: CommentsConsumer;
 	printedComments: Set<string>;
@@ -65,10 +68,22 @@ export default class Builder {
 			);
 		}
 
+		const oldRootType = this.rootType;
+		let changedRootType = false;
+
+		if (isRoot(node)) {
+			changedRootType = true;
+			this.rootType = node.type;
+		}
 		this.printStack.push(node);
+
 		let printedNode = tokenizeNode(this, node, parent);
 		const needsParens = n.needsParens(node, parent, this.printStack);
+
 		this.printStack.pop();
+		if (changedRootType) {
+			this.rootType = oldRootType;
+		}
 
 		if (printedNode !== "") {
 			if (this.options.sourceMaps && node.loc !== undefined) {
@@ -98,7 +113,7 @@ export default class Builder {
 			for (let i = leadingComments.length - 1; i >= 0; i--) {
 				const comment = leadingComments[i];
 				this.printedComments.add(comment.id);
-				tokens.unshift(printLeadingComment(comment, next));
+				tokens.unshift(printLeadingComment(comment, next, this.rootType));
 				next = comment;
 			}
 		}
@@ -111,7 +126,7 @@ export default class Builder {
 
 			for (const comment of trailingComments) {
 				this.printedComments.add(comment.id);
-				tokens.push(printTrailingComment(comment, previous));
+				tokens.push(printTrailingComment(comment, previous, this.rootType));
 				previous = comment;
 			}
 		}
@@ -160,7 +175,7 @@ export default class Builder {
 
 		for (const comment of innerComments) {
 			this.printedComments.add(comment.id);
-			tokens.push(printComment(comment));
+			tokens.push(printComment(comment, this.rootType));
 		}
 
 		return shouldIndent
