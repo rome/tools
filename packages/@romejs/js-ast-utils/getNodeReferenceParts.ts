@@ -6,7 +6,7 @@
  */
 
 import {AnyNode} from "@romejs/ast";
-import isIdentifierish from "./isIdentifierish";
+import {isIdentifierish} from "./isIdentifierish";
 
 type Parts = Array<{
 	value: string;
@@ -25,7 +25,7 @@ const EMPTY: Result = {
 	parts: [],
 };
 
-export default function getNodeReferenceParts(node: undefined | AnyNode): Result {
+export function getNodeReferenceParts(node: undefined | AnyNode): Result {
 	if (node === undefined) {
 		return EMPTY;
 	}

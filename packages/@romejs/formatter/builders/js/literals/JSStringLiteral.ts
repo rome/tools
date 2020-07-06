@@ -14,7 +14,7 @@ import {
 	JSStringLiteral,
 	TSStringLiteralTypeAnnotation,
 } from "@romejs/ast";
-import {escapeXHTMLEntities} from "@romejs/js-parser";
+import {escapeXHTMLEntities} from "@romejs/html-parser";
 
 export default function JSStringLiteral(
 	builder: Builder,

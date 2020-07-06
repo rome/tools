@@ -1,7 +1,7 @@
 import {JSXElement} from "@romejs/ast";
-import getJSXAttribute from "./getJSXAttribute";
+import {getJSXAttribute} from "./getJSXAttribute";
 
-export default function hasJSXAttribute(
+export function hasJSXAttribute(
 	tag: JSXElement,
 	name: string,
 	allowEmpty: boolean = false,

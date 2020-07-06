@@ -6,11 +6,9 @@
  */
 
 import {AnyJSStatement, AnyNode} from "@romejs/ast";
-import isDeclaration from "./isDeclaration";
+import {isDeclaration} from "./isDeclaration";
 
-export default function isStatement(
-	node: undefined | AnyNode,
-): node is AnyJSStatement {
+export function isStatement(node: undefined | AnyNode): node is AnyJSStatement {
 	if (node === undefined) {
 		return false;
 	}

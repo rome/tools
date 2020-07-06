@@ -7,7 +7,7 @@
 
 import {isPlainObject} from "@romejs/typescript-helpers";
 
-export default function isNodeLike(node: unknown): boolean {
+export function isNodeLike(node: unknown): boolean {
 	if (node == null) {
 		return false;
 	} else {

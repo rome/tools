@@ -19,7 +19,7 @@ import {
 	softline,
 } from "@romejs/formatter";
 
-import {hasInnerComments} from "../comments";
+import {hasInnerComments} from "../../comments";
 
 export default function TSTupleType(builder: Builder, node: TSTupleType): Token {
 	if (node.elementTypes.length === 0 && node.rest === undefined) {

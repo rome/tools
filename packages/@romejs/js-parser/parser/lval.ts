@@ -133,7 +133,7 @@ export function toAssignmentPattern(
 					if (arg.type === "JSAssignmentIdentifier") {
 						rest = arg;
 					} else {
-						parser.addDiagnostic({
+						parser.unexpectedDiagnostic({
 							loc: arg.loc,
 							description: descriptions.JS_PARSER.INVALID_OBJECT_REST_ARGUMENT,
 						});
@@ -167,7 +167,7 @@ export function toAssignmentPattern(
 
 		case "JSAssignmentExpression": {
 			if (node.operator !== "=") {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					loc: parser.getLoc(node.left),
 					description: descriptions.JS_PARSER.INVALID_ASSIGNMENT_PATTERN_OPERATOR,
 				});
@@ -183,7 +183,7 @@ export function toAssignmentPattern(
 		}
 
 		default: {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: node.loc,
 				description: descriptions.JS_PARSER.INVALID_LEFT_HAND_SIDE(
 					contextDescription,
@@ -215,7 +215,7 @@ export function toTargetAssignmentPattern(
 			return binding;
 
 		default: {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: node.loc,
 				description: descriptions.JS_PARSER.INVALID_ASSIGNMENT_TARGET,
 			});
@@ -275,7 +275,7 @@ export function toBindingPattern(
 	const binding = toAssignmentPattern(parser, node, contextDescription);
 
 	if (binding.type === "JSMemberExpression") {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc: node.loc,
 			description: descriptions.JS_PARSER.BINDING_MEMBER_EXPRESSION,
 		});
@@ -361,7 +361,7 @@ export function toAssignmentObjectProperty(
 ): JSAssignmentObjectPatternProperty {
 	switch (prop.type) {
 		case "JSObjectMethod": {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: prop.key.loc,
 				description: descriptions.JS_PARSER.OBJECT_PATTERN_CANNOT_CONTAIN_METHODS,
 			});
@@ -400,7 +400,7 @@ export function toAssignmentObjectProperty(
 			};
 
 		default: {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: prop.loc,
 				description: descriptions.JS_PARSER.INVALID_OBJECT_PATTERN_PROPERTY,
 			});
@@ -484,7 +484,7 @@ export function toAssignableList(
 		}
 
 		if (expr.type === "TSAsExpression" || expr.type === "TSTypeAssertion") {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: expr.loc,
 				description: descriptions.JS_PARSER.TS_UNEXPECTED_CAST_IN_PARAMETER_POSITION,
 			});
@@ -613,20 +613,20 @@ export function normalizeReferencedItem(
 		return expr;
 	}
 
-	parser.addDiagnostic({
+	parser.unexpectedDiagnostic({
 		loc: expr.loc,
 		description: descriptions.JS_PARSER.FLOW_TYPE_CAST_IN_TS,
 	});
 
 	if (!parser.isParenthesized(expr) && (multiple || !isParenthesizedExpr)) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc: expr.loc,
 			description: descriptions.JS_PARSER.TYPE_CAST_EXPECTED_PARENS,
 		});
 	}
 
 	if (expr.optional) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc: expr.loc,
 			description: descriptions.JS_PARSER.TYPE_CAST_CANNOT_BE_OPTIONAL,
 		});
@@ -635,7 +635,7 @@ export function normalizeReferencedItem(
 	const {typeAnnotation, expression} = expr;
 
 	if (typeAnnotation === undefined) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc: expr.loc,
 			description: descriptions.JS_PARSER.TYPE_CAST_WITHOUT_ANNOTATION,
 		});
@@ -652,7 +652,7 @@ export function filterSpread<T extends AnyNode>(
 	for (let i = 0; i < elems.length; i++) {
 		const elem = elems[i];
 		if (elem.type === "JSSpreadElement") {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				description: descriptions.JS_PARSER.UNEXPECTED_SPREAD,
 			});
 
@@ -788,7 +788,7 @@ export function parseBindingList(
 			first = false;
 		} else {
 			if (!parser.eat(tt.comma)) {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					description: descriptions.JS_PARSER.EXPECTED_COMMA_SEPARATOR(
 						openContext.name,
 					),
@@ -857,7 +857,7 @@ export function parseBindingListItem(
 
 	if (accessibility !== undefined || readonly) {
 		if (!parser.isSyntaxEnabled("ts")) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				description: descriptions.JS_PARSER.TS_DISABLED_BUT_ACCESSIBILITY_OR_READONLY,
 			});
 		}
@@ -866,7 +866,7 @@ export function parseBindingListItem(
 			elt.type !== "JSBindingIdentifier" &&
 			elt.type !== "JSBindingAssignmentPattern"
 		) {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				start,
 				description: descriptions.JS_PARSER.TS_PARAMETER_PROPERTY_BINDING_PATTERN,
 			});
@@ -901,7 +901,7 @@ export function parseBindingListItemTypes(
 
 	if (parser.eat(tt.question)) {
 		if (param.type !== "JSBindingIdentifier") {
-			parser.addDiagnostic({
+			parser.unexpectedDiagnostic({
 				loc: param.loc,
 				description: descriptions.JS_PARSER.TYPE_BINDING_PARAMETER_OPTIONAL,
 			});
@@ -960,7 +960,7 @@ export function parseMaybeDefault(
 		parser.getLoc(target.right).start.index <
 		parser.getLoc(target.meta.typeAnnotation).start.index
 	) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc: target.meta.typeAnnotation.loc,
 			description: descriptions.JS_PARSER.TYPE_ANNOTATION_AFTER_ASSIGNMENT,
 		});
@@ -1000,7 +1000,7 @@ export function checkLVal(
 		parser.isParenthesized(expr) &&
 		!ALLOWED_PARENTHESIZED_LVAL_TYPES.includes(expr.type)
 	) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.INVALID_PARENTEHSIZED_LVAL(
 				expr.type === "JSBindingObjectPattern"
 					? "object"
@@ -1033,7 +1033,7 @@ export function checkLVal(
 				parser.inScope("STRICT") &&
 				isStrictBindReservedWord(expr.name, parser.inModule)
 			) {
-				parser.addDiagnostic({
+				parser.unexpectedDiagnostic({
 					loc: expr.loc,
 					description: descriptions.JS_PARSER.RESERVED_WORD(expr.name),
 				});
@@ -1045,7 +1045,7 @@ export function checkLVal(
 				if (clash === undefined) {
 					checkClashes.set(expr.name, expr);
 				} else {
-					parser.addDiagnostic({
+					parser.unexpectedDiagnostic({
 						description: descriptions.JS_PARSER.ARGUMENT_CLASH_IN_STRICT(
 							expr.name,
 							expr.loc,
@@ -1125,7 +1125,7 @@ export function checkToRestConversion(
 	node: JSSpreadProperty | JSSpreadElement,
 ): void {
 	if (VALID_REST_ARGUMENT_TYPES.includes(node.argument.type) === false) {
-		parser.addDiagnostic({
+		parser.unexpectedDiagnostic({
 			loc: node.argument.loc,
 			description: descriptions.JS_PARSER.REST_INVALID_ARGUMENT,
 		});
@@ -1146,7 +1146,7 @@ export function raiseRestNotLast(
 	loc?: SourceLocation,
 	start?: Position,
 ) {
-	parser.addDiagnostic({
+	parser.unexpectedDiagnostic({
 		start,
 		loc,
 		description: descriptions.JS_PARSER.DESTRUCTURING_REST_ELEMENT_NOT_LAST,

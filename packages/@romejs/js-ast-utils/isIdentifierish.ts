@@ -7,7 +7,7 @@
 
 import {AnyJSIdentifier, AnyNode} from "@romejs/ast";
 
-export default function isIdentifierish(node: AnyNode): node is AnyJSIdentifier {
+export function isIdentifierish(node: AnyNode): node is AnyJSIdentifier {
 	return (
 		node.type === "JSIdentifier" ||
 		node.type === "JSXIdentifier" ||

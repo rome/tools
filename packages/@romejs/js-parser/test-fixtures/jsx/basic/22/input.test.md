@@ -69,6 +69,7 @@ JSRoot {
 			location: Object {
 				filename: "input.mjs"
 				mtime: undefined
+				sourceText: undefined
 				end: Object {
 					column: 35
 					index: 51

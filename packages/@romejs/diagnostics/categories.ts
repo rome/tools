@@ -26,6 +26,7 @@ export type DiagnosticCategory =
 	| "lint/disabled"
 	| "lint/pendingFixes"
 	| "lsp/parse"
+	| "parse/html"
 	| "parse/js"
 	| "parse/json"
 	| "parse/manifest"

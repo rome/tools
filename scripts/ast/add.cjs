@@ -29,7 +29,7 @@ if (language === undefined || nodeType === undefined || category === undefined) 
 const builderName = getBuilderName(nodeType);
 
 // Write AST def
-let file = `import {NodeBaseWithComments} from "../../index";
+let file = `import {NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
 
 export type ${nodeType} = NodeBaseWithComments & {

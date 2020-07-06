@@ -7,7 +7,7 @@
 
 import {AnyJSVariableIdentifier, AnyNode} from "@romejs/ast";
 
-export default function isVariableIdentifier(
+export function isVariableIdentifier(
 	node: AnyNode,
 ): node is AnyJSVariableIdentifier {
 	return (

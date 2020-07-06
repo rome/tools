@@ -8,7 +8,7 @@
 import {AnyNode} from "@romejs/ast";
 import {SourceLocation} from "@romejs/parser-core";
 
-export default function inheritLoc(
+export function inheritLoc(
 	node: AnyNode,
 	name?: string,
 ): undefined | SourceLocation {

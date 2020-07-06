@@ -13,10 +13,10 @@ import {
 	jsRoot,
 } from "@romejs/ast";
 import {CompilerContext, Path} from "@romejs/compiler";
-import removeLoc from "./removeLoc";
+import {removeLoc} from "@romejs/ast-utils";
 import {parseJS} from "@romejs/js-parser";
 import {createUnknownFilePath} from "@romejs/path";
-import isIdentifierish from "./isIdentifierish";
+import {isIdentifierish} from "./isIdentifierish";
 import {Dict} from "@romejs/typescript-helpers";
 
 type Placeholder = {
@@ -124,7 +124,7 @@ function createIdentifier(
 	}
 }
 
-export default function template(
+export function template(
 	strs: TemplateStringsArray,
 	...substitutions: TemplateSubstitions
 ): AnyNode {

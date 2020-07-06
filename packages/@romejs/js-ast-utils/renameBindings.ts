@@ -6,7 +6,7 @@
  */
 
 import {Binding, Path} from "@romejs/compiler";
-import inheritLoc from "./inheritLoc";
+import {inheritLoc} from "./inheritLoc";
 import {
 	AnyJSVariableIdentifier,
 	AnyNode,
@@ -15,13 +15,13 @@ import {
 	jsIdentifier,
 	jsReferenceIdentifier,
 } from "@romejs/ast";
-import getBindingIdentifiers from "./getBindingIdentifiers";
-import isVariableIdentifier from "./isVariableIdentifier";
-import assertSingleOrMultipleNodes from "./assertSingleOrMultipleNodes";
+import {getBindingIdentifiers} from "./getBindingIdentifiers";
+import {isVariableIdentifier} from "./isVariableIdentifier";
+import {assertSingleOrMultipleNodes} from "./assertSingleOrMultipleNodes";
 
 // This methods allows either passing in Bindings that could be present within deep scopes,
 // or local names for the scope in the passed Path
-export default function renameBindings(
+export function renameBindings(
 	path: Path,
 	oldToNewMapping: Map<Binding | string, string>,
 ): AnyNode | Array<AnyNode> {

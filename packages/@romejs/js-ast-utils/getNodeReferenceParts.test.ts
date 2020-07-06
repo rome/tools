@@ -6,8 +6,8 @@
  */
 
 import {test} from "rome";
-import getNodeReferenceParts from "./getNodeReferenceParts";
-import template from "./template";
+import {getNodeReferenceParts} from "./getNodeReferenceParts";
+import {template} from "./template";
 
 test(
 	"getNodeReferenceParts",

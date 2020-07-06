@@ -228,9 +228,6 @@ evaluators.set("JSMemberExpression", JSMemberExpression);
 import JSMetaProperty from "./expressions/JSMetaProperty";
 evaluators.set("JSMetaProperty", JSMetaProperty);
 
-import JSMockParent from "./temp/JSMockParent";
-evaluators.set("JSMockParent", JSMockParent);
-
 import JSNewExpression from "./expressions/JSNewExpression";
 evaluators.set("JSNewExpression", JSNewExpression);
 

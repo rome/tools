@@ -6,7 +6,7 @@
  */
 
 import {AnyComment, AnyNode, AnyRoot} from "@romejs/ast";
-import {getLinesBetween} from "../../node";
+import {getLinesBetween} from "../node";
 import {
 	Token,
 	comment,

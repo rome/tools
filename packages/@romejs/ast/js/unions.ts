@@ -104,7 +104,7 @@ export type AnyJSAuxiliary =
 	| n.JSTemplateElement
 	| n.JSVariableDeclarator
 	| n.JSAmbiguousFlowTypeCastExpression
-	| n.JSMockParent;
+	| n.MockParent;
 
 export type AnyCommentOptionalId =
 	| OptionalProps<n.CommentBlock, "id">

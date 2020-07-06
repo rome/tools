@@ -307,6 +307,7 @@ Object {
 			location: Object {
 				filename: "unknown"
 				mtime: undefined
+				sourceText: undefined
 				end: Object {
 					column: 25
 					index: 25

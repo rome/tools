@@ -12,7 +12,7 @@ import {
 	printComment,
 	printLeadingComment,
 	printTrailingComment,
-} from "./builders/js/comments";
+} from "./builders/comments";
 import builders from "./builders/index";
 import * as n from "./node/index";
 import {Token, concat, hardline, indent, join, mark} from "./tokens";

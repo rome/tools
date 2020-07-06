@@ -36,6 +36,7 @@ import {manifest} from "./manifest";
 import {projectConfig} from "./projectConfig";
 import {lint} from "./lint";
 import {userConfig} from "./userConfig";
+import {htmlParser} from "./htmlParser";
 
 type DiagnosticMetadataString = Omit<Partial<DiagnosticDescription>, "message"> & {
 	message: string;
@@ -175,4 +176,5 @@ export const descriptions = {
 	MANIFEST: manifest,
 	PROJECT_CONFIG: projectConfig,
 	USER_CONFIG: userConfig,
+	HTML_PARSER: htmlParser,
 };

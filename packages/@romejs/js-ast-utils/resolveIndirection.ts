@@ -1,7 +1,7 @@
 import {AnyNode} from "@romejs/ast";
 import {ConstBinding, Scope} from "@romejs/compiler";
 
-export default function resolveIndirection(
+export function resolveIndirection(
 	node: AnyNode,
 	scope: Scope,
 ): {

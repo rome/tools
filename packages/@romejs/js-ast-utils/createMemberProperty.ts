@@ -13,9 +13,9 @@ import {
 	jsStaticMemberProperty,
 	jsStringLiteral,
 } from "@romejs/ast";
-import isValidIdentifierName from "./isValidIdentifierName";
+import {isValidIdentifierName} from "./isValidIdentifierName";
 
-export default function createMemberProperty(
+export function createMemberProperty(
 	name: string,
 ): JSStaticMemberProperty | JSComputedMemberProperty {
 	if (isValidIdentifierName(name)) {

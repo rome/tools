@@ -14,9 +14,9 @@ import {
 	JSStringLiteral,
 } from "@romejs/ast";
 import {
-	ParserCoreAddDiagnosticsOptions,
 	ParserCoreState,
 	ParserOptionsWithRequiredPath,
+	ParserUnexpectedOptions,
 	Position,
 	createParser,
 } from "@romejs/parser-core";
@@ -242,7 +242,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			const {state} = this;
 
 			if (state.startPos.index > state.lastEndPos.index) {
-				this.addDiagnostic({
+				this.unexpectedDiagnostic({
 					start: state.lastEndPos,
 					end: state.lastEndPos,
 					description: _metadata,
@@ -282,7 +282,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			this.state.tokens.push(token);
 		}
 
-		addDiagnostic(opts: ParserCoreAddDiagnosticsOptions): void {
+		unexpectedDiagnostic(opts: ParserUnexpectedOptions): void {
 			if (this.isLookahead) {
 				return;
 			}
@@ -297,7 +297,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 				}
 			}
 
-			super.addDiagnostic(opts);
+			super.unexpectedDiagnostic(opts);
 		}
 
 		shouldTokenizeJSX(): boolean {
@@ -310,7 +310,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 
 		expectSyntaxEnabled(syntax: ConstJSProgramSyntax) {
 			if (!this.isSyntaxEnabled(syntax)) {
-				this.addDiagnostic({
+				this.unexpectedDiagnostic({
 					description: descriptions.JS_PARSER.EXPECTED_ENABLE_SYNTAX(syntax),
 				});
 			}
@@ -324,7 +324,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			if (this.eatRelational(op)) {
 				return true;
 			} else {
-				this.addDiagnostic({
+				this.unexpectedDiagnostic({
 					description: descriptions.JS_PARSER.EXPECTED_RELATIONAL_OPERATOR,
 				});
 				return false;
@@ -338,7 +338,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 
 		banUnicodeEscape(index: undefined | Number0, name: string) {
 			if (index !== undefined) {
-				this.addDiagnostic({
+				this.unexpectedDiagnostic({
 					index,
 					description: descriptions.JS_PARSER.ESCAPE_SEQUENCE_IN_WORD(name),
 				});
@@ -393,7 +393,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			if (this.eatContextual(name)) {
 				return true;
 			} else {
-				this.addDiagnostic({
+				this.unexpectedDiagnostic({
 					description: _metadata,
 				});
 				return false;
@@ -423,7 +423,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		// pretend that there is a semicolon at this position.
 		semicolon(): void {
 			if (!this.isLineTerminator()) {
-				this.addDiagnostic({
+				this.unexpectedDiagnostic({
 					description: descriptions.JS_PARSER.EXPECTED_SEMI_OR_LINE_TERMINATOR,
 				});
 			}
@@ -464,7 +464,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			} else {
 				const currPos = this.getPosition();
 
-				this.addDiagnostic({
+				this.unexpectedDiagnostic({
 					description: descriptions.JS_PARSER.EXPECTED_CLOSING(
 						context.name,
 						context.close.label,
@@ -497,7 +497,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 					possibleMistake === this.state.tokenType.label;
 			}
 
-			this.addDiagnostic({
+			this.unexpectedDiagnostic({
 				description: descriptions.JS_PARSER.UNEXPECTED_TOKEN(
 					expectedToken,
 					possibleShiftMistake,

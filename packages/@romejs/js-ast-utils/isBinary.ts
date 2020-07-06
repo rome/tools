@@ -7,7 +7,7 @@
 
 import {AnyNode, JSBinaryExpression, JSLogicalExpression} from "@romejs/ast";
 
-export default function isBinary(
+export function isBinary(
 	node: undefined | AnyNode,
 ): node is JSBinaryExpression | JSLogicalExpression {
 	if (node === undefined) {

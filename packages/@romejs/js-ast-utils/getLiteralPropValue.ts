@@ -1,1 +1,1 @@
-export default function getLiteralPropValue() {}
+export function getLiteralPropValue() {}

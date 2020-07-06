@@ -70,4 +70,3 @@ export {Token};
 export {tokTypes};
 
 export {keywords as keywordTokTypes} from "./tokenizer/types";
-export * from "./xhtmlEntities";

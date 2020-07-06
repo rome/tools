@@ -1,6 +1,6 @@
 import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
-import isEmptyTemplateLiteral from "@romejs/js-ast-utils/isEmptyTemplateLiteral";
+import {isEmptyTemplateLiteral} from "@romejs/js-ast-utils";
 import {
 	ARIAProperty,
 	ARIAPropertyDefinition,

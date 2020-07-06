@@ -69,20 +69,13 @@ export type ParserUnexpectedOptions = {
 	start?: Position;
 	end?: Position;
 	token?: TokenBase;
+	index?: Number0;
+	location?: DiagnosticLocation;
 };
 
 export type TokenValues<Tokens extends TokensShape> =
 	| Tokens[keyof Tokens]
 	| BaseTokens[keyof BaseTokens];
-
-export type ParserCoreAddDiagnosticsOptions = {
-	description: Omit<DiagnosticDescription, "category">;
-	start?: Position;
-	end?: Position;
-	loc?: SourceLocation;
-	index?: Number0;
-	location?: DiagnosticLocation;
-};
 
 export function tryParseWithOptionalOffsetPosition<
 	Opts extends ParserOptions,
@@ -458,36 +451,46 @@ export class ParserCore<
 
 	createDiagnostic(opts: ParserUnexpectedOptions = {}): Diagnostic {
 		const {currentToken} = this;
-		let {description: metadata, start, end, loc, token} = opts;
+		let {description: metadata, start, end, token} = opts;
 
-		// Allow passing in a TokenBase
+		if (opts.index !== undefined) {
+			start = this.getPositionFromIndex(opts.index);
+			end = start;
+		}
+
+		if (opts.location !== undefined) {
+			start = opts.location.start;
+			end = opts.location.end;
+		}
+
 		if (token !== undefined) {
 			start = this.getPositionFromIndex(token.start);
 			end = this.getPositionFromIndex(token.end);
 		}
 
-		// Allow passing in a SourceLocation as an easy way to point to a particular node
-		if (loc !== undefined) {
-			start = loc.start;
-			end = loc.end;
+		if (start === undefined && end === undefined && opts.loc !== undefined) {
+			start = opts.loc.start;
+			end = opts.loc.end;
 		}
 
-		// When both properties are omitted then we will default to the current token range
+		// If we weren't given a start then default to the provided end, or the current token start
 		if (start === undefined && end === undefined) {
+			start = this.getPosition();
 			end = this.getLastEndPosition();
 		}
 
-		if (start === undefined) {
-			start = this.getPosition();
+		if (start === undefined && end !== undefined) {
+			start = end;
 		}
 
-		if (end === undefined) {
+		if (start !== undefined && end === undefined) {
 			end = start;
 		}
 
-		// Sometimes the end position may be empty as it hasn't been filled yet
-		if (end.index === ob1Number0) {
-			end = start;
+		if (start === undefined || end === undefined) {
+			throw new Error(
+				`Conditions above should have eliminated this possibility`,
+			);
 		}
 
 		// Normalize message, we need to be defensive here because it could have been called while tokenizing the first token
@@ -530,6 +533,10 @@ export class ParserCore<
 	// Return an error to indicate a parser error, this must be thrown at the callsite for refinement
 	unexpected(opts: ParserUnexpectedOptions = {}): DiagnosticsError {
 		return createSingleDiagnosticError(this.createDiagnostic(opts));
+	}
+
+	unexpectedDiagnostic(opts: ParserUnexpectedOptions = {}) {
+		this.state.diagnostics.push(this.createDiagnostic(opts));
 	}
 
 	//# Token utility methods
@@ -769,51 +776,8 @@ export class ParserCore<
 		return collector.addDiagnostics(this.state.diagnostics).slice(0, 1);
 	}
 
-	addDiagnostic(opts: ParserCoreAddDiagnosticsOptions) {
-		let {start, end} = opts;
-
-		if (opts.index !== undefined) {
-			start = this.getPositionFromIndex(opts.index);
-			end = start;
-		}
-
-		if (opts.location !== undefined) {
-			start = opts.location.start;
-			end = opts.location.end;
-		}
-
-		if (start === undefined && end === undefined && opts.loc !== undefined) {
-			start = opts.loc.start;
-			end = opts.loc.end;
-		}
-
-		// If we weren't given a start then default to the provided end, or the current token start
-		if (start === undefined && end === undefined) {
-			start = this.getPosition();
-			end = this.getLastEndPosition();
-		}
-
-		if (start === undefined && end !== undefined) {
-			start = end;
-		}
-
-		if (start !== undefined && end === undefined) {
-			end = start;
-		}
-
-		this.state.diagnostics.push({
-			description: {
-				category: "parse/js",
-				...opts.description,
-			},
-			location: {
-				filename: this.filename,
-				//sourceTypeJS: this.sourceType,
-				mtime: this.mtime,
-				start,
-				end,
-			},
-		});
+	addDiagnostic(diag: Diagnostic) {
+		this.state.diagnostics.push(diag);
 	}
 
 	addDiagnosticFilter(diag: DiagnosticFilter) {
@@ -835,12 +799,12 @@ export class ParserCore<
 
 export class ParserWithRequiredPath<
 	Tokens extends TokensShape,
-	State extends ParserCoreState
+	State extends ParserCoreState = ParserCoreState
 > extends ParserCore<Tokens, State> {
 	constructor(
 		opts: ParserOptionsWithRequiredPath,
 		diagnosticCategory: DiagnosticCategory,
-		initialState: State,
+		initialState: Omit<State, keyof ParserCoreState>,
 	) {
 		super(opts, diagnosticCategory, initialState);
 		this.filename = this.getFilenameAssert();

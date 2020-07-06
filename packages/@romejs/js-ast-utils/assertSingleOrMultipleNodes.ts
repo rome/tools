@@ -8,7 +8,7 @@
 import {TransformExitResult} from "@romejs/compiler";
 import {AnyNode} from "@romejs/ast";
 
-export default function assertSingleOrMultipleNodes(
+export function assertSingleOrMultipleNodes(
 	result: TransformExitResult,
 ): AnyNode | Array<AnyNode> {
 	if (result === undefined) {

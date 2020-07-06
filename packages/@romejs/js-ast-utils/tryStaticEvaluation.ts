@@ -5,7 +5,7 @@ import {
 	JSUnaryExpression,
 } from "@romejs/ast";
 import {Scope} from "@romejs/compiler";
-import resolveIndirection from "./resolveIndirection";
+import {resolveIndirection} from "./resolveIndirection";
 
 export type EvalResult = {
 	value: undefined | null | bigint | string | number | boolean;
@@ -150,7 +150,7 @@ function evalTemplateLiteral(
 
 const cache: WeakMap<AnyNode, EvalResult> = new WeakMap();
 
-export default function tryStaticEvaluation(
+export function tryStaticEvaluation(
 	node: AnyNode,
 	scope: Scope,
 	opts: EvalOptions = {},

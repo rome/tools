@@ -7,7 +7,7 @@
 
 import {AnyNode} from "@romejs/ast";
 
-export default function isUnaryLike(node: undefined | AnyNode): boolean {
+export function isUnaryLike(node: undefined | AnyNode): boolean {
 	if (node === undefined) {
 		return false;
 	}

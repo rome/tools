@@ -3,6 +3,7 @@ import * as n from "@romejs/ast";
 export * from "./base";
 export * from "./js/constants";
 
+export * from "./html/unions";
 export * from "./css/unions";
 export * from "./js/unions";
 export * from "./unions";
@@ -64,10 +65,11 @@ export * from "./css/types/CSSURLType";
 export * from "./css/at-rules/CSSViewportAtStatement";
 export * from "./html/attributes/HTMLAttribute";
 export * from "./html/tags/HTMLDoctypeTag";
+export * from "./html/core/HTMLIdentifier";
 export * from "./html/core/HTMLRoot";
-export * from "./html/tags/HTMLTag";
+export * from "./html/core/HTMLString";
+export * from "./html/tags/HTMLElement";
 export * from "./html/core/HTMLText";
-export * from "./html/tags/HTMLXmlTag";
 export * from "./js/temp/JSAmbiguousFlowTypeCastExpression";
 export * from "./js/expressions/JSArrayExpression";
 export * from "./js/auxiliary/JSArrayHole";
@@ -136,7 +138,6 @@ export * from "./js/statements/JSLabeledStatement";
 export * from "./js/expressions/JSLogicalExpression";
 export * from "./js/expressions/JSMemberExpression";
 export * from "./js/expressions/JSMetaProperty";
-export * from "./js/temp/JSMockParent";
 export * from "./js/expressions/JSNewExpression";
 export * from "./js/literals/JSNullLiteral";
 export * from "./js/literals/JSNumericLiteral";
@@ -207,6 +208,7 @@ export * from "./js/jsx/JSXSpreadAttribute";
 export * from "./js/jsx/JSXSpreadChild";
 export * from "./js/jsx/JSXText";
 export * from "./js/expressions/JSYieldExpression";
+export * from "./common/core/MockParent";
 export * from "./js/typescript/TSAnyKeywordTypeAnnotation";
 export * from "./js/typescript/TSArrayType";
 export * from "./js/typescript/TSAsExpression";
@@ -328,10 +330,11 @@ export type AnyNode =
 	| n.CSSViewportAtStatement
 	| n.HTMLAttribute
 	| n.HTMLDoctypeTag
+	| n.HTMLIdentifier
 	| n.HTMLRoot
-	| n.HTMLTag
+	| n.HTMLString
+	| n.HTMLElement
 	| n.HTMLText
-	| n.HTMLXmlTag
 	| n.JSAmbiguousFlowTypeCastExpression
 	| n.JSArrayExpression
 	| n.JSArrayHole
@@ -400,7 +403,6 @@ export type AnyNode =
 	| n.JSLogicalExpression
 	| n.JSMemberExpression
 	| n.JSMetaProperty
-	| n.JSMockParent
 	| n.JSNewExpression
 	| n.JSNullLiteral
 	| n.JSNumericLiteral
@@ -471,6 +473,7 @@ export type AnyNode =
 	| n.JSXSpreadChild
 	| n.JSXText
 	| n.JSYieldExpression
+	| n.MockParent
 	| n.TSAnyKeywordTypeAnnotation
 	| n.TSArrayType
 	| n.TSAsExpression

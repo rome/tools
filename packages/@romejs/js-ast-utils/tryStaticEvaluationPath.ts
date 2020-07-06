@@ -1,10 +1,11 @@
 import {Path} from "@romejs/compiler";
-import tryStaticEvaluation, {
+import {
 	EvalOptions,
 	EvalResult,
+	tryStaticEvaluation,
 } from "./tryStaticEvaluation";
 
-export default function tryStaticEvaluationPath(
+export function tryStaticEvaluationPath(
 	path: Path,
 	opts?: EvalOptions,
 ): EvalResult {

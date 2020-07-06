@@ -176,17 +176,20 @@ builders.set("HTMLAttribute", HTMLAttribute);
 import HTMLDoctypeTag from "./html/tags/HTMLDoctypeTag";
 builders.set("HTMLDoctypeTag", HTMLDoctypeTag);
 
+import HTMLIdentifier from "./html/core/HTMLIdentifier";
+builders.set("HTMLIdentifier", HTMLIdentifier);
+
 import HTMLRoot from "./html/core/HTMLRoot";
 builders.set("HTMLRoot", HTMLRoot);
 
-import HTMLTag from "./html/tags/HTMLTag";
-builders.set("HTMLTag", HTMLTag);
+import HTMLString from "./html/core/HTMLString";
+builders.set("HTMLString", HTMLString);
+
+import HTMLElement from "./html/tags/HTMLElement";
+builders.set("HTMLElement", HTMLElement);
 
 import HTMLText from "./html/core/HTMLText";
 builders.set("HTMLText", HTMLText);
-
-import HTMLXmlTag from "./html/tags/HTMLXmlTag";
-builders.set("HTMLXmlTag", HTMLXmlTag);
 
 import JSAmbiguousFlowTypeCastExpression from "./js/temp/JSAmbiguousFlowTypeCastExpression";
 builders.set(
@@ -397,9 +400,6 @@ builders.set("JSMemberExpression", JSMemberExpression);
 
 import JSMetaProperty from "./js/expressions/JSMetaProperty";
 builders.set("JSMetaProperty", JSMetaProperty);
-
-import JSMockParent from "./js/temp/JSMockParent";
-builders.set("JSMockParent", JSMockParent);
 
 import JSNewExpression from "./js/expressions/JSNewExpression";
 builders.set("JSNewExpression", JSNewExpression);
@@ -613,6 +613,9 @@ builders.set("JSXText", JSXText);
 
 import JSYieldExpression from "./js/expressions/JSYieldExpression";
 builders.set("JSYieldExpression", JSYieldExpression);
+
+import MockParent from "./common/core/MockParent";
+builders.set("MockParent", MockParent);
 
 import TSAnyKeywordTypeAnnotation from "./js/typescript/TSAnyKeywordTypeAnnotation";
 builders.set("TSAnyKeywordTypeAnnotation", TSAnyKeywordTypeAnnotation);

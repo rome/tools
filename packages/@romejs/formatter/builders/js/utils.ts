@@ -33,7 +33,7 @@ import {
 	softline,
 	space,
 } from "@romejs/formatter";
-import {hasInnerComments} from "./comments";
+import {hasInnerComments} from "../comments";
 
 export function buildLabelStatementBuilder(
 	prefix: string,

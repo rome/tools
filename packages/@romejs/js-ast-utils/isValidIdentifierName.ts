@@ -24,7 +24,7 @@ import {
  * So whatever you decide to do with this check, ensure that it's not causing any
  * unintentional semantics.
  */
-export default function isValidIdentifierName(name: string): boolean {
+export function isValidIdentifierName(name: string): boolean {
 	if (name.length === 0) {
 		return false;
 	}

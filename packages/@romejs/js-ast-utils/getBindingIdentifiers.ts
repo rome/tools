@@ -7,7 +7,7 @@
 
 import {AnyNode, JSBindingIdentifier, bindingKeys} from "@romejs/ast";
 
-export default function getBindingIdentifiers(
+export function getBindingIdentifiers(
 	node: AnyNode | Array<AnyNode>,
 ): Array<JSBindingIdentifier> {
 	const ids: Array<JSBindingIdentifier> = [];
