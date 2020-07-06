@@ -115,7 +115,6 @@ for (const {basename, category} of defs) {
 
 	if (fs.existsSync(ruleDocFile)) {
 		const content = readFile(ruleDocFile).toString();
-		console.log(content)
 		const description = getDocRuleDescription(content);
 		if (!description) {
 			console.log(
