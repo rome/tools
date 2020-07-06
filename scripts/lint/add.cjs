@@ -7,8 +7,12 @@
 
 require("../_setup.cjs");
 
-const {toCamelCase, write, readFile, camelCaseToKebabCase} = require("../_utils.cjs");
-const {lintRulesFolder, descriptionsFolder, lintRulesDocFolder} = require("../_constants.cjs");
+const {toCamelCase, write, readFile, camelCaseToKebabCase} = require(
+	"../_utils.cjs",
+);
+const {lintRulesFolder, descriptionsFolder, lintRulesDocFolder} = require(
+	"../_constants.cjs",
+);
 const path = require("path");
 
 const ruleName = process.argv[2];
@@ -37,7 +41,7 @@ const docLoc = path.join(
 	lintRulesDocFolder,
 	category,
 	`${camelCaseToKebabCase(camelCasedName)}.md`,
-)
+);
 
 write(
 	ruleLoc,
@@ -95,8 +99,8 @@ description: DESCRIPTION HERE
 # ${camelCasedName}
 
 not documented yet
-`
-)
+`,
+);
 
 // Add description
 const descriptionsFile = path.join(descriptionsFolder, "lint.ts");

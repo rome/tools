@@ -111,7 +111,11 @@ for (const {basename, category} of defs) {
 	categoryAlias[category] = null;
 
 	const ruleNameKebabCase = camelCaseToKebabCase(basename);
-	const ruleDocFile = path.join(lintRulesDocFolder, category, `${ruleNameKebabCase}.md`);
+	const ruleDocFile = path.join(
+		lintRulesDocFolder,
+		category,
+		`${ruleNameKebabCase}.md`,
+	);
 
 	if (fs.existsSync(ruleDocFile)) {
 		const content = readFile(ruleDocFile).toString();
