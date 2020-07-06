@@ -29,6 +29,9 @@ export function normalizeTokenType(
 		case "variable":
 		case "attr-name":
 		case "function":
+		case "attr-value":
+		case "attr-equals":
+		case "tag":
 			return type;
 
 		default:

@@ -5,16 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+// NB: Maybe this belongs in a dedicated package?
+
 import {tokenizeJS} from "@romejs/js-parser";
 import {Number0, ob1Get0} from "@romejs/ob1";
 import {DiagnosticLanguage, DiagnosticSourceType} from "@romejs/diagnostics";
 import {ConstJSSourceType} from "@romejs/ast";
 import {tokenizeJSON} from "@romejs/codec-json";
-import {UnknownFilePath, createUnknownFilePath} from "@romejs/path";
+import {UnknownFilePath} from "@romejs/path";
 import {escapeMarkup, markupTag} from "@romejs/string-markup";
 import {MarkupTokenType} from "@romejs/string-markup/types";
+import {tokenizeHTML} from "@romejs/html-parser";
 
-// 100KB
+// Max file size to avoid doing expensive highlighting for massive files - 100KB
+// NB: This should probably be lower
 const FILE_SIZE_MAX = 100_000;
 
 export type AnsiHighlightOptions = {
@@ -24,40 +28,72 @@ export type AnsiHighlightOptions = {
 	language: undefined | DiagnosticLanguage;
 };
 
+type TokenShape =  {
+	start: Number0;
+	end: Number0;
+};
+
+type ReduceCallbackResult = {type?: MarkupTokenType, value?: string};
+
+type ReduceCallback<Token extends TokenShape> = (
+	token: Token,
+	line: string,
+	prev: undefined | Token,
+	next: undefined | Token,
+) => undefined | ReduceCallbackResult;
+
 export default function highlightCode(opts: AnsiHighlightOptions): string {
 	if (opts.input.length > FILE_SIZE_MAX) {
 		return escapeMarkup(opts.input);
 	}
 
-	if (opts.language === "js") {
-		// js-parser does not accept an "unknown" sourceType
-		return highlightJS(
-			opts.input,
-			opts.sourceType === undefined || opts.sourceType === "unknown"
-				? "script"
-				: opts.sourceType,
-		);
-	}
+	switch (opts.language) {
+		case "js":
+			return highlightJS(
+				opts,
+				// js-parser does not accept an "unknown" sourceType
+				opts.sourceType === undefined || opts.sourceType === "unknown"
+					? "script"
+					: opts.sourceType,
+			);
 
-	if (opts.language === "json") {
-		return highlightJSON(opts.path, opts.input);
-	}
+		case "html":
+				return highlightHTML(opts);
 
-	return escapeMarkup(opts.input);
+		case "json":
+			return highlightJSON(opts);
+
+		default:
+			return escapeMarkup(opts.input);
+	}
 }
 
-function reduce<Token extends {
-	start: Number0;
-	end: Number0;
-}>(
+function reduceParserCore<Token extends TokenShape & {type: string}>(
 	input: string,
 	tokens: Array<Token>,
-	callback: (
-		token: Token,
-		line: string,
-		prev: undefined | Token,
-		next: undefined | Token,
-	) => string,
+	callback: ReduceCallback<Token>,
+) {
+	return reduce(input, tokens, (token, value, prev, next) => {
+		switch (token.type) {
+			case "Invalid":
+				return invalidHighlight(value);
+
+			// Will never be hit
+			case "EOF":
+			case "SOF":
+				return {value: ""};
+
+			default:
+				// We should have refined `token` to not include any of the base tokens
+				return callback(token, value, prev, next);
+		}
+	});
+}
+
+function reduce<Token extends TokenShape>(
+	input: string,
+	tokens: Array<Token>,
+	callback: ReduceCallback<Token>,
 ): string {
 	let prevEnd = 0;
 	let buff = "";
@@ -76,9 +112,24 @@ function reduce<Token extends {
 		const lines = value.split("\n");
 
 		const values: Array<string> = lines.map((line) => {
-			return line === ""
-				? ""
-				: callback(token, escapeMarkup(line), tokens[i - 1], tokens[i + 1]);
+			if (line === "") {
+				return "";
+			} else {
+				const prev = tokens[i - 1];
+				const next = tokens[i + 1];
+				const escapedLine = escapeMarkup(line);
+				const res = callback(token, escapedLine, prev, next);
+				if (res === undefined) {
+					return escapedLine;
+				} else {
+					const {value = escapedLine, type} = res;
+					if (type === undefined) {
+						return value;
+					} else {
+						return markupTag("token", value, {type});
+					}
+				}
+			}
 		});
 
 		buff += values.join("\n");
@@ -87,48 +138,48 @@ function reduce<Token extends {
 	return buff;
 }
 
-function invalidHighlight(line: string): string {
-	return markupTag("emphasis", markupTag("color", line, {bg: "red"}));
+function invalidHighlight(line: string): ReduceCallbackResult {
+	return {value: markupTag("emphasis", markupTag("color", line, {bg: "red"}))};
 }
 
-function highlightJSON(path: UnknownFilePath, input: string): string {
+function highlightJSON({input, path}: AnsiHighlightOptions): string {
 	const tokens = tokenizeJSON({
 		input,
 		// Wont be used anywhere but activates JSON extensions if necessary
 		path,
 	});
 
-	return reduce(
+	return reduceParserCore(
 		input,
 		tokens,
-		(token, value) => {
+		(token) => {
 			// Try to keep the highlighting in line with JS where possible
 			switch (token.type) {
 				case "BlockComment":
 				case "LineComment":
-					return markupTag("token", value, {type: "comment"});
+					return {type: "comment"};
 
 				case "String":
-					return markupTag("token", value, {type: "string"});
+					return {type: "string"};
 
 				case "Number":
-					return markupTag("token", value, {type: "number"});
+					return {type: "number"};
 
 				case "Word":
 					switch (token.value) {
 						case "true":
 						case "false":
 						case "null":
-							return markupTag("token", value, {type: "boolean"});
+							return {type: "boolean"};
 
 						default:
-							return value;
+							return undefined;
 					}
 
 				case "Comma":
 				case "Colon":
 				case "Dot":
-					return markupTag("token", value, {type: "operator"});
+					return {type: "operator"};
 
 				case "BracketOpen":
 				case "BracketClose":
@@ -136,27 +187,56 @@ function highlightJSON(path: UnknownFilePath, input: string): string {
 				case "BraceClose":
 				case "Minus":
 				case "Plus":
-					return value;
+					return {type: "punctuation"};
 
-				case "Invalid":
-					return invalidHighlight(value);
-
-				// Will never be hit
-				case "EOF":
-				case "SOF":
-					return "";
+				default:
+					return undefined;
 			}
 		},
 	);
 }
 
-function highlightJS(input: string, sourceType: ConstJSSourceType): string {
-	const tokens = tokenizeJS(
-		input,
+function highlightHTML({input, path}: AnsiHighlightOptions): string {
+	const tokens = tokenizeHTML(
 		{
+			input,
+			path,
+		},
+	);
+
+	return reduceParserCore(
+		input,
+		tokens,
+		(token, value, prev) => {
+			// All these tokens appear only inside of tags
+			switch (token.type) {
+				case "Equals":
+					return {type: "attr-equals"};
+
+				case "Identifier":
+					return {type: prev !== undefined && prev.type === "Less" ? "tag" : "attr-name"};
+
+				case "String":
+					return {type: "attr-value"};
+
+				case "Greater":
+				case "Less":
+				case "Slash":
+					return {type: "punctuation"};
+
+				default:
+					return undefined;
+			}
+		}
+	);
+}
+
+function highlightJS({input, path}: AnsiHighlightOptions, sourceType: ConstJSSourceType): string {
+	const tokens = tokenizeJS(
+		{
+			input,
 			sourceType,
-			// js-parser requires a filename. Doesn't really matter since we'll never be producing an AST or diagnostics
-			path: createUnknownFilePath("unknown"),
+			path,
 		},
 	);
 
@@ -165,8 +245,6 @@ function highlightJS(input: string, sourceType: ConstJSSourceType): string {
 		tokens,
 		(token, value, prev, next) => {
 			const {type} = token;
-
-			let tokenType: MarkupTokenType;
 
 			switch (type.label) {
 				case "break":
@@ -203,36 +281,26 @@ function highlightJS(input: string, sourceType: ConstJSSourceType): string {
 				case "instanceof":
 				case "typeof":
 				case "void":
-				case "delete": {
-					tokenType = "keyword";
-					break;
-				}
+				case "delete":
+					return {type: "keyword"};
 
 				case "num":
-				case "bigint": {
-					tokenType = "number";
-					break;
-				}
+				case "bigint":
+					return {type: "number"};
 
-				case "regexp": {
-					tokenType = "regex";
-					break;
-				}
+				case "regexp":
+					return {type: "regex"};
 
 				case "string":
 				case "template":
-				case "`": {
-					tokenType = "string";
-					break;
-				}
+				case "`":
+					return {type: "string"};
 
 				case "invalid":
 					return invalidHighlight(value);
 
-				case "comment": {
-					tokenType = "comment";
-					break;
-				}
+				case "comment":
+					return {type: "comment"};
 
 				case ",":
 				case ";":
@@ -249,32 +317,28 @@ function highlightJS(input: string, sourceType: ConstJSSourceType): string {
 				case "}":
 				case "|}":
 				case "(":
-				case ")": {
-					tokenType = "punctuation";
-					break;
-				}
+				case ")":
+					return {type: "punctuation"};
 
 				case "name": {
-					tokenType = "variable";
+					if (next !== undefined && next.type.label === "(") {
+						return {type: "function"};
+					}
 
 					if (value === "from") {
-						tokenType = "keyword";
+						return {type: "keyword"};
 					}
 
-					if (next !== undefined && next.type.label === "(") {
-						tokenType = "function";
-					}
-					break;
+					return {type: "variable"};
 				}
 
-				case "jsxName": {
-					tokenType =
-						prev !== undefined &&
+				case "jsxName":
+					return {
+						type: prev !== undefined &&
 						(prev.type.label === "jsxTagStart" || prev.type.label === "/")
 							? "variable"
-							: "attr-name";
-					break;
-				}
+							: "attr-name",
+					};
 
 				case "=>":
 				case "...":
@@ -298,19 +362,12 @@ function highlightJS(input: string, sourceType: ConstJSSourceType): string {
 				case "%":
 				case "*":
 				case "/":
-				case "**": {
-					tokenType = "operator";
-					break;
-				}
+				case "**":
+					return {type: "operator"};
 
-				case "jsxText":
-				case "jsxTagStart":
-				case "jsxTagEnd":
-				case "eof":
-					return value;
+				default:
+					return undefined;
 			}
-
-			return markupTag("token", value, {type: tokenType});
 		},
 	);
 }

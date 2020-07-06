@@ -389,4 +389,8 @@ export function parseHTML(opts: ParserOptionsWithRequiredPath) {
 	return createHTMLParser(opts).parse();
 }
 
+export function tokenizeHTML(opts: ParserOptionsWithRequiredPath) {
+	return createHTMLParser(opts).tokenizeAll();
+}
+
 export * from "./xhtmlEntities";
