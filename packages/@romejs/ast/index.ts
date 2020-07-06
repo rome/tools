@@ -65,10 +65,10 @@ export * from "./css/types/CSSURLType";
 export * from "./css/at-rules/CSSViewportAtStatement";
 export * from "./html/attributes/HTMLAttribute";
 export * from "./html/tags/HTMLDoctypeTag";
+export * from "./html/tags/HTMLElement";
 export * from "./html/core/HTMLIdentifier";
 export * from "./html/core/HTMLRoot";
 export * from "./html/core/HTMLString";
-export * from "./html/tags/HTMLElement";
 export * from "./html/core/HTMLText";
 export * from "./js/temp/JSAmbiguousFlowTypeCastExpression";
 export * from "./js/expressions/JSArrayExpression";
@@ -330,10 +330,10 @@ export type AnyNode =
 	| n.CSSViewportAtStatement
 	| n.HTMLAttribute
 	| n.HTMLDoctypeTag
+	| n.HTMLElement
 	| n.HTMLIdentifier
 	| n.HTMLRoot
 	| n.HTMLString
-	| n.HTMLElement
 	| n.HTMLText
 	| n.JSAmbiguousFlowTypeCastExpression
 	| n.JSArrayExpression

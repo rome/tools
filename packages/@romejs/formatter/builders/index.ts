@@ -176,6 +176,9 @@ builders.set("HTMLAttribute", HTMLAttribute);
 import HTMLDoctypeTag from "./html/tags/HTMLDoctypeTag";
 builders.set("HTMLDoctypeTag", HTMLDoctypeTag);
 
+import HTMLElement from "./html/tags/HTMLElement";
+builders.set("HTMLElement", HTMLElement);
+
 import HTMLIdentifier from "./html/core/HTMLIdentifier";
 builders.set("HTMLIdentifier", HTMLIdentifier);
 
@@ -184,9 +187,6 @@ builders.set("HTMLRoot", HTMLRoot);
 
 import HTMLString from "./html/core/HTMLString";
 builders.set("HTMLString", HTMLString);
-
-import HTMLElement from "./html/tags/HTMLElement";
-builders.set("HTMLElement", HTMLElement);
 
 import HTMLText from "./html/core/HTMLText";
 builders.set("HTMLText", HTMLText);
