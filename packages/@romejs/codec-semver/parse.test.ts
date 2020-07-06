@@ -12,7 +12,7 @@ import {test} from "rome";
 test(
 	"parse",
 	async (t) => {
-		// versions in version mode
+		// Versions in version mode
 		const versionTests = [
 			"1.2.3",
 			"1.2.3-prerelease",
@@ -29,8 +29,15 @@ test(
 			t.snapshot(parseSemverVersion({input: str}));
 		}
 
-		// loose mode
-		const looseRangeTests = ["* - 1.2.3", "v1.2.3", "||", "", "1.2.3prerelease"];
+		// Loose mode ranges only
+		const looseRangeTests = [
+			"* - 1.2.3",
+			"v1.2.3",
+			"||",
+			"",
+			"1.2.3prerelease",
+			"^4.0.0 || ^4.0.0-beta.* || ^3.8.1 || ^3.0.0 || ^3.0.0-rc.0 || ^2.1.0 || ^1.13.1",
+		];
 		for (const str of looseRangeTests) {
 			t.snapshot(parseSemverRange({input: str, loose: true}));
 
@@ -87,12 +94,12 @@ test(
 			rangeTests.push(`${op} ${op}`);
 		}
 
-		// run range tests
+		// Run range tests
 		for (const str of rangeTests) {
 			t.snapshot(parseSemverRange({input: str}));
 		}
 
-		// ensure ranges throw in version mode
+		// Ensure ranges throw in version mode
 		for (const str of rangeTests) {
 			t.throws(() => {
 				parseSemverVersion({input: str});

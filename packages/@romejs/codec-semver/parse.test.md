@@ -438,23 +438,351 @@ AbsoluteVersion {
 ### `15`
 
 ```javascript
-WildcardVersion {
-	build: Array []
-	major: 1
-	minor: undefined
-	patch: undefined
-	prerelease: Array []
+LogicalOr {
 	loc: Object {
 		filename: undefined
 		end: Object {
-			column: 0
-			index: 0
+			column: 78
+			index: 78
 			line: 1
 		}
 		start: Object {
 			column: 0
 			index: 0
 			line: 1
+		}
+	}
+	left: Comparator {
+		operator: "^"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 6
+				index: 6
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+		version: AbsoluteVersion {
+			build: Array []
+			major: 4
+			minor: 0
+			patch: 0
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+				start: Object {
+					column: 1
+					index: 1
+					line: 1
+				}
+			}
+		}
+	}
+	right: LogicalOr {
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 78
+				index: 78
+				line: 1
+			}
+			start: Object {
+				column: 10
+				index: 10
+				line: 1
+			}
+		}
+		left: Comparator {
+			operator: "^"
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 23
+					index: 23
+					line: 1
+				}
+				start: Object {
+					column: 10
+					index: 10
+					line: 1
+				}
+			}
+			version: AbsoluteVersion {
+				build: Array []
+				major: 4
+				minor: 0
+				patch: 0
+				prerelease: Array [
+					"beta"
+					"*"
+				]
+				loc: Object {
+					filename: undefined
+					end: Object {
+						column: 23
+						index: 23
+						line: 1
+					}
+					start: Object {
+						column: 11
+						index: 11
+						line: 1
+					}
+				}
+			}
+		}
+		right: LogicalOr {
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 78
+					index: 78
+					line: 1
+				}
+				start: Object {
+					column: 27
+					index: 27
+					line: 1
+				}
+			}
+			left: Comparator {
+				operator: "^"
+				loc: Object {
+					filename: undefined
+					end: Object {
+						column: 33
+						index: 33
+						line: 1
+					}
+					start: Object {
+						column: 27
+						index: 27
+						line: 1
+					}
+				}
+				version: AbsoluteVersion {
+					build: Array []
+					major: 3
+					minor: 8
+					patch: 1
+					prerelease: Array []
+					loc: Object {
+						filename: undefined
+						end: Object {
+							column: 33
+							index: 33
+							line: 1
+						}
+						start: Object {
+							column: 28
+							index: 28
+							line: 1
+						}
+					}
+				}
+			}
+			right: LogicalOr {
+				loc: Object {
+					filename: undefined
+					end: Object {
+						column: 78
+						index: 78
+						line: 1
+					}
+					start: Object {
+						column: 37
+						index: 37
+						line: 1
+					}
+				}
+				left: Comparator {
+					operator: "^"
+					loc: Object {
+						filename: undefined
+						end: Object {
+							column: 43
+							index: 43
+							line: 1
+						}
+						start: Object {
+							column: 37
+							index: 37
+							line: 1
+						}
+					}
+					version: AbsoluteVersion {
+						build: Array []
+						major: 3
+						minor: 0
+						patch: 0
+						prerelease: Array []
+						loc: Object {
+							filename: undefined
+							end: Object {
+								column: 43
+								index: 43
+								line: 1
+							}
+							start: Object {
+								column: 38
+								index: 38
+								line: 1
+							}
+						}
+					}
+				}
+				right: LogicalOr {
+					loc: Object {
+						filename: undefined
+						end: Object {
+							column: 78
+							index: 78
+							line: 1
+						}
+						start: Object {
+							column: 47
+							index: 47
+							line: 1
+						}
+					}
+					left: Comparator {
+						operator: "^"
+						loc: Object {
+							filename: undefined
+							end: Object {
+								column: 58
+								index: 58
+								line: 1
+							}
+							start: Object {
+								column: 47
+								index: 47
+								line: 1
+							}
+						}
+						version: AbsoluteVersion {
+							build: Array []
+							major: 3
+							minor: 0
+							patch: 0
+							prerelease: Array [
+								"rc"
+								0
+							]
+							loc: Object {
+								filename: undefined
+								end: Object {
+									column: 58
+									index: 58
+									line: 1
+								}
+								start: Object {
+									column: 48
+									index: 48
+									line: 1
+								}
+							}
+						}
+					}
+					right: LogicalOr {
+						loc: Object {
+							filename: undefined
+							end: Object {
+								column: 78
+								index: 78
+								line: 1
+							}
+							start: Object {
+								column: 62
+								index: 62
+								line: 1
+							}
+						}
+						left: Comparator {
+							operator: "^"
+							loc: Object {
+								filename: undefined
+								end: Object {
+									column: 68
+									index: 68
+									line: 1
+								}
+								start: Object {
+									column: 62
+									index: 62
+									line: 1
+								}
+							}
+							version: AbsoluteVersion {
+								build: Array []
+								major: 2
+								minor: 1
+								patch: 0
+								prerelease: Array []
+								loc: Object {
+									filename: undefined
+									end: Object {
+										column: 68
+										index: 68
+										line: 1
+									}
+									start: Object {
+										column: 63
+										index: 63
+										line: 1
+									}
+								}
+							}
+						}
+						right: Comparator {
+							operator: "^"
+							loc: Object {
+								filename: undefined
+								end: Object {
+									column: 78
+									index: 78
+									line: 1
+								}
+								start: Object {
+									column: 72
+									index: 72
+									line: 1
+								}
+							}
+							version: AbsoluteVersion {
+								build: Array []
+								major: 1
+								minor: 13
+								patch: 1
+								prerelease: Array []
+								loc: Object {
+									filename: undefined
+									end: Object {
+										column: 78
+										index: 78
+										line: 1
+									}
+									start: Object {
+										column: 73
+										index: 73
+										line: 1
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }
@@ -466,14 +794,14 @@ WildcardVersion {
 WildcardVersion {
 	build: Array []
 	major: 1
-	minor: 2
+	minor: undefined
 	patch: undefined
 	prerelease: Array []
 	loc: Object {
 		filename: undefined
 		end: Object {
-			column: 2
-			index: 2
+			column: 0
+			index: 0
 			line: 1
 		}
 		start: Object {
@@ -491,7 +819,7 @@ WildcardVersion {
 WildcardVersion {
 	build: Array []
 	major: 1
-	minor: undefined
+	minor: 2
 	patch: undefined
 	prerelease: Array []
 	loc: Object {
@@ -517,13 +845,13 @@ WildcardVersion {
 	build: Array []
 	major: 1
 	minor: undefined
-	patch: 3
+	patch: undefined
 	prerelease: Array []
 	loc: Object {
 		filename: undefined
 		end: Object {
-			column: 4
-			index: 4
+			column: 2
+			index: 2
 			line: 1
 		}
 		start: Object {
@@ -541,8 +869,8 @@ WildcardVersion {
 WildcardVersion {
 	build: Array []
 	major: 1
-	minor: 2
-	patch: undefined
+	minor: undefined
+	patch: 3
 	prerelease: Array []
 	loc: Object {
 		filename: undefined
@@ -566,6 +894,31 @@ WildcardVersion {
 WildcardVersion {
 	build: Array []
 	major: 1
+	minor: 2
+	patch: undefined
+	prerelease: Array []
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 4
+			index: 4
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `21`
+
+```javascript
+WildcardVersion {
+	build: Array []
+	major: 1
 	minor: undefined
 	patch: undefined
 	prerelease: Array []
@@ -585,7 +938,7 @@ WildcardVersion {
 }
 ```
 
-### `21`
+### `22`
 
 ```javascript
 WildcardVersion {
@@ -593,31 +946,6 @@ WildcardVersion {
 	major: 1
 	minor: undefined
 	patch: 3
-	prerelease: Array []
-	loc: Object {
-		filename: undefined
-		end: Object {
-			column: 4
-			index: 4
-			line: 1
-		}
-		start: Object {
-			column: 0
-			index: 0
-			line: 1
-		}
-	}
-}
-```
-
-### `22`
-
-```javascript
-WildcardVersion {
-	build: Array []
-	major: 1
-	minor: 2
-	patch: undefined
 	prerelease: Array []
 	loc: Object {
 		filename: undefined
@@ -641,6 +969,31 @@ WildcardVersion {
 WildcardVersion {
 	build: Array []
 	major: 1
+	minor: 2
+	patch: undefined
+	prerelease: Array []
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 4
+			index: 4
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `24`
+
+```javascript
+WildcardVersion {
+	build: Array []
+	major: 1
 	minor: undefined
 	patch: undefined
 	prerelease: Array []
@@ -660,7 +1013,7 @@ WildcardVersion {
 }
 ```
 
-### `24`
+### `25`
 
 ```javascript
 WildcardVersion {
@@ -685,7 +1038,7 @@ WildcardVersion {
 }
 ```
 
-### `25`
+### `26`
 
 ```javascript
 WildcardVersion {
@@ -710,7 +1063,7 @@ WildcardVersion {
 }
 ```
 
-### `26`
+### `27`
 
 ```javascript
 VersionRange {
@@ -770,7 +1123,7 @@ VersionRange {
 }
 ```
 
-### `27`
+### `28`
 
 ```javascript
 LogicalOr {
@@ -830,7 +1183,7 @@ LogicalOr {
 }
 ```
 
-### `28`
+### `29`
 
 ```javascript
 LogicalOr {
@@ -925,7 +1278,7 @@ LogicalOr {
 }
 ```
 
-### `29`
+### `30`
 
 ```javascript
 Comparator {
@@ -960,98 +1313,6 @@ Comparator {
 				column: 2
 				index: 2
 				line: 1
-			}
-		}
-	}
-}
-```
-
-### `30`
-
-```javascript
-LogicalAnd {
-	loc: Object {
-		filename: undefined
-		end: Object {
-			column: 14
-			index: 14
-			line: 1
-		}
-		start: Object {
-			column: 0
-			index: 0
-			line: 1
-		}
-	}
-	left: Comparator {
-		operator: ">="
-		loc: Object {
-			filename: undefined
-			end: Object {
-				column: 7
-				index: 7
-				line: 1
-			}
-			start: Object {
-				column: 0
-				index: 0
-				line: 1
-			}
-		}
-		version: AbsoluteVersion {
-			build: Array []
-			major: 1
-			minor: 4
-			patch: 5
-			prerelease: Array []
-			loc: Object {
-				filename: undefined
-				end: Object {
-					column: 7
-					index: 7
-					line: 1
-				}
-				start: Object {
-					column: 2
-					index: 2
-					line: 1
-				}
-			}
-		}
-	}
-	right: Comparator {
-		operator: ">="
-		loc: Object {
-			filename: undefined
-			end: Object {
-				column: 14
-				index: 14
-				line: 1
-			}
-			start: Object {
-				column: 8
-				index: 8
-				line: 1
-			}
-		}
-		version: AbsoluteVersion {
-			build: Array []
-			major: 1
-			minor: 4
-			patch: 5
-			prerelease: Array []
-			loc: Object {
-				filename: undefined
-				end: Object {
-					column: 14
-					index: 14
-					line: 1
-				}
-				start: Object {
-					column: 10
-					index: 10
-					line: 1
-				}
 			}
 		}
 	}
@@ -1061,6 +1322,98 @@ LogicalAnd {
 ### `31`
 
 ```javascript
+LogicalAnd {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 14
+			index: 14
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: Comparator {
+		operator: ">="
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 7
+				index: 7
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+		version: AbsoluteVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 7
+					index: 7
+					line: 1
+				}
+				start: Object {
+					column: 2
+					index: 2
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: ">="
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 14
+				index: 14
+				line: 1
+			}
+			start: Object {
+				column: 8
+				index: 8
+				line: 1
+			}
+		}
+		version: AbsoluteVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+				start: Object {
+					column: 10
+					index: 10
+					line: 1
+				}
+			}
+		}
+	}
+}
+```
+
+### `32`
+
+```javascript
 Comparator {
 	operator: "<="
 	loc: Object {
@@ -1099,7 +1452,7 @@ Comparator {
 }
 ```
 
-### `32`
+### `33`
 
 ```javascript
 LogicalAnd {
@@ -1191,7 +1544,7 @@ LogicalAnd {
 }
 ```
 
-### `33`
+### `34`
 
 ```javascript
 Comparator {
@@ -1226,98 +1579,6 @@ Comparator {
 				column: 1
 				index: 1
 				line: 1
-			}
-		}
-	}
-}
-```
-
-### `34`
-
-```javascript
-LogicalAnd {
-	loc: Object {
-		filename: undefined
-		end: Object {
-			column: 12
-			index: 12
-			line: 1
-		}
-		start: Object {
-			column: 0
-			index: 0
-			line: 1
-		}
-	}
-	left: Comparator {
-		operator: ">"
-		loc: Object {
-			filename: undefined
-			end: Object {
-				column: 6
-				index: 6
-				line: 1
-			}
-			start: Object {
-				column: 0
-				index: 0
-				line: 1
-			}
-		}
-		version: AbsoluteVersion {
-			build: Array []
-			major: 1
-			minor: 4
-			patch: 5
-			prerelease: Array []
-			loc: Object {
-				filename: undefined
-				end: Object {
-					column: 6
-					index: 6
-					line: 1
-				}
-				start: Object {
-					column: 1
-					index: 1
-					line: 1
-				}
-			}
-		}
-	}
-	right: Comparator {
-		operator: ">"
-		loc: Object {
-			filename: undefined
-			end: Object {
-				column: 12
-				index: 12
-				line: 1
-			}
-			start: Object {
-				column: 7
-				index: 7
-				line: 1
-			}
-		}
-		version: AbsoluteVersion {
-			build: Array []
-			major: 1
-			minor: 4
-			patch: 5
-			prerelease: Array []
-			loc: Object {
-				filename: undefined
-				end: Object {
-					column: 12
-					index: 12
-					line: 1
-				}
-				start: Object {
-					column: 8
-					index: 8
-					line: 1
-				}
 			}
 		}
 	}
@@ -1327,13 +1588,12 @@ LogicalAnd {
 ### `35`
 
 ```javascript
-Comparator {
-	operator: "<"
+LogicalAnd {
 	loc: Object {
 		filename: undefined
 		end: Object {
-			column: 5
-			index: 5
+			column: 12
+			index: 12
 			line: 1
 		}
 		start: Object {
@@ -1342,23 +1602,75 @@ Comparator {
 			line: 1
 		}
 	}
-	version: AbsoluteVersion {
-		build: Array []
-		major: 1
-		minor: 4
-		patch: 5
-		prerelease: Array []
+	left: Comparator {
+		operator: ">"
 		loc: Object {
 			filename: undefined
 			end: Object {
-				column: 5
-				index: 5
+				column: 6
+				index: 6
 				line: 1
 			}
 			start: Object {
-				column: 1
-				index: 1
+				column: 0
+				index: 0
 				line: 1
+			}
+		}
+		version: AbsoluteVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+				start: Object {
+					column: 1
+					index: 1
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: ">"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 12
+				index: 12
+				line: 1
+			}
+			start: Object {
+				column: 7
+				index: 7
+				line: 1
+			}
+		}
+		version: AbsoluteVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 12
+					index: 12
+					line: 1
+				}
+				start: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
 			}
 		}
 	}
@@ -1368,12 +1680,13 @@ Comparator {
 ### `36`
 
 ```javascript
-LogicalAnd {
+Comparator {
+	operator: "<"
 	loc: Object {
 		filename: undefined
 		end: Object {
-			column: 12
-			index: 12
+			column: 5
+			index: 5
 			line: 1
 		}
 		start: Object {
@@ -1382,75 +1695,23 @@ LogicalAnd {
 			line: 1
 		}
 	}
-	left: Comparator {
-		operator: "<"
+	version: AbsoluteVersion {
+		build: Array []
+		major: 1
+		minor: 4
+		patch: 5
+		prerelease: Array []
 		loc: Object {
 			filename: undefined
 			end: Object {
-				column: 6
-				index: 6
+				column: 5
+				index: 5
 				line: 1
 			}
 			start: Object {
-				column: 0
-				index: 0
+				column: 1
+				index: 1
 				line: 1
-			}
-		}
-		version: AbsoluteVersion {
-			build: Array []
-			major: 1
-			minor: 4
-			patch: 5
-			prerelease: Array []
-			loc: Object {
-				filename: undefined
-				end: Object {
-					column: 6
-					index: 6
-					line: 1
-				}
-				start: Object {
-					column: 1
-					index: 1
-					line: 1
-				}
-			}
-		}
-	}
-	right: Comparator {
-		operator: "<"
-		loc: Object {
-			filename: undefined
-			end: Object {
-				column: 12
-				index: 12
-				line: 1
-			}
-			start: Object {
-				column: 7
-				index: 7
-				line: 1
-			}
-		}
-		version: AbsoluteVersion {
-			build: Array []
-			major: 1
-			minor: 4
-			patch: 5
-			prerelease: Array []
-			loc: Object {
-				filename: undefined
-				end: Object {
-					column: 12
-					index: 12
-					line: 1
-				}
-				start: Object {
-					column: 8
-					index: 8
-					line: 1
-				}
 			}
 		}
 	}
@@ -1460,13 +1721,12 @@ LogicalAnd {
 ### `37`
 
 ```javascript
-Comparator {
-	operator: "^"
+LogicalAnd {
 	loc: Object {
 		filename: undefined
 		end: Object {
-			column: 5
-			index: 5
+			column: 12
+			index: 12
 			line: 1
 		}
 		start: Object {
@@ -1475,23 +1735,75 @@ Comparator {
 			line: 1
 		}
 	}
-	version: AbsoluteVersion {
-		build: Array []
-		major: 1
-		minor: 4
-		patch: 5
-		prerelease: Array []
+	left: Comparator {
+		operator: "<"
 		loc: Object {
 			filename: undefined
 			end: Object {
-				column: 5
-				index: 5
+				column: 6
+				index: 6
 				line: 1
 			}
 			start: Object {
-				column: 1
-				index: 1
+				column: 0
+				index: 0
 				line: 1
+			}
+		}
+		version: AbsoluteVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+				start: Object {
+					column: 1
+					index: 1
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: "<"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 12
+				index: 12
+				line: 1
+			}
+			start: Object {
+				column: 7
+				index: 7
+				line: 1
+			}
+		}
+		version: AbsoluteVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 12
+					index: 12
+					line: 1
+				}
+				start: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
 			}
 		}
 	}
@@ -1501,6 +1813,47 @@ Comparator {
 ### `38`
 
 ```javascript
+Comparator {
+	operator: "^"
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 5
+			index: 5
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	version: AbsoluteVersion {
+		build: Array []
+		major: 1
+		minor: 4
+		patch: 5
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 5
+				index: 5
+				line: 1
+			}
+			start: Object {
+				column: 1
+				index: 1
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `39`
+
+```javascript
 LogicalAnd {
 	loc: Object {
 		filename: undefined
@@ -1590,7 +1943,7 @@ LogicalAnd {
 }
 ```
 
-### `39`
+### `40`
 
 ```javascript
 Comparator {
@@ -1631,7 +1984,7 @@ Comparator {
 }
 ```
 
-### `40`
+### `41`
 
 ```javascript
 LogicalAnd {
@@ -1723,7 +2076,7 @@ LogicalAnd {
 }
 ```
 
-### `41`
+### `42`
 
 ```javascript
 Comparator {
@@ -1758,98 +2111,6 @@ Comparator {
 				column: 2
 				index: 2
 				line: 1
-			}
-		}
-	}
-}
-```
-
-### `42`
-
-```javascript
-LogicalAnd {
-	loc: Object {
-		filename: undefined
-		end: Object {
-			column: 10
-			index: 10
-			line: 1
-		}
-		start: Object {
-			column: 0
-			index: 0
-			line: 1
-		}
-	}
-	left: Comparator {
-		operator: ">="
-		loc: Object {
-			filename: undefined
-			end: Object {
-				column: 5
-				index: 5
-				line: 1
-			}
-			start: Object {
-				column: 0
-				index: 0
-				line: 1
-			}
-		}
-		version: WildcardVersion {
-			build: Array []
-			major: 1
-			minor: 4
-			patch: undefined
-			prerelease: Array []
-			loc: Object {
-				filename: undefined
-				end: Object {
-					column: 5
-					index: 5
-					line: 1
-				}
-				start: Object {
-					column: 2
-					index: 2
-					line: 1
-				}
-			}
-		}
-	}
-	right: Comparator {
-		operator: ">="
-		loc: Object {
-			filename: undefined
-			end: Object {
-				column: 10
-				index: 10
-				line: 1
-			}
-			start: Object {
-				column: 6
-				index: 6
-				line: 1
-			}
-		}
-		version: WildcardVersion {
-			build: Array []
-			major: 1
-			minor: 4
-			patch: undefined
-			prerelease: Array []
-			loc: Object {
-				filename: undefined
-				end: Object {
-					column: 10
-					index: 10
-					line: 1
-				}
-				start: Object {
-					column: 8
-					index: 8
-					line: 1
-				}
 			}
 		}
 	}
@@ -1859,6 +2120,98 @@ LogicalAnd {
 ### `43`
 
 ```javascript
+LogicalAnd {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 10
+			index: 10
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: Comparator {
+		operator: ">="
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 5
+				index: 5
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 5
+					index: 5
+					line: 1
+				}
+				start: Object {
+					column: 2
+					index: 2
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: ">="
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 10
+				index: 10
+				line: 1
+			}
+			start: Object {
+				column: 6
+				index: 6
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 10
+					index: 10
+					line: 1
+				}
+				start: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+			}
+		}
+	}
+}
+```
+
+### `44`
+
+```javascript
 Comparator {
 	operator: "<="
 	loc: Object {
@@ -1897,7 +2250,7 @@ Comparator {
 }
 ```
 
-### `44`
+### `45`
 
 ```javascript
 LogicalAnd {
@@ -1989,7 +2342,7 @@ LogicalAnd {
 }
 ```
 
-### `45`
+### `46`
 
 ```javascript
 Comparator {
@@ -2030,7 +2383,7 @@ Comparator {
 }
 ```
 
-### `46`
+### `47`
 
 ```javascript
 LogicalAnd {
@@ -2122,7 +2475,7 @@ LogicalAnd {
 }
 ```
 
-### `47`
+### `48`
 
 ```javascript
 Comparator {
@@ -2163,7 +2516,7 @@ Comparator {
 }
 ```
 
-### `48`
+### `49`
 
 ```javascript
 LogicalAnd {
@@ -2255,7 +2608,7 @@ LogicalAnd {
 }
 ```
 
-### `49`
+### `50`
 
 ```javascript
 Comparator {
@@ -2296,7 +2649,7 @@ Comparator {
 }
 ```
 
-### `50`
+### `51`
 
 ```javascript
 LogicalAnd {
@@ -2388,7 +2741,7 @@ LogicalAnd {
 }
 ```
 
-### `51`
+### `52`
 
 ```javascript
 Comparator {
@@ -2429,7 +2782,7 @@ Comparator {
 }
 ```
 
-### `52`
+### `53`
 
 ```javascript
 LogicalAnd {
@@ -2521,7 +2874,7 @@ LogicalAnd {
 }
 ```
 
-### `53`
+### `54`
 
 ```javascript
 Comparator {
@@ -2562,7 +2915,7 @@ Comparator {
 }
 ```
 
-### `54`
+### `55`
 
 ```javascript
 LogicalAnd {
@@ -2654,7 +3007,7 @@ LogicalAnd {
 }
 ```
 
-### `55`
+### `56`
 
 ```javascript
 Comparator {
@@ -2695,7 +3048,7 @@ Comparator {
 }
 ```
 
-### `56`
+### `57`
 
 ```javascript
 LogicalAnd {
@@ -2787,7 +3140,7 @@ LogicalAnd {
 }
 ```
 
-### `57`
+### `58`
 
 ```javascript
 Comparator {
@@ -2828,7 +3181,7 @@ Comparator {
 }
 ```
 
-### `58`
+### `59`
 
 ```javascript
 LogicalAnd {
@@ -2920,7 +3273,7 @@ LogicalAnd {
 }
 ```
 
-### `59`
+### `60`
 
 ```javascript
 Comparator {
@@ -2961,7 +3314,7 @@ Comparator {
 }
 ```
 
-### `60`
+### `61`
 
 ```javascript
 LogicalAnd {
@@ -3053,7 +3406,7 @@ LogicalAnd {
 }
 ```
 
-### `61`
+### `62`
 
 ```javascript
 Comparator {
@@ -3094,7 +3447,7 @@ Comparator {
 }
 ```
 
-### `62`
+### `63`
 
 ```javascript
 LogicalAnd {
@@ -3186,7 +3539,7 @@ LogicalAnd {
 }
 ```
 
-### `63`
+### `64`
 
 ```javascript
 Comparator {
@@ -3227,7 +3580,7 @@ Comparator {
 }
 ```
 
-### `64`
+### `65`
 
 ```javascript
 LogicalAnd {
