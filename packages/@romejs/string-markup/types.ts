@@ -98,6 +98,7 @@ export type MarkupLinesAndWidth = {
 
 export type GridOutputFormat = "ansi" | "html" | "none";
 
+// These match PrismJS class names
 export type MarkupTokenType =
 	| "keyword"
 	| "number"
@@ -108,6 +109,9 @@ export type MarkupTokenType =
 	| "punctuation"
 	| "variable"
 	| "attr-name"
+	| "attr-value"
+	| "attr-equals"
+	| "tag"
 	| "function"
 	| "boolean";
 

@@ -99,9 +99,12 @@ const tokenTypeToScope: Dict<MarkupTokenType> = {
 	"comment": "comment",
 	"entity.name.function": "function",
 	//"": "operator",
-	//"": "punctuation",
+	"punctuation": "punctuation",
 	"variable": "variable",
 	"keyword": "keyword",
+	"punctuation.separator.key-value.html": "attr-equals",
+	"entity.name.tag.html": "tag",
+	"string.quoted.double.html": "attr-value",
 	"entity.other.attribute-name": "attr-name",
 	"entity.other.attribute-name.js": "attr-name",
 };

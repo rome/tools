@@ -63,6 +63,7 @@ export type DiagnosticLanguage =
 	| "shell"
 	| "css"
 	| "html"
+	| "md"
 	| "unknown";
 
 export type DiagnosticSourceType = "unknown" | ConstJSSourceType;
