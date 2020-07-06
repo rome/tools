@@ -236,6 +236,10 @@ export default class Worker {
 		bridge.clearBuffer.subscribe((payload) => {
 			return this.clearBuffer(convertTransportFileReference(payload.file));
 		});
+
+		bridge.getFileBuffers.subscribe(() => {
+			return this.getFileBuffers();
+		});
 	}
 
 	clearBuffer({real}: FileReference) {
@@ -248,6 +252,13 @@ export default class Worker {
 		this.logger.info(`Updated ${ref.real.toMarkup()} buffer`);
 		this.buffers.set(ref.real, content);
 		this.evict(ref.real);
+	}
+
+	getFileBuffers() {
+		return Array.from(
+			this.buffers,
+			([path, content]) => ({file: path.join(), content}),
+		);
 	}
 
 	async getTypeCheckProvider(

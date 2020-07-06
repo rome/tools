@@ -20,8 +20,7 @@ import {
 	createBridgeFromLocal,
 } from "@romejs/events";
 import child = require("child_process");
-
-import {AbsoluteFilePath} from "@romejs/path";
+import {AbsoluteFilePath, createAbsoluteFilePath} from "@romejs/path";
 
 export type WorkerContainer = {
 	id: number;
@@ -170,6 +169,18 @@ export default class WorkerManager {
 
 			// Spawn a new worker
 			const newWorker = await this.spawnWorker(this.getNextWorkerId(), true);
+
+			// Transfer buffers to the new worker
+			const buffers = await serverWorker.bridge.getFileBuffers.call();
+
+			for (const {file, content} of buffers) {
+				await newWorker.bridge.updateBuffer.call({
+					file: this.server.projectManager.getTransportFileReference(
+						createAbsoluteFilePath(file),
+					),
+					content,
+				});
+			}
 
 			// End the old worker, will automatically cleanup
 			serverWorker.bridge.end();
