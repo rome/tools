@@ -3,7 +3,9 @@ layout: layouts/base.njk
 showHero: true
 ---
 
-**Rome** is a linter, compiler, bundler, and [more](#responsibilities) for JavaScript, HTML, CSS, and Markdown. It unifies functionality that have previously been completely separate tools. We have support for JavaScript flavors such as TypeScript and JSX.
+**Rome** is a linter, compiler, bundler, and [more](#responsibilities) for JavaScript, HTML, CSS, and Markdown.
+
+**Rome** unifies functionality that have previously been completely separate tools. We have support for JavaScript flavors such as TypeScript and JSX.
 
 [Babel](https://babeljs.io/), [Webpack](https://webpack.js.org/), [Jest](https://jestjs.io/), [ESLint](https://eslint.org/), and other frontend tooling have a significant overlap in responsibilities and implementation. There is value in these being a single tool.
 
