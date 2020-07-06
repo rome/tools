@@ -173,6 +173,7 @@ export function printTSBraced(
 		);
 	}
 
+	// TODO inner comments wont be included if there's a member. Members could have been inserted after parsing the source.
 	return group(
 		concat([
 			"{",

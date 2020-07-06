@@ -701,10 +701,7 @@ export class ParserCore<
 	}
 
 	// Sometimes we want to pretend we're in different locations to consume the comments of other nodes
-	finishNodeWithCommentStarts<T extends AnyNode>(
-		starts: Array<Position>,
-		node: T,
-	): T {
+	finishNodeWithStarts<T extends AnyNode>(starts: Array<Position>, node: T): T {
 		for (const start of starts) {
 			node = this.finishNode(start, node);
 		}

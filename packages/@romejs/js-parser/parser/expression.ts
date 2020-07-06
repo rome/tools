@@ -838,7 +838,7 @@ export function parseSubscripts(
 		);
 		const callee = base;
 		const {args} = parseCallExpressionArguments(parser, openContext, false);
-		base = parser.finishNodeWithCommentStarts(
+		base = parser.finishNodeWithStarts(
 			[argsStart, startPos],
 			{
 				type: "JSCallExpression",
@@ -1122,7 +1122,7 @@ export function parseExpressionSubscript(
 					"call arguments",
 				);
 				const {args} = parseCallExpressionArguments(parser, openContext, false);
-				const node: JSCallExpression = parser.finishNodeWithCommentStarts(
+				const node: JSCallExpression = parser.finishNodeWithStarts(
 					[argsStart, startPos],
 					{
 						type: "JSCallExpression",
@@ -1204,7 +1204,7 @@ export function parseExpressionSubscript(
 		parser.state.maybeInArrowParameters = oldMaybeInArrowParameters;
 		parser.state.commaAfterSpreadAt = oldCommaAfterSpreadAt;
 
-		return parser.finishNodeWithCommentStarts(
+		return parser.finishNodeWithStarts(
 			[argsStart, startPos],
 			{
 				type: "JSCallExpression",
