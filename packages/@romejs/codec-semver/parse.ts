@@ -236,6 +236,10 @@ const createSemverParser = createParser((ParserCore) =>
 				} else if (token.type === "Dash") {
 					this.nextToken();
 					parts.push("-");
+				} else if (this.loose && token.type === "Star") {
+					// https://github.com/romejs/rome/issues/295
+					this.nextToken();
+					parts.push("*");
 				} else {
 					throw this.unexpected({
 						description: descriptions.SEMVER.INVALID_QUANTIFIER_PART,
