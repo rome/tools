@@ -28,7 +28,7 @@ JSRoot {
 		}
 	}
 	comments: Array [
-		JSCommentBlock {
+		CommentBlock {
 			id: "0"
 			value: " Some multiline\ncomment "
 			loc: Object {

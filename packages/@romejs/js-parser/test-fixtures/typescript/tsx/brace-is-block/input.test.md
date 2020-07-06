@@ -32,7 +32,7 @@ JSRoot {
 		}
 	}
 	comments: Array [
-		JSCommentLine {
+		CommentLine {
 			id: "0"
 			value: " Regression test for tokenizer bug where the `{` after `<T>` was considered a JSX interpolation."
 			loc: Object {

@@ -29,7 +29,7 @@ JSRoot {
 		}
 	}
 	comments: Array [
-		JSCommentLine {
+		CommentLine {
 			id: "0"
 			value: " Copy of modifiers-methods with 'async'"
 			loc: Object {

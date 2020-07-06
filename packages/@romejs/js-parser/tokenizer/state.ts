@@ -10,7 +10,7 @@ import {ScopeType} from "../parser";
 import {Position, SourceLocation} from "@romejs/parser-core";
 import {TokContext, types as ct} from "./context";
 import {TokenTypes, types as tt} from "./types";
-import {AnyJSComment, AnyNode} from "@romejs/ast";
+import {AnyComment, AnyNode} from "@romejs/ast";
 import {Token} from "..";
 import {
 	Number0,
@@ -75,11 +75,11 @@ export type State = {
 	yieldInPossibleArrowParameters: undefined | Position;
 
 	// Comment store.
-	comments: Array<AnyJSComment>;
+	comments: Array<AnyComment>;
 
 	// Comment attachment store
-	trailingComments: Array<AnyJSComment>;
-	leadingComments: Array<AnyJSComment>;
+	trailingComments: Array<AnyComment>;
+	leadingComments: Array<AnyComment>;
 	commentStack: Array<AnyNode>;
 	commentPreviousNode: undefined | AnyNode;
 

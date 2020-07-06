@@ -6,7 +6,7 @@
  */
 
 import {
-	AnyJSComment,
+	AnyComment,
 	JSInterpreterDirective,
 	JSNumericLiteral,
 } from "@romejs/ast";
@@ -305,18 +305,18 @@ function pushComment(
 		startPos: Position;
 		endPos: Position;
 	},
-): AnyJSComment {
+): AnyComment {
 	const loc = parser.finishLocAt(opts.startPos, opts.endPos);
-	let comment: AnyJSComment;
+	let comment: AnyComment;
 	if (opts.block) {
 		comment = parser.comments.addComment({
-			type: "JSCommentBlock",
+			type: "CommentBlock",
 			value: removeCarriageReturn(opts.text),
 			loc,
 		});
 	} else {
 		comment = parser.comments.addComment({
-			type: "JSCommentLine",
+			type: "CommentLine",
 			value: opts.text,
 			loc,
 		});
@@ -421,10 +421,7 @@ function parseLineComment(
 	};
 }
 
-export function skipLineComment(
-	parser: JSParser,
-	startSkip: number,
-): AnyJSComment {
+export function skipLineComment(parser: JSParser, startSkip: number): AnyComment {
 	const lineComment = parseLineComment(parser, startSkip);
 	return pushComment(
 		parser,

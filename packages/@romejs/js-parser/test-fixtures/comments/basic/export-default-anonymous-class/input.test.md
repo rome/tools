@@ -29,7 +29,7 @@ JSRoot {
 		}
 	}
 	comments: Array [
-		JSCommentBlock {
+		CommentBlock {
 			id: "0"
 			value: "*\n * this is anonymous class.\n "
 			loc: Object {
@@ -46,7 +46,7 @@ JSRoot {
 				}
 			}
 		}
-		JSCommentBlock {
+		CommentBlock {
 			id: "1"
 			value: "*\n     * this is method1.\n     "
 			loc: Object {

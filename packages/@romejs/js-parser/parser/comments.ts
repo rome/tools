@@ -31,14 +31,14 @@
 
 import {JSParser} from "../parser";
 import {SourceLocation} from "@romejs/parser-core";
-import {AnyJSComment, AnyNode} from "@romejs/ast";
+import {AnyComment, AnyNode} from "@romejs/ast";
 import {Number0} from "@romejs/ob1";
 
 function last<T>(stack: Array<T>): T {
 	return stack[stack.length - 1];
 }
 
-function getIds(comments: Array<AnyJSComment>): Array<string> {
+function getIds(comments: Array<AnyComment>): Array<string> {
 	return comments.map((comment) => comment.id);
 }
 
@@ -67,7 +67,7 @@ function hasComments(
 function setComments(
 	node: AnyNode,
 	key: "leadingComments" | "trailingComments",
-	comments: Array<AnyJSComment>,
+	comments: Array<AnyComment>,
 ) {
 	let innerEndIndex = -1;
 
@@ -88,7 +88,7 @@ function setComments(
 	}
 }
 
-export function addComment(parser: JSParser, comment: AnyJSComment): void {
+export function addComment(parser: JSParser, comment: AnyComment): void {
 	parser.state.trailingComments.push(comment);
 	parser.state.leadingComments.push(comment);
 }
@@ -132,7 +132,7 @@ function adjustCommentsAfterTrailingComma(
 		}
 	}
 
-	const newTrailingComments: Array<AnyJSComment> = [];
+	const newTrailingComments: Array<AnyComment> = [];
 	for (let i = 0; i < parser.state.leadingComments.length; i++) {
 		const leadingComment = parser.state.leadingComments[i];
 		if (end(leadingComment) < end(node)) {
@@ -168,7 +168,7 @@ export function attachComments(parser: JSParser, node: AnyNode) {
 
 	const {commentStack, commentPreviousNode} = parser.state;
 
-	let trailingComments: undefined | Array<AnyJSComment>;
+	let trailingComments: undefined | Array<AnyComment>;
 
 	if (parser.state.trailingComments.length > 0) {
 		// If the first comment in trailingComments comes after the

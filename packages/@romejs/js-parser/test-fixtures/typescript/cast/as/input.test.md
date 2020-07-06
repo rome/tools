@@ -29,7 +29,7 @@ JSRoot {
 		}
 	}
 	comments: Array [
-		JSCommentLine {
+		CommentLine {
 			id: "0"
 			value: " (x < y) as boolean;"
 			loc: Object {
@@ -46,7 +46,7 @@ JSRoot {
 				}
 			}
 		}
-		JSCommentLine {
+		CommentLine {
 			id: "1"
 			value: " x === (1 as number);"
 			loc: Object {

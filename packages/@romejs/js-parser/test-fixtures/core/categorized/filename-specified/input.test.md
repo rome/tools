@@ -29,7 +29,7 @@ JSRoot {
 		}
 	}
 	comments: Array [
-		JSCommentLine {
+		CommentLine {
 			id: "0"
 			value: " This comment should have a filename prop attached to loc"
 			loc: Object {

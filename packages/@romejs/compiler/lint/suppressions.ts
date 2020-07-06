@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSComment, AnyNode, AnyRoot} from "@romejs/ast";
+import {AnyComment, AnyNode, AnyRoot} from "@romejs/ast";
 import {CompilerContext} from "@romejs/compiler";
 import {Number1, ob1Get1} from "@romejs/ob1";
 import Path from "../lib/Path";
@@ -50,7 +50,7 @@ export function addSuppressions(context: CompilerContext, ast: AnyRoot): AnyRoot
 		}
 
 		// Find existing suppression comment
-		let updateComment: undefined | AnyJSComment;
+		let updateComment: undefined | AnyComment;
 		const lastComment = context.comments.getCommentsFromIds(
 			node.leadingComments,
 		).pop();
@@ -66,7 +66,7 @@ export function addSuppressions(context: CompilerContext, ast: AnyRoot): AnyRoot
 			const id = path.callHook(
 				commentInjector,
 				{
-					type: "JSCommentLine",
+					type: "CommentLine",
 					value: ` ${buildSuppressionCommentValue(suppressionCategories)}`,
 				},
 			);
@@ -111,8 +111,8 @@ export function addSuppressions(context: CompilerContext, ast: AnyRoot): AnyRoot
 
 				// Don't allow attaching suppression comments to a comment or program...
 				if (
-					node.type === "JSCommentBlock" ||
-					node.type === "JSCommentLine" ||
+					node.type === "CommentBlock" ||
+					node.type === "CommentLine" ||
 					node.type === "JSRoot"
 				) {
 					return node;

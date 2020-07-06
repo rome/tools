@@ -28,7 +28,7 @@ JSRoot {
 		}
 	}
 	comments: Array [
-		JSCommentLine {
+		CommentLine {
 			id: "0"
 			value: " expression closure is not supported"
 			loc: Object {

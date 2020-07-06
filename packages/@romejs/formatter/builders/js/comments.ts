@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSComment, AnyNode} from "@romejs/ast";
+import {AnyComment, AnyNode} from "@romejs/ast";
 import {getLinesBetween} from "../../node";
 import {
 	Token,
@@ -22,9 +22,9 @@ export function hasInnerComments(node: AnyNode): boolean {
 	return node.innerComments !== undefined && node.innerComments.length > 0;
 }
 
-export function printComment(node: AnyJSComment): Token {
+export function printComment(node: AnyComment): Token {
 	switch (node.type) {
-		case "JSCommentBlock": {
+		case "CommentBlock": {
 			const lines = node.value.split("\n");
 			if (lines.every((line) => line.trimStart().charAt(0) === "*")) {
 				return comment(
@@ -48,7 +48,7 @@ export function printComment(node: AnyJSComment): Token {
 			}
 		}
 
-		case "JSCommentLine": {
+		case "CommentLine": {
 			return comment(`//${node.value.trimEnd()}`);
 		}
 	}
@@ -63,19 +63,16 @@ function printCommentSeparator(left: AnyNode, right: AnyNode): Token {
 			: concat([hardline, hardline]);
 }
 
-export function printLeadingComment(node: AnyJSComment, next: AnyNode): Token {
+export function printLeadingComment(node: AnyComment, next: AnyNode): Token {
 	const comment = printComment(node);
-	if (node.type === "JSCommentLine") {
+	if (node.type === "CommentLine") {
 		return concat([comment, hardline]);
 	} else {
 		return concat([comment, printCommentSeparator(node, next)]);
 	}
 }
 
-export function printTrailingComment(
-	node: AnyJSComment,
-	previous: AnyNode,
-): Token {
+export function printTrailingComment(node: AnyComment, previous: AnyNode): Token {
 	const comment = printComment(node);
 	const linesBetween = getLinesBetween(previous, node);
 
@@ -84,7 +81,7 @@ export function printTrailingComment(
 			concat([linesBetween > 1 ? hardline : "", hardline, comment]),
 		);
 	} else {
-		if (node.type === "JSCommentBlock") {
+		if (node.type === "CommentBlock") {
 			return ifBreak(
 				lineSuffix(concat([space, comment])),
 				concat([space, comment]),

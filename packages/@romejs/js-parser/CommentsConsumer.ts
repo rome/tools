@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSComment, AnyJSCommentOptionalId} from "@romejs/ast";
+import {AnyComment, AnyCommentOptionalId} from "@romejs/ast";
 
 export default class CommentsConsumer {
-	constructor(seedComments: Array<AnyJSComment> = []) {
+	constructor(seedComments: Array<AnyComment> = []) {
 		this.idToComment = new Map();
 		this.counter = seedComments.length;
 		this.setComments(seedComments);
 	}
 
-	idToComment: Map<string, AnyJSComment>;
+	idToComment: Map<string, AnyComment>;
 	counter: number;
 
-	setComments(comments: Array<AnyJSComment>) {
+	setComments(comments: Array<AnyComment>) {
 		this.idToComment.clear();
 
 		for (const comment of comments) {
@@ -25,12 +25,12 @@ export default class CommentsConsumer {
 		}
 	}
 
-	getCommentsFromIds(ids: undefined | Array<string>): Array<AnyJSComment> {
+	getCommentsFromIds(ids: undefined | Array<string>): Array<AnyComment> {
 		if (ids === undefined) {
 			return [];
 		}
 
-		const comments: Array<AnyJSComment> = [];
+		const comments: Array<AnyComment> = [];
 
 		for (const id of ids) {
 			const comment = this.getCommentFromId(id);
@@ -42,19 +42,19 @@ export default class CommentsConsumer {
 		return comments;
 	}
 
-	getIdsFromComments(comments: Array<AnyJSComment>): Array<string> {
+	getIdsFromComments(comments: Array<AnyComment>): Array<string> {
 		return comments.map((comment) => comment.id);
 	}
 
-	getAllComments(): Array<AnyJSComment> {
+	getAllComments(): Array<AnyComment> {
 		return Array.from(this.idToComment.values());
 	}
 
-	getCommentFromId(id: string): undefined | AnyJSComment {
+	getCommentFromId(id: string): undefined | AnyComment {
 		return this.idToComment.get(id);
 	}
 
-	assertGetCommentFromId(id: string): AnyJSComment {
+	assertGetCommentFromId(id: string): AnyComment {
 		const comment = this.getCommentFromId(id);
 		if (comment === undefined) {
 			throw new Error(`No comment found for id ${id}`);
@@ -66,7 +66,7 @@ export default class CommentsConsumer {
 		return String(this.counter++);
 	}
 
-	updateComment(comment: AnyJSComment) {
+	updateComment(comment: AnyComment) {
 		this.idToComment.set(comment.id, comment);
 	}
 
@@ -74,8 +74,8 @@ export default class CommentsConsumer {
 		this.idToComment.delete(id);
 	}
 
-	addComment(withoutId: AnyJSCommentOptionalId): AnyJSComment {
-		const withId: AnyJSComment = {
+	addComment(withoutId: AnyCommentOptionalId): AnyComment {
+		const withId: AnyComment = {
 			...withoutId,
 			id: this.getNextId(),
 		};

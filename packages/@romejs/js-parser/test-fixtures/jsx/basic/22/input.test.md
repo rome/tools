@@ -31,7 +31,7 @@ JSRoot {
 		}
 	}
 	comments: Array [
-		JSCommentBlock {
+		CommentBlock {
 			id: "0"
 			value: "* @jsx mdx "
 			loc: Object {

@@ -29,7 +29,7 @@ JSRoot {
 		}
 	}
 	comments: Array [
-		JSCommentLine {
+		CommentLine {
 			id: "0"
 			value: " Type literals have the same body syntax as interfaces, so see `interface` directory for that."
 			loc: Object {

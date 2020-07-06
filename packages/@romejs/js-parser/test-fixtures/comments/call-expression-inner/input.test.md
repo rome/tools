@@ -29,7 +29,7 @@ JSRoot {
 		}
 	}
 	comments: Array [
-		JSCommentBlock {
+		CommentBlock {
 			id: "0"
 			value: " EMPTY "
 			loc: Object {

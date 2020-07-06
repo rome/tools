@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSComment, AnyNode} from "@romejs/ast";
+import {AnyComment, AnyNode} from "@romejs/ast";
 import {isTypeExpressionWrapperNode, isTypeNode} from "@romejs/js-ast-utils";
 import CommentsConsumer from "@romejs/js-parser/CommentsConsumer";
 import {
@@ -33,7 +33,7 @@ export type BuilderOptions = {
 };
 
 export default class Builder {
-	constructor(opts: BuilderOptions, comments: Array<AnyJSComment> = []) {
+	constructor(opts: BuilderOptions, comments: Array<AnyComment> = []) {
 		this.options = opts;
 		this.comments = new CommentsConsumer(comments);
 		this.printedComments = new Set();
@@ -172,7 +172,7 @@ export default class Builder {
 		kind: "leadingComments" | "trailingComments" | "innerComments",
 		node: AnyNode,
 		all: boolean = false,
-	): undefined | Array<AnyJSComment> {
+	): undefined | Array<AnyComment> {
 		if (!node) {
 			return undefined;
 		}
@@ -221,7 +221,7 @@ export default class Builder {
 		// Comments must be deduplicated because they are shared between nodes.
 		// Walk them in order to calculate the nodes' boundaries.
 		if (aTrailingComments !== undefined || bLeadingComments !== undefined) {
-			const seenComments: Set<AnyJSComment> = new Set();
+			const seenComments: Set<AnyComment> = new Set();
 
 			// Expand `a` boundaries
 			if (aTrailingComments !== undefined) {

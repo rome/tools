@@ -29,7 +29,7 @@ JSRoot {
 		}
 	}
 	comments: Array [
-		JSCommentLine {
+		CommentLine {
 			id: "0"
 			value: " One"
 			loc: Object {
@@ -46,7 +46,7 @@ JSRoot {
 				}
 			}
 		}
-		JSCommentBlock {
+		CommentBlock {
 			id: "1"
 			value: " Two "
 			loc: Object {
@@ -63,7 +63,7 @@ JSRoot {
 				}
 			}
 		}
-		JSCommentLine {
+		CommentLine {
 			id: "2"
 			value: " Three"
 			loc: Object {
@@ -80,7 +80,7 @@ JSRoot {
 				}
 			}
 		}
-		JSCommentBlock {
+		CommentBlock {
 			id: "3"
 			value: " Four "
 			loc: Object {

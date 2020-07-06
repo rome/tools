@@ -29,7 +29,7 @@ JSRoot {
 		}
 	}
 	comments: Array [
-		JSCommentBlock {
+		CommentBlock {
 			id: "0"
 			value: " before "
 			loc: Object {
@@ -46,7 +46,7 @@ JSRoot {
 				}
 			}
 		}
-		JSCommentBlock {
+		CommentBlock {
 			id: "1"
 			value: " after "
 			loc: Object {

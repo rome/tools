@@ -59,7 +59,7 @@ export default {
 				const id = path.callHook(
 					commentInjector,
 					{
-						type: "JSCommentLine",
+						type: "CommentLine",
 						value: " empty",
 					},
 				);

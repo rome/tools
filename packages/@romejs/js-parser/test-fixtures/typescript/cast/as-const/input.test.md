@@ -29,7 +29,7 @@ JSRoot {
 		}
 	}
 	comments: Array [
-		JSCommentLine {
+		CommentLine {
 			id: "0"
 			value: " Copied over from TypeScript's test case"
 			loc: Object {
@@ -46,7 +46,7 @@ JSRoot {
 				}
 			}
 		}
-		JSCommentLine {
+		CommentLine {
 			id: "1"
 			value: " https://github.com/Microsoft/TypeScript/blob/server/tests/baselines/reference/constAssertions.js"
 			loc: Object {
@@ -63,7 +63,7 @@ JSRoot {
 				}
 			}
 		}
-		JSCommentLine {
+		CommentLine {
 			id: "2"
 			value: " Error"
 			loc: Object {
