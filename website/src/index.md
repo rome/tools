@@ -3,15 +3,13 @@ layout: layouts/base.njk
 showHero: true
 ---
 
-**Rome** is a linter, compiler, bundler, and [more](#responsibilities) for JavaScript, HTML, CSS, and Markdown.
+**Rome** is a linter, compiler, bundler, and [more](https://preview.romejs.dev/#development-status) for JavaScript, TypeScript, HTML, Markdown, and CSS. Read more about our language support [here](https://preview.romejs.dev/docs/language-support).
 
-**Rome** unifies functionality that have previously been completely separate tools. We have support for JavaScript flavors such as TypeScript and JSX.
+**Rome** unifies functionality that has previously been completely separate tools. Most frontend tooling have a significant overlap in responsibilities and implementation. There is value in these being a single tool. Building upon a shared base allows us to provide a cohesive experience for processing code, displaying errors, parallelizing work, caching, and configuration.
 
-[Babel](https://babeljs.io/), [Webpack](https://webpack.js.org/), [Jest](https://jestjs.io/), [ESLint](https://eslint.org/), and other frontend tooling have a significant overlap in responsibilities and implementation. There is value in these being a single tool.
+**Rome** has been built from scratch without the usage of existing libraries. Rome contains no third-party library dependencies.
 
-Building upon a shared base allows us to provide a cohesive experience for processing code, displaying errors, parallelizing work, caching, and configuration.
-
-**Rome** has strong conventions and we aim to have minimal configuration. By using Rome you accept the conventions we have set. Read more about our philosophy [here](https://preview.romejs.dev/contributing/philosophy).
+**Rome** has strong conventions and aims to have minimal configuration. Read more about our project philosophy [here](https://preview.romejs.dev/contributing/philosophy).
 
 **Rome** is maintained by a [team of contributors](https://preview.romejs.dev/contributing/team). **Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io) and [Yarn](https://yarnpkg.com).
 

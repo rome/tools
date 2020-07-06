@@ -5,6 +5,12 @@ layout: layouts/base.njk
 
 # Language Support
 
-## TypeScript
+We have support for the following languages:
 
-## JSX
+ - HTML
+ - JavaScript (with JSX and TypeScript)
+
+With the following in development:
+
+ - CSS
+ - Markdown (GitHub-flavored)
