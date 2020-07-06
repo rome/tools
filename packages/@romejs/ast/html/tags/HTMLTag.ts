@@ -1,10 +1,9 @@
-import {NodeBaseWithComments} from "../../index";
+import {NodeBaseWithComments, HTMLAttribute} from "@romejs/ast";
 import {createBuilder} from "../../utils";
-import {AnyHTMLAttribute} from "@romejs/ast/html/unions";
 
 export type HTMLTag = NodeBaseWithComments & {
 	type: "HTMLTag";
-	attributes: Array<AnyHTMLAttribute>;
+	attributes: Array<HTMLAttribute>;
 	kind: "self-closing" | "open";
 	childNodes: Array<HTMLTag>;
 };

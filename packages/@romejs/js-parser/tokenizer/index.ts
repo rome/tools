@@ -30,7 +30,6 @@ import {
 	types as tt,
 } from "./types";
 import {TokContext, types as ct} from "./context";
-import {addComment} from "../parser/index";
 import {ASCII_NAMES, UNICODE_MISTAKES} from "./unicodeMistakes";
 import * as charCodes from "@romejs/string-charcodes";
 import {descriptions} from "@romejs/diagnostics";
@@ -328,8 +327,7 @@ function pushComment(
 	}
 
 	if (parser.isLookahead === false) {
-		parser.state.comments.push(comment);
-		addComment(parser, comment);
+		parser.addComment(comment);
 	}
 
 	if (parser.shouldCreateToken()) {

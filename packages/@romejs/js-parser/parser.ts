@@ -18,14 +18,12 @@ import {
 	Position,
 	SourceLocation,
 	createParser,
+	ParserCoreState,
 } from "@romejs/parser-core";
 import {JSParserOptions} from "./options";
 import {
 	DiagnosticDescription,
-	DiagnosticFilter,
 	DiagnosticLocation,
-	Diagnostics,
-	DiagnosticsProcessor,
 	descriptions,
 } from "@romejs/diagnostics";
 import ParserBranchFinder from "./ParserBranchFinder";
@@ -36,8 +34,6 @@ import {parseTopLevel} from "./parser/index";
 import {State, createInitialState} from "./tokenizer/state";
 import {Number0, ob1Number0, ob1Sub} from "@romejs/ob1";
 import {Dict, OptionalProps} from "@romejs/typescript-helpers";
-import {attachComments} from "./parser/comments";
-import CommentsConsumer from "./CommentsConsumer";
 
 const TOKEN_MISTAKES: Dict<string> = {
 	";": ":",
@@ -116,14 +112,12 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 				this.options.sourceType === "template" ||
 				this.options.sourceType === "module";
 			this.parenthesized = new Set();
-			this.comments = new CommentsConsumer();
 
 			// Turn options.syntax into a Set, probably faster than doing `includes` on the array
 			// We may also push stuff to it as we read comments such as `@\flow`
 			this.syntax = new Set(options.syntax);
 		}
 
-		comments: CommentsConsumer;
 		options: JSParserOptions;
 		sourceType: ConstJSSourceType;
 		syntax: Set<ConstJSProgramSyntax>;
@@ -197,6 +191,11 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			this.state = newState;
 		}
 
+		// Overrides ParserCore#getCommentsState
+		getCommentsState(): ParserCoreState {
+			return this.state;
+		}
+
 		atEOF(): boolean {
 			return this.match(tt.eof);
 		}
@@ -213,48 +212,6 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			} else {
 				return undefined;
 			}
-		}
-
-		finalizeNode<T extends AnyNode>(node: T): T {
-			attachComments(this, node);
-			return node;
-		}
-
-		// Sometimes we want to pretend we're in different locations to consume the comments of other nodes
-		finishNodeWithCommentStarts<T extends AnyNode>(
-			starts: Array<Position>,
-			node: T,
-		): T {
-			for (const start of starts) {
-				node = this.finishNode(start, node);
-			}
-			return node;
-		}
-
-		finishNode<T extends AnyNode>(
-			start: Position,
-			node: T,
-		): T & {
-			loc: SourceLocation;
-		} {
-			return this.finishNodeAt(start, this.getLastEndPosition(), node);
-		}
-
-		finishNodeAt<T extends AnyNode>(
-			start: Position,
-			end: Position,
-			node: T,
-		): T & {
-			loc: SourceLocation;
-		} {
-			// Maybe mutating `node` is better...?
-			const newNode: T & {
-				loc: SourceLocation;
-			} = {
-				...node,
-				loc: this.finishLocAt(start, end),
-			};
-			return this.finalizeNode(newNode);
 		}
 
 		createUnknownIdentifier(
@@ -295,32 +252,6 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 					description: _metadata,
 				});
 			}
-		}
-
-		getDiagnostics(): Diagnostics {
-			const collector = new DiagnosticsProcessor({
-				origins: [
-					{
-						category: "js-parser",
-					},
-				],
-				//unique: ['start.line'],
-			});
-
-			for (const filter of this.state.diagnosticFilters) {
-				collector.addFilter(filter);
-			}
-
-			// TODO remove any trailing "eof" diagnostic
-			return collector.addDiagnostics(this.state.diagnostics).slice(0, 1);
-		}
-
-		addDiagnosticFilter(diag: DiagnosticFilter) {
-			this.state.diagnosticFilters.push(diag);
-		}
-
-		addCompleteDiagnostic(diags: Diagnostics) {
-			this.state.diagnostics = [...this.state.diagnostics, ...diags];
 		}
 
 		shouldCreateToken() {
@@ -377,10 +308,6 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 				if (maxDiagnostics < 0) {
 					throw new DiagnosticsFatalError();
 				}
-			}
-
-			if (this.state.diagnostics.length > 0) {
-				//return;
 			}
 
 			let {start, end} = opts;

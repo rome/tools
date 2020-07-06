@@ -67,9 +67,9 @@ type SPDXLicenseParserOptions = ParserOptions & {
 };
 
 const createSPDXLicenseParser = createParser((ParserCore) =>
-	class SPDXLicenseParser extends ParserCore<Tokens, void> {
+	class SPDXLicenseParser extends ParserCore<Tokens> {
 		constructor(opts: SPDXLicenseParserOptions) {
-			super(opts, "parse/spdxLicense");
+			super(opts, "parse/spdxLicense", {});
 			this.loose = opts.loose === true;
 		}
 

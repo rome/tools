@@ -115,20 +115,16 @@ export function parseTopLevel(parser: JSParser): JSRoot {
 
 	return parser.finishNode(
 		start,
-		{
+		parser.finishRoot({
 			type: "JSRoot",
 			corrupt: parser.state.corrupt,
 			body,
 			directives,
-			mtime: parser.mtime,
-			diagnostics: parser.getDiagnostics(),
-			filename: parser.filename,
-			comments: parser.state.comments,
 			sourceType: parser.sourceType,
 			interpreter,
 			syntax: Array.from(parser.syntax),
 			hasHoistedVars: parser.state.hasHoistedVars,
-		},
+		}),
 	);
 }
 
@@ -191,11 +187,8 @@ export function isLetStart(parser: JSParser, context?: string): boolean {
 	const nextCh = parser.input.charCodeAt(ob1Get0(next));
 
 	// For ambiguous cases, determine if a LexicalDeclaration (or only a
-
 	// Statement) is allowed here. If context is not empty then only a Statement
-
 	// is allowed. However, `let [` is an explicit negative lookahead for
-
 	// JSExpressionStatement, so special-case it first.
 	if (nextCh === charCodes.leftSquareBracket) {
 		return true;

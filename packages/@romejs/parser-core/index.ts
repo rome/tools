@@ -26,6 +26,9 @@ import {
 	catchDiagnosticsSync,
 	createSingleDiagnosticError,
 	descriptions,
+	DiagnosticsProcessor,
+	Diagnostics,
+	DiagnosticFilter,
 } from "@romejs/diagnostics";
 import {
 	Number0,
@@ -41,6 +44,9 @@ import {
 import {UnknownFilePath, createUnknownFilePath} from "@romejs/path";
 import {Class, OptionalProps} from "@romejs/typescript-helpers";
 import {removeCarriageReturn} from "@romejs/string-utils";
+import { AnyNode, AnyComment, RootBase } from "@romejs/ast";
+import {attachComments} from "./comments";
+import CommentsConsumer from "@romejs/js-parser/CommentsConsumer";
 
 export * from "./types";
 
@@ -119,11 +125,24 @@ function normalizeInput(opts: ParserOptions): string {
 	}
 }
 
-export class ParserCore<Tokens extends TokensShape, State> {
+export type ParserCoreState = {
+	comments: Array<AnyComment>;
+	trailingComments: Array<AnyComment>;
+	leadingComments: Array<AnyComment>;
+	commentStack: Array<AnyNode>;
+	commentPreviousNode: undefined | AnyNode;
+	diagnostics: Diagnostics;
+	diagnosticFilters: Array<DiagnosticFilter>;
+	corrupt: boolean;
+};
+
+export type AnyParserCore = ParserCore<TokensShape, ParserCoreState>;
+
+export class ParserCore<Tokens extends TokensShape, State extends ParserCoreState = ParserCoreState> {
 	constructor(
 		opts: ParserOptions,
 		diagnosticCategory: DiagnosticCategory,
-		initialState: State,
+		initialState: Omit<State, keyof ParserCoreState>,
 	) {
 		const {path, mtime, offsetPosition} = opts;
 
@@ -151,16 +170,23 @@ export class ParserCore<Tokens extends TokensShape, State> {
 		this.nextTokenIndex = ob1Number0;
 		this.currentToken = SOF_TOKEN;
 		this.prevToken = SOF_TOKEN;
-		this.state = initialState;
 		this.ignoreWhitespaceTokens = false;
+		this.comments = new CommentsConsumer();
 
 		this.indexTracker = new PositionTracker(
 			this.input,
 			offsetPosition,
 			this.getPosition.bind(this),
 		);
+
+		// @ts-ignore
+		this.state = {
+			...initialState,
+			...ParserCore.createInitialState(),
+		};
 	}
 
+	comments: CommentsConsumer;
 	indexTracker: PositionTracker;
 	offsetPosition: undefined | Position;
 	diagnosticCategory: DiagnosticCategory;
@@ -180,6 +206,19 @@ export class ParserCore<Tokens extends TokensShape, State> {
 	length: Number0;
 	currLine: Number1;
 	currColumn: Number0;
+
+	static createInitialState(): ParserCoreState {
+		return {
+			corrupt: false,
+			trailingComments: [],
+			leadingComments: [],
+			commentStack: [],
+			comments: [],
+			commentPreviousNode: undefined,
+			diagnostics: [],
+			diagnosticFilters: [],
+		};
+	}
 
 	getPathAssert(): UnknownFilePath {
 		const {path} = this;
@@ -565,8 +604,6 @@ export class ParserCore<Tokens extends TokensShape, State> {
 	getRawInput(start: Number0, end: Number0): string {
 		return this.input.slice(ob1Get0(start), ob1Get0(end));
 	}
-
-	//# Utility methods to make it easy to construct nodes or tokens
 	getLoc(node: undefined | NodeBase): SourceLocation {
 		if (node === undefined || node.loc === undefined) {
 			throw new Error("Tried to fetch node loc start but none found");
@@ -574,6 +611,8 @@ export class ParserCore<Tokens extends TokensShape, State> {
 			return node.loc;
 		}
 	}
+
+	//# Token finalization
 
 	finishToken<Type extends string>(
 		type: Type,
@@ -612,6 +651,8 @@ export class ParserCore<Tokens extends TokensShape, State> {
 		};
 	}
 
+	//# SourceLocation finalization
+
 	finishLocFromToken(token: TokenBase): SourceLocation {
 		return this.finishLocAt(
 			this.getPositionFromIndex(token.start),
@@ -631,6 +672,62 @@ export class ParserCore<Tokens extends TokensShape, State> {
 		};
 	}
 
+	//# Node finalization
+
+	finalizeNode<T extends AnyNode>(node: T): T {
+		// @ts-ignore
+		attachComments(this, node);
+		return node;
+	}
+
+	// Sometimes we want to pretend we're in different locations to consume the comments of other nodes
+	finishNodeWithCommentStarts<T extends AnyNode>(
+		starts: Array<Position>,
+		node: T,
+	): T {
+		for (const start of starts) {
+			node = this.finishNode(start, node);
+		}
+		return node;
+	}
+
+	finishNode<T extends AnyNode>(
+		start: Position,
+		node: T,
+	): T & {
+		loc: SourceLocation;
+	} {
+		return this.finishNodeAt(start, this.getLastEndPosition(), node);
+	}
+
+	finishNodeAt<T extends AnyNode>(
+		start: Position,
+		end: Position,
+		node: T,
+	): T & {
+		loc: SourceLocation;
+	} {
+		// Maybe mutating `node` is better...?
+		const newNode: T & {
+			loc: SourceLocation;
+		} = {
+			...node,
+			loc: this.finishLocAt(start, end),
+		};
+		return this.finalizeNode(newNode);
+	}
+
+	finishRoot<T extends object>(node: T): T & RootBase {
+		return {
+			...node,
+			corrupt: this.state.corrupt,
+			mtime: this.mtime,
+			diagnostics: this.getDiagnostics(),
+			filename: this.getFilenameAssert(),
+			comments: this.state.comments,
+		};
+	}
+
 	finalize(): void {
 		if (!this.eatToken("EOF")) {
 			throw this.unexpected({
@@ -638,9 +735,45 @@ export class ParserCore<Tokens extends TokensShape, State> {
 			});
 		}
 	}
+
+	//# Diagnostics
+
+	getDiagnostics(): Diagnostics {
+		const collector = new DiagnosticsProcessor({
+			origins: [
+				{
+					category: this.diagnosticCategory,
+				},
+			],
+			//unique: ['start.line'],
+		});
+
+		for (const filter of this.state.diagnosticFilters) {
+			collector.addFilter(filter);
+		}
+
+		// TODO remove any trailing "eof" diagnostic
+		return collector.addDiagnostics(this.state.diagnostics).slice(0, 1);
+	}
+	
+	addDiagnosticFilter(diag: DiagnosticFilter) {
+		this.state.diagnosticFilters.push(diag);
+	}
+
+	addCompleteDiagnostic(diags: Diagnostics) {
+		this.state.diagnostics = [...this.state.diagnostics, ...diags];
+	}
+
+	//# Comments
+
+	addComment(comment: AnyComment) {
+		this.state.comments.push(comment);
+		this.state.trailingComments.push(comment);
+		this.state.leadingComments.push(comment);
+	}
 }
 
-export class ParserWithRequiredPath<Tokens extends TokensShape, State>
+export class ParserWithRequiredPath<Tokens extends TokensShape, State extends ParserCoreState>
 	extends ParserCore<Tokens, State> {
 	constructor(
 		opts: ParserOptionsWithRequiredPath,

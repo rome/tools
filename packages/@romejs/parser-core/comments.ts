@@ -29,8 +29,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import {JSParser} from "../parser";
-import {SourceLocation} from "@romejs/parser-core";
+import {SourceLocation, AnyParserCore} from "@romejs/parser-core";
 import {AnyComment, AnyNode} from "@romejs/ast";
 import {Number0} from "@romejs/ob1";
 
@@ -88,13 +87,8 @@ function setComments(
 	}
 }
 
-export function addComment(parser: JSParser, comment: AnyComment): void {
-	parser.state.trailingComments.push(comment);
-	parser.state.leadingComments.push(comment);
-}
-
 function adjustCommentsAfterTrailingComma(
-	parser: JSParser,
+	parser: AnyParserCore,
 	node: AnyNode,
 	elements: Array<undefined | AnyNode>,
 	// When the current node is followed by a token which hasn't a respective AST node, we
@@ -107,7 +101,9 @@ function adjustCommentsAfterTrailingComma(
 	// /* cmt */ is both a trailing comment of fn(x) and a leading comment of y
 	takeAllComments?: boolean,
 ) {
-	if (parser.state.leadingComments.length === 0) {
+	const {state} = parser;
+
+	if (state.leadingComments.length === 0) {
 		return;
 	}
 
@@ -120,12 +116,12 @@ function adjustCommentsAfterTrailingComma(
 		return;
 	}
 
-	const {commentPreviousNode} = parser.state;
+	const {commentPreviousNode} = state;
 	if (commentPreviousNode === undefined) {
 		throw new Error("No commentPreviousNode found");
 	}
 
-	for (let j = 0; j < parser.state.leadingComments.length; j++) {
+	for (let j = 0; j < state.leadingComments.length; j++) {
 		if (end(parser.state.leadingComments[j]) < end(commentPreviousNode)) {
 			parser.state.leadingComments.splice(j, 1);
 			j--;
@@ -133,14 +129,14 @@ function adjustCommentsAfterTrailingComma(
 	}
 
 	const newTrailingComments: Array<AnyComment> = [];
-	for (let i = 0; i < parser.state.leadingComments.length; i++) {
-		const leadingComment = parser.state.leadingComments[i];
+	for (let i = 0; i < state.leadingComments.length; i++) {
+		const leadingComment = state.leadingComments[i];
 		if (end(leadingComment) < end(node)) {
 			newTrailingComments.push(leadingComment);
 
 			// Perf: we don't need to splice if we are going to reset the array anyway
 			if (!takeAllComments) {
-				parser.state.leadingComments.splice(i, 1);
+				state.leadingComments.splice(i, 1);
 				i--;
 			}
 		} else {
@@ -151,7 +147,7 @@ function adjustCommentsAfterTrailingComma(
 		}
 	}
 	if (takeAllComments) {
-		parser.state.leadingComments = [];
+		state.leadingComments = [];
 	}
 
 	if (newTrailingComments.length > 0) {
@@ -161,23 +157,24 @@ function adjustCommentsAfterTrailingComma(
 	}
 }
 
-export function attachComments(parser: JSParser, node: AnyNode) {
+export function attachComments(parser: AnyParserCore, node: AnyNode) {
 	if (node.type === "JSRoot" && node.body.length > 0) {
 		return;
 	}
 
-	const {commentStack, commentPreviousNode} = parser.state;
+	const {state} = parser;
+	const {commentStack, commentPreviousNode} = state;
 
 	let trailingComments: undefined | Array<AnyComment>;
 
-	if (parser.state.trailingComments.length > 0) {
+	if (state.trailingComments.length > 0) {
 		// If the first comment in trailingComments comes after the
 		// current node, then we're good - all comments in the array will
 		// come after the node and so it's safe to add them as official
 		// trailingComments.
-		if (start(parser.state.trailingComments[0]) >= end(node)) {
-			trailingComments = parser.state.trailingComments;
-			parser.state.trailingComments = [];
+		if (start(state.trailingComments[0]) >= end(node)) {
+			trailingComments = state.trailingComments;
+			state.trailingComments = [];
 		} else {
 			// Otherwise, if the first comment doesn't come after the
 			// current node, that means we have a mix of leading and trailing
@@ -320,9 +317,9 @@ export function attachComments(parser: JSParser, node: AnyNode) {
 				}
 			}
 
-			if (parser.state.leadingComments.length > 0) {
+			if (state.leadingComments.length > 0) {
 				setComments(node, "leadingComments", parser.state.leadingComments);
-				parser.state.leadingComments = [];
+				state.leadingComments = [];
 			}
 		} else {
 			// https://github.com/eslint/espree/issues/2
@@ -337,8 +334,8 @@ export function attachComments(parser: JSParser, node: AnyNode) {
 			// leading and trailing comments by finding the location of the
 			// first comment that comes after the given node.
 			let i = 0;
-			while (i < parser.state.leadingComments.length) {
-				if (end(parser.state.leadingComments[i]) > start(node)) {
+			while (i < state.leadingComments.length) {
+				if (end(state.leadingComments[i]) > start(node)) {
 					break;
 				} else {
 					i++;
@@ -350,7 +347,7 @@ export function attachComments(parser: JSParser, node: AnyNode) {
 			// result in an empty array, and if so, the array must be
 			// deleted.
 
-			const leadingComments = parser.state.leadingComments.slice(0, i);
+			const leadingComments = state.leadingComments.slice(0, i);
 
 			if (leadingComments.length > 0) {
 				setComments(node, "leadingComments", leadingComments);
@@ -358,7 +355,7 @@ export function attachComments(parser: JSParser, node: AnyNode) {
 
 			// Similarly, trailing comments are attached later. The variable
 			// must be reset to null if there are no trailing comments.
-			trailingComments = parser.state.leadingComments.slice(i);
+			trailingComments = state.leadingComments.slice(i);
 			if (trailingComments.length === 0) {
 				trailingComments = undefined;
 			}

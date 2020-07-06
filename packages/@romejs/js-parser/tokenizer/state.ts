@@ -5,12 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticFilters, Diagnostics} from "@romejs/diagnostics";
 import {ScopeType} from "../parser";
-import {Position, SourceLocation} from "@romejs/parser-core";
+import {Position, SourceLocation, ParserCoreState, ParserCore} from "@romejs/parser-core";
 import {TokContext, types as ct} from "./context";
 import {TokenTypes, types as tt} from "./types";
-import {AnyComment, AnyNode} from "@romejs/ast";
 import {Token} from "..";
 import {
 	Number0,
@@ -23,13 +21,10 @@ import {
 // rome-ignore lint/js/noUnusedVariables
 type Scopes = {[K in ScopeType]?: Array<unknown>};
 
-export type State = {
-	diagnostics: Diagnostics;
-	diagnosticFilters: DiagnosticFilters;
+export type State = ParserCoreState & {
 	isIterator: boolean;
 	tokens: Array<Token>;
 	hasHoistedVars: boolean;
-	corrupt: boolean;
 	indentLevel: Number0;
 	lineStart: boolean;
 
@@ -73,15 +68,6 @@ export type State = {
 	// function parameters. It is used to disallow yield in arrow function
 	// parameters.
 	yieldInPossibleArrowParameters: undefined | Position;
-
-	// Comment store.
-	comments: Array<AnyComment>;
-
-	// Comment attachment store
-	trailingComments: Array<AnyComment>;
-	leadingComments: Array<AnyComment>;
-	commentStack: Array<AnyNode>;
-	commentPreviousNode: undefined | AnyNode;
 
 	// The current position of the tokenizer in the input.
 	index: Number0;
@@ -141,11 +127,9 @@ const EMPTY_POS: Position = {
 
 export function createInitialState(): State {
 	return {
+		...ParserCore.createInitialState(),
 		scopes: {},
-		diagnostics: [],
-		diagnosticFilters: [],
 		hasHoistedVars: false,
-		corrupt: false,
 		tokens: [],
 		potentialArrowAt: ob1Number0Neg1,
 		commaAfterSpreadAt: ob1Number0Neg1,
@@ -159,11 +143,6 @@ export function createInitialState(): State {
 		classLevel: ob1Number0,
 		labels: [],
 		yieldInPossibleArrowParameters: undefined,
-		comments: [],
-		trailingComments: [],
-		leadingComments: [],
-		commentStack: [],
-		commentPreviousNode: undefined,
 		index: ob1Number0,
 		lineStartIndex: ob1Number0,
 		curLine: ob1Number1,

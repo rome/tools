@@ -1,10 +1,9 @@
-import {NodeBaseWithComments} from "../../index";
+import {NodeBaseWithComments, HTMLAttribute} from "@romejs/ast";
 import {createBuilder} from "../../utils";
-import {AnyHTMLAttribute} from "@romejs/ast/html/unions";
 
 export type HTMLDoctypeTag = NodeBaseWithComments & {
 	type: "HTMLDoctypeTag";
-	attributes: Array<AnyHTMLAttribute>;
+	attributes: Array<HTMLAttribute>;
 };
 
 export const htmlDoctypeTag = createBuilder<HTMLDoctypeTag>(
