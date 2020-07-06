@@ -21,9 +21,7 @@ export function parseJS(userOptions: JSParserUserOptions): JSRoot {
 	return createJSParser(options).parse();
 }
 
-export function tokenizeJS(
-	userOptions: JSParserUserOptions,
-): Array<Token> {
+export function tokenizeJS(userOptions: JSParserUserOptions): Array<Token> {
 	const options: JSParserOptions = normalizeOptions(userOptions);
 	const parser = createJSParser({...options, tokens: true});
 	parser.parse();

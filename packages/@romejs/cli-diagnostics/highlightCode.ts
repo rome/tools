@@ -6,7 +6,6 @@
  */
 
 // NB: Maybe this belongs in a dedicated package?
-
 import {tokenizeJS} from "@romejs/js-parser";
 import {Number0, ob1Get0} from "@romejs/ob1";
 import {DiagnosticLanguage, DiagnosticSourceType} from "@romejs/diagnostics";
@@ -28,12 +27,15 @@ export type AnsiHighlightOptions = {
 	language: undefined | DiagnosticLanguage;
 };
 
-type TokenShape =  {
+type TokenShape = {
 	start: Number0;
 	end: Number0;
 };
 
-type ReduceCallbackResult = {type?: MarkupTokenType, value?: string};
+type ReduceCallbackResult = {
+	type?: MarkupTokenType;
+	value?: string;
+};
 
 type ReduceCallback<Token extends TokenShape> = (
 	token: Token,
@@ -58,7 +60,7 @@ export default function highlightCode(opts: AnsiHighlightOptions): string {
 			);
 
 		case "html":
-				return highlightHTML(opts);
+			return highlightHTML(opts);
 
 		case "json":
 			return highlightJSON(opts);
@@ -68,26 +70,28 @@ export default function highlightCode(opts: AnsiHighlightOptions): string {
 	}
 }
 
-function reduceParserCore<Token extends TokenShape & {type: string}>(
-	input: string,
-	tokens: Array<Token>,
-	callback: ReduceCallback<Token>,
-) {
-	return reduce(input, tokens, (token, value, prev, next) => {
-		switch (token.type) {
-			case "Invalid":
-				return invalidHighlight(value);
+function reduceParserCore<Token extends TokenShape & {
+	type: string;
+}>(input: string, tokens: Array<Token>, callback: ReduceCallback<Token>) {
+	return reduce(
+		input,
+		tokens,
+		(token, value, prev, next) => {
+			switch (token.type) {
+				case "Invalid":
+					return invalidHighlight(value);
 
-			// Will never be hit
-			case "EOF":
-			case "SOF":
-				return {value: ""};
+				// Will never be hit
+				case "EOF":
+				case "SOF":
+					return {value: ""};
 
-			default:
-				// We should have refined `token` to not include any of the base tokens
-				return callback(token, value, prev, next);
-		}
-	});
+				default:
+					// We should have refined `token` to not include any of the base tokens
+					return callback(token, value, prev, next);
+			}
+		},
+	);
 }
 
 function reduce<Token extends TokenShape>(
@@ -197,12 +201,10 @@ function highlightJSON({input, path}: AnsiHighlightOptions): string {
 }
 
 function highlightHTML({input, path}: AnsiHighlightOptions): string {
-	const tokens = tokenizeHTML(
-		{
-			input,
-			path,
-		},
-	);
+	const tokens = tokenizeHTML({
+		input,
+		path,
+	});
 
 	return reduceParserCore(
 		input,
@@ -214,7 +216,11 @@ function highlightHTML({input, path}: AnsiHighlightOptions): string {
 					return {type: "attr-equals"};
 
 				case "Identifier":
-					return {type: prev !== undefined && prev.type === "Less" ? "tag" : "attr-name"};
+					return {
+						type: prev !== undefined && prev.type === "Less"
+							? "tag"
+							: "attr-name",
+					};
 
 				case "String":
 					return {type: "attr-value"};
@@ -227,18 +233,19 @@ function highlightHTML({input, path}: AnsiHighlightOptions): string {
 				default:
 					return undefined;
 			}
-		}
+		},
 	);
 }
 
-function highlightJS({input, path}: AnsiHighlightOptions, sourceType: ConstJSSourceType): string {
-	const tokens = tokenizeJS(
-		{
-			input,
-			sourceType,
-			path,
-		},
-	);
+function highlightJS(
+	{input, path}: AnsiHighlightOptions,
+	sourceType: ConstJSSourceType,
+): string {
+	const tokens = tokenizeJS({
+		input,
+		sourceType,
+		path,
+	});
 
 	return reduce(
 		input,
