@@ -30,6 +30,7 @@ import {bundler} from "./bundler";
 import {resolver} from "./resolver";
 import {spdx} from "./spdx";
 import {jsParser} from "./jsParser";
+import {cssParser} from "./cssParser";
 import {typeCheck} from "./typeCheck";
 import {consume} from "./consume";
 import {manifest} from "./manifest";
@@ -171,6 +172,7 @@ export const descriptions = {
 	RESOLVER: resolver,
 	SPDX: spdx,
 	JS_PARSER: jsParser,
+	CSS_PARSER: cssParser,
 	TYPE_CHECK: typeCheck,
 	CONSUME: consume,
 	MANIFEST: manifest,
