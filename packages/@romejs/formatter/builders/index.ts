@@ -164,17 +164,8 @@ builders.set("CSSURLType", CSSURLType);
 import CSSViewportAtStatement from "./css/at-rules/CSSViewportAtStatement";
 builders.set("CSSViewportAtStatement", CSSViewportAtStatement);
 
-import HTMLAriaAttribute from "./html/attributes/HTMLAriaAttribute";
-builders.set("HTMLAriaAttribute", HTMLAriaAttribute);
-
 import HTMLAttribute from "./html/attributes/HTMLAttribute";
 builders.set("HTMLAttribute", HTMLAttribute);
-
-import HTMLCommentBlock from "./html/core/HTMLCommentBlock";
-builders.set("HTMLCommentBlock", HTMLCommentBlock);
-
-import HTMLDataAttribute from "./html/attributes/HTMLDataAttribute";
-builders.set("HTMLDataAttribute", HTMLDataAttribute);
 
 import HTMLDoctypeTag from "./html/tags/HTMLDoctypeTag";
 builders.set("HTMLDoctypeTag", HTMLDoctypeTag);
