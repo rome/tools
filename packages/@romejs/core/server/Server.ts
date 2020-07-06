@@ -442,7 +442,11 @@ export default class Server {
 			// Protects against file events not being emitted and causing hanging
 			const timeoutPromise = new Promise((resolve, reject) => {
 				const timeout = setTimeout(() => {
-					reject(new Error("File events should have been emitted within a second"));
+					const lines = ["File events should have been emitted within a second. Did not receive an event for:"];
+					for (const path of paths) {
+						lines.push(` - ${path.join()}`);
+					}
+					reject(new Error(lines.join("\n")));
 				}, 1000);
 	
 				teardowns.push(async () => {
