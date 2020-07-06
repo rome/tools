@@ -239,6 +239,17 @@ export default class WorkerBridge extends Bridge {
 		AnyRoot
 	>({name: "parse", direction: "server->client"});
 
+	getFileBuffers = this.createEvent<
+		void,
+		Array<{
+			filename: string;
+			content: string;
+		}>
+	>({
+		name: "getFileBuffers",
+		direction: "server->client",
+	});
+
 	updateBuffer = this.createEvent<
 		{
 			file: JSONFileReference;
