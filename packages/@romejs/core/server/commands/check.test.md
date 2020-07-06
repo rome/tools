@@ -49,3 +49,51 @@ unknownVariable
 }
 
 ```
+
+## `smoke save`
+
+### `console`
+
+```
+
+ index.js:1:4 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The unformatted variable is undeclared
+
+  > 1 │ if (unformatted) {
+      │     ^^^^^^^^^^^
+    2 │  swag;
+    3 │ }
+
+ index.js:2:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The swag variable is undeclared
+
+    1 │ if (unformatted) {
+  > 2 │  swag;
+      │  ^^^^
+    3 │ }
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✔ 1 file updated
+✖ Found 2 problems
+
+```
+
+### `files`
+
+```
+# index.js
+if (unformatted) {
+	swag;
+}
+
+# rome.json
+{
+	"files": {
+		"vendorPath": "../remote"
+	}
+}
+
+```
