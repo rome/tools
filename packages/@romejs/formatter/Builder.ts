@@ -15,7 +15,7 @@ import {
 } from "./builders/comments";
 import builders from "./builders/index";
 import * as n from "./node/index";
-import {Token, concat, hardline, indent, join, mark} from "./tokens";
+import {Token, Tokens, concat, hardline, indent, join, mark} from "./tokens";
 import {ob1Get1} from "@romejs/ob1";
 import {isRoot} from "@romejs/ast-utils";
 
@@ -77,7 +77,25 @@ export default class Builder {
 		}
 		this.printStack.push(node);
 
+		let tokens: Tokens = [];
+
+		// Print leading comments
+		const leadingComments = this.getComments("leadingComments", node);
+		if (leadingComments !== undefined) {
+			let next = node;
+
+			// Leading comments are traversed backward in order to get `next` right
+			for (let i = leadingComments.length - 1; i >= 0; i--) {
+				const comment = leadingComments[i];
+				this.printedComments.add(comment.id);
+				tokens.unshift(printLeadingComment(comment, next, this.rootType));
+				next = comment;
+			}
+		}
+
+		// Print node itself
 		let printedNode = tokenizeNode(this, node, parent);
+
 		const needsParens = n.needsParens(node, parent, this.printStack);
 
 		this.printStack.pop();
@@ -99,27 +117,9 @@ export default class Builder {
 			}
 		}
 
-		return this.tokenizeComments(node, printedNode);
-	}
+		tokens.push(printedNode);
 
-	tokenizeComments(node: AnyNode, printed: Token): Token {
-		const tokens = [];
-
-		const leadingComments = this.getComments("leadingComments", node);
-		if (leadingComments !== undefined) {
-			let next = node;
-
-			// Leading comments are traversed backward in order to get `next` right
-			for (let i = leadingComments.length - 1; i >= 0; i--) {
-				const comment = leadingComments[i];
-				this.printedComments.add(comment.id);
-				tokens.unshift(printLeadingComment(comment, next, this.rootType));
-				next = comment;
-			}
-		}
-
-		tokens.push(printed);
-
+		// Print trailing comments
 		const trailingComments = this.getComments("trailingComments", node);
 		if (trailingComments !== undefined) {
 			let previous = node;

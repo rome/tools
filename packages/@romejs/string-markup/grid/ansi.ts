@@ -92,21 +92,26 @@ type TokenFormat = {
 // rome-ignore lint/js/noUnusedVariables
 type TokenFormats = {[type in MarkupTokenType]?: TokenFormat};
 
-const tokenTypeToScope: Dict<MarkupTokenType> = {
-	"constant.numeric": "number",
-	"string.regexp": "regex",
-	"string": "string",
-	"comment": "comment",
-	"entity.name.function": "function",
-	//"": "operator",
-	"punctuation": "punctuation",
-	"variable": "variable",
-	"keyword": "keyword",
-	"punctuation.separator.key-value.html": "attr-equals",
-	"entity.name.tag.html": "tag",
-	"string.quoted.double.html": "attr-value",
-	"entity.other.attribute-name": "attr-name",
-	"entity.other.attribute-name.js": "attr-name",
+const scopeToTokenTypes: Dict<Array<MarkupTokenType>> = {
+	"constant": ["number", "boolean"],
+	"constant.numeric": ["number"],
+	"constant.language.boolean": ["boolean"],
+
+	"string": ["string"],
+	"string.regexp": ["regex"],
+
+	"comment": ["comment"],
+	"entity.name.function": ["function"],
+	//"": "operator"],
+	"punctuation": ["punctuation"],
+	"variable": ["variable"],
+	"keyword": ["keyword"],
+
+	"entity.name.tag.html": ["tag"],
+	"punctuation.separator.key-value.html": ["attr-equals"],
+	"string.quoted.double.html": ["attr-value"],
+	"entity.other.attribute-name": ["attr-name"],
+	"entity.other.attribute-name.js": ["attr-name"],
 };
 
 function normalizeFontStyle(style: undefined | string): FontStyle {
@@ -149,8 +154,12 @@ function getTokenColors(consumer: undefined | Consumer): TokenFormats {
 			: scope.asString().split(",").map((scope) => scope.trim());
 
 		for (const scope of scopes) {
-			const tokenType = tokenTypeToScope[scope];
-			if (tokenType !== undefined) {
+			const tokenTypes = scopeToTokenTypes[scope];
+			if (tokenTypes === undefined) {
+				continue;
+			}
+
+			for (const tokenType of tokenTypes) {
 				const existing = tokenTypeFormat[tokenType];
 
 				const newSettings: TokenFormat = {};

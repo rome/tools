@@ -67,12 +67,8 @@ runtimeAgent.getProperties(
 	false,
 	// accessorPropertiesOnly
 	false,
-	(
-		// generatePreview
-		error,
-		properties,
-		internalProperties,
-	) => {
+	// generatePreview
+	(error, properties, internalProperties) => {
 		return 1;
 	},
 );

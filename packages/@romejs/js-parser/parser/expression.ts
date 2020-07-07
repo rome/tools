@@ -242,7 +242,7 @@ export function parseMaybeAssign<T extends AnyNode = AnyJSExpression>(
 		branches.add(() => {
 			const start = parser.getPosition();
 			const typeParameters = parseTSTypeParameters(parser);
-			const arrowExpression = forwardNoArrowParamsConversionAt(
+			const possibleArrow = forwardNoArrowParamsConversionAt(
 				parser,
 				start,
 				() =>
@@ -256,12 +256,17 @@ export function parseMaybeAssign<T extends AnyNode = AnyJSExpression>(
 					)
 				,
 			);
-			parser.resetStartLocationFromNode(arrowExpression, typeParameters);
+			parser.resetStartLocationFromNode(possibleArrow, typeParameters);
 
-			if (arrowExpression.type === "JSArrowFunctionExpression") {
+			if (possibleArrow.type === "JSArrowFunctionExpression") {
+				// `as` cast for reasons... `possibleArrow` is `T | JSArrowFunctionExpression`
+				const arrow = (possibleArrow as JSArrowFunctionExpression);
 				return {
-					...arrowExpression,
-					typeParameters,
+					...arrow,
+					head: {
+						...arrow.head,
+						typeParameters,
+					},
 				};
 			} else {
 				parser.unexpectedDiagnostic({
@@ -1798,11 +1803,11 @@ export function parseParenAndDistinguishExpression(
 	context: ExpressionContext,
 	canBeArrow: boolean,
 ): AnyJSExpression {
-	if (parser.state.noArrowAt.includes(parser.state.startPos.index)) {
+	const startPos = parser.getPosition();
+
+	if (parser.state.noArrowAt.includes(startPos.index)) {
 		canBeArrow = false;
 	}
-
-	const startPos = parser.state.startPos;
 
 	const openContext = parser.expectOpening(
 		tt.parenL,
@@ -1881,7 +1886,6 @@ export function parseParenAndDistinguishExpression(
 
 	parser.state.maybeInArrowParameters = oldMaybeInArrowParameters;
 
-	const arrowStart = startPos;
 	if (canBeArrow && shouldParseArrow(parser)) {
 		const {valid, returnType} = parseArrowHead(parser);
 
@@ -1901,7 +1905,7 @@ export function parseParenAndDistinguishExpression(
 
 			const arrow = parseArrowExpression(
 				parser,
-				arrowStart,
+				startPos,
 				{
 					assignmentList: exprList,
 				},
@@ -3072,6 +3076,10 @@ export function parseArrowExpression(
 	parser.state.maybeInArrowParameters = oldMaybeInArrowParameters;
 	parser.state.yieldPos = oldYieldPos;
 	parser.state.awaitPos = oldAwaitPos;
+
+	// Finish the head again so it's added to the comment stack again so that the arrow
+	// finishNode can take comments if necessary
+	head = parser.finishNodeAt(start, headEnd, head);
 
 	return parser.finishNode(
 		start,

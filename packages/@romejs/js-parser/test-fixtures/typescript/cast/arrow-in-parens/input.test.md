@@ -105,80 +105,6 @@ JSRoot {
 									line: 1
 								}
 							}
-							typeParameters: TSTypeParameterDeclaration {
-								loc: Object {
-									filename: "input.ts"
-									end: Object {
-										column: 21
-										index: 21
-										line: 1
-									}
-									start: Object {
-										column: 16
-										index: 16
-										line: 1
-									}
-								}
-								params: Array [
-									TSTypeParameter {
-										name: "any"
-										constraint: undefined
-										default: undefined
-										loc: Object {
-											filename: "input.ts"
-											end: Object {
-												column: 20
-												index: 20
-												line: 1
-											}
-											start: Object {
-												column: 17
-												index: 17
-												line: 1
-											}
-										}
-									}
-								]
-							}
-							head: JSFunctionHead {
-								async: false
-								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: Object {
-									filename: "input.ts"
-									end: Object {
-										column: 28
-										index: 28
-										line: 1
-									}
-									start: Object {
-										column: 22
-										index: 22
-										line: 1
-									}
-								}
-								params: Array [
-									JSBindingIdentifier {
-										name: "n"
-										loc: Object {
-											filename: "input.ts"
-											identifierName: "n"
-											end: Object {
-												column: 24
-												index: 24
-												line: 1
-											}
-											start: Object {
-												column: 23
-												index: 23
-												line: 1
-											}
-										}
-									}
-								]
-							}
 							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
@@ -228,6 +154,80 @@ JSRoot {
 										}
 									}
 								]
+							}
+							head: JSFunctionHead {
+								async: false
+								hasHoistedVars: false
+								rest: undefined
+								returnType: undefined
+								thisType: undefined
+								loc: Object {
+									filename: "input.ts"
+									end: Object {
+										column: 28
+										index: 28
+										line: 1
+									}
+									start: Object {
+										column: 22
+										index: 22
+										line: 1
+									}
+								}
+								params: Array [
+									JSBindingIdentifier {
+										name: "n"
+										loc: Object {
+											filename: "input.ts"
+											identifierName: "n"
+											end: Object {
+												column: 24
+												index: 24
+												line: 1
+											}
+											start: Object {
+												column: 23
+												index: 23
+												line: 1
+											}
+										}
+									}
+								]
+								typeParameters: TSTypeParameterDeclaration {
+									loc: Object {
+										filename: "input.ts"
+										end: Object {
+											column: 21
+											index: 21
+											line: 1
+										}
+										start: Object {
+											column: 16
+											index: 16
+											line: 1
+										}
+									}
+									params: Array [
+										TSTypeParameter {
+											name: "any"
+											constraint: undefined
+											default: undefined
+											loc: Object {
+												filename: "input.ts"
+												end: Object {
+													column: 20
+													index: 20
+													line: 1
+												}
+												start: Object {
+													column: 17
+													index: 17
+													line: 1
+												}
+											}
+										}
+									]
+								}
 							}
 						}
 					}
