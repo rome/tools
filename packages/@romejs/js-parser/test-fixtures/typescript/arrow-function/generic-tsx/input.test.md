@@ -97,43 +97,6 @@ JSRoot {
 						}
 					}
 				}
-				typeParameters: TSTypeParameterDeclaration {
-					leadingComments: undefined
-					loc: Object {
-						filename: "input.ts"
-						end: Object {
-							column: 3
-							index: 64
-							line: 2
-						}
-						start: Object {
-							column: 0
-							index: 61
-							line: 2
-						}
-					}
-					params: Array [
-						TSTypeParameter {
-							name: "T"
-							constraint: undefined
-							default: undefined
-							leadingComments: undefined
-							loc: Object {
-								filename: "input.ts"
-								end: Object {
-									column: 2
-									index: 63
-									line: 2
-								}
-								start: Object {
-									column: 1
-									index: 62
-									line: 2
-								}
-							}
-						}
-					]
-				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
@@ -184,6 +147,43 @@ JSRoot {
 								}
 							}
 						}
+					}
+					typeParameters: TSTypeParameterDeclaration {
+						leadingComments: undefined
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 3
+								index: 64
+								line: 2
+							}
+							start: Object {
+								column: 0
+								index: 61
+								line: 2
+							}
+						}
+						params: Array [
+							TSTypeParameter {
+								name: "T"
+								constraint: undefined
+								default: undefined
+								leadingComments: undefined
+								loc: Object {
+									filename: "input.ts"
+									end: Object {
+										column: 2
+										index: 63
+										line: 2
+									}
+									start: Object {
+										column: 1
+										index: 62
+										line: 2
+									}
+								}
+							}
+						]
 					}
 					params: Array [
 						JSBindingIdentifier {

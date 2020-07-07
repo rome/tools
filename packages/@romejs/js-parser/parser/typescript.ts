@@ -1959,12 +1959,13 @@ export function parseTSEnumDeclaration(
 	isConst: boolean,
 ): TSEnumDeclaration {
 	parser.addDiagnosticFilter({
-		message: "enum is a reserved word",
+		message: descriptions.JS_PARSER.RESERVED_WORD("enum").message.value,
 		start,
 	});
 
 	const id = parseBindingIdentifier(parser);
 
+	const braceOpenStart = parser.getPosition();
 	const openContext = parser.expectOpening(
 		tt.braceL,
 		tt.braceR,
@@ -1974,8 +1975,8 @@ export function parseTSEnumDeclaration(
 	const members = parseTSDelimitedList(parser, "EnumMembers", parseTSEnumMember);
 	parser.expectClosing(openContext);
 
-	return parser.finishNode(
-		start,
+	return parser.finishNodeWithStarts(
+		[braceOpenStart, start],
 		{
 			type: "TSEnumDeclaration",
 			members,

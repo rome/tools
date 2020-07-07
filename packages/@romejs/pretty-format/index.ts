@@ -69,23 +69,23 @@ export default function prettyFormat(
 	switch (typeof obj) {
 		case "symbol": {
 			const val = maybeEscapeMarkup(formatSymbol(obj), opts);
-			return opts.markup ? markupTag("color", val, {fg: "green"}) : val;
+			return opts.markup ? markupTag("token", val, {type: "string"}) : val;
 		}
 
 		case "string": {
 			const val = maybeEscapeMarkup(formatString(obj), opts);
-			return opts.markup ? markupTag("color", val, {fg: "green"}) : val;
+			return opts.markup ? markupTag("token", val, {type: "string"}) : val;
 		}
 
 		case "bigint":
 		case "number": {
 			const val = formatNumber(obj);
-			return opts.markup ? markupTag("color", val, {fg: "yellow"}) : val;
+			return opts.markup ? markupTag("token", val, {type: "number"}) : val;
 		}
 
 		case "boolean": {
 			const val = formatBoolean(obj);
-			return opts.markup ? markupTag("color", val, {fg: "yellow"}) : val;
+			return opts.markup ? markupTag("token", val, {type: "boolean"}) : val;
 		}
 
 		case "undefined": {
