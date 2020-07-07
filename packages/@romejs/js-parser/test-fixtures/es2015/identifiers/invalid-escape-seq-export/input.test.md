@@ -4,6 +4,8 @@
 
 ## `es2015 > identifiers > invalid-escape-seq-export`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -13,14 +15,14 @@ JSRoot {
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "script"
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
 		filename: "input.js"
 		end: Object {
 			column: 0
-			index: 23
-			line: 2
+			index: 50
+			line: 5
 		}
 		start: Object {
 			column: 0
@@ -136,6 +138,154 @@ JSRoot {
 				]
 			}
 		}
+		JSVariableDeclarationStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 6
+					index: 30
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 24
+					line: 3
+				}
+			}
+			declaration: JSVariableDeclaration {
+				kind: "var"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 6
+						index: 30
+						line: 3
+					}
+					start: Object {
+						column: 0
+						index: 24
+						line: 3
+					}
+				}
+				declarations: Array [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "x"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "x"
+								end: Object {
+									column: 5
+									index: 29
+									line: 3
+								}
+								start: Object {
+									column: 4
+									index: 28
+									line: 3
+								}
+							}
+						}
+						init: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 5
+								index: 29
+								line: 3
+							}
+							start: Object {
+								column: 4
+								index: 28
+								line: 3
+							}
+						}
+					}
+				]
+			}
+		}
+		JSExportLocalDeclaration {
+			declaration: undefined
+			exportKind: "value"
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 18
+					index: 49
+					line: 4
+				}
+				start: Object {
+					column: 0
+					index: 31
+					line: 4
+				}
+			}
+			specifiers: Array [
+				JSExportLocalSpecifier {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 15
+							index: 46
+							line: 4
+						}
+						start: Object {
+							column: 14
+							index: 45
+							line: 4
+						}
+					}
+					exported: JSIdentifier {
+						name: "x"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "x"
+							end: Object {
+								column: 15
+								index: 46
+								line: 4
+							}
+							start: Object {
+								column: 14
+								index: 45
+								line: 4
+							}
+						}
+					}
+					local: JSReferenceIdentifier {
+						name: "x"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "x"
+							end: Object {
+								column: 15
+								index: 46
+								line: 4
+							}
+							start: Object {
+								column: 14
+								index: 45
+								line: 4
+							}
+						}
+					}
+				}
+			]
+		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Escape sequence in keyword export
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

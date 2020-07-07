@@ -4,6 +4,8 @@
 
 ## `typescript > class > expression-extends-implements`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -542,4 +544,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

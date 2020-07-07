@@ -4,6 +4,8 @@
 
 ## `experimental > function-sent > enabled-if-statement`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -201,4 +203,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

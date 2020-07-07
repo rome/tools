@@ -4,20 +4,21 @@
 
 ## `experimental > export-extensions > export-with-ts`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
 	corrupt: false
-	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
-	syntax: Array ["ts"]
+	syntax: Array []
 	loc: Object {
-		filename: "input.ts"
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 165
@@ -29,15 +30,41 @@ JSRoot {
 			line: 1
 		}
 	}
-	body: Array [
-		JSExportLocalDeclaration {
-			exportKind: "value"
-			specifiers: undefined
-			loc: Object {
-				filename: "input.ts"
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse/js"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Expected `from` for an export node"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceText: undefined
 				end: Object {
-					column: 26
-					index: 26
+					column: 15
+					index: 15
+					line: 1
+				}
+				start: Object {
+					column: 16
+					index: 16
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExportExternalDeclaration {
+			exportKind: undefined
+			namedSpecifiers: Array []
+			namespaceSpecifier: undefined
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 15
+					index: 15
 					line: 1
 				}
 				start: Object {
@@ -46,30 +73,28 @@ JSRoot {
 					line: 1
 				}
 			}
-			declaration: JSClassDeclaration {
-				id: JSBindingIdentifier {
-					name: "A"
-					loc: Object {
-						filename: "input.ts"
-						identifierName: "A"
-						end: Object {
-							column: 23
-							index: 23
-							line: 1
-						}
-						start: Object {
-							column: 22
-							index: 22
-							line: 1
-						}
+			source: JSStringLiteral {
+				value: ""
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+					start: Object {
+						column: 16
+						index: 16
+						line: 1
 					}
 				}
-				abstract: true
+			}
+			defaultSpecifier: JSExportDefaultSpecifier {
 				loc: Object {
-					filename: "input.ts"
+					filename: "input.js"
 					end: Object {
-						column: 26
-						index: 26
+						column: 15
+						index: 15
 						line: 1
 					}
 					start: Object {
@@ -78,17 +103,14 @@ JSRoot {
 						line: 1
 					}
 				}
-				meta: JSClassHead {
-					body: Array []
-					implements: undefined
-					superClass: undefined
-					superTypeParameters: undefined
-					typeParameters: undefined
+				exported: JSIdentifier {
+					name: "abstract"
 					loc: Object {
-						filename: "input.ts"
+						filename: "input.js"
+						identifierName: "abstract"
 						end: Object {
-							column: 26
-							index: 26
+							column: 15
+							index: 15
 							line: 1
 						}
 						start: Object {
@@ -100,14 +122,67 @@ JSRoot {
 				}
 			}
 		}
-		JSExportLocalDeclaration {
-			exportKind: "value"
-			specifiers: undefined
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
+				name: "A"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "A"
+					end: Object {
+						column: 23
+						index: 23
+						line: 1
+					}
+					start: Object {
+						column: 22
+						index: 22
+						line: 1
+					}
+				}
+			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "input.js"
 				end: Object {
-					column: 29
-					index: 56
+					column: 26
+					index: 26
+					line: 1
+				}
+				start: Object {
+					column: 16
+					index: 16
+					line: 1
+				}
+			}
+			meta: JSClassHead {
+				body: Array []
+				implements: undefined
+				superClass: undefined
+				superTypeParameters: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 26
+						index: 26
+						line: 1
+					}
+					start: Object {
+						column: 16
+						index: 16
+						line: 1
+					}
+				}
+			}
+		}
+		JSExportExternalDeclaration {
+			exportKind: undefined
+			namedSpecifiers: Array []
+			namespaceSpecifier: undefined
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 14
+					index: 41
 					line: 2
 				}
 				start: Object {
@@ -116,32 +191,28 @@ JSRoot {
 					line: 2
 				}
 			}
-			declaration: TSInterfaceDeclaration {
-				id: JSBindingIdentifier {
-					name: "B"
-					loc: Object {
-						filename: "input.ts"
-						identifierName: "B"
-						end: Object {
-							column: 26
-							index: 53
-							line: 2
-						}
-						start: Object {
-							column: 25
-							index: 52
-							line: 2
-						}
+			source: JSStringLiteral {
+				value: ""
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 14
+						index: 41
+						line: 2
+					}
+					start: Object {
+						column: 15
+						index: 42
+						line: 2
 					}
 				}
-				declare: true
-				extends: undefined
-				typeParameters: undefined
+			}
+			defaultSpecifier: JSExportDefaultSpecifier {
 				loc: Object {
-					filename: "input.ts"
+					filename: "input.js"
 					end: Object {
-						column: 29
-						index: 56
+						column: 14
+						index: 41
 						line: 2
 					}
 					start: Object {
@@ -150,32 +221,84 @@ JSRoot {
 						line: 2
 					}
 				}
-				body: TSInterfaceBody {
-					body: Array []
+				exported: JSIdentifier {
+					name: "declare"
 					loc: Object {
-						filename: "input.ts"
+						filename: "input.js"
+						identifierName: "declare"
 						end: Object {
-							column: 29
-							index: 56
+							column: 14
+							index: 41
 							line: 2
 						}
 						start: Object {
-							column: 27
-							index: 54
+							column: 7
+							index: 34
 							line: 2
 						}
 					}
 				}
 			}
 		}
-		JSExportLocalDeclaration {
-			exportKind: "value"
-			specifiers: undefined
+		TSInterfaceDeclaration {
+			id: JSBindingIdentifier {
+				name: "B"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "B"
+					end: Object {
+						column: 26
+						index: 53
+						line: 2
+					}
+					start: Object {
+						column: 25
+						index: 52
+						line: 2
+					}
+				}
+			}
+			extends: undefined
+			typeParameters: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "input.js"
 				end: Object {
-					column: 16
-					index: 73
+					column: 29
+					index: 56
+					line: 2
+				}
+				start: Object {
+					column: 15
+					index: 42
+					line: 2
+				}
+			}
+			body: TSInterfaceBody {
+				body: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 29
+						index: 56
+						line: 2
+					}
+					start: Object {
+						column: 27
+						index: 54
+						line: 2
+					}
+				}
+			}
+		}
+		JSExportExternalDeclaration {
+			exportKind: undefined
+			namedSpecifiers: Array []
+			namespaceSpecifier: undefined
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 11
+					index: 68
 					line: 3
 				}
 				start: Object {
@@ -184,31 +307,28 @@ JSRoot {
 					line: 3
 				}
 			}
-			declaration: TSEnumDeclaration {
-				id: JSBindingIdentifier {
-					name: "C"
-					loc: Object {
-						filename: "input.ts"
-						identifierName: "C"
-						end: Object {
-							column: 13
-							index: 70
-							line: 3
-						}
-						start: Object {
-							column: 12
-							index: 69
-							line: 3
-						}
+			source: JSStringLiteral {
+				value: ""
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 11
+						index: 68
+						line: 3
+					}
+					start: Object {
+						column: 12
+						index: 69
+						line: 3
 					}
 				}
-				const: false
-				members: Array []
+			}
+			defaultSpecifier: JSExportDefaultSpecifier {
 				loc: Object {
-					filename: "input.ts"
+					filename: "input.js"
 					end: Object {
-						column: 16
-						index: 73
+						column: 11
+						index: 68
 						line: 3
 					}
 					start: Object {
@@ -217,13 +337,79 @@ JSRoot {
 						line: 3
 					}
 				}
+				exported: JSIdentifier {
+					name: "enum"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "enum"
+						end: Object {
+							column: 11
+							index: 68
+							line: 3
+						}
+						start: Object {
+							column: 7
+							index: 64
+							line: 3
+						}
+					}
+				}
+			}
+		}
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 13
+					index: 70
+					line: 3
+				}
+				start: Object {
+					column: 12
+					index: 69
+					line: 3
+				}
+			}
+			expression: JSReferenceIdentifier {
+				name: "C"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "C"
+					end: Object {
+						column: 13
+						index: 70
+						line: 3
+					}
+					start: Object {
+						column: 12
+						index: 69
+						line: 3
+					}
+				}
+			}
+		}
+		JSBlockStatement {
+			body: Array []
+			directives: Array []
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 16
+					index: 73
+					line: 3
+				}
+				start: Object {
+					column: 14
+					index: 71
+					line: 3
+				}
 			}
 		}
 		JSExportLocalDeclaration {
 			exportKind: "type"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "input.js"
 				end: Object {
 					column: 21
 					index: 95
@@ -239,7 +425,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "D"
 					loc: Object {
-						filename: "input.ts"
+						filename: "input.js"
 						identifierName: "D"
 						end: Object {
 							column: 18
@@ -256,7 +442,7 @@ JSRoot {
 				extends: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "input.js"
 					end: Object {
 						column: 21
 						index: 95
@@ -271,7 +457,7 @@ JSRoot {
 				body: TSInterfaceBody {
 					body: Array []
 					loc: Object {
-						filename: "input.ts"
+						filename: "input.js"
 						end: Object {
 							column: 21
 							index: 95
@@ -286,14 +472,15 @@ JSRoot {
 				}
 			}
 		}
-		JSExportLocalDeclaration {
-			exportKind: "value"
-			specifiers: undefined
+		JSExportExternalDeclaration {
+			exportKind: undefined
+			namedSpecifiers: Array []
+			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "input.js"
 				end: Object {
-					column: 18
-					index: 114
+					column: 13
+					index: 109
 					line: 5
 				}
 				start: Object {
@@ -302,29 +489,28 @@ JSRoot {
 					line: 5
 				}
 			}
-			declaration: TSModuleDeclaration {
-				id: JSBindingIdentifier {
-					name: "E"
-					loc: Object {
-						filename: "input.ts"
-						identifierName: "E"
-						end: Object {
-							column: 15
-							index: 111
-							line: 5
-						}
-						start: Object {
-							column: 14
-							index: 110
-							line: 5
-						}
+			source: JSStringLiteral {
+				value: ""
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 13
+						index: 109
+						line: 5
+					}
+					start: Object {
+						column: 14
+						index: 110
+						line: 5
 					}
 				}
+			}
+			defaultSpecifier: JSExportDefaultSpecifier {
 				loc: Object {
-					filename: "input.ts"
+					filename: "input.js"
 					end: Object {
-						column: 18
-						index: 114
+						column: 13
+						index: 109
 						line: 5
 					}
 					start: Object {
@@ -333,32 +519,83 @@ JSRoot {
 						line: 5
 					}
 				}
-				body: TSModuleBlock {
-					body: Array []
+				exported: JSIdentifier {
+					name: "module"
 					loc: Object {
-						filename: "input.ts"
+						filename: "input.js"
+						identifierName: "module"
 						end: Object {
-							column: 18
-							index: 114
+							column: 13
+							index: 109
 							line: 5
 						}
 						start: Object {
-							column: 16
-							index: 112
+							column: 7
+							index: 103
 							line: 5
 						}
 					}
 				}
 			}
 		}
-		JSExportLocalDeclaration {
-			exportKind: "value"
-			specifiers: undefined
+		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "input.js"
 				end: Object {
-					column: 21
-					index: 136
+					column: 15
+					index: 111
+					line: 5
+				}
+				start: Object {
+					column: 14
+					index: 110
+					line: 5
+				}
+			}
+			expression: JSReferenceIdentifier {
+				name: "E"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "E"
+					end: Object {
+						column: 15
+						index: 111
+						line: 5
+					}
+					start: Object {
+						column: 14
+						index: 110
+						line: 5
+					}
+				}
+			}
+		}
+		JSBlockStatement {
+			body: Array []
+			directives: Array []
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 18
+					index: 114
+					line: 5
+				}
+				start: Object {
+					column: 16
+					index: 112
+					line: 5
+				}
+			}
+		}
+		JSExportExternalDeclaration {
+			exportKind: undefined
+			namedSpecifiers: Array []
+			namespaceSpecifier: undefined
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 16
+					index: 131
 					line: 6
 				}
 				start: Object {
@@ -367,29 +604,28 @@ JSRoot {
 					line: 6
 				}
 			}
-			declaration: TSModuleDeclaration {
-				id: JSBindingIdentifier {
-					name: "F"
-					loc: Object {
-						filename: "input.ts"
-						identifierName: "F"
-						end: Object {
-							column: 18
-							index: 133
-							line: 6
-						}
-						start: Object {
-							column: 17
-							index: 132
-							line: 6
-						}
+			source: JSStringLiteral {
+				value: ""
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 16
+						index: 131
+						line: 6
+					}
+					start: Object {
+						column: 17
+						index: 132
+						line: 6
 					}
 				}
+			}
+			defaultSpecifier: JSExportDefaultSpecifier {
 				loc: Object {
-					filename: "input.ts"
+					filename: "input.js"
 					end: Object {
-						column: 21
-						index: 136
+						column: 16
+						index: 131
 						line: 6
 					}
 					start: Object {
@@ -398,21 +634,71 @@ JSRoot {
 						line: 6
 					}
 				}
-				body: TSModuleBlock {
-					body: Array []
+				exported: JSIdentifier {
+					name: "namespace"
 					loc: Object {
-						filename: "input.ts"
+						filename: "input.js"
+						identifierName: "namespace"
 						end: Object {
-							column: 21
-							index: 136
+							column: 16
+							index: 131
 							line: 6
 						}
 						start: Object {
-							column: 19
-							index: 134
+							column: 7
+							index: 122
 							line: 6
 						}
 					}
+				}
+			}
+		}
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 18
+					index: 133
+					line: 6
+				}
+				start: Object {
+					column: 17
+					index: 132
+					line: 6
+				}
+			}
+			expression: JSReferenceIdentifier {
+				name: "F"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "F"
+					end: Object {
+						column: 18
+						index: 133
+						line: 6
+					}
+					start: Object {
+						column: 17
+						index: 132
+						line: 6
+					}
+				}
+			}
+		}
+		JSBlockStatement {
+			body: Array []
+			directives: Array []
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 21
+					index: 136
+					line: 6
+				}
+				start: Object {
+					column: 19
+					index: 134
+					line: 6
 				}
 			}
 		}
@@ -420,7 +706,7 @@ JSRoot {
 			exportKind: "type"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "input.js"
 				end: Object {
 					column: 27
 					index: 164
@@ -436,7 +722,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "G"
 					loc: Object {
-						filename: "input.ts"
+						filename: "input.js"
 						identifierName: "G"
 						end: Object {
 							column: 13
@@ -452,7 +738,7 @@ JSRoot {
 				}
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "input.js"
 					end: Object {
 						column: 27
 						index: 164
@@ -466,7 +752,7 @@ JSRoot {
 				}
 				right: TSTypeQuery {
 					loc: Object {
-						filename: "input.ts"
+						filename: "input.js"
 						end: Object {
 							column: 26
 							index: 163
@@ -481,7 +767,7 @@ JSRoot {
 					exprName: JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.ts"
+							filename: "input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 26
@@ -500,4 +786,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Expected `from` for an export node
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

@@ -4,6 +4,8 @@
 
 ## `typescript > class > parameter-properties`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -567,4 +569,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -4,6 +4,8 @@
 
 ## `typescript > types > object-shorthand`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -403,4 +405,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

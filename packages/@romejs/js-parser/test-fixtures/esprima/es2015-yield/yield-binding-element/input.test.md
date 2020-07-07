@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-yield > yield-binding-element`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -179,4 +181,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

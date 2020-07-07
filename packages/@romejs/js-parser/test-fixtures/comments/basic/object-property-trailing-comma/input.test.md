@@ -4,6 +4,8 @@
 
 ## `comments > basic > object-property-trailing-comma`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -19,7 +21,7 @@ JSRoot {
 		filename: "input.js"
 		end: Object {
 			column: 0
-			index: 84
+			index: 97
 			line: 6
 		}
 		start: Object {
@@ -80,9 +82,27 @@ JSRoot {
 				}
 			}
 		}
+		CommentLine {
+			id: "3"
+			value: " comment 4"
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 15
+					index: 96
+					line: 5
+				}
+				start: Object {
+					column: 3
+					index: 84
+					line: 5
+				}
+			}
+		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
+			trailingComments: Array ["3"]
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -98,6 +118,7 @@ JSRoot {
 			}
 			declaration: JSVariableDeclaration {
 				kind: "var"
+				trailingComments: undefined
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -362,4 +383,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

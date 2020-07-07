@@ -4,23 +4,22 @@
 
 ## `jsx > basic > 19`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "script"
-	syntax: Array [
-		"jsx"
-		"ts"
-	]
+	sourceType: "module"
+	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.js"
+		filename: "input.jsx"
 		end: Object {
 			column: 53
 			index: 53
@@ -35,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				end: Object {
 					column: 53
 					index: 53
@@ -51,7 +50,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "div"
 					loc: Object {
-						filename: "input.js"
+						filename: "input.jsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -68,7 +67,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "input.jsx"
 					end: Object {
 						column: 53
 						index: 53
@@ -85,7 +84,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "pre"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 8
 									index: 8
@@ -101,7 +100,7 @@ JSRoot {
 						value: JSStringLiteral {
 							value: "leading"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 18
 									index: 18
@@ -115,7 +114,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 18
 								index: 18
@@ -132,7 +131,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "pre2"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 23
 									index: 23
@@ -148,7 +147,7 @@ JSRoot {
 						value: JSStringLiteral {
 							value: "attribute"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 35
 									index: 35
@@ -162,7 +161,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 35
 								index: 35
@@ -177,7 +176,7 @@ JSRoot {
 					}
 					JSXSpreadAttribute {
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 46
 								index: 46
@@ -192,7 +191,7 @@ JSRoot {
 						argument: JSReferenceIdentifier {
 							name: "props"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								identifierName: "props"
 								end: Object {
 									column: 45
@@ -212,4 +211,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

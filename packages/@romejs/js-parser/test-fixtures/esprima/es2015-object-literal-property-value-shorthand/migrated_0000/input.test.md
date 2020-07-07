@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-object-literal-property-value-shorthand > migrated_0000`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -225,4 +227,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

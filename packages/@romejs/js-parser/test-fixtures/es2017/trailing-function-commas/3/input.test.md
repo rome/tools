@@ -4,6 +4,8 @@
 
 ## `es2017 > trailing-function-commas > 3`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -234,4 +236,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

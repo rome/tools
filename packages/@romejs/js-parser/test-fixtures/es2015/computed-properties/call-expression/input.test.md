@@ -4,6 +4,8 @@
 
 ## `es2015 > computed-properties > call-expression`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -193,4 +195,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

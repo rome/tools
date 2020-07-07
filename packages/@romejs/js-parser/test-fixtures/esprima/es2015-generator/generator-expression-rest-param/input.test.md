@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-generator > generator-expression-rest-param`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -136,4 +138,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

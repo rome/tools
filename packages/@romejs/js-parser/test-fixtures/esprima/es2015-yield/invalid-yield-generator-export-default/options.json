@@ -1,4 +1,4 @@
 {
-  "sourceType": "module",
-  "throws": "yield is a reserved word"
+	"sourceType": "module",
+	"throws": true
 }

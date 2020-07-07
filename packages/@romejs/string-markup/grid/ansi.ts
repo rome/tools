@@ -6,7 +6,7 @@ import {
 } from "../types";
 import {formatAnsi} from "../ansi";
 import {
-	getFileLinkFilename,
+	buildFileLink,
 	normalizeColor,
 	normalizeTokenType,
 } from "./tagFormatters";
@@ -25,7 +25,7 @@ export function ansiFormatText(
 		}
 
 		case "filelink": {
-			const filename = getFileLinkFilename(attributes, opts);
+			const {filename} = buildFileLink(attributes, opts);
 			return formatAnsi.hyperlink(value, `file://${filename}`);
 		}
 

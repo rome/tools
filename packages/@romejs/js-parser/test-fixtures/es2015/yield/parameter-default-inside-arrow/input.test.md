@@ -4,6 +4,8 @@
 
 ## `es2015 > yield > parameter-default-inside-arrow`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -151,4 +153,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

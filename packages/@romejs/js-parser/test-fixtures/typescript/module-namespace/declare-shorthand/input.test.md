@@ -4,6 +4,8 @@
 
 ## `typescript > module-namespace > declare-shorthand`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -66,4 +68,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

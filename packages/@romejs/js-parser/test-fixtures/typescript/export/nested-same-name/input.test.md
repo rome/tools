@@ -4,6 +4,8 @@
 
 ## `typescript > export > nested-same-name`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -296,4 +298,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -4,6 +4,8 @@
 
 ## `es2015 > modules > duplicate-named-export-destructuring`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -3286,4 +3288,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

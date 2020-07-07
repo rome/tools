@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-yield > yield-function-expression`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -119,4 +121,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

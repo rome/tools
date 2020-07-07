@@ -4,6 +4,8 @@
 
 ## `es2015 > identifiers > invalid-escape-seq-import`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -13,14 +15,14 @@ JSRoot {
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "script"
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
 		filename: "input.js"
 		end: Object {
 			column: 0
-			index: 48
-			line: 2
+			index: 91
+			line: 4
 		}
 		start: Object {
 			column: 0
@@ -136,6 +138,55 @@ JSRoot {
 				]
 			}
 		}
+		JSImportDeclaration {
+			defaultSpecifier: undefined
+			importKind: undefined
+			namedSpecifiers: Array []
+			namespaceSpecifier: undefined
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 41
+					index: 90
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 49
+					line: 3
+				}
+			}
+			source: JSStringLiteral {
+				value: "x"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 40
+						index: 89
+						line: 3
+					}
+					start: Object {
+						column: 37
+						index: 86
+						line: 3
+					}
+				}
+			}
+		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:34 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Escape sequence in keyword import
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

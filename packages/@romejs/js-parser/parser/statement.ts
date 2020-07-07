@@ -762,6 +762,7 @@ export function parseSwitchStatement(
 			if (parser.match(tt._case) || parser.match(tt._default)) {
 				pushCase();
 
+				const start = parser.getPosition();
 				const isCase = parser.match(tt._case);
 
 				parser.next();
@@ -781,7 +782,7 @@ export function parseSwitchStatement(
 				}
 
 				cur = {
-					start: parser.getPosition(),
+					start,
 					consequent: [],
 					test,
 				};

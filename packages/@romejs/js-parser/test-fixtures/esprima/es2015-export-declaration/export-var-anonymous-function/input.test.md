@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-export-declaration > export-var-anonymous-function`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -170,4 +172,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

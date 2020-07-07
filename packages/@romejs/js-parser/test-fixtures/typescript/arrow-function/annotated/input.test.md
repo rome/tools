@@ -4,6 +4,8 @@
 
 ## `typescript > arrow-function > annotated`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -162,4 +164,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

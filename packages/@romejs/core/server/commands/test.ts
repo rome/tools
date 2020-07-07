@@ -24,6 +24,7 @@ export default createServerCommand({
 	examples: [],
 	defineFlags(c: Consumer): Flags {
 		return {
+			filter: c.get("filter").asStringOrVoid(),
 			coverage: c.get("coverage").asBoolean(false),
 			showAllCoverage: c.get("showAllCoverage").asBoolean(false),
 			updateSnapshots: c.get("updateSnapshots").asBoolean(false),

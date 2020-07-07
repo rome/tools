@@ -4,6 +4,8 @@
 
 ## `typescript > type-arguments > new-false-positive`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -115,4 +117,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

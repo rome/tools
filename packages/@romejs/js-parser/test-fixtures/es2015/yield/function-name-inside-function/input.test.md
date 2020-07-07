@@ -4,6 +4,8 @@
 
 ## `es2015 > yield > function-name-inside-function`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -177,4 +179,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

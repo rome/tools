@@ -4,6 +4,8 @@
 
 ## `esprima > declaration-function > migrated_0010`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -169,4 +171,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

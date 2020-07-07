@@ -4,6 +4,8 @@
 
 ## `esprima > invalid-syntax > migrated_0143`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -97,8 +99,8 @@ JSRoot {
 							line: 1
 						}
 						start: Object {
-							column: 20
-							index: 20
+							column: 13
+							index: 13
 							line: 1
 						}
 					}
@@ -114,8 +116,8 @@ JSRoot {
 							line: 1
 						}
 						start: Object {
-							column: 29
-							index: 29
+							column: 22
+							index: 22
 							line: 1
 						}
 					}
@@ -124,4 +126,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Multiple default clauses
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

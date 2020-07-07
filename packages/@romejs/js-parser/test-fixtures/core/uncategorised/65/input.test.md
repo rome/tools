@@ -4,6 +4,8 @@
 
 ## `core > uncategorised > 65`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -89,8 +91,8 @@ JSRoot {
 							line: 1
 						}
 						start: Object {
-							column: 25
-							index: 25
+							column: 18
+							index: 18
 							line: 1
 						}
 					}
@@ -169,4 +171,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

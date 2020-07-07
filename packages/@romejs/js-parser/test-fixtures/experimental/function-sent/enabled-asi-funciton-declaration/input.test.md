@@ -4,6 +4,8 @@
 
 ## `experimental > function-sent > enabled-asi-funciton-declaration`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -202,4 +204,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -106,7 +106,6 @@ export const jsParser = createDiagnosticsCategory({
 	INVALID_ASSIGNMENT_TARGET: "Not a valid assignment target",
 	IMPORT_KIND_SPECIFIER_ON_IMPORT_DECLARATION_WITH_KIND: "The `type` and `typeof` keywords on named imports can only be used on regular `import` statements. It cannot be used with `import type` or `import typeof` statements",
 	DESTRUCTURING_IN_IMPORT: "ES2015 named imports do not destructure. Use another statement for destructuring after the import.",
-	IMPORT_TYPE_STAR: "import * is not allowed",
 	IMPORT_MISSING_SOURCE: "import missing a source",
 	EXPORT_TYPE_NAMESPACE: "Can't have a type export namespacer specifier",
 	EXPORT_MISSING_FROM: "Expected `from` for an export node",

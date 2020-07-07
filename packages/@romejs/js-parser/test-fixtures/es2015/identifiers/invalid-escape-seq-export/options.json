@@ -1,3 +1,4 @@
 {
-  "throws": "Escape sequence in keyword export"
+	"sourceType": "module",
+	"throws": true
 }

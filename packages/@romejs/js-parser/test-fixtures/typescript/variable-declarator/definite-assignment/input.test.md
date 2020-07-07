@@ -4,6 +4,8 @@
 
 ## `typescript > variable-declarator > definite-assignment`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -128,4 +130,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -4,6 +4,8 @@
 
 ## `typescript > interface > method-optional`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -164,4 +166,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

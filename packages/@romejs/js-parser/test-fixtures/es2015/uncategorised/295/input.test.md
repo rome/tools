@@ -4,6 +4,8 @@
 
 ## `es2015 > uncategorised > 295`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -115,8 +117,8 @@ JSRoot {
 							line: 1
 						}
 						start: Object {
-							column: 23
-							index: 23
+							column: 16
+							index: 16
 							line: 1
 						}
 					}
@@ -226,4 +228,20 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Unclosed switch body
+
+  ℹ We expected to find the closing character } here
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

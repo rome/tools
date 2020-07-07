@@ -4,6 +4,8 @@
 
 ## `typescript > regression > async-arrow-generic-9560`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -19,9 +21,9 @@ JSRoot {
 	loc: Object {
 		filename: "input.ts"
 		end: Object {
-			column: 0
-			index: 81
-			line: 9
+			column: 1
+			index: 80
+			line: 8
 		}
 		start: Object {
 			column: 0
@@ -459,4 +461,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

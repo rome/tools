@@ -4,6 +4,8 @@
 
 ## `esprima > automatic-semicolon-insertion > migrated_0012`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -173,4 +175,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

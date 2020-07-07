@@ -4,6 +4,8 @@
 
 ## `es2015 > modules > xml-comment-in-module`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -131,4 +133,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

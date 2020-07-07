@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-template-literals > tagged`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -116,4 +118,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

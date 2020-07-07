@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-yield > yield-variable-declaration`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -98,4 +100,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

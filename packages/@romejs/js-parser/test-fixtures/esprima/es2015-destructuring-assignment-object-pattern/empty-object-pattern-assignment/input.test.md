@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-destructuring-assignment-object-pattern > empty-object-pattern-assignment`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -97,4 +99,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -4,6 +4,8 @@
 
 ## `es2015 > let > let-as-identifier-5`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -114,4 +116,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

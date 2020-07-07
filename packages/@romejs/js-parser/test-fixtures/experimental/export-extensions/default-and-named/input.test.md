@@ -4,6 +4,8 @@
 
 ## `experimental > export-extensions > default-and-named`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -148,4 +150,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-destructuring-assignment-array-pattern > simple-assignment`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -115,4 +117,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

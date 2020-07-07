@@ -4,6 +4,8 @@
 
 ## `es2018 > object-rest-spread > comma-after-spread`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -96,4 +98,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

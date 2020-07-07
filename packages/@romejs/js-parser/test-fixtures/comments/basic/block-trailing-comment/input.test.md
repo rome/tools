@@ -4,6 +4,8 @@
 
 ## `comments > basic > block-trailing-comment`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -117,4 +119,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-meta-property > new-target-expression`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -218,4 +220,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

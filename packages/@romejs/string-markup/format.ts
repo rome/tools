@@ -18,11 +18,7 @@ import {escapeMarkup} from "./escape";
 import Grid from "./grid/Grid";
 import {ob1Get1} from "@romejs/ob1";
 import {sliceEscaped} from "@romejs/string-utils";
-import {
-	formatGrammarNumber,
-	getFileLinkFilename,
-	getFileLinkText,
-} from "./grid/tagFormatters";
+import {buildFileLink, formatGrammarNumber} from "./grid/tagFormatters";
 
 function buildTag(
 	tag: TagNode,
@@ -32,13 +28,14 @@ function buildTag(
 	let {attributes} = tag;
 
 	switch (tag.name) {
-		case // Normalize filename of <filelink target>
-		"filelink": {
+		// Normalize filename of <filelink target>
+		case "filelink": {
 			// Clone
 			attributes = {...attributes};
 
-			const filename = getFileLinkFilename(attributes, opts);
-			const text = getFileLinkText(filename, attributes, opts);
+			const {filename, line, column, text} = buildFileLink(attributes, opts);
+			attributes.column = column;
+			attributes.line = line;
 			attributes.target = filename;
 			if (opts.stripPositions) {
 				attributes.line = undefined;

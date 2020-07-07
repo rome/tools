@@ -4,6 +4,8 @@
 
 ## `es2018 > object-rest-spread > expression-rest-not-last-invalid`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -177,4 +179,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

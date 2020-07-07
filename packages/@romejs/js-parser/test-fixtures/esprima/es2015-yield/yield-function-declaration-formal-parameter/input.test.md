@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-yield > yield-function-declaration-formal-parameter`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -139,4 +141,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

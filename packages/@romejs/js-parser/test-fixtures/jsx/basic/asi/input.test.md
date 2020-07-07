@@ -4,23 +4,22 @@
 
 ## `jsx > basic > asi`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "script"
-	syntax: Array [
-		"jsx"
-		"ts"
-	]
+	sourceType: "module"
+	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.js"
+		filename: "input.jsx"
 		end: Object {
 			column: 0
 			index: 35
@@ -37,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "input.jsx"
 					identifierName: "x"
 					end: Object {
 						column: 10
@@ -52,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				end: Object {
 					column: 1
 					index: 34
@@ -74,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "input.jsx"
 					end: Object {
 						column: 12
 						index: 12
@@ -90,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "input.jsx"
 					end: Object {
 						column: 1
 						index: 34
@@ -105,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSVariableDeclarationStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 7
 								index: 22
@@ -120,7 +119,7 @@ JSRoot {
 						declaration: JSVariableDeclaration {
 							kind: "let"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 7
 									index: 22
@@ -137,7 +136,7 @@ JSRoot {
 									id: JSBindingIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.js"
+											filename: "input.jsx"
 											identifierName: "x"
 											end: Object {
 												column: 7
@@ -153,7 +152,7 @@ JSRoot {
 									}
 									init: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "input.jsx"
 										end: Object {
 											column: 7
 											index: 22
@@ -171,7 +170,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 9
 								index: 32
@@ -187,7 +186,7 @@ JSRoot {
 							name: JSXIdentifier {
 								name: "div"
 								loc: Object {
-									filename: "input.js"
+									filename: "input.jsx"
 									end: Object {
 										column: 6
 										index: 29
@@ -205,7 +204,7 @@ JSRoot {
 							selfClosing: true
 							typeArguments: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 9
 									index: 32
@@ -224,4 +223,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

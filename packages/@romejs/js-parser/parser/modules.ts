@@ -857,13 +857,6 @@ function parseImportSpecifiers(
 	}
 
 	if (importKind) {
-		if (importKind === "type" && lh.tokenType === tt.star) {
-			parser.unexpectedDiagnostic({
-				start: lh.startPos,
-				description: descriptions.JS_PARSER.IMPORT_TYPE_STAR,
-			});
-		}
-
 		if (
 			isMaybeDefaultImport(lh) ||
 			lh.tokenType === tt.braceL ||

@@ -4,6 +4,8 @@
 
 ## `typescript > variable-declarator > definite-assignment-not-allowed`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -18,9 +20,9 @@ JSRoot {
 	loc: Object {
 		filename: "input.ts"
 		end: Object {
-			column: 0
-			index: 14
-			line: 2
+			column: 13
+			index: 13
+			line: 1
 		}
 		start: Object {
 			column: 0
@@ -202,4 +204,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.ts:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Complex binding patterns require an initialization value
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

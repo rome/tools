@@ -4,10 +4,12 @@
 
 ## `esprima > expression-primary-array > migrated_0012`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
-	corrupt: true
+	corrupt: false
 	directives: Array []
 	filename: "input.js"
 	hasHoistedVars: false
@@ -19,7 +21,7 @@ JSRoot {
 		filename: "input.js"
 		end: Object {
 			column: 0
-			index: 28
+			index: 19
 			line: 2
 		}
 		start: Object {
@@ -58,8 +60,8 @@ JSRoot {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
-					column: 27
-					index: 27
+					column: 18
+					index: 18
 					line: 1
 				}
 				start: Object {
@@ -68,13 +70,14 @@ JSRoot {
 					line: 1
 				}
 			}
-			expression: JSAssignmentExpression {
-				operator: "="
+			expression: JSReferenceIdentifier {
+				name: "\u2163\u2161\u200a"
 				loc: Object {
 					filename: "input.js"
+					identifierName: "\u2163\u2161\u200a"
 					end: Object {
-						column: 27
-						index: 27
+						column: 18
+						index: 18
 						line: 1
 					}
 					start: Object {
@@ -83,88 +86,22 @@ JSRoot {
 						line: 1
 					}
 				}
-				left: JSAssignmentIdentifier {
-					name: "\u2163\u2161\u200a"
-					loc: Object {
-						filename: "input.js"
-						identifierName: "\u2163\u2161\u200a"
-						end: Object {
-							column: 18
-							index: 18
-							line: 1
-						}
-						start: Object {
-							column: 0
-							index: 0
-							line: 1
-						}
-					}
-				}
-				right: JSMemberExpression {
-					loc: Object {
-						filename: "input.js"
-						end: Object {
-							column: 27
-							index: 27
-							line: 1
-						}
-						start: Object {
-							column: 19
-							index: 19
-							line: 1
-						}
-					}
-					object: JSReferenceIdentifier {
-						name: "\u2009"
-						loc: Object {
-							filename: "input.js"
-							identifierName: "\u2009"
-							end: Object {
-								column: 25
-								index: 25
-								line: 1
-							}
-							start: Object {
-								column: 19
-								index: 19
-								line: 1
-							}
-						}
-					}
-					property: JSComputedMemberProperty {
-						value: JSReferenceIdentifier {
-							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "input.js"
-								end: Object {
-									column: 27
-									index: 27
-									line: 1
-								}
-								start: Object {
-									column: 26
-									index: 26
-									line: 1
-								}
-							}
-						}
-						loc: Object {
-							filename: "input.js"
-							end: Object {
-								column: 27
-								index: 27
-								line: 1
-							}
-							start: Object {
-								column: 25
-								index: 25
-								line: 1
-							}
-						}
-					}
-				}
 			}
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:18 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Invalid Unicode escape
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

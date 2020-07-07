@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-arrow-function > object-binding-pattern-invalid-rest-in-object-pattern`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -199,4 +201,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -4,6 +4,8 @@
 
 ## `test262 > rest-parameter > array-pattern-empty-with-object`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -172,4 +174,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

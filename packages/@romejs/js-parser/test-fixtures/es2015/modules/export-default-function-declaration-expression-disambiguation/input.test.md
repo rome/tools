@@ -4,6 +4,8 @@
 
 ## `es2015 > modules > export-default-function-declaration-expression-disambiguation`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -150,4 +152,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

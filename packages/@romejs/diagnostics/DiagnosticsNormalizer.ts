@@ -12,6 +12,14 @@ import {
 	normalizeMarkup,
 } from "@romejs/string-markup";
 import {createBlessedDiagnosticMessage} from "./descriptions";
+import {ob1Number0, ob1Number0Neg1, ob1Number1} from "@romejs/ob1";
+import {RequiredProps} from "@romejs/typescript-helpers";
+import {Position} from "@romejs/parser-core";
+
+type NormalizeOptionsRequiredPosition = RequiredProps<
+	MarkupFormatNormalizeOptions,
+	"normalizePosition"
+>;
 
 export default class DiagnosticsNormalizer {
 	constructor(
@@ -19,15 +27,57 @@ export default class DiagnosticsNormalizer {
 		sourceMaps?: SourceMapConsumerCollection,
 	) {
 		this.sourceMaps = sourceMaps;
-		this.markupOptions = markupOptions || {};
 		this.inlineSourceText = new Map();
 		this.hasMarkupOptions = markupOptions !== undefined;
+
+		this.markupOptions = this.createMarkupOptions(markupOptions);
 	}
 
 	sourceMaps: undefined | SourceMapConsumerCollection;
-	markupOptions: MarkupFormatNormalizeOptions;
+	markupOptions: NormalizeOptionsRequiredPosition;
 	hasMarkupOptions: boolean;
 	inlineSourceText: Map<string, string>;
+
+	createMarkupOptions(
+		markupOptions: MarkupFormatNormalizeOptions = {},
+	): NormalizeOptionsRequiredPosition {
+		const {sourceMaps} = this;
+
+		return {
+			...markupOptions,
+			normalizePosition: (filename, line, column) => {
+				if (
+					markupOptions !== undefined &&
+					markupOptions.normalizePosition !== undefined
+				) {
+					({filename, line, column} = markupOptions.normalizePosition(
+						filename,
+						line,
+						column,
+					));
+				}
+
+				if (sourceMaps !== undefined) {
+					// line and column can be undefined so we do some weirdness to try and get only the filename if possible
+					// using some default positions and then we'll toss whatever positions they return
+					const resolved = sourceMaps.approxOriginalPositionFor(
+						filename,
+						line === undefined ? ob1Number1 : line,
+						column === undefined ? ob1Number0 : column,
+					);
+					if (resolved !== undefined) {
+						return {
+							filename: resolved.source,
+							line: line === undefined ? undefined : resolved.line,
+							column: column === undefined ? undefined : resolved.column,
+						};
+					}
+				}
+
+				return {filename, line, column};
+			},
+		};
+	}
 
 	setInlineSourceText(filename: string, sourceText: string) {
 		this.inlineSourceText.set(filename, sourceText);
@@ -38,12 +88,13 @@ export default class DiagnosticsNormalizer {
 		if (markupOptions === undefined || filename === undefined) {
 			return filename;
 		}
-		const {normalizeFilename} = markupOptions;
-		if (normalizeFilename === undefined) {
+
+		const {normalizePosition} = markupOptions;
+		if (normalizePosition === undefined) {
 			return filename;
 		}
 
-		return normalizeFilename(filename);
+		return normalizePosition(filename, undefined, undefined).filename;
 	}
 
 	normalizePositionValue<T>(value: T): undefined | T {
@@ -54,6 +105,34 @@ export default class DiagnosticsNormalizer {
 		}
 	}
 
+	resolvePosition(
+		filename: string,
+		position: Position,
+	):
+		| undefined
+		| {
+				filename: string;
+				position: Position;
+			} {
+		const resolved = this.markupOptions.normalizePosition(
+			filename,
+			position.line,
+			position.column,
+		);
+		if (resolved === undefined) {
+			return undefined;
+		}
+
+		return {
+			filename: resolved.filename,
+			position: {
+				line: resolved.line === undefined ? ob1Number1 : resolved.line,
+				column: resolved.column === undefined ? ob1Number0 : resolved.column,
+				index: ob1Number0Neg1,
+			},
+		};
+	}
+
 	normalizeLocation(location: DiagnosticLocation): DiagnosticLocation {
 		const {sourceMaps} = this;
 		if (sourceMaps === undefined) {
@@ -61,11 +140,12 @@ export default class DiagnosticsNormalizer {
 		}
 
 		let {marker, filename, start, end} = location;
+		let origFilename = filename;
 
-		if (filename !== undefined) {
+		if (filename !== undefined && origFilename !== undefined) {
 			if (start !== undefined) {
 				const resolved = sourceMaps.approxOriginalPositionFor(
-					filename,
+					origFilename,
 					start.line,
 					start.column,
 				);
@@ -81,7 +161,7 @@ export default class DiagnosticsNormalizer {
 
 			if (end !== undefined) {
 				const resolved = sourceMaps.approxOriginalPositionFor(
-					filename,
+					origFilename,
 					end.line,
 					end.column,
 				);

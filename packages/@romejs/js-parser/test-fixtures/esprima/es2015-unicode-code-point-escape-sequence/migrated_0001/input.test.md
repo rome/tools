@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-unicode-code-point-escape-sequence > migrated_0001`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	body: Array []
@@ -48,4 +50,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

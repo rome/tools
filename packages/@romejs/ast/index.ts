@@ -216,6 +216,7 @@ export * from "./js/typescript/TSAssignmentAsExpression";
 export * from "./js/typescript/TSAssignmentNonNullExpression";
 export * from "./js/typescript/TSAssignmentTypeAssertion";
 export * from "./js/typescript/TSBigIntKeywordTypeAnnotation";
+export * from "./js/typescript/TSBigIntLiteralTypeAnnotation";
 export * from "./js/typescript/TSBooleanKeywordTypeAnnotation";
 export * from "./js/typescript/TSBooleanLiteralTypeAnnotation";
 export * from "./js/typescript/TSCallSignatureDeclaration";
@@ -481,6 +482,7 @@ export type AnyNode =
 	| n.TSAssignmentNonNullExpression
 	| n.TSAssignmentTypeAssertion
 	| n.TSBigIntKeywordTypeAnnotation
+	| n.TSBigIntLiteralTypeAnnotation
 	| n.TSBooleanKeywordTypeAnnotation
 	| n.TSBooleanLiteralTypeAnnotation
 	| n.TSCallSignatureDeclaration

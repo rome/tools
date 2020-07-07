@@ -4,6 +4,8 @@
 
 ## `typescript > cast > multiple-assert-and-assign`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -19,9 +21,9 @@ JSRoot {
 	loc: Object {
 		filename: "input.ts"
 		end: Object {
-			column: 0
-			index: 27
-			line: 2
+			column: 26
+			index: 26
+			line: 1
 		}
 		start: Object {
 			column: 0
@@ -157,4 +159,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

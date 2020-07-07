@@ -4,6 +4,8 @@
 
 ## `comments > basic > switch-fallthrough-comment`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -99,6 +101,7 @@ JSRoot {
 			cases: Array [
 				JSSwitchCase {
 					consequent: Array []
+					leadingComments: Array ["0"]
 					trailingComments: Array ["1"]
 					loc: Object {
 						filename: "input.js"
@@ -108,15 +111,15 @@ JSRoot {
 							line: 3
 						}
 						start: Object {
-							column: 10
-							index: 35
+							column: 4
+							index: 29
 							line: 3
 						}
 					}
 					test: JSNumericLiteral {
 						value: 1
 						format: undefined
-						leadingComments: Array ["0"]
+						leadingComments: undefined
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -133,6 +136,7 @@ JSRoot {
 					}
 				}
 				JSSwitchCase {
+					leadingComments: Array ["1"]
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -141,15 +145,15 @@ JSRoot {
 							line: 6
 						}
 						start: Object {
-							column: 10
-							index: 72
+							column: 4
+							index: 66
 							line: 5
 						}
 					}
 					test: JSNumericLiteral {
 						value: 2
 						format: undefined
-						leadingComments: Array ["1"]
+						leadingComments: undefined
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -219,4 +223,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

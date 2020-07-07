@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-yield > yield-arrow-parameter-name`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -118,4 +120,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

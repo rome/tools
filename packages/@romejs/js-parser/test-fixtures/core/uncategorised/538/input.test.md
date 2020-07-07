@@ -4,6 +4,8 @@
 
 ## `core > uncategorised > 538`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -66,4 +68,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

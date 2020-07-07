@@ -4,6 +4,8 @@
 
 ## `comments > basic > switch-function-call-no-semicolon-no-default`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -90,8 +92,8 @@ JSRoot {
 							line: 3
 						}
 						start: Object {
-							column: 8
-							index: 21
+							column: 2
+							index: 15
 							line: 2
 						}
 					}
@@ -234,4 +236,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

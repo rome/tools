@@ -128,19 +128,19 @@ export function createDiagnosticsCategory<Input extends InputMessagesCategory>(
 			const callback: InputMessagesFactory = (value as any);
 
 			category[key] = function(...params) {
-				const {message, ...ret} = callback(...params);
+				const {message, advice = [], ...ret} = callback(...params);
 				return {
-					advice: [],
 					...ret,
+					advice,
 					message: createBlessedDiagnosticMessage(message),
 				};
 			};
 		} else {
 			// rome-ignore lint/js/noExplicitAny
-			const {message, ...obj} = (value as any);
+			const {message, advice = [], ...obj} = (value as any);
 			category[key] = {
-				advice: [],
 				...obj,
+				advice,
 				message: createBlessedDiagnosticMessage(message),
 			};
 		}

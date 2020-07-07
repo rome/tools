@@ -4,6 +4,8 @@
 
 ## `test262 > rest-parameter > object-pattern-multi-element-with-initializer`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -394,4 +396,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

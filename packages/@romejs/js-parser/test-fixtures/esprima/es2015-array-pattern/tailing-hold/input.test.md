@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-array-pattern > tailing-hold`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -164,4 +166,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

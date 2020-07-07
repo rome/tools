@@ -4,6 +4,8 @@
 
 ## `es2015 > for-in > nonstrict-initializer`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -755,4 +757,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-default-parameter-value > migrated_0000`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -203,4 +205,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

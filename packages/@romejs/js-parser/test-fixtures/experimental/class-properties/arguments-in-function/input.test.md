@@ -4,6 +4,8 @@
 
 ## `experimental > class-properties > arguments-in-function`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -338,4 +340,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

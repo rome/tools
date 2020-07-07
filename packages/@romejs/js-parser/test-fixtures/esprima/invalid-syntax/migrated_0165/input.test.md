@@ -4,6 +4,8 @@
 
 ## `esprima > invalid-syntax > migrated_0165`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -19,7 +21,7 @@ JSRoot {
 		filename: "input.js"
 		end: Object {
 			column: 0
-			index: 8
+			index: 7
 			line: 2
 		}
 		start: Object {
@@ -34,20 +36,20 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Expecting Unicode escape sequence \\uXXXX"}
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Invalid Unicode escape"}
 			}
 			location: Object {
 				filename: "input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
-					column: 1
-					index: 1
+					column: 6
+					index: 6
 					line: 1
 				}
 				start: Object {
-					column: 1
-					index: 1
+					column: 6
+					index: 6
 					line: 1
 				}
 			}
@@ -58,8 +60,8 @@ JSRoot {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
-					column: 7
-					index: 7
+					column: 6
+					index: 6
 					line: 1
 				}
 				start: Object {
@@ -69,13 +71,13 @@ JSRoot {
 				}
 			}
 			expression: JSReferenceIdentifier {
-				name: "\0u0000"
+				name: "\0"
 				loc: Object {
 					filename: "input.js"
-					identifierName: "\0u0000"
+					identifierName: "\0"
 					end: Object {
-						column: 7
-						index: 7
+						column: 6
+						index: 6
 						line: 1
 					}
 					start: Object {
@@ -88,4 +90,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Invalid Unicode escape
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

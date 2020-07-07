@@ -4,6 +4,8 @@
 
 ## `comments > basic > switch-no-default-comment-in-nested-functions`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -426,8 +428,8 @@ JSRoot {
 															line: 6
 														}
 														start: Object {
-															column: 37
-															index: 136
+															column: 12
+															index: 111
 															line: 5
 														}
 													}
@@ -784,4 +786,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

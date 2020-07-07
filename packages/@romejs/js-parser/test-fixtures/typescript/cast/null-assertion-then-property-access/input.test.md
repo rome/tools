@@ -4,6 +4,8 @@
 
 ## `typescript > cast > null-assertion-then-property-access`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -127,4 +129,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

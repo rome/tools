@@ -127,6 +127,23 @@ export default class TestAPI implements TestHelper {
 	snapshotCounter: number;
 	snapshotManager: SnapshotManager;
 
+	getAdvice(startAdvice: DiagnosticAdvice = []): DiagnosticAdvice {
+		const {advice} = this;
+
+		if (advice.length === 0) {
+			return startAdvice;
+		}
+
+		return [
+			...startAdvice,
+			{
+				type: "group",
+				title: "User-specified test advice",
+				advice,
+			},
+		];
+	}
+
 	buildMatchAdvice(
 		received: unknown,
 		expected: unknown,

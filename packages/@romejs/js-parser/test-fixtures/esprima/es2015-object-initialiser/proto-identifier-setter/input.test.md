@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-object-initialiser > proto-identifier-setter`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -249,4 +251,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

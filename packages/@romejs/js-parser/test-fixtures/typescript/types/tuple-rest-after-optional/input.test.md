@@ -4,6 +4,8 @@
 
 ## `typescript > types > tuple-rest-after-optional`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -264,4 +266,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

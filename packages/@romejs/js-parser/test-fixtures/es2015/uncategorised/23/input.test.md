@@ -4,6 +4,8 @@
 
 ## `es2015 > uncategorised > 23`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -19,9 +21,9 @@ JSRoot {
 	loc: Object {
 		filename: "input.js"
 		end: Object {
-			column: 0
-			index: 7
-			line: 5
+			column: 1
+			index: 4
+			line: 3
 		}
 		start: Object {
 			column: 0
@@ -34,9 +36,9 @@ JSRoot {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
-					column: 2
-					index: 6
-					line: 4
+					column: 1
+					index: 4
+					line: 3
 				}
 				start: Object {
 					column: 0
@@ -50,8 +52,8 @@ JSRoot {
 					filename: "input.js"
 					end: Object {
 						column: 1
-						index: 5
-						line: 4
+						index: 4
+						line: 3
 					}
 					start: Object {
 						column: 0
@@ -61,15 +63,15 @@ JSRoot {
 				}
 				quasis: Array [
 					JSTemplateElement {
-						cooked: "\n\n\n"
-						raw: "\n\n\n"
+						cooked: "\n\n"
+						raw: "\n\n"
 						tail: true
 						loc: Object {
 							filename: "input.js"
 							end: Object {
 								column: 0
-								index: 4
-								line: 4
+								index: 3
+								line: 3
 							}
 							start: Object {
 								column: 1
@@ -83,4 +85,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

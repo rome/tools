@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-destructuring-assignment-array-pattern > dup-assignment`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -163,4 +165,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

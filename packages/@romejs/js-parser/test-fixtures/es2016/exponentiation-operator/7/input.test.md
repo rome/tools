@@ -4,6 +4,8 @@
 
 ## `es2016 > exponentiation-operator > 7`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -147,4 +149,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

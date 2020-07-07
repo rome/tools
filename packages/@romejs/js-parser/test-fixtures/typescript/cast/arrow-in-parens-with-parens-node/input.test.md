@@ -4,6 +4,8 @@
 
 ## `typescript > cast > arrow-in-parens-with-parens-node`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -236,4 +238,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

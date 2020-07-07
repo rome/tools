@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-generator > generator-declaration-with-params`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -207,4 +209,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

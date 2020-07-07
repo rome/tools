@@ -4,6 +4,8 @@
 
 ## `experimental > class-private-methods > get-set`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -464,4 +466,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

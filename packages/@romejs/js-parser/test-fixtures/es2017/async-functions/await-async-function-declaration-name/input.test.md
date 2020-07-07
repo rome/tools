@@ -4,6 +4,8 @@
 
 ## `es2017 > async-functions > await-async-function-declaration-name`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -104,4 +106,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -4,6 +4,8 @@
 
 ## `typescript > regression > destructuring-in-function-type`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -392,4 +394,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

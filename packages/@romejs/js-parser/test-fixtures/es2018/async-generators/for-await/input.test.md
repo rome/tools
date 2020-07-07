@@ -4,6 +4,8 @@
 
 ## `es2018 > async-generators > for-await`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -204,4 +206,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

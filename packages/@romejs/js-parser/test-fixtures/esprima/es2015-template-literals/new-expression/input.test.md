@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-template-literals > new-expression`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -134,4 +136,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

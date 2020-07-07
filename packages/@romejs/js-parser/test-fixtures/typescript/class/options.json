@@ -1,4 +1,6 @@
 {
   "sourceType": "module",
-  "syntax": ["ts"]
+  "plugins": [
+    "classPrivateProperties"
+  ]
 }

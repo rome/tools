@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-array-pattern > empty-pattern-lexical`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -113,4 +115,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

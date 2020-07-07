@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-class > migrated_0023`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -99,4 +101,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

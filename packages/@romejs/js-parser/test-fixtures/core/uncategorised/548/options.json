@@ -1,4 +1,4 @@
 {
-  "sourceType": "module",
-  "throws": "arguments is a reserved word"
+	"sourceType": "module",
+	"throws": true
 }

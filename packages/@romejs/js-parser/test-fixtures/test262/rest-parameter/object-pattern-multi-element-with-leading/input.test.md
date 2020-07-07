@@ -4,6 +4,8 @@
 
 ## `test262 > rest-parameter > object-pattern-multi-element-with-leading`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -399,4 +401,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

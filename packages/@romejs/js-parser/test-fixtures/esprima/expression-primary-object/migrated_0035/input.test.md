@@ -4,6 +4,8 @@
 
 ## `esprima > expression-primary-object > migrated_0035`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -164,4 +166,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

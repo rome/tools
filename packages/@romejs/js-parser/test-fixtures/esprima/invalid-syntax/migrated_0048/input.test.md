@@ -4,6 +4,8 @@
 
 ## `esprima > invalid-syntax > migrated_0048`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -19,7 +21,7 @@ JSRoot {
 		filename: "input.js"
 		end: Object {
 			column: 0
-			index: 12
+			index: 11
 			line: 2
 		}
 		start: Object {
@@ -34,20 +36,20 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Expecting Unicode escape sequence \\uXXXX"}
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Code point out of bounds"}
 			}
 			location: Object {
 				filename: "input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
-					column: 1
-					index: 1
+					column: 2
+					index: 2
 					line: 1
 				}
 				start: Object {
-					column: 1
-					index: 1
+					column: 2
+					index: 2
 					line: 1
 				}
 			}
@@ -58,8 +60,8 @@ JSRoot {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
-					column: 3
-					index: 3
+					column: 10
+					index: 10
 					line: 1
 				}
 				start: Object {
@@ -69,13 +71,13 @@ JSRoot {
 				}
 			}
 			expression: JSReferenceIdentifier {
-				name: "\0u"
+				name: "\udc00\udc00"
 				loc: Object {
 					filename: "input.js"
-					identifierName: "\0u"
+					identifierName: "\udc00\udc00"
 					end: Object {
-						column: 3
-						index: 3
+						column: 10
+						index: 10
 						line: 1
 					}
 					start: Object {
@@ -86,56 +88,20 @@ JSRoot {
 				}
 			}
 		}
-		JSBlockStatement {
-			directives: Array []
-			loc: Object {
-				filename: "input.js"
-				end: Object {
-					column: 11
-					index: 11
-					line: 1
-				}
-				start: Object {
-					column: 3
-					index: 3
-					line: 1
-				}
-			}
-			body: Array [
-				JSExpressionStatement {
-					loc: Object {
-						filename: "input.js"
-						end: Object {
-							column: 10
-							index: 10
-							line: 1
-						}
-						start: Object {
-							column: 4
-							index: 4
-							line: 1
-						}
-					}
-					expression: JSNumericLiteral {
-						value: 110_000
-						format: undefined
-						loc: Object {
-							filename: "input.js"
-							end: Object {
-								column: 10
-								index: 10
-								line: 1
-							}
-							start: Object {
-								column: 4
-								index: 4
-								line: 1
-							}
-						}
-					}
-				}
-			]
-		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Code point out of bounds
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

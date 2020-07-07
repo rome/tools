@@ -4,6 +4,8 @@
 
 ## `es2015 > yield > yield-star-in-global-scope-is-multiplication`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -97,4 +99,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

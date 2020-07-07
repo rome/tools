@@ -4,6 +4,8 @@
 
 ## `es2015 > regression > 6864`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -409,4 +411,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

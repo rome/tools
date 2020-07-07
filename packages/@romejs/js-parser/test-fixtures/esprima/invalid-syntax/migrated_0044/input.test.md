@@ -4,6 +4,8 @@
 
 ## `esprima > invalid-syntax > migrated_0044`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -19,7 +21,7 @@ JSRoot {
 		filename: "input.js"
 		end: Object {
 			column: 0
-			index: 23
+			index: 24
 			line: 2
 		}
 		start: Object {
@@ -34,20 +36,20 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Regular expression flags can't contain unicode escapes"}
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Expecting Unicode escape sequence \\uXXXX"}
 			}
 			location: Object {
 				filename: "input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
-					column: 16
-					index: 16
+					column: 17
+					index: 17
 					line: 1
 				}
 				start: Object {
-					column: 16
-					index: 16
+					column: 17
+					index: 17
 					line: 1
 				}
 			}
@@ -58,8 +60,8 @@ JSRoot {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
-					column: 22
-					index: 22
+					column: 23
+					index: 23
 					line: 1
 				}
 				start: Object {
@@ -73,8 +75,8 @@ JSRoot {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
-						column: 22
-						index: 22
+						column: 23
+						index: 23
 						line: 1
 					}
 					start: Object {
@@ -105,8 +107,8 @@ JSRoot {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
-								column: 22
-								index: 22
+								column: 23
+								index: 23
 								line: 1
 							}
 							start: Object {
@@ -116,17 +118,17 @@ JSRoot {
 							}
 						}
 						init: JSRegExpLiteral {
-							global: true
+							global: false
 							insensitive: false
 							multiline: false
 							noDotNewline: false
 							sticky: false
-							unicode: false
+							unicode: true
 							loc: Object {
 								filename: "input.js"
 								end: Object {
-									column: 22
-									index: 22
+									column: 23
+									index: 23
 									line: 1
 								}
 								start: Object {
@@ -241,4 +243,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Expecting Unicode escape sequence \uXXXX
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

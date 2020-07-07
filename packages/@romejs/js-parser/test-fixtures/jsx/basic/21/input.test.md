@@ -4,23 +4,22 @@
 
 ## `jsx > basic > 21`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "script"
-	syntax: Array [
-		"jsx"
-		"ts"
-	]
+	sourceType: "module"
+	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.js"
+		filename: "input.jsx"
 		end: Object {
 			column: 0
 			index: 42
@@ -35,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				end: Object {
 					column: 41
 					index: 41
@@ -51,7 +50,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "div"
 					loc: Object {
-						filename: "input.js"
+						filename: "input.jsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -67,7 +66,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "input.jsx"
 					end: Object {
 						column: 41
 						index: 41
@@ -82,7 +81,7 @@ JSRoot {
 				attributes: Array [
 					JSXSpreadAttribute {
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 11
 								index: 11
@@ -97,7 +96,7 @@ JSRoot {
 						argument: JSReferenceIdentifier {
 							name: "c"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								identifierName: "c"
 								end: Object {
 									column: 10
@@ -117,7 +116,7 @@ JSRoot {
 					JSXText {
 						value: " "
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 13
 								index: 13
@@ -132,7 +131,7 @@ JSRoot {
 					}
 					JSXSpreadChild {
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 26
 								index: 26
@@ -147,7 +146,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "children"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								identifierName: "children"
 								end: Object {
 									column: 25
@@ -164,7 +163,7 @@ JSRoot {
 					}
 					JSXExpressionContainer {
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 29
 								index: 29
@@ -179,7 +178,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								identifierName: "a"
 								end: Object {
 									column: 28
@@ -196,7 +195,7 @@ JSRoot {
 					}
 					JSXSpreadChild {
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 35
 								index: 35
@@ -211,7 +210,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "b"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								identifierName: "b"
 								end: Object {
 									column: 34
@@ -231,4 +230,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

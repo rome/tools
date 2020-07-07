@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-yield > yield-expression-precedence`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -286,4 +288,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

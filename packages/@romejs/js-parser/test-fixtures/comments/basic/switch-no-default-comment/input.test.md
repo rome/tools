@@ -4,6 +4,8 @@
 
 ## `comments > basic > switch-no-default-comment`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -90,8 +92,8 @@ JSRoot {
 							line: 3
 						}
 						start: Object {
-							column: 10
-							index: 23
+							column: 4
+							index: 17
 							line: 2
 						}
 					}
@@ -136,4 +138,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

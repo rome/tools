@@ -4,6 +4,8 @@
 
 ## `core > uncategorised > 337`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -71,8 +73,8 @@ JSRoot {
 							line: 2
 						}
 						start: Object {
-							column: 18
-							index: 18
+							column: 12
+							index: 12
 							line: 1
 						}
 					}
@@ -218,4 +220,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -4,6 +4,8 @@
 
 ## `es2015 > arrow-functions > in-logic-expression`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -249,4 +251,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

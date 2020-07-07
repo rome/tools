@@ -4,22 +4,21 @@
 
 ## `jsx > basic > fragment-5`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "script"
-	syntax: Array [
-		"jsx"
-		"ts"
-	]
+	sourceType: "module"
+	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.js"
+		filename: "input.jsx"
 		end: Object {
 			column: 0
 			index: 63
@@ -36,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " comment1"
 			loc: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				end: Object {
 					column: 11
 					index: 13
@@ -53,7 +52,7 @@ JSRoot {
 			id: "1"
 			value: " comment2 "
 			loc: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				end: Object {
 					column: 14
 					index: 28
@@ -70,7 +69,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				end: Object {
 					column: 3
 					index: 62
@@ -84,7 +83,7 @@ JSRoot {
 			}
 			expression: JSXFragment {
 				loc: Object {
-					filename: "input.js"
+					filename: "input.jsx"
 					end: Object {
 						column: 3
 						index: 62
@@ -104,7 +103,7 @@ JSRoot {
 							"1"
 						]
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 2
 								index: 33
@@ -121,7 +120,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "div"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 6
 									index: 37
@@ -139,7 +138,7 @@ JSRoot {
 						selfClosing: false
 						typeArguments: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 13
 								index: 44
@@ -155,7 +154,7 @@ JSRoot {
 					JSXText {
 						value: "\n  "
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 2
 								index: 47
@@ -172,7 +171,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "div"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 6
 									index: 51
@@ -190,7 +189,7 @@ JSRoot {
 						selfClosing: false
 						typeArguments: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 13
 								index: 58
@@ -206,7 +205,7 @@ JSRoot {
 					JSXText {
 						value: "\n"
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 0
 								index: 59
@@ -224,4 +223,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

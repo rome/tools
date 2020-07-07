@@ -4,6 +4,8 @@
 
 ## `es2018 > async-generators > object-method`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -483,4 +485,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

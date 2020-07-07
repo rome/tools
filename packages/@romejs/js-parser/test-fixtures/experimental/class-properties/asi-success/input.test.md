@@ -4,6 +4,8 @@
 
 ## `experimental > class-properties > asi-success`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -480,4 +482,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

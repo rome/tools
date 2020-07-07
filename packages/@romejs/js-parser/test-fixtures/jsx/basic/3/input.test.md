@@ -4,23 +4,22 @@
 
 ## `jsx > basic > 3`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "script"
-	syntax: Array [
-		"jsx"
-		"ts"
-	]
+	sourceType: "module"
+	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.js"
+		filename: "input.jsx"
 		end: Object {
 			column: 40
 			index: 40
@@ -35,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				end: Object {
 					column: 40
 					index: 40
@@ -51,7 +50,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "a"
 					loc: Object {
-						filename: "input.js"
+						filename: "input.jsx"
 						end: Object {
 							column: 2
 							index: 2
@@ -67,7 +66,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "input.jsx"
 					end: Object {
 						column: 40
 						index: 40
@@ -85,7 +84,7 @@ JSRoot {
 							name: JSXIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "input.jsx"
 									end: Object {
 										column: 8
 										index: 8
@@ -99,7 +98,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 8
 									index: 8
@@ -114,7 +113,7 @@ JSRoot {
 							namespace: JSXIdentifier {
 								name: "n"
 								loc: Object {
-									filename: "input.js"
+									filename: "input.jsx"
 									end: Object {
 										column: 4
 										index: 4
@@ -131,7 +130,7 @@ JSRoot {
 						value: JSStringLiteral {
 							value: "bar"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 14
 									index: 14
@@ -145,7 +144,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 14
 								index: 14
@@ -163,7 +162,7 @@ JSRoot {
 					JSXText {
 						value: " "
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 16
 								index: 16
@@ -178,7 +177,7 @@ JSRoot {
 					}
 					JSXExpressionContainer {
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 23
 								index: 23
@@ -193,7 +192,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "value"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								identifierName: "value"
 								end: Object {
 									column: 22
@@ -211,7 +210,7 @@ JSRoot {
 					JSXText {
 						value: " "
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 24
 								index: 24
@@ -228,7 +227,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "b"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 26
 									index: 26
@@ -245,7 +244,7 @@ JSRoot {
 						selfClosing: false
 						typeArguments: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 36
 								index: 36
@@ -262,7 +261,7 @@ JSRoot {
 								name: JSXIdentifier {
 									name: "c"
 									loc: Object {
-										filename: "input.js"
+										filename: "input.jsx"
 										end: Object {
 											column: 29
 											index: 29
@@ -280,7 +279,7 @@ JSRoot {
 								selfClosing: true
 								typeArguments: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "input.jsx"
 									end: Object {
 										column: 32
 										index: 32
@@ -300,4 +299,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

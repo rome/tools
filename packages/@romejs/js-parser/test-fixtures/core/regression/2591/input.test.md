@@ -4,6 +4,8 @@
 
 ## `core > regression > 2591`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -272,4 +274,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

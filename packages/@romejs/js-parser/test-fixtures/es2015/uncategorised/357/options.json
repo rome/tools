@@ -1,4 +1,4 @@
 {
-  "sourceType": "module",
-  "throws": "Unknown start to an await argument"
+	"sourceType": "module",
+	"throws": true
 }

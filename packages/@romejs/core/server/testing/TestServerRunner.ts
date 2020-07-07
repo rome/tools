@@ -959,7 +959,7 @@ export default class TestServerRunner {
 		}
 
 		const otherTotal = this.progress.totalTests - this.focusedTests.length;
-		reporter.info(
+		reporter.warn(
 			`<number emphasis>${otherTotal}</number> other ${grammarNumberTests(
 				otherTotal,
 			)} ignored`,

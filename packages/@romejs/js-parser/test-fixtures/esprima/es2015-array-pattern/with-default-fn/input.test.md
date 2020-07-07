@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-array-pattern > with-default-fn`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -206,4 +208,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

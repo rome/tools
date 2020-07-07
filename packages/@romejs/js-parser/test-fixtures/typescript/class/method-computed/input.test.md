@@ -4,6 +4,8 @@
 
 ## `typescript > class > method-computed`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -405,4 +407,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

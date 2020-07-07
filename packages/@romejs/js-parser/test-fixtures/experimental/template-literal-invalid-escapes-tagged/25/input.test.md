@@ -4,6 +4,8 @@
 
 ## `experimental > template-literal-invalid-escapes-tagged > 25`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -116,4 +118,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

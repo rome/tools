@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-array-binding-pattern > array-binding-pattern-03`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -152,4 +154,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

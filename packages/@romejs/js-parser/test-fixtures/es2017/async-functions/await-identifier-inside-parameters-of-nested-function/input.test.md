@@ -4,6 +4,8 @@
 
 ## `es2017 > async-functions > await-identifier-inside-parameters-of-nested-function`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -244,4 +246,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

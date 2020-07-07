@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-for-of > for-of-object-pattern-const`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -260,4 +262,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

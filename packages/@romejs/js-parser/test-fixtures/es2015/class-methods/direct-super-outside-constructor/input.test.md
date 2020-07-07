@@ -4,6 +4,8 @@
 
 ## `es2015 > class-methods > direct-super-outside-constructor`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -275,4 +277,20 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:2:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ super() is only valid inside a class constructor of a subclass
+
+  ℹ Maybe a typo in the method name ('constructor') or not extending another class?
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

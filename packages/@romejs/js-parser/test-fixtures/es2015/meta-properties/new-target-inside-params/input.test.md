@@ -4,6 +4,8 @@
 
 ## `es2015 > meta-properties > new-target-inside-params`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -427,4 +429,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

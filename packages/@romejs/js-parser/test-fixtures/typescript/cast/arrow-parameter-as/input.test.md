@@ -4,6 +4,8 @@
 
 ## `typescript > cast > arrow-parameter-as`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -18,9 +20,9 @@ JSRoot {
 	loc: Object {
 		filename: "input.ts"
 		end: Object {
-			column: 0
-			index: 16
-			line: 2
+			column: 15
+			index: 15
+			line: 1
 		}
 		start: Object {
 			column: 0
@@ -141,4 +143,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.ts:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Unexpected type cast in parameter position
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

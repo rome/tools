@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-object-initialiser > proto-literal-getter-setter`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -336,4 +338,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

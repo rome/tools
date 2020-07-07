@@ -4,6 +4,8 @@
 
 ## `es2015 > modules > xml-comment-in-script`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -84,4 +86,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

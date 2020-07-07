@@ -1,5 +1,5 @@
 // Copied over from TypeScript's test case
-// https://github.com/Microsoft/TypeScript/blob/server/tests/baselines/reference/constAssertions.js
+// https://github.com/Microsoft/TypeScript/blob/master/tests/baselines/reference/constAssertions.js
 let v1 = 'abc' as const;
 let v2 = `abc` as const;
 let v3 = 10 as const;

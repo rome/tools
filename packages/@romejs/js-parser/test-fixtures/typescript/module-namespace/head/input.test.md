@@ -4,6 +4,8 @@
 
 ## `typescript > module-namespace > head`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -288,4 +290,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

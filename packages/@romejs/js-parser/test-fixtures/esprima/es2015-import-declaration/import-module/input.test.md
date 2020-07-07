@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-import-declaration > import-module`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -67,4 +69,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

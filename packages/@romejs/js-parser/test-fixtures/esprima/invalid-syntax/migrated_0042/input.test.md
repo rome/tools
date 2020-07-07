@@ -4,6 +4,8 @@
 
 ## `esprima > invalid-syntax > migrated_0042`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -19,7 +21,7 @@ JSRoot {
 		filename: "input.js"
 		end: Object {
 			column: 0
-			index: 22
+			index: 21
 			line: 2
 		}
 		start: Object {
@@ -34,20 +36,20 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Expecting Unicode escape sequence \\uXXXX"}
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Bad character escape sequence"}
 			}
 			location: Object {
 				filename: "input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
-					column: 18
-					index: 18
+					column: 19
+					index: 19
 					line: 1
 				}
 				start: Object {
-					column: 18
-					index: 18
+					column: 19
+					index: 19
 					line: 1
 				}
 			}
@@ -58,8 +60,8 @@ JSRoot {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
-					column: 21
-					index: 21
+					column: 20
+					index: 20
 					line: 1
 				}
 				start: Object {
@@ -73,8 +75,8 @@ JSRoot {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
-						column: 21
-						index: 21
+						column: 20
+						index: 20
 						line: 1
 					}
 					start: Object {
@@ -105,8 +107,8 @@ JSRoot {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
-								column: 21
-								index: 21
+								column: 20
+								index: 20
 								line: 1
 							}
 							start: Object {
@@ -121,12 +123,12 @@ JSRoot {
 							multiline: false
 							noDotNewline: false
 							sticky: false
-							unicode: true
+							unicode: false
 							loc: Object {
 								filename: "input.js"
 								end: Object {
-									column: 21
-									index: 21
+									column: 20
+									index: 20
 									line: 1
 								}
 								start: Object {
@@ -240,4 +242,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:19 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Bad character escape sequence
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

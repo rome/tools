@@ -86,7 +86,7 @@ export function deriveRootAdviceFromDiagnostic(
 	let header = diagnosticLocationToMarkupFilelink(location);
 
 	if (diag.label !== undefined) {
-		header += ` <emphasis>${diag.label}</emphasis>`;
+		header = `<emphasis>${diag.label}</emphasis> ${header}`;
 
 		if (description.category !== undefined) {
 			header += ` <dim>${description.category}</dim>`;

@@ -4,6 +4,8 @@
 
 ## `typescript > type-arguments > tsx`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -16,8 +18,8 @@ JSRoot {
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array [
-		"jsx"
 		"ts"
+		"jsx"
 	]
 	loc: Object {
 		filename: "input.tsx"
@@ -197,4 +199,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

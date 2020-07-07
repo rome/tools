@@ -4,6 +4,8 @@
 
 ## `typescript > types > type-operator`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -580,4 +582,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -1,3 +1,3 @@
 {
-  "throws": "Bad character escape sequence"
+	"throws": true
 }

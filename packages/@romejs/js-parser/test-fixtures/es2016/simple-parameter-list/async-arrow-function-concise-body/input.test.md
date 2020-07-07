@@ -4,6 +4,8 @@
 
 ## `es2016 > simple-parameter-list > async-arrow-function-concise-body`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -200,4 +202,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -4,6 +4,8 @@
 
 ## `comments > basic > surrounding-throw-comments`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -175,4 +177,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

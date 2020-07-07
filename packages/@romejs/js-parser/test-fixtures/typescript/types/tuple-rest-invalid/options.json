@@ -1,5 +1,4 @@
 {
   "sourceType": "module",
-  "syntax": ["ts"],
-  "throws": "The rest element has to be the last element when destructuring"
+  "throws": "Rest element must be last element (1:19)"
 }

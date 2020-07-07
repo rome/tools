@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-array-pattern > with-default-catch-param-fail`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -319,4 +321,20 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Unclosed catch clause param
+
+  ℹ We expected to find the closing character ) here
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-identifier > module_await`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -97,4 +99,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

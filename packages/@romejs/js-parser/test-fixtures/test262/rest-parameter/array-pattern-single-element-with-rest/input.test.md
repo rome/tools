@@ -4,6 +4,8 @@
 
 ## `test262 > rest-parameter > array-pattern-single-element-with-rest`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -170,4 +172,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

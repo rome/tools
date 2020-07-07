@@ -4,6 +4,8 @@
 
 ## `typescript > class > property-computed`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -361,4 +363,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

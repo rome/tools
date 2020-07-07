@@ -1,4 +1,0 @@
-{
-  "throws": "import.meta may appear only with 'sourceType: \"module\"'",
-  "sourceType": "script"
-}

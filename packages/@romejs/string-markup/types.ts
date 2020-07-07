@@ -9,6 +9,7 @@ import {BaseTokens, SimpleToken, ValueToken} from "@romejs/parser-core";
 import {Dict} from "@romejs/typescript-helpers";
 import {AbsoluteFilePath} from "@romejs/path";
 import {UserConfig} from "@romejs/core/common/userConfig";
+import {Number0, Number1} from "@romejs/ob1";
 
 export type Tokens = BaseTokens & {
 	Text: ValueToken<"Text", string>;
@@ -70,7 +71,15 @@ export type MarkupTagName =
 	| "ul"
 	| "li";
 
-export type MarkupFormatFilenameNormalizer = (filename: string) => string;
+export type MarkupFormatPositionNormalizer = (
+	filename: string,
+	line: undefined | Number1,
+	column: undefined | Number0,
+) => {
+	filename: string;
+	line?: Number1;
+	column?: Number0;
+};
 
 export type MarkupFormatFilenameHumanizer = (
 	filename: string,
@@ -78,7 +87,7 @@ export type MarkupFormatFilenameHumanizer = (
 
 export type MarkupFormatOptions = {
 	userConfig?: UserConfig;
-	normalizeFilename?: MarkupFormatFilenameNormalizer;
+	normalizePosition?: MarkupFormatPositionNormalizer;
 	humanizeFilename?: MarkupFormatFilenameHumanizer;
 	cwd?: AbsoluteFilePath;
 };

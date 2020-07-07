@@ -4,6 +4,8 @@
 
 ## `esprima > rest-parameter > arrow-rest-parameter-object`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -199,4 +201,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

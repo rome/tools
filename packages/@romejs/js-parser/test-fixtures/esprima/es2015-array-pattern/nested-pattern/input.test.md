@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-array-pattern > nested-pattern`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -149,4 +151,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

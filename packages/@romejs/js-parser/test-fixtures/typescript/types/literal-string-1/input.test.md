@@ -4,6 +4,8 @@
 
 ## `typescript > types > literal-string-1`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -129,4 +131,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

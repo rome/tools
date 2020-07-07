@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-generator > generator-method-with-computed-name`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -240,4 +242,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

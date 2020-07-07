@@ -4,6 +4,8 @@
 
 ## `es2015 > identifiers > invalid-escape-seq-const`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -19,8 +21,8 @@ JSRoot {
 		filename: "input.js"
 		end: Object {
 			column: 0
-			index: 22
-			line: 2
+			index: 41
+			line: 4
 		}
 		start: Object {
 			column: 0
@@ -136,6 +138,102 @@ JSRoot {
 				]
 			}
 		}
+		JSVariableDeclarationStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 17
+					index: 40
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 23
+					line: 3
+				}
+			}
+			declaration: JSVariableDeclaration {
+				kind: "const"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 17
+						index: 40
+						line: 3
+					}
+					start: Object {
+						column: 0
+						index: 23
+						line: 3
+					}
+				}
+				declarations: Array [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "x"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "x"
+								end: Object {
+									column: 12
+									index: 35
+									line: 3
+								}
+								start: Object {
+									column: 11
+									index: 34
+									line: 3
+								}
+							}
+						}
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 16
+								index: 39
+								line: 3
+							}
+							start: Object {
+								column: 11
+								index: 34
+								line: 3
+							}
+						}
+						init: JSNumericLiteral {
+							value: 2
+							format: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 16
+									index: 39
+									line: 3
+								}
+								start: Object {
+									column: 15
+									index: 38
+									line: 3
+								}
+							}
+						}
+					}
+				]
+			}
+		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Escape sequence in keyword const
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

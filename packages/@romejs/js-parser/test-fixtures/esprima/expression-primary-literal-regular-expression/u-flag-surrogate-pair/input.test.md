@@ -4,6 +4,8 @@
 
 ## `esprima > expression-primary-literal-regular-expression > u-flag-surrogate-pair`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -303,4 +305,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:16 parse/regex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Range values reversed. Start char code is greater than end char code
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

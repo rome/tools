@@ -1,4 +1,4 @@
 {
-  "sourceType": "module",
-  "throws": "eval is a reserved word"
+	"sourceType": "module",
+	"throws": true
 }

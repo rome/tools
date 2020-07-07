@@ -4,6 +4,8 @@
 
 ## `es2017 > async-functions > export`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -208,4 +210,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

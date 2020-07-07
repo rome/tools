@@ -4,6 +4,8 @@
 
 ## `es2017 > async-functions > await-inside-parenthesized-assign`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -185,4 +187,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

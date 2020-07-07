@@ -4,6 +4,8 @@
 
 ## `experimental > throw-expression > comma`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -188,4 +190,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

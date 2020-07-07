@@ -4,6 +4,8 @@
 
 ## `es2015 > let > let-block-with-newline`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -185,4 +187,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

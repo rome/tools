@@ -4,6 +4,8 @@
 
 ## `typescript > module-namespace > body-nested`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -129,4 +131,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -4,6 +4,8 @@
 
 ## `core > regression > use-strict-with-pre-semi`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -300,4 +302,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

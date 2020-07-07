@@ -4,6 +4,8 @@
 
 ## `es2019 > json-strings > string-paragraph-separator`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -82,4 +84,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

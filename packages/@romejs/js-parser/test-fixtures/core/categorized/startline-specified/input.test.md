@@ -4,6 +4,8 @@
 
 ## `core > categorized > startline-specified`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -164,4 +166,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -1,4 +1,4 @@
 {
   "allowAwaitOutsideFunction": true,
-  "throws": "Unexpected token"
+  "throws": "Unexpected token, expected \";\" (2:15)"
 }

@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-octal-integer-literal > migrated_0002`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -154,4 +156,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

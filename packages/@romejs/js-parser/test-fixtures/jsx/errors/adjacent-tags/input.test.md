@@ -4,22 +4,21 @@
 
 ## `jsx > errors > adjacent-tags`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "input.jsx"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "script"
-	syntax: Array [
-		"jsx"
-		"ts"
-	]
+	sourceType: "module"
+	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.js"
+		filename: "input.jsx"
 		end: Object {
 			column: 38
 			index: 38
@@ -40,7 +39,7 @@ JSRoot {
 				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>?"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -59,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				end: Object {
 					column: 38
 					index: 38
@@ -74,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "input.jsx"
 					end: Object {
 						column: 38
 						index: 38
@@ -91,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								identifierName: "x"
 								end: Object {
 									column: 5
@@ -106,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 38
 								index: 38
@@ -121,7 +120,7 @@ JSRoot {
 						init: JSBinaryExpression {
 							operator: "<"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 38
 									index: 38
@@ -136,7 +135,7 @@ JSRoot {
 							left: JSBinaryExpression {
 								operator: ">"
 								loc: Object {
-									filename: "input.js"
+									filename: "input.jsx"
 									end: Object {
 										column: 30
 										index: 30
@@ -151,7 +150,7 @@ JSRoot {
 								right: JSReferenceIdentifier {
 									name: "two"
 									loc: Object {
-										filename: "input.js"
+										filename: "input.jsx"
 										identifierName: "two"
 										end: Object {
 											column: 30
@@ -168,7 +167,7 @@ JSRoot {
 								left: JSBinaryExpression {
 									operator: "<"
 									loc: Object {
-										filename: "input.js"
+										filename: "input.jsx"
 										end: Object {
 											column: 26
 											index: 26
@@ -183,7 +182,7 @@ JSRoot {
 									right: JSReferenceIdentifier {
 										name: "div"
 										loc: Object {
-											filename: "input.js"
+											filename: "input.jsx"
 											identifierName: "div"
 											end: Object {
 												column: 26
@@ -201,7 +200,7 @@ JSRoot {
 										name: JSXIdentifier {
 											name: "div"
 											loc: Object {
-												filename: "input.js"
+												filename: "input.jsx"
 												end: Object {
 													column: 12
 													index: 12
@@ -218,7 +217,7 @@ JSRoot {
 										selfClosing: false
 										typeArguments: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "input.jsx"
 											end: Object {
 												column: 22
 												index: 22
@@ -234,7 +233,7 @@ JSRoot {
 											JSXText {
 												value: "one"
 												loc: Object {
-													filename: "input.js"
+													filename: "input.jsx"
 													end: Object {
 														column: 16
 														index: 16
@@ -259,7 +258,7 @@ JSRoot {
 								sticky: false
 								unicode: false
 								loc: Object {
-									filename: "input.js"
+									filename: "input.jsx"
 									end: Object {
 										column: 38
 										index: 38
@@ -273,7 +272,7 @@ JSRoot {
 								}
 								expression: JSRegExpSubExpression {
 									loc: Object {
-										filename: "input.js"
+										filename: "input.jsx"
 										end: Object {
 											column: 37
 											index: 37
@@ -289,7 +288,7 @@ JSRoot {
 										JSRegExpCharacter {
 											value: "d"
 											loc: Object {
-												filename: "input.js"
+												filename: "input.jsx"
 												end: Object {
 													column: 33
 													index: 33
@@ -305,7 +304,7 @@ JSRoot {
 										JSRegExpCharacter {
 											value: "i"
 											loc: Object {
-												filename: "input.js"
+												filename: "input.jsx"
 												end: Object {
 													column: 34
 													index: 34
@@ -321,7 +320,7 @@ JSRoot {
 										JSRegExpCharacter {
 											value: "v"
 											loc: Object {
-												filename: "input.js"
+												filename: "input.jsx"
 												end: Object {
 													column: 35
 													index: 35
@@ -337,7 +336,7 @@ JSRoot {
 										JSRegExpCharacter {
 											value: ">"
 											loc: Object {
-												filename: "input.js"
+												filename: "input.jsx"
 												end: Object {
 													column: 36
 													index: 36
@@ -353,7 +352,7 @@ JSRoot {
 										JSRegExpCharacter {
 											value: ";"
 											loc: Object {
-												filename: "input.js"
+												filename: "input.jsx"
 												end: Object {
 													column: 37
 													index: 37
@@ -376,4 +375,135 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.jsx:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Encountered an error displaying this diagnostic
+  ✖ DiagnosticsError: Expected token Word but got Greater
+    
+     unknown parse/stringMarkup
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    
+      ✖ Expected token Word but got Greater
+    
+        <error>Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX
+    fragment <>...</>?</error>
+                                                                                                    
+     
+    ^
+    
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    ━━━
+    
+    ✖ Found 1 problem
+    
+      at ___R$project$rome$$romejs$diagnostics$errors_ts$createSingleDiagnosticError
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:75511:9)
+    generated source location
+      at StringMarkupParser.unexpected
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:80351:10)
+    generated source location
+      at StringMarkupParser.expectToken
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:80403:15)
+    generated source location
+      at StringMarkupParser.parseTag
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:3101:27)
+    generated source location
+      at StringMarkupParser.parseChild
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:3316:17)
+    generated source location
+      at StringMarkupParser.parseTag
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:3238:25)
+    generated source location
+      at StringMarkupParser.parseChild
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:3316:17)
+    generated source location
+      at StringMarkupParser.parse
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:3327:24)
+    generated source location
+      at ___R$project$rome$$romejs$string$markup$parse_ts$parseMarkup
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:3341:6)
+    generated source location
+      at ___R$$priv$project$rome$$romejs$string$markup$format_ts$renderGrid
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:56993:3)
+    generated source location
+      at ___R$project$rome$$romejs$string$markup$format_ts$markupToPlainText
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:57015:9)
+    generated source location
+      at ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default.markupify
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:60009:12)
+    generated source location
+      at ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default.logAllWithCategory
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:60129:25)
+    generated source location
+      at ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default.error
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:60159:8)
+    generated source location
+      at ___R$$priv$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printLog
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:63306:14)
+    generated source location
+      at ___R$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printAdviceItem
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:62751:11)
+    generated source location
+      at ___R$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printAdvice
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:62730:15)
+    generated source location
+      at <anonymous>
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:75278:24)
+    generated source location
+      at ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default.indent
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:59744:3)
+    generated source location
+      at ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default.displayDiagnostic
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:75274:12)
+    generated source location
+      at <anonymous>
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:75145:30)
+    generated source location
+      at ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default.wrapError
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:75126:4)
+    generated source location
+      at ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default.displayDiagnostics
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:75145:9)
+    generated source location
+      at ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default.print
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:75120:8)
+    generated source location
+      at ___R$project$rome$$romejs$cli$diagnostics$index_ts$printDiagnostics
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:75456:10)
+    generated source location
+      at ___R$project$rome$$romejs$cli$diagnostics$index_ts$printDiagnosticsToString
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:75468:2)
+    generated source location
+      at <anonymous>
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:103784:29)
+    generated source location
+      at <anonymous>
+    (/Users/sebastianmckenzie/Projects/rome/packages/@romejs/js-parser/index.test.ts:103684:11)
+    generated source location
+      at <anonymous> (project-rome/@romejs/core/test-worker/TestWorkerRunner.ts:538:16)
+      at ___R$project$rome$$romejs$diagnostics$wrap_ts$catchDiagnostics
+    (project-rome/@romejs/diagnostics/wrap.ts:28:22)
+      at ___R$project$rome$$romejs$core$test$worker$TestWorkerRunner_ts$default.runTest
+    (project-rome/@romejs/core/test-worker/TestWorkerRunner.ts:537:31)
+      at ___R$project$rome$$romejs$core$test$worker$TestWorkerRunner_ts$default.run
+    (project-rome/@romejs/core/test-worker/TestWorkerRunner.ts:604:24)
+      at global.runMicrotasks
+      at process.processTicksAndRejections (internal/process/task_queues.js:97:4) generated source
+    location
+      at ___R$project$rome$$romejs$core$test$worker$TestWorker_ts$default.runTest
+    (project-rome/@romejs/core/test-worker/TestWorker.ts:87:10)
+      at Function.all
+      at ___R$project$rome$$romejs$events$BridgeEvent_ts$default.call
+    (project-rome/@romejs/events/Event.ts:105:16)
+
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Found 1 problem
+
 ```

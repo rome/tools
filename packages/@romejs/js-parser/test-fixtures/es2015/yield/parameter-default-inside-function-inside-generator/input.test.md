@@ -4,6 +4,8 @@
 
 ## `es2015 > yield > parameter-default-inside-function-inside-generator`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -244,4 +246,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```
