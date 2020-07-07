@@ -219,6 +219,7 @@ export * from "./markdown/blocks/MarkdownHeadingBlock";
 export * from "./markdown/inline/MarkdownImageInline";
 export * from "./markdown/inline/MarkdownLinkInline";
 export * from "./markdown/blocks/MarkdownListBlock";
+export * from "./markdown/core/MarkdownListItem";
 export * from "./markdown/core/MarkdownParagraph";
 export * from "./markdown/blocks/MarkdownQuoteBlock";
 export * from "./markdown/core/MarkDownRoot";
@@ -499,6 +500,7 @@ export type AnyNode =
 	| n.MarkdownImageInline
 	| n.MarkdownLinkInline
 	| n.MarkdownListBlock
+	| n.MarkdownListItem
 	| n.MarkdownParagraph
 	| n.MarkdownQuoteBlock
 	| n.MarkDownRoot

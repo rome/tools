@@ -647,6 +647,9 @@ builders.set("MarkdownLinkInline", MarkdownLinkInline);
 import MarkdownListBlock from "./markdown/blocks/MarkdownListBlock";
 builders.set("MarkdownListBlock", MarkdownListBlock);
 
+import MarkdownListItem from "./markdown/core/MarkdownListItem";
+builders.set("MarkdownListItem", MarkdownListItem);
+
 import MarkdownParagraph from "./markdown/core/MarkdownParagraph";
 builders.set("MarkdownParagraph", MarkdownParagraph);
 

@@ -1,11 +1,10 @@
-import {NodeBaseWithComments} from "@romejs/ast";
+import {MarkdownListItem, NodeBaseWithComments} from "@romejs/ast";
 import {createBuilder} from "../../utils";
-import {MarkdownListChildren} from "@romejs/ast/markdown/types";
 
 export type MarkdownListBlock = NodeBaseWithComments & {
 	type: "MarkdownListBlock";
 	kind: "dot-list" | "numeric-list";
-	children: Array<MarkdownListChildren>;
+	children: Array<MarkdownListItem>;
 };
 
 export const markdownListBlock = createBuilder<MarkdownListBlock>(
