@@ -102,8 +102,12 @@ export function buildFileLink(
 		);
 		if (pos !== undefined) {
 			filename = pos.filename;
-			line = String(pos.line);
-			column = String(pos.column);
+			if (pos.line !== undefined) {
+				line = String(pos.line);
+			}
+			if (pos.column !== undefined) {
+				column = String(pos.column);
+			}
 		}
 	}
 
