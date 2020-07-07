@@ -79,8 +79,8 @@ export const createSnapshotParser = createParser((ParserCore) =>
 			this.ignoreWhitespaceTokens = true;
 		}
 
-		tokenize(index: Number0, input: string) {
-			const char = input[ob1Get0(index)];
+		tokenize(index: Number0) {
+			const char = this.getInputCharOnly(index);
 
 			switch (char) {
 				case "#": {
@@ -90,14 +90,14 @@ export const createSnapshotParser = createParser((ParserCore) =>
 				}
 
 				case "`": {
-					const nextChar = input[ob1Get0(ob1Add(index, 1))];
-					const nextNextChar = input[ob1Get0(ob1Add(index, 2))];
+					const nextChar = this.getInputCharOnly(index, 1);
+					const nextNextChar = this.getInputCharOnly(index, 2);
 
 					if (nextChar === "`" && nextNextChar === "`") {
 						let codeOffset = ob1Add(index, 3);
 
 						let language: undefined | string;
-						if (input[ob1Get0(codeOffset)] !== "\n") {
+						if (this.getInputCharOnly(codeOffset) !== "\n") {
 							[language, codeOffset] = this.readInputFrom(
 								codeOffset,
 								isntNewline,
@@ -105,7 +105,7 @@ export const createSnapshotParser = createParser((ParserCore) =>
 						}
 
 						// Expect the first offset character to be a newline
-						if (input[ob1Get0(codeOffset)] === "\n") {
+						if (this.getInputCharOnly(codeOffset) === "\n") {
 							// Skip leading newline
 							codeOffset = ob1Add(codeOffset, 1);
 						} else {
@@ -119,7 +119,7 @@ export const createSnapshotParser = createParser((ParserCore) =>
 
 						let end = ob1Add(codeOffset, code.length);
 
-						if (isCodeBlockEnd(end, input)) {
+						if (isCodeBlockEnd(end, this.input)) {
 							// Check for trailing newline
 							if (code[code.length - 1] === "\n") {
 								// Trim trailing newline

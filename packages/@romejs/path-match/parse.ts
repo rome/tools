@@ -60,9 +60,9 @@ const createPathMatchParser = createParser((ParserCore) =>
 			return true;
 		}
 
-		tokenize(index: Number0, input: string) {
-			const char = input[ob1Get0(index)];
-			const nextChar = input[ob1Get0(index) + 1];
+		tokenize(index: Number0) {
+			const char = this.getInputCharOnly(index);
+			const nextChar = this.getInputCharOnly(index, 1);
 
 			if (char === "*") {
 				if (nextChar === "*") {

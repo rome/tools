@@ -313,13 +313,15 @@ export default class SnapshotManager {
 					await this.emitDiagnostic(descriptions.SNAPSHOTS.REDUNDANT);
 				}
 			} else {
+				// Don't delete or write a snapshot if there are test failures as those failures may be hiding snapshot usages
+				if (!hasDiagnostics) {
+					continue;
+				}
+
 				if (existsOnDisk && !used) {
-					// Don't delete a snapshot if there are test failures as those failures may be hiding a snapshot usage
-					if (!hasDiagnostics) {
-						// If a snapshot wasn't used or is empty then delete it!
-						await removeFile(path);
-						this.snapshotCounts.deleted++;
-					}
+					// If a snapshot wasn't used or is empty then delete it!
+					await removeFile(path);
+					this.snapshotCounts.deleted++;
 				} else if (used && formatted !== raw) {
 					// Fresh snapshot!
 					await writeFile(path, formatted);

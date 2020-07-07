@@ -17,7 +17,7 @@ import {
 } from "@romejs/parser-core";
 import {getSPDXLicense, licenseNames} from "./index";
 import {descriptions} from "@romejs/diagnostics";
-import {Number0, ob1Get0, ob1Inc} from "@romejs/ob1";
+import {Number0} from "@romejs/ob1";
 
 //# Tokens
 type Tokens = BaseTokens & {
@@ -70,14 +70,15 @@ const createSPDXLicenseParser = createParser((ParserCore) =>
 	class SPDXLicenseParser extends ParserCore<Tokens> {
 		constructor(opts: SPDXLicenseParserOptions) {
 			super(opts, "parse/spdxLicense", {});
+			this.ignoreWhitespaceTokens = true;
 			this.loose = opts.loose === true;
 		}
 
 		loose: boolean;
 
 		// For some reason Flow will throw an error without the type casts...
-		tokenize(index: Number0, input: string) {
-			const char = input[ob1Get0(index)];
+		tokenize(index: Number0) {
+			const char = this.getInputCharOnly(index);
 
 			if (char === "+") {
 				return this.finishToken("Plus");
@@ -89,11 +90,6 @@ const createSPDXLicenseParser = createParser((ParserCore) =>
 
 			if (char === ")") {
 				return this.finishToken("ParenClose");
-			}
-
-			// Skip spaces
-			if (char === " ") {
-				return this.lookaheadToken(ob1Inc(index));
 			}
 
 			if (isWordChar(char)) {
