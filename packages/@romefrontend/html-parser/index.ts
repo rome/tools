@@ -33,9 +33,7 @@ type Tokens = BaseTokens & {
 	Greater: SimpleToken<"Greater">;
 	Identifier: ValueToken<"Identifier", string>;
 	String: ValueToken<"String", string>;
-	Exclamation: SimpleToken<"Exclamation">;
 	Comment: ValueToken<"Comment", string>;
-	Dash: SimpleToken<"Dash">;
 };
 
 type State = ParserCoreState & {
@@ -68,7 +66,7 @@ function isTagComment(index: Number0, input: string): boolean {
 	const second = input[ob1Get0(index) + 1];
 	const third = input[ob1Get0(index) + 2];
 	const fourth = input[ob1Get0(index) + 3];
-	return first === "<" && second === "!" && third === "-"&& fourth === "-";
+	return first === "<" && second === "!" && third === "-" && fourth === "-";
 }
 
 const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>

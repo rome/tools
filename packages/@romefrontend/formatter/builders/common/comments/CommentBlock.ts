@@ -5,8 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Token} from "@romefrontend/formatter";
+import {Builder, Token} from "@romefrontend/formatter";
+import {AnyComment} from "@romefrontend/ast";
 
-export default function CommentBlock(): Token {
-	throw new Error("unimplemented");
+export default function CommentBlock(builder: Builder, node: AnyComment): Token {
+	// TODO to review this part
+	return JSON.stringify(node.value);
 }
