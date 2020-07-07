@@ -4,6 +4,8 @@
 
 ## `core > uncategorised > 51`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -18,9 +20,9 @@ JSRoot {
 	loc: Object {
 		filename: "input.js"
 		end: Object {
-			column: 0
-			index: 12
-			line: 3
+			column: 9
+			index: 9
+			line: 1
 		}
 		start: Object {
 			column: 0
@@ -31,13 +33,13 @@ JSRoot {
 	comments: Array [
 		CommentBlock {
 			id: "0"
-			value: "a\nb"
+			value: "ab"
 			loc: Object {
 				filename: "input.js"
 				end: Object {
-					column: 3
-					index: 7
-					line: 2
+					column: 6
+					index: 6
+					line: 1
 				}
 				start: Object {
 					column: 0
@@ -53,14 +55,14 @@ JSRoot {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
-					column: 7
-					index: 11
-					line: 2
+					column: 9
+					index: 9
+					line: 1
 				}
 				start: Object {
-					column: 4
-					index: 8
-					line: 2
+					column: 7
+					index: 7
+					line: 1
 				}
 			}
 			expression: JSNumericLiteral {
@@ -70,18 +72,25 @@ JSRoot {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
-						column: 6
-						index: 10
-						line: 2
+						column: 9
+						index: 9
+						line: 1
 					}
 					start: Object {
-						column: 4
-						index: 8
-						line: 2
+						column: 7
+						index: 7
+						line: 1
 					}
 				}
 			}
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

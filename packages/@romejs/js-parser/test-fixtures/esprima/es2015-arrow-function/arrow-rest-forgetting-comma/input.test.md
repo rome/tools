@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-arrow-function > arrow-rest-forgetting-comma`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -245,4 +247,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Unexpected token, expected ,
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

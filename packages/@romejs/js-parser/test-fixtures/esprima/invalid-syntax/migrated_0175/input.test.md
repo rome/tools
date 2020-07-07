@@ -4,6 +4,8 @@
 
 ## `esprima > invalid-syntax > migrated_0175`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -137,4 +139,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Unexpected token, expected while
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

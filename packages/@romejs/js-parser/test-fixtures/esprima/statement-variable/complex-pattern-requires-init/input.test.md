@@ -4,6 +4,8 @@
 
 ## `esprima > statement-variable > complex-pattern-requires-init`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -122,4 +124,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Complex binding patterns require an initialization value
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

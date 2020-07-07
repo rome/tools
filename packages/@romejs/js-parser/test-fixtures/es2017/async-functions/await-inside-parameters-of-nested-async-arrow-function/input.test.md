@@ -4,6 +4,8 @@
 
 ## `es2017 > async-functions > await-inside-parameters-of-nested-async-arrow-function`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -263,4 +265,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:2:18 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ await is not allowed in async function parameters
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

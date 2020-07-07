@@ -4,6 +4,8 @@
 
 ## `esprima > statement-iteration > const_forin`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -181,4 +183,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

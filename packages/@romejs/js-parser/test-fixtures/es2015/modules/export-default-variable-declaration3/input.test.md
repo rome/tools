@@ -4,6 +4,8 @@
 
 ## `es2015 > modules > export-default-variable-declaration3`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -240,4 +242,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Only expressions, functions or classes are allowed as the `default` export.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

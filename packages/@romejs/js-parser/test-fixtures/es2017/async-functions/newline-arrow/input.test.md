@@ -4,6 +4,8 @@
 
 ## `es2017 > async-functions > newline-arrow`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -117,4 +119,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

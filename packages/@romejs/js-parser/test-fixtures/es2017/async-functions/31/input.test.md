@@ -4,6 +4,8 @@
 
 ## `es2017 > async-functions > 31`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -282,4 +284,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

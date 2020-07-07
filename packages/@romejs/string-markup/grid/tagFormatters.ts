@@ -13,6 +13,7 @@ import {
 } from "../types";
 import {humanizeNumber} from "@romejs/string-utils";
 import {createUnknownFilePath} from "@romejs/path";
+import {ob1Coerce0, ob1Coerce1} from "@romejs/ob1";
 
 export function normalizeTokenType(
 	type: undefined | string,
@@ -80,36 +81,48 @@ export function humanizeMarkupFilename(
 	return createUnknownFilePath(filename).format(opts.cwd);
 }
 
-export function getFileLinkText(
-	filename: string,
+export function buildFileLink(
 	attributes: TagAttributes,
 	opts: MarkupFormatOptions,
-): string {
+): {
+	text: string;
+	filename: string;
+	line: undefined | string;
+	column: undefined | string;
+} {
+	let filename = attributes.target || "";
+	let line = attributes.line;
+	let column = attributes.column;
+
+	if (opts.normalizePosition !== undefined) {
+		const pos = opts.normalizePosition(
+			filename,
+			line === undefined ? undefined : ob1Coerce1(Number(line)),
+			column === undefined ? undefined : ob1Coerce0(Number(column)),
+		);
+		if (pos !== undefined) {
+			filename = pos.filename;
+			if (pos.line !== undefined) {
+				line = String(pos.line);
+			}
+			if (pos.column !== undefined) {
+				column = String(pos.column);
+			}
+		}
+	}
+
 	let text = humanizeMarkupFilename(filename, opts);
 
-	const line = attributes.line;
 	if (line !== undefined) {
 		text += `:${line}`;
 
-		const column = attributes.column;
 		// Ignore a 0 column and just target the line
 		if (column !== undefined && column !== "0") {
 			text += `:${column}`;
 		}
 	}
 
-	return text;
-}
-
-export function getFileLinkFilename(
-	attributes: TagAttributes,
-	opts: MarkupFormatOptions,
-): string {
-	let filename = attributes.target || "";
-	if (opts.normalizeFilename !== undefined) {
-		filename = opts.normalizeFilename(filename);
-	}
-	return filename;
+	return {filename, text, line, column};
 }
 
 export function formatApprox(attributes: TagAttributes, value: string) {

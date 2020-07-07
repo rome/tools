@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-meta-property > new-target-invoke`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -185,4 +187,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

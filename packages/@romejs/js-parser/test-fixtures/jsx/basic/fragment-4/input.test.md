@@ -4,23 +4,22 @@
 
 ## `jsx > basic > fragment-4`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "script"
-	syntax: Array [
-		"jsx"
-		"ts"
-	]
+	sourceType: "module"
+	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.js"
+		filename: "input.jsx"
 		end: Object {
 			column: 0
 			index: 50
@@ -35,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				end: Object {
 					column: 3
 					index: 49
@@ -49,7 +48,7 @@ JSRoot {
 			}
 			expression: JSXFragment {
 				loc: Object {
-					filename: "input.js"
+					filename: "input.jsx"
 					end: Object {
 						column: 3
 						index: 49
@@ -65,7 +64,7 @@ JSRoot {
 					JSXText {
 						value: "\n  "
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 2
 								index: 5
@@ -80,7 +79,7 @@ JSRoot {
 					}
 					JSXFragment {
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 5
 								index: 45
@@ -96,7 +95,7 @@ JSRoot {
 							JSXText {
 								value: "\n    "
 								loc: Object {
-									filename: "input.js"
+									filename: "input.jsx"
 									end: Object {
 										column: 4
 										index: 12
@@ -111,7 +110,7 @@ JSRoot {
 							}
 							JSXFragment {
 								loc: Object {
-									filename: "input.js"
+									filename: "input.jsx"
 									end: Object {
 										column: 7
 										index: 39
@@ -127,7 +126,7 @@ JSRoot {
 									JSXText {
 										value: "\n      super deep\n    "
 										loc: Object {
-											filename: "input.js"
+											filename: "input.jsx"
 											end: Object {
 												column: 4
 												index: 36
@@ -145,7 +144,7 @@ JSRoot {
 							JSXText {
 								value: "\n  "
 								loc: Object {
-									filename: "input.js"
+									filename: "input.jsx"
 									end: Object {
 										column: 2
 										index: 42
@@ -163,7 +162,7 @@ JSRoot {
 					JSXText {
 						value: "\n"
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 0
 								index: 46
@@ -181,4 +180,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

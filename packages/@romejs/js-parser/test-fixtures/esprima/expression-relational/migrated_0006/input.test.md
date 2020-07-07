@@ -4,6 +4,8 @@
 
 ## `esprima > expression-relational > migrated_0006`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -130,4 +132,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

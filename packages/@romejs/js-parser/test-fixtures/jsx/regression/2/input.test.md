@@ -4,23 +4,22 @@
 
 ## `jsx > regression > 2`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "script"
-	syntax: Array [
-		"jsx"
-		"ts"
-	]
+	sourceType: "module"
+	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.js"
+		filename: "input.jsx"
 		end: Object {
 			column: 30
 			index: 30
@@ -35,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				end: Object {
 					column: 30
 					index: 30
@@ -51,7 +50,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "div"
 					loc: Object {
-						filename: "input.js"
+						filename: "input.jsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -68,7 +67,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "input.jsx"
 					end: Object {
 						column: 30
 						index: 30
@@ -83,7 +82,7 @@ JSRoot {
 				children: Array [
 					JSXExpressionContainer {
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 24
 								index: 24
@@ -99,7 +98,7 @@ JSRoot {
 							name: JSXIdentifier {
 								name: "div"
 								loc: Object {
-									filename: "input.js"
+									filename: "input.jsx"
 									end: Object {
 										column: 10
 										index: 10
@@ -116,7 +115,7 @@ JSRoot {
 							selfClosing: true
 							typeArguments: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 23
 									index: 23
@@ -131,7 +130,7 @@ JSRoot {
 							attributes: Array [
 								JSXSpreadAttribute {
 									loc: Object {
-										filename: "input.js"
+										filename: "input.jsx"
 										end: Object {
 											column: 20
 											index: 20
@@ -146,7 +145,7 @@ JSRoot {
 									argument: JSReferenceIdentifier {
 										name: "test"
 										loc: Object {
-											filename: "input.js"
+											filename: "input.jsx"
 											identifierName: "test"
 											end: Object {
 												column: 19
@@ -169,4 +168,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

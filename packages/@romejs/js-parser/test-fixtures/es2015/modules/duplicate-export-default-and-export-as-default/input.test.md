@@ -4,6 +4,8 @@
 
 ## `es2015 > modules > duplicate-export-default-and-export-as-default`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -245,4 +247,20 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:2:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Only one default export allowed per module.
+
+  ℹ Defined already here
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

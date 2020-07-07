@@ -4,6 +4,8 @@
 
 ## `typescript > import > not-top-level`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -164,4 +166,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

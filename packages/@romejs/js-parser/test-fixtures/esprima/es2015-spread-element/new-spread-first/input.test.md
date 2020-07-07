@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-spread-element > new-spread-first`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -149,4 +151,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

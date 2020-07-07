@@ -31,11 +31,10 @@ import {
 	humanizeTime,
 } from "@romejs/string-utils";
 import {
+	buildFileLink,
 	formatApprox,
 	formatGrammarNumber,
 	formatNumber,
-	getFileLinkFilename,
-	getFileLinkText,
 } from "./tagFormatters";
 import {escapeXHTMLEntities} from "@romejs/html-parser";
 import {ansiFormatText} from "./ansi";
@@ -826,11 +825,7 @@ export default class Grid {
 						children: [
 							{
 								type: "Text",
-								value: getFileLinkText(
-									getFileLinkFilename(tag.attributes, this.markupOptions),
-									tag.attributes,
-									this.markupOptions,
-								),
+								value: buildFileLink(tag.attributes, this.markupOptions).text,
 							},
 						],
 					},

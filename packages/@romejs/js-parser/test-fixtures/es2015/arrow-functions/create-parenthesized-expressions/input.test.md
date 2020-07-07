@@ -4,6 +4,8 @@
 
 ## `es2015 > arrow-functions > create-parenthesized-expressions`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -118,4 +120,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

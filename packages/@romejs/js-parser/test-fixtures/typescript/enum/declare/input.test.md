@@ -4,6 +4,8 @@
 
 ## `typescript > enum > declare`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -19,9 +21,9 @@ JSRoot {
 	loc: Object {
 		filename: "input.ts"
 		end: Object {
-			column: 0
-			index: 18
-			line: 2
+			column: 17
+			index: 17
+			line: 1
 		}
 		start: Object {
 			column: 0
@@ -67,4 +69,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

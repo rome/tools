@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-for-of > let-of-of`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -131,4 +133,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

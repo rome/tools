@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-object-pattern > properties`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -534,4 +536,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -4,6 +4,8 @@
 
 ## `typescript > class > extends`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -165,4 +167,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

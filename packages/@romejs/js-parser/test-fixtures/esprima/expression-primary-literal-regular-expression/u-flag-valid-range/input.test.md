@@ -4,6 +4,8 @@
 
 ## `esprima > expression-primary-literal-regular-expression > u-flag-valid-range`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -675,4 +677,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:15 parse/regex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Range values reversed. Start char code is greater than end char code
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

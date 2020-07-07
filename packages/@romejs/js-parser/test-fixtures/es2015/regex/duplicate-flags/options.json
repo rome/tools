@@ -1,3 +1,3 @@
 {
-  "throws": "Duplicate regular expression flag"
+	"throws": true
 }

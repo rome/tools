@@ -4,6 +4,8 @@
 
 ## `comments > basic > call-expression-function-argument`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -259,4 +261,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

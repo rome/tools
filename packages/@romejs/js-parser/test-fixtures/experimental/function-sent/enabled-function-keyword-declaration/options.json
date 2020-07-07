@@ -1,4 +1,4 @@
 {
-  "plugins": [],
-  "throws": "Unexpected token"
+  "plugins": ["functionSent"],
+  "throws": "Unexpected token, expected \";\" (2:18)"
 }

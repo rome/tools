@@ -4,23 +4,22 @@
 
 ## `jsx > basic > empty-expression-container`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "script"
-	syntax: Array [
-		"jsx"
-		"ts"
-	]
+	sourceType: "module"
+	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.js"
+		filename: "input.jsx"
 		end: Object {
 			column: 9
 			index: 9
@@ -35,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				end: Object {
 					column: 9
 					index: 9
@@ -51,7 +50,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "a"
 					loc: Object {
-						filename: "input.js"
+						filename: "input.jsx"
 						end: Object {
 							column: 2
 							index: 2
@@ -68,7 +67,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "input.jsx"
 					end: Object {
 						column: 9
 						index: 9
@@ -83,7 +82,7 @@ JSRoot {
 				children: Array [
 					JSXExpressionContainer {
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 5
 								index: 5
@@ -97,7 +96,7 @@ JSRoot {
 						}
 						expression: JSXEmptyExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 4
 									index: 4
@@ -116,4 +115,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

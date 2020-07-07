@@ -1,3 +1,3 @@
 {
-  "throws": "Illegal newline after throw"
+	"throws": true
 }

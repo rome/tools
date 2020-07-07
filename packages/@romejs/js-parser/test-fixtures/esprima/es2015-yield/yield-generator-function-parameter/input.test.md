@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-yield > yield-generator-function-parameter`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -261,4 +263,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

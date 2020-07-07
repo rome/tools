@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-super-property > new_super`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -312,4 +314,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

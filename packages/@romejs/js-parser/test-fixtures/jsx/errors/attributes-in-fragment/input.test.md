@@ -4,22 +4,21 @@
 
 ## `jsx > errors > attributes-in-fragment`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "script"
-	syntax: Array [
-		"jsx"
-		"ts"
-	]
+	sourceType: "module"
+	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.js"
+		filename: "input.jsx"
 		end: Object {
 			column: 0
 			index: 17
@@ -40,7 +39,7 @@ JSRoot {
 				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unknown JSX identifier token"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -59,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				end: Object {
 					column: 16
 					index: 16
@@ -75,7 +74,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "key"
 					loc: Object {
-						filename: "input.js"
+						filename: "input.jsx"
 						end: Object {
 							column: 5
 							index: 5
@@ -92,7 +91,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "input.jsx"
 					end: Object {
 						column: 16
 						index: 16
@@ -109,7 +108,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: ""
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 6
 									index: 6
@@ -124,7 +123,7 @@ JSRoot {
 						}
 						value: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 6
 								index: 6
@@ -141,7 +140,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: ""
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 12
 									index: 12
@@ -156,7 +155,7 @@ JSRoot {
 						}
 						value: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 12
 								index: 12
@@ -174,4 +173,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.jsx:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Unknown JSX identifier token
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

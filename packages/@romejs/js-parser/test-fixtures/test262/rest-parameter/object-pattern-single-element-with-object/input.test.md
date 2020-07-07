@@ -4,6 +4,8 @@
 
 ## `test262 > rest-parameter > object-pattern-single-element-with-object`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -267,4 +269,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

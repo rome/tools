@@ -4,6 +4,8 @@
 
 ## `experimental > class-private-properties > nested`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -5404,4 +5406,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

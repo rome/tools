@@ -4,6 +4,8 @@
 
 ## `comments > basic > function-trailing-comma-shorthand`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -19,7 +21,7 @@ JSRoot {
 		filename: "input.js"
 		end: Object {
 			column: 0
-			index: 29
+			index: 47
 			line: 2
 		}
 		start: Object {
@@ -31,17 +33,34 @@ JSRoot {
 	comments: Array [
 		CommentBlock {
 			id: "0"
-			value: " comment "
+			value: " comment 1 "
 			loc: Object {
 				filename: "input.js"
 				end: Object {
-					column: 26
-					index: 26
+					column: 28
+					index: 28
 					line: 1
 				}
 				start: Object {
 					column: 13
 					index: 13
+					line: 1
+				}
+			}
+		}
+		CommentBlock {
+			id: "1"
+			value: " comment 2 "
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 45
+					index: 45
+					line: 1
+				}
+				start: Object {
+					column: 30
+					index: 30
 					line: 1
 				}
 			}
@@ -52,8 +71,8 @@ JSRoot {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
-					column: 28
-					index: 28
+					column: 46
+					index: 46
 					line: 1
 				}
 				start: Object {
@@ -63,11 +82,12 @@ JSRoot {
 				}
 			}
 			expression: JSCallExpression {
+				trailingComments: Array ["1"]
 				loc: Object {
 					filename: "input.js"
 					end: Object {
-						column: 27
-						index: 27
+						column: 29
+						index: 29
 						line: 1
 					}
 					start: Object {
@@ -112,7 +132,7 @@ JSRoot {
 						}
 					}
 					JSObjectExpression {
-						trailingComments: Array ["0"]
+						trailingComments: Array []
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -198,4 +218,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

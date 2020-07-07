@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-import-declaration > import-default-and-named-specifiers`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -180,4 +182,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -18,6 +18,7 @@ import {
 	createSingleDiagnosticError,
 	deriveDiagnosticFromErrorStructure,
 	descriptions,
+	diagnosticLocationToMarkupFilelink,
 	getErrorStackAdvice,
 } from "@romejs/diagnostics";
 import {
@@ -104,8 +105,10 @@ export type TestWorkerFileResult = {
 };
 
 type FoundTest = {
+	name: string;
 	options: TestOptions;
 	callback: TestCallback;
+	callsiteLocation: DiagnosticLocation;
 };
 
 export type FocusedTest = {
@@ -147,7 +150,16 @@ export default class TestWorkerRunner {
 	locked: boolean;
 	consoleAdvice: DiagnosticAdvice;
 	hasDiagnostics: boolean;
+
+	// Diagnostics that shouldn't result in console logs being output
 	pendingDiagnostics: Array<Diagnostic>;
+
+	createTestRef(test: FoundTest): TestRef {
+		return {
+			testName: test.name,
+			filename: this.file.real.join(),
+		};
+	}
 
 	createConsole(): Partial<Console> {
 		const addDiagnostic = (
@@ -279,20 +291,10 @@ export default class TestWorkerRunner {
 				});
 			}
 		} catch (err) {
-			await this.onError(
-				undefined,
-				{
-					error: err,
-					firstAdvice: [],
-					lastAdvice: [
-						{
-							type: "log",
-							category: "info",
-							text: markup`Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
-						},
-					],
-				},
-			);
+			await this.emitError({
+				origin: {type: "EXECUTING"},
+				error: err,
+			});
 		}
 	}
 
@@ -318,20 +320,33 @@ export default class TestWorkerRunner {
 			throw new Error(`Test ${testName} has already been defined`);
 		}
 
+		// Get the frame where this test was declared. We pop 1 off as the error is created inside the test function.
+		const callsiteStruct = getErrorStructure(callsiteError, 1);
+		const callsiteLocation = getSourceLocationFromErrorFrame(
+			callsiteStruct.frames[0],
+		);
+
 		this.foundTests.set(
 			testName,
 			{
+				callsiteLocation,
+				name: testName,
 				callback,
 				options,
 			},
 		);
 
-		if (options.only === true) {
-			const callsiteStruct = getErrorStructure(callsiteError, 1);
+		let only = options.only === true;
 
+		const {filter} = this.options;
+		if (filter !== undefined) {
+			only = testName.includes(filter);
+		}
+
+		if (only) {
 			this.focusedTests.push({
 				testName,
-				location: getSourceLocationFromErrorFrame(callsiteStruct.frames[0]),
+				location: callsiteLocation,
 			});
 
 			this.hasFocusedTests = true;
@@ -352,32 +367,20 @@ export default class TestWorkerRunner {
 		}
 	}
 
-	async emitDiagnostic(
-		diag: Diagnostic,
-		ref?: TestRef,
-		advice?: DiagnosticAdvice,
-	) {
+	async emitDiagnostic(diag: Diagnostic, test?: FoundTest) {
 		let origin: DiagnosticOrigin = {
 			category: "test/error",
 			message: "Generated from a test worker without being attached to a test",
 		};
 
-		if (ref !== undefined) {
-			origin.message = markup`Generated from the file <filelink target="${this.file.uid}" /> and test name "${ref.testName}"`;
-		}
-
 		let label = diag.label;
-		if (label !== undefined && ref !== undefined) {
-			label = escapeMarkup(ref.testName);
+		if (label === undefined && test !== undefined) {
+			label = escapeMarkup(test.name);
 		}
 
 		diag = {
 			...diag,
 			label,
-			description: {
-				...diag.description,
-				advice: [...diag.description.advice, ...(advice || [])],
-			},
 		};
 
 		this.hasDiagnostics = true;
@@ -397,71 +400,118 @@ export default class TestWorkerRunner {
 		);
 	}
 
-	async onError(
-		testName: undefined | string,
+	async emitError(
 		opts: {
 			error: Error;
-			firstAdvice?: DiagnosticAdvice;
-			lastAdvice?: DiagnosticAdvice;
+			origin:
+				| {
+						type: "INTERNAL";
+					}
+				| {
+						type: "EXECUTING";
+					}
+				| {
+						type: "TEST";
+						test: FoundTest;
+					}
+				| {
+						type: "TEARDOWN";
+						test: FoundTest;
+					};
+			trailingAdvice?: DiagnosticAdvice;
 		},
 	): Promise<void> {
+		const {origin, error, trailingAdvice = []} = opts;
+
 		let diagnostic = this.deriveDiagnosticFromErrorStructure(
-			getErrorStructure(opts.error),
+			getErrorStructure(error),
 		);
+		let {location} = diagnostic;
+		let {advice} = diagnostic.description;
+		let test: undefined | FoundTest;
+
+		switch (origin.type) {
+			case "INTERNAL": {
+				advice.push(INTERNAL_ERROR_LOG_ADVICE);
+				break;
+			}
+
+			case "EXECUTING": {
+				advice.push({
+					type: "log",
+					category: "info",
+					text: markup`Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
+				});
+				break;
+			}
+
+			case "TEST": {
+				advice.push({
+					type: "log",
+					category: "info",
+					text: `Test declared at <emphasis>${diagnosticLocationToMarkupFilelink(
+						origin.test.callsiteLocation,
+					)}:</emphasis>`,
+				});
+				advice.push({
+					type: "frame",
+					location: origin.test.callsiteLocation,
+				});
+				test = origin.test;
+				break;
+			}
+
+			case "TEARDOWN": {
+				advice.push({
+					type: "log",
+					category: "info",
+					text: `Error occured while running <emphasis>teardown</emphasis> for test declared at <emphasis>${diagnosticLocationToMarkupFilelink(
+						origin.test.callsiteLocation,
+					)}:</emphasis>`,
+				});
+				advice.push({
+					type: "frame",
+					location: origin.test.callsiteLocation,
+				});
+				test = origin.test;
+				break;
+			}
+		}
+
+		advice = [...advice, ...trailingAdvice];
 
 		diagnostic = {
 			...diagnostic,
+			location,
 			unique: true,
 			description: {
 				...diagnostic.description,
-				advice: [
-					...(opts.firstAdvice || []),
-					...diagnostic.description.advice,
-					...(opts.lastAdvice || []),
-				],
+				advice,
 			},
 		};
 
-		await this.emitDiagnostic(
-			diagnostic,
-			testName === undefined ? undefined : this.createTestRef(testName),
-		);
+		await this.emitDiagnostic(diagnostic, test);
 	}
 
-	async teardownTest(testName: string, api: TestAPI): Promise<boolean> {
+	async teardownTest(test: FoundTest, api: TestAPI): Promise<boolean> {
 		api.clearTimeout();
 
 		try {
 			await api.teardownEvent.callOptional();
 			return true;
 		} catch (err) {
-			await this.onError(
-				testName,
-				{
-					error: err,
-					firstAdvice: [],
-					lastAdvice: [
-						{
-							type: "log",
-							category: "info",
-							text: `Error occured while running <emphasis>teardown</emphasis> for test <emphasis>${testName}</emphasis>`,
-						},
-						...api.advice,
-					],
-				},
-			);
+			await this.emitError({
+				origin: {type: "TEARDOWN", test},
+				error: err,
+				trailingAdvice: api.getAdvice(),
+			});
 			return false;
 		}
 	}
 
-	createTestRef(testName: string): TestRef {
-		return {
-			testName,
-			filename: this.file.real.join(),
-		};
-	}
+	async runTest(test: FoundTest) {
+		const {callback, name: testName} = test;
 
-	async runTest(testName: string, callback: TestCallback) {
 		let onTimeout: OnTimeout = () => {
 			throw new Error("Promise wasn't created. Should be impossible.");
 		};
@@ -472,10 +522,17 @@ export default class TestWorkerRunner {
 			};
 		});
 
-		const ref = this.createTestRef(testName);
-
 		const emitDiagnostic = (diag: Diagnostic): Promise<void> => {
-			return this.emitDiagnostic(diag, ref, api.advice);
+			return this.emitDiagnostic(
+				{
+					...diag,
+					description: {
+						...diag.description,
+						advice: api.getAdvice(diag.description.advice),
+					},
+				},
+				test,
+			);
 		};
 
 		const api = new TestAPI({
@@ -507,19 +564,16 @@ export default class TestWorkerRunner {
 
 			testSuccess = true;
 		} catch (err) {
-			await this.onError(
-				testName,
-				{
-					error: err,
-					firstAdvice: [],
-					lastAdvice: api.advice,
-				},
-			);
+			await this.emitError({
+				origin: {type: "TEST", test},
+				error: err,
+				trailingAdvice: api.getAdvice(),
+			});
 		} finally {
-			const teardownSuccess = await this.teardownTest(testName, api);
+			const teardownSuccess = await this.teardownTest(test, api);
 			await this.bridge.testFinish.call({
 				success: testSuccess && teardownSuccess,
-				ref,
+				ref: this.createTestRef(test),
 			});
 		}
 	}
@@ -547,21 +601,18 @@ export default class TestWorkerRunner {
 		}
 
 		// Execute all the tests
-		for (const [testName, test] of foundTests) {
-			const {options, callback} = test;
+		for (const test of foundTests.values()) {
+			const {options} = test;
 			if (this.hasFocusedTests && !test.options.only) {
 				continue;
 			}
 
 			this.bridge.testStart.send({
-				ref: {
-					filename: this.file.real.join(),
-					testName,
-				},
+				ref: this.createTestRef(test),
 				timeout: options.timeout,
 			});
 
-			const promise = this.runTest(testName, callback);
+			const promise = this.runTest(test);
 
 			if (this.options.syncTests) {
 				await promise;
@@ -626,21 +677,10 @@ export default class TestWorkerRunner {
 				}
 			}
 		} catch (err) {
-			await this.onError(
-				undefined,
-				{
-					error: err,
-					firstAdvice: [],
-					lastAdvice: [
-						{
-							type: "log",
-							category: "info",
-							text: markup`Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
-						},
-						INTERNAL_ERROR_LOG_ADVICE,
-					],
-				},
-			);
+			await this.emitError({
+				origin: {type: "INTERNAL"},
+				error: err,
+			});
 		}
 	}
 

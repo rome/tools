@@ -4,6 +4,8 @@
 
 ## `es2015 > yield > parameter-name-arrow-inside-arrow-inside-generator`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -227,4 +229,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

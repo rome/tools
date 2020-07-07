@@ -4,6 +4,8 @@
 
 ## `es2015 > yield > accessor-name-inst-computed-yield-expr`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -716,4 +718,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -4,6 +4,8 @@
 
 ## `esprima > invalid-syntax > migrated_0043`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -19,7 +21,7 @@ JSRoot {
 		filename: "input.js"
 		end: Object {
 			column: 0
-			index: 22
+			index: 20
 			line: 2
 		}
 		start: Object {
@@ -58,8 +60,8 @@ JSRoot {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
-					column: 21
-					index: 21
+					column: 19
+					index: 19
 					line: 1
 				}
 				start: Object {
@@ -73,8 +75,8 @@ JSRoot {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
-						column: 21
-						index: 21
+						column: 19
+						index: 19
 						line: 1
 					}
 					start: Object {
@@ -105,8 +107,8 @@ JSRoot {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
-								column: 21
-								index: 21
+								column: 19
+								index: 19
 								line: 1
 							}
 							start: Object {
@@ -125,8 +127,8 @@ JSRoot {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
-									column: 21
-									index: 21
+									column: 19
+									index: 19
 									line: 1
 								}
 								start: Object {
@@ -224,4 +226,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Expecting Unicode escape sequence \uXXXX
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

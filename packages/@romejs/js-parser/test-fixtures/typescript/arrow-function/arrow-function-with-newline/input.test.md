@@ -4,6 +4,8 @@
 
 ## `typescript > arrow-function > arrow-function-with-newline`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -150,4 +152,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

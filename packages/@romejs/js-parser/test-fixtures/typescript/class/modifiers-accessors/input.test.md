@@ -4,6 +4,8 @@
 
 ## `typescript > class > modifiers-accessors`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -1037,4 +1039,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

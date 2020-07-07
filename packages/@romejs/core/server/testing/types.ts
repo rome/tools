@@ -28,6 +28,7 @@ export type TestServerRunnerConstructorOptions = {
 };
 
 export type TestServerRunnerOptions = {
+	filter: undefined | string;
 	focusAllowed: boolean;
 	coverage: boolean;
 	showAllCoverage: boolean;

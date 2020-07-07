@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-arrow-function > complex-rest-in-arrow-not-allowed`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -152,4 +154,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

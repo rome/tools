@@ -4,6 +4,8 @@
 
 ## `esprima > expression-binary-logical > migrated_0004`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -130,4 +132,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

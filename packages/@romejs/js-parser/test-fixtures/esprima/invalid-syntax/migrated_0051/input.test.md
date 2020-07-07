@@ -4,10 +4,12 @@
 
 ## `esprima > invalid-syntax > migrated_0051`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
-	corrupt: false
+	corrupt: true
 	directives: Array []
 	filename: "input.js"
 	hasHoistedVars: false
@@ -19,7 +21,7 @@ JSRoot {
 		filename: "input.js"
 		end: Object {
 			column: 0
-			index: 9
+			index: 8
 			line: 2
 		}
 		start: Object {
@@ -34,20 +36,20 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Expecting Unicode escape sequence \\uXXXX"}
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Bad character escape sequence"}
 			}
 			location: Object {
 				filename: "input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
-					column: 1
-					index: 1
+					column: 3
+					index: 3
 					line: 1
 				}
 				start: Object {
-					column: 1
-					index: 1
+					column: 3
+					index: 3
 					line: 1
 				}
 			}
@@ -58,8 +60,8 @@ JSRoot {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
-					column: 3
-					index: 3
+					column: 6
+					index: 6
 					line: 1
 				}
 				start: Object {
@@ -69,13 +71,13 @@ JSRoot {
 				}
 			}
 			expression: JSReferenceIdentifier {
-				name: "\0u"
+				name: "\0"
 				loc: Object {
 					filename: "input.js"
-					identifierName: "\0u"
+					identifierName: "\0"
 					end: Object {
-						column: 3
-						index: 3
+						column: 6
+						index: 6
 						line: 1
 					}
 					start: Object {
@@ -86,56 +88,51 @@ JSRoot {
 				}
 			}
 		}
-		JSBlockStatement {
-			directives: Array []
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
-					column: 8
-					index: 8
+					column: 7
+					index: 7
 					line: 1
 				}
 				start: Object {
-					column: 3
-					index: 3
+					column: 6
+					index: 6
 					line: 1
 				}
 			}
-			body: Array [
-				JSExpressionStatement {
-					loc: Object {
-						filename: "input.js"
-						end: Object {
-							column: 7
-							index: 7
-							line: 1
-						}
-						start: Object {
-							column: 4
-							index: 4
-							line: 1
-						}
+			expression: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 7
+						index: 7
+						line: 1
 					}
-					expression: JSReferenceIdentifier {
-						name: "FFZ"
-						loc: Object {
-							filename: "input.js"
-							identifierName: "FFZ"
-							end: Object {
-								column: 7
-								index: 7
-								line: 1
-							}
-							start: Object {
-								column: 4
-								index: 4
-								line: 1
-							}
-						}
+					start: Object {
+						column: 6
+						index: 6
+						line: 1
 					}
 				}
-			]
+			}
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Bad character escape sequence
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

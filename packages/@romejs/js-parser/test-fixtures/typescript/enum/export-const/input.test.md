@@ -4,6 +4,8 @@
 
 ## `typescript > enum > export-const`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -83,4 +85,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

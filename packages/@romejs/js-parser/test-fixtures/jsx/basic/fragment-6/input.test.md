@@ -4,23 +4,22 @@
 
 ## `jsx > basic > fragment-6`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "script"
-	syntax: Array [
-		"jsx"
-		"ts"
-	]
+	sourceType: "module"
+	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.js"
+		filename: "input.jsx"
 		end: Object {
 			column: 0
 			index: 60
@@ -35,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				end: Object {
 					column: 59
 					index: 59
@@ -49,7 +48,7 @@ JSRoot {
 			}
 			expression: JSXFragment {
 				loc: Object {
-					filename: "input.js"
+					filename: "input.jsx"
 					end: Object {
 						column: 59
 						index: 59
@@ -66,7 +65,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "div"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 6
 									index: 6
@@ -83,7 +82,7 @@ JSRoot {
 						selfClosing: false
 						typeArguments: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 23
 								index: 23
@@ -99,7 +98,7 @@ JSRoot {
 							JSXText {
 								value: "JSXElement"
 								loc: Object {
-									filename: "input.js"
+									filename: "input.jsx"
 									end: Object {
 										column: 17
 										index: 17
@@ -117,7 +116,7 @@ JSRoot {
 					JSXText {
 						value: "JSXText"
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 30
 								index: 30
@@ -132,7 +131,7 @@ JSRoot {
 					}
 					JSXExpressionContainer {
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 56
 								index: 56
@@ -147,7 +146,7 @@ JSRoot {
 						expression: JSStringLiteral {
 							value: "JSXExpressionContainer"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 55
 									index: 55
@@ -166,4 +165,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -4,6 +4,8 @@
 
 ## `core > uncategorised > 457`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -96,8 +98,8 @@ JSRoot {
 							line: 1
 						}
 						start: Object {
-							column: 20
-							index: 20
+							column: 13
+							index: 13
 							line: 1
 						}
 					}
@@ -124,4 +126,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ No loop label found
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

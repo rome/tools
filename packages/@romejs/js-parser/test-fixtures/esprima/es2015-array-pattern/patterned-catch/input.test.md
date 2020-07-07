@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-array-pattern > patterned-catch`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -570,4 +572,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

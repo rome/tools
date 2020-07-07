@@ -4,6 +4,8 @@
 
 ## `es2015 > uncategorised > 27`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -71,8 +73,8 @@ JSRoot {
 							line: 1
 						}
 						start: Object {
-							column: 25
-							index: 25
+							column: 18
+							index: 18
 							line: 1
 						}
 					}
@@ -198,4 +200,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

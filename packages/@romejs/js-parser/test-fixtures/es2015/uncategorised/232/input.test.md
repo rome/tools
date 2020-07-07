@@ -4,6 +4,8 @@
 
 ## `es2015 > uncategorised > 232`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -18,8 +20,8 @@ JSRoot {
 	loc: Object {
 		filename: "input.js"
 		end: Object {
-			column: 13
-			index: 13
+			column: 17
+			index: 17
 			line: 1
 		}
 		start: Object {
@@ -58,8 +60,8 @@ JSRoot {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
-					column: 13
-					index: 13
+					column: 17
+					index: 17
 					line: 1
 				}
 				start: Object {
@@ -73,8 +75,8 @@ JSRoot {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
-						column: 13
-						index: 13
+						column: 17
+						index: 17
 						line: 1
 					}
 					start: Object {
@@ -102,12 +104,11 @@ JSRoot {
 								}
 							}
 						}
-						init: undefined
 						loc: Object {
 							filename: "input.js"
 							end: Object {
-								column: 13
-								index: 13
+								column: 17
+								index: 17
 								line: 1
 							}
 							start: Object {
@@ -116,10 +117,41 @@ JSRoot {
 								line: 1
 							}
 						}
+						init: JSNumericLiteral {
+							value: 2
+							format: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 17
+									index: 17
+									line: 1
+								}
+								start: Object {
+									column: 16
+									index: 16
+									line: 1
+								}
+							}
+						}
 					}
 				]
 			}
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Unexpected keyword default
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

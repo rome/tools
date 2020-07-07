@@ -1,1 +1,0 @@
-let triplicate = /^(?<part>.*).\k<par>.\1$/u;

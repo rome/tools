@@ -4,6 +4,8 @@
 
 ## `experimental > class-private-methods > combined`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -987,4 +989,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -4,6 +4,8 @@
 
 ## `es2015 > modules > duplicate-named-export-function-declaration`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -248,4 +250,20 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:2:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ `foo` has already been exported. Exported identifiers must be unique.
+
+  ℹ Defined already here
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

@@ -4,6 +4,8 @@
 
 ## `es2015 > uncategorised > 125`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -18,8 +20,8 @@ JSRoot {
 	loc: Object {
 		filename: "input.js"
 		end: Object {
-			column: 44
-			index: 44
+			column: 47
+			index: 47
 			line: 1
 		}
 		start: Object {
@@ -75,8 +77,8 @@ JSRoot {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
-					column: 44
-					index: 44
+					column: 47
+					index: 47
 					line: 1
 				}
 				start: Object {
@@ -93,8 +95,8 @@ JSRoot {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
-						column: 44
-						index: 44
+						column: 47
+						index: 47
 						line: 1
 					}
 					start: Object {
@@ -218,7 +220,7 @@ JSRoot {
 							}
 						}
 					}
-					TSDeclareMethod {
+					JSClassMethod {
 						kind: "constructor"
 						key: JSStaticPropertyKey {
 							value: JSStringLiteral {
@@ -251,18 +253,34 @@ JSRoot {
 								}
 							}
 						}
-						body: undefined
 						loc: Object {
 							filename: "input.js"
 							end: Object {
-								column: 42
-								index: 42
+								column: 45
+								index: 45
 								line: 1
 							}
 							start: Object {
 								column: 27
 								index: 27
 								line: 1
+							}
+						}
+						body: JSBlockStatement {
+							body: Array []
+							directives: Array []
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 45
+									index: 45
+									line: 1
+								}
+								start: Object {
+									column: 43
+									index: 43
+									line: 1
+								}
 							}
 						}
 						head: JSFunctionHead {
@@ -320,4 +338,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:27 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Duplicate constructor in the same class
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

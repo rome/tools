@@ -4,6 +4,8 @@
 
 ## `typescript > interface > new-line`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -113,4 +115,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

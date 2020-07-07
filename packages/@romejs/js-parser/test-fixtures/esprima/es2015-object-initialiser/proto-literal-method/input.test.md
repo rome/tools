@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-object-initialiser > proto-literal-method`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -213,4 +215,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -4,6 +4,8 @@
 
 ## `es2015 > class-methods > linebreaks`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -1295,4 +1297,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

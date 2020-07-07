@@ -4,6 +4,8 @@
 
 ## `core > categorized > 05-regex`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -237,4 +239,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

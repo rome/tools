@@ -4,23 +4,22 @@
 
 ## `jsx > basic > 5`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "script"
-	syntax: Array [
-		"jsx"
-		"ts"
-	]
+	sourceType: "module"
+	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.js"
+		filename: "input.jsx"
 		end: Object {
 			column: 2
 			index: 5
@@ -35,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				end: Object {
 					column: 2
 					index: 5
@@ -51,7 +50,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "a"
 					loc: Object {
-						filename: "input.js"
+						filename: "input.jsx"
 						end: Object {
 							column: 2
 							index: 2
@@ -69,7 +68,7 @@ JSRoot {
 				selfClosing: true
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "input.jsx"
 					end: Object {
 						column: 2
 						index: 5
@@ -85,4 +84,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

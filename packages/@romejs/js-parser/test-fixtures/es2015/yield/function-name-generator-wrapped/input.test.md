@@ -4,6 +4,8 @@
 
 ## `es2015 > yield > function-name-generator-wrapped`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -225,4 +227,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

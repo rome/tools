@@ -74,6 +74,7 @@ export default createServerCommand({
 				await test.callback(
 					req,
 					{
+						filter: undefined,
 						focusAllowed: false,
 						coverage: false,
 						freezeSnapshots: !flags.fix,

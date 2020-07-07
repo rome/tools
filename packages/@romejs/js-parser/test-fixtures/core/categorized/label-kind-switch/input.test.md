@@ -4,6 +4,8 @@
 
 ## `core > categorized > label-kind-switch`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -115,4 +117,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

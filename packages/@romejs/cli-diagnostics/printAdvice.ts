@@ -8,11 +8,13 @@
 import {Reporter} from "@romejs/cli-reporter";
 import {
 	Diagnostic,
+	DiagnosticAdvice,
 	DiagnosticAdviceAction,
 	DiagnosticAdviceCode,
 	DiagnosticAdviceCommand,
 	DiagnosticAdviceDiff,
 	DiagnosticAdviceFrame,
+	DiagnosticAdviceGroup,
 	DiagnosticAdviceInspect,
 	DiagnosticAdviceItem,
 	DiagnosticAdviceList,
@@ -58,7 +60,28 @@ const DID_NOT_PRINT: PrintAdviceResult = {
 	truncated: false,
 };
 
-export default function printAdvice(
+export function printAdvice(
+	advice: DiagnosticAdvice,
+	opts: AdvicePrintOptions,
+): {
+	truncated: boolean;
+} {
+	let truncated = false;
+
+	for (const item of advice) {
+		const res = printAdviceItem(item, opts);
+		if (res.printed) {
+			opts.reporter.br();
+		}
+		if (res.truncated) {
+			truncated = true;
+		}
+	}
+
+	return {truncated};
+}
+
+export function printAdviceItem(
 	item: DiagnosticAdviceItem,
 	opts: AdvicePrintOptions,
 ): PrintAdviceResult {
@@ -89,7 +112,30 @@ export default function printAdvice(
 
 		case "inspect":
 			return printInspect(item, opts);
+
+		case "group":
+			return printGroup(item, opts);
 	}
+}
+
+function printGroup(
+	item: DiagnosticAdviceGroup,
+	opts: AdvicePrintOptions,
+): PrintAdviceResult {
+	const {reporter} = opts;
+
+	let truncated = false;
+
+	reporter.logAll(`<emphasis>${item.title}</emphasis>`);
+	reporter.br();
+	reporter.indent(() => {
+		({truncated} = printAdvice(item.advice, opts));
+	});
+
+	return {
+		printed: true,
+		truncated,
+	};
 }
 
 function printAction(
@@ -208,7 +254,7 @@ function printDiff(
 	const hint = generateDiffHint(item.diff);
 	if (hint !== undefined) {
 		opts.reporter.br();
-		printAdvice(hint, opts);
+		printAdviceItem(hint, opts);
 		opts.reporter.br();
 	}
 

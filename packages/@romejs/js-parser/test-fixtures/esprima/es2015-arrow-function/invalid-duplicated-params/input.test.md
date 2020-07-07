@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-arrow-function > invalid-duplicated-params`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -180,4 +182,20 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Argument x name clash in strict mode
+
+  ℹ Defined already here
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-generator > generator-method-with-yield-expression`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -201,4 +203,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

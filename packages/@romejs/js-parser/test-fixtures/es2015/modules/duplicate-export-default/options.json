@@ -1,3 +1,4 @@
 {
-  "throws": "Only one default export allowed per module."
+	"sourceType": "module",
+	"throws": true
 }

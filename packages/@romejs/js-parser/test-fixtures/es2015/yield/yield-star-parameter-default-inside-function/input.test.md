@@ -4,6 +4,8 @@
 
 ## `es2015 > yield > yield-star-parameter-default-inside-function`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -204,4 +206,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

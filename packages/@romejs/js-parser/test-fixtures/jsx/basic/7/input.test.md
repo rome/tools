@@ -4,23 +4,22 @@
 
 ## `jsx > basic > 7`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "script"
-	syntax: Array [
-		"jsx"
-		"ts"
-	]
+	sourceType: "module"
+	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.js"
+		filename: "input.jsx"
 		end: Object {
 			column: 10
 			index: 51
@@ -35,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				end: Object {
 					column: 10
 					index: 51
@@ -51,7 +50,7 @@ JSRoot {
 				name: JSXReferenceIdentifier {
 					name: "AbC-def"
 					loc: Object {
-						filename: "input.js"
+						filename: "input.jsx"
 						end: Object {
 							column: 8
 							index: 8
@@ -67,7 +66,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "input.jsx"
 					end: Object {
 						column: 10
 						index: 51
@@ -83,7 +82,7 @@ JSRoot {
 					JSXText {
 						value: "\nbar\nbaz\n"
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 0
 								index: 41
@@ -102,7 +101,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "test"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 6
 									index: 15
@@ -118,7 +117,7 @@ JSRoot {
 						value: JSStringLiteral {
 							value: "&&"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 22
 									index: 31
@@ -132,7 +131,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 22
 								index: 31
@@ -150,4 +149,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

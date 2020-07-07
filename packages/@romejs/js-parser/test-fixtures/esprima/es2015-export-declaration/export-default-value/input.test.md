@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-export-declaration > export-default-value`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -64,4 +66,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

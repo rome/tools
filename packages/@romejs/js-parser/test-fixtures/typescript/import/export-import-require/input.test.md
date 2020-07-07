@@ -4,6 +4,8 @@
 
 ## `typescript > import > export-import-require`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -96,4 +98,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

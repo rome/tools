@@ -4,6 +4,8 @@
 
 ## `typescript > types > read-only-1`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -17,9 +19,9 @@ JSRoot {
 	loc: Object {
 		filename: "input.ts"
 		end: Object {
-			column: 0
-			index: 38
-			line: 2
+			column: 37
+			index: 37
+			line: 1
 		}
 		start: Object {
 			column: 0
@@ -139,4 +141,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.ts:1:20 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ 'readonly' type modifier is only permitted on array and tuple literal types.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

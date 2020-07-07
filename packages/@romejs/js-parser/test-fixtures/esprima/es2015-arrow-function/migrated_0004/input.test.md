@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-arrow-function > migrated_0004`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -150,4 +152,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -4,6 +4,8 @@
 
 ## `core > uncategorised > 338`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -160,4 +162,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

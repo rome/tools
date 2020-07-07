@@ -4,6 +4,8 @@
 
 ## `typescript > const > reserved-word`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -18,9 +20,9 @@ JSRoot {
 	loc: Object {
 		filename: "input.ts"
 		end: Object {
-			column: 0
-			index: 16
-			line: 2
+			column: 15
+			index: 15
+			line: 1
 		}
 		start: Object {
 			column: 0
@@ -168,4 +170,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.ts:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Unknown TS non array type start
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

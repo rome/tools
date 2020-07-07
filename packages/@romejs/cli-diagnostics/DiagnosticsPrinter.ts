@@ -28,7 +28,7 @@ import {
 	markupToPlainTextString,
 } from "@romejs/string-markup";
 import {ToLines, toLines} from "./utils";
-import printAdvice from "./printAdvice";
+import {printAdvice} from "./printAdvice";
 import {default as successBanner} from "./banners/success.json";
 import {default as errorBanner} from "./banners/error.json";
 import {
@@ -169,12 +169,14 @@ export default class DiagnosticsPrinter extends Error {
 			filename = "unknown";
 		}
 
-		const {normalizeFilename} = this.reporter.markupOptions;
+		const {normalizePosition} = this.reporter.markupOptions;
 
-		if (normalizeFilename === undefined) {
+		if (normalizePosition === undefined) {
 			return createUnknownFilePath(filename);
 		} else {
-			return createUnknownFilePath(normalizeFilename(filename));
+			return createUnknownFilePath(
+				normalizePosition(filename, undefined, undefined).filename,
+			);
 		}
 	}
 
@@ -253,11 +255,13 @@ export default class DiagnosticsPrinter extends Error {
 	): Array<FileDependency> {
 		const deps: Array<FileDependency> = [];
 
-		for (const {
-			dependencies,
-			description: {advice},
-			location: {language, sourceTypeJS: sourceType, mtime, filename},
-		} of diagnostics) {
+		for (const diag of diagnostics) {
+			const {
+				dependencies,
+				description: {advice},
+				location: {language, sourceTypeJS: sourceType, mtime, filename},
+			} = diag;
+
 			if (filename !== undefined) {
 				deps.push({
 					type: "reference",
@@ -485,25 +489,20 @@ export default class DiagnosticsPrinter extends Error {
 				...advice,
 			];
 
-			// Print advice
-			for (const item of allAdvice) {
-				const res = printAdvice(
-					item,
-					{
-						printer: this,
-						flags: this.flags,
-						missingFileSources: this.missingFileSources,
-						fileSources: this.fileSources,
-						diagnostic: diag,
-						reporter,
-					},
-				);
-				if (res.printed) {
-					reporter.br();
-				}
-				if (res.truncated) {
-					this.hasTruncatedDiagnostics = true;
-				}
+			const {truncated} = printAdvice(
+				allAdvice,
+				{
+					printer: this,
+					flags: this.flags,
+					missingFileSources: this.missingFileSources,
+					fileSources: this.fileSources,
+					diagnostic: diag,
+					reporter,
+				},
+			);
+
+			if (truncated) {
+				this.hasTruncatedDiagnostics = true;
 			}
 
 			// Print verbose information

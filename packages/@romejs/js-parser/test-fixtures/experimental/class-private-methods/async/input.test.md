@@ -4,6 +4,8 @@
 
 ## `experimental > class-private-methods > async`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -263,4 +265,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

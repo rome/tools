@@ -4,6 +4,8 @@
 
 ## `es2015 > statements > label-valid-func-non-strict`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -136,4 +138,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

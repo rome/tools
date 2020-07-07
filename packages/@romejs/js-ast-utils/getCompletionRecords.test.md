@@ -733,8 +733,8 @@ Array [
 							line: 1
 						}
 						start: Object {
-							column: 39
-							index: 39
+							column: 29
+							index: 29
 							line: 1
 						}
 					}

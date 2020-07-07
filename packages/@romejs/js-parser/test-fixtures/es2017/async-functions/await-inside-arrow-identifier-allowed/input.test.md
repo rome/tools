@@ -4,6 +4,8 @@
 
 ## `es2017 > async-functions > await-inside-arrow-identifier-allowed`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -133,4 +135,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

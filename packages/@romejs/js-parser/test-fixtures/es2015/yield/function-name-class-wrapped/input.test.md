@@ -4,6 +4,8 @@
 
 ## `es2015 > yield > function-name-class-wrapped`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -272,4 +274,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

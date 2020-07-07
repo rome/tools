@@ -4,6 +4,8 @@
 
 ## `esprima > statement-iteration > for-statement-with-seq`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -132,4 +134,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

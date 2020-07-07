@@ -4,6 +4,8 @@
 
 ## `esprima > invalid-syntax > migrated_0249`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -235,4 +237,20 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:36 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Argument __proto__ name clash in strict mode
+
+  ℹ Defined already here
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

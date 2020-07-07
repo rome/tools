@@ -1,3 +1,3 @@
 {
-  "throws": "Deleting local variable in strict mode"
+	"throws": true
 }

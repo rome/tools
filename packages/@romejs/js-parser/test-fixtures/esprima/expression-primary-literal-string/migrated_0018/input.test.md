@@ -4,6 +4,8 @@
 
 ## `esprima > expression-primary-literal-string > migrated_0018`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	body: Array []
@@ -48,4 +50,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

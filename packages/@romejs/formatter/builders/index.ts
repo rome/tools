@@ -638,6 +638,9 @@ builders.set("TSAssignmentTypeAssertion", TSAssignmentTypeAssertion);
 import TSBigIntKeywordTypeAnnotation from "./js/typescript/TSBigIntKeywordTypeAnnotation";
 builders.set("TSBigIntKeywordTypeAnnotation", TSBigIntKeywordTypeAnnotation);
 
+import TSBigIntLiteralTypeAnnotation from "./js/typescript/TSBigIntLiteralTypeAnnotation";
+builders.set("TSBigIntLiteralTypeAnnotation", TSBigIntLiteralTypeAnnotation);
+
 import TSBooleanKeywordTypeAnnotation from "./js/typescript/TSBooleanKeywordTypeAnnotation";
 builders.set("TSBooleanKeywordTypeAnnotation", TSBooleanKeywordTypeAnnotation);
 

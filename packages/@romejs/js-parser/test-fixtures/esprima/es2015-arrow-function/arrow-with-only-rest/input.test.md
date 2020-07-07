@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-arrow-function > arrow-with-only-rest`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -116,4 +118,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

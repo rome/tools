@@ -4,6 +4,8 @@
 
 ## `es2015 > uncategorised > 123`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -307,4 +309,20 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:40 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ super() is only valid inside a class constructor of a subclass
+
+  ℹ Maybe a typo in the method name ('constructor') or not extending another class?
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

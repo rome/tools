@@ -4,6 +4,8 @@
 
 ## `typescript > cast > as-const`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -48,7 +50,7 @@ JSRoot {
 		}
 		CommentLine {
 			id: "1"
-			value: " https://github.com/Microsoft/TypeScript/blob/server/tests/baselines/reference/constAssertions.js"
+			value: " https://github.com/Microsoft/TypeScript/blob/master/tests/baselines/reference/constAssertions.js"
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -6115,4 +6117,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

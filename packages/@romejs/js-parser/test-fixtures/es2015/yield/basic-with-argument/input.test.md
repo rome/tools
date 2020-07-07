@@ -4,6 +4,8 @@
 
 ## `es2015 > yield > basic-with-argument`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -152,4 +154,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

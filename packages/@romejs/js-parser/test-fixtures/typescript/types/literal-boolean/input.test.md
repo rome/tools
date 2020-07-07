@@ -4,6 +4,8 @@
 
 ## `typescript > types > literal-boolean`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -226,4 +228,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

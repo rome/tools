@@ -4,6 +4,8 @@
 
 ## `experimental > class-private-properties > pbn-success`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -2679,4 +2681,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

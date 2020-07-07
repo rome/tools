@@ -4,6 +4,8 @@
 
 ## `esprima > invalid-syntax > migrated_0272`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -199,4 +201,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

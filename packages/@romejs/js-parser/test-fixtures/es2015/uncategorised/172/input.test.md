@@ -4,6 +4,8 @@
 
 ## `es2015 > uncategorised > 172`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -617,4 +619,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

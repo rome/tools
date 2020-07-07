@@ -4,6 +4,8 @@
 
 ## `core > categorized > regex-after-block`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -182,4 +184,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

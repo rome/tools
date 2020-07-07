@@ -4,23 +4,22 @@
 
 ## `jsx > regression > 7`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "script"
-	syntax: Array [
-		"jsx"
-		"ts"
-	]
+	sourceType: "module"
+	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.js"
+		filename: "input.jsx"
 		end: Object {
 			column: 0
 			index: 63
@@ -35,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				end: Object {
 					column: 17
 					index: 62
@@ -51,7 +50,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "path"
 					loc: Object {
-						filename: "input.js"
+						filename: "input.jsx"
 						end: Object {
 							column: 5
 							index: 5
@@ -68,7 +67,7 @@ JSRoot {
 				selfClosing: true
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "input.jsx"
 					end: Object {
 						column: 17
 						index: 62
@@ -85,7 +84,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "d"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 7
 									index: 7
@@ -101,7 +100,7 @@ JSRoot {
 						value: JSStringLiteral {
 							value: "M230 80\n\t\tA 45 45, 0, 1, 0, 275 125\n    L 275 80 Z"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 15
 									index: 60
@@ -115,7 +114,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 15
 								index: 60
@@ -133,4 +132,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

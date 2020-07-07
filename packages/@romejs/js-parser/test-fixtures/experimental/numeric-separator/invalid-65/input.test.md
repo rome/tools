@@ -4,10 +4,12 @@
 
 ## `experimental > numeric-separator > invalid-65`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
-	corrupt: true
+	corrupt: false
 	directives: Array []
 	filename: "input.js"
 	hasHoistedVars: false
@@ -19,7 +21,7 @@ JSRoot {
 		filename: "input.js"
 		end: Object {
 			column: 0
-			index: 10
+			index: 12
 			line: 2
 		}
 		start: Object {
@@ -58,9 +60,9 @@ JSRoot {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
-					column: 0
-					index: 10
-					line: 2
+					column: 11
+					index: 11
+					line: 1
 				}
 				start: Object {
 					column: 0
@@ -72,9 +74,9 @@ JSRoot {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
-						column: 0
-						index: 10
-						line: 2
+						column: 11
+						index: 11
+						line: 1
 					}
 					start: Object {
 						column: 0
@@ -100,19 +102,20 @@ JSRoot {
 							}
 						}
 					}
-					JSReferenceIdentifier {
-						name: "INVALID_PLACEHOLDER"
+					JSNumericLiteral {
+						value: 0
+						format: undefined
 						loc: Object {
 							filename: "input.js"
 							end: Object {
-								column: 0
-								index: 10
-								line: 2
+								column: 11
+								index: 11
+								line: 1
 							}
 							start: Object {
-								column: 0
+								column: 10
 								index: 10
-								line: 2
+								line: 1
 							}
 						}
 					}
@@ -121,4 +124,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Invalid or unexpected int token
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

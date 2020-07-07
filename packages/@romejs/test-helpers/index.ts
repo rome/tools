@@ -188,6 +188,8 @@ export async function createFixtureTests(
 				});
 
 				await callback(fixture, t);
+
+				fixture.options.enforceUsedProperties();
 			},
 		);
 	}

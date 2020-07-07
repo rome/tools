@@ -4,6 +4,8 @@
 
 ## `es2015 > destructuring > binding-this`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -19,7 +21,7 @@ JSRoot {
 		filename: "input.js"
 		end: Object {
 			column: 0
-			index: 14
+			index: 19
 			line: 2
 		}
 		start: Object {
@@ -58,8 +60,8 @@ JSRoot {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
-					column: 13
-					index: 13
+					column: 18
+					index: 18
 					line: 1
 				}
 				start: Object {
@@ -73,8 +75,8 @@ JSRoot {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
-						column: 13
-						index: 13
+						column: 18
+						index: 18
 						line: 1
 					}
 					start: Object {
@@ -167,12 +169,11 @@ JSRoot {
 								}
 							]
 						}
-						init: undefined
 						loc: Object {
 							filename: "input.js"
 							end: Object {
-								column: 12
-								index: 12
+								column: 17
+								index: 17
 								line: 1
 							}
 							start: Object {
@@ -181,10 +182,40 @@ JSRoot {
 								line: 1
 							}
 						}
+						init: JSObjectExpression {
+							properties: Array []
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 17
+									index: 17
+									line: 1
+								}
+								start: Object {
+									column: 15
+									index: 15
+									line: 1
+								}
+							}
+						}
 					}
 				]
 			}
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Unexpected keyword this
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

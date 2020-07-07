@@ -4,6 +4,8 @@
 
 ## `typescript > tsx > brace-is-block`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
@@ -15,8 +17,8 @@ JSRoot {
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array [
-		"jsx"
 		"ts"
+		"jsx"
 	]
 	loc: Object {
 		filename: "input.tsx"
@@ -223,4 +225,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

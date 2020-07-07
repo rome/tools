@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-export-declaration > export-named-as-specifiers`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -248,4 +250,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

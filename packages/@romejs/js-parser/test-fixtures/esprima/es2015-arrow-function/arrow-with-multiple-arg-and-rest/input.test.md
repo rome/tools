@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-arrow-function > arrow-with-multiple-arg-and-rest`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -151,4 +153,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

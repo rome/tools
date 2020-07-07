@@ -4,6 +4,8 @@
 
 ## `typescript > arrow-function > async-generic-false-positive`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -228,4 +230,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

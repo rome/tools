@@ -115,7 +115,14 @@ export type DiagnosticAdviceItem =
 	| DiagnosticAdviceDiff
 	| DiagnosticAdviceStacktrace
 	| DiagnosticAdviceCommand
-	| DiagnosticAdviceAction;
+	| DiagnosticAdviceAction
+	| DiagnosticAdviceGroup;
+
+export type DiagnosticAdviceGroup = {
+	type: "group";
+	title: string;
+	advice: DiagnosticAdvice;
+};
 
 export type DiagnosticAdviceCommand = {
 	type: "command";

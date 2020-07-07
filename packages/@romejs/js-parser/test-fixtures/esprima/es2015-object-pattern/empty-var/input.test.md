@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-object-pattern > empty-var`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -114,4 +116,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

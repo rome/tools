@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-identifier > escaped_math_dal_part`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -98,4 +100,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -4,6 +4,8 @@
 
 ## `es2015 > let > let-with-linebreak-arr-dstrk`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -166,4 +168,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

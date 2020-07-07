@@ -4,6 +4,8 @@
 
 ## `es2015 > for-of > right-regex`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -365,4 +367,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

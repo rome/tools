@@ -4,6 +4,8 @@
 
 ## `es2015 > array-rest-spread > with-object`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -263,4 +265,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

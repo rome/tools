@@ -4,6 +4,8 @@
 
 ## `es2015 > yield > function-name-function-expression`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -136,4 +138,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

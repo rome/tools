@@ -4,6 +4,8 @@
 
 ## `typescript > class > method-with-newline-without-body`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -281,4 +283,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

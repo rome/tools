@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-template-literals > escape-sequences`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -83,4 +85,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

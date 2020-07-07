@@ -4,6 +4,8 @@
 
 ## `esprima > statement-variable > migrated_0001`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -131,4 +133,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

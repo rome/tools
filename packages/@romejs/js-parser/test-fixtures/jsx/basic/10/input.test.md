@@ -4,22 +4,21 @@
 
 ## `jsx > basic > 10`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "script"
-	syntax: Array [
-		"jsx"
-		"ts"
-	]
+	sourceType: "module"
+	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.js"
+		filename: "input.jsx"
 		end: Object {
 			column: 32
 			index: 32
@@ -36,7 +35,7 @@ JSRoot {
 			id: "1"
 			value: " this is a comment "
 			loc: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				end: Object {
 					column: 27
 					index: 27
@@ -53,7 +52,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				end: Object {
 					column: 32
 					index: 32
@@ -69,7 +68,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "a"
 					loc: Object {
-						filename: "input.js"
+						filename: "input.jsx"
 						end: Object {
 							column: 2
 							index: 2
@@ -86,7 +85,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "input.jsx"
 					end: Object {
 						column: 32
 						index: 32
@@ -101,7 +100,7 @@ JSRoot {
 				children: Array [
 					JSXExpressionContainer {
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 28
 								index: 28
@@ -116,7 +115,7 @@ JSRoot {
 						expression: JSXEmptyExpression {
 							trailingComments: Array ["1"]
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 4
 									index: 4
@@ -135,4 +134,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

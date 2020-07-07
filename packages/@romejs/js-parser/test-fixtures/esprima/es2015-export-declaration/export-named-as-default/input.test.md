@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-export-declaration > export-named-as-default`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -166,4 +168,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

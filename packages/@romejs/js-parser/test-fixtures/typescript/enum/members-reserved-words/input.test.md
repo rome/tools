@@ -4,6 +4,8 @@
 
 ## `typescript > enum > members-reserved-words`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -133,4 +135,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -4,6 +4,8 @@
 
 ## `es2015 > meta-properties > expression`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -218,4 +220,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

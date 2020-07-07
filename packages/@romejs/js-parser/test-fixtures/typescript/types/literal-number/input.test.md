@@ -4,6 +4,8 @@
 
 ## `typescript > types > literal-number`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -130,4 +132,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

@@ -4,6 +4,8 @@
 
 ## `typescript > enum > members-trailing-comma-with-initializer`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -116,4 +118,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

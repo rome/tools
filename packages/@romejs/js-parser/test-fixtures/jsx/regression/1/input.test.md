@@ -4,23 +4,22 @@
 
 ## `jsx > regression > 1`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "script"
-	syntax: Array [
-		"jsx"
-		"ts"
-	]
+	sourceType: "module"
+	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.js"
+		filename: "input.jsx"
 		end: Object {
 			column: 40
 			index: 40
@@ -35,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				end: Object {
 					column: 40
 					index: 40
@@ -51,7 +50,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "p"
 					loc: Object {
-						filename: "input.js"
+						filename: "input.jsx"
 						end: Object {
 							column: 2
 							index: 2
@@ -68,7 +67,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "input.jsx"
 					end: Object {
 						column: 38
 						index: 38
@@ -84,7 +83,7 @@ JSRoot {
 					JSXText {
 						value: "foo "
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 7
 								index: 7
@@ -101,7 +100,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 9
 									index: 9
@@ -117,7 +116,7 @@ JSRoot {
 						selfClosing: false
 						typeArguments: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 30
 								index: 30
@@ -133,7 +132,7 @@ JSRoot {
 							JSXText {
 								value: " bar"
 								loc: Object {
-									filename: "input.js"
+									filename: "input.jsx"
 									end: Object {
 										column: 26
 										index: 26
@@ -152,7 +151,7 @@ JSRoot {
 								name: JSXIdentifier {
 									name: "href"
 									loc: Object {
-										filename: "input.js"
+										filename: "input.jsx"
 										end: Object {
 											column: 14
 											index: 14
@@ -168,7 +167,7 @@ JSRoot {
 								value: JSStringLiteral {
 									value: "test"
 									loc: Object {
-										filename: "input.js"
+										filename: "input.jsx"
 										end: Object {
 											column: 21
 											index: 21
@@ -182,7 +181,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "input.jsx"
 									end: Object {
 										column: 21
 										index: 21
@@ -200,7 +199,7 @@ JSRoot {
 					JSXText {
 						value: " baz"
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 34
 								index: 34
@@ -218,4 +217,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

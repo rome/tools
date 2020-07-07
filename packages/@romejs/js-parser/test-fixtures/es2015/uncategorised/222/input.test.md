@@ -4,6 +4,8 @@
 
 ## `es2015 > uncategorised > 222`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -73,13 +75,13 @@ JSRoot {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
-						column: 17
-						index: 17
+						column: 16
+						index: 16
 						line: 1
 					}
 					start: Object {
-						column: 0
-						index: 0
+						column: 1
+						index: 1
 						line: 1
 					}
 				}
@@ -89,13 +91,13 @@ JSRoot {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
-							column: 17
-							index: 17
+							column: 16
+							index: 16
 							line: 1
 						}
 						start: Object {
-							column: 15
-							index: 15
+							column: 14
+							index: 14
 							line: 1
 						}
 					}
@@ -154,13 +156,13 @@ JSRoot {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
-										column: 12
-										index: 12
+										column: 11
+										index: 11
 										line: 1
 									}
 									start: Object {
-										column: 13
-										index: 13
+										column: 12
+										index: 12
 										line: 1
 									}
 								}
@@ -185,4 +187,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Invalid left-hand side in assignment object property value
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

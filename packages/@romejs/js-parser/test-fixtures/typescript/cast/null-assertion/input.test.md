@@ -4,6 +4,8 @@
 
 ## `typescript > cast > null-assertion`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -79,4 +81,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

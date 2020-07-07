@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-rest-parameter > function-declaration`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -172,4 +174,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

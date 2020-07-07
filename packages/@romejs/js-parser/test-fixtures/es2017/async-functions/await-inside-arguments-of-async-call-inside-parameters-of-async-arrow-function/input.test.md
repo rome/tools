@@ -4,6 +4,8 @@
 
 ## `es2017 > async-functions > await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -330,4 +332,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:2:28 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ await is not allowed in async function parameters
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

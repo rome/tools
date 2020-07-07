@@ -4,6 +4,8 @@
 
 ## `es2015 > yield > parameter-name-function`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -139,4 +141,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

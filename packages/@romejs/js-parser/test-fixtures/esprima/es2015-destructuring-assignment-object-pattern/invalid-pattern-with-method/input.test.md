@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-destructuring-assignment-object-pattern > invalid-pattern-with-method`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -73,13 +75,13 @@ JSRoot {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
-						column: 11
-						index: 11
+						column: 10
+						index: 10
 						line: 1
 					}
 					start: Object {
-						column: 0
-						index: 0
+						column: 1
+						index: 1
 						line: 1
 					}
 				}
@@ -89,13 +91,13 @@ JSRoot {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
-							column: 11
-							index: 11
+							column: 10
+							index: 10
 							line: 1
 						}
 						start: Object {
-							column: 10
-							index: 10
+							column: 9
+							index: 9
 							line: 1
 						}
 					}
@@ -184,4 +186,18 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Object pattern cannot contains methods
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

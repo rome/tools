@@ -4,6 +4,8 @@
 
 ## `esprima > es2015-template-literals > tagged-nested-with-object-literal`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -258,4 +260,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

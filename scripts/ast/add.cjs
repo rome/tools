@@ -67,7 +67,7 @@ write(builderDefFile, builderContent);
 // Write analysis
 if (language === "js") {
 	const analysisDefFile = path.join(analysisFolder, category, `${nodeType}.ts`);
-	const analysisContent = `import {AnyNode, ${nodeType}, ${builderName}} from "@romejs/js-ast";
+	const analysisContent = `import {AnyNode, ${nodeType}, ${builderName}} from "@romejs/ast";
 
 	export default function ${nodeType}(node: AnyNode) {
 		node = ${builderName}.assert(node);

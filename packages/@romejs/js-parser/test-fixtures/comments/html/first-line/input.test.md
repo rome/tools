@@ -4,6 +4,8 @@
 
 ## `comments > html > first-line`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	body: Array []
@@ -71,4 +73,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

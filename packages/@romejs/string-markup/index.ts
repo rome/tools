@@ -9,7 +9,6 @@ export * from "./parse";
 
 export {
 	MarkupFormatFilenameHumanizer,
-	MarkupFormatFilenameNormalizer,
 	MarkupFormatGridOptions,
 	MarkupFormatNormalizeOptions,
 	MarkupFormatOptions,

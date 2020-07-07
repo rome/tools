@@ -4,6 +4,8 @@
 
 ## `es2019 > json-strings > directive-line-separator`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	body: Array []
@@ -67,4 +69,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

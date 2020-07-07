@@ -4,6 +4,8 @@
 
 ## `experimental > class-properties > inline`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -474,4 +476,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

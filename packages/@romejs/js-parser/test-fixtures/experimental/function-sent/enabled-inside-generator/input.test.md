@@ -4,6 +4,8 @@
 
 ## `experimental > function-sent > enabled-inside-generator`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -169,4 +171,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

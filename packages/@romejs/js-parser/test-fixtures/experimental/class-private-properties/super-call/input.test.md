@@ -4,6 +4,8 @@
 
 ## `experimental > class-private-properties > super-call`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -419,4 +421,20 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:4:13 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ super() is only valid inside a class constructor of a subclass
+
+  ℹ Maybe a typo in the method name ('constructor') or not extending another class?
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

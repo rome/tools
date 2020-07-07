@@ -1,4 +1,4 @@
 {
   "sourceType": "module",
-  "throws": "Unexpected token"
+  "throws": "Unexpected token, expected \";\" (1:17)"
 }

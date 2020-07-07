@@ -4,23 +4,22 @@
 
 ## `jsx > basic > 2`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "script"
-	syntax: Array [
-		"jsx"
-		"ts"
-	]
+	sourceType: "module"
+	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.js"
+		filename: "input.jsx"
 		end: Object {
 			column: 11
 			index: 11
@@ -35,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "input.jsx"
 				end: Object {
 					column: 11
 					index: 11
@@ -52,7 +51,7 @@ JSRoot {
 					name: JSXIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 4
 								index: 4
@@ -66,7 +65,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "input.jsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -81,7 +80,7 @@ JSRoot {
 					namespace: JSXIdentifier {
 						name: "n"
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 2
 								index: 2
@@ -99,7 +98,7 @@ JSRoot {
 				selfClosing: true
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "input.jsx"
 					end: Object {
 						column: 11
 						index: 11
@@ -117,7 +116,7 @@ JSRoot {
 							name: JSXIdentifier {
 								name: "v"
 								loc: Object {
-									filename: "input.js"
+									filename: "input.jsx"
 									end: Object {
 										column: 8
 										index: 8
@@ -131,7 +130,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "input.jsx"
 								end: Object {
 									column: 8
 									index: 8
@@ -146,7 +145,7 @@ JSRoot {
 							namespace: JSXIdentifier {
 								name: "n"
 								loc: Object {
-									filename: "input.js"
+									filename: "input.jsx"
 									end: Object {
 										column: 6
 										index: 6
@@ -162,7 +161,7 @@ JSRoot {
 						}
 						value: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "input.jsx"
 							end: Object {
 								column: 8
 								index: 8
@@ -180,4 +179,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

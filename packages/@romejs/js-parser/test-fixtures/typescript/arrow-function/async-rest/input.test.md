@@ -4,6 +4,8 @@
 
 ## `typescript > arrow-function > async-rest`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -175,4 +177,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

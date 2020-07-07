@@ -4,6 +4,8 @@
 
 ## `es2015 > modules > export-from-valid-reserved-word`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -117,4 +119,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

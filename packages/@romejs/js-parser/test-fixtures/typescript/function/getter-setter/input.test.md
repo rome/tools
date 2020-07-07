@@ -4,6 +4,8 @@
 
 ## `typescript > function > getter-setter`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -19,9 +21,9 @@ JSRoot {
 	loc: Object {
 		filename: "input.ts"
 		end: Object {
-			column: 0
-			index: 79
-			line: 7
+			column: 2
+			index: 78
+			line: 6
 		}
 		start: Object {
 			column: 0
@@ -503,4 +505,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

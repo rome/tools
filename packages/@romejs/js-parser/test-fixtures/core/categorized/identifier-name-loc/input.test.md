@@ -4,6 +4,8 @@
 
 ## `core > categorized > identifier-name-loc`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -98,4 +100,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

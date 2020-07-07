@@ -4,6 +4,8 @@
 
 ## `typescript > declare > var`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -196,4 +198,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

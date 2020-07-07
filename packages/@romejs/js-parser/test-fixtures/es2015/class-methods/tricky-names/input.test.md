@@ -4,6 +4,8 @@
 
 ## `es2015 > class-methods > tricky-names`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -1674,4 +1676,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

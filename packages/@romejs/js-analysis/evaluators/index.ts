@@ -462,6 +462,9 @@ evaluators.set("TSAssignmentTypeAssertion", TSAssignmentTypeAssertion);
 import TSBigIntKeywordTypeAnnotation from "./typescript/TSBigIntKeywordTypeAnnotation";
 evaluators.set("TSBigIntKeywordTypeAnnotation", TSBigIntKeywordTypeAnnotation);
 
+import TSBigIntLiteralTypeAnnotation from "./typescript/TSBigIntLiteralTypeAnnotation";
+evaluators.set("TSBigIntLiteralTypeAnnotation", TSBigIntLiteralTypeAnnotation);
+
 import TSBooleanKeywordTypeAnnotation from "./typescript/TSBooleanKeywordTypeAnnotation";
 evaluators.set("TSBooleanKeywordTypeAnnotation", TSBooleanKeywordTypeAnnotation);
 

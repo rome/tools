@@ -4,6 +4,8 @@
 
 ## `experimental > class-private-properties > static`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -251,4 +253,11 @@ JSRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

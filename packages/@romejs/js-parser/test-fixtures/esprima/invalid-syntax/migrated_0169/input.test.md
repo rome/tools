@@ -4,6 +4,8 @@
 
 ## `esprima > invalid-syntax > migrated_0169`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	body: Array []
@@ -18,8 +20,8 @@ JSRoot {
 	loc: Object {
 		filename: "input.js"
 		end: Object {
-			column: 6
-			index: 6
+			column: 5
+			index: 5
 			line: 1
 		}
 		start: Object {
@@ -30,12 +32,12 @@ JSRoot {
 	}
 	directives: Array [
 		JSDirective {
-			value: "\\\\u"
+			value: "\\u"
 			loc: Object {
 				filename: "input.js"
 				end: Object {
-					column: 6
-					index: 6
+					column: 5
+					index: 5
 					line: 1
 				}
 				start: Object {
@@ -52,24 +54,38 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unterminated string constant"}
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Bad character escape sequence"}
 			}
 			location: Object {
 				filename: "input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
-					column: 4
-					index: 4
+					column: 3
+					index: 3
 					line: 1
 				}
 				start: Object {
-					column: 4
-					index: 4
+					column: 3
+					index: 3
 					line: 1
 				}
 			}
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Bad character escape sequence
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

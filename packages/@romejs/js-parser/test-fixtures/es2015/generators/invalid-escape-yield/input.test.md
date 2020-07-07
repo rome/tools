@@ -4,6 +4,8 @@
 
 ## `es2015 > generators > invalid-escape-yield`
 
+### `ast`
+
 ```javascript
 JSRoot {
 	comments: Array []
@@ -19,7 +21,7 @@ JSRoot {
 		filename: "input.js"
 		end: Object {
 			column: 0
-			index: 33
+			index: 31
 			line: 2
 		}
 		start: Object {
@@ -58,8 +60,8 @@ JSRoot {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
-					column: 32
-					index: 32
+					column: 30
+					index: 30
 					line: 1
 				}
 				start: Object {
@@ -73,8 +75,8 @@ JSRoot {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
-						column: 31
-						index: 31
+						column: 29
+						index: 29
 						line: 1
 					}
 					start: Object {
@@ -111,8 +113,8 @@ JSRoot {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
-							column: 31
-							index: 31
+							column: 29
+							index: 29
 							line: 1
 						}
 						start: Object {
@@ -126,8 +128,8 @@ JSRoot {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
-									column: 26
-									index: 26
+									column: 27
+									index: 27
 									line: 1
 								}
 								start: Object {
@@ -154,42 +156,24 @@ JSRoot {
 								}
 							}
 						}
-						JSExpressionStatement {
-							loc: Object {
-								filename: "input.js"
-								end: Object {
-									column: 29
-									index: 29
-									line: 1
-								}
-								start: Object {
-									column: 27
-									index: 27
-									line: 1
-								}
-							}
-							expression: JSNumericLiteral {
-								value: 10
-								format: undefined
-								loc: Object {
-									filename: "input.js"
-									end: Object {
-										column: 29
-										index: 29
-										line: 1
-									}
-									start: Object {
-										column: 27
-										index: 27
-										line: 1
-									}
-								}
-							}
-						}
 					]
 				}
 			}
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+
+ input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Can not use 'yield' as identifier inside a generator
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```

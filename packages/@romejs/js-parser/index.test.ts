@@ -9,6 +9,7 @@ import {parseJS} from "@romejs/js-parser";
 import {createFixtureTests} from "@romejs/test-helpers";
 import {ConstJSProgramSyntax} from "@romejs/ast";
 import {removeCarriageReturn} from "@romejs/string-utils";
+import {printDiagnosticsToString} from "@romejs/cli-diagnostics";
 
 const promise = createFixtureTests(async (fixture, t) => {
 	const {options, files} = fixture;
@@ -16,20 +17,23 @@ const promise = createFixtureTests(async (fixture, t) => {
 	// Get the input JS
 	const inputFile =
 		files.get("input.js") ||
+		files.get("input.jsx") ||
 		files.get("input.mjs") ||
 		files.get("input.ts") ||
 		files.get("input.tsx");
 	if (inputFile === undefined) {
 		throw new Error(
-			`The fixture ${fixture.dir} did not have an input.(mjs|js|ts|tsx)`,
+			`The fixture ${fixture.dir} did not have an input.(mjs|js|jsx|ts|tsx)`,
 		);
 	}
 
-	const sourceTypeProp = options.get("sourceType");
-	const sourceType = sourceTypeProp.asString("script");
-	if (sourceType !== "module" && sourceType !== "script") {
-		throw sourceTypeProp.unexpected();
-	}
+	const ext = inputFile.absolute.getExtensions();
+
+	// Default to script for .js files, otherwise module
+	const sourceType = options.get("sourceType").asStringSet(
+		["script", "module"],
+		ext === ".js" ? "script" : "module",
+	);
 
 	const allowReturnOutsideFunction = options.get("allowReturnOutsideFunction").asBoolean(
 		false,
@@ -41,6 +45,27 @@ const promise = createFixtureTests(async (fixture, t) => {
 	).map((item) => {
 		return item.asStringSet(["jsx", "ts"]);
 	});
+
+	// Implicit syntax property
+	if (!options.has("syntax")) {
+		switch (ext) {
+			case ".jsx": {
+				syntax.push("jsx");
+				break;
+			}
+
+			case ".ts": {
+				syntax.push("ts");
+				break;
+			}
+
+			case ".tsx": {
+				syntax.push("ts");
+				syntax.push("jsx");
+				break;
+			}
+		}
+	}
 
 	t.addToAdvice({
 		type: "log",
@@ -71,7 +96,26 @@ const promise = createFixtureTests(async (fixture, t) => {
 	const outputFile = inputFile.absolute.getParent().append(
 		inputFile.absolute.getExtensionlessBasename(),
 	).join();
-	t.snapshot(ast, undefined, {filename: outputFile});
+	t.namedSnapshot("ast", ast, undefined, {filename: outputFile});
+
+	const printedDiagnostics = printDiagnosticsToString({
+		diagnostics: ast.diagnostics,
+		suppressions: [],
+	});
+	t.namedSnapshot(
+		"diagnostics",
+		printedDiagnostics,
+		undefined,
+		{filename: outputFile},
+	);
+
+	if (ast.diagnostics.length === 0) {
+		if (options.has("throws")) {
+			// TODO: throw new Error(`Expected diagnostics but didn't receive any\n${printedDiagnostics}`);
+		}
+	} else if (!options.has("throws")) {
+		// TODO: throw new Error(`Received diagnostics when we didn't expect any\n${printedDiagnostics}`);
+	}
 });
 
 // @ts-ignore Doesn't support top-level await lol
