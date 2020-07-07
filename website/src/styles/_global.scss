@@ -185,3 +185,15 @@ pre[class*=language-] {
     margin-right: -32px;
   }
 }
+
+.wip-banner {
+  padding: 10px;
+  text-align: center;
+  position: fixed;
+  z-index: 99999999;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: #fff;
+  background-color: tomato;
+}
