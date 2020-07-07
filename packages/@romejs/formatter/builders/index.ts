@@ -614,6 +614,54 @@ builders.set("JSXText", JSXText);
 import JSYieldExpression from "./js/expressions/JSYieldExpression";
 builders.set("JSYieldExpression", JSYieldExpression);
 
+import MarkdownAutomaticLinkInline from "./markdown/inline/MarkdownAutomaticLinkInline";
+builders.set("MarkdownAutomaticLinkInline", MarkdownAutomaticLinkInline);
+
+import MarkdownBoldInline from "./markdown/inline/MarkdownBoldInline";
+builders.set("MarkdownBoldInline", MarkdownBoldInline);
+
+import MarkdownCodeBlock from "./markdown/blocks/MarkdownCodeBlock";
+builders.set("MarkdownCodeBlock", MarkdownCodeBlock);
+
+import MarkdownCodeInline from "./markdown/inline/MarkdownCodeInline";
+builders.set("MarkdownCodeInline", MarkdownCodeInline);
+
+import MarkdownDefinitionInline from "./markdown/inline/MarkdownDefinitionInline";
+builders.set("MarkdownDefinitionInline", MarkdownDefinitionInline);
+
+import MarkdownDividerBlock from "./markdown/blocks/MarkdownDividerBlock";
+builders.set("MarkdownDividerBlock", MarkdownDividerBlock);
+
+import MarkdownEmphasisInline from "./markdown/inline/MarkdownEmphasisInline";
+builders.set("MarkdownEmphasisInline", MarkdownEmphasisInline);
+
+import MarkdownHeadingBlock from "./markdown/blocks/MarkdownHeadingBlock";
+builders.set("MarkdownHeadingBlock", MarkdownHeadingBlock);
+
+import MarkdownImageInline from "./markdown/inline/MarkdownImageInline";
+builders.set("MarkdownImageInline", MarkdownImageInline);
+
+import MarkdownLinkInline from "./markdown/inline/MarkdownLinkInline";
+builders.set("MarkdownLinkInline", MarkdownLinkInline);
+
+import MarkdownListBlock from "./markdown/blocks/MarkdownListBlock";
+builders.set("MarkdownListBlock", MarkdownListBlock);
+
+import MarkdownListItem from "./markdown/core/MarkdownListItem";
+builders.set("MarkdownListItem", MarkdownListItem);
+
+import MarkdownParagraph from "./markdown/core/MarkdownParagraph";
+builders.set("MarkdownParagraph", MarkdownParagraph);
+
+import MarkdownQuoteBlock from "./markdown/blocks/MarkdownQuoteBlock";
+builders.set("MarkdownQuoteBlock", MarkdownQuoteBlock);
+
+import MarkDownRoot from "./markdown/core/MarkDownRoot";
+builders.set("MarkDownRoot", MarkDownRoot);
+
+import MarkdownText from "./markdown/core/MarkdownText";
+builders.set("MarkdownText", MarkdownText);
+
 import MockParent from "./common/core/MockParent";
 builders.set("MockParent", MockParent);
 

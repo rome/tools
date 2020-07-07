@@ -208,6 +208,22 @@ export * from "./js/jsx/JSXSpreadAttribute";
 export * from "./js/jsx/JSXSpreadChild";
 export * from "./js/jsx/JSXText";
 export * from "./js/expressions/JSYieldExpression";
+export * from "./markdown/inline/MarkdownAutomaticLinkInline";
+export * from "./markdown/inline/MarkdownBoldInline";
+export * from "./markdown/blocks/MarkdownCodeBlock";
+export * from "./markdown/inline/MarkdownCodeInline";
+export * from "./markdown/inline/MarkdownDefinitionInline";
+export * from "./markdown/blocks/MarkdownDividerBlock";
+export * from "./markdown/inline/MarkdownEmphasisInline";
+export * from "./markdown/blocks/MarkdownHeadingBlock";
+export * from "./markdown/inline/MarkdownImageInline";
+export * from "./markdown/inline/MarkdownLinkInline";
+export * from "./markdown/blocks/MarkdownListBlock";
+export * from "./markdown/core/MarkdownListItem";
+export * from "./markdown/core/MarkdownParagraph";
+export * from "./markdown/blocks/MarkdownQuoteBlock";
+export * from "./markdown/core/MarkDownRoot";
+export * from "./markdown/core/MarkdownText";
 export * from "./common/core/MockParent";
 export * from "./js/typescript/TSAnyKeywordTypeAnnotation";
 export * from "./js/typescript/TSArrayType";
@@ -474,6 +490,22 @@ export type AnyNode =
 	| n.JSXSpreadChild
 	| n.JSXText
 	| n.JSYieldExpression
+	| n.MarkdownAutomaticLinkInline
+	| n.MarkdownBoldInline
+	| n.MarkdownCodeBlock
+	| n.MarkdownCodeInline
+	| n.MarkdownDefinitionInline
+	| n.MarkdownDividerBlock
+	| n.MarkdownEmphasisInline
+	| n.MarkdownHeadingBlock
+	| n.MarkdownImageInline
+	| n.MarkdownLinkInline
+	| n.MarkdownListBlock
+	| n.MarkdownListItem
+	| n.MarkdownParagraph
+	| n.MarkdownQuoteBlock
+	| n.MarkDownRoot
+	| n.MarkdownText
 	| n.MockParent
 	| n.TSAnyKeywordTypeAnnotation
 	| n.TSArrayType
