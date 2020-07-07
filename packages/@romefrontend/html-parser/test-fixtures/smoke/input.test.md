@@ -15,8 +15,8 @@ HTMLRoot {
 		filename: "input.html"
 		end: Object {
 			column: 6
-			index: 161
-			line: 16
+			index: 219
+			line: 19
 		}
 		start: Object {
 			column: 0
@@ -25,6 +25,23 @@ HTMLRoot {
 		}
 	}
 	body: Array [
+		CommentBlock {
+			id: ""
+			value: "I am a comment"
+			loc: Object {
+				filename: "input.html"
+				end: Object {
+					column: 23
+					index: 23
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
 		HTMLElement {
 			name: HTMLIdentifier {
 				name: "foo"
@@ -32,13 +49,13 @@ HTMLRoot {
 					filename: "input.html"
 					end: Object {
 						column: 4
-						index: 4
-						line: 1
+						index: 28
+						line: 2
 					}
 					start: Object {
 						column: 1
-						index: 1
-						line: 1
+						index: 25
+						line: 2
 					}
 				}
 			}
@@ -48,13 +65,13 @@ HTMLRoot {
 				filename: "input.html"
 				end: Object {
 					column: 6
-					index: 161
-					line: 16
+					index: 219
+					line: 19
 				}
 				start: Object {
 					column: 0
-					index: 0
-					line: 1
+					index: 24
+					line: 2
 				}
 			}
 			children: Array [
@@ -65,13 +82,13 @@ HTMLRoot {
 							filename: "input.html"
 							end: Object {
 								column: 7
-								index: 13
-								line: 2
+								index: 37
+								line: 3
 							}
 							start: Object {
 								column: 2
-								index: 8
-								line: 2
+								index: 32
+								line: 3
 							}
 						}
 					}
@@ -80,14 +97,14 @@ HTMLRoot {
 					loc: Object {
 						filename: "input.html"
 						end: Object {
-							column: 25
-							index: 31
-							line: 2
+							column: 27
+							index: 57
+							line: 3
 						}
 						start: Object {
 							column: 1
-							index: 7
-							line: 2
+							index: 31
+							line: 3
 						}
 					}
 					attributes: Array [
@@ -98,13 +115,13 @@ HTMLRoot {
 									filename: "input.html"
 									end: Object {
 										column: 19
-										index: 25
-										line: 2
+										index: 49
+										line: 3
 									}
 									start: Object {
 										column: 8
-										index: 14
-										line: 2
+										index: 38
+										line: 3
 									}
 								}
 							}
@@ -114,13 +131,13 @@ HTMLRoot {
 									filename: "input.html"
 									end: Object {
 										column: 24
-										index: 30
-										line: 2
+										index: 54
+										line: 3
 									}
 									start: Object {
 										column: 20
-										index: 26
-										line: 2
+										index: 50
+										line: 3
 									}
 								}
 							}
@@ -128,13 +145,13 @@ HTMLRoot {
 								filename: "input.html"
 								end: Object {
 									column: 24
-									index: 30
-									line: 2
+									index: 54
+									line: 3
 								}
 								start: Object {
 									column: 8
-									index: 14
-									line: 2
+									index: 38
+									line: 3
 								}
 							}
 						}
@@ -146,13 +163,13 @@ HTMLRoot {
 						filename: "input.html"
 						end: Object {
 							column: 6
-							index: 92
-							line: 13
+							index: 118
+							line: 14
 						}
 						start: Object {
 							column: 1
-							index: 33
-							line: 3
+							index: 59
+							line: 4
 						}
 					}
 				}
@@ -163,13 +180,13 @@ HTMLRoot {
 							filename: "input.html"
 							end: Object {
 								column: 11
-								index: 97
-								line: 13
+								index: 123
+								line: 14
 							}
 							start: Object {
 								column: 7
-								index: 93
-								line: 13
+								index: 119
+								line: 14
 							}
 						}
 					}
@@ -179,13 +196,13 @@ HTMLRoot {
 						filename: "input.html"
 						end: Object {
 							column: 48
-							index: 134
-							line: 13
+							index: 160
+							line: 14
 						}
 						start: Object {
 							column: 6
-							index: 92
-							line: 13
+							index: 118
+							line: 14
 						}
 					}
 					children: Array [
@@ -196,13 +213,13 @@ HTMLRoot {
 									filename: "input.html"
 									end: Object {
 										column: 17
-										index: 103
-										line: 13
+										index: 129
+										line: 14
 									}
 									start: Object {
 										column: 13
-										index: 99
-										line: 13
+										index: 125
+										line: 14
 									}
 								}
 							}
@@ -212,13 +229,13 @@ HTMLRoot {
 								filename: "input.html"
 								end: Object {
 									column: 41
-									index: 127
-									line: 13
+									index: 153
+									line: 14
 								}
 								start: Object {
 									column: 12
-									index: 98
-									line: 13
+									index: 124
+									line: 14
 								}
 							}
 							children: Array [
@@ -229,13 +246,13 @@ HTMLRoot {
 											filename: "input.html"
 											end: Object {
 												column: 23
-												index: 109
-												line: 13
+												index: 135
+												line: 14
 											}
 											start: Object {
 												column: 19
-												index: 105
-												line: 13
+												index: 131
+												line: 14
 											}
 										}
 									}
@@ -245,13 +262,13 @@ HTMLRoot {
 										filename: "input.html"
 										end: Object {
 											column: 34
-											index: 120
-											line: 13
+											index: 146
+											line: 14
 										}
 										start: Object {
 											column: 18
-											index: 104
-											line: 13
+											index: 130
+											line: 14
 										}
 									}
 									children: Array [
@@ -261,13 +278,13 @@ HTMLRoot {
 												filename: "input.html"
 												end: Object {
 													column: 27
-													index: 113
-													line: 13
+													index: 139
+													line: 14
 												}
 												start: Object {
 													column: 24
-													index: 110
-													line: 13
+													index: 136
+													line: 14
 												}
 											}
 										}
@@ -284,13 +301,13 @@ HTMLRoot {
 							filename: "input.html"
 							end: Object {
 								column: 6
-								index: 142
-								line: 15
+								index: 168
+								line: 16
 							}
 							start: Object {
 								column: 2
-								index: 138
-								line: 15
+								index: 164
+								line: 16
 							}
 						}
 					}
@@ -300,13 +317,13 @@ HTMLRoot {
 						filename: "input.html"
 						end: Object {
 							column: 18
-							index: 154
-							line: 15
+							index: 180
+							line: 16
 						}
 						start: Object {
 							column: 1
-							index: 137
-							line: 15
+							index: 163
+							line: 16
 						}
 					}
 					children: Array [
@@ -316,17 +333,34 @@ HTMLRoot {
 								filename: "input.html"
 								end: Object {
 									column: 11
-									index: 147
-									line: 15
+									index: 173
+									line: 16
 								}
 								start: Object {
 									column: 7
-									index: 143
-									line: 15
+									index: 169
+									line: 16
 								}
 							}
 						}
 					]
+				}
+				CommentBlock {
+					id: ""
+					value: "I am another comment"
+					loc: Object {
+						filename: "input.html"
+						end: Object {
+							column: 30
+							index: 211
+							line: 17
+						}
+						start: Object {
+							column: 1
+							index: 182
+							line: 17
+						}
+					}
 				}
 			]
 		}

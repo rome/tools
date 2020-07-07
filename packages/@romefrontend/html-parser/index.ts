@@ -10,6 +10,7 @@ import {
 	isDigit,
 } from "@romefrontend/parser-core";
 import {
+	AnyComment,
 	AnyHTMLChildNode,
 	HTMLAttribute,
 	HTMLElement,
@@ -22,6 +23,7 @@ import {Number0, ob1Add, ob1Get0, ob1Inc} from "@romefrontend/ob1";
 import {isEscaped} from "@romefrontend/string-utils";
 import {isSelfClosingTagName} from "./tags";
 import {descriptions} from "@romefrontend/diagnostics";
+import {consumeComment} from "@romejs/html-parser/utils";
 
 type Tokens = BaseTokens & {
 	Text: ValueToken<"Text", string>;
@@ -31,6 +33,9 @@ type Tokens = BaseTokens & {
 	Greater: SimpleToken<"Greater">;
 	Identifier: ValueToken<"Identifier", string>;
 	String: ValueToken<"String", string>;
+	Exclamation: SimpleToken<"Exclamation">;
+	Comment: ValueToken<"Comment", string>;
+	Dash: SimpleToken<"Dash">;
 };
 
 type State = ParserCoreState & {
@@ -56,6 +61,14 @@ function isIdentifierChar(char: string): boolean {
 
 function isTextChar(char: string, index: Number0, input: string): boolean {
 	return !isTagStartChar(index, input);
+}
+
+function isTagComment(index: Number0, input: string): boolean {
+	const first = input[ob1Get0(index)];
+	const second = input[ob1Get0(index) + 1];
+	const third = input[ob1Get0(index) + 2];
+	const fourth = input[ob1Get0(index) + 3];
+	return first === "<" && second === "!" && third === "-"&& fourth === "-";
 }
 
 const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
@@ -138,6 +151,18 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 				}
 			}
 
+			if (isTagComment(index, input)) {
+				const startingIndex = ob1Add(index, 2);
+				const [endIndex, value] = consumeComment(startingIndex, input);
+				return {
+					state: {
+						...state,
+						inTagHead: false,
+					},
+					token: this.finishValueToken("Comment", value, endIndex),
+				};
+			}
+
 			if (isTagStartChar(index, this.input)) {
 				return {
 					state: {
@@ -204,12 +229,20 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 			return this.matchToken("Less") && this.lookahead().token.type === "Slash";
 		}
 
+		atComment(): boolean {
+			return this.lookahead().token.type === "Comment";
+		}
+
 		parseTag(): HTMLElement {
 			const headStart = this.getPosition();
+			if (this.atComment()) {
+				this.parseComment();
+			}
 			this.expectToken("Less");
 
 			const attributes: HTMLElement["attributes"] = [];
 			const children: HTMLElement["children"] = [];
+
 			const name = this.parseIdentifier();
 			const tagName = name.name;
 			let selfClosing = isSelfClosingTagName(tagName);
@@ -291,6 +324,27 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 			);
 		}
 
+		parseComment(): AnyComment {
+			const start = this.getPosition();
+			const token = this.expectToken("Comment");
+			const comment: AnyComment = {
+				value: token.value,
+				id: "",
+				type: "CommentBlock",
+			};
+
+			const finishedToken = this.finishNode(start, comment);
+
+			// TODO: to review this, it executes code inside JS parser
+			// new Error(`No comment found for id ${id}`);
+			// this.addComment({
+			// 	...comment,
+			// 	loc: finishedToken.loc
+			// });
+
+			return finishedToken;
+		}
+
 		parseText(): HTMLText {
 			const start = this.getPosition();
 			const token = this.expectToken("Text");
@@ -354,6 +408,9 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 
 				case "Text":
 					return this.parseText();
+
+				case "Comment":
+					return this.parseComment();
 
 				default:
 					throw this.unexpected();
