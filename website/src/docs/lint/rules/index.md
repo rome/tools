@@ -71,8 +71,8 @@ showHero: false
 | Rule | Description |
 | ------------- | ------------- |
 | alt-text |  |
-| anchor-has-content |  |
-| anchor-is-valid |  |
+| [anchor-has-content](/docs/lint/rules/jsx-a11y/anchor-has-content) |  Anchor elements should have contents |
+| [anchor-is-valid](/docs/lint/rules/jsx-a11y/anchor-is-valid) |  Validate the correctness of the `href` attribute |
 | aria-props |  |
 | aria-proptypes |  |
 | aria-unsupported-elements |  |
