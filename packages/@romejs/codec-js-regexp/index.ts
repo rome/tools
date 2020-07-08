@@ -31,7 +31,7 @@ import {
 	JSRegExpSubExpression,
 } from "@romejs/ast";
 import {Diagnostics, descriptions} from "@romejs/diagnostics";
-import {Number0, ob1Add, ob1Coerce0, ob1Get0} from "@romejs/ob1";
+import {Number0, ob1Add, ob1Get0} from "@romejs/ob1";
 
 type Operator =
 	| "^"
@@ -158,13 +158,13 @@ export const createRegExpParser = createParser((ParserCore) =>
 			throw new Error("No throwing");
 		}
 
-		tokenize(index: Number0, input: string): TokenValues<Tokens> {
-			const char = input[ob1Get0(index)];
+		tokenize(index: Number0): TokenValues<Tokens> {
+			const char = this.getInputCharOnly(index);
 
 			if (char === "\\") {
 				let end = ob1Add(index, 2);
 
-				const nextChar = input[ob1Get0(index) + 1];
+				const nextChar = this.getInputCharOnly(index, 1);
 				switch (nextChar) {
 					case "t":
 						return this.finishComplexToken(
@@ -229,30 +229,26 @@ export const createRegExpParser = createParser((ParserCore) =>
 					case "k": {
 						if (this.unicode) {
 							// named group back reference https://github.com/tc39/proposal-regexp-named-groups#backreferences
-							let namedBackReference = "";
-							let namedBackReferenceIndex = ob1Get0(index) + 2;
-							let namedBackReferenceChar = input[namedBackReferenceIndex];
-							if (namedBackReferenceChar === "<") {
-								namedBackReferenceChar = input[namedBackReferenceIndex];
-								while (
-									namedBackReferenceChar !== ">" &&
-									namedBackReferenceIndex < input.length
-								) {
-									namedBackReference += namedBackReferenceChar;
-									namedBackReferenceIndex++;
-									namedBackReferenceChar = input[namedBackReferenceIndex];
+							let value = "";
+							let [char, next] = this.getInputChar(index, 2);
+
+							if (char === "<") {
+								while (!this.isEOF(next)) {
+									value += char;
+									[char, next] = this.getInputChar(index, 1);
+
+									if (char === ">") {
+										break;
+									}
 								}
-								if (namedBackReferenceChar === ">") {
-									namedBackReference += namedBackReferenceChar;
-									namedBackReferenceIndex++;
-								}
+
 								return this.finishComplexToken(
 									"NamedBackReferenceCharacter",
 									{
-										value: namedBackReference,
+										value,
 										escaped: true,
 									},
-									ob1Coerce0(namedBackReferenceIndex),
+									index,
 								);
 							}
 						}
@@ -310,7 +306,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 
 					case "0": {
 						const {octalValue, end: octalEnd} = readOctalCode(
-							input,
+							this.input,
 							index,
 							nextChar,
 						);
@@ -336,10 +332,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 					}
 
 					case "x": {
-						const possibleHex = input.slice(
-							ob1Get0(index) + 1,
-							ob1Get0(index) + 3,
-						);
+						const [possibleHex] = this.getInputRange(index, 3, 1);
 
 						// \xhh
 						if (possibleHex.length === 2 && isHex(possibleHex)) {
@@ -367,10 +360,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 
 					case "u": {
 						// Get the next 4 characters after \u
-						const possibleHex = input.slice(
-							ob1Get0(index) + 2,
-							ob1Get0(index) + 6,
-						);
+						const [possibleHex] = this.getInputRange(index, 4, 2);
 
 						// \uhhhh
 						if (possibleHex.length === 4 && isHex(possibleHex)) {
@@ -405,7 +395,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 						let {
 							octalValue: referenceValue,
 							end: referenceEnd,
-						} = readOctalCode(input, index, nextChar);
+						} = readOctalCode(this.input, index, nextChar);
 						if (referenceValue !== undefined) {
 							let backReference = referenceValue.toString();
 							// \8 \9 are treated as escape char

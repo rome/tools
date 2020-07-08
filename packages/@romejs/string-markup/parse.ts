@@ -148,7 +148,6 @@ const createStringMarkupParser = createParser((ParserCore) =>
 
 		tokenizeWithState(
 			index: Number0,
-			input: string,
 			state: State,
 		):
 			| undefined
@@ -156,8 +155,8 @@ const createStringMarkupParser = createParser((ParserCore) =>
 					token: TokenValues<Tokens>;
 					state: State;
 				} {
-			const escaped = isEscaped(index, input);
-			const char = input[ob1Get0(index)];
+			const escaped = isEscaped(index, this.input);
+			const char = this.getInputCharOnly(index);
 
 			if (!escaped && state.inTagHead) {
 				if (char === " ") {
@@ -221,7 +220,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
 				}
 			}
 
-			if (isTagStartChar(index, input)) {
+			if (isTagStartChar(index, this.input)) {
 				return {
 					state: {
 						...state,

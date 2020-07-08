@@ -1,16 +1,15 @@
 import {CSSParserOptions, Tokens} from "./types";
-import {ParserOptions, createParser, isDigit} from "@romejs/parser-core";
-import {DiagnosticCategory, descriptions} from "@romejs/diagnostics";
-import {Number0, ob1Add, ob1Get, ob1Get0, ob1Inc} from "@romejs/ob1";
-
 import {
-	consumeBadURL,
-	consumeChar,
-	consumeEscaped,
-	consumeName,
-	consumeNumber,
-	getChar,
-	getNewlineLength,
+	ParserOptions,
+	createParser,
+	isDigit,
+	isHexDigit,
+} from "@romejs/parser-core";
+import {DiagnosticCategory, descriptions} from "@romejs/diagnostics";
+import {Number0, ob1Add, ob1Inc} from "@romejs/ob1";
+import {
+	Symbols,
+	hexToUtf8,
 	isIdentifierStart,
 	isName,
 	isNameStart,
@@ -34,39 +33,203 @@ export const createCSSParser = createParser((ParserCore) =>
 			this.options = opts;
 		}
 
+		getNewlineLength(index: Number0): number {
+			if (
+				this.getInputCharOnly(index) === Symbols.CarriageReturn &&
+				this.getInputCharOnly(index, 1) === Symbols.LineFeed
+			) {
+				return 2;
+			}
+
+			return 1;
+		}
+
+		consumeBadURL(index: Number0): Number0 {
+			while (!this.isEOF(index)) {
+				if (this.getInputCharOnly(index) === ")") {
+					return ob1Inc(index);
+				}
+
+				if (
+					isValidEscape(
+						this.getInputCharOnly(index),
+						this.getInputCharOnly(index, 1),
+					)
+				) {
+					index = this.consumeEscaped(index)[1];
+				} else {
+					index = ob1Inc(index);
+				}
+			}
+			return index;
+		}
+
+		consumeEscaped(index: Number0): [string, Number0] {
+			let value = "";
+			index = ob1Add(index, 2);
+			const lastChar = this.getInputCharOnly(index, -1);
+
+			if (isHexDigit(lastChar)) {
+				let hexString = lastChar;
+				let utf8Value = "";
+
+				const [possibleHex] = this.getInputRange(index, 5);
+				for (const char of possibleHex) {
+					if (!isHexDigit(char)) {
+						break;
+					}
+
+					hexString += char;
+					index = ob1Inc(index);
+				}
+
+				const hexNumber = parseInt(hexString, 16);
+				if (
+					hexNumber === 0 ||
+					hexNumber > Symbols.MaxValue ||
+					(hexNumber >= Symbols.SurrogateMin &&
+					hexNumber <= Symbols.SurrogateMax)
+				) {
+					utf8Value = Symbols.Replace;
+				} else {
+					utf8Value = hexToUtf8(hexString);
+				}
+				value += utf8Value;
+
+				if (isWhitespace(this.getInputCharOnly(index))) {
+					index = ob1Add(index, this.getNewlineLength(index));
+				}
+			}
+
+			return [value, index];
+		}
+
+		consumeName(index: Number0): [string, Number0] {
+			let value = "";
+
+			while (!this.isEOF(index)) {
+				const char1 = this.getInputCharOnly(index);
+				const char2 = this.getInputCharOnly(index, 1);
+
+				if (isName(char1)) {
+					value += char1;
+					index = ob1Inc(index);
+					continue;
+				}
+
+				if (isValidEscape(char1, char2)) {
+					const [newValue, newIndex] = this.consumeEscaped(index);
+					value += newValue;
+					index = newIndex;
+					continue;
+				}
+
+				break;
+			}
+
+			return [value, index];
+		}
+
+		consumeNumber(index: Number0): [Number0, number, string] {
+			const char = this.getInputCharOnly(index);
+			let value = "";
+			let type = "integer";
+
+			if (char === "+" || char === "-") {
+				value += char;
+				index = ob1Inc(index);
+			}
+
+			while (isDigit(this.getInputCharOnly(index))) {
+				value += this.getInputCharOnly(index);
+				index = ob1Inc(index);
+			}
+
+			if (
+				this.getInputCharOnly(index) === "." &&
+				isDigit(this.getInputCharOnly(index, 1))
+			) {
+				value += this.getInputCharOnly(index);
+				index = ob1Inc(index);
+
+				value += this.getInputCharOnly(index);
+				index = ob1Inc(index);
+
+				type = "number";
+
+				while (isDigit(this.getInputCharOnly(index))) {
+					value += this.getInputCharOnly(index);
+					index = ob1Inc(index);
+				}
+			}
+
+			const char1 = this.getInputCharOnly(index);
+			const char2 = this.getInputCharOnly(index, 1);
+			const char3 = this.getInputCharOnly(index, 2);
+
+			if (char1 === "E" || char1 === "e") {
+				if (isDigit(char2)) {
+					value += this.getInputCharOnly(index);
+					index = ob1Inc(index);
+
+					value += this.getInputCharOnly(index);
+					index = ob1Inc(index);
+				} else if ((char2 === "-" || char2 === "+") && isDigit(char3)) {
+					value += this.getInputCharOnly(index);
+					index = ob1Inc(index);
+
+					value += this.getInputCharOnly(index);
+					index = ob1Inc(index);
+
+					value += this.getInputCharOnly(index);
+					index = ob1Inc(index);
+
+					while (isDigit(this.getInputCharOnly(index))) {
+						value += this.getInputCharOnly(index);
+						index = ob1Inc(index);
+					}
+				}
+			}
+
+			return [index, parseFloat(value), type];
+		}
+
 		consumeIdentLikeToken(
 			index: Number0,
-			input: string,
 		): Tokens["Function"] | Tokens["Ident"] | Tokens["URL"] | Tokens["BadURL"] {
-			const [newIndex, name] = consumeName(index, input);
+			const [name, newIndex] = this.consumeName(index);
 			index = newIndex;
 			let value = name;
 
-			if (/url/gi.test(value) && getChar(index, input) === "(") {
+			if (/url/gi.test(value) && this.getInputCharOnly(index) === "(") {
 				index = ob1Inc(index);
 
 				while (
-					isWhitespace(getChar(index, input)) &&
-					isWhitespace(getChar(index, input, 1))
+					isWhitespace(this.getInputCharOnly(index)) &&
+					isWhitespace(this.getInputCharOnly(index, 1))
 				) {
 					index = ob1Inc(index);
 				}
 
-				if (getChar(index, input) === '"' || getChar(index, input) === "'") {
+				if (
+					this.getInputCharOnly(index) === '"' ||
+					this.getInputCharOnly(index) === "'"
+				) {
 					return this.finishValueToken("Function", value, index);
 				}
 
 				if (
-					isWhitespace(getChar(index, input)) &&
-					(getChar(index, input, 1) === '"' || getChar(index, input, 1) === "'")
+					isWhitespace(this.getInputCharOnly(index)) &&
+					(this.getInputCharOnly(index, 1) === '"' ||
+					this.getInputCharOnly(index, 1) === "'")
 				) {
 					return this.finishValueToken("Function", value, ob1Add(index, 1));
 				}
 
-				return this.consumeURLToken(index, input);
+				return this.consumeURLToken(index);
 			}
 
-			if (getChar(index, input) === "(") {
+			if (this.getInputCharOnly(index) === "(") {
 				return this.finishValueToken("Function", value, ob1Inc(index));
 			}
 
@@ -75,28 +238,27 @@ export const createCSSParser = createParser((ParserCore) =>
 
 		consumeStringToken(
 			index: Number0,
-			input: string,
 			endChar?: string,
 		): Tokens["String"] | Tokens["BadString"] {
 			let value = "";
 
 			if (!endChar) {
-				[index, endChar] = consumeChar(index, input);
+				[endChar, index] = this.getInputChar(index);
 			}
 
-			while (ob1Get(index) < input.length) {
-				const char = getChar(index, input);
-				const nextChar = getChar(index, input, 1);
+			while (!this.isEOF(index)) {
+				const char = this.getInputCharOnly(index);
+				const nextChar = this.getInputCharOnly(index, 1);
 
 				if (char === endChar) {
 					return this.finishValueToken("String", value, ob1Inc(index));
 				} else if (this.isEOF(index)) {
-					this.createDiagnostic({
+					this.unexpectedDiagnostic({
 						description: descriptions.CSS_PARSER.UNTERMINATED_STRING,
 					});
 					return this.finishValueToken("String", value, ob1Inc(index));
 				} else if (isNewline(char)) {
-					this.createDiagnostic({
+					this.unexpectedDiagnostic({
 						description: descriptions.CSS_PARSER.UNTERMINATED_STRING,
 					});
 					return this.finishToken("BadString", index);
@@ -105,9 +267,9 @@ export const createCSSParser = createParser((ParserCore) =>
 						continue;
 					}
 					if (isNewline(nextChar)) {
-						index = ob1Add(index, getNewlineLength(ob1Inc(index), input));
+						index = ob1Add(index, this.getNewlineLength(ob1Inc(index)));
 					} else if (isValidEscape(char, nextChar)) {
-						const [newIndex, newValue] = consumeEscaped(index, input);
+						const [newValue, newIndex] = this.consumeEscaped(index);
 						value += newValue;
 						index = newIndex;
 					}
@@ -122,19 +284,18 @@ export const createCSSParser = createParser((ParserCore) =>
 
 		consumeNumberToken(
 			index: Number0,
-			input: string,
 		): Tokens["Percentage"] | Tokens["Dimension"] | Tokens["Number"] {
-			const [newIndex, numberValue, numberType] = consumeNumber(index, input);
+			const [newIndex, numberValue, numberType] = this.consumeNumber(index);
 			index = newIndex;
 
 			if (
 				isIdentifierStart(
-					getChar(index, input),
-					getChar(index, input, 1),
-					getChar(index, input, 2),
+					this.getInputCharOnly(index),
+					this.getInputCharOnly(index, 1),
+					this.getInputCharOnly(index, 2),
 				)
 			) {
-				const [endIndex, unit] = consumeName(index, input);
+				const [unit, endIndex] = this.consumeName(index);
 				return this.finishComplexToken(
 					"Dimension",
 					{
@@ -146,7 +307,7 @@ export const createCSSParser = createParser((ParserCore) =>
 				);
 			}
 
-			if (getChar(index, input) === "%") {
+			if (this.getInputCharOnly(index) === "%") {
 				return this.finishValueToken("Percentage", numberValue, index);
 			}
 
@@ -160,107 +321,128 @@ export const createCSSParser = createParser((ParserCore) =>
 			);
 		}
 
-		consumeURLToken(
-			index: Number0,
-			input: string,
-		): Tokens["URL"] | Tokens["BadURL"] {
+		consumeURLToken(index: Number0): Tokens["URL"] | Tokens["BadURL"] {
 			let value = "";
 
-			while (isWhitespace(getChar(index, input))) {
+			while (isWhitespace(this.getInputCharOnly(index))) {
 				index = ob1Inc(index);
 			}
 
-			while (ob1Get(index) < input.length) {
-				if (getChar(index, input) === ")") {
+			while (!this.isEOF(index)) {
+				if (this.getInputCharOnly(index) === ")") {
 					return this.finishValueToken("URL", value, ob1Inc(index));
 				}
 
 				if (this.isEOF(index)) {
-					this.createDiagnostic({
+					this.unexpectedDiagnostic({
 						description: descriptions.CSS_PARSER.UNTERMINATED_URL,
 					});
 					return this.finishValueToken("URL", value);
 				}
 
-				if (isWhitespace(getChar(index, input))) {
-					while (isWhitespace(getChar(index, input))) {
+				if (isWhitespace(this.getInputCharOnly(index))) {
+					while (isWhitespace(this.getInputCharOnly(index))) {
 						index = ob1Inc(index);
 					}
 
-					if (getChar(index, input) === ")") {
+					if (this.getInputCharOnly(index) === ")") {
 						return this.finishValueToken("URL", value, ob1Inc(index));
 					}
 
 					if (this.isEOF(index)) {
-						this.createDiagnostic({
+						this.unexpectedDiagnostic({
 							description: descriptions.CSS_PARSER.UNTERMINATED_URL,
 						});
 						return this.finishValueToken("URL", value);
 					}
 
-					[index] = consumeBadURL(index, input);
+					index = this.consumeBadURL(index);
 					return this.finishToken("BadURL", index);
 				}
 
 				if (
-					getChar(index, input) === '"' ||
-					getChar(index, input) === "'" ||
-					getChar(index, input) === "("
+					this.getInputCharOnly(index) === '"' ||
+					this.getInputCharOnly(index) === "'" ||
+					this.getInputCharOnly(index) === "("
 				) {
-					this.createDiagnostic({
+					this.unexpectedDiagnostic({
 						description: descriptions.CSS_PARSER.UNTERMINATED_URL,
 					});
-					[index] = consumeBadURL(index, input);
+					index = this.consumeBadURL(index);
 					return this.finishToken("BadURL", index);
 				}
 
-				if (getChar(index, input) === "\\") {
-					if (isValidEscape(getChar(index, input), getChar(index, input))) {
-						const [newIndex, newValue] = consumeEscaped(index, input);
+				if (this.getInputCharOnly(index) === "\\") {
+					if (
+						isValidEscape(
+							this.getInputCharOnly(index),
+							this.getInputCharOnly(index),
+						)
+					) {
+						const [newValue, newIndex] = this.consumeEscaped(index);
 						index = newIndex;
 						value += newValue;
 						continue;
 					}
 
-					this.createDiagnostic({
+					this.unexpectedDiagnostic({
 						description: descriptions.CSS_PARSER.UNTERMINATED_URL,
 					});
-					[index] = consumeBadURL(index, input);
+					index = this.consumeBadURL(index);
 					return this.finishToken("BadURL", index);
 				}
 
-				value += getChar(index, input);
+				value += this.getInputCharOnly(index);
 				index = ob1Inc(index);
 			}
 
 			throw new Error("Unrecoverable state due to bad URL");
 		}
 
-		tokenize(index: Number0, input: string) {
-			function getChar(offset = 0) {
-				return input[ob1Get0(index) + offset];
-			}
+		tokenize(index: Number0) {
+			const char = this.getInputCharOnly(index);
 
-			if (getChar() === "/" && getChar(1) === "*") {
+			// Skip over comments
+			if (char === "/" && this.getInputCharOnly(index, 1) === "*") {
 				index = ob1Add(index, 2);
-				while (getChar() !== "*" && getChar(1) !== "/") {
+				let value = "";
+				while (
+					this.getInputCharOnly(index) !== "*" &&
+					this.getInputCharOnly(index, 1) !== "/" &&
+					!this.isEOF(index)
+				) {
+					value += this.getInputCharOnly(index);
 					index = ob1Add(index, 1);
 				}
+				this.registerComment(
+					this.comments.addComment({
+						type: "CommentBlock",
+						value,
+					}),
+				);
 			}
 
-			if (isWhitespace(getChar())) {
+			if (isWhitespace(char)) {
 				const endIndex = this.readInputFrom(index, isWhitespace)[1];
 				return this.finishToken("Whitespace", endIndex);
 			}
 
-			if (getChar() === '"') {
-				return this.consumeStringToken(index, input);
+			if (char === '"') {
+				return this.consumeStringToken(index);
 			}
 
-			if (getChar() === "#") {
-				if (isName(getChar(1)) || isValidEscape(getChar(1), getChar(2))) {
-					const [endIndex, value] = consumeName(ob1Inc(index), input);
-					const isIdent = isIdentifierStart(getChar(1), getChar(2), getChar(3));
+			if (char === "#") {
+				const nextChar = this.getInputCharOnly(index, 1);
+				if (
+					isName(nextChar) ||
+					isValidEscape(nextChar, this.getInputCharOnly(index, 2))
+				) {
+					const [value, endIndex] = this.consumeName(ob1Inc(index));
+					const isIdent = isIdentifierStart(
+						this.getInputCharOnly(index, 1),
+						this.getInputCharOnly(index, 2),
+						this.getInputCharOnly(index, 3),
+					);
 					return this.finishComplexToken(
 						"Hash",
 						{
@@ -270,106 +452,142 @@ export const createCSSParser = createParser((ParserCore) =>
 						endIndex,
 					);
 				}
-				return this.finishValueToken("Delim", getChar());
+				return this.finishValueToken("Delim", char);
 			}
 
-			if (getChar() === "'") {
-				return this.consumeStringToken(index, input);
+			if (char === "'") {
+				return this.consumeStringToken(index);
 			}
 
-			if (getChar() === "(") {
+			if (char === "(") {
 				return this.finishToken("LeftParen");
 			}
 
-			if (getChar() === ")") {
+			if (char === ")") {
 				return this.finishToken("RightParen");
 			}
 
-			if (getChar() === "+") {
-				if (isNumberStart(getChar(), getChar(1), getChar(2))) {
-					return this.consumeNumberToken(index, input);
+			if (char === "+") {
+				if (
+					isNumberStart(
+						char,
+						this.getInputCharOnly(index, 1),
+						this.getInputCharOnly(index, 2),
+					)
+				) {
+					return this.consumeNumberToken(index);
 				}
-				return this.finishValueToken("Delim", getChar());
+
+				return this.finishValueToken("Delim", char);
 			}
 
-			if (getChar() === ",") {
+			if (char === ",") {
 				return this.finishToken("Comma");
 			}
 
-			if (getChar() === "-") {
-				if (isNumberStart(getChar(), getChar(1), getChar(2))) {
-					return this.consumeNumberToken(index, input);
+			if (char === "-") {
+				if (
+					isNumberStart(
+						char,
+						this.getInputCharOnly(index, 1),
+						this.getInputCharOnly(index, 2),
+					)
+				) {
+					return this.consumeNumberToken(index);
 				}
 
-				if (getChar(1) === "-" && getChar(2) === ">") {
+				if (
+					this.getInputCharOnly(index, 1) === "-" &&
+					this.getInputCharOnly(index, 2) === ">"
+				) {
 					return this.finishToken("CDC", ob1Add(index, 3));
 				}
 
-				if (isIdentifierStart(getChar(), getChar(1), getChar(2))) {
-					return this.consumeIdentLikeToken(index, input);
+				if (
+					isIdentifierStart(
+						char,
+						this.getInputCharOnly(index, 1),
+						this.getInputCharOnly(index, 2),
+					)
+				) {
+					return this.consumeIdentLikeToken(index);
 				}
 
-				return this.finishValueToken("Delim", getChar());
+				return this.finishValueToken("Delim", char);
 			}
 
-			if (getChar() === ".") {
-				if (isNumberStart(getChar(), getChar(1), getChar(2))) {
-					return this.consumeNumberToken(index, input);
+			if (char === ".") {
+				if (
+					isNumberStart(
+						char,
+						this.getInputCharOnly(index, 1),
+						this.getInputCharOnly(index, 2),
+					)
+				) {
+					return this.consumeNumberToken(index);
 				}
-				return this.finishValueToken("Delim", getChar());
+
+				return this.finishValueToken("Delim", char);
 			}
 
-			if (getChar() === ":") {
+			if (char === ":") {
 				return this.finishToken("Colon");
 			}
 
-			if (getChar() === ";") {
+			if (char === ";") {
 				return this.finishToken("Semi");
 			}
 
-			if (getChar() === "@") {
-				if (isIdentifierStart(getChar(1), getChar(2), getChar(3))) {
-					const [endIndex, value] = consumeName(ob1Inc(index), input);
+			if (char === "@") {
+				if (
+					isIdentifierStart(
+						this.getInputCharOnly(index, 1),
+						this.getInputCharOnly(index, 2),
+						this.getInputCharOnly(index, 3),
+					)
+				) {
+					const [value, endIndex] = this.consumeName(ob1Inc(index));
 					return this.finishValueToken("AtKeyword", value, endIndex);
 				}
-				return this.finishValueToken("Delim", getChar());
+				return this.finishValueToken("Delim", char);
 			}
 
-			if (getChar() === "[") {
+			if (char === "[") {
 				return this.finishToken("LeftSquareBracket");
 			}
 
-			if (getChar() === "\\") {
-				if (isValidEscape(getChar(), getChar(1))) {
-					return this.consumeIdentLikeToken(index, input);
+			if (char === "\\") {
+				if (isValidEscape(char, this.getInputCharOnly(index, 1))) {
+					return this.consumeIdentLikeToken(index);
 				}
-				this.createDiagnostic({
+
+				this.unexpectedDiagnostic({
 					description: descriptions.CSS_PARSER.INVALID_ESCAPE,
 				});
-				return this.finishValueToken("Delim", getChar());
+				return this.finishValueToken("Delim", char);
 			}
 
-			if (getChar() === "]") {
+			if (char === "]") {
 				return this.finishToken("RightSquareBracket");
 			}
 
-			if (getChar() === "{") {
+			if (char === "{") {
 				return this.finishToken("LeftCurlyBracket");
 			}
 
-			if (getChar() === "}") {
+			if (char === "}") {
 				return this.finishToken("RightCurlyBracket");
 			}
 
-			if (isDigit(getChar())) {
-				return this.consumeNumberToken(index, input);
+			if (isDigit(char)) {
+				return this.consumeNumberToken(index);
 			}
 
-			if (isNameStart(getChar())) {
-				return this.consumeIdentLikeToken(index, input);
+			if (isNameStart(char)) {
+				return this.consumeIdentLikeToken(index);
 			}
 
-			return this.finishValueToken("Delim", getChar());
+			return this.finishValueToken("Delim", char);
 		}
 	}
 );

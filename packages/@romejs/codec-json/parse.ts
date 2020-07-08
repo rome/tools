@@ -168,9 +168,9 @@ export const createJSONParser = createParser((ParserCore) =>
 			this.pathKeys.pop();
 		}
 
-		tokenize(index: Number0, input: string) {
-			const nextChar = input[ob1Get0(index) + 1];
-			const char = input[ob1Get0(index)];
+		tokenize(index: Number0) {
+			const char = this.getInputCharOnly(index);
+			const nextChar = this.getInputCharOnly(index, 1);
 
 			// Line comment
 			if (char === "/" && nextChar === "/") {
@@ -212,11 +212,12 @@ export const createJSONParser = createParser((ParserCore) =>
 			// Single character token starters
 			switch (char) {
 				case '"': {
-					const [value] = this.readInputFrom(ob1Inc(index), isStringValueChar);
+					const [value, end, overflow] = this.readInputFrom(
+						ob1Inc(index),
+						isStringValueChar,
+					);
 
-					// Check for closed string (index is the current token index + string length + closing quote + 1 for the end char)
-					const end = ob1Add(ob1Add(index, value.length), 2);
-					if (input[ob1Get0(end) - 1] !== '"') {
+					if (overflow) {
 						throw this.unexpected({
 							description: descriptions.JSON.UNCLOSED_STRING,
 							start: this.getPositionFromIndex(end),
@@ -246,7 +247,8 @@ export const createJSONParser = createParser((ParserCore) =>
 						},
 					);
 
-					return this.finishValueToken("String", unescaped, end);
+					// increment to take the trailing quote
+					return this.finishValueToken("String", unescaped, ob1Inc(end));
 				}
 
 				case "'":

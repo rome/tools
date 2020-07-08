@@ -271,14 +271,13 @@ export class ParserCore<
 	}
 
 	// Tokenize method that must be implemented by subclasses
-	tokenize(index: Number0, input: string): undefined | TokenValues<Tokens> {
+	tokenize(index: Number0): undefined | TokenValues<Tokens> {
 		throw new Error("Unimplemented");
 	}
 
 	// Alternate tokenize method to allow that allows the use of state
 	tokenizeWithState(
 		index: Number0,
-		input: string,
 		state: State,
 	):
 		| undefined
@@ -286,7 +285,7 @@ export class ParserCore<
 				token: TokenValues<Tokens>;
 				state: State;
 			} {
-		const token = this.tokenize(index, input);
+		const token = this.tokenize(index);
 		if (token !== undefined) {
 			return {token, state};
 		} else {
@@ -296,7 +295,6 @@ export class ParserCore<
 
 	_tokenizeWithState(
 		index: Number0,
-		input: string,
 		state: State,
 	):
 		| undefined
@@ -305,7 +303,7 @@ export class ParserCore<
 				state: State;
 			} {
 		if (this.ignoreWhitespaceTokens) {
-			switch (input[ob1Get0(index)]) {
+			switch (this.getInputCharOnly(index)) {
 				case " ":
 				case "\t":
 				case "\r":
@@ -314,7 +312,7 @@ export class ParserCore<
 			}
 		}
 
-		return this.tokenizeWithState(index, input, state);
+		return this.tokenizeWithState(index, state);
 	}
 
 	// Get the current token
@@ -431,7 +429,7 @@ export class ParserCore<
 		this.tokenizing = true;
 
 		// Tokenize and do some validation
-		const nextToken = this._tokenizeWithState(index, this.input, this.state);
+		const nextToken = this._tokenizeWithState(index, this.state);
 		if (nextToken === undefined) {
 			throw this.unexpected({
 				start: this.getPositionFromIndex(index),
@@ -593,6 +591,39 @@ export class ParserCore<
 		}
 	}
 
+	getInputRange(
+		start: Number0,
+		count: number,
+		startOffset?: number,
+	): [string, Number0] {
+		// Allow passing in an `offset` to avoid callsites having to do `ob1Add` themselves
+		const startIndex = ob1Get0(
+			startOffset === undefined ? start : ob1Add(start, startOffset),
+		);
+		const endIndex = Math.min(startIndex + count, this.input.length - 1);
+		return [this.input.slice(startIndex, endIndex), ob1Coerce0(endIndex + 1)];
+	}
+
+	getInputCharOnly(index: Number0, offset?: number): string {
+		return this.getInputChar(index, offset)[0];
+	}
+
+	getInputChar(index: Number0, offset?: number): [string, Number0] {
+		const {input} = this;
+
+		// Allow passing in an `offset` to avoid callsites having to do `ob1Add` themselves
+		const i = ob1Get0(offset === undefined ? index : ob1Add(index, offset));
+
+		const end = ob1Coerce0(i + 1);
+
+		// Allow an overflow since we call this method to check for trailing characters
+		if (i >= input.length || i < 0) {
+			return ["", end];
+		}
+
+		return [input[i], end];
+	}
+
 	// Read from the input starting at the specified index, until the callback returns false
 	readInputFrom(
 		index: Number0,
@@ -624,6 +655,7 @@ export class ParserCore<
 	getRawInput(start: Number0, end: Number0): string {
 		return this.input.slice(ob1Get0(start), ob1Get0(end));
 	}
+
 	getLoc(node: undefined | NodeBase): SourceLocation {
 		if (node === undefined || node.loc === undefined) {
 			throw new Error("Tried to fetch node loc start but none found");
@@ -787,7 +819,7 @@ export class ParserCore<
 
 	//# Comments
 
-	addComment(comment: AnyComment) {
+	registerComment(comment: AnyComment) {
 		this.state.comments.push(comment);
 		this.state.trailingComments.push(comment);
 		this.state.leadingComments.push(comment);

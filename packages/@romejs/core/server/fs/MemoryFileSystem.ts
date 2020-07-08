@@ -674,7 +674,12 @@ export default class MemoryFileSystem {
 			});
 		}
 
-		const project = projectManager.assertProjectExisting(path);
+		const project = projectManager.findProjectExisting(path);
+		if (project === undefined) {
+			// Project failed to load. We'll display the errors but failing hard here with assertProjectExisting will hide them.
+			return;
+		}
+
 		projectManager.declareManifest(project, isProjectPackage, def, diagnostics);
 
 		// Tell all workers of our discovery

@@ -26,7 +26,7 @@ import {
 	isDigit,
 } from "@romejs/parser-core";
 
-import {Number0, ob1Add, ob1Get0} from "@romejs/ob1";
+import {Number0, ob1Add} from "@romejs/ob1";
 import {descriptions} from "@romejs/diagnostics";
 
 type ParseMode = "version" | "range";
@@ -48,9 +48,9 @@ const createSemverParser = createParser((ParserCore) =>
 		mode: ParseMode;
 
 		// For some reason Flow will throw an error without the type casts...
-		tokenize(index: Number0, input: string): undefined | TokenValues<Tokens> {
-			const char = input[ob1Get0(index)];
-			const nextChar = input[ob1Get0(index) + 1];
+		tokenize(index: Number0): undefined | TokenValues<Tokens> {
+			const char = this.getInputCharOnly(index);
+			const nextChar = this.getInputCharOnly(index, 1);
 
 			if (
 				(char === "<" && nextChar === "=") ||
@@ -81,7 +81,11 @@ const createSemverParser = createParser((ParserCore) =>
 				return this.finishToken("Star");
 			}
 
-			if (input[ob1Get0(index) - 1] === " " && char === "-" && nextChar === " ") {
+			if (
+				this.getInputCharOnly(index, -1) === " " &&
+				char === "-" &&
+				nextChar === " "
+			) {
 				return this.finishToken("RangeDash");
 			}
 

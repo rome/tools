@@ -153,7 +153,7 @@ JSRoot {
 								}
 							}
 							JSRegExpCharacter {
-								value: undefined
+								value: ""
 								loc: Object {
 									filename: "input.js"
 									end: Object {
