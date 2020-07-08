@@ -76,8 +76,8 @@ module.exports = function(eleventyConfig) {
 
 				const contentB = fs.readFileSync(`${opts.blogPath}/${fileB}`, "utf8").toString();
 				const dateB = contentB.match(/date:(.*)/)[1];
-
-				return new Date(dateA) - new Date(dateB);
+				console.log(new Date(dateB) - new Date(dateA));
+				return new Date(dateB) - new Date(dateA);
 			});
 
 			let list = ``;
