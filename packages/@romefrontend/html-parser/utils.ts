@@ -1,4 +1,4 @@
-import {Number0, ob1Add, ob1Get} from "@romejs/ob1";
+import {Number0, ob1Add, ob1Get} from "@romefrontend/ob1";
 
 export function getChar(index: Number0, input: string, offset = 0): string {
 	const targetIndex = ob1Get(index) + offset;

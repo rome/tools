@@ -22,7 +22,7 @@ import {Number0, ob1Add, ob1Get0, ob1Inc} from "@romefrontend/ob1";
 import {isEscaped} from "@romefrontend/string-utils";
 import {isSelfClosingTagName} from "./tags";
 import {descriptions} from "@romefrontend/diagnostics";
-import {consumeComment} from "@romejs/html-parser/utils";
+import {consumeComment} from "@romefrontend/html-parser/utils.ts";
 
 type Tokens = BaseTokens & {
 	Text: ValueToken<"Text", string>;
@@ -148,9 +148,9 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 				}
 			}
 
-			if (isTagComment(index, input)) {
+			if (isTagComment(index, this.input)) {
 				const startingIndex = ob1Add(index, 2);
-				const [endIndex, value] = consumeComment(startingIndex, input);
+				const [endIndex, value] = consumeComment(startingIndex, this.input);
 				return {
 					state: {
 						...state,
