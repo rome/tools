@@ -1,4 +1,3 @@
-import {Number0, ob1Add, ob1Get, ob1Inc} from "@romejs/ob1";
 import {isAlpha, isDigit} from "@romejs/parser-core";
 
 export const Symbols = {

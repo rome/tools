@@ -1,8 +1,15 @@
 import {CSSParserOptions, Tokens} from "./types";
-import {ParserOptions, createParser, isDigit, isHexDigit} from "@romejs/parser-core";
+import {
+	ParserOptions,
+	createParser,
+	isDigit,
+	isHexDigit,
+} from "@romejs/parser-core";
 import {DiagnosticCategory, descriptions} from "@romejs/diagnostics";
 import {Number0, ob1Add, ob1Inc} from "@romejs/ob1";
 import {
+	Symbols,
+	hexToUtf8,
 	isIdentifierStart,
 	isName,
 	isNameStart,
@@ -10,8 +17,6 @@ import {
 	isNumberStart,
 	isValidEscape,
 	isWhitespace,
-	hexToUtf8,
-	Symbols,
 } from "./utils";
 
 export const createCSSParser = createParser((ParserCore) =>
@@ -35,7 +40,7 @@ export const createCSSParser = createParser((ParserCore) =>
 			) {
 				return 2;
 			}
-		
+
 			return 1;
 		}
 
@@ -45,7 +50,12 @@ export const createCSSParser = createParser((ParserCore) =>
 					return ob1Inc(index);
 				}
 
-				if (isValidEscape(this.getInputCharOnly(index), this.getInputCharOnly(index, 1))) {
+				if (
+					isValidEscape(
+						this.getInputCharOnly(index),
+						this.getInputCharOnly(index, 1),
+					)
+				) {
 					index = this.consumeEscaped(index)[1];
 				} else {
 					index = ob1Inc(index);
@@ -77,7 +87,8 @@ export const createCSSParser = createParser((ParserCore) =>
 				if (
 					hexNumber === 0 ||
 					hexNumber > Symbols.MaxValue ||
-					(hexNumber >= Symbols.SurrogateMin && hexNumber <= Symbols.SurrogateMax)
+					(hexNumber >= Symbols.SurrogateMin &&
+					hexNumber <= Symbols.SurrogateMax)
 				) {
 					utf8Value = Symbols.Replace;
 				} else {
@@ -134,7 +145,10 @@ export const createCSSParser = createParser((ParserCore) =>
 				index = ob1Inc(index);
 			}
 
-			if (this.getInputCharOnly(index) === "." && isDigit(this.getInputCharOnly(index, 1))) {
+			if (
+				this.getInputCharOnly(index) === "." &&
+				isDigit(this.getInputCharOnly(index, 1))
+			) {
 				value += this.getInputCharOnly(index);
 				index = ob1Inc(index);
 
@@ -197,13 +211,17 @@ export const createCSSParser = createParser((ParserCore) =>
 					index = ob1Inc(index);
 				}
 
-				if (this.getInputCharOnly(index) === '"' || this.getInputCharOnly(index) === "'") {
+				if (
+					this.getInputCharOnly(index) === '"' ||
+					this.getInputCharOnly(index) === "'"
+				) {
 					return this.finishValueToken("Function", value, index);
 				}
 
 				if (
 					isWhitespace(this.getInputCharOnly(index)) &&
-					(this.getInputCharOnly(index, 1) === '"' || this.getInputCharOnly(index, 1) === "'")
+					(this.getInputCharOnly(index, 1) === '"' ||
+					this.getInputCharOnly(index, 1) === "'")
 				) {
 					return this.finishValueToken("Function", value, ob1Add(index, 1));
 				}
@@ -303,9 +321,7 @@ export const createCSSParser = createParser((ParserCore) =>
 			);
 		}
 
-		consumeURLToken(
-			index: Number0,
-		): Tokens["URL"] | Tokens["BadURL"] {
+		consumeURLToken(index: Number0): Tokens["URL"] | Tokens["BadURL"] {
 			let value = "";
 
 			while (isWhitespace(this.getInputCharOnly(index))) {
@@ -357,7 +373,12 @@ export const createCSSParser = createParser((ParserCore) =>
 				}
 
 				if (this.getInputCharOnly(index) === "\\") {
-					if (isValidEscape(this.getInputCharOnly(index), this.getInputCharOnly(index))) {
+					if (
+						isValidEscape(
+							this.getInputCharOnly(index),
+							this.getInputCharOnly(index),
+						)
+					) {
 						const [newValue, newIndex] = this.consumeEscaped(index);
 						index = newIndex;
 						value += newValue;
@@ -385,14 +406,20 @@ export const createCSSParser = createParser((ParserCore) =>
 			if (char === "/" && this.getInputCharOnly(index, 1) === "*") {
 				index = ob1Add(index, 2);
 				let value = "";
-				while (this.getInputCharOnly(index) !== "*" && this.getInputCharOnly(index, 1) !== "/" && !this.isEOF(index)) {
+				while (
+					this.getInputCharOnly(index) !== "*" &&
+					this.getInputCharOnly(index, 1) !== "/" &&
+					!this.isEOF(index)
+				) {
 					value += this.getInputCharOnly(index);
 					index = ob1Add(index, 1);
 				}
-				this.registerComment(this.comments.addComment({
-					type: "CommentBlock",
-					value,
-				}));
+				this.registerComment(
+					this.comments.addComment({
+						type: "CommentBlock",
+						value,
+					}),
+				);
 			}
 
 			if (isWhitespace(char)) {
@@ -406,9 +433,16 @@ export const createCSSParser = createParser((ParserCore) =>
 
 			if (char === "#") {
 				const nextChar = this.getInputCharOnly(index, 1);
-				if (isName(nextChar) || isValidEscape(nextChar, this.getInputCharOnly(index, 2))) {
+				if (
+					isName(nextChar) ||
+					isValidEscape(nextChar, this.getInputCharOnly(index, 2))
+				) {
 					const [value, endIndex] = this.consumeName(ob1Inc(index));
-					const isIdent = isIdentifierStart(this.getInputCharOnly(index, 1), this.getInputCharOnly(index, 2), this.getInputCharOnly(index, 3));
+					const isIdent = isIdentifierStart(
+						this.getInputCharOnly(index, 1),
+						this.getInputCharOnly(index, 2),
+						this.getInputCharOnly(index, 3),
+					);
 					return this.finishComplexToken(
 						"Hash",
 						{
@@ -434,7 +468,13 @@ export const createCSSParser = createParser((ParserCore) =>
 			}
 
 			if (char === "+") {
-				if (isNumberStart(char, this.getInputCharOnly(index, 1), this.getInputCharOnly(index, 2))) {
+				if (
+					isNumberStart(
+						char,
+						this.getInputCharOnly(index, 1),
+						this.getInputCharOnly(index, 2),
+					)
+				) {
 					return this.consumeNumberToken(index);
 				}
 
@@ -446,15 +486,30 @@ export const createCSSParser = createParser((ParserCore) =>
 			}
 
 			if (char === "-") {
-				if (isNumberStart(char, this.getInputCharOnly(index, 1), this.getInputCharOnly(index, 2))) {
+				if (
+					isNumberStart(
+						char,
+						this.getInputCharOnly(index, 1),
+						this.getInputCharOnly(index, 2),
+					)
+				) {
 					return this.consumeNumberToken(index);
 				}
 
-				if (this.getInputCharOnly(index, 1) === "-" && this.getInputCharOnly(index, 2) === ">") {
+				if (
+					this.getInputCharOnly(index, 1) === "-" &&
+					this.getInputCharOnly(index, 2) === ">"
+				) {
 					return this.finishToken("CDC", ob1Add(index, 3));
 				}
 
-				if (isIdentifierStart(char, this.getInputCharOnly(index, 1), this.getInputCharOnly(index, 2))) {
+				if (
+					isIdentifierStart(
+						char,
+						this.getInputCharOnly(index, 1),
+						this.getInputCharOnly(index, 2),
+					)
+				) {
 					return this.consumeIdentLikeToken(index);
 				}
 
@@ -462,7 +517,13 @@ export const createCSSParser = createParser((ParserCore) =>
 			}
 
 			if (char === ".") {
-				if (isNumberStart(char, this.getInputCharOnly(index, 1), this.getInputCharOnly(index, 2))) {
+				if (
+					isNumberStart(
+						char,
+						this.getInputCharOnly(index, 1),
+						this.getInputCharOnly(index, 2),
+					)
+				) {
 					return this.consumeNumberToken(index);
 				}
 
@@ -478,7 +539,13 @@ export const createCSSParser = createParser((ParserCore) =>
 			}
 
 			if (char === "@") {
-				if (isIdentifierStart(this.getInputCharOnly(index, 1), this.getInputCharOnly(index, 2), this.getInputCharOnly(index, 3))) {
+				if (
+					isIdentifierStart(
+						this.getInputCharOnly(index, 1),
+						this.getInputCharOnly(index, 2),
+						this.getInputCharOnly(index, 3),
+					)
+				) {
 					const [value, endIndex] = this.consumeName(ob1Inc(index));
 					return this.finishValueToken("AtKeyword", value, endIndex);
 				}
@@ -493,7 +560,7 @@ export const createCSSParser = createParser((ParserCore) =>
 				if (isValidEscape(char, this.getInputCharOnly(index, 1))) {
 					return this.consumeIdentLikeToken(index);
 				}
-				
+
 				this.unexpectedDiagnostic({
 					description: descriptions.CSS_PARSER.INVALID_ESCAPE,
 				});
