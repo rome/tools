@@ -819,7 +819,7 @@ export class ParserCore<
 
 	//# Comments
 
-	addComment(comment: AnyComment) {
+	registerComment(comment: AnyComment) {
 		this.state.comments.push(comment);
 		this.state.trailingComments.push(comment);
 		this.state.leadingComments.push(comment);

@@ -327,7 +327,7 @@ function pushComment(
 	}
 
 	if (parser.isLookahead === false) {
-		parser.addComment(comment);
+		parser.registerComment(comment);
 	}
 
 	if (parser.shouldCreateToken()) {
