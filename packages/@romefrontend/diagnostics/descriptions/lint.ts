@@ -16,6 +16,10 @@ import {buildSuggestionAdvice} from "../helpers";
 import {createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	JS_NO_NESTED_TERNARY: {
+		category: "lint/js/noNestedTernary",
+		message: "Nesting ternary expressions can make code more difficult to understand.",
+	},
 	JSX_FILE_EXTENSION: (ext: string, basename: string) => ({
 		category: "lint/jsx/fileExtension",
 		message: `Files with the <emphasis>${ext}</emphasis> extension cannot contain JSX elements.`,
