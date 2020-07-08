@@ -9,6 +9,7 @@ const opts = {
 	dirInput: "src",
 	staticPath: "static",
 	docsPath: "_includes/docs",
+	blogPath: "src/posts",
 	dirOutput: "build",
 	toc: {
 		headingText: "test", // Optional text to show in heading above the wrapper element
@@ -54,6 +55,37 @@ module.exports = function(eleventyConfig) {
 				},
 			);
 			return md.render(data.toString());
+		},
+	);
+
+	eleventyConfig.addShortcode(
+		"postslist",
+		function() {
+
+			let files = fs.readdirSync(opts.blogPath);
+
+			//remove index.md from the list and only accept .md files
+			files = files.filter(function(file){
+				return file != 'index.md' && path.extname(file) === '.md';
+			});
+
+			let list = ``;
+
+			files.forEach(file => {
+				list += '<article>';
+				const content = fs.readFileSync(`${opts.blogPath}/${file}`, "utf8").toString();
+				const title = content.match(/title:(.*)/)[1];
+				const date = content.match(/date:(.*)/)[1];
+				const description = content.match(/description:(.*)/)[1];
+
+				list += `<h1><a href="${file.replace(path.extname(file), "")}">${title}</a></h1>`;
+				list += `<time datetime="${date}">${date}</time>`;
+				list += `<p>${description}</p>`;
+
+				list += '</article>';
+			});
+
+			return list;
 		},
 	);
 
