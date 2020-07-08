@@ -33,9 +33,11 @@ Refer to [Project Configuration](/docs/project-config) for more details.
 
 > Note: [RJSON](/docs/rjson) is a superset of JSON that supports more-concise syntax and features such as comments.
 
-## 3. Celebrate!
+## 3. Celebrate! 🎉
 
 ### Run some commands
+
+[`rome check`](/docs/cli/commands/check)
 
 ```bash
 rome check

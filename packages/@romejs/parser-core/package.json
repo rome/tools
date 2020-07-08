@@ -1,6 +1,0 @@
-{
-	"name": "@romejs/parser-core",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

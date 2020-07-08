@@ -1,0 +1,6 @@
+{
+	"name": "@romefrontend/codec-source-map",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
+}

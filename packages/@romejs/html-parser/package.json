@@ -1,6 +1,0 @@
-{
-	"name": "@romejs/html-parser",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

@@ -1,0 +1,6 @@
+{
+	"name": "@romefrontend/ob1",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
+}

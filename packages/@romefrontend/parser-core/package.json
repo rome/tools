@@ -1,0 +1,6 @@
+{
+	"name": "@romefrontend/parser-core",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
+}

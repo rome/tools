@@ -1,0 +1,6 @@
+{
+	"name": "@romefrontend/fs",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
+}

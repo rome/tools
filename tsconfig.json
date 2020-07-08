@@ -21,17 +21,17 @@
 		],
 		"baseUrl": ".",
 		"paths": {
-			"@romejs/*": [
-				"packages/@romejs/*"
+			"@romefrontend/*": [
+				"packages/@romefrontend/*"
 			],
-			"@romejs-web/*": [
-				"packages/@romejs-web/*"
+			"@romefrontend-web/*": [
+				"packages/@romefrontend-web/*"
 			],
-			"@romejs-runtime/*": [
-				"packages/@romejs-runtime/*"
+			"@romefrontend-runtime/*": [
+				"packages/@romefrontend-runtime/*"
 			],
 			"*": [
-				"packages/@romejs-runtime/*"
+				"packages/@romefrontend-runtime/*"
 			]
 		}
 	},
@@ -41,6 +41,6 @@
 		"type-libs",
 		"scripts",
 		"test-fixtures",
-		"packages/@romejs/js-parser/test-fixtures"
+		"packages/@romefrontend/js-parser/test-fixtures"
 	]
 }

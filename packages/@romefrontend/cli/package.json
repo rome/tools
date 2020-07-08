@@ -1,0 +1,9 @@
+{
+	"name": "@romefrontend/cli",
+	"private": true,
+	"type": "module",
+	"main": "index.ts",
+	"bin": {
+		"rome": "bin/rome.ts"
+	}
+}

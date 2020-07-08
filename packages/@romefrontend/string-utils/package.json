@@ -1,0 +1,6 @@
+{
+	"name": "@romefrontend/string-utils",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
+}

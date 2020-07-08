@@ -1,0 +1,6 @@
+{
+	"name": "@romefrontend/events",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
+}

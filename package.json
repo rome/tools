@@ -38,7 +38,7 @@
 				"type-libs",
 				"lib/modules.js",
 				"prelude.ts",
-				"@romejs-web",
+				"@romefrontend-web",
 				"out",
 				"website/.eleventy.js",
 				"vscode/node_modules"

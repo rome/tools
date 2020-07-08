@@ -29,7 +29,7 @@ if (language === undefined || nodeType === undefined || category === undefined) 
 const builderName = getBuilderName(nodeType);
 
 // Write AST def
-let file = `import {NodeBaseWithComments} from "@romejs/ast";
+let file = `import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export type ${nodeType} = NodeBaseWithComments & {
@@ -55,8 +55,8 @@ const builderDefFile = path.join(
 	category,
 	`${nodeType}.ts`,
 );
-const builderContent = `import {${nodeType}} from "@romejs/ast";
-import {Builder, Token} from "@romejs/formatter";
+const builderContent = `import {${nodeType}} from "@romefrontend/ast";
+import {Builder, Token} from "@romefrontend/formatter";
 
 export default function ${nodeType}(builder: Builder, node: ${nodeType}): Token {
 	throw new Error("unimplemented");
@@ -67,7 +67,7 @@ write(builderDefFile, builderContent);
 // Write analysis
 if (language === "js") {
 	const analysisDefFile = path.join(analysisFolder, category, `${nodeType}.ts`);
-	const analysisContent = `import {AnyNode, ${nodeType}, ${builderName}} from "@romejs/ast";
+	const analysisContent = `import {AnyNode, ${nodeType}, ${builderName}} from "@romefrontend/ast";
 
 	export default function ${nodeType}(node: AnyNode) {
 		node = ${builderName}.assert(node);

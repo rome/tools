@@ -1,6 +1,0 @@
-{
-	"name": "@romejs/cli-diagnostics",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

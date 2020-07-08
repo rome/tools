@@ -10,8 +10,8 @@ All members must follow the [Code of Conduct](CODE_OF_CONDUCT.md). Consequences 
 
 Core Contributors are those with a history of consistent contributions, including but not limited to pull requests, project management, or support. These privileges include:
 
-- Push access to the [Rome GitHub org](https://github.com/romejs), this includes all repos
-- Contributor status on the [Rome Discord server](https://github.com/romejs)
+- Push access to the [Rome GitHub org](https://github.com/romefrontend), this includes all repos
+- Contributor status on the [Rome Discord server](https://github.com/romefrontend)
 - Ability to [vote](#voting) on project decisions
 
 There are no expectations around activity once someone becomes a core contributor. Inactive contributors may have voting rights removed however will always retain their status. Inactivity requirements will be specified in a later governance change.
@@ -28,17 +28,17 @@ In the event of a rejection the nominated person will be privately given the req
 
 Stewards have additional privileges over core contributors. Stewards control and maintain sensitive project assets, and act as tiebreakers in the event of disagreements. These additional privileges include:
 
-- Access to the [@romejsdev Twitter account](https://twitter.com/romejsdev)
-- Administration privileges on the [Rome GitHub org](https://github.com/romejs)
-- Administration privileges on the [Rome Discord server](https://github.com/romejs)
+- Access to the [@romefrontend Twitter account](https://twitter.com/romefrontend)
+- Administration privileges on the [Rome GitHub org](https://github.com/romefrontend)
+- Administration privileges on the [Rome Discord server](https://github.com/romefrontend)
 - Publish access to the [`rome` npm package](https://www.npmjs.com/package/rome)
-- Domain registrar and DNS access to all `romejs.*` domains
-- Administration access to the `romejs.dev` Netlify account
+- Domain registrar and DNS access to all `romefrontend.*` domains
+- Administration access to the `romefrontend.dev` Netlify account
 - Ability to initiate a [vote](#voting)
 - Ability to veto [votes](#voting) and resolve voting deadlocks
 - Define project direction and planning
 - Ability to decide on moderation decisions
-- Access to the `*@romejs.dev` email address
+- Access to the `*@romefrontend.dev` email address
 
 #### Induction
 
@@ -111,10 +111,10 @@ Outlined below is the process for Code of Conduct violation reviews.
 
 Anyone may report a violation. Violations can be reported in the following ways:
 
-- In private, via <conduct@romejs.dev> which is listed in the [Code of Conduct](./CODE_OF_CONDUCT.md). This email address is monitored by all stewards.
+- In private, via <conduct@romefrontend.dev> which is listed in the [Code of Conduct](./CODE_OF_CONDUCT.md). This email address is monitored by all stewards.
 - In private, via email to one or more stewards.
 - In private, via direct message to a project steward on Discord
-- In public, via a GitHub comment (mentioning `@romejs/stewards`).
+- In public, via a GitHub comment (mentioning `@romefrontend/stewards`).
 - In public, via the project Discord server.
 
 ### Who gets involved?

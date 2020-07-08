@@ -7,12 +7,17 @@
 
 require("../_setup.cjs");
 
-const {toCamelCase, write, readFile, camelCaseToKebabCase} = require(
-	"../_utils.cjs",
-);
-const {lintRulesFolder, descriptionsFolder, lintRulesDocFolder} = require(
-	"../_constants.cjs",
-);
+const {
+	toCamelCase,
+	write,
+	readFile,
+	camelCaseToKebabCase,
+} = require("../_utils.cjs");
+const {
+	lintRulesFolder,
+	descriptionsFolder,
+	lintRulesDocFolder,
+} = require("../_constants.cjs");
 const path = require("path");
 
 const ruleName = process.argv[2];
@@ -45,8 +50,8 @@ const docLoc = path.join(
 
 write(
 	ruleLoc,
-	`import {Path, TransformExitResult} from "@romejs/compiler";
-import {descriptions} from "@romejs/diagnostics";
+	`import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {descriptions} from "@romefrontend/diagnostics";
 
 export default {
  name: "${groupCamelCasedName}",

@@ -1,6 +1,0 @@
-{
-	"name": "@romejs/js-analysis",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

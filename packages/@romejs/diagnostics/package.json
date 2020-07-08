@@ -1,6 +1,0 @@
-{
-	"name": "@romejs/diagnostics",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

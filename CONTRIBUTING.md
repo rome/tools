@@ -1,6 +1,6 @@
 # Contributing
 
-We can use help in a bunch of areas and any help is appreciated. Our [GitHub issues](https://github.com/romejs/rome/issues) serve as a place for any discussion, whether it's bug reports, questions, project direction etc. As the project grows this policy may change.
+We can use help in a bunch of areas and any help is appreciated. Our [GitHub issues](https://github.com/romefrontend/rome/issues) serve as a place for any discussion, whether it's bug reports, questions, project direction etc. As the project grows this policy may change.
 
 Our [Discord server](https://discord.gg/9WxHa5d) is open for help and more adhoc discussion. All activity on the Discord is still moderated and will be strictly enforced under the project's [Code of Conduct](./CODE_OF_CONDUCT.md).
 
@@ -9,12 +9,12 @@ Our [Discord server](https://discord.gg/9WxHa5d) is open for help and more adhoc
 Getting started with developing Rome is as easy as three commands. You will need Node v12 or above.
 
 ```bash
-git clone https://github.com/romejs/rome
+git clone https://github.com/romefrontend/rome
 cd rome
 ./scripts/dev-rome --help
 ```
 
-**Note:** If you previously ran the user-facing [installation instructions](https://romejs.dev/docs/introduction/installation), the `dist` directory must be deleted before running any development commands.
+**Note:** If you previously ran the user-facing [installation instructions](https://romefrontend.dev/docs/introduction/installation), the `dist` directory must be deleted before running any development commands.
 
 No dependency installation step is required as we check in our `node_modules` folder that contains only a copy of TypeScript and some definitions.
 
@@ -22,7 +22,7 @@ If files specific to your local development environment should be ignored,
 please add these files to a global git ignore file rather than to a git ignore
 file within Rome. You can find more information on this process [here](https://help.github.com/en/github/using-git/ignoring-files#configuring-ignored-files-for-all-repositories-on-your-computer).
 
-Refer to [Getting Started](https://romejs.dev/docs/introduction/getting-started/) for more usage documentation.
+Refer to [Getting Started](https://romefrontend.dev/docs/introduction/getting-started/) for more usage documentation.
 
 ## Linting
 

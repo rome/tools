@@ -1,0 +1,6 @@
+{
+	"name": "@romefrontend/path-match",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
+}

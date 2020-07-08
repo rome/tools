@@ -1,0 +1,6 @@
+{
+	"name": "@romefrontend/cli-flags",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
+}

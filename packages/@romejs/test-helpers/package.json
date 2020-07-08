@@ -1,6 +1,0 @@
-{
-	"name": "@romejs/test-helpers",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

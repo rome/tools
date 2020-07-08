@@ -1,0 +1,6 @@
+{
+	"name": "@romefrontend/typescript-helpers",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
+}

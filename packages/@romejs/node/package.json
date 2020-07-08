@@ -1,6 +1,0 @@
-{
-	"name": "@romejs/node",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

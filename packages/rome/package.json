@@ -12,6 +12,6 @@
 		"rome": "bin/rome.ts"
 	},
 	"scripts": {
-		"postinstall": "echo \"Thanks for using Rome! This space reserved for future sustainability announcements. See https://github.com/romejs/rome/pull/198 for context.\""
+		"postinstall": "echo \"Thanks for using Rome! This space reserved for future sustainability announcements. See https://github.com/romefrontend/rome/pull/198 for context.\""
 	}
 }

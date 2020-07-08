@@ -1,6 +1,0 @@
-{
-	"name": "@romejs/project",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

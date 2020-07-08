@@ -1,0 +1,6 @@
+{
+	"name": "@romefrontend/formatter",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
+}
