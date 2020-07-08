@@ -10,7 +10,6 @@ import {
 	isDigit,
 } from "@romefrontend/parser-core";
 import {
-	AnyComment,
 	AnyHTMLChildNode,
 	HTMLAttribute,
 	HTMLElement,
@@ -322,25 +321,16 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 			);
 		}
 
-		parseComment(): AnyComment {
+		parseComment(): undefined {
 			const start = this.getPosition();
 			const token = this.expectToken("Comment");
-			const comment: AnyComment = {
+
+			this.comments.addComment({
 				value: token.value,
-				id: "",
 				type: "CommentBlock",
-			};
-
-			const finishedToken = this.finishNode(start, comment);
-
-			// TODO: to review this, it executes code inside JS parser
-			// new Error(`No comment found for id ${id}`);
-			// this.addComment({
-			// 	...comment,
-			// 	loc: finishedToken.loc
-			// });
-
-			return finishedToken;
+				loc: this.finishLoc(start),
+			});
+			return undefined;
 		}
 
 		parseText(): HTMLText {
