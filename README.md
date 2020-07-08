@@ -2,15 +2,15 @@
   <img alt="Rome, logo of an ancient Greek spartan helmet" src="https://github.com/romefrontend/rome/raw/main/assets/PNG/logo_transparent.png" width="700">
 </p>
 
-**Rome** is a linter, compiler, bundler, and [more](https://preview.romefrontend.dev/#development-status) for JavaScript, TypeScript, HTML, Markdown, and CSS. Read more about our language support [here](https://preview.romefrontend.dev/docs/language-support).
+**Rome** is a linter, compiler, bundler, and [more](https://romefrontend.dev/#development-status) for JavaScript, TypeScript, HTML, Markdown, and CSS. Read more about our language support [here](https://romefrontend.dev/docs/language-support).
 
 **Rome** unifies functionality that has previously been completely separate tools. Most frontend tooling have a significant overlap in responsibilities and implementation. There is value in these being a single tool. Building upon a shared base allows us to provide a cohesive experience for processing code, displaying errors, parallelizing work, caching, and configuration.
 
 **Rome** has been built from scratch without the usage of existing libraries. **Rome** contains no third-party library dependencies.
 
-**Rome** has strong conventions and aims to have minimal configuration. Read more about our project philosophy [here](https://preview.romefrontend.dev/contributing/philosophy).
+**Rome** has strong conventions and aims to have minimal configuration. Read more about our project philosophy [here](https://romefrontend.dev/contributing/philosophy).
 
-**Rome** is maintained by a [team of contributors](https://preview.romefrontend.dev/contributing/team). **Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io) and [Yarn](https://yarnpkg.com).
+**Rome** is maintained by a [team of contributors](https://romefrontend.dev/contributing/team). **Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io) and [Yarn](https://yarnpkg.com).
 
 **Rome** is [MIT licensed](LICENSE), and the project managed under the [Contributor Covenant Code of Conduct](./CODE_OF_CONDUCT.md).
 
@@ -52,7 +52,7 @@ See [Getting Started](https://romefrontend.dev/docs/introduction/getting-started
 
 ## Philosophy
 
-Project philosophy can be found on our [website](https://preview.romefrontend.dev/contributing/philosophy).
+Project philosophy can be found on our [website](https://romefrontend.dev/contributing/philosophy).
 
 ## Community
 
