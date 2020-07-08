@@ -48,7 +48,7 @@ $ rome init
 
 This file is used to configure Rome and indicates the boundaries of your project.
 
-See [Getting Started](https://romefrontend.dev/docs/introduction/getting-started/) for more usage instructions.
+See [Getting Started](https://romefrontend.dev/docs/getting-started/) for more usage instructions.
 
 ## Philosophy
 
