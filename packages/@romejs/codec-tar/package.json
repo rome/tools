@@ -1,6 +1,0 @@
-{
-	"name": "@romejs/codec-tar",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

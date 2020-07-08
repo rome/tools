@@ -7,8 +7,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const {argv} = require("./_constants.cjs");
-const {buildTrunk, heading, exec, execDev} = require("./_utils.cjs");
+const { argv } = require("./_constants.cjs");
+const { buildTrunk, heading, exec, execDev } = require("./_utils.cjs");
 const path = require("path");
 const os = require("os");
 
@@ -18,12 +18,8 @@ async function main() {
   await buildTrunk();
 
   heading("Bundling Extension");
-  await execDev([
-    "bundle",
-    "@romejs-integration/vscode",
-    outFolder,
-  ]);
-  
+  await execDev(["bundle", "@romefrontend-integration/vscode", outFolder]);
+
   heading("Running VSCode");
   exec("code", [
     "--extensionDevelopmentPath",

@@ -1,6 +1,0 @@
-{
-	"name": "@romejs/codec-json",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

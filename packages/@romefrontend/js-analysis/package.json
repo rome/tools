@@ -1,0 +1,6 @@
+{
+	"name": "@romefrontend/js-analysis",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
+}

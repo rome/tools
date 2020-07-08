@@ -21,6 +21,7 @@ module.exports = function(eleventyConfig) {
 	eleventyConfig.setUseGitIgnore(false);
 
 	eleventyConfig.addPassthroughCopy(opts.staticPath);
+  eleventyConfig.addPassthroughCopy("_redirects");
 
 	eleventyConfig.addPlugin(syntaxHighlight);
 	eleventyConfig.addPlugin(pluginTOC);

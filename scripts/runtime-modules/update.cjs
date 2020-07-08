@@ -14,7 +14,7 @@ const fs = require("fs");
 const {root, packages} = require("../_constants.cjs");
 const {readGeneratedFile, write, readFile} = require("../_utils.cjs");
 
-const runtimeModules = path.join(root, "packages", "@romejs-runtime");
+const runtimeModules = path.join(root, "packages", "@romefrontend-runtime");
 const runtimeIndex = path.join(
 	packages,
 	"core",

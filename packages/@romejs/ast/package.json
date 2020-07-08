@@ -1,6 +1,0 @@
-{
-	"name": "@romejs/ast",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

@@ -10,7 +10,7 @@ const os = require("os");
 
 exports.devFolder = path.join(os.tmpdir(), "rome-dev");
 exports.root = path.join(__dirname, "..");
-exports.packages = path.join(exports.root, "packages", "@romejs");
+exports.packages = path.join(exports.root, "packages", "@romefrontend");
 exports.formatterFolder = path.join(exports.packages, "formatter", "builders");
 exports.analysisFolder = path.join(
 	exports.packages,
@@ -29,7 +29,7 @@ exports.lintRulesDocFolder = path.join(
 	"website",
 	"src",
 	"docs",
-	"check",
+	"lint",
 	"rules",
 );
 exports.categoriesFile = path.join(

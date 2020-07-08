@@ -1,0 +1,6 @@
+{
+	"name": "@romefrontend/js-parser-utils",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
+}

@@ -1,0 +1,6 @@
+{
+	"name": "@romefrontend/node",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
+}

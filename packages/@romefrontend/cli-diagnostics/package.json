@@ -1,0 +1,6 @@
+{
+	"name": "@romefrontend/cli-diagnostics",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
+}

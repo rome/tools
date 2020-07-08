@@ -79,7 +79,7 @@ exports.heading = function(str) {
 };
 
 exports.isDevDaemonRunning = function() {
-	// Path and version logic copied from packages/@romejs/core/common/constants.ts
+	// Path and version logic copied from packages/@romefrontend/core/common/constants.ts
 	// If there is a running daemon then we shouldn't build and just use the existing bundle
 	// We'll log to let the developer know what's going on
 	const version = `${packageJson.version}-dev`;
@@ -148,7 +148,7 @@ exports.buildTrunk = async function() {
 	exports.execNode([
 		path.join(__dirname, "vendor/rome.cjs"),
 		"bundle",
-		path.join(root, "packages/@romejs/cli/bin/rome.ts"),
+		path.join(root, "packages/@romefrontend/cli/bin/rome.ts"),
 		devFolder,
 		"--quiet",
 	]);

@@ -1,6 +1,0 @@
-{
-	"name": "@romejs/messages",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

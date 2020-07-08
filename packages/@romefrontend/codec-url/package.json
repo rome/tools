@@ -1,0 +1,6 @@
+{
+	"name": "@romefrontend/codec-url",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
+}

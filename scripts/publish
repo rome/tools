@@ -2,7 +2,13 @@
 
 require("./_setup.cjs");
 
-const {heading, buildRelease, exec, unlink, readFile} = require("./_utils.cjs");
+const {
+  heading,
+  buildRelease,
+  exec,
+  unlink,
+  readFile,
+} = require("./_utils.cjs");
 const path = require("path");
 const child = require("child_process");
 const os = require("os");
@@ -16,11 +22,14 @@ function setName(name) {
     ...JSON.parse(readFile(releaseManifest, "utf8")),
     name,
   };
-  fs.writeFileSync(releaseManifest, JSON.stringify(manifest, null, "\t") + "\n");
+  fs.writeFileSync(
+    releaseManifest,
+    JSON.stringify(manifest, null, "\t") + "\n"
+  );
 }
 
 function publishRegistry(registry) {
-  exec("npm", ["publish", "--registry", registry], {cwd: releaseFolder});
+  exec("npm", ["publish", "--registry", registry], { cwd: releaseFolder });
 }
 
 try {
@@ -32,7 +41,7 @@ try {
   publishRegistry("https://registry.npmjs.org/");
 
   heading("Publishing to npm.pkg.github.com");
-  setName("@romejs/rome");
+  setName("@romefrontend/rome");
   publishRegistry("https://npm.pkg.github.com/");
 } finally {
   unlink(releaseFolder);
