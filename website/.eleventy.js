@@ -69,8 +69,18 @@ module.exports = function(eleventyConfig) {
 				return file != 'index.md' && path.extname(file) === '.md';
 			});
 
-			let list = ``;
+			//sort by date
+			files.sort(function(fileA,fileB){
+				const contentA = fs.readFileSync(`${opts.blogPath}/${fileA}`, "utf8").toString();
+				const dateA = contentA.match(/date:(.*)/)[1];
 
+				const contentB = fs.readFileSync(`${opts.blogPath}/${fileB}`, "utf8").toString();
+				const dateB = contentB.match(/date:(.*)/)[1];
+
+				return new Date(dateA) - new Date(dateB);
+			});
+
+			let list = ``;
 			files.forEach(file => {
 				list += '<article>';
 				const content = fs.readFileSync(`${opts.blogPath}/${file}`, "utf8").toString();
