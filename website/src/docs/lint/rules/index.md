@@ -16,7 +16,7 @@ showHero: false
 
 | Rule | Description |
 | ------------- | ------------- |
-| [camel-case](/docs/check/rules/js/camel-case) |  This rule enforce the use of camelCase |
+| [camel-case](/docs/lint/rules/js/camel-case) |  This rule enforce the use of camelCase |
 | case-single-statement |  |
 | confusing-language |  |
 | default-export-same-basename |  |

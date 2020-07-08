@@ -15,13 +15,13 @@ exports.formatterFolder = path.join(exports.packages, "formatter", "builders");
 exports.analysisFolder = path.join(
 	exports.packages,
 	"js-analysis",
-	"evaluators",
+	"evaluators"
 );
 exports.lintRulesFolder = path.join(
 	exports.packages,
 	"compiler",
 	"lint",
-	"rules",
+	"rules"
 );
 exports.lintRulesDocFolder = path.join(
 	__dirname,
@@ -29,18 +29,18 @@ exports.lintRulesDocFolder = path.join(
 	"website",
 	"src",
 	"docs",
-	"check",
-	"rules",
+	"lint",
+	"rules"
 );
 exports.categoriesFile = path.join(
 	exports.packages,
 	"diagnostics",
-	"categories.ts",
+	"categories.ts"
 );
 exports.descriptionsFolder = path.join(
 	exports.packages,
 	"diagnostics",
-	"descriptions",
+	"descriptions"
 );
 exports.astFolder = path.join(exports.packages, "ast");
 exports.argv = process.argv.slice(2);
