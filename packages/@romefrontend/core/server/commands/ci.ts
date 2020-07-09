@@ -30,7 +30,7 @@ export default createServerCommand({
 		req.updateRequestFlags({
 			verboseDiagnostics: true,
 		});
-		
+
 		await chainCommands(
 			req,
 			[
