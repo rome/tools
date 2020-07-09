@@ -992,9 +992,7 @@ export default class TestServerRunner {
 		const first = snapshotCounts.shift()!;
 		const parts = [
 			// Inline snapshots will always be the last element, so if it's inline here then there's no others
-			`<number emphasis>${first.count}</number> ${first.inline
-				? "inline snapshots"
-				: "snapshots"} ${first.noun}`,
+			`<number emphasis>${first.count}</number> ${first.inline ? " inline" : ""}<grammarNumber plural="snapshots" singular="snapshot">${first.count}</grammarNumber> ${first.noun}`,
 		];
 
 		for (let {inline, count, noun} of snapshotCounts) {
@@ -1016,11 +1014,9 @@ export default class TestServerRunner {
 			this.printFocusedTestWarning(reporter);
 
 			if (!isError) {
-				// Don't say "all" when we have focused tests
-				let prefix = this.focusedTests.length === 0 ? "All " : "";
 				const totalCount = this.getTotalTests();
 				reporter.success(
-					`${prefix}<emphasis>${humanizeNumber(totalCount)}</emphasis> ${grammarNumberTests(
+					`<emphasis>${humanizeNumber(totalCount)}</emphasis> ${grammarNumberTests(
 						totalCount,
 					)} passed!`,
 				);

@@ -128,6 +128,8 @@ export default class DiagnosticsPrinter extends Error {
 		);
 		const {cwd, reporter, flags = DEFAULT_PRINTER_FLAGS} = opts;
 
+		this.options = opts;
+
 		this.reporter = reporter;
 		this.flags = flags;
 		this.readFile =
@@ -148,6 +150,7 @@ export default class DiagnosticsPrinter extends Error {
 		this.onFooterPrintCallbacks = [];
 	}
 
+	options: DiagnosticsPrinterOptions;
 	reporter: Reporter;
 	processor: DiagnosticsProcessor;
 	onFooterPrintCallbacks: Array<FooterPrintCallback>;
@@ -546,6 +549,22 @@ export default class DiagnosticsPrinter extends Error {
 		}
 
 		return filteredDiagnostics;
+	}
+
+	inject(printer: DiagnosticsPrinter) {
+		this.processor.addDiagnostics(printer.getDiagnostics());
+		for (const fn of printer.onFooterPrintCallbacks) {
+			this.onFooterPrint((reporter) => {
+				fn(reporter, printer.problemCount > 0);
+			});
+		}
+	}
+
+	concat(other: DiagnosticsPrinter): DiagnosticsPrinter {
+		const printer = new DiagnosticsPrinter(this.options);
+		printer.inject(this);
+		printer.inject(other);
+		return printer;
 	}
 
 	onFooterPrint(fn: FooterPrintCallback) {
