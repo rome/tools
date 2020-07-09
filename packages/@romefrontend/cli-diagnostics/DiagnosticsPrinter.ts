@@ -423,11 +423,11 @@ export default class DiagnosticsPrinter extends Error {
 
 				if (start !== undefined) {
 					if (start.line !== undefined) {
-						parts.push(`line:${ob1Get1(start.line)}`);
+						parts.push(`line=${ob1Get1(start.line)}`);
 					}
 
 					if (start.column !== undefined) {
-						parts.push(`col:${ob1Get0(start.column)}`);
+						parts.push(`col=${ob1Get0(start.column)}`);
 					}
 				}
 
