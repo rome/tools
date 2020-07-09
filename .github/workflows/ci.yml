@@ -9,7 +9,7 @@ on:
 
 jobs:
   lint:
-    name: rome check
+    name: rome ci (ubuntu-latest)
     runs-on: ubuntu-latest
 
     steps:
@@ -17,15 +17,16 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '13.x'
-      - name: rome check
-        run: node scripts/dev-rome check --verbose-diagnostics
+      - name: rome ci
+        run: node scripts/dev-rome ci
 
   tests:
     name: rome test
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [windows-latest, macos-latest]
 
     steps:
       - uses: actions/checkout@v2
