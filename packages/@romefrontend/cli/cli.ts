@@ -30,6 +30,7 @@ import {writeFile} from "@romefrontend/fs";
 import fs = require("fs");
 import {markup} from "@romefrontend/string-markup";
 import {JSONObject, stringifyJSON} from "@romefrontend/codec-json";
+import { isEnvVarEnabled } from "@romefrontend/environment";
 
 type CLIFlags = {
 	logs: boolean;
@@ -376,7 +377,7 @@ export default async function cli() {
 
 	// Default according to env vars
 	if (requestFlags.auxiliaryDiagnosticFormat === undefined) {
-		if (process.env.GITHUB_ACTIONS === "1") {
+		if (isEnvVarEnabled("GITHUB_ACTIONS")) {
 			requestFlags.auxiliaryDiagnosticFormat = "github-actions";
 		}
 	}

@@ -516,8 +516,8 @@ export default class Client {
 		await Promise.all([
 			bridge.getClientInfo.wait({
 				version: VERSION,
-				format: stdout.format,
-				unicode: stdout.unicode,
+				outputFormat: stdout.format,
+				outputSupport: stdout.features,
 				hasClearScreen: this.reporter.hasClearScreen,
 				columns: stdout.columns,
 				useRemoteReporter: true,

@@ -17,7 +17,7 @@ import {
 	removeDirectory,
 	writeFile,
 } from "@romefrontend/fs";
-import {Stdout} from "@romefrontend/cli-reporter";
+import {Stdout} from "@romefrontend/environment";
 import {Dict} from "@romefrontend/typescript-helpers";
 import {UserConfig} from "./common/userConfig";
 import crypto = require("crypto");

@@ -27,7 +27,6 @@ import {
 	ReporterTableField,
 	SelectArguments,
 	SelectOptions,
-	Stdout,
 } from "./types";
 import {removeSuffix} from "@romefrontend/string-utils";
 import Progress from "./Progress";
@@ -37,8 +36,9 @@ import {CWD_PATH} from "@romefrontend/path";
 import {Event} from "@romefrontend/events";
 import readline = require("readline");
 import select from "./select";
-import {onKeypress, isCI} from "./util";
+import {onKeypress} from "./util";
 import {markupToHtml} from "@romefrontend/string-markup/format";
+import {Stdout, inferTerminalFeatures, TERMINAL_FEATURES_ALL} from "@romefrontend/environment";
 
 type ListOptions = {
 	reverse?: boolean;
@@ -95,25 +95,12 @@ const EMPTY_PREFIX: MessagePrefix = {
 
 let remoteProgressIdCounter = 0;
 
-function getStreamFormat(stdout: undefined | Stdout): ReporterStream["format"] {
-	if (stdout === undefined) {
-		return "none";
-	}
-
-	if (stdout.isTTY || isCI()) {
-		return "ansi";
-	}
-
-	return "none";
-}
-
 export default class Reporter {
 	constructor(opts: ReporterOptions = {}) {
 		this.programName =
 			opts.programName === undefined ? "rome" : opts.programName;
 		this.programVersion = opts.programVersion;
 
-		this.noProgress = process.env.CI === "1";
 		this.isVerbose = Boolean(opts.verbose);
 
 		this.startTime = opts.startTime === undefined ? Date.now() : opts.startTime;
@@ -179,17 +166,14 @@ export default class Reporter {
 			name: "columnsUpdated",
 		});
 
-		// Windows terminals are awful
-		const unicode =
-			stdout !== undefined && stdout.unicode !== undefined
-				? stdout.unicode
-				: process.platform !== "win32";
+		const support = inferTerminalFeatures(stdout);
+		const format = support.color ? "ansi" : "none";
 
 		const outStream: ReporterStream = {
 			type: "out",
-			format: force.format || getStreamFormat(stdout),
+			format,
+			features: support,
 			columns,
-			unicode,
 			write(chunk) {
 				if (stdout !== undefined) {
 					stdout.write(chunk);
@@ -200,9 +184,9 @@ export default class Reporter {
 
 		const errStream: ReporterStream = {
 			type: "error",
-			format: force.format || getStreamFormat(stderr),
+			format,
 			columns,
-			unicode,
+			features: support,
 			write(chunk) {
 				if (stderr !== undefined) {
 					stderr.write(chunk);
@@ -212,7 +196,6 @@ export default class Reporter {
 
 		// Watch for resizing, unless force.columns has been set and we'll consider it to be fixed
 		if (
-			outStream.format === "ansi" &&
 			stdout !== undefined &&
 			force.columns !== undefined
 		) {
@@ -278,7 +261,7 @@ export default class Reporter {
 			format,
 			type: "all",
 			columns: Reporter.DEFAULT_COLUMNS,
-			unicode: true,
+			features: TERMINAL_FEATURES_ALL,
 			write(chunk) {
 				buff += chunk;
 			},
@@ -315,7 +298,6 @@ export default class Reporter {
 	markupOptions: MarkupFormatOptions;
 
 	isRemote: boolean;
-	noProgress: boolean;
 	isVerbose: boolean;
 	streamsWithNewlineEnd: Set<ReporterStreamMeta>;
 	streamsWithDoubleNewlineEnd: Set<ReporterStreamMeta>;
@@ -922,6 +904,7 @@ export default class Reporter {
 			this.indentString.length -
 			viewportShrink -
 			allLinePrefix.width,
+			features: stream.features,
 		};
 
 		let res: MarkupLinesAndWidth;
@@ -1056,7 +1039,7 @@ export default class Reporter {
 
 		for (const stream of streams) {
 			// Format the prefix, selecting it depending on if we're a unicode stream
-			const prefixInner = stream.unicode ? opts.unicodePrefix : opts.rawPrefix;
+			const prefixInner = stream.features.unicode ? opts.unicodePrefix : opts.rawPrefix;
 			const prefix = markupTag(
 				"emphasis",
 				markupTag(opts.markupTag, prefixInner),

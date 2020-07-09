@@ -613,8 +613,8 @@ export default class Server {
 			useRemoteReporter,
 			hasClearScreen,
 			columns,
-			unicode,
-			format,
+			outputFormat,
+			outputSupport,
 			version,
 		} = await bridge.getClientInfo.call();
 
@@ -627,8 +627,8 @@ export default class Server {
 		const outStream: ReporterStream = {
 			type: "out",
 			columns,
-			format,
-			unicode,
+			format: outputFormat,
+			features: outputSupport,
 			write(chunk: string) {
 				if (flags.silent === true) {
 					return;

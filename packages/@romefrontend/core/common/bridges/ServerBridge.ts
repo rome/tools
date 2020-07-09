@@ -16,6 +16,7 @@ import {
 	ReporterStream,
 } from "@romefrontend/cli-reporter";
 import {ServerMarker} from "../../server/Server";
+import { TerminalFeatures } from "@romefrontend/environment";
 
 export type ServerQueryRequest = {
 	requestFlags: ClientRequestFlags;
@@ -84,8 +85,8 @@ export type ServerBridgeInfo = {
 	columns: number;
 	hasClearScreen: boolean;
 	useRemoteReporter: boolean;
-	unicode: boolean;
-	format: ReporterStream["format"];
+	outputSupport: TerminalFeatures;
+	outputFormat: ReporterStream["format"];
 	flags: ClientFlagsJSON;
 };
 

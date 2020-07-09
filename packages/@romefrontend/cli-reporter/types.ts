@@ -6,13 +6,7 @@
  */
 
 import {Event} from "@romefrontend/events";
-import stream = require("stream");
-
-export type Stdout = stream.Writable & {
-	unicode?: boolean;
-	isTTY?: boolean;
-	columns?: number;
-};
+import { TerminalFeatures } from "@romefrontend/environment";
 
 export type SelectOption = {
 	label: string;
@@ -46,7 +40,7 @@ export type ReporterTableField =
 export type ReporterStreamMeta = {
 	type: "out" | "error" | "all";
 	columns: number;
-	unicode: boolean;
+	features: TerminalFeatures;
 	format: "markup" | "ansi" | "html" | "none";
 };
 

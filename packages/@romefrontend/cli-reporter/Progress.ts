@@ -404,7 +404,7 @@ export default class Progress extends ProgressBase {
 		this.lastRenderTime = Date.now();
 
 		for (const stream of this.reporter.getStreams(false)) {
-			if (stream.format === "ansi") {
+			if (stream.format === "ansi" && stream.features.progressBars) {
 				stream.write(ansiEscapes.cursorTo(0));
 				stream.write(this.buildBar(stream));
 			}
