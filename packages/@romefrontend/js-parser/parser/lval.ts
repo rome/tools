@@ -1000,13 +1000,16 @@ export function checkLVal(
 		parser.isParenthesized(expr) &&
 		!ALLOWED_PARENTHESIZED_LVAL_TYPES.includes(expr.type)
 	) {
+		let patternType: "object" | "array" | undefined;
+		if (expr.type === "JSBindingObjectPattern") {
+			patternType = "object";
+		}
+		if (expr.type === "JSBindingArrayPattern") {
+			patternType = "array";
+		}
 		parser.unexpectedDiagnostic({
 			description: descriptions.JS_PARSER.INVALID_PARENTEHSIZED_LVAL(
-				expr.type === "JSBindingObjectPattern"
-					? "object"
-					: expr.type === "JSBindingArrayPattern"
-						? "array"
-						: undefined,
+				patternType,
 			),
 			loc: expr.loc,
 		});

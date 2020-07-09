@@ -54,11 +54,13 @@ export function printComment(
 
 function printCommentSeparator(left: AnyNode, right: AnyNode): Token {
 	const linesBetween = getLinesBetween(left, right);
-	return linesBetween === 0
-		? space
-		: linesBetween === 1
-			? hardline
-			: concat([hardline, hardline]);
+	if (linesBetween === 0) {
+		return space;
+	}
+	if (linesBetween === 1) {
+		return hardline;
+	}
+	return concat([hardline, hardline]);
 }
 
 export function printLeadingComment(

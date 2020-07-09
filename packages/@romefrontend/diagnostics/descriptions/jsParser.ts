@@ -234,26 +234,37 @@ export const jsParser = createDiagnosticsCategory({
 			},
 		],
 	},
-	INVALID_PARENTEHSIZED_LVAL: (patternType: undefined | "object" | "array") => ({
-		message: "Invalid parenthesized binding",
-		advice: patternType === "object"
-			? [
+	INVALID_PARENTEHSIZED_LVAL: (patternType: undefined | "object" | "array") => {
+		const message = "Invalid parenthesized binding";
+		if (patternType === "object") {
+			return {
+				message,
+				advice: [
 					{
 						type: "log",
 						category: "info",
 						text: "Did you use `({a}) = 0` instead of `({a} = 0)`?",
 					},
-				]
-			: patternType === "array"
-				? [
-						{
-							type: "log",
-							category: "info",
-							text: "Did you use `([a]) = 0` instead of `([a] = 0)`?",
-						},
-					]
-				: [],
-	}),
+				],
+			};
+		} else if (patternType === "array") {
+			return {
+				message,
+				advice: [
+					{
+						type: "log",
+						category: "info",
+						text: "Did you use `([a]) = 0` instead of `([a] = 0)`?",
+					},
+				],
+			};
+		} else {
+			return {
+				message,
+				advice: [],
+			};
+		}
+	},
 	EXPECTED_COMMA_SEPARATOR: (context: string) => ({
 		message: `Expected a comma to separate items in ${context}`,
 	}),
