@@ -56,28 +56,22 @@ unknownVariable
 
 ```
 
- index.js:1:4 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ ~/Projects/rome/packages/@romefrontend/core/server/commands/check.test.ts:125199:14 
+internalError/request ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ The unformatted variable is undeclared
+  ✖ File events should have been emitted within a second. Did not receive an event for:
+     -
+    /var/folders/qf/t00z772x7m90vb0pwlfpt0qw0000gp/T/rome-integration-BZ6gytxw03WdX3qZ7Hl0Ow==/projec
+    t/index.js
 
-  > 1 │ if (unformatted) {
-      │     ^^^^^^^^^^^
-    2 │  swag;
-    3 │ }
+  1. Timeout.<anonymous> (
+     ~/Projects/rome/packages/@romefrontend/core/server/commands/check.test.ts:125199:14)
+  2. listOnTimeout (internal/timers.js:549:16)
+  3. process.processTimers (internal/timers.js:492:6)
 
- index.js:2:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ⚠ This diagnostic was derived from an internal Rome error. The problem likely isn't with your
+    code. Please report this if necessary
 
-  ✖ The swag variable is undeclared
-
-    1 │ if (unformatted) {
-  > 2 │  swag;
-      │  ^^^^
-    3 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✔ 1 file updated
-✖ Found 2 problems
 
 ```
 

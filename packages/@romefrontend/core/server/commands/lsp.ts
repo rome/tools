@@ -19,17 +19,26 @@ export default createServerCommand({
 		return {};
 	},
 	async callback(req: ServerRequest): Promise<void> {
-		const {server, bridge} = req;
+		const {server, bridge, reporter} = req;
 
-		const lspServer = new LSPServer(req);
-		server.connectedLSPServers.add(lspServer);
+		// This way we can still log stuff since it'll be redirected to stderr and stdout will be reserved for messages
+		reporter.redirectOutToErr(true);
+
+		const lsp = new LSPServer(req);
+		server.connectedLSPServers.add(lsp);
 
 		bridge.endEvent.subscribe(() => {
-			server.connectedLSPServers.delete(lspServer);
+			server.connectedLSPServers.delete(lsp);
 		});
 
+		const {transport} = lsp;
+
 		bridge.lspFromClientBuffer.subscribe((chunk) => {
-			lspServer.append(chunk);
+			transport.append(chunk);
+		});
+
+		transport.writeEvent.subscribe((msg) => {
+			bridge.lspFromServerBuffer.send(msg);
 		});
 
 		await bridge.endEvent.wait();
