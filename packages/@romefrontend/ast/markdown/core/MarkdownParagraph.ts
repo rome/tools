@@ -1,6 +1,6 @@
 import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
-import {AnyMarkdownInlineNode} from "@romefrontend/ast/markdown/types";
+import {AnyMarkdownInlineNode} from "@romefrontend/ast/markdown/unions";
 
 export type MarkdownParagraph = NodeBaseWithComments & {
 	type: "MarkdownParagraph";

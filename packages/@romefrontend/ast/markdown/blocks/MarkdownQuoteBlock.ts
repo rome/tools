@@ -1,6 +1,6 @@
 import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
-import {MarkdownQuoteChildren} from "@romefrontend/ast/markdown/types";
+import {MarkdownQuoteChildren} from "@romefrontend/ast/markdown/unions";
 
 // > this quote
 export type MarkdownQuoteBlock = NodeBaseWithComments & {

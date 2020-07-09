@@ -5,5 +5,5 @@ export default function MarkdownText(
 	builder: Builder,
 	node: MarkdownText,
 ): Token {
-	return node.value
+	return node.value;
 }

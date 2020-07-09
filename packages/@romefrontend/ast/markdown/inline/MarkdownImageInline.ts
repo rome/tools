@@ -1,6 +1,6 @@
 import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
-import {MarkdownReference} from "@romefrontend/ast/markdown/types";
+import {MarkdownReference} from "@romefrontend/ast/markdown/unions";
 
 // ![Atl text](//url)
 // ![Atl text] [1]

@@ -1,5 +1,5 @@
 import {MarkdownRoot} from "@romefrontend/ast";
-import {Builder, concat, hardline, Token} from "@romefrontend/formatter";
+import {Builder, Token, concat, hardline} from "@romefrontend/formatter";
 
 export default function MarkdownRoot(
 	builder: Builder,
