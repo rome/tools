@@ -37,7 +37,7 @@ import {CWD_PATH} from "@romefrontend/path";
 import {Event} from "@romefrontend/events";
 import readline = require("readline");
 import select from "./select";
-import {onKeypress} from "./util";
+import {onKeypress, isCI} from "./util";
 import {markupToHtml} from "@romefrontend/string-markup/format";
 
 type ListOptions = {
@@ -96,7 +96,15 @@ const EMPTY_PREFIX: MessagePrefix = {
 let remoteProgressIdCounter = 0;
 
 function getStreamFormat(stdout: undefined | Stdout): ReporterStream["format"] {
-	return stdout !== undefined && stdout.isTTY === true ? "ansi" : "none";
+	if (stdout === undefined) {
+		return "none";
+	}
+
+	if (stdout.isTTY || isCI()) {
+		return "ansi";
+	}
+
+	return "none";
 }
 
 export default class Reporter {

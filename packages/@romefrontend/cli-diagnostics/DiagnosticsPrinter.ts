@@ -40,7 +40,7 @@ import {
 	createAbsoluteFilePath,
 	createUnknownFilePath,
 } from "@romefrontend/path";
-import {Number0, Number1} from "@romefrontend/ob1";
+import {Number0, Number1, ob1Get0, ob1Get1} from "@romefrontend/ob1";
 import {existsSync, lstatSync, readFileTextSync} from "@romefrontend/fs";
 
 type Banner = {
@@ -88,6 +88,7 @@ type FooterPrintCallback = (
 ) => void | boolean;
 
 export const DEFAULT_PRINTER_FLAGS: DiagnosticsPrinterFlags = {
+	auxiliaryDiagnosticFormat: undefined,
 	grep: "",
 	inverseGrep: false,
 	showAllDiagnostics: true,
@@ -355,7 +356,7 @@ export default class DiagnosticsPrinter extends Error {
 	print() {
 		const filteredDiagnostics = this.filterDiagnostics();
 		this.fetchFileSources(filteredDiagnostics);
-		this.displayDiagnostics(filteredDiagnostics);
+		this.printDiagnostics(filteredDiagnostics);
 	}
 
 	wrapError(callback: () => void) {
@@ -371,12 +372,12 @@ export default class DiagnosticsPrinter extends Error {
 		}
 	}
 
-	displayDiagnostics(diagnostics: Diagnostics) {
+	printDiagnostics(diagnostics: Diagnostics) {
 		const {reporter} = this;
 		const restoreRedirect = reporter.redirectOutToErr(true);
 
 		for (const diag of diagnostics) {
-			this.wrapError(() => this.displayDiagnostic(diag));
+			this.wrapError(() => this.printDiagnostic(diag));
 		}
 
 		reporter.redirectOutToErr(restoreRedirect);
@@ -400,10 +401,53 @@ export default class DiagnosticsPrinter extends Error {
 		return outdatedFiles;
 	}
 
-	displayDiagnostic(diag: Diagnostic) {
+	printAuxiliaryDiagnostic(diag: Diagnostic) {
+		const {description: {message}, location: {start, filename}} = diag;
+
+		switch (this.flags.auxiliaryDiagnosticFormat) {
+			// https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-error-message
+			// Format: \:\:error file=app.js,line=10,col=15::Something went wrong
+			case "github-actions": {
+				let log = '::error';
+
+				if (filename !== undefined) {
+					log += `file=`;
+					
+					const path = createUnknownFilePath(filename);
+
+					if (path.isAbsolute() && path.isRelativeTo(this.cwd)) {
+						log += `${this.cwd.relative(path).join()}`;
+					} else {
+						log += filename;
+					}
+
+					log += `,`;
+				}
+
+				if (start !== undefined) {
+					if (start.line !== undefined) {
+						log += `line:${ob1Get1(start.line)},`;
+					}
+
+					if (start.column !== undefined) {
+						log += `col:${ob1Get0(start.column)},`;
+					}
+				}
+
+				log += `::message=${message.value}`;
+
+				this.reporter.logAllRaw(log);
+				break;
+			}
+		}
+	}
+
+	printDiagnostic(diag: Diagnostic) {
 		const {reporter} = this;
 		const {start, end, filename} = diag.location;
 		let advice = [...diag.description.advice];
+
+		this.printAuxiliaryDiagnostic(diag);
 
 		// Remove stacktrace from beginning if it contains only one frame that matches the root diagnostic location
 		const firstAdvice = advice[0];

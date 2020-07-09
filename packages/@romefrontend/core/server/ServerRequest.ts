@@ -359,6 +359,7 @@ export default class ServerRequest {
 	getDiagnosticsPrinterFlags(): DiagnosticsPrinterFlags {
 		const {requestFlags} = this.query;
 		return {
+			auxiliaryDiagnosticFormat: requestFlags.auxiliaryDiagnosticFormat,
 			grep: requestFlags.grep,
 			inverseGrep: requestFlags.inverseGrep,
 			showAllDiagnostics: requestFlags.showAllDiagnostics,

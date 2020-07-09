@@ -192,6 +192,12 @@ export default async function cli() {
 					...overrideCLIFlags,
 				},
 				requestFlags: {
+					auxiliaryDiagnosticFormat: c.get(
+						"auxiliaryDiagnosticFormat",
+						{
+							description: "When printing diagnostics, output another format alongside",
+						},
+					).asStringSetOrVoid(["github-actions"], DEFAULT_CLIENT_REQUEST_FLAGS.auxiliaryDiagnosticFormat),
 					benchmark: c.get(
 						"benchmark",
 						{
@@ -367,6 +373,13 @@ export default async function cli() {
 
 	// Initialize flags
 	let {reporterOverrides, clientFlags, cliFlags, requestFlags} = await p.init();
+
+	// Default according to env vars
+	if (requestFlags.auxiliaryDiagnosticFormat === undefined) {
+		if (process.env.GITHUB_ACTIONS === "1") {
+			requestFlags.auxiliaryDiagnosticFormat = "github-actions";
+		}
+	}
 
 	// Force collection of markers if markersPath or we are raging
 	if (cliFlags.markersPath || cliFlags.rage) {

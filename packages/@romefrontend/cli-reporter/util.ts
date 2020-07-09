@@ -9,6 +9,18 @@ import {ReporterProgress} from "./types";
 import Reporter from "./Reporter";
 import readline = require("readline");
 
+const CI_ENV_NAMES = ['TRAVIS', 'CIRCLECI', 'APPVEYOR', 'GITLAB_CI', 'GITHUB_ACTIONS'];
+
+export function isCI(): boolean {
+	for (const key of CI_ENV_NAMES) {
+		const val = process.env[key];
+		if (val !== undefined && val !== "0") {
+			return true;
+		}
+	}
+	return false;
+}
+
 export function mergeProgresses(
 	progresses: Array<ReporterProgress>,
 ): ReporterProgress {
