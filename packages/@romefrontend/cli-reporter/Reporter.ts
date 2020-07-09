@@ -768,7 +768,7 @@ export default class Reporter {
 
 	writeAll(msg: string, opts: LogOptions = {}) {
 		for (const stream of this.getStreams(opts.stderr)) {
-			this.writeSpecific(stream, msg, opts);
+			this.writeSpecific(stream, msg);
 		}
 	}
 
@@ -1009,7 +1009,7 @@ export default class Reporter {
 			this.streamsWithNewlineEnd.delete(stream);
 		}
 
-		this.writeSpecific(stream, msg, opts);
+		this.writeSpecific(stream, msg);
 	}
 
 	logAllWithCategory(
