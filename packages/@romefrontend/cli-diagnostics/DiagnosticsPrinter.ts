@@ -407,6 +407,7 @@ export default class DiagnosticsPrinter extends Error {
 		switch (this.flags.auxiliaryDiagnosticFormat) {
 			// https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-error-message
 			// Format: \:\:error file=app.js,line=10,col=15::Something went wrong
+			// TODO escaping
 			case "github-actions": {
 				const parts = [];
 
@@ -414,7 +415,7 @@ export default class DiagnosticsPrinter extends Error {
 					const path = createUnknownFilePath(filename);
 
 					if (path.isAbsolute() && path.isRelativeTo(this.cwd)) {
-						parts.push(`file=${this.cwd.relative(path).join()}}`);
+						parts.push(`file=${this.cwd.relative(path).join()}`);
 					} else {
 						parts.push(`file=${filename}`);
 					}
@@ -430,7 +431,7 @@ export default class DiagnosticsPrinter extends Error {
 					}
 				}
 
-				let log = `::error ${parts.join(",")}::${message.value}`;
+				let log = `::error ${parts.join(",")}::${markupToPlainTextString(message.value)}`;
 				this.reporter.logAllRaw(log);
 				break;
 			}
