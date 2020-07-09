@@ -5,5 +5,5 @@ export default function MarkdownText(
 	builder: Builder,
 	node: MarkdownText,
 ): Token {
-	throw new Error("unimplemented");
+	return node.value
 }

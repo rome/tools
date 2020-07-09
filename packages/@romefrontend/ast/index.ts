@@ -222,7 +222,7 @@ export * from "./markdown/blocks/MarkdownListBlock";
 export * from "./markdown/core/MarkdownListItem";
 export * from "./markdown/core/MarkdownParagraph";
 export * from "./markdown/blocks/MarkdownQuoteBlock";
-export * from "./markdown/core/MarkDownRoot";
+export * from "./markdown/core/MarkdownRoot";
 export * from "./markdown/core/MarkdownText";
 export * from "./common/core/MockParent";
 export * from "./js/typescript/TSAnyKeywordTypeAnnotation";
@@ -504,7 +504,7 @@ export type AnyNode =
 	| n.MarkdownListItem
 	| n.MarkdownParagraph
 	| n.MarkdownQuoteBlock
-	| n.MarkDownRoot
+	| n.MarkdownRoot
 	| n.MarkdownText
 	| n.MockParent
 	| n.TSAnyKeywordTypeAnnotation

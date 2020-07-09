@@ -31,6 +31,7 @@ export type DiagnosticCategory =
 	| "parse/js"
 	| "parse/json"
 	| "parse/manifest"
+	| "parse/markdown"
 	| "parse/patchMatch"
 	| "parse/regex"
 	| "parse/semver"
