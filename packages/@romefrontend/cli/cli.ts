@@ -113,7 +113,6 @@ export default async function cli() {
 							description: "Don't write anything to the console",
 						},
 					).asBoolean(DEFAULT_CLIENT_FLAGS.silent),
-					...overrideClientFlags,
 				},
 				cliFlags: {
 					markersPath: c.get(
@@ -284,15 +283,12 @@ export default async function cli() {
 							description: "Enable mocks for module resolution",
 						},
 					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.resolverMocks),
-					...overrideRequestFlags,
 				},
 			};
 		},
 	});
 
 	let command = "";
-	let overrideClientFlags: undefined | Partial<ClientFlags>;
-	let overrideRequestFlags: undefined | Partial<ClientRequestFlags>;
 	let overrideCLIFlags: Partial<CLIFlags> = {};
 	let commandFlags: JSONObject = {};
 	let args: Array<string> = [];
@@ -334,9 +330,6 @@ export default async function cli() {
 				examples: server.examples,
 				callback(_commandFlags) {
 					commandFlags = _commandFlags;
-					overrideClientFlags = server.overrideClientFlags;
-					overrideRequestFlags = server.overrideRequestFlags;
-
 					args = p.getArgs();
 					command = cmd;
 				},

@@ -31,14 +31,11 @@ import _projectDump from "./commands/_projectDump";
 //
 import {Dict} from "@romefrontend/typescript-helpers";
 import ServerRequest from "./ServerRequest";
-import {ClientFlags, ClientRequestFlags} from "../common/types/client";
 import {JSONPropertyValue} from "@romefrontend/codec-json";
 import {SharedCommand} from "../common/commands";
 import {DiagnosticsPrinter} from "@romefrontend/cli-diagnostics";
 
 export type ServerCommand<Flags extends Dict<unknown>> = SharedCommand<Flags> & {
-	overrideClientFlags?: Partial<ClientFlags>;
-	overrideRequestFlags?: Partial<ClientRequestFlags>;
 	callback: (
 		req: ServerRequest,
 		commandFlags: Flags,

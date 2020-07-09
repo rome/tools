@@ -51,7 +51,9 @@ export type TestDiagnosticAdviceItem =
 	| TestDiagnosticAdviceList;
 
 export interface TestHelper {
-	addToAdvice(item: TestDiagnosticAdviceItem): void;
+	addToAdvice(
+		item: TestDiagnosticAdviceItem | (() => TestDiagnosticAdviceItem),
+	): void;
 	clearAdvice(): void;
 	onTeardown(callback: AsyncFunc): void;
 	clearTimeout(): void;

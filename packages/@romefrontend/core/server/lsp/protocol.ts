@@ -129,13 +129,13 @@ export class LSPTransport {
 		}
 	}
 
-	verboseLog(message: string, ...args: Array<unknown>) {
-		this.reporter.verbose(`[LSPServer][Transport] ${message}`, ...args);
+	log(message: string, ...args: Array<unknown>) {
+		this.reporter.info(`[LSPServer][Transport] ${message}`, ...args);
 	}
 
 	setStatus(status: Status) {
 		this.status = status;
-		this.verboseLog(`Status: ${status}`);
+		this.log(`Status: ${status}`);
 	}
 
 	process() {
@@ -154,7 +154,7 @@ export class LSPTransport {
 					// Parse headers
 					const rawHeaders = this.buffer.slice(0, endIndex);
 					this.nextHeaders = parseHeaders(rawHeaders);
-					this.verboseLog("Headers for next message:", this.nextHeaders);
+					this.log("Headers for next message:", this.nextHeaders);
 
 					// Process rest of the buffer
 					this.setStatus("WAITING_FOR_RESPONSE_END");
@@ -172,7 +172,7 @@ export class LSPTransport {
 				if (this.bufferLength >= headers.expectedLength) {
 					const content = this.buffer.slice(0, headers.expectedLength);
 					this.onMessage(headers, content);
-					this.verboseLog("Received message content:", content);
+					this.log("Received message content:", content);
 
 					// Reset headers and trim content
 					this.nextHeaders = undefined;

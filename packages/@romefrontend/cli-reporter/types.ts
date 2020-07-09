@@ -50,6 +50,10 @@ export type ReporterStreamMeta = {
 	format: "markup" | "ansi" | "html" | "none";
 };
 
+export type ReporterConditionalStream = {
+	update: () => boolean;
+};
+
 export type ReporterStream = ReporterStreamMeta & {
 	write: (chunk: string) => void;
 	teardown?: () => void;

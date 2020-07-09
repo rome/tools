@@ -639,11 +639,11 @@ export default class Parser<T> {
 
 		switch (shell) {
 			case "bash": {
-				reporter.logAllNoMarkup(this.genBashCompletions(programName));
+				reporter.logAllRaw(this.genBashCompletions(programName));
 				break;
 			}
 			case "fish": {
-				reporter.logAllNoMarkup(this.genFishCompletions(programName));
+				reporter.logAllRaw(this.genFishCompletions(programName));
 				break;
 			}
 		}

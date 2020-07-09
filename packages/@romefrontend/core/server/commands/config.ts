@@ -147,7 +147,7 @@ export default createServerCommand<Flags>({
 			validate: (res: ConsumeJSONResult, stringified: string) => void,
 		) {
 			if (action === "location") {
-				reporter.logAllNoMarkup(configPath.join());
+				reporter.logAllRaw(configPath.join());
 				return;
 			}
 

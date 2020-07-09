@@ -5,13 +5,13 @@
 ## `LSPTransport handles emoji byte lengths`
 
 ```
-⚡ [LSPServer][Transport] Status: WAITING_FOR_HEADERS_END
-⚡ [LSPServer][Transport] Headers for next message: Object {
+ℹ [LSPServer][Transport] Status: WAITING_FOR_HEADERS_END
+ℹ [LSPServer][Transport] Headers for next message: Object {
     expectedLength: 321
     extra: Map []
   }
-⚡ [LSPServer][Transport] Status: WAITING_FOR_RESPONSE_END
-⚡ [LSPServer][Transport] Received message content:
+ℹ [LSPServer][Transport] Status: WAITING_FOR_RESPONSE_END
+ℹ [LSPServer][Transport] Received message content:
   {"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"file:///Users/s
   ebastianmckenzie/Scratch/rome-playground/test.ts","version":24},"contentChanges":[{"text":"//Can’t
   handle this comment
@@ -20,6 +20,6 @@
   
   rocket;
   foo;"}]}}
-⚡ [LSPServer][Transport] Status: IDLE
+ℹ [LSPServer][Transport] Status: IDLE
 
 ```
