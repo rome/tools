@@ -27,7 +27,10 @@ export function isEnvVarEnabled(key: string): boolean {
 
 export function inferTerminalFeatures(stdout?: Stdout): TerminalFeatures {
 	// Windows terminals are awful
-	const unicode = stdout?.unicode === undefined ? process.platform !== "win32" : stdout.unicode;
+	const unicode =
+		stdout?.unicode === undefined
+			? process.platform !== "win32"
+			: stdout.unicode;
 
 	const isTTY = stdout?.isTTY === true;
 	const isCI = isCIEnv();
@@ -42,15 +45,19 @@ export function inferTerminalFeatures(stdout?: Stdout): TerminalFeatures {
 	return features;
 }
 
-const CI_ENV_NAMES = ['TRAVIS', 'CIRCLECI', 'APPVEYOR', 'GITLAB_CI', 'GITHUB_ACTIONS'];
+const CI_ENV_NAMES = [
+	"TRAVIS",
+	"CIRCLECI",
+	"APPVEYOR",
+	"GITLAB_CI",
+	"GITHUB_ACTIONS",
+];
 
 export function isCIEnv(): boolean {
 	for (const key of CI_ENV_NAMES) {
-		const val = process.env[key];
-		if (val !== undefined && val !== "0") {
+		if (isEnvVarEnabled(key)) {
 			return true;
 		}
 	}
 	return false;
-
 }

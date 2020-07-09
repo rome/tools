@@ -408,11 +408,11 @@ export default class DiagnosticsPrinter extends Error {
 			// https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-error-message
 			// Format: \:\:error file=app.js,line=10,col=15::Something went wrong
 			case "github-actions": {
-				let log = '::error';
+				let log = "::error ";
 
 				if (filename !== undefined) {
 					log += `file=`;
-					
+
 					const path = createUnknownFilePath(filename);
 
 					if (path.isAbsolute() && path.isRelativeTo(this.cwd)) {

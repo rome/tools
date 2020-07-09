@@ -30,7 +30,7 @@ import {writeFile} from "@romefrontend/fs";
 import fs = require("fs");
 import {markup} from "@romefrontend/string-markup";
 import {JSONObject, stringifyJSON} from "@romefrontend/codec-json";
-import { isEnvVarEnabled } from "@romefrontend/environment";
+import {isEnvVarEnabled} from "@romefrontend/environment";
 
 type CLIFlags = {
 	logs: boolean;
@@ -198,7 +198,10 @@ export default async function cli() {
 						{
 							description: "When printing diagnostics, output another format alongside",
 						},
-					).asStringSetOrVoid(["github-actions"], DEFAULT_CLIENT_REQUEST_FLAGS.auxiliaryDiagnosticFormat),
+					).asStringSetOrVoid(
+						["github-actions"],
+						DEFAULT_CLIENT_REQUEST_FLAGS.auxiliaryDiagnosticFormat,
+					),
 					benchmark: c.get(
 						"benchmark",
 						{

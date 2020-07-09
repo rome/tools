@@ -38,7 +38,11 @@ import readline = require("readline");
 import select from "./select";
 import {onKeypress} from "./util";
 import {markupToHtml} from "@romefrontend/string-markup/format";
-import {Stdout, inferTerminalFeatures, TERMINAL_FEATURES_ALL} from "@romefrontend/environment";
+import {
+	Stdout,
+	TERMINAL_FEATURES_ALL,
+	inferTerminalFeatures,
+} from "@romefrontend/environment";
 
 type ListOptions = {
 	reverse?: boolean;
@@ -195,10 +199,7 @@ export default class Reporter {
 		};
 
 		// Watch for resizing, unless force.columns has been set and we'll consider it to be fixed
-		if (
-			stdout !== undefined &&
-			force.columns !== undefined
-		) {
+		if (stdout !== undefined && force.columns !== undefined) {
 			const onStdoutResize = () => {
 				if (stdout?.columns !== undefined) {
 					const {columns} = stdout;
@@ -1039,7 +1040,9 @@ export default class Reporter {
 
 		for (const stream of streams) {
 			// Format the prefix, selecting it depending on if we're a unicode stream
-			const prefixInner = stream.features.unicode ? opts.unicodePrefix : opts.rawPrefix;
+			const prefixInner = stream.features.unicode
+				? opts.unicodePrefix
+				: opts.rawPrefix;
 			const prefix = markupTag(
 				"emphasis",
 				markupTag(opts.markupTag, prefixInner),

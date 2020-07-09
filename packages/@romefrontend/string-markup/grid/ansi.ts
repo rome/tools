@@ -13,7 +13,7 @@ import {
 import OneDarkPro from "../syntax-theme/OneDarkPro.json";
 import {Dict} from "@romefrontend/typescript-helpers";
 import {Consumer, consumeUnknown} from "@romefrontend/consume";
-import { TerminalFeatures } from "@romefrontend/environment";
+import {TerminalFeatures} from "@romefrontend/environment";
 
 export function ansiFormatText(
 	{name: tagName, attributes}: TagNode,

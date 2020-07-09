@@ -39,7 +39,10 @@ import {
 import {escapeXHTMLEntities} from "@romefrontend/html-parser";
 import {ansiFormatText} from "./ansi";
 import {htmlFormatText} from "./html";
-import { TerminalFeatures, TERMINAL_FEATURES_ALL } from "@romefrontend/environment";
+import {
+	TERMINAL_FEATURES_ALL,
+	TerminalFeatures,
+} from "@romefrontend/environment";
 
 type Cursor = {
 	line: Number1;
@@ -79,7 +82,8 @@ export default class Grid {
 			opts.columns === undefined ? undefined : ob1Coerce1(opts.columns);
 		this.markupOptions = opts;
 
-		this.features = opts.features === undefined ? TERMINAL_FEATURES_ALL : opts.features;
+		this.features =
+			opts.features === undefined ? TERMINAL_FEATURES_ALL : opts.features;
 
 		this.cursor = {
 			line: ob1Number1,
@@ -257,7 +261,10 @@ export default class Grid {
 	getFormattedAnsiLines(): Array<string> {
 		return this.getFormattedLines({
 			normalizeText: (text) => text,
-			formatTag: (tag, inner) => ansiFormatText(tag, inner, this.markupOptions, this.features),
+			formatTag: (tag, inner) =>
+				ansiFormatText(tag, inner, this.markupOptions, this.features)
+			,
+
 			wrapRange: (inner) => formatAnsi.reset(inner),
 		});
 	}

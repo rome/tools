@@ -16,7 +16,7 @@ import {
 	ReporterStream,
 } from "@romefrontend/cli-reporter";
 import {ServerMarker} from "../../server/Server";
-import { TerminalFeatures } from "@romefrontend/environment";
+import {TerminalFeatures} from "@romefrontend/environment";
 
 export type ServerQueryRequest = {
 	requestFlags: ClientRequestFlags;

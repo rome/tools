@@ -25,7 +25,7 @@ import {AbsoluteFilePath} from "@romefrontend/path";
 import {PLATFORMS} from "../../common/types/platform";
 import {HmrClientLogMessage, HmrServerMessage} from "./hmr";
 import {ConsumableUrl} from "@romefrontend/codec-url";
-import { TERMINAL_FEATURES_ALL } from "@romefrontend/environment";
+import {TERMINAL_FEATURES_ALL} from "@romefrontend/environment";
 
 export type WebServerTime = {
 	startTime: number;
@@ -102,7 +102,7 @@ export class WebServer {
 				type: "all",
 				format: "html",
 				columns: 100,
-				features: STREAM_OUTPUT_SUPPORT_ALL,
+				features: TERMINAL_FEATURES_ALL,
 				write(chunk) {
 					data.stdoutHTML += chunk;
 				},
