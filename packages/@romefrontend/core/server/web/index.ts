@@ -98,8 +98,6 @@ export class WebServer {
 				},
 			};
 
-			const foo = "";
-
 			const htmlReporterStream: ReporterStream = {
 				type: "all",
 				format: "html",

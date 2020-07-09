@@ -377,6 +377,10 @@ export default class DiagnosticsPrinter extends Error {
 		const restoreRedirect = reporter.redirectOutToErr(true);
 
 		for (const diag of diagnostics) {
+			this.printAuxiliaryDiagnostic(diag);
+		}
+
+		for (const diag of diagnostics) {
 			this.wrapError(() => this.printDiagnostic(diag));
 		}
 
@@ -431,7 +435,9 @@ export default class DiagnosticsPrinter extends Error {
 					}
 				}
 
-				let log = `::error ${parts.join(",")}::${markupToPlainTextString(message.value)}`;
+				let log = `::error ${parts.join(",")}::${markupToPlainTextString(
+					message.value,
+				)}`;
 				this.reporter.logAllRaw(log);
 				break;
 			}
@@ -442,8 +448,6 @@ export default class DiagnosticsPrinter extends Error {
 		const {reporter} = this;
 		const {start, end, filename} = diag.location;
 		let advice = [...diag.description.advice];
-
-		this.printAuxiliaryDiagnostic(diag);
 
 		// Remove stacktrace from beginning if it contains only one frame that matches the root diagnostic location
 		const firstAdvice = advice[0];
