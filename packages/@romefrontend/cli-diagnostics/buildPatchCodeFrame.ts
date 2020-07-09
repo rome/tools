@@ -11,7 +11,7 @@ import {
 	GUTTER,
 	MAX_PATCH_LINES,
 } from "./constants";
-import {joinNoBreak} from "./utils";
+import {joinNoBreak, showInvisibles} from "./utils";
 import {
 	Diffs,
 	diffConstants,
@@ -26,7 +26,7 @@ function formatDiffLine(diffs: Diffs) {
 		if (type === diffConstants.EQUAL) {
 			return escaped;
 		} else {
-			return markupTag("emphasis", escaped);
+			return markupTag("emphasis", showInvisibles(escaped));
 		}
 	}).join("");
 }
