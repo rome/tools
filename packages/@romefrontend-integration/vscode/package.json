@@ -8,6 +8,8 @@
 	],
 	"icon": "icon.png",
 	"_activationEvents": [
+		"onLanguage:html",
+		"onLanguage:css",
 		"onLanguage:javascript",
 		"onLanguage:javascriptreact",
 		"onLanguage:typescript",

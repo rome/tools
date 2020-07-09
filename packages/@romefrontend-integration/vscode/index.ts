@@ -68,7 +68,15 @@ async function tryManifest(root: string): Promise<undefined | string> {
 	return undefined;
 }
 
-async function getRomeLocation(): Promise<undefined | string> {
+async function getRomeLocation(): Promise<
+	| undefined
+	| {
+			path: string;
+			env: {
+				[key: string]: string;
+			};
+		}
+> {
 	const {workspaceFolders} = vscode.workspace;
 	if (workspaceFolders === undefined) {
 		return undefined;
@@ -79,7 +87,7 @@ async function getRomeLocation(): Promise<undefined | string> {
 		if (uri.scheme === "file") {
 			const manifest = await tryManifest(uri.path);
 			if (manifest !== undefined) {
-				return manifest;
+				return {path: manifest, env: {}};
 			}
 
 			const nodeModules = await tryChain(
@@ -87,7 +95,7 @@ async function getRomeLocation(): Promise<undefined | string> {
 				`node_modules/rome/bin/rome/index.js`,
 			);
 			if (nodeModules !== undefined) {
-				return nodeModules;
+				return {path: nodeModules, env: {}};
 			}
 		}
 	}
@@ -96,7 +104,7 @@ async function getRomeLocation(): Promise<undefined | string> {
 	try {
 		const possible = path.join(os.tmpdir(), "rome-dev", "index.js");
 		await fs.promises.access(possible);
-		return possible;
+		return {path: possible, env: {ROME_DEV: "1"}};
 	} catch (err) {
 	}
 
@@ -110,19 +118,19 @@ export async function activate() {
 		outputChannel.appendLine(message);
 	}
 
-	let romePath: undefined | string = await getRomeLocation();
+	let res = await getRomeLocation();
 
 	// If no romePath was found then watch workspace folders until we find one
-	if (romePath === undefined) {
+	if (res === undefined) {
 		log(
 			"No Rome path found. Waiting for workspace folder changes before trying again",
 		);
 
 		await new Promise((resolve) => {
 			const event = vscode.workspace.onDidChangeWorkspaceFolders(() => {
-				getRomeLocation().then((filename) => {
-					if (filename !== undefined) {
-						romePath = filename;
+				getRomeLocation().then((_res) => {
+					if (_res !== undefined) {
+						res = _res;
 						event.dispose();
 						resolve();
 					}
@@ -131,9 +139,11 @@ export async function activate() {
 		});
 	}
 
-	if (romePath === undefined) {
+	if (res === undefined) {
 		throw new Error("Should have been defined");
 	}
+
+	const {path: romePath, env} = res;
 
 	log(`Discovered Rome path ${romePath}`);
 
@@ -141,6 +151,9 @@ export async function activate() {
 		module: romePath,
 		args: ["lsp"],
 		transport: languageClient.TransportKind.stdio,
+		options: {
+			env,
+		},
 	};
 
 	let clientOptions: languageClient.LanguageClientOptions = {

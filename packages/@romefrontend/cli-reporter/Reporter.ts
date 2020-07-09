@@ -1092,7 +1092,7 @@ export default class Reporter {
 
 	verbose(msg: string, ...args: Array<unknown>) {
 		if (this.isVerbose) {
-			this.verboseForce(msg, args);
+			this.verboseForce(msg, ...args);
 		}
 	}
 

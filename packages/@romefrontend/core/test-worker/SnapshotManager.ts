@@ -314,7 +314,7 @@ export default class SnapshotManager {
 				}
 			} else {
 				// Don't delete or write a snapshot if there are test failures as those failures may be hiding snapshot usages
-				if (!hasDiagnostics && !this.options.updateSnapshots) {
+				if (hasDiagnostics && !this.options.updateSnapshots) {
 					continue;
 				}
 

@@ -5,15 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Consumer, consumeUnknown} from "@romefrontend/consume";
-import {
-	LSPDiagnostic,
-	LSPDiagnosticRelatedInformation,
-	LSPPosition,
-	LSPRange,
-	LSPResponseMessage,
-	LSPTextEdit,
-} from "./types";
+import {Consumer} from "@romefrontend/consume";
 import Server, {ServerClient} from "../Server";
 import {
 	AbsoluteFilePath,
@@ -21,14 +13,7 @@ import {
 	AbsoluteFilePathSet,
 	createAbsoluteFilePath,
 } from "@romefrontend/path";
-import {
-	DiagnosticLocation,
-	Diagnostics,
-	catchDiagnostics,
-} from "@romefrontend/diagnostics";
-import {Position} from "@romefrontend/parser-core";
-import {Number0, ob1Coerce1To0, ob1Inc, ob1Number0} from "@romefrontend/ob1";
-import {markupToPlainTextString} from "@romefrontend/string-markup";
+import {Diagnostics, catchDiagnostics} from "@romefrontend/diagnostics";
 import {
 	PartialServerQueryRequest,
 	ServerQueryResponse,
@@ -36,262 +21,21 @@ import {
 import Linter from "../linter/Linter";
 import ServerRequest, {EMPTY_SUCCESS_RESPONSE} from "../ServerRequest";
 import {DEFAULT_CLIENT_REQUEST_FLAGS} from "@romefrontend/core/common/types/client";
-import stringDiff, {Diffs, diffConstants} from "@romefrontend/string-diff";
-import {JSONObject, JSONPropertyValue} from "@romefrontend/codec-json";
+import {JSONPropertyValue} from "@romefrontend/codec-json";
 import {
-	Reporter,
 	ReporterProgress,
-	ReporterProgressBase,
 	ReporterProgressOptions,
 } from "@romefrontend/cli-reporter";
-
-type Status = "IDLE" | "WAITING_FOR_HEADERS_END" | "WAITING_FOR_RESPONSE_END";
-
-type Headers = {
-	length: number;
-	extra: Map<string, string>;
-};
-
-const HEADERS_END = "\r\n\r\n";
-
-function parseHeaders(buffer: string): Headers {
-	const headers: Map<string, string> = new Map();
-
-	for (const line of buffer.split("\n")) {
-		const clean = line.trim();
-		const match = clean.match(/^(.*?): (.*?)$/);
-		if (match == null) {
-			throw new Error(`Invalid header: ${clean}`);
-		}
-
-		const [, key, value] = match;
-		headers.set(key.toLowerCase(), value);
-	}
-
-	const length = headers.get("content-length");
-	if (length === undefined) {
-		throw new Error("Expected Content-Length");
-	}
-	headers.delete("content-length");
-
-	return {
-		length: Number(length),
-		extra: headers,
-	};
-}
-
-function convertPositionToLSP(pos: undefined | Position): LSPPosition {
-	if (pos === undefined) {
-		return {
-			line: ob1Number0,
-			character: ob1Number0,
-		};
-	} else {
-		return {
-			line: ob1Coerce1To0(pos.line),
-			character: pos.column,
-		};
-	}
-}
-
-function convertDiagnosticLocationToLSPRange(
-	location: DiagnosticLocation,
-): LSPRange {
-	return {
-		start: convertPositionToLSP(location.start),
-		end: convertPositionToLSP(location.end),
-	};
-}
-
-function convertDiagnosticsToLSP(
-	diagnostics: Diagnostics,
-	server: Server,
-): Array<LSPDiagnostic> {
-	const lspDiagnostics: Array<LSPDiagnostic> = [];
-
-	for (const {description, location} of diagnostics) {
-		// Infer relatedInformation from log messages followed by frames
-		let relatedInformation: Array<LSPDiagnosticRelatedInformation> = [];
-		const {advice} = description;
-		for (let i = 0; i < advice.length; i++) {
-			const item = advice[i];
-			const nextItem = advice[i + 1];
-			if (
-				item.type === "log" &&
-				nextItem !== undefined &&
-				nextItem.type === "frame"
-			) {
-				const abs = server.projectManager.getFilePathFromUidOrAbsolute(
-					nextItem.location.filename,
-				);
-				if (abs !== undefined) {
-					relatedInformation.push({
-						message: markupToPlainTextString(item.text),
-						location: {
-							uri: `file://${abs.join()}`,
-							range: convertDiagnosticLocationToLSPRange(nextItem.location),
-						},
-					});
-				}
-			}
-		}
-
-		lspDiagnostics.push({
-			severity: 1,
-			range: convertDiagnosticLocationToLSPRange(location),
-			message: markupToPlainTextString(description.message.value),
-			code: description.category,
-			source: "rome",
-			relatedInformation,
-		});
-	}
-
-	return lspDiagnostics;
-}
-
-function getPathFromTextDocument(consumer: Consumer): AbsoluteFilePath {
-	return createAbsoluteFilePath(consumer.get("uri").asString());
-}
-
-function diffTextEdits(original: string, desired: string): Array<LSPTextEdit> {
-	const edits: Array<LSPTextEdit> = [];
-
-	const diffs: Diffs = stringDiff(original, desired);
-
-	let currLine: Number0 = ob1Number0;
-	let currChar: Number0 = ob1Number0;
-
-	function advance(str: string) {
-		for (const char of str) {
-			if (char === "\n") {
-				currLine = ob1Inc(currLine);
-				currChar = ob1Number0;
-			} else {
-				currChar = ob1Inc(currChar);
-			}
-		}
-	}
-
-	function getPosition(): LSPPosition {
-		return {
-			line: currLine,
-			character: currChar,
-		};
-	}
-
-	for (const [type, text] of diffs) {
-		switch (type) {
-			case diffConstants.ADD: {
-				const pos = getPosition();
-				edits.push({
-					range: {
-						start: pos,
-						end: pos,
-					},
-					newText: text,
-				});
-				break;
-			}
-
-			case diffConstants.DELETE: {
-				const start: LSPPosition = getPosition();
-				advance(text);
-				const end: LSPPosition = getPosition();
-				edits.push({
-					range: {
-						start,
-						end,
-					},
-					newText: "",
-				});
-				break;
-			}
-
-			case diffConstants.EQUAL: {
-				advance(text);
-				break;
-			}
-		}
-	}
-
-	return edits;
-}
-
-let progressTokenCounter = 0;
-
-class LSPProgress extends ReporterProgressBase {
-	constructor(
-		server: LSPServer,
-		reporter: Reporter,
-		opts?: ReporterProgressOptions,
-	) {
-		super(reporter, opts);
-		this.server = server;
-		this.token = progressTokenCounter++;
-		this.lastRenderKey = "";
-
-		server.write({
-			type: "$/progress",
-			params: {
-				token: this.token,
-				value: {
-					kind: "begin",
-					cancellable: false,
-					title: this.title,
-					percentage: 0,
-				},
-			},
-		});
-	}
-
-	lastRenderKey: string;
-	token: number;
-	server: LSPServer;
-
-	render() {
-		const total = this.total === undefined ? 0 : this.total;
-		const percentage = Math.floor(100 / total * this.current);
-
-		// Make sure we don't send pointless duplicate messages
-		const renderKey = `percent:${percentage},text:${this.text}`;
-		if (this.lastRenderKey === renderKey) {
-			return;
-		}
-
-		this.lastRenderKey = renderKey;
-		this.server.write({
-			type: "$/progress",
-			params: {
-				token: this.token,
-				value: {
-					kind: "report",
-					cancellable: false,
-					message: this.text,
-					percentage,
-				},
-			},
-		});
-	}
-
-	end() {
-		this.server.write({
-			type: "$/progress",
-			params: {
-				token: this.token,
-				value: {
-					kind: "end",
-				},
-			},
-		});
-	}
-}
+import {LSPTransport} from "./protocol";
+import LSPProgress from "./LSPProgress";
+import {
+	convertDiagnosticsToLSP,
+	diffTextEdits,
+	getPathFromTextDocument,
+} from "./utils";
 
 export default class LSPServer {
 	constructor(request: ServerRequest) {
-		this.status = "IDLE";
-		this.socketBuffer = "";
-		this.nextHeaders = undefined;
-
 		this.request = request;
 		this.server = request.server;
 		this.client = request.client;
@@ -304,27 +48,30 @@ export default class LSPServer {
 		request.endEvent.subscribe(async () => {
 			await this.shutdown();
 		});
+
+		const transport = new LSPTransport(request.reporter);
+		this.transport = transport;
+
+		transport.notificationEvent.subscribe(({method, params}) => {
+			return this.handleNotification(method, params);
+		});
+
+		transport.requestEvent.subscribe(({method, params}) => {
+			return this.handleRequest(method, params);
+		});
 	}
 
 	request: ServerRequest;
 	client: ServerClient;
 	server: Server;
-	nextHeaders: undefined | Headers;
-	status: Status;
-	socketBuffer: string;
+	transport: LSPTransport;
 
 	fileBuffers: AbsoluteFilePathSet;
 	lintSessionsPending: AbsoluteFilePathSet;
 	lintSessions: AbsoluteFilePathMap<ServerRequest>;
 
-	write(res: JSONObject) {
-		const json = JSON.stringify(res);
-		const out = `Content-Length: ${String(json.length)}${HEADERS_END}${json}`;
-		this.client.bridge.lspFromServerBuffer.send(out);
-	}
-
 	logMessage(path: AbsoluteFilePath, message: string) {
-		this.write({
+		this.transport.write({
 			method: "window/logMessage",
 			params: {
 				uri: `file://${path.join()}`,
@@ -379,7 +126,7 @@ export default class LSPServer {
 	}
 
 	createProgress(opts?: ReporterProgressOptions): ReporterProgress {
-		return new LSPProgress(this, this.request.reporter, opts);
+		return new LSPProgress(this.transport, this.request.reporter, opts);
 	}
 
 	async watchProject(path: AbsoluteFilePath) {
@@ -428,7 +175,7 @@ export default class LSPServer {
 					});
 					processor.addDiagnostics(diagnostics);
 
-					this.write({
+					this.transport.write({
 						method: "textDocument/publishDiagnostics",
 						params: {
 							uri: `file://${filename}`,
@@ -575,112 +322,5 @@ export default class LSPServer {
 				break;
 			}
 		}
-	}
-
-	normalizeMessage(content: string): undefined | Consumer {
-		try {
-			const data = JSON.parse(content);
-			const consumer = consumeUnknown(data, "lsp/parse");
-			return consumer;
-		} catch (err) {
-			if (err instanceof SyntaxError) {
-				console.error("JSON parse error", content);
-				return undefined;
-			} else {
-				throw err;
-			}
-		}
-	}
-
-	async onMessage(headers: Headers, content: string) {
-		const consumer = this.normalizeMessage(content);
-		if (consumer === undefined) {
-			return;
-		}
-
-		if (!consumer.has("method")) {
-			console.error("NO METHOD", content);
-			return;
-		}
-
-		const method: string = consumer.get("method").asString();
-		const params = consumer.get("params");
-
-		if (consumer.has("id")) {
-			const id = consumer.get("id").asNumber();
-
-			try {
-				const res: LSPResponseMessage = {
-					id,
-					result: await this.handleRequest(method, params),
-				};
-				this.write(res);
-			} catch (err) {
-				const res: LSPResponseMessage = {
-					id,
-					error: {
-						code: -32_603,
-						message: err.message,
-					},
-				};
-				this.write(res);
-			}
-		} else {
-			await this.handleNotification(method, params);
-		}
-	}
-
-	process() {
-		switch (this.status) {
-			case "IDLE": {
-				if (this.socketBuffer.length > 0) {
-					this.status = "WAITING_FOR_HEADERS_END";
-					this.process();
-				}
-				break;
-			}
-
-			case "WAITING_FOR_HEADERS_END": {
-				const endIndex = this.socketBuffer.indexOf(HEADERS_END);
-				if (endIndex !== -1) {
-					// Parse headers
-					const rawHeaders = this.socketBuffer.slice(0, endIndex);
-					this.nextHeaders = parseHeaders(rawHeaders);
-
-					// Process rest of the buffer
-					this.status = "WAITING_FOR_RESPONSE_END";
-					this.socketBuffer = this.socketBuffer.slice(
-						endIndex + HEADERS_END.length,
-					);
-					this.process();
-				}
-				break;
-			}
-
-			case "WAITING_FOR_RESPONSE_END": {
-				const headers = this.nextHeaders;
-				if (headers === undefined) {
-					throw new Error("Expected headers due to our status");
-				}
-				if (this.socketBuffer.length >= headers.length) {
-					const content = this.socketBuffer.slice(0, headers.length);
-					this.onMessage(headers, content);
-
-					// Reset headers and trim content
-					this.nextHeaders = undefined;
-					this.socketBuffer = this.socketBuffer.slice(headers.length);
-
-					// Process rest of the buffer
-					this.status = "IDLE";
-					this.process();
-				}
-				break;
-			}
-		}
-	}
-
-	append(data: string) {
-		this.socketBuffer += data;
-		this.process();
 	}
 }
