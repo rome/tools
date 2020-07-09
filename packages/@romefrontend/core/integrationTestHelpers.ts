@@ -143,6 +143,17 @@ export function createIntegrationTest(
 				);
 			});
 
+			t.addToAdvice({
+				type: "log",
+				category: "info",
+				text: "Server logs",
+			});
+
+			t.addToAdvice(() => ({
+				type: "code",
+				code: logs,
+			}));
+
 			try {
 				// Start the server inside of the process
 				const {server, bridge, serverClient} = await client.startInternalServer({
@@ -191,10 +202,6 @@ export function createIntegrationTest(
 
 				// Console
 				t.namedSnapshot("console", terminalOutput);
-
-				// Logs
-				//t.namedSnapshot("logs", logs);
-				logs;
 
 				// Files
 				const files: Array<string> = [];

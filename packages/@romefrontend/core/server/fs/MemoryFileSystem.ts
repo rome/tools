@@ -174,48 +174,20 @@ async function createWatcher(
 				folderPath,
 				{recursive, persistent: false},
 				(eventType, filename) => {
+					memoryFs.server.logger.info(
+						`[MemoryFileSystem] Raw fs.watch event in ${folderPath.toMarkup()} type ${eventType} for ${filename}`,
+					);
+
 					if (filename === null) {
 						// TODO not sure how we want to handle this?
 						return;
 					}
 
-					const path = folderPath.resolve(filename);
-
-					memoryFs.hardStat(path).then((newStats) => {
-						const diagnostics = memoryFs.server.createDisconnectedDiagnosticsProcessor([
-							{
-								category: "memory-fs",
-								message: "Processing fs.watch changes",
-							},
-						]);
-
-						if (newStats.type === "file") {
-							memoryFs.addFile(
-								path,
-								newStats,
-								{
-									reason: "watch",
-									diagnostics,
-								},
-							);
-						} else if (newStats.type === "directory") {
-							memoryFs.addDirectory(
-								path,
-								newStats,
-								{
-									reason: "watch",
-									diagnostics,
-									onFoundDirectory,
-								},
-							);
-						}
-					}).catch((err) => {
-						if (err.code === "ENOENT") {
-							memoryFs.handleDeletion(path);
-						} else {
-							throw err;
-						}
-					});
+					memoryFs.refreshPath(
+						folderPath.resolve(filename),
+						{onFoundDirectory},
+						"Processing fs.watch changes",
+					);
 				},
 			);
 			watchers.set(folderPath, watcher);
@@ -896,6 +868,49 @@ export default class MemoryFileSystem {
 			return exists(path);
 		} else {
 			return resolvedExistence;
+		}
+	}
+
+	async refreshPath(
+		path: AbsoluteFilePath,
+		customCrawlOpts: Partial<CrawlOptions> = {},
+		originMessage: string = "maybeRefreshFile",
+	) {
+		const diagnostics = this.server.createDisconnectedDiagnosticsProcessor([
+			{
+				category: "memory-fs",
+				message: originMessage,
+			},
+		]);
+
+		let newStats;
+		try {
+			newStats = await this.hardStat(path);
+		} catch (err) {
+			if (err.code === "ENOENT") {
+				// Only call handleDeletion if we think this file still exists
+				if (this.exists(path)) {
+					await this.handleDeletion(path);
+				}
+			} else {
+				throw err;
+			}
+		}
+		if (newStats === undefined) {
+			// Deleted
+			return;
+		}
+
+		const crawlOpts: CrawlOptions = {
+			reason: "watch",
+			diagnostics,
+			...customCrawlOpts,
+		};
+
+		if (newStats.type === "directory") {
+			await this.addDirectory(path, newStats, crawlOpts);
+		} else if (newStats.type === "file") {
+			await this.addFile(path, newStats, crawlOpts);
 		}
 	}
 

@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Reporter, ReporterOptions} from "@romefrontend/cli-reporter";
+import {
+	Reporter,
+	ReporterConditionalStream,
+	ReporterOptions,
+} from "@romefrontend/cli-reporter";
 import {AbsoluteFilePath} from "@romefrontend/path";
 
 export type LoggerOptions = {
@@ -19,8 +23,11 @@ export type PartialLoggerOptions = Partial<LoggerOptions>;
 export default class Logger extends Reporter {
 	constructor(
 		loggerOptions: LoggerOptions,
-		isEnabled: () => boolean,
 		opts: ReporterOptions,
+		{write, check}: {
+			check: () => boolean;
+			write: (chunk: string) => void;
+		},
 	) {
 		super({
 			verbose: true,
@@ -31,12 +38,27 @@ export default class Logger extends Reporter {
 			},
 		});
 		this.loggerOptions = loggerOptions;
-		this.isEnabled = isEnabled;
+
+		this.conditionalStream = this.attachConditionalStream(
+			{
+				type: "all",
+				format: "none",
+				columns: Infinity,
+				unicode: true,
+				write,
+			},
+			check,
+		);
 	}
 
+	conditionalStream: ReporterConditionalStream;
 	loggerOptions: LoggerOptions;
 
-	getMessagePrefix() {
+	updateStream() {
+		this.conditionalStream.update();
+	}
+
+	_getMessagePrefix() {
 		let inner = this.loggerOptions.type;
 		if (!this.loggerOptions.excludePid) {
 			inner += ` ${process.pid}`;

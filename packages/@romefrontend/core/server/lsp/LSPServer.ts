@@ -49,7 +49,7 @@ export default class LSPServer {
 			await this.shutdown();
 		});
 
-		const transport = new LSPTransport(request.reporter);
+		const transport = new LSPTransport(this.server.logger);
 		this.transport = transport;
 
 		transport.notificationEvent.subscribe(({method, params}) => {

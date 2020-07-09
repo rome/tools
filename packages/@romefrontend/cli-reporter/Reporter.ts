@@ -18,6 +18,7 @@ import {
 import {
 	RemoteReporterClientMessage,
 	RemoteReporterReceiveMessage as RemoteReporterServerMessage,
+	ReporterConditionalStream,
 	ReporterDerivedStreams,
 	ReporterProgress,
 	ReporterProgressOptions,
@@ -56,7 +57,6 @@ export type ReporterOptions = {
 	hasClearScreen?: boolean;
 	programVersion?: string;
 	markupOptions?: MarkupFormatOptions;
-	disabled?: boolean;
 	verbose?: boolean;
 	useRemoteProgressBars?: boolean;
 	startTime?: number;
@@ -64,8 +64,6 @@ export type ReporterOptions = {
 };
 
 export type LogOptions = {
-	nonTTY?: string;
-	noPrefix?: boolean;
 	stderr?: boolean;
 	newline?: boolean;
 };
@@ -83,6 +81,16 @@ type QuestionOptions = {
 	default?: string;
 	yes?: boolean;
 	normalize?: (value: string) => string;
+};
+
+type MessagePrefix = {
+	value: string;
+	width: number;
+};
+
+const EMPTY_PREFIX: MessagePrefix = {
+	value: "",
+	width: 0,
 };
 
 let remoteProgressIdCounter = 0;
@@ -106,7 +114,6 @@ export default class Reporter {
 		this.activeElements = new Set();
 		this.indentLevel = 0;
 		this.indentString = "";
-		this.enabled = opts.disabled === true ? 0 : 1;
 		this.markupOptions =
 			opts.markupOptions === undefined ? {} : opts.markupOptions;
 		this.streamsWithDoubleNewlineEnd = new Set();
@@ -128,6 +135,7 @@ export default class Reporter {
 
 		this.isRemote = opts.useRemoteProgressBars === true;
 
+		this.streamToMessagePrefix = new WeakMap();
 		this.outStreams = new Set();
 		this.errStreams = new Set();
 		this.streams = new Set();
@@ -225,6 +233,31 @@ export default class Reporter {
 		};
 	}
 
+	attachConditionalStream(
+		stream: ReporterStream,
+		check: () => boolean,
+	): ReporterConditionalStream {
+		const cond: ReporterConditionalStream = {
+			update: () => {
+				if (check()) {
+					if (!this.streams.has(stream)) {
+						this.addStream(stream);
+					}
+					return true;
+				} else {
+					if (this.streams.has(stream)) {
+						this.removeStream(stream);
+					}
+					return false;
+				}
+			},
+		};
+
+		cond.update();
+
+		return cond;
+	}
+
 	attachCaptureStream(
 		format: ReporterStream["format"] = "none",
 	): {
@@ -276,17 +309,17 @@ export default class Reporter {
 	isRemote: boolean;
 	noProgress: boolean;
 	isVerbose: boolean;
-	streamsWithNewlineEnd: Set<ReporterStream>;
-	streamsWithDoubleNewlineEnd: Set<ReporterStream>;
+	streamsWithNewlineEnd: Set<ReporterStreamMeta>;
+	streamsWithDoubleNewlineEnd: Set<ReporterStreamMeta>;
 	indentLevel: number;
 	indentString: string;
-	enabled: number;
 	startTime: number;
 	shouldRedirectOutToErr: boolean;
 	wrapperFactory: undefined | WrapperFactory;
 	outStreams: Set<ReporterStream>;
 	errStreams: Set<ReporterStream>;
 	streams: Set<ReporterStream>;
+	streamToMessagePrefix: WeakMap<ReporterStreamMeta, MessagePrefix>;
 	sendRemoteServerMessage: Event<RemoteReporterServerMessage, void>;
 	sendRemoteClientMessage: Event<RemoteReporterClientMessage, void>;
 	stdin: undefined | NodeJS.ReadStream;
@@ -351,34 +384,31 @@ export default class Reporter {
 		}
 	}
 
-	getMessagePrefix(): string {
-		return "";
+	// Lazily create and memoize a message prefix per stream
+	getMessagePrefix(stream: ReporterStreamMeta): MessagePrefix {
+		const cached = this.streamToMessagePrefix.get(stream);
+		if (cached !== undefined) {
+			return cached;
+		}
+
+		const rawPrefix = this._getMessagePrefix();
+		const {lines, width} = this.format(stream, rawPrefix, {partial: true});
+		if (lines.length !== 1) {
+			throw new Error(
+				`Expected only 1 line but got ${lines.length} for prefix string "${rawPrefix}" for stream ${stream.format}`,
+			);
+		}
+
+		const prefix: MessagePrefix = {
+			width,
+			value: lines[0],
+		};
+		this.streamToMessagePrefix.set(stream, prefix);
+		return prefix;
 	}
 
-	normalizeMessage(
-		stream: ReporterStream,
-		tty: string,
-		opts: LogOptions,
-	): string {
-		let msg =
-			stream.format !== "none" || opts.nonTTY === undefined ? tty : opts.nonTTY;
-
-		if (opts.noPrefix !== true) {
-			msg = this.getMessagePrefix() + msg;
-		}
-
-		// Don't indent if there is no indent, or the message is empty
-		const {indentString} = this;
-		if (
-			this.streamsWithNewlineEnd.has(stream) &&
-			indentString !== "" &&
-			msg !== ""
-		) {
-			// Indent each line, leaving out the indentation for empty lines
-			msg = indentString + msg.replace(/\n([^\n])/g, `\n${indentString}$1`);
-		}
-
-		return msg;
+	_getMessagePrefix(): string {
+		return "";
 	}
 
 	redirectOutToErr(should: boolean): boolean {
@@ -589,15 +619,8 @@ export default class Reporter {
 	}
 
 	//# Control
-	isEnabled(stderr: undefined | boolean): boolean {
-		return this.getStreams(stderr).size > 0;
-	}
 
 	getStreams(stderr: undefined | boolean): Set<ReporterStream> {
-		if (this.enabled === 0) {
-			return new Set();
-		}
-
 		if (this.shouldRedirectOutToErr) {
 			return this.errStreams;
 		}
@@ -607,21 +630,6 @@ export default class Reporter {
 		}
 
 		return this.outStreams;
-	}
-
-	enable(): () => void {
-		let alreadyDisabled = false;
-
-		this.enabled++;
-
-		return () => {
-			if (alreadyDisabled) {
-				throw new Error("Already disabled Reporter");
-			}
-
-			this.enabled--;
-			alreadyDisabled = true;
-		};
 	}
 
 	//# LIFECYCLE
@@ -728,7 +736,8 @@ export default class Reporter {
 	}
 
 	inspect(value: unknown) {
-		if (!this.isEnabled(false)) {
+		const streams = this.getStreams(false);
+		if (streams.size === 0) {
 			return;
 		}
 
@@ -738,7 +747,9 @@ export default class Reporter {
 			formatted = prettyFormat(formatted, {markup: true});
 		}
 
-		this.logAll(String(formatted));
+		for (const stream of streams) {
+			this.logOne(stream, String(formatted));
+		}
 	}
 
 	//# ESCAPE HATCHES
@@ -761,11 +772,7 @@ export default class Reporter {
 		}
 	}
 
-	writeSpecific(stream: ReporterStream, msg: string, opts: LogOptions = {}) {
-		if (!this.isEnabled(opts.stderr)) {
-			return;
-		}
-
+	writeSpecific(stream: ReporterStream, msg: string) {
 		this.hasClearScreen = false;
 
 		if (stream.format === "ansi" && this.activeElements.size > 0) {
@@ -793,12 +800,7 @@ export default class Reporter {
 	//# SECTIONS
 	heading(text: string) {
 		this.br();
-		this.logAll(
-			`<inverse><emphasis>${text}</emphasis></inverse>`,
-			{
-				nonTTY: `# ${text}`,
-			},
-		);
+		this.logAll(`<inverse><emphasis>${text}</emphasis></inverse>`);
 		this.br();
 	}
 
@@ -886,36 +888,88 @@ export default class Reporter {
 		return markupToPlainText(str, this.markupOptions).lines.join("\n");
 	}
 
-	markupify(
+	format(
 		stream: ReporterStreamMeta,
 		str: string,
-		viewportShrink: number = 0,
+		{
+			partial = false,
+			leadingPrefix,
+		}: {
+			leadingPrefix?: MessagePrefix;
+			partial?: boolean;
+		} = {},
 	): MarkupLinesAndWidth {
 		if (str === "") {
 			return {lines: [""], width: 0};
 		}
 
+		const allLinePrefix: MessagePrefix = partial
+			? EMPTY_PREFIX
+			: this.getMessagePrefix(stream);
+		const viewportShrink = leadingPrefix === undefined ? 0 : leadingPrefix.width;
+
 		const gridMarkupOptions: MarkupFormatGridOptions = {
 			...this.markupOptions,
-			columns: stream.columns - this.indentString.length - viewportShrink,
+			columns: stream.columns -
+			this.indentString.length -
+			viewportShrink -
+			allLinePrefix.width,
 		};
 
+		let res: MarkupLinesAndWidth;
+
 		switch (stream.format) {
-			case "ansi":
-				return markupToAnsi(str, gridMarkupOptions);
+			case "ansi": {
+				res = markupToAnsi(str, gridMarkupOptions);
+				break;
+			}
 
-			case "html":
-				return markupToHtml(str, gridMarkupOptions);
+			case "html": {
+				res = markupToHtml(str, gridMarkupOptions);
+				break;
+			}
 
-			case "none":
-				return markupToPlainText(str, gridMarkupOptions);
+			case "none": {
+				res = markupToPlainText(str, gridMarkupOptions);
+				break;
+			}
 
-			case "markup":
-				return {
+			case "markup": {
+				res = {
 					width: 0,
 					lines: [str],
 				};
+				break;
+			}
 		}
+
+		const {indentString} = this;
+		const shouldIndent =
+			!partial && this.streamsWithNewlineEnd.has(stream) && indentString !== "";
+
+		let prefixIncluded = false;
+
+		const newLines = res.lines.map((line, i) => {
+			if (leadingPrefix !== undefined) {
+				if (i === 0) {
+					line = `${leadingPrefix.value}${line}`;
+				} else {
+					line = `${" ".repeat(leadingPrefix.width)}${line}`;
+				}
+			}
+
+			if (shouldIndent && line !== "") {
+				line = `${indentString}${line}`;
+			}
+
+			prefixIncluded = true;
+			return `${allLinePrefix.value}${line}`;
+		});
+
+		return {
+			width: prefixIncluded ? res.width + allLinePrefix.width : res.width,
+			lines: newLines,
+		};
 	}
 
 	logAll(tty: string, opts: LogOptions = {}) {
@@ -924,27 +978,20 @@ export default class Reporter {
 		}
 	}
 
-	logAllNoMarkup(tty: string, opts: LogOptions = {}) {
+	logAllRaw(tty: string, opts: LogOptions = {}) {
 		for (const stream of this.getStreams(opts.stderr)) {
-			this.logOneNoMarkup(stream, tty, opts);
+			this.logOneRaw(stream, tty, opts);
 		}
 	}
 
-	logOne(stream: ReporterStream, tty: string, opts: LogOptions = {}) {
-		const msg =
-			stream.format !== "none" || opts.nonTTY === undefined ? tty : opts.nonTTY;
-		const {lines} = this.markupify(stream, msg);
+	logOne(stream: ReporterStream, msg: string, opts: LogOptions = {}) {
+		const {lines} = this.format(stream, msg);
 		for (const line of lines) {
-			this.logOneNoMarkup(stream, line, opts);
+			this.logOneRaw(stream, line, opts);
 		}
 	}
 
-	logOneNoMarkup(stream: ReporterStream, tty: string, opts: LogOptions = {}) {
-		if (!this.isEnabled(opts.stderr)) {
-			return;
-		}
-
-		let msg = this.normalizeMessage(stream, tty, opts);
+	logOneRaw(stream: ReporterStream, msg: string, opts: LogOptions = {}) {
 		if (opts.newline !== false) {
 			msg += "\n";
 		}
@@ -970,7 +1017,8 @@ export default class Reporter {
 		args: Array<unknown>,
 		opts: LogCategoryOptions,
 	) {
-		if (!this.isEnabled(opts.stderr)) {
+		const streams = this.getStreams(opts.stderr);
+		if (streams.size === 0) {
 			return;
 		}
 
@@ -998,40 +1046,37 @@ export default class Reporter {
 			}
 		}
 
-		for (const stream of this.getStreams(opts.stderr)) {
+		for (const stream of streams) {
 			// Format the prefix, selecting it depending on if we're a unicode stream
 			const prefixInner = stream.unicode ? opts.unicodePrefix : opts.rawPrefix;
 			const prefix = markupTag(
 				"emphasis",
-				markupTag(opts.markupTag, this.getMessagePrefix() + prefixInner),
+				markupTag(opts.markupTag, prefixInner),
 			);
 
 			// Should only be one line
-			const {lines: prefixLines, width: prefixWidth} = this.markupify(
+			const {lines: prefixLines, width: prefixWidth} = this.format(
 				stream,
 				prefix,
+				{partial: true},
 			);
 			const prefixLine = prefixLines[0];
 			if (prefixLines.length !== 1) {
 				throw new Error(`Expected 1 prefix line but got ${prefixLines.length}`);
 			}
 
-			const {lines} = this.markupify(stream, inner, prefixWidth);
-			for (let i = 0; i < lines.length; i++) {
-				let line = lines[i];
-				if (i === 0) {
-					line = `${prefixLine}${line}`;
-				} else {
-					line = `${" ".repeat(prefixWidth)}${line}`;
-				}
-				this.logOneNoMarkup(
-					stream,
-					line,
-					{
-						noPrefix: true,
-						...opts,
+			const {lines} = this.format(
+				stream,
+				inner,
+				{
+					leadingPrefix: {
+						width: prefixWidth,
+						value: prefixLine,
 					},
-				);
+				},
+			);
+			for (const line of lines) {
+				this.logOneRaw(stream, line, opts);
 			}
 		}
 	}
@@ -1109,12 +1154,7 @@ export default class Reporter {
 	}
 
 	command(command: string) {
-		this.logAll(
-			`<dim>$ ${command}</dim>`,
-			{
-				nonTTY: `$ ${command}`,
-			},
-		);
+		this.logAll(`<dim>$ ${command}</dim>`);
 	}
 
 	processedList<T>(

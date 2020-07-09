@@ -181,6 +181,14 @@ export default class Server {
 		this.userConfig =
 			opts.userConfig === undefined ? loadUserConfig() : opts.userConfig;
 
+		this.requestFileLocker = new FilePathLocker();
+
+		this.connectedReporters = new ServerReporter(this);
+
+		this.connectedClientsListeningForLogs = new Set();
+		this.connectedLSPServers = new Set();
+		this.connectedClients = new Set();
+
 		this.clientStartEvent = new Event({
 			name: "Server.clientStart",
 			onError: this.onFatalErrorBound,
@@ -207,21 +215,7 @@ export default class Server {
 				...opts.loggerOptions,
 				type: "server",
 			},
-			() => {
-				return this.connectedClientsListeningForLogs.size > 0;
-			},
 			{
-				streams: [
-					{
-						type: "all",
-						format: "none",
-						columns: Infinity,
-						unicode: true,
-						write: (chunk) => {
-							this.emitServerLog(chunk);
-						},
-					},
-				],
 				markupOptions: {
 					userConfig: this.userConfig,
 					humanizeFilename: (filename) => {
@@ -246,15 +240,15 @@ export default class Server {
 					},
 				},
 			},
+			{
+				write: (chunk) => {
+					this.emitServerLog(chunk);
+				},
+				check: () => {
+					return this.connectedClientsListeningForLogs.size > 0;
+				},
+			},
 		);
-
-		this.requestFileLocker = new FilePathLocker();
-
-		this.connectedReporters = new ServerReporter(this);
-
-		this.connectedClientsListeningForLogs = new Set();
-		this.connectedLSPServers = new Set();
-		this.connectedClients = new Set();
 
 		this.virtualModules = new VirtualModules(this);
 		this.memoryFs = new MemoryFileSystem(this);
@@ -437,6 +431,11 @@ export default class Server {
 		try {
 			for (const [path, content] of files) {
 				await writeFile(path, content);
+
+				// We want writeFiles to only return once all the refreshFileEvent handlers have ran
+				// We call maybeRefreshPath to do a hard check on the filesystem and update our in memory fs
+				// This mitigates slow watch events
+				this.memoryFs.refreshPath(path, {}, "Server.writeFiles");
 			}
 
 			// Protects against file events not being emitted and causing hanging
@@ -711,6 +710,7 @@ export default class Server {
 			} else {
 				this.connectedClientsListeningForLogs.delete(client);
 			}
+			this.logger.updateStream();
 		});
 
 		bridge.endEvent.subscribe(() => {
@@ -718,6 +718,7 @@ export default class Server {
 			this.connectedClientsListeningForLogs.delete(client);
 			this.connectedReporters.removeStream(errStream);
 			this.connectedReporters.removeStream(outStream);
+			this.logger.updateStream();
 
 			// Cancel any requests still in flight
 			for (const req of client.requestsInFlight) {

@@ -6,6 +6,7 @@
  */
 
 import {
+	ClientRequestFlags,
 	DEFAULT_CLIENT_FLAGS,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
@@ -202,6 +203,16 @@ export default class ServerRequest {
 	markers: Array<ServerMarker>;
 	cancelled: boolean;
 	toredown: boolean;
+
+	updateRequestFlags(flags: Partial<ClientRequestFlags>) {
+		this.query = {
+			...this.query,
+			requestFlags: {
+				...this.query.requestFlags,
+				...flags,
+			},
+		};
+	}
 
 	async init() {
 		if (this.query.requestFlags.collectMarkers) {

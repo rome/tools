@@ -11,7 +11,6 @@ import {
 	DiagnosticAdvice,
 	DiagnosticLocation,
 	DiagnosticLogCategory,
-	DiagnosticOrigin,
 	INTERNAL_ERROR_LOG_ADVICE,
 	catchDiagnostics,
 	createBlessedDiagnosticMessage,
@@ -368,11 +367,6 @@ export default class TestWorkerRunner {
 	}
 
 	async emitDiagnostic(diag: Diagnostic, test?: FoundTest) {
-		let origin: DiagnosticOrigin = {
-			category: "test/error",
-			message: "Generated from a test worker without being attached to a test",
-		};
-
 		let label = diag.label;
 		if (label === undefined && test !== undefined) {
 			label = escapeMarkup(test.name);
@@ -384,7 +378,7 @@ export default class TestWorkerRunner {
 		};
 
 		this.hasDiagnostics = true;
-		await this.bridge.testDiagnostic.call({diagnostic: diag, origin});
+		await this.bridge.testDiagnostic.call({diagnostic: diag, origin: undefined});
 	}
 
 	deriveDiagnosticFromErrorStructure(struct: StructuredError): Diagnostic {

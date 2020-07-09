@@ -71,21 +71,17 @@ export default class Worker {
 				...opts.loggerOptions,
 				type: "worker",
 			},
-			() => opts.bridge.log.hasSubscribers(),
+			{},
 			{
-				streams: [
-					{
-						type: "all",
-						format: "none",
-						columns: Infinity,
-						unicode: true,
-						write(chunk) {
-							opts.bridge.log.send(chunk.toString());
-						},
-					},
-				],
+				check: () => opts.bridge.log.hasSubscribers(),
+				write(chunk) {
+					opts.bridge.log.send(chunk.toString());
+				},
 			},
 		);
+		opts.bridge.updatedListenersEvent.subscribe(() => {
+			this.logger.updateStream();
+		});
 
 		//
 		this.api = new WorkerAPI(this);
