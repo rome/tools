@@ -112,7 +112,7 @@ export type ServerMarker = ServerUnfinishedMarker & {
 
 const disallowedFlagsWhenReviewing: Array<keyof ClientRequestFlags> = ["watch"];
 
-export function partialServerQueryResponseToFull(
+export function partialServerQueryRequestToFull(
 	partialQuery: PartialServerQueryRequest,
 ): ServerQueryRequest {
 	const requestFlags: ClientRequestFlags = {
@@ -758,7 +758,7 @@ export default class Server {
 		client: ServerClient,
 		partialQuery: PartialServerQueryRequest,
 	): Promise<ServerQueryResponse> {
-		const query: ServerQueryRequest = partialServerQueryResponseToFull(
+		const query: ServerQueryRequest = partialServerQueryRequestToFull(
 			partialQuery,
 		);
 

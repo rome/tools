@@ -23,7 +23,7 @@ import {UserConfig} from "./common/userConfig";
 import crypto = require("crypto");
 import stream = require("stream");
 import ServerRequest from "./server/ServerRequest";
-import {partialServerQueryResponseToFull} from "./server/Server";
+import {partialServerQueryRequestToFull} from "./server/Server";
 import {PartialServerQueryRequest} from "./common/bridges/ServerBridge";
 
 type IntegrationTestHelper = {
@@ -191,7 +191,7 @@ export function createIntegrationTest(
 						) {
 							return new ServerRequest({
 								client: serverClient,
-								query: partialServerQueryResponseToFull(query),
+								query: partialServerQueryRequestToFull(query),
 								server,
 							});
 						},
