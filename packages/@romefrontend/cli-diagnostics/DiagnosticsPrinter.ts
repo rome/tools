@@ -408,34 +408,29 @@ export default class DiagnosticsPrinter extends Error {
 			// https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-error-message
 			// Format: \:\:error file=app.js,line=10,col=15::Something went wrong
 			case "github-actions": {
-				let log = "::error ";
+				const parts = [];
 
 				if (filename !== undefined) {
-					log += `file=`;
-
 					const path = createUnknownFilePath(filename);
 
 					if (path.isAbsolute() && path.isRelativeTo(this.cwd)) {
-						log += `${this.cwd.relative(path).join()}`;
+						parts.push(`file=${this.cwd.relative(path).join()}}`);
 					} else {
-						log += filename;
+						parts.push(`file=${filename}`);
 					}
-
-					log += `,`;
 				}
 
 				if (start !== undefined) {
 					if (start.line !== undefined) {
-						log += `line:${ob1Get1(start.line)},`;
+						parts.push(`line:${ob1Get1(start.line)}`);
 					}
 
 					if (start.column !== undefined) {
-						log += `col:${ob1Get0(start.column)},`;
+						parts.push(`col:${ob1Get0(start.column)}`);
 					}
 				}
 
-				log += `::message=${message.value}`;
-
+				let log = `::error ${parts.join(",")}::message=${message.value}`;
 				this.reporter.logAllRaw(log);
 				break;
 			}
