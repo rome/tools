@@ -34,7 +34,6 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 	if (applyRecommendedFixes) {
 		const formatContext = new CompilerContext({
 			ref: req.ref,
-			sourceText: req.sourceText,
 			options,
 			ast,
 			project,

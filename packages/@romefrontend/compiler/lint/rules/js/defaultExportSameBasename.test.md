@@ -16,7 +16,8 @@
 
   ℹ Recommended fix
 
-     1 │ + export default function test() {}
+    1  │   test
+     1 │ + export default function·test() {}
      2 │ + 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -44,7 +45,8 @@ export default function foo() {}
 
   ℹ Recommended fix
 
-     1 │ + export default class Test {}
+    1  │   Test
+     1 │ + export default class·Test·{}
      2 │ + 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

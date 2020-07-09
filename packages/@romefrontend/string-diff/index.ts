@@ -50,7 +50,7 @@ export const diffConstants = {
 	ADD: DIFF_INSERT,
 };
 
-export type GroupDiffs = {
+export type UnifiedDiff = {
 	diffsByLine: Array<GroupDiffsLine>;
 	beforeLineCount: number;
 	afterLineCount: number;
@@ -66,39 +66,28 @@ function generateLineKey(beforeLine?: number, afterLine?: number) {
 	return `${beforeLine || ""}:${afterLine || ""}`;
 }
 
-export function groupDiffByLines(rawDiffs: Diffs): GroupDiffs {
-	const diffsByLine: Array<GroupDiffsLine> = [];
-
+export function stringDiffUnified(rawDiffs: Diffs): UnifiedDiff {
 	const modifiedLines: Set<string> = new Set();
 	const insertedLines: Map<string, GroupDiffsLine> = new Map();
 
 	let beforeLine = 1;
 	let afterLine = 1;
-	createLine();
-
+	
 	function getLine(beforeLine?: number, afterLine?: number): GroupDiffsLine {
-		const line = insertedLines.get(generateLineKey(beforeLine, afterLine));
-		if (line === undefined) {
-			throw new Error("Expected line");
-		}
-		return line;
-	}
-
-	function pushLine(beforeLine?: number, afterLine?: number) {
 		const key = generateLineKey(beforeLine, afterLine);
-		if (insertedLines.has(key)) {
-			return;
+
+		const existing = insertedLines.get(key);
+		if (existing !== undefined) {
+			return existing;
 		}
 
-		const line: GroupDiffsLine = {beforeLine, afterLine, diffs: []};
+		const line: GroupDiffsLine = {
+			beforeLine,
+			afterLine,
+			diffs: [],
+		};
 		insertedLines.set(key, line);
-		diffsByLine.push(line);
-	}
-
-	function createLine() {
-		pushLine(beforeLine, afterLine);
-		pushLine(beforeLine, undefined);
-		pushLine(undefined, afterLine);
+		return line;
 	}
 
 	function pushToLine(diff: Diff) {
@@ -164,33 +153,18 @@ export function groupDiffByLines(rawDiffs: Diffs): GroupDiffs {
 				}
 			}
 
-			createLine();
 			pushToLine([type, newLine]);
 		}
 	}
 
-	const diffsByLineClean = diffsByLine.filter((line) => {
-		if (line.beforeLine !== undefined && line.afterLine !== undefined) {
-			// Ignore if either side is modified
-			if (
-				modifiedLines.has(generateLineKey(line.beforeLine, undefined)) ||
-				modifiedLines.has(generateLineKey(undefined, line.afterLine))
-			) {
-				return false;
-			}
+	const diffsByLine: Array<GroupDiffsLine> = [];
 
-			return true;
-		} else {
-			// Include if either side is modified
-			return (
-				modifiedLines.has(generateLineKey(undefined, line.afterLine)) ||
-				modifiedLines.has(generateLineKey(line.beforeLine, undefined))
-			);
-		}
-	});
+	for (const line of insertedLines.values()) {
+		diffsByLine.push(line);
+	}
 
 	return {
-		diffsByLine: diffsByLineClean,
+		diffsByLine,
 		beforeLineCount: beforeLine,
 		afterLineCount: afterLine,
 	};

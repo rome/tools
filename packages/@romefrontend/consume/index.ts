@@ -7,7 +7,7 @@
 
 import {ConsumerOptions} from "./types";
 import Consumer from "./Consumer";
-import {RequiredProps} from "@romefrontend/typescript-helpers";
+import {RequiredProps, mergeObjects} from "@romefrontend/typescript-helpers";
 import {DiagnosticCategory} from "@romefrontend/diagnostics";
 
 const EMPTY_CONSUME_OPTIONS: Omit<ConsumerOptions, "context"> = {
@@ -23,10 +23,7 @@ const EMPTY_CONSUME_OPTIONS: Omit<ConsumerOptions, "context"> = {
 export function consume(
 	opts: RequiredProps<Partial<ConsumerOptions>, "context">,
 ): Consumer {
-	return new Consumer({
-		...EMPTY_CONSUME_OPTIONS,
-		...opts,
-	});
+	return new Consumer(mergeObjects(EMPTY_CONSUME_OPTIONS, opts));
 }
 
 export function consumeUnknown(

@@ -11,6 +11,7 @@ import {ServerRequest, TestWorkerBridge} from "@romefrontend/core";
 import {CoverageFile, InspectorClient} from "@romefrontend/v8";
 import child = require("child_process");
 import {FileReference} from "@romefrontend/core/common/types/files";
+import { DiagnosticsPrinterFlags } from "@romefrontend/cli-diagnostics";
 
 export type TestSource = {
 	code: string;
@@ -34,7 +35,7 @@ export type TestServerRunnerOptions = {
 	showAllCoverage: boolean;
 	updateSnapshots: boolean;
 	freezeSnapshots: boolean;
-	verboseDiagnostics: boolean;
+	verboseDiagnostics: DiagnosticsPrinterFlags["verboseDiagnostics"];
 	syncTests: boolean;
 };
 

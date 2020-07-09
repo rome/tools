@@ -40,7 +40,7 @@ import {escapeXHTMLEntities} from "@romefrontend/html-parser";
 import {ansiFormatText} from "./ansi";
 import {htmlFormatText} from "./html";
 import {
-	TERMINAL_FEATURES_ALL,
+	TERMINAL_FEATURES_DEFAULT,
 	TerminalFeatures,
 } from "@romefrontend/environment";
 
@@ -83,7 +83,7 @@ export default class Grid {
 		this.markupOptions = opts;
 
 		this.features =
-			opts.features === undefined ? TERMINAL_FEATURES_ALL : opts.features;
+			opts.features === undefined ? TERMINAL_FEATURES_DEFAULT : opts.features;
 
 		this.cursor = {
 			line: ob1Number1,

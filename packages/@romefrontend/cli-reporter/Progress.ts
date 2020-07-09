@@ -132,7 +132,7 @@ export default class Progress extends ProgressBase {
 
 			for (const stream of this.reporter.streams) {
 				// We remove the bouncer width from the total columns since we'll append it
-				const width = stream.columns - BOUNCER_WIDTH;
+				const width = stream.features.columns - BOUNCER_WIDTH;
 
 				// Position to place the bouncer
 				let position = elapsedFrames % width;
@@ -281,7 +281,7 @@ export default class Progress extends ProgressBase {
 	buildProgressBar(stream: ReporterStream, bar: SplitBar, total: number): string {
 		const ratio = Math.min(Math.max(this.current / total, 0), 1);
 
-		const completeLength = Math.round(stream.columns * ratio);
+		const completeLength = Math.round(stream.features.columns * ratio);
 		let fullBar = "";
 		for (const [i, char] of bar) {
 			if (i < completeLength) {
@@ -368,7 +368,7 @@ export default class Progress extends ProgressBase {
 		}
 
 		// Get the full width of the bar. We take off 3 for padding.
-		const width = stream.columns - 3;
+		const width = stream.features.columns - 3;
 
 		// The amount of spaces to put between the title and counter
 		const spacerLength = Math.max(0, width - prefix.length - suffix.length);

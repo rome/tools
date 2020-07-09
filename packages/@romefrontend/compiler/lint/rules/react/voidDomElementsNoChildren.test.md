@@ -47,6 +47,7 @@
   ℹ Recommended fix
 
   - <img>invalid children</img>
+    <img />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -74,7 +75,8 @@
 
   ℹ Recommended fix
 
-  - <hr children={'invalid children'} />
+  - <hr children={'invalid children'}·/>
+    <hr />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -103,6 +105,7 @@
   ℹ Recommended fix
 
   - <area dangerouslySetInnerHTML={{__html: ''}}></area>
+    <area />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -131,6 +134,7 @@
   ℹ Recommended fix
 
   - <img dangerouslySetInnerHTML={{__html: ''}} children={'invalid children'}>invalid children</img>
+    <img />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

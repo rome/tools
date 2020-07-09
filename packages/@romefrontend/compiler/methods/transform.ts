@@ -58,7 +58,6 @@ export default async function transform(
 	const context = new CompilerContext({
 		suppressions,
 		ref: req.ref,
-		sourceText: req.sourceText,
 		ast,
 		project,
 		options,

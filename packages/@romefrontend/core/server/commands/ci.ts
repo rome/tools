@@ -28,7 +28,7 @@ export default createServerCommand({
 	},
 	async callback(req: ServerRequest, flags: Flags): Promise<void> {
 		req.updateRequestFlags({
-			verboseDiagnostics: true,
+			verboseDiagnostics: "NO_TRUNCATE",
 		});
 
 		await chainCommands(

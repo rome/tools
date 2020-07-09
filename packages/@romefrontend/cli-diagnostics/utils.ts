@@ -14,10 +14,42 @@ export function normalizeTabs(str: string): string {
 	return str.replace(/\t/g, "  ");
 }
 
-export function showInvisibles(str: string): string {
+function isWhitespace(char: undefined | string): boolean {
+	return char === " " || char === "\t" || char === "\r" || char === "\n";
+}
+
+export function showInvisibles(str: string, isLineBeginning: boolean): string {
 	let ret = "";
-	for (const cha of str) {
-		switch (cha) {
+	let foundVisible = false;
+
+	for (let i = 0; i < str.length; i++) {
+		const char = str[i];
+		let showInvisible = false;
+
+		// Show if whitespace on either side
+		if (isWhitespace(str[i - 1]) || isWhitespace(str[i + 1])) {
+			showInvisible = true;
+		}
+
+		// Always show trailing and leading
+		if (i === 0 || i === str.length - 1) {
+			showInvisible = true;
+		}
+
+		// Don't show leading tabs
+		if (isLineBeginning && char === "\t" && !foundVisible) {
+			showInvisible = false;
+		}
+
+		if (!showInvisible) {
+			if (!isWhitespace(char)) {
+				foundVisible = true;
+			}
+			ret += char;
+			continue;
+		}
+
+		switch (char) {
 			case " ": {
 				ret += "\xb7"; // Middle Dot, \u00B7
 				break;
@@ -35,11 +67,12 @@ export function showInvisibles(str: string): string {
 				break;
 			}
 			default: {
-				ret += cha;
+				ret += char;
 				break;
 			}
 		}
 	}
+
 	return ret;
 }
 

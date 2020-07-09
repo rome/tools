@@ -21,7 +21,7 @@
   ℹ Recommended fix
 
   - target="_blank"
-  + <a href="http://external.link">child</a>
+  + <a·href="http://external.link">child</a>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -53,7 +53,7 @@
   ℹ Recommended fix
 
   - target="_blank"
-  + <a href={dynamicLink}>child</a>
+  + <a·href={dynamicLink}>child</a>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

@@ -82,7 +82,6 @@ export type ProfilingStartData = {
 
 export type ServerBridgeInfo = {
 	version: string;
-	columns: number;
 	hasClearScreen: boolean;
 	useRemoteReporter: boolean;
 	outputSupport: TerminalFeatures;
@@ -122,8 +121,8 @@ export default class ServerBridge extends Bridge {
 		direction: "server->client",
 	});
 
-	setColumns = this.createEvent<number, void>({
-		name: "columns.set",
+	updateFeatures = this.createEvent<TerminalFeatures, void>({
+		name: "updateFeatures",
 		direction: "server<-client",
 	});
 

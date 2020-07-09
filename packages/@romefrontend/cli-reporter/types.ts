@@ -39,7 +39,6 @@ export type ReporterTableField =
 
 export type ReporterStreamMeta = {
 	type: "out" | "error" | "all";
-	columns: number;
 	features: TerminalFeatures;
 	format: "markup" | "ansi" | "html" | "none";
 };
@@ -50,13 +49,16 @@ export type ReporterConditionalStream = {
 
 export type ReporterStream = ReporterStreamMeta & {
 	write: (chunk: string) => void;
+	init?: () => void;
 	teardown?: () => void;
 };
 
 export type ReporterDerivedStreams = {
-	columnsUpdated: Event<number, void>;
-	stdout: ReporterStream;
-	stderr: ReporterStream;
+	stdoutWrite: (chunk: string) => void;
+	stderrWrite: (chunk: string) => void;
+	format: ReporterStream["format"];
+	features: TerminalFeatures;
+	featuresUpdated: Event<TerminalFeatures, void>;
 };
 
 export type ReporterProgressOptions = {

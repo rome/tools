@@ -34,10 +34,10 @@ import {default as errorBanner} from "./banners/error.json";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
+	CWD_PATH,
 	UnknownFilePath,
 	UnknownFilePathMap,
 	UnknownFilePathSet,
-	createAbsoluteFilePath,
 	createUnknownFilePath,
 } from "@romefrontend/path";
 import {Number0, Number1, ob1Get0, ob1Get1} from "@romefrontend/ob1";
@@ -135,7 +135,7 @@ export default class DiagnosticsPrinter extends Error {
 		this.flags = flags;
 		this.readFile =
 			opts.readFile === undefined ? readDiagnosticsFileLocal : opts.readFile;
-		this.cwd = cwd === undefined ? createAbsoluteFilePath(process.cwd()) : cwd;
+		this.cwd = cwd === undefined ? CWD_PATH : cwd;
 		this.processor =
 			opts.processor === undefined ? new DiagnosticsProcessor() : opts.processor;
 
@@ -553,7 +553,7 @@ export default class DiagnosticsPrinter extends Error {
 			}
 
 			// Print verbose information
-			if (this.flags.verboseDiagnostics) {
+			if (this.flags.verboseDiagnostics === true) {
 				const {origins} = diag;
 
 				if (origins !== undefined && origins.length > 0) {

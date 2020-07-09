@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {UnknownObject, isIterable} from "@romefrontend/typescript-helpers";
+import {
+	UnknownObject,
+	isIterable,
+	mergeObjects,
+} from "@romefrontend/typescript-helpers";
 import {escapeJSString} from "@romefrontend/string-escape";
 import {humanizeNumber, naturalCompare} from "@romefrontend/string-utils";
 import {escapeMarkup, markupTag} from "@romefrontend/string-markup";
@@ -57,10 +61,7 @@ export default function prettyFormat(
 	obj: unknown,
 	rawOpts: FormatPartialOptions = {},
 ): string {
-	const opts: FormatOptions = {
-		...DEFAULT_OPTIONS,
-		...rawOpts,
-	};
+	const opts: FormatOptions = mergeObjects(DEFAULT_OPTIONS, rawOpts);
 
 	if (opts.maxDepth === opts.depth) {
 		return "[depth exceeded]";

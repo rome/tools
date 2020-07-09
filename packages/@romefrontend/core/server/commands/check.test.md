@@ -19,6 +19,7 @@
 
   ✖ Pending formatting and recommended autofixes
 
+    1  │   unknownVariable
      1 │ + unknownVariable;
      2 │ + 
 

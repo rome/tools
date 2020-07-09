@@ -74,7 +74,11 @@ import {
 	createUnknownFilePath,
 } from "@romefrontend/path";
 import crypto = require("crypto");
-import {Dict, RequiredProps} from "@romefrontend/typescript-helpers";
+import {
+	Dict,
+	RequiredProps,
+	mergeObjects,
+} from "@romefrontend/typescript-helpers";
 import {ob1Coerce0, ob1Number0, ob1Number1} from "@romefrontend/ob1";
 import {MemoryFSGlobOptions} from "./fs/MemoryFileSystem";
 import {markup} from "@romefrontend/string-markup";
@@ -506,15 +510,12 @@ export default class ServerRequest {
 	}
 
 	getBundlerConfigFromFlags(
-		resolverOpts?: Partial<ResolverOptions>,
+		resolverOpts: Partial<ResolverOptions> = {},
 	): BundlerConfig {
 		return {
 			inlineSourceMap: false,
 			cwd: this.client.flags.cwd,
-			resolver: {
-				...this.getResolverOptionsFromFlags(),
-				...resolverOpts,
-			},
+			resolver: mergeObjects(this.getResolverOptionsFromFlags(), resolverOpts),
 		};
 	}
 

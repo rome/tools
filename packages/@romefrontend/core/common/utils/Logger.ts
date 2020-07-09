@@ -11,7 +11,7 @@ import {
 	ReporterOptions,
 } from "@romefrontend/cli-reporter";
 import {AbsoluteFilePath} from "@romefrontend/path";
-import {TERMINAL_FEATURES_ALL} from "@romefrontend/environment";
+import {TERMINAL_FEATURES_DEFAULT} from "@romefrontend/environment";
 
 export type LoggerOptions = {
 	cwd?: AbsoluteFilePath;
@@ -44,8 +44,10 @@ export default class Logger extends Reporter {
 			{
 				type: "all",
 				format: "none",
-				columns: Infinity,
-				features: TERMINAL_FEATURES_ALL,
+				features: {
+					...TERMINAL_FEATURES_DEFAULT,
+					columns: Infinity,
+				},
 				write,
 			},
 			check,

@@ -17,6 +17,7 @@
 
   ℹ Recommended fix
 
+    1  │   if (x) x;
      1 │ + if (x) {
      2 │ +   x;
      3 │ + }
@@ -54,6 +55,7 @@ if (x) {
 
     1 1 │   if (x) {
     2 2 │     x;
+    3  │   } else y;
      3 │ + } else {
      4 │ +   y;
      5 │ + }
@@ -90,6 +92,7 @@ if (x) {
 
   ℹ Recommended fix
 
+    1  │   if (y) y;
      1 │ + if (y) {
      2 │ +   y;
      3 │ + }
@@ -125,7 +128,7 @@ if (x) {
   ℹ Recommended fix
 
     1  │ - for (;;);
-     1 │ + for (;;) {
+     1 │ + for (;;)·{
      2 │ + 
      3 │ + }
 
@@ -158,7 +161,7 @@ while (true) {
   ℹ Recommended fix
 
     1  │ - for (p in obj);
-     1 │ + for (p in obj) {
+     1 │ + for (p in obj)·{
      2 │ + 
      3 │ + }
 
@@ -191,7 +194,7 @@ for (p in obj) {
   ℹ Recommended fix
 
     1  │ - for (x of xs);
-     1 │ + for (x of xs) {
+     1 │ + for (x of xs)·{
      2 │ + 
      3 │ + }
 
@@ -224,7 +227,7 @@ for (x of xs) {
   ℹ Recommended fix
 
     1  │ - do; while (x);
-     1 │ + do {
+     1 │ + do·{
      2 │ + 
      3 │ + } while (x);
 
@@ -257,7 +260,7 @@ do {
   ℹ Recommended fix
 
     1  │ - while (x);
-     1 │ + while (x) {
+     1 │ + while (x)·{
      2 │ + 
      3 │ + }
 
@@ -290,7 +293,7 @@ while (x) {
   ℹ Recommended fix
 
     1  │ - with (x);
-     1 │ + with (x) {
+     1 │ + with (x)·{
      2 │ + 
      3 │ + }
 

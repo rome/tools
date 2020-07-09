@@ -40,7 +40,8 @@ import {onKeypress} from "./util";
 import {markupToHtml} from "@romefrontend/string-markup/format";
 import {
 	Stdout,
-	TERMINAL_FEATURES_ALL,
+	TERMINAL_FEATURES_DEFAULT,
+	TerminalFeatures,
 	inferTerminalFeatures,
 } from "@romefrontend/environment";
 
@@ -146,82 +147,65 @@ export default class Reporter {
 		}
 	}
 
-	static DEFAULT_COLUMNS = 100;
-
 	attachStdoutStreams(
 		stdout?: Stdout,
 		stderr?: Stdout,
-		force: {
-			columns?: number;
+		force: Partial<TerminalFeatures> & {
 			format?: ReporterStream["format"];
 		} = {},
 	): ReporterDerivedStreams {
-		let columns =
-			stdout === undefined || stdout.columns === undefined
-				? Reporter.DEFAULT_COLUMNS
-				: stdout.columns;
+		const {features, updateEvent, setupUpdateEvent, closeUpdateEvent} = inferTerminalFeatures(
+			stdout,
+			force,
+		);
+		const format = features.color ? "ansi" : "none";
 
-		// Force set columns
-		if (force.columns !== undefined) {
-			columns = force.columns;
-		}
+		const stdoutWrite: ReporterDerivedStreams["stdoutWrite"] = (chunk) => {
+			if (stdout !== undefined) {
+				stdout.write(chunk);
+			}
+		};
 
-		const columnsUpdated: Event<number, void> = new Event({
-			name: "columnsUpdated",
-		});
+		const stderrWrite: ReporterDerivedStreams["stderrWrite"] = (chunk) => {
+			if (stderr !== undefined) {
+				stderr.write(chunk);
+			}
+		};
 
-		const support = inferTerminalFeatures(stdout);
-		const format = support.color ? "ansi" : "none";
+		setupUpdateEvent();
 
-		const outStream: ReporterStream = {
+		let outStream: ReporterStream = {
 			type: "out",
 			format,
-			features: support,
-			columns,
-			write(chunk) {
-				if (stdout !== undefined) {
-					stdout.write(chunk);
-				}
-			},
-			teardown() {},
+			features,
+			write: stdoutWrite,
+			init: setupUpdateEvent,
+			teardown: closeUpdateEvent,
 		};
 
-		const errStream: ReporterStream = {
+		let errStream: ReporterStream = {
 			type: "error",
 			format,
-			columns,
-			features: support,
-			write(chunk) {
-				if (stderr !== undefined) {
-					stderr.write(chunk);
-				}
-			},
+			features,
+			write: stderrWrite,
 		};
-
-		// Watch for resizing, unless force.columns has been set and we'll consider it to be fixed
-		if (stdout !== undefined && force.columns !== undefined) {
-			const onStdoutResize = () => {
-				if (stdout?.columns !== undefined) {
-					const {columns} = stdout;
-					columnsUpdated.send(columns);
-					this.setStreamColumns([outStream, errStream], columns);
-				}
-			};
-
-			outStream.teardown = () => {
-				stdout.off("resize", onStdoutResize);
-			};
-
-			stdout.on("resize", onStdoutResize);
-		}
 
 		this.addStream(outStream);
 		this.addStream(errStream);
 
+		updateEvent.subscribe((features) => {
+			[outStream, errStream] = this.updateStreamsFeatures(
+				[outStream, errStream],
+				features,
+			);
+		});
+
 		return {
-			columnsUpdated,
-			stdout: outStream,
-			stderr: errStream,
+			format,
+			features,
+			featuresUpdated: updateEvent,
+			stdoutWrite,
+			stderrWrite,
 		};
 	}
 
@@ -261,8 +245,7 @@ export default class Reporter {
 		const stream: ReporterStream = {
 			format,
 			type: "all",
-			columns: Reporter.DEFAULT_COLUMNS,
-			features: TERMINAL_FEATURES_ALL,
+			features: TERMINAL_FEATURES_DEFAULT,
 			write(chunk) {
 				buff += chunk;
 			},
@@ -408,23 +391,34 @@ export default class Reporter {
 		return old;
 	}
 
-	setStreamColumns(streams: Array<ReporterStream>, columns: number) {
-		for (const stream of streams) {
-			if (!this.streams.has(stream)) {
-				throw new Error(
-					"Trying to setStreamColumns on a stream that isn't attached to this Reporter",
-				);
-			}
+	updateStreamsFeatures(
+		streams: Array<ReporterStream>,
+		features: TerminalFeatures,
+	): Array<ReporterStream> {
+		const newStreams: Array<ReporterStream> = streams.map((stream) => {
+			this.removeStream(stream);
+			const newStream: ReporterStream = {
+				...stream,
+				features,
+			};
+			this.addStream(stream);
+			return newStream;
+		});
+		this.refreshActiveElements();
+		return newStreams;
+	}
 
-			stream.columns = columns;
-		}
-
+	refreshActiveElements() {
 		for (const elem of this.activeElements) {
 			elem.render();
 		}
 	}
 
 	addStream(stream: ReporterStream) {
+		if (stream.init !== undefined) {
+			stream.init();
+		}
+
 		this.streamsWithNewlineEnd.add(stream);
 		this.streams.add(stream);
 
@@ -901,7 +895,7 @@ export default class Reporter {
 
 		const gridMarkupOptions: MarkupFormatGridOptions = {
 			...this.markupOptions,
-			columns: stream.columns -
+			columns: stream.features.columns -
 			this.indentString.length -
 			viewportShrink -
 			allLinePrefix.width,

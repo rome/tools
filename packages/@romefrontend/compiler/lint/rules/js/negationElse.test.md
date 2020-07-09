@@ -18,6 +18,7 @@
   ℹ Recommended fix
 
     1  │ - if (!true) {consequent;} else {alternate;}
+     1 │   if (true) {
      2 │ +   alternate;
      3 │ + } else {
      4 │ +   consequent;
@@ -53,8 +54,8 @@ if (true) {
 
   ℹ Recommended fix
 
-  - !true ? consequent : alternate
-  + true ? alternate : consequent
+  - !true ? consequent·: alternate
+  + true ?·alternate : consequent
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

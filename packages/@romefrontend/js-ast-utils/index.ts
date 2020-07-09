@@ -46,3 +46,4 @@ export {tryStaticEvaluationPath} from "./tryStaticEvaluationPath";
 export {resolveIndirection} from "./resolveIndirection";
 export {getTSQualifiedBaseFromEntityName} from "./getTSQualifiedBaseFromEntityName";
 export {isEmptyTemplateLiteral} from "./isEmptyTemplateLiteral";
+export {cleanJSXText} from "./cleanJSXText";

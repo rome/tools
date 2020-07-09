@@ -247,7 +247,7 @@ function printDiff(
 ): PrintAdviceResult {
 	const {frame, truncated} = buildPatchCodeFrame(
 		item,
-		opts.flags.verboseDiagnostics,
+		opts.flags.verboseDiagnostics !== false,
 	);
 	if (frame === "") {
 		return DID_NOT_PRINT;
@@ -312,7 +312,7 @@ function printCode(
 		} else {
 			// If it's a string with only whitespace then make it obvious
 			if (code.trim() === "") {
-				code = showInvisibles(code);
+				code = showInvisibles(code, false);
 			}
 
 			reporter.logAll(`<nobr>${escapeMarkup(code)}</nobr>`);
