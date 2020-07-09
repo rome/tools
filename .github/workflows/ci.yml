@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: '13.x'
       - name: rome check
-        run: node scripts/dev-rome check
+        run: node scripts/dev-rome check --verbose-diagnostics
 
   tests:
     name: rome test

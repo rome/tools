@@ -51,6 +51,10 @@ export default createServerCommand({
 	async callback(req: ServerRequest, flags: Flags): Promise<void> {
 		const {reporter} = req;
 
+		req.updateRequestFlags({
+			verboseDiagnostics: true,
+		});
+
 		reporter.heading("Running lint");
 		await runChildCommand(
 			req,

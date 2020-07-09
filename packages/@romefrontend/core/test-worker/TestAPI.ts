@@ -8,6 +8,7 @@
 import {
 	Diagnostic,
 	DiagnosticAdvice,
+	DiagnosticAdviceItem,
 	createBlessedDiagnosticMessage,
 	createSingleDiagnosticError,
 	deriveDiagnosticFromErrorStructure,
@@ -121,7 +122,7 @@ export default class TestAPI implements TestHelper {
 	timeoutStart: undefined | number;
 	timeoutMax: undefined | number;
 
-	advice: DiagnosticAdvice;
+	advice: Array<DiagnosticAdviceItem | (() => DiagnosticAdviceItem)>;
 	teardownEvent: Event<void, void>;
 	testName: string;
 	snapshotCounter: number;
@@ -139,7 +140,13 @@ export default class TestAPI implements TestHelper {
 			{
 				type: "group",
 				title: "User-specified test advice",
-				advice,
+				advice: advice.map((item) => {
+					if (typeof item === "function") {
+						return item();
+					} else {
+						return item;
+					}
+				}),
 			},
 		];
 	}
@@ -236,7 +243,10 @@ export default class TestAPI implements TestHelper {
 		return advice;
 	}
 
-	addToAdvice(item: TestDiagnosticAdviceItem): void {
+	// We allow lazy construction of test advice when an error actually occurs
+	addToAdvice(
+		item: TestDiagnosticAdviceItem | (() => TestDiagnosticAdviceItem),
+	): void {
 		this.advice.push(item);
 	}
 
