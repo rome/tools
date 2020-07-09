@@ -430,7 +430,7 @@ export default class DiagnosticsPrinter extends Error {
 					}
 				}
 
-				let log = `::error ${parts.join(",")}::message=${message.value}`;
+				let log = `::error ${parts.join(",")}::${message.value}`;
 				this.reporter.logAllRaw(log);
 				break;
 			}
