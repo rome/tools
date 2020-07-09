@@ -32,6 +32,7 @@ import {AnalyzeDependencyResult} from "../types/analyzeDependencies";
 import {InlineSnapshotUpdates} from "@romefrontend/core/test-worker/SnapshotManager";
 import {FileNotFound} from "@romefrontend/core/common/FileNotFound";
 import {createAbsoluteFilePath} from "@romefrontend/path";
+import {Number0} from "@romefrontend/ob1";
 
 export type WorkerProjects = Array<{
 	id: number;
@@ -121,6 +122,19 @@ export type WorkerLintResult = {
 	save: undefined | string;
 	diagnostics: Diagnostics;
 	suppressions: DiagnosticSuppressions;
+};
+
+export type WorkerBufferPosition = {
+	line: Number0;
+	character: Number0;
+};
+
+export type WorkerBufferPatch = {
+	range: {
+		start: WorkerBufferPosition;
+		end: WorkerBufferPosition;
+	};
+	text: string;
 };
 
 export default class WorkerBridge extends Bridge {
@@ -262,6 +276,17 @@ export default class WorkerBridge extends Bridge {
 		void
 	>({
 		name: "updateBuffer",
+		direction: "server->client",
+	});
+
+	patchBuffer = this.createEvent<
+		{
+			file: JSONFileReference;
+			patches: Array<WorkerBufferPatch>;
+		},
+		string
+	>({
+		name: "patchBuffer",
 		direction: "server->client",
 	});
 

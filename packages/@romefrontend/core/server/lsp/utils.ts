@@ -13,6 +13,7 @@ import {Number0, ob1Coerce1To0, ob1Inc, ob1Number0} from "@romefrontend/ob1";
 import {Position} from "@romefrontend/parser-core";
 import {DiagnosticLocation, Diagnostics} from "@romefrontend/diagnostics";
 import {Server} from "@romefrontend/core";
+import {WorkerBufferPatch} from "@romefrontend/core/common/bridges/WorkerBridge";
 
 export function convertPositionToLSP(pos: undefined | Position): LSPPosition {
 	if (pos === undefined) {
@@ -152,4 +153,27 @@ export function diffTextEdits(
 	}
 
 	return edits;
+}
+
+export function getWorkerBufferPatches(
+	contentChanges: Consumer,
+): Array<WorkerBufferPatch> {
+	return contentChanges.asArray().map((change) => {
+		const start = change.get("range").get("start");
+		const end = change.get("range").get("end");
+
+		return {
+			text: change.get("text").asString(),
+			range: {
+				start: {
+					line: start.get("line").asZeroIndexedNumber(),
+					character: start.get("character").asZeroIndexedNumber(),
+				},
+				end: {
+					line: end.get("line").asZeroIndexedNumber(),
+					character: end.get("character").asZeroIndexedNumber(),
+				},
+			},
+		};
+	});
 }

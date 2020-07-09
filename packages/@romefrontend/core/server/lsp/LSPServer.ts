@@ -32,6 +32,7 @@ import {
 	convertDiagnosticsToLSP,
 	diffTextEdits,
 	getPathFromTextDocument,
+	getWorkerBufferPatches,
 } from "./utils";
 
 export default class LSPServer {
@@ -129,7 +130,7 @@ export default class LSPServer {
 		return new LSPProgress(this.transport, this.request.reporter, opts);
 	}
 
-	async watchProject(path: AbsoluteFilePath) {
+	async initProject(path: AbsoluteFilePath) {
 		if (this.lintSessions.has(path) || this.lintSessionsPending.has(path)) {
 			return;
 		}
@@ -147,6 +148,11 @@ export default class LSPServer {
 		const req = this.createFakeServerRequest("lsp_project", [path.join()]);
 		await req.init();
 
+		// This is not awaited so it doesn't delay the initialize response
+		this.watchProject(path, req);
+	}
+
+	async watchProject(path: AbsoluteFilePath, req: ServerRequest) {
 		const linter = new Linter(
 			req,
 			{
@@ -234,13 +240,13 @@ export default class LSPServer {
 			case "initialize": {
 				const rootUri = params.get("rootUri");
 				if (rootUri.exists()) {
-					this.watchProject(createAbsoluteFilePath(rootUri.asString()));
+					await this.initProject(createAbsoluteFilePath(rootUri.asString()));
 				}
 
 				const workspaceFolders = params.get("workspaceFolders");
 				if (workspaceFolders.exists()) {
 					for (const elem of workspaceFolders.asArray()) {
-						this.watchProject(getPathFromTextDocument(elem));
+						await this.initProject(getPathFromTextDocument(elem));
 					}
 				}
 
@@ -248,8 +254,8 @@ export default class LSPServer {
 					capabilities: {
 						textDocumentSync: {
 							openClose: true,
-							// This sends over the full text on change. We should make this incremental later
-							change: 1,
+							// This sends over incremental patches on change
+							change: 2,
 						},
 						documentFormattingProvider: true,
 						workspaceFolders: {
@@ -299,7 +305,7 @@ export default class LSPServer {
 		switch (method) {
 			case "workspace/didChangeWorkspaceFolders": {
 				for (const elem of params.get("added").asArray()) {
-					this.watchProject(getPathFromTextDocument(elem));
+					await this.initProject(getPathFromTextDocument(elem));
 				}
 				for (const elem of params.get("removed").asArray()) {
 					this.unwatchProject(getPathFromTextDocument(elem));
@@ -307,18 +313,34 @@ export default class LSPServer {
 				break;
 			}
 
-			case "textDocument/didChange": {
+			case "textDocument/didOpen": {
 				const path = getPathFromTextDocument(params.get("textDocument"));
-				const content = params.get("contentChanges").asArray()[0].get("text").asString();
+				const content = params.get("textDocument").get("text").asString();
 				await this.request.requestWorkerUpdateBuffer(path, content);
 				this.fileBuffers.add(path);
+				this.logMessage(path, `Opened: ${path.join()}`);
 				break;
 			}
 
-			case "textDocument/didSave": {
+			case "textDocument/didChange": {
+				const path = getPathFromTextDocument(params.get("textDocument"));
+				const contentChanges = params.get("contentChanges");
+
+				if (contentChanges.asArray()[0].has("range")) {
+					const patches = getWorkerBufferPatches(contentChanges);
+					await this.request.requestWorkerPatchBuffer(path, patches);
+				} else {
+					const content = contentChanges.asArray()[0].get("text").asString();
+					await this.request.requestWorkerUpdateBuffer(path, content);
+				}
+				break;
+			}
+
+			case "textDocument/didClose": {
 				const path = getPathFromTextDocument(params.get("textDocument"));
 				this.fileBuffers.delete(path);
 				await this.request.requestWorkerClearBuffer(path);
+				this.logMessage(path, `Closed: ${path.join()}`);
 				break;
 			}
 		}

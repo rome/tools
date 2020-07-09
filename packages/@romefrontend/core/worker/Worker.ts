@@ -8,6 +8,7 @@
 import {ModuleSignature, TypeCheckProvider} from "@romefrontend/js-analysis";
 import WorkerBridge, {
 	PrefetchedModuleSignatures,
+	WorkerBufferPatch,
 	WorkerParseOptions,
 	WorkerPartialManifest,
 	WorkerPartialManifests,
@@ -37,6 +38,7 @@ import {getFileHandlerAssert} from "../common/file-handlers/index";
 import {TransformProjectDefinition} from "@romefrontend/compiler";
 import WorkerAPI from "./WorkerAPI";
 import {FileNotFound} from "../common/FileNotFound";
+import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
 
 export type ParseResult = {
 	ast: AnyRoot;
@@ -229,6 +231,13 @@ export default class Worker {
 			);
 		});
 
+		bridge.patchBuffer.subscribe((payload) => {
+			return this.patchBuffer(
+				convertTransportFileReference(payload.file),
+				payload.patches,
+			);
+		});
+
 		bridge.clearBuffer.subscribe((payload) => {
 			return this.clearBuffer(convertTransportFileReference(payload.file));
 		});
@@ -255,6 +264,26 @@ export default class Worker {
 			this.buffers,
 			([path, content]) => ({filename: path.join(), content}),
 		);
+	}
+
+	patchBuffer(ref: FileReference, patches: Array<WorkerBufferPatch>) {
+		this.logger.info(`Patched ${ref.real.toMarkup()} buffer`);
+		let buffer = this.buffers.get(ref.real);
+		if (buffer === undefined) {
+			throw new Error(`Can't find buffer to patch for ${ref.real.join()}`);
+		}
+		// Patches must be applied sequentially
+		for (const patch of patches) {
+			buffer = applyWorkerBufferPatch(buffer, patch);
+
+			if (buffer === undefined) {
+				throw new Error(`Invalid patch for buffer of ${ref.real.join()}`);
+			}
+		}
+
+		this.buffers.set(ref.real, buffer);
+		this.evict(ref.real);
+		return buffer;
 	}
 
 	async getTypeCheckProvider(
