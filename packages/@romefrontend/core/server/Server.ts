@@ -959,22 +959,26 @@ export default class Server {
 					name: err.name,
 					message: err.message,
 					stack: err.stack,
+					markers: [],
 				};
 			} else if (err instanceof ServerRequestCancelled) {
 				return {
 					type: "CANCELLED",
+					markers: [],
 				};
 			} else if (err instanceof ServerRequestInvalid) {
 				return {
 					type: "INVALID_REQUEST",
 					diagnostics,
 					showHelp: err.showHelp,
+					markers: [],
 				};
 			} else {
 				return {
 					type: "DIAGNOSTICS",
 					hasDiagnostics: diagnostics.length > 0,
 					diagnostics,
+					markers: [],
 				};
 			}
 		}

@@ -234,6 +234,7 @@ export default class ServerRequest {
 		this.cancelled = true;
 		this.teardown({
 			type: "CANCELLED",
+			markers: [],
 		});
 	}
 
@@ -268,23 +269,23 @@ export default class ServerRequest {
 						type: "DIAGNOSTICS",
 						hasDiagnostics: res.hasDiagnostics,
 						diagnostics: [],
+						markers: [],
 					};
 				} else if (res.type === "INVALID_REQUEST") {
 					res = {
 						type: "INVALID_REQUEST",
 						diagnostics: [],
+						markers: [],
 						showHelp: res.showHelp,
 					};
 				}
 			}
 
 			// Add on markers
-			if (res.type === "SUCCESS") {
-				res = {
-					...res,
-					markers: this.markers,
-				};
-			}
+			res = {
+				...res,
+				markers: this.markers,
+			};
 		}
 
 		this.reporter.teardown();

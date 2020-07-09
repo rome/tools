@@ -36,14 +36,17 @@ export type PartialServerQueryRequest = Partial<Omit<
 	commandName: string;
 };
 
-export type ServerQueryResponseSuccess = {
-	type: "SUCCESS";
-	hasData: boolean;
-	data: JSONPropertyValue;
+type ServerQueryResponseBase = {
 	markers: Array<ServerMarker>;
 };
 
-export type ServerQueryResponseError = {
+export type ServerQueryResponseSuccess = ServerQueryResponseBase & {
+	type: "SUCCESS";
+	hasData: boolean;
+	data: JSONPropertyValue;
+};
+
+export type ServerQueryResponseError = ServerQueryResponseBase & {
 	type: "ERROR";
 	fatal: boolean;
 	handled: boolean;
@@ -52,19 +55,19 @@ export type ServerQueryResponseError = {
 	stack: undefined | string;
 };
 
-export type ServerQueryResponseDiagnostics = {
+export type ServerQueryResponseDiagnostics = ServerQueryResponseBase & {
 	type: "DIAGNOSTICS";
 	hasDiagnostics: boolean;
 	diagnostics: Diagnostics;
 };
 
-export type ServerQueryResponseInvalid = {
+export type ServerQueryResponseInvalid = ServerQueryResponseBase & {
 	type: "INVALID_REQUEST";
 	diagnostics: Diagnostics;
 	showHelp: boolean;
 };
 
-export type ServerQueryResponseCancelled = {
+export type ServerQueryResponseCancelled = ServerQueryResponseBase & {
 	type: "CANCELLED";
 };
 

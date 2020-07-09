@@ -52,6 +52,7 @@ export default class ClientRequest {
 				name: err.name,
 				message: err.message,
 				stack: err.stack,
+				markers: [],
 			};
 		}
 	}
@@ -100,6 +101,7 @@ export default class ClientRequest {
 				name: "Error",
 				message: "Command was not successful",
 				stack: undefined,
+				markers: [],
 			};
 		} else {
 			return res;
@@ -121,6 +123,7 @@ export default class ClientRequest {
 					name: "Error",
 					message: "Server died while processing command. Results may be incomplete.",
 					stack: undefined,
+					markers: [],
 				};
 			} else {
 				throw err;
