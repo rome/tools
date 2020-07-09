@@ -46,6 +46,7 @@ showHero: false
 | no-import-assign |  |
 | no-label-var |  |
 | no-multiple-spaces-in-regular-expression-literals |  |
+| [no-nested-ternary](/docs/lint/rules/js/no-nested-ternary) |  This rule bans use of nested ternaries |
 | no-posix-in-regular-expression |  |
 | no-reference-to-non-existing-group |  |
 | no-setter-return |  |

@@ -127,6 +127,7 @@ type LintDiagnosticCategory =
 	| "lint/js/noImportAssign"
 	| "lint/js/noLabelVar"
 	| "lint/js/noMultipleSpacesInRegularExpressionLiterals"
+	| "lint/js/noNestedTernary"
 	| "lint/js/noPosixInRegularExpression"
 	| "lint/js/noReferenceToNonExistingGroup"
 	| "lint/js/noSetterReturn"

@@ -36,6 +36,7 @@ import noFunctionAssign from "./js/noFunctionAssign";
 import noImportAssign from "./js/noImportAssign";
 import noLabelVar from "./js/noLabelVar";
 import noMultipleSpacesInRegularExpressionLiterals from "./js/noMultipleSpacesInRegularExpressionLiterals";
+import noNestedTernary from "./js/noNestedTernary";
 import noPosixInRegularExpression from "./js/noPosixInRegularExpression";
 import noReferenceToNonExistingGroup from "./js/noReferenceToNonExistingGroup";
 import noSetterReturn from "./js/noSetterReturn";
@@ -142,6 +143,7 @@ export const lintTransforms = [
 	noImportAssign,
 	noLabelVar,
 	noMultipleSpacesInRegularExpressionLiterals,
+	noNestedTernary,
 	noPosixInRegularExpression,
 	noReferenceToNonExistingGroup,
 	noSetterReturn,
