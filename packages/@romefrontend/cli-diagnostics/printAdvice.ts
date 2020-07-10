@@ -245,7 +245,7 @@ function printDiff(
 	item: DiagnosticAdviceDiff,
 	opts: AdvicePrintOptions,
 ): PrintAdviceResult {
-	opts.reporter.inspect(item.diff);
+	console.log(item.diff);
 	const {frame, truncated} = buildPatchCodeFrame(
 		item,
 		opts.flags.verboseDiagnostics !== false,
