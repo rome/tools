@@ -469,21 +469,19 @@ export default async function cli() {
 	});
 	await client.end();
 
-	if (res.type === "SUCCESS") {
-		// Write markers if we were collecting them
-		if (requestFlags.collectMarkers) {
-			const markersPath = clientFlags.cwd.resolve(
-				cliFlags.markersPath === undefined
-					? `Markers-${getFilenameTimestamp()}.json`
-					: cliFlags.markersPath,
-			);
+	// Write markers if we were collecting them
+	if (requestFlags.collectMarkers && res.markers.length > 0) {
+		const markersPath = clientFlags.cwd.resolve(
+			cliFlags.markersPath === undefined
+				? `Markers-${getFilenameTimestamp()}.json`
+				: cliFlags.markersPath,
+		);
 
-			await writeFile(markersPath, stringifyJSON(res.markers));
+		await writeFile(markersPath, stringifyJSON(res.markers));
 
-			client.reporter.success(
-				markup`Wrote markers to <emphasis>${markersPath.toMarkup()}</emphasis>`,
-			);
-		}
+		client.reporter.success(
+			markup`Wrote markers to <emphasis>${markersPath.toMarkup()}</emphasis>`,
+		);
 	}
 
 	switch (res.type) {
