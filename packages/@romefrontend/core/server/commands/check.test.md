@@ -19,9 +19,9 @@
 
   ✖ Pending formatting and recommended autofixes
 
-    1  │   unknownVariable
-     1 │ + unknownVariable;
-     2 │ + 
+    1   │ - unknownVariable
+      1 │ + unknownVariable;
+      2 │ + 
 
   ℹ To apply fixes and formatting run
   $ rome check index.js --apply 

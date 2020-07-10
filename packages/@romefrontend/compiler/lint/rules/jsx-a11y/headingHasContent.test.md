@@ -52,7 +52,9 @@
 ### `1: formatted`
 
 ```
-<h1><TextWrapper aria-hidden /></h1>;
+<h1>
+	<TextWrapper aria-hidden />
+</h1>;
 
 ```
 
@@ -78,7 +80,9 @@
 ### `2: formatted`
 
 ```
-<h1><div aria-hidden /></h1>;
+<h1>
+	<div aria-hidden />
+</h1>;
 
 ```
 
@@ -92,7 +96,9 @@
 ### `3: formatted`
 
 ```
-<h1>heading</h1>;
+<h1>
+	heading
+</h1>;
 
 ```
 
@@ -106,7 +112,9 @@
 ### `4: formatted`
 
 ```
-<h1><TextWrapper /></h1>;
+<h1>
+	<TextWrapper />
+</h1>;
 
 ```
 
@@ -134,6 +142,9 @@
 ### `6: formatted`
 
 ```
-<h1><div aria-hidden />visible content</h1>;
+<h1>
+	<div aria-hidden />
+	visible content
+</h1>;
 
 ```

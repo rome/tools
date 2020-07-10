@@ -140,7 +140,7 @@ Object {}
 
   ℹ Did you mean foobar?
 
-    foo
+  - foo
   + foobar
 
   ℹ To see available commands run

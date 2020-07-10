@@ -40,10 +40,10 @@ import {
 } from "@romefrontend/ast";
 import {Path} from "@romefrontend/compiler";
 import {
+	cleanJSXText,
 	inheritLoc,
 	isValidIdentifierName,
 	template,
-	cleanJSXText,
 } from "@romefrontend/js-ast-utils";
 import {descriptions} from "@romefrontend/diagnostics";
 

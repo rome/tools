@@ -17,12 +17,14 @@
 
   ℹ Recommended fix
 
-    1  │ - if (!true) {consequent;} else {alternate;}
-     1 │   if (true) {
-     2 │ +   alternate;
-     3 │ + } else {
-     4 │ +   consequent;
-     5 │ + }
+    1   │ - if (!true) {
+    2   │ -   consequent;
+      1 │ + if (true) {
+      2 │ +   alternate;
+    3 3 │   } else {
+    4   │ -   alternate;
+      4 │ +   consequent;
+    5 5 │   }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

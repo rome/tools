@@ -26,7 +26,9 @@
 ### `0: formatted`
 
 ```
-<div dangerouslySetInnerHTML={{__html: "HTML"}}>children</div>;
+<div dangerouslySetInnerHTML={{__html: "HTML"}}>
+	children
+</div>;
 
 ```
 
@@ -104,7 +106,9 @@
 ### `3: formatted`
 
 ```
-<Invalid dangerouslySetInnerHTML={{__html: "HTML"}}>children</Invalid>;
+<Invalid dangerouslySetInnerHTML={{__html: "HTML"}}>
+	children
+</Invalid>;
 
 ```
 
@@ -622,7 +626,9 @@ createElement(
 ### `22: formatted`
 
 ```
-<div>children</div>;
+<div>
+	children
+</div>;
 
 ```
 
@@ -678,7 +684,9 @@ createElement(
 ### `26: formatted`
 
 ```
-<Valid>children</Valid>;
+<Valid>
+	children
+</Valid>;
 
 ```
 

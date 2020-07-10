@@ -32,7 +32,9 @@
 ### `0: formatted`
 
 ```
-const a = <div>// comment</div>;
+const a = <div>
+	// comment
+</div>;
 
 ```
 
@@ -52,7 +54,7 @@ const a = <div>// comment</div>;
 
   ℹ Recommended fix
 
-    /* comment */
+  - /* comment */
   + {/** comment */}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -64,7 +66,9 @@ const a = <div>// comment</div>;
 ### `1: formatted`
 
 ```
-const a = <div>/* comment */</div>;
+const a = <div>
+	/* comment */
+</div>;
 
 ```
 
@@ -84,7 +88,7 @@ const a = <div>/* comment */</div>;
 
   ℹ Recommended fix
 
-    /** comment */
+  - /** comment */
   + {/** comment */}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -96,7 +100,9 @@ const a = <div>/* comment */</div>;
 ### `2: formatted`
 
 ```
-const a = <div>/** comment */</div>;
+const a = <div>
+	/** comment */
+</div>;
 
 ```
 
@@ -110,7 +116,9 @@ const a = <div>/** comment */</div>;
 ### `3: formatted`
 
 ```
-const a = <div>{ /* comment */}</div>;
+const a = <div>
+	{} /* comment */
+</div>;
 
 ```
 
@@ -124,7 +132,9 @@ const a = <div>{ /* comment */}</div>;
 ### `4: formatted`
 
 ```
-const a = <div>{ /** comment*/}</div>;
+const a = <div>
+	{} /** comment*/
+</div>;
 
 ```
 
@@ -138,6 +148,7 @@ const a = <div>{ /** comment*/}</div>;
 ### `5: formatted`
 
 ```
-const a = <div className={"cls" /* comment */}></div>;
+const a = <div className={"cls" /* comment */}>
+</div>;
 
 ```

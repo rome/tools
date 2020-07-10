@@ -262,6 +262,7 @@
 ### `10: formatted`
 
 ```
-<iframe title={title}></iframe>;
+<iframe title={title}>
+</iframe>;
 
 ```

@@ -26,7 +26,11 @@
 ### `0: formatted`
 
 ```
-const Foo = () => <div>{this.props.bar < /div>/}</div>;
+const Foo = () =>
+	<div>
+		{this.props.bar < /div>/}
+	</div>
+;
 
 ```
 
@@ -57,7 +61,9 @@ const Foo = () => <div>{this.props.bar < /div>/}</div>;
 
 ```
 const Foo = () => {
-	return <div>{this.props.bar}</div>;
+	return <div>
+		{this.props.bar}
+	</div>;
 };
 
 ```
@@ -89,7 +95,9 @@ const Foo = () => {
 ```
 const Foo = () => {
 	const {bar} = this.props;
-	return <div>{bar}</div>;
+	return <div>
+		{bar}
+	</div>;
 };
 
 ```
@@ -121,7 +129,9 @@ const Foo = () => {
 
 ```
 function Foo(props) {
-	return <div>{this.props.bar}</div>;
+	return <div>
+		{this.props.bar}
+	</div>;
 }
 
 ```
@@ -154,8 +164,8 @@ function Foo(props) {
 function Foo(props) {
 	const {bar} = this.props;
 	return <div>
-									{bar}
-								</div>;
+		{bar}
+	</div>;
 }
 
 ```
@@ -201,8 +211,8 @@ function Foo(props) {
 ```
 function Foo(props, context) {
 	return <div>
-									{this.context.foo ? this.props.bar : ""}
-								</div>;
+		{this.context.foo ? this.props.bar : ""}
+	</div>;
 }
 
 ```
@@ -249,8 +259,8 @@ function Foo(props, context) {
 	const {foo} = this.context;
 	const {bar} = this.props;
 	return <div>
-									{foo ? bar : ""}
-								</div>;
+		{foo ? bar : ""}
+	</div>;
 }
 
 ```
@@ -298,8 +308,8 @@ function Foo(props) {
 		return <Loader />;
 	}
 	return <div>
-									{this.props.bar}
-								</div>;
+		{this.props.bar}
+	</div>;
 }
 
 ```
@@ -349,8 +359,8 @@ function Foo(props) {
 		return <Loader />;
 	}
 	return <div>
-									{bar}
-								</div>;
+		{bar}
+	</div>;
 }
 
 ```
@@ -382,7 +392,9 @@ function Foo(props) {
 
 ```
 React.memo(function Foo(props) {
-	return <div>{this.props.bar}</div>;
+	return <div>
+		{this.props.bar}
+	</div>;
 });
 
 ```
@@ -415,8 +427,8 @@ React.memo(function Foo(props) {
 ```
 React.forwardRef((props, ref) =>
 	<div>
-								{this.props.bar}
-							</div>
+		{this.props.bar}
+	</div>
 );
 
 ```
@@ -449,8 +461,8 @@ React.forwardRef((props, ref) =>
 ```
 const Foo = React.forwardRef((props, ref) =>
 	<div>
-								{this.props.bar}
-							</div>
+		{this.props.bar}
+	</div>
 );
 
 ```
@@ -483,8 +495,8 @@ const Foo = React.forwardRef((props, ref) =>
 ```
 const Foo = React.memo((props, ref) =>
 	<div>
-									{this.props.bar}
-								</div>
+		{this.props.bar}
+	</div>
 );
 
 ```
@@ -500,7 +512,9 @@ const Foo = React.memo((props, ref) =>
 
 ```
 function Foo(bar) {
-	return <div>{bar}</div>;
+	return <div>
+		{bar}
+	</div>;
 }
 
 ```
@@ -516,7 +530,9 @@ function Foo(bar) {
 
 ```
 function Foo(props) {
-	return <div>{props.bar}</div>;
+	return <div>
+		{props.bar}
+	</div>;
 }
 
 ```
@@ -533,7 +549,9 @@ function Foo(props) {
 ```
 function Foo(props) {
 	const {bar} = props;
-	return <div>{bar}</div>;
+	return <div>
+		{bar}
+	</div>;
 }
 
 ```
@@ -549,7 +567,9 @@ function Foo(props) {
 
 ```
 function Foo({bar}) {
-	return <div>{bar}</div>;
+	return <div>
+		{bar}
+	</div>;
 }
 
 ```
@@ -566,8 +586,8 @@ function Foo({bar}) {
 ```
 function Foo(props, context) {
 	return <div>
-									{context.foo ? props.bar : ""}
-								</div>;
+		{context.foo ? props.bar : ""}
+	</div>;
 }
 
 ```
@@ -586,8 +606,8 @@ function Foo(props, context) {
 	const {foo} = context;
 	const {bar} = props;
 	return <div>
-									{foo ? bar : ""}
-								</div>;
+		{foo ? bar : ""}
+	</div>;
 }
 
 ```
@@ -604,8 +624,8 @@ function Foo(props, context) {
 ```
 function Foo({bar}, {foo}) {
 	return <div>
-									{foo ? bar : ""}
-								</div>;
+		{foo ? bar : ""}
+	</div>;
 }
 
 ```
@@ -622,7 +642,9 @@ function Foo({bar}, {foo}) {
 ```
 class MyComponent extends React.Component {
 	foo() {
-		return <div>some jsx</div>;
+		return <div>
+			some jsx
+		</div>;
 	}
 
 	render() {
@@ -643,7 +665,9 @@ class MyComponent extends React.Component {
 
 ```
 React.memo(function Foo(props) {
-	return <div>{props.bar}</div>;
+	return <div>
+		{props.bar}
+	</div>;
 });
 
 ```
@@ -660,8 +684,8 @@ React.memo(function Foo(props) {
 ```
 React.forwardRef((props, ref) =>
 	<div>
-							{props.bar}
-						</div>
+		{props.bar}
+	</div>
 );
 
 ```
@@ -678,8 +702,8 @@ React.forwardRef((props, ref) =>
 ```
 const Foo = React.forwardRef((props, ref) =>
 	<div>
-							{props.bar}
-						</div>
+		{props.bar}
+	</div>
 );
 
 ```
@@ -696,8 +720,8 @@ const Foo = React.forwardRef((props, ref) =>
 ```
 const Foo = React.memo((props, ref) =>
 	<div>
-								{props.bar}
-							</div>
+		{props.bar}
+	</div>
 );
 
 ```

@@ -17,7 +17,7 @@
 
   Suggested fix: ARIA Spelling Mistake
 
-  - aria-labell=''
+  - aria-labell=""
   + aria-label=""
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -70,7 +70,7 @@
 
   Suggested fix: ARIA Spelling Mistake
 
-  - aria-labeledby='foobar'
+  - aria-labeledby="foobar"
   + aria-labelledby="foobar"
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -134,7 +134,8 @@
 ### `5: formatted`
 
 ```
-<div></div>;
+<div>
+</div>;
 
 ```
 
@@ -148,7 +149,8 @@
 ### `6: formatted`
 
 ```
-<div aria="wee"></div>;
+<div aria="wee">
+</div>;
 
 ```
 
@@ -162,7 +164,8 @@
 ### `7: formatted`
 
 ```
-<div abcARIAdef="true"></div>;
+<div abcARIAdef="true">
+</div>;
 
 ```
 
@@ -176,7 +179,8 @@
 ### `8: formatted`
 
 ```
-<div fooaria-foobar="true"></div>;
+<div fooaria-foobar="true">
+</div>;
 
 ```
 
@@ -190,7 +194,8 @@
 ### `9: formatted`
 
 ```
-<div fooaria-hidden="true"></div>;
+<div fooaria-hidden="true">
+</div>;
 
 ```
 

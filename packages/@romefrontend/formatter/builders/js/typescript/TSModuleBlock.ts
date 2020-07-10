@@ -20,7 +20,7 @@ export default function TSModuleBlock(
 ): Token {
 	return concat([
 		"{",
-		indent(concat([hardline, builder.tokenizeStatementList(node.body, node)])),
+		indent(builder.tokenizeStatementList(node.body, node), true),
 		hardline,
 		"}",
 	]);

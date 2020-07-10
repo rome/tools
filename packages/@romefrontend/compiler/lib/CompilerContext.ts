@@ -92,9 +92,9 @@ type DiagnosticTarget =
 
 function getFormattedCodeFromExitResult(result: TransformExitResult): string {
 	if (Array.isArray(result)) {
-		return result.map(node => {
+		return result.map((node) => {
 			return formatAST(node).code;
-		}).filter(str => str !== "").join("\n");
+		}).filter((str) => str !== "").join("\n");
 	} else if (result === REDUCE_REMOVE) {
 		return "";
 	} else {
@@ -303,9 +303,12 @@ export default class CompilerContext {
 
 			advice.push({
 				type: "diff",
-				diff: stringDiff(getFormattedCodeFromExitResult(old), getFormattedCodeFromExitResult(defaultFixed)),
+				diff: stringDiff(
+					getFormattedCodeFromExitResult(old),
+					getFormattedCodeFromExitResult(defaultFixed),
+				),
 			});
-			
+
 			if (loc === undefined) {
 				advice.push({
 					type: "log",

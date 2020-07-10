@@ -81,7 +81,9 @@
 ### `2: formatted`
 
 ```
-<audio>child</audio>;
+<audio>
+	child
+</audio>;
 
 ```
 
@@ -108,7 +110,9 @@
 ### `3: formatted`
 
 ```
-<video>child</video>;
+<video>
+	child
+</video>;
 
 ```
 
@@ -122,7 +126,9 @@
 ### `4: formatted`
 
 ```
-<audio><track kind="captions" {...props} /></audio>;
+<audio>
+	<track kind="captions" {...props} />
+</audio>;
 
 ```
 
@@ -136,7 +142,9 @@
 ### `5: formatted`
 
 ```
-<video><track kind="captions" {...props} /></video>;
+<video>
+	<track kind="captions" {...props} />
+</video>;
 
 ```
 
@@ -150,6 +158,7 @@
 ### `6: formatted`
 
 ```
-<video muted {...props}></video>;
+<video muted {...props}>
+</video>;
 
 ```

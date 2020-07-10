@@ -52,7 +52,9 @@
 ### `1: formatted`
 
 ```
-<a><TextWrapper aria-hidden /></a>;
+<a>
+	<TextWrapper aria-hidden />
+</a>;
 
 ```
 
@@ -66,7 +68,9 @@
 ### `2: formatted`
 
 ```
-<a>Anchor Content!</a>;
+<a>
+	Anchor Content!
+</a>;
 
 ```
 
@@ -80,7 +84,9 @@
 ### `3: formatted`
 
 ```
-<a><TextWrapper /></a>;
+<a>
+	<TextWrapper />
+</a>;
 
 ```
 
@@ -108,6 +114,9 @@
 ### `5: formatted`
 
 ```
-<a><TextWrapper aria-hidden /> visible content</a>;
+<a>
+	<TextWrapper aria-hidden />
+	 visible content
+</a>;
 
 ```

@@ -437,7 +437,9 @@
 ### `20: formatted`
 
 ```
-<object>Meaningful description</object>;
+<object>
+	Meaningful description
+</object>;
 
 ```
 
@@ -451,7 +453,9 @@
 ### `21: formatted`
 
 ```
-<object>{hello}</object>;
+<object>
+	{hello}
+</object>;
 
 ```
 

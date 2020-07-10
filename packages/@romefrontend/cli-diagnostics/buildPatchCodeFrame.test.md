@@ -31,9 +31,9 @@ Barreto
 
 # Diff
   1   │ - Sebastian
+  2   │ - McKenzie
     1 │ + Ana
     2 │ + Barreto
-  2   │ - McKenzie
 ```
 
 ### `2`
@@ -46,8 +46,8 @@ Sebastian
 Seb astian
 
 # Diff
-+ Seb·astian
 - Sebastian
++ Seb·astian
 ```
 
 ### `3`
@@ -60,8 +60,8 @@ Sebastian
 Seb  astian
 
 # Diff
-+ Seb··astian
 - Sebastian
++ Seb··astian
 ```
 
 ### `4`
@@ -74,8 +74,8 @@ Sebastian
 Seb	astian
 
 # Diff
-+ Seb↹astian
 - Sebastian
++ Seb↹astian
 ```
 
 ### `5`
@@ -88,8 +88,8 @@ Sebastian
 Seb		astian
 
 # Diff
-+ Seb↹↹astian
 - Sebastian
++ Seb↹↹astian
 ```
 
 ### `6`
@@ -148,44 +148,45 @@ if (char === "<") {
 }
 
 # Diff
-      1 │ + let value = "";
    1    │ - let namedBackReference = "";
-      2 │ + let [char,·next] = this.getInputChar(index, 2);
    2    │ - let namedBackReferenceIndex = ob1Get0(index) + 2;
    3    │ - let·namedBackReferenceChar·=·input[namedBackReferenceIndex];
-      3 │ + 
    4    │ - if (namedBackReferenceChar === "<") {
-      4 │ + if (char === "<") {
-      5 │ +   while (!this.isEOF(next)) {
    5    │ -   namedBackReferenceChar = input[namedBackReferenceIndex];
    6    │ -   while (
    7    │ -     namedBackReferenceChar !== ">" &&
    8    │ -     namedBackReferenceIndex·< input.length
    9    │ -   ) {
-      6 │ +     value += char;
   10    │ -     namedBackReference += namedBackReferenceChar;
-      7 │ +     [char,·next] = this.getInputChar(index, 1);
   11    │ -     namedBackReferenceIndex++;
   12    │ -     namedBackReferenceChar = input[namedBackReferenceIndex];
-      8 │ + 
   13    │ - ↹}
-      9 │ + ↹  if (char === ">") {
   14    │ -   if (namedBackReferenceChar === ">") {
-     10 │ +     ↹break;
   15    │ -     namedBackReference += namedBackReferenceChar;
-     11 │ +     }
   16    │ -     namedBackReferenceIndex++;
-  17 12 │     }
+  17    │ -   }
+      1 │ + let value = "";
+      2 │ + let [char,·next] = this.getInputChar(index, 2);
+      3 │ + 
+      4 │ + if (char === "<") {
+      5 │ +   while (!this.isEOF(next)) {
+      6 │ +     value += char;
+      7 │ +     [char,·next] = this.getInputChar(index, 1);
+      8 │ + 
+      9 │ + ↹  if (char === ">") {
+     10 │ +     ↹break;
+     11 │ +     }
+     12 │ +   }
      13 │ + 
   18 14 │     return this.finishComplexToken(
   19 15 │       "NamedBackReferenceCharacter",
   20 16 │       {
-     17 │ +       value,
   21    │ -       value: namedBackReference,
+     17 │ +       value,
   22 18 │         escaped: true,
   23 19 │       },
-     20 │ +     index,
   24    │ -     ob1Coerce0(namedBackReferenceIndex),
+     20 │ +     index,
   25 21 │     );
 ```
 
@@ -195,24 +196,25 @@ if (char === "<") {
 # Before
 <section>
 	<>
-		<div>
-		<div>
+		<div />
+		<div />
 	</>
-<section/>
+</section/>
 
 # After
 <section>
-	<div>
-	<div>
-<section/>
+	<div />
+	<div />
+</section>
 
 # Diff
   1 1 │   <section>
-    2 │ +   <div>
   2   │ -   <>
-  3   │ -     <div>
-    3 │ +   <div>
-  4   │ - ↹  <div>
-  5   │ -   </>
-  6 4 │   <section/>
+  3   │ -     <div />
+  4   │ - ↹  <div />
+  5   │ - ↹</>
+  6   │ - </section/>
+    2 │ +   <div />
+    3 │ +   <div />
+    4 │ + </section>
 ```

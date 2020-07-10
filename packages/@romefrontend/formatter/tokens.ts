@@ -102,7 +102,13 @@ export function comment(value: Token): CommentToken {
 	};
 }
 
-export function indent(contents: Token): IndentToken {
+export function indent(contents: Token, force: boolean = false): Token {
+	if (contents === "") {
+		return "";
+	}
+	if (force) {
+		contents = concat([hardline, contents]);
+	}
 	return {
 		type: "Indent",
 		contents,

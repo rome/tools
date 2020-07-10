@@ -153,6 +153,9 @@ export default class Builder {
 			}
 
 			let printed = this.tokenize(node, parent);
+			if (printed === "") {
+				continue;
+			}
 
 			if (!isLast) {
 				const nextNode = nodes[i + 1];
@@ -182,7 +185,7 @@ export default class Builder {
 		}
 
 		return shouldIndent
-			? indent(concat([hardline, join(hardline, tokens)]))
+			? indent(join(hardline, tokens), true)
 			: join(hardline, tokens);
 	}
 

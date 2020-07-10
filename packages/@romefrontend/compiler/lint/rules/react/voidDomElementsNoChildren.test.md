@@ -17,8 +17,10 @@
 
   ℹ Recommended fix
 
-  - <br className={'dont-remove-class'}>invalid children</br>
-  + <br className={"dont-remove-class"} />
+    1   │ - <br className={"dont-remove-class"}>
+    2   │ -   invalid children
+    3   │ - </br>
+      1 │ + <br className={"dont-remove-class"} />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -46,8 +48,10 @@
 
   ℹ Recommended fix
 
-  - <img>invalid children</img>
-    <img />
+    1   │ - <img>
+    2   │ -   invalid children
+    3   │ - </img>
+      1 │ + <img />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -75,8 +79,8 @@
 
   ℹ Recommended fix
 
-  - <hr children={'invalid children'}·/>
-    <hr />
+  - <hr children={"invalid children"}·/>
+  + <hr />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -104,8 +108,9 @@
 
   ℹ Recommended fix
 
-  - <area dangerouslySetInnerHTML={{__html: ''}}></area>
-    <area />
+    1   │ - <area dangerouslySetInnerHTML={{__html: ""}}>
+    2   │ - </area>
+      1 │ + <area />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -133,8 +138,10 @@
 
   ℹ Recommended fix
 
-  - <img dangerouslySetInnerHTML={{__html: ''}} children={'invalid children'}>invalid children</img>
-    <img />
+    1   │ - <img dangerouslySetInnerHTML={{__html: ""}} children={"invalid children"}>
+    2   │ -   invalid children
+    3   │ - </img>
+      1 │ + <img />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -218,7 +225,7 @@
 
   ℹ Recommended fix
 
-  - "img", {}, "child"
+  - React.createElement("img", {}, "child")
   + React.createElement("img", {})
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -303,7 +310,7 @@ React.createElement("img", {});
 
   ℹ Recommended fix
 
-  - "img", {}, "child"
+  - createElement("img", {}, "child")
   + createElement("img", {})
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -329,7 +336,9 @@ createElement("img", {});
 ### `11: formatted`
 
 ```
-<div>Children</div>;
+<div>
+	Children
+</div>;
 
 ```
 

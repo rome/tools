@@ -26,7 +26,8 @@
 ### `0: formatted`
 
 ```
-<div dangerouslySetInnerHTML={{__html: "child"}}></div>;
+<div dangerouslySetInnerHTML={{__html: "child"}}>
+</div>;
 
 ```
 
@@ -92,7 +93,9 @@ createElement("div", {dangerouslySetInnerHTML: {__html: "child"}});
 ### `3: formatted`
 
 ```
-<div>Hello World</div>;
+<div>
+	Hello World
+</div>;
 
 ```
 

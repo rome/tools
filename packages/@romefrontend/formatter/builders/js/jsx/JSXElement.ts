@@ -17,6 +17,7 @@ import {
 } from "@romefrontend/formatter";
 
 import {JSXElement} from "@romefrontend/ast";
+import {hardline} from "@romefrontend/formatter/tokens";
 
 export default function JSXElement(builder: Builder, node: JSXElement): Token {
 	const tokens: Array<Token> = [
@@ -40,9 +41,10 @@ export default function JSXElement(builder: Builder, node: JSXElement): Token {
 	} else {
 		return concat([
 			group(concat([concat(tokens), ">"])),
-			indent(
-				concat(node.children.map((child) => builder.tokenize(child, node))),
-			),
+			concat([
+				indent(builder.tokenizeStatementList(node.children, node), true),
+				hardline,
+			]),
 			"</",
 			builder.tokenize(node.name, node),
 			">",
