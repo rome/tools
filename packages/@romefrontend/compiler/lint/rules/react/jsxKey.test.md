@@ -61,7 +61,11 @@ const a = [<div />, <div />];
 ### `1: formatted`
 
 ```
-const a = [1, 2].map((x) => <div>{x}</div>);
+const a = [1, 2].map((x) =>
+	<div>
+		{x}
+	</div>
+);
 
 ```
 
@@ -87,7 +91,14 @@ const a = [1, 2].map((x) => <div>{x}</div>);
 ### `2: formatted`
 
 ```
-React.Children.map(children, (x) => <div>{x}</div>);
+React.Children.map(
+	children,
+	(x) =>
+		<div>
+			{x}
+		</div>
+	,
+);
 
 ```
 
@@ -113,7 +124,14 @@ React.Children.map(children, (x) => <div>{x}</div>);
 ### `3: formatted`
 
 ```
-Children.map(children, (x) => <div>{x}</div>);
+Children.map(
+	children,
+	(x) =>
+		<div>
+			{x}
+		</div>
+	,
+);
 
 ```
 
@@ -142,7 +160,9 @@ Children.map(children, (x) => <div>{x}</div>);
 
 ```
 const a = [1, 2].map((x) => {
-	return <div>{x}</div>;
+	return <div>
+		{x}
+	</div>;
 });
 
 ```
@@ -174,7 +194,9 @@ const a = [1, 2].map((x) => {
 React.Children.map(
 	children,
 	(x) => {
-		return <div>{x}</div>;
+		return <div>
+			{x}
+		</div>;
 	},
 );
 
@@ -207,7 +229,9 @@ React.Children.map(
 Children.map(
 	children,
 	(x) => {
-		return <div>{x}</div>;
+		return <div>
+			{x}
+		</div>;
 	},
 );
 
@@ -238,7 +262,9 @@ Children.map(
 
 ```
 const a = [1, 2].map(function(x) {
-	return <div>{x}</div>;
+	return <div>
+		{x}
+	</div>;
 });
 
 ```
@@ -270,7 +296,9 @@ const a = [1, 2].map(function(x) {
 React.Children.map(
 	children,
 	function(x) {
-		return <div>{x}</div>;
+		return <div>
+			{x}
+		</div>;
 	},
 );
 
@@ -303,7 +331,9 @@ React.Children.map(
 Children.map(
 	children,
 	function(x) {
-		return <div>{x}</div>;
+		return <div>
+			{x}
+		</div>;
 	},
 );
 
@@ -333,7 +363,11 @@ const a = [<div key="a" />, <div key={"b"} />];
 ### `11: formatted`
 
 ```
-const a = [1, 2].map((x) => <div key={x}>{x}</div>);
+const a = [1, 2].map((x) =>
+	<div key={x}>
+		{x}
+	</div>
+);
 
 ```
 
@@ -347,7 +381,14 @@ const a = [1, 2].map((x) => <div key={x}>{x}</div>);
 ### `12: formatted`
 
 ```
-React.Children.map(children, (x) => <div key={x}>{x}</div>);
+React.Children.map(
+	children,
+	(x) =>
+		<div key={x}>
+			{x}
+		</div>
+	,
+);
 
 ```
 
@@ -361,7 +402,14 @@ React.Children.map(children, (x) => <div key={x}>{x}</div>);
 ### `13: formatted`
 
 ```
-Children.map(children, (x) => <div key={x}>{x}</div>);
+Children.map(
+	children,
+	(x) =>
+		<div key={x}>
+			{x}
+		</div>
+	,
+);
 
 ```
 
@@ -376,7 +424,9 @@ Children.map(children, (x) => <div key={x}>{x}</div>);
 
 ```
 const a = [1, 2].map((x) => {
-	return <div key={x}>{x}</div>;
+	return <div key={x}>
+		{x}
+	</div>;
 });
 
 ```
@@ -394,7 +444,9 @@ const a = [1, 2].map((x) => {
 React.Children.map(
 	children,
 	(x) => {
-		return <div key={x}>{x}</div>;
+		return <div key={x}>
+			{x}
+		</div>;
 	},
 );
 
@@ -413,7 +465,9 @@ React.Children.map(
 Children.map(
 	children,
 	(x) => {
-		return <div key={x}>{x}</div>;
+		return <div key={x}>
+			{x}
+		</div>;
 	},
 );
 
@@ -430,7 +484,9 @@ Children.map(
 
 ```
 const a = [1, 2].map(function(x) {
-	return <div key={x}>{x}</div>;
+	return <div key={x}>
+		{x}
+	</div>;
 });
 
 ```
@@ -448,7 +504,9 @@ const a = [1, 2].map(function(x) {
 React.Children.map(
 	children,
 	function(x) {
-		return <div key={x}>{x}</div>;
+		return <div key={x}>
+			{x}
+		</div>;
 	},
 );
 
@@ -467,7 +525,9 @@ React.Children.map(
 Children.map(
 	children,
 	function(x) {
-		return <div key={x}>{x}</div>;
+		return <div key={x}>
+			{x}
+		</div>;
 	},
 );
 

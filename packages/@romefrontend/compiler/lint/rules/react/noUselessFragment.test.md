@@ -20,7 +20,10 @@
 
   ℹ Recommended fix
 
-  - <>{foo}</>
+    1   │ - <>
+    2   │ -   {foo}
+    3   │ - </>
+      1 │ + {foo}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -51,7 +54,10 @@
 
   ℹ Recommended fix
 
-  - <>foo</>
+    1   │ - <>
+    2   │ -   foo
+    3   │ - </>
+      1 │ + foo
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -62,7 +68,9 @@
 ### `1: formatted`
 
 ```
-<p>foo</p>;
+<p>
+	foo
+</p>;
 
 ```
 
@@ -82,7 +90,8 @@
 
   ℹ Recommended fix
 
-  - <></>
+    1   │ - <>
+    2   │ - </>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -113,7 +122,10 @@
 
   ℹ Recommended fix
 
-  - <React.Fragment>foo</React.Fragment>
+    1   │ - <React.Fragment>
+    2   │ -   foo
+    3   │ - </React.Fragment>
+      1 │ + foo
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -144,7 +156,10 @@ foo;
 
   ℹ Recommended fix
 
-  - <Fragment>foo</Fragment>
+    1   │ - <Fragment>
+    2   │ -   foo
+    3   │ - </Fragment>
+      1 │ + foo
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -175,17 +190,19 @@ foo;
   > 5 │      </>
       │ ^^^^^^^^
     6 │     </section>
-    7 │     
+    7 │ ····
 
   ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html element,
     and is not a keyed fragment.
 
   ℹ Recommended fix
 
-    1  │ - <>
-    2  │ -             <div />
-    3  │ -             <div />
-    4  │ -           </>
+    1   │ - <>
+    2   │ -   <div />
+    3   │ -   <div />
+    4   │ - </>
+      1 │ + <div />
+      2 │ + <div />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -197,11 +214,9 @@ foo;
 
 ```
 <section>
-					
-						<div />
-						<div />
-					
-				</section>;
+	<div />
+	<div />
+</section>;
 
 ```
 
@@ -216,9 +231,9 @@ foo;
 
 ```
 <>
-					<Foo />
-					<Bar />
-				</>;
+	<Foo />
+	<Bar />
+</>;
 
 ```
 
@@ -232,7 +247,10 @@ foo;
 ### `7: formatted`
 
 ```
-<>foo {bar}</>;
+<>
+	foo 
+	{bar}
+</>;
 
 ```
 
@@ -246,7 +264,10 @@ foo;
 ### `8: formatted`
 
 ```
-<> {foo}</>;
+<>
+	 
+	{foo}
+</>;
 
 ```
 
@@ -260,7 +281,9 @@ foo;
 ### `9: formatted`
 
 ```
-const cat = <>meow</>;
+const cat = <>
+	meow
+</>;
 
 ```
 
@@ -275,7 +298,9 @@ const cat = <>meow</>;
 
 ```
 function cat() {
-	return <>meow</>;
+	return <>
+		meow
+	</>;
 }
 
 ```
@@ -291,7 +316,9 @@ function cat() {
 
 ```
 function cat() {
-	return <>meow</>;
+	return <>
+		meow
+	</>;
 }
 
 ```
@@ -307,7 +334,9 @@ function cat() {
 
 ```
 function cat() {
-	const foo = <>meow</>;
+	const foo = <>
+		meow
+	</>;
 	return foo;
 }
 
@@ -324,11 +353,11 @@ function cat() {
 
 ```
 <SomeComponent>
-					<>
-						<div />
-						<div />
-					</>
-				</SomeComponent>;
+	<>
+		<div />
+		<div />
+	</>
+</SomeComponent>;
 
 ```
 
@@ -342,6 +371,8 @@ function cat() {
 ### `14: formatted`
 
 ```
-<Fragment key={item.id}>{item.value}</Fragment>;
+<Fragment key={item.id}>
+	{item.value}
+</Fragment>;
 
 ```

@@ -49,7 +49,7 @@ export default function JSIfStatement(
 	if (needsBlock) {
 		tokens.push(
 			"{",
-			indent(concat([hardline, builder.tokenize(node.consequent, node)])),
+			indent(builder.tokenize(node.consequent, node), true),
 			hardline,
 			"}",
 		);

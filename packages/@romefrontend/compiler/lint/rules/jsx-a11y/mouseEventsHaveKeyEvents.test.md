@@ -81,7 +81,9 @@
 ### `2: formatted`
 
 ```
-<div onMouseOver={() => void 0}>{props}</div>;
+<div onMouseOver={() => void 0}>
+	{props}
+</div>;
 
 ```
 
@@ -108,7 +110,9 @@
 ### `3: formatted`
 
 ```
-<div onMouseOut={() => void 0}>{props}</div>;
+<div onMouseOut={() => void 0}>
+	{props}
+</div>;
 
 ```
 
@@ -150,7 +154,9 @@
 ### `6: formatted`
 
 ```
-<div onMouseOver={() => void 0} onFocus={() => void 0}>{props}</div>;
+<div onMouseOver={() => void 0} onFocus={() => void 0}>
+	{props}
+</div>;
 
 ```
 
@@ -164,6 +170,8 @@
 ### `7: formatted`
 
 ```
-<div onMouseOut={() => void 0} onBlur={() => void 0}>{props}</div>;
+<div onMouseOut={() => void 0} onBlur={() => void 0}>
+	{props}
+</div>;
 
 ```

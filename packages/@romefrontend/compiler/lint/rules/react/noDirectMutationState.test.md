@@ -34,7 +34,10 @@
 class Hello extends React.Component {
 	testFunc() {
 		this.state.foo++;
-		return <div>Hello {this.props.name}</div>;
+		return <div>
+			Hello 
+			{this.props.name}
+		</div>;
 	}
 }
 
@@ -70,7 +73,10 @@ class Hello extends React.Component {
 class Hello extends React.Component {
 	testFunc() {
 		--this.state.foo;
-		return <div>Hello {this.props.name}</div>;
+		return <div>
+			Hello 
+			{this.props.name}
+		</div>;
 	}
 }
 
@@ -106,7 +112,10 @@ class Hello extends React.Component {
 class Hello extends React.Component {
 	testFunc() {
 		this.state.foo += "bar";
-		return <div>Hello {this.props.name}</div>;
+		return <div>
+			Hello 
+			{this.props.name}
+		</div>;
 	}
 }
 
@@ -142,7 +151,10 @@ class Hello extends React.Component {
 class Hello extends React.Component {
 	testFunc() {
 		this.state.foo = undefined;
-		return <div>Hello {this.props.name}</div>;
+		return <div>
+			Hello 
+			{this.props.name}
+		</div>;
 	}
 }
 
@@ -178,7 +190,9 @@ class Hello extends React.Component {
 class Hello extends React.Component {
 	testFunc() {
 		this.state.person.name.first = "bar";
-		return <div>Hello</div>;
+		return <div>
+			Hello
+		</div>;
 	}
 }
 
@@ -229,7 +243,9 @@ class Hello extends React.Component {
 	testFunc() {
 		this.state.person.name.first = "bar";
 		this.state.person.name.last = "baz";
-		return <div>Hello</div>;
+		return <div>
+			Hello
+		</div>;
 	}
 }
 
@@ -675,7 +691,10 @@ class Hello extends React.Component {
 	testFunc() {
 		var obj = {state: {}};
 		obj.state.name = "foo";
-		return <div>Hello {obj.state.name}</div>;
+		return <div>
+			Hello 
+			{obj.state.name}
+		</div>;
 	}
 }
 
@@ -824,7 +843,10 @@ class OneComponent extends Component {
 class Hello extends React.Component {
 	testFunc() {
 		typeof this.state.person.name;
-		return <div>Hello {this.props.name}</div>;
+		return <div>
+			Hello 
+			{this.props.name}
+		</div>;
 	}
 }
 

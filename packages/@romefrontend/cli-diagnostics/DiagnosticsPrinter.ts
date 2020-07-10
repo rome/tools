@@ -34,13 +34,13 @@ import {default as errorBanner} from "./banners/error.json";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
+	CWD_PATH,
 	UnknownFilePath,
 	UnknownFilePathMap,
 	UnknownFilePathSet,
-	createAbsoluteFilePath,
 	createUnknownFilePath,
 } from "@romefrontend/path";
-import {Number0, Number1} from "@romefrontend/ob1";
+import {Number0, Number1, ob1Get0, ob1Get1} from "@romefrontend/ob1";
 import {existsSync, lstatSync, readFileTextSync} from "@romefrontend/fs";
 
 type Banner = {
@@ -88,6 +88,7 @@ type FooterPrintCallback = (
 ) => void | boolean;
 
 export const DEFAULT_PRINTER_FLAGS: DiagnosticsPrinterFlags = {
+	auxiliaryDiagnosticFormat: undefined,
 	grep: "",
 	inverseGrep: false,
 	showAllDiagnostics: true,
@@ -128,11 +129,13 @@ export default class DiagnosticsPrinter extends Error {
 		);
 		const {cwd, reporter, flags = DEFAULT_PRINTER_FLAGS} = opts;
 
+		this.options = opts;
+
 		this.reporter = reporter;
 		this.flags = flags;
 		this.readFile =
 			opts.readFile === undefined ? readDiagnosticsFileLocal : opts.readFile;
-		this.cwd = cwd === undefined ? createAbsoluteFilePath(process.cwd()) : cwd;
+		this.cwd = cwd === undefined ? CWD_PATH : cwd;
 		this.processor =
 			opts.processor === undefined ? new DiagnosticsProcessor() : opts.processor;
 
@@ -148,6 +151,7 @@ export default class DiagnosticsPrinter extends Error {
 		this.onFooterPrintCallbacks = [];
 	}
 
+	options: DiagnosticsPrinterOptions;
 	reporter: Reporter;
 	processor: DiagnosticsProcessor;
 	onFooterPrintCallbacks: Array<FooterPrintCallback>;
@@ -242,7 +246,7 @@ export default class DiagnosticsPrinter extends Error {
 					lines: toLines({
 						path: info.path,
 						input: stats.content,
-						sourceType: info.sourceType,
+						sourceTypeJS: info.sourceType,
 						language: info.language,
 					}),
 				},
@@ -352,7 +356,7 @@ export default class DiagnosticsPrinter extends Error {
 	print() {
 		const filteredDiagnostics = this.filterDiagnostics();
 		this.fetchFileSources(filteredDiagnostics);
-		this.displayDiagnostics(filteredDiagnostics);
+		this.printDiagnostics(filteredDiagnostics);
 	}
 
 	wrapError(callback: () => void) {
@@ -368,12 +372,16 @@ export default class DiagnosticsPrinter extends Error {
 		}
 	}
 
-	displayDiagnostics(diagnostics: Diagnostics) {
+	printDiagnostics(diagnostics: Diagnostics) {
 		const {reporter} = this;
 		const restoreRedirect = reporter.redirectOutToErr(true);
 
 		for (const diag of diagnostics) {
-			this.wrapError(() => this.displayDiagnostic(diag));
+			this.printAuxiliaryDiagnostic(diag);
+		}
+
+		for (const diag of diagnostics) {
+			this.wrapError(() => this.printDiagnostic(diag));
 		}
 
 		reporter.redirectOutToErr(restoreRedirect);
@@ -397,7 +405,46 @@ export default class DiagnosticsPrinter extends Error {
 		return outdatedFiles;
 	}
 
-	displayDiagnostic(diag: Diagnostic) {
+	printAuxiliaryDiagnostic(diag: Diagnostic) {
+		const {description: {message}, location: {start, filename}} = diag;
+
+		switch (this.flags.auxiliaryDiagnosticFormat) {
+			// https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-error-message
+			// Format: \:\:error file=app.js,line=10,col=15::Something went wrong
+			// TODO escaping
+			case "github-actions": {
+				const parts = [];
+
+				if (filename !== undefined) {
+					const path = createUnknownFilePath(filename);
+
+					if (path.isAbsolute() && path.isRelativeTo(this.cwd)) {
+						parts.push(`file=${this.cwd.relative(path).join()}`);
+					} else {
+						parts.push(`file=${filename}`);
+					}
+				}
+
+				if (start !== undefined) {
+					if (start.line !== undefined) {
+						parts.push(`line=${ob1Get1(start.line)}`);
+					}
+
+					if (start.column !== undefined) {
+						parts.push(`col=${ob1Get0(start.column)}`);
+					}
+				}
+
+				let log = `::error ${parts.join(",")}::${markupToPlainTextString(
+					message.value,
+				)}`;
+				this.reporter.logAllRaw(log);
+				break;
+			}
+		}
+	}
+
+	printDiagnostic(diag: Diagnostic) {
 		const {reporter} = this;
 		const {start, end, filename} = diag.location;
 		let advice = [...diag.description.advice];
@@ -506,7 +553,7 @@ export default class DiagnosticsPrinter extends Error {
 			}
 
 			// Print verbose information
-			if (this.flags.verboseDiagnostics) {
+			if (this.flags.verboseDiagnostics === true) {
 				const {origins} = diag;
 
 				if (origins !== undefined && origins.length > 0) {
@@ -546,6 +593,22 @@ export default class DiagnosticsPrinter extends Error {
 		}
 
 		return filteredDiagnostics;
+	}
+
+	inject(printer: DiagnosticsPrinter) {
+		this.processor.addDiagnostics(printer.getDiagnostics());
+		for (const fn of printer.onFooterPrintCallbacks) {
+			this.onFooterPrint((reporter) => {
+				fn(reporter, printer.problemCount > 0);
+			});
+		}
+	}
+
+	concat(other: DiagnosticsPrinter): DiagnosticsPrinter {
+		const printer = new DiagnosticsPrinter(this.options);
+		printer.inject(this);
+		printer.inject(other);
+		return printer;
 	}
 
 	onFooterPrint(fn: FooterPrintCallback) {

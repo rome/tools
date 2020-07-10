@@ -9,11 +9,14 @@ import {Reporter} from "@romefrontend/cli-reporter";
 import {AbsoluteFilePath} from "@romefrontend/path";
 import {DiagnosticsProcessor} from "@romefrontend/diagnostics";
 
+export type DiagnosticPrinterAuxiliaryFormat = undefined | "github-actions";
+
 export type DiagnosticsPrinterFlags = {
+	auxiliaryDiagnosticFormat: DiagnosticPrinterAuxiliaryFormat;
 	grep: string;
 	fieri: boolean;
 	inverseGrep: boolean;
-	verboseDiagnostics: boolean;
+	verboseDiagnostics: boolean | "NO_TRUNCATE";
 	maxDiagnostics: number;
 	showAllDiagnostics: boolean;
 };

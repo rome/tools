@@ -26,8 +26,6 @@ type HubStatus = number;
 export default class Hub {
 	constructor(ast: JSRoot, project: TransformProjectDefinition) {
 		this.context = new CompilerContext({
-			// TODO
-			sourceText: "",
 			ast,
 			project,
 			origin: {

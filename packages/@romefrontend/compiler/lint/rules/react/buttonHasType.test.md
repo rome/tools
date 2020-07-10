@@ -27,7 +27,9 @@
 ### `0: formatted`
 
 ```
-<button>child</button>;
+<button>
+	child
+</button>;
 
 ```
 
@@ -54,7 +56,9 @@
 ### `1: formatted`
 
 ```
-<button type="foo">child</button>;
+<button type="foo">
+	child
+</button>;
 
 ```
 
@@ -122,7 +126,9 @@ createElement("button", {type: "foo"}, ["child"]);
 ### `4: formatted`
 
 ```
-<div>child</div>;
+<div>
+	child
+</div>;
 
 ```
 
@@ -136,7 +142,9 @@ createElement("button", {type: "foo"}, ["child"]);
 ### `5: formatted`
 
 ```
-<div type="type">child</div>;
+<div type="type">
+	child
+</div>;
 
 ```
 
@@ -150,7 +158,9 @@ createElement("button", {type: "foo"}, ["child"]);
 ### `6: formatted`
 
 ```
-<button type="button">child</button>;
+<button type="button">
+	child
+</button>;
 
 ```
 
@@ -164,7 +174,9 @@ createElement("button", {type: "foo"}, ["child"]);
 ### `7: formatted`
 
 ```
-<button type="submit">child</button>;
+<button type="submit">
+	child
+</button>;
 
 ```
 
@@ -178,7 +190,9 @@ createElement("button", {type: "foo"}, ["child"]);
 ### `8: formatted`
 
 ```
-<button type="reset">child</button>;
+<button type="reset">
+	child
+</button>;
 
 ```
 

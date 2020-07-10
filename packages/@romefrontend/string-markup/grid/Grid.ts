@@ -39,6 +39,10 @@ import {
 import {escapeXHTMLEntities} from "@romefrontend/html-parser";
 import {ansiFormatText} from "./ansi";
 import {htmlFormatText} from "./html";
+import {
+	TERMINAL_FEATURES_DEFAULT,
+	TerminalFeatures,
+} from "@romefrontend/environment";
 
 type Cursor = {
 	line: Number1;
@@ -78,6 +82,9 @@ export default class Grid {
 			opts.columns === undefined ? undefined : ob1Coerce1(opts.columns);
 		this.markupOptions = opts;
 
+		this.features =
+			opts.features === undefined ? TERMINAL_FEATURES_DEFAULT : opts.features;
+
 		this.cursor = {
 			line: ob1Number1,
 			column: ob1Number1,
@@ -89,6 +96,7 @@ export default class Grid {
 		this.lines = [];
 	}
 
+	features: TerminalFeatures;
 	canLineWrap: boolean;
 	markupOptions: MarkupFormatGridOptions;
 	lines: Array<{
@@ -253,7 +261,10 @@ export default class Grid {
 	getFormattedAnsiLines(): Array<string> {
 		return this.getFormattedLines({
 			normalizeText: (text) => text,
-			formatTag: (tag, inner) => ansiFormatText(tag, inner, this.markupOptions),
+			formatTag: (tag, inner) =>
+				ansiFormatText(tag, inner, this.markupOptions, this.features)
+			,
+
 			wrapRange: (inner) => formatAnsi.reset(inner),
 		});
 	}
@@ -799,7 +810,7 @@ export default class Grid {
 		}
 
 		if (hasText) {
-			if (tag.name === "hr" || tag.name === "inverse") {
+			if (tag.name === "hr") {
 				return [
 					{
 						...tag,

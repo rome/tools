@@ -8,7 +8,7 @@
 import {
 	ClientFlags,
 	ClientFlagsJSON,
-	ClientReporterOverrides,
+	ClientTerminalFeatures,
 	DEFAULT_CLIENT_FLAGS,
 } from "../common/types/client";
 import ClientRequest, {ClientRequestType} from "./ClientRequest";
@@ -40,6 +40,7 @@ import net = require("net");
 import zlib = require("zlib");
 import fs = require("fs");
 import child = require("child_process");
+import {mergeObjects} from "@romefrontend/typescript-helpers";
 
 export function getFilenameTimestamp(): string {
 	return new Date().toISOString().replace(/[^0-9a-zA-Z]/g, "");
@@ -48,7 +49,7 @@ export function getFilenameTimestamp(): string {
 const NEW_SERVER_INIT_TIMEOUT = 10_000;
 
 type ClientOptions = {
-	reporterOverrides?: ClientReporterOverrides;
+	terminalFeatures?: ClientTerminalFeatures;
 	globalErrorHandlers?: boolean;
 	stdout?: stream.Writable;
 	stderr?: stream.Writable;
@@ -86,11 +87,7 @@ export default class Client {
 		this.options = opts;
 		this.userConfig = loadUserConfig();
 		this.queryCounter = 0;
-
-		this.flags = {
-			...DEFAULT_CLIENT_FLAGS,
-			...opts.flags,
-		};
+		this.flags = mergeObjects(DEFAULT_CLIENT_FLAGS, opts.flags);
 
 		this.requestResponseEvent = new Event({
 			name: "Client.requestResponseEvent",
@@ -121,7 +118,7 @@ export default class Client {
 		this.derivedReporterStreams = this.reporter.attachStdoutStreams(
 			stdout,
 			opts.stderr,
-			this.options.reporterOverrides,
+			this.options.terminalFeatures,
 		);
 
 		this.endEvent.subscribe(() => {
@@ -477,8 +474,8 @@ export default class Client {
 	}
 
 	async attachBridge(status: BridgeStatus) {
-		const {stdout, stderr, columnsUpdated} = this.derivedReporterStreams;
-		const {reporterOverrides = {}} = this.options;
+		const {stdoutWrite, stderrWrite, featuresUpdated, features, format} = this.derivedReporterStreams;
+		const {terminalFeatures: reporterOverrides = {}} = this.options;
 
 		if (this.bridgeStatus !== undefined) {
 			throw new Error("Already attached bridge to API");
@@ -490,14 +487,14 @@ export default class Client {
 
 		bridge.stderr.subscribe((chunk) => {
 			if (reporterOverrides.redirectError) {
-				stdout.write(chunk);
+				stdoutWrite(chunk);
 			} else {
-				stderr.write(chunk);
+				stderrWrite(chunk);
 			}
 		});
 
 		bridge.stdout.subscribe((chunk) => {
-			stdout.write(chunk);
+			stdoutWrite(chunk);
 		});
 
 		bridge.reporterRemoteServerMessage.subscribe((msg) => {
@@ -509,17 +506,16 @@ export default class Client {
 		});
 
 		// Listen for resize column events if stdout is a TTY
-		columnsUpdated.subscribe((columns: number) => {
-			bridge.setColumns.call(columns);
+		featuresUpdated.subscribe((features) => {
+			bridge.updateFeatures.call(features);
 		});
 
 		await Promise.all([
 			bridge.getClientInfo.wait({
 				version: VERSION,
-				format: stdout.format,
-				unicode: stdout.unicode,
+				outputFormat: format,
+				outputSupport: features,
 				hasClearScreen: this.reporter.hasClearScreen,
-				columns: stdout.columns,
 				useRemoteReporter: true,
 				flags: this.getClientJSONFlags(),
 			}),

@@ -11,22 +11,34 @@ import {
 	GUTTER,
 	MAX_PATCH_LINES,
 } from "./constants";
-import {joinNoBreak} from "./utils";
+import {joinNoBreak, showInvisibles} from "./utils";
 import {
 	Diffs,
 	diffConstants,
-	groupDiffByLines,
+	stringDiffUnified,
 } from "@romefrontend/string-diff";
 import {escapeMarkup, markup, markupTag} from "@romefrontend/string-markup";
 import {DiagnosticAdviceDiff} from "@romefrontend/diagnostics";
 
 function formatDiffLine(diffs: Diffs) {
-	return diffs.map(([type, text]) => {
+	let atLineStart = true;
+	return diffs.map(([type, text], i) => {
 		const escaped = escapeMarkup(text);
+		const res = showInvisibles(
+			escaped,
+			{
+				atLineStart,
+				atLineEnd: i === diffs.length - 1,
+			},
+		);
+		if (res.hadNonWhitespace) {
+			atLineStart = false;
+		}
+		const value = res.value;
 		if (type === diffConstants.EQUAL) {
 			return escaped;
 		} else {
-			return markupTag("emphasis", escaped);
+			return markupTag("emphasis", value);
 		}
 	}).join("");
 }
@@ -40,15 +52,14 @@ function formatSingleLineMarker(text: string): string {
 
 export default function buildPatchCodeFrame(
 	item: DiagnosticAdviceDiff,
-	verbose: boolean,
+	truncate: boolean,
 ): {
 	truncated: boolean;
 	frame: string;
 } {
-	const {diffsByLine, beforeLineCount, afterLineCount} = groupDiffByLines(
+	const {diffsByLine, beforeLineCount, afterLineCount} = stringDiffUnified(
 		item.diff,
 	);
-	let lastVisibleIndex = -1;
 
 	// Calculate the parts of the diff we should show
 	const shownLineIndexes: Set<number> = new Set();
@@ -62,19 +73,13 @@ export default function buildPatchCodeFrame(
 				visible++
 			) {
 				shownLineIndexes.add(visible);
-				lastVisibleIndex = visible;
 			}
 		}
 	}
 
 	// Calculate width of line no column
-	const lastVisibleLine = diffsByLine[lastVisibleIndex];
-	let beforeNoLength = 0;
-	let afterNoLength = 0;
-	if (lastVisibleLine !== undefined) {
-		beforeNoLength = String(lastVisibleLine.beforeLine).length;
-		afterNoLength = String(lastVisibleLine.afterLine).length;
-	}
+	const beforeNoLength = String(beforeLineCount).length;
+	const afterNoLength = String(afterLineCount).length;
 
 	const singleLine = beforeLineCount === 1 && afterLineCount === 1;
 
@@ -111,7 +116,7 @@ export default function buildPatchCodeFrame(
 
 		displayedLines++;
 
-		if (!verbose && displayedLines > MAX_PATCH_LINES) {
+		if (!truncate && displayedLines > MAX_PATCH_LINES) {
 			truncated = true;
 			continue;
 		}
@@ -120,20 +125,12 @@ export default function buildPatchCodeFrame(
 
 		let lineType: "EQUAL" | "ADD" | "DELETE" = "EQUAL";
 
-		for (const tuple of diffs) {
-			let [type] = tuple;
+		if (beforeLine === undefined) {
+			lineType = "ADD";
+		}
 
-			switch (type) {
-				case diffConstants.DELETE: {
-					lineType = "DELETE";
-					break;
-				}
-
-				case diffConstants.ADD: {
-					lineType = "ADD";
-					break;
-				}
-			}
+		if (afterLine === undefined) {
+			lineType = "DELETE";
 		}
 
 		if (lastDisplayedLine !== i - 1 && lastDisplayedLine !== -1) {

@@ -27,7 +27,6 @@ import {
 	ReporterTableField,
 	SelectArguments,
 	SelectOptions,
-	Stdout,
 } from "./types";
 import {removeSuffix} from "@romefrontend/string-utils";
 import Progress from "./Progress";
@@ -39,6 +38,12 @@ import readline = require("readline");
 import select from "./select";
 import {onKeypress} from "./util";
 import {markupToHtml} from "@romefrontend/string-markup/format";
+import {
+	Stdout,
+	TERMINAL_FEATURES_DEFAULT,
+	TerminalFeatures,
+	inferTerminalFeatures,
+} from "@romefrontend/environment";
 
 type ListOptions = {
 	reverse?: boolean;
@@ -95,17 +100,12 @@ const EMPTY_PREFIX: MessagePrefix = {
 
 let remoteProgressIdCounter = 0;
 
-function getStreamFormat(stdout: undefined | Stdout): ReporterStream["format"] {
-	return stdout !== undefined && stdout.isTTY === true ? "ansi" : "none";
-}
-
 export default class Reporter {
 	constructor(opts: ReporterOptions = {}) {
 		this.programName =
 			opts.programName === undefined ? "rome" : opts.programName;
 		this.programVersion = opts.programVersion;
 
-		this.noProgress = process.env.CI === "1";
 		this.isVerbose = Boolean(opts.verbose);
 
 		this.startTime = opts.startTime === undefined ? Date.now() : opts.startTime;
@@ -147,89 +147,65 @@ export default class Reporter {
 		}
 	}
 
-	static DEFAULT_COLUMNS = 100;
-
 	attachStdoutStreams(
 		stdout?: Stdout,
 		stderr?: Stdout,
-		force: {
-			columns?: number;
+		force: Partial<TerminalFeatures> & {
 			format?: ReporterStream["format"];
 		} = {},
 	): ReporterDerivedStreams {
-		let columns =
-			stdout === undefined || stdout.columns === undefined
-				? Reporter.DEFAULT_COLUMNS
-				: stdout.columns;
+		const {features, updateEvent, setupUpdateEvent, closeUpdateEvent} = inferTerminalFeatures(
+			stdout,
+			force,
+		);
+		const format = features.color ? "ansi" : "none";
 
-		// Force set columns
-		if (force.columns !== undefined) {
-			columns = force.columns;
-		}
+		const stdoutWrite: ReporterDerivedStreams["stdoutWrite"] = (chunk) => {
+			if (stdout !== undefined) {
+				stdout.write(chunk);
+			}
+		};
 
-		const columnsUpdated: Event<number, void> = new Event({
-			name: "columnsUpdated",
-		});
+		const stderrWrite: ReporterDerivedStreams["stderrWrite"] = (chunk) => {
+			if (stderr !== undefined) {
+				stderr.write(chunk);
+			}
+		};
 
-		// Windows terminals are awful
-		const unicode =
-			stdout !== undefined && stdout.unicode !== undefined
-				? stdout.unicode
-				: process.platform !== "win32";
+		setupUpdateEvent();
 
-		const outStream: ReporterStream = {
+		let outStream: ReporterStream = {
 			type: "out",
-			format: force.format || getStreamFormat(stdout),
-			columns,
-			unicode,
-			write(chunk) {
-				if (stdout !== undefined) {
-					stdout.write(chunk);
-				}
-			},
-			teardown() {},
+			format,
+			features,
+			write: stdoutWrite,
+			init: setupUpdateEvent,
+			teardown: closeUpdateEvent,
 		};
 
-		const errStream: ReporterStream = {
+		let errStream: ReporterStream = {
 			type: "error",
-			format: force.format || getStreamFormat(stderr),
-			columns,
-			unicode,
-			write(chunk) {
-				if (stderr !== undefined) {
-					stderr.write(chunk);
-				}
-			},
+			format,
+			features,
+			write: stderrWrite,
 		};
-
-		// Watch for resizing, unless force.columns has been set and we'll consider it to be fixed
-		if (
-			outStream.format === "ansi" &&
-			stdout !== undefined &&
-			force.columns !== undefined
-		) {
-			const onStdoutResize = () => {
-				if (stdout?.columns !== undefined) {
-					const {columns} = stdout;
-					columnsUpdated.send(columns);
-					this.setStreamColumns([outStream, errStream], columns);
-				}
-			};
-
-			outStream.teardown = () => {
-				stdout.off("resize", onStdoutResize);
-			};
-
-			stdout.on("resize", onStdoutResize);
-		}
 
 		this.addStream(outStream);
 		this.addStream(errStream);
 
+		updateEvent.subscribe((features) => {
+			[outStream, errStream] = this.updateStreamsFeatures(
+				[outStream, errStream],
+				features,
+			);
+		});
+
 		return {
-			columnsUpdated,
-			stdout: outStream,
-			stderr: errStream,
+			format,
+			features,
+			featuresUpdated: updateEvent,
+			stdoutWrite,
+			stderrWrite,
 		};
 	}
 
@@ -269,8 +245,7 @@ export default class Reporter {
 		const stream: ReporterStream = {
 			format,
 			type: "all",
-			columns: Reporter.DEFAULT_COLUMNS,
-			unicode: true,
+			features: TERMINAL_FEATURES_DEFAULT,
 			write(chunk) {
 				buff += chunk;
 			},
@@ -307,7 +282,6 @@ export default class Reporter {
 	markupOptions: MarkupFormatOptions;
 
 	isRemote: boolean;
-	noProgress: boolean;
 	isVerbose: boolean;
 	streamsWithNewlineEnd: Set<ReporterStreamMeta>;
 	streamsWithDoubleNewlineEnd: Set<ReporterStreamMeta>;
@@ -417,23 +391,34 @@ export default class Reporter {
 		return old;
 	}
 
-	setStreamColumns(streams: Array<ReporterStream>, columns: number) {
-		for (const stream of streams) {
-			if (!this.streams.has(stream)) {
-				throw new Error(
-					"Trying to setStreamColumns on a stream that isn't attached to this Reporter",
-				);
-			}
+	updateStreamsFeatures(
+		streams: Array<ReporterStream>,
+		features: TerminalFeatures,
+	): Array<ReporterStream> {
+		const newStreams: Array<ReporterStream> = streams.map((stream) => {
+			this.removeStream(stream);
+			const newStream: ReporterStream = {
+				...stream,
+				features,
+			};
+			this.addStream(stream);
+			return newStream;
+		});
+		this.refreshActiveElements();
+		return newStreams;
+	}
 
-			stream.columns = columns;
-		}
-
+	refreshActiveElements() {
 		for (const elem of this.activeElements) {
 			elem.render();
 		}
 	}
 
 	addStream(stream: ReporterStream) {
+		if (stream.init !== undefined) {
+			stream.init();
+		}
+
 		this.streamsWithNewlineEnd.add(stream);
 		this.streams.add(stream);
 
@@ -760,7 +745,7 @@ export default class Reporter {
 	}
 
 	clearLineSpecific(stream: ReporterStream) {
-		if (stream.format === "ansi") {
+		if (stream.format === "ansi" && stream.features.cursor) {
 			stream.write(ansiEscapes.eraseLine);
 			stream.write(ansiEscapes.cursorTo(0));
 		}
@@ -775,7 +760,7 @@ export default class Reporter {
 	writeSpecific(stream: ReporterStream, msg: string) {
 		this.hasClearScreen = false;
 
-		if (stream.format === "ansi" && this.activeElements.size > 0) {
+		if (this.activeElements.size > 0) {
 			// A progress bar is active and has probably drawn to the screen
 			this.clearLineSpecific(stream);
 		}
@@ -790,7 +775,7 @@ export default class Reporter {
 
 	clearScreen() {
 		for (const stream of this.getStreams(false)) {
-			if (stream.format === "ansi") {
+			if (stream.format === "ansi" && stream.features.cursor) {
 				stream.write(ansiEscapes.clearScreen);
 			}
 		}
@@ -800,7 +785,7 @@ export default class Reporter {
 	//# SECTIONS
 	heading(text: string) {
 		this.br();
-		this.logAll(`<inverse><emphasis>${text}</emphasis></inverse>`);
+		this.logAll(`<inverse><emphasis> ${text} </emphasis></inverse>`);
 		this.br();
 	}
 
@@ -847,7 +832,7 @@ export default class Reporter {
 			// If a step doesn't produce any output, or just progress bars that are cleared, we can safely remove the previous `step` message line
 			if (clear && this.hasClearScreen) {
 				for (const stream of this.getStreams(false)) {
-					if (stream.format === "ansi") {
+					if (stream.format === "ansi" && stream.features.cursor) {
 						stream.write(ansiEscapes.cursorTo(0));
 						stream.write(ansiEscapes.cursorUp());
 						stream.write(ansiEscapes.eraseLine);
@@ -910,10 +895,11 @@ export default class Reporter {
 
 		const gridMarkupOptions: MarkupFormatGridOptions = {
 			...this.markupOptions,
-			columns: stream.columns -
+			columns: stream.features.columns -
 			this.indentString.length -
 			viewportShrink -
 			allLinePrefix.width,
+			features: stream.features,
 		};
 
 		let res: MarkupLinesAndWidth;
@@ -1048,7 +1034,9 @@ export default class Reporter {
 
 		for (const stream of streams) {
 			// Format the prefix, selecting it depending on if we're a unicode stream
-			const prefixInner = stream.unicode ? opts.unicodePrefix : opts.rawPrefix;
+			const prefixInner = stream.features.unicode
+				? opts.unicodePrefix
+				: opts.rawPrefix;
 			const prefix = markupTag(
 				"emphasis",
 				markupTag(opts.markupTag, prefixInner),

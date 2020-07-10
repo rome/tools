@@ -8,7 +8,8 @@
 import {Builder, Token} from "@romefrontend/formatter";
 import {JSXText} from "@romefrontend/ast";
 import {escapeXHTMLEntities} from "@romefrontend/html-parser";
+import {cleanJSXText} from "@romefrontend/js-ast-utils";
 
 export default function JSXText(builder: Builder, node: JSXText): Token {
-	return escapeXHTMLEntities(node.value);
+	return escapeXHTMLEntities(cleanJSXText(node.value));
 }

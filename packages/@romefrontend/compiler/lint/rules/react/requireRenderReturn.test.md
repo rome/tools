@@ -65,7 +65,9 @@ import React from "react";
 class Foo extends React.Component {
 	render() {
 		[1, 2, 3].map((num) => {
-			return <div> Foo </div>;
+			return <div>
+				 Foo 
+			</div>;
 		});
 	}
 }
@@ -265,7 +267,9 @@ const Foo = class extends PureComponent {
 import React from "react";
 class Foo extends React.Component {
 	render() {
-		return <div>Foo</div>;
+		return <div>
+			Foo
+		</div>;
 	}
 }
 
@@ -285,7 +289,9 @@ import React from "react";
 class Foo extends React.Component {
 	render() {
 		if (foo) {
-			return <div>Foo</div>;
+			return <div>
+				Foo
+			</div>;
 		} else {
 			return void 0;
 		}
@@ -306,7 +312,8 @@ class Foo extends React.Component {
 ```
 class Foo {
 	render = () => {
-		return <></>;
+		return <>
+		</>;
 	};
 }
 
@@ -323,7 +330,10 @@ class Foo {
 
 ```
 class Foo {
-	render = () => <></>;
+	render = () =>
+		<>
+		</>
+	;
 }
 
 ```

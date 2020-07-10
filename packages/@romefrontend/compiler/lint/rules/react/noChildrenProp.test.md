@@ -27,7 +27,8 @@
 ### `0: formatted`
 
 ```
-<MyComponent children={"foo"}></MyComponent>;
+<MyComponent children={"foo"}>
+</MyComponent>;
 
 ```
 
@@ -95,7 +96,9 @@ createElement("div", {children: "foo"});
 ### `3: formatted`
 
 ```
-<MyComponent><AnotherComponent /></MyComponent>;
+<MyComponent>
+	<AnotherComponent />
+</MyComponent>;
 
 ```
 

@@ -27,7 +27,8 @@
 ### `0: formatted`
 
 ```
-<html></html>;
+<html>
+</html>;
 
 ```
 
@@ -54,7 +55,8 @@
 ### `1: formatted`
 
 ```
-<html {...props}></html>;
+<html {...props}>
+</html>;
 
 ```
 
@@ -81,7 +83,8 @@
 ### `2: formatted`
 
 ```
-<html lang=""></html>;
+<html lang="">
+</html>;
 
 ```
 
@@ -108,7 +111,8 @@
 ### `3: formatted`
 
 ```
-<html lang={""}></html>;
+<html lang={""}>
+</html>;
 
 ```
 
@@ -135,7 +139,8 @@
 ### `4: formatted`
 
 ```
-<html lang={``}></html>;
+<html lang={``}>
+</html>;
 
 ```
 
@@ -162,7 +167,8 @@
 ### `5: formatted`
 
 ```
-<html lang={undefined}></html>;
+<html lang={undefined}>
+</html>;
 
 ```
 
@@ -189,7 +195,8 @@
 ### `6: formatted`
 
 ```
-<html lang={false}></html>;
+<html lang={false}>
+</html>;
 
 ```
 
@@ -216,7 +223,8 @@
 ### `7: formatted`
 
 ```
-<html lang={true}></html>;
+<html lang={true}>
+</html>;
 
 ```
 
@@ -243,7 +251,8 @@
 ### `8: formatted`
 
 ```
-<html lang={42}></html>;
+<html lang={42}>
+</html>;
 
 ```
 
@@ -257,7 +266,8 @@
 ### `9: formatted`
 
 ```
-<html lang="en"></html>;
+<html lang="en">
+</html>;
 
 ```
 
@@ -271,7 +281,8 @@
 ### `10: formatted`
 
 ```
-<html lang={language}></html>;
+<html lang={language}>
+</html>;
 
 ```
 
@@ -285,6 +296,7 @@
 ### `11: formatted`
 
 ```
-<html lang={() => language}></html>;
+<html lang={() => language}>
+</html>;
 
 ```

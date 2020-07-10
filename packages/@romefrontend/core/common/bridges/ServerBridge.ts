@@ -16,6 +16,7 @@ import {
 	ReporterStream,
 } from "@romefrontend/cli-reporter";
 import {ServerMarker} from "../../server/Server";
+import {TerminalFeatures} from "@romefrontend/environment";
 
 export type ServerQueryRequest = {
 	requestFlags: ClientRequestFlags;
@@ -84,11 +85,10 @@ export type ProfilingStartData = {
 
 export type ServerBridgeInfo = {
 	version: string;
-	columns: number;
 	hasClearScreen: boolean;
 	useRemoteReporter: boolean;
-	unicode: boolean;
-	format: ReporterStream["format"];
+	outputSupport: TerminalFeatures;
+	outputFormat: ReporterStream["format"];
 	flags: ClientFlagsJSON;
 };
 
@@ -124,8 +124,8 @@ export default class ServerBridge extends Bridge {
 		direction: "server->client",
 	});
 
-	setColumns = this.createEvent<number, void>({
-		name: "columns.set",
+	updateFeatures = this.createEvent<TerminalFeatures, void>({
+		name: "updateFeatures",
 		direction: "server<-client",
 	});
 

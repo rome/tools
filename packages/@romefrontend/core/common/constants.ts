@@ -9,6 +9,7 @@ import packageJson from "../../../../package.json";
 import os = require("os");
 
 import {TEMP_PATH, createAbsoluteFilePath} from "@romefrontend/path";
+import {getEnvVar} from "@romefrontend/environment";
 
 export const CHILD_ARGS = ["--max-old-space-size=8192"];
 
@@ -29,7 +30,7 @@ export let VERSION = String(packageJson.version);
 
 // Vendor Rome and Trunk Rome could have the same version number if there was no release in between
 // Ensure they are properly namespaced to avoid having daemon socket conflicts
-if (process.env.ROME_DEV === "1") {
+if (getEnvVar("ROME_DEV").type === "ENABLED") {
 	VERSION += "-dev";
 }
 

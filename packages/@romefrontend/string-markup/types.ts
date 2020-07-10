@@ -10,6 +10,7 @@ import {Dict} from "@romefrontend/typescript-helpers";
 import {AbsoluteFilePath} from "@romefrontend/path";
 import {UserConfig} from "@romefrontend/core/common/userConfig";
 import {Number0, Number1} from "@romefrontend/ob1";
+import {TerminalFeatures} from "@romefrontend/environment";
 
 export type Tokens = BaseTokens & {
 	Text: ValueToken<"Text", string>;
@@ -93,6 +94,7 @@ export type MarkupFormatOptions = {
 };
 
 export type MarkupFormatGridOptions = MarkupFormatOptions & {
+	features?: TerminalFeatures;
 	columns?: number;
 };
 

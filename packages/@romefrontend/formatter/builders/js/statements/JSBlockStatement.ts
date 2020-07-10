@@ -50,14 +50,12 @@ export default function JSBlockStatement(
 
 	if (hasDirectives) {
 		for (const directive of node.directives!) {
-			tokens.push(indent(concat([hardline, builder.tokenize(directive, node)])));
+			tokens.push(indent(builder.tokenize(directive, node), true));
 		}
 	}
 
 	if (hasContents) {
-		tokens.push(
-			indent(concat([hardline, builder.tokenizeStatementList(node.body, node)])),
-		);
+		tokens.push(indent(builder.tokenizeStatementList(node.body, node), true));
 	}
 
 	if (hasComments) {

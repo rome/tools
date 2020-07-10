@@ -17,8 +17,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='article'
-  + <article></article>
+    1   │ - <article role="article">
+      1 │ + <article>
+    2 2 │   </article>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -29,7 +30,8 @@
 ### `0: formatted`
 
 ```
-<article role="article"></article>;
+<article role="article">
+</article>;
 
 ```
 
@@ -46,8 +48,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='button'
-  + <button></button>
+    1   │ - <button role="button">
+      1 │ + <button>
+    2 2 │   </button>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -58,7 +61,8 @@
 ### `1: formatted`
 
 ```
-<button role="button"></button>;
+<button role="button">
+</button>;
 
 ```
 
@@ -75,8 +79,9 @@
 
   Suggested fix: Remove the role attribute and ARIA attributes.
 
-  - role='heading' aria-level='1'
-  + <h1></h1>
+    1   │ - <h1 role="heading" aria-level="1">
+      1 │ + <h1>
+    2 2 │   </h1>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -87,7 +92,8 @@
 ### `2: formatted`
 
 ```
-<h1 role="heading" aria-level="1"></h1>;
+<h1 role="heading" aria-level="1">
+</h1>;
 
 ```
 
@@ -104,8 +110,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='heading'
-  + <h1></h1>
+    1   │ - <h1 role="heading">
+      1 │ + <h1>
+    2 2 │   </h1>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -116,7 +123,8 @@
 ### `3: formatted`
 
 ```
-<h1 role="heading"></h1>;
+<h1 role="heading">
+</h1>;
 
 ```
 
@@ -133,8 +141,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='dialog'
-  + <dialog></dialog>
+    1   │ - <dialog role="dialog">
+      1 │ + <dialog>
+    2 2 │   </dialog>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -145,7 +154,8 @@
 ### `4: formatted`
 
 ```
-<dialog role="dialog"></dialog>;
+<dialog role="dialog">
+</dialog>;
 
 ```
 
@@ -162,7 +172,7 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='checkbox'
+  - <input type="checkbox" role="checkbox" />
   + <input type="checkbox" />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -191,8 +201,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='figure'
-  + <figure></figure>
+    1   │ - <figure role="figure">
+      1 │ + <figure>
+    2 2 │   </figure>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -203,7 +214,8 @@
 ### `6: formatted`
 
 ```
-<figure role="figure"></figure>;
+<figure role="figure">
+</figure>;
 
 ```
 
@@ -220,8 +232,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='form'
-  + <form></form>
+    1   │ - <form role="form">
+      1 │ + <form>
+    2 2 │   </form>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -232,7 +245,8 @@
 ### `7: formatted`
 
 ```
-<form role="form"></form>;
+<form role="form">
+</form>;
 
 ```
 
@@ -249,8 +263,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='grid'
-  + <table></table>
+    1   │ - <table role="grid">
+      1 │ + <table>
+    2 2 │   </table>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -261,7 +276,8 @@
 ### `8: formatted`
 
 ```
-<table role="grid"></table>;
+<table role="grid">
+</table>;
 
 ```
 
@@ -278,8 +294,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='gridcell'
-  + <td></td>
+    1   │ - <td role="gridcell">
+      1 │ + <td>
+    2 2 │   </td>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -290,7 +307,8 @@
 ### `9: formatted`
 
 ```
-<td role="gridcell"></td>;
+<td role="gridcell">
+</td>;
 
 ```
 
@@ -307,8 +325,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='group'
-  + <fieldset></fieldset>
+    1   │ - <fieldset role="group">
+      1 │ + <fieldset>
+    2 2 │   </fieldset>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -319,7 +338,8 @@
 ### `10: formatted`
 
 ```
-<fieldset role="group"></fieldset>;
+<fieldset role="group">
+</fieldset>;
 
 ```
 
@@ -336,7 +356,7 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='img'
+  - <img src="foo" alt="bar" role="img" />
   + <img src="foo" alt="bar" />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -365,8 +385,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='link'
-  + <a></a>
+    1   │ - <a role="link">
+      1 │ + <a>
+    2 2 │   </a>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -377,7 +398,8 @@
 ### `12: formatted`
 
 ```
-<a role="link"></a>;
+<a role="link">
+</a>;
 
 ```
 
@@ -394,7 +416,7 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='link'
+  - <link role="link" />
   + <link />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -423,8 +445,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='list'
-  + <ol></ol>
+    1   │ - <ol role="list">
+      1 │ + <ol>
+    2 2 │   </ol>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -435,7 +458,8 @@
 ### `14: formatted`
 
 ```
-<ol role="list"></ol>;
+<ol role="list">
+</ol>;
 
 ```
 
@@ -452,8 +476,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='list'
-  + <ul></ul>
+    1   │ - <ul role="list">
+      1 │ + <ul>
+    2 2 │   </ul>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -464,7 +489,8 @@
 ### `15: formatted`
 
 ```
-<ul role="list"></ul>;
+<ul role="list">
+</ul>;
 
 ```
 
@@ -481,8 +507,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='listbox'
-  + <select></select>
+    1   │ - <select role="listbox">
+      1 │ + <select>
+    2 2 │   </select>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -493,7 +520,8 @@
 ### `16: formatted`
 
 ```
-<select role="listbox"></select>;
+<select role="listbox">
+</select>;
 
 ```
 
@@ -510,8 +538,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='listitem'
-  + <li></li>
+    1   │ - <li role="listitem">
+      1 │ + <li>
+    2 2 │   </li>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -522,7 +551,8 @@
 ### `17: formatted`
 
 ```
-<li role="listitem"></li>;
+<li role="listitem">
+</li>;
 
 ```
 
@@ -539,8 +569,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='navigation'
-  + <nav></nav>
+    1   │ - <nav role="navigation">
+      1 │ + <nav>
+    2 2 │   </nav>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -551,7 +582,8 @@
 ### `18: formatted`
 
 ```
-<nav role="navigation"></nav>;
+<nav role="navigation">
+</nav>;
 
 ```
 
@@ -568,8 +600,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='option'
-  + <option></option>
+    1   │ - <option role="option">
+      1 │ + <option>
+    2 2 │   </option>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -580,7 +613,8 @@
 ### `19: formatted`
 
 ```
-<option role="option"></option>;
+<option role="option">
+</option>;
 
 ```
 
@@ -597,8 +631,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='row'
-  + <tr></tr>
+    1   │ - <tr role="row">
+      1 │ + <tr>
+    2 2 │   </tr>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -609,7 +644,8 @@
 ### `20: formatted`
 
 ```
-<tr role="row"></tr>;
+<tr role="row">
+</tr>;
 
 ```
 
@@ -626,8 +662,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='rowgroup'
-  + <tbody></tbody>
+    1   │ - <tbody role="rowgroup">
+      1 │ + <tbody>
+    2 2 │   </tbody>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -638,7 +675,8 @@
 ### `21: formatted`
 
 ```
-<tbody role="rowgroup"></tbody>;
+<tbody role="rowgroup">
+</tbody>;
 
 ```
 
@@ -655,8 +693,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='rowgroup'
-  + <tfoot></tfoot>
+    1   │ - <tfoot role="rowgroup">
+      1 │ + <tfoot>
+    2 2 │   </tfoot>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -667,7 +706,8 @@
 ### `22: formatted`
 
 ```
-<tfoot role="rowgroup"></tfoot>;
+<tfoot role="rowgroup">
+</tfoot>;
 
 ```
 
@@ -684,8 +724,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='rowgroup'
-  + <thead></thead>
+    1   │ - <thead role="rowgroup">
+      1 │ + <thead>
+    2 2 │   </thead>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -696,7 +737,8 @@
 ### `23: formatted`
 
 ```
-<thead role="rowgroup"></thead>;
+<thead role="rowgroup">
+</thead>;
 
 ```
 
@@ -713,8 +755,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='rowheader'
-  + <th scope="row"></th>
+    1   │ - <th scope="row" role="rowheader">
+      1 │ + <th scope="row">
+    2 2 │   </th>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -725,7 +768,8 @@
 ### `24: formatted`
 
 ```
-<th scope="row" role="rowheader"></th>;
+<th scope="row" role="rowheader">
+</th>;
 
 ```
 
@@ -742,7 +786,7 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='searchbox'
+  - <input type="search" role="searchbox" />
   + <input type="search" />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -771,8 +815,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='table'
-  + <table></table>
+    1   │ - <table role="table">
+      1 │ + <table>
+    2 2 │   </table>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -783,7 +828,8 @@
 ### `26: formatted`
 
 ```
-<table role="table"></table>;
+<table role="table">
+</table>;
 
 ```
 
@@ -800,8 +846,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='term'
-  + <dt></dt>
+    1   │ - <dt role="term">
+      1 │ + <dt>
+    2 2 │   </dt>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -812,7 +859,8 @@
 ### `27: formatted`
 
 ```
-<dt role="term"></dt>;
+<dt role="term">
+</dt>;
 
 ```
 
@@ -829,8 +877,9 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='textbox'
-  + <textarea></textarea>
+    1   │ - <textarea role="textbox">
+      1 │ + <textarea>
+    2 2 │   </textarea>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -841,7 +890,8 @@
 ### `28: formatted`
 
 ```
-<textarea role="textbox"></textarea>;
+<textarea role="textbox">
+</textarea>;
 
 ```
 
@@ -858,7 +908,7 @@
 
   Suggested fix: Remove the role attribute.
 
-  - role='textbox'
+  - <input type="text" role="textbox" />
   + <input type="text" />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -884,7 +934,8 @@
 ### `30: formatted`
 
 ```
-<article role="presentation"></article>;
+<article role="presentation">
+</article>;
 
 ```
 
@@ -898,7 +949,8 @@
 ### `31: formatted`
 
 ```
-<Button role="button"></Button>;
+<Button role="button">
+</Button>;
 
 ```
 
@@ -912,6 +964,7 @@
 ### `32: formatted`
 
 ```
-<span></span>;
+<span>
+</span>;
 
 ```

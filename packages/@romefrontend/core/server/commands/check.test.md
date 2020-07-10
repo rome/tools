@@ -10,28 +10,29 @@
 
  index.js:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ The unknownVariable variable is undeclared
+  × The unknownVariable variable is undeclared
 
     unknownVariable
     ^^^^^^^^^^^^^^^
 
  index.js lint/pendingFixes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Pending formatting and recommended autofixes
+  × Pending formatting and recommended autofixes
 
-     1 │ + unknownVariable;
-     2 │ + 
+    1   │ - unknownVariable
+      1 │ + unknownVariable;
+      2 │ + 
 
-  ℹ To apply fixes and formatting run
-  $ rome check index.js --apply 
+  i To apply fixes and formatting run
+  $ rome check index.js --apply
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-ℹ Fixes available. To apply recommended fixes and formatting run
+i Fixes available. To apply recommended fixes and formatting run
 $ rome check --apply
-ℹ To choose fix suggestions run
+i To choose fix suggestions run
 $ rome check --review
-✖ Found 2 problems
+× Found 2 problems
 
 ```
 
@@ -58,7 +59,7 @@ unknownVariable
 
  index.js:1:4 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ The unformatted variable is undeclared
+  × The unformatted variable is undeclared
 
   > 1 │ if (unformatted) {
       │     ^^^^^^^^^^^
@@ -67,7 +68,7 @@ unknownVariable
 
  index.js:2:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ The swag variable is undeclared
+  × The swag variable is undeclared
 
     1 │ if (unformatted) {
   > 2 │  swag;
@@ -76,8 +77,8 @@ unknownVariable
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✔ 1 file updated
-✖ Found 2 problems
+√ 1 file updated
+× Found 2 problems
 
 ```
 

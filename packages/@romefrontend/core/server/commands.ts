@@ -33,6 +33,7 @@ import {Dict} from "@romefrontend/typescript-helpers";
 import ServerRequest from "./ServerRequest";
 import {JSONPropertyValue} from "@romefrontend/codec-json";
 import {SharedCommand} from "../common/commands";
+import {DiagnosticsPrinter} from "@romefrontend/cli-diagnostics";
 
 export type ServerCommand<Flags extends Dict<unknown>> = SharedCommand<Flags> & {
 	callback: (
@@ -45,6 +46,44 @@ export function createServerCommand<Flags extends Dict<unknown>>(
 	cmd: ServerCommand<Flags>,
 ): ServerCommand<Flags> {
 	return cmd;
+}
+
+export async function chainCommands(
+	req: ServerRequest,
+	fns: Array<{
+		title: string;
+		callback: () => Promise<void>;
+	}>,
+): Promise<void> {
+	let printer: undefined | DiagnosticsPrinter;
+
+	await req.reporter.steps(
+		fns.map(({callback, title}) => {
+			return {
+				clear: true,
+				message: title,
+				async callback() {
+					try {
+						await callback();
+					} catch (err) {
+						if (err instanceof DiagnosticsPrinter) {
+							if (printer === undefined) {
+								printer = err;
+							} else {
+								printer = printer.concat(err);
+							}
+						} else {
+							throw err;
+						}
+					}
+				},
+			};
+		}),
+	);
+
+	if (printer !== undefined) {
+		throw printer;
+	}
 }
 
 // rome-ignore lint/js/noExplicitAny

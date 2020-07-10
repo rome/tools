@@ -16,8 +16,7 @@
 
   ℹ Recommended fix
 
-     1 │ + export default function test() {}
-     2 │ + 
+  ℹ Only difference is leading and trailing whitespace
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -44,8 +43,7 @@ export default function foo() {}
 
   ℹ Recommended fix
 
-     1 │ + export default class Test {}
-     2 │ + 
+  ℹ Only difference is leading and trailing whitespace
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

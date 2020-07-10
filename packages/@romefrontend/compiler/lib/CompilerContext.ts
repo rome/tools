@@ -46,7 +46,6 @@ import {
 	matchesSuppression,
 } from "../suppressions";
 import CommentsConsumer from "@romefrontend/js-parser/CommentsConsumer";
-import {ob1Get0} from "@romefrontend/ob1";
 import {hookVisitors} from "../transforms";
 import stringDiff from "@romefrontend/string-diff";
 import {formatAST} from "@romefrontend/formatter";
@@ -65,7 +64,6 @@ export type ContextArg = {
 	ast: AnyRoot;
 	suppressions?: DiagnosticSuppressions;
 	ref?: FileReference;
-	sourceText?: string;
 	project?: TransformProjectDefinition;
 	frozen?: boolean;
 	options?: CompilerOptions;
@@ -94,8 +92,9 @@ type DiagnosticTarget =
 
 function getFormattedCodeFromExitResult(result: TransformExitResult): string {
 	if (Array.isArray(result)) {
-		// TODO?
-		return "";
+		return result.map((node) => {
+			return formatAST(node).code;
+		}).filter((str) => str !== "").join("\n");
 	} else if (result === REDUCE_REMOVE) {
 		return "";
 	} else {
@@ -111,7 +110,6 @@ export default class CompilerContext {
 			ref,
 			frozen = false,
 			options = {},
-			sourceText = "",
 			project = {
 				folder: undefined,
 				config: createDefaultProjectConfig(),
@@ -123,7 +121,6 @@ export default class CompilerContext {
 
 		this.path = createUnknownFilePath(ast.filename);
 		this.filename = ast.filename;
-		this.sourceText = sourceText;
 		this.displayFilename =
 			ref === undefined ? ast.filename : ref.relative.join();
 		this.frozen = frozen;
@@ -155,7 +152,6 @@ export default class CompilerContext {
 	filename: string;
 	path: UnknownFilePath;
 	project: TransformProjectDefinition;
-	sourceText: string;
 
 	language: DiagnosticLanguage;
 	sourceTypeJS: undefined | ConstJSSourceType;
@@ -294,13 +290,6 @@ export default class CompilerContext {
 		const {category} = description;
 		const advice = [...description.advice];
 		const loc = this.getLoc(target);
-		const oldCode =
-			loc === undefined
-				? ""
-				: this.sourceText.slice(
-						ob1Get0(loc.start.index),
-						ob1Get0(loc.end.index),
-					);
 
 		let fixed: undefined | New = defaultFixed;
 
@@ -314,8 +303,12 @@ export default class CompilerContext {
 
 			advice.push({
 				type: "diff",
-				diff: stringDiff(oldCode, getFormattedCodeFromExitResult(defaultFixed)),
+				diff: stringDiff(
+					getFormattedCodeFromExitResult(old),
+					getFormattedCodeFromExitResult(defaultFixed),
+				),
 			});
+
 			if (loc === undefined) {
 				advice.push({
 					type: "log",
@@ -385,7 +378,7 @@ export default class CompilerContext {
 				advice.push({
 					type: "diff",
 					diff: stringDiff(
-						oldCode,
+						getFormattedCodeFromExitResult(old),
 						getFormattedCodeFromExitResult(suggestion.fixed),
 					),
 				});

@@ -62,7 +62,7 @@ import {
 	createAbsoluteFilePath,
 	createUnknownFilePath,
 } from "@romefrontend/path";
-import {Dict} from "@romefrontend/typescript-helpers";
+import {Dict, mergeObjects} from "@romefrontend/typescript-helpers";
 import LSPServer from "./lsp/LSPServer";
 import ServerReporter from "./ServerReporter";
 import VirtualModules from "./fs/VirtualModules";
@@ -115,10 +115,10 @@ const disallowedFlagsWhenReviewing: Array<keyof ClientRequestFlags> = ["watch"];
 export function partialServerQueryRequestToFull(
 	partialQuery: PartialServerQueryRequest,
 ): ServerQueryRequest {
-	const requestFlags: ClientRequestFlags = {
-		...DEFAULT_CLIENT_REQUEST_FLAGS,
-		...partialQuery.requestFlags,
-	};
+	const requestFlags: ClientRequestFlags = mergeObjects(
+		DEFAULT_CLIENT_REQUEST_FLAGS,
+		partialQuery.requestFlags || {},
+	);
 
 	return {
 		commandName: partialQuery.commandName,
@@ -612,9 +612,8 @@ export default class Server {
 			flags: rawFlags,
 			useRemoteReporter,
 			hasClearScreen,
-			columns,
-			unicode,
-			format,
+			outputFormat,
+			outputSupport,
 			version,
 		} = await bridge.getClientInfo.call();
 
@@ -624,11 +623,10 @@ export default class Server {
 			cwd: createAbsoluteFilePath(rawFlags.cwd),
 		};
 
-		const outStream: ReporterStream = {
+		let outStream: ReporterStream = {
 			type: "out",
-			columns,
-			format,
-			unicode,
+			format: outputFormat,
+			features: outputSupport,
 			write(chunk: string) {
 				if (flags.silent === true) {
 					return;
@@ -647,7 +645,7 @@ export default class Server {
 			},
 		};
 
-		const errStream: ReporterStream = {
+		let errStream: ReporterStream = {
 			...outStream,
 			type: "error",
 			write(chunk: string) {
@@ -655,8 +653,11 @@ export default class Server {
 			},
 		};
 
-		bridge.setColumns.subscribe((columns) => {
-			reporter.setStreamColumns([outStream, errStream], columns);
+		bridge.updateFeatures.subscribe((features) => {
+			[outStream, errStream] = reporter.updateStreamsFeatures(
+				[outStream, errStream],
+				features,
+			);
 		});
 
 		// Initialize the reporter

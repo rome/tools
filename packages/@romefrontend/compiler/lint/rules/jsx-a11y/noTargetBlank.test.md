@@ -20,8 +20,9 @@
 
   ℹ Recommended fix
 
-  - target="_blank"
-  + <a href="http://external.link">child</a>
+    1   │ - <a href="http://external.link" target="_blank">
+      1 │ + <a href="http://external.link">
+    2 2 │     child
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -32,7 +33,9 @@
 ### `0: formatted`
 
 ```
-<a href="http://external.link">child</a>;
+<a href="http://external.link">
+	child
+</a>;
 
 ```
 
@@ -52,8 +55,9 @@
 
   ℹ Recommended fix
 
-  - target="_blank"
-  + <a href={dynamicLink}>child</a>
+    1   │ - <a href={dynamicLink} target="_blank">
+      1 │ + <a href={dynamicLink}>
+    2 2 │     child
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -64,7 +68,9 @@
 ### `1: formatted`
 
 ```
-<a href={dynamicLink}>child</a>;
+<a href={dynamicLink}>
+	child
+</a>;
 
 ```
 
@@ -78,7 +84,9 @@
 ### `2: formatted`
 
 ```
-<p href="http://external.link" target="_blank">child</p>;
+<p href="http://external.link" target="_blank">
+	child
+</p>;
 
 ```
 
@@ -92,7 +100,9 @@
 ### `3: formatted`
 
 ```
-<a href="http://external.link" rel="noreferrer" target="_blank">child</a>;
+<a href="http://external.link" rel="noreferrer" target="_blank">
+	child
+</a>;
 
 ```
 
@@ -106,7 +116,9 @@
 ### `4: formatted`
 
 ```
-<a href="http://external.link" rel="noopener noreferrer" target="_blank">child</a>;
+<a href="http://external.link" rel="noopener noreferrer" target="_blank">
+	child
+</a>;
 
 ```
 
@@ -120,7 +132,9 @@
 ### `5: formatted`
 
 ```
-<a href="relative/link" rel="noreferrer" target="_blank">child</a>;
+<a href="relative/link" rel="noreferrer" target="_blank">
+	child
+</a>;
 
 ```
 
@@ -134,7 +148,9 @@
 ### `6: formatted`
 
 ```
-<a href="/absolute/link" rel="noreferrer" target="_blank">child</a>;
+<a href="/absolute/link" rel="noreferrer" target="_blank">
+	child
+</a>;
 
 ```
 
@@ -148,6 +164,8 @@
 ### `7: formatted`
 
 ```
-<a href={dynamicLink} rel="noreferrer" target="_blank">child</a>;
+<a href={dynamicLink} rel="noreferrer" target="_blank">
+	child
+</a>;
 
 ```

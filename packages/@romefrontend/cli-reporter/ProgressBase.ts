@@ -7,6 +7,7 @@
 
 import Reporter from "./Reporter";
 import {ReporterProgress, ReporterProgressOptions} from "./types";
+import {mergeObjects} from "@romefrontend/typescript-helpers";
 
 const DEFAULT_PROGRESS_OPTIONS: ReporterProgressOptions = {
 	name: undefined,
@@ -35,10 +36,7 @@ export default class ProgressBase implements ReporterProgress {
 		this.pausedStart = undefined;
 		this.pausedElapsed = 0;
 
-		this.opts = {
-			...DEFAULT_PROGRESS_OPTIONS,
-			...opts,
-		};
+		this.opts = mergeObjects(DEFAULT_PROGRESS_OPTIONS, opts);
 	}
 
 	reporter: Reporter;

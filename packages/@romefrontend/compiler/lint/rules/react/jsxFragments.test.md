@@ -19,7 +19,12 @@
 
   ℹ Recommended fix
 
-  - <Fragment><Foo /><Foo /></Fragment>
+    1   │ - <Fragment>
+      1 │ + <>
+    2 2 │     <Foo />
+    3 3 │     <Foo />
+    4   │ - </Fragment>
+      4 │ + </>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -30,7 +35,10 @@
 ### `0: formatted`
 
 ```
-<><Foo /><Foo /></>;
+<>
+	<Foo />
+	<Foo />
+</>;
 
 ```
 
@@ -49,7 +57,12 @@
 
   ℹ Recommended fix
 
-  - <React.Fragment><Foo /><Foo /></React.Fragment>
+    1   │ - <React.Fragment>
+      1 │ + <>
+    2 2 │     <Foo />
+    3 3 │     <Foo />
+    4   │ - </React.Fragment>
+      4 │ + </>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -60,7 +73,10 @@
 ### `1: formatted`
 
 ```
-<><Foo /><Foo /></>;
+<>
+	<Foo />
+	<Foo />
+</>;
 
 ```
 
@@ -79,7 +95,12 @@
 
   ℹ Recommended fix
 
-  - <Fragment><Foo /><Foo /></Fragment>
+    1   │ - <Fragment>
+      1 │ + <>
+    2 2 │     <Foo />
+    3 3 │     <Foo />
+    4   │ - </Fragment>
+      4 │ + </>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -90,7 +111,10 @@
 ### `2: formatted`
 
 ```
-const Hello = <div><Foo /><Foo /></div>;
+const Hello = <div>
+	<Foo />
+	<Foo />
+</div>;
 
 ```
 
@@ -109,7 +133,12 @@ const Hello = <div><Foo /><Foo /></div>;
 
   ℹ Recommended fix
 
-  - <React.Fragment><Foo /><Foo /></React.Fragment>
+    1   │ - <React.Fragment>
+      1 │ + <>
+    2 2 │     <Foo />
+    3 3 │     <Foo />
+    4   │ - </React.Fragment>
+      4 │ + </>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -120,7 +149,10 @@ const Hello = <div><Foo /><Foo /></div>;
 ### `3: formatted`
 
 ```
-const Hello = <div><Foo /><Foo /></div>;
+const Hello = <div>
+	<Foo />
+	<Foo />
+</div>;
 
 ```
 
@@ -139,7 +171,12 @@ const Hello = <div><Foo /><Foo /></div>;
 
   ℹ Recommended fix
 
-  - <React.Fragment><Foo /><Foo /></React.Fragment>
+    1   │ - <React.Fragment>
+      1 │ + <>
+    2 2 │     <Foo />
+    3 3 │     <Foo />
+    4   │ - </React.Fragment>
+      4 │ + </>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -150,7 +187,10 @@ const Hello = <div><Foo /><Foo /></div>;
 ### `4: formatted`
 
 ```
-const Hello = <><Foo /><Foo /></>;
+const Hello = <>
+	<Foo />
+	<Foo />
+</>;
 
 ```
 
@@ -169,7 +209,12 @@ const Hello = <><Foo /><Foo /></>;
 
   ℹ Recommended fix
 
-  - <Fragment><Foo /><Foo /></Fragment>
+    1   │ - <Fragment>
+      1 │ + <>
+    2 2 │     <Foo />
+    3 3 │     <Foo />
+    4   │ - </Fragment>
+      4 │ + </>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -180,7 +225,10 @@ const Hello = <><Foo /><Foo /></>;
 ### `5: formatted`
 
 ```
-const Hello = <><Foo /><Foo /></>;
+const Hello = <>
+	<Foo />
+	<Foo />
+</>;
 
 ```
 
@@ -188,21 +236,26 @@ const Hello = <><Foo /><Foo /></>;
 
 ```
 
- unknown:3:16 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:11 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
-    2 │      function Foo() {
-  > 3 │       let bar = <React.Fragment><Foo /><Foo /></React.Fragment>;
-      │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    4 │       return bar;
-    5 │      }
+    1 │ function Foo() {
+  > 2 │  let bar = <React.Fragment><Foo /><Foo /></React.Fragment>;
+      │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │  return bar;
+    4 │ }
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
   ℹ Recommended fix
 
-  - <React.Fragment><Foo /><Foo /></React.Fragment>
+    1   │ - <React.Fragment>
+      1 │ + <>
+    2 2 │     <Foo />
+    3 3 │     <Foo />
+    4   │ - </React.Fragment>
+      4 │ + </>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -214,7 +267,10 @@ const Hello = <><Foo /><Foo /></>;
 
 ```
 function Foo() {
-	let bar = <><Foo /><Foo /></>;
+	let bar = <>
+		<Foo />
+		<Foo />
+	</>;
 	return bar;
 }
 
@@ -224,21 +280,26 @@ function Foo() {
 
 ```
 
- unknown:3:16 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:11 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
-    2 │      function Foo() {
-  > 3 │       let bar = <Fragment><Foo /><Foo /></Fragment>;
-      │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    4 │       return bar;
-    5 │      }
+    1 │ function Foo() {
+  > 2 │  let bar = <Fragment><Foo /><Foo /></Fragment>;
+      │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │  return bar;
+    4 │ }
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
   ℹ Recommended fix
 
-  - <Fragment><Foo /><Foo /></Fragment>
+    1   │ - <Fragment>
+      1 │ + <>
+    2 2 │     <Foo />
+    3 3 │     <Foo />
+    4   │ - </Fragment>
+      4 │ + </>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -250,7 +311,10 @@ function Foo() {
 
 ```
 function Foo() {
-	let bar = <><Foo /><Foo /></>;
+	let bar = <>
+		<Foo />
+		<Foo />
+	</>;
 	return bar;
 }
 
@@ -260,21 +324,25 @@ function Foo() {
 
 ```
 
- unknown:3:13 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:8 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
-    2 │      function Hello() {
-  > 3 │       return <React.Fragment><Foo /><Foo /></React.Fragment>
-      │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    4 │      }
-    5 │      
+    1 │ function Hello() {
+  > 2 │  return <React.Fragment><Foo /><Foo /></React.Fragment>
+      │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ }
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
   ℹ Recommended fix
 
-  - <React.Fragment><Foo /><Foo /></React.Fragment>
+    1   │ - <React.Fragment>
+      1 │ + <>
+    2 2 │     <Foo />
+    3 3 │     <Foo />
+    4   │ - </React.Fragment>
+      4 │ + </>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -286,7 +354,10 @@ function Foo() {
 
 ```
 function Hello() {
-	return <><Foo /><Foo /></>;
+	return <>
+		<Foo />
+		<Foo />
+	</>;
 }
 
 ```
@@ -303,13 +374,17 @@ function Hello() {
   > 2 │       return <Fragment><Foo /><Foo /></Fragment>
       │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     3 │      }
-    4 │      
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
   ℹ Recommended fix
 
-  - <Fragment><Foo /><Foo /></Fragment>
+    1   │ - <Fragment>
+      1 │ + <>
+    2 2 │     <Foo />
+    3 3 │     <Foo />
+    4   │ - </Fragment>
+      4 │ + </>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -321,7 +396,10 @@ function Hello() {
 
 ```
 function Hello() {
-	return <><Foo /><Foo /></>;
+	return <>
+		<Foo />
+		<Foo />
+	</>;
 }
 
 ```
@@ -341,7 +419,12 @@ function Hello() {
 
   ℹ Recommended fix
 
-  - <React.Fragment><Foo /><Foo /></React.Fragment>
+    1   │ - <React.Fragment>
+      1 │ + <>
+    2 2 │     <Foo />
+    3 3 │     <Foo />
+    4   │ - </React.Fragment>
+      4 │ + </>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -353,7 +436,10 @@ function Hello() {
 
 ```
 function Hello() {
-	return <><Foo /><Foo /></>;
+	return <>
+		<Foo />
+		<Foo />
+	</>;
 }
 
 ```
@@ -373,7 +459,12 @@ function Hello() {
 
   ℹ Recommended fix
 
-  - <Fragment><Foo /><Foo /></Fragment>
+    1   │ - <Fragment>
+      1 │ + <>
+    2 2 │     <Foo />
+    3 3 │     <Foo />
+    4   │ - </Fragment>
+      4 │ + </>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -385,7 +476,10 @@ function Hello() {
 
 ```
 function Hello() {
-	return <><Foo /><Foo /></>;
+	return <>
+		<Foo />
+		<Foo />
+	</>;
 }
 
 ```
@@ -400,7 +494,10 @@ function Hello() {
 ### `12: formatted`
 
 ```
-<><Foo /><Foo /></>;
+<>
+	<Foo />
+	<Foo />
+</>;
 
 ```
 
@@ -414,7 +511,8 @@ function Hello() {
 ### `13: formatted`
 
 ```
-<Fragment key="id"></Fragment>;
+<Fragment key="id">
+</Fragment>;
 
 ```
 
@@ -428,7 +526,9 @@ function Hello() {
 ### `14: formatted`
 
 ```
-<React.Fragment key="id"><Foo /></React.Fragment>;
+<React.Fragment key="id">
+	<Foo />
+</React.Fragment>;
 
 ```
 
@@ -442,7 +542,11 @@ function Hello() {
 ### `15: formatted`
 
 ```
-const Hello = <div><Fragment key="word"><Foo /></Fragment></div>;
+const Hello = <div>
+	<Fragment key="word">
+		<Foo />
+	</Fragment>
+</div>;
 
 ```
 
@@ -456,7 +560,9 @@ const Hello = <div><Fragment key="word"><Foo /></Fragment></div>;
 ### `16: formatted`
 
 ```
-const Hello = <>hello</>;
+const Hello = <>
+	hello
+</>;
 
 ```
 
@@ -470,7 +576,9 @@ const Hello = <>hello</>;
 ### `17: formatted`
 
 ```
-const Hello = <Fragment key="id"><Foo /></Fragment>;
+const Hello = <Fragment key="id">
+	<Foo />
+</Fragment>;
 
 ```
 
@@ -484,7 +592,9 @@ const Hello = <Fragment key="id"><Foo /></Fragment>;
 ### `18: formatted`
 
 ```
-const Hello = <React.Fragment key="id"><Foo /></React.Fragment>;
+const Hello = <React.Fragment key="id">
+	<Foo />
+</React.Fragment>;
 
 ```
 
@@ -499,7 +609,8 @@ const Hello = <React.Fragment key="id"><Foo /></React.Fragment>;
 
 ```
 function Foo() {
-	let bar = <React.Fragment key="word"></React.Fragment>;
+	let bar = <React.Fragment key="word">
+	</React.Fragment>;
 	return bar;
 }
 
@@ -516,7 +627,9 @@ function Foo() {
 
 ```
 function Hello() {
-	return <React.Fragment key="id"><Foo /></React.Fragment>;
+	return <React.Fragment key="id">
+		<Foo />
+	</React.Fragment>;
 }
 
 ```
@@ -532,7 +645,9 @@ function Hello() {
 
 ```
 function Hello() {
-	return <Fragment key="id"><Foo /></Fragment>;
+	return <Fragment key="id">
+		<Foo />
+	</Fragment>;
 }
 
 ```
@@ -548,7 +663,8 @@ function Hello() {
 
 ```
 function Hello() {
-	return <></>;
+	return <>
+	</>;
 }
 
 ```
@@ -564,7 +680,8 @@ function Hello() {
 
 ```
 function Hello() {
-	return <React.Fragment key="id"></React.Fragment>;
+	return <React.Fragment key="id">
+	</React.Fragment>;
 }
 
 ```
@@ -580,7 +697,8 @@ function Hello() {
 
 ```
 function Hello() {
-	return <Fragment key="id"></Fragment>;
+	return <Fragment key="id">
+	</Fragment>;
 }
 
 ```

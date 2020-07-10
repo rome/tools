@@ -50,7 +50,7 @@ export const diffConstants = {
 	ADD: DIFF_INSERT,
 };
 
-export type GroupDiffs = {
+export type UnifiedDiff = {
 	diffsByLine: Array<GroupDiffsLine>;
 	beforeLineCount: number;
 	afterLineCount: number;
@@ -66,39 +66,40 @@ function generateLineKey(beforeLine?: number, afterLine?: number) {
 	return `${beforeLine || ""}:${afterLine || ""}`;
 }
 
-export function groupDiffByLines(rawDiffs: Diffs): GroupDiffs {
-	const diffsByLine: Array<GroupDiffsLine> = [];
-
+export function stringDiffUnified(rawDiffs: Diffs): UnifiedDiff {
 	const modifiedLines: Set<string> = new Set();
 	const insertedLines: Map<string, GroupDiffsLine> = new Map();
+	const beforeLineToAfter: Map<number, number> = new Map();
 
 	let beforeLine = 1;
 	let afterLine = 1;
-	createLine();
+
+	function hasModifiedLine(beforeLine?: number, afterLine?: number): boolean {
+		return modifiedLines.has(generateLineKey(beforeLine, afterLine));
+	}
+
+	function maybeGetLine(
+		beforeLine?: number,
+		afterLine?: number,
+	): undefined | GroupDiffsLine {
+		return insertedLines.get(generateLineKey(beforeLine, afterLine));
+	}
 
 	function getLine(beforeLine?: number, afterLine?: number): GroupDiffsLine {
-		const line = insertedLines.get(generateLineKey(beforeLine, afterLine));
-		if (line === undefined) {
-			throw new Error("Expected line");
-		}
-		return line;
-	}
-
-	function pushLine(beforeLine?: number, afterLine?: number) {
 		const key = generateLineKey(beforeLine, afterLine);
-		if (insertedLines.has(key)) {
-			return;
+
+		const existing = insertedLines.get(key);
+		if (existing !== undefined) {
+			return existing;
 		}
 
-		const line: GroupDiffsLine = {beforeLine, afterLine, diffs: []};
+		const line: GroupDiffsLine = {
+			beforeLine,
+			afterLine,
+			diffs: [],
+		};
 		insertedLines.set(key, line);
-		diffsByLine.push(line);
-	}
-
-	function createLine() {
-		pushLine(beforeLine, afterLine);
-		pushLine(beforeLine, undefined);
-		pushLine(undefined, afterLine);
+		return line;
 	}
 
 	function pushToLine(diff: Diff) {
@@ -116,7 +117,11 @@ export function groupDiffByLines(rawDiffs: Diffs): GroupDiffs {
 			}
 
 			case diffConstants.EQUAL: {
-				getLine(beforeLine, afterLine).diffs.push(diff);
+				// We are still on the first line
+				if (beforeLine === 1 && afterLine === 1) {
+					beforeLineToAfter.set(1, 1);
+				}
+
 				getLine(undefined, afterLine).diffs.push(diff);
 				getLine(beforeLine, undefined).diffs.push(diff);
 				break;
@@ -164,35 +169,76 @@ export function groupDiffByLines(rawDiffs: Diffs): GroupDiffs {
 				}
 			}
 
-			createLine();
+			beforeLineToAfter.set(beforeLine, afterLine);
 			pushToLine([type, newLine]);
 		}
 	}
 
-	const diffsByLineClean = diffsByLine.filter((line) => {
-		if (line.beforeLine !== undefined && line.afterLine !== undefined) {
-			// Ignore if either side is modified
-			if (
-				modifiedLines.has(generateLineKey(line.beforeLine, undefined)) ||
-				modifiedLines.has(generateLineKey(undefined, line.afterLine))
-			) {
-				return false;
-			}
+	const beforeLineCount = beforeLine;
+	const afterLineCount = afterLine;
 
-			return true;
-		} else {
-			// Include if either side is modified
-			return (
-				modifiedLines.has(generateLineKey(undefined, line.afterLine)) ||
-				modifiedLines.has(generateLineKey(line.beforeLine, undefined))
+	// Merge identical lines
+	for (let beforeLine = 1; beforeLine <= beforeLineCount; beforeLine++) {
+		let afterLine = beforeLineToAfter.get(beforeLine)!;
+		if (!hasModifiedLine(beforeLine) && !hasModifiedLine(undefined, afterLine)) {
+			const line = getLine(beforeLine);
+			insertedLines.delete(generateLineKey(beforeLine, undefined));
+			insertedLines.delete(generateLineKey(undefined, afterLine));
+			insertedLines.set(
+				generateLineKey(beforeLine, afterLine),
+				{beforeLine, afterLine, diffs: line.diffs},
 			);
 		}
-	});
+	}
+
+	const diffsByLineWithBeforeAndShared: Array<GroupDiffsLine> = [];
+
+	// Print before lines, including those that are shared
+	for (let beforeLine = 1; beforeLine <= beforeLineCount; beforeLine++) {
+		const line = maybeGetLine(beforeLine);
+		if (line !== undefined) {
+			diffsByLineWithBeforeAndShared.push(line);
+		}
+
+		// If we have a shared line then add it
+		const afterLine = beforeLineToAfter.get(beforeLine);
+		if (afterLine !== undefined) {
+			const line = maybeGetLine(beforeLine, afterLine);
+			if (line !== undefined) {
+				diffsByLineWithBeforeAndShared.push(line);
+			}
+		}
+	}
+
+	let lastPrintedAfter = 0;
+	let diffsByLine: Array<GroupDiffsLine> = [];
+
+	function catchUpAfter(afterLine: number) {
+		for (let i = lastPrintedAfter + 1; i <= afterLine; i++) {
+			const line = maybeGetLine(undefined, i);
+			if (line !== undefined) {
+				diffsByLine.push(line);
+			}
+		}
+		lastPrintedAfter = afterLine;
+	}
+
+	// Catch up after lines when we hit a shared line
+	for (const line of diffsByLineWithBeforeAndShared) {
+		const {afterLine} = line;
+		if (afterLine !== undefined) {
+			catchUpAfter(afterLine);
+		}
+		diffsByLine.push(line);
+	}
+
+	// Push on remaining lines at the end
+	catchUpAfter(afterLineCount);
 
 	return {
-		diffsByLine: diffsByLineClean,
-		beforeLineCount: beforeLine,
-		afterLineCount: afterLine,
+		diffsByLine,
+		beforeLineCount,
+		afterLineCount,
 	};
 }
 

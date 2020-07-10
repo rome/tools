@@ -13,22 +13,38 @@ import {
 import OneDarkPro from "../syntax-theme/OneDarkPro.json";
 import {Dict} from "@romefrontend/typescript-helpers";
 import {Consumer, consumeUnknown} from "@romefrontend/consume";
+import {TerminalFeatures} from "@romefrontend/environment";
 
 export function ansiFormatText(
 	{name: tagName, attributes}: TagNode,
 	value: string,
 	opts: MarkupFormatOptions,
+	features: TerminalFeatures,
 ): string {
 	switch (tagName) {
 		case "hyperlink": {
-			return formatAnsi.hyperlink(attributes.target || "", value);
+			if (features.hyperlinks) {
+				return formatAnsi.hyperlink(attributes.target || "", value);
+			} else {
+				return value;
+			}
 		}
 
 		case "filelink": {
-			const {filename} = buildFileLink(attributes, opts);
-			return formatAnsi.hyperlink(value, `file://${filename}`);
+			if (features.hyperlinks) {
+				const {filename} = buildFileLink(attributes, opts);
+				return formatAnsi.hyperlink(value, `file://${filename}`);
+			} else {
+				return value;
+			}
 		}
+	}
 
+	if (!features.color) {
+		return value;
+	}
+
+	switch (tagName) {
 		case "inverse":
 			return formatAnsi.inverse(value);
 

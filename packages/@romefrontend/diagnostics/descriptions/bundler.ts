@@ -18,7 +18,7 @@ export const bundler = createDiagnosticsCategory({
 			} else if (part === target) {
 				return `<highlight i="1" legend>${tagged}</highlight>`;
 			} else if (index === 0) {
-				return `${tagged} <inverse>ENTRY</inverse>`;
+				return `${tagged} <inverse> ENTRY </inverse>`;
 			} else {
 				return tagged;
 			}

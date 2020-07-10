@@ -26,7 +26,8 @@
 ### `0: formatted`
 
 ```
-<h1 role="checkbox"></h1>;
+<h1 role="checkbox">
+</h1>;
 
 ```
 
@@ -40,6 +41,7 @@
 ### `1: formatted`
 
 ```
-<h1 role="article"></h1>;
+<h1 role="article">
+</h1>;
 
 ```

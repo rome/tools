@@ -34,7 +34,7 @@ export default createLocalCommand({
 		}
 
 		bridge.lspFromServerBuffer.subscribe((chunk) => {
-			req.client.derivedReporterStreams.stdout.write(chunk);
+			req.client.derivedReporterStreams.stdoutWrite(chunk);
 		});
 
 		stdin.on(

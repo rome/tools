@@ -23,7 +23,7 @@ import {
 	diagnosticLocationToMarkupFilelink,
 } from "@romefrontend/diagnostics";
 import {Position} from "@romefrontend/parser-core";
-import {ToLines, showInvisibles, toLines} from "./utils";
+import {ToLines, toLines} from "./utils";
 import buildPatchCodeFrame from "./buildPatchCodeFrame";
 import buildMessageCodeFrame from "./buildMessageCodeFrame";
 import {
@@ -34,7 +34,7 @@ import {
 import {DiagnosticsPrinterFlags} from "./types";
 import {ob1Number0Neg1} from "@romefrontend/ob1";
 import DiagnosticsPrinter, {DiagnosticsPrinterFileSources} from "./DiagnosticsPrinter";
-import {AbsoluteFilePathSet} from "@romefrontend/path";
+import {AbsoluteFilePathSet, createUnknownFilePath} from "@romefrontend/path";
 import {MAX_CODE_LENGTH, MAX_LOG_LENGTH} from "./constants";
 import {Diffs, diffConstants} from "@romefrontend/string-diff";
 import {removeCarriageReturn} from "@romefrontend/string-utils";
@@ -247,7 +247,7 @@ function printDiff(
 ): PrintAdviceResult {
 	const {frame, truncated} = buildPatchCodeFrame(
 		item,
-		opts.flags.verboseDiagnostics,
+		opts.flags.verboseDiagnostics !== false,
 	);
 	if (frame === "") {
 		return DID_NOT_PRINT;
@@ -306,22 +306,24 @@ function printCode(
 		!opts.flags.verboseDiagnostics && item.code.length > MAX_CODE_LENGTH;
 	let code = truncated ? item.code.slice(0, MAX_CODE_LENGTH) : item.code;
 
-	reporter.indent(() => {
-		if (code === "") {
-			reporter.logAll("<dim>empty input</dim>");
-		} else {
-			// If it's a string with only whitespace then make it obvious
-			if (code.trim() === "") {
-				code = showInvisibles(code);
-			}
-
-			reporter.logAll(`<nobr>${escapeMarkup(code)}</nobr>`);
-		}
-
-		if (truncated) {
-			printTruncated(reporter, item.code.length - MAX_CODE_LENGTH);
-		}
+	const frame = buildMessageCodeFrame({
+		sourceText: code,
+		lines: toLines({
+			input: code,
+			path: createUnknownFilePath("inline"),
+			sourceTypeJS: item.sourceTypeJS,
+			language: item.language,
+		}),
 	});
+	if (frame.trim() === "") {
+		return DID_NOT_PRINT;
+	}
+
+	reporter.logAll(frame);
+
+	if (truncated) {
+		printTruncated(reporter, item.code.length - MAX_CODE_LENGTH);
+	}
 
 	return {
 		printed: true,
@@ -352,7 +354,7 @@ function printFrame(
 		lines = toLines({
 			path,
 			input: sourceText,
-			sourceType: item.location.sourceTypeJS,
+			sourceTypeJS: item.location.sourceTypeJS,
 			language: item.location.language,
 		});
 	} else if (filename !== undefined) {
@@ -376,13 +378,13 @@ function printFrame(
 		sourceText = "";
 	}
 
-	const frame = buildMessageCodeFrame(
+	const frame = buildMessageCodeFrame({
 		sourceText,
 		lines,
 		start,
 		end,
-		cleanMarker,
-	);
+		markerMessage: cleanMarker,
+	});
 	if (frame.trim() === "") {
 		return DID_NOT_PRINT;
 	}

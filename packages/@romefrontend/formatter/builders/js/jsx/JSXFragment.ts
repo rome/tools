@@ -8,11 +8,15 @@
 import {Builder, Token, concat, indent} from "@romefrontend/formatter";
 
 import {JSXFragment} from "@romefrontend/ast";
+import {hardline} from "@romefrontend/formatter/tokens";
 
 export default function JSXFragment(builder: Builder, node: JSXFragment): Token {
 	return concat([
 		"<>",
-		indent(concat(node.children.map((child) => builder.tokenize(child, node)))),
+		concat([
+			indent(builder.tokenizeStatementList(node.children, node), true),
+			hardline,
+		]),
 		"</>",
 	]);
 }

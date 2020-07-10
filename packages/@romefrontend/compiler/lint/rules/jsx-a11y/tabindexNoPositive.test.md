@@ -20,8 +20,10 @@
 
   ℹ Recommended fix
 
-  - tabIndex='5'
-  + <span>foo</span>
+    1   │ - tabIndex="5"
+      1 │ + <span>
+      2 │ +   foo
+      3 │ + </span>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -32,7 +34,9 @@
 ### `0: formatted`
 
 ```
-<span tabIndex="5">foo</span>;
+<span tabIndex="5">
+	foo
+</span>;
 
 ```
 
@@ -52,8 +56,10 @@
 
   ℹ Recommended fix
 
-  - tabIndex={5}
-  + <span>foo</span>
+    1   │ - tabIndex={5}
+      1 │ + <span>
+      2 │ +   foo
+      3 │ + </span>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -64,7 +70,9 @@
 ### `1: formatted`
 
 ```
-<span tabIndex={5}>foo</span>;
+<span tabIndex={5}>
+	foo
+</span>;
 
 ```
 
@@ -84,8 +92,10 @@
 
   ℹ Recommended fix
 
-  - tabIndex={'5'}
-  + <span>foo</span>
+    1   │ - tabIndex={"5"}
+      1 │ + <span>
+      2 │ +   foo
+      3 │ + </span>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -96,7 +106,9 @@
 ### `2: formatted`
 
 ```
-<span tabIndex={"5"}>foo</span>;
+<span tabIndex={"5"}>
+	foo
+</span>;
 
 ```
 
@@ -110,7 +122,9 @@
 ### `3: formatted`
 
 ```
-<span tabIndex={0}>baz</span>;
+<span tabIndex={0}>
+	baz
+</span>;
 
 ```
 
@@ -124,7 +138,9 @@
 ### `4: formatted`
 
 ```
-<span tabIndex={-1}>baz</span>;
+<span tabIndex={-1}>
+	baz
+</span>;
 
 ```
 
@@ -138,7 +154,9 @@
 ### `5: formatted`
 
 ```
-<span tabIndex="-1">baz</span>;
+<span tabIndex="-1">
+	baz
+</span>;
 
 ```
 
@@ -152,7 +170,9 @@
 ### `6: formatted`
 
 ```
-<span tabIndex="0">baz</span>;
+<span tabIndex="0">
+	baz
+</span>;
 
 ```
 
@@ -166,7 +186,9 @@
 ### `7: formatted`
 
 ```
-<span tabIndex={dynamic}>baz</span>;
+<span tabIndex={dynamic}>
+	baz
+</span>;
 
 ```
 
@@ -180,6 +202,8 @@
 ### `8: formatted`
 
 ```
-<span tabIndex={undefined}>baz</span>;
+<span tabIndex={undefined}>
+	baz
+</span>;
 
 ```

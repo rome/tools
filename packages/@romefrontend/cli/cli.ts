@@ -8,8 +8,8 @@
 import {
 	Client,
 	ClientFlags,
-	ClientReporterOverrides,
 	ClientRequestFlags,
+	ClientTerminalFeatures,
 	DEFAULT_CLIENT_FLAGS,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 	PLATFORMS,
@@ -19,7 +19,7 @@ import {
 } from "@romefrontend/core";
 import setProcessTitle from "./utils/setProcessTitle";
 import {parseCLIFlagsFromProcess} from "@romefrontend/cli-flags";
-import {UnknownFilePath, createAbsoluteFilePath} from "@romefrontend/path";
+import {CWD_PATH, UnknownFilePath} from "@romefrontend/path";
 import {Consumer} from "@romefrontend/consume";
 import {
 	ClientProfileOptions,
@@ -30,6 +30,7 @@ import {writeFile} from "@romefrontend/fs";
 import fs = require("fs");
 import {markup} from "@romefrontend/string-markup";
 import {JSONObject, stringifyJSON} from "@romefrontend/codec-json";
+import {getEnvVar} from "@romefrontend/environment";
 
 type CLIFlags = {
 	logs: boolean;
@@ -49,7 +50,7 @@ type CLIFlags = {
 export default async function cli() {
 	setProcessTitle("cli");
 	const p = parseCLIFlagsFromProcess({
-		programName: process.env.ROME_DEV === "1" ? "dev-rome" : "rome",
+		programName: getEnvVar("ROME_DEV").type === "ENABLED" ? "dev-rome" : "rome",
 		usage: "[command] [flags]",
 		version: VERSION,
 		commandRequired: true,
@@ -62,7 +63,7 @@ export default async function cli() {
 		defineFlags(
 			c: Consumer,
 		): {
-			reporterOverrides: ClientReporterOverrides;
+			reporterOverrides: ClientTerminalFeatures;
 			cliFlags: CLIFlags;
 			clientFlags: ClientFlags;
 			requestFlags: ClientRequestFlags;
@@ -75,7 +76,7 @@ export default async function cli() {
 					{
 						description: "Specify a different working directory",
 					},
-				).asAbsoluteFilePathOrVoid() || createAbsoluteFilePath(process.cwd());
+				).asAbsoluteFilePathOrVoid() || CWD_PATH;
 
 			return {
 				reporterOverrides: {
@@ -192,6 +193,15 @@ export default async function cli() {
 					...overrideCLIFlags,
 				},
 				requestFlags: {
+					auxiliaryDiagnosticFormat: c.get(
+						"auxiliaryDiagnosticFormat",
+						{
+							description: "When printing diagnostics, output another format alongside",
+						},
+					).asStringSetOrVoid(
+						["github-actions"],
+						DEFAULT_CLIENT_REQUEST_FLAGS.auxiliaryDiagnosticFormat,
+					),
 					benchmark: c.get(
 						"benchmark",
 						{
@@ -252,12 +262,13 @@ export default async function cli() {
 							description: "Cap the amount of diagnostics displayed",
 						},
 					).asNumber(DEFAULT_CLIENT_REQUEST_FLAGS.maxDiagnostics),
+					// false is inlined from DEFAULT_CLIENT_REQUEST_FLAGS.verboseDiagnostics
 					verboseDiagnostics: c.get(
 						"verboseDiagnostics",
 						{
 							description: "Display hidden and truncated diagnostic information",
 						},
-					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.verboseDiagnostics),
+					).asBoolean(false),
 					showAllDiagnostics: c.get(
 						"showAllDiagnostics",
 						{
@@ -368,6 +379,13 @@ export default async function cli() {
 	// Initialize flags
 	let {reporterOverrides, clientFlags, cliFlags, requestFlags} = await p.init();
 
+	// Default according to env vars
+	if (requestFlags.auxiliaryDiagnosticFormat === undefined) {
+		if (getEnvVar("GITHUB_ACTIONS").type === "ENABLED") {
+			requestFlags.auxiliaryDiagnosticFormat = "github-actions";
+		}
+	}
+
 	// Force collection of markers if markersPath or we are raging
 	if (cliFlags.markersPath || cliFlags.rage) {
 		requestFlags.collectMarkers = true;
@@ -379,7 +397,7 @@ export default async function cli() {
 	}
 
 	const client = new Client({
-		reporterOverrides,
+		terminalFeatures: reporterOverrides,
 		globalErrorHandlers: true,
 		flags: clientFlags,
 		stdin: process.stdin,

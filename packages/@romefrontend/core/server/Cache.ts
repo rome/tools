@@ -22,6 +22,7 @@ import {
 	writeFile,
 } from "@romefrontend/fs";
 import {stringifyJSON} from "@romefrontend/codec-json";
+import {getEnvVar} from "@romefrontend/environment";
 
 export type CacheEntry = {
 	version: string;
@@ -67,7 +68,8 @@ export default class Cache {
 		this.loadedEntries = new AbsoluteFilePathMap();
 		this.disabled =
 			!server.options.forceCacheEnabled &&
-			(process.env.ROME_CACHE === "0" || process.env.ROME_DEV === "1");
+			(getEnvVar("ROME_CACHE").type === "ENABLED" ||
+			getEnvVar("ROME_DEV").type === "ENABLED");
 		this.cachePath = server.userConfig.cachePath;
 
 		this.runningWritePromise = undefined;

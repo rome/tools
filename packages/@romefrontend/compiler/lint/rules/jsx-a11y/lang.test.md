@@ -24,7 +24,8 @@
 ### `0: formatted`
 
 ```
-<html lang="foo"></html>;
+<html lang="foo">
+</html>;
 
 ```
 
@@ -48,7 +49,8 @@
 ### `1: formatted`
 
 ```
-<html lang="ex"></html>;
+<html lang="ex">
+</html>;
 
 ```
 
@@ -72,7 +74,8 @@
 ### `2: formatted`
 
 ```
-<html lang="foo-bar"></html>;
+<html lang="foo-bar">
+</html>;
 
 ```
 
@@ -116,7 +119,8 @@
 ### `3: formatted`
 
 ```
-<html lang="aa-zz"></html>;
+<html lang="aa-zz">
+</html>;
 
 ```
 
@@ -160,7 +164,8 @@
 ### `4: formatted`
 
 ```
-<html lang="zz-AA"></html>;
+<html lang="zz-AA">
+</html>;
 
 ```
 
@@ -184,7 +189,8 @@
 ### `5: formatted`
 
 ```
-<html lang="en2&gt;&lt;/html&gt;"></html>;
+<html lang="en2&gt;&lt;/html&gt;">
+</html>;
 
 ```
 
@@ -198,7 +204,8 @@
 ### `6: formatted`
 
 ```
-<html lang="en-US"></html>;
+<html lang="en-US">
+</html>;
 
 ```
 
@@ -212,7 +219,8 @@
 ### `7: formatted`
 
 ```
-<html lang="en"></html>;
+<html lang="en">
+</html>;
 
 ```
 
@@ -226,6 +234,7 @@
 ### `8: formatted`
 
 ```
-<html lang={lang}></html>;
+<html lang={lang}>
+</html>;
 
 ```

@@ -23,7 +23,8 @@
 ### `0: formatted`
 
 ```
-<div></div>;
+<div>
+</div>;
 
 ```
 
@@ -121,7 +122,8 @@
 ### `5: formatted`
 
 ```
-<div></div>;
+<div>
+</div>;
 
 ```
 
@@ -177,7 +179,8 @@
 ### `9: formatted`
 
 ```
-<div></div>;
+<div>
+</div>;
 
 ```
 
