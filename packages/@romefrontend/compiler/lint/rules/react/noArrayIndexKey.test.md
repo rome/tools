@@ -16,7 +16,7 @@
   > 3 │        React.cloneElement(child, { key: index })
       │        ^^^^^^^^^^^^^^^^^^
     4 │       ))
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -28,7 +28,7 @@
   > 3 │        React.cloneElement(child, { key: index })
       │              ^^^^^^^^^^^^
     4 │       ))
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -60,7 +60,7 @@ React.Children.map(
   > 3 │        return React.cloneElement(child, { key: index })
       │               ^^^^^^^^^^^^^^^^^^
     4 │       })
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -72,7 +72,7 @@ React.Children.map(
   > 3 │        return React.cloneElement(child, { key: index })
       │                     ^^^^^^^^^^^^
     4 │       })
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -153,7 +153,7 @@ React.Children.map(
   > 3 │        cloneElement(child, { key: index })
       │        ^^^^^^^^^^^^
     4 │       ))
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -185,7 +185,7 @@ Children.map(
   > 3 │        return cloneElement(child, { key: index })
       │               ^^^^^^^^^^^^
     4 │       })
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -254,7 +254,7 @@ Children.map(
   > 3 │        React.cloneElement(child, { key: index })
       │        ^^^^^^^^^^^^^^^^^^
     4 │       ))
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -266,7 +266,7 @@ Children.map(
   > 3 │        React.cloneElement(child, { key: index })
       │              ^^^^^^^^^^^^
     4 │       ))
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -298,7 +298,7 @@ Children.map(
   > 3 │        cloneElement(child, { key: index })
       │        ^^^^^^^^^^^^
     4 │       ))
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -330,7 +330,7 @@ React.Children.map(
   > 3 │        React.cloneElement(child, { key: index })
       │        ^^^^^^^^^^^^^^^^^^
     4 │       ))
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -342,7 +342,7 @@ React.Children.map(
   > 3 │        React.cloneElement(child, { key: index })
       │              ^^^^^^^^^^^^
     4 │       ))
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -374,7 +374,7 @@ React.Children.forEach(
   > 3 │        return React.cloneElement(child, { key: index })
       │               ^^^^^^^^^^^^^^^^^^
     4 │       })
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -386,7 +386,7 @@ React.Children.forEach(
   > 3 │        return React.cloneElement(child, { key: index })
       │                     ^^^^^^^^^^^^
     4 │       })
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -467,7 +467,7 @@ React.Children.forEach(
   > 3 │        cloneElement(child, { key: index })
       │        ^^^^^^^^^^^^
     4 │       ))
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -499,7 +499,7 @@ Children.forEach(
   > 3 │        return cloneElement(child, { key: index })
       │               ^^^^^^^^^^^^
     4 │       })
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -568,7 +568,7 @@ Children.forEach(
   > 3 │        React.cloneElement(child, { key: index })
       │        ^^^^^^^^^^^^^^^^^^
     4 │       ))
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -580,7 +580,7 @@ Children.forEach(
   > 3 │        React.cloneElement(child, { key: index })
       │              ^^^^^^^^^^^^
     4 │       ))
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -612,7 +612,7 @@ Children.forEach(
   > 3 │        cloneElement(child, { key: index })
       │        ^^^^^^^^^^^^
     4 │       ))
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -644,7 +644,7 @@ React.Children.forEach(
   > 3 │        <Hello key={index} />
       │        ^^^^^^^^^^^^^^^^^^^^^
     4 │       ));
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -673,7 +673,7 @@ things.map((thing, index) => <Hello key={index} />);
   > 3 │        return (<Hello key={index} />);
       │                ^^^^^^^^^^^^^^^^^^^^^
     4 │       });
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -704,7 +704,7 @@ things.map(function(thing, index) {
   > 3 │        React.cloneElement(thing, { key: index })
       │        ^^^^^^^^^^^^^^^^^^
     4 │       ));
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -716,7 +716,7 @@ things.map(function(thing, index) {
   > 3 │        React.cloneElement(thing, { key: index })
       │              ^^^^^^^^^^^^
     4 │       ));
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -745,7 +745,7 @@ things.map((thing, index) => React.cloneElement(thing, {key: index}));
   > 3 │        cloneElement(thing, { key: index })
       │        ^^^^^^^^^^^^
     4 │       ));
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -774,7 +774,7 @@ things.map((thing, index) => cloneElement(thing, {key: index}));
   > 3 │        return cloneElement(thing, { key: index })
       │               ^^^^^^^^^^^^
     4 │       });
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -805,7 +805,7 @@ things.map(function(thing, index) {
   > 3 │        otherThings.push(<Hello key={index} />);
       │                         ^^^^^^^^^^^^^^^^^^^^^
     4 │       });
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -836,7 +836,7 @@ things.forEach((thing, index) => {
   > 3 │        otherThings.push(<Hello key={index} />);
       │                         ^^^^^^^^^^^^^^^^^^^^^
     4 │       });
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -867,7 +867,7 @@ things.forEach(function(thing, index) {
   > 3 │        otherThings.push(<Hello key={index} />);
       │                         ^^^^^^^^^^^^^^^^^^^^^
     4 │       });
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -898,7 +898,7 @@ things.filter((thing, index) => {
   > 3 │        otherThings.push(<Hello key={index} />);
       │                         ^^^^^^^^^^^^^^^^^^^^^
     4 │       });
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -929,7 +929,7 @@ things.some((thing, index) => {
   > 3 │        otherThings.push(<Hello key={index} />);
       │                         ^^^^^^^^^^^^^^^^^^^^^
     4 │       });
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -960,7 +960,7 @@ things.every((thing, index) => {
   > 3 │        otherThings.push(<Hello key={index} />);
       │                         ^^^^^^^^^^^^^^^^^^^^^
     4 │       });
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -991,7 +991,7 @@ things.find((thing, index) => {
   > 3 │        otherThings.push(<Hello key={index} />);
       │                         ^^^^^^^^^^^^^^^^^^^^^
     4 │       });
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -1022,7 +1022,7 @@ things.findIndex((thing, index) => {
   > 3 │        collection.concat(<Hello key={index} />)
       │                          ^^^^^^^^^^^^^^^^^^^^^
     4 │       ), []);
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -1054,7 +1054,7 @@ things.reduce(
   > 3 │        return collection.concat(<Hello key={index} />)
       │                                 ^^^^^^^^^^^^^^^^^^^^^
     4 │       }, []);
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -1088,7 +1088,7 @@ things.reduce(
   > 3 │        collection.concat(<Hello key={index} />)
       │                          ^^^^^^^^^^^^^^^^^^^^^
     4 │       ), []);
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -1120,7 +1120,7 @@ things.reduceRight(
   > 3 │        return collection.concat(<Hello key={index} />)
       │                                 ^^^^^^^^^^^^^^^^^^^^^
     4 │       }, []);
-    5 │      
+    5 │ ·····
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 

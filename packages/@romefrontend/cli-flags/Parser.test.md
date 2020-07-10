@@ -33,8 +33,7 @@
 
   ✖ No command specified
 
-    $ test  
-           ^
+    $ test
 
   ℹ To see available commands run
 
@@ -135,7 +134,7 @@ Object {}
 
   ✖ Unknown command foo
 
-    $ test foo foo 
+    $ test foo foo
            ^^^
 
   ℹ Did you mean foobar?
@@ -184,12 +183,10 @@ Object {}
 
   ✖ Unknown command foo
 
-    $ test foo 
+    $ test foo
            ^^^
 
   ℹ Did you mean foobar instead? A much cooler command
-
-    $ test foobar 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -228,7 +225,7 @@ Object {}
 
   ✖ Incorrect cased flag name at fooBar
 
-    $ test --fooBar 
+    $ test --fooBar
            ^^^^^^^^
 
   ℹ Use foo-bar instead
@@ -270,7 +267,7 @@ Object {}
 
   ✖ Shorthand flags are not supported at f
 
-    $ test -f 
+    $ test -f
            ^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -671,8 +668,7 @@ Object {name: "sebastian"}
 
   ✖ Expected a string at name
 
-    $ test 
-          ^
+    $ test
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

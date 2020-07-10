@@ -17,6 +17,7 @@ export type InferredTerminalFeatures = {
 
 export type TerminalFeatures = {
 	columns: number;
+	cursor: boolean;
 	progressBars: boolean;
 	hyperlinks: boolean;
 	color: boolean;
@@ -25,6 +26,7 @@ export type TerminalFeatures = {
 
 export const TERMINAL_FEATURES_DEFAULT: TerminalFeatures = {
 	columns: 100,
+	cursor: true,
 	progressBars: true,
 	unicode: true,
 	hyperlinks: true,
@@ -86,6 +88,7 @@ export function inferTerminalFeatures(
 	let features: TerminalFeatures = mergeObjects(
 		{
 			columns,
+			cursor: isTTY && !isCI,
 			hyperlinks: isTTY && !isCI,
 			progressBars: isTTY && !isCI,
 			color: isTTY || isCI,

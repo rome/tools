@@ -79,7 +79,7 @@
 
   ℹ Recommended fix
 
-  - <hr children={"invalid children"}·/>
+  - <hr children={"invalid children"} />
   + <hr />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

@@ -190,7 +190,7 @@ foo;
   > 5 │      </>
       │ ^^^^^^^^
     6 │     </section>
-    7 │     
+    7 │ ····
 
   ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html element,
     and is not a keyed fragment.

@@ -7,8 +7,10 @@
 
 import {markupToPlainTextString} from "@romefrontend/string-markup";
 import highlightCode, {AnsiHighlightOptions} from "./highlightCode";
-import {NEWLINE} from "@romefrontend/js-parser-utils";
+import {NEWLINE, nonASCIIwhitespace} from "@romefrontend/js-parser-utils";
 import {removeCarriageReturn} from "@romefrontend/string-utils";
+
+const unicodeControls = /[\u0000-\u001f\u007f-\u00a0]/u;
 
 export function normalizeTabs(str: string): string {
 	return str.replace(/\t/g, "  ");
@@ -20,30 +22,44 @@ function isWhitespace(char: undefined | string): boolean {
 
 export function showInvisibles(
 	str: string,
-	hadNonWhitespace: boolean,
+	{atLineStart, atLineEnd}: {
+		atLineStart: boolean;
+		atLineEnd: boolean;
+	},
 ): {
 	value: string;
 	hadNonWhitespace: boolean;
 } {
+	let hadNonWhitespace = false;
 	let ret = "";
+
+	// Get the first trailing whitespace character in the string
+	let trailingWhitespaceIndex = str.length;
+	while (isWhitespace(str[trailingWhitespaceIndex - 1])) {
+		trailingWhitespaceIndex--;
+	}
 
 	for (let i = 0; i < str.length; i++) {
 		const char = str[i];
-		let showInvisible = false;
+		let showInvisible = true;
 
-		// Show if whitespace on either side
-		if (isWhitespace(str[i - 1]) || isWhitespace(str[i + 1])) {
-			showInvisible = true;
-		}
+		// Only highlight spaces when surrounded by other spaces
+		if (char === " ") {
+			showInvisible = false;
 
-		// Always show trailing and leading
-		if (i === 0 || i === str.length - 1) {
-			showInvisible = true;
+			if (isWhitespace(str[i - 1]) || isWhitespace(str[i + 1])) {
+				showInvisible = false;
+			}
 		}
 
 		// Don't show leading tabs
-		if (!hadNonWhitespace && char === "\t") {
+		if (atLineStart && !hadNonWhitespace && char === "\t") {
 			showInvisible = false;
+		}
+
+		// Always show if at the end of line
+		if (atLineEnd && i >= trailingWhitespaceIndex) {
+			showInvisible = true;
 		}
 
 		if (!showInvisible) {
@@ -54,34 +70,70 @@ export function showInvisibles(
 			continue;
 		}
 
-		switch (char) {
-			case " ": {
-				ret += "\xb7"; // Middle Dot, \u00B7
-				break;
-			}
-			case "\r": {
-				ret += "\u240d";
-				break;
-			}
-			case "\n": {
-				ret += "\u23ce"; // Return Symbol, \u23ce
-				break;
-			}
-			case "\t": {
-				ret += "\u21b9"; // Left Arrow To Bar Over Right Arrow To Bar, \u21b9
-				break;
-			}
-			default: {
-				ret += char;
-				break;
-			}
+		const visible = showInvisibleChar(char);
+		if (visible !== undefined) {
+			ret += visible;
+			continue;
 		}
+
+		if (nonASCIIwhitespace.test(char) || unicodeControls.test(char)) {
+			ret += showUnicodeChar(char);
+			continue;
+		}
+
+		ret += char;
 	}
 
 	return {
 		hadNonWhitespace,
 		value: ret,
 	};
+}
+
+function showUnicodeChar(char: string): string {
+	// We use inverse to make it clear that it's not in the source
+	return `<inverse>U+${char.codePointAt(0)!.toString(16)}</inverse>`;
+}
+
+function showInvisibleChar(char: string): undefined | string {
+	switch (char) {
+		case " ":
+			return "\xb7"; // Middle Dot
+
+		case "\r":
+			return "\u240d"; // Carriage Return Symbol
+
+		case "\n":
+			return "\u23ce"; // Return Symbol
+
+		case "\t":
+			return "\u21b9"; // Left Arrow To Bar Over Right Arrow To Bar
+
+		case "\0":
+			return "\u2400"; // Null Symbol
+
+		case "\x0b":
+			return "\u240b"; // Vertical Tabulation Symbol
+
+		case "\b":
+			return "\u232b"; // Backspace Symbol
+
+		case "\f":
+			return "\u21a1"; // Downards Two Headed Arrow
+
+		// These are display characters we use above. Remove the ambiguity by escaping them
+		case "\u240d":
+		case "\u23ce":
+		case "\u21b9":
+		case "\u2400":
+		case "\u240b":
+		case "\u232b":
+		case "\u21a1":
+			return showUnicodeChar(char);
+
+		default:
+			return undefined;
+	}
 }
 
 export function cleanEquivalentString(str: string): string {

@@ -112,6 +112,15 @@ const tests: Array<Test> = [
 			</section>
 		`,
 	},
+	// Control characters
+	{
+		before: "\x01",
+		after: "",
+	},
+	{
+		before: "\x7f",
+		after: "",
+	},
 ];
 
 test(

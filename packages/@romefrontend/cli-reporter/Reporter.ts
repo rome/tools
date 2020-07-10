@@ -745,7 +745,7 @@ export default class Reporter {
 	}
 
 	clearLineSpecific(stream: ReporterStream) {
-		if (stream.format === "ansi") {
+		if (stream.format === "ansi" && stream.features.cursor) {
 			stream.write(ansiEscapes.eraseLine);
 			stream.write(ansiEscapes.cursorTo(0));
 		}
@@ -760,7 +760,7 @@ export default class Reporter {
 	writeSpecific(stream: ReporterStream, msg: string) {
 		this.hasClearScreen = false;
 
-		if (stream.format === "ansi" && this.activeElements.size > 0) {
+		if (this.activeElements.size > 0) {
 			// A progress bar is active and has probably drawn to the screen
 			this.clearLineSpecific(stream);
 		}
@@ -775,7 +775,7 @@ export default class Reporter {
 
 	clearScreen() {
 		for (const stream of this.getStreams(false)) {
-			if (stream.format === "ansi") {
+			if (stream.format === "ansi" && stream.features.cursor) {
 				stream.write(ansiEscapes.clearScreen);
 			}
 		}
@@ -832,7 +832,7 @@ export default class Reporter {
 			// If a step doesn't produce any output, or just progress bars that are cleared, we can safely remove the previous `step` message line
 			if (clear && this.hasClearScreen) {
 				for (const stream of this.getStreams(false)) {
-					if (stream.format === "ansi") {
+					if (stream.format === "ansi" && stream.features.cursor) {
 						stream.write(ansiEscapes.cursorTo(0));
 						stream.write(ansiEscapes.cursorUp());
 						stream.write(ansiEscapes.eraseLine);

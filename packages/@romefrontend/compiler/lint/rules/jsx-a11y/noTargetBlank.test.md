@@ -20,7 +20,7 @@
 
   ℹ Recommended fix
 
-    1   │ - <a href="http://external.link"·target="_blank">
+    1   │ - <a href="http://external.link" target="_blank">
       1 │ + <a href="http://external.link">
     2 2 │     child
 
@@ -55,7 +55,7 @@
 
   ℹ Recommended fix
 
-    1   │ - <a href={dynamicLink}·target="_blank">
+    1   │ - <a href={dynamicLink} target="_blank">
       1 │ + <a href={dynamicLink}>
     2 2 │     child
 

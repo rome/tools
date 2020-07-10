@@ -26,7 +26,7 @@ const FILE_SIZE_MAX = 100_000;
 export type AnsiHighlightOptions = {
 	path: UnknownFilePath;
 	input: string;
-	sourceType: undefined | DiagnosticSourceType;
+	sourceTypeJS: undefined | DiagnosticSourceType;
 	language: undefined | DiagnosticLanguage;
 };
 
@@ -57,9 +57,9 @@ export default function highlightCode(opts: AnsiHighlightOptions): string {
 			return highlightJS(
 				opts,
 				// js-parser does not accept an "unknown" sourceType
-				opts.sourceType === undefined || opts.sourceType === "unknown"
+				opts.sourceTypeJS === undefined || opts.sourceTypeJS === "unknown"
 					? "script"
-					: opts.sourceType,
+					: opts.sourceTypeJS,
 			);
 
 		case "html":

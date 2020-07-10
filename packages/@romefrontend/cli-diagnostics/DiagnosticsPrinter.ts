@@ -246,7 +246,7 @@ export default class DiagnosticsPrinter extends Error {
 					lines: toLines({
 						path: info.path,
 						input: stats.content,
-						sourceType: info.sourceType,
+						sourceTypeJS: info.sourceType,
 						language: info.language,
 					}),
 				},

@@ -19,7 +19,7 @@
 
   ℹ Recommended fix
 
-    1   │ - for (;·x.running;·) {
+    1   │ - for (; x.running; ) {
       1 │ + while (x.running) {
     2 2 │     x.step();
 

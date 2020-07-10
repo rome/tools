@@ -24,7 +24,7 @@
   ℹ Recommended fix
 
     1   │ - case false:
-      1 │ + case false:·{
+      1 │ + case false: {
     2 2 │     let foo = "";
     3   │ -   foo;
       3 │ +   foo;

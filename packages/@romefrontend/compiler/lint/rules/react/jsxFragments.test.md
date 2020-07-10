@@ -236,15 +236,15 @@ const Hello = <>
 
 ```
 
- unknown:3:16 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:11 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
-    2 │      function Foo() {
-  > 3 │       let bar = <React.Fragment><Foo /><Foo /></React.Fragment>;
-      │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    4 │       return bar;
-    5 │      }
+    1 │ function Foo() {
+  > 2 │  let bar = <React.Fragment><Foo /><Foo /></React.Fragment>;
+      │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │  return bar;
+    4 │ }
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
@@ -280,15 +280,15 @@ function Foo() {
 
 ```
 
- unknown:3:16 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:11 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
-    2 │      function Foo() {
-  > 3 │       let bar = <Fragment><Foo /><Foo /></Fragment>;
-      │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    4 │       return bar;
-    5 │      }
+    1 │ function Foo() {
+  > 2 │  let bar = <Fragment><Foo /><Foo /></Fragment>;
+      │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │  return bar;
+    4 │ }
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
@@ -324,15 +324,14 @@ function Foo() {
 
 ```
 
- unknown:3:13 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:8 lint/react/jsxFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
-    2 │      function Hello() {
-  > 3 │       return <React.Fragment><Foo /><Foo /></React.Fragment>
-      │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    4 │      }
-    5 │      
+    1 │ function Hello() {
+  > 2 │  return <React.Fragment><Foo /><Foo /></React.Fragment>
+      │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ }
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
@@ -375,7 +374,6 @@ function Hello() {
   > 2 │       return <Fragment><Foo /><Foo /></Fragment>
       │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     3 │      }
-    4 │      
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 

@@ -17,7 +17,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <article·role="article">
+    1   │ - <article role="article">
       1 │ + <article>
     2 2 │   </article>
 
@@ -48,7 +48,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <button·role="button">
+    1   │ - <button role="button">
       1 │ + <button>
     2 2 │   </button>
 
@@ -79,7 +79,7 @@
 
   Suggested fix: Remove the role attribute and ARIA attributes.
 
-    1   │ - <h1·role="heading" aria-level="1">
+    1   │ - <h1 role="heading" aria-level="1">
       1 │ + <h1>
     2 2 │   </h1>
 
@@ -110,7 +110,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <h1·role="heading">
+    1   │ - <h1 role="heading">
       1 │ + <h1>
     2 2 │   </h1>
 
@@ -141,7 +141,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <dialog·role="dialog">
+    1   │ - <dialog role="dialog">
       1 │ + <dialog>
     2 2 │   </dialog>
 
@@ -172,7 +172,7 @@
 
   Suggested fix: Remove the role attribute.
 
-  - <input type="checkbox" role="checkbox"·/>
+  - <input type="checkbox" role="checkbox" />
   + <input type="checkbox" />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -201,7 +201,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <figure·role="figure">
+    1   │ - <figure role="figure">
       1 │ + <figure>
     2 2 │   </figure>
 
@@ -232,7 +232,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <form·role="form">
+    1   │ - <form role="form">
       1 │ + <form>
     2 2 │   </form>
 
@@ -263,7 +263,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <table·role="grid">
+    1   │ - <table role="grid">
       1 │ + <table>
     2 2 │   </table>
 
@@ -294,7 +294,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <td·role="gridcell">
+    1   │ - <td role="gridcell">
       1 │ + <td>
     2 2 │   </td>
 
@@ -325,7 +325,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <fieldset·role="group">
+    1   │ - <fieldset role="group">
       1 │ + <fieldset>
     2 2 │   </fieldset>
 
@@ -356,7 +356,7 @@
 
   Suggested fix: Remove the role attribute.
 
-  - <img src="foo" alt="bar" role="img"·/>
+  - <img src="foo" alt="bar" role="img" />
   + <img src="foo" alt="bar" />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -385,7 +385,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <a·role="link">
+    1   │ - <a role="link">
       1 │ + <a>
     2 2 │   </a>
 
@@ -416,7 +416,7 @@
 
   Suggested fix: Remove the role attribute.
 
-  - <link role="link"·/>
+  - <link role="link" />
   + <link />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -445,7 +445,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <ol·role="list">
+    1   │ - <ol role="list">
       1 │ + <ol>
     2 2 │   </ol>
 
@@ -476,7 +476,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <ul·role="list">
+    1   │ - <ul role="list">
       1 │ + <ul>
     2 2 │   </ul>
 
@@ -507,7 +507,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <select·role="listbox">
+    1   │ - <select role="listbox">
       1 │ + <select>
     2 2 │   </select>
 
@@ -538,7 +538,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <li·role="listitem">
+    1   │ - <li role="listitem">
       1 │ + <li>
     2 2 │   </li>
 
@@ -569,7 +569,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <nav·role="navigation">
+    1   │ - <nav role="navigation">
       1 │ + <nav>
     2 2 │   </nav>
 
@@ -600,7 +600,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <option·role="option">
+    1   │ - <option role="option">
       1 │ + <option>
     2 2 │   </option>
 
@@ -631,7 +631,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <tr·role="row">
+    1   │ - <tr role="row">
       1 │ + <tr>
     2 2 │   </tr>
 
@@ -662,7 +662,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <tbody·role="rowgroup">
+    1   │ - <tbody role="rowgroup">
       1 │ + <tbody>
     2 2 │   </tbody>
 
@@ -693,7 +693,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <tfoot·role="rowgroup">
+    1   │ - <tfoot role="rowgroup">
       1 │ + <tfoot>
     2 2 │   </tfoot>
 
@@ -724,7 +724,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <thead·role="rowgroup">
+    1   │ - <thead role="rowgroup">
       1 │ + <thead>
     2 2 │   </thead>
 
@@ -755,7 +755,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <th scope="row"·role="rowheader">
+    1   │ - <th scope="row" role="rowheader">
       1 │ + <th scope="row">
     2 2 │   </th>
 
@@ -786,7 +786,7 @@
 
   Suggested fix: Remove the role attribute.
 
-  - <input type="search" role="searchbox"·/>
+  - <input type="search" role="searchbox" />
   + <input type="search" />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -815,7 +815,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <table·role="table">
+    1   │ - <table role="table">
       1 │ + <table>
     2 2 │   </table>
 
@@ -846,7 +846,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <dt·role="term">
+    1   │ - <dt role="term">
       1 │ + <dt>
     2 2 │   </dt>
 
@@ -877,7 +877,7 @@
 
   Suggested fix: Remove the role attribute.
 
-    1   │ - <textarea·role="textbox">
+    1   │ - <textarea role="textbox">
       1 │ + <textarea>
     2 2 │   </textarea>
 
@@ -908,7 +908,7 @@
 
   Suggested fix: Remove the role attribute.
 
-  - <input type="text" role="textbox"·/>
+  - <input type="text" role="textbox" />
   + <input type="text" />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

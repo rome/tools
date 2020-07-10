@@ -24,7 +24,7 @@
       2 │ + 
 
   ℹ To apply fixes and formatting run
-  $ rome check index.js --apply 
+  $ rome check index.js --apply
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

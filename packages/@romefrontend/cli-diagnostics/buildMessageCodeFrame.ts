@@ -19,6 +19,7 @@ import {
 	cleanEquivalentString,
 	joinNoBreak,
 	normalizeTabs,
+	showInvisibles,
 } from "./utils";
 import {
 	Number0,
@@ -85,11 +86,13 @@ function createPointer(
 }
 
 export default function buildMessageCodeFrame(
-	sourceText: string,
-	allLines: ToLines,
-	start: undefined | Position,
-	end: undefined | Position,
-	markerMessage: string,
+	{sourceText, lines: allLines, start, end, markerMessage = ""}: {
+		sourceText: string;
+		lines: ToLines;
+		start?: Position;
+		end?: Position;
+		markerMessage?: string;
+	},
 ): string {
 	if (allLines.length === 0 || start === undefined || end === undefined) {
 		if (markerMessage === "") {
@@ -167,6 +170,15 @@ export default function buildMessageCodeFrame(
 				pointer = createPointer(markerMessage, rawLine, ob1Number0, end.column);
 			}
 		}
+
+		// Show invisible characters
+		highlightLine = showInvisibles(
+			highlightLine,
+			{
+				atLineStart: true,
+				atLineEnd: true,
+			},
+		).value;
 
 		// Replace hard tabs with two spaces
 		highlightLine = normalizeTabs(highlightLine);

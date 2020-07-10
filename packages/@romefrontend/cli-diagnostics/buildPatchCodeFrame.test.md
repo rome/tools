@@ -47,7 +47,7 @@ Seb astian
 
 # Diff
 - Sebastian
-+ Seb·astian
++ Seb astian
 ```
 
 ### `3`
@@ -61,7 +61,7 @@ Seb  astian
 
 # Diff
 - Sebastian
-+ Seb··astian
++ Seb  astian
 ```
 
 ### `4`
@@ -150,12 +150,12 @@ if (char === "<") {
 # Diff
    1    │ - let namedBackReference = "";
    2    │ - let namedBackReferenceIndex = ob1Get0(index) + 2;
-   3    │ - let·namedBackReferenceChar·=·input[namedBackReferenceIndex];
+   3    │ - let namedBackReferenceChar = input[namedBackReferenceIndex];
    4    │ - if (namedBackReferenceChar === "<") {
    5    │ -   namedBackReferenceChar = input[namedBackReferenceIndex];
    6    │ -   while (
    7    │ -     namedBackReferenceChar !== ">" &&
-   8    │ -     namedBackReferenceIndex·< input.length
+   8    │ -     namedBackReferenceIndex < input.length
    9    │ -   ) {
   10    │ -     namedBackReference += namedBackReferenceChar;
   11    │ -     namedBackReferenceIndex++;
@@ -166,12 +166,12 @@ if (char === "<") {
   16    │ -     namedBackReferenceIndex++;
   17    │ -   }
       1 │ + let value = "";
-      2 │ + let [char,·next] = this.getInputChar(index, 2);
+      2 │ + let [char, next] = this.getInputChar(index, 2);
       3 │ + 
       4 │ + if (char === "<") {
       5 │ +   while (!this.isEOF(next)) {
       6 │ +     value += char;
-      7 │ +     [char,·next] = this.getInputChar(index, 1);
+      7 │ +     [char, next] = this.getInputChar(index, 1);
       8 │ + 
       9 │ +     if (char === ">") {
      10 │ +       break;
@@ -217,4 +217,30 @@ if (char === "<") {
     2 │ +   <div />
     3 │ +   <div />
     4 │ + </section>
+```
+
+### `8`
+
+```
+# Before
+
+
+# After
+
+
+# Diff
+-  U+1 
+```
+
+### `9`
+
+```
+# Before
+
+
+# After
+
+
+# Diff
+-  U+7f 
 ```

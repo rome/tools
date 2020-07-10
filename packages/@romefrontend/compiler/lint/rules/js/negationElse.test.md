@@ -56,8 +56,8 @@ if (true) {
 
   ℹ Recommended fix
 
-  - !true ? consequent·: alternate
-  + true ?·alternate : consequent
+  - !true ? consequent : alternate
+  + true ? alternate : consequent
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
