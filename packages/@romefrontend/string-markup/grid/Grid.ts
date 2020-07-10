@@ -810,7 +810,7 @@ export default class Grid {
 		}
 
 		if (hasText) {
-			if (tag.name === "hr" || tag.name === "inverse") {
+			if (tag.name === "hr") {
 				return [
 					{
 						...tag,

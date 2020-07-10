@@ -785,7 +785,7 @@ export default class Reporter {
 	//# SECTIONS
 	heading(text: string) {
 		this.br();
-		this.logAll(`<inverse><emphasis>${text}</emphasis></inverse>`);
+		this.logAll(`<inverse><emphasis> ${text} </emphasis></inverse>`);
 		this.br();
 	}
 

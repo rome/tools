@@ -8,7 +8,7 @@
 import {
 	ClientFlags,
 	ClientFlagsJSON,
-	ClientReporterOverrides,
+	ClientTerminalFeatures,
 	DEFAULT_CLIENT_FLAGS,
 } from "../common/types/client";
 import ClientRequest, {ClientRequestType} from "./ClientRequest";
@@ -49,7 +49,7 @@ export function getFilenameTimestamp(): string {
 const NEW_SERVER_INIT_TIMEOUT = 10_000;
 
 type ClientOptions = {
-	reporterOverrides?: ClientReporterOverrides;
+	terminalFeatures?: ClientTerminalFeatures;
 	globalErrorHandlers?: boolean;
 	stdout?: stream.Writable;
 	stderr?: stream.Writable;
@@ -118,7 +118,7 @@ export default class Client {
 		this.derivedReporterStreams = this.reporter.attachStdoutStreams(
 			stdout,
 			opts.stderr,
-			this.options.reporterOverrides,
+			this.options.terminalFeatures,
 		);
 
 		this.endEvent.subscribe(() => {
@@ -475,7 +475,7 @@ export default class Client {
 
 	async attachBridge(status: BridgeStatus) {
 		const {stdoutWrite, stderrWrite, featuresUpdated, features, format} = this.derivedReporterStreams;
-		const {reporterOverrides = {}} = this.options;
+		const {terminalFeatures: reporterOverrides = {}} = this.options;
 
 		if (this.bridgeStatus !== undefined) {
 			throw new Error("Already attached bridge to API");

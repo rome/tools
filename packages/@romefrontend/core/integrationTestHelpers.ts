@@ -118,10 +118,10 @@ export function createIntegrationTest(
 					callback();
 				},
 			});
-			stdout.unicode = true;
 
 			// Create a Client. The abstraction used by the CLI.
 			const client = new Client({
+				terminalFeatures: {},
 				globalErrorHandlers: false,
 				flags: {
 					cwd: projectPath,

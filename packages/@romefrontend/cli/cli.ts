@@ -8,8 +8,8 @@
 import {
 	Client,
 	ClientFlags,
-	ClientReporterOverrides,
 	ClientRequestFlags,
+	ClientTerminalFeatures,
 	DEFAULT_CLIENT_FLAGS,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 	PLATFORMS,
@@ -63,7 +63,7 @@ export default async function cli() {
 		defineFlags(
 			c: Consumer,
 		): {
-			reporterOverrides: ClientReporterOverrides;
+			reporterOverrides: ClientTerminalFeatures;
 			cliFlags: CLIFlags;
 			clientFlags: ClientFlags;
 			requestFlags: ClientRequestFlags;
@@ -397,7 +397,7 @@ export default async function cli() {
 	}
 
 	const client = new Client({
-		reporterOverrides,
+		terminalFeatures: reporterOverrides,
 		globalErrorHandlers: true,
 		flags: clientFlags,
 		stdin: process.stdin,

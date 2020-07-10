@@ -3,7 +3,6 @@ import {Event} from "@romefrontend/events";
 import {mergeObjects} from "@romefrontend/typescript-helpers";
 
 export type Stdout = stream.Writable & {
-	unicode?: boolean;
 	isTTY?: boolean;
 	columns?: number;
 };
@@ -65,16 +64,22 @@ export function inferTerminalFeatures(
 	stdout?: Stdout,
 	force: Partial<TerminalFeatures> = {},
 ): InferredTerminalFeatures {
-	// Windows terminals are awful
-	const unicode =
-		stdout?.unicode === undefined
-			? process.platform !== "win32"
-			: stdout.unicode;
-
 	const isTTY = stdout?.isTTY === true;
-	const isCI = isCIEnv();
 
 	let columns = TERMINAL_FEATURES_DEFAULT.columns;
+	let unicode = false;
+	let isCI = false;
+
+	// Only apply this environment sniffing when we've been given a process stdout stream
+	// Otherwise it'll be some custom stream and if they really want to infer from the environment
+	// Then they will do it on process.stdout and pass the features as the force param
+	if (
+		stdout !== undefined &&
+		(stdout === process.stdout || stdout === process.stderr)
+	) {
+		unicode = process.platform !== "win32";
+		isCI = isCIEnv();
+	}
 
 	if (stdout === undefined || stdout.columns === undefined) {
 		// Increase column size for CI
@@ -85,12 +90,14 @@ export function inferTerminalFeatures(
 		columns = stdout.columns;
 	}
 
+	const fancyAnsi = isTTY && !isCI;
+
 	let features: TerminalFeatures = mergeObjects(
 		{
 			columns,
-			cursor: isTTY && !isCI,
-			hyperlinks: isTTY && !isCI,
-			progressBars: isTTY && !isCI,
+			cursor: fancyAnsi,
+			hyperlinks: fancyAnsi,
+			progressBars: fancyAnsi,
 			color: isTTY || isCI,
 			unicode,
 		},

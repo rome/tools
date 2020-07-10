@@ -48,7 +48,7 @@ export default createServerCommand<Flags>({
 			savedList.push(
 				markup`<filelink target="${loc}">${filename}</filelink> <filesize dim>${Buffer.byteLength(
 					buff,
-				)}</filesize> <inverse>${kind}</inverse>`,
+				)}</filesize> <inverse> ${kind} </inverse>`,
 			);
 			await createDirectory(file.getParent());
 			await writeFile(file, buff);

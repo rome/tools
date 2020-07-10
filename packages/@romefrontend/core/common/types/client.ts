@@ -12,6 +12,7 @@ import {
 import {Platform} from "./platform";
 import {AbsoluteFilePath, CWD_PATH} from "@romefrontend/path";
 import {ReporterStream} from "@romefrontend/cli-reporter";
+import {TerminalFeatures} from "@romefrontend/environment";
 
 export const DEFAULT_CLIENT_FLAGS: ClientFlags = {
 	clientName: "unknown",
@@ -50,10 +51,9 @@ export type ClientRequestFlags = DiagnosticsPrinterFlags & {
 	resolverMocks: boolean;
 };
 
-export type ClientReporterOverrides = {
+export type ClientTerminalFeatures = Partial<TerminalFeatures> & {
 	redirectError?: boolean;
 	format?: ReporterStream["format"];
-	columns?: number;
 };
 
 export type ClientFlags = {
