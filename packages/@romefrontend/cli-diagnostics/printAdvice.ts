@@ -312,7 +312,7 @@ function printCode(
 		} else {
 			// If it's a string with only whitespace then make it obvious
 			if (code.trim() === "") {
-				code = showInvisibles(code, false);
+				code = showInvisibles(code, false).value;
 			}
 
 			reporter.logAll(`<nobr>${escapeMarkup(code)}</nobr>`);

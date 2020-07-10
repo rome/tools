@@ -18,9 +18,14 @@ function isWhitespace(char: undefined | string): boolean {
 	return char === " " || char === "\t" || char === "\r" || char === "\n";
 }
 
-export function showInvisibles(str: string, isLineBeginning: boolean): string {
+export function showInvisibles(
+	str: string,
+	hadNonWhitespace: boolean,
+): {
+	value: string;
+	hadNonWhitespace: boolean;
+} {
 	let ret = "";
-	let foundVisible = false;
 
 	for (let i = 0; i < str.length; i++) {
 		const char = str[i];
@@ -37,13 +42,13 @@ export function showInvisibles(str: string, isLineBeginning: boolean): string {
 		}
 
 		// Don't show leading tabs
-		if (isLineBeginning && char === "\t" && !foundVisible) {
+		if (!hadNonWhitespace && char === "\t") {
 			showInvisible = false;
 		}
 
 		if (!showInvisible) {
 			if (!isWhitespace(char)) {
-				foundVisible = true;
+				hadNonWhitespace = true;
 			}
 			ret += char;
 			continue;
@@ -73,7 +78,10 @@ export function showInvisibles(str: string, isLineBeginning: boolean): string {
 		}
 	}
 
-	return ret;
+	return {
+		hadNonWhitespace,
+		value: ret,
+	};
 }
 
 export function cleanEquivalentString(str: string): string {

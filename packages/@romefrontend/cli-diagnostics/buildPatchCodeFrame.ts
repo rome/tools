@@ -21,12 +21,15 @@ import {escapeMarkup, markup, markupTag} from "@romefrontend/string-markup";
 import {DiagnosticAdviceDiff} from "@romefrontend/diagnostics";
 
 function formatDiffLine(diffs: Diffs) {
-	return diffs.map(([type, text], i) => {
+	let shownVisible = false;
+	return diffs.map(([type, text]) => {
 		const escaped = escapeMarkup(text);
 		if (type === diffConstants.EQUAL) {
 			return escaped;
 		} else {
-			return markupTag("emphasis", showInvisibles(escaped, i === 0));
+			const res = showInvisibles(escaped, shownVisible);
+			shownVisible = res.hadNonWhitespace;
+			return markupTag("emphasis", res.value);
 		}
 	}).join("");
 }

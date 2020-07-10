@@ -335,7 +335,8 @@ function highlightJS(
 						return {type: "function"};
 					}
 
-					if (value === "from") {
+					// These are contextual keywords
+					if (value === "from" || value === "let" || value === "async") {
 						return {type: "keyword"};
 					}
 
