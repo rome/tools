@@ -6,7 +6,7 @@ date: 2018-05-02
 tags:
   - post
   - release
-layout: layouts/blog.njk
+layout: layouts/blog/post.njk
 ---
 
 file added for tests
