@@ -188,6 +188,8 @@ Object {}
 
   ℹ Did you mean foobar instead? A much cooler command
 
+    $ test foobar
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

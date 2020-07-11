@@ -25,7 +25,7 @@ import {
 import {Position} from "@romefrontend/parser-core";
 import {ToLines, toLines} from "./utils";
 import buildPatchCodeFrame from "./buildPatchCodeFrame";
-import buildMessageCodeFrame from "./buildMessageCodeFrame";
+import buildCodeFrame from "./buildCodeFrame";
 import {
 	escapeMarkup,
 	markupTag,
@@ -35,7 +35,7 @@ import {DiagnosticsPrinterFlags} from "./types";
 import {ob1Number0Neg1} from "@romefrontend/ob1";
 import DiagnosticsPrinter, {DiagnosticsPrinterFileSources} from "./DiagnosticsPrinter";
 import {AbsoluteFilePathSet, createUnknownFilePath} from "@romefrontend/path";
-import {MAX_CODE_LENGTH, MAX_LOG_LENGTH} from "./constants";
+import {MAX_CODE_LENGTH, MAX_CODE_LINES, MAX_LOG_LENGTH} from "./constants";
 import {Diffs, diffConstants} from "@romefrontend/string-diff";
 import {removeCarriageReturn} from "@romefrontend/string-utils";
 import {serializeCLIFlags} from "@romefrontend/cli-flags";
@@ -302,12 +302,14 @@ function printCode(
 ): PrintAdviceResult {
 	const {reporter} = opts;
 
-	const truncated =
+	const truncatedLength =
 		!opts.flags.verboseDiagnostics && item.code.length > MAX_CODE_LENGTH;
-	let code = truncated ? item.code.slice(0, MAX_CODE_LENGTH) : item.code;
+	let code = truncatedLength ? item.code.slice(0, MAX_CODE_LENGTH) : item.code;
 
-	const frame = buildMessageCodeFrame({
+	const {frame, truncated: truncatedLines} = buildCodeFrame({
+		type: "all",
 		sourceText: code,
+		truncateLines: MAX_CODE_LINES,
 		lines: toLines({
 			input: code,
 			path: createUnknownFilePath("inline"),
@@ -321,13 +323,13 @@ function printCode(
 
 	reporter.logAll(frame);
 
-	if (truncated) {
+	if (truncatedLength) {
 		printTruncated(reporter, item.code.length - MAX_CODE_LENGTH);
 	}
 
 	return {
 		printed: true,
-		truncated,
+		truncated: truncatedLines || truncatedLength,
 	};
 }
 
@@ -378,7 +380,8 @@ function printFrame(
 		sourceText = "";
 	}
 
-	const frame = buildMessageCodeFrame({
+	const {frame, truncated} = buildCodeFrame({
+		type: "pointer",
 		sourceText,
 		lines,
 		start,
@@ -390,7 +393,10 @@ function printFrame(
 	}
 
 	reporter.logAll(frame);
-	return DID_PRINT;
+	return {
+		printed: true,
+		truncated,
+	};
 }
 
 function printStacktrace(

@@ -85,36 +85,80 @@ function createPointer(
 	}
 }
 
-export default function buildMessageCodeFrame(
-	{sourceText, lines: allLines, start, end, markerMessage = ""}: {
+function formatMarker(markerMessage: string): string {
+	if (markerMessage === "") {
+		return "";
+	} else {
+		return `<nobr>${markerMessage}</nobr>`;
+	}
+}
+
+export default function buildCodeFrame(
+	{
+		sourceText,
+		lines: allLines,
+		truncateLines,
+		start,
+		end,
+		type,
+		markerMessage = "",
+	}: {
 		sourceText: string;
 		lines: ToLines;
+		type: "pointer" | "all";
+		truncateLines?: number;
 		start?: Position;
 		end?: Position;
 		markerMessage?: string;
 	},
-): string {
-	if (allLines.length === 0 || start === undefined || end === undefined) {
-		if (markerMessage === "") {
-			return "";
-		} else {
-			return `<nobr>${markerMessage}</nobr>`;
-		}
+): {
+	frame: string;
+	truncated: boolean;
+} {
+	// Bail if we have negative line references, we have no lines, or we expected positions and don't have one
+	let shouldBail = allLines.length === 0;
+	if (type === "pointer" && (start === undefined || end === undefined)) {
+		shouldBail = true;
+	}
+	if (start !== undefined && start.line === ob1Number1Neg1) {
+		shouldBail = true;
+	}
+	if (end !== undefined && end.line === ob1Number1Neg1) {
+		shouldBail = true;
+	}
+	if (shouldBail) {
+		return {
+			frame: formatMarker(markerMessage),
+			truncated: false,
+		};
 	}
 
-	const startLineIndex = ob1Coerce1To0(start.line);
-	let endLineIndex = ob1Coerce1To0(end.line);
+	// Whether we truncated lines
+	let truncated = false;
+
+	const startLineIndex =
+		start === undefined ? ob1Number0 : ob1Coerce1To0(start.line);
+	let endLineIndex =
+		end === undefined
+			? ob1Coerce0(allLines.length - 1)
+			: ob1Coerce1To0(end.line);
 
 	// Increase the amount of lines we should show for "context"
-	let contextStartIndex = ob1Coerce0(
-		Math.max(0, ob1Get0(startLineIndex) - CODE_FRAME_CONTEXT_LINES),
-	);
-	let contextEndIndex = ob1Coerce0(
-		Math.min(
-			allLines.length - 1,
-			ob1Get0(endLineIndex) + CODE_FRAME_CONTEXT_LINES,
-		),
-	);
+	let contextStartIndex =
+		start === undefined
+			? startLineIndex
+			: ob1Coerce0(
+					Math.max(0, ob1Get0(startLineIndex) - CODE_FRAME_CONTEXT_LINES),
+				);
+	let contextEndIndex =
+		end === undefined
+			? endLineIndex
+			: ob1Coerce0(
+					Math.min(
+						allLines.length - 1,
+						ob1Get0(endLineIndex) + CODE_FRAME_CONTEXT_LINES,
+					),
+				);
 
 	let maxVisibleLineNo = 0;
 
@@ -145,9 +189,10 @@ export default function buildMessageCodeFrame(
 		let pointer: undefined | string;
 
 		// If this is within the highlighted line range
-		const shouldHighlight: boolean = i >= startLineIndex && i <= endLineIndex;
+		const shouldHighlight: boolean =
+			type === "pointer" && i >= startLineIndex && i <= endLineIndex;
 
-		if (shouldHighlight) {
+		if (shouldHighlight && start !== undefined && end !== undefined) {
 			if (i === startLineIndex && i === endLineIndex) {
 				// Only line in the selection
 				pointer = createPointer(
@@ -199,10 +244,16 @@ export default function buildMessageCodeFrame(
 		});
 
 		maxVisibleLineNo = ob1Get0(i) + 1;
+
+		if (truncateLines !== undefined && maxVisibleLineNo >= truncateLines) {
+			truncated = true;
+			break;
+		}
 	}
 
 	// If we have too many lines in our selection, then collapse them to an ellipsis
-	const pruned = formattedLines.length > MAX_CODE_FRAME_LINES + 2;
+	const pruned =
+		type === "pointer" && formattedLines.length > MAX_CODE_FRAME_LINES + 2;
 	if (pruned) {
 		const start = formattedLines.slice(0, HALF_MAX_CODE_FRAME_LINES);
 		const end = formattedLines.slice(-HALF_MAX_CODE_FRAME_LINES);
@@ -220,16 +271,11 @@ export default function buildMessageCodeFrame(
 	}
 
 	// If there's no lines to target then return the normal marker
-	if (
-		formattedLines.length === 0 ||
-		end.line === ob1Number1Neg1 ||
-		start.line === ob1Number1Neg1
-	) {
-		if (markerMessage === "") {
-			return "";
-		} else {
-			return `<nobr>${markerMessage}</nobr>`;
-		}
+	if (formattedLines.length === 0) {
+		return {
+			frame: formatMarker(markerMessage),
+			truncated: false,
+		};
 	}
 
 	// Calculate max size of gutter, this is the maximum visible line plus the futter length plus the frame indent
@@ -242,7 +288,7 @@ export default function buildMessageCodeFrame(
 		String(maxVisibleLineNo).length + GUTTER.length + CODE_FRAME_INDENT.length;
 
 	// If what the marker is highlighting equals the marker message then it's redundant so don't show the message
-	if (markerMessage !== "") {
+	if (markerMessage !== "" && start !== undefined && end !== undefined) {
 		const text = sourceText.slice(ob1Get0(start.index), ob1Get0(end.index));
 		if (
 			cleanEquivalentString(text) ===
@@ -266,7 +312,10 @@ export default function buildMessageCodeFrame(
 			result.push(`${CODE_FRAME_INDENT}${selection.pointer}`);
 		}
 
-		return joinNoBreak(result);
+		return {
+			frame: joinNoBreak(result),
+			truncated,
+		};
 	}
 
 	// Build up the line we display when source lines are omitted
@@ -293,5 +342,14 @@ export default function buildMessageCodeFrame(
 		}
 	}
 
-	return joinNoBreak(result);
+	if (truncated) {
+		result.push(
+			`${omittedLine} <dim><number>${maxVisibleLineNo - truncateLines!}</number> more lines truncated</dim>`,
+		);
+	}
+
+	return {
+		truncated,
+		frame: joinNoBreak(result),
+	};
 }
