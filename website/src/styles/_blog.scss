@@ -1,0 +1,15 @@
+div.post-list{
+  h1{
+    margin-bottom: $unit / 2;
+  }
+
+  .info{
+    display: flex;
+    flex-direction: row;
+    color: var(--sub-text-color);
+
+    time{
+      margin-left: auto;
+    }
+  }
+}

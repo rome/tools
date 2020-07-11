@@ -5,7 +5,7 @@ author: test
 date: 2018-05-02
 tags:
   - another-tag
-layout: layouts/base.njk
+layout: layouts/blog.njk
 ---
 
 file added for tests

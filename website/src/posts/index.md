@@ -1,6 +1,6 @@
 ---
 title: Blog posts
-layout: layouts/base.njk
+layout: layouts/blog.njk
 ---
 
 {% postslist %}

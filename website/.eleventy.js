@@ -80,6 +80,7 @@ module.exports = function(eleventyConfig) {
 			});
 
 			let list = ``;
+			list += '<div class="post-list">';
 			files.forEach(file => {
 				list += '<article>';
 				const content = fs.readFileSync(`${opts.blogPath}/${file}`, "utf8").toString();
@@ -89,12 +90,16 @@ module.exports = function(eleventyConfig) {
 				const description = content.match(/description:(.*)/)[1];
 
 				list += `<h1><a href="${file.replace(path.extname(file), "")}">${title}</a></h1>`;
+				list += `<div class="info">`;
 				list += `<div class="${author}">by ${author}</div>`;
-				list += `<time datetime="${date}">${date}</time>`;
+				list += `<time datetime="${date}">${new Date(date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</time>`;
+				list += `</div>`;
 				list += `<p>${description}</p>`;
 
 				list += '</article>';
 			});
+
+			list += '</div>';
 
 			return list;
 		},
