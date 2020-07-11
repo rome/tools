@@ -24,72 +24,185 @@ function extractSuppressionsFromSource(sourceText: string) {
 test(
 	"single category",
 	async (t) => {
-		t.snapshot(
-			extractSuppressionsFromSource(
-				dedent`
-      // rome-ignore foo
-      foo();
+		const suppressions = extractSuppressionsFromSource(
+			dedent`
+    // rome-ignore foo
+    foo();
 
-      /** rome-ignore bar */
-      bar();
+    /** rome-ignore bar */
+    bar();
 
-      /**
-       * rome-ignore yes
-       */
-      yes();
+    /**
+     * rome-ignore yes
+     */
+    yes();
 
-      /**
-       * hello
-       * rome-ignore wow
-       */
-      wow();
-    `,
-			),
+    /**
+     * hello
+     * rome-ignore wow
+     */
+    wow();
+  `,
 		);
+
+		t.is(suppressions.suppressions.length, 4);
+		t.is(suppressions.diagnostics.length, 0);
+
+		t.snapshot(suppressions);
 	},
 );
 
 test(
 	"multiple categories",
 	async (t) => {
-		t.snapshot(
-			extractSuppressionsFromSource(
-				dedent`
-      // rome-ignore foo dog
-      foo();
+		const suppressions = extractSuppressionsFromSource(
+			dedent`
+    // rome-ignore foo dog
+    foo();
 
-      /** rome-ignore bar cat */
-      bar();
+    /** rome-ignore bar cat */
+    bar();
 
-      /**
-       * rome-ignore yes frog
-       */
-      yes();
+    /**
+     * rome-ignore yes frog
+     */
+    yes();
 
-      /**
-       * hello
-       * rome-ignore wow fish
-       */
-      wow();
-    `,
-			),
+    /**
+     * hello
+     * rome-ignore wow fish
+     */
+    wow();
+  `,
 		);
+
+		t.is(suppressions.suppressions.length, 8);
+		t.is(suppressions.diagnostics.length, 0);
+
+		t.snapshot(suppressions);
 	},
 );
 
 test(
 	"duplicates",
 	async (t) => {
-		t.snapshot(
-			extractSuppressionsFromSource(
-				dedent`
-      // rome-ignore dog dog
-      foo();
+		const suppressions = extractSuppressionsFromSource(
+			dedent`
+    // rome-ignore dog dog
+    foo();
 
-      // rome-ignore dog cat dog
-      bar();
-    `,
-			),
+    // rome-ignore dog cat dog
+    bar();
+  `,
 		);
+
+		t.is(suppressions.suppressions.length, 3);
+		t.is(suppressions.diagnostics.length, 2);
+		for (const diagnostic of suppressions.diagnostics) {
+			t.is(diagnostic.description.category, "suppressions/duplicate");
+		}
+
+		t.snapshot(suppressions);
+	},
+);
+
+test(
+	"overlap suppressions",
+	async (t) => {
+		const suppressions = extractSuppressionsFromSource(
+			dedent`
+      // rome-ignore foo
+      function foo_bar() {
+        // rome-ignore foo
+        bar_foo;
+      }
+  `,
+		);
+
+		t.is(suppressions.suppressions.length, 2);
+		t.is(suppressions.diagnostics.length, 1);
+		for (const diagnostic of suppressions.diagnostics) {
+			t.is(diagnostic.description.category, "suppressions/overlap");
+		}
+
+		t.snapshot(suppressions);
+	},
+);
+
+test(
+	"overlap suppressions with suppressions in between overlaps",
+	async (t) => {
+		const suppressions = extractSuppressionsFromSource(
+			dedent`
+      // rome-ignore foo
+      function foo_bar() {
+        // rome-ignore bar
+        // rome-ignore baz
+        // rome-ignore foo
+        bar_foo;
+      }
+  `,
+		);
+
+		t.is(suppressions.suppressions.length, 4);
+		t.is(suppressions.diagnostics.length, 1);
+		for (const diagnostic of suppressions.diagnostics) {
+			t.is(diagnostic.description.category, "suppressions/overlap");
+		}
+
+		t.snapshot(suppressions);
+	},
+);
+
+test(
+	"overlap suppression with a non-overlap suppression",
+	async (t) => {
+		const suppressions = extractSuppressionsFromSource(
+			dedent`
+      // rome-ignore foo
+      function foo_bar() {
+        // rome-ignore foo
+        bar_foo;
+      }
+
+      // rome-ignore foo
+      baz()
+  `,
+		);
+
+		t.is(suppressions.suppressions.length, 3);
+		t.is(suppressions.diagnostics.length, 1);
+		for (const diagnostic of suppressions.diagnostics) {
+			t.is(diagnostic.description.category, "suppressions/overlap");
+		}
+
+		t.snapshot(suppressions);
+	},
+);
+
+test(
+	"multiple overlap suppressions",
+	async (t) => {
+		const suppressions = extractSuppressionsFromSource(
+			dedent`
+      // rome-ignore foo
+      function foo_bar() {
+        // rome-ignore foo
+        // rome-ignore foo
+        bar_foo;
+      }
+
+      // rome-ignore foo
+      baz()
+  `,
+		);
+
+		t.is(suppressions.suppressions.length, 4);
+		t.is(suppressions.diagnostics.length, 2);
+		for (const diagnostic of suppressions.diagnostics) {
+			t.is(diagnostic.description.category, "suppressions/overlap");
+		}
+
+		t.snapshot(suppressions);
 	},
 );

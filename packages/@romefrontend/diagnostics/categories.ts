@@ -50,6 +50,7 @@ export type DiagnosticCategory =
 	| "resolver/unknownExport"
 	| "resolver/unsupported"
 	| "suppressions/duplicate"
+	| "suppressions/overlap"
 	| "suppressions/incorrectPrefix"
 	| "suppressions/missingSpace"
 	| "suppressions/missingTarget"

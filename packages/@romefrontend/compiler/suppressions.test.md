@@ -272,6 +272,397 @@ Object {
 }
 ```
 
+## `multiple overlap suppressions`
+
+```javascript
+Object {
+	diagnostics: Array [
+		Object {
+			description: Object {
+				advice: Array []
+				category: "suppressions/overlap"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "overlap suppression category <emphasis>foo</emphasis>"}
+			}
+			location: Object {
+				filename: "unknown"
+				end: Object {
+					column: 20
+					index: 60
+					line: 3
+				}
+				start: Object {
+					column: 2
+					index: 42
+					line: 3
+				}
+			}
+		}
+		Object {
+			description: Object {
+				advice: Array []
+				category: "suppressions/overlap"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "overlap suppression category <emphasis>foo</emphasis>"}
+			}
+			location: Object {
+				filename: "unknown"
+				end: Object {
+					column: 20
+					index: 81
+					line: 4
+				}
+				start: Object {
+					column: 2
+					index: 63
+					line: 4
+				}
+			}
+		}
+	]
+	suppressions: Array [
+		Object {
+			category: "foo"
+			endLine: 6
+			filename: "unknown"
+			startLine: 2
+			commentLocation: Object {
+				filename: "unknown"
+				end: Object {
+					column: 18
+					index: 18
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+		Object {
+			category: "foo"
+			endLine: 5
+			filename: "unknown"
+			startLine: 5
+			commentLocation: Object {
+				filename: "unknown"
+				end: Object {
+					column: 20
+					index: 60
+					line: 3
+				}
+				start: Object {
+					column: 2
+					index: 42
+					line: 3
+				}
+			}
+		}
+		Object {
+			category: "foo"
+			endLine: 5
+			filename: "unknown"
+			startLine: 5
+			commentLocation: Object {
+				filename: "unknown"
+				end: Object {
+					column: 20
+					index: 81
+					line: 4
+				}
+				start: Object {
+					column: 2
+					index: 63
+					line: 4
+				}
+			}
+		}
+		Object {
+			category: "foo"
+			endLine: 9
+			filename: "unknown"
+			startLine: 9
+			commentLocation: Object {
+				filename: "unknown"
+				end: Object {
+					column: 18
+					index: 114
+					line: 8
+				}
+				start: Object {
+					column: 0
+					index: 96
+					line: 8
+				}
+			}
+		}
+	]
+}
+```
+
+## `overlap suppression with a non-overlap suppression`
+
+```javascript
+Object {
+	diagnostics: Array [
+		Object {
+			description: Object {
+				advice: Array []
+				category: "suppressions/overlap"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "overlap suppression category <emphasis>foo</emphasis>"}
+			}
+			location: Object {
+				filename: "unknown"
+				end: Object {
+					column: 20
+					index: 60
+					line: 3
+				}
+				start: Object {
+					column: 2
+					index: 42
+					line: 3
+				}
+			}
+		}
+	]
+	suppressions: Array [
+		Object {
+			category: "foo"
+			endLine: 5
+			filename: "unknown"
+			startLine: 2
+			commentLocation: Object {
+				filename: "unknown"
+				end: Object {
+					column: 18
+					index: 18
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+		Object {
+			category: "foo"
+			endLine: 4
+			filename: "unknown"
+			startLine: 4
+			commentLocation: Object {
+				filename: "unknown"
+				end: Object {
+					column: 20
+					index: 60
+					line: 3
+				}
+				start: Object {
+					column: 2
+					index: 42
+					line: 3
+				}
+			}
+		}
+		Object {
+			category: "foo"
+			endLine: 8
+			filename: "unknown"
+			startLine: 8
+			commentLocation: Object {
+				filename: "unknown"
+				end: Object {
+					column: 18
+					index: 93
+					line: 7
+				}
+				start: Object {
+					column: 0
+					index: 75
+					line: 7
+				}
+			}
+		}
+	]
+}
+```
+
+## `overlap suppressions`
+
+```javascript
+Object {
+	diagnostics: Array [
+		Object {
+			description: Object {
+				advice: Array []
+				category: "suppressions/overlap"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "overlap suppression category <emphasis>foo</emphasis>"}
+			}
+			location: Object {
+				filename: "unknown"
+				end: Object {
+					column: 20
+					index: 60
+					line: 3
+				}
+				start: Object {
+					column: 2
+					index: 42
+					line: 3
+				}
+			}
+		}
+	]
+	suppressions: Array [
+		Object {
+			category: "foo"
+			endLine: 5
+			filename: "unknown"
+			startLine: 2
+			commentLocation: Object {
+				filename: "unknown"
+				end: Object {
+					column: 18
+					index: 18
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+		Object {
+			category: "foo"
+			endLine: 4
+			filename: "unknown"
+			startLine: 4
+			commentLocation: Object {
+				filename: "unknown"
+				end: Object {
+					column: 20
+					index: 60
+					line: 3
+				}
+				start: Object {
+					column: 2
+					index: 42
+					line: 3
+				}
+			}
+		}
+	]
+}
+```
+
+## `overlap suppressions with suppressions in between overlaps`
+
+```javascript
+Object {
+	diagnostics: Array [
+		Object {
+			description: Object {
+				advice: Array []
+				category: "suppressions/overlap"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "overlap suppression category <emphasis>foo</emphasis>"}
+			}
+			location: Object {
+				filename: "unknown"
+				end: Object {
+					column: 20
+					index: 102
+					line: 5
+				}
+				start: Object {
+					column: 2
+					index: 84
+					line: 5
+				}
+			}
+		}
+	]
+	suppressions: Array [
+		Object {
+			category: "foo"
+			endLine: 7
+			filename: "unknown"
+			startLine: 2
+			commentLocation: Object {
+				filename: "unknown"
+				end: Object {
+					column: 18
+					index: 18
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+		Object {
+			category: "bar"
+			endLine: 6
+			filename: "unknown"
+			startLine: 6
+			commentLocation: Object {
+				filename: "unknown"
+				end: Object {
+					column: 20
+					index: 60
+					line: 3
+				}
+				start: Object {
+					column: 2
+					index: 42
+					line: 3
+				}
+			}
+		}
+		Object {
+			category: "baz"
+			endLine: 6
+			filename: "unknown"
+			startLine: 6
+			commentLocation: Object {
+				filename: "unknown"
+				end: Object {
+					column: 20
+					index: 81
+					line: 4
+				}
+				start: Object {
+					column: 2
+					index: 63
+					line: 4
+				}
+			}
+		}
+		Object {
+			category: "foo"
+			endLine: 6
+			filename: "unknown"
+			startLine: 6
+			commentLocation: Object {
+				filename: "unknown"
+				end: Object {
+					column: 20
+					index: 102
+					line: 5
+				}
+				start: Object {
+					column: 2
+					index: 84
+					line: 5
+				}
+			}
+		}
+	]
+}
+```
+
 ## `single category`
 
 ```javascript
