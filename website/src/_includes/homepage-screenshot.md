@@ -9,7 +9,7 @@
      <strong> │ </strong>       <span style="color: Tomato;"><strong>^^^^</strong></span>
   <strong>  3 │ </strong><span class="token keyword">import</span> <span class="token string">&quot;./App.css&quot;</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Unused variables are dead code and usually the result of incomplete</span>
+  <strong><span style="color: DodgerBlue;">ℹ&#xFE0E; </span></strong><span style="color: DodgerBlue;">Unused variables are dead code and usually the result of incomplete</span>
     <span style="color: DodgerBlue;">refactoring.</span>
 
  <span style="text-decoration-style: dotted;">src/App.js:8:8</span> <strong>lint/jsx-a11y/altText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -24,7 +24,7 @@
    <strong>  9 │ </strong>        &lt;<span class="token variable">p</span>&gt;
   <strong>  10 │ </strong>          Edit &lt;<span class="token variable">code</span>&gt;src/App.js&lt;<span class="token operator">/</span><span class="token variable">code</span>&gt; and save to reload.
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Meaningful alternative text on elements helps users relying on screen</span>
+  <strong><span style="color: DodgerBlue;">ℹ&#xFE0E; </span></strong><span style="color: DodgerBlue;">Meaningful alternative text on elements helps users relying on screen</span>
     <span style="color: DodgerBlue;">readers to understand content&apos;s purpose within a page.</span>
 
  <span style="text-decoration-style: dotted;">src/App.js:8:18</span> <strong>lint/js/undeclaredVariables</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -38,7 +38,7 @@
    <strong>  9 │ </strong>        &lt;<span class="token variable">p</span>&gt;
   <strong>  10 │ </strong>          Edit &lt;<span class="token variable">code</span>&gt;src/App.js&lt;<span class="token operator">/</span><span class="token variable">code</span>&gt; and save to reload.
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Did you mean </span><span style="color: DodgerBlue;"><strong>logo</strong></span><span style="color: DodgerBlue;">?</span>
+  <strong><span style="color: DodgerBlue;">ℹ&#xFE0E; </span></strong><span style="color: DodgerBlue;">Did you mean </span><span style="color: DodgerBlue;"><strong>logo</strong></span><span style="color: DodgerBlue;">?</span>
 
   <span style="color: Tomato;">-</span> <span style="color: Tomato;">logo</span><span style="color: Tomato;"><strong>2</strong></span>
 
