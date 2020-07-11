@@ -66,7 +66,7 @@ module.exports = function(eleventyConfig) {
 
 			//remove index.md from the list and only accept .md files
 			files = files.filter(function(file){
-				return file != 'index.md' && path.extname(file) === '.md';
+				return file !== 'index.md' && path.extname(file) === '.md';
 			});
 
 			//sort by date
@@ -76,7 +76,6 @@ module.exports = function(eleventyConfig) {
 
 				const contentB = fs.readFileSync(`${opts.blogPath}/${fileB}`, "utf8").toString();
 				const dateB = contentB.match(/date:(.*)/)[1];
-				console.log(new Date(dateB) - new Date(dateA));
 				return new Date(dateB) - new Date(dateA);
 			});
 
