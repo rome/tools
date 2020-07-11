@@ -74,7 +74,7 @@ export default class CommentsConsumer {
 		this.idToComment.delete(id);
 	}
 
-	addComment(withoutId: AnyCommentOptionalId): AnyComment {
+	createComment(withoutId: AnyCommentOptionalId): AnyComment {
 		const withId: AnyComment = {
 			...withoutId,
 			id: this.getNextId(),
