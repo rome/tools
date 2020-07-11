@@ -16,6 +16,10 @@ import {buildSuggestionAdvice} from "../helpers";
 import {createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	JSX_NO_IMPLICIT_BOOLEAN: {
+		category: "lint/jsx/noImplicitBoolean",
+		message: "Use explicit boolean values for boolean JSX props.",
+	},
 	JS_NO_NESTED_TERNARY: {
 		category: "lint/js/noNestedTernary",
 		message: "Nesting ternary expressions can make code more difficult to understand.",

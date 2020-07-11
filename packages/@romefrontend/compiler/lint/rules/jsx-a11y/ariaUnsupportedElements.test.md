@@ -192,7 +192,7 @@
 ### `6: formatted`
 
 ```
-<style aria-labelledby>
+<style aria-labelledby={true}>
 </style>;
 
 ```
@@ -279,7 +279,7 @@
 ### `11: formatted`
 
 ```
-<style parole>
+<style parole={true}>
 </style>;
 
 ```

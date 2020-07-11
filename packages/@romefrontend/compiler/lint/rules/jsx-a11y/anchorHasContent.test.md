@@ -53,7 +53,7 @@
 
 ```
 <a>
-	<TextWrapper aria-hidden />
+	<TextWrapper aria-hidden={true} />
 </a>;
 
 ```
@@ -115,7 +115,7 @@
 
 ```
 <a>
-	<TextWrapper aria-hidden />
+	<TextWrapper aria-hidden={true} />
 	 visible content
 </a>;
 

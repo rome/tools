@@ -311,7 +311,7 @@
 ### `11: formatted`
 
 ```
-<img {...props} alt />;
+<img {...props} alt={true} />;
 
 ```
 
@@ -395,7 +395,7 @@
 ### `17: formatted`
 
 ```
-<object aria-label />;
+<object aria-label={true} />;
 
 ```
 
@@ -483,7 +483,7 @@
 ### `23: formatted`
 
 ```
-<area {...props} alt />;
+<area {...props} alt={true} />;
 
 ```
 
@@ -539,7 +539,7 @@
 ### `27: formatted`
 
 ```
-<input type="image" {...props} alt />;
+<input type="image" {...props} alt={true} />;
 
 ```
 

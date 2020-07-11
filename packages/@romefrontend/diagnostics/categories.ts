@@ -176,6 +176,7 @@ type LintDiagnosticCategory =
 	| "lint/jsx/fileExtension"
 	| "lint/jsx/noCommentText"
 	| "lint/jsx/noDuplicateProps"
+	| "lint/jsx/noImplicitBoolean"
 	| "lint/jsx/pascalCase"
 	| "lint/jsx/propsNoSpreading"
 	| "lint/react/buttonHasType"

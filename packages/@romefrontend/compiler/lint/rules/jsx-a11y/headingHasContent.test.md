@@ -53,7 +53,7 @@
 
 ```
 <h1>
-	<TextWrapper aria-hidden />
+	<TextWrapper aria-hidden={true} />
 </h1>;
 
 ```
@@ -81,7 +81,7 @@
 
 ```
 <h1>
-	<div aria-hidden />
+	<div aria-hidden={true} />
 </h1>;
 
 ```
@@ -143,7 +143,7 @@
 
 ```
 <h1>
-	<div aria-hidden />
+	<div aria-hidden={true} />
 	visible content
 </h1>;
 
