@@ -58,6 +58,7 @@ import {TransformStageName} from "@romefrontend/compiler";
 import WorkerBridge, {
 	PrefetchedModuleSignatures,
 	WorkerAnalyzeDependencyResult,
+	WorkerBufferPatch,
 	WorkerCompileResult,
 	WorkerCompilerOptions,
 	WorkerFormatResult,
@@ -914,6 +915,25 @@ export default class ServerRequest {
 				await bridge.updateBuffer.call({file, content});
 				this.server.memoryFs.addBuffer(path, content);
 				this.server.refreshFileEvent.send(path);
+			},
+			{noRetry: true},
+		);
+	}
+
+	async requestWorkerPatchBuffer(
+		path: AbsoluteFilePath,
+		patches: Array<WorkerBufferPatch>,
+	): Promise<string> {
+		this.checkCancelled();
+
+		return this.wrapRequestDiagnostic(
+			"patchBuffer",
+			path,
+			async (bridge, file) => {
+				const buffer = await bridge.patchBuffer.call({file, patches});
+				this.server.memoryFs.addBuffer(path, buffer);
+				this.server.refreshFileEvent.send(path);
+				return buffer;
 			},
 			{noRetry: true},
 		);
