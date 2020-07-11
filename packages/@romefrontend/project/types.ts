@@ -188,7 +188,7 @@ export function createDefaultProjectConfig(): ProjectConfig {
 			root: createAbsoluteFilePath("/"),
 		},
 		files: {
-			vendorPath: TEMP_PATH.append(`rome-remote`),
+			vendorPath: TEMP_PATH.append("rome-remote"),
 			assetExtensions: [],
 			maxSize: 40_000_000, // 40 megabytes
 		},

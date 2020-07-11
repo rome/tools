@@ -193,7 +193,7 @@ export default class WebRequest {
 			}
 		}
 
-		this.reporter.error(`Unknown request for`, req.url);
+		this.reporter.error("Unknown request for", req.url);
 		res.writeHead(404);
 		res.end("Not found");
 	}
@@ -294,7 +294,7 @@ export default class WebRequest {
 			},
 		);
 
-		this.reporter.success(`Device websocket client connected`);
+		this.reporter.success("Device websocket client connected");
 
 		socket.completeFrameEvent.subscribe((frame) => {
 			const text = frame.payload.toString();

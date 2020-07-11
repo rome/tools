@@ -489,7 +489,7 @@ export class ParserCore<
 
 		if (start === undefined || end === undefined) {
 			throw new Error(
-				`Conditions above should have eliminated this possibility`,
+				"Conditions above should have eliminated this possibility",
 			);
 		}
 

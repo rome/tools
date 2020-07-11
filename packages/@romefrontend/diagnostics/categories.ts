@@ -136,6 +136,7 @@ type LintDiagnosticCategory =
 	| "lint/js/noShorthandArrayType"
 	| "lint/js/noTemplateCurlyInString"
 	| "lint/js/noUnsafeFinally"
+	| "lint/js/noUnusedTemplateLiteral"
 	| "lint/js/noUnusedVariables"
 	| "lint/js/noVar"
 	| "lint/js/preferBlockStatements"

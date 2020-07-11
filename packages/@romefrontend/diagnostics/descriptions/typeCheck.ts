@@ -16,7 +16,7 @@ export const typeCheck = createDiagnosticsCategory({
 			{
 				type: "log",
 				category: "error",
-				text: `This type is incompatible with expected type of`,
+				text: "This type is incompatible with expected type of",
 			},
 			originLoc === undefined
 				? {

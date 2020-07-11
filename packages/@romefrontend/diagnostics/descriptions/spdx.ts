@@ -9,7 +9,7 @@ export const spdx = createDiagnosticsCategory({
 		advice: buildSuggestionAdvice(id, knownLicenses),
 	}),
 	VALID_LICENSE_WITH_MISSING_DASH: (possibleCorrectLicense: string) => ({
-		message: `Missing dash between SPDX license name and version`,
+		message: "Missing dash between SPDX license name and version",
 		advice: [
 			{
 				type: "log",

@@ -30,7 +30,7 @@ export default function JSExportLocalDeclaration(
 			case "JSClassDeclaration": {
 				const id = decl.id;
 				if (id === undefined) {
-					throw new Error(`Expected id`);
+					throw new Error("Expected id");
 				}
 				evaluator.addExport(id.name, declType);
 				break;

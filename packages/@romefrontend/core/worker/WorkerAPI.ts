@@ -107,7 +107,7 @@ export default class WorkerAPI {
 			);
 		}
 
-		this.logger.info(`Generating module signature:`, ref.real.toMarkup());
+		this.logger.info("Generating module signature:", ref.real.toMarkup());
 
 		return await jsAnalysis.getModuleSignature({
 			ast,
@@ -222,7 +222,7 @@ export default class WorkerAPI {
 		parseOptions: WorkerParseOptions,
 	): Promise<AnalyzeDependencyResult> {
 		const project = this.worker.getProject(ref.project);
-		this.logger.info(`Analyze dependencies:`, ref.real.toMarkup());
+		this.logger.info("Analyze dependencies:", ref.real.toMarkup());
 
 		const parseResult = await catchDiagnostics(async () =>
 			this.worker.parse(ref, parseOptions)
@@ -290,7 +290,7 @@ export default class WorkerAPI {
 			ref,
 			parseOptions,
 		);
-		this.logger.info(`Compiling:`, ref.real.toMarkup());
+		this.logger.info("Compiling:", ref.real.toMarkup());
 
 		const compilerOptions = await this.workerCompilerOptionsToCompilerOptions(
 			ref,
@@ -344,7 +344,7 @@ export default class WorkerAPI {
 		parseOptions: WorkerParseOptions,
 	): Promise<undefined | ExtensionLintResult> {
 		const project = this.worker.getProject(ref.project);
-		this.logger.info(`Formatting:`, ref.real.toMarkup());
+		this.logger.info("Formatting:", ref.real.toMarkup());
 
 		const {handler} = getFileHandlerAssert(ref.real, project.config);
 
@@ -391,7 +391,7 @@ export default class WorkerAPI {
 		parseOptions: WorkerParseOptions,
 	): Promise<WorkerLintResult> {
 		const project = this.worker.getProject(ref.project);
-		this.logger.info(`Linting:`, ref.real.toMarkup());
+		this.logger.info("Linting:", ref.real.toMarkup());
 
 		// Get the extension handler
 		const {handler} = getFileHandlerAssert(ref.real, project.config);

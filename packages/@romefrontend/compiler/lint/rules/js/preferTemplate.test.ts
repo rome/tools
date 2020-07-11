@@ -21,7 +21,7 @@ test(
 					`console.log(1 + 'foo' + 2 + 'bar' + 'baz' + 3)`,
 					`console.log((1 + 'foo') * 2)`,
 					`console.log((1 * (2 + 'foo')) + 'bar')`,
-					`console.log(\`foo\` + 1)`,
+					"console.log(`foo` + 1)",
 					`console.log('foo' + \`bar\${\`baz\${'bat' + 'bam'}\`}\` + 'boo')`,
 					`console.log('foo' + 1 + 2)`,
 				],

@@ -92,7 +92,7 @@ async function getRomeLocation(): Promise<
 
 			const nodeModules = await tryChain(
 				uri.path,
-				`node_modules/rome/bin/rome/index.js`,
+				"node_modules/rome/bin/rome/index.js",
 			);
 			if (nodeModules !== undefined) {
 				return {path: nodeModules, env: {}};

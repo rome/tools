@@ -24,31 +24,31 @@ function helper(input: string) {
 test(
 	"invalid",
 	async (t) => {
-		t.snapshot(helper(`{}`));
+		t.snapshot(helper("{}"));
 		t.snapshot(helper(`'foobar';`));
 		t.snapshot(helper(`if (bar) {'foobar';}`));
 		t.snapshot(helper(`if (bar) {'foobar';} else {}`));
-		t.snapshot(helper(`switch (foo) {}`));
+		t.snapshot(helper("switch (foo) {}"));
 		t.snapshot(helper(`switch (foo) {case 'bar': {}}`));
-		t.snapshot(helper(`switch (foo) {default: {}}`));
+		t.snapshot(helper("switch (foo) {default: {}}"));
 	},
 );
 
 test(
 	"completions",
 	async (t) => {
-		t.snapshot(helper(`return false;`));
-		t.snapshot(helper(`return; invalid;`));
-		t.snapshot(helper(`if (bar) {return false;}`));
-		t.snapshot(helper(`if (bar) {return false;} else {return true;}`));
-		t.snapshot(helper(`switch (foo) {default: {return false;}}`));
-		t.snapshot(helper(`switch (foo) {default: {return false;}}`));
+		t.snapshot(helper("return false;"));
+		t.snapshot(helper("return; invalid;"));
+		t.snapshot(helper("if (bar) {return false;}"));
+		t.snapshot(helper("if (bar) {return false;} else {return true;}"));
+		t.snapshot(helper("switch (foo) {default: {return false;}}"));
+		t.snapshot(helper("switch (foo) {default: {return false;}}"));
 	},
 );
 
 test(
 	"mix",
 	async (t) => {
-		t.snapshot(helper(`switch (foo) {default: {if (true) {return false;}}}`));
+		t.snapshot(helper("switch (foo) {default: {if (true) {return false;}}}"));
 	},
 );

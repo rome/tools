@@ -100,12 +100,12 @@ for (const {basename, category} of defs) {
 	if (categoryAlias[category]) {
 		if (docTemplateTable) {
 			docTemplate += docTemplateTable;
-			docTemplate += `\n`;
+			docTemplate += "\n";
 		}
 
 		docTemplate += `## ${categoryAlias[category]}\n\n`;
 
-		docTemplateTable = `| Rule | Description |\n| ------------- | ------------- |\n`;
+		docTemplateTable = "| Rule | Description |\n| ------------- | ------------- |\n";
 	}
 	//Remove this, so each doc headings will be added once
 	categoryAlias[category] = null;
@@ -138,7 +138,7 @@ for (const {basename, category} of defs) {
 }
 
 docTemplate += docTemplateTable;
-docTemplate += `\n`;
+docTemplate += "\n";
 
 write(lintRulesDocFile, docTemplate);
 

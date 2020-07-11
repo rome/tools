@@ -4,7 +4,7 @@ import {toKebabCase} from "@romefrontend/string-utils";
 import {buildSuggestionAdvice} from "../helpers";
 
 export const flags = createDiagnosticsCategory({
-	UNSUPPORTED_SHORTHANDS: `Shorthand flags are not supported`,
+	UNSUPPORTED_SHORTHANDS: "Shorthand flags are not supported",
 	INCORRECT_CASED_FLAG: (flag: string) => ({
 		message: "Incorrect cased flag name",
 		advice: [

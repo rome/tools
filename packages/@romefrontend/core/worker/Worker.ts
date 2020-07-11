@@ -444,7 +444,7 @@ export default class Worker {
 			}
 		}
 
-		this.logger.info(`Parsing:`, path.toMarkup());
+		this.logger.info("Parsing:", path.toMarkup());
 
 		const stat = await lstat(path);
 		let manifestPath: undefined | string;

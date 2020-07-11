@@ -550,7 +550,7 @@ export default class Parser<T> {
 		const {programName} = this.opts;
 
 		reporter.section(
-			`Usage`,
+			"Usage",
 			() => {
 				if (description !== undefined) {
 					reporter.logAll(description);

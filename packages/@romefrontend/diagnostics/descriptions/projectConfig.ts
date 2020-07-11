@@ -3,7 +3,7 @@ import {createDiagnosticsCategory} from "./index";
 // @romefrontend/project
 export const projectConfig = createDiagnosticsCategory({
 	BOOLEAN_CATEGORY: (enabled: boolean) => ({
-		message: `Expected an object here but got a boolean`,
+		message: "Expected an object here but got a boolean",
 		advice: [
 			{
 				type: "log",

@@ -384,7 +384,7 @@ export default class ServerRequest {
 		if (min === max) {
 			if (args.length !== min) {
 				if (min === 0) {
-					message = `Expected no arguments`;
+					message = "Expected no arguments";
 				} else {
 					message = `Expected exactly <number emphasis>${min}</number> arguments`;
 				}

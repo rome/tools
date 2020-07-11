@@ -16,6 +16,10 @@ import {buildSuggestionAdvice} from "../helpers";
 import {createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	JS_NO_UNUSED_TEMPLATE_LITERAL: {
+		category: "lint/js/noUnusedTemplateLiteral",
+		message: "Do not use template literals if interpolation and special-character handling are not needed.",
+	},
 	JS_NO_NESTED_TERNARY: {
 		category: "lint/js/noNestedTernary",
 		message: "Nesting ternary expressions can make code more difficult to understand.",
