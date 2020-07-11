@@ -4,7 +4,8 @@ description: This is a post on My Blog about agile frameworks.
 author: sebmck
 date: 2018-05-01
 tags:
-  - another-tag
+  - post
+  - another
 layout: layouts/blog.njk
 ---
 

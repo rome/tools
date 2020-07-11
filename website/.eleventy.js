@@ -58,52 +58,9 @@ module.exports = function(eleventyConfig) {
 		},
 	);
 
-	eleventyConfig.addShortcode(
-		"postslist",
-		function() {
-
-			let files = fs.readdirSync(opts.blogPath);
-
-			//remove index.md from the list and only accept .md files
-			files = files.filter(function(file){
-				return file !== 'index.md' && path.extname(file) === '.md';
-			});
-
-			//sort by date
-			files.sort(function(fileA,fileB){
-				const contentA = fs.readFileSync(`${opts.blogPath}/${fileA}`, "utf8").toString();
-				const dateA = contentA.match(/date:(.*)/)[1];
-
-				const contentB = fs.readFileSync(`${opts.blogPath}/${fileB}`, "utf8").toString();
-				const dateB = contentB.match(/date:(.*)/)[1];
-				return new Date(dateB) - new Date(dateA);
-			});
-
-			let list = ``;
-			list += '<div class="post-list">';
-			files.forEach(file => {
-				list += '<article>';
-				const content = fs.readFileSync(`${opts.blogPath}/${file}`, "utf8").toString();
-				const title = content.match(/title:(.*)/)[1];
-				const author = content.match(/author:(.*)/)[1];
-				const date = content.match(/date:(.*)/)[1];
-				const description = content.match(/description:(.*)/)[1];
-
-				list += `<h1><a href="${file.replace(path.extname(file), "")}">${title}</a></h1>`;
-				list += `<div class="info">`;
-				list += `<div class="${author}">by ${author}</div>`;
-				list += `<time datetime="${date}">${new Date(date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</time>`;
-				list += `</div>`;
-				list += `<p>${description}</p>`;
-
-				list += '</article>';
-			});
-
-			list += '</div>';
-
-			return list;
-		},
-	);
+	eleventyConfig.addLiquidFilter("dateFormat", function(value) {
+		return new Date(value).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+	});
 
 	return {
 		dir: {
