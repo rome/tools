@@ -84,10 +84,12 @@ module.exports = function(eleventyConfig) {
 				list += '<article>';
 				const content = fs.readFileSync(`${opts.blogPath}/${file}`, "utf8").toString();
 				const title = content.match(/title:(.*)/)[1];
+				const author = content.match(/author:(.*)/)[1];
 				const date = content.match(/date:(.*)/)[1];
 				const description = content.match(/description:(.*)/)[1];
 
 				list += `<h1><a href="${file.replace(path.extname(file), "")}">${title}</a></h1>`;
+				list += `<div class="${author}">by ${author}</div>`;
 				list += `<time datetime="${date}">${date}</time>`;
 				list += `<p>${description}</p>`;
 
