@@ -35,4 +35,8 @@ export const suppressions = createDiagnosticsCategory({
 		category: "suppressions/duplicate",
 		message: markup`Duplicate suppression category <emphasis>${category}</emphasis>`,
 	}),
+	OVERLAP: (category: string) => ({
+		category: "suppressions/overlap",
+		message: markup`overlap suppression category <emphasis>${category}</emphasis>`,
+	}),
 });

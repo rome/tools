@@ -85,7 +85,6 @@ function extractSuppressionsFromComment(
 				shouldBreak = true;
 				category = category.slice(-1);
 			}
-
 			if (suppressedCategories.has(category)) {
 				diagnostics.push({
 					description: descriptions.SUPPRESSIONS.DUPLICATE(category),
@@ -156,6 +155,31 @@ export function extractSuppressionsFromProgram(
 		if (result !== undefined) {
 			diagnostics = diagnostics.concat(result.diagnostics);
 			suppressions = suppressions.concat(result.suppressions);
+		}
+	}
+
+	// check for overlap suppressions
+	const nonOverlapSuppressions = new Map();
+	for (const suppression of suppressions) {
+		if (nonOverlapSuppressions.has(suppression.category)) {
+			const previousSuppression = nonOverlapSuppressions.get(
+				suppression.category,
+			);
+			const currentSuppression = suppression;
+			if (
+				currentSuppression.startLine > previousSuppression.startLine &&
+				currentSuppression.endLine <= previousSuppression.endLine
+			) {
+				diagnostics.push({
+					description: descriptions.SUPPRESSIONS.OVERLAP(suppression.category),
+					location: suppression.commentLocation,
+				});
+			} else {
+				// replace suppression to compare to later suppressions
+				nonOverlapSuppressions.set(suppression.category, suppression);
+			}
+		} else {
+			nonOverlapSuppressions.set(suppression.category, suppression);
 		}
 	}
 
