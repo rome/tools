@@ -6,7 +6,6 @@
 
 ```javascript
 HTMLRoot {
-	comments: Array []
 	corrupt: false
 	diagnostics: Array []
 	filename: "input.html"
@@ -24,10 +23,47 @@ HTMLRoot {
 			line: 1
 		}
 	}
+	comments: Array [
+		CommentBlock {
+			id: "0"
+			value: " I am a comment "
+			loc: Object {
+				filename: "input.html"
+				end: Object {
+					column: 23
+					index: 23
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+		CommentBlock {
+			id: "1"
+			value: " I am another comment "
+			loc: Object {
+				filename: "input.html"
+				end: Object {
+					column: 30
+					index: 210
+					line: 17
+				}
+				start: Object {
+					column: 1
+					index: 181
+					line: 17
+				}
+			}
+		}
+	]
 	body: Array [
 		HTMLElement {
 			name: HTMLIdentifier {
 				name: "foo"
+				leadingComments: undefined
 				loc: Object {
 					filename: "input.html"
 					end: Object {
@@ -44,6 +80,7 @@ HTMLRoot {
 			}
 			attributes: Array []
 			selfClosing: false
+			leadingComments: Array ["0"]
 			loc: Object {
 				filename: "input.html"
 				end: Object {

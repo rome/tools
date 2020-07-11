@@ -220,7 +220,7 @@ function highlightHTML({input, path}: AnsiHighlightOptions): string {
 
 				case "Identifier":
 					return {
-						type: prev !== undefined && prev.type === "Less"
+						type: prev !== undefined && prev.type === "TagStartOpen"
 							? "tag"
 							: "attr-name",
 					};
@@ -228,9 +228,10 @@ function highlightHTML({input, path}: AnsiHighlightOptions): string {
 				case "String":
 					return {type: "attr-value"};
 
-				case "Greater":
-				case "Less":
-				case "Slash":
+				case "TagEndOpen":
+				case "TagEnd":
+				case "TagSelfClosing":
+				case "TagStartOpen":
 					return {type: "punctuation"};
 
 				default:

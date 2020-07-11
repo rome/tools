@@ -52,6 +52,7 @@ import CommentsConsumer from "@romefrontend/js-parser/CommentsConsumer";
 export * from "./types";
 
 export type ParserOptions = {
+	inlineDiagnosticsSource?: boolean;
 	retainCarriageReturn?: boolean;
 	path?: string | UnknownFilePath;
 	mtime?: number;
@@ -150,11 +151,12 @@ export class ParserCore<
 		diagnosticCategory: DiagnosticCategory,
 		initialState: Omit<State, keyof ParserCoreState>,
 	) {
-		const {path, mtime, offsetPosition} = opts;
+		const {path, mtime, offsetPosition, inlineDiagnosticsSource = false} = opts;
 
 		// Input information
 		this.path = path === undefined ? undefined : createUnknownFilePath(path);
 		this.filename = this.path === undefined ? undefined : this.path.join();
+		this.shouldInlineDiagnosticsSource = inlineDiagnosticsSource;
 		this.mtime = mtime;
 		this.input = normalizeInput(opts);
 		this.length = ob1Coerce0(this.input.length);
@@ -206,7 +208,7 @@ export class ParserCore<
 
 	path: undefined | UnknownFilePath;
 	filename: undefined | string;
-
+	shouldInlineDiagnosticsSource: boolean;
 	mtime: undefined | number;
 	input: string;
 	length: Number0;
@@ -519,7 +521,10 @@ export class ParserCore<
 		return {
 			description: metadataWithCategory,
 			location: {
-				sourceText: this.path === undefined ? this.input : undefined,
+				sourceText: this.path === undefined ||
+				this.shouldInlineDiagnosticsSource
+					? this.input
+					: undefined,
 				mtime: this.mtime,
 				start,
 				end,

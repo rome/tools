@@ -308,13 +308,13 @@ function pushComment(
 	const loc = parser.finishLocAt(opts.startPos, opts.endPos);
 	let comment: AnyComment;
 	if (opts.block) {
-		comment = parser.comments.addComment({
+		comment = parser.comments.createComment({
 			type: "CommentBlock",
 			value: removeCarriageReturn(opts.text),
 			loc,
 		});
 	} else {
-		comment = parser.comments.addComment({
+		comment = parser.comments.createComment({
 			type: "CommentLine",
 			value: opts.text,
 			loc,

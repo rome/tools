@@ -415,7 +415,7 @@ export const createCSSParser = createParser((ParserCore) =>
 					index = ob1Add(index, 1);
 				}
 				this.registerComment(
-					this.comments.addComment({
+					this.comments.createComment({
 						type: "CommentBlock",
 						value,
 					}),

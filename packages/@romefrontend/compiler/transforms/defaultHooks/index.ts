@@ -124,7 +124,7 @@ export const commentInjector = createHook<
 
 		const {id} = comment;
 		if (id === undefined) {
-			commentWithId = path.context.comments.addComment(comment);
+			commentWithId = path.context.comments.createComment(comment);
 		} else {
 			// This comment already has an id so update it
 			commentWithId = {
