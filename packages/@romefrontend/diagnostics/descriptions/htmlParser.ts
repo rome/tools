@@ -11,6 +11,7 @@ export const htmlParser = createDiagnosticsCategory({
 	INCORRECT_CLOSING_TAG_NAME: (expected: string, got: string) => ({
 		message: markup`Expected to close ${expected} but found ${got}`,
 	}),
+	UNOPENED_TAG: "Ending tag with no opening tag",
 	UNCLOSED_TAG: (tagName: string, openLocation: DiagnosticLocation) => ({
 		message: markup`Unclosed ${tagName} tag`,
 		advice: [

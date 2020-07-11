@@ -22,14 +22,18 @@ import {Number0, ob1Add, ob1Get0, ob1Inc} from "@romefrontend/ob1";
 import {isEscaped} from "@romefrontend/string-utils";
 import {isSelfClosingTagName} from "./tags";
 import {descriptions} from "@romefrontend/diagnostics";
-import {consumeComment} from "@romefrontend/html-parser/utils.ts";
 
 type Tokens = BaseTokens & {
 	Text: ValueToken<"Text", string>;
-	Slash: SimpleToken<"Slash">;
-	Less: SimpleToken<"Less">;
+	// <
+	TagStartOpen: SimpleToken<"TagStartOpen">;
+	// />
+	TagSelfClosing: SimpleToken<"TagSelfClosing">;
+	// >
+	TagEnd: SimpleToken<"TagEnd">;
+	// </
+	TagEndOpen: SimpleToken<"TagEndOpen">;
 	Equals: SimpleToken<"Equals">;
-	Greater: SimpleToken<"Greater">;
 	Identifier: ValueToken<"Identifier", string>;
 	String: ValueToken<"String", string>;
 	Comment: ValueToken<"Comment", string>;
@@ -60,12 +64,13 @@ function isTextChar(char: string, index: Number0, input: string): boolean {
 	return !isTagStartChar(index, input);
 }
 
-function isTagComment(index: Number0, input: string): boolean {
-	const first = input[ob1Get0(index)];
-	const second = input[ob1Get0(index) + 1];
-	const third = input[ob1Get0(index) + 2];
-	const fourth = input[ob1Get0(index) + 3];
-	return first === "<" && second === "!" && third === "-" && fourth === "-";
+function isntCommentEnd(char: string, index: Number0, input: string): boolean {
+	const isCommentEnd =
+		char === "-" &&
+		!isEscaped(index, input) &&
+		input[ob1Get0(index) + 1] === "-" &&
+		input[ob1Get0(index) + 2] === ">";
+	return !isCommentEnd;
 }
 
 const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
@@ -94,10 +99,6 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 			const char = this.getInputCharOnly(index);
 
 			if (!escaped && state.inTagHead) {
-				if (char === " ") {
-					return this.lookahead(ob1Inc(index));
-				}
-
 				if (char === "=") {
 					return {
 						state,
@@ -105,10 +106,10 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 					};
 				}
 
-				if (char === "/") {
+				if (char === "/" && this.getInputCharOnly(index, 1)) {
 					return {
 						state,
-						token: this.finishToken("Slash"),
+						token: this.finishToken("TagSelfClosing", ob1Add(index, 2)),
 					};
 				}
 
@@ -143,30 +144,56 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 							...state,
 							inTagHead: false,
 						},
-						token: this.finishToken("Greater"),
+						token: this.finishToken("TagEnd"),
 					};
 				}
 			}
 
-			if (isTagComment(index, this.input)) {
-				const startingIndex = ob1Add(index, 2);
-				const [endIndex, value] = consumeComment(startingIndex, this.input);
+			if (
+				this.getInputCharOnly(index) === "<" &&
+				this.getInputCharOnly(index, 1) === "!" &&
+				this.getInputCharOnly(index, 2) === "-" &&
+				this.getInputCharOnly(index, 3) === "-"
+			) {
+				// Skip <!--
+				const start = ob1Add(index, 4);
+				const [value, valueEnd, overflow] = this.readInputFrom(
+					start,
+					isntCommentEnd,
+				);
+
+				// Check for unclosed comment
+				if (overflow) {
+					// TODO
+				}
+
+				// Skip -->
+				const end = ob1Add(valueEnd, 3);
+
 				return {
 					state: {
 						...state,
 						inTagHead: false,
 					},
-					token: this.finishValueToken("Comment", value, endIndex),
+					token: this.finishValueToken("Comment", value, end),
 				};
 			}
 
 			if (isTagStartChar(index, this.input)) {
+				let token;
+
+				if (this.getInputCharOnly(index, 1) === "/") {
+					token = this.finishToken("TagEndOpen", ob1Add(index, 2));
+				} else {
+					token = this.finishToken("TagStartOpen");
+				}
+
 				return {
 					state: {
 						...state,
 						inTagHead: true,
 					},
-					token: this.finishToken("Less"),
+					token,
 				};
 			}
 
@@ -222,20 +249,9 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 			);
 		}
 
-		atTagEnd(): boolean {
-			return this.matchToken("Less") && this.lookahead().token.type === "Slash";
-		}
-
-		atComment(): boolean {
-			return this.lookahead().token.type === "Comment";
-		}
-
 		parseTag(): HTMLElement {
 			const headStart = this.getPosition();
-			if (this.atComment()) {
-				this.parseComment();
-			}
-			this.expectToken("Less");
+			this.expectToken("TagStartOpen");
 
 			const attributes: HTMLElement["attributes"] = [];
 			const children: HTMLElement["children"] = [];
@@ -245,14 +261,15 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 			let selfClosing = isSelfClosingTagName(tagName);
 
 			// Parse attributes
-			while (!this.matchToken("EOF") && !this.matchToken("Greater")) {
+			while (
+				!this.matchToken("EOF") &&
+				!this.matchToken("TagSelfClosing") &&
+				!this.matchToken("TagEnd")
+			) {
 				const keyToken = this.getToken();
 
 				if (keyToken.type === "Identifier") {
 					attributes.push(this.parseAttribute());
-				} else if (keyToken.type === "Slash") {
-					this.nextToken();
-					selfClosing = true;
 				} else {
 					throw this.unexpected({
 						description: descriptions.HTML_PARSER.EXPECTED_ATTRIBUTE_NAME,
@@ -260,7 +277,12 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 				}
 			}
 
-			this.expectToken("Greater");
+			if (this.eatToken("TagSelfClosing")) {
+				selfClosing = true;
+			} else {
+				this.expectToken("TagEnd");
+			}
+
 			const headEnd = this.getPosition();
 
 			// Verify closing tag
@@ -268,7 +290,7 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 				while (
 					// Build children
 					!this.matchToken("EOF") &&
-					!this.atTagEnd()
+					!this.matchToken("TagEndOpen")
 				) {
 					const child = this.parseChild();
 					if (child !== undefined) {
@@ -284,8 +306,7 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 						),
 					});
 				} else {
-					this.expectToken("Less");
-					this.expectToken("Slash");
+					this.expectToken("TagEndOpen");
 
 					const name = this.getToken();
 					if (name.type === "Identifier") {
@@ -305,7 +326,7 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 						});
 					}
 
-					this.expectToken("Greater");
+					this.expectToken("TagEnd");
 				}
 			}
 
@@ -325,11 +346,13 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 			const start = this.getPosition();
 			const token = this.expectToken("Comment");
 
-			this.comments.addComment({
-				value: token.value,
-				type: "CommentBlock",
-				loc: this.finishLoc(start),
-			});
+			this.registerComment(
+				this.comments.createComment({
+					value: token.value,
+					type: "CommentBlock",
+					loc: this.finishLoc(start),
+				}),
+			);
 			return undefined;
 		}
 
@@ -391,7 +414,7 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 			const token = this.getToken();
 
 			switch (token.type) {
-				case "Less":
+				case "TagStartOpen":
 					return this.parseTag();
 
 				case "Text":
@@ -400,8 +423,19 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 				case "Comment":
 					return this.parseComment();
 
-				default:
-					throw this.unexpected();
+				case "TagEndOpen": {
+					this.unexpectedDiagnostic({
+						description: descriptions.HTML_PARSER.UNOPENED_TAG,
+					});
+					this.nextToken();
+					return undefined;
+				}
+
+				default: {
+					this.unexpectedDiagnostic();
+					this.nextToken();
+					return undefined;
+				}
 			}
 		}
 

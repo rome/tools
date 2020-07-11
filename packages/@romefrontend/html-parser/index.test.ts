@@ -15,6 +15,7 @@ const promise = createFixtureTests(async (fixture, t) => {
 	const inputContent = removeCarriageReturn(inputFile.content.toString());
 
 	const ast = parseHTML({
+		inlineDiagnosticsSource: true,
 		input: inputContent,
 		path: filename,
 	});
