@@ -100,17 +100,24 @@ export const createMarkdownParser = createParser((
 			return this.finishValueToken("Text", value, endIndex);
 		}
 
-		parseHeading(): MarkdownHeadingBlock {
+		parseHeading(): MarkdownHeadingBlock | MarkdownParagraph {
 			const start = this.getPosition();
-			let level = 1;
-			this.expectToken("Hash");
-			while (this.matchToken("Hash") && level < 6) {
+			let level = 0;
+			let index = start.index;
+			// we check how many consecutive Hashes we have without moving the tokens
+			while (this.lookahead(index).token.type === "Hash") {
 				level += 1;
-				this.nextToken();
+				index = ob1Add(index, 1);
+			}
+			// we have more than 6 Hashes, ti means it will computed as a paragraph
+			if (level > 6) {
+				return this.parseParagraph();
 			}
 
-			// TODO what if we have more than 6 hashes? Error or what?
+			// we jump straight of level tokens
+			this.jumpToToken(level);
 			const token = this.expectToken("Text");
+
 			return this.finishNode(
 				start,
 				{

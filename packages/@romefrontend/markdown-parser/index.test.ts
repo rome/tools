@@ -23,9 +23,6 @@ const promise = createFixtureTests(async (fixture, t) => {
 		inputFile.absolute.getExtensionlessBasename(),
 	).join();
 
-	// console.log('output', outputFile);
-
-	// throw new Error();
 	t.snapshot(ast, undefined, {filename: outputFile});
 });
 
