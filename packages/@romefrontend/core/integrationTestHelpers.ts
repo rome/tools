@@ -162,11 +162,6 @@ export function createIntegrationTest(
 					// Force cache to be enabled (which will be at our generated folder specified above)
 					// This will ignore any ROME_CACHE env variable specified by scripts/dev-rome
 					forceCacheEnabled: true,
-					// Custom loggerOptions so that logs don't vary between runs. ie. relative paths and no PIDs
-					loggerOptions: {
-						cwd: temp,
-						excludePid: true,
-					},
 					userConfig,
 				});
 

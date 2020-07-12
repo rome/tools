@@ -15,9 +15,8 @@ import WorkerBridge, {
 	WorkerProjects,
 } from "../common/bridges/WorkerBridge";
 import {AnyRoot, ConstJSSourceType, JSRoot} from "@romefrontend/ast";
-import Logger, {PartialLoggerOptions} from "../common/utils/Logger";
+import Logger from "../common/utils/Logger";
 import {Profiler} from "@romefrontend/v8";
-
 import setupGlobalErrorHandlers from "../common/utils/setupGlobalErrorHandlers";
 import {UserConfig, loadUserConfig} from "../common/userConfig";
 import {hydrateJSONProjectConfig} from "@romefrontend/project";
@@ -50,7 +49,6 @@ export type ParseResult = {
 };
 
 type WorkerOptions = {
-	loggerOptions?: PartialLoggerOptions;
 	userConfig?: UserConfig;
 	globalErrorHandlers: boolean;
 	bridge: WorkerBridge;
@@ -69,10 +67,7 @@ export default class Worker {
 		this.buffers = new AbsoluteFilePathMap();
 
 		this.logger = new Logger(
-			{
-				...opts.loggerOptions,
-				type: "worker",
-			},
+			"worker",
 			{},
 			{
 				check: () => opts.bridge.log.hasSubscribers(),

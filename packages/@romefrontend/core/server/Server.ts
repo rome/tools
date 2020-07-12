@@ -37,7 +37,7 @@ import ProjectManager from "./project/ProjectManager";
 import WorkerManager from "./WorkerManager";
 import Resolver from "./fs/Resolver";
 import FileAllocator from "./fs/FileAllocator";
-import Logger, {PartialLoggerOptions} from "../common/utils/Logger";
+import Logger from "../common/utils/Logger";
 import MemoryFileSystem from "./fs/MemoryFileSystem";
 import Cache from "./Cache";
 import {Reporter, ReporterStream} from "@romefrontend/cli-reporter";
@@ -84,7 +84,6 @@ export type ServerClient = {
 
 export type ServerOptions = {
 	inbandOnly?: boolean;
-	loggerOptions?: PartialLoggerOptions;
 	forceCacheEnabled?: boolean;
 	userConfig?: UserConfig;
 	dedicated: boolean;
@@ -189,6 +188,12 @@ export default class Server {
 		this.connectedLSPServers = new Set();
 		this.connectedClients = new Set();
 
+		this.clientIdCounter = 0;
+
+		this.logInitBuffer = "";
+		this.requestRunningCounter = 0;
+		this.terminateWhenIdle = false;
+
 		this.clientStartEvent = new Event({
 			name: "Server.clientStart",
 			onError: this.onFatalErrorBound,
@@ -211,10 +216,7 @@ export default class Server {
 		});
 
 		this.logger = new Logger(
-			{
-				...opts.loggerOptions,
-				type: "server",
-			},
+			"server",
 			{
 				markupOptions: {
 					userConfig: this.userConfig,
@@ -245,10 +247,14 @@ export default class Server {
 					this.emitServerLog(chunk);
 				},
 				check: () => {
-					return this.connectedClientsListeningForLogs.size > 0;
+					return (
+						this.clientIdCounter === 0 ||
+						this.connectedClientsListeningForLogs.size > 0
+					);
 				},
 			},
 		);
+		this.logger.updateStream();
 
 		this.virtualModules = new VirtualModules(this);
 		this.memoryFs = new MemoryFileSystem(this);
@@ -258,10 +264,7 @@ export default class Server {
 		this.resolver = new Resolver(this);
 		this.cache = new Cache(this);
 
-		this.clientIdCounter = 0;
-
-		this.requestRunningCounter = 0;
-		this.terminateWhenIdle = false;
+		this.logger.info("[Server] Created Server with options", opts);
 	}
 
 	userConfig: UserConfig;
@@ -297,11 +300,20 @@ export default class Server {
 	connectedReporters: ServerReporter;
 	logger: Logger;
 	requestFileLocker: FilePathLocker;
+
+	// Before we receive our first connected client we will buffer our server init logs
+	// These should be relatively cheap to process since we don't do a lot
+	logInitBuffer: string;
+
 	connectedClients: Set<ServerClient>;
 	connectedLSPServers: Set<LSPServer>;
 	connectedClientsListeningForLogs: Set<ServerClient>;
 
 	emitServerLog(chunk: string) {
+		if (this.clientIdCounter === 0) {
+			this.logInitBuffer += chunk;
+		}
+
 		for (const {bridge} of this.connectedClientsListeningForLogs) {
 			// Sometimes the bridge hasn't completely been teardown and we still consider it connected
 			if (bridge.alive) {
@@ -707,7 +719,16 @@ export default class Server {
 
 		bridge.updatedListenersEvent.subscribe((listeners) => {
 			if (listeners.has("log")) {
-				this.connectedClientsListeningForLogs.add(client);
+				if (!this.connectedClientsListeningForLogs.has(client)) {
+					this.connectedClientsListeningForLogs.add(client);
+					let buffer = this.logInitBuffer;
+					buffer += ".".repeat(20);
+					buffer += "\n";
+					bridge.log.send({
+						chunk: buffer,
+						origin: "server",
+					});
+				}
 			} else {
 				this.connectedClientsListeningForLogs.delete(client);
 			}
@@ -1067,7 +1088,6 @@ export default class Server {
 		printer.print();
 
 		// We could probably return printer.getDiagnostics() but we just want to print to the console
-
 		// We will still want to send the `error` property
 		return undefined;
 	}

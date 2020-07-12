@@ -47,7 +47,6 @@ import {
 	TERMINAL_FEATURES_DEFAULT,
 	TerminalFeatures,
 } from "@romefrontend/environment";
-
 import {parseMarkup} from "../parse";
 import {Position} from "@romefrontend/parser-core";
 import {lineWrapValidator} from "../tags";
@@ -329,6 +328,11 @@ export default class Grid {
 	}
 
 	moveCursor(cursor: Cursor) {
+		if (cursor.line !== this.cursor.line) {
+			this.lineStartMeta.indentationCount = 0;
+			this.lineStartMeta.sourceColumn = this.sourceCursor.currentColumn;
+		}
+
 		this.cursor = cursor;
 	}
 
@@ -346,7 +350,7 @@ export default class Grid {
 		if (this.doesOverflowViewport(newColumns)) {
 			const currentLine = this.lines[ob1Get1(this.cursor.line) - 1];
 
-			this.newline();
+			this.moveCursorBottomStart();
 
 			// Inherit the previous lines indentation
 			if (currentLine !== undefined) {
@@ -374,9 +378,8 @@ export default class Grid {
 	}
 
 	newline() {
-		this.lineStartMeta.indentationCount = 0;
-		this.lineStartMeta.sourceColumn = this.sourceCursor.currentColumn;
 		this.moveCursorBottomStart();
+		this.fillCursor(this.cursor);
 	}
 
 	moveCursorStart() {
@@ -477,7 +480,7 @@ export default class Grid {
 				(this.doesOverflowViewport(ob1Add(this.cursor.column, word.length - 1)) &&
 				!this.doesOverflowViewport(ob1Coerce1(word.length))));
 			if (willOverflow) {
-				this.newline();
+				this.moveCursorBottomStart();
 			}
 			forceNextWordOverflow = false;
 
@@ -730,8 +733,9 @@ export default class Grid {
 	drawView({children, attributes}: TagNode, ancestry: Ancestry) {
 		// We allow markup in the linePrefix tag... Not sure how else we can support it.
 		// NB: This assumes that the line prefix is only 1 height, maybe we could have some validation
-		const linePrefix = this.normalizeChildren(
-			parseMarkup(attributes.get("linePrefix").asString("")),
+		const linePrefix = this.parse(
+			attributes.get("linePrefix").asString(""),
+			attributes.get("linePrefix").getDiagnosticLocation("inner-value").start,
 		);
 
 		const linePrefixStart = this.getCursor();
@@ -964,10 +968,6 @@ export default class Grid {
 		}
 	}
 
-	drawRoot(children: Children) {
-		this.drawChildren(this.normalizeChildren(children), []);
-	}
-
 	normalizeChildren(children: Children): Children {
 		let newChildren: Children = [];
 
@@ -1171,43 +1171,63 @@ export default class Grid {
 				case "filesize":
 					return [
 						{
-							type: "Text",
-							source: false,
-							sourceValue: singleInnerText,
-							value: humanizeFileSize(Number(singleInnerText)),
+							...tag,
+							children: [
+								{
+									type: "Text",
+									source: false,
+									sourceValue: singleInnerText,
+									value: humanizeFileSize(Number(singleInnerText)),
+								},
+							],
 						},
 					];
 
 				case "duration":
 					return [
 						{
-							type: "Text",
-							source: false,
-							sourceValue: singleInnerText,
-							value: formatApprox(
-								attributes,
-								humanizeTime(Number(singleInnerText), true),
-							),
+							...tag,
+							children: [
+								{
+									type: "Text",
+									source: false,
+									sourceValue: singleInnerText,
+									value: formatApprox(
+										attributes,
+										humanizeTime(Number(singleInnerText), true),
+									),
+								},
+							],
 						},
 					];
 
 				case "number":
 					return [
 						{
-							type: "Text",
-							source: false,
-							sourceValue: singleInnerText,
-							value: formatNumber(attributes, singleInnerText),
+							...tag,
+							children: [
+								{
+									type: "Text",
+									source: false,
+									sourceValue: singleInnerText,
+									value: formatNumber(attributes, singleInnerText),
+								},
+							],
 						},
 					];
 
 				case "grammarNumber":
 					return [
 						{
-							type: "Text",
-							source: false,
-							sourceValue: singleInnerText,
-							value: formatGrammarNumber(attributes, singleInnerText),
+							...tag,
+							children: [
+								{
+									type: "Text",
+									source: false,
+									sourceValue: singleInnerText,
+									value: formatGrammarNumber(attributes, singleInnerText),
+								},
+							],
 						},
 					];
 			}

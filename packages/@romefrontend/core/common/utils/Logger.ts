@@ -10,20 +10,11 @@ import {
 	ReporterConditionalStream,
 	ReporterOptions,
 } from "@romefrontend/cli-reporter";
-import {AbsoluteFilePath} from "@romefrontend/path";
 import {TERMINAL_FEATURES_DEFAULT} from "@romefrontend/environment";
-
-export type LoggerOptions = {
-	cwd?: AbsoluteFilePath;
-	excludePid?: boolean;
-	type: string;
-};
-
-export type PartialLoggerOptions = Partial<LoggerOptions>;
 
 export default class Logger extends Reporter {
 	constructor(
-		loggerOptions: LoggerOptions,
+		loggerType: string,
 		opts: ReporterOptions,
 		{write, check}: {
 			check: () => boolean;
@@ -33,17 +24,13 @@ export default class Logger extends Reporter {
 		super({
 			verbose: true,
 			...opts,
-			markupOptions: {
-				cwd: loggerOptions.cwd,
-				...opts.markupOptions,
-			},
 		});
-		this.loggerOptions = loggerOptions;
+		this.loggerType = loggerType;
 
 		this.conditionalStream = this.attachConditionalStream(
 			{
 				type: "all",
-				format: "none",
+				format: "markup",
 				features: {
 					...TERMINAL_FEATURES_DEFAULT,
 					columns: Infinity,
@@ -55,17 +42,15 @@ export default class Logger extends Reporter {
 	}
 
 	conditionalStream: ReporterConditionalStream;
-	loggerOptions: LoggerOptions;
+	loggerType: string;
 
 	updateStream() {
 		this.conditionalStream.update();
 	}
 
-	_getMessagePrefix() {
-		let inner = this.loggerOptions.type;
-		if (!this.loggerOptions.excludePid) {
-			inner += ` ${process.pid}`;
-		}
-		return `<dim>[${inner}]</dim> `;
+	getMessagePrefix() {
+		const inner = `${this.loggerType} ${process.pid}`;
+		const timestamp = new Date().toISOString();
+		return `<dim>[${timestamp}] [${inner}]</dim> `;
 	}
 }

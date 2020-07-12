@@ -819,7 +819,9 @@ export default class ServerRequest {
 	startMarker(
 		opts: Omit<ServerUnfinishedMarker, "start">,
 	): ServerUnfinishedMarker {
-		this.server.logger.info("[ServerRequest] Started marker", opts.label);
+		this.server.logger.info(
+			markup`[ServerRequest] Started marker: ${opts.label}`,
+		);
 		return {
 			...opts,
 			start: Date.now(),
@@ -832,8 +834,7 @@ export default class ServerRequest {
 			end: Date.now(),
 		};
 		this.server.logger.info(
-			"[ServerRequest] Finished marker",
-			startMarker.label,
+			markup`[ServerRequest] Started marker: ${startMarker.label}`,
 		);
 		this.markerEvent.send(endMarker);
 		return endMarker;

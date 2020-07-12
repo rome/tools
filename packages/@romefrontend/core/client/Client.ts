@@ -23,6 +23,7 @@ import fork from "../common/utils/fork";
 import {
 	BridgeError,
 	Event,
+	EventSubscription,
 	createBridgeFromLocal,
 	createBridgeFromSocket,
 } from "@romefrontend/events";
@@ -41,6 +42,7 @@ import zlib = require("zlib");
 import fs = require("fs");
 import child = require("child_process");
 import {mergeObjects} from "@romefrontend/typescript-helpers";
+import {markupToPlainTextString} from "@romefrontend/string-markup";
 
 export function getFilenameTimestamp(): string {
 	return new Date().toISOString().replace(/[^0-9a-zA-Z]/g, "");
@@ -133,7 +135,7 @@ export default class Client {
 	reporter: Reporter;
 	derivedReporterStreams: ReporterDerivedStreams;
 	bridgeStatus: undefined | BridgeStatus;
-	bridgeAttachedEvent: Event<void, void>;
+	bridgeAttachedEvent: Event<BridgeStatus, void>;
 
 	requestResponseEvent: Event<ClientRequestResponseResult, void>;
 	endEvent: Event<void, void>;
@@ -275,25 +277,38 @@ export default class Client {
 		});
 	}
 
-	async subscribeLogs(
+	subscribeLogs(
 		includeWorkerLogs: boolean,
 		callback: (chunk: string) => void,
-	): Promise<void> {
-		const bridge = await this.findOrStartServer();
+	): EventSubscription {
+		let logEvent: undefined | EventSubscription;
 
-		if (includeWorkerLogs) {
-			await bridge.enableWorkerLogs.call();
-		}
-
-		bridge.log.subscribe(({origin, chunk}) => {
-			if (origin === "worker" && !includeWorkerLogs) {
-				// We allow multiple calls to bridge.enableWorkerLogs
-				// Filter the event if necessary if it wasn't requested by this log subscription
-				return;
+		const bridgeAttachedEvent = this.bridgeAttachedEvent.subscribe(async (
+			{bridge},
+		) => {
+			if (includeWorkerLogs) {
+				await bridge.enableWorkerLogs.call();
 			}
 
-			callback(chunk);
+			logEvent = bridge.log.subscribe(({origin, chunk}) => {
+				if (origin === "worker" && !includeWorkerLogs) {
+					// We allow multiple calls to bridge.enableWorkerLogs
+					// Filter the event if necessary if it wasn't requested by this log subscription
+					return;
+				}
+
+				callback(chunk);
+			});
 		});
+
+		return {
+			async unsubscribe() {
+				await bridgeAttachedEvent.unsubscribe();
+				if (logEvent !== undefined) {
+					await logEvent.unsubscribe();
+				}
+			},
+		};
 	}
 
 	async rage(ragePath: string, profileOpts: ClientProfileOptions) {
@@ -304,10 +319,10 @@ export default class Client {
 		}
 
 		let logs = "";
-		await this.subscribeLogs(
+		this.subscribeLogs(
 			true,
 			(chunk) => {
-				logs += chunk;
+				logs += markupToPlainTextString(chunk);
 			},
 		);
 
@@ -522,7 +537,7 @@ export default class Client {
 			bridge.handshake(),
 		]);
 
-		await this.bridgeAttachedEvent.callOptional();
+		await this.bridgeAttachedEvent.callOptional(status);
 	}
 
 	async findOrStartServer(): Promise<ServerBridge> {

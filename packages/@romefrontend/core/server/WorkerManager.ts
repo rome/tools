@@ -131,14 +131,12 @@ export default class WorkerManager {
 		// Create the worker
 		const bridge = createBridgeFromLocal(WorkerBridge, {});
 		const worker = new Worker({
-			loggerOptions: this.server.logger.loggerOptions,
 			userConfig: this.server.userConfig,
 			bridge,
 			globalErrorHandlers: false,
 		});
 
 		// We make an assumption elsewhere in the code that this is always the first worker
-
 		// Let's use an invariant here for completeness
 		const id = this.getNextWorkerId();
 		if (id !== 0) {

@@ -156,7 +156,7 @@ export default class FileAllocator {
 	}
 
 	async assignOwner(path: AbsoluteFilePath): Promise<WorkerContainer> {
-		const {workerManager, logger} = this.server;
+		const {workerManager, logger, memoryFs} = this.server;
 
 		const lock = await this.locker.getLock(path);
 
@@ -165,14 +165,15 @@ export default class FileAllocator {
 			lock.release();
 			return this.getOwnerAssert(path);
 		}
+
 		try {
 			const worker = await workerManager.getNextWorker(path);
 
 			// Add ourselves to the file map
 			logger.info(
-				"[FileAllocator] File %s assigned to worker %s",
-				path.toMarkup(),
-				worker.id,
+				`[FileAllocator] File <emphasis>${path.toMarkup()}</emphasis> (file size <filesize>${memoryFs.getFileStats(
+					path,
+				)?.size}</filesize>) assigned to worker <number>${worker.id}</number>`,
 			);
 			this.fileToWorker.set(path, worker.id);
 
