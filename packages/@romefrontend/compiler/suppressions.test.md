@@ -110,6 +110,156 @@ Object {
 }
 ```
 
+## `incorrect suppression comment`
+
+```javascript
+Object {
+	suppressions: Array []
+	diagnostics: Array [
+		Object {
+			description: Object {
+				advice: Array []
+				category: "suppressions/incorrectSuppressionStart"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+			}
+			location: Object {
+				filename: "unknown"
+				end: Object {
+					column: 19
+					index: 19
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+		Object {
+			description: Object {
+				advice: Array []
+				category: "suppressions/incorrectSuppressionStart"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+			}
+			location: Object {
+				filename: "unknown"
+				end: Object {
+					column: 19
+					index: 46
+					line: 4
+				}
+				start: Object {
+					column: 0
+					index: 27
+					line: 4
+				}
+			}
+		}
+		Object {
+			description: Object {
+				advice: Array []
+				category: "suppressions/incorrectSuppressionStart"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+			}
+			location: Object {
+				filename: "unknown"
+				end: Object {
+					column: 20
+					index: 74
+					line: 7
+				}
+				start: Object {
+					column: 0
+					index: 54
+					line: 7
+				}
+			}
+		}
+		Object {
+			description: Object {
+				advice: Array []
+				category: "suppressions/incorrectSuppressionStart"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+			}
+			location: Object {
+				filename: "unknown"
+				end: Object {
+					column: 27
+					index: 109
+					line: 10
+				}
+				start: Object {
+					column: 0
+					index: 82
+					line: 10
+				}
+			}
+		}
+		Object {
+			description: Object {
+				advice: Array []
+				category: "suppressions/incorrectSuppressionStart"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+			}
+			location: Object {
+				filename: "unknown"
+				end: Object {
+					column: 26
+					index: 143
+					line: 13
+				}
+				start: Object {
+					column: 0
+					index: 117
+					line: 13
+				}
+			}
+		}
+		Object {
+			description: Object {
+				advice: Array []
+				category: "suppressions/incorrectSuppressionStart"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+			}
+			location: Object {
+				filename: "unknown"
+				end: Object {
+					column: 28
+					index: 179
+					line: 16
+				}
+				start: Object {
+					column: 0
+					index: 151
+					line: 16
+				}
+			}
+		}
+		Object {
+			description: Object {
+				advice: Array []
+				category: "suppressions/incorrectSuppressionStart"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+			}
+			location: Object {
+				filename: "unknown"
+				end: Object {
+					column: 27
+					index: 214
+					line: 19
+				}
+				start: Object {
+					column: 0
+					index: 187
+					line: 19
+				}
+			}
+		}
+	]
+}
+```
+
 ## `multiple categories`
 
 ```javascript

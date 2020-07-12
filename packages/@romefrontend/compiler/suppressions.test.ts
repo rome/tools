@@ -206,3 +206,44 @@ test(
 		t.snapshot(suppressions);
 	},
 );
+
+test(
+	"incorrect suppression comment",
+	async (t) => {
+		const suppressions = extractSuppressionsFromSource(
+			dedent`
+			// @rome-ignore foo
+			boo()
+
+			// rome-disable foo
+			boo()
+
+			// @rome-disable foo
+			boo()
+
+			// @romefrontend-ignore foo
+			boo()
+
+			// romefrontend-ignore foo
+			boo()
+
+			// @romefrontend-disable foo
+			boo()
+
+			// romefrontend-disable foo
+			boo()	
+  `,
+		);
+
+		t.is(suppressions.suppressions.length, 0);
+		t.is(suppressions.diagnostics.length, 7);
+		for (const diagnostic of suppressions.diagnostics) {
+			t.is(
+				diagnostic.description.category,
+				"suppressions/incorrectSuppressionStart",
+			);
+		}
+
+		t.snapshot(suppressions);
+	},
+);

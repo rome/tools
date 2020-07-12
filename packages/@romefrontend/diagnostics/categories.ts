@@ -51,6 +51,7 @@ export type DiagnosticCategory =
 	| "resolver/unsupported"
 	| "suppressions/duplicate"
 	| "suppressions/overlap"
+	| "suppressions/incorrectSuppressionStart"
 	| "suppressions/incorrectPrefix"
 	| "suppressions/missingSpace"
 	| "suppressions/missingTarget"
