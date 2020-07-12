@@ -10,12 +10,13 @@ layout: layouts/blog/base.njk
 
   {{ content | safe }}
 
-  {% for tag in tags %}
-
+  <div class="tags">
+  tags:
+    {% for tag in tags %}
       {%- if collections.tagList.indexOf(tag) != -1 -%}
       {% set tagUrl %}/blog/tags/{{ tag }}/{% endset %}
       <a href="{{ tagUrl | url }}" class="tag">{{ tag }}</a>
       {%- endif -%}
-
     {% endfor %}
+  </div>
 </div>

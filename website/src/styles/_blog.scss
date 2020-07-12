@@ -13,3 +13,42 @@ div.blog{
     }
   }
 }
+
+div.tags{
+  display: flex;
+  justify-content: flex-start;
+  margin-top: $unit * 2;
+  align-items: center;
+  color: var(--sub-text-color);
+
+  > a.tag{
+    margin-right: $unit / 2;
+  }
+}
+
+div.post{
+  div.tags{
+    justify-content: flex-end;
+    > a.tag{
+      margin-left: $unit / 2;
+      margin-right: 0;
+    }
+  }
+}
+
+a.tag{
+  background: var(--soft-border-color);
+  padding: $unit / 4 $unit / 2;
+  text-decoration: none;
+  border-radius: 4px;
+
+  &:hover{
+    background: var(--logo-font-color);
+    color: var(--background-color);
+  }
+
+  &:active{
+    background: var(--primary-color);
+    color: $gray-4;
+  }
+}

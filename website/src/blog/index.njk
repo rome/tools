@@ -11,5 +11,15 @@ layout: layouts/blog/base.njk
       <time datetime="{{ post.date }}"> {{ post.date | dateFormat }} </time>
     </div>
     <p>{{ post.data.description }}</p>
+
+    <div class="tags">
+      tags:
+      {% for tag in post.data.tags %}
+        {%- if collections.tagList.indexOf(tag) != -1 -%}
+        {% set tagUrl %}/blog/tags/{{ tag }}/{% endset %}
+        <a href="{{ tagUrl | url }}" class="tag">{{ tag }}</a>
+        {%- endif -%}
+      {% endfor %}
+    </div>
   </article>
 {% endfor %}

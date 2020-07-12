@@ -5,6 +5,8 @@ author: sebmck
 date: 2018-05-01
 tags:
   - post
+  - another
+  - release
   - another-tag
 layout: layouts/blog/post.njk
 ---
