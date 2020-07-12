@@ -47,6 +47,8 @@ export type Children = Array<ChildNode>;
 
 export type MarkupTagName =
 	| "view"
+	| "viewLinePrefix"
+	| "viewPointer"
 	| "token"
 	| "hr"
 	| "pad"
@@ -111,10 +113,15 @@ export type UserMarkupFormatGridOptions = MarkupFormatOptions & {
 	columns?: number;
 };
 
-export type MarkupFormatGridOptions = UserMarkupFormatGridOptions & {
-	sourceText: string;
+export type MarkupGridViewOptions = {
+	extraSoftWrapIndent?: number;
 	lineWrapMode?: MarkupLineWrapMode;
 	pointer?: MarkupPointer;
+};
+
+export type MarkupFormatGridOptions = UserMarkupFormatGridOptions & {
+	sourceText: string;
+	view: MarkupGridViewOptions;
 };
 
 export type MarkupFormatNormalizeOptions = MarkupFormatOptions & {

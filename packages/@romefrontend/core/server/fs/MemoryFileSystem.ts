@@ -143,7 +143,7 @@ async function createWatcher(
 	projectFolder: AbsoluteFilePath,
 ): Promise<WatcherClose> {
 	const {logger} = memoryFs.server;
-	const projectFolderMarkup = "<emphasis>projectFolder.toMarkup()</emphasis>";
+	const projectFolderMarkup = `<emphasis>${projectFolder.toMarkup()}</emphasis>`;
 
 	// Create activity spinners for all connected reporters
 	const activity = memoryFs.server.connectedReporters.progress({

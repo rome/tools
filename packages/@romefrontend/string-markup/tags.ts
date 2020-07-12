@@ -25,7 +25,7 @@ const booleanValidator: AttributeValidator = (value, key) => {
 	return undefined;
 };
 const numberValidator: AttributeValidator = (value) => {
-	const num = Number(value);
+	const num = parseFloat(value);
 	if (isNaN(num)) {
 		return undefined;
 	} else {
@@ -53,13 +53,22 @@ tags.set(
 tags.set(
 	"view",
 	new Map([
-		["linePrefix", stringValidator],
-		["pointerMessage", stringValidator],
-		["pointerLine", numberValidator],
-		["pointerStart", numberValidator],
-		["pointerEnd", numberValidator],
-		["pointerChar", stringValidator],
+		["extraSoftWrapIndent", numberValidator],
 		["lineWrap", lineWrapValidator],
+		["align", alignValidator],
+	]),
+);
+tags.set(
+	"viewLinePrefix",
+	new Map([["type", stringValidator], ["align", alignValidator]]),
+);
+tags.set(
+	"viewPointer",
+	new Map([
+		["char", stringValidator],
+		["line", numberValidator],
+		["start", numberValidator],
+		["end", numberValidator],
 	]),
 );
 tags.set(
@@ -99,11 +108,11 @@ tags.set(
 );
 tags.set("table", new Map());
 tags.set("tr", new Map());
-tags.set("td", new Map([["align", stringValidator]]));
+tags.set("td", new Map([["align", alignValidator]]));
 tags.set("hr", new Map());
 tags.set(
 	"pad",
-	new Map([["width", numberValidator], ["align", stringValidator]]),
+	new Map([["width", numberValidator], ["align", alignValidator]]),
 );
 tags.set("nobr", new Map());
 tags.set("li", new Map());
@@ -125,6 +134,16 @@ export const tagsToOnlyParent: Map<MarkupTagName, Array<MarkupTagName>> = new Ma
 tagsToOnlyParent.set("tr", ["table"]);
 tagsToOnlyParent.set("td", ["tr"]);
 tagsToOnlyParent.set("li", ["ol", "ul"]);
+tagsToOnlyParent.set("viewLinePrefix", ["view"]);
+tagsToOnlyParent.set("viewPointer", ["view"]);
+
+function alignValidator(align: undefined | string): undefined | string {
+	if (align === "left" || align === "right") {
+		return align;
+	}
+
+	return undefined;
+}
 
 // Validators
 export function lineWrapValidator(
