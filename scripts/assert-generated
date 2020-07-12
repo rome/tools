@@ -34,6 +34,12 @@ execDev(["check", ...filteredWrittenFiles, "--apply"]).finally(() => {
 		console.log();
 		console.log("To fix this run `node scripts/assert-generated` and commit the results");
 		console.log();
+		console.log("Git diff:");
+		console.log();
+		child_process.spawnSync("git", ["diff"], {
+			stdio: "inherit",
+		});
+		console.log();
 		process.exit(1);
 	}
 });
