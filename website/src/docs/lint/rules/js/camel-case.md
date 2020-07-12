@@ -5,6 +5,6 @@ showHero: false
 description: This rule enforce the use of camelCase
 ---
 
-# camel-case
+# camelCase
 
 not documented yet
