@@ -17,6 +17,15 @@ import CompilerContext from "./lib/CompilerContext";
 import Path from "./lib/Path";
 
 export const SUPPRESSION_START = "rome-ignore";
+export const INCORRECT_SUPPRESSION_START = [
+	"rome-disable",
+	"@rome-ignore",
+	"@rome-disable",
+	"romefrontend-ignore",
+	"romefrontend-disable",
+	"@romefrontend-ignore",
+	"@romefrontend-disable",
+];
 
 type ExtractedSuppressions = {
 	suppressions: DiagnosticSuppressions;
@@ -46,6 +55,17 @@ function extractSuppressionsFromComment(
 	});
 
 	for (const line of cleanLines) {
+		if (
+			INCORRECT_SUPPRESSION_START.some((incorrectStart) =>
+				line.startsWith(incorrectStart)
+			)
+		) {
+			diagnostics.push({
+				description: descriptions.SUPPRESSIONS.INCORRECT_SUPPRESSION_START,
+				location: commentLocation,
+			});
+		}
+
 		if (!line.startsWith(SUPPRESSION_START)) {
 			continue;
 		}

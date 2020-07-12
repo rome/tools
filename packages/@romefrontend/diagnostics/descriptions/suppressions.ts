@@ -39,4 +39,8 @@ export const suppressions = createDiagnosticsCategory({
 		category: "suppressions/overlap",
 		message: markup`overlap suppression category <emphasis>${category}</emphasis>`,
 	}),
+	INCORRECT_SUPPRESSION_START: {
+		category: "suppressions/incorrectSuppressionStart",
+		message: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?",
+	},
 });
