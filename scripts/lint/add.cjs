@@ -96,7 +96,7 @@ write(
 	docLoc,
 	`---
 title: Rome
-layout: layouts/base.njk
+layout: layouts/page.njk
 showHero: false
 description: MISSING DOCUMENTATION
 ---

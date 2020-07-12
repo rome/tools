@@ -1,6 +1,6 @@
 ---
 title: rome lsp
-layout: layouts/base.njk
+layout: layouts/page.njk
 ---
 
 # `rome lsp`

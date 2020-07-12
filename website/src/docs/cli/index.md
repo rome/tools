@@ -1,6 +1,6 @@
 ---
 title: CLI
-layout: layouts/base.njk
+layout: layouts/page.njk
 ---
 
 # CLI
@@ -20,7 +20,7 @@ layout: layouts/base.njk
 
 ## Global Flags
 
-These are flags that can be added to any Rome command. 
+These are flags that can be added to any Rome command.
 
 ### `--cwd <dir>`
 

@@ -1,4 +1,4 @@
 ---
 title: Sitemap
-layout: layouts/base.njk
+layout: layouts/page.njk
 ---

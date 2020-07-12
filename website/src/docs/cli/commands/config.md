@@ -1,6 +1,6 @@
 ---
 title: rome config
-layout: layouts/base.njk
+layout: layouts/page.njk
 ---
 
 # `rome config`

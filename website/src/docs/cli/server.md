@@ -1,6 +1,6 @@
 ---
 title: Server
-layout: layouts/base.njk
+layout: layouts/page.njk
 ---
 
 # Server

@@ -1,6 +1,6 @@
 ---
 title: Project Configuration
-layout: layouts/base.njk
+layout: layouts/page.njk
 ---
 
 # Project Configuration

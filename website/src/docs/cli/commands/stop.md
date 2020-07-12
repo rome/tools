@@ -1,6 +1,6 @@
 ---
 title: rome stop
-layout: layouts/base.njk
+layout: layouts/page.njk
 ---
 
 # `rome stop`

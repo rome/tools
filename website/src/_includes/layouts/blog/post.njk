@@ -1,0 +1,22 @@
+---
+layout: layouts/blog/base.njk
+---
+<div class="post">
+  <h1 id="{{ title | kebabCase }} ">{{ title }}</a></h1>
+  <div class="info">
+    <div>by {{ author }}</div>
+    <time datetime="{{ date }}"> {{ date | dateFormat }} </time>
+  </div>
+
+  {{ content | safe }}
+
+  <div class="tags">
+  tags:
+    {% for tag in tags %}
+      {%- if collections.tagList.indexOf(tag) != -1 -%}
+      {% set tagUrl %}/blog/tags/{{ tag }}/{% endset %}
+      <a href="{{ tagUrl | url }}" class="tag">{{ tag }}</a>
+      {%- endif -%}
+    {% endfor %}
+  </div>
+</div>

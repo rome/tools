@@ -1,6 +1,6 @@
 ---
 title: rome start
-layout: layouts/base.njk
+layout: layouts/page.njk
 ---
 
 # `rome start`

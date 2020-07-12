@@ -57,7 +57,7 @@
           <h2 id="site-navigation" class="sr-only">Site Navigation</h2>
           <ul>
             <li>
-              <a href="{{ '/posts' | url }}">Blog</a>
+              <a href="{{ '/blog' | url }}">Blog</a>
             </li>
             <li>
               <a href="{{ '/contributing/team' | url }}">Team</a>
@@ -107,13 +107,8 @@
       <div class="main">
         <div class="overlay"></div>
 
-        {% if showHero %}
-          {% include "./sections/hero.njk" %}
-        {% endif %}
-
-        <main id="main-content" class="content">
           {{ content | safe }}
-        </main>
+
       </div>
       <div class="sidebar right">
         <nav aria-labelledby="table-of-content" class="table-of-contents">

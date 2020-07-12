@@ -1,6 +1,6 @@
 ---
 title: rome noop
-layout: layouts/base.njk
+layout: layouts/page.njk
 ---
 
 # `rome noop`

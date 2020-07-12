@@ -1,6 +1,6 @@
 ---
 title: RJSON
-layout: layouts/base.njk
+layout: layouts/page.njk
 ---
 
 RJSON is a superset of JSON. It does not add any new data types. It just makes some syntax optional for the sake of readability.

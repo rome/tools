@@ -1,0 +1,26 @@
+---
+pagination:
+  data: collections
+  size: 1
+  alias: tag
+  filter:
+    - all
+    - nav
+    - post
+    - posts
+    - tagList
+permalink: blog/tags/{{ tag }}/
+renderData:
+  title: Tagged “{{ tag }}”
+layout: layouts/blog/base.njk
+---
+<h1>Tagged “{{ tag }}”</h1>
+
+<ol>
+{% set taglist = collections[ tag ] %}
+{% for post in taglist | reverse %}
+  <li><a href="{{ post.url | url }}">{{ post.data.title }}</a></li>
+{% endfor %}
+</ol>
+
+<p style="text-align: right;">See <a href="{{ '/blog/tags/' | url }}">all tags</a>.</p>

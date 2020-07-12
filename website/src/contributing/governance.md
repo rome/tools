@@ -1,7 +1,6 @@
 ---
 title: Governance
-layout: layouts/base.njk
-showHero: false
+layout: layouts/page.njk
 ---
 
 {% rootmd "GOVERNANCE.md" %}
