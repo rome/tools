@@ -92,6 +92,10 @@ module.exports = function(eleventyConfig) {
 		return new Date(value).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
 	});
 
+	eleventyConfig.addFilter("kebabCase", function(string) {
+		return string.toLowerCase().replace(/\s/g, '-');
+	});
+
 	return {
 		dir: {
 			input: opts.dirInput,

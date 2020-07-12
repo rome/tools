@@ -2,7 +2,7 @@
 layout: layouts/blog/base.njk
 ---
 <div class="post">
-  <h1>{{ title }}</a></h1>
+  <h1 id="{{ title | kebabCase }} ">{{ title }}</a></h1>
   <div class="info">
     <div>by {{ author }}</div>
     <time datetime="{{ date }}"> {{ date | dateFormat }} </time>
