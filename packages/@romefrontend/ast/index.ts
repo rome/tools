@@ -293,7 +293,7 @@ export * from "./js/typescript/TSUndefinedKeywordTypeAnnotation";
 export * from "./js/typescript/TSUnionTypeAnnotation";
 export * from "./js/typescript/TSUnknownKeywordTypeAnnotation";
 export * from "./js/typescript/TSVoidKeywordTypeAnnotation";
-export type AnyNode =
+export type AnyNode = 
 	| n.CommentBlock
 	| n.CommentLine
 	| n.CSSAnglePercentageType

@@ -8,7 +8,7 @@
 import {Server} from "@romefrontend/core";
 import {modules} from "./runtime-modules";
 import {AbsoluteFilePath} from "@romefrontend/path";
-import {createDirectory, writeFile} from "@romefrontend/fs";
+import {createDirectory, writeFile, lstat, updateTimes} from "@romefrontend/fs";
 import {
 	ProjectConfig,
 	createDefaultProjectConfig,
@@ -31,13 +31,30 @@ export default class VirtualModules {
 		// We could technically keep these in memory and never materialize them but
 		// this way we can have something to point at on disk for errors etc
 		await createDirectory(runtimeModulesPath);
-		for (const [name, files] of modules) {
+		await Promise.all(Array.from(modules, async ([name, files]) => {
 			const modulePath = runtimeModulesPath.append(name);
 			await createDirectory(modulePath);
-			for (const [basename, content] of files) {
-				await writeFile(modulePath.append(basename), content);
-			}
-		}
+
+			await Promise.all(Array.from(files, async ([basename, {content, mtime}]) => {
+				const path = modulePath.append(basename);
+				try {
+					const stats = await lstat(path);
+
+					// Check if it's the same file
+					if (Math.floor(stats.mtimeMs / 1000) === mtime) {
+						return;
+					}
+				} catch (err) {
+					// Swallow file doesn't exist errors
+					if (err.code !== "ENOENT") {
+						throw err;
+					}
+				}
+
+				await writeFile(path, content);
+				await updateTimes(path, mtime, mtime);
+			}));
+		}));
 
 		// Initialize as project
 		const projectConfig: ProjectConfig = {

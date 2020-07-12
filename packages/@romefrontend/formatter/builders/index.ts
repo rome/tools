@@ -135,10 +135,7 @@ import CSSSelectorPseudoClass from "./css/selectors/CSSSelectorPseudoClass";
 builders.set("CSSSelectorPseudoClass", CSSSelectorPseudoClass);
 
 import CSSSelectorPseudoElementSelector from "./css/selectors/CSSSelectorPseudoElementSelector";
-builders.set(
-	"CSSSelectorPseudoElementSelector",
-	CSSSelectorPseudoElementSelector,
-);
+builders.set("CSSSelectorPseudoElementSelector", CSSSelectorPseudoElementSelector);
 
 import CSSSelectorTag from "./css/selectors/CSSSelectorTag";
 builders.set("CSSSelectorTag", CSSSelectorTag);
@@ -192,10 +189,7 @@ import HTMLText from "./html/core/HTMLText";
 builders.set("HTMLText", HTMLText);
 
 import JSAmbiguousFlowTypeCastExpression from "./js/temp/JSAmbiguousFlowTypeCastExpression";
-builders.set(
-	"JSAmbiguousFlowTypeCastExpression",
-	JSAmbiguousFlowTypeCastExpression,
-);
+builders.set("JSAmbiguousFlowTypeCastExpression", JSAmbiguousFlowTypeCastExpression);
 
 import JSArrayExpression from "./js/expressions/JSArrayExpression";
 builders.set("JSArrayExpression", JSArrayExpression);
@@ -222,10 +216,7 @@ import JSAssignmentObjectPattern from "./js/patterns/JSAssignmentObjectPattern";
 builders.set("JSAssignmentObjectPattern", JSAssignmentObjectPattern);
 
 import JSAssignmentObjectPatternProperty from "./js/patterns/JSAssignmentObjectPatternProperty";
-builders.set(
-	"JSAssignmentObjectPatternProperty",
-	JSAssignmentObjectPatternProperty,
-);
+builders.set("JSAssignmentObjectPatternProperty", JSAssignmentObjectPatternProperty);
 
 import JSAwaitExpression from "./js/expressions/JSAwaitExpression";
 builders.set("JSAwaitExpression", JSAwaitExpression);
@@ -474,10 +465,7 @@ import JSRegExpNonWhiteSpaceCharacter from "./js/regex/JSRegExpNonWhiteSpaceChar
 builders.set("JSRegExpNonWhiteSpaceCharacter", JSRegExpNonWhiteSpaceCharacter);
 
 import JSRegExpNonWordBoundaryCharacter from "./js/regex/JSRegExpNonWordBoundaryCharacter";
-builders.set(
-	"JSRegExpNonWordBoundaryCharacter",
-	JSRegExpNonWordBoundaryCharacter,
-);
+builders.set("JSRegExpNonWordBoundaryCharacter", JSRegExpNonWordBoundaryCharacter);
 
 import JSRegExpNonWordCharacter from "./js/regex/JSRegExpNonWordCharacter";
 builders.set("JSRegExpNonWordCharacter", JSRegExpNonWordCharacter);
@@ -858,10 +846,7 @@ import TSTypeReference from "./js/typescript/TSTypeReference";
 builders.set("TSTypeReference", TSTypeReference);
 
 import TSUndefinedKeywordTypeAnnotation from "./js/typescript/TSUndefinedKeywordTypeAnnotation";
-builders.set(
-	"TSUndefinedKeywordTypeAnnotation",
-	TSUndefinedKeywordTypeAnnotation,
-);
+builders.set("TSUndefinedKeywordTypeAnnotation", TSUndefinedKeywordTypeAnnotation);
 
 import TSUnionTypeAnnotation from "./js/typescript/TSUnionTypeAnnotation";
 builders.set("TSUnionTypeAnnotation", TSUnionTypeAnnotation);

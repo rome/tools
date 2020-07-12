@@ -108,6 +108,26 @@ export function writeFileSync(
 	return fs.writeFileSync(path.join(), content);
 }
 
+// utimes
+export function updateTimes(
+	path: AbsoluteFilePath,
+	atime: number | string | Date,
+	mtime: number | string | Date,
+): Promise<void> {
+	return promisifyVoid(
+		path,
+		(filename, callback) => fs.utimes(filename, atime, mtime, callback),
+	);
+}
+
+export function updateTimesSync(
+	path: AbsoluteFilePath,
+	atime: number | string | Date,
+	mtime: number | string | Date,
+): void {
+	return fs.utimesSync(path.join(), atime, mtime);
+}
+
 // readdir
 function createReaddirReturn(
 	folder: AbsoluteFilePath,
