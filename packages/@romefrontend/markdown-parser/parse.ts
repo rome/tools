@@ -4,7 +4,7 @@ import {
 	isDigit,
 	readUntilLineBreak,
 } from "@romefrontend/parser-core";
-import {Tokens} from "@romefrontend/markdown-parser/types";
+import {State, Tokens} from "@romefrontend/markdown-parser/types";
 import {
 	MarkdownDividerBlock,
 	MarkdownHeadingBlock,
@@ -22,16 +22,37 @@ import {
 	MarkdownListChildren,
 } from "@romefrontend/ast/markdown/unions";
 import {hasThematicBreak} from "@romefrontend/markdown-parser/utils";
+import {descriptions} from "@romefrontend/diagnostics";
 
 export const createMarkdownParser = createParser((
 	ParserCore,
 	ParserWithRequiredPath,
 ) =>
-	class MarkdownParser extends ParserWithRequiredPath<Tokens> {
+	class MarkdownParser extends ParserWithRequiredPath<Tokens, State> {
 		constructor(opts: ParserOptionsWithRequiredPath) {
-			super(opts, "parse/markdown", {});
+			super(
+				opts,
+				"parse/markdown",
+				{
+					isBlockHead: false,
+				},
+			);
 
 			this.ignoreWhitespaceTokens = false;
+		}
+
+		consumeHeading(index: Number0) {
+			const [value, end] = this.readInputFrom(
+				index,
+				(char1) => {
+					return char1 === "#";
+				},
+			);
+			if (value.length > 6) {
+				const [textValue, endText] = this.readInputFrom(end, readUntilLineBreak);
+				return this.finishValueToken("Text", value + textValue, endText);
+			}
+			return this.finishValueToken("HeadingLevel", value.length, end);
 		}
 
 		consumeBlock(blockChar: string, index: Number0, currentChar: string) {
@@ -50,35 +71,49 @@ export const createMarkdownParser = createParser((
 			return undefined;
 		}
 
-		tokenize(index: Number0) {
+		tokenizeWithState(index: Number0, state: State) {
 			const char = this.getInputCharOnly(index);
 			const escaped = isEscaped(index, this.input);
 			if (!escaped) {
 				if (char === "#") {
-					return this.finishToken("Hash");
+					return {
+						token: this.consumeHeading(index),
+						state,
+					};
 				}
 
 				if (char === "\n") {
-					return this.finishToken("NewLine");
+					const nextChar = this.getInputCharOnly(index, 1);
+					if (nextChar === "#") {
+						return {
+							token: this.consumeHeading(ob1Add(index, 1)),
+							state,
+						};
+					}
+
+					return {
+						token: this.finishToken("NewLine"),
+						state,
+					};
 				}
 
 				// dividers
 				if (char === "-") {
 					const block = this.consumeBlock("-", index, char);
 					if (block) {
-						return block;
+						return {token: block, state};
 					}
 				}
 				if (char === "_") {
 					const block = this.consumeBlock("_", index, char);
 					if (block) {
-						return block;
+						return {token: block, state};
 					}
 				}
 				if (char === "*") {
 					const block = this.consumeBlock("*", index, char);
 					if (block) {
-						return block;
+						return {token: block, state};
 					}
 				}
 
@@ -86,46 +121,46 @@ export const createMarkdownParser = createParser((
 					const nextChar = this.getInputCharOnly(index, 1);
 					const nextNextChar = this.getInputCharOnly(index, 2);
 					if (nextChar === "." && nextNextChar === " ") {
-						return this.finishValueToken(
-							"ListItem",
-							"numeric-list",
-							ob1Add(index, 3),
-						);
+						return {
+							token: this.finishValueToken(
+								"ListItem",
+								"numeric-list",
+								ob1Add(index, 3),
+							),
+							state,
+						};
 					}
 				}
 			}
 
 			const [value, endIndex] = this.readInputFrom(index, readUntilLineBreak);
 
-			return this.finishValueToken("Text", value, endIndex);
+			return {
+				token: this.finishValueToken("Text", value, endIndex),
+				state,
+			};
 		}
 
-		parseHeading(): MarkdownHeadingBlock | MarkdownParagraph {
+		parseHeading(): MarkdownHeadingBlock {
 			const start = this.getPosition();
-			let level = 0;
-			let index = start.index;
-			// we check how many consecutive Hashes we have without moving the tokens
-			while (this.lookahead(index).token.type === "Hash") {
-				level += 1;
-				index = ob1Add(index, 1);
+			const token = this.getToken();
+			if (token.type === "HeadingLevel") {
+				const nextToken = this.nextToken();
+				if (nextToken.type === "Text") {
+					this.nextToken();
+					return this.finishNode(
+						start,
+						{
+							type: "MarkdownHeadingBlock",
+							level: token.value,
+							value: nextToken.value.trim(),
+						},
+					);
+				}
 			}
-			// we have more than 6 Hashes, ti means it will computed as a paragraph
-			if (level > 6) {
-				return this.parseParagraph();
-			}
-
-			// we jump straight of level tokens
-			this.jumpToToken(level);
-			const token = this.expectToken("Text");
-
-			return this.finishNode(
-				start,
-				{
-					type: "MarkdownHeadingBlock",
-					level,
-					value: token.value.trim(),
-				},
-			);
+			throw this.unexpected({
+				description: descriptions.MARKDOWN_PARSER.INVALID_SEQUENCE,
+			});
 		}
 
 		parseText(): MarkdownText {
@@ -224,7 +259,7 @@ export const createMarkdownParser = createParser((
 					this.nextToken();
 					return undefined;
 				}
-				case "Hash":
+				case "HeadingLevel":
 					return this.parseHeading();
 
 				case "ListItem":

@@ -53,9 +53,9 @@ MarkdownRoot {
 					line: 2
 				}
 				start: Object {
-					column: 0
-					index: 8
-					line: 2
+					column: 7
+					index: 7
+					line: 1
 				}
 			}
 		}
@@ -70,9 +70,9 @@ MarkdownRoot {
 					line: 3
 				}
 				start: Object {
-					column: 0
-					index: 17
-					line: 3
+					column: 8
+					index: 16
+					line: 2
 				}
 			}
 		}
@@ -87,9 +87,9 @@ MarkdownRoot {
 					line: 4
 				}
 				start: Object {
-					column: 0
-					index: 27
-					line: 4
+					column: 9
+					index: 26
+					line: 3
 				}
 			}
 		}
@@ -104,9 +104,9 @@ MarkdownRoot {
 					line: 5
 				}
 				start: Object {
-					column: 0
-					index: 38
-					line: 5
+					column: 10
+					index: 37
+					line: 4
 				}
 			}
 		}
@@ -121,9 +121,9 @@ MarkdownRoot {
 					line: 6
 				}
 				start: Object {
-					column: 0
-					index: 50
-					line: 6
+					column: 11
+					index: 49
+					line: 5
 				}
 			}
 		}
@@ -136,14 +136,14 @@ MarkdownRoot {
 					line: 8
 				}
 				start: Object {
-					column: 0
-					index: 63
-					line: 7
+					column: 12
+					index: 62
+					line: 6
 				}
 			}
 			children: Array [
 				MarkdownText {
-					value: " this will be a paragraph"
+					value: "####### this will be a paragraph"
 					loc: Object {
 						filename: "input.md"
 						end: Object {
