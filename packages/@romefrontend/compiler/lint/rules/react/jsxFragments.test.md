@@ -241,9 +241,9 @@ const Hello = <>
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
     1 │ function Foo() {
-  > 2 │  let bar = <React.Fragment><Foo /><Foo /></React.Fragment>;
-      │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    3 │  return bar;
+  > 2 │   let bar = <React.Fragment><Foo /><Foo /></React.Fragment>;
+      │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │   return bar;
     4 │ }
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
@@ -285,9 +285,9 @@ function Foo() {
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
     1 │ function Foo() {
-  > 2 │  let bar = <Fragment><Foo /><Foo /></Fragment>;
-      │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    3 │  return bar;
+  > 2 │   let bar = <Fragment><Foo /><Foo /></Fragment>;
+      │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │   return bar;
     4 │ }
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
@@ -329,8 +329,8 @@ function Foo() {
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
     1 │ function Hello() {
-  > 2 │  return <React.Fragment><Foo /><Foo /></React.Fragment>
-      │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 2 │   return <React.Fragment><Foo /><Foo /></React.Fragment>
+      │          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     3 │ }
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
@@ -371,9 +371,9 @@ function Hello() {
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
     1 │ function Hello() {
-  > 2 │       return <Fragment><Foo /><Foo /></Fragment>
-      │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    3 │      }
+  > 2 │             return <Fragment><Foo /><Foo /></Fragment>
+      │                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │           }
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 

@@ -15,8 +15,8 @@
     <html></html>
     ^^^^^^^^^^^^^
 
-  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when no
-    user default is specified.
+  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when
+    no user default is specified.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -43,8 +43,8 @@
     <html {...props}></html>
     ^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when no
-    user default is specified.
+  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when
+    no user default is specified.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -71,8 +71,8 @@
     <html lang=""></html>
     ^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when no
-    user default is specified.
+  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when
+    no user default is specified.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -99,8 +99,8 @@
     <html lang={""}></html>
     ^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when no
-    user default is specified.
+  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when
+    no user default is specified.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -127,8 +127,8 @@
     <html lang={``}></html>
     ^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when no
-    user default is specified.
+  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when
+    no user default is specified.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -155,8 +155,8 @@
     <html lang={undefined}></html>
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when no
-    user default is specified.
+  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when
+    no user default is specified.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -183,8 +183,8 @@
     <html lang={false}></html>
     ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when no
-    user default is specified.
+  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when
+    no user default is specified.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -211,8 +211,8 @@
     <html lang={true}></html>
     ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when no
-    user default is specified.
+  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when
+    no user default is specified.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -239,8 +239,8 @@
     <html lang={42}></html>
     ^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when no
-    user default is specified.
+  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when
+    no user default is specified.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

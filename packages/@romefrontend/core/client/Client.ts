@@ -475,7 +475,7 @@ export default class Client {
 
 	async attachBridge(status: BridgeStatus) {
 		const {stdoutWrite, stderrWrite, featuresUpdated, features, format} = this.derivedReporterStreams;
-		const {terminalFeatures: reporterOverrides = {}} = this.options;
+		const {terminalFeatures = {}} = this.options;
 
 		if (this.bridgeStatus !== undefined) {
 			throw new Error("Already attached bridge to API");
@@ -486,7 +486,7 @@ export default class Client {
 		const {bridge} = status;
 
 		bridge.stderr.subscribe((chunk) => {
-			if (reporterOverrides.redirectError) {
+			if (terminalFeatures.redirectError) {
 				stdoutWrite(chunk);
 			} else {
 				stderrWrite(chunk);

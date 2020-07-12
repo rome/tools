@@ -66,7 +66,7 @@ let a = 4;
 
   > 1 │ function foo(myVar) {
       │          ^^^
-    2 │  console.log("foo");
+    2 │   console.log("foo");
     3 │ };
 
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
@@ -77,7 +77,7 @@ let a = 4;
 
   > 1 │ function foo(myVar) {
       │              ^^^^^
-    2 │  console.log("foo");
+    2 │   console.log("foo");
     3 │ };
 
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
@@ -107,7 +107,7 @@ function foo(myVar) {
 
   > 1 │ function foo(myVar) {
       │              ^^^^^
-    2 │  console.log("foo");
+    2 │   console.log("foo");
     3 │ }
 
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
@@ -138,7 +138,7 @@ foo();
 
   > 1 │ const foo = (b) => {
       │       ^^^
-    2 │  console.log("foo");
+    2 │   console.log("foo");
     3 │ };
 
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
@@ -149,7 +149,7 @@ foo();
 
   > 1 │ const foo = (b) => {
       │              ^
-    2 │  console.log("foo");
+    2 │   console.log("foo");
     3 │ };
 
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.

@@ -16,8 +16,6 @@
 
   ℹ Recommended fix
 
-  ℹ Only difference is leading and trailing whitespace
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
@@ -42,8 +40,6 @@ export default function foo() {}
   ℹ The filename should be Test.ts or the class name should be Foo.
 
   ℹ Recommended fix
-
-  ℹ Only difference is leading and trailing whitespace
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

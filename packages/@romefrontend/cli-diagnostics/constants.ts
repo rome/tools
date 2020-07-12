@@ -5,7 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export const GUTTER = " \u2502 ";
+export const GUTTER = "<emphasis> \u2502 </emphasis>";
+
 export const CODE_FRAME_INDENT = "  ";
 export const CODE_FRAME_SELECTED_INDENT = "<error>></error> ";
 

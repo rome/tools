@@ -20,6 +20,10 @@ export const lint = createDiagnosticsCategory({
 		category: "lint/js/noUnusedTemplateLiteral",
 		message: "Do not use template literals if interpolation and special-character handling are not needed.",
 	},
+	JSX_NO_IMPLICIT_BOOLEAN: {
+		category: "lint/jsx/noImplicitBoolean",
+		message: "Use explicit boolean values for boolean JSX props.",
+	},
 	JS_NO_NESTED_TERNARY: {
 		category: "lint/js/noNestedTernary",
 		message: "Nesting ternary expressions can make code more difficult to understand.",

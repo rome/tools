@@ -13,12 +13,12 @@
   ✖ A switch case should only have a single statement. If you want more, then wrap it in a block.
 
     1 │ switch (foo) {
-    2 │  case true:
-  > 3 │  case false:
-      │  ^^^^^^^^^^^
-  > 4 │   let foo = '';
-  > 5 │   foo;
-      │ ^^^^^^
+    2 │   case true:
+  > 3 │   case false:
+      │   ^^^^^^^^^^^
+  > 4 │     let foo = '';
+  > 5 │     foo;
+      │ ^^^^^^^^
     6 │ }
 
   ℹ Recommended fix

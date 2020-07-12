@@ -285,15 +285,17 @@ function highlightJS(
 				case "extends":
 				case "export":
 				case "import":
-				case "null":
-				case "true":
-				case "false":
 				case "in":
 				case "instanceof":
 				case "typeof":
 				case "void":
 				case "delete":
 					return {type: "keyword"};
+
+				case "true":
+				case "false":
+				case "null":
+					return {type: "boolean"};
 
 				case "num":
 				case "bigint":

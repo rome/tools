@@ -68,8 +68,8 @@ Object {}
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  - bar 
-  - foo 
+  - bar
+  - foo
 
   ℹ To view help for a specific command run
   $ test command_name --help
@@ -92,8 +92,8 @@ Object {}
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  - bar 
-  - foo 
+  - bar
+  - foo
 
   ℹ To view help for a specific command run
   $ test command_name --help
@@ -118,7 +118,7 @@ Object {}
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  - foobar 
+  - foobar
 
   ℹ To view help for a specific command run
   $ test command_name --help

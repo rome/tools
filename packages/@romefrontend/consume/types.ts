@@ -28,7 +28,7 @@ export type ConsumeSourceLocationRequestTarget =
 export type ConsumeContext = {
 	category: DiagnosticCategory;
 	normalizeKey?: (key: string) => string;
-	getDiagnosticPointer?: (
+	getDiagnosticLocation?: (
 		keys: ConsumePath,
 		target: ConsumeSourceLocationRequestTarget,
 	) => DiagnosticLocation;
@@ -38,6 +38,9 @@ export type ConsumeContext = {
 export type ConsumePropertyMetadata = {
 	description?: string;
 	inputName?: string;
+	getDiagnosticLocation?: (
+		target: ConsumeSourceLocationRequestTarget,
+	) => DiagnosticLocation;
 };
 
 type ConsumePropertyDefinitionBase = {

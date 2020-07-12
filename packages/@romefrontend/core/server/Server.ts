@@ -900,7 +900,7 @@ export default class Server {
 					normalizeKey: (key) => {
 						return toKebabCase(key);
 					},
-					getDiagnosticPointer: (keys: ConsumePath) => {
+					getDiagnosticLocation: (keys: ConsumePath) => {
 						return req.getDiagnosticPointerFromFlags({
 							type: "flag",
 							key: String(keys[0]),

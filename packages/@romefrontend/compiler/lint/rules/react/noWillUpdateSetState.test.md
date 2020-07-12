@@ -13,11 +13,11 @@
   ✖ Avoid calling this.setState in the componentWillUpdate method.
 
     1 │ class Hello extends React.Component {
-    2 │  componentWillUpdate() {
-  > 3 │   this.setState({
-      │   ^^^^^^^^^^^^^
-    4 │    name: 'John'
-    5 │   });
+    2 │   componentWillUpdate() {
+  > 3 │     this.setState({
+      │     ^^^^^^^^^^^^^
+    4 │       name: 'John'
+    5 │     });
 
   ℹ Updating state immediately before a scheduled render causes a second render that can cause
     visual layout thrashing.
@@ -49,12 +49,12 @@ class Hello extends React.Component {
 
   ✖ Avoid calling this.setState in the componentWillUpdate method.
 
-    2 │  componentWillUpdate() {
-    3 │   foo();
-  > 4 │   this.setState({
-      │   ^^^^^^^^^^^^^
-    5 │    name: 'John'
-    6 │   });
+    2 │   componentWillUpdate() {
+    3 │     foo();
+  > 4 │     this.setState({
+      │     ^^^^^^^^^^^^^
+    5 │       name: 'John'
+    6 │     });
 
   ℹ Updating state immediately before a scheduled render causes a second render that can cause
     visual layout thrashing.
@@ -88,11 +88,11 @@ class Hello extends React.Component {
   ✖ Avoid calling this.setState in the componentWillUpdate method.
 
     1 │ class Hello extends Component {
-    2 │  componentWillUpdate() {
-  > 3 │   this.setState({
-      │   ^^^^^^^^^^^^^
-    4 │    name: 'John'
-    5 │   });
+    2 │   componentWillUpdate() {
+  > 3 │     this.setState({
+      │     ^^^^^^^^^^^^^
+    4 │       name: 'John'
+    5 │     });
 
   ℹ Updating state immediately before a scheduled render causes a second render that can cause
     visual layout thrashing.
@@ -124,12 +124,12 @@ class Hello extends Component {
 
   ✖ Avoid calling this.setState in the componentWillUpdate method.
 
-    2 │  componentWillUpdate() {
-    3 │   foo();
-  > 4 │   this.setState({
-      │   ^^^^^^^^^^^^^
-    5 │    name: 'John'
-    6 │   });
+    2 │   componentWillUpdate() {
+    3 │     foo();
+  > 4 │     this.setState({
+      │     ^^^^^^^^^^^^^
+    5 │       name: 'John'
+    6 │     });
 
   ℹ Updating state immediately before a scheduled render causes a second render that can cause
     visual layout thrashing.
@@ -163,11 +163,11 @@ class Hello extends Component {
   ✖ Avoid calling this.setState in the componentWillUpdate method.
 
     1 │ class Hello extends React.Component {
-    2 │  UNSAFE_componentWillUpdate() {
-  > 3 │   this.setState({
-      │   ^^^^^^^^^^^^^
-    4 │    name: 'John'
-    5 │   });
+    2 │   UNSAFE_componentWillUpdate() {
+  > 3 │     this.setState({
+      │     ^^^^^^^^^^^^^
+    4 │       name: 'John'
+    5 │     });
 
   ℹ Updating state immediately before a scheduled render causes a second render that can cause
     visual layout thrashing.
@@ -200,11 +200,11 @@ class Hello extends React.Component {
   ✖ Avoid calling this.setState in the componentWillUpdate method.
 
     1 │ class Hello extends Component {
-    2 │  UNSAFE_componentWillUpdate() {
-  > 3 │   this.setState({
-      │   ^^^^^^^^^^^^^
-    4 │    name: 'John'
-    5 │   });
+    2 │   UNSAFE_componentWillUpdate() {
+  > 3 │     this.setState({
+      │     ^^^^^^^^^^^^^
+    4 │       name: 'John'
+    5 │     });
 
   ℹ Updating state immediately before a scheduled render causes a second render that can cause
     visual layout thrashing.

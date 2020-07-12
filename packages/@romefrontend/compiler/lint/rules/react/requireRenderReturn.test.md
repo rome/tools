@@ -14,8 +14,8 @@
 
     1 │ import React from "react";
     2 │ class Foo extends React.Component {
-  > 3 │  render() {}
-      │           ^^
+  > 3 │   render() {}
+      │            ^^
     4 │ }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -44,12 +44,13 @@ class Foo extends React.Component {
 
     1 │ import React from "react";
     2 │ class Foo extends React.Component {
-  > 3 │  render() {
-  > 4 │   [1, 2, 3].map((num) => {
-  > 5 │    return <div> Foo </div>
-  > 6 │   });
-  > 7 │  }
-      │ ^^
+  > 3 │   render() {
+      │            ^
+  > 4 │     [1, 2, 3].map((num) => {
+  > 5 │       return <div> Foo </div>
+  > 6 │     });
+  > 7 │   }
+      │ ^^^
     8 │ }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -84,8 +85,8 @@ class Foo extends React.Component {
 
     1 │ import React from "react";
     2 │ class Foo extends React.Component {
-  > 3 │  render = () => { }
-      │                 ^^^
+  > 3 │   render = () => { }
+      │                  ^^^
     4 │ }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -114,8 +115,8 @@ class Foo extends React.Component {
 
     1 │ import React, {Component} from "react";
     2 │ class Foo extends Component {
-  > 3 │  render = () => { }
-      │                 ^^^
+  > 3 │   render = () => { }
+      │                  ^^^
     4 │ }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -144,8 +145,8 @@ class Foo extends Component {
 
     1 │ import React from "react";
     2 │ const Foo = class extends React.Component {
-  > 3 │  render = () => { }
-      │                 ^^^
+  > 3 │   render = () => { }
+      │                  ^^^
     4 │ }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -174,8 +175,8 @@ const Foo = class extends React.Component {
 
     1 │ import React, {Component} from "react";
     2 │ const Foo = class extends Component {
-  > 3 │  render = () => { }
-      │                 ^^^
+  > 3 │   render = () => { }
+      │                  ^^^
     4 │ }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -204,8 +205,8 @@ const Foo = class extends Component {
 
     1 │ import React from "react";
     2 │ const Foo = class extends React.PureComponent {
-  > 3 │  render = () => { }
-      │                 ^^^
+  > 3 │   render = () => { }
+      │                  ^^^
     4 │ }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -234,8 +235,8 @@ const Foo = class extends React.PureComponent {
 
     1 │ import React, {PureComponent} from "react";
     2 │ const Foo = class extends PureComponent {
-  > 3 │  render = () => { }
-      │                 ^^^
+  > 3 │   render = () => { }
+      │                  ^^^
     4 │ }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

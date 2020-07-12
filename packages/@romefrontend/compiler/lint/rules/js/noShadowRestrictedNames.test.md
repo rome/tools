@@ -15,8 +15,8 @@
     function NaN() {}
              ^^^
 
-  ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're named
-    after a known global.
+  ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're
+    named after a known global.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -42,8 +42,8 @@ function NaN() {}
     let Set;
         ^^^
 
-  ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're named
-    after a known global.
+  ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're
+    named after a known global.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -69,8 +69,8 @@ let Set;
     try {  } catch(Object) {}
                    ^^^^^^
 
-  ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're named
-    after a known global.
+  ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're
+    named after a known global.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -98,8 +98,8 @@ try {
     !function Array() {}
               ^^^^^
 
-  ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're named
-    after a known global.
+  ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're
+    named after a known global.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -125,8 +125,8 @@ try {
     function test(JSON) {console.log(JSON)}
                   ^^^^
 
-  ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're named
-    after a known global.
+  ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're
+    named after a known global.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

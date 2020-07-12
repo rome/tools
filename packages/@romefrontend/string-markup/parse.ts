@@ -22,99 +22,16 @@ import {
 	Tokens,
 } from "./types";
 import {isEscaped} from "@romefrontend/string-utils";
-import {Number0, ob1Add, ob1Get0, ob1Inc} from "@romefrontend/ob1";
+import {Number0, ob1Add, ob1Dec, ob1Get0, ob1Inc} from "@romefrontend/ob1";
 import {descriptions} from "@romefrontend/diagnostics";
 import {unescapeTextValue} from "./escape";
-import {normalizeColor, normalizeTokenType} from "./grid/tagFormatters";
-
-type AttributeValidator = (value: string) => undefined | string;
-type AttributeValidators = Map<string, AttributeValidator>;
-
-const noopValidator: AttributeValidator = (value) => value;
-const booleanValidator: AttributeValidator = (value) =>
-	value === "false" || value === "true" ? value : undefined
-;
-const numberValidator: AttributeValidator = (value) =>
-	isNaN(Number(value)) ? undefined : value
-;
-
-const globalAttributes: AttributeValidators = new Map([
-	["emphasis", booleanValidator],
-	["dim", booleanValidator],
-]);
-
-// Tags and their corresponding supported attributes and validators
-const tags: Map<MarkupTagName, AttributeValidators> = new Map();
-
-tags.set("emphasis", new Map());
-tags.set(
-	"number",
-	new Map([
-		["approx", booleanValidator],
-		["pluralSuffix", noopValidator],
-		["singularSuffix", noopValidator],
-	]),
-);
-tags.set(
-	"grammarNumber",
-	new Map([
-		["plural", noopValidator],
-		["singular", noopValidator],
-		["none", noopValidator],
-	]),
-);
-tags.set("hyperlink", new Map([["target", noopValidator]]));
-tags.set(
-	"filelink",
-	new Map([
-		["target", noopValidator],
-		["column", numberValidator],
-		["line", numberValidator],
-	]),
-);
-tags.set("inverse", new Map());
-tags.set("dim", new Map());
-tags.set("filesize", new Map());
-tags.set("duration", new Map([["approx", booleanValidator]]));
-tags.set("italic", new Map());
-tags.set("underline", new Map());
-tags.set("strike", new Map());
-tags.set("token", new Map([["type", normalizeTokenType]]));
-tags.set("error", new Map());
-tags.set("success", new Map());
-tags.set("warn", new Map());
-tags.set("info", new Map());
-tags.set("command", new Map());
-tags.set("color", new Map([["fg", normalizeColor], ["bg", normalizeColor]]));
-tags.set(
-	"highlight",
-	new Map([["i", noopValidator], ["legend", booleanValidator]]),
-);
-tags.set("table", new Map());
-tags.set("tr", new Map());
-tags.set("td", new Map([["align", noopValidator]]));
-tags.set("hr", new Map());
-tags.set("pad", new Map([["width", numberValidator], ["align", noopValidator]]));
-tags.set("nobr", new Map());
-tags.set("li", new Map());
-tags.set("ul", new Map());
-tags.set(
-	"ol",
-	new Map([["reversed", booleanValidator], ["start", numberValidator]]),
-);
-
-// Tags that only support certain other tags as their children
-const tagsToOnlyChildren: Map<MarkupTagName, Array<MarkupTagName>> = new Map();
-tagsToOnlyChildren.set("table", ["tr"]);
-tagsToOnlyChildren.set("tr", ["td"]);
-tagsToOnlyChildren.set("ol", ["li"]);
-tagsToOnlyChildren.set("ul", ["li"]);
-
-// Tags that should only be children of other tags
-const tagsToOnlyParent: Map<MarkupTagName, Array<MarkupTagName>> = new Map();
-tagsToOnlyParent.set("tr", ["table"]);
-tagsToOnlyParent.set("td", ["tr"]);
-tagsToOnlyParent.set("li", ["ol", "ul"]);
+import {createEmptyAttributes} from "./util";
+import {
+	globalAttributes,
+	tags,
+	tagsToOnlyChildren,
+	tagsToOnlyParent,
+} from "./tags";
 
 //
 function isStringValueChar(char: string, index: Number0, input: string): boolean {
@@ -298,7 +215,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
 				}
 			}
 
-			const attributes: TagAttributes = {};
+			const attributes: TagAttributes = createEmptyAttributes();
 			const children: Children = [];
 			let selfClosing = false;
 
@@ -306,6 +223,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
 			while (!this.matchToken("EOF") && !this.matchToken("Greater")) {
 				const keyToken = this.getToken();
 
+				let valueToken: TokenValues<Tokens>;
 				let key;
 				if (keyToken.type === "Word") {
 					key = keyToken.value;
@@ -324,35 +242,68 @@ const createStringMarkupParser = createParser((ParserCore) =>
 
 					this.nextToken();
 
+					let rawValue;
+
 					// Shorthand properties
 					if (
 						this.matchToken("Word") ||
 						this.matchToken("Slash") ||
 						this.matchToken("Greater")
 					) {
-						attributes[key] = "true";
-						continue;
+						rawValue = key;
+						valueToken = keyToken;
+					} else {
+						this.expectToken("Equals");
+
+						valueToken = this.expectToken("String");
+						rawValue = valueToken.value;
 					}
 
-					this.expectToken("Equals");
-
-					const valueToken = this.expectToken("String");
-					if (valueToken.type !== "String") {
-						throw new Error("Expected String");
-					}
-					const value = validator(valueToken.value);
+					const value = validator(rawValue, key);
 
 					if (value === undefined) {
 						throw this.unexpected({
+							token: valueToken,
 							description: descriptions.STRING_MARKUP.INVALID_ATTRIBUTE_VALUE(
 								tagName,
 								key,
-								valueToken.value,
+								rawValue,
 							),
 						});
 					}
 
-					attributes[key] = value;
+					attributes.get(
+						key,
+						{
+							getDiagnosticLocation: (target) => {
+								switch (target) {
+									case "key":
+										return this.getDiagnosticLocation({token: keyToken});
+
+									case "value":
+										return this.getDiagnosticLocation({token: valueToken});
+
+									case "inner-value":
+										if (valueToken === keyToken) {
+											// Shorthand
+											return this.getDiagnosticLocation({token: keyToken});
+										} else {
+											// Remove string quotes
+											return this.getDiagnosticLocation({
+												startIndex: ob1Inc(keyToken.start),
+												endIndex: ob1Dec(valueToken.end),
+											});
+										}
+
+									case "all":
+										return this.getDiagnosticLocation({
+											startIndex: keyToken.start,
+											endIndex: valueToken.end,
+										});
+								}
+							},
+						},
+					).setValue(value);
 				} else if (keyToken.type === "Slash") {
 					this.nextToken();
 					selfClosing = true;
@@ -447,6 +398,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
 
 				return {
 					type: "Text",
+					source: true,
 					value: token.value,
 				};
 			} else if (token.type === "Less") {
@@ -471,9 +423,9 @@ const createStringMarkupParser = createParser((ParserCore) =>
 	}
 );
 
-export function parseMarkup(input: string) {
+export function parseMarkup(input: string, opts: ParserOptions = {}) {
 	try {
-		return createStringMarkupParser({input}).parse();
+		return createStringMarkupParser({...opts, input}).parse();
 	} catch (err) {
 		throw err;
 	}

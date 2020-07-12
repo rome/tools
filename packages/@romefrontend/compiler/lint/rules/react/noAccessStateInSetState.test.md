@@ -12,12 +12,12 @@
 
   ✖ Avoid using this.state within a this.setState call.
 
-    2 │      class MyComponent extends Component {
-    3 │       function increment() {
-  > 4 │        this.setState({value: this.state.value + 1});
-      │        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    5 │       }
-    6 │      }
+    2 │           class MyComponent extends Component {
+    3 │             function increment() {
+  > 4 │               this.setState({value: this.state.value + 1});
+      │               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │             }
+    6 │           }
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
@@ -46,12 +46,12 @@ class MyComponent extends Component {
 
   ✖ Avoid using this.state within a this.setState call.
 
-    2 │      class MyComponent extends Component {
-    3 │       function increment() {
-  > 4 │        this.setState({value: 1 + this.state.value});
-      │        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    5 │       }
-    6 │      }
+    2 │           class MyComponent extends Component {
+    3 │             function increment() {
+  > 4 │               this.setState({value: 1 + this.state.value});
+      │               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │             }
+    6 │           }
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
@@ -80,15 +80,15 @@ class MyComponent extends Component {
 
   ✖ Avoid using this.state within a this.setState call.
 
-    2 │      class MyComponent extends Component {
-    3 │       function toggle() {
-  > 4 │        this.setState({
-      │        ^^^^^^^^^^^^^^^
-  > 5 │         value: !this.state.value
-  > 6 │        });
-      │ ^^^^^^^^^
-    7 │       }
-    8 │      }
+    2 │           class MyComponent extends Component {
+    3 │             function toggle() {
+  > 4 │               this.setState({
+      │               ^^^^^^^^^^^^^^^
+  > 5 │                 value: !this.state.value
+  > 6 │               });
+      │ ^^^^^^^^^^^^^^^^
+    7 │             }
+    8 │           }
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
@@ -119,15 +119,15 @@ class MyComponent extends Component {
 
   ✖ Avoid using this.state within a this.setState call.
 
-    2 │      class MyComponent extends Component {
-    3 │       function toggle() {
-  > 4 │        this.setState({
-      │        ^^^^^^^^^^^^^^^
-  > 5 │         value: !!this.state.value
-  > 6 │        });
-      │ ^^^^^^^^^
-    7 │       }
-    8 │      }
+    2 │           class MyComponent extends Component {
+    3 │             function toggle() {
+  > 4 │               this.setState({
+      │               ^^^^^^^^^^^^^^^
+  > 5 │                 value: !!this.state.value
+  > 6 │               });
+      │ ^^^^^^^^^^^^^^^^
+    7 │             }
+    8 │           }
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
@@ -158,16 +158,16 @@ class MyComponent extends Component {
 
   ✖ Avoid using this.state within a this.setState call.
 
-    2 │      class MyComponent extends Component {
-    3 │       function update() {
-  > 4 │        this.setState({
-      │        ^^^^^^^^^^^^^^^
-  > 5 │         foo: bar,
-  > 6 │         value: 1 + this.state.value
-  > 7 │        });
-      │ ^^^^^^^^^
-    8 │       }
-    9 │      }
+    2 │           class MyComponent extends Component {
+    3 │             function update() {
+  > 4 │               this.setState({
+      │               ^^^^^^^^^^^^^^^
+  > 5 │                 foo: bar,
+  > 6 │                 value: 1 + this.state.value
+  > 7 │               });
+      │ ^^^^^^^^^^^^^^^^
+    8 │             }
+    9 │           }
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
@@ -199,16 +199,16 @@ class MyComponent extends Component {
 
   ✖ Avoid using this.state within a this.setState call.
 
-    2 │      class MyComponent extends Component {
-    3 │       function update() {
-  > 4 │        this.setState({
-      │        ^^^^^^^^^^^^^^^
-  > 5 │         foo: bar,
-  > 6 │         value: this.state.value + 1
-  > 7 │        });
-      │ ^^^^^^^^^
-    8 │       }
-    9 │      }
+    2 │           class MyComponent extends Component {
+    3 │             function update() {
+  > 4 │               this.setState({
+      │               ^^^^^^^^^^^^^^^
+  > 5 │                 foo: bar,
+  > 6 │                 value: this.state.value + 1
+  > 7 │               });
+      │ ^^^^^^^^^^^^^^^^
+    8 │             }
+    9 │           }
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
@@ -240,15 +240,15 @@ class MyComponent extends Component {
 
   ✖ Avoid using this.state within a this.setState call.
 
-    2 │      class MyComponent extends Component {
-    3 │       function update() {
-  > 4 │        this.setState({
-      │        ^^^^^^^^^^^^^^^
-  > 5 │         value: this.state.value
-  > 6 │        });
-      │ ^^^^^^^^^
-    7 │       }
-    8 │      }
+    2 │           class MyComponent extends Component {
+    3 │             function update() {
+  > 4 │               this.setState({
+      │               ^^^^^^^^^^^^^^^
+  > 5 │                 value: this.state.value
+  > 6 │               });
+      │ ^^^^^^^^^^^^^^^^
+    7 │             }
+    8 │           }
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
@@ -279,16 +279,16 @@ class MyComponent extends Component {
 
   ✖ Avoid using this.state within a this.setState call.
 
-    2 │      class MyComponent extends Component {
-    3 │       function update() {
-  > 4 │        this.setState({
-      │        ^^^^^^^^^^^^^^^
-  > 5 │         foo: bar,
-  > 6 │         value: this.state.value
-  > 7 │        });
-      │ ^^^^^^^^^
-    8 │       }
-    9 │      }
+    2 │           class MyComponent extends Component {
+    3 │             function update() {
+  > 4 │               this.setState({
+      │               ^^^^^^^^^^^^^^^
+  > 5 │                 foo: bar,
+  > 6 │                 value: this.state.value
+  > 7 │               });
+      │ ^^^^^^^^^^^^^^^^
+    8 │             }
+    9 │           }
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 

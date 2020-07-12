@@ -21,7 +21,7 @@
 
     1   │ - unknownVariable
       1 │ + unknownVariable;
-      2 │ + 
+      2 │ +
 
   i To apply fixes and formatting run
   $ rome check index.js --apply
@@ -63,7 +63,7 @@ unknownVariable
 
   > 1 │ if (unformatted) {
       │     ^^^^^^^^^^^
-    2 │  swag;
+    2 │   swag;
     3 │ }
 
  index.js:2:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -71,8 +71,8 @@ unknownVariable
   × The swag variable is undeclared
 
     1 │ if (unformatted) {
-  > 2 │  swag;
-      │  ^^^^
+  > 2 │   swag;
+      │   ^^^^
     3 │ }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

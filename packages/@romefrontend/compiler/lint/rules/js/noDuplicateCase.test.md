@@ -12,23 +12,23 @@
 
   ✖ Do not duplicate the "c" case.
 
-    5 │  case 'b':
-    6 │   break;
-  > 7 │  case 'c':
-      │       ^^^
-    8 │   break;
-    9 │  case 'd':
+    5 │   case 'b':
+    6 │     break;
+  > 7 │   case 'c':
+      │        ^^^
+    8 │     break;
+    9 │   case 'd':
 
   ℹ Duplicated switch logic paths are hard to follow and usually typos.
 
   ℹ Defined already here
 
-     9 │  case 'd':
-    10 │   break;
-  > 11 │  case 'c':
-       │       ^^^
-    12 │   break;
-    13 │  default:
+     9 │   case 'd':
+    10 │     break;
+  > 11 │   case 'c':
+       │        ^^^
+    12 │     break;
+    13 │   default:
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -65,23 +65,23 @@ switch (expr) {
 
   ✖ Do not duplicate the 2 case.
 
-    3 │  case 1:
-    4 │   break;
-  > 5 │  case 2:
-      │       ^
-    6 │   break;
-    7 │  case 3:
+    3 │   case 1:
+    4 │     break;
+  > 5 │   case 2:
+      │        ^
+    6 │     break;
+    7 │   case 3:
 
   ℹ Duplicated switch logic paths are hard to follow and usually typos.
 
   ℹ Defined already here
 
-     7 │  case 3:
-     8 │   break;
-   > 9 │  case 2:
-       │       ^
-    10 │   break;
-    11 │  default:
+     7 │   case 3:
+     8 │     break;
+   > 9 │   case 2:
+       │        ^
+    10 │     break;
+    11 │   default:
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -116,23 +116,23 @@ switch (expr) {
 
   ✖ Do not duplicate the 2n case.
 
-    3 │  case 1:
-    4 │   break;
-  > 5 │  case 2n:
-      │       ^^
-    6 │   break;
-    7 │  case 3:
+    3 │   case 1:
+    4 │     break;
+  > 5 │   case 2n:
+      │        ^^
+    6 │     break;
+    7 │   case 3:
 
   ℹ Duplicated switch logic paths are hard to follow and usually typos.
 
   ℹ Defined already here
 
-     7 │  case 3:
-     8 │   break;
-   > 9 │  case 2n:
-       │       ^^
-    10 │   break;
-    11 │  default:
+     7 │   case 3:
+     8 │     break;
+   > 9 │   case 2n:
+       │        ^^
+    10 │     break;
+    11 │   default:
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -169,21 +169,21 @@ switch (expr) {
 
     1 │ const foo = 'a';
     2 │ switch ('a') {
-  > 3 │  case foo:
-      │       ^^^
-    4 │   break;
-    5 │  case foo:
+  > 3 │   case foo:
+      │        ^^^
+    4 │     break;
+    5 │   case foo:
 
   ℹ Duplicated switch logic paths are hard to follow and usually typos.
 
   ℹ Defined already here
 
-    3 │  case foo:
-    4 │   break;
-  > 5 │  case foo:
-      │       ^^^
-    6 │   break;
-    7 │  default:
+    3 │   case foo:
+    4 │     break;
+  > 5 │   case foo:
+      │        ^^^
+    6 │     break;
+    7 │   default:
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -216,21 +216,21 @@ switch ("a") {
 
     1 │ const foo = 'a';
     2 │ switch ('a') {
-  > 3 │  case 'foo':
-      │       ^^^^^
-    4 │   break;
-    5 │  case "foo":
+  > 3 │   case 'foo':
+      │        ^^^^^
+    4 │     break;
+    5 │   case "foo":
 
   ℹ Duplicated switch logic paths are hard to follow and usually typos.
 
   ℹ Defined already here
 
-    3 │  case 'foo':
-    4 │   break;
-  > 5 │  case "foo":
-      │       ^^^^^
-    6 │   break;
-    7 │  default:
+    3 │   case 'foo':
+    4 │     break;
+  > 5 │   case "foo":
+      │        ^^^^^
+    6 │     break;
+    7 │   default:
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -263,21 +263,21 @@ switch ("a") {
 
     1 │ const foo = 'a';
     2 │ switch ('a') {
-  > 3 │  case null:
-      │       ^^^^
-    4 │   break;
-    5 │  case null:
+  > 3 │   case null:
+      │        ^^^^
+    4 │     break;
+    5 │   case null:
 
   ℹ Duplicated switch logic paths are hard to follow and usually typos.
 
   ℹ Defined already here
 
-    3 │  case null:
-    4 │   break;
-  > 5 │  case null:
-      │       ^^^^
-    6 │   break;
-    7 │  default:
+    3 │   case null:
+    4 │     break;
+  > 5 │   case null:
+      │        ^^^^
+    6 │     break;
+    7 │   default:
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

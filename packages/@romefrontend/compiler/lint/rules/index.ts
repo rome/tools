@@ -85,6 +85,7 @@ import tabindexNoPositive from "./jsx-a11y/tabindexNoPositive";
 import fileExtension from "./jsx/fileExtension";
 import noCommentText from "./jsx/noCommentText";
 import noDuplicateProps from "./jsx/noDuplicateProps";
+import noImplicitBoolean from "./jsx/noImplicitBoolean";
 import pascalCase from "./jsx/pascalCase";
 import propsNoSpreading from "./jsx/propsNoSpreading";
 import buttonHasType from "./react/buttonHasType";
@@ -193,6 +194,7 @@ export const lintTransforms = [
 	fileExtension,
 	noCommentText,
 	noDuplicateProps,
+	noImplicitBoolean,
 	pascalCase,
 	propsNoSpreading,
 	buttonHasType,

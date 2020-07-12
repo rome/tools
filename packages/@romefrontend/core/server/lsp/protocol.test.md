@@ -12,12 +12,11 @@
   }
 ℹ [LSPServer][Transport] Status: WAITING_FOR_RESPONSE_END
 ℹ [LSPServer][Transport] Received message content:
-  {"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"file:///Users/s
-  ebastianmckenzie/Scratch/rome-playground/test.ts","version":24},"contentChanges":[{"text":"//Can’t
-  handle this comment
+  {"jsonrpc":"2.0","method":"textDocument/didChange","params":{"textDocument":{"uri":"file:///Users/
+  sebastianmckenzie/Scratch/rome-playground/test.ts","version":24},"contentChanges":[{"text":"//Can’
+  t handle this comment
   const foo = 'Or this “special” string';
   const rocket = "Or this🚀";
-  
   rocket;
   foo;"}]}}
 ℹ [LSPServer][Transport] Status: IDLE

@@ -15,8 +15,8 @@
     <>{foo}</>
     ^^^^^^^^^^
 
-  ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html element,
-    and is not a keyed fragment.
+  ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html
+    element, and is not a keyed fragment.
 
   ℹ Recommended fix
 
@@ -49,8 +49,8 @@
     <p><>foo</></p>
        ^^^^^^^^
 
-  ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html element,
-    and is not a keyed fragment.
+  ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html
+    element, and is not a keyed fragment.
 
   ℹ Recommended fix
 
@@ -85,8 +85,8 @@
     <></>
     ^^^^^
 
-  ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html element,
-    and is not a keyed fragment.
+  ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html
+    element, and is not a keyed fragment.
 
   ℹ Recommended fix
 
@@ -117,8 +117,8 @@
     <React.Fragment>foo</React.Fragment>
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html element,
-    and is not a keyed fragment.
+  ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html
+    element, and is not a keyed fragment.
 
   ℹ Recommended fix
 
@@ -151,8 +151,8 @@ foo;
     <Fragment>foo</Fragment>
     ^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html element,
-    and is not a keyed fragment.
+  ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html
+    element, and is not a keyed fragment.
 
   ℹ Recommended fix
 
@@ -183,17 +183,17 @@ foo;
   ✖ Avoid using unnecessary Fragment.
 
     1 │ <section>
-  > 2 │      <>
-      │      ^^
-  > 3 │       <div />
-  > 4 │       <div />
-  > 5 │      </>
-      │ ^^^^^^^^
-    6 │     </section>
-    7 │ ····
+  > 2 │           <>
+      │           ^^
+  > 3 │             <div />
+  > 4 │             <div />
+  > 5 │           </>
+      │ ^^^^^^^^^^^^^
+    6 │         </section>
+    7 │ ↹↹↹↹
 
-  ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html element,
-    and is not a keyed fragment.
+  ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html
+    element, and is not a keyed fragment.
 
   ℹ Recommended fix
 

@@ -14,6 +14,7 @@ export {
 	MarkupFormatOptions,
 	MarkupLinesAndWidth,
 	MarkupTagName,
+	UserMarkupFormatGridOptions,
 } from "./types";
 
 export {

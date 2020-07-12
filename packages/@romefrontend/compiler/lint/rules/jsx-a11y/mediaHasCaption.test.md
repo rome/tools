@@ -158,7 +158,7 @@
 ### `6: formatted`
 
 ```
-<video muted {...props}>
+<video muted={true} {...props}>
 </video>;
 
 ```

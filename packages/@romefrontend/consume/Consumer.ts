@@ -115,7 +115,7 @@ export default class Consumer {
 		let diagnostics: Diagnostics = [];
 		const definitions: Array<ConsumePropertyDefinition> = [];
 
-		const consumer = this.clone({
+		const consumer = this.cloneConsumer({
 			onDefinition: (def, consumer) => {
 				if (this.onDefinition !== undefined) {
 					this.onDefinition(def, consumer);
@@ -189,16 +189,25 @@ export default class Consumer {
 	getDiagnosticLocation(
 		target: ConsumeSourceLocationRequestTarget = "all",
 	): DiagnosticLocation {
-		const {getDiagnosticPointer} = this.context;
-		if (getDiagnosticPointer === undefined) {
-			return {};
-		}
-
 		const {forceDiagnosticTarget} = this;
 		if (forceDiagnosticTarget !== undefined) {
 			target = forceDiagnosticTarget;
 		}
-		return getDiagnosticPointer(this.keyPath, target);
+
+		let getPropertyDiagnosticLocation = this.propertyMetadata?.getDiagnosticLocation;
+		if (getPropertyDiagnosticLocation !== undefined) {
+			const loc = getPropertyDiagnosticLocation(target);
+			if (loc !== undefined) {
+				return loc;
+			}
+		}
+
+		const getDiagnosticLocation = this.context.getDiagnosticLocation;
+		if (getDiagnosticLocation === undefined) {
+			return {};
+		} else {
+			return getDiagnosticLocation(this.keyPath, target);
+		}
 	}
 
 	getLocation(target?: ConsumeSourceLocationRequestTarget): SourceLocation {
@@ -255,7 +264,7 @@ export default class Consumer {
 	}
 
 	getKey(): Consumer {
-		return this.clone({
+		return this.cloneConsumer({
 			forceDiagnosticTarget: "key",
 			value: this.getParentKey(),
 		});
@@ -454,7 +463,7 @@ export default class Consumer {
 		return true;
 	}
 
-	clone(opts: Partial<ConsumerOptions>): Consumer {
+	cloneConsumer(opts: Partial<ConsumerOptions>): Consumer {
 		return new Consumer({
 			usedNames: this.usedNames,
 			onDefinition: this.onDefinition,
@@ -467,6 +476,35 @@ export default class Consumer {
 			propertyMetadata: this.propertyMetadata,
 			...opts,
 		});
+	}
+
+	copy(mix?: object) {
+		let value = this.value;
+
+		if (isPlainObject(value)) {
+			value = {...this.asOriginalUnknownObject()};
+		}
+
+		if (Array.isArray(value)) {
+			value = [...value];
+		}
+
+		if (mix !== undefined) {
+			Object.assign(value, mix);
+		}
+
+		const consumer = this.cloneConsumer({
+			value,
+		});
+
+		// Add on cached property metadata if necessary
+		for (const [key, value] of this.forkCache) {
+			if (value.propertyMetadata !== undefined) {
+				consumer.get(key, value.propertyMetadata);
+			}
+		}
+
+		return consumer;
 	}
 
 	fork(
@@ -485,7 +523,7 @@ export default class Consumer {
 			return cached;
 		}
 
-		const forked = this.clone({
+		const forked = this.cloneConsumer({
 			propertyMetadata,
 			value,
 			parent: this,
@@ -549,11 +587,16 @@ export default class Consumer {
 	}
 
 	has(key: string): boolean {
-		return this.get(key).asUnknown() != null;
+		const value = this.asOriginalUnknownObject();
+		return value[key] != null;
 	}
 
-	setProperty(key: string, value: unknown): Consumer {
-		return this.get(key).setValue(value);
+	delete(key: string) {
+		this.get(key).setValue(undefined);
+	}
+
+	set(key: string, value: unknown) {
+		this.get(key).setValue(value);
 	}
 
 	get(key: string, metadata?: ConsumePropertyMetadata): Consumer {
@@ -602,7 +645,7 @@ export default class Consumer {
 
 	asPossibleParsedJSON(): Consumer {
 		if (typeof this.asUnknown() === "string") {
-			return this.clone({
+			return this.cloneConsumer({
 				value: JSON.parse(this.asString()),
 			});
 		} else {
@@ -757,14 +800,14 @@ export default class Consumer {
 		}
 	}
 
-	asDateOrVoid(def?: Date): undefined | Date {
+	asDateOrVoid(): undefined | Date {
 		this.declareDefinition({
 			type: "date",
-			default: def,
+			default: undefined,
 			required: false,
 		});
 		if (this.exists()) {
-			return this.asUndeclaredDate(def);
+			return this.asUndeclaredDate();
 		} else {
 			return undefined;
 		}
@@ -788,14 +831,14 @@ export default class Consumer {
 		return value;
 	}
 
-	asBooleanOrVoid(def?: boolean): undefined | boolean {
+	asBooleanOrVoid(): undefined | boolean {
 		this.declareDefinition({
 			type: "boolean",
-			default: def,
+			default: undefined,
 			required: false,
 		});
 		if (this.exists()) {
-			return this.asUndeclaredBoolean(def);
+			return this.asUndeclaredBoolean();
 		} else {
 			return undefined;
 		}
@@ -819,15 +862,15 @@ export default class Consumer {
 		return value;
 	}
 
-	asStringOrVoid(def?: string): undefined | string {
+	asStringOrVoid(): undefined | string {
 		this.declareDefinition({
 			type: "string",
-			default: def,
+			default: undefined,
 			required: false,
 		});
 
 		if (this.exists()) {
-			return this.asUndeclaredString(def);
+			return this.asUndeclaredString();
 		} else {
 			return undefined;
 		}
@@ -907,14 +950,14 @@ export default class Consumer {
 		}
 	}
 
-	asBigIntOrVoid(def?: number | bigint): undefined | bigint {
+	asBigIntOrVoid(): undefined | bigint {
 		this.declareDefinition({
 			type: "bigint",
-			default: def,
+			default: undefined,
 			required: false,
 		});
 		if (this.exists()) {
-			return this.asUndeclaredBigInt(def);
+			return this.asUndeclaredBigInt();
 		} else {
 			return undefined;
 		}
@@ -965,11 +1008,11 @@ export default class Consumer {
 		}
 	}
 
-	asURLFilePathOrVoid(def?: string): undefined | URLFilePath {
+	asURLFilePathOrVoid(): undefined | URLFilePath {
 		if (this.exists()) {
-			return this.asURLFilePath(def);
+			return this.asURLFilePath();
 		} else {
-			this._declareOptionalFilePath(def);
+			this._declareOptionalFilePath();
 			return undefined;
 		}
 	}
@@ -987,11 +1030,11 @@ export default class Consumer {
 		return createUnknownFilePath(this.asUndeclaredString(def));
 	}
 
-	asUnknownFilePathOrVoid(def?: string): undefined | UnknownFilePath {
+	asUnknownFilePathOrVoid(): undefined | UnknownFilePath {
 		if (this.exists()) {
-			return this.asUnknownFilePath(def);
+			return this.asUnknownFilePath();
 		} else {
-			this._declareOptionalFilePath(def);
+			this._declareOptionalFilePath();
 			return undefined;
 		}
 	}
@@ -1030,11 +1073,11 @@ export default class Consumer {
 		}
 	}
 
-	asRelativeFilePathOrVoid(def?: string): undefined | RelativeFilePath {
+	asRelativeFilePathOrVoid(): undefined | RelativeFilePath {
 		if (this.exists()) {
-			return this.asRelativeFilePath(def);
+			return this.asRelativeFilePath();
 		} else {
-			this._declareOptionalFilePath(def);
+			this._declareOptionalFilePath();
 			return undefined;
 		}
 	}
@@ -1050,35 +1093,45 @@ export default class Consumer {
 		}
 	}
 
-	asExplicitRelativeFilePathOrVoid(def?: string): undefined | RelativeFilePath {
+	asExplicitRelativeFilePathOrVoid(): undefined | RelativeFilePath {
 		if (this.exists()) {
-			return this.asExplicitRelativeFilePath(def);
+			return this.asExplicitRelativeFilePath();
 		} else {
-			this._declareOptionalFilePath(def);
+			this._declareOptionalFilePath();
 			return undefined;
 		}
 	}
 
-	asNumberOrVoid(def?: number): undefined | number {
+	asNumberOrVoid(): undefined | number {
 		this.declareDefinition({
 			type: "number",
-			default: def,
+			default: undefined,
 			required: false,
 		});
 
 		if (this.exists()) {
-			return this.asUndeclaredNumber(def);
+			return this.asUndeclaredNumber();
 		} else {
 			return undefined;
 		}
 	}
 
-	asZeroIndexedNumber(): Number0 {
-		return ob1Coerce0(this.asNumber());
+	asZeroIndexedNumber(def?: number): Number0 {
+		return ob1Coerce0(this.asNumber(def));
 	}
 
-	asOneIndexedNumber(): Number1 {
-		return ob1Coerce1(this.asNumber());
+	asOneIndexedNumber(def?: number): Number1 {
+		return ob1Coerce1(this.asNumber(def));
+	}
+
+	asZeroIndexedNumberOrVoid(): undefined | Number0 {
+		const num = this.asNumberOrVoid();
+		return num === undefined ? undefined : ob1Coerce0(num);
+	}
+
+	asOneIndexedNumberOrVoid(): undefined | Number1 {
+		const num = this.asNumberOrVoid();
+		return num === undefined ? undefined : ob1Coerce1(num);
 	}
 
 	asNumberFromString(def?: number): number {
@@ -1090,15 +1143,15 @@ export default class Consumer {
 		return this.asUndeclaredNumberFromString(def);
 	}
 
-	asNumberFromStringOrVoid(def?: number): undefined | number {
+	asNumberFromStringOrVoid(): undefined | number {
 		this.declareDefinition({
 			type: "number",
-			default: def,
+			default: undefined,
 			required: false,
 		});
 
 		if (this.exists()) {
-			return this.asUndeclaredNumberFromString(def);
+			return this.asUndeclaredNumberFromString();
 		} else {
 			return undefined;
 		}

@@ -12,7 +12,7 @@ test(
 					"<a>Anchor Content!</a>",
 					"<a><TextWrapper /></a>",
 					"<a dangerouslySetInnerHTML={{ __html: 'foo' }} />",
-					"<a><TextWrapper aria-hidden /> visible content</a>",
+					"<a><TextWrapper aria-hidden={true} /> visible content</a>",
 				],
 			},
 			{category: "lint/jsx-a11y/anchorHasContent"},

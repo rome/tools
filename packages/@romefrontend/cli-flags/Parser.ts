@@ -279,7 +279,7 @@ export default class Parser<T> {
 				getOriginalValue: (keys: ConsumePath) => {
 					return flags[keys[0]];
 				},
-				getDiagnosticPointer: (
+				getDiagnosticLocation: (
 					keys: ConsumePath,
 					target: ConsumeSourceLocationRequestTarget,
 				) => {

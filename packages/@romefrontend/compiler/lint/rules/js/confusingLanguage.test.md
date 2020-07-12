@@ -12,8 +12,8 @@
 
   ✖ The word blacklist can be considered racially charged language.
 
-    // the blacklist
-         ^^^^^^^^^
+    //  the  blacklist
+          ^^^^^^^^^^
 
   ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation.
 
@@ -40,8 +40,8 @@
 
   ✖ The word blacklist can be considered racially charged language.
 
-    1 │ /* the
-  > 2 │ blacklist */
+    1 │ /*  the
+  > 2 │ blacklist  */
       │ ^^^^^^^^^
 
   ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation.

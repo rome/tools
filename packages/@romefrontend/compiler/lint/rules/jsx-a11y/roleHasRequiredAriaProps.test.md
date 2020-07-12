@@ -449,8 +449,9 @@
 
   ✖ The element with the scrollbar ARIA role does not have the required ARIA attributes.
 
-    <span role='scrollbar' aria-valuemin='0' aria-valuemax='100' aria-orientation='horizontal'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    <span role='scrollbar' aria-valuemin='0' aria-valuemax='100' aria-orientation='horizontal'></
+    span>
+    ^^^^^^^^
 
   ℹ Missing aria attribute: aria-valuenow
 
