@@ -20,7 +20,7 @@ There are no expectations around activity once someone becomes a core contributo
 
 Core contributors may either be nominated by another core contributor or can be self nominated. This can be done via message in the [`#contributors` Discord channel](https://discord.com/channels/678763474494423051/678763474930761739) or by privately messaging a steward.
 
-New core contributors will be decided based on a [vote](#voting) conducted in the [`#contributors-private` Discord channel](https://discord.com/channels/678763474494423051/712849311985041420).
+New core contributors will be decided based on a [vote](#voting) conducted by privately messaging a steward.
 
 In the event of a rejection the nominated person will be privately given the requirements they have not met. Details of the discussion such as the names of those who objected will not be disclosed.
 
@@ -78,7 +78,7 @@ Project direction and planning is a shared responsibility amongst members. Stewa
 Certain project decisions require a vote. These include:
 
 - Governance changes: simple majority (over 50%) conducted via GitHub PR approval.
-- Core contributor membership: overwhelming majority (over 70%) conducted in the `#contributors-private` Discord channel.
+- Core contributor membership: overwhelming majority (over 70%) conducted by privately messaging a steward. Funneling both assenting and dissenting votes directly through stewards allows for anonymity when discussing the merits of a potential contributor.
 
 A steward may initiate a vote for any unlisted project decision. Core contributors can request a vote by contacting a steward.
 
