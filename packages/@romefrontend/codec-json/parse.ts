@@ -811,8 +811,8 @@ export const createJSONParser = createParser((ParserCore) =>
 							getOriginalValue(path) {
 								return getContext().getOriginalValue(path);
 							},
-							getDiagnosticPointer(keys, target) {
-								return getContext().getDiagnosticPointer(keys, target);
+							getDiagnosticLocation(keys, target) {
+								return getContext().getDiagnosticLocation(keys, target);
 							},
 						},
 						value,
@@ -854,7 +854,7 @@ export const createJSONParser = createParser((ParserCore) =>
 			const context: Required<ConsumeContext> = {
 				category: this.consumeDiagnosticCategory,
 				normalizeKey: (key) => key,
-				getDiagnosticPointer: (
+				getDiagnosticLocation: (
 					keys: ConsumePath,
 					target: ConsumeSourceLocationRequestTarget,
 				): DiagnosticLocation => {

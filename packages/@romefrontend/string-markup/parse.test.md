@@ -11,7 +11,42 @@ Array [
 	Tag {
 		name: "filelink"
 		children: Array []
-		attributes: Object {target: "C:\\Users\\sebmck\\file.ts"}
+		attributes: ___R$project$rome$$romefrontend$consume$Consumer_ts$default {
+			value: Object {target: "C:\\Users\\sebmck\\file.ts"}
+			declared: false
+			filename: undefined
+			forceDiagnosticTarget: undefined
+			forkCache: Map [
+				Array [
+					"target"
+					___R$project$rome$$romefrontend$consume$Consumer_ts$default {
+						value: "C:\\Users\\sebmck\\file.ts"
+						declared: false
+						filename: undefined
+						forceDiagnosticTarget: undefined
+						forkCache: Map []
+						handleUnexpected: undefined
+						hasHandledUnexpected: false
+						onDefinition: undefined
+						path: undefined
+						usedNames: Set ["target"]
+						context: Object {category: "parse/stringMarkup"}
+						keyPath: Array ["target"]
+						parent: Circular ___R$project$rome$$romefrontend$consume$Consumer_ts$default 2
+						propertyMetadata: Object {getDiagnosticLocation: Function getDiagnosticLocation}
+					}
+				]
+			]
+			handleUnexpected: undefined
+			hasHandledUnexpected: false
+			keyPath: Array []
+			onDefinition: undefined
+			parent: undefined
+			path: undefined
+			propertyMetadata: undefined
+			usedNames: Set ["target"]
+			context: Object {category: "parse/stringMarkup"}
+		}
 	}
 ]
 ```
@@ -22,8 +57,28 @@ Array [
 Array [
 	Tag {
 		name: "info"
-		attributes: Object {}
-		children: Array [Text {value: "[MemoryFileSystem] Adding new project folder C:\\Users\\sebmck\\rome"}]
+		children: Array [
+			Text {
+				value: "[MemoryFileSystem] Adding new project folder C:\\Users\\sebmck\\rome"
+				source: true
+			}
+		]
+		attributes: ___R$project$rome$$romefrontend$consume$Consumer_ts$default {
+			value: Object {}
+			declared: false
+			filename: undefined
+			forceDiagnosticTarget: undefined
+			forkCache: Map []
+			handleUnexpected: undefined
+			hasHandledUnexpected: false
+			keyPath: Array []
+			onDefinition: undefined
+			parent: undefined
+			path: undefined
+			propertyMetadata: undefined
+			usedNames: Set []
+			context: Object {category: "parse/stringMarkup"}
+		}
 	}
 ]
 ```
@@ -32,18 +87,59 @@ Array [
 
 ```javascript
 Array [
-	Text {value: "  <info>[MemoryFileSystem] Adding new project folder C:\\Users\\Sebastian\\rome\\</info>\n        "}
+	Text {
+		value: "  <info>[MemoryFileSystem] Adding new project folder C:\\Users\\Sebastian\\rome\\</info>\n        "
+		source: true
+	}
 	Tag {
 		name: "error"
-		attributes: Object {}
+		attributes: ___R$project$rome$$romefrontend$consume$Consumer_ts$default {
+			value: Object {}
+			declared: false
+			filename: undefined
+			forceDiagnosticTarget: undefined
+			forkCache: Map []
+			handleUnexpected: undefined
+			hasHandledUnexpected: false
+			keyPath: Array []
+			onDefinition: undefined
+			parent: undefined
+			path: undefined
+			propertyMetadata: undefined
+			usedNames: Set []
+			context: Object {category: "parse/stringMarkup"}
+		}
 		children: Array [
 			Tag {
 				name: "emphasis"
-				attributes: Object {}
-				children: Array [Text {value: "^"}]
+				children: Array [
+					Text {
+						value: "^"
+						source: true
+					}
+				]
+				attributes: ___R$project$rome$$romefrontend$consume$Consumer_ts$default {
+					value: Object {}
+					declared: false
+					filename: undefined
+					forceDiagnosticTarget: undefined
+					forkCache: Map []
+					handleUnexpected: undefined
+					hasHandledUnexpected: false
+					keyPath: Array []
+					onDefinition: undefined
+					parent: undefined
+					path: undefined
+					propertyMetadata: undefined
+					usedNames: Set []
+					context: Object {category: "parse/stringMarkup"}
+				}
 			}
 		]
 	}
-	Text {value: " "}
+	Text {
+		value: " "
+		source: true
+	}
 ]
 ```

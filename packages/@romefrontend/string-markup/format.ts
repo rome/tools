@@ -8,17 +8,17 @@
 import {
 	Children,
 	GridOutputFormat,
-	MarkupFormatGridOptions,
 	MarkupFormatNormalizeOptions,
 	MarkupLinesAndWidth,
 	TagNode,
+	UserMarkupFormatGridOptions,
 } from "./types";
 import {parseMarkup} from "./parse";
 import {escapeMarkup} from "./escape";
 import Grid from "./grid/Grid";
 import {ob1Get1} from "@romefrontend/ob1";
 import {sliceEscaped} from "@romefrontend/string-utils";
-import {buildFileLink, formatGrammarNumber} from "./grid/tagFormatters";
+import {buildFileLink, formatGrammarNumber} from "./util";
 
 function buildTag(
 	tag: TagNode,
@@ -31,15 +31,15 @@ function buildTag(
 		// Normalize filename of <filelink target>
 		case "filelink": {
 			// Clone
-			attributes = {...attributes};
+			attributes = attributes.copy();
 
 			const {filename, line, column, text} = buildFileLink(attributes, opts);
-			attributes.column = column;
-			attributes.line = line;
-			attributes.target = filename;
+			attributes.get("column").setValue(column);
+			attributes.get("line").setValue(line);
+			attributes.get("target").setValue(filename);
 			if (opts.stripPositions) {
-				attributes.line = undefined;
-				attributes.column = undefined;
+				attributes.get("line").setValue(undefined);
+				attributes.get("column").setValue(undefined);
 			}
 			inner = text;
 			break;
@@ -54,16 +54,16 @@ function buildTag(
 	let open = `<${tag.name}`;
 
 	// Print attributes
-	for (const key in attributes) {
-		const value = attributes[key];
-		if (value === undefined) {
+	for (const [key, value] of attributes.asMap()) {
+		if (!value.exists()) {
 			continue;
 		}
 
-		if (value === "true") {
+		const raw = value.asUnknown();
+		if (raw === true) {
 			open += ` ${key}`;
 		} else {
-			const escapedValue = escapeMarkup(value);
+			const escapedValue = escapeMarkup(String(raw));
 			open += ` ${key}="${escapedValue}"`;
 		}
 	}
@@ -128,10 +128,13 @@ function normalizeMarkupChildren(
 
 function renderGrid(
 	input: string,
-	opts: MarkupFormatGridOptions = {},
+	opts: UserMarkupFormatGridOptions = {},
 	format: GridOutputFormat,
 ): MarkupLinesAndWidth {
-	const grid = new Grid(opts);
+	const grid = new Grid({
+		...opts,
+		sourceText: input,
+	});
 	grid.drawRoot(parseMarkup(input));
 	return {
 		width: ob1Get1(grid.getWidth()),
@@ -141,28 +144,28 @@ function renderGrid(
 
 export function markupToPlainTextString(
 	input: string,
-	opts: MarkupFormatGridOptions = {},
+	opts: UserMarkupFormatGridOptions = {},
 ): string {
-	return markupToPlainText(input, opts).lines.join("\n");
+	return markupToPlainText(input, opts).lines.map(({line}) => line).join("\n");
 }
 
 export function markupToPlainText(
 	input: string,
-	opts: MarkupFormatGridOptions = {},
+	opts: UserMarkupFormatGridOptions = {},
 ): MarkupLinesAndWidth {
 	return renderGrid(input, opts, "none");
 }
 
 export function markupToAnsi(
 	input: string,
-	opts: MarkupFormatGridOptions = {},
+	opts: UserMarkupFormatGridOptions = {},
 ): MarkupLinesAndWidth {
 	return renderGrid(input, opts, "ansi");
 }
 
 export function markupToHtml(
 	input: string,
-	opts: MarkupFormatGridOptions = {},
+	opts: UserMarkupFormatGridOptions = {},
 ): MarkupLinesAndWidth {
 	return renderGrid(input, opts, "html");
 }

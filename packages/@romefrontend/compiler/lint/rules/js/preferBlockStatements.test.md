@@ -47,7 +47,7 @@ if (x) {
 
   > 1 │ if (x) {
       │ ^^^^^^^^
-  > 2 │  x;
+  > 2 │   x;
   > 3 │ } else y;
       │ ^^^^^^^^^
 
@@ -86,7 +86,7 @@ if (x) {
   ✖ Block statements are preferred in this position.
 
     1 │ if (x) {
-    2 │  x
+    2 │   x
   > 3 │ } else if (y) y;
       │        ^^^^^^^^^
 

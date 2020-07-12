@@ -15,7 +15,7 @@
     <a href="http://external.link" target="_blank">child</a>
                                    ^^^^^^^^^^^^^^^
 
-  ℹ Opening external links in new tabs without rel="noreferrer" is a security risk. See 
+  ℹ Opening external links in new tabs without rel="noreferrer" is a security risk. See
     https://html.spec.whatwg.org/multipage/links.html#link-type-noopener for more details.
 
   ℹ Recommended fix
@@ -50,7 +50,7 @@
     <a href={dynamicLink} target="_blank">child</a>
                           ^^^^^^^^^^^^^^^
 
-  ℹ Opening external links in new tabs without rel="noreferrer" is a security risk. See 
+  ℹ Opening external links in new tabs without rel="noreferrer" is a security risk. See
     https://html.spec.whatwg.org/multipage/links.html#link-type-noopener for more details.
 
   ℹ Recommended fix

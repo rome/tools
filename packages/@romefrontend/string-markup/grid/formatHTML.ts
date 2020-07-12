@@ -1,6 +1,6 @@
 import {TagNode} from "../types";
 import {escapeXHTMLEntities} from "@romefrontend/html-parser";
-import {normalizeColor} from "./tagFormatters";
+import {validateColor} from "../tags";
 
 export function htmlFormatText(
 	{name: tagName, attributes}: TagNode,
@@ -8,7 +8,9 @@ export function htmlFormatText(
 ): string {
 	switch (tagName) {
 		case "hyperlink": {
-			return `<a href="${escapeXHTMLEntities(attributes.target || "")}">${value}</a>`;
+			return `<a href="${escapeXHTMLEntities(
+				attributes.get("target").asString(""),
+			)}">${value}</a>`;
 		}
 
 		case "filelink": {
@@ -52,7 +54,7 @@ export function htmlFormatText(
 			return `<i>${value}</i>`;
 
 		case "highlight": {
-			const index = Math.min(0, Number(attributes.i) || 0);
+			const index = Math.min(0, attributes.get("i").asNumber(0));
 			const color = highlightColors[index % highlightColors.length];
 			return `<span style="color: ${color};">${value}</span>`;
 		}
@@ -60,12 +62,12 @@ export function htmlFormatText(
 		case "color": {
 			const styles = [];
 
-			const fg = normalizeColor(attributes.fg);
+			const fg = validateColor(attributes.get("fg").asStringOrVoid());
 			if (fg !== undefined) {
 				styles.push(`color: ${fg}`);
 			}
 
-			const bg = normalizeColor(attributes.bg);
+			const bg = validateColor(attributes.get("bg").asStringOrVoid());
 			if (bg !== undefined) {
 				styles.push(`background-color: ${bg}`);
 			}
@@ -74,7 +76,7 @@ export function htmlFormatText(
 		}
 
 		case "token":
-			return `<span class="token ${attributes.type || ""}">${value}</span>`;
+			return `<span class="token ${attributes.get("type").asString("")}">${value}</span>`;
 
 		default:
 			return value;

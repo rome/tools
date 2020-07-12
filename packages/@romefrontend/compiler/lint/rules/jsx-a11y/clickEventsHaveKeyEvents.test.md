@@ -10,7 +10,8 @@
 
  unknown:1 lint/jsx-a11y/clickEventsHaveKeyEvents ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Pair the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event.
+  ✖ Pair the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard
+    event.
 
     <div onClick={() => {}} />
     ^^^^^^^^^^^^^^^^^^^^^^^^^^

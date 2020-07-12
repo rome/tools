@@ -110,10 +110,10 @@ function foo() {
 
   ✖ Do not depend on the return value from ReactDOM.render().
 
-    2 │      const foo = {
-  > 3 │       react: ReactDOM.render(<div />, document.body)
-      │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    4 │      };
+    2 │           const foo = {
+  > 3 │             react: ReactDOM.render(<div />, document.body)
+      │                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │           };
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -138,10 +138,10 @@ const foo = {
 
   ✖ Do not depend on the return value from ReactDOM.render().
 
-    2 │      let foo;
-  > 3 │      foo = ReactDOM.render(<div />, document.body);
-      │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    4 │ ·····
+    2 │           let foo;
+  > 3 │           foo = ReactDOM.render(<div />, document.body);
+      │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │ ↹↹↹↹↹
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -165,10 +165,10 @@ foo = ReactDOM.render(<div />, document.body);
 
   ✖ Do not depend on the return value from ReactDOM.render().
 
-    2 │      function render () {
-  > 3 │       return ReactDOM.render(<div />, document.body)
-      │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    4 │      }
+    2 │           function render () {
+  > 3 │             return ReactDOM.render(<div />, document.body)
+      │                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │           }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

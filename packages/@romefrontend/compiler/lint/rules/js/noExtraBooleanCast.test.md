@@ -14,7 +14,7 @@
 
   > 1 │ if (Boolean(foo)) {
       │     ^^^^^^^^^^^^
-    2 │  return foo;
+    2 │   return foo;
     3 │ }
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
@@ -44,7 +44,7 @@ if (Boolean(foo)) {
 
   > 1 │ while (!!foo) {
       │        ^^^^^
-    2 │  return foo;
+    2 │   return foo;
     3 │ }
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
@@ -73,7 +73,7 @@ while (!!foo) {
   ✖ Avoid redundant double-negation.
 
     2 │ do {
-    3 │  1 + 1;
+    3 │   1 + 1;
   > 4 │ } while (Boolean(x));
       │          ^^^^^^^^^^
 
@@ -105,7 +105,7 @@ do {
 
   > 1 │ for (; !!foo; ) {
       │        ^^^^^
-    2 │  return 1 + 1;
+    2 │   return 1 + 1;
     3 │ }
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.

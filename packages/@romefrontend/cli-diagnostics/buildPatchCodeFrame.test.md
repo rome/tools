@@ -167,17 +167,17 @@ if (char === "<") {
   17    │ -   }
       1 │ + let value = "";
       2 │ + let [char, next] = this.getInputChar(index, 2);
-      3 │ + 
+      3 │ +
       4 │ + if (char === "<") {
       5 │ +   while (!this.isEOF(next)) {
       6 │ +     value += char;
       7 │ +     [char, next] = this.getInputChar(index, 1);
-      8 │ + 
+      8 │ +
       9 │ +     if (char === ">") {
      10 │ +       break;
      11 │ +     }
      12 │ +   }
-     13 │ + 
+     13 │ +
   18 14 │     return this.finishComplexToken(
   19 15 │       "NamedBackReferenceCharacter",
   20 16 │       {

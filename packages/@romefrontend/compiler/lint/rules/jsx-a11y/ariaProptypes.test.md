@@ -119,7 +119,8 @@
     <span aria-relevant='fancy' ></span>
           ^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ The supported values for the aria-relevant attribute are: "additions", "all", "removals", "text"
+  ℹ The supported values for the aria-relevant attribute are: "additions", "all", "removals",
+    "text"
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

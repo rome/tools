@@ -9,6 +9,10 @@ import {Diagnostics, DiagnosticsProcessor} from "@romefrontend/diagnostics";
 import {printDiagnosticsToString} from "@romefrontend/cli-diagnostics";
 import {Diagnostic, DiagnosticSuppressions} from "./types";
 
+// If printDiagnosticsToString throws a DiagnosticsError then we'll be trapped in a loop forever
+// since we'll continuously be trying to serialize diagnostics
+let insideDiagnosticsErrorSerial = false;
+
 export class DiagnosticsError extends Error {
 	constructor(
 		message: string,
@@ -19,13 +23,44 @@ export class DiagnosticsError extends Error {
 			throw new Error("No diagnostics");
 		}
 
-		message += "\n";
-		message += printDiagnosticsToString({diagnostics, suppressions});
-
-		super(message);
+		super();
+		this._memoMessage = undefined;
+		this._message = message;
 		this.diagnostics = diagnostics;
 		this.suppressions = suppressions;
 		this.name = "DiagnosticsError";
+	}
+
+	_memoMessage: string | undefined;
+	_message: string;
+
+	// Lazily instantiate this. If we ever catchDiagnostics we wont even care about the `message`
+	// so this avoids having to print it to a string
+	get message(): string {
+		if (this._memoMessage !== undefined) {
+			return this._memoMessage;
+		}
+
+		if (insideDiagnosticsErrorSerial) {
+			return [
+				"Possible DiagnosticsError message serialization infinite loop",
+				"Diagnostic messages:",
+				this.diagnostics.map((diag) => `- ${diag.description.message}`),
+			].join("\n");
+		}
+
+		let message = this._message;
+		message += "\n";
+
+		insideDiagnosticsErrorSerial = true;
+		message += printDiagnosticsToString({
+			diagnostics: this.diagnostics,
+			suppressions: this.suppressions,
+		});
+		insideDiagnosticsErrorSerial = false;
+
+		this._memoMessage = message;
+		return message;
 	}
 
 	diagnostics: Diagnostics;

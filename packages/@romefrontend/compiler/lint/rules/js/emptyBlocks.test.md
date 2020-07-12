@@ -40,7 +40,7 @@ if (foo) {
   ✖ Avoid empty logic blocks.
 
     1 │ if (foo) {
-    2 │  // foo;
+    2 │   // foo;
   > 3 │ } else {}
       │        ^^
 

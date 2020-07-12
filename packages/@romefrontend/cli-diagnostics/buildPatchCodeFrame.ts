@@ -11,7 +11,7 @@ import {
 	GUTTER,
 	MAX_PATCH_LINES,
 } from "./constants";
-import {joinNoBreak, showInvisibles} from "./utils";
+import {showInvisibles} from "./utils";
 import {
 	Diffs,
 	diffConstants,
@@ -95,7 +95,7 @@ export default function buildPatchCodeFrame(
 		lineNoLength,
 	)}${GUTTER}</emphasis>`;
 
-	function createGutter(beforeLine?: number, afterLine?: number) {
+	function createLineNos(beforeLine?: number, afterLine?: number) {
 		let gutter = `<emphasis>${CODE_FRAME_INDENT}<pad align="right" width="${beforeNoLength}">`;
 		if (beforeLine !== undefined) {
 			gutter += String(beforeLine);
@@ -104,7 +104,7 @@ export default function buildPatchCodeFrame(
 		if (afterLine !== undefined) {
 			gutter += String(afterLine);
 		}
-		gutter += `</pad>${GUTTER}</emphasis>`;
+		gutter += `</pad></emphasis>`;
 		return gutter;
 	}
 
@@ -138,29 +138,33 @@ export default function buildPatchCodeFrame(
 		}
 
 		let gutter = "";
+		let lineNo = "";
 
 		if (singleLine) {
 			if (legend !== undefined) {
 				if (lineType === "DELETE") {
-					gutter = formatSingleLineMarker(legend.delete);
+					lineNo = formatSingleLineMarker(legend.delete);
 				} else if (lineType === "ADD") {
-					gutter = formatSingleLineMarker(legend.add);
+					lineNo = formatSingleLineMarker(legend.add);
 				}
 			}
 		} else {
-			gutter = createGutter(beforeLine, afterLine);
+			lineNo = createLineNos(beforeLine, afterLine);
+			gutter = GUTTER;
 		}
 
-		if (lineType === "DELETE") {
+		if (lineType === "DELETE" || lineType === "ADD") {
+			const marker = lineType === "ADD" ? ADD_MARKER : DELETE_MARKER;
+			const type = lineType === "ADD" ? "success" : "error";
 			frame.push(
-				`${gutter}${DELETE_MARKER} <error>${formatDiffLine(diffs)}</error>`,
-			);
-		} else if (lineType === "ADD") {
-			frame.push(
-				`${gutter}${ADD_MARKER} <success>${formatDiffLine(diffs)}</success>`,
+				`${lineNo}<${type}><view linePrefix="${gutter}${marker} ">${formatDiffLine(
+					diffs,
+				)}</view></${type}>`,
 			);
 		} else {
-			frame.push(`${gutter}  ${formatDiffLine(diffs)}`);
+			frame.push(
+				`${lineNo}<view linePrefix="${gutter}  ">${formatDiffLine(diffs)}</view>`,
+			);
 		}
 
 		lastDisplayedLine = i;
@@ -181,6 +185,6 @@ export default function buildPatchCodeFrame(
 
 	return {
 		truncated,
-		frame: joinNoBreak(frame),
+		frame: frame.join("\n"),
 	};
 }

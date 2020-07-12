@@ -14,13 +14,7 @@ import {
 	MAX_CODE_FRAME_LINES,
 } from "./constants";
 import {Position} from "@romefrontend/parser-core";
-import {
-	ToLines,
-	cleanEquivalentString,
-	joinNoBreak,
-	normalizeTabs,
-	showInvisibles,
-} from "./utils";
+import {ToLines, cleanEquivalentString, showInvisibles} from "./utils";
 import {
 	Number0,
 	ob1Coerce0,
@@ -30,67 +24,40 @@ import {
 	ob1Inc,
 	ob1Number0,
 	ob1Number1Neg1,
-	ob1Sub,
 } from "@romefrontend/ob1";
-import {markupToPlainTextString} from "@romefrontend/string-markup";
+import {markupTag, markupToPlainTextString} from "@romefrontend/string-markup";
+import {Dict} from "@romefrontend/typescript-helpers";
 
-function createPointer(
-	markerMessage: string,
-	line: string,
-	markerStart: Number0,
-	markerEnd: Number0,
-): undefined | string {
-	let result = "";
+type Marker = {
+	message: string;
+	start: Number0;
+	end: Number0;
+};
 
-	let markerSize = ob1Get0(ob1Sub(markerEnd, markerStart));
+type FormattedLine = {
+	marker: undefined | Marker;
+	gutter: string;
+	line: string;
+};
 
-	// If the range contains tabs then increase the marker size
-	for (let i = ob1Get0(markerStart); i < ob1Get0(markerEnd); i++) {
-		const char = line[i];
-		if (char === "\t") {
-			markerSize++;
-		}
+function formatLineView({line, marker}: FormattedLine, gutter: boolean): string {
+	const attributes: Dict<string> = {
+		// NB: The `word-break` default is probably better? lineWrap: "char-break",
+	};
+
+	if (gutter) {
+		attributes.linePrefix = GUTTER;
 	}
 
-	const pointerLength: number = Math.max(markerSize, 1);
-
-	// Skip the pointer if it's pointing at the last character
-	let skipPointer = pointerLength === 1 && ob1Get0(markerEnd) >= line.length;
-
-	if (!skipPointer) {
-		// Add indentation, handling hard tabs as two soft spaces
-		for (let i = 0; i < ob1Get0(markerStart); i++) {
-			const char = line[i];
-			if (char === "\t") {
-				// normalizeTabs will be called on this line and this replacement made
-				result += "  ";
-			} else {
-				result += " ";
-			}
-		}
-
-		// Add pointer
-		result += `<error><emphasis>${"^".repeat(pointerLength)}</emphasis></error>`;
+	if (marker !== undefined) {
+		attributes.pointerChar = "<error><emphasis>^</emphasis></error>";
+		attributes.pointerMessage = marker.message;
+		attributes.pointerLine = "1";
+		attributes.pointerStart = String(marker.start);
+		attributes.pointerEnd = String(marker.end);
 	}
 
-	// Add marker
-	if (markerMessage !== "") {
-		result += ` ${markerMessage}`;
-	}
-
-	if (result === "") {
-		return undefined;
-	} else {
-		return result;
-	}
-}
-
-function formatMarker(markerMessage: string): string {
-	if (markerMessage === "") {
-		return "";
-	} else {
-		return `<nobr>${markerMessage}</nobr>`;
-	}
+	return markupTag("view", line, attributes);
 }
 
 export default function buildCodeFrame(
@@ -128,7 +95,7 @@ export default function buildCodeFrame(
 	}
 	if (shouldBail) {
 		return {
-			frame: formatMarker(markerMessage),
+			frame: markerMessage,
 			truncated: false,
 		};
 	}
@@ -162,14 +129,7 @@ export default function buildCodeFrame(
 
 	let maxVisibleLineNo = 0;
 
-	let formattedLines: Array<
-		| {
-				pointer: undefined | string;
-				gutter: string;
-				line: string;
-			}
-		| undefined
-	> = [];
+	let formattedLines: Array<FormattedLine | undefined> = [];
 	for (let i = contextStartIndex; i <= contextEndIndex; i = ob1Inc(i)) {
 		let rawLine: undefined | string = allLines.raw[ob1Get0(i)];
 		let highlightLine: undefined | string = allLines.highlighted[ob1Get0(i)];
@@ -186,33 +146,35 @@ export default function buildCodeFrame(
 			continue;
 		}
 
-		let pointer: undefined | string;
-
 		// If this is within the highlighted line range
 		const shouldHighlight: boolean =
 			type === "pointer" && i >= startLineIndex && i <= endLineIndex;
 
+		let marker: undefined | Marker;
+
 		if (shouldHighlight && start !== undefined && end !== undefined) {
 			if (i === startLineIndex && i === endLineIndex) {
 				// Only line in the selection
-				pointer = createPointer(
-					markerMessage,
-					rawLine,
-					start.column,
-					end.column,
-				);
+				marker = {
+					message: markerMessage,
+					start: start.column,
+					end: end.column,
+				};
 			} else if (i === startLineIndex) {
 				// First line in selection
-				pointer = createPointer(
-					"",
-					rawLine,
-					start.column,
+				marker = {
+					message: "",
+					start: start.column,
 					// line could be highlighted
-					ob1Coerce0(rawLine.length),
-				);
+					end: ob1Coerce0(rawLine.length),
+				};
 			} else if (i === endLineIndex) {
 				// Last line in selection
-				pointer = createPointer(markerMessage, rawLine, ob1Number0, end.column);
+				marker = {
+					message: markerMessage,
+					start: ob1Number0,
+					end: end.column,
+				};
 			}
 		}
 
@@ -225,11 +187,8 @@ export default function buildCodeFrame(
 			},
 		).value;
 
-		// Replace hard tabs with two spaces
-		highlightLine = normalizeTabs(highlightLine);
-
 		const lineNo = ob1Coerce0To1(i);
-		let gutter = `${String(lineNo)}${GUTTER}`;
+		let gutter = `${String(lineNo)}`;
 
 		if (shouldHighlight) {
 			gutter = `${CODE_FRAME_SELECTED_INDENT}${gutter}`;
@@ -238,7 +197,7 @@ export default function buildCodeFrame(
 		}
 
 		formattedLines.push({
-			pointer,
+			marker,
 			gutter,
 			line: highlightLine,
 		});
@@ -273,7 +232,7 @@ export default function buildCodeFrame(
 	// If there's no lines to target then return the normal marker
 	if (formattedLines.length === 0) {
 		return {
-			frame: formatMarker(markerMessage),
+			frame: markerMessage,
 			truncated: false,
 		};
 	}
@@ -285,7 +244,7 @@ export default function buildCodeFrame(
 	}
 
 	const maxGutterLength =
-		String(maxVisibleLineNo).length + GUTTER.length + CODE_FRAME_INDENT.length;
+		String(maxVisibleLineNo).length + CODE_FRAME_INDENT.length;
 
 	// If what the marker is highlighting equals the marker message then it's redundant so don't show the message
 	if (markerMessage !== "" && start !== undefined && end !== undefined) {
@@ -307,13 +266,10 @@ export default function buildCodeFrame(
 			);
 		}
 
-		const result = [`${CODE_FRAME_INDENT}${selection.line}`];
-		if (selection.pointer !== undefined) {
-			result.push(`${CODE_FRAME_INDENT}${selection.pointer}`);
-		}
+		const result = [`${CODE_FRAME_INDENT}${formatLineView(selection, false)}`];
 
 		return {
-			frame: joinNoBreak(result),
+			frame: result.join("\n"),
 			truncated,
 		};
 	}
@@ -329,17 +285,14 @@ export default function buildCodeFrame(
 			continue;
 		}
 
-		const {pointer, gutter, line} = selection;
+		const {gutter} = selection;
 
 		result.push(
-			`<pad align="right" width="${maxGutterLength}"><emphasis>${gutter}</emphasis></pad>${line}`,
+			`<pad align="right" width="${maxGutterLength}"><emphasis>${gutter}</emphasis></pad>${formatLineView(
+				selection,
+				true,
+			)}`,
 		);
-
-		if (pointer !== undefined) {
-			result.push(
-				`<pad align="right" width="${maxGutterLength}"><emphasis>${GUTTER}</emphasis></pad>${pointer}`,
-			);
-		}
 	}
 
 	if (truncated) {
@@ -350,6 +303,6 @@ export default function buildCodeFrame(
 
 	return {
 		truncated,
-		frame: joinNoBreak(result),
+		frame: result.join("\n"),
 	};
 }

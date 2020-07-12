@@ -42,12 +42,12 @@ const Foo = () =>
 
   ✖ Avoid using this in stateless functional components.
 
-    2 │       const Foo = () => {
-    3 │        return (
-  > 4 │         <div>{this.props.bar}</div>
-      │               ^^^^
-    5 │        );
-    6 │       }
+    2 │             const Foo = () => {
+    3 │               return (
+  > 4 │                 <div>{this.props.bar}</div>
+      │                       ^^^^
+    5 │               );
+    6 │             }
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
@@ -76,11 +76,11 @@ const Foo = () => {
 
   ✖ Avoid using this in stateless functional components.
 
-    2 │       const Foo = () => {
-  > 3 │        const { bar } = this.props;
-      │                        ^^^^
-    4 │        return (
-    5 │         <div>{ bar }</div>
+    2 │             const Foo = () => {
+  > 3 │               const { bar } = this.props;
+      │                               ^^^^
+    4 │               return (
+    5 │                 <div>{ bar }</div>
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
@@ -110,12 +110,12 @@ const Foo = () => {
 
   ✖ Avoid using this in stateless functional components.
 
-    2 │       function Foo(props) {
-    3 │        return (
-  > 4 │         <div>{this.props.bar}</div>
-      │               ^^^^
-    5 │        );
-    6 │       }
+    2 │             function Foo(props) {
+    3 │               return (
+  > 4 │                 <div>{this.props.bar}</div>
+      │                       ^^^^
+    5 │               );
+    6 │             }
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
@@ -144,11 +144,11 @@ function Foo(props) {
 
   ✖ Avoid using this in stateless functional components.
 
-    2 │       function Foo(props) {
-  > 3 │        const { bar } = this.props;
-      │                        ^^^^
-    4 │        return (
-    5 │         <div>
+    2 │             function Foo(props) {
+  > 3 │               const { bar } = this.props;
+      │                               ^^^^
+    4 │               return (
+    5 │                 <div>
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
@@ -178,12 +178,12 @@ function Foo(props) {
 
   ✖ Avoid using this in stateless functional components.
 
-    3 │        return (
-    4 │         <div>
-  > 5 │          {this.context.foo ? this.props.bar : ''}
-      │           ^^^^
-    6 │         </div>
-    7 │        );
+    3 │               return (
+    4 │                 <div>
+  > 5 │                   {this.context.foo ? this.props.bar : ''}
+      │                    ^^^^
+    6 │                 </div>
+    7 │               );
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
@@ -191,12 +191,12 @@ function Foo(props) {
 
   ✖ Avoid using this in stateless functional components.
 
-    3 │        return (
-    4 │         <div>
-  > 5 │          {this.context.foo ? this.props.bar : ''}
-      │                              ^^^^
-    6 │         </div>
-    7 │        );
+    3 │               return (
+    4 │                 <div>
+  > 5 │                   {this.context.foo ? this.props.bar : ''}
+      │                                       ^^^^
+    6 │                 </div>
+    7 │               );
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
@@ -225,11 +225,11 @@ function Foo(props, context) {
 
   ✖ Avoid using this in stateless functional components.
 
-    2 │       function Foo(props, context) {
-  > 3 │        const { foo } = this.context;
-      │                        ^^^^
-    4 │        const { bar } = this.props;
-    5 │        return (
+    2 │             function Foo(props, context) {
+  > 3 │               const { foo } = this.context;
+      │                               ^^^^
+    4 │               const { bar } = this.props;
+    5 │               return (
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
@@ -237,12 +237,12 @@ function Foo(props, context) {
 
   ✖ Avoid using this in stateless functional components.
 
-    2 │       function Foo(props, context) {
-    3 │        const { foo } = this.context;
-  > 4 │        const { bar } = this.props;
-      │                        ^^^^
-    5 │        return (
-    6 │         <div>
+    2 │             function Foo(props, context) {
+    3 │               const { foo } = this.context;
+  > 4 │               const { bar } = this.props;
+      │                               ^^^^
+    5 │               return (
+    6 │                 <div>
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
@@ -273,11 +273,11 @@ function Foo(props, context) {
 
   ✖ Avoid using this in stateless functional components.
 
-    2 │       function Foo(props) {
-  > 3 │        if (this.state.loading) {
-      │            ^^^^
-    4 │         return <Loader />;
-    5 │        }
+    2 │             function Foo(props) {
+  > 3 │               if (this.state.loading) {
+      │                   ^^^^
+    4 │                 return <Loader />;
+    5 │               }
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
@@ -285,12 +285,12 @@ function Foo(props, context) {
 
   ✖ Avoid using this in stateless functional components.
 
-     6 │        return (
-     7 │         <div>
-   > 8 │          {this.props.bar}
-       │           ^^^^
-     9 │         </div>
-    10 │        );
+     6 │               return (
+     7 │                 <div>
+   > 8 │                   {this.props.bar}
+       │                    ^^^^
+     9 │                 </div>
+    10 │               );
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
@@ -322,11 +322,11 @@ function Foo(props) {
 
   ✖ Avoid using this in stateless functional components.
 
-    2 │       function Foo(props) {
-  > 3 │        const { loading } = this.state;
-      │                            ^^^^
-    4 │        const { bar } = this.props;
-    5 │        if (loading) {
+    2 │             function Foo(props) {
+  > 3 │               const { loading } = this.state;
+      │                                   ^^^^
+    4 │               const { bar } = this.props;
+    5 │               if (loading) {
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
@@ -334,12 +334,12 @@ function Foo(props) {
 
   ✖ Avoid using this in stateless functional components.
 
-    2 │       function Foo(props) {
-    3 │        const { loading } = this.state;
-  > 4 │        const { bar } = this.props;
-      │                        ^^^^
-    5 │        if (loading) {
-    6 │         return <Loader />;
+    2 │             function Foo(props) {
+    3 │               const { loading } = this.state;
+  > 4 │               const { bar } = this.props;
+      │                               ^^^^
+    5 │               if (loading) {
+    6 │                 return <Loader />;
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
@@ -373,12 +373,12 @@ function Foo(props) {
 
   ✖ Avoid using this in stateless functional components.
 
-    3 │        function Foo(props) {
-    4 │         return (
-  > 5 │          <div>{this.props.bar}</div>
-      │                ^^^^
-    6 │         );
-    7 │        }
+    3 │               function Foo(props) {
+    4 │                 return (
+  > 5 │                   <div>{this.props.bar}</div>
+      │                         ^^^^
+    6 │                 );
+    7 │               }
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
@@ -407,12 +407,12 @@ React.memo(function Foo(props) {
 
   ✖ Avoid using this in stateless functional components.
 
-    2 │       React.forwardRef((props, ref) => (
-    3 │        <div>
-  > 4 │         {this.props.bar}
-      │          ^^^^
-    5 │        </div>
-    6 │       ));
+    2 │             React.forwardRef((props, ref) => (
+    3 │               <div>
+  > 4 │                 {this.props.bar}
+      │                  ^^^^
+    5 │               </div>
+    6 │             ));
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
@@ -441,12 +441,12 @@ React.forwardRef((props, ref) =>
 
   ✖ Avoid using this in stateless functional components.
 
-    2 │       const Foo = React.forwardRef((props, ref) => (
-    3 │        <div>
-  > 4 │         {this.props.bar}
-      │          ^^^^
-    5 │        </div>
-    6 │       ));
+    2 │             const Foo = React.forwardRef((props, ref) => (
+    3 │               <div>
+  > 4 │                 {this.props.bar}
+      │                  ^^^^
+    5 │               </div>
+    6 │             ));
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
@@ -475,12 +475,12 @@ const Foo = React.forwardRef((props, ref) =>
 
   ✖ Avoid using this in stateless functional components.
 
-    2 │       const Foo = React.memo((props, ref) => (
-    3 │         <div>
-  > 4 │          {this.props.bar}
-      │           ^^^^
-    5 │         </div>
-    6 │        )
+    2 │             const Foo = React.memo((props, ref) => (
+    3 │                 <div>
+  > 4 │                   {this.props.bar}
+      │                    ^^^^
+    5 │                 </div>
+    6 │               )
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
