@@ -13,9 +13,7 @@ export default {
 
 		if (
 			node.type === "JSTemplateLiteral" &&
-			!path.findAncestry((path) =>
-				path.node.type === "JSTaggedTemplateExpression"
-			) &&
+			path.parent.type !== "JSTaggedTemplateExpression" &&
 			node.expressions.length === 0 &&
 			!node.quasis.some(containsSpecialCharacters)
 		) {
