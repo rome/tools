@@ -6,7 +6,7 @@
  */
 
 import {
-	MarkupFormatGridOptions,
+	UserMarkupFormatGridOptions,
 	MarkupFormatOptions,
 	MarkupLinesAndWidth,
 	MarkupTagName,
@@ -882,7 +882,7 @@ export default class Reporter {
 			columns -= this.rightIndentString.length;
 		}
 
-		const gridMarkupOptions: MarkupFormatGridOptions = {
+		const gridMarkupOptions: UserMarkupFormatGridOptions = {
 			...this.markupOptions,
 			columns,
 			features: stream.features,

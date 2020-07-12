@@ -11,7 +11,7 @@ export {
 	MarkupFormatFilenameHumanizer,
 	MarkupFormatGridOptions,
 	MarkupFormatNormalizeOptions,
-	MarkupFormatOptions,
+	UserMarkupFormatGridOptions,
 	MarkupLinesAndWidth,
 	MarkupTagName,
 } from "./types";
