@@ -38,6 +38,7 @@ import {projectConfig} from "./projectConfig";
 import {lint} from "./lint";
 import {userConfig} from "./userConfig";
 import {htmlParser} from "./htmlParser";
+import {markdownParser} from "@romefrontend/diagnostics/descriptions/markdownParser";
 
 type DiagnosticMetadataString = Omit<Partial<DiagnosticDescription>, "message"> & {
 	message: string;
@@ -179,4 +180,5 @@ export const descriptions = {
 	PROJECT_CONFIG: projectConfig,
 	USER_CONFIG: userConfig,
 	HTML_PARSER: htmlParser,
+	MARKDOWN_PARSER: markdownParser,
 };

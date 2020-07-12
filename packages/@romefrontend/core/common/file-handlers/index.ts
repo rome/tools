@@ -20,6 +20,7 @@ import {textHandler} from "./text";
 import {jsonHandler, rjsonHandler} from "./json";
 import {htmHandler, htmlHandler} from "./html";
 import {parseJS} from "@romefrontend/js-parser";
+// import {markdownHandler} from "@romefrontend/core/common/file-handlers/markdown";
 
 type ExtensionsMap = Map<string, ExtensionHandler>;
 
@@ -152,3 +153,4 @@ setHandler(jsonHandler);
 setHandler(rjsonHandler);
 setHandler(htmlHandler);
 setHandler(htmHandler);
+// setHandler(markdownHandler);

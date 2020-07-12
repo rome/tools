@@ -1,9 +1,10 @@
-import {MarkdownText, NodeBaseWithComments} from "@romefrontend/ast";
+import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
+import {AnyMarkdownInlineNode} from "@romefrontend/ast/markdown/unions";
 
 export type MarkdownParagraph = NodeBaseWithComments & {
 	type: "MarkdownParagraph";
-	value: Array<MarkdownText>;
+	children: Array<AnyMarkdownInlineNode>;
 };
 
 export const markdownParagraph = createBuilder<MarkdownParagraph>(
@@ -11,7 +12,7 @@ export const markdownParagraph = createBuilder<MarkdownParagraph>(
 	{
 		bindingKeys: {},
 		visitorKeys: {
-			value: true,
+			children: true,
 		},
 	},
 );

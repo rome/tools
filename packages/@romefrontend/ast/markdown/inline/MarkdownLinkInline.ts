@@ -1,6 +1,6 @@
 import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
-import {MarkdownReference} from "@romefrontend/ast/markdown/types";
+import {MarkdownReference} from "@romefrontend/ast/markdown/unions";
 
 // [link](www.example.com)
 export type MarkdownLinkInline = NodeBaseWithComments & {

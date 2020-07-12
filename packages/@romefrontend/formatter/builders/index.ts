@@ -656,8 +656,8 @@ builders.set("MarkdownParagraph", MarkdownParagraph);
 import MarkdownQuoteBlock from "./markdown/blocks/MarkdownQuoteBlock";
 builders.set("MarkdownQuoteBlock", MarkdownQuoteBlock);
 
-import MarkDownRoot from "./markdown/core/MarkDownRoot";
-builders.set("MarkDownRoot", MarkDownRoot);
+import MarkdownRoot from "./markdown/core/MarkdownRoot";
+builders.set("MarkdownRoot", MarkdownRoot);
 
 import MarkdownText from "./markdown/core/MarkdownText";
 builders.set("MarkdownText", MarkdownText);
