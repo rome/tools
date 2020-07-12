@@ -14,6 +14,7 @@ export default createServerCommand({
 	description: "stop daemon",
 	usage: "",
 	examples: [],
+	hidden: true,
 	defineFlags() {
 		return {};
 	},

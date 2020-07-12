@@ -19,6 +19,7 @@ export default createLocalCommand({
 	description: "TODO",
 	usage: "",
 	examples: [],
+	hidden: true,
 	defineFlags() {
 		return {};
 	},

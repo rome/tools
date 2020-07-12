@@ -14,6 +14,7 @@ export default createServerCommand({
 	description: "TODO",
 	usage: "",
 	examples: [],
+	hidden: true,
 	defineFlags() {
 		return {};
 	},

@@ -19,6 +19,7 @@ export default createServerCommand({
 	description: "TODO",
 	usage: "",
 	examples: [],
+	hidden: true,
 	defineFlags(c: Consumer): Flags {
 		return {
 			allowDiagnostics: c.get("allowDiagnostics").asBoolean(false),

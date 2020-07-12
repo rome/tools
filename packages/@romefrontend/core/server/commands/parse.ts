@@ -23,6 +23,7 @@ export default createServerCommand({
 	description: "parse a single file and dump its ast",
 	usage: "",
 	examples: [],
+	hidden: true,
 	defineFlags(c: Consumer): Flags {
 		return {
 			allowDiagnostics: c.get("allowDiagnostics").asBoolean(false),

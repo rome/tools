@@ -16,6 +16,7 @@ export default createLocalCommand({
 	examples: [],
 	// vscode-languageclient adds these on
 	ignoreFlags: ["stdio", "clientProcessId"],
+	hidden: true,
 	defineFlags() {
 		return {};
 	},

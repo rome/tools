@@ -14,6 +14,7 @@ export default createServerCommand({
 	category: commandCategories.INTERNAL,
 	usage: "",
 	examples: [],
+	hidden: true,
 	defineFlags() {
 		return {};
 	},

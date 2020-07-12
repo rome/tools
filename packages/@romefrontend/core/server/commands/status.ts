@@ -36,6 +36,7 @@ export default createServerCommand({
 	description: "dump memory and process info of server and workers",
 	usage: "",
 	examples: [],
+	hidden: true,
 	defineFlags() {
 		return {};
 	},

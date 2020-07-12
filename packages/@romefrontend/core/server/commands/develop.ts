@@ -22,6 +22,7 @@ export default createServerCommand({
 	description: "start a web server",
 	usage: "",
 	examples: [],
+	hidden: true,
 	defineFlags(c: Consumer): Flags {
 		return {
 			port: c.get("port").asNumber(DEFAULT_PORT),

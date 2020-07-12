@@ -14,6 +14,7 @@ export default createServerCommand({
 	description: "get the module type signature of a file",
 	usage: "",
 	examples: [],
+	hidden: true,
 	defineFlags() {
 		return {};
 	},

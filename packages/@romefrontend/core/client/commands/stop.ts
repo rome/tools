@@ -14,6 +14,7 @@ export default createLocalCommand({
 	description: "stop a running daemon if one exists",
 	usage: "",
 	examples: [],
+	hidden: true,
 	defineFlags() {
 		return {};
 	},

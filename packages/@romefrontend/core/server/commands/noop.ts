@@ -18,6 +18,7 @@ export default createServerCommand<Flags>({
 	description: "TODO",
 	usage: "",
 	examples: [],
+	hidden: true,
 	defineFlags(c) {
 		return {
 			hang: c.get("hang", {description: "Hang rather than instantly quitting"}).asBoolean(

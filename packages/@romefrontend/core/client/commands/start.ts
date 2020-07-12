@@ -14,6 +14,7 @@ export default createLocalCommand({
 	description: "start daemon (if none running)",
 	usage: "",
 	examples: [],
+	hidden: true,
 	defineFlags() {
 		return {};
 	},
