@@ -1,14 +1,11 @@
 require("../_setup.cjs");
 
-const {readGeneratedFile, write, readFile, camelCaseToKebabCase} = require(
+const {readGeneratedFile, write, readFile} = require(
 	"../_utils.cjs",
 );
-const {root} = require(
-	"../_constants.cjs",
-);
+const {root} = require("../_constants.cjs");
 const path = require("path");
 const fs = require("fs");
-
 
 const src = path.join(root, "website", "src");
 const sitemapFile = path.join(src, "sitemap.md");
@@ -31,7 +28,7 @@ function buildTree(folder) {
 		const stats = fs.statSync(loc);
 		if (stats.isFile() && name.endsWith(".md")) {
 			const file = readFile(loc);
-			const headingMatch = file.match(/\# (.*?)\n/);
+			const headingMatch = file.match(/# (.*?)\n/);
 			const heading = headingMatch == null ? undefined : headingMatch[1];
 
 			children.push({
@@ -43,15 +40,15 @@ function buildTree(folder) {
 				children: [],
 			});
 		} else if (stats.isDirectory()) {
-			const node = buildTree(loc)
+			const node = buildTree(loc);
 			if (node.children.length > 0 || node.link) {
-				children.push(node)
+				children.push(node);
 			}
 		}
 	}
 
 	let index;
-	children = children.filter(child => {
+	children = children.filter((child) => {
 		if (child.name === "index") {
 			index = child;
 			return false;
@@ -59,7 +56,7 @@ function buildTree(folder) {
 			return true;
 		}
 	});
-	
+
 	return {
 		type: "folder",
 		url: `/${path.relative(src, folder)}`,
@@ -70,13 +67,11 @@ function buildTree(folder) {
 	};
 }
 
-const list = [];
-
 function pushList(node, level) {
 	let text = `\`/${node.name}\``;
 
 	if (node.link) {
-		text = `[${text}](${node.url})`
+		text = `[${text}](${node.url})`;
 	}
 
 	if (node.heading) {
