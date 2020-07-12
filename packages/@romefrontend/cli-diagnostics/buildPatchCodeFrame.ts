@@ -104,7 +104,7 @@ export default function buildPatchCodeFrame(
 		if (afterLine !== undefined) {
 			gutter += String(afterLine);
 		}
-		gutter += `</pad></emphasis>`;
+		gutter += "</pad></emphasis>";
 		return gutter;
 	}
 
