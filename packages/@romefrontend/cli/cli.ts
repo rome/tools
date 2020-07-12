@@ -28,7 +28,7 @@ import {
 import {commandCategories} from "@romefrontend/core/common/commands";
 import {writeFile} from "@romefrontend/fs";
 import fs = require("fs");
-import {markup} from "@romefrontend/string-markup";
+import {markup, markupToPlainTextString} from "@romefrontend/string-markup";
 import {JSONObject, stringifyJSON} from "@romefrontend/codec-json";
 import {getEnvVar} from "@romefrontend/environment";
 
@@ -458,13 +458,13 @@ export default async function cli() {
 				});
 			}
 
-			await client.subscribeLogs(
+			client.subscribeLogs(
 				cliFlags.logWorkers === true,
 				(chunk) => {
 					if (fileout === undefined) {
-						client.reporter.writeAll(chunk);
+						client.reporter.logAll(chunk, {newline: false});
 					} else {
-						fileout.write(chunk);
+						fileout.write(markupToPlainTextString(chunk));
 					}
 				},
 			);

@@ -135,7 +135,7 @@ function renderGrid(
 		...opts,
 		sourceText: input,
 	});
-	grid.drawRoot(parseMarkup(input));
+	grid.drawChildren(grid.parse(input, undefined), []);
 	return {
 		width: ob1Get1(grid.getWidth()),
 		lines: grid.getLines(format),

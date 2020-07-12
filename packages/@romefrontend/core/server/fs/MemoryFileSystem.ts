@@ -28,7 +28,6 @@ import {
 } from "@romefrontend/diagnostics";
 import {Event} from "@romefrontend/events";
 import {consumeJSON} from "@romefrontend/codec-json";
-import {humanizeNumber} from "@romefrontend/string-utils";
 import {WorkerPartialManifest} from "../../common/bridges/WorkerBridge";
 import {
 	AbsoluteFilePath,
@@ -43,7 +42,6 @@ import {
 	watch,
 } from "@romefrontend/fs";
 import {getFileHandler} from "../../common/file-handlers/index";
-import {markup} from "@romefrontend/string-markup";
 import crypto = require("crypto");
 import fs = require("fs");
 import {FileNotFound} from "@romefrontend/core/common/FileNotFound";
@@ -145,11 +143,12 @@ async function createWatcher(
 	projectFolder: AbsoluteFilePath,
 ): Promise<WatcherClose> {
 	const {logger} = memoryFs.server;
+	const projectFolderMarkup = "<emphasis>projectFolder.toMarkup()</emphasis>";
 
 	// Create activity spinners for all connected reporters
 	const activity = memoryFs.server.connectedReporters.progress({
 		initDelay: 1_000,
-		title: `Adding project ${projectFolder.toMarkup()}`,
+		title: `Adding project ${projectFolderMarkup}`,
 	});
 
 	const watchers: AbsoluteFilePathMap<fs.FSWatcher> = new AbsoluteFilePathMap();
@@ -175,7 +174,7 @@ async function createWatcher(
 				{recursive, persistent: false},
 				(eventType, filename) => {
 					memoryFs.server.logger.info(
-						`[MemoryFileSystem] Raw fs.watch event in ${folderPath.toMarkup()} type ${eventType} for ${filename}`,
+						`[MemoryFileSystem] Raw fs.watch event in <emphasis>${folderPath.toMarkup()}</emphasis> type ${eventType} for ${filename}`,
 					);
 
 					if (filename === null) {
@@ -207,9 +206,9 @@ async function createWatcher(
 			},
 		);
 		logger.info(
-			`[MemoryFileSystem] Finished initial crawl for ${projectFolder.toMarkup()} - added ${humanizeNumber(
-				memoryFs.countFiles(projectFolder),
-			)} files`,
+			`[MemoryFileSystem] Finished initial crawl for <emphasis>${projectFolder.toMarkup()}</emphasis> - added <number>${memoryFs.countFiles(
+				projectFolder,
+			)}</number> files`,
 		);
 	} finally {
 		activity.end();
@@ -456,8 +455,7 @@ export default class MemoryFileSystem {
 
 	async watch(projectFolder: AbsoluteFilePath): Promise<void> {
 		const {logger} = this.server;
-		const projectFolderJoined = projectFolder.join();
-		const folderLink = markup`<filelink target="${projectFolderJoined}" />`;
+		const folderLink = `<emphasis>${projectFolder.toMarkup()}</emphasis>`;
 
 		// Defer if we're already currently initializing this project
 		const cached = this.watchPromises.get(projectFolder);
@@ -962,8 +960,7 @@ export default class MemoryFileSystem {
 		const oldStats = this.getFileStats(path);
 		if (oldStats !== undefined && opts.reason === "watch") {
 			this.server.logger.info(
-				"[MemoryFileSystem] File change:",
-				path.toMarkup(),
+				`[MemoryFileSystem] File change: <emphasis>${path.toMarkup()}</emphasis>`,
 			);
 			this.server.refreshFileEvent.send(path);
 			this.changedFileEvent.send({path, oldStats, newStats: stats});

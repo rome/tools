@@ -40,6 +40,7 @@ import {onKeypress} from "./util";
 import {
 	markupToHtml,
 	markupToPlainTextString,
+	normalizeMarkup,
 } from "@romefrontend/string-markup/format";
 import {
 	Stdout,
@@ -743,14 +744,14 @@ export default class Reporter {
 
 	writeAll(msg: string, opts: LogOptions = {}) {
 		for (const stream of this.getStreams(opts.stderr)) {
-			this.writeSpecific(stream, msg);
+			this.writeSpecific(stream, msg, opts);
 		}
 	}
 
-	writeSpecific(stream: ReporterStream, msg: string) {
+	writeSpecific(stream: ReporterStream, msg: string, opts: LogOptions) {
 		this.hasClearScreen = false;
 
-		if (this.activeElements.size > 0) {
+		if (this.activeElements.size > 0 && opts.newline) {
 			// A progress bar is active and has probably drawn to the screen
 			this.clearLineSpecific(stream);
 		}
@@ -907,7 +908,7 @@ export default class Reporter {
 			}
 
 			case "markup": {
-				return [built];
+				return [normalizeMarkup(built, this.markupOptions).text];
 			}
 		}
 
@@ -935,8 +936,15 @@ export default class Reporter {
 
 	logOne(stream: ReporterStream, msg: string, opts: LogOptions = {}) {
 		const lines = this.format(stream, msg);
-		for (const line of lines) {
-			this.logOneRaw(stream, line, opts);
+		for (let i = 0; i < lines.length; i++) {
+			this.logOneRaw(
+				stream,
+				lines[i],
+				{
+					...opts,
+					newline: i === lines.length - 1 ? opts.newline : true,
+				},
+			);
 		}
 	}
 
@@ -958,7 +966,7 @@ export default class Reporter {
 			this.streamsWithNewlineEnd.delete(stream);
 		}
 
-		this.writeSpecific(stream, msg);
+		this.writeSpecific(stream, msg, opts);
 	}
 
 	logAllWithCategory(
@@ -1004,10 +1012,7 @@ export default class Reporter {
 				markupTag(opts.markupTag, prefixInner),
 			);
 			const prefixedInner = `${prefix}<view>${inner}</view>`;
-			const lines = this.format(stream, prefixedInner);
-			for (const line of lines) {
-				this.logOneRaw(stream, line, opts);
-			}
+			this.logOne(stream, prefixedInner);
 		}
 	}
 
