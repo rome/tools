@@ -398,12 +398,6 @@ export class ParserCore<
 		return nextToken;
 	}
 
-	jumpToToken(index: number): void {
-		for (let i = 0; i < index; i++) {
-			this.nextToken();
-		}
-	}
-
 	// Get the position of the current token
 	getPosition(): Position {
 		const index = this.currentToken.start;
