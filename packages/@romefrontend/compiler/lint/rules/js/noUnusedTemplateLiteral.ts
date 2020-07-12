@@ -10,13 +10,12 @@ export default {
 	name: "jsNoUnusedTemplateLiteral",
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
-		path.findAncestry;
 
 		if (
+			node.type === "JSTemplateLiteral" &&
 			!path.findAncestry((path) =>
 				path.node.type === "JSTaggedTemplateExpression"
 			) &&
-			node.type === "JSTemplateLiteral" &&
 			node.expressions.length === 0 &&
 			!node.quasis.some(containsSpecialCharacters)
 		) {
