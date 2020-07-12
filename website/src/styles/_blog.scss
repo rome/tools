@@ -16,23 +16,20 @@ div.blog{
 
 div.tags{
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   margin-top: $unit * 2;
   align-items: center;
   color: var(--sub-text-color);
 
   > a.tag{
-    margin-right: $unit / 2;
+    margin-left: $unit / 2;
   }
 }
 
-div.post{
-  div.tags{
-    justify-content: flex-end;
-    > a.tag{
-      margin-left: $unit / 2;
-      margin-right: 0;
-    }
+div.tags-page{
+  margin-top: $unit * 2;
+  > a.tag{
+    margin-right: $unit / 2;
   }
 }
 

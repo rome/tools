@@ -1,6 +1,6 @@
 ---
 title: Language Support
-layout: layouts/base.njk
+layout: layouts/page.njk
 ---
 
 # Language Support

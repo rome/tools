@@ -1,6 +1,6 @@
 ---
 title: rome check
-layout: layouts/base.njk
+layout: layouts/page.njk
 ---
 
 # `rome check`

@@ -1,6 +1,6 @@
 ---
 title: rome logs
-layout: layouts/base.njk
+layout: layouts/page.njk
 ---
 
 # `rome logs`

@@ -1,6 +1,6 @@
 ---
 title: Linting
-layout: layouts/base.njk
+layout: layouts/page.njk
 ---
 
 # Linting
@@ -35,7 +35,7 @@ This can also be configured via the [`rome config` command](/docs/cli/commands/c
 rome config push lint.globals SomeGlobal
 ```
 
-## Formatting 
+## Formatting
 
 ## Fixing
 

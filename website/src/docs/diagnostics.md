@@ -1,6 +1,6 @@
 ---
 title: Diagnostics
-layout: layouts/base.njk
+layout: layouts/page.njk
 ---
 
 # Diagnostics

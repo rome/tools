@@ -1,7 +1,6 @@
 ---
 title: Team
-layout: layouts/base.njk
-showHero: false
+layout: layouts/page.njk
 ---
 
 # Team

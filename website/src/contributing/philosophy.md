@@ -1,6 +1,6 @@
 ---
 title: Philosophy
-layout: layouts/base.njk
+layout: layouts/page.njk
 ---
 
 # Philosophy

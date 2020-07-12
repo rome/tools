@@ -134,3 +134,39 @@ pre.homepage-example {
     line-height: 0;
   }
 }
+
+article.latest-post{
+  border-bottom: 1px solid var(--soft-border-color);
+  padding: $unit $unit * 2;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  @include desktop-only() {
+    min-height: 32px + 64px + 1px;
+  }
+
+  div.info{
+    display: flex;
+    align-items: center;
+
+    div{
+      margin-left: auto;
+      color: var(--sub-text-color);
+    }
+  }
+
+  h2{
+    text-transform: uppercase;
+    font-size: .8em;
+    font-weight: bold;
+    font-family: inherit;
+    color: var(--sub-text-color);
+    margin-top: 0;
+  }
+
+  h3{
+    font-size: 1em;
+    margin: 0;
+  }
+}

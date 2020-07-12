@@ -1,6 +1,6 @@
 ---
 title: Editor Integration
-layout: layouts/base.njk
+layout: layouts/page.njk
 ---
 
 # Editor Integration

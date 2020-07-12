@@ -1,6 +1,6 @@
 ---
 title: rome rage
-layout: layouts/base.njk
+layout: layouts/page.njk
 ---
 
 # `rome rage`
