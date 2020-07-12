@@ -5,15 +5,12 @@ import {
 	TagNode,
 } from "../types";
 import {formatAnsi} from "../ansi";
-import {
-	buildFileLink,
-	normalizeColor,
-	normalizeTokenType,
-} from "./tagFormatters";
+import {buildFileLink} from "../util";
 import OneDarkPro from "../syntax-theme/OneDarkPro.json";
 import {Dict} from "@romefrontend/typescript-helpers";
 import {Consumer, consumeUnknown} from "@romefrontend/consume";
 import {TerminalFeatures} from "@romefrontend/environment";
+import {validateColor, validateTokenType} from "../tags";
 
 export function ansiFormatText(
 	{name: tagName, attributes}: TagNode,
@@ -24,7 +21,10 @@ export function ansiFormatText(
 	switch (tagName) {
 		case "hyperlink": {
 			if (features.hyperlinks) {
-				return formatAnsi.hyperlink(attributes.target || "", value);
+				return formatAnsi.hyperlink(
+					attributes.get("target").asString(""),
+					value,
+				);
 			} else {
 				return value;
 			}
@@ -79,19 +79,26 @@ export function ansiFormatText(
 			return formatAnsi.italic(value);
 
 		case "highlight": {
-			const index = Math.min(0, Number(attributes.i) || 0);
+			const index = Math.min(0, attributes.get("i").asNumber(0));
 			const fn = ansiHighlightFactories[index % ansiHighlightFactories.length];
 			return fn(value);
 		}
 
 		case "color":
 			return formatAnsiBackground(
-				normalizeColor(attributes.bg),
-				formatAnsiForeground(normalizeColor(attributes.fg), value),
+				validateColor(attributes.get("bg").asStringOrVoid()),
+				formatAnsiForeground(
+					validateColor(attributes.get("fg").asStringOrVoid()),
+					value,
+				),
 			);
 
 		case "token":
-			return formatToken(normalizeTokenType(attributes.type), value, opts);
+			return formatToken(
+				validateTokenType(attributes.get("type").asStringOrVoid()),
+				value,
+				opts,
+			);
 
 		default:
 			return value;
@@ -112,6 +119,7 @@ const scopeToTokenTypes: Dict<Array<MarkupTokenType>> = {
 	"constant": ["number", "boolean"],
 	"constant.numeric": ["number"],
 	"constant.language.boolean": ["boolean"],
+	"variable.other.constant": ["boolean"],
 
 	"string": ["string"],
 	"string.regexp": ["regex"],
@@ -120,7 +128,7 @@ const scopeToTokenTypes: Dict<Array<MarkupTokenType>> = {
 	"entity.name.function": ["function"],
 	//"": "operator"],
 	"punctuation": ["punctuation"],
-	"variable": ["variable"],
+	//"variable": ["variable"],
 	"keyword": ["keyword"],
 
 	"entity.name.tag.html": ["tag"],

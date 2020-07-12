@@ -14,11 +14,12 @@
 
   > 1 │ class Hello extends React.PureComponent {
       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  > 2 │  shouldComponentUpdate() {}
+  > 2 │   shouldComponentUpdate() {}
   > 3 │ }
+      │ ^
 
-  ℹ When the shouldComponentUpdate method is implemented, extending React.PureComponent provides no
-    benefit.
+  ℹ When the shouldComponentUpdate method is implemented, extending React.PureComponent provides
+    no benefit.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -45,11 +46,12 @@ class Hello extends React.PureComponent {
 
   > 1 │ class Hello extends PureComponent {
       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  > 2 │  shouldComponentUpdate() {}
+  > 2 │   shouldComponentUpdate() {}
   > 3 │ }
+      │ ^
 
-  ℹ When the shouldComponentUpdate method is implemented, extending React.PureComponent provides no
-    benefit.
+  ℹ When the shouldComponentUpdate method is implemented, extending React.PureComponent provides
+    no benefit.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

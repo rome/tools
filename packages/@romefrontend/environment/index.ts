@@ -119,6 +119,7 @@ export function inferTerminalFeatures(
 					...features,
 					columns: stdout.columns,
 				};
+				updateEvent.send(features);
 			}
 		}
 

@@ -108,8 +108,12 @@ exports.isDevDaemonRunning = function() {
 exports.execDev = async function(argv) {
 	await exports.buildTrunk();
 	exports.heading("Executing trunk");
+	const args = [path.join(devFolder, "index.js"), ...argv];
+	if (process.env.ROME_DEV_DEBUG === "1") {
+		args.unshift("--inspect", "--inspect-brk");
+	}
 	exports.execNode(
-		[path.join(devFolder, "index.js"), ...argv],
+		args,
 		{
 			env: {
 				...process.env,

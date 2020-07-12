@@ -16,6 +16,7 @@
       │ ^^^^^^^^^^^^^^^^^^^^
   > 2 │   x.step();
   > 3 │ }
+      │ ^
 
   ℹ Recommended fix
 
@@ -50,6 +51,7 @@ while (x.running) {
       │ ^^^^^^^^^^
   > 2 │   doSomething();
   > 3 │ }
+      │ ^
 
   ℹ Recommended fix
 

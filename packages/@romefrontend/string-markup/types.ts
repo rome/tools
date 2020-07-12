@@ -6,11 +6,11 @@
  */
 
 import {BaseTokens, SimpleToken, ValueToken} from "@romefrontend/parser-core";
-import {Dict} from "@romefrontend/typescript-helpers";
 import {AbsoluteFilePath} from "@romefrontend/path";
 import {UserConfig} from "@romefrontend/core/common/userConfig";
 import {Number0, Number1} from "@romefrontend/ob1";
 import {TerminalFeatures} from "@romefrontend/environment";
+import {Consumer} from "@romefrontend/consume";
 
 export type Tokens = BaseTokens & {
 	Text: ValueToken<"Text", string>;
@@ -25,10 +25,12 @@ export type Tokens = BaseTokens & {
 //
 export type TextNode = {
 	type: "Text";
+	source: boolean;
+	sourceValue?: string;
 	value: string;
 };
 
-export type TagAttributes = Dict<undefined | string>;
+export type TagAttributes = Consumer;
 
 export type TagNode = {
 	type: "Tag";
@@ -37,11 +39,14 @@ export type TagNode = {
 	children: Children;
 };
 
+export type MarkupLineWrapMode = "none" | "char-break" | "word-break";
+
 export type ChildNode = TextNode | TagNode;
 
 export type Children = Array<ChildNode>;
 
 export type MarkupTagName =
+	| "view"
 	| "token"
 	| "hr"
 	| "pad"
@@ -93,18 +98,37 @@ export type MarkupFormatOptions = {
 	cwd?: AbsoluteFilePath;
 };
 
-export type MarkupFormatGridOptions = MarkupFormatOptions & {
+export type MarkupPointer = {
+	char: Children;
+	message: Children;
+	line: Number1;
+	columnStart: Number1;
+	columnEnd: Number1;
+};
+
+export type UserMarkupFormatGridOptions = MarkupFormatOptions & {
 	features?: TerminalFeatures;
 	columns?: number;
+};
+
+export type MarkupFormatGridOptions = UserMarkupFormatGridOptions & {
+	sourceText: string;
+	lineWrapMode?: MarkupLineWrapMode;
+	pointer?: MarkupPointer;
 };
 
 export type MarkupFormatNormalizeOptions = MarkupFormatOptions & {
 	stripPositions?: boolean;
 };
 
+export type MarkupLines = Array<{
+	line: string;
+	width: number;
+}>;
+
 export type MarkupLinesAndWidth = {
 	width: number;
-	lines: Array<string>;
+	lines: MarkupLines;
 };
 
 export type GridOutputFormat = "ansi" | "html" | "none";

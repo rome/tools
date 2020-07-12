@@ -170,8 +170,8 @@ JSRoot {
 
  input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ In non-strict mode code, functions can only be declared at top level, inside a block, or as the
-    body of an if statement
+  ✖ In non-strict mode code, functions can only be declared at top level, inside a block, or as
+    the body of an if statement
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

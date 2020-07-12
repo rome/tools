@@ -15,8 +15,8 @@
     <blink />
     ^^^^^^^^^
 
-  ℹ Deprecated blink are difficult to read and distract attention away from page content, especially
-    for users with visual impairments.
+  ℹ Deprecated blink are difficult to read and distract attention away from page content,
+    especially for users with visual impairments.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

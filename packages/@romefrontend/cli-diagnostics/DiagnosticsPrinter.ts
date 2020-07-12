@@ -22,7 +22,6 @@ import {
 	DiagnosticsPrinterOptions,
 } from "./types";
 import {
-	escapeMarkup,
 	formatAnsi,
 	markup,
 	markupToPlainTextString,
@@ -348,27 +347,35 @@ export default class DiagnosticsPrinter extends Error {
 			if (stats === undefined) {
 				this.missingFileSources.add(abs);
 			} else {
-				this.wrapError(() => this.addFileSource(dep, stats));
+				this.wrapError("addFileSource", () => this.addFileSource(dep, stats));
 			}
 		}
 	}
 
 	print() {
-		const filteredDiagnostics = this.filterDiagnostics();
-		this.fetchFileSources(filteredDiagnostics);
-		this.printDiagnostics(filteredDiagnostics);
+		this.wrapError(
+			"root",
+			() => {
+				const filteredDiagnostics = this.filterDiagnostics();
+				this.fetchFileSources(filteredDiagnostics);
+				this.printDiagnostics(filteredDiagnostics);
+			},
+		);
 	}
 
-	wrapError(callback: () => void) {
+	wrapError(reason: string, callback: () => void) {
 		const {reporter} = this;
 		try {
 			callback();
 		} catch (err) {
 			// Sometimes we'll run into issues displaying diagnostics
-			// We can safely catch them here since the presence of diagnostics is considered a critical failure
-			// Display diagnostics is idempotent
-			reporter.error("Encountered an error displaying this diagnostic");
-			reporter.error(escapeMarkup(err.stack));
+			// We can safely catch them here since the presence of diagnostics is considered a critical failure anyway
+			// Display diagnostics is idempotent meaning we can bail at any point
+			// We don't use reporter.error here since the error could have been thrown by string-markup
+			reporter.logAllRaw(
+				`Encountered an error during diagnostics printing in ${reason}`,
+			);
+			reporter.logAllRaw(err.stack);
 		}
 	}
 
@@ -381,7 +388,7 @@ export default class DiagnosticsPrinter extends Error {
 		}
 
 		for (const diag of diagnostics) {
-			this.wrapError(() => this.printDiagnostic(diag));
+			this.wrapError("printDiagnostic", () => this.printDiagnostic(diag));
 		}
 
 		reporter.redirectOutToErr(restoreRedirect);
@@ -616,44 +623,49 @@ export default class DiagnosticsPrinter extends Error {
 	}
 
 	footer() {
-		const {reporter, problemCount} = this;
+		this.wrapError(
+			"footer",
+			() => {
+				const {reporter, problemCount} = this;
 
-		const isError = problemCount > 0;
+				const isError = problemCount > 0;
 
-		if (isError) {
-			const restoreRedirect = reporter.redirectOutToErr(true);
-			reporter.hr();
-			reporter.redirectOutToErr(restoreRedirect);
-		}
+				if (isError) {
+					const restoreRedirect = reporter.redirectOutToErr(true);
+					reporter.hr();
+					reporter.redirectOutToErr(restoreRedirect);
+				}
 
-		if (this.hasTruncatedDiagnostics) {
-			reporter.warn(
-				"Some diagnostics have been truncated. Use the --verbose-diagnostics flag to disable truncation.",
-			);
-		}
+				if (this.hasTruncatedDiagnostics) {
+					reporter.warn(
+						"Some diagnostics have been truncated. Use the --verbose-diagnostics flag to disable truncation.",
+					);
+				}
 
-		if (isError) {
-			if (this.flags.fieri) {
-				this.showBanner(errorBanner);
-			}
-		} else {
-			if (this.flags.fieri) {
-				this.showBanner(successBanner);
-			}
-		}
+				if (isError) {
+					if (this.flags.fieri) {
+						this.showBanner(errorBanner);
+					}
+				} else {
+					if (this.flags.fieri) {
+						this.showBanner(successBanner);
+					}
+				}
 
-		for (const handler of this.onFooterPrintCallbacks) {
-			const stop = handler(reporter, isError);
-			if (stop) {
-				return;
-			}
-		}
+				for (const handler of this.onFooterPrintCallbacks) {
+					const stop = handler(reporter, isError);
+					if (stop) {
+						return;
+					}
+				}
 
-		if (isError) {
-			this.footerError();
-		} else {
-			reporter.success("No known problems!");
-		}
+				if (isError) {
+					this.footerError();
+				} else {
+					reporter.success("No known problems!");
+				}
+			},
+		);
 	}
 
 	showBanner(banner: Banner) {

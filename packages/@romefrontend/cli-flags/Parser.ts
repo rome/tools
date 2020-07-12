@@ -279,7 +279,7 @@ export default class Parser<T> {
 				getOriginalValue: (keys: ConsumePath) => {
 					return flags[keys[0]];
 				},
-				getDiagnosticPointer: (
+				getDiagnosticLocation: (
 					keys: ConsumePath,
 					target: ConsumeSourceLocationRequestTarget,
 				) => {
@@ -550,7 +550,7 @@ export default class Parser<T> {
 		const {programName} = this.opts;
 
 		reporter.section(
-			`Usage`,
+			`<emphasis>Usage</emphasis>`,
 			() => {
 				if (description !== undefined) {
 					reporter.logAll(description);

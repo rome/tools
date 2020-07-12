@@ -12,11 +12,11 @@
 
   ✖ Using JSReturnStatement inside a finally clause is unsafe.
 
-    5 │   throw err;
-    6 │  } finally {
-  > 7 │   return 1;
-      │   ^^^^^^^^^
-    8 │  }
+    5 │     throw err;
+    6 │   } finally {
+  > 7 │     return 1;
+      │     ^^^^^^^^^
+    8 │   }
     9 │ }
 
   ℹ Do not use control flow statements inside finally clauses.
@@ -50,11 +50,11 @@ function greet1() {
 
   ✖ Using JSBreakStatement inside a finally clause is unsafe.
 
-    5 │   throw err;
-    6 │  } finally {
-  > 7 │   break;
-      │   ^^^^^^
-    8 │  }
+    5 │     throw err;
+    6 │   } finally {
+  > 7 │     break;
+      │     ^^^^^^
+    8 │   }
     9 │ }
 
   ℹ Do not use control flow statements inside finally clauses.
@@ -88,11 +88,11 @@ function greet2() {
 
   ✖ Using JSContinueStatement inside a finally clause is unsafe.
 
-    5 │   throw err;
-    6 │  } finally {
-  > 7 │   continue;
-      │   ^^^^^^^^^
-    8 │  }
+    5 │     throw err;
+    6 │   } finally {
+  > 7 │     continue;
+      │     ^^^^^^^^^
+    8 │   }
     9 │ }
 
   ℹ Do not use control flow statements inside finally clauses.
@@ -126,11 +126,11 @@ function greet3() {
 
   ✖ Using JSThrowStatement inside a finally clause is unsafe.
 
-    5 │   throw err;
-    6 │  } finally {
-  > 7 │   throw new Error("Finally");
-      │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    8 │  }
+    5 │     throw err;
+    6 │   } finally {
+  > 7 │     throw new Error("Finally");
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │   }
     9 │ }
 
   ℹ Do not use control flow statements inside finally clauses.

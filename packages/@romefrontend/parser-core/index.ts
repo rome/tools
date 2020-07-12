@@ -43,7 +43,11 @@ import {
 	ob1Sub,
 } from "@romefrontend/ob1";
 import {UnknownFilePath, createUnknownFilePath} from "@romefrontend/path";
-import {Class, OptionalProps} from "@romefrontend/typescript-helpers";
+import {
+	Class,
+	OptionalProps,
+	RequiredProps,
+} from "@romefrontend/typescript-helpers";
 import {removeCarriageReturn} from "@romefrontend/string-utils";
 import {AnyComment, AnyNode, RootBase} from "@romefrontend/ast";
 import {attachComments} from "./comments";
@@ -57,6 +61,7 @@ export type ParserOptions = {
 	path?: string | UnknownFilePath;
 	mtime?: number;
 	input?: string;
+	sourceText?: string;
 	offsetPosition?: Position;
 };
 
@@ -71,6 +76,8 @@ export type ParserUnexpectedOptions = {
 	end?: Position;
 	token?: TokenBase;
 	index?: Number0;
+	startIndex?: Number0;
+	endIndex?: Number0;
 	location?: DiagnosticLocation;
 };
 
@@ -151,7 +158,13 @@ export class ParserCore<
 		diagnosticCategory: DiagnosticCategory,
 		initialState: Omit<State, keyof ParserCoreState>,
 	) {
-		const {path, mtime, offsetPosition, inlineDiagnosticsSource = false} = opts;
+		const {
+			path,
+			mtime,
+			offsetPosition,
+			sourceText,
+			inlineDiagnosticsSource = false,
+		} = opts;
 
 		// Input information
 		this.path = path === undefined ? undefined : createUnknownFilePath(path);
@@ -159,6 +172,7 @@ export class ParserCore<
 		this.shouldInlineDiagnosticsSource = inlineDiagnosticsSource;
 		this.mtime = mtime;
 		this.input = normalizeInput(opts);
+		this.sourceText = sourceText === undefined ? this.input : sourceText;
 		this.length = ob1Coerce0(this.input.length);
 
 		this.eofToken = {
@@ -211,6 +225,7 @@ export class ParserCore<
 	shouldInlineDiagnosticsSource: boolean;
 	mtime: undefined | number;
 	input: string;
+	sourceText: string;
 	length: Number0;
 	currLine: Number1;
 	currColumn: Number0;
@@ -451,11 +466,62 @@ export class ParserCore<
 
 	createDiagnostic(opts: ParserUnexpectedOptions = {}): Diagnostic {
 		const {currentToken} = this;
-		let {description: metadata, start, end, token} = opts;
+		let {description} = opts;
+		const location = this.getDiagnosticLocation(opts);
+		const {start} = location;
+
+		// Normalize message, we need to be defensive here because it could have been called while tokenizing the first token
+		if (description === undefined) {
+			if (currentToken !== undefined && start.index === currentToken.start) {
+				description = descriptions.PARSER_CORE.UNEXPECTED(currentToken.type);
+			} else {
+				if (this.isEOF(start.index)) {
+					description = descriptions.PARSER_CORE.UNEXPECTED_EOF;
+				} else {
+					const char = this.input[ob1Get0(start.index)];
+					description = descriptions.PARSER_CORE.UNEXPECTED_CHARACTER(char);
+				}
+			}
+		}
+
+		const descriptionWithCategory: DiagnosticDescription = {
+			...description,
+			category: description.category === undefined
+				? this.diagnosticCategory
+				: description.category,
+		};
+
+		return {
+			description: descriptionWithCategory,
+			location,
+		};
+	}
+
+	// Return an error to indicate a parser error, this must be thrown at the callsite for refinement
+	unexpected(opts: ParserUnexpectedOptions = {}): DiagnosticsError {
+		return createSingleDiagnosticError(this.createDiagnostic(opts));
+	}
+
+	unexpectedDiagnostic(opts: ParserUnexpectedOptions = {}) {
+		this.state.diagnostics.push(this.createDiagnostic(opts));
+	}
+
+	getDiagnosticLocation(
+		opts: Omit<ParserUnexpectedOptions, "description"> = {},
+	): RequiredProps<DiagnosticLocation, "start" | "end"> {
+		let {start, end, token} = opts;
 
 		if (opts.index !== undefined) {
 			start = this.getPositionFromIndex(opts.index);
 			end = start;
+		}
+
+		if (opts.startIndex !== undefined) {
+			start = this.getPositionFromIndex(opts.startIndex);
+		}
+
+		if (opts.endIndex !== undefined) {
+			end = this.getPositionFromIndex(opts.endIndex);
 		}
 
 		if (opts.location !== undefined) {
@@ -488,58 +554,21 @@ export class ParserCore<
 		}
 
 		if (start === undefined || end === undefined) {
-			throw new Error(
-				`Conditions above should have eliminated this possibility`,
-			);
+			throw new Error("This condition should have been refined");
 		}
 
-		// Normalize message, we need to be defensive here because it could have been called while tokenizing the first token
-		if (metadata === undefined) {
-			if (
-				currentToken !== undefined &&
-				start !== undefined &&
-				start.index === currentToken.start
-			) {
-				metadata = descriptions.PARSER_CORE.UNEXPECTED(currentToken.type);
-			} else {
-				if (this.isEOF(start.index)) {
-					metadata = descriptions.PARSER_CORE.UNEXPECTED_EOF;
-				} else {
-					const char = this.input[ob1Get0(start.index)];
-					metadata = descriptions.PARSER_CORE.UNEXPECTED_CHARACTER(char);
-				}
-			}
+		let sourceText;
+		if (this.path === undefined || this.shouldInlineDiagnosticsSource) {
+			sourceText = this.sourceText;
 		}
-
-		const metadataWithCategory: DiagnosticDescription = {
-			...metadata,
-			category: metadata.category === undefined
-				? this.diagnosticCategory
-				: metadata.category,
-		};
 
 		return {
-			description: metadataWithCategory,
-			location: {
-				sourceText: this.path === undefined ||
-				this.shouldInlineDiagnosticsSource
-					? this.input
-					: undefined,
-				mtime: this.mtime,
-				start,
-				end,
-				filename: this.filename,
-			},
+			sourceText,
+			mtime: this.mtime,
+			start,
+			end,
+			filename: this.filename,
 		};
-	}
-
-	// Return an error to indicate a parser error, this must be thrown at the callsite for refinement
-	unexpected(opts: ParserUnexpectedOptions = {}): DiagnosticsError {
-		return createSingleDiagnosticError(this.createDiagnostic(opts));
-	}
-
-	unexpectedDiagnostic(opts: ParserUnexpectedOptions = {}) {
-		this.state.diagnostics.push(this.createDiagnostic(opts));
 	}
 
 	//# Token utility methods

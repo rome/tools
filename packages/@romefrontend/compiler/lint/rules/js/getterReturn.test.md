@@ -13,10 +13,11 @@
   ✖ Return a value at the end of a getter method instead of empty block.
 
     1 │ class p {
-  > 2 │  get name() {
-  > 3 │   console.log('hello');
-  > 4 │  }
-      │ ^^
+  > 2 │   get name() {
+      │              ^
+  > 3 │     console.log('hello');
+  > 4 │   }
+      │ ^^^
     5 │ }
 
   ℹ Getters that do not return values are either typos or should not be getters.
@@ -47,10 +48,11 @@ class p {
   ✖ Return a value at the end of a getter method instead of empty block.
 
     1 │ let p = {
-  > 2 │  get name() {
-  > 3 │   console.log('hello');
-  > 4 │  },
-      │ ^^
+  > 2 │   get name() {
+      │              ^
+  > 3 │     console.log('hello');
+  > 4 │   },
+      │ ^^^
     5 │ };
 
   ℹ Getters that do not return values are either typos or should not be getters.

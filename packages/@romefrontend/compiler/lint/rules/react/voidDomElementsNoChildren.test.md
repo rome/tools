@@ -133,8 +133,9 @@
 
   ✖ img is a void element tag and must not have children, or dangerouslySetInnerHTML.
 
-    <img dangerouslySetInnerHTML={{__html: ''}} children={'invalid children'}>invalid children</img>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    <img dangerouslySetInnerHTML={{__html: ''}} children={'invalid children'}>invalid children</
+    img>
+    ^^^^^^^^
 
   ℹ Recommended fix
 

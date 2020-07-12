@@ -63,7 +63,7 @@ export default async function cli() {
 		defineFlags(
 			c: Consumer,
 		): {
-			reporterOverrides: ClientTerminalFeatures;
+			terminalFeatures: ClientTerminalFeatures;
 			cliFlags: CLIFlags;
 			clientFlags: ClientFlags;
 			requestFlags: ClientRequestFlags;
@@ -79,7 +79,7 @@ export default async function cli() {
 				).asAbsoluteFilePathOrVoid() || CWD_PATH;
 
 			return {
-				reporterOverrides: {
+				terminalFeatures: {
 					format: c.get(
 						"consoleFormat",
 						{
@@ -377,7 +377,7 @@ export default async function cli() {
 	});
 
 	// Initialize flags
-	let {reporterOverrides, clientFlags, cliFlags, requestFlags} = await p.init();
+	let {terminalFeatures, clientFlags, cliFlags, requestFlags} = await p.init();
 
 	// Default according to env vars
 	if (requestFlags.auxiliaryDiagnosticFormat === undefined) {
@@ -397,7 +397,7 @@ export default async function cli() {
 	}
 
 	const client = new Client({
-		terminalFeatures: reporterOverrides,
+		terminalFeatures,
 		globalErrorHandlers: true,
 		flags: clientFlags,
 		stdin: process.stdin,

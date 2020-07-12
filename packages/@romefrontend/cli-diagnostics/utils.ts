@@ -12,10 +12,6 @@ import {removeCarriageReturn} from "@romefrontend/string-utils";
 
 const unicodeControls = /[\u0000-\u001f\u007f-\u00a0]/u;
 
-export function normalizeTabs(str: string): string {
-	return str.replace(/\t/g, "  ");
-}
-
 function isWhitespace(char: undefined | string): boolean {
 	return char === " " || char === "\t" || char === "\r" || char === "\n";
 }
@@ -151,12 +147,8 @@ export function cleanEquivalentString(str: string): string {
 	return str;
 }
 
-export function joinNoBreak(lines: Array<string>): string {
-	return `<nobr>${lines.join("\n")}</nobr>`;
-}
-
 export function splitLines(src: string): Array<string> {
-	return src.replace(/\t/g, " ").split(NEWLINE);
+	return src.split(NEWLINE);
 }
 
 export type ToLines = {

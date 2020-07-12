@@ -14,7 +14,7 @@
 
   > 1 │ for (let i = 1; i = 10; i++) {
       │                 ^^^^^^
-    2 │  console.log('foo');
+    2 │   console.log('foo');
     3 │ }
 
   ℹ It is a common typo to mistype an equality operator as an assignment operator.
@@ -44,7 +44,7 @@ for (let i = 1; i = 10; i++) {
 
   > 1 │ if (foo = 'bar') {
       │     ^^^^^^^^^^^
-    2 │  console.log('foo');
+    2 │   console.log('foo');
     3 │ }
 
   ℹ It is a common typo to mistype an equality operator as an assignment operator.
@@ -74,7 +74,7 @@ if (foo = "bar") {
 
   > 1 │ while (foo = 'bar') {
       │        ^^^^^^^^^^^
-    2 │  console.log('foo');
+    2 │   console.log('foo');
     3 │ }
 
   ℹ It is a common typo to mistype an equality operator as an assignment operator.
@@ -103,7 +103,7 @@ while (foo = "bar") {
   ✖ Do not assign variables in loop conditions.
 
     1 │ do {
-    2 │  console.log('foo');
+    2 │   console.log('foo');
   > 3 │ } while (foo = 'bar')
       │          ^^^^^^^^^^^
 
