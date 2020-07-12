@@ -14,6 +14,7 @@ import {
 	MarkupLines,
 	MarkupPointer,
 	MarkupTagName,
+	TagAttributes,
 	TagNode,
 	TextNode,
 } from "../types";
@@ -56,6 +57,8 @@ type Cursor = {
 	column: Number1;
 };
 
+type Rows = Array<Array<TagNode>>;
+
 function cursorToIndex(
 	cursor: Cursor,
 ): {
@@ -72,7 +75,7 @@ type Ancestry = Array<TagNode>;
 
 function createTag(
 	name: TagNode["name"],
-	attributes: TagNode["attributes"],
+	attributes: TagNode["attributes"] = createEmptyAttributes(),
 	children: TagNode["children"] = [],
 ): TagNode {
 	return {
@@ -83,16 +86,51 @@ function createTag(
 	};
 }
 
+function extractViewTags(
+	tag: TagNode,
+): {
+	pointer: undefined | TagNode;
+	linePrefixes: Array<TagNode>;
+	children: Children;
+} {
+	let pointer: undefined | TagNode;
+	let linePrefixes: Array<TagNode> = [];
+	let children: Children = [];
+
+	for (const child of tag.children) {
+		if (child.type === "Tag") {
+			if (child.name === "viewLinePrefix") {
+				linePrefixes.push(child);
+				continue;
+			} else if (child.name === "viewPointer") {
+				pointer = child;
+				continue;
+			}
+		}
+
+		children.push(child);
+	}
+
+	return {pointer, linePrefixes, children};
+}
+
+type GridLine = {
+	ranges: Array<{
+		start: number;
+		end: number;
+		ancestry: Ancestry;
+	}>;
+	columns: Array<string>;
+};
+
 export default class Grid {
 	constructor(opts: MarkupFormatGridOptions) {
 		this.viewportWidth =
 			opts.columns === undefined ? undefined : ob1Coerce1(opts.columns);
-		this.markupOptions = opts;
+		this.options = opts;
 
 		this.features =
 			opts.features === undefined ? TERMINAL_FEATURES_DEFAULT : opts.features;
-
-		this.pointer = opts.pointer;
 
 		this.cursor = {
 			line: ob1Number1,
@@ -106,11 +144,12 @@ export default class Grid {
 		};
 
 		this.lineStartMeta = {
+			softWrapped: false,
 			indentationCount: 0,
 			sourceColumn: ob1Number1,
 		};
 
-		const {lineWrapMode = "word-break"} = opts;
+		const {lineWrapMode = "word-break"} = opts.view;
 		this.lineWrapMode = lineWrapMode;
 		this.width = ob1Number1;
 
@@ -119,16 +158,8 @@ export default class Grid {
 
 	features: TerminalFeatures;
 	lineWrapMode: MarkupLineWrapMode;
-	markupOptions: MarkupFormatGridOptions;
-	lines: Array<{
-		ranges: Array<{
-			start: number;
-			end: number;
-			ancestry: Ancestry;
-		}>;
-		columns: Array<string>;
-	}>;
-	pointer: undefined | MarkupPointer;
+	options: MarkupFormatGridOptions;
+	lines: Array<GridLine>;
 	cursor: Cursor;
 	width: Number1;
 	viewportWidth: undefined | Number1;
@@ -142,6 +173,7 @@ export default class Grid {
 	};
 
 	lineStartMeta: {
+		softWrapped: boolean;
 		indentationCount: number;
 		sourceColumn: Number1;
 	};
@@ -154,10 +186,12 @@ export default class Grid {
 
 		this.lines = this.lines.map(({ranges, columns}) => {
 			const newColumns = [...columns];
+			let offset = 0;
 
 			// Pad out line to viewport width
 			while (newColumns.length < viewportWidth) {
-				newColumns.push(" ");
+				offset++;
+				newColumns.unshift(" ");
 			}
 
 			// Skip if all it contains is spaces
@@ -173,15 +207,6 @@ export default class Grid {
 					columns: newColumns,
 					ranges,
 				};
-			}
-
-			let offset = 0;
-
-			// Shift whitespace from right to left
-			while (newColumns[newColumns.length - 1] === " ") {
-				offset++;
-				newColumns.pop();
-				newColumns.unshift(" ");
 			}
 
 			const newRanges = ranges.map((range) => {
@@ -211,9 +236,16 @@ export default class Grid {
 		return ob1Coerce1(this.lines.length);
 	}
 
+	getLine(lineIndex: number): GridLine {
+		// Pad lines
+		for (let i = lineIndex; i >= 0 && this.lines[i] === undefined; i--) {
+			this.lines[i] = {ranges: [], columns: []};
+		}
+		return this.lines[lineIndex];
+	}
+
 	getLineWidth(lineIndex: number): number {
-		const line = this.lines[lineIndex];
-		return line === undefined ? 0 : line.columns.length;
+		return this.getLine(lineIndex).columns.length;
 	}
 
 	getWidth(): Number1 {
@@ -247,11 +279,42 @@ export default class Grid {
 		}
 	}
 
+	getTrimmedLines(trimColumns: boolean = true): Array<GridLine> {
+		// Remove trailing spaces
+		let lines = this.lines;
+
+		if (trimColumns) {
+			lines = lines.map((line) => {
+				let {columns} = line;
+
+				if (columns[columns.length - 1] === " ") {
+					columns = [...columns];
+					while (columns[columns.length - 1] === " ") {
+						columns.pop();
+					}
+					return {...line, columns};
+				}
+
+				return line;
+			});
+		} else {
+			lines = [...this.lines];
+		}
+
+		// Remove empty columns
+		// Explicit newlines will have at least one column with an empty field
+		while (lines.length > 0 && lines[lines.length - 1].columns.length === 0) {
+			lines.pop();
+		}
+
+		return lines;
+	}
+
 	getUnformattedLines(): MarkupLines {
-		return this.lines.map(({columns}) => {
+		return this.getTrimmedLines().map(({columns}) => {
 			return {
 				width: columns.length,
-				line: columns.join("").trimRight(),
+				line: columns.join(""),
 			};
 		});
 	}
@@ -265,8 +328,8 @@ export default class Grid {
 	): MarkupLines {
 		const lines: MarkupLines = [];
 
-		for (const {ranges, columns} of this.lines) {
-			let content = columns.join("").trimRight();
+		for (const {ranges, columns} of this.getTrimmedLines()) {
+			let content = columns.join("");
 
 			// Sort ranges from last to first
 			const sortedRanges = ranges.sort((a, b) => b.end - a.end);
@@ -305,7 +368,7 @@ export default class Grid {
 		return this.getFormattedLines({
 			normalizeText: (text) => text,
 			formatTag: (tag, inner) =>
-				ansiFormatText(tag, inner, this.markupOptions, this.features)
+				ansiFormatText(tag, inner, this.options, this.features)
 			,
 
 			wrapRange: (inner) => formatAnsi.reset(inner),
@@ -315,13 +378,8 @@ export default class Grid {
 	fillCursor(cursor: Cursor) {
 		const {line: lineIndex, column: colIndex} = cursorToIndex(cursor);
 
-		// Pad lines
-		for (let i = lineIndex; i >= 0 && this.lines[i] === undefined; i--) {
-			this.lines[i] = {ranges: [], columns: []};
-		}
-
 		// Pad columns
-		const line = this.lines[lineIndex];
+		const line = this.getLine(lineIndex);
 		for (let i = colIndex - 1; i >= 0 && line.columns[i] === undefined; i--) {
 			line.columns[i] = " ";
 		}
@@ -329,6 +387,7 @@ export default class Grid {
 
 	moveCursor(cursor: Cursor) {
 		if (cursor.line !== this.cursor.line) {
+			this.lineStartMeta.softWrapped = false;
 			this.lineStartMeta.indentationCount = 0;
 			this.lineStartMeta.sourceColumn = this.sourceCursor.currentColumn;
 		}
@@ -348,11 +407,12 @@ export default class Grid {
 
 		// Perform character line wrap
 		if (this.doesOverflowViewport(newColumns)) {
-			const currentLine = this.lines[ob1Get1(this.cursor.line) - 1];
+			const currentLine = this.getLine(ob1Get1(this.cursor.line) - 1);
+			const previousLineSoftWrapped = this.lineStartMeta.softWrapped;
 
 			this.moveCursorBottomStart();
 
-			// Inherit the previous lines indentation
+			// Soft wrap, inherit the previous lines indentation
 			if (currentLine !== undefined) {
 				for (
 					let i = 0;
@@ -361,6 +421,16 @@ export default class Grid {
 				) {
 					this.moveCursorRight();
 					this.lineStartMeta.indentationCount++;
+				}
+
+				const {extraSoftWrapIndent} = this.options.view;
+				if (previousLineSoftWrapped) {
+					this.lineStartMeta.softWrapped = true;
+				} else if (extraSoftWrapIndent !== undefined) {
+					this.lineStartMeta.softWrapped = true;
+					for (let i = 0; i < extraSoftWrapIndent; i++) {
+						this.moveCursorRight();
+					}
 				}
 			}
 		} else {
@@ -379,7 +449,7 @@ export default class Grid {
 
 	newline() {
 		this.moveCursorBottomStart();
-		this.fillCursor(this.cursor);
+		this.writeToCursor(this.cursor, "");
 	}
 
 	moveCursorStart() {
@@ -400,7 +470,7 @@ export default class Grid {
 		this.fillCursor(cursor);
 
 		const {line: lineIndex, column: colIndex} = cursorToIndex(cursor);
-		const line = this.lines[lineIndex];
+		const line = this.getLine(lineIndex);
 		line.columns[colIndex] = char;
 
 		if (cursor.column > this.width) {
@@ -440,7 +510,8 @@ export default class Grid {
 	}
 
 	isInsidePointer(): boolean {
-		const {sourceCursor, pointer} = this;
+		const {sourceCursor} = this;
+		const {pointer} = this.options.view;
 
 		if (pointer === undefined) {
 			return false;
@@ -538,12 +609,12 @@ export default class Grid {
 		if (end < start) {
 			throw new Error(
 				`Range end for line index ${line} is before the start. end(${end}) < start(${start}). Line content: ${JSON.stringify(
-					this.lines[line]?.columns,
+					this.getLine(line).columns,
 				)}`,
 			);
 		}
 
-		this.lines[line].ranges.push({
+		this.getLine(line).ranges.push({
 			start,
 			end,
 			ancestry,
@@ -641,7 +712,7 @@ export default class Grid {
 
 	drawListItem(item: TagNode, ancestry: Ancestry) {
 		const grid = new Grid({
-			...this.markupOptions,
+			...this.options,
 			columns: this.getSubColumns(this.cursor.column),
 		});
 		grid.drawTag(item, ancestry);
@@ -649,15 +720,16 @@ export default class Grid {
 		this.moveCursorBottomStart();
 	}
 
-	drawPointer() {
-		const {pointer, sourceCursor, lineStartMeta, cursor} = this;
+	drawPointer(): boolean {
+		const {pointer} = this.options.view;
+		const {sourceCursor, lineStartMeta, cursor} = this;
 		if (pointer === undefined) {
-			return;
+			return false;
 		}
 
 		if (sourceCursor.currentLine !== pointer.line) {
 			// I'm not quite sure what we are meant to do here
-			return;
+			return false;
 		}
 
 		let start = ob1Get1(pointer.columnStart);
@@ -705,93 +777,228 @@ export default class Grid {
 		// Pointer message
 		if (pointer.message.length > 0) {
 			this.writeText(" ", [], false);
-			this.drawView(
-				{
-					type: "Tag",
-					name: "view",
-					children: pointer.message,
-					attributes: createEmptyAttributes(),
-				},
-				[],
-			);
+			this.drawView(createTag("view", undefined, pointer.message), []);
 		}
+
+		return true;
 	}
 
-	parse(sub: string, offsetPosition: undefined | Position): Children {
-		if (sub === "") {
+	parse(sub: undefined | string, offsetPosition: undefined | Position): Children {
+		if (sub === undefined) {
 			return [];
 		}
 
 		return this.normalizeChildren(
-			parseMarkup(
-				sub,
-				{offsetPosition, sourceText: this.markupOptions.sourceText},
-			),
+			parseMarkup(sub, {offsetPosition, sourceText: this.options.sourceText}),
 		);
 	}
 
-	drawView({children, attributes}: TagNode, ancestry: Ancestry) {
-		// We allow markup in the linePrefix tag... Not sure how else we can support it.
-		// NB: This assumes that the line prefix is only 1 height, maybe we could have some validation
-		const linePrefix = this.parse(
-			attributes.get("linePrefix").asString(""),
-			attributes.get("linePrefix").getDiagnosticLocation("inner-value").start,
+	parseAttribute(attributes: TagAttributes, key: string): Children {
+		return this.parse(
+			attributes.get(key).asStringOrVoid(),
+			attributes.get(key).getDiagnosticLocation("inner-value").start,
+		);
+	}
+
+	getViewLinePrefixes(
+		children: Array<TagNode>,
+		ancestry: Ancestry,
+	): {
+		width: number;
+		pointer: undefined | Grid;
+		first: undefined | Grid;
+		middle: undefined | Grid;
+		last: undefined | Grid;
+	} {
+		const prefixes: Array<TagNode> = [];
+
+		let linePrefixFirst: undefined | TagNode;
+		let linePrefixMiddle: undefined | TagNode;
+		let linePrefixLast: undefined | TagNode;
+		let linePrefixPointer: undefined | TagNode;
+
+		// Extract viewLinePrefix tags
+		for (const child of children) {
+			switch (child.attributes.get("type").asStringOrVoid()) {
+				case "first": {
+					linePrefixFirst = child;
+					prefixes.push(linePrefixFirst);
+					break;
+				}
+
+				case "middle": {
+					linePrefixMiddle = child;
+					if (linePrefixLast === undefined) {
+						linePrefixLast = child;
+					}
+					prefixes.push(child);
+					break;
+				}
+
+				case "end": {
+					linePrefixLast = child;
+					prefixes.push(child);
+					break;
+				}
+
+				case "pointer": {
+					linePrefixPointer = child;
+					prefixes.push(child);
+					break;
+				}
+
+				case undefined: {
+					if (
+						linePrefixPointer === undefined ||
+						linePrefixFirst === undefined ||
+						linePrefixMiddle === undefined ||
+						linePrefixLast === undefined
+					) {
+						prefixes.push(child);
+					}
+					if (linePrefixFirst === undefined) {
+						linePrefixFirst = child;
+					}
+					if (linePrefixMiddle === undefined) {
+						linePrefixMiddle = child;
+					}
+					if (linePrefixLast === undefined) {
+						linePrefixLast = child;
+					}
+					if (linePrefixPointer === undefined) {
+						linePrefixPointer = child;
+					}
+					break;
+				}
+			}
+		}
+
+		const childrenToGrid: Map<undefined | TagNode, Grid> = new Map();
+		let maxWidth = 0;
+
+		// Get the maxWidth
+		for (const prefix of prefixes) {
+			const grid = new Grid({...this.options, columns: undefined});
+			grid.drawChildren(prefix.children, ancestry);
+			const width = ob1Get1(grid.getSize().width);
+			if (width > maxWidth) {
+				maxWidth = width;
+			}
+		}
+
+		// Now actually render the grids
+		for (const prefix of prefixes) {
+			const grid = new Grid({...this.options, columns: maxWidth});
+			grid.drawChildren(prefix.children, ancestry);
+			grid.maybeAlign(prefix);
+			childrenToGrid.set(prefix, grid);
+		}
+
+		return {
+			width: maxWidth,
+			pointer: childrenToGrid.get(linePrefixPointer),
+			first: childrenToGrid.get(linePrefixFirst),
+			middle: childrenToGrid.get(linePrefixMiddle),
+			last: childrenToGrid.get(linePrefixLast),
+		};
+	}
+
+	getViewPointer({attributes, children}: TagNode): MarkupPointer {
+		return {
+			char: this.parse(
+				attributes.get("char").asString(""),
+				attributes.get("char").getDiagnosticLocation("inner-value").start,
+			),
+			message: children,
+			line: attributes.get("line").asOneIndexedNumber(0),
+			columnStart: attributes.get("start").asOneIndexedNumber(0),
+			columnEnd: attributes.get("end").asOneIndexedNumber(0),
+		};
+	}
+
+	drawView(tag: TagNode, ancestry: Ancestry) {
+		const tags = extractViewTags(tag);
+		const {children} = tags;
+		const {attributes} = tag;
+
+		const pointer =
+			tags.pointer === undefined ? undefined : this.getViewPointer(tags.pointer);
+		const linePrefixes = this.getViewLinePrefixes(tags.linePrefixes, ancestry);
+		const startCursor = this.getCursor();
+		const columns = this.getSubColumns(
+			ob1Add(startCursor.column, linePrefixes?.width || 0),
 		);
 
-		const linePrefixStart = this.getCursor();
-		this.drawChildren(linePrefix, ancestry);
-		const linePrefixEnd = this.getCursor();
-		const hasLinePrefix =
-			linePrefixStart.line !== linePrefixEnd.line ||
-			linePrefixStart.column !== linePrefixEnd.column;
-
-		const columns = this.getSubColumns(this.cursor.column);
-		const pointer: MarkupPointer = {
-			char: this.parse(
-				attributes.get("pointerChar").asString(""),
-				attributes.get("pointerChar").getDiagnosticLocation("inner-value").start,
-			),
-			message: this.parse(
-				attributes.get("pointerMessage").asString(""),
-				attributes.get("pointerMessage").getDiagnosticLocation("inner-value").start,
-			),
-			line: attributes.get("pointerLine").asOneIndexedNumber(0),
-			columnStart: attributes.get("pointerStart").asOneIndexedNumber(0),
-			columnEnd: attributes.get("pointerEnd").asOneIndexedNumber(0),
-		};
+		if (linePrefixes !== undefined) {
+			if (linePrefixes.first !== undefined) {
+				this.drawGrid(linePrefixes.first);
+			}
+			this.moveCursor({
+				...startCursor,
+				column: ob1Add(startCursor.column, linePrefixes.width),
+			});
+		}
 
 		const lineWrapMode = lineWrapValidator(
 			attributes.get("lineWrap").asStringOrVoid(),
 		);
+
 		const grid = new Grid({
-			...this.markupOptions,
-			pointer,
+			...this.options,
+			view: {
+				extraSoftWrapIndent: attributes.get("extraSoftWrapIndent").asNumberOrVoid(),
+				pointer,
+				lineWrapMode,
+			},
 			columns,
-			lineWrapMode,
 		});
-		grid.drawChildren(children, ancestry);
-		grid.drawPointer();
+		for (const child of children) {
+			grid.drawChild(child, ancestry);
+		}
+		const drewPointer = grid.drawPointer();
+		grid.maybeAlign(tag);
 		this.drawGrid(grid);
 
-		if (hasLinePrefix) {
+		if (linePrefixes) {
+			const height = ob1Get1(grid.getHeight());
+
 			// Add on any subsequent line prefixes if we wrapped
-			for (let i = 1; i < ob1Get1(grid.getHeight()); i++) {
+			for (let i = 1; i < height; i++) {
+				let thisLinePrefix = linePrefixes.middle;
+
+				if (i === height - 1) {
+					if (drewPointer) {
+						// Don't prefix a pointer
+						thisLinePrefix = linePrefixes.pointer;
+					} else {
+						thisLinePrefix = linePrefixes.last;
+					}
+				}
+
+				// Correct last offset if we drew a pointer
+				if (drewPointer && i === height - 2) {
+					thisLinePrefix = linePrefixes.last;
+				}
+
 				this.moveCursor({
-					line: ob1Add(linePrefixStart.line, i),
-					column: linePrefixStart.column,
+					line: ob1Add(startCursor.line, i),
+					column: startCursor.column,
 				});
-				this.drawChildren(linePrefix, ancestry);
+
+				if (thisLinePrefix !== undefined) {
+					this.drawGrid(thisLinePrefix);
+				}
 			}
 		}
 
 		this.moveCursor({
 			line: this.getHeight(),
-			column: linePrefixStart.column,
+			column: startCursor.column,
 		});
 	}
 
 	drawTable(tag: TagNode, ancestry: Ancestry) {
-		const rows: Array<Array<TagNode>> = [];
+		const rows: Rows = [];
 
 		for (const child of tag.children) {
 			if (child.type === "Tag" && child.name === "tr") {
@@ -823,7 +1030,7 @@ export default class Grid {
 					// Could be an excessive column
 					return 0;
 				} else {
-					const grid = new Grid({...this.markupOptions, columns: undefined});
+					const grid = new Grid({...this.options, columns: undefined});
 					grid.drawTag(field, ancestry);
 					return ob1Get1(grid.getSize().width);
 				}
@@ -866,11 +1073,9 @@ export default class Grid {
 				const field = row[colIndex];
 				const width = ob1Coerce1(columnWidths[colIndex]);
 
-				const grid = new Grid({...this.markupOptions, columns: ob1Get1(width)});
+				const grid = new Grid({...this.options, columns: ob1Get1(width)});
 				grid.drawTag(field, ancestry);
-				if (field.attributes.get("align").asStringOrVoid() === "right") {
-					grid.alignRight();
-				}
+				grid.maybeAlign(field);
 
 				this.drawGrid(grid);
 				this.moveCursorRight(ob1Inc(width));
@@ -880,11 +1085,17 @@ export default class Grid {
 		}
 	}
 
+	// Sometimes we derive a Grid from a tag that accepts an align attribute
+	maybeAlign(tag: TagNode) {
+		if (tag.attributes.get("align").asStringOrVoid() === "right") {
+			this.alignRight();
+		}
+	}
+
 	drawGrid(grid: Grid) {
-		const {lines} = grid;
+		const lines = grid.getTrimmedLines(false);
 		const cursor = cursorToIndex(this.getCursor());
 
-		// Write
 		for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
 			const {columns, ranges} = lines[lineIndex];
 
@@ -958,13 +1169,17 @@ export default class Grid {
 		this.lineWrapMode = oldLineWrapMode;
 	}
 
+	drawChild(child: ChildNode, ancestry: Ancestry) {
+		if (child.type === "Text") {
+			this.drawText(child, ancestry);
+		} else {
+			this.drawTag(child, ancestry);
+		}
+	}
+
 	drawChildren(children: Children, ancestry: Ancestry) {
 		for (const child of children) {
-			if (child.type === "Text") {
-				this.drawText(child, ancestry);
-			} else {
-				this.drawTag(child, ancestry);
-			}
+			this.drawChild(child, ancestry);
 		}
 	}
 
@@ -1140,7 +1355,7 @@ export default class Grid {
 							{
 								type: "Text",
 								source: false,
-								value: buildFileLink(tag.attributes, this.markupOptions).text,
+								value: buildFileLink(tag.attributes, this.options).text,
 							},
 						],
 					},

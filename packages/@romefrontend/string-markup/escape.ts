@@ -54,6 +54,8 @@ export function escapeMarkup(input: string): string {
 
 		if (char === "<") {
 			escaped += "\\<";
+		} else if (char === '"') {
+			escaped += '\\"';
 		} else if (char === "\\") {
 			escaped += "\\\\";
 		} else {
@@ -94,7 +96,7 @@ export function unescapeTextValue(str: string): string {
 		// Unescape \\\\ to just \\
 		if (char === "\\") {
 			const nextChar = str[i + 1];
-			if (nextChar === "<" || nextChar === "\\") {
+			if (nextChar === "<" || nextChar === '"' || nextChar === "\\") {
 				i++;
 				unescaped += nextChar;
 				continue;
