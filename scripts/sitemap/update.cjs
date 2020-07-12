@@ -1,8 +1,6 @@
 require("../_setup.cjs");
 
-const {readGeneratedFile, write, readFile} = require(
-	"../_utils.cjs",
-);
+const {readGeneratedFile, write, readFile} = require("../_utils.cjs");
 const {root} = require("../_constants.cjs");
 const path = require("path");
 const fs = require("fs");
