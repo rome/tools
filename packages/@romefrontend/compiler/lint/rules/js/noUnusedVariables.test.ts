@@ -9,8 +9,8 @@ test(
 			t,
 			{
 				invalid: [
-					`const a = 4;`,
-					`let a = 4;`,
+					"const a = 4;",
+					"let a = 4;",
 					dedent`
 						function foo(myVar) {
 							console.log("foo");

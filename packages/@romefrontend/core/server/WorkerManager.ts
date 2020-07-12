@@ -252,7 +252,7 @@ export default class WorkerManager {
 				type: "client",
 				onSendMessage: (data) => {
 					this.server.logger.info(
-						`[WorkerManager] Sending worker request to %s:`,
+						"[WorkerManager] Sending worker request to %s:",
 						workerId,
 						data,
 					);
@@ -300,7 +300,7 @@ export default class WorkerManager {
 		this.workerStartEvent.send(bridge);
 
 		this.server.logger.info(
-			`[WorkerManager] Worker %s started after %sms`,
+			"[WorkerManager] Worker %s started after %sms",
 			workerId,
 			Date.now() - start,
 		);

@@ -107,7 +107,7 @@ export default class Scope {
 	getRootScope(): RootScope {
 		const {rootScope} = this;
 		if (rootScope === undefined) {
-			throw new Error(`Expected rootScope`);
+			throw new Error("Expected rootScope");
 		}
 		return rootScope;
 	}

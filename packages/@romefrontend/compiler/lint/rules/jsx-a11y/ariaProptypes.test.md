@@ -181,7 +181,7 @@
 ### `6: formatted`
 
 ```
-<span aria-labelledby={``}>
+<span aria-labelledby={""}>
 </span>;
 
 ```

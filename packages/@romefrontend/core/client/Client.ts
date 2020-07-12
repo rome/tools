@@ -610,7 +610,7 @@ export default class Client {
 				resolve(
 					this.tryConnectToExistingDaemon().then((bridge) => {
 						if (bridge !== undefined) {
-							this.reporter.success(`Started daemon!`);
+							this.reporter.success("Started daemon!");
 						}
 						return bridge;
 					}),

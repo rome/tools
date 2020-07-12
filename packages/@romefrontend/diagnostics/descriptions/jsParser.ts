@@ -92,7 +92,7 @@ export const jsParser = createDiagnosticsCategory({
 	OBJECT_PROPERTY_WITH_TYPE_PARAMETERS: "Object property cannot have type parameters",
 	ILLEGAL_VARIANCE: "Variance is not allowed here",
 	OBJECT_METHOD_IN_PATTERN: "Object methods aren't allowed in object patterns",
-	IMPORT_META_OUTSIDE_MODULE: `import.meta may only appear in a module`,
+	IMPORT_META_OUTSIDE_MODULE: "import.meta may only appear in a module",
 	EXPECTED_ARROW_AFTER_ASYNC_TYPE_PARAMS: "Expected arrow because we are a possible async arrow and type annotated parameters were present",
 	INVALID_OBJECT_PATTERN_PROP: "Invalid property node for object pattern",
 	ASYNC_OBJECT_METHOD_LINE_BREAK: "There shouldn't be any newlines between async and the rest of the function",
@@ -101,7 +101,7 @@ export const jsParser = createDiagnosticsCategory({
 	EXPECTED_ARROW_AFTER_TYPE_PARAMS: "Expected an arrow function after this type parameter declaration",
 	REQUIRED_CLASS_NAME: "Class name is required",
 	JSX_ELEM_TYPE_ARGUMENTS_OUTSIDE_TS: "JSX element type arguments are only allowed in TS",
-	UNWRAPPED_ADJACENT_JHX: `Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment \\<>...\\</>?`,
+	UNWRAPPED_ADJACENT_JHX: "Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment \\<>...\\</>?",
 	CONFUSED_OR: "Unexpected ||, did you mean just |?",
 	INVALID_ASSIGNMENT_TARGET: "Not a valid assignment target",
 	IMPORT_KIND_SPECIFIER_ON_IMPORT_DECLARATION_WITH_KIND: "The `type` and `typeof` keywords on named imports can only be used on regular `import` statements. It cannot be used with `import type` or `import typeof` statements",
@@ -117,7 +117,7 @@ export const jsParser = createDiagnosticsCategory({
 	INVALID_OBJECT_REST_ARGUMENT: "Invalid rest operator's argument",
 	INVALID_EXPORT_DEFAULT: "Only expressions, functions or classes are allowed as the `default` export.",
 	INVALID_EXPORT_DECLARATION: "Invalid export declaration",
-	DESTRUCTURING_REST_ELEMENT_NOT_LAST: `The rest element has to be the last element when destructuring`,
+	DESTRUCTURING_REST_ELEMENT_NOT_LAST: "The rest element has to be the last element when destructuring",
 	REST_INVALID_ARGUMENT: "Invalid rest operator's argument",
 	EXPORT_ASYNC_NO_FUNCTION_KEYWORD: "Started with `export async` so we expected to receive an async function but no function keyword was found",
 	TYPE_CAST_WITHOUT_ANNOTATION: "Type cast expression has no type annotation. Did you mean for this to be a function parameter?",
@@ -178,7 +178,7 @@ export const jsParser = createDiagnosticsCategory({
 			: markup`Unknown label <emphasis>${label}</emphasis>`,
 	}),
 	IMPORT_EXPORT_IN_SCRIPT: (manifestPath: string) => ({
-		message: `<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module`,
+		message: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module",
 		advice: [
 			// TODO this advice is pointless if you have syntax extensions enabled
 			{
@@ -348,7 +348,7 @@ export const jsParser = createDiagnosticsCategory({
 					{
 						type: "log",
 						category: "info",
-						text: `Did you accidently hold shift?`,
+						text: "Did you accidently hold shift?",
 					},
 				]
 			: [],

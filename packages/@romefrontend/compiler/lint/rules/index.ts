@@ -44,6 +44,7 @@ import noShadowRestrictedNames from "./js/noShadowRestrictedNames";
 import noShorthandArrayType from "./js/noShorthandArrayType";
 import noTemplateCurlyInString from "./js/noTemplateCurlyInString";
 import noUnsafeFinally from "./js/noUnsafeFinally";
+import noUnusedTemplateLiteral from "./js/noUnusedTemplateLiteral";
 import noUnusedVariables from "./js/noUnusedVariables";
 import noVar from "./js/noVar";
 import preferBlockStatements from "./js/preferBlockStatements";
@@ -152,6 +153,7 @@ export const lintTransforms = [
 	noShorthandArrayType,
 	noTemplateCurlyInString,
 	noUnsafeFinally,
+	noUnusedTemplateLiteral,
 	noUnusedVariables,
 	noVar,
 	preferBlockStatements,

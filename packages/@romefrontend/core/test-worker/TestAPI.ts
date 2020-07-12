@@ -181,7 +181,7 @@ export default class TestAPI implements TestHelper {
 			advice.push({
 				type: "log",
 				category: "info",
-				text: `Both the received and expected values are visually identical`,
+				text: "Both the received and expected values are visually identical",
 			});
 
 			advice.push({
@@ -204,7 +204,7 @@ export default class TestAPI implements TestHelper {
 				advice.push({
 					type: "log",
 					category: "info",
-					text: `Expected to receive`,
+					text: "Expected to receive",
 				});
 
 				advice.push({
@@ -215,7 +215,7 @@ export default class TestAPI implements TestHelper {
 				advice.push({
 					type: "log",
 					category: "info",
-					text: `But got`,
+					text: "But got",
 				});
 
 				advice.push({
@@ -330,7 +330,7 @@ export default class TestAPI implements TestHelper {
 					{
 						type: "log",
 						category: "info",
-						text: `Received`,
+						text: "Received",
 					},
 					{
 						type: "code",
@@ -350,7 +350,7 @@ export default class TestAPI implements TestHelper {
 					{
 						type: "log",
 						category: "info",
-						text: `Received`,
+						text: "Received",
 					},
 					{
 						type: "code",
@@ -370,7 +370,7 @@ export default class TestAPI implements TestHelper {
 					{
 						type: "log",
 						category: "info",
-						text: `Received`,
+						text: "Received",
 					},
 					{
 						type: "code",
@@ -390,7 +390,7 @@ export default class TestAPI implements TestHelper {
 					{
 						type: "log",
 						category: "info",
-						text: `Received`,
+						text: "Received",
 					},
 					{
 						type: "code",
@@ -567,7 +567,7 @@ export default class TestAPI implements TestHelper {
 					{
 						type: "log",
 						category: "info",
-						text: `Expected`,
+						text: "Expected",
 					},
 					{
 						type: "code",
@@ -576,7 +576,7 @@ export default class TestAPI implements TestHelper {
 					{
 						type: "log",
 						category: "info",
-						text: `to match pattern`,
+						text: "to match pattern",
 					},
 					{
 						type: "code",
@@ -600,7 +600,7 @@ export default class TestAPI implements TestHelper {
 					{
 						type: "log",
 						category: "info",
-						text: `Expected`,
+						text: "Expected",
 					},
 					{
 						type: "code",
@@ -609,7 +609,7 @@ export default class TestAPI implements TestHelper {
 					{
 						type: "log",
 						category: "info",
-						text: `to not match pattern`,
+						text: "to not match pattern",
 					},
 					{
 						type: "code",

@@ -288,9 +288,9 @@ export default class BundleRequest {
 				}
 			}
 
-			push(`(async function(global) {`);
+			push("(async function(global) {");
 		} else {
-			push(`(function(global) {`);
+			push("(function(global) {");
 		}
 
 		if (mode === "modern") {

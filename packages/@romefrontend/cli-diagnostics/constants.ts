@@ -8,7 +8,7 @@
 export const GUTTER = "<emphasis> \u2502 </emphasis>";
 
 export const CODE_FRAME_INDENT = "  ";
-export const CODE_FRAME_SELECTED_INDENT = `<error>\></error> `;
+export const CODE_FRAME_SELECTED_INDENT = "<error>></error> ";
 
 export const MAX_CODE_FRAME_LINES = 8;
 export const HALF_MAX_CODE_FRAME_LINES = MAX_CODE_FRAME_LINES / 2;

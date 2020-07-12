@@ -31,9 +31,9 @@ export default function resolverSuggest(
 ): Error {
 	let errMsg = "";
 	if (resolved.type === "UNSUPPORTED") {
-		errMsg = `Unsupported path format`;
+		errMsg = "Unsupported path format";
 	} else if (resolved.type === "MISSING") {
-		errMsg = `Cannot find`;
+		errMsg = "Cannot find";
 	} else if (resolved.type === "FETCH_ERROR") {
 		errMsg = "Failed to fetch";
 	}

@@ -95,7 +95,7 @@ export default class FileAllocator {
 			filename,
 		});
 
-		this.server.logger.info(`[FileAllocator] Evicted %s`, path.toMarkup());
+		this.server.logger.info("[FileAllocator] Evicted %s", path.toMarkup());
 	}
 
 	async handleDeleted(path: AbsoluteFilePath) {
@@ -147,11 +147,11 @@ export default class FileAllocator {
 			workerManager.own(workerId, newStats);
 		} else if (await this.server.projectManager.maybeEvictPossibleConfig(path)) {
 			logger.info(
-				`[FileAllocator] Evicted the project belonging to config %s`,
+				"[FileAllocator] Evicted the project belonging to config %s",
 				path.toMarkup(),
 			);
 		} else {
-			logger.info(`[FileAllocator] No owner for eviction %s`, path.toMarkup());
+			logger.info("[FileAllocator] No owner for eviction %s", path.toMarkup());
 		}
 	}
 
@@ -170,7 +170,7 @@ export default class FileAllocator {
 
 			// Add ourselves to the file map
 			logger.info(
-				`[FileAllocator] File %s assigned to worker %s`,
+				"[FileAllocator] File %s assigned to worker %s",
 				path.toMarkup(),
 				worker.id,
 			);

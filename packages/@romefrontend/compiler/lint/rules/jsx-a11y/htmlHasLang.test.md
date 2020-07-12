@@ -139,7 +139,7 @@
 ### `4: formatted`
 
 ```
-<html lang={``}>
+<html lang={""}>
 </html>;
 
 ```

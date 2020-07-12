@@ -284,7 +284,7 @@ export default function reduce(
 					// When replacing a key value, we cannot replace it with an array
 					if (Array.isArray(newVal)) {
 						throw new Error(
-							`Cannot replace a key value node with an array of nodes`,
+							"Cannot replace a key value node with an array of nodes",
 						);
 					}
 

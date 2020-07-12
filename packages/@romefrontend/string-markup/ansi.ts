@@ -23,7 +23,7 @@ export const formatAnsi = {
 		return createEscape(0) + str + createEscape(0);
 	},
 	fileHyperlink(name: string, filename: string): string {
-		let href = `file://`;
+		let href = "file://";
 		const {HOSTNAME} = process.env;
 		if (HOSTNAME != null) {
 			href += `${HOSTNAME}/`;

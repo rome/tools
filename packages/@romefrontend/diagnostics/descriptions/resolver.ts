@@ -18,12 +18,12 @@ export const resolver = createDiagnosticsCategory({
 
 		switch (responseType) {
 			case "UNSUPPORTED": {
-				messagePrefix = `Unsupported`;
+				messagePrefix = "Unsupported";
 				category = "resolver/unsupported";
 				break;
 			}
 			case "MISSING": {
-				messagePrefix = `Cannot find`;
+				messagePrefix = "Cannot find";
 				break;
 			}
 			case "FETCH_ERROR": {

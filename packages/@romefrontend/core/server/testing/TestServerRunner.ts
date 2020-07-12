@@ -599,7 +599,7 @@ export default class TestServerRunner {
 								{
 									type: "log",
 									category: "info",
-									text: `You can find the specific test that caused this by running <command>rome test --sync-tests</command>`,
+									text: "You can find the specific test that caused this by running <command>rome test --sync-tests</command>",
 								},
 							],
 						},

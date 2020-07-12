@@ -128,13 +128,13 @@ test(
 	(t) => {
 		for (const {before, after} of tests) {
 			const lines = [];
-			lines.push(`# Before`);
+			lines.push("# Before");
 			lines.push(before);
 			lines.push("");
-			lines.push(`# After`);
+			lines.push("# After");
 			lines.push(after);
 			lines.push("");
-			lines.push(`# Diff`);
+			lines.push("# Diff");
 			lines.push(
 				markupToPlainTextString(
 					buildPatchCodeFrame(

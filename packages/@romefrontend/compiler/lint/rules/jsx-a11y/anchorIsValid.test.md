@@ -78,7 +78,7 @@
 ### `2: formatted`
 
 ```
-<a href={`#`} onClick={foo} />;
+<a href={"#"} onClick={foo} />;
 
 ```
 
@@ -182,7 +182,7 @@
 ### `6: formatted`
 
 ```
-<a href={`javascript:void(0)`} onClick={foo} />;
+<a href={"javascript:void(0)"} onClick={foo} />;
 
 ```
 
@@ -338,7 +338,7 @@
 ### `12: formatted`
 
 ```
-<a href={`#`} />;
+<a href={"#"} />;
 
 ```
 
@@ -416,7 +416,7 @@
 ### `15: formatted`
 
 ```
-<a href={`javascript:void(0)`} />;
+<a href={"javascript:void(0)"} />;
 
 ```
 

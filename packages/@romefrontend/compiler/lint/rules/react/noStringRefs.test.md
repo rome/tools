@@ -112,7 +112,7 @@ class Hello extends React.Component {
 ```
 class Hello extends React.Component {
 	render() {
-		return <div ref={`hello`}>
+		return <div ref={"hello"}>
 			Hello 
 			{this.props.name}
 		</div>;

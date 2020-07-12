@@ -54,6 +54,7 @@ showHero: false
 | no-shorthand-array-type |  |
 | no-template-curly-in-string |  |
 | no-unsafe-finally |  |
+| [no-unused-template-literal](/docs/lint/rules/js/no-unused-template-literal) |  MISSING DOCUMENTATION |
 | no-unused-variables |  |
 | no-var |  |
 | prefer-block-statements |  |

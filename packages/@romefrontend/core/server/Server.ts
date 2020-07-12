@@ -731,7 +731,7 @@ export default class Server {
 	}
 
 	async handleRequestStart(req: ServerRequest) {
-		this.logger.info(`[Server] Handling CLI request:`, req.query);
+		this.logger.info("[Server] Handling CLI request:", req.query);
 
 		// Hook used by the web server to track and collect server requests
 		await this.requestStartEvent.callOptional(req);
@@ -747,7 +747,7 @@ export default class Server {
 
 	handleRequestEnd(req: ServerRequest) {
 		this.requestRunningCounter--;
-		this.logger.info(`[Server] Replying to CLI request:`, req.query);
+		this.logger.info("[Server] Replying to CLI request:", req.query);
 
 		// If we're waiting to terminate ourselves when idle, then do so when there's no running requests
 		if (this.terminateWhenIdle && this.requestRunningCounter === 0) {

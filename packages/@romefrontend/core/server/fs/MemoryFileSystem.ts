@@ -402,7 +402,7 @@ export default class MemoryFileSystem {
 		}
 
 		// Wait for any subscribers that might need the file's stats
-		this.server.logger.info(`[MemoryFileSystem] File deleted:`, path.toMarkup());
+		this.server.logger.info("[MemoryFileSystem] File deleted:", path.toMarkup());
 
 		// Only emit these events for files
 		if (folderInfo === undefined) {
@@ -962,7 +962,7 @@ export default class MemoryFileSystem {
 		const oldStats = this.getFileStats(path);
 		if (oldStats !== undefined && opts.reason === "watch") {
 			this.server.logger.info(
-				`[MemoryFileSystem] File change:`,
+				"[MemoryFileSystem] File change:",
 				path.toMarkup(),
 			);
 			this.server.refreshFileEvent.send(path);
