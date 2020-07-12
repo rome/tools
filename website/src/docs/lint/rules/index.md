@@ -99,6 +99,7 @@ showHero: false
 | file-extension |  |
 | no-comment-text |  |
 | no-duplicate-props |  |
+| [no-implicit-boolean](/docs/lint/rules/jsx/no-implicit-boolean) |  MISSING DOCUMENTATION |
 | pascal-case |  |
 | props-no-spreading |  |
 
