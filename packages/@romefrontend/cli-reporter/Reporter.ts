@@ -6,10 +6,10 @@
  */
 
 import {
-	UserMarkupFormatGridOptions,
 	MarkupFormatOptions,
 	MarkupLinesAndWidth,
 	MarkupTagName,
+	UserMarkupFormatGridOptions,
 	ansiEscapes,
 	markupTag,
 	markupToAnsi,

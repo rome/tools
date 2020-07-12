@@ -12,9 +12,9 @@ export {
 	MarkupFormatGridOptions,
 	MarkupFormatNormalizeOptions,
 	MarkupFormatOptions,
-	UserMarkupFormatGridOptions,
 	MarkupLinesAndWidth,
 	MarkupTagName,
+	UserMarkupFormatGridOptions,
 } from "./types";
 
 export {
