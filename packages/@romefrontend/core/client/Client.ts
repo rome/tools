@@ -312,7 +312,7 @@ export default class Client {
 	}
 
 	async rage(ragePath: string, profileOpts: ClientProfileOptions) {
-		if (this.bridgeStatus !== undefined) {
+		if (this.bridgeStatus === undefined) {
 			throw new Error(
 				"rage() can only be called before a query has been dispatched",
 			);
