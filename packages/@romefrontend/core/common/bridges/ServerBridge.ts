@@ -98,13 +98,8 @@ export default class ServerBridge extends Bridge {
 		direction: "server->client",
 	});
 
-	stdout = this.createEvent<string, void>({
-		name: "stdout",
-		direction: "server->client",
-	});
-
-	stderr = this.createEvent<string, void>({
-		name: "stderr",
+	write = this.createEvent<[string, boolean], void>({
+		name: "write",
 		direction: "server->client",
 	});
 

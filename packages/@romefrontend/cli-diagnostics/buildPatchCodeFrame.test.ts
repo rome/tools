@@ -1,8 +1,9 @@
 import {test} from "rome";
 import buildPatchCodeFrame from "./buildPatchCodeFrame";
 import stringDiff from "@romefrontend/string-diff";
-import {markupToPlainTextString} from "@romefrontend/string-markup";
+import {markupToPlainText} from "@romefrontend/string-markup";
 import {dedent} from "@romefrontend/string-utils";
+import {joinMarkupLines} from "@romefrontend/string-markup/format";
 
 type Test = {
 	before: string;
@@ -136,14 +137,16 @@ test(
 			lines.push("");
 			lines.push("# Diff");
 			lines.push(
-				markupToPlainTextString(
-					buildPatchCodeFrame(
-						{
-							type: "diff",
-							diff: stringDiff(before, after),
-						},
-						true,
-					).frame,
+				joinMarkupLines(
+					markupToPlainText(
+						buildPatchCodeFrame(
+							{
+								type: "diff",
+								diff: stringDiff(before, after),
+							},
+							true,
+						).frame,
+					),
 				),
 			);
 			t.snapshot(lines.join("\n"));

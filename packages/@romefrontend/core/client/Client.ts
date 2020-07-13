@@ -42,7 +42,11 @@ import zlib = require("zlib");
 import fs = require("fs");
 import child = require("child_process");
 import {mergeObjects} from "@romefrontend/typescript-helpers";
-import {markupToPlainTextString} from "@romefrontend/string-markup";
+import {
+	joinMarkupLines,
+	markupToHtml,
+	markupToPlainText,
+} from "@romefrontend/string-markup/format";
 
 export function getFilenameTimestamp(): string {
 	return new Date().toISOString().replace(/[^0-9a-zA-Z]/g, "");
@@ -64,6 +68,8 @@ export type ClientProfileOptions = {
 	timeoutInterval: undefined | number;
 	includeWorkers: boolean;
 };
+
+type ProfileCallback = (profile: Array<TraceEvent>) => Promise<void>;
 
 type BridgeStatus = BridgeStatusDedicated | BridgeStatusLocal;
 
@@ -122,10 +128,6 @@ export default class Client {
 			opts.stderr,
 			this.options.terminalFeatures,
 		);
-
-		this.endEvent.subscribe(() => {
-			this.reporter.teardown();
-		});
 	}
 
 	queryCounter: number;
@@ -139,6 +141,18 @@ export default class Client {
 
 	requestResponseEvent: Event<ClientRequestResponseResult, void>;
 	endEvent: Event<void, void>;
+
+	assertBridgeStatus(): BridgeStatus {
+		const {bridgeStatus} = this;
+		if (bridgeStatus === undefined) {
+			throw new Error("Expected a connected bridge but found none");
+		}
+		return bridgeStatus;
+	}
+
+	getBridgeStatus(): undefined | BridgeStatus {
+		return this.bridgeStatus;
+	}
 
 	setFlags(flags: Partial<ClientFlags>) {
 		if (this.bridgeStatus !== undefined) {
@@ -160,13 +174,13 @@ export default class Client {
 		};
 	}
 
-	async profile(
-		opts: ClientProfileOptions,
-		callback: (profile: Array<TraceEvent>) => Promise<void>,
-	) {
-		const {samplingInterval, timeoutInterval, includeWorkers} = opts;
-
+	async profile(opts: ClientProfileOptions, callback: ProfileCallback) {
 		this.reporter.info("Starting CPU profile...");
+		return this._profile(opts, callback);
+	}
+
+	async _profile(opts: ClientProfileOptions, callback: ProfileCallback) {
+		const {samplingInterval, timeoutInterval, includeWorkers} = opts;
 
 		// Start server and start profiling
 		const bridge = await this.findOrStartServer();
@@ -176,7 +190,7 @@ export default class Client {
 
 		// Start cli profiling
 		let cliProfiler: undefined | Profiler;
-		const bridgeStatus = this.getBridge();
+		const bridgeStatus = this.getBridgeStatus();
 		if (bridgeStatus === undefined || bridgeStatus.dedicated) {
 			cliProfiler = new Profiler();
 			await cliProfiler.startProfiling(samplingInterval);
@@ -277,52 +291,39 @@ export default class Client {
 		});
 	}
 
-	subscribeLogs(
+	async subscribeLogs(
 		includeWorkerLogs: boolean,
 		callback: (chunk: string) => void,
-	): EventSubscription {
-		let logEvent: undefined | EventSubscription;
+	): Promise<EventSubscription> {
+		const {bridge} = this.assertBridgeStatus();
 
-		const bridgeAttachedEvent = this.bridgeAttachedEvent.subscribe(async (
-			{bridge},
-		) => {
-			if (includeWorkerLogs) {
-				await bridge.enableWorkerLogs.call();
+		if (includeWorkerLogs) {
+			await bridge.enableWorkerLogs.call();
+		}
+
+		return bridge.log.subscribe(({origin, chunk}) => {
+			if (origin === "worker" && !includeWorkerLogs) {
+				// We allow multiple calls to bridge.enableWorkerLogs
+				// Filter the event if necessary if it wasn't requested by this log subscription
+				return;
 			}
 
-			logEvent = bridge.log.subscribe(({origin, chunk}) => {
-				if (origin === "worker" && !includeWorkerLogs) {
-					// We allow multiple calls to bridge.enableWorkerLogs
-					// Filter the event if necessary if it wasn't requested by this log subscription
-					return;
-				}
-
-				callback(chunk);
-			});
+			callback(chunk);
 		});
-
-		return {
-			async unsubscribe() {
-				await bridgeAttachedEvent.unsubscribe();
-				if (logEvent !== undefined) {
-					await logEvent.unsubscribe();
-				}
-			},
-		};
 	}
 
 	async rage(ragePath: string, profileOpts: ClientProfileOptions) {
-		if (this.bridgeStatus !== undefined) {
-			throw new Error(
-				"rage() can only be called before a query has been dispatched",
-			);
-		}
+		const {bridge} = this.assertBridgeStatus();
 
-		let logs = "";
-		this.subscribeLogs(
+		this.reporter.info("Rage enabled \u{1f620}");
+
+		let logsHTML = "";
+		let logsPlain = "";
+		await this.subscribeLogs(
 			true,
 			(chunk) => {
-				logs += markupToPlainTextString(chunk);
+				logsPlain += joinMarkupLines(markupToPlainText(chunk));
+				logsHTML += joinMarkupLines(markupToHtml(chunk));
 			},
 		);
 
@@ -330,7 +331,7 @@ export default class Client {
 		// Callback will be called later once it has been collected
 		// Initial async work is just connecting to the processes and setting up handlers
 		let profileEvents: Array<TraceEvent> = [];
-		await this.profile(
+		await this._profile(
 			profileOpts,
 			async (_profileEvents) => {
 				profileEvents = _profileEvents;
@@ -343,6 +344,12 @@ export default class Client {
 			responses.push(result);
 		});
 
+		// Capture terminal output
+		let output = "";
+		const writeEvent = bridge.write.subscribe(([chunk]) => {
+			output += chunk;
+		});
+
 		this.endEvent.subscribe(async () => {
 			const stream = zlib.createGzip();
 			stream.pipe(fs.createWriteStream(ragePath));
@@ -350,15 +357,21 @@ export default class Client {
 			const writer = new TarWriter(stream);
 
 			writer.append({name: "profile.json"}, stringifyJSON(profileEvents));
-			writer.append({name: "logs.txt"}, logs);
+			writer.append({name: "logs.txt"}, logsPlain);
+			writer.append({name: "logs.html"}, `<pre><code>${logsHTML}</code></pre>`);
+			writer.append({name: "output.txt"}, output);
+
+			writeEvent.unsubscribe();
 
 			// Add requests
 			for (let i = 0; i < responses.length; i++) {
 				const {request, response} = responses[i];
-				const dirname = `requests/${i}-${request.commandName}`;
-				writer.append({name: `${dirname}/request.json`}, stringifyJSON(request));
+				// If there are multiple responses then use a directory otherwise just dump it in the root
+				const dirname =
+					responses.length === 1 ? "" : `requests/${i}-${request.commandName}/`;
+				writer.append({name: `${dirname}request.json`}, stringifyJSON(request));
 				writer.append(
-					{name: `${dirname}/response.json`},
+					{name: `${dirname}response.json`},
 					stringifyJSON(response),
 				);
 			}
@@ -392,12 +405,15 @@ export default class Client {
 			writer.append({name: "environment.txt"}, `${env.join("\n\n")}\n`);
 
 			// Don't do this if we never connected to the server
-			const bridgeStatus = this.getBridge();
+			const bridgeStatus = this.getBridgeStatus();
 			if (bridgeStatus !== undefined) {
-				const status = await this.query({
-					silent: true,
-					commandName: "status",
-				});
+				const status = await this.query(
+					{
+						silent: true,
+						commandName: "status",
+					},
+					"server",
+				);
 				if (status.type === "SUCCESS") {
 					writer.append(
 						{name: "status.txt"},
@@ -412,7 +428,9 @@ export default class Client {
 			}
 
 			await writer.finalize();
-			this.reporter.success("Rage archive written to", ragePath);
+			this.reporter.success(
+				`Rage archive written to <emphasis><filelink target="${ragePath}" /></emphasis>`,
+			);
 		});
 	}
 
@@ -444,16 +462,12 @@ export default class Client {
 				type,
 			),
 			cancel: async () => {
-				const status = this.getBridge();
+				const status = this.getBridgeStatus();
 				if (status !== undefined) {
 					await status.bridge.cancelQuery.call(cancelToken);
 				}
 			},
 		};
-	}
-
-	getBridge(): undefined | BridgeStatus {
-		return this.bridgeStatus;
 	}
 
 	async shutdownServer() {
@@ -475,6 +489,7 @@ export default class Client {
 
 	async end() {
 		await this.endEvent.callOptional();
+
 		const status = this.bridgeStatus;
 
 		if (status !== undefined && status.bridge.alive) {
@@ -485,6 +500,7 @@ export default class Client {
 			}
 		}
 
+		this.reporter.teardown();
 		this.bridgeStatus = undefined;
 	}
 
@@ -500,16 +516,12 @@ export default class Client {
 
 		const {bridge} = status;
 
-		bridge.stderr.subscribe((chunk) => {
-			if (terminalFeatures.redirectError) {
+		bridge.write.subscribe(([chunk, error]) => {
+			if (!error || terminalFeatures.redirectError) {
 				stdoutWrite(chunk);
 			} else {
 				stderrWrite(chunk);
 			}
-		});
-
-		bridge.stdout.subscribe((chunk) => {
-			stdoutWrite(chunk);
 		});
 
 		bridge.reporterRemoteServerMessage.subscribe((msg) => {
@@ -542,7 +554,7 @@ export default class Client {
 
 	async findOrStartServer(): Promise<ServerBridge> {
 		// First check if we already have a bridge connection
-		const connected = this.getBridge();
+		const connected = this.getBridgeStatus();
 		if (connected !== undefined) {
 			return connected.bridge;
 		}

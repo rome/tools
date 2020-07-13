@@ -7,10 +7,10 @@
 
 import {
 	MarkupFormatOptions,
-	MarkupLinesAndWidth,
 	MarkupTagName,
 	UserMarkupFormatGridOptions,
 	ansiEscapes,
+	escapeMarkup,
 	markupTag,
 	markupToAnsi,
 	markupToPlainText,
@@ -38,8 +38,8 @@ import readline = require("readline");
 import select from "./select";
 import {onKeypress} from "./util";
 import {
+	joinMarkupLines,
 	markupToHtml,
-	markupToPlainTextString,
 	normalizeMarkup,
 } from "@romefrontend/string-markup/format";
 import {
@@ -106,10 +106,7 @@ export default class Reporter {
 		this.hasClearScreen =
 			opts.hasClearScreen === undefined ? true : opts.hasClearScreen;
 		this.activeElements = new Set();
-		this.leftIndentLevel = 0;
-		this.leftIndentString = "";
-		this.rightIndentLevel = 0;
-		this.rightIndentString = "";
+		this.indentLevel = 0;
 		this.markupOptions =
 			opts.markupOptions === undefined ? {} : opts.markupOptions;
 		this.streamsWithDoubleNewlineEnd = new Set();
@@ -281,10 +278,7 @@ export default class Reporter {
 	isVerbose: boolean;
 	streamsWithNewlineEnd: Set<ReporterStreamMeta>;
 	streamsWithDoubleNewlineEnd: Set<ReporterStreamMeta>;
-	leftIndentLevel: number;
-	leftIndentString: string;
-	rightIndentLevel: number;
-	rightIndentString: string;
+	indentLevel: number;
 	startTime: number;
 	shouldRedirectOutToErr: boolean;
 	wrapperFactory: undefined | WrapperFactory;
@@ -368,11 +362,13 @@ export default class Reporter {
 	updateStreamsFeatures(
 		streams: Array<ReporterStream>,
 		features: TerminalFeatures,
+		format?: ReporterStream["format"],
 	): Array<ReporterStream> {
 		const newStreams: Array<ReporterStream> = streams.map((stream) => {
 			this.removeStream(stream);
 			const newStream: ReporterStream = {
 				...stream,
+				format: format === undefined ? stream.format : format,
 				features,
 			};
 			this.addStream(stream);
@@ -614,43 +610,25 @@ export default class Reporter {
 	}
 
 	//# INDENTATION METHODS
-	indent(callback: () => void, right: boolean = true) {
-		this.leftIndentLevel++;
-		if (right) {
-			this.rightIndentLevel++;
-		}
-		this.updateIndent();
+	indent(callback: () => void) {
+		this.indentLevel++;
 
 		try {
 			callback();
 		} finally {
-			this.leftIndentLevel--;
-			if (right) {
-				this.rightIndentLevel--;
-			}
-			this.updateIndent();
+			this.indentLevel--;
 		}
 	}
 
 	noIndent(callback: () => void) {
-		const prevLeftIndentLevel = this.leftIndentLevel;
-		const prevRightIndentLevel = this.rightIndentLevel;
-		this.leftIndentLevel = 0;
-		this.rightIndentLevel = 0;
-		this.updateIndent();
+		const prevIndentLevel = this.indentLevel;
+		this.indentLevel = 0;
 
 		try {
 			callback();
 		} finally {
-			this.leftIndentLevel = prevLeftIndentLevel;
-			this.rightIndentLevel = prevRightIndentLevel;
-			this.updateIndent();
+			this.indentLevel = prevIndentLevel;
 		}
-	}
-
-	updateIndent() {
-		this.leftIndentString = "  ".repeat(this.leftIndentLevel);
-		this.rightIndentString = "  ".repeat(this.rightIndentLevel);
 	}
 
 	//# INTERNAL
@@ -861,7 +839,7 @@ export default class Reporter {
 	};
 
 	stripMarkup(str: string): string {
-		return markupToPlainTextString(str, this.markupOptions);
+		return joinMarkupLines(markupToPlainText(str, this.markupOptions));
 	}
 
 	format(stream: ReporterStreamMeta, str: string): Array<string> {
@@ -870,56 +848,36 @@ export default class Reporter {
 		}
 
 		const prefix = this.getMessagePrefix();
-		const built = prefix === "" ? str : `${prefix}<view>${str}</view>`;
-		let columns = stream.features.columns;
+		let built = prefix === "" ? str : `${prefix}<view>${str}</view>`;
 
-		const {leftIndentString, rightIndentString} = this;
 		const shouldIndent =
-			this.streamsWithNewlineEnd.has(stream) &&
-			(leftIndentString !== "" || rightIndentString !== "");
+			this.indentLevel > 0 && this.streamsWithNewlineEnd.has(stream);
 
 		if (shouldIndent) {
-			columns -= this.leftIndentString.length;
-			columns -= this.rightIndentString.length;
+			for (let i = 0; i < this.indentLevel; i++) {
+				built = `<indent>${built}</indent>`;
+			}
 		}
 
 		const gridMarkupOptions: UserMarkupFormatGridOptions = {
 			...this.markupOptions,
-			columns,
+			columns: stream.features.columns,
 			features: stream.features,
 		};
 
-		let res: MarkupLinesAndWidth;
-
 		switch (stream.format) {
-			case "ansi": {
-				res = markupToAnsi(built, gridMarkupOptions);
-				break;
-			}
+			case "ansi":
+				return markupToAnsi(built, gridMarkupOptions).lines;
 
-			case "html": {
-				res = markupToHtml(built, gridMarkupOptions);
-				break;
-			}
+			case "html":
+				return markupToHtml(built, gridMarkupOptions).lines;
 
-			case "none": {
-				res = markupToPlainText(built, gridMarkupOptions);
-				break;
-			}
+			case "none":
+				return markupToPlainText(built, gridMarkupOptions).lines;
 
-			case "markup": {
+			case "markup":
 				return [normalizeMarkup(built, this.markupOptions).text];
-			}
 		}
-
-		return res.lines.map(({line}) => {
-			if (!shouldIndent || line === "") {
-				return line;
-			} else {
-				// We never actually need to append the `rightIndentString` because we just shrunk the viewport
-				return `${leftIndentString}${line}`;
-			}
-		});
 	}
 
 	logAll(tty: string, opts: LogOptions = {}) {
@@ -984,7 +942,7 @@ export default class Reporter {
 		if (args.length > 0) {
 			const formattedArgs: Array<string> = args.map((arg) => {
 				if (typeof arg === "string") {
-					return arg;
+					return escapeMarkup(arg);
 				} else {
 					return prettyFormat(arg, {markup: true});
 				}

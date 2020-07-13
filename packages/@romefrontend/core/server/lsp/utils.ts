@@ -1,4 +1,4 @@
-import {markupToPlainTextString} from "@romefrontend/string-markup";
+import {markupToPlainText} from "@romefrontend/string-markup";
 import {AbsoluteFilePath, createAbsoluteFilePath} from "@romefrontend/path";
 import {Consumer} from "@romefrontend/consume";
 import {
@@ -14,6 +14,7 @@ import {Position} from "@romefrontend/parser-core";
 import {DiagnosticLocation, Diagnostics} from "@romefrontend/diagnostics";
 import {Server} from "@romefrontend/core";
 import {WorkerBufferPatch} from "@romefrontend/core/common/bridges/WorkerBridge";
+import {joinMarkupLines} from "@romefrontend/string-markup/format";
 
 export function convertPositionToLSP(pos: undefined | Position): LSPPosition {
 	if (pos === undefined) {
@@ -61,7 +62,7 @@ export function convertDiagnosticsToLSP(
 				);
 				if (abs !== undefined) {
 					relatedInformation.push({
-						message: markupToPlainTextString(item.text),
+						message: joinMarkupLines(markupToPlainText(item.text)),
 						location: {
 							uri: `file://${abs.join()}`,
 							range: convertDiagnosticLocationToLSPRange(nextItem.location),
@@ -74,7 +75,7 @@ export function convertDiagnosticsToLSP(
 		lspDiagnostics.push({
 			severity: 1,
 			range: convertDiagnosticLocationToLSPRange(location),
-			message: markupToPlainTextString(description.message.value),
+			message: joinMarkupLines(markupToPlainText(description.message.value)),
 			code: description.category,
 			source: "rome",
 			relatedInformation,

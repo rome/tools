@@ -43,7 +43,6 @@ export default class LSPServer {
 
 		this.lintSessionsPending = new AbsoluteFilePathSet();
 		this.lintSessions = new AbsoluteFilePathMap();
-
 		this.fileBuffers = new AbsoluteFilePathSet();
 
 		request.endEvent.subscribe(async () => {
@@ -72,6 +71,7 @@ export default class LSPServer {
 	lintSessions: AbsoluteFilePathMap<ServerRequest>;
 
 	logMessage(path: AbsoluteFilePath, message: string) {
+		this.server.logger.info(`[LSPServer] ${message}`);
 		this.transport.write({
 			method: "window/logMessage",
 			params: {

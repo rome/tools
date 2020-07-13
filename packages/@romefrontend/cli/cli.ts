@@ -28,9 +28,13 @@ import {
 import {commandCategories} from "@romefrontend/core/common/commands";
 import {writeFile} from "@romefrontend/fs";
 import fs = require("fs");
-import {markup, markupToPlainTextString} from "@romefrontend/string-markup";
+import {markup} from "@romefrontend/string-markup";
 import {JSONObject, stringifyJSON} from "@romefrontend/codec-json";
 import {getEnvVar} from "@romefrontend/environment";
+import {
+	joinMarkupLines,
+	markupToPlainText,
+} from "@romefrontend/string-markup/format";
 
 type CLIFlags = {
 	logs: boolean;
@@ -190,7 +194,6 @@ export default async function cli() {
 							description: "Path where to output logs. When omitted logs are not written anywhere",
 						},
 					).asAbsoluteFilePathOrVoid(undefined, cwd),
-					...overrideCLIFlags,
 				},
 				requestFlags: {
 					auxiliaryDiagnosticFormat: c.get(
@@ -372,12 +375,22 @@ export default async function cli() {
 				logs: true,
 			};
 
+			commandFlags = {
+				hang: true,
+			};
+
 			command = "noop";
 		},
 	});
 
 	// Initialize flags
 	let {terminalFeatures, clientFlags, cliFlags, requestFlags} = await p.init();
+
+	// We force some cli flags to be set for certain commands
+	cliFlags = {
+		...cliFlags,
+		...overrideCLIFlags,
+	};
 
 	// Default according to env vars
 	if (requestFlags.auxiliaryDiagnosticFormat === undefined) {
@@ -387,6 +400,9 @@ export default async function cli() {
 	}
 
 	// Force collection of markers if markersPath or we are raging
+	// Save the real value here since if rage is set we don't want to save them
+	const shouldCollectMarkers =
+		requestFlags.collectMarkers || cliFlags.markersPath !== undefined;
 	if (cliFlags.markersPath || cliFlags.rage) {
 		requestFlags.collectMarkers = true;
 	}
@@ -464,7 +480,7 @@ export default async function cli() {
 					if (fileout === undefined) {
 						client.reporter.logAll(chunk, {newline: false});
 					} else {
-						fileout.write(markupToPlainTextString(chunk));
+						fileout.write(joinMarkupLines(markupToPlainText(chunk)));
 					}
 				},
 			);
@@ -483,12 +499,13 @@ export default async function cli() {
 		// Daemon would have been started before, so terminate when we complete
 		terminateWhenIdle: cliFlags.temporaryDaemon,
 		// We don't use the data result, so no point transporting it over the bridge
-		noData: true,
+		// We want it in rage mode though for debugging
+		noData: !cliFlags.rage,
 	});
 	await client.end();
 
 	// Write markers if we were collecting them
-	if (requestFlags.collectMarkers && res.markers.length > 0) {
+	if (shouldCollectMarkers && res.markers.length > 0) {
 		const markersPath = clientFlags.cwd.resolve(
 			cliFlags.markersPath === undefined
 				? `Markers-${getFilenameTimestamp()}.json`

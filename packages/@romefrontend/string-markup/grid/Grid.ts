@@ -11,7 +11,6 @@ import {
 	GridOutputFormat,
 	MarkupFormatGridOptions,
 	MarkupLineWrapMode,
-	MarkupLines,
 	MarkupPointer,
 	MarkupTagName,
 	TagNode,
@@ -27,7 +26,6 @@ import {
 	ob1Number1,
 	ob1Sub,
 } from "@romefrontend/ob1";
-import {formatAnsi} from "../ansi";
 import {
 	humanizeFileSize,
 	humanizeNumber,
@@ -234,7 +232,7 @@ export default class Grid {
 		return {...this.cursor};
 	}
 
-	getLines(format: GridOutputFormat): MarkupLines {
+	getLines(format: GridOutputFormat): Array<string> {
 		switch (format) {
 			case "ansi":
 				return this.getFormattedAnsiLines();
@@ -247,12 +245,9 @@ export default class Grid {
 		}
 	}
 
-	getUnformattedLines(): MarkupLines {
+	getUnformattedLines(): Array<string> {
 		return this.lines.map(({columns}) => {
-			return {
-				width: columns.length,
-				line: columns.join("").trimRight(),
-			};
+			return columns.join("").trimRight();
 		});
 	}
 
@@ -260,19 +255,27 @@ export default class Grid {
 		opts: {
 			normalizeText: (text: string) => string;
 			formatTag: (tag: TagNode, inner: string) => string;
-			wrapRange: (inner: string) => string;
 		},
-	): MarkupLines {
-		const lines: MarkupLines = [];
+	): Array<string> {
+		const lines: Array<string> = [];
 
 		for (const {ranges, columns} of this.lines) {
-			let content = columns.join("").trimRight();
-
 			// Sort ranges from last to first
 			const sortedRanges = ranges.sort((a, b) => b.end - a.end);
 
+			let line = "";
+
+			let lastEnd: number | undefined = undefined;
+
+			function catchUp(end: number) {
+				line = `${columns.slice(end, lastEnd).join("")}${line}`;
+				lastEnd = end;
+			}
+
 			for (const {start, end, ancestry} of sortedRanges) {
-				let substr = opts.normalizeText(content.slice(start, end));
+				catchUp(end);
+
+				let substr = opts.normalizeText(columns.slice(start, end).join(""));
 
 				// Format tags in reverse
 				for (let i = ancestry.length - 1; i >= 0; i--) {
@@ -280,35 +283,31 @@ export default class Grid {
 					substr = opts.formatTag(tag, substr);
 				}
 
-				substr = opts.wrapRange(substr);
-				content = content.slice(0, start) + substr + content.slice(end);
+				line = `${substr}${line}`;
+				lastEnd = start;
 			}
 
-			lines.push({
-				width: columns.length,
-				line: content,
-			});
+			catchUp(0);
+
+			lines.push(line.trimRight());
 		}
 
 		return lines;
 	}
 
-	getFormattedHtmlLines(): MarkupLines {
+	getFormattedHtmlLines(): Array<string> {
 		return this.getFormattedLines({
 			normalizeText: (text) => escapeXHTMLEntities(text),
 			formatTag: (tag, inner) => htmlFormatText(tag, inner),
-			wrapRange: (inner) => inner,
 		});
 	}
 
-	getFormattedAnsiLines(): MarkupLines {
+	getFormattedAnsiLines(): Array<string> {
 		return this.getFormattedLines({
 			normalizeText: (text) => text,
-			formatTag: (tag, inner) =>
-				ansiFormatText(tag, inner, this.markupOptions, this.features)
-			,
-
-			wrapRange: (inner) => formatAnsi.reset(inner),
+			formatTag: (tag, inner) => {
+				return ansiFormatText(tag, inner, this.markupOptions, this.features);
+			},
 		});
 	}
 
@@ -484,9 +483,7 @@ export default class Grid {
 			}
 			forceNextWordOverflow = false;
 
-			// NOTE: We are iterating over the word rather than using split("")
-			// This means that unicode characters that are multiple code points are displayed correctly
-			for (const char of word) {
+			for (const char of word.split(/(?:){1}/u)) {
 				this.writeChar(char);
 
 				if (source) {
@@ -730,7 +727,11 @@ export default class Grid {
 		);
 	}
 
-	drawView({children, attributes}: TagNode, ancestry: Ancestry) {
+	drawView(
+		{children, attributes}: TagNode,
+		ancestry: Ancestry,
+		shrinkViewport: number = 0,
+	) {
 		// We allow markup in the linePrefix tag... Not sure how else we can support it.
 		// NB: This assumes that the line prefix is only 1 height, maybe we could have some validation
 		const linePrefix = this.parse(
@@ -745,7 +746,12 @@ export default class Grid {
 			linePrefixStart.line !== linePrefixEnd.line ||
 			linePrefixStart.column !== linePrefixEnd.column;
 
-		const columns = this.getSubColumns(this.cursor.column);
+		// Calculate size of view
+		let columns = this.getSubColumns(this.cursor.column);
+		if (columns !== undefined) {
+			columns -= shrinkViewport;
+		}
+
 		const pointer: MarkupPointer = {
 			char: this.parse(
 				attributes.get("pointerChar").asString(""),
@@ -942,6 +948,32 @@ export default class Grid {
 
 			case "view": {
 				this.drawView(tag, subAncestry);
+				break;
+			}
+
+			case "indent": {
+				// Optimization for nested indents
+				let levels = 1;
+				let children: Children = tag.children;
+				while (
+					children.length === 1 &&
+					children[0].type === "Tag" &&
+					children[0].name === "indent"
+				) {
+					children = children[0].children;
+					levels++;
+				}
+
+				for (let i = 0; i < levels; i++) {
+					this.writeChar(" ");
+					this.writeChar(" ");
+				}
+
+				this.drawView(
+					createTag("view", createEmptyAttributes(), children),
+					ancestry,
+					levels * 2,
+				);
 				break;
 			}
 
@@ -1270,10 +1302,11 @@ hooks.set(
 	"hr",
 	{
 		after: (tag, grid, ancestry) => {
-			const size =
+			let size =
 				grid.viewportWidth === undefined
 					? 100
 					: ob1Get1(grid.viewportWidth) - ob1Get1(grid.cursor.column) + 1;
+			size = Math.max(size, 0);
 			grid.writeText("\u2501".repeat(size), ancestry, false);
 		},
 	},

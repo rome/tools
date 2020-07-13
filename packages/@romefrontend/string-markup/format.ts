@@ -142,13 +142,6 @@ function renderGrid(
 	};
 }
 
-export function markupToPlainTextString(
-	input: string,
-	opts: UserMarkupFormatGridOptions = {},
-): string {
-	return markupToPlainText(input, opts).lines.map(({line}) => line).join("\n");
-}
-
 export function markupToPlainText(
 	input: string,
 	opts: UserMarkupFormatGridOptions = {},
@@ -168,6 +161,10 @@ export function markupToHtml(
 	opts: UserMarkupFormatGridOptions = {},
 ): MarkupLinesAndWidth {
 	return renderGrid(input, opts, "html");
+}
+
+export function joinMarkupLines({lines}: MarkupLinesAndWidth): string {
+	return lines.join("\n");
 }
 
 export function normalizeMarkup(

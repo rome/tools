@@ -17,12 +17,7 @@ export {
 	UserMarkupFormatGridOptions,
 } from "./types";
 
-export {
-	markupToAnsi,
-	markupToPlainText,
-	markupToPlainTextString,
-	normalizeMarkup,
-} from "./format";
+export {markupToAnsi, markupToPlainText, normalizeMarkup} from "./format";
 
 export * from "./escape";
 

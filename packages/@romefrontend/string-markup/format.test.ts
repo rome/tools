@@ -1,6 +1,6 @@
 import {test} from "rome";
 import {catchDiagnosticsSync} from "@romefrontend/diagnostics";
-import {markupToPlainTextString} from "./format";
+import {markupToPlainText} from "./format";
 import {printDiagnosticsToString} from "@romefrontend/cli-diagnostics";
 
 const SYNTAX_ERROR_TESTS = [
@@ -12,7 +12,7 @@ test(
 	async (t) => {
 		for (const input of SYNTAX_ERROR_TESTS) {
 			const {diagnostics} = catchDiagnosticsSync(() => {
-				markupToPlainTextString(
+				markupToPlainText(
 					input,
 					{
 						columns: 400,
