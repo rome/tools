@@ -11,6 +11,10 @@ layout: layouts/page.njk
 		<p><a href="https://github.com/EduardoLopes">Eduardo Lopes</a></p>
 	</li>
 	<li>
+        <img src="https://github.com/ematipico.png?s=176">
+        <p><a href="https://github.com/ematipico">Emanuele Stoppa</a></p>
+    </li>
+	<li>
 		<img src="https://github.com/ooflorent.png?s=176">
 		<p><a href="https://github.com/ooflorent">Florent Cailhol</a></p>
 	</li>
@@ -42,8 +46,4 @@ layout: layouts/page.njk
 		<img src="https://github.com/yassere.png?s=176">
 		<p><a href="https://github.com/yassere">Yasser Elassal</a></p>
 	</li>
-	<li>
-        <img src="https://github.com/ematipico.png?s=176">
-        <p><a href="https://github.com/ematipico">Emanuele Stoppa</a></p>
-    </li>
 </ul>

@@ -61,6 +61,7 @@ Members listed in alphabetical order.
 ### Core Contributors
 
 - [Eduardo Lopes @EduardoLopes](https://github.com/EduardoLopes)
+- [Emanuele Stoppa @ematipico](https://github.com/ematipico)
 - [Florent Cailhol @ooflorent](https://github.com/ooflorent)
 - [Jamie Kyle @jamiebuilds](https://github.com/jamiebuilds)
 - [Kevin Kelbie @Kelbie](https://github.com/Kelbie)
@@ -68,7 +69,6 @@ Members listed in alphabetical order.
 - [Paul Bouchon @bitpshr](https://github.com/bitpshr)
 - [Victor Hom @VictorHom](https://github.com/VictorHom)
 - [Yasser Elassal @yassere](https://github.com/yassere)
-- [Emanuele Stoppa @ematipico](https://github.com/ematipico)
 
 ## Project direction and planning
 
