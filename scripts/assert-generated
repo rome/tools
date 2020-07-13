@@ -13,10 +13,10 @@ const child_process = require("child_process");
 const {execDev, writtenFiles} = require("./_utils.cjs");
 
 // Generate files
-require("./runtime-modules/update.cjs");
-require("./ast/update.cjs");
-require("./lint/update.cjs");
-require("./sitemap/update.cjs");
+require("./generated-files/runtime-modules.cjs");
+require("./generated-files/ast.cjs");
+require("./generated-files/lint-rules.cjs");
+require("./generated-files/sitemap.cjs");
 
 //only .ts will be autofixed
 const filteredWrittenFiles = writtenFiles.filter(function(file){

@@ -22,6 +22,7 @@ import check from "./commands/check";
 import ci from "./commands/ci";
 import test from "./commands/test";
 import noop from "./commands/noop";
+import json from "./commands/json";
 
 // Hidden commands, useful for internal debugging but not much else
 import _evict from "./commands/_evict";
@@ -108,3 +109,4 @@ serverCommands.set("_evict", _evict);
 serverCommands.set("_moduleSignature", _moduleSignature);
 serverCommands.set("noop", noop);
 serverCommands.set("_projectDump", _projectDump);
+serverCommands.set("json", json);

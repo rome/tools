@@ -22,6 +22,7 @@ type TestLintOptions = {
 	sourceType?: ConstJSSourceType;
 	syntax?: Array<ConstJSProgramSyntax>;
 	path?: UnknownFilePath | string;
+	snapshotFilename?: string;
 };
 
 type TestLintInput = {
@@ -50,6 +51,7 @@ async function testLintExpect(
 		category,
 		sourceType = "module",
 		path = createUnknownFilePath("unknown"),
+		snapshotFilename,
 	}: TestLintOptions,
 	expectValid: boolean,
 ) {
@@ -119,9 +121,16 @@ async function testLintExpect(
 			diagnostics,
 			suppressions: res.suppressions,
 		}),
+		undefined,
+		{filename: snapshotFilename},
 	);
 
-	t.namedSnapshot(`${snapshotName}: formatted`, res.src);
+	t.namedSnapshot(
+		`${snapshotName}: formatted`,
+		res.src,
+		undefined,
+		{filename: snapshotFilename},
+	);
 
 	t.clearAdvice();
 }

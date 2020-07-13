@@ -1,6 +1,10 @@
 ---
 title: Linting
 layout: layouts/page.njk
+eleventyNavigation: {
+	key: linting,
+	title: Linting
+}
 ---
 
 # Linting

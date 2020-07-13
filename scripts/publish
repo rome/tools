@@ -3,11 +3,11 @@
 require("./_setup.cjs");
 
 const {
-  heading,
-  buildRelease,
-  exec,
-  unlink,
-  readFile,
+	heading,
+	buildRelease,
+	exec,
+	unlink,
+	readFile,
 } = require("./_utils.cjs");
 const path = require("path");
 const child = require("child_process");
@@ -18,31 +18,31 @@ const releaseFolder = path.join(os.tmpdir(), "rome-publish-release");
 const releaseManifest = path.join(releaseFolder, "package.json");
 
 function setName(name) {
-  const manifest = {
-    ...JSON.parse(readFile(releaseManifest, "utf8")),
-    name,
-  };
-  fs.writeFileSync(
-    releaseManifest,
-    JSON.stringify(manifest, null, "\t") + "\n"
-  );
+	const manifest = {
+		...JSON.parse(readFile(releaseManifest, "utf8")),
+		name,
+	};
+	fs.writeFileSync(
+		releaseManifest,
+		JSON.stringify(manifest, null, "\t") + "\n"
+	);
 }
 
 function publishRegistry(registry) {
-  exec("npm", ["publish", "--registry", registry], { cwd: releaseFolder });
+	exec("npm", ["publish", "--registry", registry], { cwd: releaseFolder });
 }
 
 try {
-  heading("Building release");
-  buildRelease([releaseFolder]);
+	heading("Building release");
+	buildRelease([releaseFolder]);
 
-  heading("Publishing to registry.npmjs.com");
-  setName("rome");
-  publishRegistry("https://registry.npmjs.org/");
+	heading("Publishing to registry.npmjs.com");
+	setName("rome");
+	publishRegistry("https://registry.npmjs.org/");
 
-  heading("Publishing to npm.pkg.github.com");
-  setName("@romefrontend/rome");
-  publishRegistry("https://npm.pkg.github.com/");
+	heading("Publishing to npm.pkg.github.com");
+	setName("@romefrontend/rome");
+	publishRegistry("https://npm.pkg.github.com/");
 } finally {
-  unlink(releaseFolder);
+	unlink(releaseFolder);
 }

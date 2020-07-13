@@ -11,6 +11,7 @@ import {
 	createAbsoluteFilePath,
 	createRelativeFilePath,
 } from "@romefrontend/path";
+
 export type FileReference = {
 	project: number;
 	manifest: undefined | number;

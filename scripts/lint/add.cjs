@@ -11,7 +11,6 @@ const {
 	toCamelCase,
 	write,
 	readFile,
-	camelCaseToKebabCase,
 } = require("../_utils.cjs");
 const {
 	lintRulesFolder,
@@ -40,13 +39,9 @@ const ruleLoc = path.join(lintRulesFolder, category, `${camelCasedName}.ts`);
 const testLoc = path.join(
 	lintRulesFolder,
 	category,
-	`${camelCasedName}.test.ts`,
+	`${camelCasedName}.test.rjson`,
 );
-const docLoc = path.join(
-	lintRulesDocFolder,
-	category,
-	`${camelCaseToKebabCase(camelCasedName)}.md`,
-);
+const docLoc = path.join(lintRulesDocFolder, category, `${camelCasedName}.md`);
 
 write(
 	ruleLoc,
@@ -73,22 +68,16 @@ export default {
 
 write(
 	testLoc,
-	`import {test} from "rome";
-import {testLint} from "../../utils/testing";
-
-test(
-	"${category} ${spacedName}",
-	async (t) => {
-		await testLint(
-			t,
-			{
-				invalid: [""],
-				valid: [""],
-			},
-			{category: "${categoryName}"},
-		);
-	},
-);
+	`invalid": [
+	"
+		// insert invalid examples here
+	"
+]
+valid": [
+	"
+		// and here
+	"
+]
 `,
 );
 
@@ -99,11 +88,14 @@ title: Rome
 layout: layouts/page.njk
 showHero: false
 description: MISSING DOCUMENTATION
+eleventyNavigation:
+	key: ${categoryName}/${camelCasedName}
+	parent: Linting
 ---
 
-# ${camelCasedName}
+# ${categoryName}/${camelCasedName}
 
-not documented yet
+MISSING DOCUMENTATION
 `,
 );
 
