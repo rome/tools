@@ -45,7 +45,7 @@ export class DiagnosticsError extends Error {
 			return [
 				"Possible DiagnosticsError message serialization infinite loop",
 				"Diagnostic messages:",
-				this.diagnostics.map((diag) => `- ${diag.description.message}`),
+				this.diagnostics.map((diag) => `- ${diag.description.message.value}`),
 			].join("\n");
 		}
 

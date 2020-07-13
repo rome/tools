@@ -95,7 +95,10 @@ export default function buildPatchCodeFrame(
 		lineNoLength,
 	)}${GUTTER}</emphasis>`;
 
-	function createLineNos(beforeLine?: number, afterLine?: number) {
+	function createLineNos(
+		beforeLine?: string | number,
+		afterLine?: string | number,
+	) {
 		let gutter = `<emphasis>${CODE_FRAME_INDENT}<pad align="right" width="${beforeNoLength}">`;
 		if (beforeLine !== undefined) {
 			gutter += String(beforeLine);
@@ -124,12 +127,15 @@ export default function buildPatchCodeFrame(
 		const {beforeLine, afterLine, diffs} = diffsByLine[i];
 
 		let lineType: "EQUAL" | "ADD" | "DELETE" = "EQUAL";
+		let marker = " ";
 
 		if (beforeLine === undefined) {
+			marker = ADD_MARKER;
 			lineType = "ADD";
 		}
 
 		if (afterLine === undefined) {
+			marker = DELETE_MARKER;
 			lineType = "DELETE";
 		}
 
@@ -137,34 +143,47 @@ export default function buildPatchCodeFrame(
 			frame.push(skippedLine);
 		}
 
-		let gutter = "";
-		let lineNo = "";
+		const logType = lineType === "ADD" ? "success" : "error";
 
 		if (singleLine) {
+			let legendPrefix = "";
+
 			if (legend !== undefined) {
 				if (lineType === "DELETE") {
-					lineNo = formatSingleLineMarker(legend.delete);
+					legendPrefix = formatSingleLineMarker(legend.delete);
 				} else if (lineType === "ADD") {
-					lineNo = formatSingleLineMarker(legend.add);
+					legendPrefix = formatSingleLineMarker(legend.add);
 				}
 			}
-		} else {
-			lineNo = createLineNos(beforeLine, afterLine);
-			gutter = GUTTER;
-		}
 
-		if (lineType === "DELETE" || lineType === "ADD") {
-			const marker = lineType === "ADD" ? ADD_MARKER : DELETE_MARKER;
-			const type = lineType === "ADD" ? "success" : "error";
-			frame.push(
-				`${lineNo}<${type}><view linePrefix="${gutter}${marker} ">${formatDiffLine(
-					diffs,
-				)}</view></${type}>`,
-			);
+			if (lineType === "DELETE" || lineType === "ADD") {
+				frame.push(
+					`${legendPrefix}<view><viewLinePrefix>${marker} </viewLinePrefix><${logType}>${formatDiffLine(
+						diffs,
+					)}</${logType}></view>`,
+				);
+			} else {
+				frame.push(
+					`${legendPrefix}<view extraSoftWrapIndent="2"><viewLinePrefix>  </viewLinePrefix>${formatDiffLine(
+						diffs,
+					)}</view>`,
+				);
+			}
 		} else {
-			frame.push(
-				`${lineNo}<view linePrefix="${gutter}  ">${formatDiffLine(diffs)}</view>`,
-			);
+			let prefixes = [
+				`<viewLinePrefix type="first">${createLineNos(beforeLine, afterLine)}${GUTTER}${marker} </viewLinePrefix>`,
+				`<viewLinePrefix type="middle"><dim>${createLineNos(
+					beforeLine === undefined ? undefined : "\u21e5",
+					afterLine === undefined ? undefined : "\u21e5",
+				)}</dim>${GUTTER}${marker} </viewLinePrefix>`,
+			].join("");
+			let line = formatDiffLine(diffs);
+
+			if (lineType === "DELETE" || lineType === "ADD") {
+				line = `<${logType}>${line}</${logType}>`;
+			}
+
+			frame.push(`<view extraSoftWrapIndent="2">${prefixes}${line}</view>`);
 		}
 
 		lastDisplayedLine = i;

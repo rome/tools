@@ -29,6 +29,59 @@ import {markupTag, markupToPlainText} from "@romefrontend/string-markup";
 import {Dict} from "@romefrontend/typescript-helpers";
 import {joinMarkupLines} from "@romefrontend/string-markup/format";
 
+function formatLineView(
+	{marker, line, gutter}: FormattedLine,
+	gutterLength: number,
+): string {
+	const attributes: Dict<string | number> = {
+		extraSoftWrapIndent: 2,
+		// NB: The `word-break` default is probably better? lineWrap: "char-break",
+	};
+
+	if (gutterLength > 0) {
+		line += markupTag(
+			"viewLinePrefix",
+			`<pad align="right" width="${gutterLength}"><emphasis>${gutter}</emphasis></pad>${GUTTER}`,
+			{
+				type: "first",
+			},
+		);
+
+		line += markupTag(
+			"viewLinePrefix",
+			`<dim>⇥</dim>${GUTTER}`,
+			{
+				align: "right",
+				type: "middle",
+			},
+		);
+
+		line += markupTag(
+			"viewLinePrefix",
+			GUTTER,
+			{
+				align: "right",
+				type: "pointer",
+			},
+		);
+	}
+
+	if (marker !== undefined) {
+		line += markupTag(
+			"viewPointer",
+			marker.message,
+			{
+				char: "<error><emphasis>^</emphasis></error>",
+				line: "1",
+				start: String(marker.start),
+				end: String(marker.end),
+			},
+		);
+	}
+
+	return markupTag("view", line, attributes);
+}
+
 type Marker = {
 	message: string;
 	start: Number0;
@@ -40,26 +93,6 @@ type FormattedLine = {
 	gutter: string;
 	line: string;
 };
-
-function formatLineView({line, marker}: FormattedLine, gutter: boolean): string {
-	const attributes: Dict<string> = {
-		// NB: The `word-break` default is probably better? lineWrap: "char-break",
-	};
-
-	if (gutter) {
-		attributes.linePrefix = GUTTER;
-	}
-
-	if (marker !== undefined) {
-		attributes.pointerChar = "<error><emphasis>^</emphasis></error>";
-		attributes.pointerMessage = marker.message;
-		attributes.pointerLine = "1";
-		attributes.pointerStart = String(marker.start);
-		attributes.pointerEnd = String(marker.end);
-	}
-
-	return markupTag("view", line, attributes);
-}
 
 export default function buildCodeFrame(
 	{
@@ -267,7 +300,7 @@ export default function buildCodeFrame(
 			);
 		}
 
-		const result = [`${CODE_FRAME_INDENT}${formatLineView(selection, false)}`];
+		const result = [`${CODE_FRAME_INDENT}${formatLineView(selection, 0)}`];
 
 		return {
 			frame: result.join("\n"),
@@ -286,14 +319,7 @@ export default function buildCodeFrame(
 			continue;
 		}
 
-		const {gutter} = selection;
-
-		result.push(
-			`<pad align="right" width="${maxGutterLength}"><emphasis>${gutter}</emphasis></pad>${formatLineView(
-				selection,
-				true,
-			)}`,
-		);
+		result.push(formatLineView(selection, maxGutterLength));
 	}
 
 	if (truncated) {

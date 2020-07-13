@@ -134,6 +134,7 @@ function renderGrid(
 	const grid = new Grid({
 		...opts,
 		sourceText: input,
+		view: {},
 	});
 	grid.drawChildren(grid.parse(input, undefined), []);
 	return {

@@ -471,6 +471,11 @@ export default class Client {
 	}
 
 	async shutdownServer() {
+		await this._shutdownServer();
+		await this.end();
+	}
+
+	async _shutdownServer() {
 		const status = this.bridgeStatus;
 		if (status !== undefined && status.bridge.alive) {
 			try {
@@ -483,8 +488,6 @@ export default class Client {
 				}
 			}
 		}
-
-		await this.end();
 	}
 
 	async end() {
@@ -496,7 +499,7 @@ export default class Client {
 			if (status.dedicated) {
 				status.socket.end();
 			} else {
-				await this.shutdownServer();
+				await this._shutdownServer();
 			}
 		}
 
