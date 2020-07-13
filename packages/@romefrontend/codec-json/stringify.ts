@@ -20,21 +20,9 @@ function joinList(
 ) {
 	if (items.length === 0) {
 		return open + close;
+	} else {
+		return [open, ...items, indent + close].join("\n");
 	}
-
-	if (items.length === 1) {
-		// Trim to remove indentation
-		const first = items[0].trim();
-
-		// We never want to place a comment in between braces because it will break for line comments
-
-		// and look weird for blocks
-		if (first[0] !== "/") {
-			return open + first + close;
-		}
-	}
-
-	return [open, ...items, indent + close].join("\n");
 }
 
 function stringifyKey(key: string): string {
