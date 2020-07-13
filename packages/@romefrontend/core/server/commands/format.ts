@@ -16,10 +16,9 @@ type Flags = {
 
 export default createServerCommand({
 	category: commandCategories.INTERNAL,
-	description: "TODO",
+	description: "formats a single file",
 	usage: "",
 	examples: [],
-	hidden: true,
 	defineFlags(c: Consumer): Flags {
 		return {
 			allowDiagnostics: c.get("allowDiagnostics").asBoolean(false),

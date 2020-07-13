@@ -352,7 +352,6 @@ export default async function cli() {
 		name: "rage",
 		category: commandCategories.INTERNAL,
 		description: "TODO",
-		hidden: true,
 		callback() {
 			overrideCLIFlags = {
 				rage: true,
@@ -367,7 +366,6 @@ export default async function cli() {
 		name: "logs",
 		category: commandCategories.INTERNAL,
 		description: "TODO",
-		hidden: true,
 		callback() {
 			overrideCLIFlags = {
 				logs: true,

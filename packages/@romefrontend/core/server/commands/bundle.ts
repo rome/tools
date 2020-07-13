@@ -22,8 +22,6 @@ export default createServerCommand<Flags>({
 	description: "build a standalone js bundle for a package",
 	usage: "",
 	examples: [],
-	allowRequestFlags: [],
-	ignoreFlags: [],
 	hidden: true,
 	defineFlags(consumer: Consumer): Flags {
 		return {

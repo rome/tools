@@ -14,7 +14,6 @@ export default createLocalCommand({
 	description: "restart daemon",
 	usage: "",
 	examples: [],
-	hidden: true,
 	defineFlags() {
 		return {};
 	},

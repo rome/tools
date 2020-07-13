@@ -14,7 +14,6 @@ export default createLocalCommand({
 	category: commandCategories.PROCESS_MANAGEMENT,
 	usage: "",
 	examples: [],
-	hidden: true,
 	defineFlags() {
 		return {};
 	},

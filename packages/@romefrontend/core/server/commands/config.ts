@@ -39,7 +39,7 @@ type Flags = {
 
 export default createServerCommand<Flags>({
 	category: commandCategories.PROJECT_MANAGEMENT,
-	description: "Modify a project config",
+	description: "modify a project config",
 	usage: "(enable|disable|set) key [value]",
 	examples: [
 		{
