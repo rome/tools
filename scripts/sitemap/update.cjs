@@ -31,11 +31,12 @@ function buildTree(folder) {
 
 			children.push({
 				type: "file",
-				url,
 				heading,
 				link: true,
-				name: path.basename(name, path.extname(name)),
 				children: [],
+				// Remove .md
+				url: url.slice(0, -3),
+				name: name.slice(0, -3),
 			});
 		} else if (stats.isDirectory()) {
 			const node = buildTree(loc);

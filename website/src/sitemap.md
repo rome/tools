@@ -10,39 +10,39 @@ layout: layouts/page.njk
  - [`/`](/): The Rome Frontend Toolchain
    - `/blog`
      - `/posts`
-       - [`/test-test`](/blog/posts/test-test.md)
-       - [`/test`](/blog/posts/test.md): Section Header
+       - [`/test-test`](/blog/posts/test-test)
+       - [`/test`](/blog/posts/test): Section Header
    - [`/contributing`](/contributing)
-     - [`/governance`](/contributing/governance.md)
-     - [`/philosophy`](/contributing/philosophy.md): Philosophy
-     - [`/team`](/contributing/team.md): Team
+     - [`/governance`](/contributing/governance)
+     - [`/philosophy`](/contributing/philosophy): Philosophy
+     - [`/team`](/contributing/team): Team
    - `/docs`
      - [`/cli`](/docs/cli): CLI
        - `/commands`
-         - [`/check`](/docs/cli/commands/check.md): `rome check`
-         - [`/config`](/docs/cli/commands/config.md): `rome config`
-         - [`/init`](/docs/cli/commands/init.md): `rome init`
-         - [`/logs`](/docs/cli/commands/logs.md): `rome logs`
-         - [`/lsp`](/docs/cli/commands/lsp.md): `rome lsp`
-         - [`/noop`](/docs/cli/commands/noop.md): `rome noop`
-         - [`/rage`](/docs/cli/commands/rage.md): `rome rage`
-         - [`/start`](/docs/cli/commands/start.md): `rome start`
-         - [`/status`](/docs/cli/commands/status.md): `rome status`
-         - [`/stop`](/docs/cli/commands/stop.md): `rome stop`
-       - [`/debugging`](/docs/cli/debugging.md): Debugging
-       - [`/server`](/docs/cli/server.md): Server
-     - [`/diagnostics`](/docs/diagnostics.md): Diagnostics
-     - [`/editor-integration`](/docs/editor-integration.md): Editor Integration
-     - [`/getting-started`](/docs/getting-started.md): Getting Started
-     - [`/language-support`](/docs/language-support.md): Language Support
+         - [`/check`](/docs/cli/commands/check): `rome check`
+         - [`/config`](/docs/cli/commands/config): `rome config`
+         - [`/init`](/docs/cli/commands/init): `rome init`
+         - [`/logs`](/docs/cli/commands/logs): `rome logs`
+         - [`/lsp`](/docs/cli/commands/lsp): `rome lsp`
+         - [`/noop`](/docs/cli/commands/noop): `rome noop`
+         - [`/rage`](/docs/cli/commands/rage): `rome rage`
+         - [`/start`](/docs/cli/commands/start): `rome start`
+         - [`/status`](/docs/cli/commands/status): `rome status`
+         - [`/stop`](/docs/cli/commands/stop): `rome stop`
+       - [`/debugging`](/docs/cli/debugging): Debugging
+       - [`/server`](/docs/cli/server): Server
+     - [`/diagnostics`](/docs/diagnostics): Diagnostics
+     - [`/editor-integration`](/docs/editor-integration): Editor Integration
+     - [`/getting-started`](/docs/getting-started): Getting Started
+     - [`/language-support`](/docs/language-support): Language Support
      - [`/lint`](/docs/lint): Linting
        - [`/rules`](/docs/lint/rules): Rules
          - `/js`
-           - [`/camel-case`](/docs/lint/rules/js/camel-case.md): camelCase
-           - [`/no-nested-ternary`](/docs/lint/rules/js/no-nested-ternary.md): noNestedTernary
-           - [`/no-unused-template-literal`](/docs/lint/rules/js/no-unused-template-literal.md): noUnusedTemplateLiteral
+           - [`/camel-case`](/docs/lint/rules/js/camel-case): camelCase
+           - [`/no-nested-ternary`](/docs/lint/rules/js/no-nested-ternary): noNestedTernary
+           - [`/no-unused-template-literal`](/docs/lint/rules/js/no-unused-template-literal): noUnusedTemplateLiteral
          - `/jsx`
-           - [`/no-implicit-boolean`](/docs/lint/rules/jsx/no-implicit-boolean.md): noImplicitBoolean
-     - [`/project-config`](/docs/project-config.md): Project Configuration
-     - [`/rjson`](/docs/rjson.md): Comments
-   - [`/sitemap`](/sitemap.md): Sitemap
+           - [`/no-implicit-boolean`](/docs/lint/rules/jsx/no-implicit-boolean): noImplicitBoolean
+     - [`/project-config`](/docs/project-config): Project Configuration
+     - [`/rjson`](/docs/rjson): Comments
+   - [`/sitemap`](/sitemap): Sitemap
