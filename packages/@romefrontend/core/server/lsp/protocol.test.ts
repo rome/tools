@@ -6,9 +6,7 @@ function createTransportTest(
 	callback: (transport: LSPTransport) => void,
 ): (t: TestHelper) => void {
 	return function(t: TestHelper) {
-		const reporter = new Reporter({
-			verbose: true,
-		});
+		const reporter = new Reporter();
 
 		const stream = reporter.attachCaptureStream();
 
