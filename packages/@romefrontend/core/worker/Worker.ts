@@ -146,7 +146,7 @@ export default class Worker {
 
 		bridge.compile.subscribe((payload) => {
 			return this.api.compile(
-				convertTransportFileReference(payload.file),
+				convertTransportFileReference(payload.ref),
 				payload.stage,
 				payload.options,
 				payload.parseOptions,
@@ -155,14 +155,14 @@ export default class Worker {
 
 		bridge.parse.subscribe((payload) => {
 			return this.api.parse(
-				convertTransportFileReference(payload.file),
+				convertTransportFileReference(payload.ref),
 				payload.options,
 			);
 		});
 
 		bridge.lint.subscribe((payload) => {
 			return this.api.lint(
-				convertTransportFileReference(payload.file),
+				convertTransportFileReference(payload.ref),
 				payload.options,
 				payload.parseOptions,
 			);
@@ -170,14 +170,14 @@ export default class Worker {
 
 		bridge.format.subscribe((payload) => {
 			return this.api.format(
-				convertTransportFileReference(payload.file),
+				convertTransportFileReference(payload.ref),
 				payload.parseOptions,
 			);
 		});
 
 		bridge.updateInlineSnapshots.subscribe((payload) => {
 			return this.api.updateInlineSnapshots(
-				convertTransportFileReference(payload.file),
+				convertTransportFileReference(payload.ref),
 				payload.updates,
 				payload.parseOptions,
 			);
@@ -185,7 +185,7 @@ export default class Worker {
 
 		bridge.analyzeDependencies.subscribe((payload) => {
 			return this.api.analyzeDependencies(
-				convertTransportFileReference(payload.file),
+				convertTransportFileReference(payload.ref),
 				payload.parseOptions,
 			);
 		});
@@ -197,7 +197,7 @@ export default class Worker {
 
 		bridge.moduleSignatureJS.subscribe((payload) => {
 			return this.api.moduleSignatureJS(
-				convertTransportFileReference(payload.file),
+				convertTransportFileReference(payload.ref),
 				payload.parseOptions,
 			);
 		});
@@ -221,20 +221,20 @@ export default class Worker {
 
 		bridge.updateBuffer.subscribe((payload) => {
 			return this.updateBuffer(
-				convertTransportFileReference(payload.file),
+				convertTransportFileReference(payload.ref),
 				payload.content,
 			);
 		});
 
 		bridge.patchBuffer.subscribe((payload) => {
 			return this.patchBuffer(
-				convertTransportFileReference(payload.file),
+				convertTransportFileReference(payload.ref),
 				payload.patches,
 			);
 		});
 
 		bridge.clearBuffer.subscribe((payload) => {
-			return this.clearBuffer(convertTransportFileReference(payload.file));
+			return this.clearBuffer(convertTransportFileReference(payload.ref));
 		});
 
 		bridge.getFileBuffers.subscribe(() => {
@@ -321,7 +321,7 @@ export default class Worker {
 
 				case "OWNED":
 					return this.api.moduleSignatureJS(
-						convertTransportFileReference(value.file),
+						convertTransportFileReference(value.ref),
 						parseOptions,
 					);
 

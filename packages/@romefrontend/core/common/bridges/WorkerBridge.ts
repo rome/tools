@@ -104,7 +104,7 @@ export type PrefetchedModuleSignatures = {
 			}
 		| {
 				type: "OWNED";
-				file: JSONFileReference;
+				ref: JSONFileReference;
 			}
 		| {
 				type: "POINTER";
@@ -190,7 +190,7 @@ export default class WorkerBridge extends Bridge {
 
 	format = this.createEvent<
 		{
-			file: JSONFileReference;
+			ref: JSONFileReference;
 			parseOptions: WorkerParseOptions;
 		},
 		undefined | WorkerFormatResult
@@ -201,7 +201,7 @@ export default class WorkerBridge extends Bridge {
 
 	moduleSignatureJS = this.createEvent<
 		{
-			file: JSONFileReference;
+			ref: JSONFileReference;
 			parseOptions: WorkerParseOptions;
 		},
 		ModuleSignature
@@ -212,7 +212,7 @@ export default class WorkerBridge extends Bridge {
 
 	analyzeDependencies = this.createEvent<
 		{
-			file: JSONFileReference;
+			ref: JSONFileReference;
 			parseOptions: WorkerParseOptions;
 		},
 		AnalyzeDependencyResult
@@ -223,7 +223,7 @@ export default class WorkerBridge extends Bridge {
 
 	lint = this.createEvent<
 		{
-			file: JSONFileReference;
+			ref: JSONFileReference;
 			options: WorkerLintOptions;
 			parseOptions: WorkerParseOptions;
 		},
@@ -232,7 +232,7 @@ export default class WorkerBridge extends Bridge {
 
 	updateInlineSnapshots = this.createEvent<
 		{
-			file: JSONFileReference;
+			ref: JSONFileReference;
 			updates: InlineSnapshotUpdates;
 			parseOptions: WorkerParseOptions;
 		},
@@ -241,7 +241,7 @@ export default class WorkerBridge extends Bridge {
 
 	compile = this.createEvent<
 		{
-			file: JSONFileReference;
+			ref: JSONFileReference;
 			stage: TransformStageName;
 			options: WorkerCompilerOptions;
 			parseOptions: WorkerParseOptions;
@@ -251,7 +251,7 @@ export default class WorkerBridge extends Bridge {
 
 	parse = this.createEvent<
 		{
-			file: JSONFileReference;
+			ref: JSONFileReference;
 			options: WorkerParseOptions;
 		},
 		AnyRoot
@@ -270,7 +270,7 @@ export default class WorkerBridge extends Bridge {
 
 	updateBuffer = this.createEvent<
 		{
-			file: JSONFileReference;
+			ref: JSONFileReference;
 			content: string;
 		},
 		void
@@ -281,7 +281,7 @@ export default class WorkerBridge extends Bridge {
 
 	patchBuffer = this.createEvent<
 		{
-			file: JSONFileReference;
+			ref: JSONFileReference;
 			patches: Array<WorkerBufferPatch>;
 		},
 		string
@@ -292,7 +292,7 @@ export default class WorkerBridge extends Bridge {
 
 	clearBuffer = this.createEvent<
 		{
-			file: JSONFileReference;
+			ref: JSONFileReference;
 		},
 		void
 	>({

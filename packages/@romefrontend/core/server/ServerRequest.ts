@@ -912,8 +912,8 @@ export default class ServerRequest {
 		await this.wrapRequestDiagnostic(
 			"updateBuffer",
 			path,
-			async (bridge, file) => {
-				await bridge.updateBuffer.call({file, content});
+			async (bridge, ref) => {
+				await bridge.updateBuffer.call({ref, content});
 				this.server.memoryFs.addBuffer(path, content);
 				this.server.refreshFileEvent.send(path);
 			},
@@ -930,8 +930,8 @@ export default class ServerRequest {
 		return this.wrapRequestDiagnostic(
 			"patchBuffer",
 			path,
-			async (bridge, file) => {
-				const buffer = await bridge.patchBuffer.call({file, patches});
+			async (bridge, ref) => {
+				const buffer = await bridge.patchBuffer.call({ref, patches});
 				this.server.memoryFs.addBuffer(path, buffer);
 				this.server.refreshFileEvent.send(path);
 				return buffer;
@@ -946,8 +946,8 @@ export default class ServerRequest {
 		await this.wrapRequestDiagnostic(
 			"updateBuffer",
 			path,
-			async (bridge, file) => {
-				await bridge.clearBuffer.call({file});
+			async (bridge, ref) => {
+				await bridge.clearBuffer.call({ref});
 				this.server.memoryFs.clearBuffer(path);
 				this.server.refreshFileEvent.send(path);
 			},
@@ -964,7 +964,7 @@ export default class ServerRequest {
 		return this.wrapRequestDiagnostic(
 			"parse",
 			path,
-			(bridge, file) => bridge.parse.call({file, options: opts}),
+			(bridge, ref) => bridge.parse.call({ref, options: opts}),
 		);
 	}
 
@@ -978,8 +978,8 @@ export default class ServerRequest {
 		return this.wrapRequestDiagnostic(
 			"updateInlineSnapshots",
 			path,
-			(bridge, file) =>
-				bridge.updateInlineSnapshots.call({file, updates, parseOptions})
+			(bridge, ref) =>
+				bridge.updateInlineSnapshots.call({ref, updates, parseOptions})
 			,
 		);
 	}
@@ -1011,7 +1011,7 @@ export default class ServerRequest {
 		const res = await this.wrapRequestDiagnostic(
 			"lint",
 			path,
-			(bridge, file) => bridge.lint.call({file, options, parseOptions: {}}),
+			(bridge, ref) => bridge.lint.call({ref, options, parseOptions: {}}),
 		);
 
 		await cache.update(
@@ -1038,7 +1038,7 @@ export default class ServerRequest {
 		return await this.wrapRequestDiagnostic(
 			"format",
 			path,
-			(bridge, file) => bridge.format.call({file, parseOptions}),
+			(bridge, ref) => bridge.format.call({ref, parseOptions}),
 		);
 	}
 
@@ -1066,13 +1066,13 @@ export default class ServerRequest {
 		const compileRes = await this.wrapRequestDiagnostic(
 			"compile",
 			path,
-			(bridge, file) => {
+			(bridge, ref) => {
 				// We allow options to be passed in as undefined so we can compute an easy cache key
 				if (options === undefined) {
 					options = {};
 				}
 
-				return bridge.compile.call({file, stage, options, parseOptions});
+				return bridge.compile.call({ref, stage, options, parseOptions});
 			},
 		);
 
@@ -1116,7 +1116,7 @@ export default class ServerRequest {
 		const res = await this.wrapRequestDiagnostic(
 			"analyzeDependencies",
 			path,
-			(bridge, file) => bridge.analyzeDependencies.call({file, parseOptions}),
+			(bridge, ref) => bridge.analyzeDependencies.call({ref, parseOptions}),
 		);
 		await cache.update(
 			path,
@@ -1150,7 +1150,7 @@ export default class ServerRequest {
 		const res = await this.wrapRequestDiagnostic(
 			"moduleSignature",
 			path,
-			(bridge, file) => bridge.moduleSignatureJS.call({file, parseOptions}),
+			(bridge, ref) => bridge.moduleSignatureJS.call({ref, parseOptions}),
 		);
 		await cache.update(
 			path,
