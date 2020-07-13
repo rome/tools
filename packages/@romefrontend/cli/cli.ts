@@ -102,12 +102,6 @@ export default async function cli() {
 				clientFlags: {
 					clientName: "cli",
 					cwd,
-					verbose: c.get(
-						"verbose",
-						{
-							description: "Output verbose logs",
-						},
-					).asBoolean(DEFAULT_CLIENT_FLAGS.verbose),
 					silent: c.get(
 						"silent",
 						{

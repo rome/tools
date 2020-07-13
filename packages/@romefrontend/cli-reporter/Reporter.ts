@@ -66,7 +66,6 @@ export type ReporterOptions = {
 	hasClearScreen?: boolean;
 	programVersion?: string;
 	markupOptions?: MarkupFormatOptions;
-	verbose?: boolean;
 	useRemoteProgressBars?: boolean;
 	startTime?: number;
 	wrapperFactory?: WrapperFactory;
@@ -99,9 +98,6 @@ export default class Reporter {
 		this.programName =
 			opts.programName === undefined ? "rome" : opts.programName;
 		this.programVersion = opts.programVersion;
-
-		this.isVerbose = Boolean(opts.verbose);
-
 		this.startTime = opts.startTime === undefined ? Date.now() : opts.startTime;
 		this.hasClearScreen =
 			opts.hasClearScreen === undefined ? true : opts.hasClearScreen;
@@ -278,7 +274,6 @@ export default class Reporter {
 	markupOptions: MarkupFormatOptions;
 
 	isRemote: boolean;
-	isVerbose: boolean;
 	streamsWithNewlineEnd: Set<ReporterStreamMeta>;
 	streamsWithDoubleNewlineEnd: Set<ReporterStreamMeta>;
 	leftIndentLevel: number;
@@ -606,7 +601,6 @@ export default class Reporter {
 	fork(opts: Partial<ReporterOptions> = {}) {
 		return new Reporter({
 			streams: [...this.streams],
-			verbose: this.isVerbose,
 			markupOptions: this.markupOptions,
 			wrapperFactory: this.wrapperFactory,
 			...opts,
@@ -703,12 +697,6 @@ export default class Reporter {
 		}
 
 		this.logAll(`<table>${body}</table>`);
-	}
-
-	verboseInspect(val: unknown) {
-		if (this.isVerbose) {
-			this.inspect(val);
-		}
 	}
 
 	inspect(value: unknown) {
@@ -1068,12 +1056,6 @@ export default class Reporter {
 				stderr: true,
 			},
 		);
-	}
-
-	verbose(msg: string, ...args: Array<unknown>) {
-		if (this.isVerbose) {
-			this.verboseForce(msg, ...args);
-		}
 	}
 
 	verboseForce(msg: string, ...args: Array<unknown>) {
