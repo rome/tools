@@ -18,7 +18,6 @@ export const DEFAULT_CLIENT_FLAGS: ClientFlags = {
 	clientName: "unknown",
 	cwd: CWD_PATH,
 	silent: false,
-	verbose: false,
 };
 
 export const DEFAULT_CLIENT_REQUEST_FLAGS: ClientRequestFlags = {
@@ -60,7 +59,6 @@ export type ClientFlags = {
 	clientName: string;
 	cwd: AbsoluteFilePath;
 	silent: boolean;
-	verbose: boolean;
 };
 
 export type ClientFlagsJSON = Omit<ClientFlags, "cwd"> & {

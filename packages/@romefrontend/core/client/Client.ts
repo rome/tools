@@ -109,7 +109,6 @@ export default class Client {
 
 		this.reporter = new Reporter({
 			stdin: opts.stdin,
-			verbose: this.flags.verbose === true,
 			markupOptions: {
 				userConfig: this.userConfig,
 				cwd: this.flags.cwd,

@@ -32,5 +32,3 @@ layout: layouts/page.njk
 ### `--rage-path <path>`
 
 ### `--timing`
-
-### `--verbose`

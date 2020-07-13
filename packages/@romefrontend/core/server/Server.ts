@@ -677,7 +677,6 @@ export default class Server {
 			hasClearScreen,
 			wrapperFactory: this.wrapFatal.bind(this),
 			streams: [outStream, errStream],
-			verbose: flags.verbose,
 			markupOptions: {
 				...this.logger.markupOptions,
 				cwd: flags.cwd,

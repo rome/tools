@@ -21,10 +21,7 @@ export default class Logger extends Reporter {
 			write: (chunk: string) => void;
 		},
 	) {
-		super({
-			verbose: true,
-			...opts,
-		});
+		super(opts);
 		this.loggerType = loggerType;
 
 		this.conditionalStream = this.attachConditionalStream(
