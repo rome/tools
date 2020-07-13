@@ -26,7 +26,7 @@ export default createLocalCommand({
 		});
 
 		const stdin = req.client.reporter.getStdin();
-		req.client.reporter.teardown();
+		req.client.reporter.redirectOutToErr(true);
 
 		const bridge = await req.client.findOrStartServer();
 		if (bridge === undefined) {

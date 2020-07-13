@@ -5,10 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {markupToPlainTextString} from "@romefrontend/string-markup";
 import highlightCode, {AnsiHighlightOptions} from "./highlightCode";
 import {NEWLINE, nonASCIIwhitespace} from "@romefrontend/js-parser-utils";
 import {removeCarriageReturn} from "@romefrontend/string-utils";
+import {
+	joinMarkupLines,
+	markupToPlainText,
+} from "@romefrontend/string-markup/format";
 
 const unicodeControls = /[\u0000-\u001f\u007f-\u00a0]/u;
 
@@ -133,7 +136,7 @@ function showInvisibleChar(char: string): undefined | string {
 }
 
 export function cleanEquivalentString(str: string): string {
-	str = markupToPlainTextString(str);
+	str = joinMarkupLines(markupToPlainText(str));
 
 	// Replace all whitespace with spaces
 	str = str.replace(/[\s\n]+/g, " ");

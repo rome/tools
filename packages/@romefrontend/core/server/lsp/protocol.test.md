@@ -17,7 +17,7 @@
   t handle this comment
   const foo = 'Or this “special” string';
   const rocket = "Or this🚀";
-  
+
   rocket;
   foo;"}]}}
 ℹ [LSPServer][Transport] Status: IDLE

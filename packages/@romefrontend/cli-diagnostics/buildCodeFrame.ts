@@ -25,8 +25,9 @@ import {
 	ob1Number0,
 	ob1Number1Neg1,
 } from "@romefrontend/ob1";
-import {markupTag, markupToPlainTextString} from "@romefrontend/string-markup";
+import {markupTag, markupToPlainText} from "@romefrontend/string-markup";
 import {Dict} from "@romefrontend/typescript-helpers";
+import {joinMarkupLines} from "@romefrontend/string-markup/format";
 
 function formatLineView(
 	{marker, line, gutter}: FormattedLine,
@@ -284,7 +285,7 @@ export default function buildCodeFrame(
 		const text = sourceText.slice(ob1Get0(start.index), ob1Get0(end.index));
 		if (
 			cleanEquivalentString(text) ===
-			cleanEquivalentString(markupToPlainTextString(markerMessage))
+			cleanEquivalentString(joinMarkupLines(markupToPlainText(markerMessage)))
 		) {
 			markerMessage = "";
 		}

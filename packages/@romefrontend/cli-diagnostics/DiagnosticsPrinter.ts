@@ -24,7 +24,7 @@ import {
 import {
 	formatAnsi,
 	markup,
-	markupToPlainTextString,
+	markupToPlainText,
 } from "@romefrontend/string-markup";
 import {ToLines, toLines} from "./utils";
 import {printAdvice} from "./printAdvice";
@@ -41,6 +41,7 @@ import {
 } from "@romefrontend/path";
 import {Number0, Number1, ob1Get0, ob1Get1} from "@romefrontend/ob1";
 import {existsSync, lstatSync, readFileTextSync} from "@romefrontend/fs";
+import {joinMarkupLines} from "@romefrontend/string-markup/format";
 
 type Banner = {
 	// Array<number> should really be [number, number, number], but TypeScript widens the imported types
@@ -222,7 +223,7 @@ export default class DiagnosticsPrinter extends Error {
 
 		// Match against the supplied grep pattern
 		let ignored =
-			markupToPlainTextString(diag.description.message.value).toLowerCase().includes(
+			joinMarkupLines(markupToPlainText(diag.description.message.value)).toLowerCase().includes(
 				grep,
 			) === false;
 		if (inverseGrep) {
@@ -442,8 +443,8 @@ export default class DiagnosticsPrinter extends Error {
 					}
 				}
 
-				let log = `::error ${parts.join(",")}::${markupToPlainTextString(
-					message.value,
+				let log = `::error ${parts.join(",")}::${joinMarkupLines(
+					markupToPlainText(message.value),
 				)}`;
 				this.reporter.logAllRaw(log);
 				break;

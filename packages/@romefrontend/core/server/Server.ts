@@ -646,12 +646,12 @@ export default class Server {
 
 				// Split up stdout chunks
 				if (chunk.length < STDOUT_MAX_CHUNK_LENGTH) {
-					bridge.stdout.send(chunk);
+					bridge.write.send([chunk, false]);
 				} else {
 					while (chunk.length > 0) {
 						const subChunk = chunk.slice(0, STDOUT_MAX_CHUNK_LENGTH);
 						chunk = chunk.slice(STDOUT_MAX_CHUNK_LENGTH);
-						bridge.stdout.send(subChunk);
+						bridge.write.send([subChunk, false]);
 					}
 				}
 			},
@@ -661,7 +661,7 @@ export default class Server {
 			...outStream,
 			type: "error",
 			write(chunk: string) {
-				bridge.stderr.send(chunk);
+				bridge.write.send([chunk, true]);
 			},
 		};
 

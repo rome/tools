@@ -46,6 +46,7 @@ export type ChildNode = TextNode | TagNode;
 export type Children = Array<ChildNode>;
 
 export type MarkupTagName =
+	| "indent"
 	| "view"
 	| "viewLinePrefix"
 	| "viewPointer"
@@ -128,14 +129,9 @@ export type MarkupFormatNormalizeOptions = MarkupFormatOptions & {
 	stripPositions?: boolean;
 };
 
-export type MarkupLines = Array<{
-	line: string;
-	width: number;
-}>;
-
 export type MarkupLinesAndWidth = {
 	width: number;
-	lines: MarkupLines;
+	lines: Array<string>;
 };
 
 export type GridOutputFormat = "ansi" | "html" | "none";

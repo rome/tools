@@ -50,6 +50,7 @@ tags.set(
 		["singularSuffix", stringValidator],
 	]),
 );
+tags.set("indent", new Map());
 tags.set(
 	"view",
 	new Map([

@@ -40,7 +40,15 @@ async function main(): Promise<void> {
 	}
 }
 
+setInterval(
+	() => {
+		// We want to exit on our own terms
+	},
+	1_000_000,
+);
+
 initErrorHooks();
+
 sourceMapManager.add(
 	BIN.join(),
 	SourceMapConsumer.fromJSONLazy(
