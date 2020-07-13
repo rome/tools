@@ -1,4 +1,5 @@
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
+const eleventyNavigationPlugin = require("@11ty/eleventy-navigation");
 const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
 const fs = require("fs");
@@ -26,6 +27,7 @@ module.exports = function(eleventyConfig) {
 
 	eleventyConfig.addPlugin(syntaxHighlight);
 	eleventyConfig.addPlugin(pluginTOC);
+	eleventyConfig.addPlugin(eleventyNavigationPlugin);
 
 	const md = markdownIt({
 		html: true,

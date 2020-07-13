@@ -107,6 +107,52 @@ a:active {
   }
 }
 
+ul.breadcrumbs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #eee;
+  
+  > li {
+    display: inline-block;
+    padding: 0;
+    line-height: 40px;
+    border-right: 1px solid red;
+    position: relative;
+
+    a, &.active {
+      padding: 0 $unit;
+    }
+
+    &.active {
+      font-weight: bold;
+    }
+
+    &:hover {
+      .sub-menu {
+        display: block;
+      }
+    }
+  }
+
+  ul.sub-menu {
+    display: none;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    list-style: none;
+    margin-left: 0;
+    background-color: #aaa;
+    padding: 0;
+    max-height: 400px;
+    overflow: auto;
+
+    li {
+      padding: 0;
+    }
+  }
+}
+
 .main {
   overflow: hidden;
   width: 80%;
