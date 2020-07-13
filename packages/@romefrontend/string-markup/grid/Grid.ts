@@ -280,11 +280,11 @@ export default class Grid {
 	getTrimmedLines(trimColumns: boolean = true): Array<GridLine> {
 		// Remove trailing spaces
 		let lines = this.lines;
-	
+
 		if (trimColumns) {
 			lines = lines.map((line) => {
 				let {columns} = line;
-	
+
 				if (columns[columns.length - 1] === " ") {
 					columns = [...columns];
 					while (columns[columns.length - 1] === " ") {
@@ -292,19 +292,19 @@ export default class Grid {
 					}
 					return {...line, columns};
 				}
-	
+
 				return line;
 			});
 		} else {
 			lines = [...this.lines];
 		}
-	
+
 		// Remove empty columns
 		// Explicit newlines will have at least one column with an empty field
 		while (lines.length > 0 && lines[lines.length - 1].columns.length === 0) {
 			lines.pop();
 		}
-	
+
 		return lines;
 	}
 
@@ -922,7 +922,7 @@ export default class Grid {
 			tags.pointer === undefined ? undefined : this.getViewPointer(tags.pointer);
 		const linePrefixes = this.getViewLinePrefixes(tags.linePrefixes, ancestry);
 		const startCursor = this.getCursor();
-		
+
 		// Calculate size of view
 		let columns = this.getSubColumns(
 			ob1Add(startCursor.column, linePrefixes?.width || 0),
