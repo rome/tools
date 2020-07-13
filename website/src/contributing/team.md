@@ -42,4 +42,8 @@ layout: layouts/page.njk
 		<img src="https://github.com/yassere.png?s=176">
 		<p><a href="https://github.com/yassere">Yasser Elassal</a></p>
 	</li>
+	<li>
+        <img src="https://github.com/ematipico.png?s=176">
+        <p><a href="https://github.com/ematipico">Emanuele Stoppa</a></p>
+    </li>
 </ul>

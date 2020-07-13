@@ -68,6 +68,7 @@ Members listed in alphabetical order.
 - [Paul Bouchon @bitpshr](https://github.com/bitpshr)
 - [Victor Hom @VictorHom](https://github.com/VictorHom)
 - [Yasser Elassal @yassere](https://github.com/yassere)
+- [Emanuele Stoppa @ematipico](https://github.com/ematipico)
 
 ## Project direction and planning
 
