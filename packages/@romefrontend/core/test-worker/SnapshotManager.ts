@@ -5,11 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	AbsoluteFilePath,
-	AbsoluteFilePathMap,
-	createAbsoluteFilePath,
-} from "@romefrontend/path";
+import {AbsoluteFilePath, AbsoluteFilePathMap} from "@romefrontend/path";
 import {exists, readFileText, removeFile, writeFile} from "@romefrontend/fs";
 import {TestServerRunnerOptions} from "../server/testing/types";
 import TestWorkerRunner from "./TestWorkerRunner";
@@ -108,7 +104,7 @@ export default class SnapshotManager {
 			return this.defaultSnapshotPath;
 		}
 
-		const path = createAbsoluteFilePath(filename);
+		const path = this.runner.file.real.getParent().resolve(filename);
 		const ext = path.getExtensions();
 		if (ext.endsWith(SNAPSHOT_EXT)) {
 			return path;

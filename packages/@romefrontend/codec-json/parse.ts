@@ -63,11 +63,24 @@ export function isValidWord(word: string): boolean {
 }
 
 // Check if a character is a part of a string, returning false for a newline or unescaped quote char
-function isStringValueChar(char: string, index: Number0, input: string): boolean {
+function isJSONStringValueChar(
+	char: string,
+	index: Number0,
+	input: string,
+): boolean {
 	if (char === "\n") {
 		return false;
 	}
 
+	return isRJSONStringValueChar(char, index, input);
+}
+
+// NOTE: Different methods as we allow newlines in RJSON strings
+function isRJSONStringValueChar(
+	char: string,
+	index: Number0,
+	input: string,
+): boolean {
 	if (char === '"' && !isEscaped(index, input)) {
 		return false;
 	}
@@ -214,7 +227,7 @@ export const createJSONParser = createParser((ParserCore) =>
 				case '"': {
 					const [value, end, overflow] = this.readInputFrom(
 						ob1Inc(index),
-						isStringValueChar,
+						this.hasExtensions ? isRJSONStringValueChar : isJSONStringValueChar,
 					);
 
 					if (overflow) {
@@ -225,14 +238,16 @@ export const createJSONParser = createParser((ParserCore) =>
 					}
 
 					// Don't allow newlines in JSON
-					for (let strIndex = 0; strIndex < value.length; strIndex++) {
-						const char = value[strIndex];
+					if (!this.hasExtensions) {
+						for (let strIndex = 0; strIndex < value.length; strIndex++) {
+							const char = value[strIndex];
 
-						if (char === "\n") {
-							throw this.unexpected({
-								description: descriptions.JSON.STRING_NEWLINES_IN_JSON,
-								start: this.getPositionFromIndex(ob1Add(index, strIndex)),
-							});
+							if (char === "\n") {
+								throw this.unexpected({
+									description: descriptions.JSON.STRING_NEWLINES_IN_JSON,
+									start: this.getPositionFromIndex(ob1Add(index, strIndex)),
+								});
+							}
 						}
 					}
 
@@ -245,6 +260,7 @@ export const createJSONParser = createParser((ParserCore) =>
 								start: this.getPositionFromIndex(ob1Add(index, strIndex)),
 							});
 						},
+						this.hasExtensions,
 					);
 
 					// increment to take the trailing quote

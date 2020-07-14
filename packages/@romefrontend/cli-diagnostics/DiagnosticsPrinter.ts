@@ -302,6 +302,18 @@ export default class DiagnosticsPrinter extends Error {
 						});
 					}
 				}
+
+				if (item.type === "stacktrace") {
+					for (const frame of item.frames) {
+						deps.push({
+							type: "reference",
+							path: this.createFilePath(frame.filename),
+							language: undefined,
+							sourceType: undefined,
+							mtime: undefined,
+						});
+					}
+				}
 			}
 		}
 

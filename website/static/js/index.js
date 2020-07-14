@@ -192,7 +192,7 @@ window.addEventListener("scroll", handleScroll, false);
 elements.colorSchemeSwitch.addEventListener("click", modeSwitch, false);
 
 const homepageExample = document.querySelector(".homepage-example");
-if (homepageExample !== undefined) {
+if (homepageExample != null) {
 	homepageExample.addEventListener(
 		"click",
 		() => {

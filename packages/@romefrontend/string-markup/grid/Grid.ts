@@ -21,6 +21,7 @@ import {
 	Number1,
 	ob1Add,
 	ob1Coerce1,
+	ob1Dec,
 	ob1Get,
 	ob1Get1,
 	ob1Inc,
@@ -56,18 +57,6 @@ type Cursor = {
 };
 
 type Rows = Array<Array<TagNode>>;
-
-function cursorToIndex(
-	cursor: Cursor,
-): {
-	line: number;
-	column: number;
-} {
-	return {
-		line: ob1Get1(cursor.line) - 1,
-		column: ob1Get1(cursor.column) - 1,
-	};
-}
 
 type Ancestry = Array<TagNode>;
 
@@ -114,8 +103,8 @@ function extractViewTags(
 
 type GridLine = {
 	ranges: Array<{
-		start: number;
-		end: number;
+		start: Number1;
+		end: Number1;
 		ancestry: Ancestry;
 	}>;
 	columns: Array<string>;
@@ -123,8 +112,7 @@ type GridLine = {
 
 export default class Grid {
 	constructor(opts: MarkupFormatGridOptions) {
-		this.viewportWidth =
-			opts.columns === undefined ? undefined : ob1Coerce1(opts.columns);
+		this.viewportWidth = opts.columns === undefined ? undefined : opts.columns;
 		this.options = opts;
 
 		this.features =
@@ -209,8 +197,8 @@ export default class Grid {
 
 			const newRanges = ranges.map((range) => {
 				return {
-					start: range.start + offset,
-					end: range.end + offset,
+					start: ob1Add(range.start, offset),
+					end: ob1Add(range.end, offset),
 					ancestry: range.ancestry,
 				};
 			});
@@ -234,16 +222,20 @@ export default class Grid {
 		return ob1Coerce1(this.lines.length);
 	}
 
-	getLine(lineIndex: number): GridLine {
-		// Pad lines
+	getLine(line: Number1): GridLine {
+		const lineIndex = ob1Get1(line) - 1;
 		for (let i = lineIndex; i >= 0 && this.lines[i] === undefined; i--) {
-			this.lines[i] = {ranges: [], columns: []};
+			this.clearLine(ob1Coerce1(i + 1));
 		}
 		return this.lines[lineIndex];
 	}
 
-	getLineWidth(lineIndex: number): number {
-		return this.getLine(lineIndex).columns.length;
+	clearLine(line: Number1) {
+		this.lines[ob1Get1(line) - 1] = {ranges: [], columns: []};
+	}
+
+	getLineWidth(line: Number1): Number1 {
+		return ob1Coerce1(this.getLine(line).columns.length);
 	}
 
 	getWidth(): Number1 {
@@ -277,27 +269,8 @@ export default class Grid {
 		}
 	}
 
-	getTrimmedLines(trimColumns: boolean = true): Array<GridLine> {
-		// Remove trailing spaces
-		let lines = this.lines;
-
-		if (trimColumns) {
-			lines = lines.map((line) => {
-				let {columns} = line;
-
-				if (columns[columns.length - 1] === " ") {
-					columns = [...columns];
-					while (columns[columns.length - 1] === " ") {
-						columns.pop();
-					}
-					return {...line, columns};
-				}
-
-				return line;
-			});
-		} else {
-			lines = [...this.lines];
-		}
+	getTrimmedLines(): Array<GridLine> {
+		const lines = [...this.lines];
 
 		// Remove empty columns
 		// Explicit newlines will have at least one column with an empty field
@@ -324,7 +297,7 @@ export default class Grid {
 
 		for (const {ranges, columns} of this.getTrimmedLines()) {
 			// Sort ranges from last to first
-			const sortedRanges = ranges.sort((a, b) => b.end - a.end);
+			const sortedRanges = ranges.sort((a, b) => ob1Get1(b.end) - ob1Get1(a.end));
 
 			let line = "";
 
@@ -336,9 +309,13 @@ export default class Grid {
 			}
 
 			for (const {start, end, ancestry} of sortedRanges) {
-				catchUp(end);
+				const startIndex = ob1Get1(start) - 1;
+				const endIndex = ob1Get1(end) - 1;
+				catchUp(endIndex);
 
-				let substr = opts.normalizeText(columns.slice(start, end).join(""));
+				let substr = opts.normalizeText(
+					columns.slice(startIndex, endIndex).join(""),
+				);
 
 				// Format tags in reverse
 				for (let i = ancestry.length - 1; i >= 0; i--) {
@@ -347,7 +324,7 @@ export default class Grid {
 				}
 
 				line = `${substr}${line}`;
-				lastEnd = start;
+				lastEnd = startIndex;
 			}
 
 			catchUp(0);
@@ -375,10 +352,9 @@ export default class Grid {
 	}
 
 	fillCursor(cursor: Cursor) {
-		const {line: lineIndex, column: colIndex} = cursorToIndex(cursor);
+		const line = this.getLine(cursor.line);
 
-		// Pad columns
-		const line = this.getLine(lineIndex);
+		const colIndex = ob1Get1(cursor.column) - 1;
 		for (let i = colIndex - 1; i >= 0 && line.columns[i] === undefined; i--) {
 			line.columns[i] = " ";
 		}
@@ -394,22 +370,15 @@ export default class Grid {
 		this.cursor = cursor;
 	}
 
-	moveCursorBottomStart() {
-		this.moveCursor({
-			line: ob1Inc(this.getHeight()),
-			column: ob1Number1,
-		});
-	}
-
 	moveCursorRight(columns: Number1 = ob1Number1) {
 		const newColumns = ob1Add(this.cursor.column, columns);
 
 		// Perform character line wrap
 		if (this.doesOverflowViewport(newColumns)) {
-			const currentLine = this.getLine(ob1Get1(this.cursor.line) - 1);
+			const currentLine = this.getLine(this.cursor.line);
 			const previousLineSoftWrapped = this.lineStartMeta.softWrapped;
 
-			this.moveCursorBottomStart();
+			this.newline();
 
 			// Soft wrap, inherit the previous lines indentation
 			if (currentLine !== undefined) {
@@ -440,15 +409,16 @@ export default class Grid {
 		}
 	}
 
-	ensureNewline() {
-		if (this.cursor.column !== ob1Number1) {
-			this.newline();
-		}
+	userNewline() {
+		this.newline();
+		this.writeToCursor(this.cursor, "");
 	}
 
 	newline() {
-		this.moveCursorBottomStart();
-		this.writeToCursor(this.cursor, "");
+		this.moveCursor({
+			line: ob1Inc(this.getHeight()),
+			column: ob1Number1,
+		});
 	}
 
 	moveCursorStart() {
@@ -468,8 +438,8 @@ export default class Grid {
 	writeToCursor(cursor: Cursor, char: string) {
 		this.fillCursor(cursor);
 
-		const {line: lineIndex, column: colIndex} = cursorToIndex(cursor);
-		const line = this.getLine(lineIndex);
+		const line = this.getLine(cursor.line);
+		const colIndex = ob1Get1(cursor.column) - 1;
 		line.columns[colIndex] = char;
 
 		if (cursor.column > this.width) {
@@ -479,7 +449,7 @@ export default class Grid {
 
 	writeChar(char: string) {
 		if (char === "\n") {
-			this.newline();
+			this.userNewline();
 			return;
 		}
 
@@ -550,7 +520,7 @@ export default class Grid {
 				(this.doesOverflowViewport(ob1Add(this.cursor.column, word.length - 1)) &&
 				!this.doesOverflowViewport(ob1Coerce1(word.length))));
 			if (willOverflow) {
-				this.moveCursorBottomStart();
+				this.newline();
 			}
 			forceNextWordOverflow = false;
 
@@ -597,7 +567,7 @@ export default class Grid {
 		this.addCursorRange(start, end, ancestry);
 	}
 
-	setRange(line: number, start: number, end: number, ancestry: Ancestry) {
+	setRange(line: Number1, start: Number1, end: Number1, ancestry: Ancestry) {
 		if (start === end) {
 			// Nothing to format. Empty tag.
 			return;
@@ -605,27 +575,37 @@ export default class Grid {
 
 		if (end < start) {
 			throw new Error(
-				`Range end for line index ${line} is before the start. end(${end}) < start(${start}). Line content: ${JSON.stringify(
-					this.getLine(line).columns,
+				`Range end for line index ${line} is before the start. end(${end}) < start(${start}).\nLine content: ${JSON.stringify(
+					this.getLine(line).columns.join(""),
 				)}`,
 			);
 		}
 
-		this.getLine(line).ranges.push({
+		const {ranges} = this.getLine(line);
+
+		for (const range of ranges) {
+			if (
+				(start >= range.start && end <= range.end) ||
+				(range.start >= start && range.end <= end)
+			) {
+				throw new Error(
+					`The ranges ${range.start}-${range.end} and ${start}-${end} overlap`,
+				);
+			}
+		}
+
+		ranges.push({
 			start,
 			end,
 			ancestry,
 		});
 	}
 
-	addCursorRange(_start: Cursor, _end: Cursor, ancestry: Ancestry) {
+	addCursorRange(start: Cursor, end: Cursor, ancestry: Ancestry) {
 		if (ancestry.length === 0) {
 			// No point storing a range without ancestry
 			return;
 		}
-
-		const start = cursorToIndex(_start);
-		const end = cursorToIndex(_end);
 
 		if (start.line === end.line) {
 			if (start.column === end.column) {
@@ -639,17 +619,18 @@ export default class Grid {
 			this.setRange(
 				start.line,
 				start.column,
-				this.getLineWidth(start.line),
+				ob1Inc(this.getLineWidth(start.line)),
 				ancestry,
 			);
 
 			// Add middle lines
-			for (let line = start.line + 1; line < end.line; line++) {
-				this.setRange(line, 0, this.getLineWidth(line), ancestry);
+			for (let i = ob1Get1(start.line) + 1; i < ob1Get1(end.line); i++) {
+				const line = ob1Coerce1(i);
+				this.setRange(line, ob1Coerce1(1), this.getLineWidth(line), ancestry);
 			}
 
 			// Add last line
-			this.setRange(end.line, 0, end.column, ancestry);
+			this.setRange(end.line, ob1Coerce1(1), end.column, ancestry);
 		}
 	}
 
@@ -664,7 +645,7 @@ export default class Grid {
 			return;
 		}
 
-		this.ensureNewline();
+		this.newline();
 
 		const ordered = tag.name === "ol";
 
@@ -691,30 +672,16 @@ export default class Grid {
 					[createTag("dim", createEmptyAttributes())],
 					false,
 				);
-				this.drawListItem(item, ancestry);
+				this.drawView(item, ancestry);
+				this.newline();
 			}
 		} else {
 			for (const item of items) {
 				this.writeText("- ", [createTag("dim", createEmptyAttributes())], false);
-				this.drawListItem(item, ancestry);
+				this.drawView(item, ancestry);
+				this.newline();
 			}
 		}
-	}
-
-	getSubColumns(columns: Number1): undefined | number {
-		return this.viewportWidth === undefined
-			? undefined
-			: ob1Get1(ob1Sub(this.viewportWidth, columns)) + 1;
-	}
-
-	drawListItem(item: TagNode, ancestry: Ancestry) {
-		const grid = new Grid({
-			...this.options,
-			columns: this.getSubColumns(this.cursor.column),
-		});
-		grid.drawTag(item, ancestry);
-		this.drawGrid(grid);
-		this.moveCursorBottomStart();
 	}
 
 	drawPointer(): boolean {
@@ -750,6 +717,8 @@ export default class Grid {
 			}
 		}
 
+		markerSize = Math.max(1, markerSize);
+
 		// If any previous text on this line contains tabs then increase the offset
 		for (let i = 0; i < start; i++) {
 			if (sourceCursor.currentLineText[i] === "\t") {
@@ -757,7 +726,7 @@ export default class Grid {
 			}
 		}
 
-		this.moveCursorBottomStart();
+		this.newline();
 
 		// Pointer offset
 		this.writeText(" ".repeat(markerOffset), [], false);
@@ -801,7 +770,7 @@ export default class Grid {
 		children: Array<TagNode>,
 		ancestry: Ancestry,
 	): {
-		width: number;
+		width: Number1;
 		pointer: undefined | Grid;
 		first: undefined | Grid;
 		middle: undefined | Grid;
@@ -871,13 +840,13 @@ export default class Grid {
 		}
 
 		const childrenToGrid: Map<undefined | TagNode, Grid> = new Map();
-		let maxWidth = 0;
+		let maxWidth = ob1Coerce1(0);
 
 		// Get the maxWidth
 		for (const prefix of prefixes) {
 			const grid = new Grid({...this.options, columns: undefined});
 			grid.drawChildren(prefix.children, ancestry);
-			const width = ob1Get1(grid.getSize().width);
+			const width = grid.getSize().width;
 			if (width > maxWidth) {
 				maxWidth = width;
 			}
@@ -913,7 +882,7 @@ export default class Grid {
 		};
 	}
 
-	drawView(tag: TagNode, ancestry: Ancestry, shrinkViewport: number = 0) {
+	drawView(tag: TagNode, ancestry: Ancestry, shrinkViewport?: Number1) {
 		const tags = extractViewTags(tag);
 		const {children} = tags;
 		const {attributes} = tag;
@@ -924,26 +893,43 @@ export default class Grid {
 		const startCursor = this.getCursor();
 
 		// Calculate size of view
-		let columns = this.getSubColumns(
-			ob1Add(startCursor.column, linePrefixes?.width || 0),
-		);
-		if (columns !== undefined) {
-			columns -= shrinkViewport;
-		}
-
-		if (linePrefixes !== undefined) {
-			if (linePrefixes.first !== undefined) {
-				this.drawGrid(linePrefixes.first);
+		let subViewport: undefined | Number1 = undefined;
+		const {viewportWidth} = this;
+		if (viewportWidth !== undefined) {
+			subViewport = viewportWidth;
+			subViewport = ob1Sub(subViewport, startCursor.column);
+			// We add on one because we can place a character on the cursor position
+			subViewport = ob1Add(subViewport, 1);
+			subViewport = ob1Sub(subViewport, linePrefixes.width);
+			if (shrinkViewport !== undefined) {
+				subViewport = ob1Sub(subViewport, shrinkViewport);
 			}
-			this.moveCursor({
-				...startCursor,
-				column: ob1Add(startCursor.column, linePrefixes.width),
-			});
 		}
 
 		const lineWrapMode = lineWrapValidator(
 			attributes.get("lineWrap").asStringOrVoid(),
 		);
+
+		// Bail and just render the children if this view is redundant
+		// This can happen since we wrap some other elements in views
+		if (
+			lineWrapMode === undefined &&
+			pointer === undefined &&
+			subViewport === this.viewportWidth &&
+			linePrefixes.width === ob1Coerce1(0)
+		) {
+			this.drawChildren(children, ancestry);
+			return;
+		}
+
+		// Render first prefix
+		if (linePrefixes.first !== undefined) {
+			this.drawGrid(linePrefixes.first);
+		}
+		this.moveCursor({
+			...startCursor,
+			column: ob1Add(startCursor.column, linePrefixes.width),
+		});
 
 		const grid = new Grid({
 			...this.options,
@@ -952,7 +938,7 @@ export default class Grid {
 				pointer,
 				lineWrapMode,
 			},
-			columns,
+			columns: subViewport,
 		});
 		for (const child of children) {
 			grid.drawChild(child, ancestry);
@@ -961,42 +947,36 @@ export default class Grid {
 		grid.maybeAlign(tag);
 		this.drawGrid(grid);
 
-		if (linePrefixes) {
-			const height = ob1Get1(grid.getHeight());
+		// Add on any subsequent line prefixes if we wrapped
+		const height = ob1Get1(grid.getHeight());
+		for (let i = 1; i < height; i++) {
+			let linePrefix = linePrefixes.middle;
 
-			// Add on any subsequent line prefixes if we wrapped
-			for (let i = 1; i < height; i++) {
-				let thisLinePrefix = linePrefixes.middle;
-
-				if (i === height - 1) {
-					if (drewPointer) {
-						// Don't prefix a pointer
-						thisLinePrefix = linePrefixes.pointer;
-					} else {
-						thisLinePrefix = linePrefixes.last;
-					}
+			if (i === height - 1) {
+				if (drewPointer) {
+					// Don't prefix a pointer
+					linePrefix = linePrefixes.pointer;
+				} else {
+					linePrefix = linePrefixes.last;
 				}
+			}
 
-				// Correct last offset if we drew a pointer
-				if (drewPointer && i === height - 2) {
-					thisLinePrefix = linePrefixes.last;
-				}
+			// Correct last offset if we drew a pointer
+			if (drewPointer && i === height - 2) {
+				linePrefix = linePrefixes.last;
+			}
 
+			if (linePrefix !== undefined) {
 				this.moveCursor({
 					line: ob1Add(startCursor.line, i),
 					column: startCursor.column,
 				});
 
-				if (thisLinePrefix !== undefined) {
-					this.drawGrid(thisLinePrefix);
-				}
+				this.drawGrid(linePrefix);
 			}
 		}
 
-		this.moveCursor({
-			line: this.getHeight(),
-			column: startCursor.column,
-		});
+		this.newline();
 	}
 
 	drawTable(tag: TagNode, ancestry: Ancestry) {
@@ -1075,7 +1055,7 @@ export default class Grid {
 				const field = row[colIndex];
 				const width = ob1Coerce1(columnWidths[colIndex]);
 
-				const grid = new Grid({...this.options, columns: ob1Get1(width)});
+				const grid = new Grid({...this.options, columns: width});
 				grid.drawTag(field, ancestry);
 				grid.maybeAlign(field);
 
@@ -1083,7 +1063,7 @@ export default class Grid {
 				this.moveCursorRight(ob1Inc(width));
 			}
 
-			this.moveCursorBottomStart();
+			this.newline();
 		}
 	}
 
@@ -1095,21 +1075,21 @@ export default class Grid {
 	}
 
 	drawGrid(grid: Grid) {
-		const lines = grid.getTrimmedLines(false);
-		const cursor = cursorToIndex(this.getCursor());
+		const lines = grid.getTrimmedLines();
+		const cursor = this.getCursor();
 
 		for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
 			const {columns, ranges} = lines[lineIndex];
 
-			const correctLine = cursor.line + lineIndex;
+			const correctLine = ob1Add(cursor.line, lineIndex);
 
 			for (let colIndex = 0; colIndex < columns.length; colIndex++) {
 				const char = columns[colIndex];
 
 				this.writeToCursor(
 					{
-						line: ob1Coerce1(correctLine + 1),
-						column: ob1Coerce1(cursor.column + colIndex + 1),
+						line: correctLine,
+						column: ob1Add(cursor.column, colIndex),
 					},
 					char,
 				);
@@ -1118,8 +1098,8 @@ export default class Grid {
 			for (const range of ranges) {
 				this.setRange(
 					correctLine,
-					cursor.column + range.start,
-					cursor.column + range.end,
+					ob1Dec(ob1Add(cursor.column, range.start)),
+					ob1Dec(ob1Add(cursor.column, range.end)),
 					range.ancestry,
 				);
 			}
@@ -1179,7 +1159,7 @@ export default class Grid {
 				this.drawView(
 					createTag("view", createEmptyAttributes(), children),
 					ancestry,
-					levels * 2,
+					ob1Coerce1(levels * 2),
 				);
 				break;
 			}
@@ -1513,10 +1493,10 @@ hooks.set(
 	"hr",
 	{
 		after: (tag, grid, ancestry) => {
-			let size =
-				grid.viewportWidth === undefined
-					? 100
-					: ob1Get1(grid.viewportWidth) - ob1Get1(grid.cursor.column) + 1;
+			let size = 100;
+			if (grid.viewportWidth !== undefined) {
+				size = ob1Get1(grid.viewportWidth) - ob1Get1(grid.cursor.column) + 1;
+			}
 			size = Math.max(size, 0);
 			grid.writeText("\u2501".repeat(size), ancestry, false);
 		},

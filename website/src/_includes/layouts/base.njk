@@ -1,6 +1,46 @@
 <!doctype html>
 <html data-theme="light" lang="en">
-	{% include "./sections/head.njk" %}
+	<head>
+    <title>{{ title }}{{ " — " if title }}Rome Frontend Toolchain</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="mask-icon" href="{{ '/static/img/pinned-rome-logo.svg' | url }}" color="#000000">
+    <link rel="alternate icon" type="image/png" href="{{ '/static/img/favicon.png' | url }}">
+    <link rel="icon" type="image/svg+xml" href="{{ '/static/img/favicon.svg' | url }}">
+
+    <meta name="description" content="Standardizing the web development experience.">
+    <meta name="theme-color" content="#FFC905">
+    <meta property="og:title" content="{{ title }}{{ " — " if title }}Rome Frontend Toolchain">
+    <meta property="og:description" content="Standardizing the web development experience.">
+    <meta property="og:image" content="https://romefrontend.dev/static/img/social-logo.png">
+    <meta property="twitter:image" content="https://romefrontend.dev/static/img/social-logo.png">
+    <meta property="twitter:site" content="@romefrontend">
+    <meta property="twitter:creator" content="@romefrontend">
+    <meta property="twitter:image:alt" content="Logo for the Rome Frontend Toolchain Project">
+    <meta property="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap">
+    <link rel="stylesheet" href="{{ '/static/styles.css' | url }}">
+    <script>
+
+      (function () {
+        // Fix white flickering when on dark mode and respect color scheme preference
+        let currentTheme = window.localStorage.getItem('data-theme');
+        const $doc = document.documentElement;
+        const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if(!currentTheme)	{
+          currentTheme = prefersDarkMode ? 'dark' : 'light';
+        }
+
+        window.localStorage.setItem('data-theme', currentTheme);
+        $doc.setAttribute("data-theme", currentTheme);
+      })();
+
+    </script>
+  </head>
+
   <body>
     <div class="container">
       <div class="skip-to-content">
@@ -106,9 +146,30 @@
       </div>
       <div class="main">
         <div class="overlay"></div>
+        {% if eleventyNavigation.key %}
+          <ul class="breadcrumbs">
+            {% set navPages = collections.all | eleventyNavigationBreadcrumb(eleventyNavigation.key) %}
+            {%- for entry in navPages %}
+              <li>
+                <a href="{{ entry.url | url }}">{{ entry.title }}</a>
 
-          {{ content | safe }}
+                <ul class="sub-menu">
+                  {% set subNavPages = collections.all | eleventyNavigation(entry.key) %}
+                  {%- for entry in subNavPages %}
+                    <li>
+                      <a href="{{ entry.url | url }}">{{ entry.title }}</a>
+                    </li>
+                  {%- endfor %}
+                </ul>
+              </li>
+            {%- endfor %}
+            <li class="active">
+              {{ eleventyNavigation.title }}
+            </li>
+          </ul>
+        {% endif %}
 
+        {{ content | safe }}
       </div>
       <div class="sidebar right">
         <nav aria-labelledby="table-of-content" class="table-of-contents">
@@ -132,6 +193,51 @@
       <strong>Rome is still in development</strong>. We have not had an official supported release so documentation may appear out of date until then.
     </div>
 
-		{% include "./sections/footer.njk" %}
+		<footer aria-labelledby="footer" class="footer">
+      <h1 id="footer" class="sr-only">Footer</h1>
+
+      <div class="container">
+        <div class="row">
+          <div>
+            <nav aria-labelledby="community-navigation">
+              <h2 id="community-navigation">Community</h2>
+              <ul>
+                <li>
+                  <a href="https://github.com/romefrontend/rome/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
+                </li>
+                <li>
+                  <a href="https://discord.gg/9WxHa5d">Discord</a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/romefrontend">Twitter</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+
+          <div>
+            <nav aria-labelledby="resources-navigation">
+              <h2 id="resources-navigation">Resources</h2>
+              <ul>
+                <li>
+                  <a href="https://github.com/romefrontend/rome">GitHub</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+
+          <a href="https://www.netlify.com">
+            <img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg" alt="Deploys by Netlify" />
+          </a>
+        </div>
+
+        <div class="logo">
+          {% include "./svg/rome-logo.njk" %}
+          <span class="logo-text">Rome</span>
+        </div>
+      </div>
+    </footer>
+
+    <script src="{{ '/static/js/index.js' | url }}"></script>
   </body>
 </html>

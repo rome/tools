@@ -30,7 +30,7 @@ export default class Logger extends Reporter {
 				format: "markup",
 				features: {
 					...TERMINAL_FEATURES_DEFAULT,
-					columns: Infinity,
+					columns: undefined,
 				},
 				write,
 			},

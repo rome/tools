@@ -77,4 +77,4 @@ if (language === "js") {
 	write(analysisDefFile, analysisContent);
 }
 
-require("./update.cjs");
+require("../generated-files/ast.cjs");

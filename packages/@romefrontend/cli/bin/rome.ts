@@ -72,4 +72,5 @@ catchDiagnostics(main).then(({diagnostics}) => {
 }).catch((err: Error) => {
 	console.error("Error thrown inside the CLI handler");
 	console.error(getErrorStructure(err).stack);
+	process.exit(1);
 });

@@ -470,7 +470,7 @@ function printStacktrace(
 				if (logParts.length === 0) {
 					logParts.push(header);
 				} else {
-					logParts.push(`(<dim>${header}</dim>)`);
+					logParts.push(`<dim>(${header})</dim>`);
 				}
 			}
 
@@ -488,7 +488,7 @@ function printStacktrace(
 					column,
 				};
 
-				const skipped = printFrame(
+				const frame = printFrame(
 					{
 						type: "frame",
 						location: {
@@ -505,8 +505,7 @@ function printStacktrace(
 						reporter,
 					},
 				);
-				if (!skipped) {
-					reporter.br(true);
+				if (frame.printed) {
 					shownCodeFrames++;
 				}
 			}

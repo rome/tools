@@ -114,6 +114,7 @@ export default class Client {
 				cwd: this.flags.cwd,
 			},
 		});
+		this.reporter.redirectOutToErr(true);
 
 		// Suppress stdout when silent is set
 		const isSilent =

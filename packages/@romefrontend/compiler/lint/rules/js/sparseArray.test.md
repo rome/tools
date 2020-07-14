@@ -13,6 +13,7 @@
   ✖ This array contains an empty slot.
 
     [1,,2]
+       ^
 
   ℹ Sparse arrays without values for some items can lead to confusion.
 

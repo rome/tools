@@ -1034,7 +1034,7 @@ export default class Reporter {
 
 	processedList<T>(
 		items: Array<T>,
-		callback: (reporter: Reporter, item: T) => void,
+		callback: (reporter: Reporter, item: T) => void | string,
 		opts: ListOptions = {},
 	): {
 		truncated: boolean;
@@ -1060,9 +1060,10 @@ export default class Reporter {
 				streams: [],
 			});
 			const stream = reporter.attachCaptureStream("markup");
-			callback(reporter, item);
+			const str = callback(reporter, item);
 			stream.remove();
-			buff += `<li>${stream.read()}</li>`;
+			let inner = str === undefined ? stream.read().trimRight() : str;
+			buff += `<li>${inner}</li>`;
 		}
 
 		if (opts.ordered) {
@@ -1083,7 +1084,7 @@ export default class Reporter {
 		return this.processedList(
 			items,
 			(reporter, str) => {
-				reporter.logAll(str, {newline: false});
+				return str;
 			},
 			opts,
 		);

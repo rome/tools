@@ -7,6 +7,8 @@
 
 import {isHexDigit} from "@romefrontend/parser-core";
 import {DiagnosticDescription, descriptions} from "@romefrontend/diagnostics";
+import {isEscaped} from "@romefrontend/string-utils";
+import {ob1Coerce0} from "@romefrontend/ob1";
 
 function unescapeChar(modifier: string): string {
 	switch (modifier) {
@@ -48,6 +50,7 @@ const UNEXPECTED_DEFAULT_THROWER: UnescapeStringUnexpected = (
 export default function unescapeJSONString(
 	input: string,
 	unexpected: UnescapeStringUnexpected = UNEXPECTED_DEFAULT_THROWER,
+	allowWhitespace: boolean = false,
 ): string {
 	let buffer = "";
 
@@ -55,12 +58,24 @@ export default function unescapeJSONString(
 
 	while (index < input.length) {
 		const char = input[index];
-		const prevChar = input[index - 1];
-		const prevPrevChar = input[index - 2];
-		const isEscaped = prevChar === "\\" && prevPrevChar !== "\\";
+
+		if (allowWhitespace) {
+			if (char === "\r") {
+				// Ignore it
+				index++;
+				continue;
+			}
+
+			if (char === "\n" || char === "\t") {
+				// Add it verbatim
+				buffer += char;
+				index++;
+				continue;
+			}
+		}
 
 		// It's verbatim if it's an escaped backslash or not a backslash
-		if ((isEscaped && char === "\\") || char !== "\\") {
+		if ((isEscaped(ob1Coerce0(index), input) && char === "\\") || char !== "\\") {
 			// Validate that this is a valid character
 			const codePoint = char.codePointAt(0);
 			if (codePoint === undefined) {
@@ -79,6 +94,7 @@ export default function unescapeJSONString(
 			continue;
 		}
 
+		// Anything after here is escaped
 		const modifierIndex = index + 1;
 		const modifier = input[modifierIndex];
 
@@ -117,7 +133,7 @@ export default function unescapeJSONString(
 			// Get the character for this code point
 			buffer += String.fromCodePoint(code);
 
-			// Skip ahead six indexes (1 escape char +  1modifier + 4 hex digits)
+			// Skip ahead six indexes (1 escape char +  1 modifier + 4 hex digits)
 			index += 6;
 		} else {
 			// Unescape a basic modifier like \t

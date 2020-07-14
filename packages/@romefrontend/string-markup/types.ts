@@ -111,7 +111,7 @@ export type MarkupPointer = {
 
 export type UserMarkupFormatGridOptions = MarkupFormatOptions & {
 	features?: TerminalFeatures;
-	columns?: number;
+	columns?: Number1;
 };
 
 export type MarkupGridViewOptions = {

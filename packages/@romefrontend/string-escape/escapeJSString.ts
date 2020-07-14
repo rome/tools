@@ -61,19 +61,15 @@ function escapeChar(
 			return "\\\\";
 	}
 
-	if (ignoreWhitespaceEscapes) {
-		return undefined;
-	}
-
 	switch (char) {
 		case "\n":
-			return "\\n";
+			return ignoreWhitespaceEscapes ? char : "\\n";
 
 		case "\r":
-			return "\\r";
+			return ignoreWhitespaceEscapes ? char : "\\r";
 
 		case "\t":
-			return "\\t";
+			return ignoreWhitespaceEscapes ? char : "\\t";
 	}
 
 	return undefined;

@@ -86,6 +86,7 @@ export type ConsumerOptions = {
 	objectPath: ConsumePath;
 	context: ConsumeContext;
 	value: unknown;
+	declared?: boolean;
 	parent?: Consumer;
 	forceDiagnosticTarget?: ConsumeSourceLocationRequestTarget;
 };

@@ -27,4 +27,4 @@ unlink(path.join(formatterFolder, `${filename}.ts`));
 unlink(path.join(analysisFolder, `${filename}.ts`));
 unlink(path.join(astFolder, `${filename}.ts`));
 
-require("./update.cjs");
+require("../generated-files/ast.cjs");

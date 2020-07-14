@@ -31,11 +31,11 @@ test(
 		);
 		t.inlineSnapshot(
 			stringifyRJSONFromConsumer(consumeExtJSON({input: "[1]"})),
-			"[1]",
+			"[\n\t1\n]",
 		);
 		t.inlineSnapshot(
 			stringifyRJSONFromConsumer(consumeExtJSON({input: "[1,]"})),
-			"[1]",
+			"[\n\t1\n]",
 		);
 		t.inlineSnapshot(
 			stringifyRJSONFromConsumer(consumeExtJSON({input: "[1, 2, 3]"})),
@@ -166,7 +166,7 @@ test(
 		const consumer = consumeExtJSON({input: complexTest});
 		t.inlineSnapshot(
 			stringifyRJSONFromConsumer(consumer),
-			'// root comment\n/* and another!*/\nfoo: {\n\t// comment before property\n\tbar: {nested: true}\n\tgreat: 1.233e+58\n\tyes: null\n}\n// hello!\nhello: [\n\t// comment before element\n\t"world"\n\t2\n\t3.53\n]',
+			'// root comment\n/* and another!*/\nfoo: {\n\t// comment before property\n\tbar: {\n\t\tnested: true\n}\n\tgreat: 1.233e+58\n\tyes: null\n}\n// hello!\nhello: [\n\t// comment before element\n\t"world"\n\t2\n\t3.53\n]',
 		);
 	},
 );

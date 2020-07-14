@@ -144,17 +144,12 @@ test(
 		t.is(parseExtJSON({input: '"foo\u1234"'}), "foo\u1234");
 		t.is(parseExtJSON({input: '"foo\\n"'}), "foo\n");
 		t.is(parseExtJSON({input: '"foo\\t"'}), "foo\t");
+		t.is(parseExtJSON({input: '"foo\n"'}), "foo\n");
+		t.is(parseExtJSON({input: '"foo\t"'}), "foo\t");
 
 		t.throws(
 			() => {
 				parseExtJSON({input: '"foo'});
-			},
-			descriptions.JSON.UNCLOSED_STRING.message.value,
-		);
-
-		t.throws(
-			() => {
-				parseExtJSON({input: '"foo\n"'});
 			},
 			descriptions.JSON.UNCLOSED_STRING.message.value,
 		);
@@ -171,13 +166,6 @@ test(
 				parseExtJSON({input: '"\\u000Z"'});
 			},
 			descriptions.STRING_ESCAPE.INVALID_HEX_DIGIT_FOR_ESCAPE.message.value,
-		);
-
-		t.throws(
-			() => {
-				parseExtJSON({input: '"\t"'});
-			},
-			descriptions.STRING_ESCAPE.INVALID_STRING_CHARACTER.message.value,
 		);
 
 		t.throws(

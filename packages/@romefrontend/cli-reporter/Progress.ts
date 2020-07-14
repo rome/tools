@@ -14,6 +14,7 @@ import {
 } from "./types";
 import ProgressBase from "./ProgressBase";
 import {ansiEscapes, formatAnsi} from "@romefrontend/string-markup";
+import {Number1, ob1Get1} from "@romefrontend/ob1";
 
 type BoldRanges = Array<[number, number]>;
 
@@ -131,8 +132,12 @@ export default class Progress extends ProgressBase {
 			const elapsedFrames = Math.round(elapsedTime / BOUNCER_INTERVAL);
 
 			for (const stream of this.reporter.streams) {
+				if (stream.features.columns === undefined) {
+					continue;
+				}
+
 				// We remove the bouncer width from the total columns since we'll append it
-				const width = stream.features.columns - BOUNCER_WIDTH;
+				const width = ob1Get1(stream.features.columns) - BOUNCER_WIDTH;
 
 				// Position to place the bouncer
 				let position = elapsedFrames % width;
@@ -278,10 +283,15 @@ export default class Progress extends ProgressBase {
 		return fullBar;
 	}
 
-	buildProgressBar(stream: ReporterStream, bar: SplitBar, total: number): string {
+	buildProgressBar(
+		stream: ReporterStream,
+		columns: Number1,
+		bar: SplitBar,
+		total: number,
+	): string {
 		const ratio = Math.min(Math.max(this.current / total, 0), 1);
 
-		const completeLength = Math.round(stream.features.columns * ratio);
+		const completeLength = Math.round(ob1Get1(columns) * ratio);
 		let fullBar = "";
 		for (const [i, char] of bar) {
 			if (i < completeLength) {
@@ -297,7 +307,7 @@ export default class Progress extends ProgressBase {
 		return fullBar;
 	}
 
-	buildBar(stream: ReporterStream) {
+	buildBar(stream: ReporterStream, columns: Number1) {
 		const {total, current, title} = this;
 
 		// Text ranges that we should make bold
@@ -368,7 +378,7 @@ export default class Progress extends ProgressBase {
 		}
 
 		// Get the full width of the bar. We take off 3 for padding.
-		const width = stream.features.columns - 3;
+		const width = ob1Get1(columns) - 3;
 
 		// The amount of spaces to put between the title and counter
 		const spacerLength = Math.max(0, width - prefix.length - suffix.length);
@@ -389,7 +399,7 @@ export default class Progress extends ProgressBase {
 		if (total === undefined) {
 			return this.buildProgressBouncer(stream, chars);
 		} else {
-			return this.buildProgressBar(stream, chars, total);
+			return this.buildProgressBar(stream, columns, chars, total);
 		}
 	}
 
@@ -404,9 +414,13 @@ export default class Progress extends ProgressBase {
 		this.lastRenderTime = Date.now();
 
 		for (const stream of this.reporter.getStreams(false)) {
-			if (stream.format === "ansi" && stream.features.progressBars) {
+			if (
+				stream.format === "ansi" &&
+				stream.features.progressBars &&
+				stream.features.columns !== undefined
+			) {
 				stream.write(ansiEscapes.cursorTo(0));
-				stream.write(this.buildBar(stream));
+				stream.write(this.buildBar(stream, stream.features.columns));
 			}
 		}
 	}

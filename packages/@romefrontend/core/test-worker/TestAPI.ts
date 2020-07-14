@@ -314,7 +314,7 @@ export default class TestAPI implements TestHelper {
 			{
 				description: {
 					category: "tests/failure",
-					message: createBlessedDiagnosticMessage(message),
+					message: createBlessedDiagnosticMessage(escapeMarkup(message)),
 					advice,
 				},
 			},
