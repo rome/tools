@@ -60,6 +60,10 @@ export default function unescapeJSONString(
 		const char = input[index];
 
 		if (allowWhitespace) {
+			if (char === "\r") {
+				continue;
+			}
+
 			if (char === "\n" || char === "\t") {
 				// Add it verbatim
 				buffer += char;
