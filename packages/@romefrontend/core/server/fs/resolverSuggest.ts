@@ -21,7 +21,7 @@ import {
 import {orderBySimilarity} from "@romefrontend/string-utils";
 import {AbsoluteFilePath, createUnknownFilePath} from "@romefrontend/path";
 import {PLATFORMS} from "../../common/types/platform";
-import {markup} from "@romefrontend/string-markup";
+import {markup} from "@romefrontend/cli-layout";
 
 export default function resolverSuggest(
 	resolver: Resolver,

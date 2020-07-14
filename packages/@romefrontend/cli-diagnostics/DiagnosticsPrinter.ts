@@ -21,11 +21,7 @@ import {
 	DiagnosticsPrinterFlags,
 	DiagnosticsPrinterOptions,
 } from "./types";
-import {
-	formatAnsi,
-	markup,
-	markupToPlainText,
-} from "@romefrontend/string-markup";
+import {formatAnsi, markup, markupToPlainText} from "@romefrontend/cli-layout";
 import {ToLines, toLines} from "./utils";
 import {printAdvice} from "./printAdvice";
 import {default as successBanner} from "./banners/success.json";
@@ -41,7 +37,7 @@ import {
 } from "@romefrontend/path";
 import {Number0, Number1, ob1Get0, ob1Get1} from "@romefrontend/ob1";
 import {existsSync, lstatSync, readFileTextSync} from "@romefrontend/fs";
-import {joinMarkupLines} from "@romefrontend/string-markup/format";
+import {joinMarkupLines} from "@romefrontend/cli-layout/format";
 
 type Banner = {
 	// Array<number> should really be [number, number, number], but TypeScript widens the imported types
@@ -384,7 +380,7 @@ export default class DiagnosticsPrinter extends Error {
 			// Sometimes we'll run into issues displaying diagnostics
 			// We can safely catch them here since the presence of diagnostics is considered a critical failure anyway
 			// Display diagnostics is idempotent meaning we can bail at any point
-			// We don't use reporter.error here since the error could have been thrown by string-markup
+			// We don't use reporter.error here since the error could have been thrown by cli-layout
 			reporter.logAllRaw(
 				`Encountered an error during diagnostics printing in ${reason}`,
 			);

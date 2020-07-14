@@ -47,7 +47,7 @@ import {
 	TestWorkerContainers,
 } from "./types";
 import {formatPercent, percentInsideCoverageFolder, sortMapKeys} from "./utils";
-import {markup, safeMarkup} from "@romefrontend/string-markup";
+import {markup, safeMarkup} from "@romefrontend/cli-layout";
 import {MAX_WORKER_COUNT} from "@romefrontend/core/common/constants";
 import {TestWorkerFlags} from "@romefrontend/core/test-worker/TestWorker";
 import net = require("net");

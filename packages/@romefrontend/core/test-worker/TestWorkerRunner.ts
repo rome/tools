@@ -44,7 +44,7 @@ import {
 	convertTransportFileReference,
 } from "../common/types/files";
 import {AbsoluteFilePath, createAbsoluteFilePath} from "@romefrontend/path";
-import {escapeMarkup, markup} from "@romefrontend/string-markup";
+import {escapeMarkup, markup} from "@romefrontend/cli-layout";
 import {
 	ErrorFrames,
 	StructuredError,

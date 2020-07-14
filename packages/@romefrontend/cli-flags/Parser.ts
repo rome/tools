@@ -22,7 +22,7 @@ import {
 } from "@romefrontend/string-utils";
 import {createUnknownFilePath} from "@romefrontend/path";
 import {Dict} from "@romefrontend/typescript-helpers";
-import {markup} from "@romefrontend/string-markup";
+import {markup} from "@romefrontend/cli-layout";
 import {
 	Diagnostic,
 	DiagnosticsError,

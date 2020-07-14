@@ -1,5 +1,5 @@
 import {createDiagnosticsCategory} from "./index";
-import {markup} from "@romefrontend/string-markup";
+import {markup} from "@romefrontend/cli-layout";
 import {toKebabCase} from "@romefrontend/string-utils";
 import {buildSuggestionAdvice} from "../helpers";
 

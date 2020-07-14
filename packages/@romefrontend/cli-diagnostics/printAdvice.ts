@@ -30,7 +30,7 @@ import {
 	escapeMarkup,
 	markupTag,
 	normalizeMarkup,
-} from "@romefrontend/string-markup";
+} from "@romefrontend/cli-layout";
 import {DiagnosticsPrinterFlags} from "./types";
 import {ob1Number0Neg1} from "@romefrontend/ob1";
 import DiagnosticsPrinter, {DiagnosticsPrinterFileSources} from "./DiagnosticsPrinter";

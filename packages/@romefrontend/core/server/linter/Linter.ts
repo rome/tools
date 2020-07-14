@@ -31,7 +31,7 @@ import {
 	LintCompilerOptionsDecisions,
 	areAnalyzeDependencyResultsEqual,
 } from "@romefrontend/compiler";
-import {markup} from "@romefrontend/string-markup";
+import {markup} from "@romefrontend/cli-layout";
 import WorkerQueue from "../WorkerQueue";
 import {Dict} from "@romefrontend/typescript-helpers";
 import {FileNotFound} from "@romefrontend/core/common/FileNotFound";

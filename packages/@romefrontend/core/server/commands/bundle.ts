@@ -11,7 +11,7 @@ import {createServerCommand} from "../commands";
 import Bundler from "../bundler/Bundler";
 import {createDirectory, writeFile} from "@romefrontend/fs";
 import {Consumer} from "@romefrontend/consume";
-import {markup} from "@romefrontend/string-markup";
+import {markup} from "@romefrontend/cli-layout";
 
 type Flags = {
 	quiet: boolean;

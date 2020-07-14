@@ -1,9 +1,9 @@
 import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 import {DiagnosticLocation} from "../types";
-import {markup} from "@romefrontend/string-markup";
+import {markup} from "@romefrontend/cli-layout";
 import {buildSuggestionAdvice} from "../helpers";
 
-// @romefrontend/string-markup
+// @romefrontend/cli-layout
 export const stringMarkup = createDiagnosticsCategory({
 	UNCLOSED_STRING: "Unclosed string",
 	EXPECTED_CLOSING_TAG_NAME: "Expected closing tag name",

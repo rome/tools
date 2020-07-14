@@ -12,7 +12,7 @@ import {
 } from "@romefrontend/typescript-helpers";
 import {escapeJSString} from "@romefrontend/string-escape";
 import {humanizeNumber, naturalCompare} from "@romefrontend/string-utils";
-import {escapeMarkup, markupTag} from "@romefrontend/string-markup";
+import {escapeMarkup, markupTag} from "@romefrontend/cli-layout";
 
 type RecursiveStack = Array<unknown>;
 

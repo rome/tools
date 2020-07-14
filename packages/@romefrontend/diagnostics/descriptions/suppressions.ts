@@ -1,6 +1,6 @@
 import {createDiagnosticsCategory} from "./index";
 import {DiagnosticSuppression} from "../types";
-import {markup} from "@romefrontend/string-markup";
+import {markup} from "@romefrontend/cli-layout";
 
 export const suppressions = createDiagnosticsCategory({
 	UNUSED: (suppression: DiagnosticSuppression) => {

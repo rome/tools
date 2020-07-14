@@ -13,7 +13,7 @@ import {
 	ReporterStream,
 } from "./types";
 import ProgressBase from "./ProgressBase";
-import {ansiEscapes, formatAnsi} from "@romefrontend/string-markup";
+import {ansiEscapes, formatAnsi} from "@romefrontend/cli-layout";
 import {Number1, ob1Get1} from "@romefrontend/ob1";
 
 type BoldRanges = Array<[number, number]>;

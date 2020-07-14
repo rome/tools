@@ -1,9 +1,9 @@
 import {test} from "rome";
 import buildPatchCodeFrame from "./buildPatchCodeFrame";
 import stringDiff from "@romefrontend/string-diff";
-import {markupToPlainText} from "@romefrontend/string-markup";
+import {markupToPlainText} from "@romefrontend/cli-layout";
 import {dedent} from "@romefrontend/string-utils";
-import {joinMarkupLines} from "@romefrontend/string-markup/format";
+import {joinMarkupLines} from "@romefrontend/cli-layout/format";
 
 type Test = {
 	before: string;

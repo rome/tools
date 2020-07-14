@@ -14,7 +14,7 @@ import {
 	HOME_PATH,
 	createUnknownFilePath,
 } from "@romefrontend/path";
-import {escapeMarkup, markup} from "@romefrontend/string-markup";
+import {escapeMarkup, markup} from "@romefrontend/cli-layout";
 import {
 	DiagnosticsError,
 	DiagnosticsProcessor,

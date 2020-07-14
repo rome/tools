@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import "@romefrontend/string-markup";
+import "@romefrontend/cli-layout";
 import prettyFormat from "@romefrontend/pretty-format";
 import {test} from "rome";
 import {Dict} from "@romefrontend/typescript-helpers";

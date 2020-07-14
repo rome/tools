@@ -52,7 +52,7 @@ import {
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
 import {VERSION} from "../common/constants";
-import {escapeMarkup} from "@romefrontend/string-markup";
+import {escapeMarkup} from "@romefrontend/cli-layout";
 import setupGlobalErrorHandlers from "../common/utils/setupGlobalErrorHandlers";
 import {UserConfig, loadUserConfig} from "../common/userConfig";
 import {

@@ -12,7 +12,7 @@ import {
 	DiagnosticOrigin,
 	Diagnostics,
 } from "./types";
-import {escapeMarkup} from "@romefrontend/string-markup";
+import {escapeMarkup} from "@romefrontend/cli-layout";
 import {
 	ErrorFrames,
 	StructuredError,

@@ -10,7 +10,7 @@ import {SourceMapConsumerCollection} from "@romefrontend/codec-source-map";
 import {
 	MarkupFormatNormalizeOptions,
 	normalizeMarkup,
-} from "@romefrontend/string-markup";
+} from "@romefrontend/cli-layout";
 import {createBlessedDiagnosticMessage} from "./descriptions";
 import {ob1Number0, ob1Number0Neg1, ob1Number1} from "@romefrontend/ob1";
 import {RequiredProps} from "@romefrontend/typescript-helpers";

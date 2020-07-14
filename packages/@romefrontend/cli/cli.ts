@@ -28,13 +28,13 @@ import {
 import {commandCategories} from "@romefrontend/core/common/commands";
 import {writeFile} from "@romefrontend/fs";
 import fs = require("fs");
-import {markup} from "@romefrontend/string-markup";
+import {markup} from "@romefrontend/cli-layout";
 import {JSONObject, stringifyJSON} from "@romefrontend/codec-json";
 import {getEnvVar} from "@romefrontend/environment";
 import {
 	joinMarkupLines,
 	markupToPlainText,
-} from "@romefrontend/string-markup/format";
+} from "@romefrontend/cli-layout/format";
 
 type CLIFlags = {
 	logs: boolean;
