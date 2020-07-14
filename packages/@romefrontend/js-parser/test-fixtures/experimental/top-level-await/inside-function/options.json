@@ -1,5 +1,5 @@
 {
-  "sourceType": "module",
+  "sourceTypeJS": "module",
   "errorRecovery": false,
   "throws": "Can not use keyword 'await' outside an async function (2:2)"
 }

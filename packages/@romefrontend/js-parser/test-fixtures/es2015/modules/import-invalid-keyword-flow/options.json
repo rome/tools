@@ -1,5 +1,5 @@
 {
-	"sourceType": "module",
+	"sourceTypeJS": "module",
 	"plugins": [
 		"flow"
 	],

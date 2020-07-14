@@ -7,6 +7,6 @@
 			}
 		]
 	],
-	"sourceType": "module",
+	"sourceTypeJS": "module",
 	"throws": true
 }

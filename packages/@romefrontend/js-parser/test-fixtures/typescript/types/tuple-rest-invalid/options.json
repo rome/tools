@@ -1,4 +1,4 @@
 {
-  "sourceType": "module",
+  "sourceTypeJS": "module",
   "throws": "Rest element must be last element (1:19)"
 }
