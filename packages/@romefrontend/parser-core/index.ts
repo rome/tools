@@ -219,7 +219,6 @@ export class ParserCore<
 
 	path: undefined | UnknownFilePath;
 	filename: undefined | string;
-	shouldInlineDiagnosticsSource: boolean;
 	mtime: undefined | number;
 	input: string;
 	sourceText: string;
@@ -555,7 +554,7 @@ export class ParserCore<
 		}
 
 		let sourceText;
-		if (this.path === undefined || this.shouldInlineDiagnosticsSource) {
+		if (this.path === undefined) {
 			sourceText = this.sourceText;
 		}
 
