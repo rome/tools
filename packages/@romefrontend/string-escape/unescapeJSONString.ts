@@ -61,6 +61,8 @@ export default function unescapeJSONString(
 
 		if (allowWhitespace) {
 			if (char === "\r") {
+				// Ignore it
+				index++;
 				continue;
 			}
 
