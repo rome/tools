@@ -820,7 +820,7 @@ export default class Parser<T> {
 
 				for (const category of sortedCategoryNames) {
 					const commands = commandsByCategory.get(category)!.filter((c) => {
-						return !c.hidden || c.hidden !== true;
+						return !c.hidden;
 					});
 
 					if (commands.length === 0) {
