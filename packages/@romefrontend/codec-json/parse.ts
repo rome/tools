@@ -124,14 +124,7 @@ type PathInfo = {
 export const createJSONParser = createParser((ParserCore) =>
 	class JSONParser extends ParserCore<Tokens> {
 		constructor(opts: JSONParserOptions) {
-			super(
-				{
-					...opts,
-					retainCarriageReturn: true,
-				},
-				"parse/json",
-				{},
-			);
+			super(opts, "parse/json", {});
 
 			this.options = opts;
 			this.ignoreWhitespaceTokens = true;
