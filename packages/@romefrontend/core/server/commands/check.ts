@@ -39,9 +39,24 @@ export default createServerCommand<Flags>({
 			decisions: consumer.get("decisions").asImplicitArray().map((item) =>
 				item.asString()
 			),
-			apply: consumer.get("apply").asBoolean(false),
-			formatOnly: consumer.get("formatOnly").asBoolean(false),
-			changed: consumer.get("changed").asStringOrVoid(),
+			apply: consumer.get(
+				"apply",
+				{
+					description: "autofixes and format are applied to the entire project",
+				},
+			).asBoolean(false),
+			formatOnly: consumer.get(
+				"formatOnly",
+				{
+					description: "only applies format changes to the entire project",
+				},
+			).asBoolean(false),
+			changed: consumer.get(
+				"changed",
+				{
+					description: "shows what's changed from the main branch",
+				},
+			).asStringOrVoid(),
 		};
 	},
 	async callback(req: ServerRequest, flags: Flags): Promise<void> {

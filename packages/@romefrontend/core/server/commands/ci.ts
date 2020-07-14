@@ -23,7 +23,12 @@ export default createServerCommand({
 	examples: [],
 	defineFlags(consumer: Consumer): Flags {
 		return {
-			fix: consumer.get("fix").asBoolean(false),
+			fix: consumer.get(
+				"fix",
+				{
+					description: "applies format and autofixes to the entire project",
+				},
+			).asBoolean(false),
 		};
 	},
 	async callback(req: ServerRequest, flags: Flags): Promise<void> {
