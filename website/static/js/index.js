@@ -9,7 +9,7 @@ const elements = {
 	headerMobile: document.getElementsByClassName("header-mobile")[0],
 	colorSchemeSwitch: document.getElementById("color-scheme-switch"),
 	colorSchemeSwitchText: document.getElementById("color-scheme-switch-text"),
-	teamList: document.getElementsByClassName("team-list")[0]
+	teamList: document.getElementsByClassName("team-list")[0],
 };
 
 function isMobile() {
@@ -146,17 +146,18 @@ function modeSwitch() {
 	window.localStorage.setItem("data-theme", theme);
 }
 
-function randomShuffle(array){
-		let count = array.length, temp, index;
+function randomShuffle(array) {
+	let count = array.length;
+	let temp;
+	let index;
+	while (count) {
+		index = Math.floor(Math.random() * count--);
+		temp = array[count];
+		array[count] = array[index];
+		array[index] = temp;
+	}
 
-		while (count) {
-			index = Math.floor(Math.random() * count--);
-			temp = array[count];
-			array[count] = array[index];
-			array[index] = temp;
-		}
-
-		return array;
+	return array;
 }
 const themeInStorage = window.localStorage.getItem("data-theme");
 
@@ -203,8 +204,8 @@ elements.overlay.addEventListener("touchstart", mobileToggleEvent, false);
 window.addEventListener("scroll", handleScroll, false);
 
 elements.colorSchemeSwitch.addEventListener("click", modeSwitch, false);
-const teamArr = Array.from(elements.teamList.getElementsByTagName('li'))
-randomShuffle(teamArr).forEach(li => elements.teamList.appendChild(li));
+const teamArr = Array.from(elements.teamList.getElementsByTagName("li"));
+randomShuffle(teamArr).forEach((li) => elements.teamList.appendChild(li));
 
 const homepageExample = document.querySelector(".homepage-example");
 if (homepageExample != null) {
