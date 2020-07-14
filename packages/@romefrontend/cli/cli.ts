@@ -317,6 +317,7 @@ export default async function cli() {
 				ignoreFlags: local.ignoreFlags,
 				examples: local.examples,
 				usage: local.usage,
+				hidden: local.hidden,
 				callback(_commandFlags) {
 					commandFlags = _commandFlags;
 					args = p.getArgs();
@@ -336,6 +337,7 @@ export default async function cli() {
 				ignoreFlags: server.ignoreFlags,
 				usage: server.usage,
 				examples: server.examples,
+				hidden: server.hidden,
 				callback(_commandFlags) {
 					commandFlags = _commandFlags;
 					args = p.getArgs();

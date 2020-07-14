@@ -22,6 +22,7 @@ export default createServerCommand({
 	description: "compile a single file",
 	usage: "",
 	examples: [],
+	hidden: true,
 	defineFlags(c: Consumer): Flags {
 		return {
 			bundle: c.get("bundle").asBoolean(false),

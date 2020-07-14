@@ -29,6 +29,7 @@ export default createServerCommand({
 	description: "analyze and dump the dependencies of a file",
 	usage: "",
 	examples: [],
+	hidden: true,
 	defineFlags(c: Consumer): Flags {
 		return {
 			compact: c.get("compact").asBoolean(false),

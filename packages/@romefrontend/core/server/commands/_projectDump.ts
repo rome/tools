@@ -15,6 +15,7 @@ export default createServerCommand({
 	description: "TODO",
 	usage: "",
 	examples: [],
+	hidden: true,
 	defineFlags(c) {
 		return {
 			complete: c.get("complete").asBoolean(false),

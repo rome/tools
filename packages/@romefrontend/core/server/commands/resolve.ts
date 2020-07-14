@@ -15,6 +15,7 @@ export default createServerCommand({
 	description: "resolve a file",
 	usage: "",
 	examples: [],
+	hidden: true,
 	defineFlags() {
 		return {};
 	},

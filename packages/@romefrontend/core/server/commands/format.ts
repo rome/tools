@@ -16,7 +16,7 @@ type Flags = {
 
 export default createServerCommand({
 	category: commandCategories.INTERNAL,
-	description: "TODO",
+	description: "formats a single file",
 	usage: "",
 	examples: [],
 	defineFlags(c: Consumer): Flags {

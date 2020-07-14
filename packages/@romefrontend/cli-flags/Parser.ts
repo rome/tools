@@ -48,6 +48,7 @@ type CommandOptions<T extends JSONObject> = {
 	usage?: string;
 	examples?: Examples;
 	ignoreFlags?: Array<string>;
+	hidden?: boolean;
 	defineFlags?: (consumer: Consumer) => T;
 	callback: (flags: T) => void | Promise<void>;
 };
@@ -454,6 +455,11 @@ export default class Parser<T> {
 
 		if (definedCommand !== undefined) {
 			this.ranCommand = definedCommand.command;
+			if (definedCommand.command.hidden === true) {
+				this.reporter.warn(
+					"This command has been hidden. Consider its usage to be experimental and do not expect support or backwards compatibility.",
+				);
+			}
 			await definedCommand.command.callback(definedCommand.flags);
 		}
 
@@ -813,7 +819,13 @@ export default class Parser<T> {
 				}
 
 				for (const category of sortedCategoryNames) {
-					const commands = commandsByCategory.get(category)!;
+					const commands = commandsByCategory.get(category)!.filter((c) => {
+						return !c.hidden;
+					});
+
+					if (commands.length === 0) {
+						continue;
+					}
 
 					if (category !== undefined) {
 						reporter.logAll(`<emphasis>${category} Commands</emphasis>`);
