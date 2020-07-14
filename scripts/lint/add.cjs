@@ -88,9 +88,11 @@ title: Rome
 layout: layouts/page.njk
 showHero: false
 description: MISSING DOCUMENTATION
-eleventyNavigation:
-	key: ${categoryName}/${camelCasedName}
-	parent: Linting
+eleventyNavigation: {
+	key: lint-rules/${categoryName}/${camelCasedName},
+	parent: lint-rules,
+	title: ${categoryName}/${camelCasedName}
+}
 ---
 
 # ${categoryName}/${camelCasedName}
