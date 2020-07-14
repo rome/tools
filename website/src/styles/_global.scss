@@ -111,13 +111,12 @@ ul.breadcrumbs {
   list-style: none;
   padding: 0;
   margin: 0;
-  background-color: #eee;
-  
+  background-color: var(--background-color);
+
   > li {
     display: inline-block;
     padding: 0;
-    line-height: 40px;
-    border-right: 1px solid red;
+    line-height: 40px;;
     position: relative;
 
     a, &.active {
@@ -142,10 +141,12 @@ ul.breadcrumbs {
     left: 0;
     list-style: none;
     margin-left: 0;
-    background-color: #aaa;
+    background-color: var(--background-color);
     padding: 0;
     max-height: 400px;
     overflow: auto;
+    border: 1px solid;
+    box-shadow: 4px 4px 10.4px -6px #999998;
 
     li {
       padding: 0;
