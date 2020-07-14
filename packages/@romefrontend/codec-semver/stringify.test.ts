@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import "@romefrontend/string-markup";
+import "@romefrontend/cli-layout";
 import {parseSemverRange, stringifySemver} from "@romefrontend/codec-semver";
 import {test} from "rome";
 

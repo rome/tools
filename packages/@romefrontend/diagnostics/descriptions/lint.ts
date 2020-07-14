@@ -10,7 +10,7 @@ import {
 	DiagnosticAdviceAction,
 	DiagnosticLocation,
 } from "../types";
-import {escapeMarkup, markup} from "@romefrontend/string-markup";
+import {escapeMarkup, markup} from "@romefrontend/cli-layout";
 import stringDiff from "@romefrontend/string-diff";
 import {buildSuggestionAdvice} from "../helpers";
 import {createDiagnosticsCategory, orJoin} from "./index";

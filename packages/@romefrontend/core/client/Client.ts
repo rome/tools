@@ -46,7 +46,7 @@ import {
 	joinMarkupLines,
 	markupToHtml,
 	markupToPlainText,
-} from "@romefrontend/string-markup/format";
+} from "@romefrontend/cli-layout/format";
 
 export function getFilenameTimestamp(): string {
 	return new Date().toISOString().replace(/[^0-9a-zA-Z]/g, "");

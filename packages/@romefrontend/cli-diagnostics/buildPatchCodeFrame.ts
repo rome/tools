@@ -17,7 +17,7 @@ import {
 	diffConstants,
 	stringDiffUnified,
 } from "@romefrontend/string-diff";
-import {escapeMarkup, markup, markupTag} from "@romefrontend/string-markup";
+import {escapeMarkup, markup, markupTag} from "@romefrontend/cli-layout";
 import {DiagnosticAdviceDiff} from "@romefrontend/diagnostics";
 
 function formatDiffLine(diffs: Diffs) {

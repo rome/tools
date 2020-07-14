@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import "@romefrontend/string-markup";
+import "@romefrontend/cli-layout";
 import {
 	PathPattern,
 	matchPath,

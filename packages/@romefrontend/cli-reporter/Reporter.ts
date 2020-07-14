@@ -14,7 +14,7 @@ import {
 	markupTag,
 	markupToAnsi,
 	markupToPlainText,
-} from "@romefrontend/string-markup";
+} from "@romefrontend/cli-layout";
 import {
 	RemoteReporterClientMessage,
 	RemoteReporterReceiveMessage as RemoteReporterServerMessage,
@@ -41,7 +41,7 @@ import {
 	joinMarkupLines,
 	markupToHtml,
 	normalizeMarkup,
-} from "@romefrontend/string-markup/format";
+} from "@romefrontend/cli-layout/format";
 import {
 	Stdout,
 	TERMINAL_FEATURES_DEFAULT,

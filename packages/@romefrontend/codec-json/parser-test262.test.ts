@@ -39,7 +39,7 @@
  *   * Ecma International Standards hereafter means Ecma International Standards as well as Ecma Technical Reports
  */
 
-import "@romefrontend/string-markup";
+import "@romefrontend/cli-layout";
 import {DiagnosticsError} from "@romefrontend/diagnostics";
 import {parseJSON} from "@romefrontend/codec-json";
 import {test} from "rome";

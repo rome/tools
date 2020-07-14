@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/string-markup",
+	"name": "@romefrontend/cli-layout",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

@@ -25,9 +25,9 @@ import {
 	ob1Number0,
 	ob1Number1Neg1,
 } from "@romefrontend/ob1";
-import {markupTag, markupToPlainText} from "@romefrontend/string-markup";
+import {markupTag, markupToPlainText} from "@romefrontend/cli-layout";
 import {Dict} from "@romefrontend/typescript-helpers";
-import {joinMarkupLines} from "@romefrontend/string-markup/format";
+import {joinMarkupLines} from "@romefrontend/cli-layout/format";
 
 function formatLineView(
 	{marker, line, gutter}: FormattedLine,

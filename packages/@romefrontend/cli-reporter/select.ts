@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ansiEscapes} from "@romefrontend/string-markup";
+import {ansiEscapes} from "@romefrontend/cli-layout";
 import Reporter from "./Reporter";
 import {SelectArguments, SelectOption, SelectOptions} from "./types";
 import {onKeypress, setRawMode} from "./util";

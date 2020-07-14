@@ -6,7 +6,7 @@
  */
 
 import os = require("os");
-import {escapeMarkup} from "@romefrontend/string-markup";
+import {escapeMarkup} from "@romefrontend/cli-layout";
 
 type FilePathOptions<Super> = {
 	filename?: string;

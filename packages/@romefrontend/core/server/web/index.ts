@@ -11,7 +11,7 @@ import {WebSocketInterface} from "@romefrontend/codec-websocket";
 import prettyFormat from "@romefrontend/pretty-format";
 import http = require("http");
 
-import {escapeMarkup} from "@romefrontend/string-markup";
+import {escapeMarkup} from "@romefrontend/cli-layout";
 import {Reporter, ReporterStream} from "@romefrontend/cli-reporter";
 import {
 	ServerQueryRequest,

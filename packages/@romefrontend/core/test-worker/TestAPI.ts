@@ -22,7 +22,7 @@ import stringDiff from "@romefrontend/string-diff";
 import {getErrorStructure} from "@romefrontend/v8";
 import prettyFormat from "@romefrontend/pretty-format";
 import {FileReference} from "../common/types/files";
-import {escapeMarkup, markup} from "@romefrontend/string-markup";
+import {escapeMarkup, markup} from "@romefrontend/cli-layout";
 import {
 	AsyncFunc,
 	ExpectedError,

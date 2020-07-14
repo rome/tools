@@ -11,7 +11,7 @@ import {removeCarriageReturn} from "@romefrontend/string-utils";
 import {
 	joinMarkupLines,
 	markupToPlainText,
-} from "@romefrontend/string-markup/format";
+} from "@romefrontend/cli-layout/format";
 
 const unicodeControls = /[\u0000-\u001f\u007f-\u00a0]/u;
 

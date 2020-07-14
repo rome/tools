@@ -15,8 +15,8 @@ import {
 import {ConstJSSourceType} from "@romefrontend/ast";
 import {tokenizeJSON} from "@romefrontend/codec-json";
 import {UnknownFilePath} from "@romefrontend/path";
-import {escapeMarkup, markupTag} from "@romefrontend/string-markup";
-import {MarkupTokenType} from "@romefrontend/string-markup/types";
+import {escapeMarkup, markupTag} from "@romefrontend/cli-layout";
+import {MarkupTokenType} from "@romefrontend/cli-layout/types";
 import {tokenizeHTML} from "@romefrontend/html-parser";
 
 // Max file size to avoid doing expensive highlighting for massive files - 100KB

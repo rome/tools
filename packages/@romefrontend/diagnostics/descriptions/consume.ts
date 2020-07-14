@@ -1,5 +1,5 @@
 import {createDiagnosticsCategory} from "./index";
-import {escapeMarkup, markup} from "@romefrontend/string-markup";
+import {escapeMarkup, markup} from "@romefrontend/cli-layout";
 import {buildSuggestionAdvice} from "../helpers";
 import {UnknownNumber} from "@romefrontend/ob1";
 

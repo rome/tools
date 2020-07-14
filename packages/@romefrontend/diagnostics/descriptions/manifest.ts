@@ -1,5 +1,5 @@
 import {createDiagnosticsCategory} from "./index";
-import {markup} from "@romefrontend/string-markup";
+import {markup} from "@romefrontend/cli-layout";
 
 // @romefrontend/codec-js-manifest
 export const manifest = createDiagnosticsCategory({

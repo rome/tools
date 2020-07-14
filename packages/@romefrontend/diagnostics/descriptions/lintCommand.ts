@@ -1,5 +1,5 @@
 import {createDiagnosticsCategory} from "./index";
-import {markup} from "@romefrontend/string-markup";
+import {markup} from "@romefrontend/cli-layout";
 
 // @romefrontend/core/server/commands/lint.ts
 export const lintCommand = createDiagnosticsCategory({
