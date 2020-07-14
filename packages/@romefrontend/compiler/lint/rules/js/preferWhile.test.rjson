@@ -1,0 +1,12 @@
+invalid: [
+	"
+          for (; x.running;) {
+            x.step();
+          }
+        "
+	"
+          for (;;) {
+            doSomething();
+          }
+        "
+]

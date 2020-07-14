@@ -1,0 +1,26 @@
+invalid: [
+	"
+						function f() {
+							console.log(arguments);
+						}
+					"
+	"
+						(function () {
+							console.log(arguments);
+						})();
+					"
+	"
+						class C {
+							fn() {
+								console.log(arguments);
+							}
+						}
+					"
+	"
+						const o = {
+							fn() {
+								console.log(arguments);
+							},
+						};
+					"
+]

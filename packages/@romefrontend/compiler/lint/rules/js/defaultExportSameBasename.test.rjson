@@ -1,0 +1,15 @@
+invalid: [
+	"export default function test() {}
+"
+	"export default class Test {}
+"
+]
+path: "foo.ts"
+valid: [
+	"export default function foo() {}
+"
+	"export default class Foo {}
+"
+	"export default 'rome';
+"
+]

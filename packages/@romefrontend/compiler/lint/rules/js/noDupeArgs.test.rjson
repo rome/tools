@@ -1,0 +1,30 @@
+invalid: [
+	"
+						function hello(a, a) {
+							//
+						}
+					"
+	"
+						const hello = (a, a) => {
+							//
+						}
+					"
+	"
+						const hello = function (a, a) {
+							//
+						}
+					"
+]
+valid: [
+	"
+						function foo(foo) {
+							console.log(foo)
+						}
+					"
+	"
+						const foo = 'test'
+						function bar(foo) {
+							console.log(foo)
+						}
+					"
+]

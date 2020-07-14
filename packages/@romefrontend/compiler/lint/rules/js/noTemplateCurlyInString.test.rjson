@@ -1,0 +1,6 @@
+invalid: [
+	"
+					const user = 'Faustina';
+                    const helloUser = 'Hello, ${user};
+				"
+]

@@ -5,7 +5,7 @@ import {DiagnosticCategory} from "@romefrontend/diagnostics";
 import {dedent} from "@romefrontend/string-utils";
 
 for (const name in tests) {
-	const {invalid, valid} = tests[name];
+	const {invalid, valid, path} = tests[name];
 
 	test(
 		name,
@@ -13,12 +13,13 @@ for (const name in tests) {
 			await testLint(
 				t,
 				{
-					invalid: invalid.map((str) => dedent(str)),
-					valid: valid.map((str) => dedent(str)),
+					invalid: invalid ? invalid.map((str) => dedent(str)) : [],
+					valid: valid ? valid.map((str) => dedent(str)) : [],
 				},
 				{
 					category: (`lint/${name}` as DiagnosticCategory),
 					snapshotFilename: `${name}.test.md`,
+					path,
 				},
 			);
 		},

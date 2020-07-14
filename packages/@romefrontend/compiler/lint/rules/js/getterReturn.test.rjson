@@ -1,0 +1,26 @@
+invalid: [
+	"
+						class p {
+							get name() {
+								console.log('hello');
+							}
+						}
+					"
+	"
+						let p = {
+							get name() {
+								console.log('hello');
+							},
+						};
+				 "
+]
+valid: [
+	"
+						let p = {};
+						Object.defineProperty(p, {
+							get: function () {
+								console.log('hello');
+							},
+						});
+				 "
+]

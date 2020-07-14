@@ -1,0 +1,10 @@
+invalid: [
+	"new Promise(async function foo() {})"
+	"new Promise(async () => {})"
+	"new Promise(((((async () => {})))))"
+]
+valid: [
+	"new Promise(() => {})"
+	"new Promise(() => {}, async function unrelated() {})"
+	"class Foo {} new Foo(async () => {})"
+]

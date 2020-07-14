@@ -1,0 +1,9 @@
+invalid: [
+	"//	the	blacklist"
+	"/*	the
+blacklist	*/"
+	"blacklist;"
+	"BLACKLIST;"
+	"someBlacklist;"
+	"SOME_BLACKLIST;"
+]
