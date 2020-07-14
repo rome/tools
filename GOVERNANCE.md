@@ -61,6 +61,7 @@ Members listed in alphabetical order.
 ### Core Contributors
 
 - [Eduardo Lopes @EduardoLopes](https://github.com/EduardoLopes)
+- [Emanuele Stoppa @ematipico](https://github.com/ematipico)
 - [Florent Cailhol @ooflorent](https://github.com/ooflorent)
 - [Jamie Kyle @jamiebuilds](https://github.com/jamiebuilds)
 - [Kevin Kelbie @Kelbie](https://github.com/Kelbie)
