@@ -178,7 +178,7 @@ export default class WorkerManager {
 
 			for (const {filename, content} of buffers) {
 				await newWorker.bridge.updateBuffer.call({
-					file: this.server.projectManager.getTransportFileReference(
+					ref: this.server.projectManager.getTransportFileReference(
 						createAbsoluteFilePath(filename),
 					),
 					content,
