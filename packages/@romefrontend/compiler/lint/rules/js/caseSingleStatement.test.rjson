@@ -1,0 +1,35 @@
+invalid: [
+	// Multiple statements
+	"
+		switch (foo) {
+			case true:
+			case false:
+				let foo = '';
+				foo;
+		}
+	"
+]
+valid: [
+	// Single statement
+	// Single block
+	// Nothing
+	"
+		switch (foo) {
+			case true:
+			case false:
+				return 'yes';
+		}
+	"
+	"
+		switch (foo) {
+			case true: {
+				// empty
+			}
+		}
+	"
+	"
+		switch (foo) {
+			case true:
+		}
+	"
+]

@@ -1,0 +1,9 @@
+invalid: [
+	"foo == bar"
+]
+valid: [
+	"foo == null"
+	"foo != null"
+	"null == foo"
+	"null != foo"
+]

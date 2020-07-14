@@ -1,0 +1,34 @@
+invalid: [
+	"const a = 4;"
+	"let a = 4;"
+	"
+						function foo(myVar) {
+							console.log('foo');
+						};
+					"
+	"
+						function foo(myVar) {
+							console.log('foo');
+						}
+						foo();
+					"
+	"
+						const foo = (b) => {
+							console.log('foo');
+						};
+					"
+]
+valid: [
+	"
+						function foo(_, b) {
+							console.log(b)
+						};
+						foo();
+					"
+	"
+						const foo = (_, b) => {
+							console.log(b)
+						};
+						foo();
+					"
+]

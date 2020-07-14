@@ -1,0 +1,18 @@
+invalid: [
+	"function foo() {}; foo = bar;"
+	"function foo() { foo = bar; }"
+	"foo = bar; function foo() { };"
+	"[foo] = bar; function foo() { };"
+	"({x: foo = 0} = bar); function foo() { };"
+	"function foo() { [foo] = bar; }"
+	"(function() { ({x: foo = 0} = bar); function foo() { }; })();"
+]
+valid: [
+	"function foo() { var foo = bar; }"
+	"function foo(foo) { foo = bar; }"
+	"function foo() { var foo; foo = bar; }"
+	"var foo = () => {}; foo = bar;"
+	"var foo = function() {}; foo = bar;"
+	"var foo = function() { foo = bar; };"
+	"import bar from 'bar'; function foo() { var foo = bar; }"
+]

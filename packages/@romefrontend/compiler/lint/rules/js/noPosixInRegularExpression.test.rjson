@@ -1,0 +1,4 @@
+invalid: [
+	"const pattern = /[[:alpha:]]/"
+	"const pattern = /[[.ch.]]/"
+]

@@ -1,0 +1,23 @@
+invalid: [
+	"
+					if (Boolean(foo)) {
+						return foo;
+					}
+				"
+	"
+					while (!!foo) {
+						return foo;
+					}
+				"
+	"
+					let x = 1;
+					do {
+						1 + 1;
+					} while (Boolean(x));
+				"
+	"
+					for (; !!foo; ) {
+						return 1 + 1;
+					}
+				"
+]

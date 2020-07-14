@@ -1,0 +1,4 @@
+invalid: [
+	"var foobar;
+foobar"
+]

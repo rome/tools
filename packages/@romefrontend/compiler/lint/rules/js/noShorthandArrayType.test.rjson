@@ -1,0 +1,6 @@
+invalid: [
+	"
+						let valid: Array<foo>;
+						let invalid: bar[];
+					"
+]

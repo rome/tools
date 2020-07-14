@@ -1,0 +1,12 @@
+invalid: [
+	"
+						const x = 'test';
+						x: const y = 'test';
+					"
+]
+valid: [
+	"
+						const x = 'test';
+						z: const y = 'test';
+					"
+]

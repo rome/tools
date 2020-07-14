@@ -228,7 +228,7 @@ exports.toCamelCase = function(str, forceCapitalize) {
 
 exports.dedent = function(str) {
 	// Find min indentation
-	const match = str.match(/^[ \t]*(?=\S)/gm);
+	const match = String(str).match(/^[ \t]*(?=\S)/gm);
 	if (match === null) {
 		return str;
 	}
@@ -236,5 +236,5 @@ exports.dedent = function(str) {
 	const indent = Math.min(...match.map((x) => x.length));
 
 	// Remove indentation
-	return str.replace(new RegExp(`^[ \\t]{${indent}}`, "gm"), "").trim();
+	return String(str).replace(new RegExp(`^[ \\t]{${indent}}`, "gm"), "").trim();
 };

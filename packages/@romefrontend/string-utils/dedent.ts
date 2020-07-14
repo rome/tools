@@ -16,11 +16,13 @@ export function dedent(
 	} else {
 		const parts: Array<string> = [];
 
-		// Perform the interpolation
-		for (let i = 0; i < literals.raw.length; i++) {
-			parts.push(literals.raw[i]);
-			if (i < values.length) {
-				parts.push(values[i]);
+		if (literals.raw) {
+			// Perform the interpolation
+			for (let i = 0; i < literals.raw.length; i++) {
+				parts.push(literals.raw[i]);
+				if (i < values.length) {
+					parts.push(values[i]);
+				}
 			}
 		}
 

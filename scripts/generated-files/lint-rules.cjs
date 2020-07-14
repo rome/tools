@@ -163,17 +163,21 @@ for (const {docs, ruleName, hasRJSON} of defs) {
 	file += "## Examples\n";
 
 	file += "## Invalid\n";
-	for (const example of json.invalid) {
-		file += "```" + language + "\n";
-		file += dedent(example).trim() + "\n";
-		file += "```\n";
+	if (json.invalid) {
+		for (const example of json.invalid) {
+			file += "```" + language + "\n";
+			file += dedent(example).trim() + "\n";
+			file += "```\n";
+		}
 	}
 
 	file += "## Valid\n";
-	for (const example of json.valid) {
-		file += "```" + language + "\n";
-		file += dedent(example).trim() + "\n";
-		file += "```\n";
+	if (json.valid) {
+		for (const example of json.valid) {
+			file += "```" + language + "\n";
+			file += dedent(example).trim() + "\n";
+			file += "```\n";
+		}
 	}
 
 	write(docs, file);

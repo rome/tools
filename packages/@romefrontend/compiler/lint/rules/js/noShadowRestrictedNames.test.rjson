@@ -1,0 +1,7 @@
+invalid: [
+	"function NaN() {}"
+	"let Set;"
+	"try {  } catch(Object) {}"
+	"!function Array() {}"
+	"function test(JSON) {console.log(JSON)}"
+]
