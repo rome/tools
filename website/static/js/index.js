@@ -205,7 +205,9 @@ window.addEventListener("scroll", handleScroll, false);
 
 elements.colorSchemeSwitch.addEventListener("click", modeSwitch, false);
 const teamArr = Array.from(elements.teamList.getElementsByTagName("li"));
-randomShuffle(teamArr).forEach((li) => elements.teamList.appendChild(li));
+for (const li of randomShuffles(teamArr)){
+  elements.teamList.appendChild(li);
+}
 
 const homepageExample = document.querySelector(".homepage-example");
 if (homepageExample != null) {
