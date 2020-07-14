@@ -85,7 +85,7 @@ export default class Consumer {
 		this.usedNames = new Set(opts.usedNames);
 		this.forkCache = new Map();
 		this.forceDiagnosticTarget = opts.forceDiagnosticTarget;
-		this.declared = false;
+		this.declared = opts.declared === true;
 
 		// See shouldDispatchUnexpected for explanation
 		this.hasHandledUnexpected = false;
@@ -139,6 +139,11 @@ export default class Consumer {
 			throw new DiagnosticsError("Captured diagnostics", diagnostics);
 		}
 		return result;
+	}
+
+	// Just for JSON.stringify debugging of Consumer instances
+	toJSON() {
+		return this.value;
 	}
 
 	handleThrownDiagnostics(callback: () => void) {
@@ -465,6 +470,7 @@ export default class Consumer {
 
 	cloneConsumer(opts: Partial<ConsumerOptions>): Consumer {
 		return new Consumer({
+			declared: this.declared,
 			usedNames: this.usedNames,
 			onDefinition: this.onDefinition,
 			handleUnexpectedDiagnostic: this.handleUnexpected,
@@ -641,6 +647,30 @@ export default class Consumer {
 				value.enforceUsedProperties(type, true);
 			}
 		}
+	}
+
+	asPossibleNumberString(def?: number): Consumer {
+		this.declareDefinition({
+			type: "number",
+			default: def,
+			required: def === undefined,
+		});
+
+		if (this.exists()) {
+			const str = this.asUndeclaredString();
+			const num = parseFloat(str);
+			if (isNaN(num)) {
+				this.unexpected(descriptions.CONSUME.EXPECTED_VALID_NUMBER);
+			} else {
+				return this.cloneConsumer({
+					value: num,
+				});
+			}
+		}
+
+		return this.cloneConsumer({
+			value: def,
+		});
 	}
 
 	asPossibleParsedJSON(): Consumer {
@@ -1132,44 +1162,6 @@ export default class Consumer {
 	asOneIndexedNumberOrVoid(): undefined | Number1 {
 		const num = this.asNumberOrVoid();
 		return num === undefined ? undefined : ob1Coerce1(num);
-	}
-
-	asNumberFromString(def?: number): number {
-		this.declareDefinition({
-			type: "number",
-			default: def,
-			required: def === undefined,
-		});
-		return this.asUndeclaredNumberFromString(def);
-	}
-
-	asNumberFromStringOrVoid(): undefined | number {
-		this.declareDefinition({
-			type: "number",
-			default: undefined,
-			required: false,
-		});
-
-		if (this.exists()) {
-			return this.asUndeclaredNumberFromString();
-		} else {
-			return undefined;
-		}
-	}
-
-	asUndeclaredNumberFromString(def?: number): number {
-		if (def !== undefined && !this.exists()) {
-			return def;
-		}
-
-		const str = this.asUndeclaredString();
-		const num = Number(str);
-		if (isNaN(num)) {
-			this.unexpected(descriptions.CONSUME.EXPECTED_VALID_NUMBER);
-			return NaN;
-		} else {
-			return num;
-		}
 	}
 
 	asNumber(def?: number): number {

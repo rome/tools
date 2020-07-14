@@ -39,7 +39,7 @@ exports.exec = function(cmd, args, opts) {
 		},
 	);
 	if (res.status !== 0) {
-		console.error(`Error executing ${cmd} ${args.join(" ")}`);
+		//console.error(`Error executing ${cmd} ${args.join(" ")}`);
 		if (opts.stdio !== undefined && opts.stdio !== "inherit") {
 			console.error(res.stderr.toString());
 		}
@@ -237,4 +237,4 @@ exports.dedent = function(str) {
 
 	// Remove indentation
 	return str.replace(new RegExp(`^[ \\t]{${indent}}`, "gm"), "").trim();
-}
+};

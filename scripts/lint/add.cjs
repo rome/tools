@@ -111,4 +111,4 @@ descriptions = descriptions.replace(
 );
 write(descriptionsFile, descriptions);
 
-require("./update.cjs");
+require("../generated-files/lint-rules.cjs");

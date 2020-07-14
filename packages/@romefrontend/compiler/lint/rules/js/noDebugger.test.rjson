@@ -1,4 +1,6 @@
-invalid: ["debugger;"]
+invalid: [
+	"debugger;"
+]
 valid: [
 	"
 		const test = { debugger: 1 };

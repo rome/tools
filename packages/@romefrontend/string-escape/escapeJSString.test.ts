@@ -14,7 +14,7 @@ test(
 		);
 		t.is(
 			escapeJSString("\u{1f680} \n \\", {ignoreWhitespaceEscapes: true}),
-			"\\u{1f680} \\x0a \\\\",
+			"\\u{1f680} \n \\\\",
 		);
 		t.is(
 			escapeJSString("\u{1f680} \n \\", {unicodeOnly: true}),

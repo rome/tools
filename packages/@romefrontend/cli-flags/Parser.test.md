@@ -34,6 +34,7 @@
   ✖ No command specified
 
     $ test
+           ^
 
   ℹ To see available commands run
 
@@ -671,6 +672,7 @@ Object {name: "sebastian"}
   ✖ Expected a string at name
 
     $ test
+          ^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

@@ -2,6 +2,7 @@ import {test} from "rome";
 import {catchDiagnosticsSync} from "@romefrontend/diagnostics";
 import {markupToPlainText} from "./format";
 import {printDiagnosticsToString} from "@romefrontend/cli-diagnostics";
+import {ob1Coerce1} from "@romefrontend/ob1";
 
 const SYNTAX_ERROR_TESTS = [
 	`<view pointerChar="<emphasis" pointerLine="1" pointerStart="1" pointerEnd="3">foobar</view>`,
@@ -15,7 +16,7 @@ test(
 				markupToPlainText(
 					input,
 					{
-						columns: 400,
+						columns: ob1Coerce1(400),
 					},
 				);
 			});

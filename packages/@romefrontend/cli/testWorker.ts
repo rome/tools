@@ -17,7 +17,7 @@ export default async function testWorker() {
 		programName: "rome test-worker",
 		defineFlags(c): TestWorkerFlags {
 			return {
-				inspectorPort: c.get("inspectorPort").asNumberFromString(),
+				inspectorPort: c.get("inspectorPort").asPossibleNumberString().asNumber(),
 			};
 		},
 	});

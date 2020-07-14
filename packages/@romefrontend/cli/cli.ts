@@ -95,7 +95,7 @@ export default async function cli() {
 						{
 							description: "Change the display width. By default it is automatically inferred and updated from the terminal.",
 						},
-					).asNumberFromStringOrVoid(),
+					).asPossibleNumberString().asOneIndexedNumberOrVoid(),
 					redirectError: c.get(
 						"consoleRedirectError",
 						{

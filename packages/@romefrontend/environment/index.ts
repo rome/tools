@@ -1,6 +1,7 @@
 import stream = require("stream");
 import {Event} from "@romefrontend/events";
 import {mergeObjects} from "@romefrontend/typescript-helpers";
+import {Number1, ob1Coerce1} from "@romefrontend/ob1";
 
 export type Stdout = stream.Writable & {
 	isTTY?: boolean;
@@ -15,7 +16,7 @@ export type InferredTerminalFeatures = {
 };
 
 export type TerminalFeatures = {
-	columns: number;
+	columns?: Number1;
 	cursor: boolean;
 	progressBars: boolean;
 	hyperlinks: boolean;
@@ -24,7 +25,7 @@ export type TerminalFeatures = {
 };
 
 export const TERMINAL_FEATURES_DEFAULT: TerminalFeatures = {
-	columns: 100,
+	columns: ob1Coerce1(100),
 	cursor: true,
 	progressBars: true,
 	unicode: true,
@@ -84,10 +85,10 @@ export function inferTerminalFeatures(
 	if (stdout === undefined || stdout.columns === undefined) {
 		// Increase column size for CI
 		if (isCI) {
-			columns = 200;
+			columns = ob1Coerce1(200);
 		}
 	} else if (stdout.columns !== undefined) {
-		columns = stdout.columns;
+		columns = ob1Coerce1(stdout.columns);
 	}
 
 	const fancyAnsi = isTTY && !isCI;
@@ -117,7 +118,7 @@ export function inferTerminalFeatures(
 			if (stdout?.columns !== undefined) {
 				features = {
 					...features,
-					columns: stdout.columns,
+					columns: ob1Coerce1(stdout.columns),
 				};
 				updateEvent.send(features);
 			}
