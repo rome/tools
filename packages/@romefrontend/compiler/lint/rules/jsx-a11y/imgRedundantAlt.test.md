@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/imgRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/imgRedundantAlt/reject/1/file.tsx:1 lint/jsx-a11y/imgRedundantAlt ━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid the words "image", "picture", or "photo" in img element alt text.
 
@@ -35,7 +35,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/imgRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/imgRedundantAlt/reject/2/file.tsx:1 lint/jsx-a11y/imgRedundantAlt ━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid the words "image", "picture", or "photo" in img element alt text.
 
@@ -62,7 +62,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/imgRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/imgRedundantAlt/reject/3/file.tsx:1 lint/jsx-a11y/imgRedundantAlt ━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid the words "image", "picture", or "photo" in img element alt text.
 
@@ -89,7 +89,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/imgRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/imgRedundantAlt/reject/4/file.tsx:1 lint/jsx-a11y/imgRedundantAlt ━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid the words "image", "picture", or "photo" in img element alt text.
 
@@ -116,7 +116,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/imgRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/imgRedundantAlt/reject/5/file.tsx:1 lint/jsx-a11y/imgRedundantAlt ━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid the words "image", "picture", or "photo" in img element alt text.
 
@@ -143,7 +143,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/imgRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/imgRedundantAlt/reject/6/file.tsx:1 lint/jsx-a11y/imgRedundantAlt ━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid the words "image", "picture", or "photo" in img element alt text.
 

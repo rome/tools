@@ -153,6 +153,9 @@ JSRoot {
 
   ✖ Unexpected type cast in parameter position
 
+    async (a as T) => {};
+           ^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

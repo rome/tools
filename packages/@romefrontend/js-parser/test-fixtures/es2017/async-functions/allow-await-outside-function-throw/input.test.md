@@ -205,6 +205,11 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    1 │ function a() {
+  > 2 │   return await 1
+      │                ^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

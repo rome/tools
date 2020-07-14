@@ -165,6 +165,9 @@ JSRoot {
 
   ✖ Template literal types cannot have any substitution
 
+    let x: `foo-${bar}`;
+                  ^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

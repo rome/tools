@@ -114,6 +114,9 @@ JSRoot {
 
   ✖ Trailing comma is disallowed inside import(...) arguments
 
+    import("foo",);
+                ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

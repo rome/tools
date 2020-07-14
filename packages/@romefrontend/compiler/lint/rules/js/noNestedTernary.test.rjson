@@ -1,3 +1,4 @@
+filename: "file.ts"
 invalid: [
 	"let thing = foo ? bar : baz === qux ? quxx : foobar;"
 	"let thing = foo ? bar ? boo : foo : baz ? boo : foo;"

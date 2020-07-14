@@ -1,12 +1,13 @@
+filename: "file.ts"
 invalid: [
 	"
-						const x = 'test';
-						x: const y = 'test';
-					"
+		const x = 'test';
+		x: expr;
+	"
 ]
 valid: [
 	"
-						const x = 'test';
-						z: const y = 'test';
-					"
+		const x = 'test';
+		z: expr;
+	"
 ]

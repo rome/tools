@@ -167,6 +167,9 @@ JSRoot {
 
   ✖ yield is a reserved word
 
+    "use strict"; try {} catch (yield) {}
+                                ^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

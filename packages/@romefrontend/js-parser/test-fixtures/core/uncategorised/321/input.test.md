@@ -132,6 +132,9 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    1 │ a
+    2 │ b
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

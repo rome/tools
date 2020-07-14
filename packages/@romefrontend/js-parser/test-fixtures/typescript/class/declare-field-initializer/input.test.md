@@ -226,6 +226,11 @@ JSRoot {
 
   ✖ Unknown class property start
 
+    1 │ class A {
+  > 2 │   declare bar: string = "test";
+      │           ^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

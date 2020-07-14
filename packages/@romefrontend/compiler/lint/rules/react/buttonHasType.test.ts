@@ -30,8 +30,9 @@ test(
 					"createElement('button', {type: 'submit'}, ['child'])",
 					"createElement('button', {type: 'reset'}, ['child'])",
 				],
+				filename: "file.tsx",
+				category: "lint/react/buttonHasType",
 			},
-			{category: "lint/react/buttonHasType"},
 		);
 	},
 );

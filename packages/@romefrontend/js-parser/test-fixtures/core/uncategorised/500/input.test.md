@@ -190,6 +190,9 @@ JSRoot {
 
   ✖ Legacy octal literals are not allowed in strict mode
 
+    function hello() { 'use strict'; 021; }
+                                        ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

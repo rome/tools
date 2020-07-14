@@ -207,6 +207,9 @@ JSRoot {
 
   ✖ package is a reserved word
 
+    (function a(package) { "use strict"; })
+                ^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

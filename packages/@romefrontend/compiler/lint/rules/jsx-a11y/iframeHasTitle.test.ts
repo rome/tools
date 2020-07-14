@@ -18,9 +18,10 @@ test(
 					"<iframe title={true} />",
 					"<iframe title={42} />",
 				],
-				valid: ['<iframe title="title" />', "<iframe title={title} >"],
+				valid: ['<iframe title="title" />'],
+				filename: "file.tsx",
+				category: "lint/jsx-a11y/iframeHasTitle",
 			},
-			{category: "lint/jsx-a11y/iframeHasTitle"},
 		);
 	},
 );

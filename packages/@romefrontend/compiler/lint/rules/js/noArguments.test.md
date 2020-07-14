@@ -8,7 +8,7 @@
 
 ```
 
- unknown:2:13 lint/js/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noArguments/reject/1/file.ts:2:13 lint/js/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use the rest parameters instead of arguments.
 
@@ -38,7 +38,7 @@ function f() {
 
 ```
 
- unknown:2:13 lint/js/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noArguments/reject/2/file.ts:2:13 lint/js/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use the rest parameters instead of arguments.
 
@@ -68,7 +68,7 @@ function f() {
 
 ```
 
- unknown:3:14 lint/js/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noArguments/reject/3/file.ts:3:14 lint/js/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use the rest parameters instead of arguments.
 
@@ -102,7 +102,7 @@ class C {
 
 ```
 
- unknown:3:14 lint/js/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noArguments/reject/4/file.ts:3:14 lint/js/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use the rest parameters instead of arguments.
 

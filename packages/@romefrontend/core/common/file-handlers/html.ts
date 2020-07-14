@@ -23,12 +23,13 @@ export const htmlHandler: ExtensionHandler = {
 	ext: "html",
 	canLint: true,
 	canFormat: true,
+	language: "html",
 
-	async parse({stat, path, file, worker}) {
+	async parse({mtime, path, file, worker}) {
 		const sourceText = await worker.readFile(file.real);
 		const ast = parseHTML({
 			input: sourceText,
-			mtime: stat.mtimeMs,
+			mtime,
 			path,
 		});
 		return {

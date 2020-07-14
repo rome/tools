@@ -253,6 +253,9 @@ JSRoot {
 
   ✖ Regular expression flags can't contain unicode escapes
 
+    var x = /[P QR]/\u0067
+                    ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

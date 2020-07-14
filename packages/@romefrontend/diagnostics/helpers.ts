@@ -73,6 +73,7 @@ export function buildSuggestionAdvice(
 
 		advice.push({
 			type: "diff",
+			language: "unknown",
 			diff: stringDiff(value, topRatingRaw),
 		});
 

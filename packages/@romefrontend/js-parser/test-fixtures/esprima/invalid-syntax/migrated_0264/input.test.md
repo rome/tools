@@ -213,6 +213,9 @@ JSRoot {
 
   ✖ Unexpected token, expected {
 
+    class A extends a + b {}
+                      ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -152,6 +152,9 @@ JSRoot {
 
   ✖ The rest element has to be the last element when destructuring
 
+    async (...a,) => {};
+                ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

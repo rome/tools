@@ -5,23 +5,27 @@ import {DiagnosticCategory} from "@romefrontend/diagnostics";
 import {dedent} from "@romefrontend/string-utils";
 
 for (const name in tests) {
-	const {invalid, valid, path} = tests[name];
-
 	test(
 		name,
 		async (t) => {
-			await testLint(
-				t,
-				{
-					invalid: invalid ? invalid.map((str) => dedent(str)) : [],
-					valid: valid ? valid.map((str) => dedent(str)) : [],
-				},
-				{
-					category: (`lint/${name}` as DiagnosticCategory),
-					snapshotFilename: `${name}.test.md`,
-					path,
-				},
-			);
+			let cases = tests[name];
+
+			if (!Array.isArray(cases)) {
+				cases = [cases];
+			}
+
+			for (const {invalid, valid, filename} of cases) {
+				await testLint(
+					t,
+					{
+						invalid: invalid ? invalid.map((str) => dedent(str)) : [],
+						valid: valid ? valid.map((str) => dedent(str)) : [],
+						category: (`lint/${name}` as DiagnosticCategory),
+						snapshotFilename: `${name}.test.md`,
+						filename,
+					},
+				);
+			}
 		},
 	);
 }

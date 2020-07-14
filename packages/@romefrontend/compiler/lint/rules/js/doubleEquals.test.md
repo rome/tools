@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/js/doubleEquals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/doubleEquals/reject/1/file.ts:1 lint/js/doubleEquals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use === instead of ==.
 

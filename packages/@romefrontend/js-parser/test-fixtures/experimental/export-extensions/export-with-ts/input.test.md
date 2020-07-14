@@ -796,6 +796,11 @@ JSRoot {
 
   ✖ Expected `from` for an export node
 
+  > 1 │ export abstract class A {}
+      │                 ^
+    2 │ export declare interface B {}
+    3 │ export enum C {}
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

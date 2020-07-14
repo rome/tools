@@ -236,6 +236,11 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    1 │ function* fn() {
+  > 2 │   yield => {};
+      │         ^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

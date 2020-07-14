@@ -1,3 +1,4 @@
+filename: "file.ts"
 invalid: [
 	"
 						const arr = [['a','b','c'], [1, 2, 3]];

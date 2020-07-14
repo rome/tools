@@ -173,6 +173,9 @@ JSRoot {
 
   ✖ Generators can only be declared at the top level or inside a block
 
+    if (1) function *foo() {}
+           ^^^^^^^^^^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

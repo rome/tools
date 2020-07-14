@@ -131,6 +131,9 @@ JSRoot {
 
   ✖ Unknown start to an export default declaration
 
+    export default = 42
+                   ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

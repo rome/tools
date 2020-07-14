@@ -32,8 +32,9 @@ test(
 						}
 					`,
 				],
+				filename: "file.tsx",
+				category: "lint/react/noRedundantShouldComponentUpdate",
 			},
-			{category: "lint/react/noRedundantShouldComponentUpdate"},
 		);
 	},
 );

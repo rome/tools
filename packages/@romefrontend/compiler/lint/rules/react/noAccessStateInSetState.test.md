@@ -8,18 +8,15 @@
 
 ```
 
- unknown:4:7 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noAccessStateInSetState/reject/1/file.tsx:3:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Avoid using this.state within a this.setState call.
+  ✖ Unknown class property start
 
     2 │           class MyComponent extends Component {
-    3 │             function increment() {
-  > 4 │               this.setState({value: this.state.value + 1});
-      │               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 3 │             function increment() {
+      │                      ^
+    4 │               this.setState({value: this.state.value + 1});
     5 │             }
-    6 │           }
-
-  ℹ Batched state calls could result in unexpected errors due to stale state data.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -29,31 +26,23 @@
 
 ### `0: formatted`
 
-```
-class MyComponent extends Component {
-	increment() {
-		this.setState({value: this.state.value + 1});
-	}
-}
-
+```javascript
+undefined
 ```
 
 ### `1`
 
 ```
 
- unknown:4:7 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noAccessStateInSetState/reject/2/file.tsx:3:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Avoid using this.state within a this.setState call.
+  ✖ Unknown class property start
 
     2 │           class MyComponent extends Component {
-    3 │             function increment() {
-  > 4 │               this.setState({value: 1 + this.state.value});
-      │               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 3 │             function increment() {
+      │                      ^
+    4 │               this.setState({value: 1 + this.state.value});
     5 │             }
-    6 │           }
-
-  ℹ Batched state calls could result in unexpected errors due to stale state data.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -63,34 +52,23 @@ class MyComponent extends Component {
 
 ### `1: formatted`
 
-```
-class MyComponent extends Component {
-	increment() {
-		this.setState({value: 1 + this.state.value});
-	}
-}
-
+```javascript
+undefined
 ```
 
 ### `2`
 
 ```
 
- unknown:4:7 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noAccessStateInSetState/reject/3/file.tsx:3:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Avoid using this.state within a this.setState call.
+  ✖ Unknown class property start
 
     2 │           class MyComponent extends Component {
-    3 │             function toggle() {
-  > 4 │               this.setState({
-      │               ^^^^^^^^^^^^^^^
-  > 5 │                 value: !this.state.value
-  > 6 │               });
-      │ ^^^^^^^^^^^^^^^^
-    7 │             }
-    8 │           }
-
-  ℹ Batched state calls could result in unexpected errors due to stale state data.
+  > 3 │             function toggle() {
+      │                      ^
+    4 │               this.setState({
+    5 │                 value: !this.state.value
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -100,36 +78,23 @@ class MyComponent extends Component {
 
 ### `2: formatted`
 
-```
-class MyComponent extends Component {
-	toggle() {
-		this.setState({
-			value: !this.state.value,
-		});
-	}
-}
-
+```javascript
+undefined
 ```
 
 ### `3`
 
 ```
 
- unknown:4:7 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noAccessStateInSetState/reject/4/file.tsx:3:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Avoid using this.state within a this.setState call.
+  ✖ Unknown class property start
 
     2 │           class MyComponent extends Component {
-    3 │             function toggle() {
-  > 4 │               this.setState({
-      │               ^^^^^^^^^^^^^^^
-  > 5 │                 value: !!this.state.value
-  > 6 │               });
-      │ ^^^^^^^^^^^^^^^^
-    7 │             }
-    8 │           }
-
-  ℹ Batched state calls could result in unexpected errors due to stale state data.
+  > 3 │             function toggle() {
+      │                      ^
+    4 │               this.setState({
+    5 │                 value: !!this.state.value
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -139,27 +104,20 @@ class MyComponent extends Component {
 
 ### `3: formatted`
 
-```
-class MyComponent extends Component {
-	toggle() {
-		this.setState({
-			value: !!this.state.value,
-		});
-	}
-}
-
+```javascript
+undefined
 ```
 
 ### `4`
 
 ```
 
- unknown:4:7 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noAccessStateInSetState/reject/5/file.tsx:4:7 lint/react/noAccessStateInSetState ━━━━━━━
 
   ✖ Avoid using this.state within a this.setState call.
 
     2 │           class MyComponent extends Component {
-    3 │             function update() {
+    3 │             update() {
   > 4 │               this.setState({
       │               ^^^^^^^^^^^^^^^
   > 5 │                 foo: bar,
@@ -195,12 +153,12 @@ class MyComponent extends Component {
 
 ```
 
- unknown:4:7 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noAccessStateInSetState/reject/6/file.tsx:4:7 lint/react/noAccessStateInSetState ━━━━━━━
 
   ✖ Avoid using this.state within a this.setState call.
 
     2 │           class MyComponent extends Component {
-    3 │             function update() {
+    3 │             update() {
   > 4 │               this.setState({
       │               ^^^^^^^^^^^^^^^
   > 5 │                 foo: bar,
@@ -236,12 +194,12 @@ class MyComponent extends Component {
 
 ```
 
- unknown:4:7 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noAccessStateInSetState/reject/7/file.tsx:4:7 lint/react/noAccessStateInSetState ━━━━━━━
 
   ✖ Avoid using this.state within a this.setState call.
 
     2 │           class MyComponent extends Component {
-    3 │             function update() {
+    3 │             update() {
   > 4 │               this.setState({
       │               ^^^^^^^^^^^^^^^
   > 5 │                 value: this.state.value
@@ -275,12 +233,12 @@ class MyComponent extends Component {
 
 ```
 
- unknown:4:7 lint/react/noAccessStateInSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noAccessStateInSetState/reject/8/file.tsx:4:7 lint/react/noAccessStateInSetState ━━━━━━━
 
   ✖ Avoid using this.state within a this.setState call.
 
     2 │           class MyComponent extends Component {
-    3 │             function update() {
+    3 │             update() {
   > 4 │               this.setState({
       │               ^^^^^^^^^^^^^^^
   > 5 │                 foo: bar,

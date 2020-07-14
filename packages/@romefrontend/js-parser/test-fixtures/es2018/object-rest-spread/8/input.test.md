@@ -295,6 +295,9 @@ JSRoot {
 
   ✖ A trailing comma is not permitted after the rest element
 
+    let { x, y, ...z, } = obj;
+                    ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

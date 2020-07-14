@@ -232,7 +232,6 @@ test(
 					`
             class Example {
               constructor(props) {
-                super(props);
                 this.state = {
                   count: 0
                 };
@@ -279,8 +278,9 @@ test(
             }
           `,
 				],
+				filename: "file.tsx",
+				category: "lint/react/noDirectMutationState",
 			},
-			{category: "lint/react/noDirectMutationState"},
 		);
 	},
 );

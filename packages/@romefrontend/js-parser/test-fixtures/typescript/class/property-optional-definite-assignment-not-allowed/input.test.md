@@ -287,6 +287,11 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    1 │ class C {
+  > 2 │   x?!: number;
+      │     ^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

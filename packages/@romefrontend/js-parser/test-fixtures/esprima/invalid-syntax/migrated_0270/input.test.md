@@ -235,6 +235,9 @@ JSRoot {
 
   ✖ Classes may not have static property named prototype
 
+    class A {static prototype(){}}
+                    ^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

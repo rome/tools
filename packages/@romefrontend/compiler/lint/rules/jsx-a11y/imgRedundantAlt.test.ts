@@ -23,8 +23,9 @@ test(
 					'<img src="src" alt="Image content" />',
 				],
 				valid: ['<img src="src" alt="alt" />', '<img src="src" alt={photo} />'],
+				filename: "file.tsx",
+				category: "lint/jsx-a11y/imgRedundantAlt",
 			},
-			{category: "lint/jsx-a11y/imgRedundantAlt"},
 		);
 	},
 );

@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/noOnChange/reject/1/file.tsx:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an onBlur event instead of an onChange event unless absolutely necessary.
 
@@ -35,7 +35,7 @@
 
 ```
 
- unknown:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/noOnChange/reject/2/file.tsx:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an onBlur event instead of an onChange event unless absolutely necessary.
 
@@ -62,7 +62,7 @@
 
 ```
 
- unknown:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/noOnChange/reject/3/file.tsx:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an onBlur event instead of an onChange event unless absolutely necessary.
 
@@ -89,7 +89,7 @@
 
 ```
 
- unknown:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/noOnChange/reject/4/file.tsx:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an onBlur event instead of an onChange event unless absolutely necessary.
 

@@ -469,6 +469,13 @@ JSRoot {
 
   ✖ 'arguments' is not allowed in class field initializer
 
+    1 │ function fn() {
+    2 │   class A {
+  > 3 │     foo = class B { bar() { arguments } };
+      │                             ^^^^^^^^^
+    4 │   }
+    5 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

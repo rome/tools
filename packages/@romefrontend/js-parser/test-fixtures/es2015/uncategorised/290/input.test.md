@@ -172,6 +172,9 @@ JSRoot {
 
   ✖ Invalid escape sequence in template
 
+    "use strict"; `${test}\02`;
+                           ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

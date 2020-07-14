@@ -9,8 +9,9 @@ test(
 			{
 				invalid: ["<h1 role='checkbox'></h1>"],
 				valid: ["<h1 role='article'></h1>"],
+				filename: "file.tsx",
+				category: "lint/jsx-a11y/noNoninteractiveElementToInteractiveRole",
 			},
-			{category: "lint/jsx-a11y/noNoninteractiveElementToInteractiveRole"},
 		);
 	},
 );

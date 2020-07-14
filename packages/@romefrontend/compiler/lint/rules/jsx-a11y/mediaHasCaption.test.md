@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/mediaHasCaption ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/mediaHasCaption/reject/1/file.tsx:1 lint/jsx-a11y/mediaHasCaption ━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a track for captions when using audio or video elements.
 
@@ -35,7 +35,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/mediaHasCaption ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/mediaHasCaption/reject/2/file.tsx:1 lint/jsx-a11y/mediaHasCaption ━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a track for captions when using audio or video elements.
 
@@ -62,7 +62,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/mediaHasCaption ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/mediaHasCaption/reject/3/file.tsx:1 lint/jsx-a11y/mediaHasCaption ━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a track for captions when using audio or video elements.
 
@@ -91,15 +91,14 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/mediaHasCaption ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/mediaHasCaption/reject/4/file.tsx:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Provide a track for captions when using audio or video elements.
+  ✖ Expected a corresponding JSX closing tag for video
+
+  ℹ Originated from opening tag of video
 
     <video>child</audio>
-    ^^^^^^^^^^^^^^^^^^^^
-
-  ℹ Captions support users with hearing-impairments. They should be a transcription or translation
-    of the dialogue, sound effects, musical cues, and other relevant audio information.
+     ^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -109,11 +108,8 @@
 
 ### `3: formatted`
 
-```
-<video>
-	child
-</video>;
-
+```javascript
+undefined
 ```
 
 ### `4`

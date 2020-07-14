@@ -221,6 +221,11 @@ JSRoot {
 
   ✖ The only valid meta property for import is import.meta
 
+    1 │ function failsParse() {
+  > 2 │   return import.then();
+      │                 ^^^^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -149,6 +149,10 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    1 │ interface
+  > 2 │ F {}
+      │   ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

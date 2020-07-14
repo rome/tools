@@ -4,9 +4,16 @@
 
 ## `arrow > params`
 
+### `Diagnostics`
+
+```
+✔ No known problems!
+
+```
+
 ### `Input`
 
-```javascript
+```js
 fooooooooooooooooooooooooooooooooooooooooooooooooooo(action => next =>
     dispatch(action),
 );
@@ -332,7 +339,7 @@ foo(
 
 ### `Output`
 
-```javascript
+```js
 fooooooooooooooooooooooooooooooooooooooooooooooooooo((action) => (next) =>
 	dispatch(action)
 );

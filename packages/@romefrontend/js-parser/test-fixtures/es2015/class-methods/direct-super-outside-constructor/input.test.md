@@ -287,6 +287,11 @@ JSRoot {
 
   ✖ super() is only valid inside a class constructor of a subclass
 
+    1 │ class A {
+  > 2 │   x () {super()}
+      │         ^^^^^
+    3 │ }
+
   ℹ Maybe a typo in the method name ('constructor') or not extending another class?
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

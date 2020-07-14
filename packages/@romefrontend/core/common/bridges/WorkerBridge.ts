@@ -7,11 +7,7 @@
 
 import {ModuleSignature} from "@romefrontend/js-analysis";
 import {Manifest} from "@romefrontend/codec-js-manifest";
-import {
-	AnyRoot,
-	ConstJSProgramSyntax,
-	ConstJSSourceType,
-} from "@romefrontend/ast";
+import {AnyRoot, ConstJSSourceType} from "@romefrontend/ast";
 import {
 	BundleCompileOptions,
 	CompileResult,
@@ -33,6 +29,7 @@ import {InlineSnapshotUpdates} from "@romefrontend/core/test-worker/SnapshotMana
 import {FileNotFound} from "@romefrontend/core/common/FileNotFound";
 import {createAbsoluteFilePath} from "@romefrontend/path";
 import {Number0} from "@romefrontend/ob1";
+import {FormatterOptions} from "@romefrontend/formatter";
 
 export type WorkerProjects = Array<{
 	id: number;
@@ -74,10 +71,10 @@ export type WorkerLintOptions = {
 };
 
 export type WorkerParseOptions = {
-	sourceType?: ConstJSSourceType;
-	syntax?: Array<ConstJSProgramSyntax>;
+	sourceTypeJS?: ConstJSSourceType;
 	cache?: boolean;
 	allowParserDiagnostics?: boolean;
+	allowCorrupt?: boolean;
 };
 
 export type WorkerStatus = {
@@ -116,6 +113,7 @@ export type WorkerFormatResult = {
 	original: string;
 	formatted: string;
 	diagnostics: Diagnostics;
+	suppressions: DiagnosticSuppressions;
 };
 
 export type WorkerLintResult = {
@@ -191,6 +189,7 @@ export default class WorkerBridge extends Bridge {
 	format = this.createEvent<
 		{
 			ref: JSONFileReference;
+			options: FormatterOptions;
 			parseOptions: WorkerParseOptions;
 		},
 		undefined | WorkerFormatResult

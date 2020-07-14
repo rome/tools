@@ -38,6 +38,7 @@ import {
 import {Number0, Number1, ob1Get0, ob1Get1} from "@romefrontend/ob1";
 import {existsSync, lstatSync, readFileTextSync} from "@romefrontend/fs";
 import {joinMarkupLines} from "@romefrontend/cli-layout/format";
+import {inferDiagnosticLanguageFromFilename} from "@romefrontend/core/common/file-handlers";
 
 type Banner = {
 	// Array<number> should really be [number, number, number], but TypeScript widens the imported types
@@ -228,6 +229,16 @@ export default class DiagnosticsPrinter extends Error {
 		return ignored;
 	}
 
+	// Only highlight if we have a reporter stream enabled that isn't format: "none"
+	shouldHighlight(): boolean {
+		for (const stream of this.reporter.getAllStreams()) {
+			if (stream.format !== "none") {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	addFileSource(
 		info: ChangeFileDependency | ReferenceFileDependency,
 		stats: DiagnosticsFileReaderStats,
@@ -240,10 +251,14 @@ export default class DiagnosticsPrinter extends Error {
 				{
 					sourceText: stats.content,
 					lines: toLines({
+						highlight: this.shouldHighlight(),
 						path: info.path,
 						input: stats.content,
 						sourceTypeJS: info.sourceType,
-						language: info.language,
+						language: inferDiagnosticLanguageFromFilename(
+							info.path,
+							info.language,
+						),
 					}),
 				},
 			);

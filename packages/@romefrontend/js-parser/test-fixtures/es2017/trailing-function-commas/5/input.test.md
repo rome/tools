@@ -133,6 +133,9 @@ JSRoot {
 
   ✖ Unknown start to an call expression argument
 
+    log(,);
+        ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

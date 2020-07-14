@@ -8,7 +8,7 @@
 
 ```
 
- unknown:2:1 lint/js/noDuplicateKeys ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDuplicateKeys/reject/1/file.ts:2:1 lint/js/noDuplicateKeys ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid duplicate component key. Check the test key.
 

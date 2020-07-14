@@ -79,8 +79,9 @@ test(
 						}
 					`,
 				],
+				filename: "file.tsx",
+				category: "lint/react/noDidMountSetState",
 			},
-			{category: "lint/react/noDidMountSetState"},
 		);
 	},
 );

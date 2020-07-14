@@ -224,6 +224,9 @@ JSRoot {
 
   ✖ protected is a reserved word
 
+    function hello() { "use strict"; var protected; }
+                                         ^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

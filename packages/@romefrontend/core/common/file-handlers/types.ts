@@ -8,10 +8,13 @@
 import {FileReference} from "@romefrontend/core";
 import {WorkerLintOptions, WorkerParseOptions} from "../bridges/WorkerBridge";
 import Worker from "../../worker/Worker";
-import {DiagnosticSuppressions, Diagnostics} from "@romefrontend/diagnostics";
+import {
+	DiagnosticLanguage,
+	DiagnosticSuppressions,
+	Diagnostics,
+} from "@romefrontend/diagnostics";
 import * as compiler from "@romefrontend/compiler";
 import {AnyRoot, ConstJSSourceType} from "@romefrontend/ast";
-import fs = require("fs");
 import {UnknownFilePath} from "@romefrontend/path";
 
 export type ExtensionLintInfo = ExtensionHandlerMethodInfo & {
@@ -34,7 +37,7 @@ export type ExtensionHandlerMethodInfo = {
 
 export type ExtensionParseInfo = ExtensionHandlerMethodInfo & {
 	sourceTypeJS: ConstJSSourceType;
-	stat: fs.Stats;
+	mtime: undefined | number;
 	manifestPath: undefined | string;
 	path: UnknownFilePath;
 };
@@ -43,6 +46,7 @@ export type PartialExtensionHandler = {
 	sourceTypeJS?: ConstJSSourceType;
 	isAsset?: boolean;
 	canHaveScale?: boolean;
+	language: DiagnosticLanguage;
 
 	canLint: boolean;
 	canFormat: boolean;

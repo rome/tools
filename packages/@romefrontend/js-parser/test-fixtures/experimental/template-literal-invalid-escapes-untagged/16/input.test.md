@@ -190,6 +190,9 @@ JSRoot {
 
   ✖ Invalid escape sequence in template
 
+    `left${0}\xAg${1}right`
+               ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

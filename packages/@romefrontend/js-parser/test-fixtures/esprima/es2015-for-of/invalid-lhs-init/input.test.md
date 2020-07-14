@@ -132,6 +132,9 @@ JSRoot {
 
   ✖ Invalid left-hand side in for-of statement
 
+    for (this of that);
+         ^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

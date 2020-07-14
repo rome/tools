@@ -240,6 +240,9 @@ JSRoot {
 
   ✖ arguments is a reserved word
 
+    function hello() {'use strict'; var arguments = 10; }
+                                        ^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

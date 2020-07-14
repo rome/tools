@@ -15,7 +15,7 @@ JSRoot {
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "module"
+	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
 		filename: "input.jsx"
@@ -179,6 +179,9 @@ JSRoot {
  input.jsx:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ JSX attribute cannot be an empty expression
+
+    <foo bar={} />
+             ^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

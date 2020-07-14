@@ -19,14 +19,10 @@ MISSING DOCUMENTATION
 ## Examples
 ## Invalid
 ```typescript
-if (Boolean(foo)) {
-	return foo;
-}
+if (Boolean(foo)) {}
 ```
 ```typescript
-while (!!foo) {
-	return foo;
-}
+while (!!foo) {}
 ```
 ```typescript
 let x = 1;
@@ -35,8 +31,6 @@ do {
 } while (Boolean(x));
 ```
 ```typescript
-for (; !!foo; ) {
-	return 1 + 1;
-}
+for (; !!foo; ) {}
 ```
 ## Valid

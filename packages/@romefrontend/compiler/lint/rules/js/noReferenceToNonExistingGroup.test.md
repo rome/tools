@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:20 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noReferenceToNonExistingGroup/reject/1/file.ts:1:20 lint/js/noReferenceToNonExistingGroup ━
 
   ✖ Avoid nonexistent group names. Check the 18 group.
 
@@ -33,7 +33,7 @@ foo;
 
 ```
 
- unknown:1:20 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noReferenceToNonExistingGroup/reject/2/file.ts:1:20 lint/js/noReferenceToNonExistingGroup ━
 
   ✖ Avoid nonexistent group names. Check the 49 group.
 
@@ -58,7 +58,7 @@ foo;
 
 ```
 
- unknown:1:20 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noReferenceToNonExistingGroup/reject/3/file.ts:1:20 lint/js/noReferenceToNonExistingGroup ━
 
   ✖ Avoid nonexistent group names. Check the 78 group.
 
@@ -83,7 +83,7 @@ foo;
 
 ```
 
- unknown:1:20 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noReferenceToNonExistingGroup/reject/4/file.ts:1:20 lint/js/noReferenceToNonExistingGroup ━
 
   ✖ Avoid nonexistent group names. Check the 99 group.
 
@@ -108,14 +108,14 @@ foo;
 
 ```
 
- unknown:1:19 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noReferenceToNonExistingGroup/reject/5/file.ts:1:19 lint/js/noReferenceToNonExistingGroup ━
 
   ✖ Avoid nonexistent group names. Check the 19 group.
 
     let foo = /(([abc])\19)+=\28/;foo;
                        ^^^
 
- unknown:1:25 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noReferenceToNonExistingGroup/reject/5/file.ts:1:25 lint/js/noReferenceToNonExistingGroup ━
 
   ✖ Avoid nonexistent group names. Check the 28 group.
 
@@ -140,7 +140,7 @@ foo;
 
 ```
 
- unknown:1:20 lint/js/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noReferenceToNonExistingGroup/reject/6/file.ts:1:20 lint/js/noReferenceToNonExistingGroup ━
 
   ✖ Avoid nonexistent group names. Check the 19 group.
 

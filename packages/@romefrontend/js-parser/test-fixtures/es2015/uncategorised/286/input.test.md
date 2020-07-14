@@ -169,6 +169,9 @@ JSRoot {
 
   ✖ Invalid left-hand side in arrow function parameters
 
+    (...[ 5 ]) => {}
+          ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

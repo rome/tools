@@ -132,6 +132,9 @@ JSRoot {
 
   ✖ super is only allowed in object methods and classes
 
+    new import("foo");
+              ^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

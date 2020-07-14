@@ -155,6 +155,9 @@ JSRoot {
 
   ✖ yield is a reserved word
 
+    export default function *yield() {}
+                             ^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

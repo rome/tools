@@ -224,6 +224,9 @@ JSRoot {
 
   ✖ implements is a reserved word
 
+    function hello() { "use strict"; var implements; }
+                                         ^^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

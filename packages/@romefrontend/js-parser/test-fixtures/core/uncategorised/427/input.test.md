@@ -136,6 +136,9 @@ JSRoot {
 
   ✖ Multiple default clauses
 
+    switch (c) { default: default: }
+                          ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

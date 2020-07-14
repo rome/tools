@@ -304,6 +304,11 @@ JSRoot {
 
   ✖ Unexpected token, expected (
 
+    1 │ function f() {
+  > 2 │   for await (let x of y);
+      │       ^^^^^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

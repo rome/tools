@@ -4,16 +4,23 @@
 
 ## `typescript > string > templateLiteralTypeAnnotation`
 
+### `Diagnostics`
+
+```
+✔ No known problems!
+
+```
+
 ### `Input`
 
-```javascript
+```js
 let x:`foo`;
 
 ```
 
 ### `Output`
 
-```javascript
+```js
 let x: `foo`;
 
 ```

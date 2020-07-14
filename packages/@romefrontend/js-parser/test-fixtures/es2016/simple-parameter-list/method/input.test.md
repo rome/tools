@@ -321,6 +321,13 @@ JSRoot {
 
   ✖ Illegal 'use strict' directive in function with non-simple parameter list
 
+    1 │ var obj = {
+    2 │   a(options = {}) {
+  > 3 │     "use strict";
+      │     ^^^^^^^^^^^^^
+    4 │   }
+    5 │ };
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

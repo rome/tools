@@ -132,6 +132,9 @@ JSRoot {
 
   ✖ Invalid left-hand side in assignment expression
 
+    (!a) += 1
+     ^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

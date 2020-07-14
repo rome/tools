@@ -10,6 +10,7 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
+	diagnostics: Array []
 	directives: Array []
 	filename: "input.js"
 	hasHoistedVars: false
@@ -48,44 +49,12 @@ JSRoot {
 			}
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse/js"}]
-			description: Object {
-				advice: Array []
-				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "'return' outside of function"}
-			}
-			location: Object {
-				filename: "input.js"
-				mtime: undefined
-				sourceText: undefined
-				end: Object {
-					column: 0
-					index: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					index: 0
-					line: 1
-				}
-			}
-		}
-	]
 }
 ```
 
 ### `diagnostics`
 
 ```
-
- input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ 'return' outside of function
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```

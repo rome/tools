@@ -8,7 +8,7 @@
 
 ```
 
- unknown:7:2 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnsafeFinally/reject/1/file.ts:7:2 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using JSReturnStatement inside a finally clause is unsafe.
 
@@ -46,18 +46,16 @@ function greet1() {
 
 ```
 
- unknown:7:2 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnsafeFinally/reject/2/file.ts:7:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Using JSBreakStatement inside a finally clause is unsafe.
+  ✖ No loop label found
 
     5 │     throw err;
     6 │   } finally {
   > 7 │     break;
-      │     ^^^^^^
+      │     ^
     8 │   }
     9 │ }
-
-  ℹ Do not use control flow statements inside finally clauses.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -67,35 +65,24 @@ function greet1() {
 
 ### `1: formatted`
 
-```
-function greet2() {
-	try {
-		throw new Error("Try");
-	} catch (err) {
-		throw err;
-	} finally {
-		break;
-	}
-}
-
+```javascript
+undefined
 ```
 
 ### `2`
 
 ```
 
- unknown:7:2 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnsafeFinally/reject/3/file.ts:7:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Using JSContinueStatement inside a finally clause is unsafe.
+  ✖ No loop label found
 
     5 │     throw err;
     6 │   } finally {
   > 7 │     continue;
-      │     ^^^^^^^^^
+      │     ^
     8 │   }
     9 │ }
-
-  ℹ Do not use control flow statements inside finally clauses.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -105,24 +92,15 @@ function greet2() {
 
 ### `2: formatted`
 
-```
-function greet3() {
-	try {
-		throw new Error("Try");
-	} catch (err) {
-		throw err;
-	} finally {
-		continue;
-	}
-}
-
+```javascript
+undefined
 ```
 
 ### `3`
 
 ```
 
- unknown:7:2 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnsafeFinally/reject/4/file.ts:7:2 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using JSThrowStatement inside a finally clause is unsafe.
 

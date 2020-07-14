@@ -20,8 +20,9 @@ test(
 					"<span tabIndex={dynamic}>baz</span>",
 					"<span tabIndex={undefined}>baz</span>",
 				],
+				filename: "file.tsx",
+				category: "lint/jsx-a11y/tabindexNoPositive",
 			},
-			{category: "lint/jsx-a11y/tabindexNoPositive"},
 		);
 	},
 );

@@ -200,3 +200,5 @@ export async function createFixtureTests(
 		);
 	}
 }
+
+export * from "./integration";

@@ -119,6 +119,9 @@ JSRoot {
 
   ✖ Unknown start to an statement expression
 
+    2 │ /* Some multiline
+    3 │ comment */
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

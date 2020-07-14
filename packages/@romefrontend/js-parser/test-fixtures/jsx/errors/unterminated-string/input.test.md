@@ -15,7 +15,7 @@ JSRoot {
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "module"
+	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
 		filename: "input.jsx"
@@ -165,6 +165,8 @@ JSRoot {
  input.jsx:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated string constant
+
+    <foo bar="
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

@@ -342,6 +342,11 @@ JSRoot {
 
   ✖ await is not allowed in async function parameters
 
+    1 │ async function fn() {
+  > 2 │   async (x = async(y = await 2)) => {};
+      │                             ^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

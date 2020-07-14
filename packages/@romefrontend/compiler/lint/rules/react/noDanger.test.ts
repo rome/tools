@@ -21,11 +21,12 @@ test(
 				],
 				valid: [
 					"<div>Hello World</div>;",
-					"React.createElement('div', 'child)",
-					"createElement('div', 'child)",
+					"React.createElement('div', child)",
+					"createElement('div', child)",
 				],
+				filename: "file.tsx",
+				category: "lint/react/noDanger",
 			},
-			{category: "lint/react/noDanger"},
 		);
 	},
 );

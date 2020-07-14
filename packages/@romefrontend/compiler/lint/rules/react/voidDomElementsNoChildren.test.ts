@@ -39,8 +39,10 @@ test(
 					'createElement("div", {dangerouslySetInnerHTML: {__html: "child"}})',
 					'createElement("div", {}, "child")',
 				],
+
+				filename: "file.tsx",
+				category: "lint/react/voidDomElementsNoChildren",
 			},
-			{category: "lint/react/voidDomElementsNoChildren"},
 		);
 	},
 );

@@ -130,6 +130,9 @@ JSRoot {
 
   ✖ Unknown start to an statement expression
 
+    while(false)
+                ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

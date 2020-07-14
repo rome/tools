@@ -150,6 +150,9 @@ JSRoot {
 
   ✖ Invalid left-hand side in assignment expression
 
+    [2] = 42
+     ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

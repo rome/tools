@@ -35,7 +35,7 @@ export type TestDiagnosticAdviceList = {
 
 export type TestDiagnosticAdviceCode = {
 	type: "code";
-	code: string;
+	sourceText: string;
 };
 
 export type TestDiagnosticAdviceLog = {

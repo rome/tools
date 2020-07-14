@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:5 lint/jsx/propsNoSpreading ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx/propsNoSpreading/reject/1/file.tsx:1:5 lint/jsx/propsNoSpreading ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using property spreading in JSX components.
 
@@ -35,7 +35,7 @@
 
 ```
 
- unknown:1:19 lint/jsx/propsNoSpreading ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx/propsNoSpreading/reject/2/file.tsx:1:19 lint/jsx/propsNoSpreading ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using property spreading in JSX components.
 
@@ -62,7 +62,7 @@
 
 ```
 
- unknown:1:53 lint/jsx/propsNoSpreading ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx/propsNoSpreading/reject/3/file.tsx:1:53 lint/jsx/propsNoSpreading ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using property spreading in JSX components.
 
@@ -89,7 +89,7 @@
 
 ```
 
- unknown:1:5 lint/jsx/propsNoSpreading ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx/propsNoSpreading/reject/4/file.tsx:1:5 lint/jsx/propsNoSpreading ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using property spreading in JSX components.
 

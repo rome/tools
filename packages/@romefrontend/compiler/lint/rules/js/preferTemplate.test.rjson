@@ -1,3 +1,4 @@
+filename: "file.ts"
 invalid: [
 	"const foo = 'bar'; console.log(foo + 'baz')"
 	"console.log((1 * 2) + 'foo')"
@@ -10,6 +11,5 @@ invalid: [
 ]
 valid: [
 	"console.log('foo' + 'bar')"
-	"console.log(foo() + '
-')"
+	"console.log(foo() + '\\n')"
 ]

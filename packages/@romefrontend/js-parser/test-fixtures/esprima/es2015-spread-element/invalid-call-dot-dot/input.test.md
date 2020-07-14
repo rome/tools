@@ -181,6 +181,9 @@ JSRoot {
 
   ✖ Unknown start to an call expression argument
 
+    f(..g);
+      ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -235,7 +235,13 @@ JSRoot {
 
   ✖ constructors in/after an Optional Chain are not allowed
 
+    new C?.b.d()
+              ^
+
   ℹ Optional chain member responsible
+
+    new C?.b.d()
+        ^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

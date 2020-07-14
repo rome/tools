@@ -8,7 +8,8 @@
 
 ```
 
- unknown:1:4 lint/jsx-a11y/noNoninteractiveElementToInteractiveRole ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/noNoninteractiveElementToInteractiveRole/reject/1/file.tsx:1:4
+lint/jsx-a11y/noNoninteractiveElementToInteractiveRole ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The HTML element h1 is non-interactive and should not have an interactive role.
 

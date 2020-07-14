@@ -8,7 +8,7 @@
 
 ```
 
- unknown:3:1 lint/js/caseSingleStatement  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/caseSingleStatement/reject/1/file.ts:3:1 lint/js/caseSingleStatement  FIXABLE  ━━━━━━━━━━━━
 
   ✖ A switch case should only have a single statement. If you want more, then wrap it in a block.
 
@@ -62,7 +62,7 @@ switch (foo) {
 switch (foo) {
 	case true:
 	case false:
-		return "yes";
+		"yes";
 }
 
 ```

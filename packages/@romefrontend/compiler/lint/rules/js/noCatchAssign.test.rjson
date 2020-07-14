@@ -1,3 +1,4 @@
+filename: "file.ts"
 invalid: [
 	"try { } catch (e) { e; e = 10; }"
 	"try { } catch (ex) { console.log('test'); ex = 10; }"

@@ -152,6 +152,9 @@ JSRoot {
 
   ✖ The rest element has to be the last element when destructuring
 
+    (...rest,) => {}
+            ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

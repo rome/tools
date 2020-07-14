@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/clickEventsHaveKeyEvents ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/clickEventsHaveKeyEvents/reject/1/file.tsx:1 lint/jsx-a11y/clickEventsHaveKeyEvents ━
 
   ✖ Pair the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard
     event.

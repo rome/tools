@@ -304,6 +304,9 @@ JSRoot {
 
   ✖ Unexpected token, expected (
 
+    declare function assertIsString(value: unknown): asserts value;
+                     ^^^^^^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

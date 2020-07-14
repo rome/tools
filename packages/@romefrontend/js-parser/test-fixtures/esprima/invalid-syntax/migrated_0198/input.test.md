@@ -207,6 +207,9 @@ JSRoot {
 
   ✖ arguments is a reserved word
 
+    function hello() {'use strict'; arguments--; }
+                                    ^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -132,6 +132,9 @@ JSRoot {
 
   ✖ The only valid meta property for import is import.meta
 
+    import.notMeta;
+           ^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

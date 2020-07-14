@@ -231,6 +231,9 @@ JSRoot {
 
   ✖ Can not use 'await' as identifier inside an async function
 
+    const { await } = foo();
+            ^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -196,6 +196,11 @@ JSRoot {
 
   ✖ Unexpected space between # and identifier
 
+    1 │ class Spaces {
+  > 2 │   #  wrongSpaces;
+      │    ^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

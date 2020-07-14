@@ -4,9 +4,16 @@
 
 ## `arrow > currying`
 
+### `Diagnostics`
+
+```
+✔ No known problems!
+
+```
+
 ### `Input`
 
-```javascript
+```js
 const fn = b => c => d => {
   return 3;
 };
@@ -28,7 +35,7 @@ const middleware = options => (req, res, next) => {
 
 ### `Output`
 
-```javascript
+```js
 const fn = (b) => (c) => (d) => {
 	return 3;
 };

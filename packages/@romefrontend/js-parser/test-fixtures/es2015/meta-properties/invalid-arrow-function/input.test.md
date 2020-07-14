@@ -251,6 +251,11 @@ JSRoot {
 
   ✖ new.target can only be used in functions or class properties
 
+    1 │ const A = () => {
+  > 2 │   new.target;
+      │   ^^^^^^^^^^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

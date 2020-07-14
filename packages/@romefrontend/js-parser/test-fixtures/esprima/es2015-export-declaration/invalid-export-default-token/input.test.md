@@ -184,6 +184,9 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    export {default} +
+                     ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:6 lint/jsx-a11y/lang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/lang/reject/1/file.tsx:1:6 lint/jsx-a11y/lang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid value for the lang attribute.
 
@@ -33,7 +33,7 @@
 
 ```
 
- unknown:1:6 lint/jsx-a11y/lang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/lang/reject/2/file.tsx:1:6 lint/jsx-a11y/lang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid value for the lang attribute.
 
@@ -58,7 +58,7 @@
 
 ```
 
- unknown:1:6 lint/jsx-a11y/lang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/lang/reject/3/file.tsx:1:6 lint/jsx-a11y/lang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid value for the lang attribute.
 
@@ -83,7 +83,7 @@
 
 ```
 
- unknown:1:6 lint/jsx-a11y/lang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/lang/reject/4/file.tsx:1:6 lint/jsx-a11y/lang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid value for the lang attribute.
 
@@ -128,7 +128,7 @@
 
 ```
 
- unknown:1:6 lint/jsx-a11y/lang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/lang/reject/5/file.tsx:1:6 lint/jsx-a11y/lang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid value for the lang attribute.
 
@@ -173,12 +173,12 @@
 
 ```
 
- unknown:1:6 lint/jsx-a11y/lang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/lang/reject/6/file.tsx:1:23 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Provide a valid value for the lang attribute.
+  ✖ Unterminated string constant
 
     <html lang="en2></html>
-          ^^^^^^^^^^^^^^^^^^
+                           ^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -188,10 +188,8 @@
 
 ### `5: formatted`
 
-```
-<html lang="en2&gt;&lt;/html&gt;">
-</html>;
-
+```javascript
+undefined
 ```
 
 ### `6`

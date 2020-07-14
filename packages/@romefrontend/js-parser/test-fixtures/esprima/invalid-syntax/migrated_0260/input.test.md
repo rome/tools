@@ -305,7 +305,13 @@ JSRoot {
 
   ✖ Unclosed function params
 
+    function x(...a = 1){}
+              ^
+
   ℹ We expected to find the closing character ) here
+
+    function x(...a = 1){}
+                    ^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

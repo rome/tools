@@ -8,7 +8,7 @@
 
 ```
 
- unknown:4:3 lint/js/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noSetterReturn/reject/1/file.ts:4:3 lint/js/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not return a value at the end of a setter method.
 
@@ -44,7 +44,7 @@ class p {
 
 ```
 
- unknown:4:3 lint/js/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noSetterReturn/reject/2/file.ts:4:3 lint/js/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not return a value at the end of a setter method.
 
@@ -80,7 +80,7 @@ class p {
 
 ```
 
- unknown:4:3 lint/js/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noSetterReturn/reject/3/file.ts:4:3 lint/js/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not return a value at the end of a setter method.
 

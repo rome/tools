@@ -4,9 +4,16 @@
 
 ## `class > classPrivateMethod`
 
+### `Diagnostics`
+
+```
+✔ No known problems!
+
+```
+
 ### `Input`
 
-```javascript
+```js
 class Foo {
   a = 1;
 
@@ -27,7 +34,7 @@ class Foo {
 
 ### `Output`
 
-```javascript
+```js
 class Foo {
 	a = 1;
 

@@ -97,8 +97,9 @@ test(
 						}
 					`,
 				],
+				filename: "file.tsx",
+				category: "lint/react/noWillUpdateSetState",
 			},
-			{category: "lint/react/noWillUpdateSetState"},
 		);
 	},
 );

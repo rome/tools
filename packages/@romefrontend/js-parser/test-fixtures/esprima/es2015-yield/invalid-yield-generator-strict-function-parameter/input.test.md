@@ -314,6 +314,9 @@ JSRoot {
 
   ✖ yield is a reserved word
 
+    "use strict"; function *g() { var z = function(yield) {} }
+                                                   ^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -222,6 +222,9 @@ JSRoot {
 
   ✖ Deleting local variable in strict mode
 
+    (function () { 'use strict'; delete i; }())
+                                        ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

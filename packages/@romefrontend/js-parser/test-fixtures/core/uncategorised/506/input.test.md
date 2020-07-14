@@ -224,6 +224,9 @@ JSRoot {
 
   ✖ package is a reserved word
 
+    function hello() { "use strict"; var package; }
+                                         ^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

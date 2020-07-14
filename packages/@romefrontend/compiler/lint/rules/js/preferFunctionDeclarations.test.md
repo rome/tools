@@ -8,7 +8,8 @@
 
 ```
 
- unknown:1:12 lint/js/preferFunctionDeclarations  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/preferFunctionDeclarations/reject/1/file.ts:1:12 lint/js/preferFunctionDeclarations
+FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a function declaration instead of a const function.
 
@@ -32,7 +33,8 @@ function foo() {}
 
 ```
 
- unknown:1:12 lint/js/preferFunctionDeclarations  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/preferFunctionDeclarations/reject/2/file.ts:1:12 lint/js/preferFunctionDeclarations
+FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a function declaration instead of a const function.
 
@@ -56,7 +58,8 @@ function foo() {}
 
 ```
 
- unknown:1:12 lint/js/preferFunctionDeclarations  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/preferFunctionDeclarations/reject/3/file.ts:1:12 lint/js/preferFunctionDeclarations
+FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a function declaration instead of a const function.
 

@@ -8,7 +8,7 @@
 
 ```
 
- unknown:2 lint/js/duplicateImportSource  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/duplicateImportSource/reject/1/file.ts:2 lint/js/duplicateImportSource  FIXABLE  ━━━━━━━━━━
 
   ✖ This module has already been imported.
 

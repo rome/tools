@@ -173,6 +173,9 @@ JSRoot {
   ✖ In non-strict mode code, functions can only be declared at top level, inside a block, or as
     the body of an if statement
 
+    while (1) function foo(){}
+              ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

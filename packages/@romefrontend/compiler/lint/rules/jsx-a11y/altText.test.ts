@@ -50,8 +50,9 @@ test(
 					"<input type='image' aria-label='foo' />",
 					"<input type='image' aria-labelledby='id1' />",
 				],
+				category: "lint/jsx-a11y/altText",
+				filename: "file.tsx",
 			},
-			{category: "lint/jsx-a11y/altText"},
 		);
 	},
 );

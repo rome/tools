@@ -205,6 +205,11 @@ JSRoot {
 
   ✖ The only valid meta property for new is new.target
 
+    1 │ function f() {
+  > 2 │   new.prop
+      │       ^^^^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

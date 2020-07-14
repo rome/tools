@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:16 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noCondAssign/reject/1/file.ts:1:16 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not assign variables in loop conditions.
 
@@ -38,7 +38,7 @@ for (let i = 1; i = 10; i++) {
 
 ```
 
- unknown:1:4 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noCondAssign/reject/2/file.ts:1:4 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not assign variables in loop conditions.
 
@@ -68,7 +68,7 @@ if (foo = "bar") {
 
 ```
 
- unknown:1:7 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noCondAssign/reject/3/file.ts:1:7 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not assign variables in loop conditions.
 
@@ -98,7 +98,7 @@ while (foo = "bar") {
 
 ```
 
- unknown:3:9 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noCondAssign/reject/4/file.ts:3:9 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not assign variables in loop conditions.
 
@@ -128,7 +128,7 @@ do {
 
 ```
 
- unknown:1:1 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noCondAssign/reject/5/file.ts:1:1 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not assign variables in loop conditions.
 

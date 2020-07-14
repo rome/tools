@@ -232,6 +232,9 @@ JSRoot {
 
   ✖ yield is a reserved word
 
+    "use strict"; var { x: yield } = foo;
+                           ^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

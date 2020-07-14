@@ -337,6 +337,9 @@ JSRoot {
 
   ℹ Defined already here
 
+    function a() { "use strict"; function b(t, t) { }; }
+                                               ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

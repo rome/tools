@@ -279,7 +279,7 @@ export default class LSPServer {
 				}
 
 				const {value, diagnostics} = await catchDiagnostics(async () => {
-					return this.request.requestWorkerFormat(path, {});
+					return this.request.requestWorkerFormat(path, {}, {});
 				});
 
 				this.logDiagnostics(path, diagnostics);

@@ -22,8 +22,9 @@ test(
 					`<div style={"color: 'red'"} />`,
 				],
 				valid: ["<div style={{color: 'red'}} />"],
+				filename: "file.tsx",
+				category: "lint/react/stylePropObject",
 			},
-			{category: "lint/react/stylePropObject"},
 		);
 	},
 );

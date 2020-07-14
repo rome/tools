@@ -195,6 +195,9 @@ JSRoot {
 
   ✖ Unexpected token, expected {
 
+    function a() 1 // expression closure is not supported
+                 ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

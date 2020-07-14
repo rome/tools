@@ -249,6 +249,11 @@ JSRoot {
 
   ✖ Invalid left-hand side in for-in statement
 
+    1 │ function* g() {
+  > 2 │   for (yield '' in {}; ; ) ;
+      │        ^^^^^^^^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

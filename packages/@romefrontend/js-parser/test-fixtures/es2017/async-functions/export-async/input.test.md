@@ -119,6 +119,9 @@ JSRoot {
   ✖ Started with `export async` so we expected to receive an async function but no function
     keyword was found
 
+    export async;
+                ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

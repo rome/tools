@@ -59,6 +59,7 @@ import {
 	deriveDecisionPositionKey,
 } from "../lint/decisions";
 import {isRoot} from "@romefrontend/ast-utils";
+import {inferDiagnosticLanguageFromRootAST} from "@romefrontend/cli-diagnostics/utils";
 
 export type ContextArg = {
 	ast: AnyRoot;
@@ -129,7 +130,7 @@ export default class CompilerContext {
 		this.options = options;
 		this.origin = origin;
 		this.cacheDependencies = new Set();
-		this.language = ast.type === "JSRoot" ? "js" : "css";
+		this.language = inferDiagnosticLanguageFromRootAST(ast);
 		this.sourceTypeJS = ast.type === "JSRoot" ? ast.sourceType : undefined;
 		this.rootScope = new RootScope(this, ast);
 
@@ -303,6 +304,7 @@ export default class CompilerContext {
 
 			advice.push({
 				type: "diff",
+				language: this.language,
 				diff: stringDiff(
 					getFormattedCodeFromExitResult(old),
 					getFormattedCodeFromExitResult(defaultFixed),
@@ -377,6 +379,7 @@ export default class CompilerContext {
 
 				advice.push({
 					type: "diff",
+					language: this.language,
 					diff: stringDiff(
 						getFormattedCodeFromExitResult(old),
 						getFormattedCodeFromExitResult(suggestion.fixed),
@@ -497,8 +500,8 @@ export default class CompilerContext {
 				filename: this.filename,
 				start: loc === undefined ? undefined : loc.start,
 				end: loc === undefined ? undefined : loc.end,
-				language: this.language,
 				sourceTypeJS: this.sourceTypeJS,
+				language: this.language,
 			},
 			origins,
 		});

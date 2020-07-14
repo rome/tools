@@ -224,6 +224,9 @@ JSRoot {
 
   ✖ let is a reserved word
 
+    function hello() { "use strict"; var let; }
+                                         ^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

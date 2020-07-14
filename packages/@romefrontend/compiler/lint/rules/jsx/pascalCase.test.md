@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/jsx/pascalCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx/pascalCase/reject/1/file.tsx:1 lint/jsx/pascalCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Switch Foo_component to FooComponent.
 
@@ -34,7 +34,7 @@
 
 ```
 
- unknown:1 lint/jsx/pascalCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx/pascalCase/reject/2/file.tsx:1 lint/jsx/pascalCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Switch FOO_COMPONENT to FooComponent.
 

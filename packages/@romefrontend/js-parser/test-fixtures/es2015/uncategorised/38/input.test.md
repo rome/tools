@@ -277,6 +277,9 @@ JSRoot {
 
   ✖ Parenthesized expression didnt contain anything
 
+    console.log(typeof () => {});
+                        ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

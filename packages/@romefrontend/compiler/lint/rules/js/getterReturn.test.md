@@ -8,7 +8,7 @@
 
 ```
 
- unknown:2:12 lint/js/getterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/getterReturn/reject/1/file.ts:2:12 lint/js/getterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Return a value at the end of a getter method instead of empty block.
 
@@ -43,7 +43,7 @@ class p {
 
 ```
 
- unknown:2:12 lint/js/getterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/getterReturn/reject/2/file.ts:2:12 lint/js/getterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Return a value at the end of a getter method instead of empty block.
 

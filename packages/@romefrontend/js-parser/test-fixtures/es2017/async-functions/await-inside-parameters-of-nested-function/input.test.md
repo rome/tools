@@ -361,6 +361,11 @@ JSRoot {
 
   ✖ Expected a comma to separate items in function params
 
+    1 │ async function foo() {
+  > 2 │   function bar(x = await 2) {}
+      │                          ^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

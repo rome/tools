@@ -53,7 +53,7 @@ test(
 					dedent`
             // Must validate a full React class
             class Hello extends React.Component {
-              displayName = \'\'
+              displayName = ''
               propTypes = {}
               contextTypes = {}
               childContextTypes = {}
@@ -141,7 +141,7 @@ test(
 					`,
 					dedent`
 						// Non-react classes should be ignored, even in expressions
-						return class Hello {
+						class Hello {
 							render() {
 								return <div>{this.props.text}</div>;
 							}
@@ -152,7 +152,7 @@ test(
 					`,
 					dedent`
 						// Non-react classes should be ignored, even in expressions
-						return class {
+						const foo = class {
 							render() {
 								return <div>{this.props.text}</div>;
 							}
@@ -272,8 +272,10 @@ test(
 						}
 					`,
 				],
+
+				filename: "file.tsx",
+				category: "lint/react/sortComp",
 			},
-			{category: "lint/react/sortComp"},
 		);
 	},
 );

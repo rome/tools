@@ -184,6 +184,9 @@ JSRoot {
 
   ✖ Only '=' operator can be used for specifying default value.
 
+    ([a += a] = a)
+      ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

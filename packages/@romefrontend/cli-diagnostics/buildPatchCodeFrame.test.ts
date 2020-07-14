@@ -142,6 +142,7 @@ test(
 						buildPatchCodeFrame(
 							{
 								type: "diff",
+								language: "unknown",
 								diff: stringDiff(before, after),
 							},
 							true,

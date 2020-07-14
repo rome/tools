@@ -131,6 +131,9 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    export default from "bar";
+                        ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

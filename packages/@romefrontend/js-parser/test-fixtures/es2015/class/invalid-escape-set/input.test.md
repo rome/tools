@@ -270,6 +270,9 @@ JSRoot {
 
   ✖ set can't contain a unicode escape
 
+    class X { se\u0074 x(value) {} }
+                ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

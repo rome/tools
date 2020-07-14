@@ -34,8 +34,9 @@ test(
 					"function greet(param: Array<string>): string { return param; };greet();",
 					"function greet(param: Array<string>): Array<string> { return param; };greet();",
 				],
+				filename: "file.ts",
+				category: "lint/ts/noExplicitAny",
 			},
-			{category: "lint/ts/noExplicitAny", syntax: ["ts"]},
 		);
 	},
 );

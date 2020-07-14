@@ -74,8 +74,9 @@ test(
 						}
 					`,
 				],
+				filename: "file.tsx",
+				category: "lint/react/noStringRefs",
 			},
-			{category: "lint/react/noStringRefs"},
 		);
 	},
 );

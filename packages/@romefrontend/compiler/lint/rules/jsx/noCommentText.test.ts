@@ -24,8 +24,9 @@ test(
 					"const a = <div>{/** comment */}</div>",
 					'const a = <div className={"cls" /* comment */}></div>',
 				],
+				filename: "file.tsx",
+				category: "lint/jsx/noCommentText",
 			},
-			{category: "lint/jsx/noCommentText"},
 		);
 	},
 );

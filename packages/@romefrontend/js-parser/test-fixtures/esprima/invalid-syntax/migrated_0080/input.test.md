@@ -340,7 +340,13 @@ JSRoot {
 
   ✖ Unclosed property name
 
+    ({[a,b]:0})
+      ^
+
   ℹ We expected to find the closing character ] here
+
+    ({[a,b]:0})
+        ^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

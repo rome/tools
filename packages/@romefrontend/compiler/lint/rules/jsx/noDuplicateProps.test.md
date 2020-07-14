@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:7 lint/jsx/noDuplicateProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx/noDuplicateProps/reject/1/file.tsx:1:7 lint/jsx/noDuplicateProps ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid duplicate component props. Check the foo prop.
 
@@ -37,7 +37,7 @@
 
 ```
 
- unknown:1:5 lint/jsx/noDuplicateProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx/noDuplicateProps/reject/2/file.tsx:1:5 lint/jsx/noDuplicateProps ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid duplicate component props. Check the style prop.
 
@@ -49,7 +49,7 @@
     <div style="{}" style="{}" id="foo" id="bar" />
                     ^^^^^^^^^^
 
- unknown:1:27 lint/jsx/noDuplicateProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx/noDuplicateProps/reject/2/file.tsx:1:27 lint/jsx/noDuplicateProps ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid duplicate component props. Check the id prop.
 

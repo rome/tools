@@ -441,6 +441,9 @@ JSRoot {
   ✖ ES2015 named imports do not destructure. Use another statement for destructuring after the
     import.
 
+    import foo, { bar: { a } } from 'my-module';
+                       ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

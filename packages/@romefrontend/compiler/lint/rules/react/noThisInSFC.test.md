@@ -8,14 +8,12 @@
 
 ```
 
- unknown:1:24 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noThisInSFC/reject/1/file.tsx:1:44 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Avoid using this in stateless functional components.
+  ✖ Unterminated regular expression
 
     const Foo = () => <div>{this.props.bar</div>
-                            ^^^^
-
-  ℹ The this keyword has no binding in functional components. Use hooks instead.
+                                                ^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -25,20 +23,15 @@
 
 ### `0: formatted`
 
-```
-const Foo = () =>
-	<div>
-		{this.props.bar < /div>/}
-	</div>
-;
-
+```javascript
+undefined
 ```
 
 ### `1`
 
 ```
 
- unknown:4:14 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noThisInSFC/reject/2/file.tsx:4:14 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this in stateless functional components.
 
@@ -72,7 +65,7 @@ const Foo = () => {
 
 ```
 
- unknown:3:23 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noThisInSFC/reject/3/file.tsx:3:23 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this in stateless functional components.
 
@@ -106,7 +99,7 @@ const Foo = () => {
 
 ```
 
- unknown:4:14 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noThisInSFC/reject/4/file.tsx:4:14 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this in stateless functional components.
 
@@ -140,7 +133,7 @@ function Foo(props) {
 
 ```
 
- unknown:3:23 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noThisInSFC/reject/5/file.tsx:3:23 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this in stateless functional components.
 
@@ -174,7 +167,7 @@ function Foo(props) {
 
 ```
 
- unknown:5:10 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noThisInSFC/reject/6/file.tsx:5:10 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this in stateless functional components.
 
@@ -187,7 +180,7 @@ function Foo(props) {
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
- unknown:5:29 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noThisInSFC/reject/6/file.tsx:5:29 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this in stateless functional components.
 
@@ -221,7 +214,7 @@ function Foo(props, context) {
 
 ```
 
- unknown:3:23 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noThisInSFC/reject/7/file.tsx:3:23 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this in stateless functional components.
 
@@ -233,7 +226,7 @@ function Foo(props, context) {
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
- unknown:4:23 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noThisInSFC/reject/7/file.tsx:4:23 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this in stateless functional components.
 
@@ -269,7 +262,7 @@ function Foo(props, context) {
 
 ```
 
- unknown:3:11 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noThisInSFC/reject/8/file.tsx:3:11 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this in stateless functional components.
 
@@ -281,7 +274,7 @@ function Foo(props, context) {
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
- unknown:8:10 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noThisInSFC/reject/8/file.tsx:8:10 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this in stateless functional components.
 
@@ -318,7 +311,7 @@ function Foo(props) {
 
 ```
 
- unknown:3:27 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noThisInSFC/reject/9/file.tsx:3:27 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this in stateless functional components.
 
@@ -330,7 +323,7 @@ function Foo(props) {
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
- unknown:4:23 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noThisInSFC/reject/9/file.tsx:4:23 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this in stateless functional components.
 
@@ -369,7 +362,7 @@ function Foo(props) {
 
 ```
 
- unknown:5:15 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noThisInSFC/reject/10/file.tsx:5:15 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this in stateless functional components.
 
@@ -403,7 +396,7 @@ React.memo(function Foo(props) {
 
 ```
 
- unknown:4:9 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noThisInSFC/reject/11/file.tsx:4:9 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this in stateless functional components.
 
@@ -437,7 +430,7 @@ React.forwardRef((props, ref) =>
 
 ```
 
- unknown:4:9 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noThisInSFC/reject/12/file.tsx:4:9 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this in stateless functional components.
 
@@ -471,7 +464,7 @@ const Foo = React.forwardRef((props, ref) =>
 
 ```
 
- unknown:4:10 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noThisInSFC/reject/13/file.tsx:4:10 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this in stateless functional components.
 

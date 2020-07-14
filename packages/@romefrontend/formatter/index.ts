@@ -5,9 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, AnyNode, MOCK_PARENT} from "@romefrontend/ast";
+import {AnyNode, MOCK_PARENT} from "@romefrontend/ast";
 import Builder from "./Builder";
 import {PrinterOutput, printTokenToString} from "./Printer";
+import {isRoot} from "@romefrontend/ast-utils";
 
 export {Builder};
 export {BuilderMethod} from "./Builder";
@@ -17,9 +18,7 @@ export type FormatterOptions = {
 	typeAnnotations?: boolean;
 	format?: "pretty" | "compact";
 	indent?: number;
-	comments?: Array<AnyComment>;
 	sourceMaps?: boolean;
-	sourceText?: string;
 	allowInterpreterDirective?: boolean;
 };
 
@@ -29,7 +28,6 @@ export function formatAST(
 		format = "pretty",
 		typeAnnotations = true,
 		sourceMaps = false,
-		comments,
 		indent = 0,
 		allowInterpreterDirective = true,
 	}: FormatterOptions = {},
@@ -41,7 +39,7 @@ export function formatAST(
 			typeAnnotations,
 			allowInterpreterDirective,
 		},
-		ast.type === "JSRoot" ? ast.comments : comments,
+		isRoot(ast) ? ast.comments : [],
 	);
 	const token = builder.tokenize(ast, MOCK_PARENT);
 	const formatted = printTokenToString(

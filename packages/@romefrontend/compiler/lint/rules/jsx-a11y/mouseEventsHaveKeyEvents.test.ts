@@ -19,8 +19,9 @@ test(
 					"<div onMouseOver={ () => void 0 }  onFocus={() => void 0} >{props}</div>",
 					"<div onMouseOut={ () => void 0 }  onBlur={() => void 0} >{props}</div>",
 				],
+				filename: "file.tsx",
+				category: "lint/jsx-a11y/mouseEventsHaveKeyEvents",
 			},
-			{category: "lint/jsx-a11y/mouseEventsHaveKeyEvents"},
 		);
 	},
 );

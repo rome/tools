@@ -131,6 +131,9 @@ JSRoot {
 
   ✖ Unknown start to an statement expression
 
+    if(false)
+             ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

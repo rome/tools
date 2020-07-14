@@ -53,8 +53,9 @@ test(
 				`,
 					"<Fragment key={item.id}>{item.value}</Fragment>",
 				],
+				filename: "file.tsx",
+				category: "lint/react/noUselessFragment",
 			},
-			{category: "lint/react/noUselessFragment"},
 		);
 	},
 );

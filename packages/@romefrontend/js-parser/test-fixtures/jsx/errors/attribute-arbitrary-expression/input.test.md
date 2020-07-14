@@ -15,7 +15,7 @@ JSRoot {
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "module"
+	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
 		filename: "input.jsx"
@@ -261,6 +261,9 @@ JSRoot {
  input.jsx:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ JSX attribute value should be either an expression or a quoted JSX text
+
+    <Foo bar=bar() />
+             ^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

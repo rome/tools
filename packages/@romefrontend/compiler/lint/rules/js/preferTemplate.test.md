@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:31 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/preferTemplate/reject/1/file.ts:1:31 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literals are preferred over string concatenation.
 
@@ -38,7 +38,7 @@ console.log(`${foo}baz`);
 
 ```
 
- unknown:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/preferTemplate/reject/2/file.ts:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literals are preferred over string concatenation.
 
@@ -67,7 +67,7 @@ console.log(`${1 * 2}foo`);
 
 ```
 
- unknown:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/preferTemplate/reject/3/file.ts:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literals are preferred over string concatenation.
 
@@ -96,7 +96,7 @@ console.log(`${1}foo${2}barbaz${3}`);
 
 ```
 
- unknown:1:13 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/preferTemplate/reject/4/file.ts:1:13 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literals are preferred over string concatenation.
 
@@ -125,7 +125,7 @@ console.log(`${1}foo` * 2);
 
 ```
 
- unknown:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/preferTemplate/reject/5/file.ts:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literals are preferred over string concatenation.
 
@@ -137,7 +137,7 @@ console.log(`${1}foo` * 2);
   - 1 * (2 + "foo") + "bar"
   + `${1 * (2 + "foo")}bar`
 
- unknown:1:18 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/preferTemplate/reject/5/file.ts:1:18 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literals are preferred over string concatenation.
 
@@ -166,7 +166,7 @@ console.log(`${1 * `${2}foo`}bar`);
 
 ```
 
- unknown:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/preferTemplate/reject/6/file.ts:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literals are preferred over string concatenation.
 
@@ -195,7 +195,7 @@ console.log(`foo${1}`);
 
 ```
 
- unknown:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/preferTemplate/reject/7/file.ts:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literals are preferred over string concatenation.
 
@@ -224,7 +224,7 @@ console.log(`foobarbaz${"bat" + "bam"}boo`);
 
 ```
 
- unknown:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/preferTemplate/reject/8/file.ts:1:12 lint/js/preferTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literals are preferred over string concatenation.
 

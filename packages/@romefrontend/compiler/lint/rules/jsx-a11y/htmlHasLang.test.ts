@@ -23,8 +23,9 @@ test(
 					"<html lang={language}></html>",
 					"<html lang={() => language}></html>",
 				],
+				filename: "file.tsx",
+				category: "lint/jsx-a11y/htmlHasLang",
 			},
-			{category: "lint/jsx-a11y/htmlHasLang"},
 		);
 	},
 );

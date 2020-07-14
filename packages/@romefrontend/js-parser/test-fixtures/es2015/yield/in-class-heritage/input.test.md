@@ -213,6 +213,9 @@ JSRoot {
 
   ✖ yield is a reserved word
 
+    class A extends yield B { }
+                    ^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

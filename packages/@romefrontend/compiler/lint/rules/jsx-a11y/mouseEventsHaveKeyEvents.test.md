@@ -8,7 +8,8 @@
 
 ```
 
- unknown:1:5 lint/jsx-a11y/mouseEventsHaveKeyEvents ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/mouseEventsHaveKeyEvents/reject/1/file.tsx:1:5 lint/jsx-a11y/mouseEventsHaveKeyEvents
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Pair the onMouseOver mouse event with the onFocus keyboard event.
 
@@ -35,7 +36,8 @@
 
 ```
 
- unknown:1:5 lint/jsx-a11y/mouseEventsHaveKeyEvents ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/mouseEventsHaveKeyEvents/reject/2/file.tsx:1:5 lint/jsx-a11y/mouseEventsHaveKeyEvents
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Pair the onMouseOut mouse event with the onBlur keyboard event.
 
@@ -62,7 +64,8 @@
 
 ```
 
- unknown:1:5 lint/jsx-a11y/mouseEventsHaveKeyEvents ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/mouseEventsHaveKeyEvents/reject/3/file.tsx:1:5 lint/jsx-a11y/mouseEventsHaveKeyEvents
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Pair the onMouseOver mouse event with the onFocus keyboard event.
 
@@ -91,7 +94,8 @@
 
 ```
 
- unknown:1:5 lint/jsx-a11y/mouseEventsHaveKeyEvents ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/mouseEventsHaveKeyEvents/reject/4/file.tsx:1:5 lint/jsx-a11y/mouseEventsHaveKeyEvents
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Pair the onMouseOut mouse event with the onBlur keyboard event.
 

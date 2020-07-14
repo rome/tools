@@ -18,8 +18,9 @@ test(
 					"<h1 dangerouslySetInnerHTML={{ __html: 'heading' }} />",
 					"<h1><div aria-hidden />visible content</h1>",
 				],
+				filename: "file.tsx",
+				category: "lint/jsx-a11y/headingHasContent",
 			},
-			{category: "lint/jsx-a11y/headingHasContent"},
 		);
 	},
 );

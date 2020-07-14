@@ -347,7 +347,6 @@ export default class DependencyGraph {
 										location: {
 											sourceText: undefined,
 											...dep.loc,
-											language: "js",
 											mtime: undefined,
 										},
 									},

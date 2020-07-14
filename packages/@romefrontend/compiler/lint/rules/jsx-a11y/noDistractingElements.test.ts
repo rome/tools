@@ -6,8 +6,12 @@ test(
 	async (t) => {
 		await testLint(
 			t,
-			{invalid: ["<blink />", "<marquee />"], valid: ["<div />"]},
-			{category: "lint/jsx-a11y/noDistractingElements"},
+			{
+				invalid: ["<blink />", "<marquee />"],
+				valid: ["<div />"],
+				filename: "file.tsx",
+				category: "lint/jsx-a11y/noDistractingElements",
+			},
 		);
 	},
 );

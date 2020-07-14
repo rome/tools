@@ -167,6 +167,9 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    async () => {}()
+                  ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

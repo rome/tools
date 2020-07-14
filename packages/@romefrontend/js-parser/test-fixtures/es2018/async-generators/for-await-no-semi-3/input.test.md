@@ -238,6 +238,11 @@ JSRoot {
 
   ✖ Can't have an await on a regular for loop
 
+    1 │ async function f() {
+  > 2 │   for await (x = 0;false;);
+      │            ^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

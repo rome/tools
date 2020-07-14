@@ -8,9 +8,13 @@
 
 ```
 
- foo.ts:1:24 lint/js/defaultExportSameBasename  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/defaultExportSameBasename/reject/1/foo.ts:1:24 lint/js/defaultExportSameBasename  FIXABLE
+ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The filename and the name of a default function should match.
+
+    export default function test() {}
+                            ^^^^
 
   ℹ The filename should be test.ts or the function name should be foo.
 
@@ -33,9 +37,13 @@ export default function foo() {}
 
 ```
 
- foo.ts:1:21 lint/js/defaultExportSameBasename  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/defaultExportSameBasename/reject/2/foo.ts:1:21 lint/js/defaultExportSameBasename  FIXABLE
+ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The filename and the name of a default class should match.
+
+    export default class Test {}
+                         ^^^^
 
   ℹ The filename should be Test.ts or the class name should be Foo.
 

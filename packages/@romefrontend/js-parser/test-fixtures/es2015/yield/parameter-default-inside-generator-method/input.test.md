@@ -255,6 +255,9 @@ JSRoot {
 
   ✖ yield is not allowed in generator parameters
 
+    ({ *method(x = yield) {} })
+                   ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

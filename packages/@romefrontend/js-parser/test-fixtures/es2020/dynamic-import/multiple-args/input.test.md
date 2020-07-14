@@ -209,6 +209,9 @@ JSRoot {
 
   ✖ Trailing comma is disallowed inside import(...) arguments
 
+    import('hello', 'world', '!');
+                  ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

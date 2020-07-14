@@ -13,8 +13,9 @@ test(
 					'<input autoFocus={"false"} />',
 				],
 				valid: ["<input />", "<input autoFocus={undefined} />"],
+				filename: "file.tsx",
+				category: "lint/jsx-a11y/noAutofocus",
 			},
-			{category: "lint/jsx-a11y/noAutofocus"},
 		);
 	},
 );

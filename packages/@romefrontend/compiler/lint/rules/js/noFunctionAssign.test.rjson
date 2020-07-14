@@ -1,3 +1,4 @@
+filename: "file.ts"
 invalid: [
 	"function foo() {}; foo = bar;"
 	"function foo() { foo = bar; }"

@@ -237,6 +237,9 @@ JSRoot {
 
   ✖ No loop label found
 
+    x: while (true) { (function () { continue; }); }
+                                     ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

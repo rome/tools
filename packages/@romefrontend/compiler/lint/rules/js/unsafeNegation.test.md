@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/js/unsafeNegation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/unsafeNegation/reject/1/file.ts:1 lint/js/unsafeNegation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The negation operator is used unsafely on the left side of this binary expression.
 

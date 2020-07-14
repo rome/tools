@@ -20,6 +20,7 @@ export const snapshots = createDiagnosticsCategory({
 		advice: [
 			{
 				type: "diff",
+				language: "unknown",
 				diff: stringDiff(expected, got),
 			},
 		],

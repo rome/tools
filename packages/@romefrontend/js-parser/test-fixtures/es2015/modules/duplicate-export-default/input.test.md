@@ -220,7 +220,15 @@ JSRoot {
 
   ✖ Only one default export allowed per module.
 
+    1 │ export default {};
+  > 2 │ export default function() {};
+      │                ^^^^^^^^^^^^^
+
   ℹ Defined already here
+
+  > 1 │ export default {};
+      │                ^^
+    2 │ export default function() {};
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

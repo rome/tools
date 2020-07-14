@@ -4,9 +4,16 @@
 
 ## `typescript > tsConstructorType`
 
+### `Diagnostics`
+
+```
+✔ No known problems!
+
+```
+
 ### `Input`
 
-```javascript
+```js
 type Class<T> = new (...args: any)  => T;
 let d: new(x: number) => void;
 
@@ -14,7 +21,7 @@ let d: new(x: number) => void;
 
 ### `Output`
 
-```javascript
+```js
 type Class<T> = new (...args: any) => T;
 let d: new (x: number) => void;
 

@@ -190,6 +190,9 @@ JSRoot {
 
   ✖ yield is a reserved word
 
+    "use strict"; function f(...yield) {}
+                                ^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

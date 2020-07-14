@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:8 lint/js/emptyMatches ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/emptyMatches/reject/1/file.ts:1:8 lint/js/emptyMatches ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ This expression can return empty matches, and may match infinitely in some use cases.
 
@@ -34,7 +34,7 @@ let a = /a*/;
 
 ```
 
- unknown:1:8 lint/js/emptyMatches ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/emptyMatches/reject/2/file.ts:1:8 lint/js/emptyMatches ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ This expression can return empty matches, and may match infinitely in some use cases.
 

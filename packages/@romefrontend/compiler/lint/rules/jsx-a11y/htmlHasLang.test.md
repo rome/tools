@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/htmlHasLang/reject/1/file.tsx:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
 
@@ -36,7 +36,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/htmlHasLang/reject/2/file.tsx:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
 
@@ -64,7 +64,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/htmlHasLang/reject/3/file.tsx:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
 
@@ -92,7 +92,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/htmlHasLang/reject/4/file.tsx:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
 
@@ -120,7 +120,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/htmlHasLang/reject/5/file.tsx:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
 
@@ -148,7 +148,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/htmlHasLang/reject/6/file.tsx:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
 
@@ -176,7 +176,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/htmlHasLang/reject/7/file.tsx:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
 
@@ -204,7 +204,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/htmlHasLang/reject/8/file.tsx:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
 
@@ -232,7 +232,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/htmlHasLang/reject/9/file.tsx:1 lint/jsx-a11y/htmlHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
 

@@ -245,6 +245,9 @@ JSRoot {
 
   ✖ Expected keyword from
 
+    import typ\u{65} typescript from "typescript";
+                     ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

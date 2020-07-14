@@ -167,6 +167,9 @@ JSRoot {
 
   ✖ In TypeScript, a new expression with type arguments must have parens
 
+    new A<T>;
+            ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -204,6 +204,11 @@ JSRoot {
 
   ✖ await* has been removed from the async functions proposal. Use Promise.all() instead.
 
+    1 │ async function bar() {
+  > 2 │   await* foo();
+      │   ^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

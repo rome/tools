@@ -171,6 +171,7 @@ export default class Worker {
 		bridge.format.subscribe((payload) => {
 			return this.api.format(
 				convertTransportFileReference(payload.ref),
+				payload.options,
 				payload.parseOptions,
 			);
 		});
@@ -391,8 +392,8 @@ export default class Worker {
 
 		// Get source type
 		let sourceTypeJS: undefined | ConstJSSourceType;
-		if (options.sourceType !== undefined) {
-			sourceTypeJS = options.sourceType;
+		if (options.sourceTypeJS !== undefined) {
+			sourceTypeJS = options.sourceTypeJS;
 		} else if (handler.sourceTypeJS !== undefined) {
 			sourceTypeJS = handler.sourceTypeJS;
 		} else {
@@ -441,7 +442,15 @@ export default class Worker {
 
 		this.logger.info("Parsing:", path.toMarkup());
 
-		const stat = await lstat(path);
+		// Get the file mtime to warn about outdated diagnostics
+		// If we have a buffer for this file then don't set an mtime since our diagnostics explicitly do not
+		// match the file system
+		let mtime;
+		if (!this.buffers.has(path)) {
+			const stat = await lstat(path);
+			mtime = stat.mtimeMs;
+		}
+
 		let manifestPath: undefined | string;
 		if (ref.manifest !== undefined) {
 			manifestPath = this.getPartialManifest(ref.manifest).path;
@@ -451,7 +460,7 @@ export default class Worker {
 			sourceTypeJS,
 			path: createUnknownFilePath(uid),
 			manifestPath,
-			stat,
+			mtime,
 			file: ref,
 			worker: this,
 			project,
@@ -459,13 +468,16 @@ export default class Worker {
 		});
 
 		// If the AST is corrupt then we don't under any circumstance allow it
-		if (ast.corrupt) {
+		if (ast.corrupt && !options.allowCorrupt) {
 			throw new DiagnosticsError("Corrupt AST", ast.diagnostics);
 		}
 
 		// Sometimes we may want to allow the "fixed" AST
-		const allowDiagnostics = options.allowParserDiagnostics === true;
-		if (!allowDiagnostics && ast.diagnostics.length > 0) {
+		if (
+			!options.allowParserDiagnostics &&
+			!options.allowCorrupt &&
+			ast.diagnostics.length > 0
+		) {
 			throw new DiagnosticsError(
 				"AST diagnostics aren't allowed",
 				ast.diagnostics,

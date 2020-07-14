@@ -235,6 +235,9 @@ JSRoot {
 
   ✖ Constructor cannot be a generator
 
+    class A { *constructor() {} }
+               ^^^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

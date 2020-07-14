@@ -32,12 +32,13 @@ function buildJSHandler(
 		sourceTypeJS,
 		canLint: true,
 		canFormat: true,
+		language: "js",
 
-		async parse({stat, sourceTypeJS, manifestPath, path, file, worker}) {
+		async parse({mtime, sourceTypeJS, manifestPath, path, file, worker}) {
 			const sourceText = await worker.readFile(file.real);
 			const ast = parseJS({
 				input: sourceText,
-				mtime: stat.mtimeMs,
+				mtime,
 				manifestPath,
 				path,
 				sourceType: sourceTypeJS,

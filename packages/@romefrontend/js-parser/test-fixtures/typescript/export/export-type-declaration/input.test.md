@@ -536,6 +536,12 @@ JSRoot {
 
   ✖ Unexpected token, expected (
 
+    1 │ export type A = 2;
+    2 │ export interface B {}
+  > 3 │ export declare function a(): string;
+      │                         ^
+    4 │ export declare var b: string;
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

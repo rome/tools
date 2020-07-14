@@ -23,8 +23,9 @@ test(
 					"<script></script>",
 					"<style parole></style>",
 				],
+				filename: "file.tsx",
+				category: "lint/jsx-a11y/ariaUnsupportedElements",
 			},
-			{category: "lint/jsx-a11y/ariaUnsupportedElements"},
 		);
 	},
 );

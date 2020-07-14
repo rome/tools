@@ -15,7 +15,7 @@ JSRoot {
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "module"
+	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
 		filename: "input.jsx"
@@ -182,6 +182,9 @@ JSRoot {
  input.jsx:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown JSX identifier token
+
+    < key="nope"></>
+         ^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

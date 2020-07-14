@@ -8,15 +8,13 @@
 
 ```
 
- unknown:2:33 lint/js/noTemplateCurlyInString ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noTemplateCurlyInString/reject/1/file.ts:2:49 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ This string contains an unexpected template string expression.
+  ✖ Unterminated string constant
 
     1 │ const user = 'Faustina';
   > 2 │                const helloUser = 'Hello, ${user};
-      │                                  ^^^^^^^^^^^^^^^^^
-
-  ℹ Using template string expressions in regular strings is usually a typo.
+      │                                                  ^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -26,8 +24,6 @@
 
 ### `0: formatted`
 
-```
-const user = "Faustina";
-const helloUser = "Hello, ${user};";
-
+```javascript
+undefined
 ```

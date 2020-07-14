@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/noDistractingElements ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/noDistractingElements/reject/1/file.tsx:1 lint/jsx-a11y/noDistractingElements ━━━━━━━
 
   ✖ Avoid using deprecated blink elements.
 
@@ -35,7 +35,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/noDistractingElements ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/noDistractingElements/reject/2/file.tsx:1 lint/jsx-a11y/noDistractingElements ━━━━━━━
 
   ✖ Avoid using deprecated marquee elements.
 

@@ -14,8 +14,9 @@ test(
 					"<a dangerouslySetInnerHTML={{ __html: 'foo' }} />",
 					"<a><TextWrapper aria-hidden={true} /> visible content</a>",
 				],
+				category: "lint/jsx-a11y/anchorHasContent",
+				filename: "file.tsx",
 			},
-			{category: "lint/jsx-a11y/anchorHasContent"},
 		);
 	},
 );

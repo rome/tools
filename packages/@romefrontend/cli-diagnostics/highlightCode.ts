@@ -27,7 +27,8 @@ export type AnsiHighlightOptions = {
 	path: UnknownFilePath;
 	input: string;
 	sourceTypeJS: undefined | DiagnosticSourceType;
-	language: undefined | DiagnosticLanguage;
+	language: DiagnosticLanguage;
+	highlight: boolean;
 };
 
 type TokenShape = {
@@ -48,7 +49,7 @@ type ReduceCallback<Token extends TokenShape> = (
 ) => undefined | ReduceCallbackResult;
 
 export default function highlightCode(opts: AnsiHighlightOptions): string {
-	if (opts.input.length > FILE_SIZE_MAX) {
+	if (opts.input.length > FILE_SIZE_MAX || !opts.highlight) {
 		return escapeMarkup(opts.input);
 	}
 
@@ -339,7 +340,12 @@ function highlightJS(
 					}
 
 					// These are contextual keywords
-					if (value === "from" || value === "let" || value === "async") {
+					if (
+						value === "from" ||
+						value === "let" ||
+						value === "async" ||
+						value === "await"
+					) {
 						return {type: "keyword"};
 					}
 

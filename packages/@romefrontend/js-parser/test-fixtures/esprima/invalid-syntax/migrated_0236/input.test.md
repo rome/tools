@@ -192,6 +192,9 @@ JSRoot {
 
   ✖ arguments is a reserved word
 
+    function arguments(a) { "use strict"; }
+             ^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

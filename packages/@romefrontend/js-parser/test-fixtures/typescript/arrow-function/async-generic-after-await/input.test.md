@@ -341,6 +341,12 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    1 │ async () => {
+    2 │   await null;
+  > 3 │   async <T>() => null;
+      │               ^
+    4 │ };
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -205,6 +205,11 @@ JSRoot {
 
   ✖ Can't use await outside of an async function
 
+    1 │ function fn() {
+  > 2 │   await 0;
+      │   ^^^^^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

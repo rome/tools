@@ -8,7 +8,8 @@
 
 ```
 
- unknown:1:5 lint/jsx-a11y/noNoninteractiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/noNoninteractiveTabindex/reject/1/file.tsx:1:5 lint/jsx-a11y/noNoninteractiveTabindex
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not use tabIndex on an element that is not interactive.
 
@@ -35,7 +36,8 @@
 
 ```
 
- unknown:1:5 lint/jsx-a11y/noNoninteractiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/noNoninteractiveTabindex/reject/2/file.tsx:1:5 lint/jsx-a11y/noNoninteractiveTabindex
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not use tabIndex on an element that is not interactive.
 
@@ -62,7 +64,8 @@
 
 ```
 
- unknown:1:9 lint/jsx-a11y/noNoninteractiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/noNoninteractiveTabindex/reject/3/file.tsx:1:9 lint/jsx-a11y/noNoninteractiveTabindex
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not use tabIndex on an element that is not interactive.
 

@@ -224,6 +224,9 @@ JSRoot {
 
   ✖ yield is a reserved word
 
+    function hello() { "use strict"; var yield; }
+                                         ^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

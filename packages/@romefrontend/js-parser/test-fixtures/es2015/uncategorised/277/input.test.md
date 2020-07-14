@@ -225,6 +225,9 @@ JSRoot {
 
   ✖ The rest element has to be the last element when destructuring
 
+    function f(a, ...b, c)
+                      ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

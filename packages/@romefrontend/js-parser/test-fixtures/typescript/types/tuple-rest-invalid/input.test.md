@@ -212,6 +212,9 @@ JSRoot {
 
   ✖ The rest element has to be the last element when destructuring
 
+    let x: [...number[], string]
+                       ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

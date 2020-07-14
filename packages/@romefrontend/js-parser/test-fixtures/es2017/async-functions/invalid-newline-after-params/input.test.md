@@ -182,6 +182,9 @@ JSRoot {
 
   ✖ Unknown start to an statement expression
 
+    1 │ async (x)
+    2 │ => {}
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

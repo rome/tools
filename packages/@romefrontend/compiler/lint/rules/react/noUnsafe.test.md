@@ -8,7 +8,7 @@
 
 ```
 
- unknown:2:1 lint/react/noUnsafe ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noUnsafe/reject/1/file.tsx:2:1 lint/react/noUnsafe ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The UNSAFE_componentWillMount method is unsafe for use in async rendering. Use the
     componentDidMount method instead.
@@ -39,7 +39,7 @@ class Hello extends React.Component {
 
 ```
 
- unknown:2:1 lint/react/noUnsafe ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noUnsafe/reject/2/file.tsx:2:1 lint/react/noUnsafe ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The UNSAFE_componentWillReceiveProps method is unsafe for use in async rendering. Use the
     getDerivedStateFromProps method instead.
@@ -70,7 +70,7 @@ class Hello extends React.Component {
 
 ```
 
- unknown:2:1 lint/react/noUnsafe ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noUnsafe/reject/3/file.tsx:2:1 lint/react/noUnsafe ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The UNSAFE_componentWillUpdate method is unsafe for use in async rendering. Use the
     componentDidUpdate method instead.

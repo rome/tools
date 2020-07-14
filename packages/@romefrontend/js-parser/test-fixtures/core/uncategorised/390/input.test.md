@@ -276,6 +276,9 @@ JSRoot {
 
   ✖ Unknown start to an call expression argument
 
+    ({ set: s(if) { } })
+              ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

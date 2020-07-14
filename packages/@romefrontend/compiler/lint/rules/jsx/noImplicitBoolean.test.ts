@@ -15,8 +15,9 @@ test(
 					"<input disabled={undefined} />",
 					'<input disabled="false" />',
 				],
+				filename: "file.tsx",
+				category: "lint/jsx/noImplicitBoolean",
 			},
-			{category: "lint/jsx/noImplicitBoolean"},
 		);
 	},
 );

@@ -169,6 +169,9 @@ JSRoot {
 
   ✖ Unexpected keyword typeof
 
+    import { typeof } from "foo";
+             ^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

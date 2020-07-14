@@ -254,6 +254,9 @@ JSRoot {
 
   ✖ setter function argument must not be a rest parameter
 
+    x = { set f(...y) {} }
+                   ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

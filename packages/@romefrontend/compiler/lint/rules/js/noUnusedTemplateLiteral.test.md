@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:12 lint/js/noUnusedTemplateLiteral  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnusedTemplateLiteral/reject/1/file.ts:1:12 lint/js/noUnusedTemplateLiteral  FIXABLE  ━━━
 
   ✖ Do not use template literals if interpolation and special-character handling are not needed.
 
@@ -37,7 +37,7 @@ const foo = "bar";
 
 ```
 
- unknown:1:12 lint/js/noUnusedTemplateLiteral  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnusedTemplateLiteral/reject/2/file.ts:1:12 lint/js/noUnusedTemplateLiteral  FIXABLE  ━━━
 
   ✖ Do not use template literals if interpolation and special-character handling are not needed.
 

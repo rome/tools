@@ -132,6 +132,9 @@ JSRoot {
 
   ✖ new.target can only be used in functions or class properties
 
+    new.target
+    ^^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

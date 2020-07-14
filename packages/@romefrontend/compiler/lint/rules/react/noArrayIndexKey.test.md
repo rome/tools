@@ -8,7 +8,7 @@
 
 ```
 
- unknown:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/1/file.tsx:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -20,7 +20,7 @@
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
- unknown:3:13 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/1/file.tsx:3:13 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -52,7 +52,7 @@ React.Children.map(
 
 ```
 
- unknown:3:14 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/2/file.tsx:3:14 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -64,7 +64,7 @@ React.Children.map(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
- unknown:3:20 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/2/file.tsx:3:20 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -98,7 +98,7 @@ React.Children.map(
 
 ```
 
- unknown:3:19 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/3/file.tsx:3:19 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -110,7 +110,7 @@ React.Children.map(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
- unknown:3:25 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/3/file.tsx:3:25 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -145,7 +145,7 @@ React.Children.map(
 
 ```
 
- unknown:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/4/file.tsx:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -177,7 +177,7 @@ Children.map(
 
 ```
 
- unknown:3:14 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/5/file.tsx:3:14 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -211,7 +211,7 @@ Children.map(
 
 ```
 
- unknown:3:19 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/6/file.tsx:3:19 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -246,7 +246,7 @@ Children.map(
 
 ```
 
- unknown:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/7/file.tsx:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -258,7 +258,7 @@ Children.map(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
- unknown:3:13 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/7/file.tsx:3:13 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -290,7 +290,7 @@ Children.map(
 
 ```
 
- unknown:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/8/file.tsx:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -322,7 +322,7 @@ React.Children.map(
 
 ```
 
- unknown:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/9/file.tsx:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -334,7 +334,7 @@ React.Children.map(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
- unknown:3:13 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/9/file.tsx:3:13 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -366,7 +366,7 @@ React.Children.forEach(
 
 ```
 
- unknown:3:14 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/10/file.tsx:3:14 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -378,7 +378,7 @@ React.Children.forEach(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
- unknown:3:20 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/10/file.tsx:3:20 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -412,7 +412,7 @@ React.Children.forEach(
 
 ```
 
- unknown:3:19 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/11/file.tsx:3:19 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -424,7 +424,7 @@ React.Children.forEach(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
- unknown:3:25 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/11/file.tsx:3:25 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -459,7 +459,7 @@ React.Children.forEach(
 
 ```
 
- unknown:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/12/file.tsx:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -491,7 +491,7 @@ Children.forEach(
 
 ```
 
- unknown:3:14 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/13/file.tsx:3:14 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -525,7 +525,7 @@ Children.forEach(
 
 ```
 
- unknown:3:19 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/14/file.tsx:3:19 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -560,7 +560,7 @@ Children.forEach(
 
 ```
 
- unknown:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/15/file.tsx:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -572,7 +572,7 @@ Children.forEach(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
- unknown:3:13 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/15/file.tsx:3:13 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -604,7 +604,7 @@ Children.forEach(
 
 ```
 
- unknown:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/16/file.tsx:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -636,7 +636,7 @@ React.Children.forEach(
 
 ```
 
- unknown:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/17/file.tsx:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -665,7 +665,7 @@ things.map((thing, index) => <Hello key={index} />);
 
 ```
 
- unknown:3:15 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/18/file.tsx:3:15 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -696,7 +696,7 @@ things.map(function(thing, index) {
 
 ```
 
- unknown:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/19/file.tsx:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -708,7 +708,7 @@ things.map(function(thing, index) {
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
- unknown:3:13 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/19/file.tsx:3:13 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -737,7 +737,7 @@ things.map((thing, index) => React.cloneElement(thing, {key: index}));
 
 ```
 
- unknown:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/20/file.tsx:3:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -766,7 +766,7 @@ things.map((thing, index) => cloneElement(thing, {key: index}));
 
 ```
 
- unknown:3:14 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/21/file.tsx:3:14 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -797,7 +797,7 @@ things.map(function(thing, index) {
 
 ```
 
- unknown:3:24 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/22/file.tsx:3:24 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -828,7 +828,7 @@ things.forEach((thing, index) => {
 
 ```
 
- unknown:3:24 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/23/file.tsx:3:24 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -859,7 +859,7 @@ things.forEach(function(thing, index) {
 
 ```
 
- unknown:3:24 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/24/file.tsx:3:24 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -890,7 +890,7 @@ things.filter((thing, index) => {
 
 ```
 
- unknown:3:24 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/25/file.tsx:3:24 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -921,7 +921,7 @@ things.some((thing, index) => {
 
 ```
 
- unknown:3:24 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/26/file.tsx:3:24 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -952,7 +952,7 @@ things.every((thing, index) => {
 
 ```
 
- unknown:3:24 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/27/file.tsx:3:24 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -983,7 +983,7 @@ things.find((thing, index) => {
 
 ```
 
- unknown:3:24 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/28/file.tsx:3:24 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -1014,7 +1014,7 @@ things.findIndex((thing, index) => {
 
 ```
 
- unknown:3:25 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/29/file.tsx:3:25 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -1046,7 +1046,7 @@ things.reduce(
 
 ```
 
- unknown:3:32 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/30/file.tsx:3:32 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -1080,7 +1080,7 @@ things.reduce(
 
 ```
 
- unknown:3:25 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/31/file.tsx:3:25 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
@@ -1112,7 +1112,7 @@ things.reduceRight(
 
 ```
 
- unknown:3:32 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noArrayIndexKey/reject/32/file.tsx:3:32 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 

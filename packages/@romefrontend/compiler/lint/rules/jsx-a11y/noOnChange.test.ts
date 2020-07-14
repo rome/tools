@@ -25,8 +25,9 @@ test(
 					"<input onChange={() => {}} onChange={() => {}} />;",
 					"<input {...props} />",
 				],
+				filename: "file.tsx",
+				category: "lint/jsx-a11y/noOnChange",
 			},
-			{category: "lint/jsx-a11y/noOnChange"},
 		);
 	},
 );

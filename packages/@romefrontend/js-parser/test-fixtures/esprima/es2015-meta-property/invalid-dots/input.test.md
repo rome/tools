@@ -319,6 +319,9 @@ JSRoot {
 
   ✖ Expected an identifier
 
+    var x = function() { y = new..target; }
+                                 ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -197,6 +197,9 @@ JSRoot {
 
   ✖ Invalid left-hand side in assignment object property value
 
+    ({ obj:20 } = 42)
+           ^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

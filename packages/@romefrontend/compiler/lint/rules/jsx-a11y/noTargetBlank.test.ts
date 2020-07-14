@@ -19,8 +19,9 @@ test(
 					'<a href="/absolute/link" rel="noreferrer" target="_blank">child</a>',
 					'<a href={dynamicLink} rel="noreferrer" target="_blank">child</a>',
 				],
+				filename: "file.tsx",
+				category: "lint/jsx-a11y/noTargetBlank",
 			},
-			{category: "lint/jsx-a11y/noTargetBlank"},
 		);
 	},
 );

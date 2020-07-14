@@ -197,6 +197,11 @@ JSRoot {
 
   ✖ Unknown class property start
 
+    1 │ class A {
+  > 2 │   declare public declare foo;
+      │           ^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

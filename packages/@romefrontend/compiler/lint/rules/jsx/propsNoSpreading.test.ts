@@ -17,8 +17,9 @@ test(
 					"<MyCustomComponent one_prop={one_prop} two_prop={two_prop} />",
 					"<img src={src} alt={alt} />",
 				],
+				filename: "file.tsx",
+				category: "lint/jsx/propsNoSpreading",
 			},
-			{category: "lint/jsx/propsNoSpreading"},
 		);
 	},
 );

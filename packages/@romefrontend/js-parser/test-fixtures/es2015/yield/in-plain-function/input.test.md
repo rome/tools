@@ -204,6 +204,9 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    (function () { yield 10 })
+                         ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -20,10 +20,10 @@ MISSING DOCUMENTATION
 ## Invalid
 ```typescript
 const x = 'test';
-x: const y = 'test';
+x: expr;
 ```
 ## Valid
 ```typescript
 const x = 'test';
-z: const y = 'test';
+z: expr;
 ```

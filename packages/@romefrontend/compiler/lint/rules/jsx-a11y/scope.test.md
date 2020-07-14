@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/scope  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/scope/reject/1/file.tsx:1 lint/jsx-a11y/scope  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the scope attribute on elements other than th elements.
 
@@ -40,7 +40,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/scope  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/scope/reject/2/file.tsx:1 lint/jsx-a11y/scope  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the scope attribute on elements other than th elements.
 

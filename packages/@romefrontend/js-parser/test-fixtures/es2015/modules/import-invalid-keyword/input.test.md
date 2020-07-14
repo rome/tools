@@ -169,6 +169,9 @@ JSRoot {
 
   ✖ Unexpected keyword debugger
 
+    import { debugger } from "foo";
+             ^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

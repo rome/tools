@@ -147,6 +147,9 @@ JSRoot {
 
   ✖ Parenthesized expression didnt contain anything
 
+    () ? 42
+     ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

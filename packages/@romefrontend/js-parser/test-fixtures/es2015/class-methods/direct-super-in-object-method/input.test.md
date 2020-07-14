@@ -444,6 +444,13 @@ JSRoot {
 
   ✖ super is only allowed in object methods and classes
 
+    2 │   foo: {
+    3 │     get: function(){
+  > 4 │       return super.foo;
+      │              ^
+    5 │     }
+    6 │   }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

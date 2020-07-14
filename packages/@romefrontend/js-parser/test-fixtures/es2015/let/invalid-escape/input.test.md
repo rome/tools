@@ -165,6 +165,9 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    le\u0074 x = 5
+             ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -1,5 +1,5 @@
 import {test} from "rome";
-import {createIntegrationTest} from "@romefrontend/core/integrationTestHelpers";
+import {createIntegrationTest} from "@romefrontend/test-helpers";
 import {AbsoluteFilePath, createUnknownFilePath} from "@romefrontend/path";
 import {ResolverQueryResponseFound} from "./Resolver";
 

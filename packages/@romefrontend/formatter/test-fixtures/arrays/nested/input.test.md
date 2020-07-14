@@ -4,9 +4,16 @@
 
 ## `arrays > nested`
 
+### `Diagnostics`
+
+```
+✔ No known problems!
+
+```
+
 ### `Input`
 
-```javascript
+```js
 let a = [[]];
 let b = [[], []];
 let c = [[], [], []];
@@ -53,7 +60,7 @@ let o1 = [{ a, b }, { a, b, c }];
 
 ### `Output`
 
-```javascript
+```js
 let a = [[]];
 let b = [[], []];
 let c = [[], [], []];

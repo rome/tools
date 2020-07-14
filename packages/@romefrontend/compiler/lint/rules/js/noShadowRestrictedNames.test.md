@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:9 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noShadowRestrictedNames/reject/1/file.ts:1:9 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━━
 
   ✖ Do not shadow the global NaN property.
 
@@ -35,7 +35,7 @@ function NaN() {}
 
 ```
 
- unknown:1:4 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noShadowRestrictedNames/reject/2/file.ts:1:4 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━━
 
   ✖ Do not shadow the global Set property.
 
@@ -62,7 +62,7 @@ let Set;
 
 ```
 
- unknown:1:15 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noShadowRestrictedNames/reject/3/file.ts:1:15 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━
 
   ✖ Do not shadow the global Object property.
 
@@ -91,7 +91,7 @@ try {
 
 ```
 
- unknown:1:10 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noShadowRestrictedNames/reject/4/file.ts:1:10 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━
 
   ✖ Do not shadow the global Array property.
 
@@ -118,7 +118,7 @@ try {
 
 ```
 
- unknown:1:14 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noShadowRestrictedNames/reject/5/file.ts:1:14 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━
 
   ✖ Do not shadow the global JSON property.
 

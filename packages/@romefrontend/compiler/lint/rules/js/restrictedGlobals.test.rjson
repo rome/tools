@@ -1,3 +1,4 @@
+filename: "file.ts"
 invalid: [
 	// invalid, event is used as a global.
 	"console.log(event);"

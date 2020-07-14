@@ -347,6 +347,9 @@ JSRoot {
 
   ✖ Duplicate constructor in the same class
 
+    class A {"constructor"(){} ["constructor"](){}}
+                               ^^^^^^^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

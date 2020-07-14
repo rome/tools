@@ -8,14 +8,14 @@
 
 ```
 
- unknown:1:18 lint/js/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDupeArgs/reject/1/file.js:1:18 lint/js/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid duplicate function arguments. Check the a argument.
 
   > 1 │ function hello(a, a) {
       │                   ^
     2 │   //
-    3 │ }a
+    3 │ }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -36,14 +36,16 @@ function hello(a, a) {
 
 ```
 
- unknown:1:18 lint/js/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDupeArgs/reject/2/file.js:1:18 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Avoid duplicate function arguments. Check the a argument.
+  ✖ Argument a name clash in strict mode
+
+  ℹ Defined already here
 
   > 1 │ const hello = (a, a) => {
       │                   ^
     2 │   //
-    3 │ }a
+    3 │ }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -53,25 +55,22 @@ function hello(a, a) {
 
 ### `1: formatted`
 
-```
-function hello(a, a) {
-	//
-}
-
+```javascript
+undefined
 ```
 
 ### `2`
 
 ```
 
- unknown:1:27 lint/js/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDupeArgs/reject/3/file.js:1:27 lint/js/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid duplicate function arguments. Check the a argument.
 
   > 1 │ const hello = function (a, a) {
       │                            ^
     2 │   //
-    3 │ }a
+    3 │ }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

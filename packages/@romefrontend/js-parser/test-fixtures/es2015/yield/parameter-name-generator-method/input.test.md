@@ -223,6 +223,9 @@ JSRoot {
 
   ✖ Can not use 'yield' as identifier inside a generator
 
+    ({ *method(yield) {} });
+               ^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

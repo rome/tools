@@ -347,6 +347,11 @@ JSRoot {
 
   ✖ Expected ts syntax to be enabled
 
+    1 │ class A extends B {
+  > 2 │   async method?(val: string): Promise<void>;
+      │               ^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -140,7 +140,12 @@ JSRoot {
 
   ✖ Unclosed class body
 
+    class A {
+            ^
+
   ℹ We expected to find the closing character } here
+
+    class A {
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

@@ -4,9 +4,16 @@
 
 ## `arrays > empty-lines`
 
+### `Diagnostics`
+
+```
+✔ No known problems!
+
+```
+
 ### `Input`
 
-```javascript
+```js
 let a = [
 
     1,
@@ -23,7 +30,7 @@ let a = [
 
 ### `Output`
 
-```javascript
+```js
 let a = [1, 2, 3, 4];
 
 ```

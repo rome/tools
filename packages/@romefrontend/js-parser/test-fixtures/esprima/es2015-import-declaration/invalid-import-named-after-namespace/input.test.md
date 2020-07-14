@@ -294,6 +294,9 @@ JSRoot {
 
   ✖ Expected keyword from
 
+    import * as foo, {bar} from "foo";
+                   ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

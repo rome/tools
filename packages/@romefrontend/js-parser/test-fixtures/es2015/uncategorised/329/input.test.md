@@ -168,6 +168,9 @@ JSRoot {
 
   ✖ Lexical declaration cannot appear in a single-statement context
 
+    for (;;) const x = 10;
+             ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -117,6 +117,9 @@ JSRoot {
   ✖ Function parameter type annotation? Possibly forgot curlies around an object. Possibly forgot
     async keyword.
 
+    func(a: T);
+         ^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

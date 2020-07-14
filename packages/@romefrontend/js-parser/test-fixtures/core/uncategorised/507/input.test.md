@@ -224,6 +224,9 @@ JSRoot {
 
   ✖ private is a reserved word
 
+    function hello() { "use strict"; var private; }
+                                         ^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

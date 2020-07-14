@@ -47,7 +47,6 @@ export default async function compile(
 			typeAnnotations: false,
 			indent: req.stage === "compileForBundle" ? 1 : 0,
 			sourceMaps: true,
-			sourceText,
 			allowInterpreterDirective: false,
 		},
 	);

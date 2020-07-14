@@ -7,9 +7,9 @@ test(
 		await testLint(
 			t,
 			{
-				// TODO
+				filename: "file.ts",
+				category: "lint/ts/preferInterfaces",
 			},
-			{category: "lint/ts/preferInterfaces"},
 		);
 	},
 );

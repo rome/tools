@@ -538,6 +538,10 @@ JSRoot {
 
   ✖ Unexpected token, expected (
 
+  > 1 │ declare function f(): void;
+      │                  ^
+    2 │ declare function f<T>(): T;
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

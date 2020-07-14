@@ -149,6 +149,10 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    1 │ namespace
+  > 2 │ Foo {}
+      │     ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

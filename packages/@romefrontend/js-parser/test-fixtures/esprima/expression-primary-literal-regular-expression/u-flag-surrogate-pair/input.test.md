@@ -315,6 +315,9 @@ JSRoot {
 
   ✖ Range values reversed. Start char code is greater than end char code
 
+    var x = /[\uD834\uDF06-\uD834\uDF08a-z]/u
+                    ^^^^^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -218,6 +218,9 @@ JSRoot {
 
   ✖ Unknown start to an yield argument
 
+    (function*() { yield* })
+                          ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

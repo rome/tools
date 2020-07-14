@@ -147,7 +147,7 @@ export default class TestWorkerRunner {
 	snapshotManager: SnapshotManager;
 	opts: TestWorkerPrepareTestOptions;
 	locked: boolean;
-	consoleAdvice: DiagnosticAdvice;
+	consoleAdvice: Array<() => DiagnosticAdvice>;
 	hasDiagnostics: boolean;
 
 	// Diagnostics that shouldn't result in console logs being output
@@ -165,38 +165,34 @@ export default class TestWorkerRunner {
 			category: DiagnosticLogCategory,
 			args: Array<unknown>,
 		) => {
-			let textParts: Array<string> = [];
-			if (args.length === 1 && typeof args[0] === "string") {
-				textParts.push(escapeMarkup(args[0]));
-			} else {
-				textParts = args.map((arg) =>
-					prettyFormat(arg, {allowCustom: false, markup: true})
-				);
-			}
-			let text = textParts.join(" ");
-
-			if (text === "") {
-				text = "<dim>empty log</dim>";
-			}
-
 			const err = new Error();
 
 			// Remove the first two frames to get to the actual source
 			const frames = cleanFrames(getErrorStructure(err).frames.slice(2));
 
-			this.consoleAdvice.push({
-				type: "log",
-				category,
-				text,
+			this.consoleAdvice.push(() => {
+				let textParts: Array<string> = [];
+				if (args.length === 1 && typeof args[0] === "string") {
+					textParts.push(escapeMarkup(args[0]));
+				} else {
+					textParts = args.map((arg) =>
+						prettyFormat(arg, {allowCustom: false, markup: true})
+					);
+				}
+				let text = textParts.join(" ");
+
+				if (text === "") {
+					text = "<dim>empty log</dim>";
+				}
+				return [
+					{
+						type: "log",
+						category,
+						text,
+					},
+					...getErrorStackAdvice(getErrorStructure({...err, frames})),
+				];
 			});
-			this.consoleAdvice = this.consoleAdvice.concat(
-				getErrorStackAdvice(
-					getErrorStructure({
-						...err,
-						frames,
-					}),
-				),
-			);
 		};
 
 		function log(...args: Array<unknown>): void {
@@ -375,6 +371,7 @@ export default class TestWorkerRunner {
 		diag = {
 			...diag,
 			label,
+			unique: true,
 		};
 
 		this.hasDiagnostics = true;
@@ -630,8 +627,12 @@ export default class TestWorkerRunner {
 		await this.snapshotManager.save();
 
 		if (this.hasDiagnostics && this.consoleAdvice.length > 0) {
+			let advice: DiagnosticAdvice = [];
+			for (const factory of this.consoleAdvice) {
+				advice = advice.concat(factory());
+			}
 			await this.emitDiagnostic({
-				description: descriptions.TESTS.LOGS(this.consoleAdvice),
+				description: descriptions.TESTS.LOGS(advice),
 				location: {
 					filename: this.file.uid,
 				},

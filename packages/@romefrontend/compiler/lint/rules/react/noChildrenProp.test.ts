@@ -24,8 +24,9 @@ test(
 					"React.createElement('div', {}, 'children')",
 					"React.createElement('div', child1, 'child2')",
 				],
+				filename: "file.tsx",
+				category: "lint/react/noChildrenProp",
 			},
-			{category: "lint/react/noChildrenProp"},
 		);
 	},
 );

@@ -172,6 +172,9 @@ JSRoot {
 
   ✖ Async functions can only be declared at the top level or inside a block
 
+    while (1) async function foo(){}
+              ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

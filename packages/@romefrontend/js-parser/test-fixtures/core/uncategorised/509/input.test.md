@@ -224,6 +224,9 @@ JSRoot {
 
   ✖ public is a reserved word
 
+    function hello() { "use strict"; var public; }
+                                         ^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

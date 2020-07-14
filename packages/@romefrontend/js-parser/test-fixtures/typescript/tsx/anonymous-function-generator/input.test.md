@@ -436,6 +436,11 @@ JSRoot {
 
   ✖ Unexpected token, expected (
 
+  > 1 │ const fn = function* <T>(input: T): Generator<number> {
+      │                      ^
+    2 │   yield 2;
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -118,6 +118,10 @@ JSRoot {
 
   ✖ extends list cannot be empty
 
+  > 1 │ interface foo extends {
+      │                       ^
+    2 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

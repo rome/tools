@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/iframeHasTitle/reject/1/file.tsx:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a title attribute when using iframe elements.
 
@@ -34,7 +34,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/iframeHasTitle/reject/2/file.tsx:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a title attribute when using iframe elements.
 
@@ -60,7 +60,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/iframeHasTitle/reject/3/file.tsx:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a title attribute when using iframe elements.
 
@@ -86,7 +86,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/iframeHasTitle/reject/4/file.tsx:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a title attribute when using iframe elements.
 
@@ -112,7 +112,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/iframeHasTitle/reject/5/file.tsx:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a title attribute when using iframe elements.
 
@@ -138,7 +138,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/iframeHasTitle/reject/6/file.tsx:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a title attribute when using iframe elements.
 
@@ -164,7 +164,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/iframeHasTitle/reject/7/file.tsx:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a title attribute when using iframe elements.
 
@@ -190,7 +190,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/iframeHasTitle/reject/8/file.tsx:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a title attribute when using iframe elements.
 
@@ -216,7 +216,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/iframeHasTitle/reject/9/file.tsx:1 lint/jsx-a11y/iframeHasTitle ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a title attribute when using iframe elements.
 
@@ -249,20 +249,5 @@
 
 ```
 <iframe title="title" />;
-
-```
-
-### `10`
-
-```
-✔ No known problems!
-
-```
-
-### `10: formatted`
-
-```
-<iframe title={title}>
-</iframe>;
 
 ```

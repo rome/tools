@@ -164,9 +164,9 @@ export type DiagnosticAdviceAction = {
 
 export type DiagnosticAdviceCode = {
 	type: "code";
-	code: string;
+	sourceText: string;
 	sourceTypeJS?: ConstJSSourceType;
-	language?: DiagnosticLanguage;
+	language: DiagnosticLanguage;
 };
 
 export type DiagnosticAdviceFrame = {
@@ -177,7 +177,7 @@ export type DiagnosticAdviceFrame = {
 export type DiagnosticAdviceDiff = {
 	type: "diff";
 	diff: Diffs;
-	language?: DiagnosticLanguage;
+	language: DiagnosticLanguage;
 	sourceTypeJS?: ConstJSSourceType;
 	legend?: {
 		add: string;
@@ -202,6 +202,6 @@ export type DiagnosticAdviceStackFrame = {
 	filename?: string;
 	line?: Number1;
 	column?: Number0;
-	language?: DiagnosticLanguage;
+	language: undefined | DiagnosticLanguage;
 	sourceText?: string;
 };

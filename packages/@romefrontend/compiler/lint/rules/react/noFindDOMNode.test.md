@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/react/noFindDOMNode ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noFindDOMNode/reject/1/file.tsx:1 lint/react/noFindDOMNode ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the findDOMNode function.
 
@@ -35,7 +35,7 @@ findDOMNode(this).scrollIntoView();
 
 ```
 
- unknown:1 lint/react/noFindDOMNode ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noFindDOMNode/reject/2/file.tsx:1 lint/react/noFindDOMNode ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the findDOMNode function.
 

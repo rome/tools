@@ -149,6 +149,9 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    'use strict'; a package
+                    ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

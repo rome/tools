@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:6 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnusedVariables/reject/1/file.ts:1:6 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The constant variable a is unused.
 
@@ -34,7 +34,7 @@ const a = 4;
 
 ```
 
- unknown:1:4 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnusedVariables/reject/2/file.ts:1:4 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The variable variable a is unused.
 
@@ -60,7 +60,7 @@ let a = 4;
 
 ```
 
- unknown:1:9 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnusedVariables/reject/3/file.ts:1:9 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The function variable foo is unused.
 
@@ -71,7 +71,7 @@ let a = 4;
 
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
- unknown:1:13 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnusedVariables/reject/3/file.ts:1:13 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The parameter variable myVar is unused.
 
@@ -101,7 +101,7 @@ function foo(myVar) {
 
 ```
 
- unknown:1:13 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnusedVariables/reject/4/file.ts:1:13 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The parameter variable myVar is unused.
 
@@ -132,7 +132,7 @@ foo();
 
 ```
 
- unknown:1:6 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnusedVariables/reject/5/file.ts:1:6 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The constant variable foo is unused.
 
@@ -143,7 +143,7 @@ foo();
 
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
- unknown:1:13 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnusedVariables/reject/5/file.ts:1:13 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The parameter variable b is unused.
 

@@ -200,6 +200,9 @@ JSRoot {
 
   ✖ 'readonly' type modifier is only permitted on array and tuple literal types.
 
+    type T33 = readonly Array<string>;  // Error
+                        ^^^^^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

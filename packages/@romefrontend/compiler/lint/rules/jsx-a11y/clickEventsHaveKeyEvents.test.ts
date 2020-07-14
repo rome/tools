@@ -13,8 +13,9 @@ test(
 					"<div onClick={() => {}} onKeyUp={this.handleKeyUp} />",
 					"<div onClick={() => {}} onKeyPress={this.handleKeyPress} />",
 				],
+				filename: "file.tsx",
+				category: "lint/jsx-a11y/clickEventsHaveKeyEvents",
 			},
-			{category: "lint/jsx-a11y/clickEventsHaveKeyEvents"},
 		);
 	},
 );

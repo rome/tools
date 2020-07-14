@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/react/buttonHasType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/buttonHasType/reject/1/file.tsx:1 lint/react/buttonHasType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an explicit type prop on button elements.
 
@@ -37,7 +37,7 @@
 
 ```
 
- unknown:1:8 lint/react/buttonHasType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/buttonHasType/reject/2/file.tsx:1:8 lint/react/buttonHasType ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an explicit type prop on button elements.
 
@@ -66,7 +66,7 @@
 
 ```
 
- unknown:1 lint/react/buttonHasType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/buttonHasType/reject/3/file.tsx:1 lint/react/buttonHasType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an explicit type prop on button elements.
 
@@ -93,7 +93,7 @@ React.createElement("button", {type: "foo"}, ["child"]);
 
 ```
 
- unknown:1 lint/react/buttonHasType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/buttonHasType/reject/4/file.tsx:1 lint/react/buttonHasType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an explicit type prop on button elements.
 

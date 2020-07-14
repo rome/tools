@@ -690,6 +690,13 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    3 │   #b?;
+    4 │   #c?: number;
+  > 5 │   #d!;
+      │     ^
+    6 │   #e!: boolean;
+    7 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
