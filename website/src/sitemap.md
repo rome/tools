@@ -84,6 +84,7 @@ layout: layouts/page.njk
 					 - [`/preferTemplate`](/docs/lint/rules/js/preferTemplate): js/preferTemplate
 					 - [`/preferWhile`](/docs/lint/rules/js/preferWhile): js/preferWhile
 					 - [`/restrictedGlobals`](/docs/lint/rules/js/restrictedGlobals): js/restrictedGlobals
+					 - [`/shoutyConstants`](/docs/lint/rules/js/shoutyConstants): js/shoutyConstants
 					 - [`/singleVarDeclarator`](/docs/lint/rules/js/singleVarDeclarator): js/singleVarDeclarator
 					 - [`/sortImportExportSpecifiers`](/docs/lint/rules/js/sortImportExportSpecifiers): js/sortImportExportSpecifiers
 					 - [`/sparseArray`](/docs/lint/rules/js/sparseArray): js/sparseArray

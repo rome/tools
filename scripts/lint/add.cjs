@@ -69,12 +69,12 @@ export default {
 write(
 	testLoc,
 	`filename: "filename.ts"
-invalid": [
+invalid: [
 	"
 		// insert invalid examples here
 	"
 ]
-valid": [
+valid: [
 	"
 		// insert valid examples here
 	"

@@ -17,6 +17,26 @@ import {buildSuggestionAdvice} from "../helpers";
 import {createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	JS_SHOUTY_CONSTANTS: (constantLocation: DiagnosticLocation = {}) => ({
+		category: "lint/js/shoutyConstants",
+		message: "Redundant constant reference",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "You should avoid declaring constants with a string that's the same value as the variable name. It introduces a level on unnecessary indirection when it's only two additional characters to inline.",
+			},
+			{
+				type: "log",
+				category: "info",
+				text: "This constant is declared here",
+			},
+			{
+				type: "frame",
+				location: constantLocation,
+			},
+		],
+	}),
 	JS_NO_UNUSED_TEMPLATE_LITERAL: {
 		category: "lint/js/noUnusedTemplateLiteral",
 		message: "Do not use template literals if interpolation and special-character handling are not needed.",
