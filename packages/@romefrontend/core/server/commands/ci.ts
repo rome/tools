@@ -23,7 +23,12 @@ export default createServerCommand({
 	examples: [],
 	defineFlags(consumer: Consumer): Flags {
 		return {
-			fix: consumer.get("fix").asBoolean(false),
+			fix: consumer.get(
+				"fix",
+				{
+					description: "enables --update-snapshots for test, and --apply for the lint command",
+				},
+			).asBoolean(false),
 		};
 	},
 	async callback(req: ServerRequest, flags: Flags): Promise<void> {
