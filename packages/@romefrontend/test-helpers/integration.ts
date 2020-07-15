@@ -347,7 +347,10 @@ export function createIntegrationTest(
 
 			// Create a Client. The abstraction used by the CLI.
 			const client = new Client({
-				terminalFeatures: DEFAULT_TERMINAL_FEATURES,
+				terminalFeatures: {
+					...DEFAULT_TERMINAL_FEATURES,
+					format: "none",
+				},
 				globalErrorHandlers: false,
 				flags: {
 					cwd: projectPath,
