@@ -9,7 +9,7 @@ import {BaseTokens, SimpleToken, ValueToken} from "@romefrontend/parser-core";
 import {AbsoluteFilePath} from "@romefrontend/path";
 import {UserConfig} from "@romefrontend/core/common/userConfig";
 import {Number0, Number1} from "@romefrontend/ob1";
-import {TerminalFeatures} from "@romefrontend/environment";
+import {TerminalFeatures} from "@romefrontend/cli-environment";
 import {Consumer} from "@romefrontend/consume";
 
 export type Tokens = BaseTokens & {

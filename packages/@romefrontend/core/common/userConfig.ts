@@ -73,7 +73,13 @@ export function normalizeUserConfig(
 	return userConfig;
 }
 
+let loadedUserConfig: undefined | UserConfig;
+
 export function loadUserConfig(): UserConfig {
+	if (loadedUserConfig !== undefined) {
+		return loadedUserConfig;
+	}
+
 	for (const configFilename of ROME_CONFIG_FILENAMES) {
 		const configPath = HOME_PATH.append([".config", configFilename]);
 
@@ -87,8 +93,10 @@ export function loadUserConfig(): UserConfig {
 			input: configFile,
 		});
 
-		return normalizeUserConfig(consumer, configPath);
+		loadedUserConfig = normalizeUserConfig(consumer, configPath);
+		return loadedUserConfig;
 	}
 
-	return DEFAULT_USER_CONFIG;
+	loadedUserConfig = DEFAULT_USER_CONFIG;
+	return loadedUserConfig;
 }

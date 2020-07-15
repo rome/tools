@@ -1,23 +1,19 @@
-import {
-	MarkupColor,
-	MarkupFormatOptions,
-	MarkupTokenType,
-	TagNode,
-} from "../types";
-import {formatAnsi} from "../ansi";
+import {MarkupColor, MarkupTokenType, TagNode} from "../types";
+import {formatAnsi, formatAnsiRGB} from "../ansi";
 import {buildFileLink} from "../util";
 import OneDarkPro from "../syntax-theme/OneDarkPro.json";
 import {Dict} from "@romefrontend/typescript-helpers";
 import {Consumer, consumeUnknown} from "@romefrontend/consume";
-import {TerminalFeatures} from "@romefrontend/environment";
 import {validateColor, validateTokenType} from "../tags";
+import Grid from "./Grid";
 
 export function ansiFormatText(
 	{name: tagName, attributes}: TagNode,
 	value: string,
-	opts: MarkupFormatOptions,
-	features: TerminalFeatures,
+	grid: Grid,
 ): string {
+	const {features} = grid;
+
 	switch (tagName) {
 		case "hyperlink": {
 			if (features.hyperlinks) {
@@ -32,7 +28,7 @@ export function ansiFormatText(
 
 		case "filelink": {
 			if (features.hyperlinks) {
-				const {filename} = buildFileLink(attributes, opts);
+				const {filename} = buildFileLink(attributes, grid.options);
 				return formatAnsi.hyperlink(value, `file://${filename}`);
 			} else {
 				return value;
@@ -40,7 +36,7 @@ export function ansiFormatText(
 		}
 	}
 
-	if (!features.color) {
+	if (features.colorDepth === 1) {
 		return value;
 	}
 
@@ -97,7 +93,7 @@ export function ansiFormatText(
 			return formatToken(
 				validateTokenType(attributes.get("type").asStringOrVoid()),
 				value,
-				opts,
+				grid,
 			);
 
 		default:
@@ -113,7 +109,10 @@ type TokenFormat = {
 };
 
 // rome-ignore lint/js/noUnusedVariables
-type TokenFormats = {[type in MarkupTokenType]?: TokenFormat};
+type Theme = {
+	kind: "default" | "user";
+	tokens: {[type in MarkupTokenType]?: TokenFormat};
+};
 
 const scopeToTokenTypes: Dict<Array<MarkupTokenType>> = {
 	"constant": ["number", "boolean"],
@@ -148,15 +147,16 @@ function normalizeFontStyle(style: undefined | string): FontStyle {
 	}
 }
 
-const tokenColorsCache: Map<Consumer, TokenFormats> = new Map();
-let defaultTokenColors: undefined | TokenFormats;
+const tokenColorsCache: Map<Consumer, Theme> = new Map();
+let defaultTokenColors: undefined | Theme;
 
-function getTokenColors(consumer: undefined | Consumer): TokenFormats {
+function getTokenColors(consumer: undefined | Consumer): Theme {
 	if (consumer === undefined) {
 		if (defaultTokenColors === undefined) {
-			defaultTokenColors = getTokenColors(
-				consumeUnknown(OneDarkPro, "parse/vscodeTheme"),
-			);
+			defaultTokenColors = {
+				...getTokenColors(consumeUnknown(OneDarkPro, "parse/vscodeTheme")),
+				kind: "default",
+			};
 		}
 
 		return defaultTokenColors;
@@ -167,8 +167,11 @@ function getTokenColors(consumer: undefined | Consumer): TokenFormats {
 		return cached;
 	}
 
-	const tokenTypeFormat: TokenFormats = {};
-	tokenColorsCache.set(consumer, tokenTypeFormat);
+	const theme: Theme = {
+		kind: "user",
+		tokens: {},
+	};
+	tokenColorsCache.set(consumer, theme);
 
 	for (const prop of consumer.get("tokenColors").asArray()) {
 		const settings = prop.get("settings");
@@ -184,7 +187,7 @@ function getTokenColors(consumer: undefined | Consumer): TokenFormats {
 			}
 
 			for (const tokenType of tokenTypes) {
-				const existing = tokenTypeFormat[tokenType];
+				const existing = theme.tokens[tokenType];
 
 				const newSettings: TokenFormat = {};
 
@@ -198,7 +201,7 @@ function getTokenColors(consumer: undefined | Consumer): TokenFormats {
 					);
 				}
 
-				tokenTypeFormat[tokenType] = {
+				theme.tokens[tokenType] = {
 					...existing,
 					...newSettings,
 				};
@@ -206,21 +209,26 @@ function getTokenColors(consumer: undefined | Consumer): TokenFormats {
 		}
 	}
 
-	return tokenTypeFormat;
+	return theme;
 }
 
 function formatToken(
 	type: undefined | MarkupTokenType,
 	value: string,
-	opts: MarkupFormatOptions,
+	grid: Grid,
 ): string {
 	if (type === undefined) {
 		return value;
 	}
 
-	const tokenTypeFormat = getTokenColors((opts?.userConfig)?.syntaxTheme);
-	const format = tokenTypeFormat[type];
+	const theme = getTokenColors((grid.options?.userConfig)?.syntaxTheme);
 
+	// Only use our default syntax theme when we are confident the terminal has a dark background
+	if (theme.kind === "default" && grid.features.background !== "dark") {
+		return value;
+	}
+
+	const format = theme.tokens[type];
 	if (format === undefined) {
 		return value;
 	}
@@ -233,7 +241,7 @@ function formatToken(
 		return value;
 	}
 
-	return formatAnsi.rgb(value, format.rgb);
+	return formatAnsiRGB(value, format.rgb, grid.features);
 }
 
 function hexToRgb(hex: undefined | string): [number, number, number] {

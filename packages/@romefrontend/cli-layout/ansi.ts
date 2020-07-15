@@ -5,6 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {TerminalFeatures} from "@romefrontend/cli-environment";
+
+type RGB = [number, number, number];
+
 const ESC = "\x1b[";
 
 export const pattern = [
@@ -16,6 +20,86 @@ export const regex = new RegExp(pattern, "g");
 
 function createEscape(num: number): string {
 	return `${ESC}${String(num)}m`;
+}
+
+function rgbTo8BitAnsi([r, g, b]: RGB): number {
+	if (r === g && g === b) {
+		if (r < 8) {
+			return 16;
+		}
+
+		if (r > 248) {
+			return 231;
+		}
+
+		return Math.round((r - 8) / 247 * 24) + 232;
+	}
+
+	const ansi =
+		16 +
+		36 * Math.round(r / 255 * 5) +
+		6 * Math.round(g / 255 * 5) +
+		Math.round(b / 255 * 5);
+
+	return ansi;
+}
+
+function saturation(rgb: RGB): number {
+	const r = rgb[0] / 255;
+	const g = rgb[1] / 255;
+	const b = rgb[2] / 255;
+	const v = Math.max(r, g, b);
+	const diff = v - Math.min(r, g, b);
+
+	let s;
+	if (diff === 0) {
+		s = 0;
+	} else {
+		s = diff / v;
+	}
+
+	return s * 100;
+}
+
+function rgbTo4BitAnsi(color: RGB): number {
+	const [r, g, b] = color;
+	let value = saturation(color);
+
+	value = Math.round(value / 50);
+
+	if (value === 0) {
+		return 30;
+	}
+
+	let ansi =
+		30 +
+		(Math.round(b / 255) << 2 | Math.round(g / 255) << 1 | Math.round(r / 255));
+
+	if (value === 2) {
+		ansi += 60;
+	}
+
+	return ansi;
+}
+
+export function formatAnsiRGB(
+	str: string,
+	color: RGB,
+	features: TerminalFeatures,
+): string {
+	switch (features.colorDepth) {
+		case 1:
+			return str;
+
+		case 4:
+			return createEscape(rgbTo4BitAnsi(color)) + str + createEscape(39);
+
+		case 8:
+			return `\u001b[38;5;${rgbTo8BitAnsi(color)}m${str}${createEscape(39)}`;
+
+		case 24:
+			return formatAnsi.rgb(str, color);
+	}
 }
 
 export const formatAnsi = {
@@ -34,10 +118,10 @@ export const formatAnsi = {
 	hyperlink(name: string, href: string): string {
 		return `\u001b]8;;${href}\u0007${name}\u001b]8;;\u0007`;
 	},
-	rgb(str: string, color: [number, number, number]): string {
+	rgb(str: string, color: RGB): string {
 		return `\u001b[38;2;${color.join(";")}m${str}${createEscape(39)}`;
 	},
-	bgRgb(str: string, color: [number, number, number]): string {
+	bgRgb(str: string, color: RGB): string {
 		return `\u001b[48;2;${color.join(";")}m${str}${createEscape(49)}`;
 	},
 	bold(str: string): string {

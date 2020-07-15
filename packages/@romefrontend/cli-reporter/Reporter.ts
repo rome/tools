@@ -47,7 +47,7 @@ import {
 	TERMINAL_FEATURES_DEFAULT,
 	TerminalFeatures,
 	inferTerminalFeatures,
-} from "@romefrontend/environment";
+} from "@romefrontend/cli-environment";
 
 type ListOptions = {
 	reverse?: boolean;
@@ -147,7 +147,7 @@ export default class Reporter {
 			force,
 		);
 
-		const {format = features.color ? "ansi" : "none"} = force;
+		const {format = features.colorDepth > 1 ? "ansi" : "none"} = force;
 
 		const stdoutWrite: ReporterDerivedStreams["stdoutWrite"] = (chunk) => {
 			if (stdout !== undefined) {

@@ -26,7 +26,7 @@ import {
 	removeDirectory,
 	writeFile,
 } from "@romefrontend/fs";
-import {Stdout} from "@romefrontend/environment";
+import {Stdout} from "@romefrontend/cli-environment";
 import {Dict} from "@romefrontend/typescript-helpers";
 import {DEFAULT_USER_CONFIG, UserConfig} from "../core/common/userConfig";
 import ServerRequest from "../core/server/ServerRequest";

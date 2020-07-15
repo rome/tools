@@ -25,7 +25,7 @@ import {AbsoluteFilePath} from "@romefrontend/path";
 import {PLATFORMS} from "../../common/types/platform";
 import {HmrClientLogMessage, HmrServerMessage} from "./hmr";
 import {ConsumableUrl} from "@romefrontend/codec-url";
-import {TERMINAL_FEATURES_DEFAULT} from "@romefrontend/environment";
+import {TERMINAL_FEATURES_DEFAULT} from "@romefrontend/cli-environment";
 
 export type WebServerTime = {
 	startTime: number;
