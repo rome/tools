@@ -110,7 +110,7 @@ const categoryAlias = {
 	ts: "TypeScript",
 };
 
-let docTemplateTable = null;
+let docTemplateTable = "";
 
 for (const {basename, ruleName, category, docs} of defs) {
 	if (categoryAlias[category]) {
@@ -120,8 +120,6 @@ for (const {basename, ruleName, category, docs} of defs) {
 		}
 
 		docTemplate += `## ${categoryAlias[category]}\n\n`;
-
-		docTemplateTable = "| Rule | Description |\n| ------------- | ------------- |\n";
 	}
 
 	// Remove this, so each doc headings will be added once
@@ -133,8 +131,8 @@ for (const {basename, ruleName, category, docs} of defs) {
 		console.log(`/docs/lint/rules/${ruleName}.md is missing a description\n`);
 	}
 
-	docTemplateTable += `| [${basename}](/docs/lint/rules/${ruleName}) | ${description ||
-	""} |\n`;
+	docTemplateTable += `- [${basename}](/docs/lint/rules/${ruleName}):  ${description ||
+	""}\n`;
 }
 
 docTemplate += docTemplateTable;

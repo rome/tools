@@ -13,6 +13,15 @@
     }
   }
 
+  ul {
+    padding: 0;
+    margin: 0 0 0 12px;
+
+    li {
+      margin: 4px 0;
+    }
+  }
+
   h1:hover .header-anchor,
   h2:hover .header-anchor,
   h3:hover .header-anchor {
