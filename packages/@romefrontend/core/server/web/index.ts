@@ -25,7 +25,7 @@ import {AbsoluteFilePath} from "@romefrontend/path";
 import {PLATFORMS} from "../../common/types/platform";
 import {HmrClientLogMessage, HmrServerMessage} from "./hmr";
 import {ConsumableUrl} from "@romefrontend/codec-url";
-import {TERMINAL_FEATURES_DEFAULT} from "@romefrontend/cli-environment";
+import {DEFAULT_TERMINAL_FEATURES} from "@romefrontend/cli-environment";
 
 export type WebServerTime = {
 	startTime: number;
@@ -91,7 +91,7 @@ export class WebServer {
 			const ansiReporterStream: ReporterStream = {
 				type: "all",
 				format: "ansi",
-				features: TERMINAL_FEATURES_DEFAULT,
+				features: DEFAULT_TERMINAL_FEATURES,
 				write(chunk) {
 					data.stdoutAnsi += chunk;
 				},
@@ -100,7 +100,7 @@ export class WebServer {
 			const htmlReporterStream: ReporterStream = {
 				type: "all",
 				format: "html",
-				features: TERMINAL_FEATURES_DEFAULT,
+				features: DEFAULT_TERMINAL_FEATURES,
 				write(chunk) {
 					data.stdoutHTML += chunk;
 				},

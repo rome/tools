@@ -10,7 +10,7 @@ import {
 	ReporterConditionalStream,
 	ReporterOptions,
 } from "@romefrontend/cli-reporter";
-import {TERMINAL_FEATURES_DEFAULT} from "@romefrontend/cli-environment";
+import {DEFAULT_TERMINAL_FEATURES} from "@romefrontend/cli-environment";
 
 export default class Logger extends Reporter {
 	constructor(
@@ -29,7 +29,7 @@ export default class Logger extends Reporter {
 				type: "all",
 				format: "markup",
 				features: {
-					...TERMINAL_FEATURES_DEFAULT,
+					...DEFAULT_TERMINAL_FEATURES,
 					columns: undefined,
 				},
 				write,

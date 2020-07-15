@@ -22,7 +22,7 @@ export type TerminalFeatures = {
 	unicode: boolean;
 };
 
-export const TERMINAL_FEATURES_DEFAULT: TerminalFeatures = {
+export const DEFAULT_TERMINAL_FEATURES: TerminalFeatures = {
 	background: "unknown",
 	columns: ob1Coerce1(100),
 	cursor: true,

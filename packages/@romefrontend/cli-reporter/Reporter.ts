@@ -44,7 +44,7 @@ import {
 } from "@romefrontend/cli-layout/format";
 import {
 	Stdout,
-	TERMINAL_FEATURES_DEFAULT,
+	DEFAULT_TERMINAL_FEATURES,
 	TerminalFeatures,
 	inferTerminalFeatures,
 } from "@romefrontend/cli-environment";
@@ -151,12 +151,14 @@ export default class Reporter {
 
 		const stdoutWrite: ReporterDerivedStreams["stdoutWrite"] = (chunk) => {
 			if (stdout !== undefined) {
+				// @ts-ignore
 				stdout.write(chunk);
 			}
 		};
 
 		const stderrWrite: ReporterDerivedStreams["stderrWrite"] = (chunk) => {
 			if (stderr !== undefined) {
+				// @ts-ignore
 				stderr.write(chunk);
 			}
 		};
@@ -234,7 +236,7 @@ export default class Reporter {
 		const stream: ReporterStream = {
 			format,
 			type: "all",
-			features: TERMINAL_FEATURES_DEFAULT,
+			features: DEFAULT_TERMINAL_FEATURES,
 			write(chunk) {
 				buff += chunk;
 			},
