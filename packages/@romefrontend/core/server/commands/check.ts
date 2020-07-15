@@ -42,13 +42,13 @@ export default createServerCommand<Flags>({
 			apply: consumer.get(
 				"apply",
 				{
-					description: "autofixes and format are applied to the entire project",
+					description: "recommended autofixes and formatting is applied",
 				},
 			).asBoolean(false),
 			formatOnly: consumer.get(
 				"formatOnly",
 				{
-					description: "only applies format changes to the entire project",
+					description: "only formatting is applied",
 				},
 			).asBoolean(false),
 			changed: consumer.get(

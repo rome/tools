@@ -26,7 +26,7 @@ export default createServerCommand({
 			fix: consumer.get(
 				"fix",
 				{
-					description: "applies format and autofixes to the entire project",
+					description: "enables --update-snapshots for test, and --apply for the lint command",
 				},
 			).asBoolean(false),
 		};
