@@ -254,6 +254,9 @@ JSRoot {
 
   ✖ The only valid meta property for new is new.target
 
+    var f = function() { new.unknown_property; }
+                             ^^^^^^^^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

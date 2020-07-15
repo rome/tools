@@ -188,6 +188,11 @@ JSRoot {
 
   ✖ There shouldn't be any newlines between async and the rest of the function
 
+    1 │ ({
+    2 │     async
+    3 │     foo() {}
+    4 │ })
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

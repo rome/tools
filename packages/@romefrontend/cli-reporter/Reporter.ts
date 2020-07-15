@@ -570,6 +570,10 @@ export default class Reporter {
 
 	//# Control
 
+	getAllStreams(): Set<ReporterStream> {
+		return this.streams;
+	}
+
 	getStreams(stderr: undefined | boolean): Set<ReporterStream> {
 		if (this.shouldRedirectOutToErr) {
 			return this.errStreams;

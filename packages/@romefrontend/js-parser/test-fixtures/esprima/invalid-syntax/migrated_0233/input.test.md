@@ -192,6 +192,9 @@ JSRoot {
 
   ✖ static is a reserved word
 
+    function hello(static) { "use strict"; }
+                   ^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

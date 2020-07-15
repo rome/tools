@@ -322,6 +322,9 @@ JSRoot {
 
   ✖ Unexpected token, expected {
 
+    x = { set method(val) v = val }
+                          ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

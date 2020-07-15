@@ -38,7 +38,7 @@ export default createServerCommand({
 		let ast = await req.requestWorkerParse(
 			filename,
 			{
-				sourceType: flags.sourceType,
+				sourceTypeJS: flags.sourceType,
 				allowParserDiagnostics: flags.allowDiagnostics,
 			},
 		);

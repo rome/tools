@@ -244,6 +244,9 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    import foo from "foo.json" with lazy: "true";
+                               ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

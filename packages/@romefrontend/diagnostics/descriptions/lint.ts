@@ -8,6 +8,7 @@
 import {
 	DiagnosticAdvice,
 	DiagnosticAdviceAction,
+	DiagnosticLanguage,
 	DiagnosticLocation,
 } from "../types";
 import {escapeMarkup, markup} from "@romefrontend/cli-layout";
@@ -607,7 +608,8 @@ export const lint = createDiagnosticsCategory({
 			},
 			{
 				type: "code",
-				code: `import {default as ${prev}}`,
+				language: "js",
+				sourceText: `import {default as ${prev}}`,
 			},
 		],
 	}),
@@ -1064,12 +1066,18 @@ export const lint = createDiagnosticsCategory({
 		category: "lint/js/sortImportExportSpecifiers",
 		message: "The specifiers of the import declaration should be sorted alphabetically.",
 	},
-	PENDING_FIXES: (relativeFilename: string, original: string, formatted: string) => ({
+	PENDING_FIXES: (
+		relativeFilename: string,
+		language: DiagnosticLanguage,
+		original: string,
+		formatted: string,
+	) => ({
 		category: "lint/pendingFixes",
 		message: "Pending formatting and recommended autofixes",
 		advice: [
 			{
 				type: "diff",
+				language,
 				diff: stringDiff(original, formatted),
 			},
 			({

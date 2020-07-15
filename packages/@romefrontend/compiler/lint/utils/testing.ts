@@ -6,67 +6,56 @@
  */
 
 import {TestHelper} from "rome";
-import lint from "../index";
-import {parseJS} from "@romefrontend/js-parser";
-import {UnknownFilePath, createUnknownFilePath} from "@romefrontend/path";
-import {createDefaultProjectConfig} from "@romefrontend/project";
-import {ConstJSProgramSyntax, ConstJSSourceType} from "@romefrontend/ast";
 import {
 	DiagnosticCategory,
 	DiagnosticsProcessor,
 } from "@romefrontend/diagnostics";
 import {printDiagnosticsToString} from "@romefrontend/cli-diagnostics";
+import {
+	IntegrationWorker,
+	createIntegrationWorker,
+} from "@romefrontend/test-helpers";
 
 type TestLintOptions = {
 	category: undefined | DiagnosticCategory;
-	sourceType?: ConstJSSourceType;
-	syntax?: Array<ConstJSProgramSyntax>;
-	path?: UnknownFilePath | string;
+	filename: string;
 	snapshotFilename?: string;
-};
-
-type TestLintInput = {
 	valid?: Array<string>;
 	invalid?: Array<string>;
 };
 
-export async function testLint(
-	t: TestHelper,
-	{invalid = [], valid = []}: TestLintInput,
-	opts: TestLintOptions,
-) {
+export async function testLint(t: TestHelper, opts: TestLintOptions) {
+	const int = createIntegrationWorker();
+	const {valid = [], invalid = []} = opts;
+
+	let i = 0;
+
 	for (const input of invalid) {
-		await testLintExpect(t, input, opts, false);
+		await testLintExpect(t, int, input, opts, ++i, false);
 	}
+
 	for (const input of valid) {
-		await testLintExpect(t, input, opts, true);
+		await testLintExpect(t, int, input, opts, ++i, true);
 	}
 }
 
 async function testLintExpect(
 	t: TestHelper,
+	{worker, createFileReference}: IntegrationWorker,
 	input: string,
 	{
-		syntax = ["jsx", "ts"],
 		category,
-		sourceType = "module",
-		path = createUnknownFilePath("unknown"),
+		filename,
 		snapshotFilename,
 	}: TestLintOptions,
+	index: number,
 	expectValid: boolean,
 ) {
 	t.addToAdvice({
-		type: "log",
-		category: "info",
-		text: "Lint options",
-	});
-
-	t.addToAdvice({
 		type: "inspect",
 		data: {
-			category,
-			syntax,
-			sourceType,
+			filename,
+			expectValid,
 		},
 	});
 
@@ -78,31 +67,47 @@ async function testLintExpect(
 
 	t.addToAdvice({
 		type: "code",
-		code: input,
-	});
-
-	const ast = parseJS({
-		input,
-		sourceType,
-		path,
-		syntax,
-	});
-
-	const res = await lint({
-		applyRecommendedFixes: true,
-		options: {},
-		ast,
 		sourceText: input,
-		project: {
-			folder: undefined,
-			config: createDefaultProjectConfig(),
+	});
+
+	const uid = `${category}/${expectValid ? "pass" : "reject"}/${index}/${filename}`;
+	const {ref, teardown} = createFileReference({
+		uid,
+		sourceText: input,
+	});
+
+	const res = await worker.api.lint(
+		ref,
+		{
+			applyRecommendedFixes: true,
+			prefetchedModuleSignatures: {},
+			save: true,
 		},
+		{
+			//allowCorrupt: true,
+		},
+	);
+
+	teardown();
+
+	t.addToAdvice({
+		type: "log",
+		category: "info",
+		text: "Response",
+	});
+
+	t.addToAdvice({
+		type: "inspect",
+		data: res,
 	});
 
 	const processor = new DiagnosticsProcessor();
-	processor.normalizer.setInlineSourceText("unknown", input);
+	processor.normalizer.setInlineSourceText(uid, input);
 	processor.addFilter({
-		test: (diag) => diag.description.category === category,
+		test: (diag) =>
+			diag.description.category === category ||
+			diag.description.category === "parse/js"
+		,
 	});
 	processor.addDiagnostics(res.diagnostics);
 
@@ -127,7 +132,7 @@ async function testLintExpect(
 
 	t.namedSnapshot(
 		`${snapshotName}: formatted`,
-		res.src,
+		res.save,
 		undefined,
 		{filename: snapshotFilename},
 	);

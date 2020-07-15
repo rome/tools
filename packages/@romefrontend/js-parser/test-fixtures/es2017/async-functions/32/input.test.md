@@ -473,6 +473,11 @@ JSRoot {
 
   ✖ Unexpected token, expected ,
 
+  > 1 │ const foo = async ({ async = bar }) => {
+      │                            ^
+    2 │   await baz;
+    3 │ };
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

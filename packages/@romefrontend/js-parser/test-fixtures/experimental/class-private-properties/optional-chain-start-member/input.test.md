@@ -488,6 +488,12 @@ JSRoot {
 
   ✖ Expected an identifier
 
+    4 │   static test() {
+  > 5 │     return Foo?.#x.toFixed;
+      │                 ^
+    6 │   }
+    7 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

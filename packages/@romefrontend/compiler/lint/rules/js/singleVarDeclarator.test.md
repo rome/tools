@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/js/singleVarDeclarator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/singleVarDeclarator/reject/1/file.ts:1 lint/js/singleVarDeclarator  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Declare variables separately.
 

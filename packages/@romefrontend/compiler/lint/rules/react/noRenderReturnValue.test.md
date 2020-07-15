@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:12 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noRenderReturnValue/reject/1/file.tsx:1:12 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━
 
   ✖ Do not depend on the return value from ReactDOM.render().
 
@@ -32,7 +32,7 @@ const foo = ReactDOM.render(<div />, document.body);
 
 ```
 
- unknown:1:19 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noRenderReturnValue/reject/2/file.tsx:1:19 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━
 
   ✖ Do not depend on the return value from ReactDOM.render().
 
@@ -56,7 +56,7 @@ const foo = bar && ReactDOM.render(<div />, document.body);
 
 ```
 
- unknown:1:18 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noRenderReturnValue/reject/3/file.tsx:1:18 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━
 
   ✖ Do not depend on the return value from ReactDOM.render().
 
@@ -80,7 +80,7 @@ const foo = bar ? ReactDOM.render(<div />, document.body) : null;
 
 ```
 
- unknown:1:18 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noRenderReturnValue/reject/4/file.tsx:1:18 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━
 
   ✖ Do not depend on the return value from ReactDOM.render().
 
@@ -106,7 +106,7 @@ function foo() {
 
 ```
 
- unknown:3:13 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noRenderReturnValue/reject/5/file.tsx:3:13 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━
 
   ✖ Do not depend on the return value from ReactDOM.render().
 
@@ -134,7 +134,7 @@ const foo = {
 
 ```
 
- unknown:3:11 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noRenderReturnValue/reject/6/file.tsx:3:11 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━
 
   ✖ Do not depend on the return value from ReactDOM.render().
 
@@ -161,7 +161,7 @@ foo = ReactDOM.render(<div />, document.body);
 
 ```
 
- unknown:3:13 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noRenderReturnValue/reject/7/file.tsx:3:13 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━
 
   ✖ Do not depend on the return value from ReactDOM.render().
 

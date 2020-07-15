@@ -9,8 +9,9 @@ test(
 			{
 				invalid: ["<div scope={scope} />", '<div scope="col" />'],
 				valid: ["<th scope={scope}></th>", '<th scope="col"></th>'],
+				filename: "file.tsx",
+				category: "lint/jsx-a11y/scope",
 			},
-			{category: "lint/jsx-a11y/scope"},
 		);
 	},
 );

@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:12 lint/js/restrictedGlobals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/restrictedGlobals/reject/1/file.ts:1:12 lint/js/restrictedGlobals ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not use the global variable event.
 
@@ -34,7 +34,7 @@ console.log(event);
 
 ```
 
- unknown:1:4 lint/js/restrictedGlobals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/restrictedGlobals/reject/2/file.ts:1:4 lint/js/restrictedGlobals ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not use the global variable event.
 

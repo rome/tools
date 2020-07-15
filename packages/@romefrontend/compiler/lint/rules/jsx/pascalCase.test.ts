@@ -17,8 +17,9 @@ test(
 					"<div />",
 					"<FooComponent />",
 				],
+				filename: "file.tsx",
+				category: "lint/jsx/pascalCase",
 			},
-			{category: "lint/jsx/pascalCase"},
 		);
 	},
 );

@@ -164,6 +164,10 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    1 │ x·
+  > 2 │  isnt y
+      │       ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

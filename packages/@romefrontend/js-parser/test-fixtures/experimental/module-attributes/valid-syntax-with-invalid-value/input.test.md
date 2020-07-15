@@ -437,6 +437,9 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    import foo from "foo.json" with type: "json", lazy: true, startAtLine: 1;
+                               ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

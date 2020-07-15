@@ -265,6 +265,9 @@ JSRoot {
 
   ✖ eval is a reserved word
 
+    function hello() { 'use strict'; function inner(eval) {} }
+                                                    ^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

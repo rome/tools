@@ -275,8 +275,9 @@ test(
 						}, []);
 					`,
 				],
+				filename: "file.tsx",
+				category: "lint/react/noArrayIndexKey",
 			},
-			{category: "lint/react/noArrayIndexKey"},
 		);
 	},
 );

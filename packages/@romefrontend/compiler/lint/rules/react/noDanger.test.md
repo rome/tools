@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:5 lint/react/noDanger ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noDanger/reject/1/file.tsx:1:5 lint/react/noDanger ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid passing content using the dangerouslySetInnerHTML prop.
 
@@ -35,7 +35,7 @@
 
 ```
 
- unknown:1:28 lint/react/noDanger ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noDanger/reject/2/file.tsx:1:28 lint/react/noDanger ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid passing content using the dangerouslySetInnerHTML prop.
 
@@ -61,7 +61,7 @@ React.createElement("div", {dangerouslySetInnerHTML: {__html: "child"}});
 
 ```
 
- unknown:1:22 lint/react/noDanger ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noDanger/reject/3/file.tsx:1:22 lint/react/noDanger ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid passing content using the dangerouslySetInnerHTML prop.
 
@@ -109,7 +109,7 @@ createElement("div", {dangerouslySetInnerHTML: {__html: "child"}});
 ### `4: formatted`
 
 ```
-React.createElement("div", "child)");
+React.createElement("div", child);
 
 ```
 
@@ -123,6 +123,6 @@ React.createElement("div", "child)");
 ### `5: formatted`
 
 ```
-createElement("div", "child)");
+createElement("div", child);
 
 ```

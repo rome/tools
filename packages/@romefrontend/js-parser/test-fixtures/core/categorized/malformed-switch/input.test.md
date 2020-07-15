@@ -101,6 +101,11 @@ JSRoot {
 
   ✖ Statement outside of a case or default block
 
+    1 │ switch (x) {
+  > 2 │   var y = 5;
+      │   ^^^^^^^^^^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

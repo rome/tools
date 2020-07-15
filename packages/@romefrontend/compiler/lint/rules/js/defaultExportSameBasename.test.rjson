@@ -1,15 +1,10 @@
+filename: "foo.ts"
 invalid: [
-	"export default function test() {}
-"
-	"export default class Test {}
-"
+	"export default function test() {}"
+	"export default class Test {}"
 ]
-path: "foo.ts"
 valid: [
-	"export default function foo() {}
-"
-	"export default class Foo {}
-"
-	"export default 'rome';
-"
+	"export default function foo() {}"
+	"export default class Foo {}"
+	"export default 'rome';"
 ]

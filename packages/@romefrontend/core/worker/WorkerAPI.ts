@@ -41,7 +41,7 @@ import {
 	InlineSnapshotUpdate,
 	InlineSnapshotUpdates,
 } from "../test-worker/SnapshotManager";
-import {formatAST} from "@romefrontend/formatter";
+import {FormatterOptions, formatAST} from "@romefrontend/formatter";
 import {getNodeReferenceParts, valueToNode} from "@romefrontend/js-ast-utils";
 
 // Some Windows git repos will automatically convert Unix line endings to Windows
@@ -125,7 +125,7 @@ export default class WorkerAPI {
 		updates: InlineSnapshotUpdates,
 		parseOptions: WorkerParseOptions,
 	): Promise<Diagnostics> {
-		let {ast, sourceText} = await this.worker.parse(ref, parseOptions);
+		let {ast} = await this.worker.parse(ref, parseOptions);
 
 		const appliedUpdatesToCallees: Set<AnyNode> = new Set();
 		const pendingUpdates: Set<InlineSnapshotUpdate> = new Set(updates);
@@ -210,7 +210,7 @@ export default class WorkerAPI {
 		}
 
 		if (diags.length === 0) {
-			const formatted = formatAST(ast, {sourceText}).code;
+			const formatted = formatAST(ast).code;
 			await this.worker.writeFile(ref.real, formatted);
 		}
 
@@ -315,7 +315,7 @@ export default class WorkerAPI {
 			ref,
 			{
 				...opts,
-				sourceType: opts.sourceType,
+				sourceTypeJS: opts.sourceTypeJS,
 				cache: false,
 			},
 		);
@@ -325,9 +325,10 @@ export default class WorkerAPI {
 
 	async format(
 		ref: FileReference,
-		opts: WorkerParseOptions,
+		formatOptions: FormatterOptions,
+		parseOptions: WorkerParseOptions,
 	): Promise<undefined | WorkerFormatResult> {
-		const res = await this._format(ref, opts);
+		const res = await this._format(ref, formatOptions, parseOptions);
 		if (res === undefined) {
 			return undefined;
 		} else {
@@ -335,12 +336,14 @@ export default class WorkerAPI {
 				formatted: normalizeFormattedLineEndings(res.sourceText, res.formatted),
 				original: res.sourceText,
 				diagnostics: res.diagnostics,
+				suppressions: res.suppressions,
 			};
 		}
 	}
 
 	async _format(
 		ref: FileReference,
+		formatOptions: FormatterOptions,
 		parseOptions: WorkerParseOptions,
 	): Promise<undefined | ExtensionLintResult> {
 		const project = this.worker.getProject(ref.project);
@@ -367,12 +370,7 @@ export default class WorkerAPI {
 			parseOptions,
 		);
 
-		const out = formatAST(
-			ast,
-			{
-				sourceText,
-			},
-		);
+		const out = formatAST(ast, formatOptions);
 
 		return this.interceptDiagnostics(
 			{
@@ -410,7 +408,7 @@ export default class WorkerAPI {
 				if (handler.canLint) {
 					return this.compilerLint(ref, options, parseOptions);
 				} else {
-					return this._format(ref, parseOptions);
+					return this._format(ref, {}, parseOptions);
 				}
 			},
 			{
@@ -483,6 +481,7 @@ export default class WorkerAPI {
 					},
 					description: descriptions.LINT.PENDING_FIXES(
 						ref.relative.join(),
+						handler.language,
 						sourceText,
 						formatted,
 					),

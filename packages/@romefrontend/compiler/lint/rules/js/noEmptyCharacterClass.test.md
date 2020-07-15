@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:15 lint/js/noEmptyCharacterClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noEmptyCharacterClass/reject/1/file.ts:1:15 lint/js/noEmptyCharacterClass ━━━━━━━━━━━━━━━━━
 
   ✖ Do not use empty character classes in regular expressions.
 
@@ -35,7 +35,7 @@ foo;
 
 ```
 
- unknown:1:14 lint/js/noEmptyCharacterClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noEmptyCharacterClass/reject/2/file.ts:1:14 lint/js/noEmptyCharacterClass ━━━━━━━━━━━━━━━━━
 
   ✖ Do not use empty character classes in regular expressions.
 
@@ -62,7 +62,7 @@ foo;
 
 ```
 
- unknown:1:20 lint/js/noEmptyCharacterClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noEmptyCharacterClass/reject/3/file.ts:1:20 lint/js/noEmptyCharacterClass ━━━━━━━━━━━━━━━━━
 
   ✖ Do not use empty character classes in regular expressions.
 
@@ -90,7 +90,7 @@ if (foo.match(/^abc/)) {
 
 ```
 
- unknown:1:11 lint/js/noEmptyCharacterClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noEmptyCharacterClass/reject/4/file.ts:1:11 lint/js/noEmptyCharacterClass ━━━━━━━━━━━━━━━━━
 
   ✖ Do not use empty character classes in regular expressions.
 
@@ -117,7 +117,7 @@ foo;
 
 ```
 
- unknown:1:13 lint/js/noEmptyCharacterClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noEmptyCharacterClass/reject/5/file.ts:1:13 lint/js/noEmptyCharacterClass ━━━━━━━━━━━━━━━━━
 
   ✖ Do not use empty character classes in regular expressions.
 
@@ -144,7 +144,7 @@ foo;
 
 ```
 
- unknown:1:20 lint/js/noEmptyCharacterClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noEmptyCharacterClass/reject/6/file.ts:1:20 lint/js/noEmptyCharacterClass ━━━━━━━━━━━━━━━━━
 
   ✖ Do not use empty character classes in regular expressions.
 

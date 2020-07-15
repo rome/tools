@@ -4,16 +4,23 @@
 
 ## `arrays > array-spread`
 
+### `Diagnostics`
+
+```
+✔ No known problems!
+
+```
+
 ### `Input`
 
-```javascript
+```js
 let a = [...a, ...b,];
 let b = [...a, ...b];
 ```
 
 ### `Output`
 
-```javascript
+```js
 let a = [...a, ...b];
 let b = [...a, ...b];
 

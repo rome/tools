@@ -166,6 +166,9 @@ JSRoot {
 
   ✖ Invalid left-hand side in assignment expression
 
+    (a,b)=(c,d);
+     ^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

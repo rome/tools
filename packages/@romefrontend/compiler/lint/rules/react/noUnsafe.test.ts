@@ -32,8 +32,9 @@ test(
 						}
 					`,
 				],
+				filename: "file.tsx",
+				category: "lint/react/noUnsafe",
 			},
-			{category: "lint/react/noUnsafe"},
 		);
 	},
 );

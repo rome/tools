@@ -295,6 +295,9 @@ JSRoot {
 
   ✖ The rest element has to be the last element when destructuring
 
+    let { ...x, y, z } = obj;
+             ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

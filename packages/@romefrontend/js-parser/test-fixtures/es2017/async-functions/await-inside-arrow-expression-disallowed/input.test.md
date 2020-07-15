@@ -201,6 +201,9 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    () => { await x }
+                  ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

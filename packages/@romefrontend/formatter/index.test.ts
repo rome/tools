@@ -1,95 +1,65 @@
-import {createFixtureTests} from "@romefrontend/test-helpers";
-import {parseJS} from "@romefrontend/js-parser";
-import {ConstJSProgramSyntax} from "@romefrontend/ast";
+import {
+	createFixtureTests,
+	createIntegrationWorker,
+	findFixtureInput,
+} from "@romefrontend/test-helpers";
 import {removeCarriageReturn} from "@romefrontend/string-utils";
-import {FormatterOptions, formatAST} from ".";
+
+import {printDiagnosticsToString} from "@romefrontend/cli-diagnostics";
 
 const promise = createFixtureTests(async (fixture, t) => {
-	const {options, files} = fixture;
-	// Get the input JS
-	const inputFile =
-		files.get("input.js") ||
-		files.get("input.mjs") ||
-		files.get("input.ts") ||
-		files.get("input.tsx");
-	if (inputFile === undefined) {
-		throw new Error(
-			`The fixture ${fixture.dir} did not have an input.(mjs|js|ts|tsx)`,
-		);
-	}
+	const {options} = fixture;
 
-	const sourceTypeProp = options.get("sourceType");
-	const sourceType = sourceTypeProp.asString("script");
-	if (sourceType !== "module" && sourceType !== "script") {
-		throw sourceTypeProp.unexpected();
-	}
+	const {worker, createFileReference} = createIntegrationWorker();
+	const {input, handler} = findFixtureInput(fixture, undefined);
 
-	const allowReturnOutsideFunction = options.get("allowReturnOutsideFunction").asBoolean(
-		false,
-	);
-	const filename = inputFile.relative;
-
-	const syntax: Array<ConstJSProgramSyntax> = options.get("syntax").asArray(
-		true,
-	).map((item) => {
-		return item.asStringSet(["jsx", "ts"]);
-	});
-
+	const filename = input.relative;
 	const format = options.get("format").asStringSetOrVoid(["pretty", "compact"]);
+	const content = removeCarriageReturn(input.content.toString());
 
-	const inputContent = removeCarriageReturn(inputFile.content.toString());
-
-	const ast = parseJS({
-		input: inputContent,
-		path: filename,
-		allowReturnOutsideFunction,
-		sourceType,
-		syntax,
+	const {ref, teardown} = createFileReference({
+		uid: filename.join(),
+		sourceText: content,
 	});
+	const res = await worker.api.format(ref, {format}, {});
+	teardown();
+	if (res === undefined) {
+		throw new Error("No format value returned");
+	}
 
-	const formatOptions: FormatterOptions = {
-		typeAnnotations: true,
-		sourceText: inputContent,
-		format,
-		sourceMaps: false,
-	};
-
-	t.addToAdvice({
-		type: "log",
-		category: "info",
-		text: "Format options",
-	});
-
-	t.addToAdvice({
-		type: "inspect",
-		data: {
-			...formatOptions,
-		},
-	});
-
-	const printed = formatAST(ast, formatOptions);
-
-	const snapshotFile = inputFile.absolute.getParent().append(
-		inputFile.absolute.getExtensionlessBasename(),
+	const snapshotFile = input.absolute.getParent().append(
+		input.absolute.getExtensionlessBasename(),
 	).join();
 
 	t.namedSnapshot(
 		"Input",
-		inputContent,
+		content,
 		undefined,
 		{
 			filename: snapshotFile,
-			language: "javascript",
+			language: handler.language,
 		},
 	);
 
 	t.namedSnapshot(
 		"Output",
-		printed.code,
+		res.formatted,
 		undefined,
 		{
 			filename: snapshotFile,
-			language: "javascript",
+			language: handler.language,
+		},
+	);
+
+	t.namedSnapshot(
+		"Diagnostics",
+		printDiagnosticsToString({
+			diagnostics: res.diagnostics,
+			suppressions: res.suppressions,
+		}),
+		undefined,
+		{
+			filename: snapshotFile,
 		},
 	);
 });

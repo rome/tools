@@ -15,7 +15,7 @@ JSRoot {
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: "module"
+	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
 		filename: "input.jsx"
@@ -357,6 +357,9 @@ JSRoot {
  input.jsx:1:46 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ,
+
+    <div>{(this?.class, this.class, this?.function, this.function)}</div>
+                                                  ^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

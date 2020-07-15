@@ -8,7 +8,7 @@
 
 ```
 
- unknown:3:2 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noWillUpdateSetState/reject/1/file.tsx:3:2 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentWillUpdate method.
 
@@ -45,7 +45,7 @@ class Hello extends React.Component {
 
 ```
 
- unknown:4:2 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noWillUpdateSetState/reject/2/file.tsx:4:2 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentWillUpdate method.
 
@@ -83,7 +83,7 @@ class Hello extends React.Component {
 
 ```
 
- unknown:3:2 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noWillUpdateSetState/reject/3/file.tsx:3:2 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentWillUpdate method.
 
@@ -120,7 +120,7 @@ class Hello extends Component {
 
 ```
 
- unknown:4:2 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noWillUpdateSetState/reject/4/file.tsx:4:2 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentWillUpdate method.
 
@@ -158,7 +158,7 @@ class Hello extends Component {
 
 ```
 
- unknown:3:2 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noWillUpdateSetState/reject/5/file.tsx:3:2 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentWillUpdate method.
 
@@ -195,7 +195,7 @@ class Hello extends React.Component {
 
 ```
 
- unknown:3:2 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noWillUpdateSetState/reject/6/file.tsx:3:2 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentWillUpdate method.
 

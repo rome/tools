@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/js/importDefaultBasename ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/importDefaultBasename/reject/1/file.ts:1 lint/js/importDefaultBasename ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use the basename bar or Bar when importing the default.
 

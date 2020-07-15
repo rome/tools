@@ -172,6 +172,9 @@ JSRoot {
 
   ✖ Async functions can only be declared at the top level or inside a block
 
+    foo: async function bar() {}
+         ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

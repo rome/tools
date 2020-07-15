@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/preferBlockStatements/reject/1/file.ts:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
 
@@ -41,7 +41,7 @@ if (x) {
 
 ```
 
- unknown:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/preferBlockStatements/reject/2/file.ts:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
 
@@ -81,7 +81,7 @@ if (x) {
 
 ```
 
- unknown:3:7 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/preferBlockStatements/reject/3/file.ts:3:7 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━
 
   ✖ Block statements are preferred in this position.
 
@@ -118,7 +118,7 @@ if (x) {
 
 ```
 
- unknown:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/preferBlockStatements/reject/4/file.ts:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
 
@@ -150,7 +150,7 @@ while (true) {
 
 ```
 
- unknown:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/preferBlockStatements/reject/5/file.ts:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
 
@@ -182,7 +182,7 @@ for (p in obj) {
 
 ```
 
- unknown:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/preferBlockStatements/reject/6/file.ts:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
 
@@ -214,7 +214,7 @@ for (x of xs) {
 
 ```
 
- unknown:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/preferBlockStatements/reject/7/file.ts:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
 
@@ -247,7 +247,7 @@ do {
 
 ```
 
- unknown:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/preferBlockStatements/reject/8/file.ts:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
 
@@ -279,18 +279,12 @@ while (x) {
 
 ```
 
- unknown:1 lint/js/preferBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/preferBlockStatements/reject/9/file.ts:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Block statements are preferred in this position.
+  ✖ 'with' in strict mode
 
-    with (x);with (x);
+    with (x);
     ^^^^^^^^^
-
-  ℹ Recommended fix
-
-    1   │ - with (x);
-      1 │ + with (x) {
-      2 │ + }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -300,9 +294,6 @@ while (x) {
 
 ### `8: formatted`
 
-```
-with (x) {
-	// empty
-}
-
+```javascript
+undefined
 ```

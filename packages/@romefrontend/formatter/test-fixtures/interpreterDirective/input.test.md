@@ -4,9 +4,16 @@
 
 ## `interpreterDirective`
 
+### `Diagnostics`
+
+```
+✔ No known problems!
+
+```
+
 ### `Input`
 
-```javascript
+```js
 #!/usr/bin/env babel-node
 console.log("hello world");
 
@@ -14,7 +21,7 @@ console.log("hello world");
 
 ### `Output`
 
-```javascript
+```js
 #!/usr/bin/env babel-node
 
 console.log("hello world");

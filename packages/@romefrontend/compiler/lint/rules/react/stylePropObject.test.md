@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:5 lint/react/stylePropObject ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/stylePropObject/reject/1/file.tsx:1:5 lint/react/stylePropObject ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The style prop value must be an object.
 
@@ -34,7 +34,7 @@
 
 ```
 
- unknown:1:5 lint/react/stylePropObject ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/stylePropObject/reject/2/file.tsx:1:5 lint/react/stylePropObject ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The style prop value must be an object.
 
@@ -60,7 +60,7 @@
 
 ```
 
- unknown:1:5 lint/react/stylePropObject ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/stylePropObject/reject/3/file.tsx:1:5 lint/react/stylePropObject ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The style prop value must be an object.
 
@@ -86,7 +86,7 @@
 
 ```
 
- unknown:1:5 lint/react/stylePropObject ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/stylePropObject/reject/4/file.tsx:1:5 lint/react/stylePropObject ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The style prop value must be an object.
 
@@ -112,7 +112,7 @@
 
 ```
 
- unknown:1:5 lint/react/stylePropObject ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/stylePropObject/reject/5/file.tsx:1:5 lint/react/stylePropObject ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The style prop value must be an object.
 

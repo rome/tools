@@ -54,8 +54,9 @@ test(
 					// id
 					"<span aria-details='someid' ></span>",
 				],
+				filename: "file.tsx",
+				category: "lint/jsx-a11y/ariaProptypes",
 			},
-			{category: "lint/jsx-a11y/ariaProptypes"},
 		);
 	},
 );

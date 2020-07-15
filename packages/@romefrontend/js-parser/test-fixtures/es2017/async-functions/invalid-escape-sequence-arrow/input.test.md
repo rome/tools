@@ -250,6 +250,9 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    \u0061sync x => { await x }
+               ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

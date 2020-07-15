@@ -383,6 +383,10 @@ JSRoot {
 
   ✖ import() requires exactly one argument
 
+  > 1 │ import();
+      │        ^
+    2 │ import("./foo.json", { with: { type: "json"} }, "unsupported");
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

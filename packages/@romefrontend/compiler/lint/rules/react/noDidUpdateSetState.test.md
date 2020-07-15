@@ -8,7 +8,7 @@
 
 ```
 
- unknown:3:2 lint/react/noDidUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noDidUpdateSetState/reject/1/file.tsx:3:2 lint/react/noDidUpdateSetState ━━━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentDidUpdate method.
 
@@ -45,7 +45,7 @@ class Hello extends React.Component {
 
 ```
 
- unknown:4:2 lint/react/noDidUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noDidUpdateSetState/reject/2/file.tsx:4:2 lint/react/noDidUpdateSetState ━━━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentDidUpdate method.
 
@@ -83,7 +83,7 @@ class Hello extends React.Component {
 
 ```
 
- unknown:3:2 lint/react/noDidUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noDidUpdateSetState/reject/3/file.tsx:3:2 lint/react/noDidUpdateSetState ━━━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentDidUpdate method.
 
@@ -120,7 +120,7 @@ class Hello extends Component {
 
 ```
 
- unknown:4:2 lint/react/noDidUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noDidUpdateSetState/reject/4/file.tsx:4:2 lint/react/noDidUpdateSetState ━━━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentDidUpdate method.
 

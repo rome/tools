@@ -231,6 +231,9 @@ JSRoot {
 
   ✖ A required element cannot follow an optional element.
 
+    let x: [string?, number]
+                     ^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

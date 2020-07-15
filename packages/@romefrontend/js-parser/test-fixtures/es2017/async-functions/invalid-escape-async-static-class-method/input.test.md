@@ -283,6 +283,9 @@ JSRoot {
 
   ✖ async can't contain a unicode escape
 
+    class X { static \u0061sync x() { await x } }
+                     ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

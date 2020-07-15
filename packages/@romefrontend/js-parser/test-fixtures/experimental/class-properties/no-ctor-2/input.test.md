@@ -311,6 +311,12 @@ JSRoot {
 
   ✖ Classes may not have a non-static field named 'constructor'
 
+    1 │ class Foo {
+  > 2 │   constructor
+      │   ^^^^^^^^^^^
+    3 │   *x(){}
+    4 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

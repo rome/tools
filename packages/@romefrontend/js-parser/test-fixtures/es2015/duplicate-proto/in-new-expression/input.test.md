@@ -294,6 +294,9 @@ JSRoot {
 
   ✖ Redefinition of __proto__ property
 
+    new {__proto__: Number, __proto__: Number}.__proto__;
+                            ^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -253,6 +253,11 @@ JSRoot {
 
   ✖ Only expressions, functions or classes are allowed as the `default` export.
 
+  > 1 │ export default let Foo = () => {
+      │                ^
+    2 │     return `<div class="bar">Hola</div>`;
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -132,6 +132,9 @@ JSRoot {
 
   ✖ Invalid left-hand side in assignment expression
 
+    func() = 4
+    ^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

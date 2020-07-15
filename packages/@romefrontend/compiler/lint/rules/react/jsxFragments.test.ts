@@ -68,8 +68,9 @@ test(
 					"const Hello = () => <React.Fragment key='id'></React.Fragment>",
 					"const Hello = () => <Fragment key='id'></Fragment>",
 				],
+				filename: "file.tsx",
+				category: "lint/react/jsxFragments",
 			},
-			{category: "lint/react/jsxFragments"},
 		);
 	},
 );

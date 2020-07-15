@@ -188,6 +188,11 @@ JSRoot {
 
   ✖ A interface declaration is only valid inside of a TypeScript file
 
+  > 1 │ interface I {
+      │ ^
+    2 │   #p: string
+    3 │ }
+
   ℹ To enable TypeScript support, the file extension should end in .ts or .tsx
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

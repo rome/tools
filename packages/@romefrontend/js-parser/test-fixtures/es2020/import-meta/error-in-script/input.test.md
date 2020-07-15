@@ -182,6 +182,9 @@ JSRoot {
 
   ✖ import.meta may only appear in a module
 
+    const x = import.meta;
+              ^^^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

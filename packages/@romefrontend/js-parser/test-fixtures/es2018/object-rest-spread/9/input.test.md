@@ -231,6 +231,9 @@ JSRoot {
 
   ✖ Cannot have multiple rest elements when destructuring
 
+    let { x, ...y, ...z } = obj;
+                      ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -209,6 +209,9 @@ JSRoot {
 
   ✖ A binding pattern parameter cannot be optional in an implementation signature.
 
+    function f([]?, {}) {}
+               ^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

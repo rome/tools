@@ -299,6 +299,9 @@ JSRoot {
 
   ✖ Unexpected token, expected {
 
+    import default from "foo"
+           ^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

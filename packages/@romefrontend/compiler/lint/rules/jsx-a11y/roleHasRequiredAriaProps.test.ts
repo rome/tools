@@ -47,8 +47,9 @@ test(
 					"<span role='menuitemcheckbox' aria-checked='true'></span>",
 					"<span role='menuitemradio' aria-checked='true'></span>",
 				],
+				filename: "file.tsx",
+				category: "lint/jsx-a11y/roleHasRequiredAriaProps",
 			},
-			{category: "lint/jsx-a11y/roleHasRequiredAriaProps"},
 		);
 	},
 );

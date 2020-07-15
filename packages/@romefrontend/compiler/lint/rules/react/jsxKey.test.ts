@@ -87,8 +87,9 @@ test(
 						});
 					`,
 				],
+				filename: "file.tsx",
+				category: "lint/react/jsxKey",
 			},
-			{category: "lint/react/jsxKey"},
 		);
 	},
 );

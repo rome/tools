@@ -164,6 +164,9 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    foo: let bar;
+             ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

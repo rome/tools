@@ -311,6 +311,9 @@ JSRoot {
 
   ✖ Redefinition of __proto__ property
 
+    ({ get __proto(){}, "__proto__": null, __proto__: null, })
+                                           ^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

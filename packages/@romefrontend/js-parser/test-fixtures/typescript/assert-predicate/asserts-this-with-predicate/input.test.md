@@ -624,6 +624,12 @@ JSRoot {
 
   ✖ Unexpected token, expected {
 
+    1 │ class Foo {
+  > 2 │   isBar(): asserts this is Foo {}
+      │                         ^^
+    3 │   isBaz = (): asserts this is Foo => {}
+    4 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

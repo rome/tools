@@ -136,6 +136,10 @@ JSRoot {
 
   ✖ implements list cannot be empty
 
+  > 1 │ class Foo extends Bar implements {
+      │                                  ^
+    2 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -55,7 +55,7 @@ export const flags = createDiagnosticsCategory({
 			{
 				type: "code",
 				language: "shell",
-				code: command,
+				sourceText: command,
 			},
 		],
 	}),

@@ -29,7 +29,8 @@ type UniquePart =
 	| "message"
 	| "start.line"
 	| "start.column"
-	| "category";
+	| "category"
+	| "label";
 
 type UniqueRule = Array<UniquePart>;
 
@@ -45,7 +46,7 @@ export type DiagnosticsProcessorOptions = {
 };
 
 const DEFAULT_UNIQUE: UniqueRules = [
-	["category", "filename", "message", "start.line", "start.column"],
+	["label", "category", "filename", "message", "start.line", "start.column"],
 ];
 
 type DiagnosticsByFilename = Map<undefined | string, Diagnostics>;
@@ -221,6 +222,10 @@ export default class DiagnosticsProcessor {
 
 		for (const rule of this.unique) {
 			const parts = [];
+
+			if (rule.includes("label")) {
+				parts.push(`label:${diag.label}`);
+			}
 
 			if (rule.includes("category")) {
 				parts.push(`category:${diag.description.category}`);

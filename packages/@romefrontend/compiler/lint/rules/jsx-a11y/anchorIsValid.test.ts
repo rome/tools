@@ -37,8 +37,9 @@ test(
 					"<a href='/foo/bar' onClick={foo} />",
 					"<a href={someValidPath} onClick={foo} />",
 				],
+				category: "lint/jsx-a11y/anchorIsValid",
+				filename: "file.tsx",
 			},
-			{category: "lint/jsx-a11y/anchorIsValid"},
 		);
 	},
 );

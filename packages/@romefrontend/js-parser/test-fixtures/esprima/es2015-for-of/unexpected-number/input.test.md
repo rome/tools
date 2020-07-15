@@ -167,6 +167,9 @@ JSRoot {
 
   ✖ A constant must have an initializer
 
+    for (const of 42);
+               ^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

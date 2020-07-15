@@ -150,6 +150,9 @@ JSRoot {
 
   ✖ Illegal expression. Wrap left hand side or entire exponentiation in parentheses.
 
+    -(5) ** 6;
+      ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

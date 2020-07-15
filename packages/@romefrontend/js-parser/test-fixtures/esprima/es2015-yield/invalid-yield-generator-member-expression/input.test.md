@@ -236,6 +236,9 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    function *g() { return yield.x; }
+                                ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -280,6 +280,11 @@ JSRoot {
 
   ✖ Unexpected token, expected (
 
+    1 │ function foo() {
+  > 2 │   return function.sent;
+      │                  ^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

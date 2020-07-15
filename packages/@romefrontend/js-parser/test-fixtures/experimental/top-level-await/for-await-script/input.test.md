@@ -230,6 +230,9 @@ JSRoot {
 
   ✖ Unexpected token, expected (
 
+    for await (const a of b);
+        ^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

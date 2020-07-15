@@ -205,6 +205,9 @@ JSRoot {
 
   ✖ target can't contain a unicode escape
 
+    function f() { new.ta\u0072get; }
+                         ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/headingHasContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/headingHasContent/reject/1/file.tsx:1 lint/jsx-a11y/headingHasContent ━━━━━━━━━━━━━━━
 
   ✖ Provide screen reader accessible content when using heading elements.
 
@@ -34,7 +34,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/headingHasContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/headingHasContent/reject/2/file.tsx:1 lint/jsx-a11y/headingHasContent ━━━━━━━━━━━━━━━
 
   ✖ Provide screen reader accessible content when using heading elements.
 
@@ -62,7 +62,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/headingHasContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/headingHasContent/reject/3/file.tsx:1 lint/jsx-a11y/headingHasContent ━━━━━━━━━━━━━━━
 
   ✖ Provide screen reader accessible content when using heading elements.
 

@@ -8,14 +8,12 @@
 
 ```
 
- unknown:1:4 lint/js/noExtraBooleanCast ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noExtraBooleanCast/reject/1/file.ts:1:4 lint/js/noExtraBooleanCast ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
 
-  > 1 │ if (Boolean(foo)) {
-      │     ^^^^^^^^^^^^
-    2 │   return foo;
-    3 │ }
+    if (Boolean(foo)) {}
+        ^^^^^^^^^^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
@@ -29,7 +27,6 @@
 
 ```
 if (Boolean(foo)) {
-	return foo;
 }
 
 ```
@@ -38,14 +35,12 @@ if (Boolean(foo)) {
 
 ```
 
- unknown:1:7 lint/js/noExtraBooleanCast ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noExtraBooleanCast/reject/2/file.ts:1:7 lint/js/noExtraBooleanCast ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
 
-  > 1 │ while (!!foo) {
-      │        ^^^^^
-    2 │   return foo;
-    3 │ }
+    while (!!foo) {}
+           ^^^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
@@ -58,9 +53,7 @@ if (Boolean(foo)) {
 ### `1: formatted`
 
 ```
-while (!!foo) {
-	return foo;
-}
+while (!!foo) {}
 
 ```
 
@@ -68,7 +61,7 @@ while (!!foo) {
 
 ```
 
- unknown:4:9 lint/js/noExtraBooleanCast ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noExtraBooleanCast/reject/3/file.ts:4:9 lint/js/noExtraBooleanCast ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
 
@@ -99,14 +92,12 @@ do {
 
 ```
 
- unknown:1:7 lint/js/noExtraBooleanCast ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noExtraBooleanCast/reject/4/file.ts:1:7 lint/js/noExtraBooleanCast ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
 
-  > 1 │ for (; !!foo; ) {
-      │        ^^^^^
-    2 │   return 1 + 1;
-    3 │ }
+    for (; !!foo; ) {}
+           ^^^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
@@ -119,8 +110,6 @@ do {
 ### `3: formatted`
 
 ```
-while (!!foo) {
-	return 1 + 1;
-}
+while (!!foo) {}
 
 ```

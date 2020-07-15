@@ -7,7 +7,6 @@ test(
 		await testLint(
 			t,
 			{
-				// INVALID
 				invalid: [
 					`
 					class MyComponent extends Component {
@@ -43,7 +42,7 @@ test(
 				`,
 					`
 					class MyComponent extends Component {
-						function update() {
+						update() {
 							this.setState({
 								foo: bar,
 								value: 1 + this.state.value
@@ -53,7 +52,7 @@ test(
 				`,
 					`
 					class MyComponent extends Component {
-						function update() {
+						update() {
 							this.setState({
 								foo: bar,
 								value: this.state.value + 1
@@ -63,7 +62,7 @@ test(
 				`,
 					`
 					class MyComponent extends Component {
-						function update() {
+						update() {
 							this.setState({
 								value: this.state.value
 							});
@@ -72,7 +71,7 @@ test(
 				`,
 					`
 					class MyComponent extends Component {
-						function update() {
+						update() {
 							this.setState({
 								foo: bar,
 								value: this.state.value
@@ -84,7 +83,7 @@ test(
 				valid: [
 					`
 					class MyComponent extends Component {
-						function update() {
+						update() {
 							this.setState({
 								foo: bar
 							});
@@ -93,14 +92,15 @@ test(
 				`,
 					`
 					class MyComponent extends Component {
-						function increment() {
+						increment() {
 							this.setState(prevState => ({value: prevState.value + 1}));
 						}
 					}
 				`,
 				],
+				filename: "file.tsx",
+				category: "lint/react/noAccessStateInSetState",
 			},
-			{category: "lint/react/noAccessStateInSetState"},
 		);
 	},
 );

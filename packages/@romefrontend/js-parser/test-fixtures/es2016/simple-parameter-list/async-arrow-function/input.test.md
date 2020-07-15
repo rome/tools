@@ -253,6 +253,11 @@ JSRoot {
 
   ✖ Illegal 'use strict' directive in function with non-simple parameter list
 
+    1 │ var a = async (options = {}) => {
+  > 2 │   "use strict";
+      │   ^^^^^^^^^^^^^
+    3 │ };
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

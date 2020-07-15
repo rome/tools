@@ -806,6 +806,12 @@ JSRoot {
 
   ✖ Unexpected token, expected (
 
+    1 │ export declare const x: number;
+  > 2 │ export declare function f(): void;
+      │                         ^
+    3 │ export declare class C {}
+    4 │ export declare interface I {}
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

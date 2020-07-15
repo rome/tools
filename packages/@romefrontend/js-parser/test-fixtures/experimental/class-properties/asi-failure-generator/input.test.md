@@ -369,6 +369,12 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    1 │ class Foo {
+    2 │   p = x
+  > 3 │   *m () {}
+      │         ^
+    4 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

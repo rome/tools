@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/js/noVar ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noVar/reject/1/file.ts:1 lint/js/noVar ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Variable declarations using var are disallowed.
 

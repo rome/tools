@@ -182,6 +182,9 @@ JSRoot {
 
   ✖ Invalid left-hand side in for-in statement
 
+    for((1 + 1) in list) process(x);
+         ^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

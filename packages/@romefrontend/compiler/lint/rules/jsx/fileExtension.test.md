@@ -8,9 +8,13 @@
 
 ```
 
- test.js:1 lint/jsx/fileExtension ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx/fileExtension/reject/1/test.js:2 lint/jsx/fileExtension ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Files with the .js extension cannot contain JSX elements.
+
+    1 │ // @jsx
+  > 2 │ <div></div>
+      │ ^^^^^^^^^^^
 
   ℹ Change the test.js file extension to .jsx or .tsx.
 
@@ -23,6 +27,7 @@
 ### `0: formatted`
 
 ```
+// @jsx
 <div>
 </div>;
 
@@ -32,9 +37,13 @@
 
 ```
 
- test.js:1 lint/jsx/fileExtension ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx/fileExtension/reject/2/test.js:2 lint/jsx/fileExtension ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Files with the .js extension cannot contain JSX elements.
+
+    1 │ // @jsx
+  > 2 │ <></>
+      │ ^^^^^
 
   ℹ Change the test.js file extension to .jsx or .tsx.
 
@@ -47,6 +56,7 @@
 ### `1: formatted`
 
 ```
+// @jsx
 ;
 
 ```
@@ -55,9 +65,13 @@
 
 ```
 
- test.js:1 lint/jsx/fileExtension ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx/fileExtension/reject/3/test.js:2 lint/jsx/fileExtension ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Files with the .js extension cannot contain JSX elements.
+
+    1 │ // @jsx
+  > 2 │ <Fragment></Fragment>
+      │ ^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Change the test.js file extension to .jsx or .tsx.
 
@@ -70,6 +84,7 @@
 ### `2: formatted`
 
 ```
+// @jsx
 ;
 
 ```
@@ -78,9 +93,13 @@
 
 ```
 
- test.js:1 lint/jsx/fileExtension ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx/fileExtension/reject/4/test.js:2 lint/jsx/fileExtension ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Files with the .js extension cannot contain JSX elements.
+
+    1 │ // @jsx
+  > 2 │ <React.Fragment></React.Fragment>
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Change the test.js file extension to .jsx or .tsx.
 
@@ -93,6 +112,7 @@
 ### `3: formatted`
 
 ```
+// @jsx
 ;
 
 ```
@@ -122,6 +142,7 @@
 ### `5: formatted`
 
 ```
+// @jsx
 <div>
 </div>;
 
@@ -137,6 +158,7 @@
 ### `6: formatted`
 
 ```
+// @jsx
 ;
 
 ```
@@ -151,6 +173,7 @@
 ### `7: formatted`
 
 ```
+// @jsx
 ;
 
 ```
@@ -165,6 +188,7 @@
 ### `8: formatted`
 
 ```
+// @jsx
 ;
 
 ```
@@ -179,6 +203,7 @@
 ### `9: formatted`
 
 ```
+// @jsx
 <div>
 </div>;
 
@@ -194,6 +219,7 @@
 ### `10: formatted`
 
 ```
+// @jsx
 ;
 
 ```
@@ -208,6 +234,7 @@
 ### `11: formatted`
 
 ```
+// @jsx
 ;
 
 ```
@@ -222,6 +249,7 @@
 ### `12: formatted`
 
 ```
+// @jsx
 ;
 
 ```

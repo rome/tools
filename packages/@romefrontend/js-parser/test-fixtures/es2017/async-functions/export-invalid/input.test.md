@@ -169,6 +169,9 @@ JSRoot {
 
   ✖ Unexpected token, expected =>
 
+    export default async functionX () {}
+                                   ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

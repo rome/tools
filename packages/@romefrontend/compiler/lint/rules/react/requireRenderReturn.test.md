@@ -8,7 +8,7 @@
 
 ```
 
- unknown:3:10 lint/react/requireRenderReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/requireRenderReturn/reject/1/file.tsx:3:10 lint/react/requireRenderReturn ━━━━━━━━━━━━━━
 
   ✖ The render method on a component must return content.
 
@@ -38,7 +38,7 @@ class Foo extends React.Component {
 
 ```
 
- unknown:3:10 lint/react/requireRenderReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/requireRenderReturn/reject/2/file.tsx:3:10 lint/react/requireRenderReturn ━━━━━━━━━━━━━━
 
   ✖ The render method on a component must return content.
 
@@ -79,7 +79,7 @@ class Foo extends React.Component {
 
 ```
 
- unknown:3:16 lint/react/requireRenderReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/requireRenderReturn/reject/3/file.tsx:3:16 lint/react/requireRenderReturn ━━━━━━━━━━━━━━
 
   ✖ The render method on a component must return content.
 
@@ -109,7 +109,7 @@ class Foo extends React.Component {
 
 ```
 
- unknown:3:16 lint/react/requireRenderReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/requireRenderReturn/reject/4/file.tsx:3:16 lint/react/requireRenderReturn ━━━━━━━━━━━━━━
 
   ✖ The render method on a component must return content.
 
@@ -139,7 +139,7 @@ class Foo extends Component {
 
 ```
 
- unknown:3:16 lint/react/requireRenderReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/requireRenderReturn/reject/5/file.tsx:3:16 lint/react/requireRenderReturn ━━━━━━━━━━━━━━
 
   ✖ The render method on a component must return content.
 
@@ -169,7 +169,7 @@ const Foo = class extends React.Component {
 
 ```
 
- unknown:3:16 lint/react/requireRenderReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/requireRenderReturn/reject/6/file.tsx:3:16 lint/react/requireRenderReturn ━━━━━━━━━━━━━━
 
   ✖ The render method on a component must return content.
 
@@ -199,7 +199,7 @@ const Foo = class extends Component {
 
 ```
 
- unknown:3:16 lint/react/requireRenderReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/requireRenderReturn/reject/7/file.tsx:3:16 lint/react/requireRenderReturn ━━━━━━━━━━━━━━
 
   ✖ The render method on a component must return content.
 
@@ -229,7 +229,7 @@ const Foo = class extends React.PureComponent {
 
 ```
 
- unknown:3:16 lint/react/requireRenderReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/requireRenderReturn/reject/8/file.tsx:3:16 lint/react/requireRenderReturn ━━━━━━━━━━━━━━
 
   ✖ The render method on a component must return content.
 

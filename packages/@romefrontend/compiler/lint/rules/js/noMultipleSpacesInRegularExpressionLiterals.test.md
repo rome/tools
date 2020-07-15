@@ -8,7 +8,8 @@
 
 ```
 
- unknown:1:4 lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noMultipleSpacesInRegularExpressionLiterals/reject/1/file.ts:1:4
+lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ This regular expression contains unclear uses of multiple spaces.
 

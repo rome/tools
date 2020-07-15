@@ -235,6 +235,9 @@ JSRoot {
 
   ✖ static can't contain a unicode escape
 
+    class X { st\u0061tic y() {} }
+                ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

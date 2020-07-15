@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/anchorIsValid/reject/1/file.tsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
 
@@ -34,7 +34,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/anchorIsValid/reject/2/file.tsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
 
@@ -60,7 +60,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/anchorIsValid/reject/3/file.tsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
 
@@ -86,7 +86,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/anchorIsValid/reject/4/file.tsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
 
@@ -112,7 +112,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/anchorIsValid/reject/5/file.tsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
 
@@ -138,7 +138,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/anchorIsValid/reject/6/file.tsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
 
@@ -164,7 +164,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/anchorIsValid/reject/7/file.tsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
 
@@ -190,7 +190,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/anchorIsValid/reject/8/file.tsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a href attribute for the a element.
 
@@ -216,7 +216,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/anchorIsValid/reject/9/file.tsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a href attribute for the a element.
 
@@ -242,7 +242,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/anchorIsValid/reject/10/file.tsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a href attribute for the a element.
 
@@ -268,7 +268,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/anchorIsValid/reject/11/file.tsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid href attribute for the a element.
 
@@ -294,7 +294,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/anchorIsValid/reject/12/file.tsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid href attribute for the a element.
 
@@ -320,7 +320,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/anchorIsValid/reject/13/file.tsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid href attribute for the a element.
 
@@ -346,7 +346,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/anchorIsValid/reject/14/file.tsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid href attribute for the a element.
 
@@ -372,7 +372,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/anchorIsValid/reject/15/file.tsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid href attribute for the a element.
 
@@ -398,7 +398,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/anchorIsValid/reject/16/file.tsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid href attribute for the a element.
 

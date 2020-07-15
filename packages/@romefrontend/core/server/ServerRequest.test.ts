@@ -1,5 +1,5 @@
 import {test} from "rome";
-import {createIntegrationTest} from "../integrationTestHelpers";
+import {createIntegrationTest} from "../../test-helpers";
 
 test(
 	"ServerRequest#watchFilesFromArgs extensions",

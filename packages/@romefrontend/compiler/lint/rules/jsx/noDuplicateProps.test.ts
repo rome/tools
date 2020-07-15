@@ -12,8 +12,9 @@ test(
 					'<div style="{}" style="{}" id="foo" id="bar" />',
 				],
 				valid: ['<Hello foo="bar" />', '<div  style="{}" />'],
+				filename: "file.tsx",
+				category: "lint/jsx/noDuplicateProps",
 			},
-			{category: "lint/jsx/noDuplicateProps"},
 		);
 	},
 );

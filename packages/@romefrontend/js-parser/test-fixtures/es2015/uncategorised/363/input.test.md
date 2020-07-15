@@ -240,6 +240,9 @@ JSRoot {
 
   ✖ Can't use await outside of an async function
 
+    function foo({ await }) {}
+                   ^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

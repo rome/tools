@@ -295,6 +295,9 @@ JSRoot {
 
   ✖ Expected keyword from
 
+    import {bar}, foo from "foo"
+                ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

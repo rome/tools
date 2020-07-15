@@ -197,6 +197,11 @@ JSRoot {
 
   ✖ Classes may not have static property named prototype
 
+    1 │ class Foo {
+  > 2 │   static prototype
+      │          ^^^^^^^^^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

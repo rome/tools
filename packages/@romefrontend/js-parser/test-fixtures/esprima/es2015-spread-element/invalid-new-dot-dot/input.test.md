@@ -183,6 +183,9 @@ JSRoot {
 
   ✖ Unknown start to an new expression argument
 
+    new f(..g);
+          ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -224,6 +224,9 @@ JSRoot {
 
   ✖ interface is a reserved word
 
+    function hello() { "use strict"; var interface; }
+                                         ^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

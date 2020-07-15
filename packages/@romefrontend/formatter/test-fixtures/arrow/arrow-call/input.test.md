@@ -4,9 +4,16 @@
 
 ## `arrow > arrow-call`
 
+### `Diagnostics`
+
+```
+✔ No known problems!
+
+```
+
 ### `Input`
 
-```javascript
+```js
 const testResults = results.testResults.map(testResult =>
     formatResult(testResult, formatter, reporter)
   );
@@ -55,7 +62,7 @@ const testResults = results.testResults.map(testResult =>
 
 ### `Output`
 
-```javascript
+```js
 const testResults = results.testResults.map((testResult) =>
 	formatResult(testResult, formatter, reporter)
 );

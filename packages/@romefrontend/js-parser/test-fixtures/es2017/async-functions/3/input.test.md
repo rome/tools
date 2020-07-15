@@ -204,6 +204,9 @@ JSRoot {
 
   ✖ Function parameters can't be parenthesized
 
+    var foo = async ((foo)) => {};
+                     ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

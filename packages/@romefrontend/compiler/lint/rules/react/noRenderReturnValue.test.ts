@@ -36,8 +36,9 @@ test(
 						ReactDOM.render(<div />, document.body);
 					}`,
 				],
+				filename: "file.tsx",
+				category: "lint/react/noRenderReturnValue",
 			},
-			{category: "lint/react/noRenderReturnValue"},
 		);
 	},
 );

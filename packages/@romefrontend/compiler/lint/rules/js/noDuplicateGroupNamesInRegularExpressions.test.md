@@ -8,7 +8,8 @@
 
 ```
 
- unknown:1:1 lint/js/noDuplicateGroupNamesInRegularExpressions ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDuplicateGroupNamesInRegularExpressions/reject/1/file.ts:1:1
+lint/js/noDuplicateGroupNamesInRegularExpressions ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid duplicate group names. Check the month group.
 
@@ -26,7 +27,8 @@
       [0-9])/
     ^^^^^
 
- unknown:1:17 lint/js/noDuplicateGroupNamesInRegularExpressions ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDuplicateGroupNamesInRegularExpressions/reject/1/file.ts:1:17
+lint/js/noDuplicateGroupNamesInRegularExpressions ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid duplicate group names. Check the year group.
 

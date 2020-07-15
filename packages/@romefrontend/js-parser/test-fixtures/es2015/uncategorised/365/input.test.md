@@ -140,6 +140,9 @@ JSRoot {
 
   ✖ Can not use 'await' as identifier inside an async function
 
+    function await() {}
+             ^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

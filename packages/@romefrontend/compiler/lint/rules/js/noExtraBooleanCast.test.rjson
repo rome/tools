@@ -1,23 +1,18 @@
+filename: "file.ts"
 invalid: [
 	"
-					if (Boolean(foo)) {
-						return foo;
-					}
-				"
+		if (Boolean(foo)) {}
 	"
-					while (!!foo) {
-						return foo;
-					}
-				"
 	"
-					let x = 1;
-					do {
-						1 + 1;
-					} while (Boolean(x));
-				"
+		while (!!foo) {}
 	"
-					for (; !!foo; ) {
-						return 1 + 1;
-					}
-				"
+	"
+		let x = 1;
+		do {
+			1 + 1;
+		} while (Boolean(x));
+	"
+	"
+		for (; !!foo; ) {}
+	"
 ]

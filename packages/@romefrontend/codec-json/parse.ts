@@ -877,6 +877,7 @@ export const createJSONParser = createParser((ParserCore) =>
 					const info = this.getPathInfo(keys);
 					if (info === undefined) {
 						return {
+							language: "json",
 							filename: this.filename,
 						};
 					}

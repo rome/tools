@@ -270,6 +270,11 @@ JSRoot {
 
   ✖ A parameter property may not be declared using a binding pattern.
 
+    1 │ class C {
+  > 2 │     constructor(public []) {}
+      │                 ^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

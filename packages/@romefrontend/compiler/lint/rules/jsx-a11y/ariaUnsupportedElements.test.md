@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/ariaUnsupportedElements ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/ariaUnsupportedElements/reject/1/file.tsx:1 lint/jsx-a11y/ariaUnsupportedElements ━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
@@ -35,7 +35,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/ariaUnsupportedElements ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/ariaUnsupportedElements/reject/2/file.tsx:1 lint/jsx-a11y/ariaUnsupportedElements ━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
@@ -62,7 +62,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/ariaUnsupportedElements ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/ariaUnsupportedElements/reject/3/file.tsx:1 lint/jsx-a11y/ariaUnsupportedElements ━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
@@ -89,7 +89,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/ariaUnsupportedElements ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/ariaUnsupportedElements/reject/4/file.tsx:1 lint/jsx-a11y/ariaUnsupportedElements ━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
@@ -117,7 +117,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/ariaUnsupportedElements ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/ariaUnsupportedElements/reject/5/file.tsx:1 lint/jsx-a11y/ariaUnsupportedElements ━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
@@ -145,7 +145,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/ariaUnsupportedElements ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/ariaUnsupportedElements/reject/6/file.tsx:1 lint/jsx-a11y/ariaUnsupportedElements ━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
@@ -173,7 +173,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/ariaUnsupportedElements ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/ariaUnsupportedElements/reject/7/file.tsx:1 lint/jsx-a11y/ariaUnsupportedElements ━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
@@ -201,7 +201,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/ariaUnsupportedElements ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/ariaUnsupportedElements/reject/8/file.tsx:1 lint/jsx-a11y/ariaUnsupportedElements ━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.

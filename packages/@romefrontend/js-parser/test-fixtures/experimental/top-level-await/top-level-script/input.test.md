@@ -132,6 +132,9 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    await 0;
+          ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

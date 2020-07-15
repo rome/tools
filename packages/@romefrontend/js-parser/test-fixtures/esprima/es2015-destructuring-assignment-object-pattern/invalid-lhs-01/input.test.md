@@ -197,6 +197,9 @@ JSRoot {
 
   ✖ Invalid left-hand side in assignment object property value
 
+    ({a:this}=0)
+        ^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

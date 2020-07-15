@@ -183,6 +183,9 @@ JSRoot {
 
   ✖ Loop variable declaration may not have an initializer
 
+    for (const x = 1 of y);
+         ^^^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

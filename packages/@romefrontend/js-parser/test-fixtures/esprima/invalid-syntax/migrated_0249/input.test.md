@@ -249,6 +249,9 @@ JSRoot {
 
   ℹ Defined already here
 
+    "use strict"; function t(__proto__, __proto__) { }
+                                        ^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

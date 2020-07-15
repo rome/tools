@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:12 lint/js/noAsyncPromiseExecutor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noAsyncPromiseExecutor/reject/1/file.ts:1:12 lint/js/noAsyncPromiseExecutor ━━━━━━━━━━━━━━━
 
   ✖ Promise executor functions should not be async.
 
@@ -34,7 +34,7 @@ new Promise(async function foo() {});
 
 ```
 
- unknown:1:12 lint/js/noAsyncPromiseExecutor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noAsyncPromiseExecutor/reject/2/file.ts:1:12 lint/js/noAsyncPromiseExecutor ━━━━━━━━━━━━━━━
 
   ✖ Promise executor functions should not be async.
 
@@ -60,7 +60,7 @@ new Promise(async () => {});
 
 ```
 
- unknown:1:16 lint/js/noAsyncPromiseExecutor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noAsyncPromiseExecutor/reject/3/file.ts:1:16 lint/js/noAsyncPromiseExecutor ━━━━━━━━━━━━━━━
 
   ✖ Promise executor functions should not be async.
 

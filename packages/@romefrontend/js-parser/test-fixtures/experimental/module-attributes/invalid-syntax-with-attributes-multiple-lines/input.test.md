@@ -197,6 +197,10 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+  > 1 │ import "x" with
+      │            ^
+    2 │ type: "json"
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

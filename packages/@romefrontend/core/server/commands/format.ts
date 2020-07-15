@@ -30,6 +30,7 @@ export default createServerCommand({
 
 		const res = await req.requestWorkerFormat(
 			filename,
+			{},
 			{
 				allowParserDiagnostics: flags.allowDiagnostics,
 			},

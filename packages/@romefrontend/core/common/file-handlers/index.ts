@@ -6,7 +6,7 @@
  */
 
 import {ProjectConfig} from "@romefrontend/project";
-import {UnknownFilePath} from "@romefrontend/path";
+import {UnknownFilePath, createUnknownFilePath} from "@romefrontend/path";
 import {ExtensionHandler} from "./types";
 import {
 	cjsHandler,
@@ -20,6 +20,7 @@ import {textHandler} from "./text";
 import {jsonHandler, rjsonHandler} from "./json";
 import {htmHandler, htmlHandler} from "./html";
 import {parseJS} from "@romefrontend/js-parser";
+import {DiagnosticLanguage} from "@romefrontend/diagnostics";
 // import {markdownHandler} from "@romefrontend/core/common/file-handlers/markdown";
 
 type ExtensionsMap = Map<string, ExtensionHandler>;
@@ -29,15 +30,36 @@ export type GetFileHandlerResult = {
 	handler?: ExtensionHandler;
 };
 
+export function inferDiagnosticLanguageFromFilename(
+	filename: undefined | UnknownFilePath | string,
+	existing?: DiagnosticLanguage,
+): DiagnosticLanguage {
+	if (existing !== undefined && existing !== "unknown") {
+		return existing;
+	}
+	if (filename !== undefined) {
+		const {handler} = getFileHandler(createUnknownFilePath(filename), undefined);
+		if (handler !== undefined) {
+			return handler.language;
+		}
+	}
+
+	return "unknown";
+}
+
 export function getFileHandlerExtensions(
-	projectConfig: ProjectConfig,
+	projectConfig: undefined | ProjectConfig,
 ): Array<string> {
-	return [...DEFAULT_HANDLERS.keys(), ...projectConfig.files.assetExtensions];
+	if (projectConfig === undefined) {
+		return [...DEFAULT_HANDLERS.keys()];
+	} else {
+		return [...DEFAULT_HANDLERS.keys(), ...projectConfig.files.assetExtensions];
+	}
 }
 
 export function getFileHandler(
 	path: UnknownFilePath,
-	projectConfig: ProjectConfig,
+	projectConfig: undefined | ProjectConfig,
 ): GetFileHandlerResult {
 	const basename = path.getBasename();
 
@@ -50,7 +72,11 @@ export function getFileHandler(
 	let handler = DEFAULT_HANDLERS.get(ext);
 
 	// Allow setting custom assert extensions in the project config
-	if (handler === undefined && projectConfig.files.assetExtensions.includes(ext)) {
+	if (
+		handler === undefined &&
+		projectConfig !== undefined &&
+		projectConfig.files.assetExtensions.includes(ext)
+	) {
 		handler = assetHandler;
 	}
 
@@ -59,7 +85,7 @@ export function getFileHandler(
 
 export function getFileHandlerAssert(
 	path: UnknownFilePath,
-	projectConfig: ProjectConfig,
+	projectConfig: undefined | ProjectConfig,
 ): Required<GetFileHandlerResult> {
 	const {handler, ext} = getFileHandler(path, projectConfig);
 

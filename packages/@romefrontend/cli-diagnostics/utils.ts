@@ -12,6 +12,8 @@ import {
 	joinMarkupLines,
 	markupToPlainText,
 } from "@romefrontend/cli-layout/format";
+import {AnyRoot} from "@romefrontend/ast";
+import {DiagnosticLanguage} from "@romefrontend/diagnostics";
 
 const unicodeControls = /[\u0000-\u001f\u007f-\u00a0]/u;
 
@@ -176,4 +178,22 @@ export function toLines(opts: AnsiHighlightOptions): ToLines {
 		raw,
 		highlighted,
 	};
+}
+
+export function inferDiagnosticLanguageFromRootAST(
+	ast: AnyRoot,
+): DiagnosticLanguage {
+	switch (ast.type) {
+		case "JSRoot":
+			return "js";
+
+		case "HTMLRoot":
+			return "html";
+
+		case "CSSRoot":
+			return "css";
+
+		case "MarkdownRoot":
+			return "md";
+	}
 }

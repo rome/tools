@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:1 lint/js/noCommaOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noCommaOperator/reject/1/file.ts:1:1 lint/js/noCommaOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid the comma operator. It can lead to easy mistakes and ambiguous code.
 
@@ -34,7 +34,7 @@
 
 ```
 
- unknown:1 lint/js/noCommaOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noCommaOperator/reject/2/file.ts:1 lint/js/noCommaOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid the comma operator. It can lead to easy mistakes and ambiguous code.
 

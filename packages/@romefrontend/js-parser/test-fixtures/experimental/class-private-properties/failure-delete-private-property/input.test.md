@@ -420,6 +420,13 @@ JSRoot {
 
   ✖ Deleting a private field is not allowed
 
+    2 │   #x;
+    3 │   constructor() {
+  > 4 │     delete this.#x;
+      │                 ^^
+    5 │   }
+    6 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

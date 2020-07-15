@@ -100,8 +100,9 @@ test(
 						}
 					`,
 				],
+				filename: "file.tsx",
+				category: "lint/react/requireRenderReturn",
 			},
-			{category: "lint/react/requireRenderReturn"},
 		);
 	},
 );

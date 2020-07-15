@@ -240,7 +240,15 @@ JSRoot {
 
   ✖ `Foo` has already been exported. Exported identifiers must be unique.
 
+    1 │ export { Foo };
+  > 2 │ export class Foo {};
+      │        ^^^^^^^^^^^^
+
   ℹ Defined already here
+
+  > 1 │ export { Foo };
+      │          ^^^
+    2 │ export class Foo {};
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

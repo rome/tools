@@ -180,6 +180,9 @@ JSRoot {
 
   ✖ Lexical declaration cannot appear in a single-statement context
 
+    foo: const bar = null;
+         ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

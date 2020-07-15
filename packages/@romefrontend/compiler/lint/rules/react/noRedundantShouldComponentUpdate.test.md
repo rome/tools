@@ -8,7 +8,8 @@
 
 ```
 
- unknown:1 lint/react/noRedundantShouldComponentUpdate ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noRedundantShouldComponentUpdate/reject/1/file.tsx:1
+lint/react/noRedundantShouldComponentUpdate ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not implement shouldComponentUpdate when extending React.PureComponent.
 
@@ -40,7 +41,8 @@ class Hello extends React.PureComponent {
 
 ```
 
- unknown:1 lint/react/noRedundantShouldComponentUpdate ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noRedundantShouldComponentUpdate/reject/2/file.tsx:1
+lint/react/noRedundantShouldComponentUpdate ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not implement shouldComponentUpdate when extending React.PureComponent.
 

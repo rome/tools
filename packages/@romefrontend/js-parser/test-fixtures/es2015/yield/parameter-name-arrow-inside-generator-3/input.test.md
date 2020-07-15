@@ -260,6 +260,11 @@ JSRoot {
 
   ✖ yield is not allowed in generator parameters
 
+    1 │ function* fn() {
+  > 2 │   (a, b, yield) => {};
+      │               ^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -222,6 +222,9 @@ JSRoot {
 
   ✖ Trailing comma is disallowed inside import(...) arguments
 
+    import("./foo.json", ...[]);
+                       ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

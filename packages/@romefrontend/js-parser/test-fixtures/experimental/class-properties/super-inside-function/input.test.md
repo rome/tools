@@ -363,6 +363,11 @@ JSRoot {
 
   ✖ super is only allowed in object methods and classes
 
+    1 │ class A {
+    2 │   foo = function fn() {
+    3 │     super.x();
+    4 │   }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

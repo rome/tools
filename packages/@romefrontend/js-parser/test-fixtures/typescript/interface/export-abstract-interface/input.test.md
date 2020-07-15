@@ -150,6 +150,11 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+  > 1 │ export abstract interface I {
+      │                 ^
+    2 │
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

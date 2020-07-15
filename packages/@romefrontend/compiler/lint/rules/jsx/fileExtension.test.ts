@@ -6,7 +6,7 @@ const JSX_CASES = [
 	"<></>",
 	"<Fragment></Fragment>",
 	"<React.Fragment></React.Fragment>",
-];
+].map((str) => `// @jsx\n${str}`);
 
 const NON_JSX_CASES = ["'<div></div>'"];
 
@@ -18,24 +18,27 @@ test(
 			{
 				invalid: JSX_CASES,
 				valid: NON_JSX_CASES,
+				category: "lint/jsx/fileExtension",
+				filename: "test.js",
 			},
-			{category: "lint/jsx/fileExtension", path: "test.js"},
 		);
 
 		await testLint(
 			t,
 			{
 				valid: JSX_CASES,
+				category: "lint/jsx/fileExtension",
+				filename: "test.jsx",
 			},
-			{category: "lint/jsx/fileExtension", path: "test.jsx"},
 		);
 
 		await testLint(
 			t,
 			{
 				valid: JSX_CASES,
+				category: "lint/jsx/fileExtension",
+				filename: "test.tsx",
 			},
-			{category: "lint/jsx/fileExtension", path: "test.tsx"},
 		);
 	},
 );

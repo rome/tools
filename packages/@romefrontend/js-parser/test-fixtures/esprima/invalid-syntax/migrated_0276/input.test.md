@@ -231,6 +231,9 @@ JSRoot {
 
   ✖ Unknown class property start
 
+    class A {static static static(){}}
+                           ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

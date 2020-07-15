@@ -167,6 +167,10 @@ JSRoot {
 
   ✖ Legacy octal literals are not allowed in strict mode
 
+    1 │ 'use strict';
+  > 2 │ const a = 07;
+      │             ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

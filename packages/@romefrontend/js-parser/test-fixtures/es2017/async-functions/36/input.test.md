@@ -310,6 +310,9 @@ JSRoot {
 
   ✖ Unexpected token, expected ,
 
+    const foo = ({ async = true });
+                         ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

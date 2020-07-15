@@ -79,6 +79,36 @@ type SnapshotOptions = {
 
 type EmitDiagnostic = (diag: Diagnostic) => Promise<void>;
 
+function normalizeUserAdvice(advice: Array<UserAdviceItem>): DiagnosticAdvice {
+	return advice.map((item) => {
+		if (typeof item === "function") {
+			return normalizeUserAdviceItem(item());
+		} else {
+			return normalizeUserAdviceItem(item);
+		}
+	});
+}
+
+// Once we have a public test framework we should perform normalization here
+function normalizeUserAdviceItem(
+	item: TestDiagnosticAdviceItem,
+): DiagnosticAdviceItem {
+	switch (item.type) {
+		case "code":
+			return {
+				...item,
+				language: "unknown",
+			};
+
+		default:
+			return item;
+	}
+}
+
+type UserAdviceItem =
+	| TestDiagnosticAdviceItem
+	| (() => TestDiagnosticAdviceItem);
+
 export default class TestAPI implements TestHelper {
 	constructor(
 		{
@@ -122,7 +152,7 @@ export default class TestAPI implements TestHelper {
 	timeoutStart: undefined | number;
 	timeoutMax: undefined | number;
 
-	advice: Array<DiagnosticAdviceItem | (() => DiagnosticAdviceItem)>;
+	advice: Array<UserAdviceItem>;
 	teardownEvent: Event<void, void>;
 	testName: string;
 	snapshotCounter: number;
@@ -135,18 +165,14 @@ export default class TestAPI implements TestHelper {
 			return startAdvice;
 		}
 
+		const userAdvice = normalizeUserAdvice(advice);
+
 		return [
 			...startAdvice,
 			{
 				type: "group",
 				title: "User-specified test advice",
-				advice: advice.map((item) => {
-					if (typeof item === "function") {
-						return item();
-					} else {
-						return item;
-					}
-				}),
+				advice: userAdvice,
 			},
 		];
 	}
@@ -186,7 +212,8 @@ export default class TestAPI implements TestHelper {
 
 			advice.push({
 				type: "code",
-				code: expectedFormat,
+				language: "unknown",
+				sourceText: expectedFormat,
 			});
 
 			if (visualMethod !== undefined) {
@@ -209,7 +236,8 @@ export default class TestAPI implements TestHelper {
 
 				advice.push({
 					type: "code",
-					code: expectedFormat,
+					language: "unknown",
+					sourceText: expectedFormat,
 				});
 
 				advice.push({
@@ -220,7 +248,8 @@ export default class TestAPI implements TestHelper {
 
 				advice.push({
 					type: "code",
-					code: receivedFormat,
+					language: "unknown",
+					sourceText: receivedFormat,
 				});
 
 				advice.push({
@@ -232,6 +261,7 @@ export default class TestAPI implements TestHelper {
 
 			advice.push({
 				type: "diff",
+				language: "unknown",
 				diff: stringDiff(expectedFormat, receivedFormat),
 				legend: {
 					add: receivedAlias ? receivedAlias : "Received",
@@ -244,9 +274,7 @@ export default class TestAPI implements TestHelper {
 	}
 
 	// We allow lazy construction of test advice when an error actually occurs
-	addToAdvice(
-		item: TestDiagnosticAdviceItem | (() => TestDiagnosticAdviceItem),
-	): void {
+	addToAdvice(item: UserAdviceItem): void {
 		this.advice.push(item);
 	}
 
@@ -334,7 +362,8 @@ export default class TestAPI implements TestHelper {
 					},
 					{
 						type: "code",
-						code: prettyFormat(value),
+						language: "unknown",
+						sourceText: prettyFormat(value),
 					},
 				],
 				1,
@@ -354,7 +383,8 @@ export default class TestAPI implements TestHelper {
 					},
 					{
 						type: "code",
-						code: prettyFormat(value),
+						language: "unknown",
+						sourceText: prettyFormat(value),
 					},
 				],
 				1,
@@ -374,7 +404,8 @@ export default class TestAPI implements TestHelper {
 					},
 					{
 						type: "code",
-						code: prettyFormat(value),
+						language: "unknown",
+						sourceText: prettyFormat(value),
 					},
 				],
 				1,
@@ -394,7 +425,8 @@ export default class TestAPI implements TestHelper {
 					},
 					{
 						type: "code",
-						code: prettyFormat(value),
+						language: "unknown",
+						sourceText: prettyFormat(value),
 					},
 				],
 				1,
@@ -571,7 +603,8 @@ export default class TestAPI implements TestHelper {
 					},
 					{
 						type: "code",
-						code: prettyFormat(contents),
+						language: "unknown",
+						sourceText: prettyFormat(contents),
 					},
 					{
 						type: "log",
@@ -580,7 +613,8 @@ export default class TestAPI implements TestHelper {
 					},
 					{
 						type: "code",
-						code: prettyFormat(regex.source),
+						language: "unknown",
+						sourceText: prettyFormat(regex.source),
 					},
 				],
 				1,
@@ -604,7 +638,8 @@ export default class TestAPI implements TestHelper {
 					},
 					{
 						type: "code",
-						code: prettyFormat(contents),
+						language: "unknown",
+						sourceText: prettyFormat(contents),
 					},
 					{
 						type: "log",
@@ -613,7 +648,8 @@ export default class TestAPI implements TestHelper {
 					},
 					{
 						type: "code",
-						code: prettyFormat(regex.source),
+						language: "unknown",
+						sourceText: prettyFormat(regex.source),
 					},
 				],
 				1,

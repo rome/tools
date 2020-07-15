@@ -150,6 +150,9 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    { get 2 }
+          ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

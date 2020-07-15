@@ -331,6 +331,11 @@ JSRoot {
 
   ✖ Unknown start to an statement expression
 
+    1 │ class Foo {
+    2 │   test() {
+    3 │     #x in {};
+    4 │   }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

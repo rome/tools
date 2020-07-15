@@ -214,6 +214,9 @@ JSRoot {
 
   ✖ Complex binding patterns require an initialization value
 
+    let {}! = {};
+          ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

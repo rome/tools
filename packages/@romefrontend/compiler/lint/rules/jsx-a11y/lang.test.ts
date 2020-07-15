@@ -20,8 +20,9 @@ test(
 					'<html lang="en"></html>',
 					"<html lang={lang}></html>",
 				],
+				filename: "file.tsx",
+				category: "lint/jsx-a11y/lang",
 			},
-			{category: "lint/jsx-a11y/lang"},
 		);
 	},
 );

@@ -247,6 +247,9 @@ JSRoot {
 
   ✖ Unexpected token, expected (
 
+    for await (const i of imports) {}
+        ^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

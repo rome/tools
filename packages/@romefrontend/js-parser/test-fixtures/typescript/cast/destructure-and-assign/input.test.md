@@ -328,6 +328,10 @@ JSRoot {
 
   ✖ Unexpected type cast in parameter position
 
+  > 1 │ [a as number] = [42];
+      │  ^^^^^^^^^^^
+    2 │ [<number>a] = [42];
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

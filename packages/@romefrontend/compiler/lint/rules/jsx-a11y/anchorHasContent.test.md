@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/anchorHasContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/anchorHasContent/reject/1/file.tsx:1 lint/jsx-a11y/anchorHasContent ━━━━━━━━━━━━━━━━━
 
   ✖ Provide screen reader accessible content when using anchor elements.
 
@@ -34,7 +34,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/anchorHasContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/anchorHasContent/reject/2/file.tsx:1 lint/jsx-a11y/anchorHasContent ━━━━━━━━━━━━━━━━━
 
   ✖ Provide screen reader accessible content when using anchor elements.
 

@@ -257,6 +257,13 @@ JSRoot {
 
   ✖ The rest element has to be the last element when destructuring
 
+    1 │ function foo (·
+    2 │     first,
+  > 3 │     ...second,
+      │              ^
+    4 │     third,
+    5 │ ) {
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

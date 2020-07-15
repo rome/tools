@@ -43,7 +43,7 @@ JSRoot {
 					}
 					log {
 						category: "info"
-						text: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"package.json\" />"
+						text: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"undefined\" />"
 					}
 				]
 			}
@@ -160,9 +160,12 @@ JSRoot {
 
   ✖ import and export can only appear in a module
 
+    export var await;
+    ^^^^^^^^^^^^^^^^^
+
   ℹ Change the extension to .mjs to turn this file into a module
 
-  ℹ Add "type": "module" to your package.json
+  ℹ Add "type": "module" to your undefined
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

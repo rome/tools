@@ -23,8 +23,9 @@ test(
 					"<div fooaria-hidden='true'></div>",
 					"<input type='text' aria-errormessage='foobar' />",
 				],
+				category: "lint/jsx-a11y/ariaProps",
+				filename: "file.tsx",
 			},
-			{category: "lint/jsx-a11y/ariaProps"},
 		);
 	},
 );

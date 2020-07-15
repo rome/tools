@@ -479,6 +479,9 @@ JSRoot {
 
   ✖ Unexpected token, expected {
 
+    export \u0061sync function y() { await x }
+           ^^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

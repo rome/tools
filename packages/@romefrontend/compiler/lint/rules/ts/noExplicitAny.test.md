@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:11 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/1/file.ts:1:11 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
@@ -35,7 +35,7 @@ age;
 
 ```
 
- unknown:1:12 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/2/file.ts:1:12 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
@@ -62,7 +62,7 @@ ages;
 
 ```
 
- unknown:1:18 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/3/file.ts:1:18 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
@@ -89,7 +89,7 @@ ages;
 
 ```
 
- unknown:1:18 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/4/file.ts:1:18 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
@@ -116,7 +116,7 @@ greet();
 
 ```
 
- unknown:1:18 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/5/file.ts:1:18 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
@@ -143,7 +143,7 @@ greet();
 
 ```
 
- unknown:1:24 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/6/file.ts:1:24 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
@@ -170,7 +170,7 @@ greet();
 
 ```
 
- unknown:1:30 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/7/file.ts:1:30 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
@@ -197,7 +197,7 @@ greet();
 
 ```
 
- unknown:1:28 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/8/file.ts:1:28 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
@@ -226,7 +226,7 @@ greet();
 
 ```
 
- unknown:1:28 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/9/file.ts:1:28 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
@@ -235,7 +235,7 @@ greet();
 
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
- unknown:1:41 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/9/file.ts:1:41 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 

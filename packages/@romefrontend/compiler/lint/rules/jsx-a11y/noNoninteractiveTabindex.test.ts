@@ -24,8 +24,9 @@ test(
 					"<div></div>",
 					"<button tabindex='-1'></button>",
 				],
+				filename: "file.tsx",
+				category: "lint/jsx-a11y/noNoninteractiveTabindex",
 			},
-			{category: "lint/jsx-a11y/noNoninteractiveTabindex"},
 		);
 	},
 );

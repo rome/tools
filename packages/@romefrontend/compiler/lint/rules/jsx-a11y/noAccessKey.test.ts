@@ -9,8 +9,9 @@ test(
 			{
 				invalid: ['<input accessKey="key" />', "<input accessKey={key} />"],
 				valid: ["<input />", "<input accessKey={undefined} />"],
+				filename: "file.tsx",
+				category: "lint/jsx-a11y/noAccessKey",
 			},
-			{category: "lint/jsx-a11y/noAccessKey"},
 		);
 	},
 );

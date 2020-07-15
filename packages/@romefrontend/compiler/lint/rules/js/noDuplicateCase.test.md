@@ -8,7 +8,7 @@
 
 ```
 
- unknown:7:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDuplicateCase/reject/1/file.ts:7:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not duplicate the "c" case.
 
@@ -61,7 +61,7 @@ switch (expr) {
 
 ```
 
- unknown:5:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDuplicateCase/reject/2/file.ts:5:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not duplicate the 2 case.
 
@@ -112,7 +112,7 @@ switch (expr) {
 
 ```
 
- unknown:5:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDuplicateCase/reject/3/file.ts:5:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not duplicate the 2n case.
 
@@ -163,7 +163,7 @@ switch (expr) {
 
 ```
 
- unknown:3:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDuplicateCase/reject/4/file.ts:3:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not duplicate the "a" case.
 
@@ -210,7 +210,7 @@ switch ("a") {
 
 ```
 
- unknown:3:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDuplicateCase/reject/5/file.ts:3:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not duplicate the "foo" case.
 
@@ -257,7 +257,7 @@ switch ("a") {
 
 ```
 
- unknown:3:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDuplicateCase/reject/6/file.ts:3:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not duplicate the null case.
 
@@ -366,58 +366,20 @@ const expr = 3;
 switch (expr) {
 	case 1:
 		break;
-	case INVALID_PLACEHOLDER:
+	case "\n1":
+		break;
+	case 1n:
+		break;
+	case "null":
+		break;
+	case null:
+		break;
+	case foo:
+		break;
+	case "foo":
+		break;
+	default:
+		break;
 }
-
-```
-
-### `9`
-
-```
-✔ No known problems!
-
-```
-
-### `9: formatted`
-
-```
-
-
-```
-
-### `10`
-
-```
-✔ No known problems!
-
-```
-
-### `10: formatted`
-
-```
-INVALID_PLACEHOLDER;
-break;
-INVALID_PLACEHOLDER;
-1n;
-INVALID_PLACEHOLDER;
-break;
-INVALID_PLACEHOLDER;
-"null";
-INVALID_PLACEHOLDER;
-break;
-INVALID_PLACEHOLDER;
-null;
-INVALID_PLACEHOLDER;
-break;
-INVALID_PLACEHOLDER;
-foo: break;
-INVALID_PLACEHOLDER;
-"foo";
-INVALID_PLACEHOLDER;
-break;
-INVALID_PLACEHOLDER;
-INVALID_PLACEHOLDER;
-break;
-INVALID_PLACEHOLDER;
 
 ```

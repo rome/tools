@@ -218,6 +218,9 @@ JSRoot {
 
   ✖ A type annotation is only valid inside of a TypeScript file
 
+    class A {a:0}
+              ^
+
   ℹ To enable TypeScript support, the file extension should end in .ts or .tsx
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

@@ -248,6 +248,10 @@ JSRoot {
 
   ✖ arguments is a reserved word
 
+    1 │ "use strict";
+  > 2 │ const { arguments } = foo();
+      │         ^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

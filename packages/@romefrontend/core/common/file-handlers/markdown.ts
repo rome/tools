@@ -5,12 +5,13 @@ export const markdownHandler: ExtensionHandler = {
 	ext: "md",
 	canLint: true,
 	canFormat: true,
+	language: "md",
 
-	async parse({stat, path, file, worker}) {
+	async parse({mtime, path, file, worker}) {
 		const sourceText = await worker.readFile(file.real);
 		const ast = parseMarkdown({
 			input: sourceText,
-			mtime: stat.mtimeMs,
+			mtime,
 			path,
 		});
 		return {

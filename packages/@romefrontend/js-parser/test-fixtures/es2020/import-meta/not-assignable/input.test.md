@@ -131,6 +131,9 @@ JSRoot {
 
   ✖ Invalid left-hand side in assignment expression
 
+    import.meta = true;
+    ^^^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

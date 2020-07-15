@@ -162,6 +162,10 @@ JSRoot {
 
   ✖ Parenthesized expression didnt contain anything
 
+  > 1 │ ()
+      │  ^
+    2 │ => 42
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

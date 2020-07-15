@@ -1,3 +1,4 @@
+filename: "file.ts"
 invalid: [
 	// Doesn't need to be an arrow function because 'this' isn't from outer scope
 	"const foo = function () {};"

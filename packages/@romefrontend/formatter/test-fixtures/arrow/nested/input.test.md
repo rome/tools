@@ -4,9 +4,16 @@
 
 ## `arrow > nested`
 
+### `Diagnostics`
+
+```
+✔ No known problems!
+
+```
+
 ### `Input`
 
-```javascript
+```js
 Seq(typeDef.interface.groups).forEach(group =>
     Seq(group.members).forEach((member, memberName) =>
       markdownDoc(
@@ -38,7 +45,7 @@ runtimeAgent.getProperties(
 
 ### `Output`
 
-```javascript
+```js
 Seq(typeDef.interface.groups).forEach((group) =>
 	Seq(group.members).forEach((member, memberName) =>
 		markdownDoc(

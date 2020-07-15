@@ -304,6 +304,9 @@ JSRoot {
 
   ✖ setter should have exactly one param
 
+    class A { set prop(x, y) {} }
+              ^^^^^^^^^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

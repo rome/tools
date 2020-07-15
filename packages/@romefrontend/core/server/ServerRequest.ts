@@ -88,6 +88,7 @@ import {JSONObject} from "@romefrontend/codec-json";
 import {VCSClient} from "@romefrontend/vcs";
 import {InlineSnapshotUpdates} from "../test-worker/SnapshotManager";
 import {CacheEntry} from "./Cache";
+import {FormatterOptions} from "@romefrontend/formatter";
 
 type ServerRequestOptions = {
 	server: Server;
@@ -1031,6 +1032,7 @@ export default class ServerRequest {
 
 	async requestWorkerFormat(
 		path: AbsoluteFilePath,
+		options: FormatterOptions,
 		parseOptions: WorkerParseOptions,
 	): Promise<undefined | WorkerFormatResult> {
 		this.checkCancelled();
@@ -1038,7 +1040,7 @@ export default class ServerRequest {
 		return await this.wrapRequestDiagnostic(
 			"format",
 			path,
-			(bridge, ref) => bridge.format.call({ref, parseOptions}),
+			(bridge, ref) => bridge.format.call({ref, options, parseOptions}),
 		);
 	}
 

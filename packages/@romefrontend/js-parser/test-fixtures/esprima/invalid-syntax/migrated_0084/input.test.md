@@ -184,7 +184,12 @@ JSRoot {
 
   ✖ Unclosed object
 
+    ({get
+     ^
+
   ℹ We expected to find the closing character } here
+
+    ({get
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

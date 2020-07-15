@@ -205,6 +205,9 @@ JSRoot {
 
   ✖ Escape sequence in keyword new
 
+    function f() { n\u0065w.target; }
+                    ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -39,6 +39,7 @@ import {MAX_CODE_LENGTH, MAX_CODE_LINES, MAX_LOG_LENGTH} from "./constants";
 import {Diffs, diffConstants} from "@romefrontend/string-diff";
 import {removeCarriageReturn} from "@romefrontend/string-utils";
 import {serializeCLIFlags} from "@romefrontend/cli-flags";
+import {inferDiagnosticLanguageFromFilename} from "@romefrontend/core/common/file-handlers";
 
 type AdvicePrintOptions = {
 	printer: DiagnosticsPrinter;
@@ -303,8 +304,10 @@ function printCode(
 	const {reporter} = opts;
 
 	const truncatedLength =
-		!opts.flags.verboseDiagnostics && item.code.length > MAX_CODE_LENGTH;
-	let code = truncatedLength ? item.code.slice(0, MAX_CODE_LENGTH) : item.code;
+		!opts.flags.verboseDiagnostics && item.sourceText.length > MAX_CODE_LENGTH;
+	let code = truncatedLength
+		? item.sourceText.slice(0, MAX_CODE_LENGTH)
+		: item.sourceText;
 
 	const {frame, truncated: truncatedLines} = buildCodeFrame({
 		type: "all",
@@ -315,6 +318,7 @@ function printCode(
 			path: createUnknownFilePath("inline"),
 			sourceTypeJS: item.sourceTypeJS,
 			language: item.language,
+			highlight: opts.printer.shouldHighlight(),
 		}),
 	});
 	if (frame.trim() === "") {
@@ -324,7 +328,7 @@ function printCode(
 	reporter.logAll(frame);
 
 	if (truncatedLength) {
-		printTruncated(reporter, item.code.length - MAX_CODE_LENGTH);
+		printTruncated(reporter, item.sourceText.length - MAX_CODE_LENGTH);
 	}
 
 	return {
@@ -357,7 +361,11 @@ function printFrame(
 			path,
 			input: sourceText,
 			sourceTypeJS: item.location.sourceTypeJS,
-			language: item.location.language,
+			language: inferDiagnosticLanguageFromFilename(
+				path,
+				item.location.language,
+			),
+			highlight: opts.printer.shouldHighlight(),
 		});
 	} else if (filename !== undefined) {
 		const source = opts.fileSources.get(path);
@@ -425,10 +433,10 @@ function printStacktrace(
 				object,
 				suffix,
 				property,
+				language,
 				prefix,
 				line,
 				column,
-				language,
 				sourceText: code,
 			} = frame;
 
@@ -460,6 +468,7 @@ function printStacktrace(
 			if (filename !== undefined && line !== undefined && column !== undefined) {
 				const header = diagnosticLocationToMarkupFilelink({
 					filename,
+					language,
 					start: {
 						index: ob1Number0Neg1,
 						line,
@@ -492,8 +501,8 @@ function printStacktrace(
 					{
 						type: "frame",
 						location: {
-							language,
 							filename,
+							language,
 							sourceTypeJS: "module",
 							start: pos,
 							end: pos,

@@ -164,6 +164,9 @@ JSRoot {
 
   ✖ super is only allowed in object methods and classes
 
+    var x = super();
+            ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

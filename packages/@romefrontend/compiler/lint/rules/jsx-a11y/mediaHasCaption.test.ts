@@ -18,8 +18,9 @@ test(
 					"<video><track kind='captions' {...props} /></video>",
 					"<video muted {...props} ></video>",
 				],
+				filename: "file.tsx",
+				category: "lint/jsx-a11y/mediaHasCaption",
 			},
-			{category: "lint/jsx-a11y/mediaHasCaption"},
 		);
 	},
 );

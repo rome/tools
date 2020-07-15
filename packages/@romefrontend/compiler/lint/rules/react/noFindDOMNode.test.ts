@@ -19,8 +19,9 @@ test(
 					"ReactDOM.findDOMNode(this).scrollIntoView()",
 				],
 				valid: ["this.node.scrollIntoView()"],
+				filename: "file.tsx",
+				category: "lint/react/noFindDOMNode",
 			},
-			{category: "lint/react/noFindDOMNode"},
 		);
 	},
 );

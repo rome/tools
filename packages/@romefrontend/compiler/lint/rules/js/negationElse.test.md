@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/js/negationElse  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/negationElse/reject/1/file.ts:1 lint/js/negationElse  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invert blocks when performing a negation test.
 
@@ -47,7 +47,7 @@ if (true) {
 
 ```
 
- unknown:1 lint/js/negationElse  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/negationElse/reject/2/file.ts:1 lint/js/negationElse  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invert blocks when performing a negation test.
 

@@ -667,6 +667,11 @@ JSRoot {
 
   ✖ Unknown class property start
 
+    1 │ class A {
+  > 2 │   declare static foo;
+      │           ^
+    3 │   static declare foo0: string;
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

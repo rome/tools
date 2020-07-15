@@ -31,7 +31,7 @@ switch (foo) {
 switch (foo) {
 	case true:
 	case false:
-		return 'yes';
+		'yes';
 }
 ```
 ```typescript

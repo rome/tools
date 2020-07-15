@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:20 lint/jsx-a11y/ariaProps  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/ariaProps/reject/1/file.tsx:1:20 lint/jsx-a11y/ariaProps  FIXABLE  ━━━━━━━━━━━━━━━━━━
 
   ✖ aria-labell is an invalid ARIA attribute.
 
@@ -39,7 +39,7 @@
 
 ```
 
- unknown:1:5 lint/jsx-a11y/ariaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/ariaProps/reject/2/file.tsx:1:5 lint/jsx-a11y/ariaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ aria- is an invalid ARIA attribute.
 
@@ -63,7 +63,7 @@
 
 ```
 
- unknown:1:5 lint/jsx-a11y/ariaProps  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/ariaProps/reject/3/file.tsx:1:5 lint/jsx-a11y/ariaProps  FIXABLE  ━━━━━━━━━━━━━━━━━━━
 
   ✖ aria-labeledby is an invalid ARIA attribute.
 
@@ -94,7 +94,7 @@
 
 ```
 
- unknown:1:5 lint/jsx-a11y/ariaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/ariaProps/reject/4/file.tsx:1:5 lint/jsx-a11y/ariaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ aria-skldjfaria-klajsd is an invalid ARIA attribute.
 

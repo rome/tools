@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:24 lint/js/noNestedTernary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noNestedTernary/reject/1/file.ts:1:24 lint/js/noNestedTernary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Nesting ternary expressions can make code more difficult to understand.
 
@@ -32,14 +32,14 @@ let thing = foo ? bar : baz === qux ? quxx : foobar;
 
 ```
 
- unknown:1:18 lint/js/noNestedTernary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noNestedTernary/reject/2/file.ts:1:18 lint/js/noNestedTernary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Nesting ternary expressions can make code more difficult to understand.
 
     let thing = foo ? bar ? boo : foo : baz ? boo : foo;
                       ^^^^^^^^^^^^^^^
 
- unknown:1:36 lint/js/noNestedTernary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noNestedTernary/reject/2/file.ts:1:36 lint/js/noNestedTernary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Nesting ternary expressions can make code more difficult to understand.
 
@@ -63,7 +63,7 @@ let thing = foo ? bar ? boo : foo : baz ? boo : foo;
 
 ```
 
- unknown:1:6 lint/js/noNestedTernary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noNestedTernary/reject/3/file.ts:1:6 lint/js/noNestedTernary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Nesting ternary expressions can make code more difficult to understand.
 

@@ -280,6 +280,10 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    1 │ var x = async
+  > 2 │ (x) => x + 1;
+      │     ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

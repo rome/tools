@@ -237,6 +237,9 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    export default \u0061sync function y() { await x }
+                              ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:23 lint/js/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noCatchAssign/reject/1/file.ts:1:23 lint/js/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not reassign catch parameters.
 
@@ -38,7 +38,7 @@ try {
 
 ```
 
- unknown:1:42 lint/js/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noCatchAssign/reject/2/file.ts:1:42 lint/js/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not reassign catch parameters.
 
@@ -68,7 +68,7 @@ try {
 
 ```
 
- unknown:1:22 lint/js/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noCatchAssign/reject/3/file.ts:1:22 lint/js/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not reassign catch parameters.
 
@@ -97,7 +97,7 @@ try {
 
 ```
 
- unknown:1:34 lint/js/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noCatchAssign/reject/4/file.ts:1:34 lint/js/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not reassign catch parameters.
 
@@ -106,7 +106,7 @@ try {
 
   ℹ Use a local variable instead.
 
- unknown:1:52 lint/js/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noCatchAssign/reject/4/file.ts:1:52 lint/js/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not reassign catch parameters.
 
@@ -136,7 +136,7 @@ try {
 
 ```
 
- unknown:1:26 lint/js/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noCatchAssign/reject/5/file.ts:1:26 lint/js/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not reassign catch parameters.
 
@@ -165,7 +165,7 @@ try {
 
 ```
 
- unknown:1:37 lint/js/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noCatchAssign/reject/6/file.ts:1:37 lint/js/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not reassign catch parameters.
 

@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/js/noDebugger  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDebugger/reject/1/file.ts:1 lint/js/noDebugger  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ This is an unexpected use of the debugger statement.
 

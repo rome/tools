@@ -178,6 +178,8 @@ JSRoot {
 
   ✖ Unknown start to an statement expression
 
+    if(false) doThis(); else
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

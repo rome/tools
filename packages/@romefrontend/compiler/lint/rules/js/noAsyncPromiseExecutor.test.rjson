@@ -1,3 +1,4 @@
+filename: "file.ts"
 invalid: [
 	"new Promise(async function foo() {})"
 	"new Promise(async () => {})"

@@ -240,6 +240,9 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    function foo(promise) { await promise; }
+                                  ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -169,6 +169,9 @@ JSRoot {
 
   ✖ Unexpected keyword default
 
+    import { default } from "foo";
+             ^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

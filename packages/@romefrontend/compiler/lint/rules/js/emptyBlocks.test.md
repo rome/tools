@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:9 lint/js/emptyBlocks ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/emptyBlocks/reject/1/file.ts:1:9 lint/js/emptyBlocks ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid empty logic blocks.
 
@@ -35,7 +35,7 @@ if (foo) {
 
 ```
 
- unknown:3:7 lint/js/emptyBlocks ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/emptyBlocks/reject/2/file.ts:3:7 lint/js/emptyBlocks ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid empty logic blocks.
 

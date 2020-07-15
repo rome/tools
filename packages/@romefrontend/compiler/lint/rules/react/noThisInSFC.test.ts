@@ -215,8 +215,9 @@ test(
 					)
 				`,
 				],
+				filename: "file.tsx",
+				category: "lint/react/noThisInSFC",
 			},
-			{category: "lint/react/noThisInSFC"},
 		);
 	},
 );

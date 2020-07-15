@@ -26,6 +26,7 @@ export const jsonHandler: ExtensionHandler = {
 	ext: "json",
 	canLint: false,
 	canFormat: true,
+	language: "json",
 
 	async customFormat(
 		info: ExtensionHandlerMethodInfo,

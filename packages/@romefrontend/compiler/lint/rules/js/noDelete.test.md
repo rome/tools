@@ -8,7 +8,7 @@
 
 ```
 
- unknown:2 lint/js/noDelete  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDelete/reject/1/file.ts:2 lint/js/noDelete  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ This is an unexpected use of the delete operator.
 
@@ -39,7 +39,7 @@ arr[0][2] = undefined;
 
 ```
 
- unknown:2 lint/js/noDelete  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDelete/reject/2/file.ts:2 lint/js/noDelete  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ This is an unexpected use of the delete operator.
 

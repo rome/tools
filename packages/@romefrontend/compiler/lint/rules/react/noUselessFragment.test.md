@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noUselessFragment/reject/1/file.tsx:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━
 
   ✖ Avoid using unnecessary Fragment.
 
@@ -42,7 +42,7 @@
 
 ```
 
- unknown:1:3 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noUselessFragment/reject/2/file.tsx:1:3 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━
 
   ✖ Avoid using unnecessary Fragment.
 
@@ -78,7 +78,7 @@
 
 ```
 
- unknown:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noUselessFragment/reject/3/file.tsx:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━
 
   ✖ Avoid using unnecessary Fragment.
 
@@ -110,7 +110,7 @@
 
 ```
 
- unknown:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noUselessFragment/reject/4/file.tsx:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━
 
   ✖ Avoid using unnecessary Fragment.
 
@@ -144,7 +144,7 @@ foo;
 
 ```
 
- unknown:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noUselessFragment/reject/5/file.tsx:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━
 
   ✖ Avoid using unnecessary Fragment.
 
@@ -178,7 +178,7 @@ foo;
 
 ```
 
- unknown:2:5 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noUselessFragment/reject/6/file.tsx:2:5 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━
 
   ✖ Avoid using unnecessary Fragment.
 

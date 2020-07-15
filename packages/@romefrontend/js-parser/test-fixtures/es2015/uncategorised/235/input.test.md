@@ -233,6 +233,9 @@ JSRoot {
 
   ✖ Loop variable declaration may not have an initializer
 
+    for (let x = 42 in list) process(x);
+         ^^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

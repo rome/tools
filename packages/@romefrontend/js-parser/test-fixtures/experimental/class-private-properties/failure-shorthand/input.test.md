@@ -391,6 +391,13 @@ JSRoot {
 
   ✖ Unknown start to an statement expression
 
+    2 │   #x;
+    3 │   constructor() {
+  > 4 │     delete #x;
+      │            ^
+    5 │   }
+    6 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

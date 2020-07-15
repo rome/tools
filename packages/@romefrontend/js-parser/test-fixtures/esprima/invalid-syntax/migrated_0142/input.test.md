@@ -182,6 +182,9 @@ JSRoot {
 
   ✖ Lexical declaration cannot appear in a single-statement context
 
+    if(true) const a = 1;
+             ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

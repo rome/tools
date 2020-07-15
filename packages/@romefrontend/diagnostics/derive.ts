@@ -8,6 +8,7 @@
 import {
 	Diagnostic,
 	DiagnosticAdvice,
+	DiagnosticAdviceStacktrace,
 	DiagnosticDescription,
 	DiagnosticOrigin,
 	Diagnostics,
@@ -247,7 +248,9 @@ export function getErrorStackAdvice(
 			list: cleanStack.split("\n").map((line) => escapeMarkup(line.trim())),
 		});
 	} else {
-		const adviceFrames = frames.map((frame) => {
+		const adviceFrames: DiagnosticAdviceStacktrace["frames"] = frames.map((
+			frame,
+		) => {
 			const {
 				typeName,
 				functionName,
@@ -288,6 +291,7 @@ export function getErrorStackAdvice(
 			}
 
 			return {
+				language: "unknown",
 				suffix,
 				prefix,
 				object,

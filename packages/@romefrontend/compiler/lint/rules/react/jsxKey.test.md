@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:11 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/jsxKey/reject/1/file.tsx:1:11 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in array.
 
@@ -17,7 +17,7 @@
 
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
- unknown:1:20 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/jsxKey/reject/1/file.tsx:1:20 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in array.
 
@@ -43,7 +43,7 @@ const a = [<div />, <div />];
 
 ```
 
- unknown:1:26 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/jsxKey/reject/2/file.tsx:1:26 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
@@ -73,7 +73,7 @@ const a = [1, 2].map((x) =>
 
 ```
 
- unknown:1:34 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/jsxKey/reject/3/file.tsx:1:34 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
@@ -106,7 +106,7 @@ React.Children.map(
 
 ```
 
- unknown:1:28 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/jsxKey/reject/4/file.tsx:1:28 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
@@ -139,7 +139,7 @@ Children.map(
 
 ```
 
- unknown:2:8 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/jsxKey/reject/5/file.tsx:2:8 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
@@ -171,7 +171,7 @@ const a = [1, 2].map((x) => {
 
 ```
 
- unknown:2:8 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/jsxKey/reject/6/file.tsx:2:8 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
@@ -206,7 +206,7 @@ React.Children.map(
 
 ```
 
- unknown:2:8 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/jsxKey/reject/7/file.tsx:2:8 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
@@ -241,7 +241,7 @@ Children.map(
 
 ```
 
- unknown:2:8 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/jsxKey/reject/8/file.tsx:2:8 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
@@ -273,7 +273,7 @@ const a = [1, 2].map(function(x) {
 
 ```
 
- unknown:2:8 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/jsxKey/reject/9/file.tsx:2:8 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
@@ -308,7 +308,7 @@ React.Children.map(
 
 ```
 
- unknown:2:8 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/jsxKey/reject/10/file.tsx:2:8 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 

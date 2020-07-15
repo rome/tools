@@ -134,25 +134,19 @@ const expr = 3;
 switch (expr) {
 	case 1:
 		break;
-	case
-```
-```typescript
-1
-```
-```typescript
-:
-								break;
-							case 1n:
-								break;
-							case 'null':
-								break;
-							case null:
-								break;
-							case foo:
-								break;
-							case 'foo':
-								break;
-							default:
-								break;
-						}
+	case '\n1':
+		break;
+	case 1n:
+		break;
+	case 'null':
+		break;
+	case null:
+		break;
+	case foo:
+		break;
+	case 'foo':
+		break;
+	default:
+		break;
+}
 ```

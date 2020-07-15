@@ -56,7 +56,6 @@ import CommentsConsumer from "@romefrontend/js-parser/CommentsConsumer";
 export * from "./types";
 
 export type ParserOptions = {
-	inlineDiagnosticsSource?: boolean;
 	retainCarriageReturn?: boolean;
 	path?: string | UnknownFilePath;
 	mtime?: number;
@@ -163,13 +162,11 @@ export class ParserCore<
 			mtime,
 			offsetPosition,
 			sourceText,
-			inlineDiagnosticsSource = false,
 		} = opts;
 
 		// Input information
 		this.path = path === undefined ? undefined : createUnknownFilePath(path);
 		this.filename = this.path === undefined ? undefined : this.path.join();
-		this.shouldInlineDiagnosticsSource = inlineDiagnosticsSource;
 		this.mtime = mtime;
 		this.input = normalizeInput(opts);
 		this.sourceText = sourceText === undefined ? this.input : sourceText;
@@ -222,7 +219,6 @@ export class ParserCore<
 
 	path: undefined | UnknownFilePath;
 	filename: undefined | string;
-	shouldInlineDiagnosticsSource: boolean;
 	mtime: undefined | number;
 	input: string;
 	sourceText: string;
@@ -558,7 +554,7 @@ export class ParserCore<
 		}
 
 		let sourceText;
-		if (this.path === undefined || this.shouldInlineDiagnosticsSource) {
+		if (this.path === undefined) {
 			sourceText = this.sourceText;
 		}
 

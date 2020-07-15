@@ -1,12 +1,21 @@
 import {TestHelper} from "rome";
-import {Client, Server, ServerBridge} from ".";
+import {
+	Client,
+	Server,
+	ServerBridge,
+	Worker,
+	WorkerBridge,
+} from "@romefrontend/core";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	RelativeFilePath,
 	TEMP_PATH,
+	createAbsoluteFilePath,
+	createRelativeFilePath,
+	createUnknownFilePath,
 } from "@romefrontend/path";
-import {ClientFlags} from "./common/types/client";
+import {ClientFlags} from "../core/common/types/client";
 import {JSONObject, stringifyJSON} from "@romefrontend/codec-json";
 import {
 	createDirectory,
@@ -19,12 +28,32 @@ import {
 } from "@romefrontend/fs";
 import {Stdout} from "@romefrontend/environment";
 import {Dict} from "@romefrontend/typescript-helpers";
-import {UserConfig} from "./common/userConfig";
+import {DEFAULT_USER_CONFIG, UserConfig} from "../core/common/userConfig";
+import ServerRequest from "../core/server/ServerRequest";
+import {partialServerQueryRequestToFull} from "../core/server/Server";
+import {PartialServerQueryRequest} from "../core/common/bridges/ServerBridge";
+import {
+	ProjectConfig,
+	createDefaultProjectConfig,
+	serializeJSONProjectConfig,
+} from "@romefrontend/project";
+import {createBridgeFromLocal} from "@romefrontend/events";
+import {FileReference} from "../core/common/types/files";
+import {
+	Fixture,
+	FixtureFile,
+	createFixtureTests,
+} from "@romefrontend/test-helpers";
+import {removeCarriageReturn} from "@romefrontend/string-utils";
+import {
+	getFileHandlerAssert,
+	getFileHandlerExtensions,
+} from "../core/common/file-handlers";
+import {printDiagnosticsToString} from "@romefrontend/cli-diagnostics";
 import crypto = require("crypto");
 import stream = require("stream");
-import ServerRequest from "./server/ServerRequest";
-import {partialServerQueryRequestToFull} from "./server/Server";
-import {PartialServerQueryRequest} from "./common/bridges/ServerBridge";
+import {ExtensionHandler} from "../core/common/file-handlers/types";
+import {DiagnosticsProcessor} from "@romefrontend/diagnostics";
 
 type IntegrationTestHelper = {
 	cwd: AbsoluteFilePath;
@@ -55,6 +84,201 @@ async function generateTempFolder(): Promise<AbsoluteFilePath> {
 		await createDirectory(path);
 		return path;
 	}
+}
+
+export type IntegrationWorker = {
+	worker: Worker;
+	addProject: (config: ProjectConfig) => number;
+	createFileReference: (
+		opts: IntegrationWorkerFileRefOptions,
+	) => IntegrationWorkerFileRefReturn;
+};
+
+type IntegrationWorkerFileRefOptions = {
+	sourceText?: string;
+	real?: string | AbsoluteFilePath;
+	project?: number;
+	once?: boolean;
+	uid: string;
+};
+
+type IntegrationWorkerFileRefReturn = {
+	ref: FileReference;
+	teardown: () => void;
+};
+
+export function findFixtureInput(
+	{files, dir}: Fixture,
+	projectConfig: undefined | ProjectConfig,
+): {
+	input: FixtureFile;
+	handler: ExtensionHandler;
+} {
+	const triedExts = [];
+	for (const ext of getFileHandlerExtensions(projectConfig)) {
+		const input = files.get(`input.${ext}`);
+		if (input !== undefined) {
+			return {
+				input,
+				handler: getFileHandlerAssert(
+					createUnknownFilePath(`input.${ext}`),
+					projectConfig,
+				).handler,
+			};
+		}
+
+		triedExts.push(ext);
+	}
+
+	throw new Error(
+		`The fixture ${dir} did not have an input.(${triedExts.join("|")})`,
+	);
+}
+
+let cachedIntegrationWorker: undefined | IntegrationWorker;
+
+export function createIntegrationWorker(
+	force: boolean = false,
+): IntegrationWorker {
+	if (!force && cachedIntegrationWorker !== undefined) {
+		return cachedIntegrationWorker;
+	}
+
+	const worker = new Worker({
+		globalErrorHandlers: false,
+		userConfig: DEFAULT_USER_CONFIG,
+
+		// This wont actually be used, it's just for setting up subscriptions
+		bridge: createBridgeFromLocal(WorkerBridge, {}),
+	});
+
+	let projectIdCounter = 0;
+
+	function createFileReference(
+		{
+			project = defaultProjectId,
+			real,
+			sourceText,
+			uid,
+		}: IntegrationWorkerFileRefOptions,
+	): IntegrationWorkerFileRefReturn {
+		let relative = createRelativeFilePath(uid);
+
+		if (real === undefined && sourceText === undefined) {
+			throw new Error("real and sourceText cannot be undefined");
+		}
+
+		if (real === undefined) {
+			real = createAbsoluteFilePath(`/project-${project}`).append(relative);
+		} else {
+			real = createAbsoluteFilePath(real);
+		}
+
+		const ref: FileReference = {
+			project,
+			manifest: undefined,
+			remote: false,
+			uid,
+			relative,
+			real,
+		};
+
+		if (sourceText !== undefined) {
+			worker.updateBuffer(ref, sourceText);
+		}
+
+		return {
+			ref,
+			teardown: () => {
+				worker.clearBuffer(ref);
+			},
+		};
+	}
+
+	function addProject(config: ProjectConfig): number {
+		let id = projectIdCounter++;
+		worker.updateProjects([
+			{
+				config: serializeJSONProjectConfig(config),
+				id,
+				folder: `/project-${id}`,
+			},
+		]);
+		return id;
+	}
+
+	const defaultProjectId = addProject(createDefaultProjectConfig());
+
+	const int: IntegrationWorker = {
+		addProject,
+		createFileReference,
+		worker,
+	};
+	if (!force) {
+		cachedIntegrationWorker = int;
+	}
+	return int;
+}
+
+export async function declareParserTests() {
+	const {worker, createFileReference} = createIntegrationWorker();
+
+	return createFixtureTests(async (fixture, t) => {
+		const {options} = fixture;
+		const {input} = findFixtureInput(fixture, undefined);
+
+		const sourceTypeJS = options.get("sourceTypeJS").asStringSetOrVoid([
+			"script",
+			"module",
+		]);
+		const inputContent = removeCarriageReturn(input.content.toString());
+
+		const {ref, teardown} = createFileReference({
+			uid: input.relative.join(),
+			sourceText: inputContent,
+		});
+
+		const {ast} = await worker.parse(
+			ref,
+			{
+				cache: false,
+				sourceTypeJS,
+				allowCorrupt: true,
+			},
+		);
+
+		teardown();
+
+		// Inline diagnostics
+		const processor = new DiagnosticsProcessor();
+		processor.normalizer.setInlineSourceText(ast.filename, inputContent);
+		processor.addDiagnostics(ast.diagnostics);
+		const diagnostics = processor.getDiagnostics();
+
+		const outputFile = input.absolute.getParent().append(
+			input.absolute.getExtensionlessBasename(),
+		).join();
+		t.namedSnapshot("ast", ast, undefined, {filename: outputFile});
+
+		const printedDiagnostics = printDiagnosticsToString({
+			diagnostics,
+			suppressions: [],
+		});
+		t.namedSnapshot(
+			"diagnostics",
+			printedDiagnostics,
+			undefined,
+			{filename: outputFile},
+		);
+
+		if (diagnostics.length === 0) {
+			if (options.has("throws")) {
+				// TODO: throw new Error(`Expected diagnostics but didn't receive any\n${printedDiagnostics}`);
+			}
+		} else if (!options.has("throws")) {
+			// TODO: throw new Error(`Received diagnostics when we didn't expect any\n${printedDiagnostics}`);
+		}
+	});
 }
 
 export function createIntegrationTest(
@@ -151,7 +375,7 @@ export function createIntegrationTest(
 
 			t.addToAdvice(() => ({
 				type: "code",
-				code: logs,
+				sourceText: logs,
 			}));
 
 			try {

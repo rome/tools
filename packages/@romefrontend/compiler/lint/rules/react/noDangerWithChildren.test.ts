@@ -67,8 +67,9 @@ test(
 					'createElement("Valid", { children: "children" })',
 					'createElement("Valid", { children: ["children"] })',
 				],
+				filename: "file.tsx",
+				category: "lint/react/noDangerWithChildren",
 			},
-			{category: "lint/react/noDangerWithChildren"},
 		);
 	},
 );

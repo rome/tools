@@ -310,6 +310,9 @@ JSRoot {
 
   ✖ eval is a reserved word
 
+    'use strict'; ({eval = defValue} = obj)
+                    ^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

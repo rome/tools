@@ -253,6 +253,9 @@ JSRoot {
 
   ✖ Expecting Unicode escape sequence \uXXXX
 
+    var x = /[P QR]/\\u0067
+                     ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -304,6 +304,11 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    1 │ class C {
+  > 2 │     readonly m() {}
+      │               ^
+    3 │ }
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

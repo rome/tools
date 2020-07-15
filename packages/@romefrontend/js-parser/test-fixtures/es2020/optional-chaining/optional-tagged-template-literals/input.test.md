@@ -201,6 +201,9 @@ JSRoot {
 
   ✖ Tagged Template Literals are not allowed in optionalChain
 
+    a?.b`foo`
+        ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

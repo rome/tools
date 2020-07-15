@@ -9,20 +9,14 @@ export * from "./common/constants";
 
 export {getFileHandler} from "./common/file-handlers/index";
 
-// API
 export {default as Client} from "./client/Client";
 export {localCommands} from "./client/commands";
 export {serverCommands} from "./server/commands";
 
-// Types
 export * from "./common/types/platform";
-
 export * from "./common/types/bundler";
-
 export * from "./common/types/client";
-
 export * from "./common/types/files";
-
 export * from "./common/types/analyzeDependencies";
 
 export {default as Server} from "./server/Server";
@@ -30,11 +24,9 @@ export {default as Worker} from "./worker/Worker";
 export {default as ServerRequest} from "./server/ServerRequest";
 export {WebServerClient, WebServerRequest} from "./server/web/index";
 
-// Testing API
 export {default as TestAPI} from "./test-worker/TestAPI";
 export {default as TestWorker} from "./test-worker/TestWorker";
 
-// Bridges
 export {default as WorkerBridge} from "./common/bridges/WorkerBridge";
 export {default as ServerBridge} from "./common/bridges/ServerBridge";
 export {default as WebBridge} from "./common/bridges/WebBridge";

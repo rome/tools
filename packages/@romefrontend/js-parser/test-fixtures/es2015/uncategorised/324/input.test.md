@@ -169,6 +169,9 @@ JSRoot {
 
   ✖ Complex binding patterns require an initialization value
 
+    let [x]
+           ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

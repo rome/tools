@@ -192,6 +192,9 @@ JSRoot {
 
   ✖ eval is a reserved word
 
+    function eval(a) { "use strict"; }
+             ^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

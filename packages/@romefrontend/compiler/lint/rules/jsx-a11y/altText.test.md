@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/altText/reject/1/file.tsx:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
 
@@ -35,7 +35,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/altText/reject/2/file.tsx:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
 
@@ -62,7 +62,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/altText/reject/3/file.tsx:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
 
@@ -89,7 +89,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/altText/reject/4/file.tsx:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
 
@@ -116,7 +116,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/altText/reject/5/file.tsx:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
 
@@ -143,7 +143,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/altText/reject/6/file.tsx:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
 
@@ -170,7 +170,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/altText/reject/7/file.tsx:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
 
@@ -197,7 +197,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/altText/reject/8/file.tsx:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
 
@@ -224,7 +224,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/altText/reject/9/file.tsx:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
 
@@ -251,7 +251,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/altText/reject/10/file.tsx:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
 
@@ -278,7 +278,7 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/altText/reject/11/file.tsx:1 lint/jsx-a11y/altText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
 

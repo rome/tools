@@ -165,6 +165,9 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
+    import "x" with;
+               ^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

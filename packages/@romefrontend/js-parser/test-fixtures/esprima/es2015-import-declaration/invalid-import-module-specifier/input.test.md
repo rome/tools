@@ -154,6 +154,9 @@ JSRoot {
 
   ✖ Export from only allows strings
 
+    export {foo} from bar
+                      ^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -44,8 +44,9 @@ test(
 					"<Button role='button' ></Button>",
 					"<span></span>",
 				],
+				filename: "file.tsx",
+				category: "lint/jsx-a11y/noRedundantRoles",
 			},
-			{category: "lint/jsx-a11y/noRedundantRoles"},
 		);
 	},
 );

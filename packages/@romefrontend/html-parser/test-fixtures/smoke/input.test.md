@@ -4,6 +4,8 @@
 
 ## `smoke`
 
+### `ast`
+
 ```javascript
 HTMLRoot {
 	corrupt: false
@@ -369,4 +371,11 @@ HTMLRoot {
 		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```

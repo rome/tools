@@ -678,6 +678,11 @@ JSRoot {
 
   ✖ Flow type cast expressions aren't allowed in TypeScript
 
+    1 │ const assert1 = (value: unknown): asserts value is string => {}
+    2 │ const assert2 = (value: unknown): asserts value => {}
+  > 3 │ const assert3 = (value: unknown): asserts => {}
+      │                  ^^^^^^^^^^^^^^
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem

@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:22 lint/jsx-a11y/ariaProptypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/ariaProptypes/reject/1/file.tsx:1:22 lint/jsx-a11y/ariaProptypes ━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-checked is not correct.
 
@@ -33,7 +33,7 @@
 
 ```
 
- unknown:1:6 lint/jsx-a11y/ariaProptypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/ariaProptypes/reject/2/file.tsx:1:6 lint/jsx-a11y/ariaProptypes ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-autocomplete is not correct.
 
@@ -60,7 +60,7 @@
 
 ```
 
- unknown:1:6 lint/jsx-a11y/ariaProptypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/ariaProptypes/reject/3/file.tsx:1:6 lint/jsx-a11y/ariaProptypes ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-invalid is not correct.
 
@@ -87,7 +87,7 @@
 
 ```
 
- unknown:1:6 lint/jsx-a11y/ariaProptypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/ariaProptypes/reject/4/file.tsx:1:6 lint/jsx-a11y/ariaProptypes ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-errormessage is not correct.
 
@@ -112,7 +112,7 @@
 
 ```
 
- unknown:1:6 lint/jsx-a11y/ariaProptypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/ariaProptypes/reject/5/file.tsx:1:6 lint/jsx-a11y/ariaProptypes ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-relevant is not correct.
 
@@ -140,7 +140,7 @@
 
 ```
 
- unknown:1:6 lint/jsx-a11y/ariaProptypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/ariaProptypes/reject/6/file.tsx:1:6 lint/jsx-a11y/ariaProptypes ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-labelledby is not correct.
 
@@ -165,7 +165,7 @@
 
 ```
 
- unknown:1:6 lint/jsx-a11y/ariaProptypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/ariaProptypes/reject/7/file.tsx:1:6 lint/jsx-a11y/ariaProptypes ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-labelledby is not correct.
 
@@ -190,7 +190,7 @@
 
 ```
 
- unknown:1:6 lint/jsx-a11y/ariaProptypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/ariaProptypes/reject/8/file.tsx:1:6 lint/jsx-a11y/ariaProptypes ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-details is not correct.
 
