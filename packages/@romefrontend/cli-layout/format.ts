@@ -34,6 +34,7 @@ function buildTag(
 			attributes = attributes.copy();
 
 			const {filename, line, column, text} = buildFileLink(attributes, opts);
+			inner = escapeMarkup(text);
 			attributes.get("column").setValue(column);
 			attributes.get("line").setValue(line);
 			attributes.get("target").setValue(filename);
@@ -41,7 +42,6 @@ function buildTag(
 				attributes.get("line").setValue(undefined);
 				attributes.get("column").setValue(undefined);
 			}
-			inner = text;
 			break;
 		}
 

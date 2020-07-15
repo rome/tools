@@ -69,12 +69,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
 	}
 
 	toMarkup(): string {
-		let target = escapeMarkup(this.join());
-		// Remove trailing slash if present as an explicit folder
-		if (target[target.length - 1] === "/") {
-			target = target.slice(0, -1);
-		}
-		return `<filelink target="${target}" />`;
+		return `<filelink target="${escapeMarkup(this.join())}" />`;
 	}
 
 	getParsed(): ParsedPath {
