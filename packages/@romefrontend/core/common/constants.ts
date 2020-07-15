@@ -9,7 +9,7 @@ import packageJson from "../../../../package.json";
 import os = require("os");
 
 import {TEMP_PATH, createAbsoluteFilePath} from "@romefrontend/path";
-import {getEnvVar} from "@romefrontend/environment";
+import {getEnvVar} from "@romefrontend/cli-environment";
 
 export const CHILD_ARGS = ["--max-old-space-size=8192"];
 

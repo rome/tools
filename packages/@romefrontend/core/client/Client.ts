@@ -376,12 +376,6 @@ export default class Client {
 				);
 			}
 
-			// Add client flags
-			writer.append(
-				{name: "clientFlags.json"},
-				stringifyJSON(this.getClientJSONFlags()),
-			);
-
 			function indent(val: unknown): string {
 				const str =
 					typeof val === "string"
@@ -398,11 +392,15 @@ export default class Client {
 			}
 
 			const env = [];
+
 			env.push(`PATH: ${indent(process.env.PATH)}`);
-			env.push(`Rome version: ${indent(VERSION)}`);
-			env.push(`Node version: ${indent(process.versions.node)}`);
+			env.push(`Rome Version: ${indent(VERSION)}`);
+			env.push(`Node Version: ${indent(process.versions.node)}`);
 			env.push(`Platform: ${indent(`${process.platform} ${process.arch}`)}`);
-			writer.append({name: "environment.txt"}, `${env.join("\n\n")}\n`);
+			env.push(
+				`Terminal Features: ${indent(this.derivedReporterStreams.features)}`,
+			);
+			env.push(`Client Flags: ${indent(this.getClientJSONFlags())}`);
 
 			// Don't do this if we never connected to the server
 			const bridgeStatus = this.getBridgeStatus();
@@ -415,17 +413,11 @@ export default class Client {
 					"server",
 				);
 				if (status.type === "SUCCESS") {
-					writer.append(
-						{name: "status.txt"},
-						`${prettyFormat(
-							status.data,
-							{
-								compact: true,
-							},
-						)}\n`,
-					);
+					env.push(`Server Status: ${indent(status.data)}`);
 				}
 			}
+
+			writer.append({name: "environment.txt"}, `${env.join("\n\n")}\n`);
 
 			await writer.finalize();
 			this.reporter.success(

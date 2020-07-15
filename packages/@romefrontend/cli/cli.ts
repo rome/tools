@@ -30,7 +30,7 @@ import {writeFile} from "@romefrontend/fs";
 import fs = require("fs");
 import {markup} from "@romefrontend/cli-layout";
 import {JSONObject, stringifyJSON} from "@romefrontend/codec-json";
-import {getEnvVar} from "@romefrontend/environment";
+import {getEnvVar} from "@romefrontend/cli-environment";
 import {
 	joinMarkupLines,
 	markupToPlainText,

@@ -44,12 +44,13 @@ import {escapeXHTMLEntities} from "@romefrontend/html-parser";
 import {ansiFormatText} from "./formatANSI";
 import {htmlFormatText} from "./formatHTML";
 import {
-	TERMINAL_FEATURES_DEFAULT,
+	DEFAULT_TERMINAL_FEATURES,
 	TerminalFeatures,
-} from "@romefrontend/environment";
+} from "@romefrontend/cli-environment";
 import {parseMarkup} from "../parse";
 import {Position} from "@romefrontend/parser-core";
 import {lineWrapValidator} from "../tags";
+import {formatAnsi} from "../ansi";
 
 type Cursor = {
 	line: Number1;
@@ -116,7 +117,7 @@ export default class Grid {
 		this.options = opts;
 
 		this.features =
-			opts.features === undefined ? TERMINAL_FEATURES_DEFAULT : opts.features;
+			opts.features === undefined ? DEFAULT_TERMINAL_FEATURES : opts.features;
 
 		this.cursor = {
 			line: ob1Number1,
@@ -291,6 +292,7 @@ export default class Grid {
 		opts: {
 			normalizeText: (text: string) => string;
 			formatTag: (tag: TagNode, inner: string) => string;
+			wrapRange: (text: string) => string;
 		},
 	): Array<string> {
 		const lines: Array<string> = [];
@@ -323,6 +325,8 @@ export default class Grid {
 					substr = opts.formatTag(tag, substr);
 				}
 
+				substr = opts.wrapRange(substr);
+
 				line = `${substr}${line}`;
 				lastEnd = startIndex;
 			}
@@ -339,6 +343,7 @@ export default class Grid {
 		return this.getFormattedLines({
 			normalizeText: (text) => escapeXHTMLEntities(text),
 			formatTag: (tag, inner) => htmlFormatText(tag, inner),
+			wrapRange: (str) => str,
 		});
 	}
 
@@ -346,8 +351,9 @@ export default class Grid {
 		return this.getFormattedLines({
 			normalizeText: (text) => text,
 			formatTag: (tag, inner) => {
-				return ansiFormatText(tag, inner, this.options, this.features);
+				return ansiFormatText(tag, inner, this);
 			},
+			wrapRange: (str) => formatAnsi.reset(str),
 		});
 	}
 
@@ -1493,10 +1499,9 @@ hooks.set(
 	"hr",
 	{
 		after: (tag, grid, ancestry) => {
-			let size = 100;
-			if (grid.viewportWidth !== undefined) {
-				size = ob1Get1(grid.viewportWidth) - ob1Get1(grid.cursor.column) + 1;
-			}
+			let viewportWidth =
+				grid.viewportWidth === undefined ? 100 : ob1Get1(grid.viewportWidth);
+			let size = viewportWidth - ob1Get1(grid.cursor.column) + 1;
 			size = Math.max(size, 0);
 			grid.writeText("\u2501".repeat(size), ancestry, false);
 		},

@@ -1,12 +1,10 @@
 import stream = require("stream");
+import tty = require("tty");
 import {Event} from "@romefrontend/events";
 import {mergeObjects} from "@romefrontend/typescript-helpers";
 import {Number1, ob1Coerce1} from "@romefrontend/ob1";
 
-export type Stdout = stream.Writable & {
-	isTTY?: boolean;
-	columns?: number;
-};
+export type Stdout = stream.Writable | tty.WriteStream;
 
 export type InferredTerminalFeatures = {
 	features: TerminalFeatures;
@@ -17,20 +15,20 @@ export type InferredTerminalFeatures = {
 
 export type TerminalFeatures = {
 	columns?: Number1;
+	background: "dark" | "light" | "unknown";
 	cursor: boolean;
-	progressBars: boolean;
 	hyperlinks: boolean;
-	color: boolean;
+	colorDepth: 1 | 4 | 8 | 24;
 	unicode: boolean;
 };
 
-export const TERMINAL_FEATURES_DEFAULT: TerminalFeatures = {
+export const DEFAULT_TERMINAL_FEATURES: TerminalFeatures = {
+	background: "unknown",
 	columns: ob1Coerce1(100),
 	cursor: true,
-	progressBars: true,
 	unicode: true,
 	hyperlinks: true,
-	color: true,
+	colorDepth: 4,
 };
 
 type EnvVarStatus =
@@ -65,41 +63,52 @@ export function inferTerminalFeatures(
 	stdout?: Stdout,
 	force: Partial<TerminalFeatures> = {},
 ): InferredTerminalFeatures {
-	const isTTY = stdout?.isTTY === true;
-
-	let columns = TERMINAL_FEATURES_DEFAULT.columns;
+	let columns: Number1 = ob1Coerce1(100);
+	let colorDepth: TerminalFeatures["colorDepth"] = 1;
+	let isTTY = false;
 	let unicode = false;
-	let isCI = false;
+	let isCI = isCIEnv();
+	let background: TerminalFeatures["background"] = "unknown";
+
+	// Increase column size for CI
+	if (isCI) {
+		columns = ob1Coerce1(200);
+		colorDepth = 4;
+	}
 
 	// Only apply this environment sniffing when we've been given a process stdout stream
 	// Otherwise it'll be some custom stream and if they really want to infer from the environment
 	// Then they will do it on process.stdout and pass the features as the force param
-	if (
-		stdout !== undefined &&
-		(stdout === process.stdout || stdout === process.stderr)
-	) {
+	if (stdout instanceof tty.WriteStream) {
+		isTTY = true;
 		unicode = process.platform !== "win32";
-		isCI = isCIEnv();
-	}
-
-	if (stdout === undefined || stdout.columns === undefined) {
-		// Increase column size for CI
-		if (isCI) {
-			columns = ob1Coerce1(200);
-		}
-	} else if (stdout.columns !== undefined) {
+		colorDepth = (stdout.getColorDepth() as TerminalFeatures["colorDepth"]);
 		columns = ob1Coerce1(stdout.columns);
+
+		// Sniff for the background
+		// https://github.com/vim/vim/blob/e3f915d12c8fe0466918a29ab4eaef153f71a2cd/src/term.c#L2943-L2952
+		const COLORFGBG = getEnvVar("COLORFGBG");
+		if (COLORFGBG.type === "ENABLED") {
+			const color = parseInt(String(COLORFGBG.value).split(";").pop()!);
+			if (!isNaN(color)) {
+				if ((color >= 0 && color <= 6) || color === 8) {
+					background = "dark";
+				} else {
+					background = "light";
+				}
+			}
+		}
 	}
 
 	const fancyAnsi = isTTY && !isCI;
 
 	let features: TerminalFeatures = mergeObjects(
 		{
+			background,
 			columns,
 			cursor: fancyAnsi,
 			hyperlinks: fancyAnsi,
-			progressBars: fancyAnsi,
-			color: isTTY || isCI,
+			colorDepth,
 			unicode,
 		},
 		force,
@@ -113,9 +122,9 @@ export function inferTerminalFeatures(
 	let setupUpdateEvent: InferredTerminalFeatures["setupUpdateEvent"] = () => {};
 
 	// Watch for resizing, unless force.columns has been set and we'll consider it to be fixed
-	if (stdout !== undefined && force.columns === undefined) {
+	if (stdout instanceof tty.WriteStream && force.columns === undefined) {
 		function onStdoutResize() {
-			if (stdout?.columns !== undefined) {
+			if (stdout instanceof tty.WriteStream) {
 				features = {
 					...features,
 					columns: ob1Coerce1(stdout.columns),
@@ -142,6 +151,7 @@ export function inferTerminalFeatures(
 }
 
 const CI_ENV_NAMES = [
+	"CI",
 	"TRAVIS",
 	"CIRCLECI",
 	"APPVEYOR",

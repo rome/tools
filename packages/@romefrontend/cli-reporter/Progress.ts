@@ -416,7 +416,7 @@ export default class Progress extends ProgressBase {
 		for (const stream of this.reporter.getStreams(false)) {
 			if (
 				stream.format === "ansi" &&
-				stream.features.progressBars &&
+				stream.features.cursor &&
 				stream.features.columns !== undefined
 			) {
 				stream.write(ansiEscapes.cursorTo(0));

@@ -12,7 +12,7 @@ import {
 import {Platform} from "./platform";
 import {AbsoluteFilePath, CWD_PATH} from "@romefrontend/path";
 import {ReporterStream} from "@romefrontend/cli-reporter";
-import {TerminalFeatures} from "@romefrontend/environment";
+import {TerminalFeatures} from "@romefrontend/cli-environment";
 
 export const DEFAULT_CLIENT_FLAGS: ClientFlags = {
 	clientName: "unknown",

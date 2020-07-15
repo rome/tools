@@ -6,7 +6,7 @@
  */
 
 import {Event} from "@romefrontend/events";
-import {TerminalFeatures} from "@romefrontend/environment";
+import {TerminalFeatures} from "@romefrontend/cli-environment";
 
 export type SelectOption = {
 	label: string;

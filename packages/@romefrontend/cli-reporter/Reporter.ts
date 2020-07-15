@@ -43,11 +43,11 @@ import {
 	normalizeMarkup,
 } from "@romefrontend/cli-layout/format";
 import {
+	DEFAULT_TERMINAL_FEATURES,
 	Stdout,
-	TERMINAL_FEATURES_DEFAULT,
 	TerminalFeatures,
 	inferTerminalFeatures,
-} from "@romefrontend/environment";
+} from "@romefrontend/cli-environment";
 
 type ListOptions = {
 	reverse?: boolean;
@@ -147,16 +147,18 @@ export default class Reporter {
 			force,
 		);
 
-		const {format = features.color ? "ansi" : "none"} = force;
+		const {format = features.colorDepth > 1 ? "ansi" : "none"} = force;
 
 		const stdoutWrite: ReporterDerivedStreams["stdoutWrite"] = (chunk) => {
 			if (stdout !== undefined) {
+				// @ts-ignore
 				stdout.write(chunk);
 			}
 		};
 
 		const stderrWrite: ReporterDerivedStreams["stderrWrite"] = (chunk) => {
 			if (stderr !== undefined) {
+				// @ts-ignore
 				stderr.write(chunk);
 			}
 		};
@@ -234,7 +236,7 @@ export default class Reporter {
 		const stream: ReporterStream = {
 			format,
 			type: "all",
-			features: TERMINAL_FEATURES_DEFAULT,
+			features: DEFAULT_TERMINAL_FEATURES,
 			write(chunk) {
 				buff += chunk;
 			},
