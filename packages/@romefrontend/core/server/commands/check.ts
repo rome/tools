@@ -54,7 +54,7 @@ export default createServerCommand<Flags>({
 			changed: consumer.get(
 				"changed",
 				{
-					description: "shows what's changed from the main branch",
+					description: "only include files that have changed from the specified branch/commit (defaults to main)",
 				},
 			).asStringOrVoid(),
 		};
