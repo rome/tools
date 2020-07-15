@@ -26,7 +26,7 @@ import {
 	removeDirectory,
 	writeFile,
 } from "@romefrontend/fs";
-import {Stdout, DEFAULT_TERMINAL_FEATURES} from "@romefrontend/cli-environment";
+import {DEFAULT_TERMINAL_FEATURES, Stdout} from "@romefrontend/cli-environment";
 import {Dict} from "@romefrontend/typescript-helpers";
 import {DEFAULT_USER_CONFIG, UserConfig} from "../core/common/userConfig";
 import ServerRequest from "../core/server/ServerRequest";
@@ -54,8 +54,8 @@ import crypto = require("crypto");
 import stream = require("stream");
 import {ExtensionHandler} from "../core/common/file-handlers/types";
 import {DiagnosticsProcessor} from "@romefrontend/diagnostics";
-import { markupToPlainText } from "@romefrontend/cli-layout";
-import { joinMarkupLines } from "@romefrontend/cli-layout/format";
+import {markupToPlainText} from "@romefrontend/cli-layout";
+import {joinMarkupLines} from "@romefrontend/cli-layout/format";
 
 type IntegrationTestHelper = {
 	cwd: AbsoluteFilePath;

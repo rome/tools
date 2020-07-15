@@ -43,8 +43,8 @@ import {
 	normalizeMarkup,
 } from "@romefrontend/cli-layout/format";
 import {
-	Stdout,
 	DEFAULT_TERMINAL_FEATURES,
+	Stdout,
 	TerminalFeatures,
 	inferTerminalFeatures,
 } from "@romefrontend/cli-environment";
