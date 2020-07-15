@@ -6,24 +6,13 @@ const fs = require("fs");
 const pluginTOC = require("eleventy-plugin-nesting-toc");
 const path = require("path");
 
-const opts = {
-	dirInput: "src",
-	staticPath: "static",
-	docsPath: "_includes/docs",
-	blogPath: "src/posts",
-	dirOutput: "build",
-	toc: {
-		headingText: "test", // Optional text to show in heading above the wrapper element
-	},
-};
-
 module.exports = function(eleventyConfig) {
 	// Aything listed in .gitignore will be ignored by the watch process,
 	// workaround to let eleventry rebuild when the css stylesheet gets rebuild.
 	eleventyConfig.setUseGitIgnore(false);
 
-	eleventyConfig.addPassthroughCopy(opts.staticPath);
-  eleventyConfig.addPassthroughCopy("_redirects");
+	eleventyConfig.addPassthroughCopy("static");
+  eleventyConfig.addPassthroughCopy({"static-root": "."});
 
 	eleventyConfig.addPlugin(syntaxHighlight);
 	eleventyConfig.addPlugin(pluginTOC);
@@ -100,8 +89,8 @@ module.exports = function(eleventyConfig) {
 
 	return {
 		dir: {
-			input: opts.dirInput,
-			output: opts.dirOutput,
+			input: "src",
+			output: "build",
 		},
 		passthroughFileCopy: true,
 		templateFormats: ["njk", "md", "css", "html", "yml"],

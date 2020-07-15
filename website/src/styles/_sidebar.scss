@@ -6,6 +6,7 @@
   overflow-x: hidden;
   font-size: 0.95rem;
   position: sticky;
+  z-index: 99999;
   top: 0;
   height: 100vh;
   border-right: 1px solid var(--soft-border-color);
@@ -125,7 +126,7 @@
       display: flex;
     }
 
-    a{
+    a {
       margin-right: $unit / 3;
     }
 
@@ -138,9 +139,22 @@
       height: 24px;
     }
   }
-
 }
 
+.algolia-autocomplete, input#docusearch {
+  width: 100%;
+  display: block;
+}
+
+.algolia-autocomplete {
+  padding-right: $unit * 2;
+}
+
+input#docusearch {
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid red;
+}
 
 html[data-theme='dark'] .color-scheme-switch:after {
   left: 50%;
