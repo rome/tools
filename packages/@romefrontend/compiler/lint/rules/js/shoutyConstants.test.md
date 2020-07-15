@@ -17,7 +17,7 @@
       │             ^^^
 
   ℹ You should avoid declaring constants with a string that's the same value as the variable name.
-    It introduces a level on unnecessary indirection when it's only two additional characters to
+    It introduces a level of unnecessary indirection when it's only two additional characters to
     inline.
 
   ℹ This constant is declared here
@@ -60,7 +60,7 @@ console.log("FOO");
     4 │ }
 
   ℹ You should avoid declaring constants with a string that's the same value as the variable name.
-    It introduces a level on unnecessary indirection when it's only two additional characters to
+    It introduces a level of unnecessary indirection when it's only two additional characters to
     inline.
 
   ℹ This constant is declared here
@@ -104,7 +104,7 @@ function f() {
       │             ^^^
 
   ℹ You should avoid declaring constants with a string that's the same value as the variable name.
-    It introduces a level on unnecessary indirection when it's only two additional characters to
+    It introduces a level of unnecessary indirection when it's only two additional characters to
     inline.
 
   ℹ This constant is declared here
