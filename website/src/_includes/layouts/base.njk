@@ -21,6 +21,7 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
     <link rel="stylesheet" href="{{ '/static/styles.css' | url }}">
     <script>
 
@@ -95,6 +96,7 @@
 
         <nav aria-labelledby="site-navigation" class="menu">
           <h2 id="site-navigation" class="sr-only">Site Navigation</h2>
+          <input type="text" id="docusearch" placeholder="Search" />
           <ul>
             <li>
               <a href="{{ '/blog' | url }}">Blog</a>
@@ -239,5 +241,14 @@
     </footer>
 
     <script src="{{ '/static/js/index.js' | url }}"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+    <script type="text/javascript">
+      docsearch({
+        apiKey: '66db1ad366d458c6acded7cbc23dba7e',
+        indexName: 'romefrontend',
+        inputSelector: '#docusearch',
+        debug: false // Set debug to true if you want to inspect the dropdown
+      });
+    </script>
   </body>
 </html>
