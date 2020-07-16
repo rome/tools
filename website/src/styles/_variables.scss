@@ -31,6 +31,9 @@ $gray-8: lighten(#27272A, 80%);
   --toc-link-color-active: #{$gray-4};
   --blockquote-color: #{$gray-7};
   --link-hover-color: #{lighten(#27272A, 20%)};
+  --breadcrumbs-background-active: #{lighten(#27272A, 70%)};
+  --breadcrumbs-background-hover: #{$gray-7};
+  --breadcrumbs-submenu-shadow-color: #{$gray-6};
 }
 
 html[data-theme='dark'] {
@@ -47,6 +50,9 @@ html[data-theme='dark'] {
   --toc-link-color-active: #{$gray-8};
   --blockquote-color: #{$gray-7};
   --link-hover-color: #{lighten(#27272A, 60%)};
+  --breadcrumbs-background-active: #{darken(#27272A, 7%)};
+  --breadcrumbs-background-hover: #{darken(#27272A, 4%)};
+  --breadcrumbs-submenu-shadow-color: #{$gray-2};
 }
 
 $body-line-height: 1.5em;
@@ -58,3 +64,5 @@ $unit: 16px;
 $unit-border-radius: 4px;
 
 $mobile-breakpoint: 768px;
+
+$breadcrumbs-height: $unit * 3;
