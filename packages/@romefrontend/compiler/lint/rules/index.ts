@@ -52,6 +52,7 @@ import preferFunctionDeclarations from "./js/preferFunctionDeclarations";
 import preferTemplate from "./js/preferTemplate";
 import preferWhile from "./js/preferWhile";
 import restrictedGlobals from "./js/restrictedGlobals";
+import shoutyConstants from "./js/shoutyConstants";
 import singleVarDeclarator from "./js/singleVarDeclarator";
 import sortImportExportSpecifiers from "./js/sortImportExportSpecifiers";
 import sparseArray from "./js/sparseArray";
@@ -161,6 +162,7 @@ export const lintTransforms = [
 	preferTemplate,
 	preferWhile,
 	restrictedGlobals,
+	shoutyConstants,
 	singleVarDeclarator,
 	sortImportExportSpecifiers,
 	sparseArray,

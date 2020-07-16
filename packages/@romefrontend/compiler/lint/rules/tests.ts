@@ -99,6 +99,8 @@ import preferWhile from "./js/preferWhile.test.rjson";
 // @ts-ignore
 import restrictedGlobals from "./js/restrictedGlobals.test.rjson";
 // @ts-ignore
+import shoutyConstants from "./js/shoutyConstants.test.rjson";
+// @ts-ignore
 import singleVarDeclarator from "./js/singleVarDeclarator.test.rjson";
 // @ts-ignore
 import sortImportExportSpecifiers from "./js/sortImportExportSpecifiers.test.rjson";
@@ -152,6 +154,7 @@ export const tests: Tests = {
 	"js/preferTemplate": preferTemplate,
 	"js/preferWhile": preferWhile,
 	"js/restrictedGlobals": restrictedGlobals,
+	"js/shoutyConstants": shoutyConstants,
 	"js/singleVarDeclarator": singleVarDeclarator,
 	"js/sortImportExportSpecifiers": sortImportExportSpecifiers,
 	"js/sparseArray": sparseArray,

@@ -61,6 +61,7 @@ eleventyNavigation: {
 - [preferTemplate](/docs/lint/rules/js/preferTemplate):   MISSING DOCUMENTATION
 - [preferWhile](/docs/lint/rules/js/preferWhile):   MISSING DOCUMENTATION
 - [restrictedGlobals](/docs/lint/rules/js/restrictedGlobals):   MISSING DOCUMENTATION
+- [shoutyConstants](/docs/lint/rules/js/shoutyConstants):   MISSING DOCUMENTATION
 - [singleVarDeclarator](/docs/lint/rules/js/singleVarDeclarator):   MISSING DOCUMENTATION
 - [sortImportExportSpecifiers](/docs/lint/rules/js/sortImportExportSpecifiers):   MISSING DOCUMENTATION
 - [sparseArray](/docs/lint/rules/js/sparseArray):   MISSING DOCUMENTATION
@@ -115,6 +116,7 @@ eleventyNavigation: {
 - [preferTemplate](/docs/lint/rules/js/preferTemplate):   MISSING DOCUMENTATION
 - [preferWhile](/docs/lint/rules/js/preferWhile):   MISSING DOCUMENTATION
 - [restrictedGlobals](/docs/lint/rules/js/restrictedGlobals):   MISSING DOCUMENTATION
+- [shoutyConstants](/docs/lint/rules/js/shoutyConstants):   MISSING DOCUMENTATION
 - [singleVarDeclarator](/docs/lint/rules/js/singleVarDeclarator):   MISSING DOCUMENTATION
 - [sortImportExportSpecifiers](/docs/lint/rules/js/sortImportExportSpecifiers):   MISSING DOCUMENTATION
 - [sparseArray](/docs/lint/rules/js/sparseArray):   MISSING DOCUMENTATION
@@ -200,6 +202,7 @@ eleventyNavigation: {
 - [preferTemplate](/docs/lint/rules/js/preferTemplate):   MISSING DOCUMENTATION
 - [preferWhile](/docs/lint/rules/js/preferWhile):   MISSING DOCUMENTATION
 - [restrictedGlobals](/docs/lint/rules/js/restrictedGlobals):   MISSING DOCUMENTATION
+- [shoutyConstants](/docs/lint/rules/js/shoutyConstants):   MISSING DOCUMENTATION
 - [singleVarDeclarator](/docs/lint/rules/js/singleVarDeclarator):   MISSING DOCUMENTATION
 - [sortImportExportSpecifiers](/docs/lint/rules/js/sortImportExportSpecifiers):   MISSING DOCUMENTATION
 - [sparseArray](/docs/lint/rules/js/sparseArray):   MISSING DOCUMENTATION
@@ -308,6 +311,7 @@ eleventyNavigation: {
 - [preferTemplate](/docs/lint/rules/js/preferTemplate):   MISSING DOCUMENTATION
 - [preferWhile](/docs/lint/rules/js/preferWhile):   MISSING DOCUMENTATION
 - [restrictedGlobals](/docs/lint/rules/js/restrictedGlobals):   MISSING DOCUMENTATION
+- [shoutyConstants](/docs/lint/rules/js/shoutyConstants):   MISSING DOCUMENTATION
 - [singleVarDeclarator](/docs/lint/rules/js/singleVarDeclarator):   MISSING DOCUMENTATION
 - [sortImportExportSpecifiers](/docs/lint/rules/js/sortImportExportSpecifiers):   MISSING DOCUMENTATION
 - [sparseArray](/docs/lint/rules/js/sparseArray):   MISSING DOCUMENTATION

@@ -146,6 +146,7 @@ type LintDiagnosticCategory =
 	| "lint/js/preferTemplate"
 	| "lint/js/preferWhile"
 	| "lint/js/restrictedGlobals"
+	| "lint/js/shoutyConstants"
 	| "lint/js/singleVarDeclarator"
 	| "lint/js/sortImportExportSpecifiers"
 	| "lint/js/sparseArray"
