@@ -53,6 +53,8 @@ html[data-theme='dark'] {
   --breadcrumbs-background-hover: #{darken(#27272A, 4%)};
 }
 
+$breadcrumbs-height: $unit * 3;
+
 $body-line-height: 1.5em;
 
 $sidebar-width: 20%;
