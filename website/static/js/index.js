@@ -205,7 +205,7 @@ elements.overlay.addEventListener("touchstart", mobileToggleEvent, false);
 window.addEventListener("scroll", handleScroll, false);
 
 elements.colorSchemeSwitch.addEventListener("click", modeSwitch, false);
-const teamArr = document.querySelectorAll(".team-member-item");
+const teamArr = document.querySelectorAll(".team-list li");
 if (teamArr.length > 0) {
 	for (const li of randomShuffle(Array.from(teamArr))) {
 		elements.teamList.appendChild(li);
