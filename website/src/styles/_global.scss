@@ -107,24 +107,91 @@ a:active {
   }
 }
 
+$breadcrumbs-height: $unit * 3;
+
 ul.breadcrumbs {
-  list-style: none;
-  padding: 0;
-  margin: 0;
   background-color: var(--background-color);
+  border-bottom: 1px solid var(--soft-border-color);
+  display: flex;
+  height: $breadcrumbs-height;
+  margin: 0;
+  padding: 0;
+
+  @include mobile-only() {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  a{
+    text-decoration: none;
+    color: var(--font-color);
+
+    &:hover{
+      background: var(--breadcrumbs-background-hover);
+      color: var(--font-color);
+    }
+
+    &:active{
+      background: var(--breadcrumbs-background-active);
+      color: var(--font-color);
+    }
+
+  }
 
   > li {
-    display: inline-block;
     padding: 0;
-    line-height: 40px;;
     position: relative;
+    list-style: none;
 
-    a, &.active {
-      padding: 0 $unit;
+    &:first-child a {
+      padding-left: 32px;
+    }
+
+    > a {
+      display: flex;
+      padding-left: $unit * 2 + $unit / 2;
+      padding-right: $unit / 2;
+      line-height: $breadcrumbs-height;
+
+      span{
+        z-index: 2;
+      }
+
+      &:hover{
+        &:after{
+          background: var(--breadcrumbs-background-hover);
+        }
+      }
+
+      &:active{
+        &:after{
+          background: var(--breadcrumbs-background-active);
+        }
+      }
+
+      &:after{
+        content: "";
+        position: absolute;
+        width: $breadcrumbs-height;
+        height: $breadcrumbs-height;
+        right: -23px;
+        background: var(--background-color);
+        transform: scale(0.7) rotate(45deg);
+        box-shadow: 1px -1px var(--soft-border-color);
+        z-index: 1;
+      }
+
+    }
+
+    &:first-child.active {
+      padding-left: $unit * 2;
     }
 
     &.active {
       font-weight: bold;
+      padding-left: $unit * 2 + $unit / 2;
+      padding-right: $unit;
+      line-height: $breadcrumbs-height;
     }
 
     &:hover {
@@ -137,19 +204,27 @@ ul.breadcrumbs {
   ul.sub-menu {
     display: none;
     position: absolute;
-    top: 40px;
+    top: $breadcrumbs-height;
     left: 0;
     list-style: none;
     margin-left: 0;
     background-color: var(--background-color);
     padding: 0;
     max-height: 400px;
+    min-width: 100%;
     overflow: auto;
-    border: 1px solid;
+    border: 1px solid var(--soft-border-color);
+    border-top: 0;
     box-shadow: 4px 4px 10.4px -6px #999998;
 
     li {
-      padding: 0;
+
+      a{
+        padding: $unit / 2 $unit;
+        display: block;
+      }
+
+      border-bottom: 1px solid var(--soft-border-color);
     }
   }
 }

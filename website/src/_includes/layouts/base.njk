@@ -153,7 +153,7 @@
             {% set navPages = collections.all | eleventyNavigationBreadcrumb(eleventyNavigation.key) %}
             {%- for entry in navPages %}
               <li>
-                <a href="{{ entry.url | url }}">{{ entry.title }}</a>
+                <a href="{{ entry.url | url }}"><span>{{ entry.title }}</span></a>
 
                 <ul class="sub-menu">
                   {% set subNavPages = collections.all | eleventyNavigation(entry.key) %}
