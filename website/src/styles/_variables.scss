@@ -31,8 +31,8 @@ $gray-8: lighten(#27272A, 80%);
   --toc-link-color-active: #{$gray-4};
   --blockquote-color: #{$gray-7};
   --link-hover-color: #{lighten(#27272A, 20%)};
-  --breadcrumbs-background-active: #{$gray-7};
-  --breadcrumbs-background-hover: #{$gray-8};
+  --breadcrumbs-background-active: #{lighten(#27272A, 70%)};
+  --breadcrumbs-background-hover: #{$gray-7};
 }
 
 html[data-theme='dark'] {
@@ -49,8 +49,8 @@ html[data-theme='dark'] {
   --toc-link-color-active: #{$gray-8};
   --blockquote-color: #{$gray-7};
   --link-hover-color: #{lighten(#27272A, 60%)};
-  --breadcrumbs-background-active: #{darken(#27272A, 4%)};
-  --breadcrumbs-background-hover: #{darken(#27272A, 3%)};
+  --breadcrumbs-background-active: #{darken(#27272A, 7%)};
+  --breadcrumbs-background-hover: #{darken(#27272A, 4%)};
 }
 
 $body-line-height: 1.5em;
