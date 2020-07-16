@@ -107,8 +107,6 @@ a:active {
   }
 }
 
-$breadcrumbs-height: $unit * 3;
-
 ul.breadcrumbs {
   background-color: var(--background-color);
   border-bottom: 1px solid var(--soft-border-color);
@@ -215,7 +213,7 @@ ul.breadcrumbs {
     overflow: auto;
     border: 1px solid var(--soft-border-color);
     border-top: 0;
-    box-shadow: 4px 4px 10.4px -6px #999998;
+    box-shadow: 4px 4px 10.4px -6px var(--breadcrumbs-submenu-shadow-color);
 
     li {
 
