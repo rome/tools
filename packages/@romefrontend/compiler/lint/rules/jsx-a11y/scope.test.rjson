@@ -1,0 +1,9 @@
+filename: "file.tsx"
+invalid: [
+	"<div scope={scope} />"
+	"<div scope='col' />"
+]
+valid: [
+	"<th scope={scope}></th>"
+	"<th scope='col'></th>"
+]

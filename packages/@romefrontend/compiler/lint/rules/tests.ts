@@ -108,6 +108,56 @@ import sortImportExportSpecifiers from "./js/sortImportExportSpecifiers.test.rjs
 import sparseArray from "./js/sparseArray.test.rjson";
 // @ts-ignore
 import unsafeNegation from "./js/unsafeNegation.test.rjson";
+// @ts-ignore
+import altText from "./jsx-a11y/altText.test.rjson";
+// @ts-ignore
+import anchorHasContent from "./jsx-a11y/anchorHasContent.test.rjson";
+// @ts-ignore
+import anchorIsValid from "./jsx-a11y/anchorIsValid.test.rjson";
+// @ts-ignore
+import ariaProps from "./jsx-a11y/ariaProps.test.rjson";
+// @ts-ignore
+import ariaProptypes from "./jsx-a11y/ariaProptypes.test.rjson";
+// @ts-ignore
+import ariaUnsupportedElements from "./jsx-a11y/ariaUnsupportedElements.test.rjson";
+// @ts-ignore
+import clickEventsHaveKeyEvents from "./jsx-a11y/clickEventsHaveKeyEvents.test.rjson";
+// @ts-ignore
+import headingHasContent from "./jsx-a11y/headingHasContent.test.rjson";
+// @ts-ignore
+import htmlHasLang from "./jsx-a11y/htmlHasLang.test.rjson";
+// @ts-ignore
+import iframeHasTitle from "./jsx-a11y/iframeHasTitle.test.rjson";
+// @ts-ignore
+import imgRedundantAlt from "./jsx-a11y/imgRedundantAlt.test.rjson";
+// @ts-ignore
+import lang from "./jsx-a11y/lang.test.rjson";
+// @ts-ignore
+import mediaHasCaption from "./jsx-a11y/mediaHasCaption.test.rjson";
+// @ts-ignore
+import mouseEventsHaveKeyEvents from "./jsx-a11y/mouseEventsHaveKeyEvents.test.rjson";
+// @ts-ignore
+import noAccessKey from "./jsx-a11y/noAccessKey.test.rjson";
+// @ts-ignore
+import noAutofocus from "./jsx-a11y/noAutofocus.test.rjson";
+// @ts-ignore
+import noDistractingElements from "./jsx-a11y/noDistractingElements.test.rjson";
+// @ts-ignore
+import noNoninteractiveElementToInteractiveRole from "./jsx-a11y/noNoninteractiveElementToInteractiveRole.test.rjson";
+// @ts-ignore
+import noNoninteractiveTabindex from "./jsx-a11y/noNoninteractiveTabindex.test.rjson";
+// @ts-ignore
+import noOnChange from "./jsx-a11y/noOnChange.test.rjson";
+// @ts-ignore
+import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
+// @ts-ignore
+import noTargetBlank from "./jsx-a11y/noTargetBlank.test.rjson";
+// @ts-ignore
+import roleHasRequiredAriaProps from "./jsx-a11y/roleHasRequiredAriaProps.test.rjson";
+// @ts-ignore
+import scope from "./jsx-a11y/scope.test.rjson";
+// @ts-ignore
+import tabindexNoPositive from "./jsx-a11y/tabindexNoPositive.test.rjson";
 
 export const tests: Tests = {
 	"js/caseSingleStatement": caseSingleStatement,
@@ -159,4 +209,29 @@ export const tests: Tests = {
 	"js/sortImportExportSpecifiers": sortImportExportSpecifiers,
 	"js/sparseArray": sparseArray,
 	"js/unsafeNegation": unsafeNegation,
+	"jsx-a11y/altText": altText,
+	"jsx-a11y/anchorHasContent": anchorHasContent,
+	"jsx-a11y/anchorIsValid": anchorIsValid,
+	"jsx-a11y/ariaProps": ariaProps,
+	"jsx-a11y/ariaProptypes": ariaProptypes,
+	"jsx-a11y/ariaUnsupportedElements": ariaUnsupportedElements,
+	"jsx-a11y/clickEventsHaveKeyEvents": clickEventsHaveKeyEvents,
+	"jsx-a11y/headingHasContent": headingHasContent,
+	"jsx-a11y/htmlHasLang": htmlHasLang,
+	"jsx-a11y/iframeHasTitle": iframeHasTitle,
+	"jsx-a11y/imgRedundantAlt": imgRedundantAlt,
+	"jsx-a11y/lang": lang,
+	"jsx-a11y/mediaHasCaption": mediaHasCaption,
+	"jsx-a11y/mouseEventsHaveKeyEvents": mouseEventsHaveKeyEvents,
+	"jsx-a11y/noAccessKey": noAccessKey,
+	"jsx-a11y/noAutofocus": noAutofocus,
+	"jsx-a11y/noDistractingElements": noDistractingElements,
+	"jsx-a11y/noNoninteractiveElementToInteractiveRole": noNoninteractiveElementToInteractiveRole,
+	"jsx-a11y/noNoninteractiveTabindex": noNoninteractiveTabindex,
+	"jsx-a11y/noOnChange": noOnChange,
+	"jsx-a11y/noRedundantRoles": noRedundantRoles,
+	"jsx-a11y/noTargetBlank": noTargetBlank,
+	"jsx-a11y/roleHasRequiredAriaProps": roleHasRequiredAriaProps,
+	"jsx-a11y/scope": scope,
+	"jsx-a11y/tabindexNoPositive": tabindexNoPositive,
 };

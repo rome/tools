@@ -115,6 +115,8 @@ for (const {basename, ruleName, category, docs} of defs) {
 		if (docTemplateTable) {
 			docTemplate += docTemplateTable;
 			docTemplate += "\n";
+			// reset template when a new category is found
+			docTemplateTable = "";
 		}
 
 		docTemplate += `## ${categoryAlias[category]}\n\n`;
@@ -128,11 +130,9 @@ for (const {basename, ruleName, category, docs} of defs) {
 	if (!description) {
 		console.log(`/docs/lint/rules/${ruleName}.md is missing a description\n`);
 	}
-
 	docTemplateTable += `- [${basename}](/docs/lint/rules/${ruleName}):  ${description ||
 	""}\n`;
 }
-
 docTemplate += docTemplateTable;
 docTemplate += "\n";
 
