@@ -1,0 +1,25 @@
+filename: "file.tsx"
+invalid: [
+	"
+						class Hello extends React.PureComponent {
+							shouldComponentUpdate() {}
+						}
+					"
+	"
+						class Hello extends PureComponent {
+							shouldComponentUpdate() {}
+						}
+					"
+]
+valid: [
+	"
+						class Hello extends React.PureComponent {
+							componentDidMount() {}
+						}
+					"
+	"
+						class Hello extends PureComponent {
+							componentDidMount() {}
+						}
+					"
+]

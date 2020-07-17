@@ -1,0 +1,90 @@
+filename: "file.tsx"
+invalid: [
+	"
+						class Hello extends React.Component {
+							componentWillUpdate() {
+								this.setState({
+									name: 'John'
+								});
+							}
+						}
+					"
+	"
+						class Hello extends React.Component {
+							componentWillUpdate() {
+								foo();
+								this.setState({
+									name: 'John'
+								});
+							}
+						}
+					"
+	"
+						class Hello extends Component {
+							componentWillUpdate() {
+								this.setState({
+									name: 'John'
+								});
+							}
+						}
+					"
+	"
+						class Hello extends Component {
+							componentWillUpdate() {
+								foo();
+								this.setState({
+									name: 'John'
+								});
+							}
+						}
+					"
+	"
+						class Hello extends React.Component {
+							UNSAFE_componentWillUpdate() {
+								this.setState({
+									name: 'John'
+								});
+							}
+						}
+					"
+	"
+						class Hello extends Component {
+							UNSAFE_componentWillUpdate() {
+								this.setState({
+									name: 'John'
+								});
+							}
+						}
+					"
+]
+valid: [
+	"
+						class Hello extends React.Component {
+							componentWillUpdate() {
+								if (condition) {
+									this.setState({
+										name: 'John'
+									});
+								}
+							}
+						}
+					"
+	"
+						class Hello extends React.Component {
+							componentWillUpdate() {
+								condition && this.setState({
+									name: 'John'
+								});
+							}
+						}
+					"
+	"
+						class Hello extends React.Component {
+							componentWillUpdate() {
+								condition ? this.setState({
+									name: 'John'
+								}) : undefined;
+							}
+						}
+					"
+]

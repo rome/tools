@@ -1,0 +1,45 @@
+filename: "file.tsx"
+invalid: [
+	// mixed
+	// token
+	// id
+	// tokenlist
+	// idlist
+	// id
+	"<span role='checkbox' aria-checked='test' ></span>"
+	"<span aria-autocomplete='test' ></span>"
+	"<span aria-invalid='foo'></span>"
+	"<span aria-errormessage='' ></span>"
+	"<span aria-relevant='fancy' ></span>"
+	"<span aria-labelledby='' ></span>"
+	"<span aria-labelledby={``} ></span>"
+	"<span aria-details='' ></span>"
+]
+valid: [
+	// various
+	// mixed
+	// token
+	// id
+	// tokenlist
+	// idlist
+	// id
+	"<span role='checkbox' aria-checked={checked} ></span>"
+	"<span role='checkbox' aria-checked='true' ></span>"
+	"<span role='checkbox' aria-checked={true} ></span>"
+	"<span role='checkbox' aria-checked='false' ></span>"
+	"<span role='checkbox' aria-checked='mixed' ></span>"
+	"<span role='checkbox' aria-autocomplete='both' ></span>"
+	"<span role='checkbox' aria-autocomplete='inline' ></span>"
+	"<span role='checkbox' aria-autocomplete='list' ></span>"
+	"<span role='checkbox' aria-autocomplete='none' ></span>"
+	"<span aria-invalid='true'></span>"
+	"<span aria-invalid='grammar'></span>"
+	"<span aria-invalid='false'></span>"
+	"<span aria-invalid={false}></span>"
+	"<span role='checkbox' aria-errormessage='someid' ></span>"
+	"<span role='checkbox' aria-relevant='additions' ></span>"
+	"<span role='checkbox' aria-relevant='additions all' ></span>"
+	"<span aria-labelledby='id' ></span>"
+	"<span aria-labelledby='fooId barId' ></span>"
+	"<span aria-details='someid' ></span>"
+]

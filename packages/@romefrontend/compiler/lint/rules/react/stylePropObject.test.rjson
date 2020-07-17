@@ -1,0 +1,11 @@
+filename: "file.tsx"
+invalid: [
+	"<div style={true} />"
+	"<div style={1} />"
+	"<div style={undefined} />"
+	"<div style=\"color: 'red'\" />"
+	"<div style={\"color: 'red'\"} />"
+]
+valid: [
+	"<div style={{color: 'red'}} />"
+]

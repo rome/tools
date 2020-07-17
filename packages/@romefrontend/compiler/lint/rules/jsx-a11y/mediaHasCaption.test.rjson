@@ -1,0 +1,12 @@
+filename: "file.tsx"
+invalid: [
+	"<audio {...props} />"
+	"<video {...props} />"
+	"<audio>child</audio>"
+	"<video>child</audio>"
+]
+valid: [
+	"<audio><track kind='captions' {...props} /></audio>"
+	"<video><track kind='captions' {...props} /></video>"
+	"<video muted {...props} ></video>"
+]

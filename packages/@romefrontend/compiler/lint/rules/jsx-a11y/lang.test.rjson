@@ -1,0 +1,14 @@
+filename: "file.tsx"
+invalid: [
+	"<html lang='foo'></html>"
+	"<html lang='ex'></html>"
+	"<html lang='foo-bar'></html>"
+	"<html lang='aa-zz'></html>"
+	"<html lang='zz-AA'></html>"
+	"<html lang='en2></html>"
+]
+valid: [
+	"<html lang='en-US'></html>"
+	"<html lang='en'></html>"
+	"<html lang={lang}></html>"
+]

@@ -1,0 +1,9 @@
+filename: "file.tsx"
+invalid: [
+	"<div onClick={() => {}} />"
+]
+valid: [
+	"<div onClick={() => {}} onKeyDown={this.handleKeyDown} />"
+	"<div onClick={() => {}} onKeyUp={this.handleKeyUp} />"
+	"<div onClick={() => {}} onKeyPress={this.handleKeyPress} />"
+]

@@ -1,0 +1,10 @@
+filename: "file.tsx"
+invalid: [
+	"<input autoFocus />"
+	"<input autoFocus='true' />"
+	"<input autoFocus={\"false\"} />"
+]
+valid: [
+	"<input />"
+	"<input autoFocus={undefined} />"
+]

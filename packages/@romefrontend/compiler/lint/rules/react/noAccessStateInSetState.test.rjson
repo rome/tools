@@ -1,0 +1,92 @@
+filename: "file.tsx"
+invalid: [
+	"
+					class MyComponent extends Component {
+						function increment() {
+							this.setState({value: this.state.value + 1});
+						}
+					}
+				"
+	"
+					class MyComponent extends Component {
+						function increment() {
+							this.setState({value: 1 + this.state.value});
+						}
+					}
+				"
+	"
+					class MyComponent extends Component {
+						function toggle() {
+							this.setState({
+								value: !this.state.value
+							});
+						}
+					}
+				"
+	"
+					class MyComponent extends Component {
+						function toggle() {
+							this.setState({
+								value: !!this.state.value
+							});
+						}
+					}
+				"
+	"
+					class MyComponent extends Component {
+						update() {
+							this.setState({
+								foo: bar,
+								value: 1 + this.state.value
+							});
+						}
+					}
+				"
+	"
+					class MyComponent extends Component {
+						update() {
+							this.setState({
+								foo: bar,
+								value: this.state.value + 1
+							});
+						}
+					}
+				"
+	"
+					class MyComponent extends Component {
+						update() {
+							this.setState({
+								value: this.state.value
+							});
+						}
+					}
+				"
+	"
+					class MyComponent extends Component {
+						update() {
+							this.setState({
+								foo: bar,
+								value: this.state.value
+							});
+						}
+					}
+				"
+]
+valid: [
+	"
+					class MyComponent extends Component {
+						update() {
+							this.setState({
+								foo: bar
+							});
+						}
+					}
+				"
+	"
+					class MyComponent extends Component {
+						increment() {
+							this.setState(prevState => ({value: prevState.value + 1}));
+						}
+					}
+				"
+]
