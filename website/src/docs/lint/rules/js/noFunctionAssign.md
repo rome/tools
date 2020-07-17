@@ -17,47 +17,114 @@ MISSING DOCUMENTATION
 
 
 ## Examples
-## Invalid
-```typescript
-function foo() {}; foo = bar;
-```
-```typescript
-function foo() { foo = bar; }
-```
-```typescript
-foo = bar; function foo() { };
-```
-```typescript
-[foo] = bar; function foo() { };
-```
-```typescript
-({x: foo = 0} = bar); function foo() { };
-```
-```typescript
-function foo() { [foo] = bar; }
-```
-```typescript
-(function() { ({x: foo = 0} = bar); function foo() { }; })();
-```
-## Valid
-```typescript
-function foo() { var foo = bar; }
-```
-```typescript
-function foo(foo) { foo = bar; }
-```
-```typescript
-function foo() { var foo; foo = bar; }
-```
-```typescript
-var foo = () => {}; foo = bar;
-```
-```typescript
-var foo = function() {}; foo = bar;
-```
-```typescript
-var foo = function() { foo = bar; };
-```
-```typescript
-import bar from 'bar'; function foo() { var foo = bar; }
-```
+### Invalid
+<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:19</span> <strong>lint/js/noFunctionAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not </span><span style="color: Tomato;"><strong>reassign a function declaration</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">;</span>
+                       <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead.</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:17</span> <strong>lint/js/noFunctionAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not </span><span style="color: Tomato;"><strong>reassign a function declaration</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+                     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead.</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">;</span> <span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1</span> <strong>lint/js/noFunctionAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not </span><span style="color: Tomato;"><strong>reassign a function declaration</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">;</span> <span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead.</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token punctuation">[</span><span class="token variable">foo</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">;</span> <span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:1</span> <strong>lint/js/noFunctionAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not </span><span style="color: Tomato;"><strong>reassign a function declaration</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token punctuation">[</span><span class="token variable">foo</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">;</span> <span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead.</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">:</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:5</span> <strong>lint/js/noFunctionAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not </span><span style="color: Tomato;"><strong>reassign a function declaration</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">:</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead.</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">[</span><span class="token variable">foo</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:18</span> <strong>lint/js/noFunctionAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not </span><span style="color: Tomato;"><strong>reassign a function declaration</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">[</span><span class="token variable">foo</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+                      <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead.</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">:</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:19</span> <strong>lint/js/noFunctionAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not </span><span style="color: Tomato;"><strong>reassign a function declaration</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">:</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                       <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead.</span>
+
+</code></pre>
+### Valid
+<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">var</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">var</span> <span class="token variable">foo</span><span class="token punctuation">;</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">var</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">var</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">var</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token variable">bar</span> <span class="token keyword">from</span> <span class="token string">&apos;bar&apos;</span><span class="token punctuation">;</span> <span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">var</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><strong><span style="background-color: red">import bar from &apos;bar&apos;;</span></strong></code></pre>

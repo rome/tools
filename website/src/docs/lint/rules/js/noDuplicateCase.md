@@ -17,136 +17,277 @@ MISSING DOCUMENTATION
 
 
 ## Examples
-## Invalid
-```typescript
-const expr = 'a';
-switch (expr) {
-	case 'a':
-		break;
-	case 'b':
-		break;
-	case 'c':
-		break;
-	case 'd':
-		break;
-	case 'c':
-		break;
-	default:
-		break;
-}
-```
-```typescript
-const expr = 3;
-switch (expr) {
-	case 1:
-		break;
-	case 2:
-		break;
-	case 3:
-		break;
-	case 2:
-		break;
-	default:
-		break;
-}
-```
-```typescript
-const expr = 3;
-switch (expr) {
-	case 1:
-		break;
-	case 2n:
-		break;
-	case 3:
-		break;
-	case 2n:
-		break;
-	default:
-		break;
-}
-```
-```typescript
-const foo = 'a';
-switch ('a') {
-	case foo:
-		break;
-	case foo:
-		break;
-	default:
-		break;
-}
-```
-```typescript
-const foo = 'a';
-switch ('a') {
-	case 'foo':
-		break;
-	case 'foo':
-		break;
-	default:
-		break;
-}
-```
-```typescript
-const foo = 'a';
-switch ('a') {
-	case null:
-		break;
-	case null:
-		break;
-	default:
-		break;
-}
-```
-## Valid
-```typescript
-const expr = 'a';
-switch (expr) {
-	case 'a':
-		break;
-	case 'b':
-		break;
-	case 'c':
-		break;
-	case 'd':
-		break;
-	default:
-		break;
-}
-```
-```typescript
-const expr = 3;
-switch (expr) {
-	case 1:
-		break;
-	case 2:
-		break;
-	case 3:
-		break;
-	case 2n:
-		break;
-	default:
-		break;
-}
-```
-```typescript
-const expr = 3;
-switch (expr) {
-	case 1:
-		break;
-	case '\n1':
-		break;
-	case 1n:
-		break;
-	case 'null':
-		break;
-	case null:
-		break;
-	case foo:
-		break;
-	case 'foo':
-		break;
-	default:
-		break;
-}
-```
+### Invalid
+<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">expr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">case</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token string">&apos;b&apos;</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token string">&apos;c&apos;</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token string">&apos;d&apos;</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token string">&apos;c&apos;</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">default</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:7:6</span> <strong>lint/js/noDuplicateCase</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not duplicate the </span><span style="color: Tomato;"><strong>&quot;c&quot;</strong></span><span style="color: Tomato;"> case.</span>
+
+  <strong>  5</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token string">&apos;b&apos;</span><span class="token punctuation">:</span>
+  <strong>  6</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 7</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token string">&apos;c&apos;</span><span class="token punctuation">:</span>
+     <strong> │ </strong>       <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  8</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <strong>  9</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token string">&apos;d&apos;</span><span class="token punctuation">:</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Duplicated switch logic paths are hard to follow and usually typos.</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
+
+   <strong>  9</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token string">&apos;d&apos;</span><span class="token punctuation">:</span>
+  <strong>  10</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 11</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token string">&apos;c&apos;</span><span class="token punctuation">:</span>
+      <strong> │ </strong>       <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  12</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <strong>  13</strong><strong> │ </strong>  <span class="token keyword">default</span><span class="token punctuation">:</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">expr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">case</span> <span class="token number">1</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token number">2</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token number">3</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token number">2</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">default</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:5:6</span> <strong>lint/js/noDuplicateCase</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not duplicate the </span><span style="color: Tomato;"><strong>2</strong></span><span style="color: Tomato;"> case.</span>
+
+  <strong>  3</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token number">1</span><span class="token punctuation">:</span>
+  <strong>  4</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 5</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token number">2</span><span class="token punctuation">:</span>
+     <strong> │ </strong>       <span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  6</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <strong>  7</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token number">3</span><span class="token punctuation">:</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Duplicated switch logic paths are hard to follow and usually typos.</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
+
+   <strong>  7</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token number">3</span><span class="token punctuation">:</span>
+   <strong>  8</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
+   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 9</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token number">2</span><span class="token punctuation">:</span>
+      <strong> │ </strong>       <span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  10</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <strong>  11</strong><strong> │ </strong>  <span class="token keyword">default</span><span class="token punctuation">:</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">expr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">case</span> <span class="token number">1</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token number">2n</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token number">3</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token number">2n</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">default</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:5:6</span> <strong>lint/js/noDuplicateCase</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not duplicate the </span><span style="color: Tomato;"><strong>2n</strong></span><span style="color: Tomato;"> case.</span>
+
+  <strong>  3</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token number">1</span><span class="token punctuation">:</span>
+  <strong>  4</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 5</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token number">2n</span><span class="token punctuation">:</span>
+     <strong> │ </strong>       <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  6</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <strong>  7</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token number">3</span><span class="token punctuation">:</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Duplicated switch logic paths are hard to follow and usually typos.</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
+
+   <strong>  7</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token number">3</span><span class="token punctuation">:</span>
+   <strong>  8</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
+   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 9</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token number">2n</span><span class="token punctuation">:</span>
+      <strong> │ </strong>       <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  10</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <strong>  11</strong><strong> │ </strong>  <span class="token keyword">default</span><span class="token punctuation">:</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token string">&apos;a&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">case</span> <span class="token variable">foo</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token variable">foo</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">default</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:3:6</span> <strong>lint/js/noDuplicateCase</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not duplicate the </span><span style="color: Tomato;"><strong>&quot;a&quot;</strong></span><span style="color: Tomato;"> case.</span>
+
+  <strong>  1</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
+  <strong>  2</strong><strong> │ </strong><span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token string">&apos;a&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token variable">foo</span><span class="token punctuation">:</span>
+     <strong> │ </strong>       <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  4</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <strong>  5</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token variable">foo</span><span class="token punctuation">:</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Duplicated switch logic paths are hard to follow and usually typos.</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
+
+  <strong>  3</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token variable">foo</span><span class="token punctuation">:</span>
+  <strong>  4</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 5</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token variable">foo</span><span class="token punctuation">:</span>
+     <strong> │ </strong>       <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  6</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <strong>  7</strong><strong> │ </strong>  <span class="token keyword">default</span><span class="token punctuation">:</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token string">&apos;a&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">case</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">default</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:3:6</span> <strong>lint/js/noDuplicateCase</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not duplicate the </span><span style="color: Tomato;"><strong>&quot;foo&quot;</strong></span><span style="color: Tomato;"> case.</span>
+
+  <strong>  1</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
+  <strong>  2</strong><strong> │ </strong><span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token string">&apos;a&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">:</span>
+     <strong> │ </strong>       <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  4</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <strong>  5</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">:</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Duplicated switch logic paths are hard to follow and usually typos.</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
+
+  <strong>  3</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">:</span>
+  <strong>  4</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 5</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">:</span>
+     <strong> │ </strong>       <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  6</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <strong>  7</strong><strong> │ </strong>  <span class="token keyword">default</span><span class="token punctuation">:</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token string">&apos;a&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">case</span> <span class="token boolean">null</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token boolean">null</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">default</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:3:6</span> <strong>lint/js/noDuplicateCase</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not duplicate the </span><span style="color: Tomato;"><strong>null</strong></span><span style="color: Tomato;"> case.</span>
+
+  <strong>  1</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
+  <strong>  2</strong><strong> │ </strong><span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token string">&apos;a&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token boolean">null</span><span class="token punctuation">:</span>
+     <strong> │ </strong>       <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  4</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <strong>  5</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token boolean">null</span><span class="token punctuation">:</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Duplicated switch logic paths are hard to follow and usually typos.</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
+
+  <strong>  3</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token boolean">null</span><span class="token punctuation">:</span>
+  <strong>  4</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 5</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token boolean">null</span><span class="token punctuation">:</span>
+     <strong> │ </strong>       <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  6</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <strong>  7</strong><strong> │ </strong>  <span class="token keyword">default</span><span class="token punctuation">:</span>
+
+</code></pre>
+### Valid
+<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">expr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">case</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token string">&apos;b&apos;</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token string">&apos;c&apos;</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token string">&apos;d&apos;</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">default</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">expr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">case</span> <span class="token number">1</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token number">2</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token number">3</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token number">2n</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">default</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">expr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">case</span> <span class="token number">1</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token string">&apos;\n1&apos;</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token number">1n</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token string">&apos;null&apos;</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token boolean">null</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token variable">foo</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token keyword">default</span><span class="token punctuation">:</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>

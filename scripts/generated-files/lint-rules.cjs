@@ -7,7 +7,7 @@
 
 require("../_setup.cjs");
 
-const {readGeneratedFile, write, readFile, execVendor, dedent} = require(
+const {readGeneratedFile, write, readFile} = require(
 	"../_utils.cjs",
 );
 const {lintRulesFolder, categoriesFile, lintRulesDocFolder} = require(
@@ -139,46 +139,3 @@ docTemplate += docTemplateTable;
 docTemplate += "\n";
 
 write(lintRulesDocFile, docTemplate);
-
-console.log("Fetching examples");
-execVendor(["start"]);
-
-for (const {docs, ruleName, hasRJSON} of defs) {
-	if (!hasRJSON) {
-		continue;
-	}
-
-	const loc = path.join(lintRulesFolder, `${ruleName}.test.rjson`);
-
-	const exec = execVendor(["json", loc], {stdio: "pipe"});
-	const content = exec.stdout.toString();
-	const json = JSON.parse(content);
-
-	let language = "typescript";
-
-	let file = readGeneratedFile(docs, false);
-	file += "\n";
-	file += "## Examples\n";
-
-	file += "## Invalid\n";
-	if (json.invalid) {
-		for (const example of json.invalid) {
-			file += "```" + language + "\n";
-			file += dedent(example).trim() + "\n";
-			file += "```\n";
-		}
-	}
-
-	file += "## Valid\n";
-	if (json.valid) {
-		for (const example of json.valid) {
-			file += "```" + language + "\n";
-			file += dedent(example).trim() + "\n";
-			file += "```\n";
-		}
-	}
-
-	write(docs, file);
-}
-
-execVendor(["stop"]);

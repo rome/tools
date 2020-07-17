@@ -17,23 +17,38 @@ MISSING DOCUMENTATION
 
 
 ## Examples
-## Invalid
-```typescript
-(0, 1, 2)
-```
-```typescript
-test(), rome()
-```
-## Valid
-```typescript
-foo(0, 1, 2)
-```
-```typescript
-[1, 2,]
-```
-```typescript
-[1,,,3]
-```
-```typescript
-let a, b, c;
-```
+### Invalid
+<pre class="language-text"><code class="language-text"><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:1</span> <strong>lint/js/noCommaOperator</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Avoid the comma operator</strong></span><span style="color: Tomato;">. It can lead to easy mistakes and ambiguous</span>
+    <span style="color: Tomato;">code.</span>
+
+    <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">If you want multiple expressions, then break it up.</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">rome</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1</span> <strong>lint/js/noCommaOperator</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Avoid the comma operator</strong></span><span style="color: Tomato;">. It can lead to easy mistakes and ambiguous</span>
+    <span style="color: Tomato;">code.</span>
+
+    <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">rome</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">If you want multiple expressions, then break it up.</span>
+
+</code></pre>
+### Valid
+<pre class="language-text"><code class="language-text"><span class="token function">foo</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span><span class="token punctuation">]</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token punctuation">,</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">b</span><span class="token punctuation">,</span> <span class="token variable">c</span><span class="token punctuation">;</span></code></pre>

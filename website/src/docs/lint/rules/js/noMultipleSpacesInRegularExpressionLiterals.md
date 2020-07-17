@@ -17,11 +17,25 @@ MISSING DOCUMENTATION
 
 
 ## Examples
-## Invalid
-```typescript
-/foo  bar/
-```
-## Valid
-```typescript
-/foo {2}bar/
-```
+### Invalid
+<pre class="language-text"><code class="language-text"><span class="token regex">/foo  bar/</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:4</span> <strong>lint/js/noMultipleSpacesInRegularExpressionLiterals</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span>
+ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">This </span><span style="color: Tomato;"><strong>regular expression</strong></span><span style="color: Tomato;"> contains unclear uses of </span><span style="color: Tomato;"><strong>multiple spaces</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token regex">/foo  bar/</span>
+        <span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">It&apos;s hard to visually count the amount of spaces, it&apos;s clearer if you</span>
+    <span style="color: DodgerBlue;">use a quantifier instead. eg / {3}/</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;">fo</span><span style="color: Tomato;"><strong>o</strong></span><span style="color: Tomato;"> </span><span style="color: Tomato;"><strong> b</strong></span><span style="color: Tomato;">ar</span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">fo </span><span style="color: MediumSeaGreen;"><strong>{3}</strong></span><span style="color: MediumSeaGreen;">ar</span>
+
+</code></pre>
+### Valid
+<pre class="language-text"><code class="language-text"><span class="token regex">/foo {2}bar/</span></code></pre>

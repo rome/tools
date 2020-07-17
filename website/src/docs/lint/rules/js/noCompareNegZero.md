@@ -17,11 +17,16 @@ MISSING DOCUMENTATION
 
 
 ## Examples
-## Invalid
-```typescript
-(1 >= -0)
-```
-## Valid
-```typescript
-(1 >= 0)
-```
+### Invalid
+<pre class="language-text"><code class="language-text"><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&gt;=</span> <span class="token operator">-</span><span class="token number">0</span><span class="token punctuation">)</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:1</span> <strong>lint/js/noCompareNegZero</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not use the </span><span style="color: Tomato;"><strong>&gt;=</strong></span><span style="color: Tomato;"> operator to compare against </span><span style="color: Tomato;"><strong>-0</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&gt;=</span> <span class="token operator">-</span><span class="token number">0</span><span class="token punctuation">)</span>
+     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+</code></pre>
+### Valid
+<pre class="language-text"><code class="language-text"><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">)</span></code></pre>

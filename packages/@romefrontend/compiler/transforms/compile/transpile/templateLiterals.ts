@@ -47,6 +47,10 @@ export default {
 				}
 			}
 
+			if (nodes.length === 0) {
+				return jsStringLiteral.quick("");
+			}
+
 			if (nodes.length === 1) {
 				return nodes[0];
 			}

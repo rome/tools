@@ -17,8 +17,40 @@ MISSING DOCUMENTATION
 
 
 ## Examples
-## Invalid
-```typescript
-/(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>[0-9])/
-```
-## Valid
+### Invalid
+<pre class="language-text"><code class="language-text"><span class="token regex">/(?&lt;month&gt;[0-9])-(?&lt;year&gt;[0-9])-(?&lt;month&gt;[0-9])-(?&lt;year&gt;[0-9])-(?&lt;day&gt;[0-9])-([0-9])-(?&lt;month&gt;[0-9])/</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:1</span> <strong>lint/js/noDuplicateGroupNamesInRegularExpressions</strong> ━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid duplicate group names. Check the </span><span style="color: Tomato;"><strong>month</strong></span><span style="color: Tomato;"> group.</span>
+
+    <span class="token regex">/(?&lt;month&gt;[0-9])-(?&lt;year&gt;[0-9])-(?&lt;month&gt;[0-9])-(?&lt;year&gt;[0-9])-(?&lt;day</span>
+    <span class="token regex">  &gt;[0-9])-([0-9])-(?&lt;month&gt;[0-9])/</span>
+    <span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
+
+    <span class="token regex">/(?&lt;month&gt;[0-9])-(?&lt;year&gt;[0-9])-(?&lt;month&gt;[0-9])-(?&lt;year&gt;[0-9])-(?&lt;day</span>
+    <span class="token regex">  &gt;[0-9])-([0-9])-(?&lt;month&gt;[0-9])/</span>
+    <span style="color: Tomato;"><strong>^</strong></span>
+
+    <span class="token regex">/(?&lt;month&gt;[0-9])-(?&lt;year&gt;[0-9])-(?&lt;month&gt;[0-9])-(?&lt;year&gt;[0-9])-(?&lt;day</span>
+    <span class="token regex">  &gt;[0-9])-([0-9])-(?&lt;month&gt;[0-9])/</span>
+    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+ <span style="text-decoration-style: dotted;">file.ts:1:17</span> <strong>lint/js/noDuplicateGroupNamesInRegularExpressions</strong> ━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid duplicate group names. Check the </span><span style="color: Tomato;"><strong>year</strong></span><span style="color: Tomato;"> group.</span>
+
+    <span class="token regex">/(?&lt;month&gt;[0-9])-(?&lt;year&gt;[0-9])-(?&lt;month&gt;[0-9])-(?&lt;year&gt;[0-9])-(?&lt;day</span>
+    <span class="token regex">  &gt;[0-9])-([0-9])-(?&lt;month&gt;[0-9])/</span>
+    <span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
+
+    <span class="token regex">/(?&lt;month&gt;[0-9])-(?&lt;year&gt;[0-9])-(?&lt;month&gt;[0-9])-(?&lt;year&gt;[0-9])-(?&lt;day</span>
+    <span class="token regex">  &gt;[0-9])-([0-9])-(?&lt;month&gt;[0-9])/</span>
+    <span style="color: Tomato;"><strong>^</strong></span>
+
+</code></pre>
+### Valid

@@ -9,6 +9,7 @@ import {DiagnosticSuppressions, Diagnostics} from "@romefrontend/diagnostics";
 import {DiagnosticsPrinterOptions} from "./types";
 import {Reporter, ReporterStream} from "@romefrontend/cli-reporter";
 import DiagnosticsPrinter from "./DiagnosticsPrinter";
+import {TerminalFeatures} from "@romefrontend/cli-environment";
 
 export {toLines} from "./utils";
 export {
@@ -20,6 +21,8 @@ export {DiagnosticsPrinter};
 export * from "./constants";
 
 export * from "./types";
+
+export * from "./utils";
 
 export function printDiagnostics(
 	{
@@ -38,7 +41,7 @@ export function printDiagnostics(
 	printer.processor.addDiagnostics(diagnostics);
 	printer.processor.addSuppressions(suppressions);
 	printer.print();
-	if (!excludeFooter) {
+	if (!excludeFooter || !printer.hasProblems()) {
 		printer.footer();
 	}
 	return printer;
@@ -51,10 +54,11 @@ export function printDiagnosticsToString(
 		printerOptions?: DiagnosticsPrinterOptions;
 		format?: ReporterStream["format"];
 		excludeFooter?: boolean;
+		features?: Partial<TerminalFeatures>;
 	},
 ): string {
 	const reporter = new Reporter();
-	const stream = reporter.attachCaptureStream(opts.format);
+	const stream = reporter.attachCaptureStream(opts.format, opts.features);
 	printDiagnostics({
 		...opts,
 		printerOptions: {

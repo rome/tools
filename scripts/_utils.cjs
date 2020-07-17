@@ -110,6 +110,15 @@ exports.isDevDaemonRunning = function() {
 	});
 };
 
+exports.execMain = function(fn) {
+	return fn().then(() => {
+		process.exit(0);
+	}).catch((err) => {
+		console.error(err.stack);
+		process.exit(1);
+	});
+};
+
 exports.execDev = async function(argv) {
 	await exports.buildTrunk();
 	exports.heading("Executing trunk");

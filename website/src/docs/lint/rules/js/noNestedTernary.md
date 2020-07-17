@@ -17,41 +17,65 @@ MISSING DOCUMENTATION
 
 
 ## Examples
-## Invalid
-```typescript
-let thing = foo ? bar : baz === qux ? quxx : foobar;
-```
-```typescript
-let thing = foo ? bar ? boo : foo : baz ? boo : foo;
-```
-```typescript
-foo ? baz === qux ? quxx() : foobar() : bar();
-```
-## Valid
-```typescript
-let thing = foo ? bar : foobar;
-```
-```typescript
-let thing = foo ? bar || boo : foo || bar;
-```
-```typescript
-let thing = foo ? bar && boo : foo && bar;
-```
-```typescript
-let thing = foo || baz ? bar || boo : foo || bar;
-```
-```typescript
-let thing = foo && baz ? bar || boo : foo && bar;
-```
-```typescript
-let thing = foo || baz ? bar || boo : foo && bar;
-```
-```typescript
-if (foo) {
-	thing = bar;
-} else if (baz === qux) {
-	thing = quxx;
-} else {
-	thing = foobar;
-}
-```
+### Invalid
+<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token punctuation">:</span> <span class="token variable">baz</span> <span class="token operator">===</span> <span class="token variable">qux</span> <span class="token punctuation">?</span> <span class="token variable">quxx</span> <span class="token punctuation">:</span> <span class="token variable">foobar</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:24</span> <strong>lint/js/noNestedTernary</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Nesting ternary expressions can make code more difficult to</span>
+    <span style="color: Tomato;">understand.</span>
+
+    <span class="token keyword">let</span> <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token punctuation">:</span> <span class="token variable">baz</span> <span class="token operator">===</span> <span class="token variable">qux</span> <span class="token punctuation">?</span> <span class="token variable">quxx</span> <span class="token punctuation">:</span> <span class="token variable">foobar</span><span class="token punctuation">;</span>
+                            <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token punctuation">?</span> <span class="token variable">boo</span> <span class="token punctuation">:</span> <span class="token variable">foo</span> <span class="token punctuation">:</span> <span class="token variable">baz</span> <span class="token punctuation">?</span> <span class="token variable">boo</span> <span class="token punctuation">:</span> <span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:18</span> <strong>lint/js/noNestedTernary</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Nesting ternary expressions can make code more difficult to</span>
+    <span style="color: Tomato;">understand.</span>
+
+    <span class="token keyword">let</span> <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token punctuation">?</span> <span class="token variable">boo</span> <span class="token punctuation">:</span> <span class="token variable">foo</span> <span class="token punctuation">:</span> <span class="token variable">baz</span> <span class="token punctuation">?</span> <span class="token variable">boo</span> <span class="token punctuation">:</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
+                      <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+ <span style="text-decoration-style: dotted;">file.ts:1:36</span> <strong>lint/js/noNestedTernary</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Nesting ternary expressions can make code more difficult to</span>
+    <span style="color: Tomato;">understand.</span>
+
+    <span class="token keyword">let</span> <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token punctuation">?</span> <span class="token variable">boo</span> <span class="token punctuation">:</span> <span class="token variable">foo</span> <span class="token punctuation">:</span> <span class="token variable">baz</span> <span class="token punctuation">?</span> <span class="token variable">boo</span> <span class="token punctuation">:</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
+                                        <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">baz</span> <span class="token operator">===</span> <span class="token variable">qux</span> <span class="token punctuation">?</span> <span class="token function">quxx</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token function">foobar</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token function">bar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:6</span> <strong>lint/js/noNestedTernary</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Nesting ternary expressions can make code more difficult to</span>
+    <span style="color: Tomato;">understand.</span>
+
+    <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">baz</span> <span class="token operator">===</span> <span class="token variable">qux</span> <span class="token punctuation">?</span> <span class="token function">quxx</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token function">foobar</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token function">bar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+</code></pre>
+### Valid
+<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token punctuation">:</span> <span class="token variable">foobar</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token operator">||</span> <span class="token variable">boo</span> <span class="token punctuation">:</span> <span class="token variable">foo</span> <span class="token operator">||</span> <span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">boo</span> <span class="token punctuation">:</span> <span class="token variable">foo</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foo</span> <span class="token operator">||</span> <span class="token variable">baz</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token operator">||</span> <span class="token variable">boo</span> <span class="token punctuation">:</span> <span class="token variable">foo</span> <span class="token operator">||</span> <span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foo</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">baz</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token operator">||</span> <span class="token variable">boo</span> <span class="token punctuation">:</span> <span class="token variable">foo</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foo</span> <span class="token operator">||</span> <span class="token variable">baz</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token operator">||</span> <span class="token variable">boo</span> <span class="token punctuation">:</span> <span class="token variable">foo</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">baz</span> <span class="token operator">===</span> <span class="token variable">qux</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">quxx</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+  <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foobar</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>

@@ -227,6 +227,7 @@ export default class Reporter {
 
 	attachCaptureStream(
 		format: ReporterStream["format"] = "none",
+		features: Partial<TerminalFeatures> = {},
 	): {
 		read: () => string;
 		remove: () => void;
@@ -236,7 +237,10 @@ export default class Reporter {
 		const stream: ReporterStream = {
 			format,
 			type: "all",
-			features: DEFAULT_TERMINAL_FEATURES,
+			features: {
+				...DEFAULT_TERMINAL_FEATURES,
+				...features,
+			},
 			write(chunk) {
 				buff += chunk;
 			},

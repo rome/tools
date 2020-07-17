@@ -17,9 +17,23 @@ MISSING DOCUMENTATION
 
 
 ## Examples
-## Invalid
-```typescript
-let valid: Array<foo>;
-let invalid: bar[];
-```
-## Valid
+### Invalid
+<pre class="language-text"><code class="language-text">let valid<span class="token punctuation">:</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">foo</span><span class="token operator">&gt;</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> <span class="token variable">invalid</span><span class="token punctuation">:</span> <span class="token variable">bar</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:2:13</span> <strong>lint/js/noShorthandArrayType</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use &lt;emphasis&gt;Array&lt;T&gt; syntax&lt;/emphasis&gt; instead of</span>
+    <span style="color: Tomato;">&lt;emphasis&gt;shorthand T[] syntax&lt;/emphasis&gt;.</span>
+
+  <strong>  1</strong><strong> │ </strong>let valid<span class="token punctuation">:</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">foo</span><span class="token operator">&gt;</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token keyword">let</span> <span class="token variable">invalid</span><span class="token punctuation">:</span> <span class="token variable">bar</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+     <strong> │ </strong>             <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;">bar</span><span style="color: Tomato;"><strong>[]</strong></span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>Array&lt;</strong></span><span style="color: MediumSeaGreen;">bar</span><span style="color: MediumSeaGreen;"><strong>&gt;</strong></span>
+
+</code></pre>
+### Valid

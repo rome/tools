@@ -17,32 +17,173 @@ MISSING DOCUMENTATION
 
 
 ## Examples
-## Invalid
-```typescript
-import {b, a, c, D} from 'mod';
-```
-```typescript
-import {b as A, a as C, B} from 'mod';
-```
-```typescript
-import {c, b as b2, b as b1, b} from 'mod';
-```
-```typescript
-export {b, a, c, D} from 'mod';
-```
-```typescript
-export {b as A, a as C, B} from 'mod';
-```
-```typescript
-export {c, b as b2, b as b1, b} from 'mod';
-```
-```typescript
-export {b, a, c, D};
-```
-```typescript
-export {b as A, a as C, B};
-```
-```typescript
-export {c, b as b2, b as b1, b};
-```
-## Valid
+### Invalid
+<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token variable">b</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">D</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span><strong><span style="background-color: red">import {b, a, c, D} from &apos;mod&apos;;</span></strong></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1</span> <strong>lint/js/sortImportExportSpecifiers</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The specifiers of the import declaration should be sorted</span>
+    <span style="color: Tomato;">alphabetically.</span>
+
+    <span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token variable">b</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">D</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span>
+    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;">import {</span><span style="color: Tomato;"><strong>b</strong></span><span style="color: Tomato;">, a, </span><span style="color: Tomato;"><strong>c</strong></span><span style="color: Tomato;">, </span><span style="color: Tomato;"><strong>D</strong></span><span style="color: Tomato;">} from &quot;mod&quot;;</span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">import {</span><span style="color: MediumSeaGreen;"><strong>D</strong></span><span style="color: MediumSeaGreen;">, a, </span><span style="color: MediumSeaGreen;"><strong>b</strong></span><span style="color: MediumSeaGreen;">, </span><span style="color: MediumSeaGreen;"><strong>c</strong></span><span style="color: MediumSeaGreen;">} from &quot;mod&quot;;</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">A</span><span class="token punctuation">,</span> <span class="token variable">a</span> <span class="token variable">as</span> <span class="token variable">C</span><span class="token punctuation">,</span> <span class="token variable">B</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span><strong><span style="background-color: red">import {b as A, a as C, B} from &apos;mod&apos;;</span></strong></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1</span> <strong>lint/js/sortImportExportSpecifiers</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The specifiers of the import declaration should be sorted</span>
+    <span style="color: Tomato;">alphabetically.</span>
+
+    <span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">A</span><span class="token punctuation">,</span> <span class="token variable">a</span> <span class="token variable">as</span> <span class="token variable">C</span><span class="token punctuation">,</span> <span class="token variable">B</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span>
+    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;">import {b as A, a as C</span><span style="color: Tomato;"><strong>, B</strong></span><span style="color: Tomato;">} from &quot;mod&quot;;</span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">import {b as A, </span><span style="color: MediumSeaGreen;"><strong>B, </strong></span><span style="color: MediumSeaGreen;">a as C} from &quot;mod&quot;;</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b2</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b1</span><span class="token punctuation">,</span> <span class="token variable">b</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span><strong><span style="background-color: red">import {c, b as b2, b as b1, b} from &apos;mod&apos;;</span></strong></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1</span> <strong>lint/js/sortImportExportSpecifiers</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The specifiers of the import declaration should be sorted</span>
+    <span style="color: Tomato;">alphabetically.</span>
+
+    <span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b2</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b1</span><span class="token punctuation">,</span> <span class="token variable">b</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span>
+    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;">import {</span><span style="color: Tomato;"><strong>c, </strong></span><span style="color: Tomato;">b</span><span style="color: Tomato;"><strong> as b2</strong></span><span style="color: Tomato;">, b as b1, b} from &quot;mod&quot;;</span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">import {b, b as b1, b</span><span style="color: MediumSeaGreen;"><strong> as b2, c</strong></span><span style="color: MediumSeaGreen;">} from &quot;mod&quot;;</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">b</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">D</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span><strong><span style="background-color: red">export {b, a, c, D} from &apos;mod&apos;;</span></strong></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1</span> <strong>lint/js/sortImportExportSpecifiers</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The specifiers of the export declaration should be sorted</span>
+    <span style="color: Tomato;">alphabetically.</span>
+
+    <span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">b</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">D</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span>
+    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;">export {</span><span style="color: Tomato;"><strong>b</strong></span><span style="color: Tomato;">, a, </span><span style="color: Tomato;"><strong>c</strong></span><span style="color: Tomato;">, </span><span style="color: Tomato;"><strong>D</strong></span><span style="color: Tomato;">} from &quot;mod&quot;;</span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">export {</span><span style="color: MediumSeaGreen;"><strong>D</strong></span><span style="color: MediumSeaGreen;">, a, </span><span style="color: MediumSeaGreen;"><strong>b</strong></span><span style="color: MediumSeaGreen;">, </span><span style="color: MediumSeaGreen;"><strong>c</strong></span><span style="color: MediumSeaGreen;">} from &quot;mod&quot;;</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">A</span><span class="token punctuation">,</span> <span class="token variable">a</span> <span class="token variable">as</span> <span class="token variable">C</span><span class="token punctuation">,</span> <span class="token variable">B</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span><strong><span style="background-color: red">export {b as A, a as C, B} from &apos;mod&apos;;</span></strong></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1</span> <strong>lint/js/sortImportExportSpecifiers</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The specifiers of the export declaration should be sorted</span>
+    <span style="color: Tomato;">alphabetically.</span>
+
+    <span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">A</span><span class="token punctuation">,</span> <span class="token variable">a</span> <span class="token variable">as</span> <span class="token variable">C</span><span class="token punctuation">,</span> <span class="token variable">B</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span>
+    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;">export {</span><span style="color: Tomato;"><strong>b as A</strong></span><span style="color: Tomato;">, a as C, </span><span style="color: Tomato;"><strong>B</strong></span><span style="color: Tomato;">} from &quot;mod&quot;;</span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">export {</span><span style="color: MediumSeaGreen;"><strong>B</strong></span><span style="color: MediumSeaGreen;">, a as C, </span><span style="color: MediumSeaGreen;"><strong>b as A</strong></span><span style="color: MediumSeaGreen;">} from &quot;mod&quot;;</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b2</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b1</span><span class="token punctuation">,</span> <span class="token variable">b</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span><strong><span style="background-color: red">export {c, b as b2, b as b1, b} from &apos;mod&apos;;</span></strong></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1</span> <strong>lint/js/sortImportExportSpecifiers</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The specifiers of the export declaration should be sorted</span>
+    <span style="color: Tomato;">alphabetically.</span>
+
+    <span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b2</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b1</span><span class="token punctuation">,</span> <span class="token variable">b</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span>
+    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;">export {</span><span style="color: Tomato;"><strong>c, </strong></span><span style="color: Tomato;">b</span><span style="color: Tomato;"><strong> as b2</strong></span><span style="color: Tomato;">, b as b1, b} from &quot;mod&quot;;</span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">export {b, b as b1, b</span><span style="color: MediumSeaGreen;"><strong> as b2, c</strong></span><span style="color: MediumSeaGreen;">} from &quot;mod&quot;;</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">b</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">D</span><span class="token punctuation">}</span><span class="token punctuation">;</span><strong><span style="background-color: red">export {b, a, c, D};</span></strong></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1</span> <strong>lint/js/sortImportExportSpecifiers</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The specifiers of the export declaration should be sorted</span>
+    <span style="color: Tomato;">alphabetically.</span>
+
+    <span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">b</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">D</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;">export {</span><span style="color: Tomato;"><strong>b</strong></span><span style="color: Tomato;">, a, </span><span style="color: Tomato;"><strong>c</strong></span><span style="color: Tomato;">, </span><span style="color: Tomato;"><strong>D</strong></span><span style="color: Tomato;">};</span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">export {</span><span style="color: MediumSeaGreen;"><strong>D</strong></span><span style="color: MediumSeaGreen;">, a, </span><span style="color: MediumSeaGreen;"><strong>b</strong></span><span style="color: MediumSeaGreen;">, </span><span style="color: MediumSeaGreen;"><strong>c</strong></span><span style="color: MediumSeaGreen;">};</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">A</span><span class="token punctuation">,</span> <span class="token variable">a</span> <span class="token variable">as</span> <span class="token variable">C</span><span class="token punctuation">,</span> <span class="token variable">B</span><span class="token punctuation">}</span><span class="token punctuation">;</span><strong><span style="background-color: red">export {b as A, a as C, B};</span></strong></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1</span> <strong>lint/js/sortImportExportSpecifiers</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The specifiers of the export declaration should be sorted</span>
+    <span style="color: Tomato;">alphabetically.</span>
+
+    <span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">A</span><span class="token punctuation">,</span> <span class="token variable">a</span> <span class="token variable">as</span> <span class="token variable">C</span><span class="token punctuation">,</span> <span class="token variable">B</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;">export {</span><span style="color: Tomato;"><strong>b as A</strong></span><span style="color: Tomato;">, a as C, </span><span style="color: Tomato;"><strong>B</strong></span><span style="color: Tomato;">};</span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">export {</span><span style="color: MediumSeaGreen;"><strong>B</strong></span><span style="color: MediumSeaGreen;">, a as C, </span><span style="color: MediumSeaGreen;"><strong>b as A</strong></span><span style="color: MediumSeaGreen;">};</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b2</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b1</span><span class="token punctuation">,</span> <span class="token variable">b</span><span class="token punctuation">}</span><span class="token punctuation">;</span><strong><span style="background-color: red">export {c, b as b2, b as b1, b};</span></strong></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1</span> <strong>lint/js/sortImportExportSpecifiers</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The specifiers of the export declaration should be sorted</span>
+    <span style="color: Tomato;">alphabetically.</span>
+
+    <span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b2</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b1</span><span class="token punctuation">,</span> <span class="token variable">b</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;">export {</span><span style="color: Tomato;"><strong>c, </strong></span><span style="color: Tomato;">b</span><span style="color: Tomato;"><strong> as b2</strong></span><span style="color: Tomato;">, b as b1, b};</span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">export {b, b as b1, b</span><span style="color: MediumSeaGreen;"><strong> as b2, c</strong></span><span style="color: MediumSeaGreen;">};</span>
+
+</code></pre>
+### Valid

@@ -17,20 +17,28 @@ MISSING DOCUMENTATION
 
 
 ## Examples
-## Invalid
-```typescript
-foo == bar
-```
-## Valid
-```typescript
-foo == null
-```
-```typescript
-foo != null
-```
-```typescript
-null == foo
-```
-```typescript
-null != foo
-```
+### Invalid
+<pre class="language-text"><code class="language-text"><span class="token variable">foo</span> <span class="token operator">==</span> <span class="token variable">bar</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1</span> <strong>lint/js/doubleEquals</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use </span><span style="color: Tomato;"><strong>===</strong></span><span style="color: Tomato;"> instead of </span><span style="color: Tomato;"><strong>==</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token variable">foo</span> <span class="token operator">==</span> <span class="token variable">bar</span>
+    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">== is only allowed when comparing against null.</span>
+
+  <strong>Suggested fix:</strong> Use ===
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;">foo == bar</span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">foo ==</span><span style="color: MediumSeaGreen;"><strong>=</strong></span><span style="color: MediumSeaGreen;"> bar</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">This may be unsafe if you are relying on type coercion</span>
+
+</code></pre>
+### Valid
+<pre class="language-text"><code class="language-text"><span class="token variable">foo</span> <span class="token operator">==</span> <span class="token boolean">null</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token variable">foo</span> <span class="token operator">!=</span> <span class="token boolean">null</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token boolean">null</span> <span class="token operator">==</span> <span class="token variable">foo</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token boolean">null</span> <span class="token operator">!=</span> <span class="token variable">foo</span></code></pre>

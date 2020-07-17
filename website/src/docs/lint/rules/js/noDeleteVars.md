@@ -17,21 +17,25 @@ MISSING DOCUMENTATION
 
 
 ## Examples
-## Invalid
-```typescript
-const foo = 'test';
-delete foo;
-```
-## Valid
-```typescript
-const arr = [['a','b','c'], [1, 2, 3]];
-delete arr[0][2];
-```
-```typescript
-const obj = {a: {b: {c: 123}}};
-delete obj.a.b.c;
-```
-```typescript
-const foo = new Set([1,2,3]);
-foo.delete(1);
-```
+### Invalid
+<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;test&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">delete</span> <span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.js:2</span> <strong>lint/js/noDeleteVars</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">This is an invalid use of the </span><span style="color: Tomato;"><strong>delete</strong></span><span style="color: Tomato;"> operator.</span>
+
+  <strong>  1</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;test&apos;</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token keyword">delete</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
+     <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Only object properties can be deleted.</span>
+
+</code></pre>
+### Valid
+<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">arr</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token string">&apos;a&apos;</span><span class="token punctuation">,</span><span class="token string">&apos;b&apos;</span><span class="token punctuation">,</span><span class="token string">&apos;c&apos;</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">delete</span> <span class="token variable">arr</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">obj</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token variable">a</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token variable">b</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token variable">c</span><span class="token punctuation">:</span> <span class="token number">123</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">delete</span> <span class="token variable">obj</span><span class="token punctuation">.</span><span class="token variable">a</span><span class="token punctuation">.</span><span class="token variable">b</span><span class="token punctuation">.</span><span class="token variable">c</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Set</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">foo</span><span class="token punctuation">.</span><span class="token keyword">delete</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>

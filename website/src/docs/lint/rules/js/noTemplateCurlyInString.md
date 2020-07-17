@@ -17,9 +17,17 @@ MISSING DOCUMENTATION
 
 
 ## Examples
-## Invalid
-```typescript
-const user = 'Faustina';
-               const helloUser = 'Hello, ${user};
-```
-## Valid
+### Invalid
+<pre class="language-text"><code class="language-text">const user = 'Faustina';
+               const helloUser = 'Hello, ${user};</code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:2:49</span> <strong>parse/js</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Unterminated string constant</span>
+
+  <strong>  1</strong><strong> │ </strong>const user = &apos;Faustina&apos;;
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>               const helloUser = &apos;Hello, ${user};
+     <strong> │ </strong>                                                 <span style="color: Tomato;"><strong>^</strong></span>
+
+</code></pre>
+### Valid
