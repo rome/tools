@@ -1,5 +1,6 @@
 import {
 	BaseTokens,
+	ComplexToken,
 	ParserCoreState,
 	ParserOptions,
 	SimpleToken,
@@ -18,11 +19,18 @@ export type State = ParserCoreState & {
 	isBlockHead: boolean;
 };
 
+export type ListProperties = {
+	checked: boolean | undefined;
+	numeric: boolean;
+	value?: string;
+};
+
 export type Tokens = BaseTokens & {
 	HeadingLevel: ValueToken<"HeadingLevel", number>;
 	Greater: SimpleToken<"Greater">;
 	Text: ValueToken<"Text", string>;
 	NewLine: SimpleToken<"NewLine">;
-	Break: SimpleToken<"Break">;
-	ListItem: ValueToken<"ListItem", string>;
+	Break: ValueToken<"Break", string>;
+	ListItem: ComplexToken<"ListItem", ListProperties>;
+	EndParagraph: SimpleToken<"EndParagraph">;
 };

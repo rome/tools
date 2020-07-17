@@ -5,5 +5,5 @@ export default function MarkdownDividerBlock(
 	builder: Builder,
 	node: MarkdownDividerBlock,
 ): Token {
-	throw new Error("unimplemented");
+	return node.value;
 }

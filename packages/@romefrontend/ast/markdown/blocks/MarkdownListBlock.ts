@@ -3,7 +3,7 @@ import {createBuilder} from "../../utils";
 
 export type MarkdownListBlock = NodeBaseWithComments & {
 	type: "MarkdownListBlock";
-	kind: "dot-list" | "numeric-list";
+	ordered: boolean;
 	children: Array<MarkdownListItem>;
 };
 

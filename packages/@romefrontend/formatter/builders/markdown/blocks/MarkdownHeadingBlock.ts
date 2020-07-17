@@ -1,9 +1,22 @@
 import {MarkdownHeadingBlock} from "@romefrontend/ast";
-import {Builder, Token} from "@romefrontend/formatter";
+import {
+	Builder,
+	Token,
+	Tokens,
+	concat,
+	hardline,
+	space,
+} from "@romefrontend/formatter";
 
 export default function MarkdownHeadingBlock(
 	builder: Builder,
 	node: MarkdownHeadingBlock,
 ): Token {
-	throw new Error("unimplemented");
+	const tokens: Tokens = [...Array.from({length: node.level}).map(() => "#")];
+
+	tokens.push(space);
+
+	tokens.push(node.value);
+
+	return concat([...tokens, hardline]);
 }

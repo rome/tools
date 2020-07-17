@@ -4,7 +4,11 @@ import {
 	isDigit,
 	readUntilLineBreak,
 } from "@romefrontend/parser-core";
-import {State, Tokens} from "@romefrontend/markdown-parser/types";
+import {
+	ListProperties,
+	State,
+	Tokens,
+} from "@romefrontend/markdown-parser/types";
 import {
 	MarkdownDividerBlock,
 	MarkdownHeadingBlock,
@@ -60,13 +64,13 @@ export const createMarkdownParser = createParser((
 			const nextNextChar = this.getInputCharOnly(index, 2);
 			if (hasThematicBreak([currentChar, nextChar, nextNextChar].join(""))) {
 				// by spec, should be at least 3, with an infinite number
-				const [, endIndex] = this.readInputFrom(
+				const [value, endIndex] = this.readInputFrom(
 					index,
 					(char) => {
 						return char === blockChar;
 					},
 				);
-				return this.finishToken("Break", endIndex);
+				return this.finishValueToken("Break", value, endIndex);
 			}
 			return undefined;
 		}
@@ -90,6 +94,32 @@ export const createMarkdownParser = createParser((
 							state,
 						};
 					}
+					if (nextChar === "\n") {
+						return {
+							token: this.finishToken("EndParagraph", ob1Add(index, 1)),
+							state,
+						};
+					}
+
+					if (isDigit(nextChar)) {
+						const [, endIndex] = this.readInputFrom(index, isDigit);
+						const nextChar = this.getInputCharOnly(endIndex);
+						const nextNextChar = this.getInputCharOnly(endIndex, 1);
+
+						if (nextChar === "." && nextNextChar === " ") {
+							return {
+								token: this.finishComplexToken<"ListItem", ListProperties>(
+									"ListItem",
+									{
+										numeric: true,
+										checked: undefined,
+									},
+									ob1Add(endIndex, 2),
+								),
+								state,
+							};
+						}
+					}
 
 					return {
 						token: this.finishToken("NewLine"),
@@ -103,6 +133,21 @@ export const createMarkdownParser = createParser((
 					if (block) {
 						return {token: block, state};
 					}
+					const nextChar = this.getInputCharOnly(index, 1);
+					if (nextChar === " ") {
+						return {
+							token: this.finishComplexToken<"ListItem", ListProperties>(
+								"ListItem",
+								{
+									numeric: false,
+									checked: undefined,
+									value: "-",
+								},
+								ob1Add(index, 2),
+							),
+							state,
+						};
+					}
 				}
 				if (char === "_") {
 					const block = this.consumeBlock("_", index, char);
@@ -115,17 +160,36 @@ export const createMarkdownParser = createParser((
 					if (block) {
 						return {token: block, state};
 					}
+					const nextChar = this.getInputCharOnly(index, 1);
+					if (nextChar === " ") {
+						return {
+							token: this.finishComplexToken<"ListItem", ListProperties>(
+								"ListItem",
+								{
+									numeric: false,
+									checked: undefined,
+									value: "*",
+								},
+								ob1Add(index, 2),
+							),
+							state,
+						};
+					}
 				}
 
 				if (isDigit(char)) {
-					const nextChar = this.getInputCharOnly(index, 1);
-					const nextNextChar = this.getInputCharOnly(index, 2);
+					const [, endIndex] = this.readInputFrom(index, isDigit);
+					const nextChar = this.getInputCharOnly(endIndex);
+					const nextNextChar = this.getInputCharOnly(endIndex, 1);
 					if (nextChar === "." && nextNextChar === " ") {
 						return {
-							token: this.finishValueToken(
+							token: this.finishComplexToken<"ListItem", ListProperties>(
 								"ListItem",
-								"numeric-list",
-								ob1Add(index, 3),
+								{
+									numeric: true,
+									checked: undefined,
+								},
+								ob1Add(endIndex, 2),
 							),
 							state,
 						};
@@ -175,19 +239,49 @@ export const createMarkdownParser = createParser((
 			);
 		}
 
-		parseParagraph(): MarkdownParagraph {
+		parseParagraph(isList?: boolean): MarkdownParagraph {
 			const start = this.getPosition();
 			const children: Array<AnyMarkdownInlineNode> = [];
-
-			while (!this.matchToken("EOF") && !this.matchToken("NewLine")) {
+			while (
+				!this.matchToken("EOF") &&
+				!this.matchToken("EndParagraph") &&
+				!this.matchToken("Break")
+			) {
 				const token = this.getToken();
+				if (isList && token.type === "NewLine") {
+					this.nextToken();
+					break;
+				}
 				switch (token.type) {
+					case "Break": {
+						break;
+					}
 					case "Text": {
 						children.push(this.parseText());
 						break;
 					}
+					case "NewLine": {
+						const pos = this.getPosition();
+						children.push(
+							this.finishNode(
+								pos,
+								{
+									type: "MarkdownText",
+									value: "\n",
+								},
+							),
+						);
+						this.nextToken();
+						break;
+					}
+					default: {
+						// TODO: to remove once all cases are handled
+						this.unexpectedDiagnostic({
+							description: descriptions.MARKDOWN_PARSER.INVALID_SEQUENCE,
+						});
+						this.nextToken();
+					}
 				}
-				this.nextToken();
 			}
 
 			return this.finishNode(
@@ -200,33 +294,39 @@ export const createMarkdownParser = createParser((
 		}
 
 		parseBreak(): MarkdownDividerBlock {
-			this.expectToken("Break");
+			const token = this.expectToken("Break");
 			const start = this.getPosition();
 
 			return this.finishNode(
 				start,
 				{
 					type: "MarkdownDividerBlock",
+					value: token.value,
 				},
 			);
 		}
 
 		parseItem(): MarkdownListItem {
-			this.expectToken("ListItem");
+			const token = this.expectToken("ListItem");
 			const pos = this.getPosition();
 			const children: Array<MarkdownListChildren> = [];
 
-			while (!this.matchToken("EOF") && this.matchToken("Text")) {
-				children.push(this.parseParagraph());
+			while (
+				!this.matchToken("EOF") &&
+				!this.matchToken("NewLine") &&
+				this.matchToken("Text")
+			) {
+				children.push(this.parseParagraph(true));
 			}
 
 			return this.finishNode(
 				pos,
 				{
 					// TODO handle check
-					checked: null,
+					checked: token.checked,
 					type: "MarkdownListItem",
 					children,
+					value: token.value,
 				},
 			);
 		}
@@ -234,7 +334,13 @@ export const createMarkdownParser = createParser((
 		parseListBlock(): MarkdownListBlock {
 			const pos = this.getPosition();
 			const children: Array<MarkdownListItem> = [];
-
+			const currentToken = this.getToken();
+			let ordered = false;
+			if (currentToken.type === "ListItem") {
+				if (currentToken.numeric === true) {
+					ordered = true;
+				}
+			}
 			while (!this.matchToken("EOF") && this.matchToken("ListItem")) {
 				const item = this.parseItem();
 				children.push(item);
@@ -244,18 +350,19 @@ export const createMarkdownParser = createParser((
 				pos,
 				{
 					type: "MarkdownListBlock",
-
-					// TODO to review the type of list
-					kind: "dot-list",
+					ordered,
 					children,
 				},
 			);
 		}
 		parseBlock(): undefined | AnyMarkdownNode {
 			const token = this.getToken();
-
 			switch (token.type) {
 				case "NewLine": {
+					this.nextToken();
+					return undefined;
+				}
+				case "EndParagraph": {
 					this.nextToken();
 					return undefined;
 				}

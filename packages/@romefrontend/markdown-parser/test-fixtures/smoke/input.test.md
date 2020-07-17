@@ -4,6 +4,8 @@
 
 ## `smoke`
 
+### `ast`
+
 ```javascript
 MarkdownRoot {
 	comments: Array []
@@ -15,8 +17,8 @@ MarkdownRoot {
 		filename: "input.md"
 		end: Object {
 			column: 3
-			index: 146
-			line: 13
+			index: 167
+			line: 19
 		}
 		start: Object {
 			column: 0
@@ -131,8 +133,8 @@ MarkdownRoot {
 			loc: Object {
 				filename: "input.md"
 				end: Object {
-					column: 3
-					index: 99
+					column: 0
+					index: 96
 					line: 8
 				}
 				start: Object {
@@ -158,21 +160,53 @@ MarkdownRoot {
 						}
 					}
 				}
+				MarkdownText {
+					value: "\n"
+					loc: Object {
+						filename: "input.md"
+						end: Object {
+							column: 32
+							index: 95
+							line: 7
+						}
+						start: Object {
+							column: 32
+							index: 95
+							line: 7
+						}
+					}
+				}
 			]
+		}
+		MarkdownDividerBlock {
+			value: "___"
+			loc: Object {
+				filename: "input.md"
+				end: Object {
+					column: 3
+					index: 99
+					line: 8
+				}
+				start: Object {
+					column: 3
+					index: 99
+					line: 8
+				}
+			}
 		}
 		MarkdownListBlock {
 			kind: "dot-list"
 			loc: Object {
 				filename: "input.md"
 				end: Object {
-					column: 3
-					index: 132
-					line: 11
+					column: 0
+					index: 130
+					line: 12
 				}
 				start: Object {
 					column: 0
-					index: 100
-					line: 9
+					index: 101
+					line: 10
 				}
 			}
 			children: Array [
@@ -181,14 +215,14 @@ MarkdownRoot {
 					loc: Object {
 						filename: "input.md"
 						end: Object {
-							column: 3
-							index: 132
+							column: 0
+							index: 115
 							line: 11
 						}
 						start: Object {
 							column: 3
-							index: 103
-							line: 9
+							index: 104
+							line: 10
 						}
 					}
 					children: Array [
@@ -196,14 +230,14 @@ MarkdownRoot {
 							loc: Object {
 								filename: "input.md"
 								end: Object {
-									column: 3
-									index: 132
+									column: 0
+									index: 115
 									line: 11
 								}
 								start: Object {
 									column: 3
-									index: 103
-									line: 9
+									index: 104
+									line: 10
 								}
 							}
 							children: Array [
@@ -213,29 +247,64 @@ MarkdownRoot {
 										filename: "input.md"
 										end: Object {
 											column: 13
-											index: 113
-											line: 9
+											index: 114
+											line: 10
 										}
 										start: Object {
 											column: 13
-											index: 113
-											line: 9
+											index: 114
+											line: 10
 										}
 									}
 								}
+							]
+						}
+					]
+				}
+				MarkdownListItem {
+					checked: null
+					loc: Object {
+						filename: "input.md"
+						end: Object {
+							column: 0
+							index: 130
+							line: 12
+						}
+						start: Object {
+							column: 3
+							index: 118
+							line: 11
+						}
+					}
+					children: Array [
+						MarkdownParagraph {
+							loc: Object {
+								filename: "input.md"
+								end: Object {
+									column: 0
+									index: 130
+									line: 12
+								}
+								start: Object {
+									column: 3
+									index: 118
+									line: 11
+								}
+							}
+							children: Array [
 								MarkdownText {
 									value: "second item"
 									loc: Object {
 										filename: "input.md"
 										end: Object {
 											column: 14
-											index: 128
-											line: 10
+											index: 129
+											line: 11
 										}
 										start: Object {
 											column: 14
-											index: 128
-											line: 10
+											index: 129
+											line: 11
 										}
 									}
 								}
@@ -245,18 +314,34 @@ MarkdownRoot {
 				}
 			]
 		}
-		MarkdownParagraph {
+		MarkdownDividerBlock {
+			value: "---"
 			loc: Object {
 				filename: "input.md"
 				end: Object {
 					column: 3
-					index: 146
-					line: 13
+					index: 133
+					line: 12
+				}
+				start: Object {
+					column: 3
+					index: 133
+					line: 12
+				}
+			}
+		}
+		MarkdownParagraph {
+			loc: Object {
+				filename: "input.md"
+				end: Object {
+					column: 0
+					index: 164
+					line: 19
 				}
 				start: Object {
 					column: 0
-					index: 133
-					line: 12
+					index: 135
+					line: 14
 				}
 			}
 			children: Array [
@@ -266,18 +351,185 @@ MarkdownRoot {
 						filename: "input.md"
 						end: Object {
 							column: 9
-							index: 142
-							line: 12
+							index: 144
+							line: 14
 						}
 						start: Object {
 							column: 9
-							index: 142
-							line: 12
+							index: 144
+							line: 14
+						}
+					}
+				}
+				MarkdownText {
+					value: "\n"
+					loc: Object {
+						filename: "input.md"
+						end: Object {
+							column: 9
+							index: 144
+							line: 14
+						}
+						start: Object {
+							column: 9
+							index: 144
+							line: 14
+						}
+					}
+				}
+				MarkdownText {
+					value: "feeeffeef"
+					loc: Object {
+						filename: "input.md"
+						end: Object {
+							column: 9
+							index: 154
+							line: 15
+						}
+						start: Object {
+							column: 9
+							index: 154
+							line: 15
+						}
+					}
+				}
+				MarkdownText {
+					value: "\n"
+					loc: Object {
+						filename: "input.md"
+						end: Object {
+							column: 9
+							index: 154
+							line: 15
+						}
+						start: Object {
+							column: 9
+							index: 154
+							line: 15
+						}
+					}
+				}
+				MarkdownText {
+					value: "ef"
+					loc: Object {
+						filename: "input.md"
+						end: Object {
+							column: 2
+							index: 157
+							line: 16
+						}
+						start: Object {
+							column: 2
+							index: 157
+							line: 16
+						}
+					}
+				}
+				MarkdownText {
+					value: "\n"
+					loc: Object {
+						filename: "input.md"
+						end: Object {
+							column: 2
+							index: 157
+							line: 16
+						}
+						start: Object {
+							column: 2
+							index: 157
+							line: 16
+						}
+					}
+				}
+				MarkdownText {
+					value: "ef"
+					loc: Object {
+						filename: "input.md"
+						end: Object {
+							column: 2
+							index: 160
+							line: 17
+						}
+						start: Object {
+							column: 2
+							index: 160
+							line: 17
+						}
+					}
+				}
+				MarkdownText {
+					value: "\n"
+					loc: Object {
+						filename: "input.md"
+						end: Object {
+							column: 2
+							index: 160
+							line: 17
+						}
+						start: Object {
+							column: 2
+							index: 160
+							line: 17
+						}
+					}
+				}
+				MarkdownText {
+					value: "ef"
+					loc: Object {
+						filename: "input.md"
+						end: Object {
+							column: 2
+							index: 163
+							line: 18
+						}
+						start: Object {
+							column: 2
+							index: 163
+							line: 18
+						}
+					}
+				}
+				MarkdownText {
+					value: "\n"
+					loc: Object {
+						filename: "input.md"
+						end: Object {
+							column: 2
+							index: 163
+							line: 18
+						}
+						start: Object {
+							column: 2
+							index: 163
+							line: 18
 						}
 					}
 				}
 			]
 		}
+		MarkdownDividerBlock {
+			value: "***"
+			loc: Object {
+				filename: "input.md"
+				end: Object {
+					column: 3
+					index: 167
+					line: 19
+				}
+				start: Object {
+					column: 3
+					index: 167
+					line: 19
+				}
+			}
+		}
 	]
 }
+```
+
+### `diagnostics`
+
+```
+✔ No known problems!
+
 ```
