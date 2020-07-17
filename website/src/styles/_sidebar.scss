@@ -2,8 +2,6 @@
   @include transition-timing;
   width: $sidebar-width;
   list-style: none;
-  overflow-y: auto;
-  overflow-x: hidden;
   font-size: 0.95rem;
   position: sticky;
   z-index: 99999;
@@ -43,6 +41,7 @@
   &.right{
     border-right: 1px solid var(--soft-border-color);
     border-left: none;
+    z-index: 0;
 
     @include desktop-only() {
       padding-top: 0;
@@ -68,6 +67,11 @@
 
     }
 
+  }
+
+  .menu-wrapper{
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .menu {
@@ -141,19 +145,52 @@
   }
 }
 
+// Better look on mobile
+// solution from https://github.com/algolia/docsearch/issues/181
+.algolia-autocomplete {
+
+  @include mobile-only() {
+    .ds-dropdown-menu {
+      max-width: calc(100vw - 32px) !important;
+      min-width: calc(100vw - 32px) !important;
+      width: calc(100vw - 32px) !important;
+      margin-left: 16px !important;
+    }
+    .algolia-docsearch-suggestion--content {
+      width: 100% !important;
+      padding-left: 0 !important;
+    }
+    .algolia-docsearch-suggestion--content:before  {
+      display: none !important;
+    }
+    .algolia-docsearch-suggestion--subcategory-column {
+      display: none !important;
+    }
+  }
+
+}
+
 .algolia-autocomplete, input#docusearch {
   width: 100%;
   display: block;
 }
 
-.algolia-autocomplete {
-  padding-right: $unit * 2;
+.ds-dropdown-menu{
+  left: $unit * 2 !important;
 }
 
 input#docusearch {
-  padding: 5px;
-  border-radius: 4px;
-  border: 1px solid red;
+  padding: 32px 8px 32px 32px;
+  border: 0;
+  border-bottom: 1px solid var(--soft-border-color);
+  height: $unit * 2;
+  background: var(--background-color);
+  font-size: 1em;
+  color: var(--font-color);
+}
+
+input#docusearch::placeholder {
+  color: var(--sub-text-color);
 }
 
 html[data-theme='dark'] .color-scheme-switch:after {
