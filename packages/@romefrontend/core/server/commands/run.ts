@@ -31,10 +31,10 @@ export default createServerCommand({
 		return {};
 	},
 	async callback(req: ServerRequest): Promise<RunResult> {
-		const {args} = req.query;
 		const {flags} = req.client;
 		const {server} = req;
 		req.expectArgumentLength(1);
+		const arg = req.query.args[0];
 
 		async function executeCode(path: AbsoluteFilePath): Promise<RunResult> {
 			const bundler = Bundler.createFromServerRequest(req);
@@ -52,20 +52,10 @@ export default createServerCommand({
 			flags.cwd,
 		);
 
-		// check for absolute paths
-		const target = args[0];
-		const resolved = await server.resolver.resolveEntry({
-			...req.getResolverOptionsFromFlags(),
-			source: createRelativeFilePath(target),
-		});
-		if (resolved.type === "FOUND") {
-			return executeCode(resolved.path);
-		}
-
-		// check for bin files in any manifests that belong to any projects
+		// Check for bin files in any manifests that belong to any projects
 		if (project !== undefined) {
 			for (const {manifest, folder} of project.packages.values()) {
-				const relative = manifest.bin.get(target);
+				const relative = manifest.bin.get(arg);
 				if (relative === undefined) {
 					continue;
 				}
@@ -84,6 +74,9 @@ export default createServerCommand({
 		// TODO check node_modules/.bin
 
 		// TODO check package.json scripts
-		throw new Error(`Failed to find "${target}"`);
+
+		// Assumed absolute paths
+		const target = await req.resolveEntryAssertPathArg(0);
+		return executeCode(target);
 	},
 });
