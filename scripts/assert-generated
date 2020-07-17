@@ -19,7 +19,7 @@ async function main() {
 	require("./generated-files/ast.cjs");
 	require("./generated-files/lint-rules.cjs");
 	require("./generated-files/sitemap.cjs");
-	await execDev(['run', path.join(__dirname, "lint-rules-docs.ts")]);
+	await execDev(['run', path.join(__dirname, "generated-files/lint-rules-docs.ts")]);
 
 	//only .ts will be autofixed
 	const filteredWrittenFiles = writtenFiles.filter(function(file){
