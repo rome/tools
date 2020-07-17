@@ -1,0 +1,11 @@
+filename: "test.tsx"
+valid: [
+	"// @jsx
+<div></div>"
+	"// @jsx
+<></>"
+	"// @jsx
+<Fragment></Fragment>"
+	"// @jsx
+<React.Fragment></React.Fragment>"
+]

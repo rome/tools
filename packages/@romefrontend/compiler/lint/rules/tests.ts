@@ -158,6 +158,16 @@ import roleHasRequiredAriaProps from "./jsx-a11y/roleHasRequiredAriaProps.test.r
 import scope from "./jsx-a11y/scope.test.rjson";
 // @ts-ignore
 import tabindexNoPositive from "./jsx-a11y/tabindexNoPositive.test.rjson";
+// @ts-ignore
+import noCommentText from "./jsx/noCommentText.test.rjson";
+// @ts-ignore
+import noDuplicateProps from "./jsx/noDuplicateProps.test.rjson";
+// @ts-ignore
+import noImplicitBoolean from "./jsx/noImplicitBoolean.test.rjson";
+// @ts-ignore
+import pascalCase from "./jsx/pascalCase.test.rjson";
+// @ts-ignore
+import propsNoSpreading from "./jsx/propsNoSpreading.test.rjson";
 
 export const tests: Tests = {
 	"js/caseSingleStatement": caseSingleStatement,
@@ -234,4 +244,9 @@ export const tests: Tests = {
 	"jsx-a11y/roleHasRequiredAriaProps": roleHasRequiredAriaProps,
 	"jsx-a11y/scope": scope,
 	"jsx-a11y/tabindexNoPositive": tabindexNoPositive,
+	"jsx/noCommentText": noCommentText,
+	"jsx/noDuplicateProps": noDuplicateProps,
+	"jsx/noImplicitBoolean": noImplicitBoolean,
+	"jsx/pascalCase": pascalCase,
+	"jsx/propsNoSpreading": propsNoSpreading,
 };

@@ -1,0 +1,11 @@
+filename: "file.tsx"
+invalid: [
+	"<App {...props} />"
+	"<MyCustomComponent {...props} some_other_prop={some_other_prop} />"
+	"<MyCustomComponent some_other_prop={some_other_prop} {...props} />"
+	"<img {...props} />"
+]
+valid: [
+	"<MyCustomComponent one_prop={one_prop} two_prop={two_prop} />"
+	"<img src={src} alt={alt} />"
+]

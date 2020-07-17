@@ -1,0 +1,14 @@
+filename: "file.tsx"
+invalid: [
+	"<Foo_component />"
+	"<FOO_COMPONENT />"
+]
+valid: [
+	"<Foo />"
+	"<foo_bar />"
+	"<fooBar />"
+	"<foo_COMPONENT />"
+	"<foo />"
+	"<div />"
+	"<FooComponent />"
+]
