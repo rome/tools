@@ -168,6 +168,52 @@ import noImplicitBoolean from "./jsx/noImplicitBoolean.test.rjson";
 import pascalCase from "./jsx/pascalCase.test.rjson";
 // @ts-ignore
 import propsNoSpreading from "./jsx/propsNoSpreading.test.rjson";
+// @ts-ignore
+import buttonHasType from "./react/buttonHasType.test.rjson";
+// @ts-ignore
+import jsxFragments from "./react/jsxFragments.test.rjson";
+// @ts-ignore
+import jsxKey from "./react/jsxKey.test.rjson";
+// @ts-ignore
+import noAccessStateInSetState from "./react/noAccessStateInSetState.test.rjson";
+// @ts-ignore
+import noArrayIndexKey from "./react/noArrayIndexKey.test.rjson";
+// @ts-ignore
+import noChildrenProp from "./react/noChildrenProp.test.rjson";
+// @ts-ignore
+import noDanger from "./react/noDanger.test.rjson";
+// @ts-ignore
+import noDangerWithChildren from "./react/noDangerWithChildren.test.rjson";
+// @ts-ignore
+import noDidMountSetState from "./react/noDidMountSetState.test.rjson";
+// @ts-ignore
+import noDidUpdateSetState from "./react/noDidUpdateSetState.test.rjson";
+// @ts-ignore
+import noDirectMutationState from "./react/noDirectMutationState.test.rjson";
+// @ts-ignore
+import noFindDOMNode from "./react/noFindDOMNode.test.rjson";
+// @ts-ignore
+import noRedundantShouldComponentUpdate from "./react/noRedundantShouldComponentUpdate.test.rjson";
+// @ts-ignore
+import noRenderReturnValue from "./react/noRenderReturnValue.test.rjson";
+// @ts-ignore
+import noStringRefs from "./react/noStringRefs.test.rjson";
+// @ts-ignore
+import noThisInSFC from "./react/noThisInSFC.test.rjson";
+// @ts-ignore
+import noUnsafe from "./react/noUnsafe.test.rjson";
+// @ts-ignore
+import noUselessFragment from "./react/noUselessFragment.test.rjson";
+// @ts-ignore
+import noWillUpdateSetState from "./react/noWillUpdateSetState.test.rjson";
+// @ts-ignore
+import requireRenderReturn from "./react/requireRenderReturn.test.rjson";
+// @ts-ignore
+import sortComp from "./react/sortComp.test.rjson";
+// @ts-ignore
+import stylePropObject from "./react/stylePropObject.test.rjson";
+// @ts-ignore
+import voidDomElementsNoChildren from "./react/voidDomElementsNoChildren.test.rjson";
 
 export const tests: Tests = {
 	"js/caseSingleStatement": caseSingleStatement,
@@ -249,4 +295,27 @@ export const tests: Tests = {
 	"jsx/noImplicitBoolean": noImplicitBoolean,
 	"jsx/pascalCase": pascalCase,
 	"jsx/propsNoSpreading": propsNoSpreading,
+	"react/buttonHasType": buttonHasType,
+	"react/jsxFragments": jsxFragments,
+	"react/jsxKey": jsxKey,
+	"react/noAccessStateInSetState": noAccessStateInSetState,
+	"react/noArrayIndexKey": noArrayIndexKey,
+	"react/noChildrenProp": noChildrenProp,
+	"react/noDanger": noDanger,
+	"react/noDangerWithChildren": noDangerWithChildren,
+	"react/noDidMountSetState": noDidMountSetState,
+	"react/noDidUpdateSetState": noDidUpdateSetState,
+	"react/noDirectMutationState": noDirectMutationState,
+	"react/noFindDOMNode": noFindDOMNode,
+	"react/noRedundantShouldComponentUpdate": noRedundantShouldComponentUpdate,
+	"react/noRenderReturnValue": noRenderReturnValue,
+	"react/noStringRefs": noStringRefs,
+	"react/noThisInSFC": noThisInSFC,
+	"react/noUnsafe": noUnsafe,
+	"react/noUselessFragment": noUselessFragment,
+	"react/noWillUpdateSetState": noWillUpdateSetState,
+	"react/requireRenderReturn": requireRenderReturn,
+	"react/sortComp": sortComp,
+	"react/stylePropObject": stylePropObject,
+	"react/voidDomElementsNoChildren": voidDomElementsNoChildren,
 };
