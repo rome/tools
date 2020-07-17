@@ -7,9 +7,7 @@
 
 require("../_setup.cjs");
 
-const {readGeneratedFile, write, readFile} = require(
-	"../_utils.cjs",
-);
+const {readGeneratedFile, write, readFile} = require("../_utils.cjs");
 const {lintRulesFolder, categoriesFile, lintRulesDocFolder} = require(
 	"../_constants.cjs",
 );
