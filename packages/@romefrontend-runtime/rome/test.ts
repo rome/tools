@@ -121,7 +121,7 @@ export type TestOptions = NamelessTestOptions & {
 type TestArg = TestName | NamelessTestOptions | TestCallback | undefined;
 
 export const testOptions: NonNullable<GlobalTestOptions> =
-	__ROME__TEST_OPTIONS__ === undefined ? {} : __ROME__TEST_OPTIONS__;
+	typeof __ROME__TEST_OPTIONS__ === "undefined" ? {} : __ROME__TEST_OPTIONS__;
 
 function registerTest(
 	callsiteError: Error,

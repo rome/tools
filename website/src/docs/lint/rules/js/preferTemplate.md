@@ -17,35 +17,160 @@ MISSING DOCUMENTATION
 
 
 ## Examples
-## Invalid
-```typescript
-const foo = 'bar'; console.log(foo + 'baz')
-```
-```typescript
-console.log((1 * 2) + 'foo')
-```
-```typescript
-console.log(1 + 'foo' + 2 + 'bar' + 'baz' + 3)
-```
-```typescript
-console.log((1 + 'foo') * 2)
-```
-```typescript
-console.log((1 * (2 + 'foo')) + 'bar')
-```
-```typescript
-console.log('foo' + 1)
-```
-```typescript
-console.log('foo' + `bar${`baz${'bat' + 'bam'}`}` + 'boo')
-```
-```typescript
-console.log('foo' + 1 + 2)
-```
-## Valid
-```typescript
-console.log('foo' + 'bar')
-```
-```typescript
-console.log(foo() + '\n')
-```
+### Invalid
+<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;bar&apos;</span><span class="token punctuation">;</span> <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">foo</span> <span class="token operator">+</span> <span class="token string">&apos;baz&apos;</span><span class="token punctuation">)</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:31</span> <strong>lint/js/preferTemplate</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Template literals</strong></span><span style="color: Tomato;"> are preferred over </span><span style="color: Tomato;"><strong>string concatenation</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;bar&apos;</span><span class="token punctuation">;</span> <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">foo</span> <span class="token operator">+</span> <span class="token string">&apos;baz&apos;</span><span class="token punctuation">)</span>
+                                   <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;">foo</span><span style="color: Tomato;"><strong> + &quot;</strong></span><span style="color: Tomato;">baz</span><span style="color: Tomato;"><strong>&quot;</strong></span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>`${</strong></span><span style="color: MediumSeaGreen;">foo</span><span style="color: MediumSeaGreen;"><strong>}</strong></span><span style="color: MediumSeaGreen;">baz</span><span style="color: MediumSeaGreen;"><strong>`</strong></span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:12</span> <strong>lint/js/preferTemplate</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Template literals</strong></span><span style="color: Tomato;"> are preferred over </span><span style="color: Tomato;"><strong>string concatenation</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span>
+                <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;">1 * 2</span><span style="color: Tomato;"><strong> + &quot;</strong></span><span style="color: Tomato;">foo</span><span style="color: Tomato;"><strong>&quot;</strong></span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>`${</strong></span><span style="color: MediumSeaGreen;">1 * 2</span><span style="color: MediumSeaGreen;"><strong>}</strong></span><span style="color: MediumSeaGreen;">foo</span><span style="color: MediumSeaGreen;"><strong>`</strong></span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token string">&apos;bar&apos;</span> <span class="token operator">+</span> <span class="token string">&apos;baz&apos;</span> <span class="token operator">+</span> <span class="token number">3</span><span class="token punctuation">)</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:12</span> <strong>lint/js/preferTemplate</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Template literals</strong></span><span style="color: Tomato;"> are preferred over </span><span style="color: Tomato;"><strong>string concatenation</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token string">&apos;bar&apos;</span> <span class="token operator">+</span> <span class="token string">&apos;baz&apos;</span> <span class="token operator">+</span> <span class="token number">3</span><span class="token punctuation">)</span>
+                <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;">1</span><span style="color: Tomato;"><strong> + &quot;</strong></span><span style="color: Tomato;">foo</span><span style="color: Tomato;"><strong>&quot; + </strong></span><span style="color: Tomato;">2</span><span style="color: Tomato;"><strong> + &quot;</strong></span><span style="color: Tomato;">bar</span><span style="color: Tomato;"><strong>&quot; + &quot;</strong></span><span style="color: Tomato;">baz</span><span style="color: Tomato;"><strong>&quot; + </strong></span><span style="color: Tomato;">3</span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>`${</strong></span><span style="color: MediumSeaGreen;">1</span><span style="color: MediumSeaGreen;"><strong>}</strong></span><span style="color: MediumSeaGreen;">foo</span><span style="color: MediumSeaGreen;"><strong>${</strong></span><span style="color: MediumSeaGreen;">2</span><span style="color: MediumSeaGreen;"><strong>}</strong></span><span style="color: MediumSeaGreen;">barbaz</span><span style="color: MediumSeaGreen;"><strong>${</strong></span><span style="color: MediumSeaGreen;">3</span><span style="color: MediumSeaGreen;"><strong>}`</strong></span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:13</span> <strong>lint/js/preferTemplate</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Template literals</strong></span><span style="color: Tomato;"> are preferred over </span><span style="color: Tomato;"><strong>string concatenation</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span>
+                 <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;">1</span><span style="color: Tomato;"><strong> + &quot;</strong></span><span style="color: Tomato;">foo</span><span style="color: Tomato;"><strong>&quot;</strong></span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>`${</strong></span><span style="color: MediumSeaGreen;">1</span><span style="color: MediumSeaGreen;"><strong>}</strong></span><span style="color: MediumSeaGreen;">foo</span><span style="color: MediumSeaGreen;"><strong>`</strong></span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">&apos;bar&apos;</span><span class="token punctuation">)</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:12</span> <strong>lint/js/preferTemplate</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Template literals</strong></span><span style="color: Tomato;"> are preferred over </span><span style="color: Tomato;"><strong>string concatenation</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">&apos;bar&apos;</span><span class="token punctuation">)</span>
+                <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;">1 * (2 + &quot;foo&quot;)</span><span style="color: Tomato;"><strong> + &quot;</strong></span><span style="color: Tomato;">bar</span><span style="color: Tomato;"><strong>&quot;</strong></span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>`${</strong></span><span style="color: MediumSeaGreen;">1 * (2 + &quot;foo&quot;)</span><span style="color: MediumSeaGreen;"><strong>}</strong></span><span style="color: MediumSeaGreen;">bar</span><span style="color: MediumSeaGreen;"><strong>`</strong></span>
+
+ <span style="text-decoration-style: dotted;">file.ts:1:18</span> <strong>lint/js/preferTemplate</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Template literals</strong></span><span style="color: Tomato;"> are preferred over </span><span style="color: Tomato;"><strong>string concatenation</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">&apos;bar&apos;</span><span class="token punctuation">)</span>
+                      <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;">2</span><span style="color: Tomato;"><strong> + &quot;</strong></span><span style="color: Tomato;">foo</span><span style="color: Tomato;"><strong>&quot;</strong></span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>`${</strong></span><span style="color: MediumSeaGreen;">2</span><span style="color: MediumSeaGreen;"><strong>}</strong></span><span style="color: MediumSeaGreen;">foo</span><span style="color: MediumSeaGreen;"><strong>`</strong></span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:12</span> <strong>lint/js/preferTemplate</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Template literals</strong></span><span style="color: Tomato;"> are preferred over </span><span style="color: Tomato;"><strong>string concatenation</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+                <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&quot;</strong></span><span style="color: Tomato;">foo</span><span style="color: Tomato;"><strong>&quot; + </strong></span><span style="color: Tomato;">1</span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>`</strong></span><span style="color: MediumSeaGreen;">foo</span><span style="color: MediumSeaGreen;"><strong>${</strong></span><span style="color: MediumSeaGreen;">1</span><span style="color: MediumSeaGreen;"><strong>}`</strong></span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token string">`</span><span class="token string">bar</span><span class="token punctuation">${</span><span class="token string">`</span><span class="token string">baz</span><span class="token punctuation">${</span><span class="token string">&apos;bat&apos;</span> <span class="token operator">+</span> <span class="token string">&apos;bam&apos;</span><span class="token punctuation">}</span><span class="token string">`</span><span class="token punctuation">}</span><span class="token string">`</span> <span class="token operator">+</span> <span class="token string">&apos;boo&apos;</span><span class="token punctuation">)</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:12</span> <strong>lint/js/preferTemplate</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Template literals</strong></span><span style="color: Tomato;"> are preferred over </span><span style="color: Tomato;"><strong>string concatenation</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token string">`</span><span class="token string">bar</span><span class="token punctuation">${</span><span class="token string">`</span><span class="token string">baz</span><span class="token punctuation">${</span><span class="token string">&apos;bat&apos;</span> <span class="token operator">+</span> <span class="token string">&apos;bam&apos;</span><span class="token punctuation">}</span><span class="token string">`</span><span class="token punctuation">}</span><span class="token string">`</span> <span class="token operator">+</span> <span class="token string">&apos;boo&apos;</span><span class="token punctuation">)</span>
+                <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&quot;</strong></span><span style="color: Tomato;">foo</span><span style="color: Tomato;"><strong>&quot; + `</strong></span><span style="color: Tomato;">bar</span><span style="color: Tomato;"><strong>${`</strong></span><span style="color: Tomato;">baz${&quot;bat&quot; + &quot;bam&quot;}</span><span style="color: Tomato;"><strong>`}` + &quot;</strong></span><span style="color: Tomato;">boo</span><span style="color: Tomato;"><strong>&quot;</strong></span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>`</strong></span><span style="color: MediumSeaGreen;">foobarbaz${&quot;bat&quot; + &quot;bam&quot;}boo</span><span style="color: MediumSeaGreen;"><strong>`</strong></span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">)</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:12</span> <strong>lint/js/preferTemplate</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Template literals</strong></span><span style="color: Tomato;"> are preferred over </span><span style="color: Tomato;"><strong>string concatenation</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">)</span>
+                <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&quot;</strong></span><span style="color: Tomato;">foo</span><span style="color: Tomato;"><strong>&quot; + </strong></span><span style="color: Tomato;">1</span><span style="color: Tomato;"><strong> + </strong></span><span style="color: Tomato;">2</span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>`</strong></span><span style="color: MediumSeaGreen;">foo</span><span style="color: MediumSeaGreen;"><strong>${</strong></span><span style="color: MediumSeaGreen;">1</span><span style="color: MediumSeaGreen;"><strong>}${</strong></span><span style="color: MediumSeaGreen;">2</span><span style="color: MediumSeaGreen;"><strong>}`</strong></span>
+
+</code></pre>
+### Valid
+<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token string">&apos;bar&apos;</span><span class="token punctuation">)</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">&apos;\n&apos;</span><span class="token punctuation">)</span></code></pre>

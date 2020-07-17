@@ -17,32 +17,49 @@ MISSING DOCUMENTATION
 
 
 ## Examples
-## Invalid
-```typescript
-switch (foo) {
-	case true:
-	case false:
-		let foo = '';
-		foo;
-}
-```
-## Valid
-```typescript
-switch (foo) {
-	case true:
-	case false:
-		'yes';
-}
-```
-```typescript
-switch (foo) {
-	case true: {
-		// empty
-	}
-}
-```
-```typescript
-switch (foo) {
-	case true:
-}
-```
+### Invalid
+<pre class="language-text"><code class="language-text"><span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">case</span> <span class="token boolean">true</span><span class="token punctuation">:</span>
+  <span class="token keyword">case</span> <span class="token boolean">false</span><span class="token punctuation">:</span>
+    <span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;&apos;</span><span class="token punctuation">;</span>
+    <span class="token variable">foo</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:3:1</span> <strong>lint/js/caseSingleStatement</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">A switch case should only have a single statement. If you want more,</span>
+    <span style="color: Tomato;">then wrap it in a block.</span>
+
+  <strong>  1</strong><strong> │ </strong><span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong>  2</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token boolean">true</span><span class="token punctuation">:</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token boolean">false</span><span class="token punctuation">:</span>
+     <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 4</strong><strong> │ </strong>    <span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;&apos;</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 5</strong><strong> │ </strong>    <span class="token variable">foo</span><span class="token punctuation">;</span>
+     <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  6</strong><strong> │ </strong><span class="token punctuation">}</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;">case false:</span>
+  <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">case false:</span><span style="color: MediumSeaGreen;"><strong> {</strong></span>
+  <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>    let foo = &quot;&quot;;
+  <strong>  </strong><strong>3</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;">  </span><span style="color: Tomato;">foo;</span>
+  <strong>  </strong><strong> </strong><strong> </strong><strong>3</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">  </span><span style="color: MediumSeaGreen;">foo;</span>
+  <strong>  </strong><strong> </strong><strong> </strong><strong>4</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>}</strong></span>
+
+</code></pre>
+### Valid
+<pre class="language-text"><code class="language-text"><span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">case</span> <span class="token boolean">true</span><span class="token punctuation">:</span>
+  <span class="token keyword">case</span> <span class="token boolean">false</span><span class="token punctuation">:</span>
+    <span class="token string">&apos;yes&apos;</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">case</span> <span class="token boolean">true</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    <span class="token comment">// empty</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">case</span> <span class="token boolean">true</span><span class="token punctuation">:</span>
+<span class="token punctuation">}</span></code></pre>

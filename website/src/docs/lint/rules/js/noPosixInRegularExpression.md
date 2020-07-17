@@ -17,11 +17,34 @@ MISSING DOCUMENTATION
 
 
 ## Examples
-## Invalid
-```typescript
-const pattern = /[[:alpha:]]/
-```
-```typescript
-const pattern = /[[.ch.]]/
-```
-## Valid
+### Invalid
+<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">pattern</span> <span class="token operator">=</span> <span class="token regex">/[[:alpha:]]/</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:18</span> <strong>lint/js/noPosixInRegularExpression</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not use POSIX character classes and collating sequences.</span>
+
+    <span class="token keyword">const</span> <span class="token variable">pattern</span> <span class="token operator">=</span> <span class="token regex">/[[:alpha:]]/</span>
+                      <span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">This functionality is not supported in JavaScript regular</span>
+    <span style="color: DodgerBlue;">expressions.</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">pattern</span> <span class="token operator">=</span> <span class="token regex">/[[.ch.]]/</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:18</span> <strong>lint/js/noPosixInRegularExpression</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not use POSIX character classes and collating sequences.</span>
+
+    <span class="token keyword">const</span> <span class="token variable">pattern</span> <span class="token operator">=</span> <span class="token regex">/[[.ch.]]/</span>
+                      <span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">This functionality is not supported in JavaScript regular</span>
+    <span style="color: DodgerBlue;">expressions.</span>
+
+</code></pre>
+### Valid

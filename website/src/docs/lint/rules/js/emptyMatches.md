@@ -17,17 +17,38 @@ MISSING DOCUMENTATION
 
 
 ## Examples
-## Invalid
-```typescript
-let a = /a*/
-```
-```typescript
-let b = /a*(abc)?[1,2,3]*/
-```
-## Valid
-```typescript
-let a = /a*(abc)+[1,2,3]?/
-```
-```typescript
-let b = /a+(abc)*/
-```
+### Invalid
+<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">a</span> <span class="token operator">=</span> <span class="token regex">/a*/</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:8</span> <strong>lint/js/emptyMatches</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">This expression can return </span><span style="color: Tomato;"><strong>empty matches</strong></span><span style="color: Tomato;">, and may match infinitely in</span>
+    <span style="color: Tomato;">some use cases.</span>
+
+    <span class="token keyword">let</span> <span class="token variable">a</span> <span class="token operator">=</span> <span class="token regex">/a*/</span>
+            <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Strengthen the regular expression so that empty matches are not</span>
+    <span style="color: DodgerBlue;">possible.</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">b</span> <span class="token operator">=</span> <span class="token regex">/a*(abc)?[1,2,3]*/</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:8</span> <strong>lint/js/emptyMatches</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">This expression can return </span><span style="color: Tomato;"><strong>empty matches</strong></span><span style="color: Tomato;">, and may match infinitely in</span>
+    <span style="color: Tomato;">some use cases.</span>
+
+    <span class="token keyword">let</span> <span class="token variable">b</span> <span class="token operator">=</span> <span class="token regex">/a*(abc)?[1,2,3]*/</span>
+            <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Strengthen the regular expression so that empty matches are not</span>
+    <span style="color: DodgerBlue;">possible.</span>
+
+</code></pre>
+### Valid
+<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">a</span> <span class="token operator">=</span> <span class="token regex">/a*(abc)+[1,2,3]?/</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">b</span> <span class="token operator">=</span> <span class="token regex">/a+(abc)*/</span></code></pre>

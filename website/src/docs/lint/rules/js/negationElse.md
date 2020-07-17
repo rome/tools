@@ -17,17 +17,46 @@ MISSING DOCUMENTATION
 
 
 ## Examples
-## Invalid
-```typescript
-if (!true) {consequent;} else {alternate;}
-```
-```typescript
-!true ? consequent : alternate
-```
-## Valid
-```typescript
-if (!true) {consequent;}
-```
-```typescript
-true ? consequent : alternate
-```
+### Invalid
+<pre class="language-text"><code class="language-text"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token variable">consequent</span><span class="token punctuation">;</span><span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span><span class="token variable">alternate</span><span class="token punctuation">;</span><span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1</span> <strong>lint/js/negationElse</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Invert blocks</strong></span><span style="color: Tomato;"> when performing a negation test.</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token variable">consequent</span><span class="token punctuation">;</span><span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span><span class="token variable">alternate</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
+    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;">if (</span><span style="color: Tomato;"><strong>!</strong></span><span style="color: Tomato;">true) {</span>
+  <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;">  </span><span style="color: Tomato;"><strong>consequ</strong></span><span style="color: Tomato;">ent;</span>
+  <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">if (true) {</span>
+  <strong>  </strong><strong> </strong><strong> </strong><strong>2</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">  </span><span style="color: MediumSeaGreen;"><strong>alt</strong></span><span style="color: MediumSeaGreen;">e</span><span style="color: MediumSeaGreen;"><strong>r</strong></span><span style="color: MediumSeaGreen;">n</span><span style="color: MediumSeaGreen;"><strong>a</strong></span><span style="color: MediumSeaGreen;">t</span><span style="color: MediumSeaGreen;"><strong>e</strong></span><span style="color: MediumSeaGreen;">;</span>
+  <strong>  </strong><strong>3</strong><strong> </strong><strong>3</strong><strong> │ </strong>  } else {
+  <strong>  </strong><strong>4</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;">  </span><span style="color: Tomato;"><strong>alt</strong></span><span style="color: Tomato;">e</span><span style="color: Tomato;"><strong>r</strong></span><span style="color: Tomato;">n</span><span style="color: Tomato;"><strong>a</strong></span><span style="color: Tomato;">t</span><span style="color: Tomato;"><strong>e</strong></span><span style="color: Tomato;">;</span>
+  <strong>  </strong><strong> </strong><strong> </strong><strong>4</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">  </span><span style="color: MediumSeaGreen;"><strong>consequ</strong></span><span style="color: MediumSeaGreen;">ent;</span>
+  <strong>  </strong><strong>5</strong><strong> </strong><strong>5</strong><strong> │ </strong>  }
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token operator">!</span><span class="token boolean">true</span> <span class="token punctuation">?</span> <span class="token variable">consequent</span> <span class="token punctuation">:</span> <span class="token variable">alternate</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1</span> <strong>lint/js/negationElse</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Invert blocks</strong></span><span style="color: Tomato;"> when performing a negation test.</span>
+
+    <span class="token operator">!</span><span class="token boolean">true</span> <span class="token punctuation">?</span> <span class="token variable">consequent</span> <span class="token punctuation">:</span> <span class="token variable">alternate</span>
+    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>!</strong></span><span style="color: Tomato;">true ? consequent</span><span style="color: Tomato;"><strong> : alternate</strong></span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">true ?</span><span style="color: MediumSeaGreen;"><strong> alternate :</strong></span><span style="color: MediumSeaGreen;"> consequent</span>
+
+</code></pre>
+### Valid
+<pre class="language-text"><code class="language-text"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token variable">consequent</span><span class="token punctuation">;</span><span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token boolean">true</span> <span class="token punctuation">?</span> <span class="token variable">consequent</span> <span class="token punctuation">:</span> <span class="token variable">alternate</span></code></pre>

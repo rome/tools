@@ -646,13 +646,16 @@ export default class DiagnosticsPrinter extends Error {
 		this.onFooterPrintCallbacks.push(fn);
 	}
 
+	hasProblems(): boolean {
+		return this.problemCount > 0;
+	}
+
 	footer() {
 		this.wrapError(
 			"footer",
 			() => {
-				const {reporter, problemCount} = this;
-
-				const isError = problemCount > 0;
+				const {reporter} = this;
+				const isError = this.hasProblems();
 
 				if (isError) {
 					const restoreRedirect = reporter.redirectOutToErr(true);

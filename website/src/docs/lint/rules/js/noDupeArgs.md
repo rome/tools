@@ -17,31 +17,62 @@ MISSING DOCUMENTATION
 
 
 ## Examples
-## Invalid
-```typescript
-function hello(a, a) {
-	//
-}
-```
-```typescript
-const hello = (a, a) => {
-	//
-}
-```
-```typescript
-const hello = function (a, a) {
-	//
-}
-```
-## Valid
-```typescript
-function foo(foo) {
-	console.log(foo)
-}
-```
-```typescript
-const foo = 'test'
-function bar(foo) {
-	console.log(foo)
-}
-```
+### Invalid
+<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">hello</span><span class="token punctuation">(</span><span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">//</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.js:1:18</span> <strong>lint/js/noDupeArgs</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid duplicate function arguments. Check the </span><span style="color: Tomato;"><strong>a</strong></span><span style="color: Tomato;"> argument.</span>
+
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 1</strong><strong> │ </strong><span class="token keyword">function</span> <span class="token function">hello</span><span class="token punctuation">(</span><span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+     <strong> │ </strong>                  <span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  2</strong><strong> │ </strong>  <span class="token comment">//</span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text">const hello = (a, <span class="token variable">a</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">//</span>
+<span class="token punctuation">}</span><strong><span style="background-color: red">a</span></strong></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.js:1:18</span> <strong>parse/js</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Argument </span><span style="color: Tomato;"><strong>a</strong></span><span style="color: Tomato;"> name clash in strict mode</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
+
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 1</strong><strong> │ </strong>const hello = (a, <span class="token variable">a</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+     <strong> │ </strong>                  <span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  2</strong><strong> │ </strong>  <span class="token comment">//</span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><strong><span style="background-color: red">a</span></strong>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">hello</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">//</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.js:1:27</span> <strong>lint/js/noDupeArgs</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid duplicate function arguments. Check the </span><span style="color: Tomato;"><strong>a</strong></span><span style="color: Tomato;"> argument.</span>
+
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 1</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">hello</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+     <strong> │ </strong>                           <span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  2</strong><strong> │ </strong>  <span class="token comment">//</span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span>
+
+</code></pre>
+### Valid
+<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;test&apos;</span>
+<span class="token keyword">function</span> <span class="token function">bar</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>

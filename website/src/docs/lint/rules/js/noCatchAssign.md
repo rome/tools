@@ -17,32 +17,104 @@ MISSING DOCUMENTATION
 
 
 ## Examples
-## Invalid
-```typescript
-try { } catch (e) { e; e = 10; }
-```
-```typescript
-try { } catch (ex) { console.log('test'); ex = 10; }
-```
-```typescript
-try { } catch (ex) { [ex, test] = []; }
-```
-```typescript
-try { } catch ({message, name}) { message = 'test'; name = 10; }
-```
-```typescript
-try { } catch (ex) { ({x: ex = 0} = {}); }
-```
-```typescript
-try { } catch (ex) { let a; ({x: a = ex = 0} = {}); }
-```
-## Valid
-```typescript
-try { } catch (e) { three = 2 + 1; }
-```
-```typescript
-try { } catch ({e}) { this.something = 2; }
-```
-```typescript
-function foo() { try { } catch (e) { return false; } }
-```
+### Invalid
+<pre class="language-text"><code class="language-text"><span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token variable">e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">e</span><span class="token punctuation">;</span> <span class="token variable">e</span> <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:23</span> <strong>lint/js/noCatchAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not </span><span style="color: Tomato;"><strong>reassign catch parameters</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token variable">e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">e</span><span class="token punctuation">;</span> <span class="token variable">e</span> <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+                           <span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead.</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token variable">ex</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;test&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token variable">ex</span> <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:42</span> <strong>lint/js/noCatchAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not </span><span style="color: Tomato;"><strong>reassign catch parameters</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token variable">ex</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;test&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token variable">ex</span> <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+                                              <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead.</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token variable">ex</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">[</span><span class="token variable">ex</span><span class="token punctuation">,</span> <span class="token variable">test</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:22</span> <strong>lint/js/noCatchAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not </span><span style="color: Tomato;"><strong>reassign catch parameters</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token variable">ex</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">[</span><span class="token variable">ex</span><span class="token punctuation">,</span> <span class="token variable">test</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+                          <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead.</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token variable">message</span><span class="token punctuation">,</span> <span class="token variable">name</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">message</span> <span class="token operator">=</span> <span class="token string">&apos;test&apos;</span><span class="token punctuation">;</span> <span class="token variable">name</span> <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:34</span> <strong>lint/js/noCatchAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not </span><span style="color: Tomato;"><strong>reassign catch parameters</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token variable">message</span><span class="token punctuation">,</span> <span class="token variable">name</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">message</span> <span class="token operator">=</span> <span class="token string">&apos;test&apos;</span><span class="token punctuation">;</span> <span class="token variable">name</span> <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+                                      <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead.</span>
+
+ <span style="text-decoration-style: dotted;">file.ts:1:52</span> <strong>lint/js/noCatchAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not </span><span style="color: Tomato;"><strong>reassign catch parameters</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token variable">message</span><span class="token punctuation">,</span> <span class="token variable">name</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">message</span> <span class="token operator">=</span> <span class="token string">&apos;test&apos;</span><span class="token punctuation">;</span> <span class="token variable">name</span> <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+                                                        <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead.</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token variable">ex</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">:</span> <span class="token variable">ex</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:26</span> <strong>lint/js/noCatchAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not </span><span style="color: Tomato;"><strong>reassign catch parameters</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token variable">ex</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">:</span> <span class="token variable">ex</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+                              <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead.</span>
+
+</code></pre>
+
+---------------
+
+<pre class="language-text"><code class="language-text"><span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token variable">ex</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">let</span> <span class="token variable">a</span><span class="token punctuation">;</span> <span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">:</span> <span class="token variable">a</span> <span class="token operator">=</span> <span class="token variable">ex</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dotted;">file.ts:1:37</span> <strong>lint/js/noCatchAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not </span><span style="color: Tomato;"><strong>reassign catch parameters</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token variable">ex</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">let</span> <span class="token variable">a</span><span class="token punctuation">;</span> <span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">:</span> <span class="token variable">a</span> <span class="token operator">=</span> <span class="token variable">ex</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+                                         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead.</span>
+
+</code></pre>
+### Valid
+<pre class="language-text"><code class="language-text"><span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token variable">e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">three</span> <span class="token operator">=</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token variable">e</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">something</span> <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre>
+<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token variable">e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span></code></pre>
