@@ -11,7 +11,7 @@ require("./_setup.cjs");
 
 const child_process = require("child_process");
 const path = require("path");
-const {execDev, writtenFiles, execDev, execMain} = require("./_utils.cjs");
+const {execDev, writtenFiles, execMain} = require("./_utils.cjs");
 
 async function main() {
 	// Generate files
