@@ -94,58 +94,62 @@
           </ul>
         </nav>
 
-        <nav aria-labelledby="site-navigation" class="menu">
-          <h2 id="site-navigation" class="sr-only">Site Navigation</h2>
-          <input type="text" id="docusearch" placeholder="Search" />
-          <ul>
-            <li>
-              <a href="{{ '/blog' | url }}">Blog</a>
-            </li>
-            <li>
-              <a href="{{ '/contributing/team' | url }}">Team</a>
-            </li>
-            <li>
-              <a href="{{ '/contributing/philosophy' | url }}">Philosophy</a>
-            </li>
-            <li>
-              <a href="{{ '/sitemap' | url }}">Sitemap</a>
-            </li>
-          </ul>
-        </nav>
+        <input type="text" id="docusearch" placeholder="Search" />
 
-        <nav aria-labelledby="site-navigation-core-documentation" class="menu">
-          <h2 id="site-navigation-core-documentation">Core Documentation</h2>
-          <ul>
-            <li>
-              <a href="{{ '/docs/getting-started' | url }}">Getting Started</a>
-            </li>
-            <li>
-              <a href="{{ '/docs/lint' | url }}">Linting</a>
-            </li>
-          </ul>
-        </nav>
+        <div class="menu-wrapper">
+          <nav aria-labelledby="site-navigation" class="menu">
+            <h2 id="site-navigation" class="sr-only">Site Navigation</h2>
+            <ul>
+              <li>
+                <a href="{{ '/blog' | url }}">Blog</a>
+              </li>
+              <li>
+                <a href="{{ '/contributing/team' | url }}">Team</a>
+              </li>
+              <li>
+                <a href="{{ '/contributing/philosophy' | url }}">Philosophy</a>
+              </li>
+              <li>
+                <a href="{{ '/sitemap' | url }}">Sitemap</a>
+              </li>
+            </ul>
+          </nav>
 
-        <nav aria-labelledby="site-navigation-documentation" class="menu">
-          <h2 id="site-navigation-documentation">Documentation</h2>
-          <ul>
-            <li>
-              <a href="{{ '/docs/cli' | url }}">CLI</a>
-            </li>
-            <li>
-              <a href="{{ '/docs/diagnostics' | url }}">Diagnostics</a>
-            </li>
-            <li>
-              <a href="{{ '/docs/editor-integration' | url }}">Editor Integration</a>
-            </li>
-            <li>
-              <a href="{{ '/docs/language-support' | url }}">Language Support</a>
-            </li>
-            <li>
-              <a href="{{ '/docs/project-config' | url }}">Project Config</a>
-            </li>
-          </ul>
-        </nav>
+          <nav aria-labelledby="site-navigation-core-documentation" class="menu">
+            <h2 id="site-navigation-core-documentation">Core Documentation</h2>
+            <ul>
+              <li>
+                <a href="{{ '/docs/getting-started' | url }}">Getting Started</a>
+              </li>
+              <li>
+                <a href="{{ '/docs/lint' | url }}">Linting</a>
+              </li>
+            </ul>
+          </nav>
+
+          <nav aria-labelledby="site-navigation-documentation" class="menu">
+            <h2 id="site-navigation-documentation">Documentation</h2>
+            <ul>
+              <li>
+                <a href="{{ '/docs/cli' | url }}">CLI</a>
+              </li>
+              <li>
+                <a href="{{ '/docs/diagnostics' | url }}">Diagnostics</a>
+              </li>
+              <li>
+                <a href="{{ '/docs/editor-integration' | url }}">Editor Integration</a>
+              </li>
+              <li>
+                <a href="{{ '/docs/language-support' | url }}">Language Support</a>
+              </li>
+              <li>
+                <a href="{{ '/docs/project-config' | url }}">Project Config</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
+
       <div class="main">
         <div class="overlay"></div>
         {% if eleventyNavigation.key %}

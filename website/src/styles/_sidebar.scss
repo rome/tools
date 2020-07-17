@@ -2,8 +2,6 @@
   @include transition-timing;
   width: $sidebar-width;
   list-style: none;
-  overflow-y: auto;
-  overflow-x: hidden;
   font-size: 0.95rem;
   position: sticky;
   z-index: 99999;
@@ -68,6 +66,11 @@
 
     }
 
+  }
+
+  .menu-wrapper{
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .menu {
