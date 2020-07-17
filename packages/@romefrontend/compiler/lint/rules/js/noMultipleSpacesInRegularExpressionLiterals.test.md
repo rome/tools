@@ -8,21 +8,21 @@
 
 ```
 
- lint/js/noMultipleSpacesInRegularExpressionLiterals/reject/1/file.ts:1:4
+ lint/js/noMultipleSpacesInRegularExpressionLiterals/reject/1/file.ts:1:1
 lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ This regular expression contains unclear uses of multiple spaces.
 
-    /foo  bar/
-        ^
+    /   /
+     ^^^
 
   ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier
     instead. eg / {3}/
 
   ℹ Recommended fix
 
-  - foo  bar
-  + fo {3}ar
+  -  ··
+  +  {3}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -33,20 +33,213 @@ lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━
 ### `0: formatted`
 
 ```
-/fo {3}ar/;
+/ {3}/;
 
 ```
 
 ### `1`
 
 ```
-✔ No known problems!
+
+ lint/js/noMultipleSpacesInRegularExpressionLiterals/reject/2/file.ts:1:1
+lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ This regular expression contains unclear uses of multiple spaces.
+
+    /  foo/
+     ^^
+
+  ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier
+    instead. eg / {2}/
+
+  ℹ Recommended fix
+
+  -   foo
+  +  {2}foo
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `1: formatted`
 
 ```
+/ {2}foo/;
+
+```
+
+### `2`
+
+```
+
+ lint/js/noMultipleSpacesInRegularExpressionLiterals/reject/3/file.ts:1:4
+lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ This regular expression contains unclear uses of multiple spaces.
+
+    /foo   /
+        ^^^
+
+  ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier
+    instead. eg / {3}/
+
+  ℹ Recommended fix
+
+  - foo ··
+  + foo {3}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `2: formatted`
+
+```
+/foo {3}/;
+
+```
+
+### `3`
+
+```
+
+ lint/js/noMultipleSpacesInRegularExpressionLiterals/reject/4/file.ts:1:4
+lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ This regular expression contains unclear uses of multiple spaces.
+
+    /foo  bar/
+        ^^
+
+  ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier
+    instead. eg / {2}/
+
+  ℹ Recommended fix
+
+  - foo  bar
+  + foo {2}bar
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `3: formatted`
+
+```
 /foo {2}bar/;
+
+```
+
+### `4`
+
+```
+
+ lint/js/noMultipleSpacesInRegularExpressionLiterals/reject/5/file.ts:1:4
+lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ This regular expression contains unclear uses of multiple spaces.
+
+    /foo   bar    baz/
+        ^^^^^^^^^^
+
+  ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier
+    instead. eg / {7}/
+
+  ℹ Recommended fix
+
+  - foo   bar    baz
+  + foo {3}bar {4}baz
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `4: formatted`
+
+```
+/foo {3}bar {4}baz/;
+
+```
+
+### `5`
+
+```
+
+ lint/js/noMultipleSpacesInRegularExpressionLiterals/reject/6/file.ts:1:10
+lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ This regular expression contains unclear uses of multiple spaces.
+
+    /foo [ba]r  b(a|z)/
+              ^^
+
+  ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier
+    instead. eg / {2}/
+
+  ℹ Recommended fix
+
+  - foo [ba]r  b(a|z)
+  + foo [ba]r {2}b(a|z)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `5: formatted`
+
+```
+/foo [ba]r {2}b(a|z)/;
+
+```
+
+### `6`
+
+```
+✔ No known problems!
+
+```
+
+### `6: formatted`
+
+```
+/foo {2}bar/;
+
+```
+
+### `7`
+
+```
+✔ No known problems!
+
+```
+
+### `7: formatted`
+
+```
+/foo bar baz/;
+
+```
+
+### `8`
+
+```
+✔ No known problems!
+
+```
+
+### `8: formatted`
+
+```
+/foo /;
 
 ```

@@ -33,58 +33,55 @@ function checkRegex(
 	node: JSRegExpSubExpression,
 	context: CompilerContext,
 ): TransformExitResult {
-	for (let i = 0; i < node.body.length; i++) {
-		const item = node.body[i];
+	const newBody: Array<AnyJSRegExpBodyItem> = [];
+	const diagnosticTargets: Array<AnyJSRegExpBodyItem> = [];
 
-		// Do some quick checks to see if we'll produce an error
-		if (!isSpaceChar(item) || !isSpaceChar(node.body[i + 1])) {
+	let index = 0;
+	while (index < node.body.length) {
+		const item = node.body[index];
+
+		// Push the item unchanged if it's not the start of consecutive spaces
+		if (!isSpaceChar(item) || !isSpaceChar(node.body[index + 1])) {
+			newBody.push(item);
+			index++;
 			continue;
 		}
 
-		const spaceNodes: Array<JSRegExpCharacter> = [];
-
-		// Get all the space nodes
-		for (let x = i; x < node.body.length; x++) {
-			const item = node.body[i];
-			if (isSpaceChar(item)) {
-				spaceNodes.push(item);
-				x++;
-			} else {
-				break;
-			}
+		// Count the number of consecutive space chars
+		let spaceCount = 0;
+		while (isSpaceChar(node.body[index])) {
+			diagnosticTargets.push(node.body[index]);
+			spaceCount++;
+			index++;
 		}
 
+		// Push a new body item that represents all the consecutive spaces
 		const quantifiedSpace: JSRegExpQuantified = jsRegExpQuantified.create({
-			min: spaceNodes.length,
-			max: spaceNodes.length,
+			min: spaceCount,
+			max: spaceCount,
 			target: item,
 		});
-
-		const newRegex: JSRegExpSubExpression = {
-			...node,
-			body: [
-				// Get start
-				...node.body.slice(0, i - 1),
-				// Inject quantifier
-				quantifiedSpace,
-				// Get end
-				...node.body.slice(i + spaceNodes.length),
-			],
-		};
-
-		return context.addFixableDiagnostic(
-			{
-				target: spaceNodes,
-				old: node,
-				fixed: checkRegex(newRegex, context),
-			},
-			descriptions.LINT.JS_NO_MULTIPLE_SPACES_IN_REGEX_LITERAL(
-				spaceNodes.length,
-			),
-		);
+		newBody.push(quantifiedSpace);
 	}
 
-	return node;
+	if (diagnosticTargets.length > 0) {
+		const newRegex: JSRegExpSubExpression = {
+			...node,
+			body: newBody,
+		};
+		return context.addFixableDiagnostic(
+			{
+				target: diagnosticTargets,
+				old: node,
+				fixed: newRegex,
+			},
+			descriptions.LINT.JS_NO_MULTIPLE_SPACES_IN_REGEX_LITERAL(
+				diagnosticTargets.length,
+			),
+		);
+	} else {
+		return node;
+	}
 }
 
 export default {
