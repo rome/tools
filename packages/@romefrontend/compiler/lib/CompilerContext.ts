@@ -112,7 +112,7 @@ export default class CompilerContext {
 			frozen = false,
 			options = {},
 			project = {
-				folder: undefined,
+				directory: undefined,
 				config: createDefaultProjectConfig(),
 			},
 			suppressions,

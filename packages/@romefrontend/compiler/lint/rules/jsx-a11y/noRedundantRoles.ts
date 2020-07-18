@@ -83,7 +83,7 @@ function createFixableDiagnostic(
 }
 
 export default {
-	name: "jsxA11YNoRedundantRoles",
+	name: "jsx-a11y/noRedundantRoles",
 	enter(path: Path): TransformExitResult {
 		const {node, context} = path;
 

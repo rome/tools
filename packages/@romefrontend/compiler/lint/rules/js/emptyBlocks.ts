@@ -27,7 +27,7 @@ function isEmpty(node: AnyNode): boolean {
 }
 
 export default {
-	name: "emptyBlocks",
+	name: "js/emptyBlocks",
 	enter(path: Path): TransformExitResult {
 		const {node, context} = path;
 

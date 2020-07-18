@@ -262,9 +262,6 @@ JSRoot {
 
   ✖ Unclosed template expression value
 
-    `hello ${10;test`
-           ^
-
   ℹ We expected to find the closing character } here
 
     `hello ${10;test`

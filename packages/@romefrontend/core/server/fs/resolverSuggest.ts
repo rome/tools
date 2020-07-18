@@ -150,7 +150,7 @@ export default function resolverSuggest(
 		if (!skipSimilaritySuggestions) {
 			const suggestions = getSuggestions(resolver, localQuery);
 			if (suggestions.size > 0) {
-				const originFolder = resolver.getOriginFolder(localQuery);
+				const originDirectory = resolver.getOriginDirectory(localQuery);
 
 				// Relative paths to absolute
 				const relativeToAbsolute: Map<string, string> = new Map();
@@ -163,7 +163,7 @@ export default function resolverSuggest(
 							return human;
 						}
 
-						let relativePath = originFolder.relative(absolute);
+						let relativePath = originDirectory.relative(absolute);
 
 						// If the user didn't use extensions, then neither should we
 						if (!query.source.hasExtensions()) {
@@ -237,11 +237,11 @@ function getPathSuggestions(
 	query: ResolverLocalQuery,
 ): Suggestions {
 	const {source} = query;
-	const originFolder = resolver.getOriginFolder(query);
+	const originDirectory = resolver.getOriginDirectory(query);
 	const suggestions: Suggestions = new Map();
 
 	// Try normal resolved
-	tryPathSuggestions(resolver, suggestions, originFolder.resolve(source));
+	tryPathSuggestions(resolver, suggestions, originDirectory.resolve(source));
 
 	// Remove . and .. entries from beginning
 	const sourceParts = [...source.getSegments()];
@@ -251,8 +251,8 @@ function getPathSuggestions(
 
 	// Try parent directories of the origin
 
-	for (const path of originFolder.getChain()) {
-		tryPathSuggestions(resolver, suggestions, path.append(sourceParts));
+	for (const path of originDirectory.getChain()) {
+		tryPathSuggestions(resolver, suggestions, path.appendList(...sourceParts));
 	}
 
 	return suggestions;
@@ -312,7 +312,7 @@ function tryPathSuggestions(
 				tryPathSuggestions(
 					resolver,
 					suggestions,
-					createUnknownFilePath(rating.target).append(segments.slice(1)).assertAbsolute(),
+					createUnknownFilePath(rating.target).appendList(...segments.slice(1)).assertAbsolute(),
 				);
 			}
 		}
@@ -335,7 +335,7 @@ function getPackageSuggestions(
 
 		for (const project of projects) {
 			for (const [name, value] of project.packages) {
-				possibleGlobalPackages.set(name, value.folder.join());
+				possibleGlobalPackages.set(name, value.directory.join());
 			}
 		}
 	}

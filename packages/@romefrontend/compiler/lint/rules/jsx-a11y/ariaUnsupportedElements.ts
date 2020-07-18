@@ -22,7 +22,7 @@ function hasAriaAttributes(node: JSXElement): boolean {
 }
 
 export default {
-	name: "ariaUnsupportedElements",
+	name: "jsx-a11y/ariaUnsupportedElements",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

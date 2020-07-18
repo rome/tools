@@ -22,7 +22,7 @@ export type TestRef = {
 export type TestWorkerPrepareTestOptions = {
 	id: number;
 	file: JSONFileReference;
-	projectFolder: string;
+	projectDirectory: string;
 	code: string;
 	cwd: string;
 	options: TestServerRunnerOptions;

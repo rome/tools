@@ -14,13 +14,13 @@ test(
 		t.snapshot(parseMarkup('<filelink target="C:\\Users\\sebmck\\file.ts" />'));
 		t.snapshot(
 			parseMarkup(
-				"<info>[MemoryFileSystem] Adding new project folder C:\\Users\\sebmck\\rome</info>",
+				"<info>[MemoryFileSystem] Adding new project directory C:\\Users\\sebmck\\rome</info>",
 			),
 		);
 
 		t.snapshot(
 			parseMarkup(
-				"  \\<info>[MemoryFileSystem] Adding new project folder C:\\\\Users\\\\Sebastian\\\\rome\\\\\\</info>\n        <error><emphasis>^</emphasis></error> ",
+				"  \\<info>[MemoryFileSystem] Adding new project directory C:\\\\Users\\\\Sebastian\\\\rome\\\\\\</info>\n        <error><emphasis>^</emphasis></error> ",
 			),
 		);
 	},

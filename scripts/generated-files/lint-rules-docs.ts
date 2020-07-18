@@ -1,4 +1,4 @@
-import {createIntegrationWorker} from "@romefrontend/test-helpers";
+import {createMockWorker} from "@romefrontend/test-helpers";
 import {tests} from "@romefrontend/compiler/lint/rules/tests";
 import {
 	DiagnosticCategory,
@@ -8,16 +8,12 @@ import {printDiagnosticsToString} from "@romefrontend/cli-diagnostics";
 import highlightCode from "@romefrontend/cli-diagnostics/highlightCode";
 import {inferDiagnosticLanguageFromFilename} from "@romefrontend/core/common/file-handlers";
 import {joinMarkupLines, markupToHtml} from "@romefrontend/cli-layout/format";
-import {readFileText, writeFile} from "@romefrontend/fs";
-import {
-	AbsoluteFilePath,
-	createAbsoluteFilePath,
-	createUnknownFilePath,
-} from "@romefrontend/path";
+import {createUnknownFilePath} from "@romefrontend/path";
 import {dedent} from "@romefrontend/string-utils";
 import {ob1Coerce1} from "@romefrontend/ob1";
+import {ROOT, modifyGeneratedFile} from "../_utils";
 
-const {worker, createFileReference} = createIntegrationWorker();
+const {worker, performFileOperation} = createMockWorker();
 
 function pre(inner: string): string {
 	return `<pre class="language-text"><code class="language-text">${inner}</code></pre>`;
@@ -46,129 +42,106 @@ async function run(
 	filename: string,
 	code: string,
 ) {
-	const {ref} = createFileReference({
-		uid: `${category}/${i}/${filename}`,
-		sourceText: code,
-	});
-
-	const res = await worker.api.lint(
-		ref,
+	const diagnosticsHTML = await performFileOperation(
 		{
-			applyRecommendedFixes: true,
-			prefetchedModuleSignatures: {},
-			save: true,
+			uid: `${category}/${i}/${filename}`,
+			sourceText: code,
 		},
-		{},
-	);
-
-	const processor = new DiagnosticsProcessor({
-		markupOptions: {
-			normalizePosition() {
-				return {filename};
-			},
-		},
-	});
-	processor.normalizer.setInlineSourceText(ref.uid, code);
-	processor.addFilter({
-		test(diag) {
-			return (
-				diag.description.category === `lint/${category}` ||
-				diag.description.category === "parse/js"
+		async (ref) => {
+			const res = await worker.api.lint(
+				ref,
+				{
+					applyRecommendedFixes: true,
+					prefetchedModuleSignatures: {},
+					save: true,
+				},
+				{},
 			);
-		},
-	});
-	processor.addSuppressions(res.suppressions);
-	processor.addDiagnostics(res.diagnostics);
 
-	const diagnostics = processor.getDiagnostics();
-	const diagnosticsHTML = printDiagnosticsToString({
-		diagnostics,
-		suppressions: [],
-		format: "html",
-		excludeFooter: true,
-		features: {
-			columns: ob1Coerce1(75),
+			const processor = new DiagnosticsProcessor({
+				markupOptions: {
+					normalizePosition() {
+						return {filename};
+					},
+				},
+			});
+			processor.normalizer.setInlineSourceText(ref.uid, code);
+			processor.addFilter({
+				test(diag) {
+					return (
+						diag.description.category === category ||
+						diag.description.category === "parse/js"
+					);
+				},
+			});
+			processor.addSuppressions(res.suppressions);
+			processor.addDiagnostics(res.diagnostics);
+
+			const diagnostics = processor.getDiagnostics();
+			const diagnosticsHTML = await printDiagnosticsToString({
+				diagnostics,
+				suppressions: [],
+				format: "html",
+				excludeFooter: true,
+				features: {
+					columns: ob1Coerce1(75),
+				},
+			});
+			return diagnosticsHTML;
 		},
-	});
+	);
 
 	return [highlightPre(filename, code), pre(diagnosticsHTML)].join("\n");
 }
 
-async function main() {
-	for (const category in tests) {
-		const rawCases = tests[category];
+export async function main() {
+	for (const ruleName in tests) {
+		const rawCases = tests[ruleName];
 		const cases = Array.isArray(rawCases) ? rawCases : [rawCases];
-		const docsPath = createAbsoluteFilePath(__dirname).append(
-			`../../website/src/docs/lint/rules/${category}.md`,
-		);
-		let docs = [await readGeneratedFile(docsPath)];
 
-		docs.push("## Examples");
+		await modifyGeneratedFile(
+			ROOT.append(`website/src/docs/lint/rules/${ruleName}.md`),
+			async () => {
+				const lines = [];
 
-		docs.push("### Invalid");
+				lines.push("## Examples");
 
-		for (const {filename, invalid} of cases) {
-			if (invalid) {
-				for (let i = 0; i < invalid.length; i++) {
-					if (i > 0) {
-						docs.push("");
-						docs.push("---------------");
-						docs.push("");
+				lines.push("### Invalid");
+
+				for (const {filename, invalid} of cases) {
+					if (invalid) {
+						for (let i = 0; i < invalid.length; i++) {
+							if (i > 0) {
+								lines.push("");
+								lines.push("---------------");
+								lines.push("");
+							}
+							lines.push(
+								await run(
+									(`lint/${ruleName}` as DiagnosticCategory),
+									i,
+									filename,
+									dedent(invalid[i]),
+								),
+							);
+						}
 					}
-					docs.push(
-						await run(
-							(category as DiagnosticCategory),
-							i,
-							filename,
-							dedent(invalid[i]),
-						),
-					);
 				}
-			}
-		}
 
-		docs.push("### Valid");
+				lines.push("### Valid");
 
-		for (const {filename, valid} of cases) {
-			if (valid) {
-				for (const code of valid) {
-					docs.push(highlightPre(filename, dedent(code)));
+				for (const {filename, valid} of cases) {
+					if (valid) {
+						for (const code of valid) {
+							lines.push(highlightPre(filename, dedent(code)));
+						}
+					}
 				}
-			}
-		}
 
-		docs.push("");
+				lines.push("");
 
-		console.log(`Write ${docsPath.join()}`);
-		await writeFile(docsPath, docs.join("\n"));
+				return {lines};
+			},
+		);
 	}
 }
-
-const COMMENT_REGEX = /(\/\/|<!--) EVERYTHING BELOW IS AUTOGENERATED\. SEE SCRIPTS FOLDER FOR UPDATE SCRIPTS([\s\S]+)$/;
-const COMMENT_TEXT = "EVERYTHING BELOW IS AUTOGENERATED. SEE SCRIPTS FOLDER FOR UPDATE SCRIPTS";
-
-async function readGeneratedFile(path: AbsoluteFilePath): Promise<string> {
-	let file = await readFileText(path);
-	const isJS = path.hasExtension("ts") || path.hasExtension("js");
-
-	file = file.replace(COMMENT_REGEX, "");
-	file = file.trim();
-	file += "\n\n";
-	if (isJS) {
-		file += "// ";
-	} else {
-		file += "<!-- ";
-	}
-	file += COMMENT_TEXT;
-	if (!isJS) {
-		file += " -->";
-	}
-	file += "\n\n";
-	return file;
-}
-main().then(() => {
-	process.exit(0);
-}).catch((err) => {
-	console.error(err.stack);
-	process.exit(1);
-});

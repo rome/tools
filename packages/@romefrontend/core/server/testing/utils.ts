@@ -6,7 +6,7 @@
  */
 
 import {naturalCompare} from "@romefrontend/string-utils";
-import {CoverageFolder} from "./types";
+import {CoverageDirectory} from "./types";
 
 export function sortMapKeys<T>(map: Map<string, T>): Map<string, T> {
 	const sortedKeys = Array.from(map.keys()).sort(naturalCompare);
@@ -32,8 +32,8 @@ export function formatPercent(num: number): string {
 	}
 }
 
-export function percentInsideCoverageFolder(
-	folder: CoverageFolder,
+export function percentInsideCoverageDirectory(
+	directory: CoverageDirectory,
 ): {
 	functions: number;
 	branches: number;
@@ -44,19 +44,19 @@ export function percentInsideCoverageFolder(
 	let branches = 0;
 	let lines = 0;
 
-	const folders = [folder];
-	while (folders.length > 0) {
-		const folder = folders.shift()!;
+	const directories = [directory];
+	while (directories.length > 0) {
+		const directory = directories.shift()!;
 
-		for (const file of folder.files.values()) {
+		for (const file of directory.files.values()) {
 			totalFiles++;
 			functions += file.functions.percent;
 			branches += file.branches.percent;
 			lines += file.lines.percent;
 		}
 
-		for (const subFolder of folder.folders.values()) {
-			folders.push(subFolder);
+		for (const subDirectory of directory.directories.values()) {
+			directories.push(subDirectory);
 		}
 	}
 

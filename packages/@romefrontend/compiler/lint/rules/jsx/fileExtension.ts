@@ -17,7 +17,7 @@ function isJSXFile(context: CompilerContext): boolean {
 }
 
 export default {
-	name: "jsxFileExtension",
+	name: "jsx/fileExtension",
 	enter(path: Path): TransformExitResult {
 		const {node, context} = path;
 

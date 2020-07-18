@@ -17,7 +17,7 @@ function inComponentDidMount(path: Path): boolean {
 }
 
 export default {
-	name: "reactNoDidMountSetState",
+	name: "react/noDidMountSetState",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

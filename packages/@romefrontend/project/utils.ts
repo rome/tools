@@ -12,8 +12,12 @@ import {ProjectConfigMeta, ProjectConfigMetaHard} from "./types";
 import {ROME_CONFIG_FILENAMES} from "./constants";
 
 export function assertHardMeta(meta: ProjectConfigMeta): ProjectConfigMetaHard {
-	const {configPath, projectFolder: folder, consumer} = meta;
-	if (configPath === undefined || folder === undefined || consumer === undefined) {
+	const {configPath, projectDirectory: directory, consumer} = meta;
+	if (
+		configPath === undefined ||
+		directory === undefined ||
+		consumer === undefined
+	) {
 		throw new Error("This is not a disk project");
 	}
 
@@ -21,7 +25,7 @@ export function assertHardMeta(meta: ProjectConfigMeta): ProjectConfigMetaHard {
 		...meta,
 		configPath,
 		consumer,
-		projectFolder: folder,
+		projectDirectory: directory,
 	};
 }
 
@@ -74,17 +78,17 @@ export function mergeAbsoluteFilePathSets(
 	return new AbsoluteFilePathSet([...a, ...b]);
 }
 
-// Get an array of possible files in parent folders that will cause a project cache invalidation
+// Get an array of possible files in parent directories that will cause a project cache invalidation
 export function getParentConfigDependencies(
 	path: AbsoluteFilePath,
 ): AbsoluteFilePathSet {
 	const deps: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
-	for (const folder of path.getChain()) {
-		deps.add(folder.append("package.json"));
+	for (const directory of path.getChain()) {
+		deps.add(directory.append("package.json"));
 
 		for (const configFilename of ROME_CONFIG_FILENAMES) {
-			deps.add(folder.append(configFilename));
+			deps.add(directory.append(configFilename));
 		}
 	}
 

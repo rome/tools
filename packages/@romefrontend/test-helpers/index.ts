@@ -74,7 +74,7 @@ async function _getFixtures(
 	// Get all the filenames in the directory
 	const filenames: AbsoluteFilePathSet = await readDirectory(dir);
 
-	// Get options for this folder
+	// Get options for this directory
 	let ownOptions;
 	if (filenames.has(dir.append("options.json"))) {
 		ownOptions = await getOptions(dir);
@@ -92,25 +92,25 @@ async function _getFixtures(
 					"tests/fixtureOptions",
 				);
 
-	// An array of folders names that lead to this fixture
+	// An array of directories names that lead to this fixture
 	const ownParts = name === undefined ? parts : [...parts, name];
 
-	// Split up all files and folders
-	const folders: Set<AbsoluteFilePath> = new Set();
+	// Split up all files and directories
+	const directories: Set<AbsoluteFilePath> = new Set();
 	const files: Set<AbsoluteFilePath> = new Set();
 	for (const path of filenames) {
 		if (await isFile(path)) {
 			files.add(path);
 		} else {
-			folders.add(path);
+			directories.add(path);
 		}
 	}
 
-	// If there's any folders then get the fixtures from 'all of them
-	if (folders.size > 0) {
+	// If there's any directories then get the fixtures from 'all of them
+	if (directories.size > 0) {
 		let fixtures: Array<Fixture> = [];
 
-		for (const path of folders) {
+		for (const path of directories) {
 			fixtures = fixtures.concat(
 				await _getFixtures({
 					name: path.getBasename(),

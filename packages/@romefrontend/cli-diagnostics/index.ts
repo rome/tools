@@ -5,17 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticSuppressions, Diagnostics} from "@romefrontend/diagnostics";
+import {
+	DiagnosticSuppressions,
+	Diagnostics,
+	DiagnosticsProcessor,
+} from "@romefrontend/diagnostics";
 import {DiagnosticsPrinterOptions} from "./types";
 import {Reporter, ReporterStream} from "@romefrontend/cli-reporter";
 import DiagnosticsPrinter from "./DiagnosticsPrinter";
 import {TerminalFeatures} from "@romefrontend/cli-environment";
 
 export {toLines} from "./utils";
-export {
-	DEFAULT_PRINTER_FLAGS,
-	readDiagnosticsFileLocal,
-} from "./DiagnosticsPrinter";
+export {DEFAULT_PRINTER_FLAGS} from "./DiagnosticsPrinter";
 export {DiagnosticsPrinter};
 
 export * from "./constants";
@@ -24,7 +25,7 @@ export * from "./types";
 
 export * from "./utils";
 
-export function printDiagnostics(
+export async function printDiagnostics(
 	{
 		diagnostics,
 		suppressions,
@@ -36,18 +37,18 @@ export function printDiagnostics(
 		printerOptions: DiagnosticsPrinterOptions;
 		excludeFooter?: boolean;
 	},
-): DiagnosticsPrinter {
+): Promise<DiagnosticsPrinter> {
 	const printer = new DiagnosticsPrinter(printerOptions);
 	printer.processor.addDiagnostics(diagnostics);
 	printer.processor.addSuppressions(suppressions);
-	printer.print();
+	await printer.print();
 	if (!excludeFooter || !printer.hasProblems()) {
-		printer.footer();
+		await printer.footer();
 	}
 	return printer;
 }
 
-export function printDiagnosticsToString(
+export async function printDiagnosticsToString(
 	opts: {
 		diagnostics: Diagnostics;
 		suppressions: DiagnosticSuppressions;
@@ -56,13 +57,14 @@ export function printDiagnosticsToString(
 		excludeFooter?: boolean;
 		features?: Partial<TerminalFeatures>;
 	},
-): string {
+): Promise<string> {
 	const reporter = new Reporter();
 	const stream = reporter.attachCaptureStream(opts.format, opts.features);
-	printDiagnostics({
+	await printDiagnostics({
 		...opts,
 		printerOptions: {
 			reporter,
+			processor: new DiagnosticsProcessor(),
 			...opts.printerOptions,
 		},
 	});

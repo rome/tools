@@ -9,7 +9,10 @@ import {TestHelper, test} from "rome";
 import Parser, {ParserOptions} from "./Parser";
 import {Reporter} from "@romefrontend/cli-reporter";
 import {Consumer} from "@romefrontend/consume";
-import {catchDiagnostics} from "@romefrontend/diagnostics";
+import {
+	DiagnosticsProcessor,
+	catchDiagnostics,
+} from "@romefrontend/diagnostics";
 import {printDiagnostics} from "@romefrontend/cli-diagnostics";
 
 async function testParser<T>(
@@ -53,10 +56,11 @@ async function testParser<T>(
 	});
 
 	if (diagnostics !== undefined) {
-		printDiagnostics({
+		await printDiagnostics({
 			diagnostics,
 			suppressions: [],
 			printerOptions: {
+				processor: new DiagnosticsProcessor(),
 				reporter,
 			},
 		});

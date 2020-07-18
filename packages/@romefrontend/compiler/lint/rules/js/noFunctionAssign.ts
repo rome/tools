@@ -11,7 +11,7 @@ import {FunctionBinding} from "@romefrontend/compiler/scope/bindings";
 import {descriptions} from "@romefrontend/diagnostics";
 
 export default {
-	name: "noFunctionAssign",
+	name: "js/noFunctionAssign",
 	enter(path: Path): AnyNode {
 		const {node, scope} = path;
 

@@ -4,7 +4,7 @@ import {Path} from "@romefrontend/compiler";
 import {doesNodeMatchReactPattern} from "../../utils/react";
 
 export default {
-	name: "reactNoRenderReturnValue",
+	name: "react/noRenderReturnValue",
 
 	enter(path: Path): AnyNode {
 		const {node, parent, scope} = path;

@@ -31,7 +31,7 @@ function validLang(node: JSXElement) {
 }
 
 export default {
-	name: "jsxA11YHTMLHasLang",
+	name: "jsx-a11y/htmlHasLang",
 
 	enter(path: Path): AnyNode {
 		const {node} = path;

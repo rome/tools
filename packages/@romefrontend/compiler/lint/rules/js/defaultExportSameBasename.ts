@@ -16,7 +16,8 @@ import {UnknownFilePath} from "@romefrontend/path";
 import {renameBindings} from "@romefrontend/js-ast-utils";
 import {TransformExitResult} from "@romefrontend/compiler/types";
 import {descriptions} from "@romefrontend/diagnostics";
-import {toVariableCamelCase} from "./camelCase";
+import {normalizeCamelCase} from "./camelCase";
+import {toCamelCase} from "@romefrontend/string-utils";
 
 function isValidDeclaration(
 	node: AnyNode,
@@ -41,11 +42,19 @@ export function filenameToId(
 		basename = path.getParent().getExtensionlessBasename();
 	}
 
-	return toVariableCamelCase(basename, capitalize);
+	return normalizeCamelCase(
+		toCamelCase(
+			basename,
+			{
+				forcePascal: capitalize,
+				allowShouty: true,
+			},
+		),
+	);
 }
 
 export default {
-	name: "defaultExportSameBasename",
+	name: "js/defaultExportSameBasename",
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 

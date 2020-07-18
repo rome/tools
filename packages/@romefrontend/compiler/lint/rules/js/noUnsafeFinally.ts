@@ -10,7 +10,7 @@ import {AnyNode} from "@romefrontend/ast";
 import {descriptions} from "@romefrontend/diagnostics";
 
 export default {
-	name: "noUnsafeFinally",
+	name: "js/noUnsafeFinally",
 	enter(path: Path): AnyNode {
 		const {node, context} = path;
 

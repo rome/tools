@@ -136,9 +136,6 @@ JSRoot {
 
   ✖ Unclosed JSX element
 
-    <><></>
-           ^
-
   ℹ Originated from this opening tag
 
     <><></>

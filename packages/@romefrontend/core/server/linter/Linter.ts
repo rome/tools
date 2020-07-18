@@ -62,7 +62,7 @@ type WatchEvents = {
 		result: WatchResults,
 		initial: boolean,
 		runner: LintRunner,
-	) => void;
+	) => Promise<void> | void;
 };
 
 type WatchResults = {
@@ -87,7 +87,7 @@ function createDiagnosticsPrinter(
 ): DiagnosticsPrinter {
 	const printer = request.createDiagnosticsPrinter(processor);
 
-	printer.onFooterPrint((reporter, isError) => {
+	printer.onFooterPrint(async (reporter, isError) => {
 		if (isError) {
 			let hasPendingFixes = false;
 
@@ -523,7 +523,7 @@ export default class Linter {
 				const processor = this.createDiagnosticsProcessor(evictedPaths, runner);
 
 				const result = await runner.run({firstRun, evictedPaths, processor});
-				events.onChanges(result, initial, runner);
+				await events.onChanges(result, initial, runner);
 				firstRun = false;
 			},
 		);
@@ -542,7 +542,7 @@ export default class Linter {
 			createProgress: (opts) => {
 				return reporter.progress(opts);
 			},
-			onChanges: ({evictedPaths, changes, totalCount, savedCount, runner}) => {
+			onChanges: async ({evictedPaths, changes, totalCount, savedCount, runner}) => {
 				const printer = createDiagnosticsPrinter(
 					request,
 					this.createDiagnosticsProcessor(evictedPaths, runner),
@@ -565,8 +565,8 @@ export default class Linter {
 				}
 
 				reporter.clearScreen();
-				printer.print();
-				printer.footer();
+				await printer.print();
+				await printer.footer();
 			},
 		});
 

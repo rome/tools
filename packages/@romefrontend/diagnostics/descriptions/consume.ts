@@ -29,6 +29,20 @@ export const consume = createDiagnosticsCategory({
 	EXPECTED_NUMBER_LOWER: (num: UnknownNumber) => ({
 		message: `Expected number lower than ${num}`,
 	}),
+	INVALID_NUMBER_SET_VALUE: (value: number, validValues: Array<number>) => ({
+		message: markup`Invalid value <emphasis>${value}</emphasis>`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Possible values are",
+			},
+			{
+				type: "list",
+				list: validValues.map((num) => `<number>${num}</number>`),
+			},
+		],
+	}),
 	INVALID_STRING_SET_VALUE: (value: string, validValues: Array<string>) => ({
 		message: markup`Invalid value <emphasis>${value}</emphasis>`,
 		advice: [

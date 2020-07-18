@@ -5,7 +5,7 @@ import {doesNodeMatchPattern} from "@romefrontend/js-ast-utils";
 const DISTRACTING_TYPES = ["blink", "marquee"];
 
 export default {
-	name: "jsxA11YNoDistractingElements",
+	name: "jsx-a11y/noDistractingElements",
 
 	enter(path: Path): TransformExitResult {
 		const {node} = path;

@@ -9,7 +9,7 @@ import {descriptions} from "@romefrontend/diagnostics";
 import {Path, REDUCE_REMOVE, TransformExitResult} from "@romefrontend/compiler";
 
 export default {
-	name: "noDebugger",
+	name: "js/noDebugger",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

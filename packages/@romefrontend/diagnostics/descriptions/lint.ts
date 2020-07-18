@@ -14,7 +14,7 @@ import {
 import {escapeMarkup, markup} from "@romefrontend/cli-layout";
 import stringDiff from "@romefrontend/string-diff";
 import {buildSuggestionAdvice} from "../helpers";
-import {createDiagnosticsCategory, orJoin} from "./index";
+import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
 	JS_SHOUTY_CONSTANTS: (constantLocation: DiagnosticLocation = {}) => ({
@@ -613,13 +613,9 @@ export const lint = createDiagnosticsCategory({
 			properties,
 		)}</emphasis>.`,
 	}),
-	JS_IMPORT_DEFAULT_BASENAME: (
-		prev: string,
-		basename: string,
-		capitalBasename: string,
-	) => ({
+	JS_IMPORT_DEFAULT_BASENAME: (prev: string, basenames: Array<string>) => ({
 		category: "lint/js/importDefaultBasename",
-		message: markup`Use the basename <emphasis>${basename}</emphasis> or <emphasis>${capitalBasename}</emphasis> when importing the default.`,
+		message: `Use the basename ${orJoin(addEmphasis(basenames))} when importing the default.`,
 		advice: [
 			{
 				type: "log",
@@ -698,10 +694,6 @@ export const lint = createDiagnosticsCategory({
 	JS_VARIABLE_CAMEL_CASE: (name: string, camelCaseName: string) => ({
 		category: "lint/js/camelCase",
 		message: markup`The <emphasis>${name}</emphasis> variable should be camel cased as <emphasis>${camelCaseName}</emphasis>.`,
-	}),
-	JS_IDENTIFIER_CAMEL_CASE: (name: string, camelCaseName: string) => ({
-		category: "lint/js/camelCase",
-		message: markup`The <emphasis>${name}</emphasis> identifier should be camel cased as <emphasis>${camelCaseName}</emphasis>.`,
 	}),
 	JS_CASE_SINGLE_STATEMENT: {
 		category: "lint/js/caseSingleStatement",

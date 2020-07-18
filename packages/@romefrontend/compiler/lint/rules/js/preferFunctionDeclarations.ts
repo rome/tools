@@ -33,7 +33,7 @@ type Arg = {
 // This hook is created with a list of initial JSVariableDeclarators that contain functions we want to convert
 // We then remove any JSArrowFunctionExpression JSVariableDeclarators that contain a valid JSThisExpression
 const hook = createHook<State, Arg, JSThisExpression>({
-	name: "preferFunctionDeclarationsHook",
+	name: "js/preferFunctionDeclarationsHook",
 	initialState: {
 		declarators: [],
 	},
@@ -128,7 +128,7 @@ const hook = createHook<State, Arg, JSThisExpression>({
 });
 
 export default {
-	name: "preferFunctionDeclarations",
+	name: "js/preferFunctionDeclarations",
 	enter(path: Path): AnyNode {
 		const {node} = path;
 

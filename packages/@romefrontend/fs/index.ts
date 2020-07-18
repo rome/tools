@@ -108,14 +108,32 @@ export function writeFileSync(
 	return fs.writeFileSync(path.join(), content);
 }
 
+// copyFile
+export function copyFile(
+	src: AbsoluteFilePath,
+	dest: AbsoluteFilePath,
+): Promise<void> {
+	return promisifyVoid(
+		src,
+		(src, callback) => fs.copyFile(src, dest.join(), callback),
+	);
+}
+
+export function copyFileSync(
+	src: AbsoluteFilePath,
+	dest: AbsoluteFilePath,
+): void {
+	return fs.copyFileSync(src.join(), dest.join());
+}
+
 // readdir
 function createReaddirReturn(
-	folder: AbsoluteFilePath,
+	directory: AbsoluteFilePath,
 	files: Array<string>,
 ): AbsoluteFilePathSet {
 	return new AbsoluteFilePathSet(
-		files.map((basename) => {
-			return folder.append(basename);
+		files.sort().map((basename) => {
+			return directory.append(basename);
 		}),
 	);
 }

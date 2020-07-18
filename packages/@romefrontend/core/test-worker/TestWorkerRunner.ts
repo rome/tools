@@ -55,7 +55,7 @@ import prettyFormat from "@romefrontend/pretty-format";
 
 const MAX_RUNNING_TESTS = 20;
 
-function cleanFrames(frames: ErrorFrames): ErrorFrames {
+export function cleanFrames(frames: ErrorFrames): ErrorFrames {
 	// TODO we should actually get the frames before module init and do it that way
 	// Remove everything before the original module factory
 	let latestTestWorkerFrame = frames.find((frame, i) => {
@@ -122,7 +122,7 @@ export default class TestWorkerRunner {
 		this.file = convertTransportFileReference(opts.file);
 		this.options = opts.options;
 		this.bridge = bridge;
-		this.projectFolder = createAbsoluteFilePath(opts.projectFolder);
+		this.projectDirectory = createAbsoluteFilePath(opts.projectDirectory);
 
 		this.snapshotManager = new SnapshotManager(
 			this,
@@ -141,7 +141,7 @@ export default class TestWorkerRunner {
 	hasFocusedTests: boolean;
 	focusedTests: Array<FocusedTest>;
 	bridge: TestWorkerBridge;
-	projectFolder: AbsoluteFilePath;
+	projectDirectory: AbsoluteFilePath;
 	file: FileReference;
 	options: TestServerRunnerOptions;
 	snapshotManager: SnapshotManager;

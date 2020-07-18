@@ -15,6 +15,7 @@ export type InferredTerminalFeatures = {
 
 export type TerminalFeatures = {
 	columns?: Number1;
+	isTTY: boolean;
 	background: "dark" | "light" | "unknown";
 	cursor: boolean;
 	hyperlinks: boolean;
@@ -24,10 +25,11 @@ export type TerminalFeatures = {
 
 export const DEFAULT_TERMINAL_FEATURES: TerminalFeatures = {
 	background: "unknown",
+	isTTY: false,
 	columns: ob1Coerce1(100),
-	cursor: true,
+	cursor: false,
 	unicode: true,
-	hyperlinks: true,
+	hyperlinks: false,
 	colorDepth: 4,
 };
 
@@ -65,7 +67,7 @@ export function inferTerminalFeatures(
 ): InferredTerminalFeatures {
 	let columns: Number1 = ob1Coerce1(100);
 	let colorDepth: TerminalFeatures["colorDepth"] = 1;
-	let isTTY = false;
+	let isTTY = force.isTTY === true;
 	let unicode = false;
 	let isCI = isCIEnv();
 	let background: TerminalFeatures["background"] = "unknown";
@@ -104,6 +106,7 @@ export function inferTerminalFeatures(
 
 	let features: TerminalFeatures = mergeObjects(
 		{
+			isTTY,
 			background,
 			columns,
 			cursor: fancyAnsi,

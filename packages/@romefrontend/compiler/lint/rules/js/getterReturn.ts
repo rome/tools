@@ -11,7 +11,7 @@ import {getCompletionRecords} from "@romefrontend/js-ast-utils";
 import {descriptions} from "@romefrontend/diagnostics";
 
 export default {
-	name: "getterReturn",
+	name: "js/getterReturn",
 	enter(path: Path): AnyNode {
 		const {node} = path;
 

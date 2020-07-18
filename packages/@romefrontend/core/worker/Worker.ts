@@ -38,6 +38,7 @@ import {TransformProjectDefinition} from "@romefrontend/compiler";
 import WorkerAPI from "./WorkerAPI";
 import {FileNotFound} from "../common/FileNotFound";
 import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
+import VirtualModules from "../common/VirtualModules";
 
 export type ParseResult = {
 	ast: AnyRoot;
@@ -65,6 +66,7 @@ export default class Worker {
 		this.astCache = new AbsoluteFilePathMap();
 		this.moduleSignatureCache = new UnknownFilePathMap();
 		this.buffers = new AbsoluteFilePathMap();
+		this.virtualModules = new VirtualModules();
 
 		this.logger = new Logger(
 			"worker",
@@ -92,11 +94,10 @@ export default class Worker {
 	}
 
 	userConfig: UserConfig;
-
 	bridge: WorkerBridge;
 	api: WorkerAPI;
 	logger: Logger;
-
+	virtualModules: VirtualModules;
 	partialManifests: Map<number, WorkerPartialManifest>;
 	projects: Map<number, TransformProjectDefinition>;
 	astCache: AbsoluteFilePathMap<ParseResult>;
@@ -120,6 +121,8 @@ export default class Worker {
 	}
 
 	async init() {
+		this.virtualModules.init();
+
 		const bridge: WorkerBridge = this.bridge;
 
 		bridge.endEvent.subscribe(() => {
@@ -361,11 +364,16 @@ export default class Worker {
 	async readFile(path: AbsoluteFilePath): Promise<string> {
 		try {
 			const buffer = this.buffers.get(path);
-			if (buffer === undefined) {
-				return await readFileText(path);
-			} else {
+			if (buffer !== undefined) {
 				return buffer;
 			}
+
+			const virtual = this.virtualModules.getPossibleVirtualFileContents(path);
+			if (virtual !== undefined) {
+				return virtual;
+			}
+
+			return await readFileText(path);
 		} catch (err) {
 			if (err.code === "ENOENT") {
 				throw new FileNotFound(path, "fs.readFile ENOENT");
@@ -443,10 +451,10 @@ export default class Worker {
 		this.logger.info("Parsing:", path.toMarkup());
 
 		// Get the file mtime to warn about outdated diagnostics
-		// If we have a buffer for this file then don't set an mtime since our diagnostics explicitly do not
-		// match the file system
+		// If we have a buffer or virtual module for this file then don't set an mtime since our diagnostics
+		// explicitly do not match the file system
 		let mtime;
-		if (!this.buffers.has(path)) {
+		if (!this.buffers.has(path) && !this.virtualModules.isVirtualPath(path)) {
 			const stat = await lstat(path);
 			mtime = stat.mtimeMs;
 		}
@@ -535,14 +543,14 @@ export default class Worker {
 	}
 
 	updateProjects(projects: WorkerProjects) {
-		for (const {config, folder, id} of projects) {
+		for (const {config, directory, id} of projects) {
 			if (config === undefined) {
 				this.projects.delete(id);
 			} else {
 				this.projects.set(
 					id,
 					{
-						folder: createAbsoluteFilePath(folder),
+						directory: createAbsoluteFilePath(directory),
 						config: hydrateJSONProjectConfig(config),
 					},
 				);

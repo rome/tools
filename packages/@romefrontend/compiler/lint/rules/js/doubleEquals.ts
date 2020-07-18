@@ -11,7 +11,7 @@ import {descriptions} from "@romefrontend/diagnostics";
 const SUGGESTION_DESCRIPTION = "This may be unsafe if you are relying on type coercion";
 
 export default {
-	name: "doubleEquals",
+	name: "js/doubleEquals",
 	enter(path: Path) {
 		const {node, context} = path;
 

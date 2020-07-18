@@ -12,12 +12,6 @@
 
   ✖ Avoid duplicate component key. Check the test key.
 
-    1 │ const foo = {
-  > 2 │   test: true,
-      │   ^^^^
-    3 │   test2: true,
-    4 │   test: false,
-
   ℹ Defined already here
 
     2 │   test: true,

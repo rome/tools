@@ -4,7 +4,7 @@ import {doesNodeMatchPattern} from "@romefrontend/js-ast-utils";
 import {insideClassComponent} from "../../utils/react";
 
 export default {
-	name: "reactNoAccessStateInSetState",
+	name: "react/noAccessStateInSetState",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 		if (

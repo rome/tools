@@ -9,7 +9,7 @@ import {Path, REDUCE_REMOVE, TransformExitResult} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 
 export default {
-	name: "noEmptyCharacterClass",
+	name: "js/noEmptyCharacterClass",
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 

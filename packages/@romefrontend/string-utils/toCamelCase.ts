@@ -5,28 +5,78 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export function toCamelCase(str: string, forceCapitalize?: boolean): string {
+export type CamelCaseOptions = {
+	allowShouty?: boolean;
+	allowPascal?: boolean;
+	forcePascal?: boolean;
+};
+
+export function removeMatch(
+	inner: string,
+	regex: RegExp,
+	suffix: boolean,
+): [string, string] {
+	const match = inner.match(regex);
+	if (match == null) {
+		return [inner, ""];
+	} else {
+		const edge = match[1];
+		if (suffix) {
+			return [inner.slice(0, -edge.length), edge];
+		} else {
+			return [inner.slice(edge.length), edge];
+		}
+	}
+}
+
+export function toCamelCase(inner: string, opts: CamelCaseOptions = {}): string {
 	// Rest of the code expects at least 1 character
-	if (str.length === 0) {
-		return str;
+	if (inner.length === 0) {
+		return inner;
 	}
 
-	// Prepend uppercase letters with a space unless all characters are uppercase
-	str = str.toUpperCase() === str ? ` ${str}` : str.replace(/([A-Z+])/g, " $1");
+	let prefix = "";
+	let suffix = "";
 
-	// We no longer care about the casing
-	str = str.toLowerCase();
-
-	// Capitalize all characters after a symbol or space
-	str = str.replace(/[_.\- ]+(\w|$)/g, (_, p1) => p1.toUpperCase());
-
-	// Capitalize characters after a number
-	str = str.replace(/\d+(\w|$)/g, (m) => m.toUpperCase());
-
-	// Force capitalize if necessary
-	if (forceCapitalize) {
-		str = str[0].toUpperCase() + str.slice(1);
+	// ALLOW_STRINGS_LIKE_THIS
+	if (opts.allowShouty) {
+		[inner, prefix] = removeMatch(inner, /^([A-Z0-9_]+)/, false);
+		[inner, suffix] = removeMatch(inner, /([A-Z0-9_]+)$/, true);
+	} else if (opts.allowPascal || opts.forcePascal) {
+		// Retain leading capitals only
+		[inner, prefix] = removeMatch(inner, /^([A-Z]+)/, false);
 	}
 
-	return str;
+	// Prepend uppercase letters with a space
+	inner = inner.replace(/([A-Z]+)/g, " $1");
+
+	// Split into parts
+	const parts = inner.split(/[_.\- ]+|(\d+)/g);
+
+	// Build it
+	let camel = prefix;
+	let first = true;
+	for (let i = 0; i < parts.length; i++) {
+		let part = parts[i];
+		if (part === undefined) {
+			// Empty capture group
+			continue;
+		}
+
+		// Don't capitalize the first part unless we want pascal case
+		if (!first || (opts.forcePascal && prefix === "")) {
+			// Needs at least one
+			if (part.length > 0) {
+				part = part[0].toUpperCase() + part.slice(1);
+			}
+		}
+
+		if (first) {
+			first = false;
+		}
+
+		camel += part;
+	}
+	camel += suffix;
+	return camel;
 }

@@ -3,7 +3,7 @@ import {descriptions} from "@romefrontend/diagnostics";
 import {hasJSXAttribute} from "@romefrontend/js-ast-utils";
 
 export default {
-	name: "clickEventsHaveKeyEvents",
+	name: "jsx-a11y/clickEventsHaveKeyEvents",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

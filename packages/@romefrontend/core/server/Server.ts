@@ -21,10 +21,9 @@ import {
 } from "@romefrontend/diagnostics";
 import {ServerCommand, serverCommands} from "./commands";
 import {
-	DiagnosticsFileReader,
+	DiagnosticsFileReaders,
 	DiagnosticsPrinter,
 	printDiagnostics,
-	readDiagnosticsFileLocal,
 } from "@romefrontend/cli-diagnostics";
 import {ConsumePath, consume} from "@romefrontend/consume";
 import {Event, EventSubscription} from "@romefrontend/events";
@@ -65,11 +64,12 @@ import {
 import {Dict, mergeObjects} from "@romefrontend/typescript-helpers";
 import LSPServer from "./lsp/LSPServer";
 import ServerReporter from "./ServerReporter";
-import VirtualModules from "./fs/VirtualModules";
+import VirtualModules from "../common/VirtualModules";
 import {DiagnosticsProcessorOptions} from "@romefrontend/diagnostics/DiagnosticsProcessor";
 import {toKebabCase} from "@romefrontend/string-utils";
 import {FilePathLocker} from "../common/utils/lockers";
 import {writeFile} from "@romefrontend/fs";
+import {getEnvVar} from "@romefrontend/cli-environment";
 
 const STDOUT_MAX_CHUNK_LENGTH = 100_000;
 
@@ -256,7 +256,7 @@ export default class Server {
 		);
 		this.logger.updateStream();
 
-		this.virtualModules = new VirtualModules(this);
+		this.virtualModules = new VirtualModules();
 		this.memoryFs = new MemoryFileSystem(this);
 		this.projectManager = new ProjectManager(this);
 		this.workerManager = new WorkerManager(this);
@@ -351,27 +351,41 @@ export default class Server {
 			"Generated diagnostics without a current request",
 		);
 
-		printDiagnostics({
+		await printDiagnostics({
 			diagnostics,
 			suppressions: [],
 			printerOptions: {
 				processor: this.createDiagnosticsProcessor(),
 				reporter: this.connectedReporters,
-				readFile: this.readDiagnosticsPrinterFile.bind(this),
+				fileReaders: this.createDiagnosticsPrinterFileReaders(),
 			},
 		});
 	}
 
-	readDiagnosticsPrinterFile(
-		path: AbsoluteFilePath,
-	): ReturnType<DiagnosticsFileReader> {
-		const remoteToLocal = this.projectManager.remoteToLocalPath.get(path);
+	createDiagnosticsPrinterFileReaders(): DiagnosticsFileReaders {
+		return {
+			read: async (path) => {
+				const virtualContents = this.virtualModules.getPossibleVirtualFileContents(
+					path,
+				);
+				if (virtualContents === undefined) {
+					return undefined;
+				} else {
+					return virtualContents;
+				}
+			},
 
-		if (remoteToLocal === undefined) {
-			return readDiagnosticsFileLocal(path);
-		} else {
-			return readDiagnosticsFileLocal(remoteToLocal);
-		}
+			getMtime: async (path) => {
+				const virtualContents = this.virtualModules.getPossibleVirtualFileContents(
+					path,
+				);
+				if (virtualContents === undefined) {
+					return undefined;
+				} else {
+					return this.memoryFs.getMtime(path);
+				}
+			},
+		};
 	}
 
 	createDiagnosticsProcessor(
@@ -480,19 +494,19 @@ export default class Server {
 
 	async init() {
 		this.maybeSetupGlobalErrorHandlers();
-		this.memoryFs.init();
-		await this.projectManager.init();
-		this.fileAllocator.init();
-		this.resolver.init();
-		await this.cache.init();
 		await this.virtualModules.init();
+		await this.projectManager.init();
+		await this.memoryFs.init();
+		await this.fileAllocator.init();
+		await this.resolver.init();
+		await this.cache.init();
 		await this.workerManager.init();
 	}
 
 	async end() {
 		this.logger.info("[Server] Teardown triggered");
 
-		// Unwatch all project folders
+		// Unwatch all project directories
 		// We do this before anything else as we don't want events firing while we're in a teardown state
 		this.memoryFs.unwatchAll();
 
@@ -698,8 +712,8 @@ export default class Server {
 		}
 		this.connectedReporters.addStream(errStream);
 
-		// Warn about disabled disk caching
-		if (this.cache.disabled) {
+		// Warn about disabled disk caching. Don't bother if it's only been set due to ROME_DEV. We don't care to see it in development.
+		if (this.cache.disabled && getEnvVar("ROME_DEV").type !== "ENABLED") {
 			reporter.warn(
 				"Disk caching has been disabled due to the <emphasis>ROME_CACHE=0</emphasis> environment variable",
 			);
@@ -967,7 +981,7 @@ export default class Server {
 				throw new Error(`Unknown command ${String(query.commandName)}`);
 			}
 		} catch (err) {
-			let diagnostics: undefined | Diagnostics = this.handleRequestError(
+			let diagnostics: undefined | Diagnostics = await this.handleRequestError(
 				req,
 				err,
 			);
@@ -1005,7 +1019,10 @@ export default class Server {
 		}
 	}
 
-	handleRequestError(req: ServerRequest, rawErr: Error): undefined | Diagnostics {
+	async handleRequestError(
+		req: ServerRequest,
+		rawErr: Error,
+	): Promise<undefined | Diagnostics> {
 		let err = rawErr;
 
 		// If we can derive diagnostics from the error then create a diagnostics printer
@@ -1044,15 +1061,15 @@ export default class Server {
 			}
 
 			if (shouldPrint) {
-				printer.print();
+				await printer.print();
 
 				// Don't output the footer if this is a notifier for an invalid request as it will be followed by a help screen
 				if (!(rawErr instanceof ServerRequestInvalid)) {
-					printer.footer();
+					await printer.footer();
 				}
 			}
 
-			return printer.getDiagnostics();
+			return printer.processor.getDiagnostics();
 		}
 
 		if (!req.bridge.alive) {
@@ -1084,7 +1101,7 @@ export default class Server {
 				advice: [...errorDiag.description.advice, INTERNAL_ERROR_LOG_ADVICE],
 			},
 		});
-		printer.print();
+		await printer.print();
 
 		// We could probably return printer.getDiagnostics() but we just want to print to the console
 		// We will still want to send the `error` property

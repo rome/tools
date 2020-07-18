@@ -44,7 +44,7 @@ function hasValidTabIndexValue(
 }
 
 export default {
-	name: "jsxA11YNoNoninteractiveTabindex",
+	name: "jsx-a11y/noNoninteractiveTabindex",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

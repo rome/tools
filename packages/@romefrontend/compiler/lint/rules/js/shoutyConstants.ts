@@ -2,7 +2,7 @@ import {ConstBinding, Path, TransformExitResult} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 
 export default {
-	name: "shoutyConstants",
+	name: "js/shoutyConstants",
 	enter(path: Path): TransformExitResult {
 		const {node, scope} = path;
 

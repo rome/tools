@@ -60,7 +60,7 @@ function extractObjects(
 }
 
 export default {
-	name: "tsPreferInterfaces",
+	name: "ts/preferInterfaces",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

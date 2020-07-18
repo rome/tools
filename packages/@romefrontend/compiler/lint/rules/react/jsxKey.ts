@@ -37,7 +37,7 @@ function getMapCallback(node: JSCallExpression) {
 }
 
 export default {
-	name: "reactJsxKey",
+	name: "react/jsxKey",
 	enter(path: Path): AnyNode {
 		const {node, context} = path;
 

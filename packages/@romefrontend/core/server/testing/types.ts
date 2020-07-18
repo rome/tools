@@ -39,9 +39,9 @@ export type TestServerRunnerOptions = {
 	syncTests: boolean;
 };
 
-export type CoverageFolder = {
+export type CoverageDirectory = {
 	name: undefined | string;
-	folders: Map<string, CoverageFolder>;
+	directories: Map<string, CoverageDirectory>;
 	files: Map<string, CoverageFile>;
 };
 

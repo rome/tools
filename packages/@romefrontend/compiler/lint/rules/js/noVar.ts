@@ -10,7 +10,7 @@ import {Path} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 
 export default {
-	name: "noVar",
+	name: "js/noVar",
 	enter(path: Path): AnyNode {
 		const {context, node: declaration} = path;
 

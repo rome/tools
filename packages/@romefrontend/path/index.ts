@@ -123,7 +123,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
 
 	getBasename(): string {
 		const {segments} = this;
-		const offset = this.isExplicitFolder() ? 2 : 1;
+		const offset = this.isExplicitDirectory() ? 2 : 1;
 		return segments[segments.length - offset] || "";
 	}
 
@@ -171,7 +171,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
 
 		const segments = this.getSegments().slice(0, -1);
 
-		// Always make this an explicit folder
+		// Always make this an explicit directory
 		if (explicit && segments.length > 0 && segments[0] !== "") {
 			segments.push("");
 		}
@@ -236,7 +236,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
 		}
 
 		if (this.segments.length === 2) {
-			// Explicit folder reference
+			// Explicit directory reference
 			return this.segments[1] === "";
 		}
 
@@ -299,7 +299,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
 		return !this.isURL() && (firstSeg === "." || firstSeg === "..");
 	}
 
-	isExplicitFolder(): boolean {
+	isExplicitDirectory(): boolean {
 		const {segments} = this;
 		return segments[segments.length - 1] === "";
 	}
@@ -332,7 +332,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
 		let {segments} = this;
 
 		if (!this.isRoot()) {
-			if (this.isExplicitFolder()) {
+			if (this.isExplicitDirectory()) {
 				segments = segments.slice(0, -1);
 			}
 
@@ -356,7 +356,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
 		let segments: undefined | PathSegments;
 
 		if (!this.isRoot()) {
-			if (this.isExplicitFolder()) {
+			if (this.isExplicitDirectory()) {
 				segments = this.getSegments();
 
 				if (this.isExplicitRelative()) {
@@ -455,36 +455,38 @@ class BaseFilePath<Super extends UnknownFilePath> {
 		}
 	}
 
-	append(raw: FilePathOrString | Array<FilePathOrString>): Super {
-		// Check if we have a memoized instance
-		if (typeof raw === "string") {
-			const cached = this.memoizedChildren.get(raw);
+	append(item: FilePathOrString): Super {
+		if (typeof item === "string") {
+			const cached = this.memoizedChildren.get(item);
 			if (cached !== undefined) {
 				return cached;
 			}
 		}
 
-		const items: Array<FilePathOrString> = Array.isArray(raw) ? raw : [raw];
+		const parsed = parsePathSegments([
+			...this.getSegments(),
+			...toFilePath(item).getSegments(),
+		]);
+		const child = this._fork(parsed, {});
 
+		if (typeof item === "string") {
+			this.memoizedChildren.set(item, child);
+		}
+
+		return child;
+	}
+
+	appendList(...items: Array<FilePathOrString>): Super {
 		if (items.length === 0) {
 			return this._assert();
 		}
 
-		let segments: PathSegments = this.getSegments();
-
+		let target: Super = this._assert();
 		for (const item of items) {
-			segments = segments.concat(toFilePath(item).getSegments());
+			// @ts-ignore
+			target = target.append(item);
 		}
-
-		const parsed = parsePathSegments(segments);
-		const child = this._fork(parsed, {});
-
-		// Set memoized child if possible
-		if (typeof raw === "string") {
-			this.memoizedChildren.set(raw, child);
-		}
-
-		return child;
+		return target;
 	}
 }
 
@@ -794,7 +796,7 @@ function normalizeSegments(
 
 	const finalSegments = [...absoluteSegments, ...relativeSegments];
 
-	// Retain explicit folder
+	// Retain explicit directory
 	if (
 		segments[segments.length - 1] === "" &&
 		finalSegments[finalSegments.length - 1] !== "" &&

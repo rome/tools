@@ -185,9 +185,6 @@ JSRoot {
 
   ✖ Unclosed JSX element
 
-    <div>() => {}
-                 ^
-
   ℹ Originated from opening tag of div
 
     <div>() => {}

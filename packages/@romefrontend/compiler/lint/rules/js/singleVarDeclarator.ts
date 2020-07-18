@@ -14,7 +14,7 @@ import {
 import {descriptions} from "@romefrontend/diagnostics";
 
 export default {
-	name: "singleVarDeclarator",
+	name: "js/singleVarDeclarator",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

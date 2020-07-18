@@ -67,7 +67,7 @@ export type LintRequest = TransformRequest & {
 
 export type TransformProjectDefinition = {
 	config: ProjectConfig;
-	folder: undefined | AbsoluteFilePath;
+	directory: undefined | AbsoluteFilePath;
 };
 
 export type TransformRequest = {

@@ -10,7 +10,7 @@ import {jsBlockStatement} from "@romefrontend/ast";
 import {descriptions} from "@romefrontend/diagnostics";
 
 export default {
-	name: "caseSingleStatement",
+	name: "js/caseSingleStatement",
 	enter(path: Path): TransformExitResult {
 		const {node, context} = path;
 

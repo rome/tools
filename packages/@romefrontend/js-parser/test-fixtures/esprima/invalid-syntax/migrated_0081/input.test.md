@@ -370,9 +370,6 @@ JSRoot {
 
   ✖ Unclosed property name
 
-    ({get[a,b]:0})
-         ^
-
   ℹ We expected to find the closing character ] here
 
     ({get[a,b]:0})

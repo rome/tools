@@ -85,19 +85,31 @@ export default async function cli() {
 			return {
 				terminalFeatures: {
 					format: c.get(
-						"consoleFormat",
+						"outputFormat",
 						{
 							description: "Change the output format. By default it is automatically inferred from terminal settings.",
 						},
 					).asStringSetOrVoid(["ansi", "html", "none"]),
+					isTTY: c.get(
+						"outputTty",
+						{
+							description: "Treat output as TTY regardless of terminal information. This will enable things like ANSI cursor, progress bars etc.",
+						},
+					).asBooleanOrVoid(),
 					columns: c.get(
-						"consoleColumns",
+						"outputColumns",
 						{
 							description: "Change the display width. By default it is automatically inferred and updated from the terminal.",
 						},
 					).asPossibleNumberString().asOneIndexedNumberOrVoid(),
+					colorDepth: c.get(
+						"outputColorDepth",
+						{
+							description: "Change the display width. By default it is automatically inferred and updated from the terminal.",
+						},
+					).asPossibleNumberString().asNumberSetOrVoid([1, 4, 8, 24]),
 					redirectError: c.get(
-						"consoleRedirectError",
+						"outputRedirectError",
 						{
 							description: "Redirect stderr to stdout.",
 						},
@@ -119,7 +131,7 @@ export default async function cli() {
 						{
 							description: "Path where to write markers. When ommitted defaults to Marker-TIMESTAMP.json",
 						},
-					).asAbsoluteFilePathOrVoid(undefined, cwd),
+					).asAbsoluteFilePathOrVoid(cwd),
 					profile: c.get(
 						"profile",
 						{
@@ -131,7 +143,7 @@ export default async function cli() {
 						{
 							description: "Path where to write profile. When omitted defaults to Profile-TIMESTAMP.json",
 						},
-					).asAbsoluteFilePathOrVoid(undefined, cwd),
+					).asAbsoluteFilePathOrVoid(cwd),
 					profileTimeout: c.get(
 						"profileTimeout",
 						{
@@ -169,7 +181,7 @@ export default async function cli() {
 						{
 							description: "Path where to write rage tarball. When omitted defaults to Rage-TIMESTAMP.tgz",
 						},
-					).asAbsoluteFilePathOrVoid(undefined, cwd),
+					).asAbsoluteFilePathOrVoid(cwd),
 					logs: c.get(
 						"logs",
 						{
@@ -187,7 +199,7 @@ export default async function cli() {
 						{
 							description: "Path where to output logs. When omitted logs are not written anywhere",
 						},
-					).asAbsoluteFilePathOrVoid(undefined, cwd),
+					).asAbsoluteFilePathOrVoid(cwd),
 				},
 				requestFlags: {
 					auxiliaryDiagnosticFormat: c.get(
@@ -195,10 +207,7 @@ export default async function cli() {
 						{
 							description: "When printing diagnostics, output another format alongside",
 						},
-					).asStringSetOrVoid(
-						["github-actions"],
-						DEFAULT_CLIENT_REQUEST_FLAGS.auxiliaryDiagnosticFormat,
-					),
+					).asStringSetOrVoid(["github-actions"]),
 					benchmark: c.get(
 						"benchmark",
 						{
@@ -450,7 +459,7 @@ export default async function cli() {
 					await writeFile(resolvedProfilePath, str);
 
 					client.reporter.success(
-						markup`Wrote CPU profile to <emphasis>${resolvedProfilePath.toMarkup()}</emphasis>`,
+						`Wrote CPU profile to <emphasis>${resolvedProfilePath.toMarkup()}</emphasis>`,
 					);
 				},
 			);

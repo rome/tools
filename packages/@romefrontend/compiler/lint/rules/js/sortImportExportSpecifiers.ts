@@ -48,7 +48,7 @@ function shouldReorder<T>(a: Array<T>, b: Array<T>) {
 }
 
 export default {
-	name: "sortImportExportSpecifiers",
+	name: "js/sortImportExportSpecifiers",
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 

@@ -34,7 +34,7 @@ function validTitle(node: JSXElement) {
 }
 
 export default {
-	name: "jsxA11YIframeHasTitle",
+	name: "jsx-a11y/iframeHasTitle",
 
 	enter(path: Path): AnyNode {
 		const {node} = path;

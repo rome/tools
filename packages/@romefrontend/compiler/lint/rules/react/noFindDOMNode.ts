@@ -16,7 +16,7 @@ const reactDOMConfig = {
 };
 
 export default {
-	name: "reactNoFindDOMNode",
+	name: "react/noFindDOMNode",
 
 	enter(path: Path): AnyNode {
 		const {node, scope} = path;

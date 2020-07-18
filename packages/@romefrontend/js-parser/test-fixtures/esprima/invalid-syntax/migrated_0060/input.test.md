@@ -217,9 +217,6 @@ JSRoot {
 
   ✖ Unclosed object
 
-    1 + { t:t
-        ^
-
   ℹ We expected to find the closing character } here
 
     1 + { t:t

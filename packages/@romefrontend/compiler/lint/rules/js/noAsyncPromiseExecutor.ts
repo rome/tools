@@ -10,7 +10,7 @@ import {TransformExitResult} from "@romefrontend/compiler/types";
 import {descriptions} from "@romefrontend/diagnostics";
 
 export default {
-	name: "noAsyncPromiseExecutor",
+	name: "js/noAsyncPromiseExecutor",
 	enter(path: Path): TransformExitResult {
 		const {node, context} = path;
 

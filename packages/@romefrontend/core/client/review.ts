@@ -14,6 +14,7 @@ import {SelectOption} from "@romefrontend/cli-reporter";
 import {
 	Diagnostic,
 	DiagnosticAdviceAction,
+	DiagnosticsProcessor,
 	derivePositionlessKeyFromDiagnostic,
 } from "@romefrontend/diagnostics";
 import {ServerQueryResponse} from "../common/bridges/ServerBridge";
@@ -165,10 +166,11 @@ async function ask(
 	}
 
 	const printer = new DiagnosticsPrinter({
+		processor: new DiagnosticsProcessor(),
 		reporter,
 	});
 	diag = printer.processor.addDiagnosticAssert(diag);
-	printer.print();
+	await printer.print();
 
 	const answer = await reporter.radio(
 		"How do you want to resolve this?",
@@ -264,11 +266,12 @@ export default async function review(
 		reporter.success("Nothing to review!");
 	} else {
 		if (res.type === "DIAGNOSTICS") {
-			printDiagnostics({
+			await printDiagnostics({
 				diagnostics: res.diagnostics,
 				suppressions: [],
 				excludeFooter: true,
 				printerOptions: {
+					processor: new DiagnosticsProcessor(),
 					reporter,
 				},
 			});

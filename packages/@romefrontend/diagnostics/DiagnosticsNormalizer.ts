@@ -30,6 +30,8 @@ export default class DiagnosticsNormalizer {
 		this.inlineSourceText = new Map();
 		this.hasMarkupOptions = markupOptions !== undefined;
 
+		this.inlinedSourceTextFilenames = new Set();
+
 		this.markupOptions = this.createMarkupOptions(markupOptions);
 	}
 
@@ -37,6 +39,7 @@ export default class DiagnosticsNormalizer {
 	markupOptions: NormalizeOptionsRequiredPosition;
 	hasMarkupOptions: boolean;
 	inlineSourceText: Map<string, string>;
+	inlinedSourceTextFilenames: Set<string>;
 
 	createMarkupOptions(
 		markupOptions: MarkupFormatNormalizeOptions = {},
@@ -179,12 +182,32 @@ export default class DiagnosticsNormalizer {
 
 		const normalizedFilename = this.normalizeFilename(filename);
 
+		// Inline sourceText. We keep track of filenames we've already inlined to avoid duplicating sourceText
+		// During printing we'll fill it back in
 		let {sourceText} = location;
-		if (sourceText === undefined && filename !== undefined) {
-			sourceText = this.inlineSourceText.get(filename);
-		}
-		if (sourceText === undefined && normalizedFilename !== undefined) {
-			sourceText = this.inlineSourceText.get(normalizedFilename);
+		if (filename !== undefined && !this.inlinedSourceTextFilenames.has(filename)) {
+			if (sourceText === undefined && filename !== undefined) {
+				sourceText = this.inlineSourceText.get(filename);
+			}
+			if (sourceText === undefined && normalizedFilename !== undefined) {
+				sourceText = this.inlineSourceText.get(normalizedFilename);
+			}
+
+			// Remove sourceText if it's not pointing anywhere
+			if (start === undefined && end === undefined) {
+				sourceText = undefined;
+			}
+
+			// Register filename as inlined if necessary
+			if (sourceText !== undefined) {
+				if (filename !== undefined) {
+					this.inlinedSourceTextFilenames.add(filename);
+				}
+
+				if (normalizedFilename !== undefined) {
+					this.inlinedSourceTextFilenames.add(normalizedFilename);
+				}
+			}
 		}
 
 		return {

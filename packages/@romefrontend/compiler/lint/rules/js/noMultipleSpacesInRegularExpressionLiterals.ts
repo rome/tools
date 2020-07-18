@@ -88,7 +88,7 @@ function checkRegex(
 }
 
 export default {
-	name: "noMultipleSpacesInRegularExpressionLiterals",
+	name: "js/noMultipleSpacesInRegularExpressionLiterals",
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 

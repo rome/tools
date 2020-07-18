@@ -11,7 +11,7 @@ import {getBindingIdentifiers} from "@romefrontend/js-ast-utils";
 import {descriptions} from "@romefrontend/diagnostics";
 
 export default {
-	name: "noDupeArgs",
+	name: "js/noDupeArgs",
 	enter(path: Path): AnyNode {
 		const {node, context} = path;
 

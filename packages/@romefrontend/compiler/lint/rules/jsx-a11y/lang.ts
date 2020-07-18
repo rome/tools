@@ -447,7 +447,7 @@ function langSupported(lang: string): boolean {
 	return false;
 }
 export default {
-	name: "jsxA11YLang",
+	name: "jsx-a11y/lang",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

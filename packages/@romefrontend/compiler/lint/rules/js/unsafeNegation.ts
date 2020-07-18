@@ -10,7 +10,7 @@ import {jsUnaryExpression} from "@romefrontend/ast";
 import {descriptions} from "@romefrontend/diagnostics";
 
 export default {
-	name: "unsafeNegation",
+	name: "js/unsafeNegation",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

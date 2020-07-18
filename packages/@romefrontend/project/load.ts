@@ -62,7 +62,7 @@ function categoryExists(consumer: Consumer): boolean {
 }
 
 export async function loadCompleteProjectConfig(
-	projectFolder: AbsoluteFilePath,
+	projectDirectory: AbsoluteFilePath,
 	configPath: AbsoluteFilePath,
 ): Promise<{
 	meta: ProjectConfigMeta;
@@ -70,23 +70,23 @@ export async function loadCompleteProjectConfig(
 }> {
 	// TODO use consumer.capture somehow here to aggregate errors
 	const {partial, meta} = await loadPartialProjectConfig(
-		projectFolder,
+		projectDirectory,
 		configPath,
 	);
 	const {consumer} = meta;
 
-	// Produce a defaultConfig with some folder specific values
+	// Produce a defaultConfig with some directory specific values
 	const _defaultConfig: ProjectConfig = createDefaultProjectConfig();
 	const defaultConfig: ProjectConfig = {
 		..._defaultConfig,
 		vcs: {
 			..._defaultConfig.vcs,
-			root: projectFolder,
+			root: projectDirectory,
 		},
 	};
 
 	const name = consumer.get("name").asString(
-		`project-${projectFolder.getBasename()}`,
+		`project-${projectDirectory.getBasename()}`,
 	);
 
 	const config: ProjectConfig = {
@@ -123,7 +123,7 @@ export async function loadCompleteProjectConfig(
 }
 
 async function loadPartialProjectConfig(
-	projectFolder: AbsoluteFilePath,
+	projectDirectory: AbsoluteFilePath,
 	configPath: AbsoluteFilePath,
 ): Promise<NormalizedPartial> {
 	const configFile = await readFileText(configPath);
@@ -132,14 +132,14 @@ async function loadPartialProjectConfig(
 		input: configFile,
 	});
 
-	return normalizeProjectConfig(res, configPath, configFile, projectFolder);
+	return normalizeProjectConfig(res, configPath, configFile, projectDirectory);
 }
 
 export async function normalizeProjectConfig(
 	res: ConsumeJSONResult,
 	configPath: AbsoluteFilePath,
 	configFile: string,
-	projectFolder: AbsoluteFilePath,
+	projectDirectory: AbsoluteFilePath,
 ): Promise<NormalizedPartial> {
 	let {consumer} = res;
 
@@ -176,13 +176,13 @@ export async function normalizeProjectConfig(
 	}
 
 	const meta: ProjectConfigMetaHard = {
-		projectFolder,
+		projectDirectory,
 		configPath,
 		consumer,
 		consumersChain: [consumer],
 		configHashes: [hash],
 		configSourceSubKey,
-		configDependencies: getParentConfigDependencies(projectFolder),
+		configDependencies: getParentConfigDependencies(projectDirectory),
 	};
 
 	// We never use `name` here but it's used in `loadCompleteProjectConfig`
@@ -238,13 +238,13 @@ export async function normalizeProjectConfig(
 
 		if (typeChecking.has("libs")) {
 			const libs = normalizeTypeCheckingLibs(
-				projectFolder,
+				projectDirectory,
 				typeChecking.get("libs"),
 			);
 			config.typeCheck.libs = libs.files;
 			meta.configDependencies = new AbsoluteFilePathSet([
 				...meta.configDependencies,
-				...libs.folders,
+				...libs.directories,
 				...libs.files,
 			]);
 		}
@@ -285,7 +285,7 @@ export async function normalizeProjectConfig(
 	const files = consumer.get("files");
 	if (categoryExists(files)) {
 		if (files.has("vendorPath")) {
-			config.files.vendorPath = projectFolder.resolve(
+			config.files.vendorPath = projectDirectory.resolve(
 				files.get("vendorPath").asString(),
 			);
 		}
@@ -304,7 +304,7 @@ export async function normalizeProjectConfig(
 	const vcs = consumer.get("vcs");
 	if (categoryExists(vcs)) {
 		if (vcs.has("root")) {
-			config.vcs.root = projectFolder.resolve(vcs.get("root").asString());
+			config.vcs.root = projectDirectory.resolve(vcs.get("root").asString());
 		}
 	}
 
@@ -333,7 +333,7 @@ export async function normalizeProjectConfig(
 	consumer.enforceUsedProperties("config property");
 
 	if (_extends.exists()) {
-		return await extendProjectConfig(projectFolder, _extends, config, meta);
+		return await extendProjectConfig(projectDirectory, _extends, config, meta);
 	}
 
 	return {
@@ -343,40 +343,40 @@ export async function normalizeProjectConfig(
 }
 
 function normalizeTypeCheckingLibs(
-	projectFolder: AbsoluteFilePath,
+	projectDirectory: AbsoluteFilePath,
 	consumer: Consumer,
 ): {
-	folders: Array<AbsoluteFilePath>;
+	directories: Array<AbsoluteFilePath>;
 	files: AbsoluteFilePathSet;
 } {
 	const libFiles: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
-	// Normalize library folders
-	const folders: Array<AbsoluteFilePath> = arrayOfStrings(consumer).map((
-		libFolder,
-	) => projectFolder.resolve(libFolder));
+	// Normalize library directories
+	const directories: Array<AbsoluteFilePath> = arrayOfStrings(consumer).map((
+		libDirectory,
+	) => projectDirectory.resolve(libDirectory));
 
-	// Crawl library folders and add their files
-	for (const folder of folders) {
-		const files = readDirectorySync(folder);
+	// Crawl library directories and add their files
+	for (const directory of directories) {
+		const files = readDirectorySync(directory);
 		for (const file of files) {
 			const stats = lstatSync(file);
 			if (stats.isFile()) {
 				libFiles.add(file);
 			} else if (stats.isDirectory()) {
-				folders.push(file);
+				directories.push(file);
 			}
 		}
 	}
 
 	return {
 		files: libFiles,
-		folders,
+		directories,
 	};
 }
 
 async function extendProjectConfig(
-	projectFolder: AbsoluteFilePath,
+	projectDirectory: AbsoluteFilePath,
 	extendsStrConsumer: Consumer,
 	config: PartialProjectConfig,
 	meta: ProjectConfigMetaHard,
@@ -387,7 +387,7 @@ async function extendProjectConfig(
 		// TODO maybe do some magic here?
 	}
 
-	const extendsPath = projectFolder.resolve(extendsRelative);
+	const extendsPath = projectDirectory.resolve(extendsRelative);
 	const {partial: extendsObj, meta: extendsMeta} = await loadPartialProjectConfig(
 		extendsPath.getParent(),
 		extendsPath,

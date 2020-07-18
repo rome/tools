@@ -12,9 +12,6 @@
 
   ✖ Avoid duplicate component props. Check the foo prop.
 
-    <Hello foo='bar' foo='baz' />
-           ^^^^^^^^^
-
   ℹ Defined already here
 
     <Hello foo='bar' foo='baz' />
@@ -41,9 +38,6 @@
 
   ✖ Avoid duplicate component props. Check the style prop.
 
-    <div style='{}' style='{}' id='foo' id='bar' />
-         ^^^^^^^^^^
-
   ℹ Defined already here
 
     <div style='{}' style='{}' id='foo' id='bar' />
@@ -53,13 +47,7 @@
 
   ✖ Avoid duplicate component props. Check the id prop.
 
-    <div style='{}' style='{}' id='foo' id='bar' />
-                               ^^^^^^^^
-
   ℹ Defined already here
-
-    <div style='{}' style='{}' id='foo' id='bar' />
-                                        ^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

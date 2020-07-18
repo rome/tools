@@ -7,7 +7,7 @@ import {
 import {Path, TransformExitResult} from "@romefrontend/compiler";
 
 export default {
-	name: "noOnChange",
+	name: "jsx-a11y/noOnChange",
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 

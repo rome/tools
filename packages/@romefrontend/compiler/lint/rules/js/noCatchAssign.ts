@@ -10,7 +10,7 @@ import {AnyNode} from "@romefrontend/ast";
 import {descriptions} from "@romefrontend/diagnostics";
 
 export default {
-	name: "noCatchAssign",
+	name: "js/noCatchAssign",
 	enter(path: Path): AnyNode {
 		const {node, context, scope} = path;
 

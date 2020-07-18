@@ -281,7 +281,7 @@ export default class Bundler {
 
 		// TODO inherit some manifest properties from project configs
 		const project = this.server.projectManager.findProjectExisting(
-			manifestDef.folder,
+			manifestDef.directory,
 		);
 		if (project !== undefined) {
 			if (newManifest.name === undefined) {
@@ -296,14 +296,14 @@ export default class Bundler {
 		// Copy manifest.files
 		if (manifest.files !== undefined) {
 			const paths = await this.server.memoryFs.glob(
-				manifestDef.folder,
+				manifestDef.directory,
 				{
 					overrideIgnore: flipPathPatterns(manifest.files),
 				},
 			);
 
 			for (const path of paths) {
-				const relative = manifestDef.folder.relative(path).join();
+				const relative = manifestDef.directory.relative(path).join();
 				const buffer = await readFile(path);
 				addFile(relative, buffer);
 			}
@@ -326,7 +326,7 @@ export default class Bundler {
 				const absolute = await this.server.resolver.resolveAssert(
 					{
 						...this.config.resolver,
-						origin: manifestDef.folder,
+						origin: manifestDef.directory,
 						source: createUnknownFilePath(relative).toExplicitRelative(),
 					},
 					{
@@ -361,8 +361,7 @@ export default class Bundler {
 		options: BundleOptions = {},
 		reporter: Reporter = this.reporter,
 	): Promise<BundleResult> {
-		reporter.info(`Bundling <emphasis>${resolvedEntry.toMarkup()}</emphasis>`);
-
+		//reporter.info(`Bundling <emphasis>${resolvedEntry.toMarkup()}</emphasis>`);
 		const req = this.createBundleRequest(resolvedEntry, options, reporter);
 		const res = await req.bundle();
 

@@ -11,6 +11,7 @@ import {
 	UserMarkupFormatGridOptions,
 	ansiEscapes,
 	escapeMarkup,
+	markup,
 	markupTag,
 	markupToAnsi,
 	markupToPlainText,
@@ -1039,7 +1040,7 @@ export default class Reporter {
 	}
 
 	command(command: string) {
-		this.logAll(`<dim>$ ${command}</dim>`);
+		this.logAll(markup`<dim>$ ${command}</dim>`);
 	}
 
 	processedList<T>(

@@ -129,7 +129,7 @@ export type JSONManifestExports = Dict<Dict<string> | string>;
 
 export type ManifestDefinition = {
 	path: AbsoluteFilePath;
-	folder: AbsoluteFilePath;
+	directory: AbsoluteFilePath;
 	id: number;
 	consumer: Consumer;
 	manifest: Manifest;

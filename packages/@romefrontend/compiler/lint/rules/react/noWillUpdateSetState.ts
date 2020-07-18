@@ -18,7 +18,7 @@ function inComponentWillUpdate(path: Path): boolean {
 }
 
 export default {
-	name: "reactNoWillUpdateSetState",
+	name: "react/noWillUpdateSetState",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

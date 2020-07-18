@@ -19,7 +19,7 @@ function getJSXDangerProp(node: AnyNode) {
 }
 
 export default {
-	name: "reactNoDanger",
+	name: "react/noDanger",
 	enter(path: Path): AnyNode {
 		const {node, scope} = path;
 		const dangerProp =

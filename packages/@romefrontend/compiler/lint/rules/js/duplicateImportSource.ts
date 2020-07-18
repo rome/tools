@@ -11,7 +11,7 @@ import {SourceLocation} from "@romefrontend/parser-core";
 import {descriptions} from "@romefrontend/diagnostics";
 
 export default {
-	name: "duplicateImport",
+	name: "js/duplicateImport",
 	enter(path: Path): AnyNode {
 		const {node} = path;
 

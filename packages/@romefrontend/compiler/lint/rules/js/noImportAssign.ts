@@ -25,7 +25,7 @@ function isAssignment(path: Path): boolean {
 }
 
 export default {
-	name: "noImportAssign",
+	name: "js/noImportAssign",
 	enter(path: Path): AnyNode {
 		const {node, scope} = path;
 

@@ -34,14 +34,14 @@ export default createServerCommand<Flags>({
 		const {reporter} = req;
 		req.expectArgumentLength(2);
 
-		const [entryFilename, outputFolder] = args;
+		const [entryFilename, outputDirectory] = args;
 		const bundler = Bundler.createFromServerRequest(req);
 
 		const resolution = await bundler.getResolvedEntry(entryFilename);
 		const {files: outFiles} = await bundler.bundleManifest(resolution);
 
 		const savedList = [];
-		const dir = flags.cwd.resolve(outputFolder);
+		const dir = flags.cwd.resolve(outputDirectory);
 		for (const [filename, {kind, content}] of outFiles) {
 			const buff = content();
 			const file = dir.append(filename);

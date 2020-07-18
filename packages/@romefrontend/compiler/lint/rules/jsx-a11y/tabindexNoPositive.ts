@@ -20,7 +20,7 @@ function createDiagnostic(path: Path, node: JSXElement, attribute: JSXAttribute)
 }
 
 export default {
-	name: "tabindexNoPositive",
+	name: "jsx-a11y/tabindexNoPositive",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

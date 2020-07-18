@@ -22,7 +22,7 @@ async function testCheck(code: string): Promise<Diagnostics> {
 	return check({
 		ast,
 		project: {
-			folder: undefined,
+			directory: undefined,
 			config: createDefaultProjectConfig(),
 		},
 		provider: {

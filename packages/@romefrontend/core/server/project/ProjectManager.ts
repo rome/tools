@@ -125,7 +125,7 @@ export default class ProjectManager {
 		this.projectIdCounter = 0;
 		this.projectConfigDependenciesToIds = new AbsoluteFilePathMap();
 		this.projectLoadingLocks = new FilePathLocker();
-		this.projectFolderToProject = new AbsoluteFilePathMap();
+		this.projectDirectoryToProject = new AbsoluteFilePathMap();
 		this.projects = new Map();
 
 		// We maintain these maps so we can reverse any uids, and protect against collisions
@@ -147,11 +147,13 @@ export default class ProjectManager {
 	projectLoadingLocks: FilePathLocker;
 
 	projects: Map<number, ProjectDefinition>;
-	projectFolderToProject: AbsoluteFilePathMap<ProjectDefinition>;
+	projectDirectoryToProject: AbsoluteFilePathMap<ProjectDefinition>;
 	projectConfigDependenciesToIds: AbsoluteFilePathMap<Set<number>>;
 	projectIdCounter: number;
 
 	async init() {
+		this.injectVirtualModules();
+
 		this.server.memoryFs.deletedFileEvent.subscribe((path) => {
 			this.handleDeleted(path);
 		});
@@ -161,13 +163,31 @@ export default class ProjectManager {
 			name: "rome-internal-remote",
 		};
 		const defaultVendorPath = vendorProjectConfig.files.vendorPath;
+		// TODO find a way to do th
 		await createDirectory(defaultVendorPath);
 		await this.declareProject({
-			projectFolder: defaultVendorPath,
+			projectDirectory: defaultVendorPath,
 			meta: createDefaultProjectConfigMeta(),
 			config: vendorProjectConfig,
 		});
 		await this.server.memoryFs.watch(defaultVendorPath);
+	}
+
+	// Add a default project for virtual modules
+	// This will automatically be sent to workers
+	async injectVirtualModules() {
+		const projectDirectory = this.server.virtualModules.nullAbsolute;
+
+		const projectConfig: ProjectConfig = {
+			...createDefaultProjectConfig(),
+			name: "rome-virtual-modules",
+		};
+
+		await this.declareProject({
+			projectDirectory,
+			meta: createDefaultProjectConfigMeta(),
+			config: projectConfig,
+		});
 	}
 
 	handleDeleted(path: AbsoluteFilePath) {
@@ -278,13 +298,13 @@ export default class ProjectManager {
 		// Format of uids will be <PROJECT_NAME>/<PACKAGE_NAME>/<RELATIVE>
 		const parts: Array<string> = [];
 
-		let root = project.folder;
+		let root = project.directory;
 
 		// Push on parent package names
 		let targetPackagePath = path;
 		while (true) {
 			const pkg = this.server.memoryFs.getOwnedManifest(targetPackagePath);
-			if (pkg === undefined || pkg.folder.equal(project.folder)) {
+			if (pkg === undefined || pkg.directory.equal(project.directory)) {
 				break;
 			} else {
 				const name = manifestNameToString(pkg.manifest.name);
@@ -292,10 +312,10 @@ export default class ProjectManager {
 					parts.unshift(name);
 
 					if (targetPackagePath === path) {
-						root = pkg.folder;
+						root = pkg.directory;
 					}
 				}
-				targetPackagePath = pkg.folder.getParent();
+				targetPackagePath = pkg.directory.getParent();
 			}
 		}
 
@@ -322,7 +342,7 @@ export default class ProjectManager {
 			project: project.id,
 			real: path,
 			manifest: pkg === undefined ? undefined : pkg.id,
-			relative: project.folder.relative(path).assertRelative(),
+			relative: project.directory.relative(path).assertRelative(),
 			remote: this.localPathToRemote.has(path),
 		};
 	}
@@ -410,7 +430,7 @@ export default class ProjectManager {
 				projects: [
 					{
 						id: evictProjectId,
-						folder: project.folder.join(),
+						directory: project.directory.join(),
 						config: undefined,
 					},
 				],
@@ -430,11 +450,11 @@ export default class ProjectManager {
 
 		// Delete the project from 'our internal map
 		this.projects.delete(evictProjectId);
-		this.projectFolderToProject.delete(project.folder);
+		this.projectDirectoryToProject.delete(project.directory);
 
 		// Evict all files that belong to this project and delete their project mapping
 		const ownedFiles: Array<AbsoluteFilePath> = [];
-		for (const path of this.server.memoryFs.glob(project.folder)) {
+		for (const path of this.server.memoryFs.glob(project.directory)) {
 			this.handleDeleted(path);
 			ownedFiles.push(path);
 		}
@@ -443,7 +463,7 @@ export default class ProjectManager {
 		);
 
 		// Tell the MemoryFileSystem to stop watching and clear it's maps
-		this.server.memoryFs.unwatch(project.folder);
+		this.server.memoryFs.unwatch(project.directory);
 	}
 
 	getProjects(): Array<ProjectDefinition> {
@@ -515,26 +535,26 @@ export default class ProjectManager {
 
 	addDiskProject(
 		opts: {
-			projectFolder: AbsoluteFilePath;
+			projectDirectory: AbsoluteFilePath;
 			configPath: AbsoluteFilePath;
 		},
 	): Promise<void> {
-		const {projectFolder, configPath} = opts;
+		const {projectDirectory, configPath} = opts;
 
 		return this.projectLoadingLocks.wrapLock(
-			projectFolder,
+			projectDirectory,
 			async () => {
-				if (this.hasLoadedProjectFolder(projectFolder)) {
+				if (this.hasLoadedProjectDirectory(projectDirectory)) {
 					return;
 				}
 
 				const {config, meta} = await loadCompleteProjectConfig(
-					projectFolder,
+					projectDirectory,
 					configPath,
 				);
 
 				await this.declareProject({
-					projectFolder: opts.projectFolder,
+					projectDirectory: opts.projectDirectory,
 					meta,
 					config,
 				});
@@ -544,11 +564,11 @@ export default class ProjectManager {
 
 	async declareProject(
 		{
-			projectFolder,
+			projectDirectory,
 			meta,
 			config,
 		}: {
-			projectFolder: AbsoluteFilePath;
+			projectDirectory: AbsoluteFilePath;
 			meta: ProjectConfigMeta;
 			config: ProjectConfig;
 		},
@@ -557,17 +577,17 @@ export default class ProjectManager {
 		for (const project of this.getProjects()) {
 			if (project.config.name === config.name) {
 				throw new Error(
-					`Conflicting project name ${config.name}. ${projectFolder.join()} and ${project.folder.join()}`,
+					`Conflicting project name ${config.name}. ${projectDirectory.join()} and ${project.directory.join()}`,
 				);
 			}
 		}
 
 		// Declare the project
-		const parentProject = this.findProjectExisting(projectFolder.getParent());
+		const parentProject = this.findProjectExisting(projectDirectory.getParent());
 		const project: ProjectDefinition = {
 			config,
 			meta,
-			folder: projectFolder,
+			directory: projectDirectory,
 			id: this.projectIdCounter++,
 			packages: new Map(),
 			manifests: new Map(),
@@ -576,7 +596,7 @@ export default class ProjectManager {
 		};
 
 		this.projects.set(project.id, project);
-		this.projectFolderToProject.set(projectFolder, project);
+		this.projectDirectoryToProject.set(projectDirectory, project);
 
 		if (parentProject !== undefined) {
 			parentProject.children.add(project);
@@ -652,7 +672,7 @@ export default class ProjectManager {
 			projectsSerial.push({
 				config: serializeJSONProjectConfig(project.config),
 				id: project.id,
-				folder: project.folder.join(),
+				directory: project.directory.join(),
 			});
 
 			for (const def of project.manifests.values()) {
@@ -701,8 +721,8 @@ export default class ProjectManager {
 		}
 	}
 
-	hasLoadedProjectFolder(path: AbsoluteFilePath): boolean {
-		return this.projectFolderToProject.has(path);
+	hasLoadedProjectDirectory(path: AbsoluteFilePath): boolean {
+		return this.projectDirectoryToProject.has(path);
 	}
 
 	// Convenience method to get the project config and pass it to the file handler class
@@ -747,8 +767,8 @@ export default class ProjectManager {
 		if (project === undefined) {
 			throw new Error(
 				`Expected existing project for ${path.join()} only have ${Array.from(
-					this.projectFolderToProject.keys(),
-					(folder) => folder.join(),
+					this.projectDirectoryToProject.keys(),
+					(directory) => directory.join(),
 				).join(", ")}`,
 			);
 		}
@@ -757,7 +777,7 @@ export default class ProjectManager {
 
 	findProjectExisting(path: AbsoluteFilePath): undefined | ProjectDefinition {
 		for (const dir of path.getChain()) {
-			const project = this.projectFolderToProject.get(dir);
+			const project = this.projectDirectoryToProject.get(dir);
 			if (project !== undefined) {
 				return project;
 			}

@@ -185,9 +185,6 @@ JSRoot {
 
   ✖ Label __proto__ is already declared
 
-    __proto__: __proto__: 42;
-               ^^^^^^^^^
-
   ℹ Defined already here
 
     __proto__: __proto__: 42;

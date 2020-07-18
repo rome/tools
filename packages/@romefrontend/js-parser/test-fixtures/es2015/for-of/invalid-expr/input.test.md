@@ -283,9 +283,6 @@ JSRoot {
 
   ✖ Unclosed for head
 
-    for (let x of y, z) {}
-        ^
-
   ℹ We expected to find the closing character ) here
 
     for (let x of y, z) {}

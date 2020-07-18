@@ -64,12 +64,20 @@ const BATCH_WRITES_MS = 5_000;
 
 export default class Cache {
 	constructor(server: Server) {
+		let disabled = false;
+		if (getEnvVar("ROME_DEV").type === "ENABLED") {
+			disabled = true;
+		}
+		if (getEnvVar("ROME_CACHE").type === "DISABLED") {
+			disabled = true;
+		}
+		if (server.options.forceCacheEnabled) {
+			disabled = false;
+		}
+
 		this.server = server;
 		this.loadedEntries = new AbsoluteFilePathMap();
-		this.disabled =
-			!server.options.forceCacheEnabled &&
-			(getEnvVar("ROME_CACHE").type === "ENABLED" ||
-			getEnvVar("ROME_DEV").type === "ENABLED");
+		this.disabled = disabled;
 		this.cachePath = server.userConfig.cachePath;
 
 		this.runningWritePromise = undefined;
@@ -118,6 +126,7 @@ export default class Cache {
 		const filelinks: Array<string> = [];
 		for (const [path, entry] of pendingWrites) {
 			filelinks.push(path.toMarkup());
+			await createDirectory(path.getParent());
 			await writeFile(path, stringifyJSON(entry));
 		}
 
@@ -164,7 +173,7 @@ export default class Cache {
 
 		const entry: CacheEntry = {
 			version: VERSION,
-			projectDir: project.folder.join(),
+			projectDir: project.directory.join(),
 			configHash: configHashes.join(";"),
 			mtime: memoryFs.getMtime(path),
 			compile: {},
@@ -255,7 +264,6 @@ export default class Cache {
 			...partialEntry,
 		};
 
-		// TODO should batch these and write during idle time
 		const cacheFilename = this.getCacheFilename(path);
 		this.loadedEntries.set(path, entry);
 
@@ -263,7 +271,13 @@ export default class Cache {
 			return;
 		}
 
-		await createDirectory(cacheFilename.getParent());
+		// If we have a file buffer then there's no point at all in writing this cache file
+		// Since it will have an mtime that doesn't exist on disk, and will never be validated
+		// if the server is restarted.
+		if (this.server.memoryFs.hasBuffer(path)) {
+			return;
+		}
+
 		this.addPendingWrite(cacheFilename, entry);
 	}
 }

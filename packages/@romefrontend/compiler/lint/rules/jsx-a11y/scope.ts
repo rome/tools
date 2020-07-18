@@ -4,7 +4,7 @@ import {Path} from "@romefrontend/compiler";
 import {hasJSXAttribute, isJSXElement} from "@romefrontend/js-ast-utils";
 
 export default {
-	name: "jsxA11YScope",
+	name: "jsx-a11y/scope",
 
 	enter(path: Path) {
 		const {node} = path;

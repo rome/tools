@@ -2,7 +2,7 @@ import {Path, TransformExitResult} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 
 export default {
-	name: "jsNoNestedTernary",
+	name: "js/jsNoNestedTernary",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

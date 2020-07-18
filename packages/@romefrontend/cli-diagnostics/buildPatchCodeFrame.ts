@@ -195,7 +195,7 @@ export default function buildPatchCodeFrame(
 		);
 	}
 
-	if (legend !== undefined) {
+	if (legend !== undefined && !singleLine) {
 		frame.push("");
 		frame.push(`<error>- ${escapeMarkup(legend.delete)}</error>`);
 		frame.push(`<success>+ ${escapeMarkup(legend.add)}</success>`);

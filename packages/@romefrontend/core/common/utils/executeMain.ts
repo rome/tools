@@ -25,6 +25,7 @@ import {ob1Coerce1, ob1Number0, ob1Number0Neg1} from "@romefrontend/ob1";
 type ExecuteMainOptions = {
 	path: AbsoluteFilePath;
 	code: string;
+	args?: Array<string>;
 	sourceMap?: SourceMapConsumer;
 	globals?: UnknownObject;
 };
@@ -34,14 +35,14 @@ export default async function executeMain(
 ): Promise<{
 	syntaxError: undefined | Diagnostic;
 }> {
-	const {path, code, sourceMap, globals} = opts;
+	const {path, code, sourceMap, globals, args = []} = opts;
 
 	const filename = path.join();
 
 	// Create global context
 	const sandbox: UnknownObject = {
 		process: {
-			argv: [process.argv[0], filename],
+			argv: [process.argv[0], filename, ...args],
 			__proto__: process,
 		},
 		Buffer,
@@ -109,6 +110,14 @@ export default async function executeMain(
 	if (sourceMap !== undefined) {
 		sourceMapManager.add(filename, sourceMap);
 	}
-	await script.runInContext(context);
+	const res = await script.runInContext(context);
+
+	if (typeof res === "object" && res != null && typeof res.main === "function") {
+		const code = await Promise.resolve(res.main(args));
+		if (typeof code === "number") {
+			process.exit(code);
+		}
+	}
+
 	return {syntaxError: undefined};
 }

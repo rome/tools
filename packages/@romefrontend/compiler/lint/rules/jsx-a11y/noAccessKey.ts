@@ -3,7 +3,7 @@ import {Path} from "@romefrontend/compiler";
 import {getJSXAttribute, hasJSXAttribute} from "@romefrontend/js-ast-utils";
 
 export default {
-	name: "jsxA11YNoAccessKey",
+	name: "jsx-a11y/noAccessKey",
 
 	enter(path: Path) {
 		const {node} = path;

@@ -24,7 +24,7 @@ function containsStringContainer(attribute: JSXAttribute): boolean {
 }
 
 export default {
-	name: "reactNoStringRefs",
+	name: "react/noStringRefs",
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 

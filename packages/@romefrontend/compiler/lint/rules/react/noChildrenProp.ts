@@ -16,7 +16,7 @@ function getJSXChildrenProp(node: AnyNode) {
 }
 
 export default {
-	name: "reactNoChildrenProp",
+	name: "react/noChildrenProp",
 	enter(path: Path): AnyNode {
 		const {node, scope} = path;
 		const childrenProp =

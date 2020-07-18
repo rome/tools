@@ -3,7 +3,7 @@ import {descriptions} from "@romefrontend/diagnostics";
 import {jsBooleanLiteral, jsxExpressionContainer} from "@romefrontend/ast";
 
 export default {
-	name: "jsxNoImplicitBoolean",
+	name: "jsx/noImplicitBoolean",
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 

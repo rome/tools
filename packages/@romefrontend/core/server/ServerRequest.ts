@@ -359,7 +359,7 @@ export default class ServerRequest {
 			reporter: this.reporter,
 			cwd: this.client.flags.cwd,
 			flags: this.getDiagnosticsPrinterFlags(),
-			readFile: this.server.readDiagnosticsPrinterFile.bind(this.server),
+			fileReaders: this.server.createDiagnosticsPrinterFileReaders(),
 		});
 	}
 
@@ -541,7 +541,7 @@ export default class ServerRequest {
 			const location = this.getDiagnosticPointerForClientCwd();
 			const project = await this.assertClientCwdProject();
 			resolvedArgs.push({
-				path: project.folder,
+				path: project.directory,
 				location,
 				project,
 			});
@@ -564,7 +564,7 @@ export default class ServerRequest {
 						const resolvedAlternate = await this.server.resolver.resolveEntry({
 							origin: cwd,
 							source: alternateSource,
-							requestedType: "folder",
+							requestedType: "directory",
 						});
 						if (resolvedAlternate.type === "FOUND") {
 							resolved = resolvedAlternate;
@@ -577,7 +577,7 @@ export default class ServerRequest {
 						{
 							origin: cwd,
 							source,
-							requestedType: "folder",
+							requestedType: "directory",
 						},
 						{
 							location,

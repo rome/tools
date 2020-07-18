@@ -11,7 +11,7 @@ export const projectManager = createDiagnosticsCategory({
 					{
 						type: "log",
 						category: "info",
-						text: "Version control root was set to the project root as it was not configured. To configure a different folder run",
+						text: "Version control root was set to the project root as it was not configured. To configure a different directory run",
 					},
 					{
 						type: "command",
@@ -48,7 +48,7 @@ export const projectManager = createDiagnosticsCategory({
 			{
 				type: "log",
 				category: "info",
-				text: "Run <command>rome init</command> in this folder to initialize a project",
+				text: "Run <command>rome init</command> in this directory to initialize a project",
 			},
 		],
 	},

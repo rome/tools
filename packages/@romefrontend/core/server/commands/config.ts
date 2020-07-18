@@ -15,12 +15,7 @@ import {
 	createUnknownFilePath,
 } from "@romefrontend/path";
 import {escapeMarkup, markup} from "@romefrontend/cli-layout";
-import {
-	DiagnosticsError,
-	DiagnosticsProcessor,
-	catchDiagnosticsSync,
-	descriptions,
-} from "@romefrontend/diagnostics";
+import {descriptions, interceptDiagnostics} from "@romefrontend/diagnostics";
 import {Consumer} from "@romefrontend/consume";
 import {
 	ConsumeJSONResult,
@@ -60,7 +55,7 @@ export default createServerCommand<Flags>({
 		const project = await req.server.projectManager.findProject(
 			req.client.flags.cwd,
 		);
-		const cwd = project?.folder || HOME_PATH;
+		const cwd = project?.directory || HOME_PATH;
 
 		const [action, keyParts, ...values] = req.query.args;
 		let value: boolean | string | Array<string> = values[0];
@@ -85,7 +80,7 @@ export default createServerCommand<Flags>({
 			case "set-directory": {
 				req.expectArgumentLength(3);
 
-				// If the value is an absolute path, then make it relative to the project folder
+				// If the value is an absolute path, then make it relative to the project directory
 				const path = createUnknownFilePath(value);
 				if (path.isAbsolute()) {
 					value = cwd.relative(path).join();
@@ -183,26 +178,23 @@ export default createServerCommand<Flags>({
 			const stringified = stringifyJSONExtra(res);
 
 			// Test if this project config doesn't result in errors
-			let {diagnostics} = catchDiagnosticsSync(() => {
-				// Reconsume with new stringified config
-				const res = consumeJSONExtra({
-					path: configPath,
-					input: stringified,
-				});
+			await interceptDiagnostics(
+				async () => {
+					// Reconsume with new stringified config
+					const res = consumeJSONExtra({
+						path: configPath,
+						input: stringified,
+					});
 
-				validate(res, stringified);
-			});
-
-			if (diagnostics !== undefined) {
-				const processor = new DiagnosticsProcessor();
-				processor.normalizer.setInlineSourceText(configPath.join(), stringified);
-				processor.addDiagnostics(diagnostics);
-
-				throw new DiagnosticsError(
-					"Diagnostics produced while testing new project config",
-					processor.getDiagnostics(),
-				);
-			}
+					validate(res, stringified);
+				},
+				(processor) => {
+					processor.normalizer.setInlineSourceText(
+						configPath.join(),
+						stringified,
+					);
+				},
+			);
 
 			// Write it out
 			await writeFile(configPath, stringified);
@@ -214,7 +206,7 @@ export default createServerCommand<Flags>({
 
 				let configPath: AbsoluteFilePath;
 				if (existingConfigPath === undefined) {
-					configPath = HOME_PATH.append([".config", "rome.rjson"]);
+					configPath = HOME_PATH.appendList(".config", "rome.rjson");
 					await writeFile(configPath, "");
 					reporter.info(
 						`Created user config at <emphasis>${configPath.toMarkup()}</emphasis> as it did not exist`,
@@ -243,7 +235,7 @@ export default createServerCommand<Flags>({
 							res,
 							meta.configPath,
 							stringified,
-							meta.projectFolder,
+							meta.projectDirectory,
 						);
 					},
 				);

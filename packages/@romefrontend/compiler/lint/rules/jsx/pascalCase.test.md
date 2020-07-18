@@ -36,7 +36,7 @@
 
  lint/jsx/pascalCase/reject/2/file.tsx:1 lint/jsx/pascalCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Switch FOO_COMPONENT to FooComponent.
+  ✖ Switch FOO_COMPONENT to FOOCOMPONENT.
 
     <FOO_COMPONENT />
     ^^^^^^^^^^^^^^^^^

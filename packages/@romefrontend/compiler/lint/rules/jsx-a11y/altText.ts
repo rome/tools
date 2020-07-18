@@ -64,7 +64,7 @@ function hasTypeImage(node: JSXElement): boolean {
 }
 
 export default {
-	name: "jsxA11YAltText",
+	name: "jsx-a11y/altText",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

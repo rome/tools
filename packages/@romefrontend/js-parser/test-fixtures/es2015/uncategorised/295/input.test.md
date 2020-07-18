@@ -238,9 +238,6 @@ JSRoot {
 
   ✖ Unclosed switch body
 
-    switch (cond) { case 10: let a = 20;
-                  ^
-
   ℹ We expected to find the closing character } here
 
     switch (cond) { case 10: let a = 20;

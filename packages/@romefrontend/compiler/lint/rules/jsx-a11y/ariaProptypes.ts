@@ -82,7 +82,7 @@ function isCorrectValue(
 }
 
 export default {
-	name: "jsxA11YAriaProptypes",
+	name: "jsx-a11y/ariaProptypes",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 
