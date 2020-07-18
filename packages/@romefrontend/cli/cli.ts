@@ -459,7 +459,7 @@ export default async function cli() {
 					await writeFile(resolvedProfilePath, str);
 
 					client.reporter.success(
-						markup`Wrote CPU profile to <emphasis>${resolvedProfilePath.toMarkup()}</emphasis>`,
+						`Wrote CPU profile to <emphasis>${resolvedProfilePath.toMarkup()}</emphasis>`,
 					);
 				},
 			);
