@@ -1080,9 +1080,7 @@ export default class Consumer {
 		}
 	}
 
-	asAbsoluteFilePathOrVoid(
-		cwd?: AbsoluteFilePath,
-	): undefined | AbsoluteFilePath {
+	asAbsoluteFilePathOrVoid(cwd?: AbsoluteFilePath): undefined | AbsoluteFilePath {
 		if (this.exists()) {
 			return this.asAbsoluteFilePath(undefined, cwd);
 		} else {
@@ -1279,7 +1277,7 @@ export default class Consumer {
 	}
 
 	asNumberSetOrVoid<ValidValue extends number>(
-		validValues: Array<ValidValue>
+		validValues: Array<ValidValue>,
 	): undefined | ValidValue {
 		this.declareDefinition({
 			type: "number",

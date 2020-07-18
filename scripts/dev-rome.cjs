@@ -1,5 +1,4 @@
 // @ts-check
-
 const child = require("child_process");
 const path = require("path");
 const net = require("net");
@@ -157,10 +156,7 @@ async function buildTrunk() {
 			];
 		}
 
-		const proc = child.spawn(
-			process.execPath,
-			args,
-		);
+		const proc = child.spawn(process.execPath, args);
 
 		proc.stdout.pipe(process.stdout);
 		proc.stderr.pipe(process.stderr);
