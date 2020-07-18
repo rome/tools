@@ -91,7 +91,7 @@ export default async function cli() {
 						},
 					).asStringSetOrVoid(["ansi", "html", "none"]),
 					isTTY: c.get(
-						"outputTTY",
+						"outputTty",
 						{
 							description: "Treat output as TTY regardless of terminal information. This will enable things like ANSI cursor, progress bars etc.",
 						},
@@ -102,6 +102,12 @@ export default async function cli() {
 							description: "Change the display width. By default it is automatically inferred and updated from the terminal.",
 						},
 					).asPossibleNumberString().asOneIndexedNumberOrVoid(),
+					colorDepth: c.get(
+						"outputColorDepth",
+						{
+							description: "Change the display width. By default it is automatically inferred and updated from the terminal.",
+						},
+					).asPossibleNumberString().asNumberSetOrVoid([1, 4, 8, 24]),
 					redirectError: c.get(
 						"outputRedirectError",
 						{

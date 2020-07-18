@@ -61,6 +61,7 @@ export type ConsumePropertyStringDefinition = ConsumePropertyDefinitionBase & {
 
 export type ConsumePropertyNumberDefinition = ConsumePropertyDefinitionBase & {
 	type: "number";
+	allowedValues?: Array<number>;
 	min?: number;
 	max?: number;
 };

@@ -8,8 +8,238 @@
 })(
 (function(global) {
   'use strict';
-  // project-rome/@romefrontend/cli-diagnostics/types.ts
-const ___R$project$rome$$romefrontend$cli$diagnostics$types_ts = {};
+  // project-rome/@romefrontend/codec-source-map/base64.ts
+const ___R$project$rome$$romefrontend$codec$source$map$base64_ts = {
+		encode: ___R$project$rome$$romefrontend$codec$source$map$base64_ts$encode,
+		encodeVLQ: ___R$project$rome$$romefrontend$codec$source$map$base64_ts$encodeVLQ,
+		decode: ___R$project$rome$$romefrontend$codec$source$map$base64_ts$decode,
+		decodeVLQ: ___R$project$rome$$romefrontend$codec$source$map$base64_ts$decodeVLQ,
+	};
+	/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+	/* -*- Mode: js; js-indent-level: 2; -*- */
+	/*
+ * Copyright 2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ *
+ * Based on the Base 64 VLQ implementation in Closure Compiler:
+ * https://code.google.com/p/closure-compiler/source/browse/trunk/src/com/google/debugging/sourcemap/Base64VLQ.java
+ *
+ * Copyright 2011 The Closure Compiler Authors. All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above
+ *    copyright notice, this list of conditions and the following
+ *    disclaimer in the documentation and/or other materials provided
+ *    with the distribution.
+ *  * Neither the name of Google Inc. nor the names of its
+ *    contributors may be used to endorse or promote products derived
+ *    from 'this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+	const ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$intToCharMap = Array.from(
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
+	);
+
+	/**
+ * Encode an integer in the range of 0 to 63 to a single base 64 digit.
+ */
+	function ___R$project$rome$$romefrontend$codec$source$map$base64_ts$encode(
+		number,
+	) {
+		if (
+			0 <= number &&
+			number <
+			___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$intToCharMap.length
+		) {
+			return ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$intToCharMap[number];
+		} else {
+			throw new TypeError("Must be between 0 and 63: " + number);
+		}
+	}
+
+	// A single base 64 digit can contain 6 bits of data. For the base 64 variable
+	// length quantities we use in the source map spec, the first bit is the sign,
+	// the next four bits are the actual value, and the 6th bit is the
+	// continuation bit. The continuation bit tells us whether there are more
+	// digits in this value following this digit.
+	//
+	//   Continuation
+	//   |    Sign
+	//   |    |
+	//   V    V
+	//   101011
+	const ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_BASE_SHIFT = 5;
+
+	// binary: 100000
+	const ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_BASE =
+		1 <<
+		___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_BASE_SHIFT;
+
+	// binary: 011111
+	const ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_BASE_MASK =
+		___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_BASE -
+		1;
+
+	// binary: 100000
+	const ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_CONTINUATION_BIT = ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_BASE;
+
+	/**
+ * Converts from 'a two-complement value to a value where the sign bit is
+ * placed in the least significant bit.  For example, as decimals:
+ *   1 becomes 2 (10 binary), -1 becomes 3 (11 binary)
+ *   2 becomes 4 (100 binary), -2 becomes 5 (101 binary)
+ */
+	function ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$toVLQSigned(
+		aValue,
+	) {
+		return aValue < 0 ? (-aValue << 1) + 1 : (aValue << 1) + 0;
+	}
+
+	/**
+ * Converts to a two-complement value from 'a value where the sign bit is
+ * placed in the least significant bit.  For example, as decimals:
+ *   2 (10 binary) becomes 1, 3 (11 binary) becomes -1
+ *   4 (100 binary) becomes 2, 5 (101 binary) becomes -2
+ */
+	// eslint-disable-next-line no-unused-vars
+	function ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$fromVLQSigned(
+		value,
+	) {
+		const isNegative = (value & 1) === 1;
+		const shifted = value >> 1;
+		return isNegative ? -shifted : shifted;
+	}
+
+	/**
+ * Returns the base 64 VLQ encoded value.
+ */
+	function ___R$project$rome$$romefrontend$codec$source$map$base64_ts$encodeVLQ(
+		value,
+	) {
+		let encoded = "";
+		let vlq = ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$toVLQSigned(
+			value,
+		);
+
+		do {
+			let digit =
+				vlq &
+				___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_BASE_MASK;
+			vlq >>>= ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_BASE_SHIFT;
+			if (vlq > 0) {
+				// There are still more digits in this value, so we must make sure the
+				// continuation bit is marked.
+				digit |= ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_CONTINUATION_BIT;
+			}
+			encoded += ___R$project$rome$$romefrontend$codec$source$map$base64_ts$encode(
+				digit,
+			);
+		} while (vlq > 0);
+
+		return encoded;
+	}
+
+	function ___R$project$rome$$romefrontend$codec$source$map$base64_ts$decode(
+		charCode,
+	) {
+		const uppercaseA = 65; // 'A'
+		const uppercaseZ = 90; // 'Z'
+		const lowercaseA = 97; // 'a'
+		const lowercaseZ = 122; // 'z'
+		const zero = 48; // '0'
+		const nine = 57; // '9'
+		const plus = 43; // '+'
+		const slash = 47; // '/'
+		const lowercaseOffset = 26;
+		const numberOffset = 52;
+
+		// 0 - 25: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+		if (uppercaseA <= charCode && charCode <= uppercaseZ) {
+			return charCode - uppercaseA;
+		}
+
+		// 26 - 51: abcdefghijklmnopqrstuvwxyz
+		if (lowercaseA <= charCode && charCode <= lowercaseZ) {
+			return charCode - lowercaseA + lowercaseOffset;
+		}
+
+		// 52 - 61: 0123456789
+		if (zero <= charCode && charCode <= nine) {
+			return charCode - zero + numberOffset;
+		}
+
+		// 62: +
+		if (charCode === plus) {
+			return 62;
+		}
+
+		// 63: /
+		if (charCode === slash) {
+			return 63;
+		}
+
+		// Invalid base64 digit.
+		return -1;
+	}
+
+	function ___R$project$rome$$romefrontend$codec$source$map$base64_ts$decodeVLQ(
+		aStr,
+		aIndex,
+	) {
+		let strLen = aStr.length;
+		let result = 0;
+		let shift = 0;
+		let continuation = false;
+
+		do {
+			if (aIndex >= strLen) {
+				throw new Error("Expected more digits in base 64 VLQ value.");
+			}
+
+			let digit = ___R$project$rome$$romefrontend$codec$source$map$base64_ts$decode(
+				aStr.charCodeAt(aIndex++),
+			);
+			if (digit === -1) {
+				throw new Error("Invalid base64 digit: " + aStr.charAt(aIndex - 1));
+			}
+
+			continuation = !!(digit &
+			___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_CONTINUATION_BIT);
+			digit &= ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_BASE_MASK;
+			result = result + (digit << shift);
+			shift += ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_BASE_SHIFT;
+		} while (continuation);
+
+		return [
+			___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$fromVLQSigned(
+				result,
+			),
+			aIndex,
+		];
+	}
 
 
   // project-rome/@romefrontend/ob1/index.ts
@@ -79,6 +309,1598 @@ function ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(a, b) {
 		// @ts-ignore
 		return x - 1;
 	}
+
+
+  // project-rome/@romefrontend/codec-source-map/util.ts
+function ___R$$priv$project$rome$$romefrontend$codec$source$map$util_ts$strcmp(
+		a,
+		b,
+	) {
+		if (a === b) {
+			return 0;
+		}
+
+		if (a === undefined) {
+			return 1;
+		}
+
+		if (b === undefined) {
+			return -1;
+		}
+
+		if (a > b) {
+			return 1;
+		}
+
+		return -1;
+	}
+
+	/**
+ * Comparator between two mappings with inflated source and name strings where
+ * the generated positions are compared.
+ */
+	function ___R$project$rome$$romefrontend$codec$source$map$util_ts$compareByGeneratedPositionsInflated(
+		mappingA,
+		mappingB,
+	) {
+		let cmp =
+			___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
+				mappingA.generated.line,
+			) -
+			___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
+				mappingB.generated.line,
+			);
+		if (cmp !== 0) {
+			return cmp;
+		}
+
+		cmp =
+			___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
+				mappingA.generated.column,
+			) -
+			___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
+				mappingB.generated.column,
+			);
+		if (cmp !== 0) {
+			return cmp;
+		}
+
+		cmp = ___R$$priv$project$rome$$romefrontend$codec$source$map$util_ts$strcmp(
+			mappingA.source,
+			mappingB.source,
+		);
+		if (cmp !== 0) {
+			return cmp;
+		}
+
+		if (mappingA.original == null) {
+			if (mappingB.original != null) {
+				return 1;
+			}
+		} else if (mappingB.original == null) {
+			return -1;
+		} else {
+			cmp =
+				___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
+					mappingA.original.line,
+				) -
+				___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
+					mappingB.original.line,
+				);
+			if (cmp !== 0) {
+				return cmp;
+			}
+
+			cmp =
+				___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
+					mappingA.original.column,
+				) -
+				___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
+					mappingB.original.column,
+				);
+			if (cmp !== 0) {
+				return cmp;
+			}
+		}
+
+		return ___R$$priv$project$rome$$romefrontend$codec$source$map$util_ts$strcmp(
+			mappingA.name,
+			mappingB.name,
+		);
+	}
+
+	function ___R$project$rome$$romefrontend$codec$source$map$util_ts$toRelativeUrl(
+		root,
+		path,
+	) {
+		if (root === "") {
+			root = ".";
+		}
+
+		root = root.replace(/\/$/, "");
+
+		// It is possible for the path to be above the root. In this case, simply
+
+		// checking whether the root is a prefix of the path won't work. Instead, we
+
+		// need to remove components from the root one by one, until either we find
+
+		// a prefix that fits, or we run out of components to remove.
+		let level = 0;
+		while (path.indexOf(root + "/") !== 0) {
+			const index = root.lastIndexOf("/");
+			if (index < 0) {
+				return path;
+			}
+
+			// If the only part of the root that is left is the scheme (i.e. http://,
+
+			// file:///, etc.), one or more slashes (/), or simply nothing at all, we
+
+			// have exhausted all components, so the path is not relative to the root.
+			root = root.slice(0, index);
+			if (root.match(/^([^\/]+:\/)?\/*$/)) {
+				return path;
+			}
+
+			++level;
+		}
+
+		// Make sure we add a '../' for each component we removed from the root.
+
+		return "../".repeat(level) + path.substr(root.length + 1);
+	}
+
+
+  // project-rome/@romefrontend/codec-source-map/ArraySet.ts
+class ___R$project$rome$$romefrontend$codec$source$map$ArraySet_ts$default {
+		constructor() {
+			this.array = [];
+			this.set = new Map();
+		}
+
+		/**
+   * Static method for creating ArraySet instances from 'an existing array.
+   */
+		static fromArray(array, allowDuplicates) {
+			const set = new ___R$project$rome$$romefrontend$codec$source$map$ArraySet_ts$default();
+			for (const item of array) {
+				set.add(item, allowDuplicates);
+			}
+			return set;
+		}
+
+		/**
+   * Add the given string to this set.
+   */
+		add(str, allowDuplicates) {
+			const isDuplicate = this.has(str);
+			const idx = this.array.length;
+
+			if (isDuplicate === false || allowDuplicates === true) {
+				this.array.push(str);
+			}
+
+			if (isDuplicate === false) {
+				this.set.set(str, idx);
+			}
+		}
+
+		/**
+   * Is the given string a member of this set?
+   */
+		has(str) {
+			return this.set.has(str);
+		}
+
+		/**
+   * What is the index of the given string in the array?
+   */
+		indexOf(str) {
+			const idx = this.set.get(str);
+			if (idx === undefined || idx < 0) {
+				throw new Error(str + " is not in the set");
+			}
+			return idx;
+		}
+
+		/**
+   * What is the element at the given index?
+   */
+		at(idx) {
+			if (idx >= 0 && idx < this.array.length) {
+				return this.array[idx];
+			} else {
+				throw new Error("No element indexed by " + idx);
+			}
+		}
+
+		/**
+   * Returns the array representation of this set (which has the proper indices
+   * indicated by indexOf). Note that this is a copy of the internal array used
+   * for storing the members so that no one can mess with internal state.
+   */
+		toArray() {
+			return this.array.slice();
+		}
+	}
+
+
+  // project-rome/@romefrontend/codec-source-map/MappingList.ts
+/**
+ * Determine whether mappingB is after mappingA with respect to generated
+ * position.
+ */
+	function ___R$$priv$project$rome$$romefrontend$codec$source$map$MappingList_ts$generatedPositionAfter(
+		mappingA,
+		mappingB,
+	) {
+		// Optimized for most common case
+		const lineA = mappingA.generated.line;
+		const lineB = mappingB.generated.line;
+		const columnA = mappingA.generated.column;
+		const columnB = mappingB.generated.column;
+		return (
+			lineB > lineA ||
+			(lineB === lineA && columnB >= columnA) ||
+			___R$project$rome$$romefrontend$codec$source$map$util_ts$compareByGeneratedPositionsInflated(
+				mappingA,
+				mappingB,
+			) <= 0
+		);
+	}
+
+	/**
+ * A data structure to provide a sorted view of accumulated mappings in a
+ * performance conscious manner. It trades a negligible overhead in general
+ * case for a large speedup in case of mappings being added in order.
+ */
+	class ___R$project$rome$$romefrontend$codec$source$map$MappingList_ts$default {
+		constructor() {
+			this.array = [];
+			this.sorted = true;
+			this.last = {
+				generated: {
+					index: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0,
+					line: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1Neg1,
+					column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0,
+				},
+				// TODO: original: undefined
+				original: {
+					line: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1Neg1,
+					column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0,
+				},
+				source: undefined,
+				name: undefined,
+			};
+		}
+
+		/**
+   * Add the given source mapping.
+   */
+		add(mapping) {
+			if (
+				___R$$priv$project$rome$$romefrontend$codec$source$map$MappingList_ts$generatedPositionAfter(
+					this.last,
+					mapping,
+				)
+			) {
+				this.last = mapping;
+				this.array.push(mapping);
+			} else {
+				this.sorted = false;
+				this.array.push(mapping);
+			}
+		}
+
+		/**
+   * Returns the flat, sorted array of mappings. The mappings are sorted by
+   * generated position.
+   *
+   * WARNING: This method returns internal data without copying, for
+   * performance. The return value must NOT be mutated, and should be treated as
+   * an immutable borrow. If you want to take ownership, you must make your own
+   * copy.
+   */
+		toArray() {
+			if (this.sorted === false) {
+				this.array.sort(
+					___R$project$rome$$romefrontend$codec$source$map$util_ts$compareByGeneratedPositionsInflated,
+				);
+				this.sorted = true;
+			}
+			return this.array;
+		}
+	}
+
+
+  // project-rome/@romefrontend/codec-source-map/SourceMapConsumer.ts
+function ___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$getParsedMappingKey(
+		line,
+		column,
+	) {
+		return String(line) + ":" + String(column);
+	}
+
+	class ___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$default {
+		constructor(file, getMappings) {
+			this.file = file;
+			this._getMappings = getMappings;
+			this.mappings = undefined;
+		}
+
+		static charIsMappingSeparator(str, index) {
+			const c = str.charAt(index);
+			return c === ";" || c === ",";
+		}
+
+		static fromJSON(sourceMap) {
+			return new ___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$default(
+				sourceMap.file,
+				() =>
+					___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$default.parseMappings(
+						sourceMap,
+					)
+				,
+			);
+		}
+
+		static fromJSONLazy(file, getSourceMap) {
+			return new ___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$default(
+				file,
+				() =>
+					___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$default.parseMappings(
+						getSourceMap(),
+					)
+				,
+			);
+		}
+
+		static parseMappings(sourceMap) {
+			const rawStr = sourceMap.mappings;
+			const map = new Map();
+
+			let generatedLine = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1;
+			let previousGeneratedColumn = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0;
+			let previousOriginalLine = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1;
+			let previousOriginalColumn = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0;
+			let previousSource = 0;
+			let previousName = 0;
+			let length = rawStr.length;
+			let index = 0;
+			let cachedSegments = {};
+			let value;
+
+			while (index < length) {
+				const char = rawStr[index];
+				if (char === ";") {
+					generatedLine = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(
+						generatedLine,
+					);
+					index++;
+					previousGeneratedColumn = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0;
+				} else if (char === ",") {
+					index++;
+				} else {
+					const mapping = {
+						generated: {
+							line: generatedLine,
+							column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0,
+						},
+						original: {
+							line: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1,
+							column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0,
+						},
+						source: undefined,
+						name: undefined,
+					};
+
+					// Because each offset is encoded relative to the previous one,
+					// many segments often have the same encoding. We can exploit this
+					// fact by caching the parsed variable length fields of each segment,
+					// allowing us to avoid a second parse if we encounter the same
+					// segment again.
+					let end = index;
+					for (; end < length; end++) {
+						if (
+							___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$default.charIsMappingSeparator(
+								rawStr,
+								end,
+							)
+						) {
+							break;
+						}
+					}
+					const str = rawStr.slice(index, end);
+
+					let segment = cachedSegments[str];
+					if (segment) {
+						index += str.length;
+					} else {
+						segment = [];
+						while (index < end) {
+							[value, index] = ___R$project$rome$$romefrontend$codec$source$map$base64_ts$decodeVLQ(
+								rawStr,
+								index,
+							);
+							segment.push(value);
+						}
+
+						if (segment.length === 2) {
+							throw new Error("Found a source, but no line and column");
+						}
+
+						if (segment.length === 3) {
+							throw new Error("Found a source and line, but no column");
+						}
+
+						cachedSegments[str] = segment;
+					}
+
+					// Generated column
+					mapping.generated.column = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+						previousGeneratedColumn,
+						segment[0],
+					);
+					previousGeneratedColumn = mapping.generated.column;
+
+					if (segment.length > 1) {
+						// Original source
+						mapping.source = sourceMap.sources[previousSource + segment[1]];
+						previousSource += segment[1];
+
+						// Original line
+						const newOriginalLine = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+							previousOriginalLine,
+							segment[2],
+						);
+						previousOriginalLine = newOriginalLine;
+
+						// Lines are stored 0-based
+						mapping.original.line = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+							newOriginalLine,
+							1,
+						);
+
+						// Original column
+						const newOriginalColumn = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+							previousOriginalColumn,
+							segment[3],
+						);
+						mapping.original.column = newOriginalColumn;
+						previousOriginalColumn = newOriginalColumn;
+
+						if (segment.length > 4) {
+							// Original name
+							mapping.name = sourceMap.names[previousName + segment[4]];
+							previousName += segment[4];
+						}
+					}
+
+					map.set(
+						___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$getParsedMappingKey(
+							mapping.generated.line,
+							mapping.generated.column,
+						),
+						mapping,
+					);
+				}
+			}
+
+			return map;
+		}
+
+		clearCache() {
+			this.mappings = undefined;
+		}
+
+		getMappings() {
+			if (this.mappings === undefined) {
+				const mappings = this._getMappings();
+				this.mappings = mappings;
+				return mappings;
+			} else {
+				return this.mappings;
+			}
+		}
+
+		approxOriginalPositionFor(line, column) {
+			while (___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(column) >= 0) {
+				const mapping = this.exactOriginalPositionFor(line, column);
+				if (mapping === undefined) {
+					column = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Dec(column);
+					continue;
+				} else {
+					return mapping;
+				}
+			}
+
+			return undefined;
+		}
+
+		exactOriginalPositionFor(line, column) {
+			const key = ___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$getParsedMappingKey(
+				line,
+				column,
+			);
+			const mapping = this.getMappings().get(key);
+			if (mapping === undefined) {
+				return undefined;
+			}
+
+			const source = mapping.source === undefined ? this.file : mapping.source;
+			if (source === undefined) {
+				throw new Error("Mapping provided unknown source");
+			}
+
+			return {
+				found: true,
+				source,
+				line: mapping.original.line,
+				column: mapping.original.column,
+				name: mapping.name,
+			};
+		}
+	}
+
+
+  // project-rome/@romefrontend/codec-source-map/SourceMapGenerator.ts
+class ___R$project$rome$$romefrontend$codec$source$map$SourceMapGenerator_ts$default {
+		constructor(args) {
+			this.file = args.file;
+			this.sourceRoot = args.sourceRoot;
+
+			this.sourcesContents = new Map();
+			this.map = undefined;
+			this.sources = new ___R$project$rome$$romefrontend$codec$source$map$ArraySet_ts$default();
+			this.names = new ___R$project$rome$$romefrontend$codec$source$map$ArraySet_ts$default();
+			this.mappings = new ___R$project$rome$$romefrontend$codec$source$map$MappingList_ts$default();
+			this.materializeCallbacks = [];
+		}
+
+		assertUnlocked() {
+			if (this.map !== undefined) {
+				throw new Error(
+					"Source map has already been materialized, serialize() should be your final call",
+				);
+			}
+		}
+
+		addMaterializer(fn) {
+			this.materializeCallbacks.push(fn);
+		}
+
+		/**
+   * Add a single mapping from 'original source line and column to the generated
+   * source's line and column for this source map being created. The mapping
+   * object should have the following properties:
+   *
+   *   - generated: An object with the generated line and column positions.
+   *   - original: An object with the original line and column positions.
+   *   - source: The original source file (relative to the sourceRoot).
+   *   - name: An optional original token name for this mapping.
+   */
+		addMapping(mapping) {
+			this.assertUnlocked();
+
+			const {name, source} = mapping;
+
+			this.validatePosition(
+				"generated",
+				mapping.generated.line,
+				mapping.generated.column,
+			);
+
+			if (mapping.original) {
+				this.validatePosition(
+					"original",
+					mapping.original.line,
+					mapping.original.column,
+				);
+			}
+
+			if (source !== undefined) {
+				this.sources.add(source);
+			}
+
+			if (name !== undefined) {
+				this.names.add(name);
+			}
+
+			this.mappings.add(mapping);
+		}
+
+		/**
+   * Set the source content for a source file.
+   */
+		setSourceContent(source, sourceContent) {
+			this.assertUnlocked();
+
+			if (this.sourceRoot !== undefined) {
+				source = ___R$project$rome$$romefrontend$codec$source$map$util_ts$toRelativeUrl(
+					this.sourceRoot,
+					source,
+				);
+			}
+
+			if (sourceContent !== undefined) {
+				// Add the source content to the _sourcesContents map.
+				this.sourcesContents.set(source, sourceContent);
+			} else {
+				// Remove the source file from the _sourcesContents map.
+				this.sourcesContents.delete(source);
+			}
+		}
+
+		validatePosition(key, line, column) {
+			if (___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(line) <= 0) {
+				throw new Error(key + " line should be >= 1 but is " + line);
+			}
+
+			if (___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(column) < 0) {
+				throw new Error(key + " column should be >= 0 but is " + column);
+			}
+		}
+
+		/**
+   * Serialize the accumulated mappings in to the stream of base 64 VLQs
+   * specified by the source map format.
+   */
+		serializeMappings() {
+			let previousGeneratedColumn = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0;
+			let previousGeneratedLine = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1;
+			let previousOriginalColumn = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0;
+			let previousOriginalLine = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1;
+			let previousName = 0;
+			let previousSource = 0;
+			let result = "";
+
+			const mappings = this.mappings.toArray();
+			for (let i = 0; i < mappings.length; i++) {
+				const mapping = mappings[i];
+				let next = "";
+
+				if (mapping.generated.line !== previousGeneratedLine) {
+					previousGeneratedColumn = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0;
+					while (mapping.generated.line !== previousGeneratedLine) {
+						next += ";";
+						previousGeneratedLine = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(
+							previousGeneratedLine,
+						);
+					}
+				} else if (i > 0) {
+					if (
+						!___R$project$rome$$romefrontend$codec$source$map$util_ts$compareByGeneratedPositionsInflated(
+							mapping,
+							mappings[i - 1],
+						)
+					) {
+						continue;
+					}
+					next += ",";
+				}
+
+				next += ___R$project$rome$$romefrontend$codec$source$map$base64_ts.encodeVLQ(
+					___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
+						mapping.generated.column,
+					) -
+					___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
+						previousGeneratedColumn,
+					),
+				);
+				previousGeneratedColumn = mapping.generated.column;
+
+				if (mapping.source !== undefined) {
+					const sourceIdx = this.sources.indexOf(mapping.source);
+					next += ___R$project$rome$$romefrontend$codec$source$map$base64_ts.encodeVLQ(
+						sourceIdx - previousSource,
+					);
+					previousSource = sourceIdx;
+
+					if (mapping.original) {
+						next += ___R$project$rome$$romefrontend$codec$source$map$base64_ts.encodeVLQ(
+							___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
+								mapping.original.line,
+							) -
+							___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
+								previousOriginalLine,
+							),
+						);
+						previousOriginalLine = mapping.original.line;
+
+						next += ___R$project$rome$$romefrontend$codec$source$map$base64_ts.encodeVLQ(
+							___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
+								mapping.original.column,
+							) -
+							___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
+								previousOriginalColumn,
+							),
+						);
+						previousOriginalColumn = mapping.original.column;
+
+						if (mapping.name !== undefined) {
+							const nameIdx = this.names.indexOf(mapping.name);
+							next += ___R$project$rome$$romefrontend$codec$source$map$base64_ts.encodeVLQ(
+								nameIdx - previousName,
+							);
+							previousName = nameIdx;
+						}
+					}
+
+					// TODO: else, assert mapping.name is undefined since it can't be encoded without an original position
+				}
+
+				// TODO: else, assert mapping.original is undefined since it can't be encoded without a source
+				result += next;
+			}
+
+			return result;
+		}
+
+		generateSourcesContent(sources, sourceRoot) {
+			return sources.map((source) => {
+				if (sourceRoot !== undefined) {
+					source = ___R$project$rome$$romefrontend$codec$source$map$util_ts$toRelativeUrl(
+						sourceRoot,
+						source,
+					);
+				}
+				const content = this.sourcesContents.get(source);
+				if (content === undefined) {
+					throw new Error("Expected content");
+				}
+				return content;
+			});
+		}
+
+		materialize() {
+			for (const fn of this.materializeCallbacks) {
+				fn();
+			}
+			this.materializeCallbacks = [];
+		}
+
+		/**
+   * Externalize the source map.
+   */
+		serialize() {
+			if (this.map !== undefined) {
+				return this.map;
+			}
+
+			this.materialize();
+
+			const sources = this.sources.toArray();
+			this.map = {
+				version: 3,
+				file: this.file,
+				names: this.names.toArray(),
+				mappings: this.serializeMappings(),
+				sourceRoot: this.sourceRoot,
+				sources,
+				sourcesContent: this.generateSourcesContent(sources, this.sourceRoot),
+			};
+			return this.map;
+		}
+
+		toComment() {
+			const jsonMap = this.toJSON();
+			const base64Map = new Buffer(jsonMap).toString("base64");
+			const comment =
+				"//# sourceMappingURL=data:application/json;charset=utf-8;base64," +
+				base64Map;
+			return comment;
+		}
+
+		toConsumer() {
+			return new ___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$default(
+				this.file,
+				() => {
+					const parsedMappings = new Map();
+
+					for (const mapping of this.getMappings()) {
+						parsedMappings.set(
+							___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$getParsedMappingKey(
+								mapping.generated.line,
+								mapping.generated.column,
+							),
+							mapping,
+						);
+					}
+
+					return parsedMappings;
+				},
+			);
+		}
+
+		getMappings() {
+			this.materialize();
+			return this.mappings.toArray();
+		}
+
+		toJSON() {
+			return JSON.stringify(this.serialize());
+		}
+	}
+
+
+  // project-rome/@romefrontend/codec-source-map/SourceMapConsumerCollection.ts
+class ___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumerCollection_ts$default {
+		constructor() {
+			this.maps = new Map();
+		}
+
+		hasAny() {
+			return this.maps.size > 0;
+		}
+
+		has(file) {
+			return file !== undefined && this.maps.has(file);
+		}
+
+		add(file, map) {
+			this.maps.set(file, map);
+		}
+
+		get(file) {
+			return this.maps.get(file);
+		}
+
+		normalizeResolved(source, line, column, loc) {
+			if (loc === undefined) {
+				return {
+					found: false,
+					source,
+					line,
+					column,
+					name: undefined,
+				};
+			} else {
+				return loc;
+			}
+		}
+
+		assertApproxOriginalPositionFor(file, line, column) {
+			return this.normalizeResolved(
+				file,
+				line,
+				column,
+				this.approxOriginalPositionFor(file, line, column),
+			);
+		}
+
+		assertExactOriginalPositionFor(file, line, column) {
+			return this.normalizeResolved(
+				file,
+				line,
+				column,
+				this.exactOriginalPositionFor(file, line, column),
+			);
+		}
+
+		approxOriginalPositionFor(file, line, column) {
+			const map = this.get(file);
+			if (map === undefined) {
+				return undefined;
+			} else {
+				return map.approxOriginalPositionFor(line, column);
+			}
+		}
+
+		exactOriginalPositionFor(file, line, column) {
+			const map = this.get(file);
+			if (map === undefined) {
+				return undefined;
+			} else {
+				return map.exactOriginalPositionFor(line, column);
+			}
+		}
+	}
+
+
+  // project-rome/@romefrontend/codec-source-map/types.ts
+
+
+
+  // project-rome/@romefrontend/codec-source-map/index.ts
+
+
+
+  // project-rome/@romefrontend/v8/types.ts
+const ___R$project$rome$$romefrontend$v8$types_ts = {};
+	const ___R$$priv$project$rome$$romefrontend$v8$types_ts$inspector = require(
+		"inspector",
+	);
+
+
+  // project-rome/@romefrontend/typescript-helpers/index.ts
+function ___R$project$rome$$romefrontend$typescript$helpers$index_ts$isPlainObject(
+		obj,
+	) {
+		return typeof obj === "object" && obj !== null && !Array.isArray(obj);
+	}
+
+	function ___R$project$rome$$romefrontend$typescript$helpers$index_ts$isIterable(
+		obj,
+	) {
+		if (typeof obj === "object" && obj != null) {
+			// @ts-ignore
+			return typeof obj[Symbol.iterator] === "function";
+		} else {
+			return false;
+		}
+	}
+
+	function ___R$project$rome$$romefrontend$typescript$helpers$index_ts$mergeObjects(
+		a,
+		b,
+	) {
+		const newObj = Object.assign({}, a, b);
+
+		// If b contains undefined properties then use the value from A
+		for (const key in b) {
+			if (b[key] === undefined) {
+				// @ts-ignore
+				newObj[key] = a[key];
+			}
+		}
+
+		return newObj;
+	}
+
+
+  // project-rome/@romefrontend/node/errors.ts
+const ___R$project$rome$$romefrontend$node$errors_ts = {
+		convertPossibleNodeError: ___R$project$rome$$romefrontend$node$errors_ts$convertPossibleNodeError,
+	};
+	function ___R$$priv$project$rome$$romefrontend$node$errors_ts$changeMessage(
+		old,
+		msg,
+	) {
+		const err = new Error(msg);
+
+		// Inherit some NodeJS.ErrnoException props
+		err.code = old.code;
+		err.path = old.path;
+		err.syscall = old.syscall;
+
+		// Without doing something jank we can't retain the original Error constructor ie. TypeError etc
+		// We probably don't need to or actually care
+		err.name = old.name;
+
+		// Populate ERROR_FRAMES_PROP
+		old.stack;
+		err[___R$project$rome$$romefrontend$v8$errors_ts$ERROR_FRAMES_PROP] = old[___R$project$rome$$romefrontend$v8$errors_ts$ERROR_FRAMES_PROP];
+		err.stack;
+
+		return err;
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$node$errors_ts$convertNodeErrorWithPath(
+		err,
+		path,
+	) {
+		switch (err.code) {
+			case "ENOENT":
+				return ___R$$priv$project$rome$$romefrontend$node$errors_ts$changeMessage(
+					err,
+					"'" + path + "' does not exist",
+				);
+
+			case "EPERM":
+				return ___R$$priv$project$rome$$romefrontend$node$errors_ts$changeMessage(
+					err,
+					"Cannot access '" + path + "'",
+				);
+
+			case "EISDIR":
+				return ___R$$priv$project$rome$$romefrontend$node$errors_ts$changeMessage(
+					err,
+					"Trying to perform a file operation on the folder '" + path + "'",
+				);
+
+			default:
+				return err;
+		}
+	}
+
+	function ___R$project$rome$$romefrontend$node$errors_ts$convertPossibleNodeError(
+		err,
+	) {
+		if (err.path !== undefined) {
+			return ___R$$priv$project$rome$$romefrontend$node$errors_ts$convertNodeErrorWithPath(
+				err,
+				err.path,
+			);
+		}
+
+		return err;
+	}
+
+
+  // project-rome/@romefrontend/node/index.ts
+
+
+
+  // project-rome/@romefrontend/v8/errors.ts
+const ___R$project$rome$$romefrontend$v8$errors_ts = {
+		get ERROR_FRAMES_PROP() {
+			return ___R$project$rome$$romefrontend$v8$errors_ts$ERROR_FRAMES_PROP;
+		},
+		getErrorStructure: ___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure,
+		getSourceLocationFromErrorFrame: ___R$project$rome$$romefrontend$v8$errors_ts$getSourceLocationFromErrorFrame,
+	};
+	Object.keys(___R$project$rome$$romefrontend$v8$types_ts).forEach(function(key) {
+		if (key === "default") return undefined;
+		Object.defineProperty(
+			___R$project$rome$$romefrontend$v8$errors_ts,
+			key,
+			{
+				enumerable: true,
+				configurable: true,
+				get: function get() {
+					return ___R$project$rome$$romefrontend$v8$types_ts[key];
+				},
+			},
+		);
+	});
+	const ___R$project$rome$$romefrontend$v8$errors_ts$ERROR_FRAMES_PROP = "ERROR_FRAMES";
+
+	function ___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(
+		err,
+		framesToShift = 0,
+	) {
+		// Make some node errors more pretty
+		if (err instanceof Error) {
+			err = ___R$project$rome$$romefrontend$node$errors_ts$convertPossibleNodeError(
+				err,
+			);
+		}
+
+		let name = "Error";
+		let message = "Unknown message";
+		let stack = undefined;
+		let frames = [];
+		let looksLikeValidError = false;
+
+		if (
+			___R$project$rome$$romefrontend$typescript$helpers$index_ts$isPlainObject(
+				err,
+			)
+		) {
+			if (typeof err.name === "string") {
+				looksLikeValidError = true;
+				name = err.name;
+			}
+
+			if (typeof err.message === "string") {
+				looksLikeValidError = true;
+				message = err.message;
+			}
+
+			if (typeof err.stack === "string") {
+				looksLikeValidError = true;
+				stack = err.stack;
+			}
+
+			if (
+				Array.isArray(
+					err[___R$project$rome$$romefrontend$v8$errors_ts$ERROR_FRAMES_PROP],
+				)
+			) {
+				// @ts-ignore
+				frames = err[___R$project$rome$$romefrontend$v8$errors_ts$ERROR_FRAMES_PROP];
+			}
+		}
+
+		frames = frames.slice(framesToShift);
+
+		if (!looksLikeValidError) {
+			message = "Not an error instance: " + String(err);
+		}
+
+		return {
+			name,
+			message,
+			stack,
+			frames,
+		};
+	}
+
+	function ___R$project$rome$$romefrontend$v8$errors_ts$getSourceLocationFromErrorFrame(
+		frame,
+	) {
+		const pos = {
+			index: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0Neg1,
+			line: frame.lineNumber === undefined
+				? ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1
+				: frame.lineNumber,
+			column: frame.columnNumber === undefined
+				? ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0
+				: frame.columnNumber,
+		};
+
+		return {
+			filename: frame.filename === undefined ? "unknown" : frame.filename,
+			start: pos,
+			end: pos,
+		};
+	}
+
+
+  // project-rome/@romefrontend/v8/sourceMapManager.ts
+let ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$inited = false;
+
+	function ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$prepareStackTrace(
+		err,
+		frames,
+	) {
+		try {
+			___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$addErrorFrames(
+				err,
+				frames,
+			);
+			return ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$buildStackString(
+				err,
+			);
+		} catch (err2) {
+			return (
+				err.name +
+				": " +
+				err.message +
+				"\n  Failed to generate stacktrace: " +
+				err2.message
+			);
+		}
+	}
+
+	function ___R$project$rome$$romefrontend$v8$sourceMapManager_ts$initErrorHooks() {
+		if (!___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$inited) {
+			___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$inited = true;
+			Error.prepareStackTrace = ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$prepareStackTrace;
+		}
+	}
+
+	function ___R$project$rome$$romefrontend$v8$sourceMapManager_ts$teardown() {
+		Error.prepareStackTrace = undefined;
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$buildStackString(
+		err,
+	) {
+		const {frames} = ___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(
+			err,
+		);
+		const lines = [];
+
+		lines.push(err.name + ": " + err.message);
+
+		for (const frame of frames) {
+			const {
+				resolvedLocation,
+				methodName,
+				functionName,
+				typeName,
+				isNative,
+				isAsync,
+				isEval,
+				isConstructor,
+				filename,
+				lineNumber,
+				columnNumber,
+			} = frame;
+			const parts = [];
+
+			if (isAsync) {
+				parts.push("await");
+			}
+
+			if (isEval) {
+				parts.push("eval");
+			}
+
+			if (isConstructor) {
+				parts.push("new");
+			}
+
+			let name = "<anonymous>";
+			if (functionName !== undefined) {
+				name = functionName;
+			}
+			if (methodName !== undefined) {
+				name = methodName;
+			}
+			if (typeName !== undefined) {
+				parts.push(typeName + "." + name);
+			} else {
+				parts.push(name);
+			}
+
+			if (isNative) {
+				parts.push("native");
+			} else if (
+				filename !== undefined &&
+				lineNumber !== undefined &&
+				columnNumber !== undefined
+			) {
+				parts.push("(" + filename + ":" + lineNumber + ":" + columnNumber + ")");
+			}
+
+			if (resolvedLocation === false) {
+				parts.push("generated source location");
+			}
+
+			lines.push("  at " + parts.join(" "));
+		}
+
+		return lines.join("\n");
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$noNull(
+		val,
+	) {
+		if (val === null) {
+			return undefined;
+		} else {
+			return val;
+		}
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$addErrorFrames(
+		err,
+		frames,
+	) {
+		if (err[___R$project$rome$$romefrontend$v8$errors_ts$ERROR_FRAMES_PROP]) {
+			return;
+		}
+
+		let builtFrames = frames.map((frameApi) => {
+			const filename = frameApi.getFileName();
+			const lineNumber = frameApi.getLineNumber();
+			const columnNumber = frameApi.getColumnNumber();
+
+			const frame = {
+				typeName: ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$noNull(
+					frameApi.getTypeName(),
+				),
+				functionName: ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$noNull(
+					frameApi.getFunctionName(),
+				),
+				methodName: ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$noNull(
+					frameApi.getMethodName(),
+				),
+				isTopLevel: frameApi.isToplevel(),
+				isEval: frameApi.isEval(),
+				isNative: frameApi.isNative(),
+				isConstructor: frameApi.isConstructor(),
+				// TODO frameApi.isAsync
+				isAsync: false,
+				resolvedLocation: true,
+				filename: ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$noNull(
+					filename,
+				),
+				lineNumber: lineNumber == null
+					? undefined
+					: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(lineNumber),
+				// Rome expects 0-indexed columns, V8 provides 1-indexed
+				columnNumber: columnNumber == null
+					? undefined
+					: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1To0(
+							columnNumber,
+						),
+			};
+
+			if (
+				frame.filename !== undefined &&
+				frame.lineNumber !== undefined &&
+				frame.columnNumber !== undefined
+			) {
+				const {found, line, column, source, name} = ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$sourceMaps.assertApproxOriginalPositionFor(
+					frame.filename,
+					frame.lineNumber,
+					frame.columnNumber,
+				);
+
+				return Object.assign(
+					{},
+					frame,
+					{
+						functionName: frame.functionName === undefined
+							? name
+							: frame.functionName,
+						methodName: frame.methodName === undefined ? name : frame.methodName,
+						resolvedLocation: found,
+						lineNumber: line,
+						columnNumber: column,
+						filename: source,
+					},
+				);
+			} else {
+				return frame;
+			}
+		});
+
+		err[___R$project$rome$$romefrontend$v8$errors_ts$ERROR_FRAMES_PROP] = builtFrames;
+	}
+
+	const ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$sourceMaps = new ___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumerCollection_ts$default();
+	const ___R$project$rome$$romefrontend$v8$sourceMapManager_ts$default = ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$sourceMaps;
+
+
+  // project-rome/@romefrontend/v8/utils.ts
+const ___R$project$rome$$romefrontend$v8$utils_ts = {
+		hrTime: ___R$project$rome$$romefrontend$v8$utils_ts$hrTime,
+		urlToFilename: ___R$project$rome$$romefrontend$v8$utils_ts$urlToFilename,
+	};
+	function ___R$project$rome$$romefrontend$v8$utils_ts$hrTime() {
+		const hrtime = process.hrtime(); // [seconds, nanoseconds]
+		const ts = hrtime[0] * 1_000_000 + Math.round(hrtime[1] / 1_000); // microseconds
+		return ts;
+	}
+
+	const ___R$$priv$project$rome$$romefrontend$v8$utils_ts$FILE_PROTOCOL = "file://";
+
+	function ___R$project$rome$$romefrontend$v8$utils_ts$urlToFilename(url) {
+		if (
+			url.startsWith(
+				___R$$priv$project$rome$$romefrontend$v8$utils_ts$FILE_PROTOCOL,
+			)
+		) {
+			return url.slice(
+				___R$$priv$project$rome$$romefrontend$v8$utils_ts$FILE_PROTOCOL.length,
+			);
+		} else {
+			return url;
+		}
+	}
+
+
+  // project-rome/@romefrontend/v8/Profiler.ts
+const ___R$$priv$project$rome$$romefrontend$v8$Profiler_ts$inspector = require(
+		"inspector",
+	);
+	class ___R$project$rome$$romefrontend$v8$Profiler_ts$default {
+		constructor() {
+			this.session = undefined;
+			this.memoryInterval = undefined;
+			this.memorySamples = [];
+		}
+
+		async startProfiling(samplingInterval) {
+			this.session = new ___R$$priv$project$rome$$romefrontend$v8$Profiler_ts$inspector.Session();
+			this.session.connect();
+
+			this.memoryInterval = setInterval(
+				() => {
+					const time = ___R$project$rome$$romefrontend$v8$utils_ts$hrTime();
+					const size = process.memoryUsage().heapUsed;
+					this.memorySamples.push([time, size]);
+				},
+				100,
+			);
+
+			await Promise.all([
+				this.sendCommand(
+					"Profiler.setSamplingInterval",
+					{
+						interval: samplingInterval,
+					},
+				),
+				this.sendCommand("Profiler.enable"),
+				this.sendCommand("Profiler.start"),
+			]);
+		}
+
+		async sendCommand(method, params) {
+			const {session} = this;
+			if (session === undefined) {
+				return Promise.reject(new Error("No current profiler session"));
+			} else {
+				return new Promise((resolve, reject) => {
+					session.post(
+						method,
+						params,
+						(err) => {
+							if (err === null) {
+								resolve();
+							} else {
+								reject(err);
+							}
+						},
+					);
+				});
+			}
+		}
+
+		destroy() {
+			const {session} = this;
+			if (session !== undefined) {
+				if (this.memoryInterval !== undefined) {
+					clearInterval(this.memoryInterval);
+				}
+				this.memorySamples = [];
+				session.disconnect();
+			}
+		}
+
+		async stopProfiling() {
+			const {session} = this;
+			if (session === undefined) {
+				return Promise.reject(new Error("No current profiler session"));
+			}
+
+			const {memorySamples} = this;
+
+			const res = await new Promise((resolve, reject) => {
+				session.post(
+					"Profiler.stop",
+					(err, params) => {
+						if (err === null) {
+							resolve(params);
+						} else {
+							reject(err);
+						}
+					},
+				);
+			});
+
+			this.destroy();
+
+			return {
+				pid: process.pid,
+				cpuProfile: res.profile,
+				memorySamples,
+			};
+		}
+	}
+
+
+  // project-rome/@romefrontend/v8/Trace.ts
+class ___R$project$rome$$romefrontend$v8$Trace_ts$default {
+		constructor() {
+			this.tid = 0;
+			this.eventId = 0;
+			this.events = [];
+		}
+
+		getEventId() {
+			const id = this.eventId;
+			this.eventId++;
+			return id;
+		}
+
+		decodeProfileSourceMap(profile) {
+			// This method mutates the profile for performance/ergonomics
+			// Nothing else should be relying on this so it doesn't really matter
+			for (const node of profile.cpuProfile.nodes) {
+				const {callFrame} = node;
+
+				// Call frame line numbers are 0-index while Rome is 1-indexed
+				const resolved = ___R$project$rome$$romefrontend$v8$sourceMapManager_ts$default.approxOriginalPositionFor(
+					___R$project$rome$$romefrontend$v8$utils_ts$urlToFilename(
+						callFrame.url,
+					),
+					___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce0To1(
+						___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce0(
+							callFrame.lineNumber,
+						),
+					),
+					___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce0(
+						callFrame.columnNumber,
+					),
+				);
+				if (resolved !== undefined) {
+					callFrame.url = resolved.source;
+					callFrame.lineNumber = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
+						___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1To0(
+							resolved.line,
+						),
+					);
+					callFrame.columnNumber = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
+						resolved.column,
+					);
+
+					if (resolved.name !== undefined) {
+						callFrame.functionName = resolved.name;
+					}
+				}
+			}
+		}
+
+		addProfile(name, profile) {
+			this.decodeProfileSourceMap(profile);
+
+			const {startTime, endTime} = profile.cpuProfile;
+
+			const common = {
+				pid: 1,
+				tid: profile.pid,
+			};
+
+			this.events.push(
+				Object.assign(
+					{},
+					common,
+					{ts: 0, ph: "M", cat: "__metadata", name: "thread_name", args: {name}},
+				),
+			);
+
+			this.events.push(
+				Object.assign(
+					{},
+					common,
+					{
+						ph: "P",
+						name: "CpuProfile",
+						id: this.getEventId(),
+						cat: "disabled-by-default-v8.cpu_profiler",
+						ts: endTime,
+						args: {
+							data: {
+								cpuProfile: profile.cpuProfile,
+							},
+						},
+					},
+				),
+			);
+
+			this.events.push(
+				Object.assign(
+					{},
+					common,
+					{
+						ph: "X",
+						name: "EvaluateScript",
+						id: this.getEventId(),
+						cat: "devtools.timeline",
+						ts: startTime,
+						dur: endTime - startTime,
+						args: {
+							data: {
+								url: "rome.js",
+								lineNumber: 1,
+								columnNumber: 1,
+								frame: "0xFFF",
+							},
+						},
+					},
+				),
+			);
+
+			for (const [time, size] of profile.memorySamples) {
+				this.events.push(
+					Object.assign(
+						{},
+						common,
+						{
+							ts: time,
+							ph: "I",
+							cat: "disabled-by-default-devtools.timeline",
+							name: "UpdateCounters",
+							args: {
+								data: {
+									jsHeapSizeUsed: size,
+								},
+							},
+							s: "t",
+						},
+					),
+				);
+			}
+		}
+
+		build() {
+			return this.events;
+		}
+	}
+
+
+  // project-rome/@romefrontend/codec-json/types.ts
+
+
+
+  // project-rome/@romefrontend/cli-diagnostics/types.ts
+const ___R$project$rome$$romefrontend$cli$diagnostics$types_ts = {};
 
 
   // project-rome/@romefrontend/parser-core/types.ts
@@ -312,7 +2134,7 @@ const ___R$$priv$project$rome$$romefrontend$path$index_ts$os = require("os");
 		toMarkup() {
 			return (
 				'<filelink target="' +
-				___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
+				___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
 					this.join(),
 				) +
 				'" />'
@@ -364,7 +2186,7 @@ const ___R$$priv$project$rome$$romefrontend$path$index_ts$os = require("os");
 
 		getBasename() {
 			const {segments} = this;
-			const offset = this.isExplicitFolder() ? 2 : 1;
+			const offset = this.isExplicitDirectory() ? 2 : 1;
 			return segments[segments.length - offset] || "";
 		}
 
@@ -409,7 +2231,7 @@ const ___R$$priv$project$rome$$romefrontend$path$index_ts$os = require("os");
 
 			const segments = this.getSegments().slice(0, -1);
 
-			// Always make this an explicit folder
+			// Always make this an explicit directory
 			if (explicit && segments.length > 0 && segments[0] !== "") {
 				segments.push("");
 			}
@@ -476,7 +2298,7 @@ const ___R$$priv$project$rome$$romefrontend$path$index_ts$os = require("os");
 			}
 
 			if (this.segments.length === 2) {
-				// Explicit folder reference
+				// Explicit directory reference
 				return this.segments[1] === "";
 			}
 
@@ -541,7 +2363,7 @@ const ___R$$priv$project$rome$$romefrontend$path$index_ts$os = require("os");
 			return !this.isURL() && (firstSeg === "." || firstSeg === "..");
 		}
 
-		isExplicitFolder() {
+		isExplicitDirectory() {
 			const {segments} = this;
 			return segments[segments.length - 1] === "";
 		}
@@ -577,7 +2399,7 @@ const ___R$$priv$project$rome$$romefrontend$path$index_ts$os = require("os");
 			let {segments} = this;
 
 			if (!this.isRoot()) {
-				if (this.isExplicitFolder()) {
+				if (this.isExplicitDirectory()) {
 					segments = segments.slice(0, -1);
 				}
 
@@ -601,7 +2423,7 @@ const ___R$$priv$project$rome$$romefrontend$path$index_ts$os = require("os");
 			let segments;
 
 			if (!this.isRoot()) {
-				if (this.isExplicitFolder()) {
+				if (this.isExplicitDirectory()) {
 					segments = this.getSegments();
 
 					if (this.isExplicitRelative()) {
@@ -711,40 +2533,38 @@ const ___R$$priv$project$rome$$romefrontend$path$index_ts$os = require("os");
 			}
 		}
 
-		append(raw) {
-			// Check if we have a memoized instance
-			if (typeof raw === "string") {
-				const cached = this.memoizedChildren.get(raw);
+		append(item) {
+			if (typeof item === "string") {
+				const cached = this.memoizedChildren.get(item);
 				if (cached !== undefined) {
 					return cached;
 				}
 			}
 
-			const items = Array.isArray(raw) ? raw : [raw];
+			const parsed = ___R$$priv$project$rome$$romefrontend$path$index_ts$parsePathSegments([
+				...this.getSegments(),
+				...___R$$priv$project$rome$$romefrontend$path$index_ts$toFilePath(item).getSegments(),
+			]);
+			const child = this._fork(parsed, {});
 
+			if (typeof item === "string") {
+				this.memoizedChildren.set(item, child);
+			}
+
+			return child;
+		}
+
+		appendList(...items) {
 			if (items.length === 0) {
 				return this._assert();
 			}
 
-			let segments = this.getSegments();
-
+			let target = this._assert();
 			for (const item of items) {
-				segments = segments.concat(
-					___R$$priv$project$rome$$romefrontend$path$index_ts$toFilePath(item).getSegments(),
-				);
+				// @ts-ignore
+				target = target.append(item);
 			}
-
-			const parsed = ___R$$priv$project$rome$$romefrontend$path$index_ts$parsePathSegments(
-				segments,
-			);
-			const child = this._fork(parsed, {});
-
-			// Set memoized child if possible
-			if (typeof raw === "string") {
-				this.memoizedChildren.set(raw, child);
-			}
-
-			return child;
+			return target;
 		}
 	}
 
@@ -1096,7 +2916,7 @@ const ___R$$priv$project$rome$$romefrontend$path$index_ts$os = require("os");
 
 		const finalSegments = [...absoluteSegments, ...relativeSegments];
 
-		// Retain explicit folder
+		// Retain explicit directory
 		if (
 			segments[segments.length - 1] === "" &&
 			finalSegments[finalSegments.length - 1] !== "" &&
@@ -1253,11 +3073,13 @@ function ___R$project$rome$$romefrontend$string$utils$dedent_ts$dedent(
 		} else {
 			const parts = [];
 
-			// Perform the interpolation
-			for (let i = 0; i < literals.raw.length; i++) {
-				parts.push(literals.raw[i]);
-				if (i < values.length) {
-					parts.push(values[i]);
+			if (literals.raw) {
+				// Perform the interpolation
+				for (let i = 0; i < literals.raw.length; i++) {
+					parts.push(literals.raw[i]);
+					if (i < values.length) {
+						parts.push(values[i]);
+					}
 				}
 			}
 
@@ -2211,34 +4033,89 @@ function ___R$project$rome$$romefrontend$string$utils$removeSuffix_ts$removeSuff
 
 
   // project-rome/@romefrontend/string-utils/toCamelCase.ts
-function ___R$project$rome$$romefrontend$string$utils$toCamelCase_ts$toCamelCase(
-		str,
-		forceCapitalize,
+function ___R$project$rome$$romefrontend$string$utils$toCamelCase_ts$removeMatch(
+		inner,
+		regex,
+		suffix,
+	) {
+		const match = inner.match(regex);
+		if (match == null) {
+			return [inner, ""];
+		} else {
+			const edge = match[1];
+			if (suffix) {
+				return [inner.slice(0, -edge.length), edge];
+			} else {
+				return [inner.slice(edge.length), edge];
+			}
+		}
+	}
+
+	function ___R$project$rome$$romefrontend$string$utils$toCamelCase_ts$toCamelCase(
+		inner,
+		opts = {},
 	) {
 		// Rest of the code expects at least 1 character
-		if (str.length === 0) {
-			return str;
+		if (inner.length === 0) {
+			return inner;
 		}
 
-		// Prepend uppercase letters with a space unless all characters are uppercase
-		str =
-			str.toUpperCase() === str ? " " + str : str.replace(/([A-Z+])/g, " $1");
+		let prefix = "";
+		let suffix = "";
 
-		// We no longer care about the casing
-		str = str.toLowerCase();
-
-		// Capitalize all characters after a symbol or space
-		str = str.replace(/[_.\- ]+(\w|$)/g, (_, p1) => p1.toUpperCase());
-
-		// Capitalize characters after a number
-		str = str.replace(/\d+(\w|$)/g, (m) => m.toUpperCase());
-
-		// Force capitalize if necessary
-		if (forceCapitalize) {
-			str = str[0].toUpperCase() + str.slice(1);
+		// ALLOW_STRINGS_LIKE_THIS
+		if (opts.allowShouty) {
+			[inner, prefix] = ___R$project$rome$$romefrontend$string$utils$toCamelCase_ts$removeMatch(
+				inner,
+				/^([A-Z0-9_]+)/,
+				false,
+			);
+			[inner, suffix] = ___R$project$rome$$romefrontend$string$utils$toCamelCase_ts$removeMatch(
+				inner,
+				/([A-Z0-9_]+)$/,
+				true,
+			);
+		} else if (opts.allowPascal || opts.forcePascal) {
+			// Retain leading capitals only
+			[inner, prefix] = ___R$project$rome$$romefrontend$string$utils$toCamelCase_ts$removeMatch(
+				inner,
+				/^([A-Z]+)/,
+				false,
+			);
 		}
 
-		return str;
+		// Prepend uppercase letters with a space
+		inner = inner.replace(/([A-Z]+)/g, " $1");
+
+		// Split into parts
+		const parts = inner.split(/[_.\- ]+|(\d+)/g);
+
+		// Build it
+		let camel = prefix;
+		let first = true;
+		for (let i = 0; i < parts.length; i++) {
+			let part = parts[i];
+			if (part === undefined) {
+				// Empty capture group
+				continue;
+			}
+
+			// Don't capitalize the first part unless we want pascal case
+			if (!first || (opts.forcePascal && prefix === "")) {
+				// Needs at least one
+				if (part.length > 0) {
+					part = part[0].toUpperCase() + part.slice(1);
+				}
+			}
+
+			if (first) {
+				first = false;
+			}
+
+			camel += part;
+		}
+		camel += suffix;
+		return camel;
 	}
 
 
@@ -2886,7 +4763,6 @@ function ___R$project$rome$$romefrontend$parser$core$index_ts$tryParseWithOption
 				mtime,
 				offsetPosition,
 				sourceText,
-				inlineDiagnosticsSource = false,
 			} = opts;
 
 			// Input information
@@ -2897,7 +4773,6 @@ function ___R$project$rome$$romefrontend$parser$core$index_ts$tryParseWithOption
 							path,
 						);
 			this.filename = this.path === undefined ? undefined : this.path.join();
-			this.shouldInlineDiagnosticsSource = inlineDiagnosticsSource;
 			this.mtime = mtime;
 			this.input = ___R$$priv$project$rome$$romefrontend$parser$core$index_ts$normalizeInput(
 				opts,
@@ -3270,7 +5145,7 @@ function ___R$project$rome$$romefrontend$parser$core$index_ts$tryParseWithOption
 			}
 
 			let sourceText;
-			if (this.path === undefined || this.shouldInlineDiagnosticsSource) {
+			if (this.path === undefined) {
 				sourceText = this.sourceText;
 			}
 
@@ -3785,15 +5660,15 @@ function ___R$project$rome$$romefrontend$parser$core$index_ts$tryParseWithOption
 	}
 
 
-  // project-rome/@romefrontend/string-markup/escape.ts
-const ___R$project$rome$$romefrontend$string$markup$escape_ts = {
-		markup: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup,
-		safeMarkup: ___R$project$rome$$romefrontend$string$markup$escape_ts$safeMarkup,
-		escapeMarkup: ___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup,
-		markupTag: ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag,
-		unescapeTextValue: ___R$project$rome$$romefrontend$string$markup$escape_ts$unescapeTextValue,
+  // project-rome/@romefrontend/cli-layout/escape.ts
+const ___R$project$rome$$romefrontend$cli$layout$escape_ts = {
+		markup: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup,
+		safeMarkup: ___R$project$rome$$romefrontend$cli$layout$escape_ts$safeMarkup,
+		escapeMarkup: ___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup,
+		markupTag: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag,
+		unescapeTextValue: ___R$project$rome$$romefrontend$cli$layout$escape_ts$unescapeTextValue,
 	};
-	function ___R$project$rome$$romefrontend$string$markup$escape_ts$markup(
+	function ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup(
 		strs,
 		...values
 	) {
@@ -3807,14 +5682,14 @@ const ___R$project$rome$$romefrontend$string$markup$escape_ts = {
 
 			if (
 				interpolated instanceof
-				___R$$priv$project$rome$$romefrontend$string$markup$escape_ts$SafeMarkup
+				___R$$priv$project$rome$$romefrontend$cli$layout$escape_ts$SafeMarkup
 			) {
 				out += interpolated.value;
 				continue;
 			}
 
 			if (interpolated !== undefined) {
-				out += ___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
+				out += ___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
 					String(interpolated),
 				);
 			}
@@ -3823,21 +5698,21 @@ const ___R$project$rome$$romefrontend$string$markup$escape_ts = {
 		return out;
 	}
 
-	class ___R$$priv$project$rome$$romefrontend$string$markup$escape_ts$SafeMarkup {
+	class ___R$$priv$project$rome$$romefrontend$cli$layout$escape_ts$SafeMarkup {
 		constructor(value) {
 			this.value = value;
 		}
 	}
 
-	function ___R$project$rome$$romefrontend$string$markup$escape_ts$safeMarkup(
+	function ___R$project$rome$$romefrontend$cli$layout$escape_ts$safeMarkup(
 		input,
 	) {
-		return new ___R$$priv$project$rome$$romefrontend$string$markup$escape_ts$SafeMarkup(
+		return new ___R$$priv$project$rome$$romefrontend$cli$layout$escape_ts$SafeMarkup(
 			input,
 		);
 	}
 
-	function ___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
+	function ___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
 		input,
 	) {
 		let escaped = "";
@@ -3857,7 +5732,7 @@ const ___R$project$rome$$romefrontend$string$markup$escape_ts = {
 		return escaped;
 	}
 
-	function ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
+	function ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
 		tagName,
 		text,
 		attrs,
@@ -3868,7 +5743,7 @@ const ___R$project$rome$$romefrontend$string$markup$escape_ts = {
 			for (const key in attrs) {
 				const value = attrs[key];
 				if (value !== undefined) {
-					ret += ___R$project$rome$$romefrontend$string$markup$escape_ts$markup` ${key}="${String(
+					ret += ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup` ${key}="${String(
 						value,
 					)}"`;
 				}
@@ -3880,7 +5755,7 @@ const ___R$project$rome$$romefrontend$string$markup$escape_ts = {
 		return ret;
 	}
 
-	function ___R$project$rome$$romefrontend$string$markup$escape_ts$unescapeTextValue(
+	function ___R$project$rome$$romefrontend$cli$layout$escape_ts$unescapeTextValue(
 		str,
 	) {
 		let unescaped = "";
@@ -3908,42 +5783,6 @@ const ___R$project$rome$$romefrontend$string$markup$escape_ts = {
 
   // project-rome/@romefrontend/consume/types.ts
 const ___R$project$rome$$romefrontend$consume$types_ts = {};
-
-
-  // project-rome/@romefrontend/typescript-helpers/index.ts
-function ___R$project$rome$$romefrontend$typescript$helpers$index_ts$isPlainObject(
-		obj,
-	) {
-		return typeof obj === "object" && obj !== null && !Array.isArray(obj);
-	}
-
-	function ___R$project$rome$$romefrontend$typescript$helpers$index_ts$isIterable(
-		obj,
-	) {
-		if (typeof obj === "object" && obj != null) {
-			// @ts-ignore
-			return typeof obj[Symbol.iterator] === "function";
-		} else {
-			return false;
-		}
-	}
-
-	function ___R$project$rome$$romefrontend$typescript$helpers$index_ts$mergeObjects(
-		a,
-		b,
-	) {
-		const newObj = Object.assign({}, a, b);
-
-		// If b contains undefined properties then use the value from A
-		for (const key in b) {
-			if (b[key] === undefined) {
-				// @ts-ignore
-				newObj[key] = a[key];
-			}
-		}
-
-		return newObj;
-	}
 
 
   // project-rome/@romefrontend/js-ast-utils/assertMultipleNodes.ts
@@ -16674,6 +18513,19 @@ const ___R$project$rome$$romefrontend$compiler$scope$evaluators$TSMappedType_ts$
 	});
 
 
+  // project-rome/@romefrontend/compiler/scope/evaluators/TSFunctionType.ts
+const ___R$project$rome$$romefrontend$compiler$scope$evaluators$TSFunctionType_ts$default = ___R$project$rome$$romefrontend$compiler$scope$evaluators$index_ts$createScopeEvaluator({
+		enter(node, parent, scope) {
+			node = ___R$project$rome$$romefrontend$ast$js$typescript$TSFunctionType_ts$tsFunctionType.assert(
+				node,
+			);
+			const newScope = scope.fork("type-generic", node);
+			newScope.injectEvaluate(node.meta.typeParameters);
+			return newScope;
+		},
+	});
+
+
   // project-rome/@romefrontend/compiler/scope/evaluators/index.ts
 function ___R$project$rome$$romefrontend$compiler$scope$evaluators$index_ts$createScopeEvaluator(
 		obj,
@@ -16683,6 +18535,10 @@ function ___R$project$rome$$romefrontend$compiler$scope$evaluators$index_ts$crea
 
 	const ___R$$priv$project$rome$$romefrontend$compiler$scope$evaluators$index_ts$evaluators = new Map();
 
+	___R$$priv$project$rome$$romefrontend$compiler$scope$evaluators$index_ts$evaluators.set(
+		"TSFunctionType",
+		___R$project$rome$$romefrontend$compiler$scope$evaluators$TSFunctionType_ts$default,
+	);
 	___R$$priv$project$rome$$romefrontend$compiler$scope$evaluators$index_ts$evaluators.set(
 		"TSMappedType",
 		___R$project$rome$$romefrontend$compiler$scope$evaluators$TSMappedType_ts$default,
@@ -19600,6 +21456,12 @@ const ___R$project$rome$$romefrontend$compiler$transforms$compile$transpile$temp
 							nodes.push(expr);
 						}
 					}
+				}
+
+				if (nodes.length === 0) {
+					return ___R$project$rome$$romefrontend$ast$js$literals$JSStringLiteral_ts$jsStringLiteral.quick(
+						"",
+					);
 				}
 
 				if (nodes.length === 1) {
@@ -43587,12 +45449,13 @@ const ___R$project$rome$$romefrontend$core$common$file$handlers$javascript_ts$IM
 			sourceTypeJS,
 			canLint: true,
 			canFormat: true,
+			language: "js",
 
-			async parse({stat, sourceTypeJS, manifestPath, path, file, worker}) {
+			async parse({mtime, sourceTypeJS, manifestPath, path, file, worker}) {
 				const sourceText = await worker.readFile(file.real);
 				const ast = ___R$project$rome$$romefrontend$js$parser$index_ts$parseJS({
 					input: sourceText,
-					mtime: stat.mtimeMs,
+					mtime,
 					manifestPath,
 					path,
 					sourceType: sourceTypeJS,
@@ -43643,6 +45506,7 @@ const ___R$project$rome$$romefrontend$core$common$file$handlers$text_ts$textHand
 		sourceTypeJS: "module",
 		canLint: false,
 		canFormat: false,
+		language: "unknown",
 
 		async parse({path, file, worker}) {
 			const src = await worker.readFile(file.real);
@@ -43663,2468 +45527,12 @@ const ___R$project$rome$$romefrontend$core$common$file$handlers$text_ts$textHand
 	};
 
 
-  // project-rome/@romefrontend/codec-json/types.ts
-
-
-
-  // project-rome/@romefrontend/string-escape/constants.ts
-const ___R$project$rome$$romefrontend$string$escape$constants_ts = {
-		get DOUBLE_QUOTE() {
-			return ___R$project$rome$$romefrontend$string$escape$constants_ts$DOUBLE_QUOTE;
-		},
-		get SINGLE_QUOTE() {
-			return ___R$project$rome$$romefrontend$string$escape$constants_ts$SINGLE_QUOTE;
-		},
-		get TICK_QUOTE() {
-			return ___R$project$rome$$romefrontend$string$escape$constants_ts$TICK_QUOTE;
-		},
-	};
-	const ___R$project$rome$$romefrontend$string$escape$constants_ts$DOUBLE_QUOTE = '"';
-	const ___R$project$rome$$romefrontend$string$escape$constants_ts$SINGLE_QUOTE = "'";
-	const ___R$project$rome$$romefrontend$string$escape$constants_ts$TICK_QUOTE = "`";
-
-
-  // project-rome/@romefrontend/string-escape/escapeJSString.ts
-// This regex represents printable ASCII characters, except the characters: '"\`
-	const ___R$$priv$project$rome$$romefrontend$string$escape$escapeJSString_ts$PRINTABLE_ASCII = /[ !#-&\(-\[\]-_a-~]/;
-
-	function ___R$$priv$project$rome$$romefrontend$string$escape$escapeJSString_ts$escapeChar(
-		char,
-		ignoreWhitespaceEscapes,
-	) {
-		switch (char) {
-			case '"':
-				return '\\"';
-
-			case "'":
-				return "\\'";
-
-			case "\b":
-				return "\\b";
-
-			case "\f":
-				return "\\f";
-
-			case "\\":
-				return "\\\\";
-		}
-
-		switch (char) {
-			case "\n":
-				return ignoreWhitespaceEscapes ? char : "\\n";
-
-			case "\r":
-				return ignoreWhitespaceEscapes ? char : "\\r";
-
-			case "\t":
-				return ignoreWhitespaceEscapes ? char : "\\t";
-		}
-
-		return undefined;
-	}
-
-	function ___R$project$rome$$romefrontend$string$escape$escapeJSString_ts$default(
-		str,
-		opts = {},
-	) {
-		let index = -1;
-		let result = "";
-
-		const {
-			ignoreWhitespaceEscapes = false,
-			quote = "",
-			json = false,
-			unicodeOnly = false,
-		} = opts;
-
-		// Loop over each code unit in the string and escape it
-		while (++index < str.length) {
-			const char = str[index];
-
-			// Handle surrogate pairs in non-JSON mode
-			if (!json) {
-				const charCode = str.charCodeAt(index);
-				const isHighSurrogate = charCode >= 55_296 && charCode <= 56_319;
-				const hasNextCodePoint = str.length > index + 1;
-				const isSurrogatePairStart = isHighSurrogate && hasNextCodePoint;
-
-				if (isSurrogatePairStart) {
-					const nextCharCode = str.charCodeAt(index + 1);
-					const isLowSurrogate =
-						nextCharCode >= 56_320 && nextCharCode <= 57_343;
-					if (isLowSurrogate) {
-						// https://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
-						const codePoint =
-							(charCode - 55_296) * 1_024 + nextCharCode - 56_320 + 65_536;
-						const hex = codePoint.toString(16);
-						result += "\\u{" + hex + "}";
-						index++;
-						continue;
-					}
-				}
-			}
-
-			//
-			if (
-				___R$$priv$project$rome$$romefrontend$string$escape$escapeJSString_ts$PRINTABLE_ASCII.test(
-					char,
-				)
-			) {
-				// It’s a printable ASCII character that is not `"`, `'` or `\`,
-				// so don’t escape it.
-				result += char;
-				continue;
-			}
-
-			// Escape double quotes
-			if (
-				char ===
-				___R$project$rome$$romefrontend$string$escape$constants_ts$DOUBLE_QUOTE
-			) {
-				result += quote === char ? '\\"' : char;
-				continue;
-			}
-
-			// Escape single quotes
-			if (
-				char ===
-				___R$project$rome$$romefrontend$string$escape$constants_ts$SINGLE_QUOTE
-			) {
-				result += quote === char ? "\\'" : char;
-				continue;
-			}
-
-			// Escape back tick
-			if (
-				char ===
-				___R$project$rome$$romefrontend$string$escape$constants_ts$TICK_QUOTE
-			) {
-				result += quote === char ? "\\`" : char;
-				continue;
-			}
-
-			// Null escape
-			if (
-				char === "\0" &&
-				!json &&
-				!___R$project$rome$$romefrontend$parser$core$index_ts$isDigit(
-					str[index + 1],
-				)
-			) {
-				result += "\\0";
-				continue;
-			}
-
-			// Simple escapes
-			if (!unicodeOnly) {
-				const replacement = ___R$$priv$project$rome$$romefrontend$string$escape$escapeJSString_ts$escapeChar(
-					char,
-					ignoreWhitespaceEscapes,
-				);
-				if (replacement !== undefined) {
-					result += replacement;
-					continue;
-				}
-			}
-
-			// Unicode escape
-			const hex = char.charCodeAt(0).toString(16);
-			const isLonghand = json || hex.length > 2;
-			const modifier = isLonghand ? "u" : "x";
-			const code = ("0000" + hex).slice(isLonghand ? -4 : -2);
-			const escaped = "\\" + modifier + code;
-			result += escaped;
-			continue;
-		}
-
-		return "" + quote + result + quote;
-	}
-
-
-  // project-rome/@romefrontend/string-escape/unescapeJSONString.ts
-function ___R$$priv$project$rome$$romefrontend$string$escape$unescapeJSONString_ts$unescapeChar(
-		modifier,
-	) {
-		switch (modifier) {
-			case "b":
-				return "\b";
-
-			case "f":
-				return "\f";
-
-			case "n":
-				return "\n";
-
-			case "r":
-				return "\r";
-
-			case "t":
-				return "\t";
-
-			case "v":
-				return "\x0b";
-
-			default:
-				return modifier;
-		}
-	}
-
-	const ___R$$priv$project$rome$$romefrontend$string$escape$unescapeJSONString_ts$UNEXPECTED_DEFAULT_THROWER = (
-		metadata,
-		index,
-	) => {
-		throw new TypeError(metadata.message.value + " (" + String(index) + ")");
-	};
-
-	function ___R$project$rome$$romefrontend$string$escape$unescapeJSONString_ts$default(
-		input,
-		unexpected = ___R$$priv$project$rome$$romefrontend$string$escape$unescapeJSONString_ts$UNEXPECTED_DEFAULT_THROWER,
-		allowWhitespace = false,
-	) {
-		let buffer = "";
-
-		let index = 0;
-
-		while (index < input.length) {
-			const char = input[index];
-
-			if (allowWhitespace) {
-				if (char === "\n" || char === "\t") {
-					// Add it verbatim
-					buffer += char;
-					index++;
-					continue;
-				}
-			}
-
-			// It's verbatim if it's an escaped backslash or not a backslash
-			if (
-				(___R$project$rome$$romefrontend$string$utils$isEscaped_ts$isEscaped(
-					___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce0(index),
-					input,
-				) &&
-				char === "\\") ||
-				char !== "\\"
-			) {
-				// Validate that this is a valid character
-				const codePoint = char.codePointAt(0);
-				if (codePoint === undefined) {
-					throw new Error("Already validated that this index exists");
-				}
-				if (codePoint >= 0 && codePoint <= 31) {
-					throw unexpected(
-						___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.STRING_ESCAPE.INVALID_STRING_CHARACTER,
-						index,
-					);
-				}
-
-				// Add it verbatim
-				buffer += char;
-				index++;
-				continue;
-			}
-
-			// Anything after here is escaped
-			const modifierIndex = index + 1;
-			const modifier = input[modifierIndex];
-
-			if (modifier === "u") {
-				// Get the next 4 characters as the code point
-				const codeStartIndex = modifierIndex + 1;
-				const rawCode = input.slice(codeStartIndex, codeStartIndex + 4);
-
-				// Validate that we have at least 4 digits
-				if (rawCode.length < 4) {
-					// (index of the point start + total point digits)
-					const lastDigitIndex = codeStartIndex + rawCode.length - 1;
-					throw unexpected(
-						___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.STRING_ESCAPE.NOT_ENOUGH_CODE_POINTS,
-						lastDigitIndex,
-					);
-				}
-
-				// Validate that each character is a valid hex digit
-				for (let i = 0; i < rawCode.length; i++) {
-					const char = rawCode[i];
-					if (
-						!___R$project$rome$$romefrontend$parser$core$index_ts$isHexDigit(
-							char,
-						)
-					) {
-						// Get the current source index for this character
-						// (code start index + digit index)
-						const pos = codeStartIndex + i;
-						throw unexpected(
-							___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.STRING_ESCAPE.INVALID_HEX_DIGIT_FOR_ESCAPE,
-							pos,
-						);
-					}
-				}
-
-				// Validate the code point
-				const code = parseInt(rawCode, 16);
-
-				// Get the character for this code point
-				buffer += String.fromCodePoint(code);
-
-				// Skip ahead six indexes (1 escape char +  1 modifier + 4 hex digits)
-				index += 6;
-			} else {
-				// Unescape a basic modifier like \t
-				buffer += ___R$$priv$project$rome$$romefrontend$string$escape$unescapeJSONString_ts$unescapeChar(
-					modifier,
-				);
-
-				// Skip ahead two indexes to also take along the modifier
-				index += 2;
-			}
-		}
-
-		return buffer;
-	}
-
-
-  // project-rome/@romefrontend/string-escape/index.ts
-
-
-
-  // project-rome/@romefrontend/codec-json/parse.ts
-// Words can't start with a digit
-	function ___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isWordStartChar(
-		char,
-	) {
-		return (
-			___R$project$rome$$romefrontend$parser$core$index_ts$isAlpha(char) ||
-			char === "_" ||
-			char === "$"
-		);
-	}
-
-	// But a digit can appear inside of a word
-	function ___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isWordChar(
-		char,
-	) {
-		return (
-			___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isWordStartChar(
-				char,
-			) || ___R$project$rome$$romefrontend$parser$core$index_ts$isDigit(char)
-		);
-	}
-
-	// Check if an input string is a valid word, this is used by the stringifier to
-	// determine if a property key should be quoted
-	function ___R$project$rome$$romefrontend$codec$json$parse_ts$isValidWord(word) {
-		if (
-			word.length === 0 ||
-			___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isWordStartChar(
-				word[0],
-			) === false
-		) {
-			return false;
-		}
-
-		for (const char of word) {
-			if (
-				___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isWordChar(
-					char,
-				) ===
-				false
-			) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	// Check if a character is a part of a string, returning false for a newline or unescaped quote char
-	function ___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isJSONStringValueChar(
-		char,
-		index,
-		input,
-	) {
-		if (char === "\n") {
-			return false;
-		}
-
-		return ___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isRJSONStringValueChar(
-			char,
-			index,
-			input,
-		);
-	}
-
-	// NOTE: Different methods as we allow newlines in RJSON strings
-	function ___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isRJSONStringValueChar(
-		char,
-		index,
-		input,
-	) {
-		if (
-			char === '"' &&
-			!___R$project$rome$$romefrontend$string$utils$isEscaped_ts$isEscaped(
-				index,
-				input,
-			)
-		) {
-			return false;
-		}
-
-		return true;
-	}
-
-	// Turn a path into a string key we can use
-	function ___R$project$rome$$romefrontend$codec$json$parse_ts$toPathKey(parts) {
-		// Right now this could conflict weirdly with properties with dots in them if they cause collisions
-		// We have this method abstracted so we can make changes later if it's necessary (probably not worth it)
-		return parts.join(".");
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isntNewline(
-		char,
-	) {
-		return char !== "\n";
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isntBlockCommentEnd(
-		char,
-		index,
-		input,
-	) {
-		const nextChar = input[___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
-			index,
-		) + 1];
-		return char !== "*" && nextChar !== "/";
-	}
-
-	// Used for Number token validation, allow underscore as a separatore
-	function ___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isNumberChar(
-		char,
-	) {
-		return (
-			___R$project$rome$$romefrontend$parser$core$index_ts$isDigit(char) ||
-			char === "_"
-		);
-	}
-
-	const ___R$project$rome$$romefrontend$codec$json$parse_ts$createJSONParser = ___R$project$rome$$romefrontend$parser$core$index_ts$createParser((
-		ParserCore,
-	) =>
-		(() => {
-			class JSONParser extends ParserCore {
-				constructor(opts) {
-					super(
-						Object.assign({}, opts, {retainCarriageReturn: true}),
-						"parse/json",
-						{},
-					);
-
-					this.options = opts;
-					this.ignoreWhitespaceTokens = true;
-
-					this.hasExtensions =
-						this.path !== undefined &&
-						this.path.getBasename().endsWith(".rjson");
-
-					this.pathKeys = [];
-					this.paths = new Map();
-					this.pathToComments = new Map();
-					this.consumeDiagnosticCategory =
-						opts.consumeDiagnosticCategory === undefined
-							? "parse/json"
-							: opts.consumeDiagnosticCategory;
-				}
-
-				getPathInfo(path) {
-					return this.paths.get(path.join("."));
-				}
-
-				setComments(pathComments) {
-					const key = this.pathKeys.join(".");
-
-					const existing = this.pathToComments.get(key);
-					if (existing === undefined) {
-						this.pathToComments.set(key, pathComments);
-					} else {
-						this.pathToComments.set(
-							key,
-							{
-								inner: [...existing.inner, ...pathComments.inner],
-								outer: [...existing.outer, ...pathComments.outer],
-							},
-						);
-					}
-				}
-
-				setPath(info) {
-					this.paths.set(this.pathKeys.join("."), info);
-					this.pathKeys.pop();
-				}
-
-				tokenize(index) {
-					const char = this.getInputCharOnly(index);
-					const nextChar = this.getInputCharOnly(index, 1);
-
-					// Line comment
-					if (char === "/" && nextChar === "/") {
-						const commentValueIndex = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
-							index,
-							2,
-						);
-						const [value] = this.readInputFrom(
-							commentValueIndex,
-							___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isntNewline,
-						);
-						// (comment content start + comment content length)
-						return this.finishValueToken(
-							"LineComment",
-							value,
-							___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
-								commentValueIndex,
-								value.length,
-							),
-						);
-					}
-
-					// BlockComment
-					if (char === "/" && nextChar === "*") {
-						const commentValueIndex = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
-							index,
-							2,
-						);
-						const [value] = this.readInputFrom(
-							commentValueIndex,
-							___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isntBlockCommentEnd,
-						);
-
-						// (comment content start + comment content length + 2 characters for comment end)
-						const endIndex = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
-							___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
-								commentValueIndex,
-								value.length,
-							),
-							2,
-						);
-
-						// Ensure the comment is closed
-						if (
-							this.input[___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
-								endIndex,
-							) - 2] !== "*" ||
-							this.input[___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
-								endIndex,
-							) - 1] !== "/"
-						) {
-							throw this.unexpected({
-								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.UNCLOSED_BLOCK_COMMENT,
-								start: this.getPositionFromIndex(endIndex),
-							});
-						}
-
-						return this.finishValueToken("BlockComment", value, endIndex);
-					}
-
-					// Single character token starters
-					switch (char) {
-						case '"': {
-							const [value, end, overflow] = this.readInputFrom(
-								___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(index),
-								this.hasExtensions
-									? ___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isRJSONStringValueChar
-									: ___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isJSONStringValueChar,
-							);
-
-							if (overflow) {
-								throw this.unexpected({
-									description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.UNCLOSED_STRING,
-									start: this.getPositionFromIndex(end),
-								});
-							}
-
-							// Don't allow newlines in JSON
-							if (!this.hasExtensions) {
-								for (let strIndex = 0; strIndex < value.length; strIndex++) {
-									const char = value[strIndex];
-
-									if (char === "\n") {
-										throw this.unexpected({
-											description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.STRING_NEWLINES_IN_JSON,
-											start: this.getPositionFromIndex(
-												___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
-													index,
-													strIndex,
-												),
-											),
-										});
-									}
-								}
-							}
-
-							// Unescape the string
-							const unescaped = ___R$project$rome$$romefrontend$string$escape$unescapeJSONString_ts$default(
-								value,
-								(metadata, strIndex) => {
-									throw this.unexpected({
-										description: metadata,
-										start: this.getPositionFromIndex(
-											___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
-												index,
-												strIndex,
-											),
-										),
-									});
-								},
-								this.hasExtensions,
-							);
-
-							// increment to take the trailing quote
-							return this.finishValueToken(
-								"String",
-								unescaped,
-								___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(end),
-							);
-						}
-
-						case "'":
-							throw this.unexpected({
-								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.SINGLE_QUOTE_USAGE,
-								start: this.getPositionFromIndex(index),
-							});
-
-						case "/":
-							throw this.unexpected({
-								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.REGEX_IN_JSON,
-								start: this.getPositionFromIndex(index),
-							});
-
-						case ",":
-							return this.finishToken("Comma");
-
-						case ".":
-							return this.finishToken("Dot");
-
-						case "-":
-							return this.finishToken("Minus");
-
-						case "+":
-							return this.finishToken("Plus");
-
-						case ":":
-							return this.finishToken("Colon");
-
-						case "{":
-							return this.finishToken("BraceOpen");
-
-						case "}":
-							return this.finishToken("BraceClose");
-
-						case "[":
-							return this.finishToken("BracketOpen");
-
-						case "]":
-							return this.finishToken("BracketClose");
-					}
-
-					// Numbers
-					if (___R$project$rome$$romefrontend$parser$core$index_ts$isDigit(char)) {
-						const value = this.removeUnderscores(
-							index,
-							this.readInputFrom(
-								index,
-								___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isNumberChar,
-							)[0],
-						);
-						const num = Number(value);
-						return this.finishValueToken(
-							"Number",
-							num,
-							___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
-								index,
-								value.length,
-							),
-						);
-					}
-
-					// Word - boolean, undefined etc
-					if (
-						___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isWordStartChar(
-							char,
-						)
-					) {
-						const [value] = this.readInputFrom(
-							index,
-							___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isWordChar,
-						);
-						return this.finishValueToken(
-							"Word",
-							value,
-							___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
-								index,
-								value.length,
-							),
-						);
-					}
-
-					// Unknown character
-					return undefined;
-				}
-
-				parseObject(firstKeyStart, firstKey) {
-					const obj = {};
-
-					let innerComments = [];
-					let isFirstProp = true;
-
-					// These are comments that the next property should take in case the previous accidently took them
-					let nextLeadingComments;
-
-					do {
-						if (this.matchToken("BraceClose")) {
-							break;
-						}
-
-						// Eat all the comments that appeared before this property, it's the most common and natural place to put them,
-
-						// and is where we'll print all comments for a property.
-						let leadingComments = this.eatComments();
-
-						// Take any leading comments that were left by the previous property
-						if (nextLeadingComments !== undefined) {
-							leadingComments = [...nextLeadingComments, ...leadingComments];
-							nextLeadingComments = undefined;
-						}
-
-						// Throw a meainingful error for redundant commas
-						if (this.matchToken("Comma")) {
-							throw this.unexpected({
-								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.REDUNDANT_COMMA,
-							});
-						}
-
-						// If there's no property key indicator then delegate any comments we have to object
-						const hasKey = isFirstProp && firstKey !== undefined;
-						if (
-							!hasKey &&
-							!this.matchToken("String") &&
-							!this.matchToken("Word")
-						) {
-							innerComments = [...innerComments, ...leadingComments];
-							break;
-						}
-
-						const keyStart =
-							isFirstProp && firstKeyStart !== undefined
-								? firstKeyStart
-								: this.getPosition();
-
-						// Parse the property key
-						let key;
-						if (isFirstProp && firstKey !== undefined) {
-							// If this is the first property and we've been given a property key then use it instead
-							key = firstKey;
-						} else {
-							key = this.parsePropertyKey();
-						}
-						isFirstProp = false;
-
-						const keyEnd = this.getPosition();
-						this.expectToken("Colon");
-
-						// Having comments before the value is a really weird place to put them, but we'll handle it
-
-						// anyway to avoid throwing a parser error. When stringified, the comments will all be before
-
-						// the property.
-						const leadingValueComments = this.eatComments();
-
-						this.pathKeys.push(key);
-
-						// Parse the value.
-						const valueStart = this.getPosition();
-						const value = this.parseExpression();
-						const valueEnd = this.getLastEndPosition();
-
-						// Eat the comments after the expression and associate the comments with them
-						let trailingValueComments = this.eatComments();
-
-						// If the next token isn't a comma or closing brace then we've just stolen
-
-						// the leading comments of the next property
-						if (!this.matchToken("Comma") && !this.matchToken("BraceClose")) {
-							nextLeadingComments = trailingValueComments;
-							trailingValueComments = [];
-						}
-
-						this.setComments({
-							inner: [],
-							outer: [
-								...leadingComments,
-								...leadingValueComments,
-								...trailingValueComments,
-							],
-						});
-
-						this.setPath({
-							keyStart,
-							keyEnd,
-							valueStart,
-							valueEnd,
-							originalValue: value,
-						});
-
-						// Set the object correctly, accounting for JS weirdness
-						if (key === "__proto__") {
-							// Need to use defineProperty to avoid triggering the Object.prototype.__proto__ setter
-							Object.defineProperty(
-								obj,
-								"__proto__",
-								{
-									value,
-									configurable: true,
-									writable: true,
-									enumerable: true,
-								},
-							);
-						} else {
-							obj[key] = value;
-						}
-					} while (this.eatPropertySeparator());
-
-					// Take any loose leading comments
-					if (nextLeadingComments !== undefined) {
-						innerComments = [...innerComments, ...nextLeadingComments];
-					}
-
-					// If we were passed a first key then this was an implicit object so there's no end token
-					if (firstKey === undefined) {
-						this.expectToken("BraceClose");
-					}
-
-					this.setComments({
-						inner: innerComments,
-						outer: [],
-					});
-
-					return obj;
-				}
-
-				// Remove underscores from 'a string, this is used for numeric separators eg. 100_000
-				removeUnderscores(index, raw) {
-					let str = "";
-
-					for (let i = 0; i < raw.length; i++) {
-						const char = raw[i];
-
-						if (char === "_") {
-							// Don't allow separators in JSON
-							if (!this.hasExtensions) {
-								throw this.unexpected({
-									description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.NUMERIC_SEPARATORS_IN_JSON,
-									start: this.getPositionFromIndex(
-										___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(index),
-									),
-								});
-							}
-						} else {
-							str += char;
-						}
-					}
-
-					return str;
-				}
-
-				eatComments() {
-					const comments = [];
-
-					while (true) {
-						const token = this.getToken();
-
-						if (token.type === "LineComment") {
-							comments.push({
-								type: "LineComment",
-								value: token.value,
-							});
-						} else if (token.type === "BlockComment") {
-							comments.push({
-								type: "BlockComment",
-								value: token.value,
-							});
-						} else {
-							break;
-						}
-
-						// Comments aren't allowed in regular JSON
-						if (!this.hasExtensions) {
-							throw this.unexpected({
-								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.COMMENTS_IN_JSON,
-							});
-						}
-
-						this.nextToken();
-					}
-
-					return comments;
-				}
-
-				parseArray() {
-					this.expectToken("BracketOpen");
-
-					const arr = [];
-					let innerComments = [];
-					let i = 0;
-
-					do {
-						if (this.matchToken("BracketClose")) {
-							break;
-						}
-
-						// Eat all the comments before an element
-						const leadingComments = this.eatComments();
-
-						if (this.matchToken("Comma")) {
-							throw this.unexpected({
-								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.REDUNDANT_COMMA,
-							});
-						}
-
-						// If we're at the end of the array then associate these comments with the array
-						if (this.matchToken("BracketClose")) {
-							innerComments = [...innerComments, ...leadingComments];
-							break;
-						}
-
-						const start = this.getPosition();
-						this.pathKeys.push(i);
-						i++;
-
-						// Parse the value
-						const item = this.parseExpression();
-						arr.push(item);
-						const end = this.getLastEndPosition();
-
-						// Trailing comments are really weird, but let's handle them just like object properties
-						const trailingComments = this.eatComments();
-
-						this.setComments({
-							outer: [...leadingComments, ...trailingComments],
-							inner: [],
-						});
-
-						this.setPath({
-							originalValue: item,
-							keyStart: start,
-							keyEnd: end,
-							valueStart: start,
-							valueEnd: end,
-						});
-
-						// Have a meaningful error message when an object is incorrectly using brackets: ["foo": "bar"]
-						if (this.matchToken("Colon")) {
-							throw this.unexpected({
-								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.MISTAKEN_ARRAY_IDENTITY,
-							});
-						}
-					} while (this.eatPropertySeparator());
-
-					this.expectToken("BracketClose");
-
-					this.setComments({
-						inner: innerComments,
-						outer: [],
-					});
-
-					return arr;
-				}
-
-				// Check if the current token is a property separator and eat it if necessary
-				eatPropertySeparator() {
-					const token = this.getToken();
-
-					// Implicit commas are only allowed in rjson
-					if (this.hasExtensions) {
-						// Eat the token, don't care if we're in RJSON
-						if (token.type === "Comma") {
-							this.nextToken();
-						}
-
-						// An object or array close is an instant failure
-
-						// Doesn't matter what we're parsing since the subsequent tokens will be validated
-						if (token.type === "BraceClose" || token.type === "BracketClose") {
-							return false;
-						}
-
-						return true;
-					} else {
-						if (token.type !== "Comma") {
-							return false;
-						}
-
-						// Make sure this isn't a trailing comma
-						const lookahead = this.lookaheadToken();
-						if (
-							lookahead.type === "BraceClose" ||
-							lookahead.type === "BracketClose"
-						) {
-							throw this.unexpected({
-								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.TRAILING_COMMA_IN_JSON,
-							});
-						}
-
-						this.nextToken();
-						return true;
-					}
-				}
-
-				parseWord(isStart) {
-					const start = this.getPosition();
-					const token = this.expectToken("Word");
-
-					switch (token.value) {
-						case "true":
-							return true;
-
-						case "false":
-							return false;
-
-						case "null":
-							return null;
-
-						case "undefined":
-							throw this.unexpected({
-								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.UNDEFINED_IN_JSON,
-							});
-					}
-
-					if (isStart && this.matchToken("Colon")) {
-						if (this.hasExtensions) {
-							return this.parseObject(start, token.value);
-						} else {
-							throw this.unexpected({
-								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.IMPLICIT_OBJECT_IN_JSON,
-							});
-						}
-					}
-
-					throw this.unexpected({
-						description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.UNKNOWN_WORD_IN_JSON(
-							token.value,
-						),
-					});
-				}
-
-				parseNumber() {
-					const isNegative = this.eatToken("Minus") !== undefined;
-
-					// Get a string of the current number that we'll parse later
-					const token = this.expectToken("Number");
-					let value = String(token.value);
-
-					// Decimals
-					if (this.eatToken("Dot")) {
-						value += ".";
-
-						const decimal = this.expectToken("Number");
-						value += String(decimal.value);
-					}
-
-					// Scientific notation
-					const nextToken = this.getToken();
-					if (
-						nextToken.type === "Word" &&
-						(nextToken.value === "e" || nextToken.value === "E")
-					) {
-						value += "e";
-
-						// Operator
-						const operator = this.nextToken();
-						if (operator.type === "Minus") {
-							value += "-";
-						} else if (operator.type === "Plus") {
-							value += "+";
-						} else {
-							throw this.unexpected();
-						}
-
-						// Factor
-						this.nextToken();
-						const factor = this.expectToken("Number");
-						value += String(factor.value);
-					}
-
-					// BigInt
-					const nextToken2 = this.getToken();
-					if (nextToken2.type === "Word" && nextToken2.value === "n") {
-						throw this.unexpected({
-							description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.BIGINT_IN_JSON,
-						});
-					}
-
-					// Turn the string into an actual number
-					let num = Number(value);
-					if (isNegative) {
-						num = -num;
-					}
-					return num;
-				}
-
-				parsePropertyKey() {
-					const token = this.getToken();
-
-					switch (token.type) {
-						case "String": {
-							this.nextToken();
-							return token.value;
-						}
-
-						case "Word":
-							if (this.hasExtensions) {
-								this.nextToken();
-								return token.value;
-							} else {
-								throw this.unexpected({
-									description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.PROPERTY_KEY_UNQUOTED_IN_JSON,
-								});
-							}
-
-						default:
-							throw this.unexpected();
-					}
-				}
-
-				parseString(isStart) {
-					const start = this.getPosition();
-					const token = this.expectToken("String");
-
-					if (isStart && this.nextToken().type === "Colon") {
-						if (this.hasExtensions) {
-							return this.parseObject(start, token.value);
-						} else {
-							throw this.unexpected({
-								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.IMPLICIT_OBJECT_IN_JSON,
-							});
-						}
-					} else {
-						return token.value;
-					}
-				}
-
-				parseExpression(isStart = false) {
-					const token = this.getToken();
-
-					switch (token.type) {
-						case "String":
-							return this.parseString(isStart);
-
-						case "Minus":
-						case "Number":
-							return this.parseNumber();
-
-						case "Word":
-							return this.parseWord(isStart);
-
-						case "BracketOpen":
-							return this.parseArray();
-
-						case "BraceOpen": {
-							this.nextToken();
-							return this.parseObject();
-						}
-
-						default:
-							throw this.unexpected();
-					}
-				}
-
-				parseEntry() {
-					if (this.matchToken("EOF")) {
-						if (this.hasExtensions) {
-							// If we're in RJSON mode then an empty input is an implicit object
-							return {};
-						} else {
-							throw this.unexpected({
-								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.EMPTY_INPUT_IN_JSON,
-							});
-						}
-					} else {
-						return this.parseExpression(true);
-					}
-				}
-
-				parse() {
-					let expectSyntaxError = false;
-
-					if (!this.hasExtensions) {
-						// If we're in regular JSON, try the native JSON.parse
-						try {
-							const value = JSON.parse(this.input);
-
-							// Lazy parse when we need location information
-							let context;
-							const getContext = () => {
-								if (context === undefined) {
-									const res = this._parse();
-									context = res.context;
-									return res.context;
-								} else {
-									return context;
-								}
-							};
-
-							return {
-								context: {
-									category: this.consumeDiagnosticCategory,
-									normalizeKey(path) {
-										return getContext().normalizeKey(path);
-									},
-									getOriginalValue(path) {
-										return getContext().getOriginalValue(path);
-									},
-									getDiagnosticLocation(keys, target) {
-										return getContext().getDiagnosticLocation(keys, target);
-									},
-								},
-								value,
-							};
-						} catch (err) {
-							// On syntax errors we'll fall back to our parser which is slower, but produces more meaningful errors
-							if (err instanceof SyntaxError) {
-								expectSyntaxError = true;
-							} else {
-								throw err;
-							}
-						}
-					}
-
-					const res = this._parse();
-
-					if (expectSyntaxError) {
-						throw new Error(
-							"JSON.parse failed but our custom JSON parser was successful... That doesn't smell right",
-						);
-					}
-
-					return res;
-				}
-
-				_parse() {
-					const leadingComments = this.eatComments();
-
-					const expr = this.parseEntry();
-
-					const trailingComments = this.eatComments();
-					this.setComments({
-						inner: [],
-						outer: [...leadingComments, ...trailingComments],
-					});
-
-					this.finalize();
-
-					const context = {
-						category: this.consumeDiagnosticCategory,
-						normalizeKey: (key) => key,
-						getDiagnosticLocation: (keys, target) => {
-							const info = this.getPathInfo(keys);
-							if (info === undefined) {
-								return {
-									filename: this.filename,
-								};
-							}
-
-							let start = info.keyStart;
-							let end = info.valueEnd;
-
-							if (target === "key") {
-								end = info.keyEnd;
-							}
-
-							if (target === "value" || target === "inner-value") {
-								start = info.valueStart;
-							}
-
-							let loc = {
-								filename: this.filename,
-								start,
-								end,
-							};
-
-							if (target === "inner-value") {
-								const originalValue = context.getOriginalValue(keys);
-
-								// Remove quote marks for strings
-								if (typeof originalValue === "string") {
-									loc = Object.assign(
-										{},
-										loc,
-										{
-											start: Object.assign(
-												{},
-												loc.start,
-												{
-													column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
-														loc.start.column,
-														1,
-													),
-												},
-											),
-											end: Object.assign(
-												{},
-												loc.end,
-												{
-													column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Sub(
-														loc.end.column,
-														1,
-													),
-												},
-											),
-										},
-									);
-								}
-							}
-
-							return Object.assign(
-								{language: "json"},
-								loc,
-								{mtime: this.mtime, sourceText: undefined},
-							);
-						},
-						getOriginalValue: (keys) => {
-							const info = this.getPathInfo(keys);
-							if (info !== undefined) {
-								return info.originalValue;
-							}
-						},
-					};
-
-					return {
-						value: expr,
-						context,
-					};
-				}
-			}
-			return JSONParser;
-		})()
-	);
-
-
-  // project-rome/@romefrontend/pretty-format/index.ts
-const ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$DEFAULT_OPTIONS = {
-		allowCustom: true,
-		maxDepth: Infinity,
-		markup: false,
-		indent: "",
-		depth: 0,
-		stack: [],
-		compact: false,
-	};
-
-	const ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$INDENT = "\t";
-
-	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$maybeEscapeMarkup(
-		str,
-		opts,
-	) {
-		if (opts.markup) {
-			return ___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
-				str,
-			);
-		} else {
-			return str;
-		}
-	}
-
-	const ___R$project$rome$$romefrontend$pretty$format$index_ts$CUSTOM_PRETTY_FORMAT = Symbol.for(
-		"custom-pretty-format",
-	);
-
-	function ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-		obj,
-		rawOpts = {},
-	) {
-		const opts = ___R$project$rome$$romefrontend$typescript$helpers$index_ts$mergeObjects(
-			___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$DEFAULT_OPTIONS,
-			rawOpts,
-		);
-
-		if (opts.maxDepth === opts.depth) {
-			return "[depth exceeded]";
-		}
-
-		switch (typeof obj) {
-			case "symbol": {
-				const val = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$maybeEscapeMarkup(
-					___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatSymbol(
-						obj,
-					),
-					opts,
-				);
-				return opts.markup
-					? ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
-							"token",
-							val,
-							{type: "string"},
-						)
-					: val;
-			}
-
-			case "string": {
-				const val = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$maybeEscapeMarkup(
-					___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatString(
-						obj,
-					),
-					opts,
-				);
-				return opts.markup
-					? ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
-							"token",
-							val,
-							{type: "string"},
-						)
-					: val;
-			}
-
-			case "bigint":
-			case "number": {
-				const val = ___R$project$rome$$romefrontend$pretty$format$index_ts$formatNumber(
-					obj,
-				);
-				return opts.markup
-					? ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
-							"token",
-							val,
-							{type: "number"},
-						)
-					: val;
-			}
-
-			case "boolean": {
-				const val = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatBoolean(
-					obj,
-				);
-				return opts.markup
-					? ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
-							"token",
-							val,
-							{type: "boolean"},
-						)
-					: val;
-			}
-
-			case "undefined": {
-				const val = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatUndefined();
-				return opts.markup
-					? ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
-							"color",
-							val,
-							{fg: "brightBlack"},
-						)
-					: val;
-			}
-
-			case "function":
-				return ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatFunction(
-					obj,
-					opts,
-				);
-
-			case "object":
-				return ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatObjectish(
-					(obj),
-					opts,
-				);
-
-			default:
-				throw new Error("Unknown type");
-		}
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$joinList(
-		items,
-		opts,
-	) {
-		if (items.length === 0) {
-			return "";
-		}
-
-		const lines = [];
-
-		for (const item of items) {
-			lines.push("" + opts.indent + item);
-		}
-
-		return lines.join("\n");
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$isNativeFunction(
-		val,
-	) {
-		return val.toString().endsWith("{ [native code] }");
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatSymbol(
-		val,
-	) {
-		return String(val);
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatString(
-		val,
-	) {
-		return ___R$project$rome$$romefrontend$string$escape$escapeJSString_ts$default(
-			val,
-			{
-				quote: '"',
-			},
-		);
-	}
-
-	// This function is used by rome-json so make sure it can parse whatever you return here
-	function ___R$project$rome$$romefrontend$pretty$format$index_ts$formatNumber(
-		val,
-	) {
-		if (typeof val === "bigint") {
-			return (
-				___R$project$rome$$romefrontend$string$utils$humanizeNumber_ts$humanizeNumber(
-					val,
-					"_",
-				) + "n"
-			);
-		} else if (isNaN(val)) {
-			return "NaN";
-		} else if (Object.is(val, -0)) {
-			return "-0";
-		} else if (isFinite(val)) {
-			return ___R$project$rome$$romefrontend$string$utils$humanizeNumber_ts$humanizeNumber(
-				val,
-				"_",
-			);
-		} else if (Object.is(val, -Infinity)) {
-			return "-Infinity";
-		} else if (Object.is(val, +Infinity)) {
-			return "Infinity";
-		} else {
-			throw new Error("Don't know how to format this number");
-		}
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatUndefined() {
-		return "undefined";
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatNull() {
-		return "null";
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatBoolean(
-		val,
-	) {
-		return val === true ? "true" : "false";
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatFunction(
-		val,
-		opts,
-	) {
-		const name =
-			val.name === ""
-				? "anonymous"
-				: ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$maybeEscapeMarkup(
-						val.name,
-						opts,
-					);
-		let label = "Function " + name;
-
-		if (
-			___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$isNativeFunction(
-				val,
-			)
-		) {
-			label = "Native" + label;
-		}
-
-		if (Object.keys(val).length === 0) {
-			return label;
-		}
-
-		// rome-ignore lint/js/noExplicitAny
-		return ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatObject(
-			label,
-			(val),
-			opts,
-			[],
-		);
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$getExtraObjectProps(
-		obj,
-		opts,
-	) {
-		const props = [];
-		const ignoreKeys = {};
-
-		if (obj instanceof Map) {
-			for (const [key, val] of obj) {
-				const formattedKey =
-					typeof key === "string"
-						? ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatKey(
-								key,
-								opts,
-							)
-						: ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-								key,
-								opts,
-							);
-				props.push(
-					formattedKey +
-					" => " +
-					___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-						val,
-						opts,
-					),
-				);
-			}
-		} else if (
-			___R$project$rome$$romefrontend$typescript$helpers$index_ts$isIterable(
-				obj,
-			)
-		) {
-			let i = 0;
-			for (const val of obj) {
-				ignoreKeys[String(i++)] = val;
-				props.push(
-					___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-						val,
-						opts,
-					),
-				);
-			}
-		}
-
-		return {ignoreKeys, props};
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatKey(
-		rawKey,
-		opts,
-	) {
-		const key = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$maybeEscapeMarkup(
-			rawKey,
-			opts,
-		);
-
-		// Format as a string if it contains any special characters
-		if (/[^A-Za-z0-9_$]/g.test(key)) {
-			return ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatString(
-				key,
-			);
-		} else {
-			return key;
-		}
-	}
-
-	// These are object keys that should always go at the top and ignore any alphabetization
-	// This is fairly arbitrary but should include generic identifier keys
-	const ___R$project$rome$$romefrontend$pretty$format$index_ts$PRIORITIZE_KEYS = [
-		"id",
-		"type",
-		"kind",
-		"key",
-		"name",
-		"value",
-	];
-
-	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$sortKeys(
-		obj,
-	) {
-		const sortedKeys = new Set(
-			Object.keys(obj).sort(
-				___R$project$rome$$romefrontend$string$utils$naturalCompare_ts$naturalCompare,
-			),
-		);
-
-		const priorityKeys = [];
-		const otherKeys = [];
-		const objectKeys = [];
-
-		for (const key of ___R$project$rome$$romefrontend$pretty$format$index_ts$PRIORITIZE_KEYS) {
-			if (sortedKeys.has(key)) {
-				priorityKeys.push({key, object: false});
-				sortedKeys.delete(key);
-			}
-		}
-
-		for (const key of sortedKeys) {
-			const val = obj[key];
-
-			// Objects with properties should be at the bottom
-			let isObject = false;
-			if (typeof val === "object" && val != null && Object.keys(val).length > 0) {
-				isObject = true;
-			}
-			if (Array.isArray(val) && val.length > 0) {
-				isObject = true;
-			}
-			if (isObject) {
-				objectKeys.push({key, object: true});
-			} else {
-				otherKeys.push({key, object: false});
-			}
-		}
-
-		return [...priorityKeys, ...otherKeys, ...objectKeys];
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$lineCount(
-		str,
-	) {
-		return str.split("\n").length;
-		___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatKey;
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$lineCountCompare(
-		a,
-		b,
-	) {
-		return (
-			___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$lineCount(a) -
-			___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$lineCount(b)
-		);
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatObjectLabel(
-		label,
-		opts,
-	) {
-		return opts.markup
-			? ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
-					"color",
-					label,
-					{fg: "cyan"},
-				)
-			: label;
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatObject(
-		label,
-		obj,
-		opts,
-		labelKeys,
-	) {
-		// Detect circular references, and create a pointer to the specific value
-		const {stack} = opts;
-		if (stack.length > 0 && stack.includes(obj)) {
-			label = "Circular " + label + " " + stack.indexOf(obj);
-			return ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatObjectLabel(
-				label,
-				opts,
-			);
-		}
-
-		const customFormat = obj[___R$project$rome$$romefrontend$pretty$format$index_ts$CUSTOM_PRETTY_FORMAT];
-		if (opts.allowCustom && typeof customFormat === "function") {
-			const custom = ___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
-				String(customFormat.call(obj)),
-			);
-			return opts.markup
-				? ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
-						"dim",
-						custom,
-					)
-				: custom;
-		}
-
-		//
-		const nextOpts = Object.assign(
-			{},
-			opts,
-			{
-				stack: [...stack, obj],
-				depth: opts.depth + 1,
-				indent: opts.indent +
-				___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$INDENT,
-			},
-		);
-		const {ignoreKeys, props} = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$getExtraObjectProps(
-			obj,
-			nextOpts,
-		);
-
-		// For props that have object values, we always put them at the end, sorted by line count
-		const objProps = [];
-
-		// Get string props
-		for (const {key, object} of ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$sortKeys(
-			obj,
-		)) {
-			const val = obj[key];
-			if (key in ignoreKeys && ignoreKeys[key] === val) {
-				continue;
-			}
-
-			if (opts.compact && val === undefined) {
-				continue;
-			}
-
-			// Ignore any properties already displayed in the label
-			if (labelKeys.includes(key)) {
-				continue;
-			}
-
-			const prop =
-				___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatKey(
-					key,
-					opts,
-				) +
-				": " +
-				___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-					val,
-					nextOpts,
-				);
-			if (object) {
-				objProps.push(prop);
-			} else {
-				props.push(prop);
-			}
-		}
-
-		// Sort object props by line count and push them on
-		for (const prop of objProps.sort(
-			___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$lineCountCompare,
-		)) {
-			props.push(prop);
-		}
-
-		// Get symbol props
-		for (const sym of Object.getOwnPropertySymbols(obj)) {
-			const val = Reflect.get(obj, sym);
-			props.push(
-				___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-					sym,
-					opts,
-				) +
-				": " +
-				___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-					val,
-					nextOpts,
-				),
-			);
-		}
-
-		//
-		let open = "{";
-		let close = "}";
-		if (
-			___R$project$rome$$romefrontend$typescript$helpers$index_ts$isIterable(
-				obj,
-			)
-		) {
-			open = "[";
-			close = "]";
-		}
-
-		//
-		let inner = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$joinList(
-			props,
-			nextOpts,
-		);
-		if (inner !== "") {
-			if (props.length === 1 && !inner.includes("\n")) {
-				// Single prop with no newlines shouldn't be indented
-				inner = inner.trim();
-			} else {
-				inner = "\n" + inner + "\n" + opts.indent;
-			}
-		}
-
-		return (
-			___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatObjectLabel(
-				label,
-				opts,
-			) +
-			" " +
-			open +
-			inner +
-			close
-		);
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatRegExp(
-		val,
-	) {
-		return String(val);
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatDate(
-		val,
-	) {
-		return val.toISOString();
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatObjectish(
-		val,
-		opts,
-	) {
-		if (val === null) {
-			const val = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatNull();
-			return opts.markup
-				? ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
-						"emphasis",
-						val,
-					)
-				: val;
-		}
-
-		if (val instanceof RegExp) {
-			const str = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatRegExp(
-				val,
-			);
-			return opts.markup
-				? ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
-						"color",
-						str,
-						{fg: "red"},
-					)
-				: str;
-		}
-
-		if (val instanceof Date) {
-			const str = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatDate(
-				val,
-			);
-			return opts.markup
-				? ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
-						"color",
-						str,
-						{fg: "magenta"},
-					)
-				: str;
-		}
-
-		let label = "null";
-
-		if (val.constructor !== undefined) {
-			label = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$maybeEscapeMarkup(
-				val.constructor.name,
-				opts,
-			);
-		}
-
-		let labelKeys = [];
-
-		// If there's a string type or kind property then use it as the label
-		if (typeof val.type === "string") {
-			label = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$maybeEscapeMarkup(
-				val.type,
-				opts,
-			);
-			labelKeys.push("type");
-		} else if (typeof val.kind === "string") {
-			label = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$maybeEscapeMarkup(
-				val.kind,
-				opts,
-			);
-			labelKeys.push("kind");
-		}
-
-		return ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatObject(
-			label,
-			val,
-			opts,
-			labelKeys,
-		);
-	}
-
-
-  // project-rome/@romefrontend/codec-json/stringify.ts
-function ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$joinList(
-		open,
-		close,
-		indent,
-		items,
-	) {
-		if (items.length === 0) {
-			return open + close;
-		} else {
-			return [open, ...items, indent + close].join("\n");
-		}
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyKey(
-		key,
-	) {
-		if (___R$project$rome$$romefrontend$codec$json$parse_ts$isValidWord(key)) {
-			// A property key doesn't need quotes if it's a valid word
-			return key;
-		} else {
-			return ___R$project$rome$$romefrontend$string$escape$escapeJSString_ts$default(
-				key,
-				{
-					quote: '"',
-					ignoreWhitespaceEscapes: true,
-					json: true,
-				},
-			);
-		}
-	}
-
-	function ___R$project$rome$$romefrontend$codec$json$stringify_ts$stringifyComments(
-		indent,
-		comments,
-	) {
-		return comments.map((node) => {
-			if (node.type === "BlockComment") {
-				return indent + "/*" + node.value + "*/";
-			} else {
-				// node.type === 'LineComment'
-				return indent + "//" + node.value;
-			}
-		});
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyPrimitives(
-		value,
-	) {
-		if (value === null) {
-			return "null";
-		}
-
-		// Coerce primitive objects to their primitive form, as specified in ECMA262 24.5.2.1
-		if (
-			value instanceof Number ||
-			value instanceof String ||
-			value instanceof Boolean
-		) {
-			value = value.valueOf();
-		}
-
-		// Basic primitive types
-		switch (typeof value) {
-			case "symbol":
-			case "function":
-			case "undefined":
-				return "null";
-
-			case "boolean":
-				return value ? "true" : "false";
-
-			case "string":
-				return ___R$project$rome$$romefrontend$string$escape$escapeJSString_ts$default(
-					value,
-					{
-						quote: '"',
-						json: true,
-						ignoreWhitespaceEscapes: true,
-					},
-				);
-
-			case "bigint":
-				// This is the actual V8 message lol
-				throw new Error("Do not know how to serialize a BigInt");
-
-			case "number":
-				return ___R$project$rome$$romefrontend$pretty$format$index_ts$formatNumber(
-					value,
-				);
-		}
-
-		return undefined;
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$sortMapKeys(
-		map,
-	) {
-		return new Set(
-			Array.from(map.keys()).sort(
-				___R$project$rome$$romefrontend$string$utils$naturalCompare_ts$naturalCompare,
-			),
-		);
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$sortMap(
-		map,
-	) {
-		const sortedMap = new Map();
-		const sortedKeys = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$sortMapKeys(
-			map,
-		);
-
-		// Add any prioritized keys so they're before anything alphabetized
-		for (const key of ___R$project$rome$$romefrontend$pretty$format$index_ts$PRIORITIZE_KEYS) {
-			if (sortedKeys.has(key)) {
-				sortedKeys.delete(key);
-
-				const val = map.get(key);
-				if (val === undefined) {
-					throw new Error("Expected value");
-				}
-
-				sortedMap.set(key, val);
-			}
-		}
-
-		// Now add the rest
-		for (const key of sortedKeys) {
-			const val = map.get(key);
-			if (val === undefined) {
-				throw new Error("Expected value");
-			}
-
-			sortedMap.set(key, val);
-		}
-
-		return sortedMap;
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$getComments(
-		consumer,
-		opts,
-	) {
-		const comments = opts.comments.get(consumer.keyPath.join("."));
-		if (comments === undefined) {
-			return {
-				inner: [],
-				outer: [],
-			};
-		} else {
-			return comments;
-		}
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyArray(
-		consumer,
-		info,
-	) {
-		const {level, prevIndent, nextIndent, stack} = info;
-
-		let buff = [];
-
-		const arr = consumer.asArray();
-		for (const consumer of arr) {
-			// Add element comments
-			const comments = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$getComments(
-				consumer,
-				info,
-			).outer;
-			buff = buff.concat(
-				___R$project$rome$$romefrontend$codec$json$stringify_ts$stringifyComments(
-					nextIndent,
-					comments,
-				),
-			);
-
-			// Add the actual element line
-			const element = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyConsumer(
-				consumer,
-				{
-					comments: info.comments,
-					isTopLevel: false,
-					level: level + 1,
-					stack,
-				},
-			);
-			buff.push("" + nextIndent + element);
-		}
-
-		// Add inner comments
-		const innerComments = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$getComments(
-			consumer,
-			info,
-		).inner;
-		buff = buff.concat(
-			___R$project$rome$$romefrontend$codec$json$stringify_ts$stringifyComments(
-				nextIndent,
-				innerComments,
-			),
-		);
-
-		return ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$joinList(
-			"[",
-			"]",
-			prevIndent,
-			buff,
-		);
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyPlainObject(
-		consumer,
-		info,
-	) {
-		const {level, prevIndent, stack, isTopLevel} = info;
-		let {nextIndent} = info;
-
-		// Must be an object if we failed all the other conditions
-		let buff = [];
-		const map = consumer.asMap();
-
-		// Remove function, symbol, and undefined properties
-		for (const [key, consumer] of map) {
-			const value = consumer.asUnknown();
-
-			if (
-				typeof value === "function" ||
-				typeof value === "undefined" ||
-				typeof value === "symbol"
-			) {
-				map.delete(key);
-			}
-		}
-
-		let propLevel = level + 1;
-
-		// We only want to increase the level for properties when we aren't at the top
-		if (isTopLevel && level === 0) {
-			propLevel = 0;
-			nextIndent = "";
-		}
-
-		// Build properties
-		for (const [key, consumer] of ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$sortMap(
-			map,
-		)) {
-			// Add property comments
-			const comments = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$getComments(
-				consumer,
-				info,
-			).outer;
-			buff = buff.concat(
-				___R$project$rome$$romefrontend$codec$json$stringify_ts$stringifyComments(
-					nextIndent,
-					comments,
-				),
-			);
-
-			// Add the actual property line
-			const propKey = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyKey(
-				key,
-			);
-			const propValue = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyConsumer(
-				consumer,
-				{
-					comments: info.comments,
-					isTopLevel: false,
-					level: propLevel,
-					stack,
-				},
-			);
-			buff.push("" + nextIndent + propKey + ": " + propValue);
-		}
-
-		// We track this so we know whether we can safely put everything at the top level
-
-		// If we only have comments then there's no way the parser could infer it was originally an object
-		const hasProps = buff.length > 0;
-
-		// Add inner comments
-		const innerComments = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$getComments(
-			consumer,
-			info,
-		).inner;
-		buff = buff.concat(
-			___R$project$rome$$romefrontend$codec$json$stringify_ts$stringifyComments(
-				nextIndent,
-				innerComments,
-			),
-		);
-
-		if (level === 0 && isTopLevel) {
-			if (hasProps) {
-				return buff.join("\n");
-			} else if (buff.length > 0) {
-				// Otherwise we just have a bunch of comments
-				// Indent them correctly and just output it as a normal object
-				buff = buff.map((str) => {
-					return "  " + str;
-				});
-			}
-		}
-
-		return ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$joinList(
-			"{",
-			"}",
-			prevIndent,
-			buff,
-		);
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyObject(
-		consumer,
-		value,
-		opts,
-	) {
-		const {isTopLevel, level, stack} = opts;
-
-		const info = {
-			comments: opts.comments,
-			isTopLevel,
-			nextIndent: "\t".repeat(level + 1),
-			prevIndent: level === 0 ? "" : "\t".repeat(level - 1),
-			level,
-			stack,
-		};
-
-		try {
-			stack.add(value);
-
-			if (Array.isArray(value) || value instanceof Set) {
-				return ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyArray(
-					consumer,
-					info,
-				);
-			}
-
-			return ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyPlainObject(
-				consumer,
-				info,
-			);
-		} finally {
-			stack.delete(value);
-		}
-	}
-
-	function ___R$project$rome$$romefrontend$codec$json$stringify_ts$stringifyRootConsumer(
-		consumer,
-		pathToComments,
-	) {
-		const opts = {
-			comments: pathToComments,
-			isTopLevel: true,
-			level: 0,
-			stack: new Set(),
-		};
-
-		// Nothing else handles comments at the top level
-		const inner = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyConsumer(
-			consumer,
-			opts,
-		);
-		const comments = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$getComments(
-			consumer,
-			opts,
-		);
-		const outer = ___R$project$rome$$romefrontend$codec$json$stringify_ts$stringifyComments(
-			"",
-			comments.outer,
-		);
-
-		return [...outer, inner].join("\n");
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyConsumer(
-		consumer,
-		opts,
-	) {
-		const value = consumer.asUnknown();
-
-		// Stringify primitives
-		const asPrim = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyPrimitives(
-			value,
-		);
-		if (asPrim !== undefined) {
-			return asPrim;
-		}
-
-		// Check if we're already stringfying this value to prevent recursion
-		if (opts.stack.has(value)) {
-			throw new TypeError("Recursive");
-		}
-
-		return ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyObject(
-			consumer,
-			value,
-			opts,
-		);
-	}
-
-
-  // project-rome/@romefrontend/codec-json/index.ts
-function ___R$project$rome$$romefrontend$codec$json$index_ts$consumeJSON(opts) {
-		return ___R$project$rome$$romefrontend$codec$json$index_ts$consumeJSONExtra(
-			opts,
-		).consumer;
-	}
-
-	function ___R$project$rome$$romefrontend$codec$json$index_ts$consumeJSONExtra(
-		opts,
-	) {
-		const parser = ___R$project$rome$$romefrontend$codec$json$parse_ts$createJSONParser(
-			opts,
-		);
-		const {value, context} = parser.parse();
-
-		return {
-			hasExtensions: parser.hasExtensions,
-			consumer: ___R$project$rome$$romefrontend$consume$index_ts$consume({
-				filePath: parser.path,
-				context,
-				objectPath: [],
-				value,
-				parent: undefined,
-			}),
-			comments: parser.pathToComments,
-		};
-	}
-
-	function ___R$project$rome$$romefrontend$codec$json$index_ts$parseJSON(opts) {
-		return ___R$project$rome$$romefrontend$codec$json$parse_ts$createJSONParser(
-			opts,
-		).parse().value;
-	}
-
-	function ___R$project$rome$$romefrontend$codec$json$index_ts$tokenizeJSON(
-		opts,
-	) {
-		return ___R$project$rome$$romefrontend$codec$json$parse_ts$createJSONParser(
-			opts,
-		).tokenizeAll();
-	}
-
-	function ___R$project$rome$$romefrontend$codec$json$index_ts$stringifyRJSONFromConsumer(
-		opts,
-	) {
-		return ___R$project$rome$$romefrontend$codec$json$stringify_ts$stringifyRootConsumer(
-			opts.consumer,
-			opts.comments,
-		);
-	}
-
-	function ___R$project$rome$$romefrontend$codec$json$index_ts$stringifyJSONExtra(
-		res,
-	) {
-		if (res.hasExtensions) {
-			return ___R$project$rome$$romefrontend$codec$json$index_ts$stringifyRJSONFromConsumer(
-				res,
-			);
-		} else {
-			return ___R$project$rome$$romefrontend$codec$json$index_ts$stringifyJSON(
-				res.consumer.asUnknown(),
-			);
-		}
-	}
-
-	function ___R$project$rome$$romefrontend$codec$json$index_ts$stringifyRJSON(
-		value,
-	) {
-		return ___R$project$rome$$romefrontend$codec$json$stringify_ts$stringifyRootConsumer(
-			___R$project$rome$$romefrontend$consume$index_ts$consumeUnknown(
-				value,
-				"parse/json",
-			),
-			new Map(),
-		);
-	}
-
-	function ___R$project$rome$$romefrontend$codec$json$index_ts$stringifyJSON(
-		value,
-	) {
-		return JSON.stringify(value, null, "\t");
-	}
-
-
   // project-rome/@romefrontend/core/common/file-handlers/json.ts
 const ___R$project$rome$$romefrontend$core$common$file$handlers$json_ts$jsonHandler = {
 		ext: "json",
 		canLint: false,
 		canFormat: true,
+		language: "json",
 
 		async customFormat(info) {
 			const {file, worker} = info;
@@ -46225,12 +45633,13 @@ const ___R$project$rome$$romefrontend$core$common$file$handlers$html_ts$IMPLICIT
 		ext: "html",
 		canLint: true,
 		canFormat: true,
+		language: "html",
 
-		async parse({stat, path, file, worker}) {
+		async parse({mtime, path, file, worker}) {
 			const sourceText = await worker.readFile(file.real);
 			const ast = ___R$project$rome$$romefrontend$html$parser$index_ts$parseHTML({
 				input: sourceText,
-				mtime: stat.mtimeMs,
+				mtime,
 				path,
 			});
 			return {
@@ -46249,13 +45658,41 @@ const ___R$project$rome$$romefrontend$core$common$file$handlers$html_ts$IMPLICIT
 
 
   // project-rome/@romefrontend/core/common/file-handlers/index.ts
-function ___R$project$rome$$romefrontend$core$common$file$handlers$index_ts$getFileHandlerExtensions(
+function ___R$project$rome$$romefrontend$core$common$file$handlers$index_ts$inferDiagnosticLanguageFromFilename(
+		filename,
+		existing,
+	) {
+		if (existing !== undefined && existing !== "unknown") {
+			return existing;
+		}
+		if (filename !== undefined) {
+			const {handler} = ___R$project$rome$$romefrontend$core$common$file$handlers$index_ts$getFileHandler(
+				___R$project$rome$$romefrontend$path$index_ts$createUnknownFilePath(
+					filename,
+				),
+				undefined,
+			);
+			if (handler !== undefined) {
+				return handler.language;
+			}
+		}
+
+		return "unknown";
+	}
+
+	function ___R$project$rome$$romefrontend$core$common$file$handlers$index_ts$getFileHandlerExtensions(
 		projectConfig,
 	) {
-		return [
-			...___R$$priv$project$rome$$romefrontend$core$common$file$handlers$index_ts$DEFAULT_HANDLERS.keys(),
-			...projectConfig.files.assetExtensions,
-		];
+		if (projectConfig === undefined) {
+			return [
+				...___R$$priv$project$rome$$romefrontend$core$common$file$handlers$index_ts$DEFAULT_HANDLERS.keys(),
+			];
+		} else {
+			return [
+				...___R$$priv$project$rome$$romefrontend$core$common$file$handlers$index_ts$DEFAULT_HANDLERS.keys(),
+				...projectConfig.files.assetExtensions,
+			];
+		}
 	}
 
 	function ___R$project$rome$$romefrontend$core$common$file$handlers$index_ts$getFileHandler(
@@ -46277,6 +45714,7 @@ function ___R$project$rome$$romefrontend$core$common$file$handlers$index_ts$getF
 		// Allow setting custom assert extensions in the project config
 		if (
 			handler === undefined &&
+			projectConfig !== undefined &&
 			projectConfig.files.assetExtensions.includes(ext)
 		) {
 			handler = ___R$$priv$project$rome$$romefrontend$core$common$file$handlers$index_ts$assetHandler;
@@ -51706,6 +51144,333 @@ function ___R$project$rome$$romefrontend$formatter$builders$js$statements$JSDebu
 	}
 
 
+  // project-rome/@romefrontend/string-escape/constants.ts
+const ___R$project$rome$$romefrontend$string$escape$constants_ts = {
+		get DOUBLE_QUOTE() {
+			return ___R$project$rome$$romefrontend$string$escape$constants_ts$DOUBLE_QUOTE;
+		},
+		get SINGLE_QUOTE() {
+			return ___R$project$rome$$romefrontend$string$escape$constants_ts$SINGLE_QUOTE;
+		},
+		get TICK_QUOTE() {
+			return ___R$project$rome$$romefrontend$string$escape$constants_ts$TICK_QUOTE;
+		},
+	};
+	const ___R$project$rome$$romefrontend$string$escape$constants_ts$DOUBLE_QUOTE = '"';
+	const ___R$project$rome$$romefrontend$string$escape$constants_ts$SINGLE_QUOTE = "'";
+	const ___R$project$rome$$romefrontend$string$escape$constants_ts$TICK_QUOTE = "`";
+
+
+  // project-rome/@romefrontend/string-escape/escapeJSString.ts
+// This regex represents printable ASCII characters, except the characters: '"\`
+	const ___R$$priv$project$rome$$romefrontend$string$escape$escapeJSString_ts$PRINTABLE_ASCII = /[ !#-&\(-\[\]-_a-~]/;
+
+	function ___R$$priv$project$rome$$romefrontend$string$escape$escapeJSString_ts$escapeChar(
+		char,
+		ignoreWhitespaceEscapes,
+	) {
+		switch (char) {
+			case '"':
+				return '\\"';
+
+			case "'":
+				return "\\'";
+
+			case "\b":
+				return "\\b";
+
+			case "\f":
+				return "\\f";
+
+			case "\\":
+				return "\\\\";
+		}
+
+		switch (char) {
+			case "\n":
+				return ignoreWhitespaceEscapes ? char : "\\n";
+
+			case "\r":
+				return ignoreWhitespaceEscapes ? char : "\\r";
+
+			case "\t":
+				return ignoreWhitespaceEscapes ? char : "\\t";
+		}
+
+		return undefined;
+	}
+
+	function ___R$project$rome$$romefrontend$string$escape$escapeJSString_ts$default(
+		str,
+		opts = {},
+	) {
+		let index = -1;
+		let result = "";
+
+		const {
+			ignoreWhitespaceEscapes = false,
+			quote = "",
+			json = false,
+			unicodeOnly = false,
+		} = opts;
+
+		// Loop over each code unit in the string and escape it
+		while (++index < str.length) {
+			const char = str[index];
+
+			// Handle surrogate pairs in non-JSON mode
+			if (!json) {
+				const charCode = str.charCodeAt(index);
+				const isHighSurrogate = charCode >= 55_296 && charCode <= 56_319;
+				const hasNextCodePoint = str.length > index + 1;
+				const isSurrogatePairStart = isHighSurrogate && hasNextCodePoint;
+
+				if (isSurrogatePairStart) {
+					const nextCharCode = str.charCodeAt(index + 1);
+					const isLowSurrogate =
+						nextCharCode >= 56_320 && nextCharCode <= 57_343;
+					if (isLowSurrogate) {
+						// https://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
+						const codePoint =
+							(charCode - 55_296) * 1_024 + nextCharCode - 56_320 + 65_536;
+						const hex = codePoint.toString(16);
+						result += "\\u{" + hex + "}";
+						index++;
+						continue;
+					}
+				}
+			}
+
+			//
+			if (
+				___R$$priv$project$rome$$romefrontend$string$escape$escapeJSString_ts$PRINTABLE_ASCII.test(
+					char,
+				)
+			) {
+				// It’s a printable ASCII character that is not `"`, `'` or `\`,
+				// so don’t escape it.
+				result += char;
+				continue;
+			}
+
+			// Escape double quotes
+			if (
+				char ===
+				___R$project$rome$$romefrontend$string$escape$constants_ts$DOUBLE_QUOTE
+			) {
+				result += quote === char ? '\\"' : char;
+				continue;
+			}
+
+			// Escape single quotes
+			if (
+				char ===
+				___R$project$rome$$romefrontend$string$escape$constants_ts$SINGLE_QUOTE
+			) {
+				result += quote === char ? "\\'" : char;
+				continue;
+			}
+
+			// Escape back tick
+			if (
+				char ===
+				___R$project$rome$$romefrontend$string$escape$constants_ts$TICK_QUOTE
+			) {
+				result += quote === char ? "\\`" : char;
+				continue;
+			}
+
+			// Null escape
+			if (
+				char === "\0" &&
+				!json &&
+				!___R$project$rome$$romefrontend$parser$core$index_ts$isDigit(
+					str[index + 1],
+				)
+			) {
+				result += "\\0";
+				continue;
+			}
+
+			// Simple escapes
+			if (!unicodeOnly) {
+				const replacement = ___R$$priv$project$rome$$romefrontend$string$escape$escapeJSString_ts$escapeChar(
+					char,
+					ignoreWhitespaceEscapes,
+				);
+				if (replacement !== undefined) {
+					result += replacement;
+					continue;
+				}
+			}
+
+			// Unicode escape
+			const hex = char.charCodeAt(0).toString(16);
+			const isLonghand = json || hex.length > 2;
+			const modifier = isLonghand ? "u" : "x";
+			const code = ("0000" + hex).slice(isLonghand ? -4 : -2);
+			const escaped = "\\" + modifier + code;
+			result += escaped;
+			continue;
+		}
+
+		return "" + quote + result + quote;
+	}
+
+
+  // project-rome/@romefrontend/string-escape/unescapeJSONString.ts
+function ___R$$priv$project$rome$$romefrontend$string$escape$unescapeJSONString_ts$unescapeChar(
+		modifier,
+	) {
+		switch (modifier) {
+			case "b":
+				return "\b";
+
+			case "f":
+				return "\f";
+
+			case "n":
+				return "\n";
+
+			case "r":
+				return "\r";
+
+			case "t":
+				return "\t";
+
+			case "v":
+				return "\x0b";
+
+			default:
+				return modifier;
+		}
+	}
+
+	const ___R$$priv$project$rome$$romefrontend$string$escape$unescapeJSONString_ts$UNEXPECTED_DEFAULT_THROWER = (
+		metadata,
+		index,
+	) => {
+		throw new TypeError(metadata.message.value + " (" + String(index) + ")");
+	};
+
+	function ___R$project$rome$$romefrontend$string$escape$unescapeJSONString_ts$default(
+		input,
+		unexpected = ___R$$priv$project$rome$$romefrontend$string$escape$unescapeJSONString_ts$UNEXPECTED_DEFAULT_THROWER,
+		allowWhitespace = false,
+	) {
+		let buffer = "";
+
+		let index = 0;
+
+		while (index < input.length) {
+			const char = input[index];
+
+			if (allowWhitespace) {
+				if (char === "\r") {
+					// Ignore it
+					index++;
+					continue;
+				}
+
+				if (char === "\n" || char === "\t") {
+					// Add it verbatim
+					buffer += char;
+					index++;
+					continue;
+				}
+			}
+
+			// It's verbatim if it's an escaped backslash or not a backslash
+			if (
+				(___R$project$rome$$romefrontend$string$utils$isEscaped_ts$isEscaped(
+					___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce0(index),
+					input,
+				) &&
+				char === "\\") ||
+				char !== "\\"
+			) {
+				// Validate that this is a valid character
+				const codePoint = char.codePointAt(0);
+				if (codePoint === undefined) {
+					throw new Error("Already validated that this index exists");
+				}
+				if (codePoint >= 0 && codePoint <= 31) {
+					throw unexpected(
+						___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.STRING_ESCAPE.INVALID_STRING_CHARACTER,
+						index,
+					);
+				}
+
+				// Add it verbatim
+				buffer += char;
+				index++;
+				continue;
+			}
+
+			// Anything after here is escaped
+			const modifierIndex = index + 1;
+			const modifier = input[modifierIndex];
+
+			if (modifier === "u") {
+				// Get the next 4 characters as the code point
+				const codeStartIndex = modifierIndex + 1;
+				const rawCode = input.slice(codeStartIndex, codeStartIndex + 4);
+
+				// Validate that we have at least 4 digits
+				if (rawCode.length < 4) {
+					// (index of the point start + total point digits)
+					const lastDigitIndex = codeStartIndex + rawCode.length - 1;
+					throw unexpected(
+						___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.STRING_ESCAPE.NOT_ENOUGH_CODE_POINTS,
+						lastDigitIndex,
+					);
+				}
+
+				// Validate that each character is a valid hex digit
+				for (let i = 0; i < rawCode.length; i++) {
+					const char = rawCode[i];
+					if (
+						!___R$project$rome$$romefrontend$parser$core$index_ts$isHexDigit(
+							char,
+						)
+					) {
+						// Get the current source index for this character
+						// (code start index + digit index)
+						const pos = codeStartIndex + i;
+						throw unexpected(
+							___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.STRING_ESCAPE.INVALID_HEX_DIGIT_FOR_ESCAPE,
+							pos,
+						);
+					}
+				}
+
+				// Validate the code point
+				const code = parseInt(rawCode, 16);
+
+				// Get the character for this code point
+				buffer += String.fromCodePoint(code);
+
+				// Skip ahead six indexes (1 escape char +  1 modifier + 4 hex digits)
+				index += 6;
+			} else {
+				// Unescape a basic modifier like \t
+				buffer += ___R$$priv$project$rome$$romefrontend$string$escape$unescapeJSONString_ts$unescapeChar(
+					modifier,
+				);
+
+				// Skip ahead two indexes to also take along the modifier
+				index += 2;
+			}
+		}
+
+		return buffer;
+	}
+
+
+  // project-rome/@romefrontend/string-escape/index.ts
+
+
+
   // project-rome/@romefrontend/formatter/builders/js/literals/JSStringLiteral.ts
 function ___R$project$rome$$romefrontend$formatter$builders$js$literals$JSStringLiteral_ts$default(
 		builder,
@@ -56850,7 +56615,7 @@ const ___R$project$rome$$romefrontend$project$types_ts = {
 	};
 	function ___R$project$rome$$romefrontend$project$types_ts$createDefaultProjectConfigMeta() {
 		return {
-			projectFolder: undefined,
+			projectDirectory: undefined,
 			configPath: undefined,
 			configHashes: [],
 			configDependencies: new ___R$project$rome$$romefrontend$path$collections_ts$AbsoluteFilePathSet(),
@@ -57649,10 +57414,10 @@ const ___R$project$rome$$romefrontend$project$utils_ts = {
 		getParentConfigDependencies: ___R$project$rome$$romefrontend$project$utils_ts$getParentConfigDependencies,
 	};
 	function ___R$project$rome$$romefrontend$project$utils_ts$assertHardMeta(meta) {
-		const {configPath, projectFolder: folder, consumer} = meta;
+		const {configPath, projectDirectory: directory, consumer} = meta;
 		if (
 			configPath === undefined ||
-			folder === undefined ||
+			directory === undefined ||
 			consumer === undefined
 		) {
 			throw new Error("This is not a disk project");
@@ -57661,7 +57426,7 @@ const ___R$project$rome$$romefrontend$project$utils_ts = {
 		return Object.assign(
 			{},
 			meta,
-			{configPath, consumer, projectFolder: folder},
+			{configPath, consumer, projectDirectory: directory},
 		);
 	}
 
@@ -57723,2234 +57488,16 @@ const ___R$project$rome$$romefrontend$project$utils_ts = {
 	) {
 		const deps = new ___R$project$rome$$romefrontend$path$collections_ts$AbsoluteFilePathSet();
 
-		for (const folder of path.getChain()) {
-			deps.add(folder.append("package.json"));
+		for (const directory of path.getChain()) {
+			deps.add(directory.append("package.json"));
 
 			for (const configFilename of ___R$project$rome$$romefrontend$project$constants_ts$ROME_CONFIG_FILENAMES) {
-				deps.add(folder.append(configFilename));
+				deps.add(directory.append(configFilename));
 			}
 		}
 
 		return deps;
 	}
-
-
-  // project-rome/@romefrontend/codec-source-map/base64.ts
-const ___R$project$rome$$romefrontend$codec$source$map$base64_ts = {
-		encode: ___R$project$rome$$romefrontend$codec$source$map$base64_ts$encode,
-		encodeVLQ: ___R$project$rome$$romefrontend$codec$source$map$base64_ts$encodeVLQ,
-		decode: ___R$project$rome$$romefrontend$codec$source$map$base64_ts$decode,
-		decodeVLQ: ___R$project$rome$$romefrontend$codec$source$map$base64_ts$decodeVLQ,
-	};
-	/**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-	/* -*- Mode: js; js-indent-level: 2; -*- */
-	/*
- * Copyright 2011 Mozilla Foundation and contributors
- * Licensed under the New BSD license. See LICENSE or:
- * http://opensource.org/licenses/BSD-3-Clause
- *
- * Based on the Base 64 VLQ implementation in Closure Compiler:
- * https://code.google.com/p/closure-compiler/source/browse/trunk/src/com/google/debugging/sourcemap/Base64VLQ.java
- *
- * Copyright 2011 The Closure Compiler Authors. All rights reserved.
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are
- * met:
- *
- *  * Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *  * Redistributions in binary form must reproduce the above
- *    copyright notice, this list of conditions and the following
- *    disclaimer in the documentation and/or other materials provided
- *    with the distribution.
- *  * Neither the name of Google Inc. nor the names of its
- *    contributors may be used to endorse or promote products derived
- *    from 'this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
-	const ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$intToCharMap = Array.from(
-		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
-	);
-
-	/**
- * Encode an integer in the range of 0 to 63 to a single base 64 digit.
- */
-	function ___R$project$rome$$romefrontend$codec$source$map$base64_ts$encode(
-		number,
-	) {
-		if (
-			0 <= number &&
-			number <
-			___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$intToCharMap.length
-		) {
-			return ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$intToCharMap[number];
-		} else {
-			throw new TypeError("Must be between 0 and 63: " + number);
-		}
-	}
-
-	// A single base 64 digit can contain 6 bits of data. For the base 64 variable
-	// length quantities we use in the source map spec, the first bit is the sign,
-	// the next four bits are the actual value, and the 6th bit is the
-	// continuation bit. The continuation bit tells us whether there are more
-	// digits in this value following this digit.
-	//
-	//   Continuation
-	//   |    Sign
-	//   |    |
-	//   V    V
-	//   101011
-	const ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_BASE_SHIFT = 5;
-
-	// binary: 100000
-	const ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_BASE =
-		1 <<
-		___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_BASE_SHIFT;
-
-	// binary: 011111
-	const ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_BASE_MASK =
-		___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_BASE -
-		1;
-
-	// binary: 100000
-	const ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_CONTINUATION_BIT = ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_BASE;
-
-	/**
- * Converts from 'a two-complement value to a value where the sign bit is
- * placed in the least significant bit.  For example, as decimals:
- *   1 becomes 2 (10 binary), -1 becomes 3 (11 binary)
- *   2 becomes 4 (100 binary), -2 becomes 5 (101 binary)
- */
-	function ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$toVLQSigned(
-		aValue,
-	) {
-		return aValue < 0 ? (-aValue << 1) + 1 : (aValue << 1) + 0;
-	}
-
-	/**
- * Converts to a two-complement value from 'a value where the sign bit is
- * placed in the least significant bit.  For example, as decimals:
- *   2 (10 binary) becomes 1, 3 (11 binary) becomes -1
- *   4 (100 binary) becomes 2, 5 (101 binary) becomes -2
- */
-	// eslint-disable-next-line no-unused-vars
-	function ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$fromVLQSigned(
-		value,
-	) {
-		const isNegative = (value & 1) === 1;
-		const shifted = value >> 1;
-		return isNegative ? -shifted : shifted;
-	}
-
-	/**
- * Returns the base 64 VLQ encoded value.
- */
-	function ___R$project$rome$$romefrontend$codec$source$map$base64_ts$encodeVLQ(
-		value,
-	) {
-		let encoded = "";
-		let vlq = ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$toVLQSigned(
-			value,
-		);
-
-		do {
-			let digit =
-				vlq &
-				___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_BASE_MASK;
-			vlq >>>= ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_BASE_SHIFT;
-			if (vlq > 0) {
-				// There are still more digits in this value, so we must make sure the
-				// continuation bit is marked.
-				digit |= ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_CONTINUATION_BIT;
-			}
-			encoded += ___R$project$rome$$romefrontend$codec$source$map$base64_ts$encode(
-				digit,
-			);
-		} while (vlq > 0);
-
-		return encoded;
-	}
-
-	function ___R$project$rome$$romefrontend$codec$source$map$base64_ts$decode(
-		charCode,
-	) {
-		const uppercaseA = 65; // 'A'
-		const uppercaseZ = 90; // 'Z'
-		const lowercaseA = 97; // 'a'
-		const lowercaseZ = 122; // 'z'
-		const zero = 48; // '0'
-		const nine = 57; // '9'
-		const plus = 43; // '+'
-		const slash = 47; // '/'
-		const lowercaseOffset = 26;
-		const numberOffset = 52;
-
-		// 0 - 25: ABCDEFGHIJKLMNOPQRSTUVWXYZ
-		if (uppercaseA <= charCode && charCode <= uppercaseZ) {
-			return charCode - uppercaseA;
-		}
-
-		// 26 - 51: abcdefghijklmnopqrstuvwxyz
-		if (lowercaseA <= charCode && charCode <= lowercaseZ) {
-			return charCode - lowercaseA + lowercaseOffset;
-		}
-
-		// 52 - 61: 0123456789
-		if (zero <= charCode && charCode <= nine) {
-			return charCode - zero + numberOffset;
-		}
-
-		// 62: +
-		if (charCode === plus) {
-			return 62;
-		}
-
-		// 63: /
-		if (charCode === slash) {
-			return 63;
-		}
-
-		// Invalid base64 digit.
-		return -1;
-	}
-
-	function ___R$project$rome$$romefrontend$codec$source$map$base64_ts$decodeVLQ(
-		aStr,
-		aIndex,
-	) {
-		let strLen = aStr.length;
-		let result = 0;
-		let shift = 0;
-		let continuation = false;
-
-		do {
-			if (aIndex >= strLen) {
-				throw new Error("Expected more digits in base 64 VLQ value.");
-			}
-
-			let digit = ___R$project$rome$$romefrontend$codec$source$map$base64_ts$decode(
-				aStr.charCodeAt(aIndex++),
-			);
-			if (digit === -1) {
-				throw new Error("Invalid base64 digit: " + aStr.charAt(aIndex - 1));
-			}
-
-			continuation = !!(digit &
-			___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_CONTINUATION_BIT);
-			digit &= ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_BASE_MASK;
-			result = result + (digit << shift);
-			shift += ___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$VLQ_BASE_SHIFT;
-		} while (continuation);
-
-		return [
-			___R$$priv$project$rome$$romefrontend$codec$source$map$base64_ts$fromVLQSigned(
-				result,
-			),
-			aIndex,
-		];
-	}
-
-
-  // project-rome/@romefrontend/codec-source-map/util.ts
-function ___R$$priv$project$rome$$romefrontend$codec$source$map$util_ts$strcmp(
-		a,
-		b,
-	) {
-		if (a === b) {
-			return 0;
-		}
-
-		if (a === undefined) {
-			return 1;
-		}
-
-		if (b === undefined) {
-			return -1;
-		}
-
-		if (a > b) {
-			return 1;
-		}
-
-		return -1;
-	}
-
-	/**
- * Comparator between two mappings with inflated source and name strings where
- * the generated positions are compared.
- */
-	function ___R$project$rome$$romefrontend$codec$source$map$util_ts$compareByGeneratedPositionsInflated(
-		mappingA,
-		mappingB,
-	) {
-		let cmp =
-			___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
-				mappingA.generated.line,
-			) -
-			___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
-				mappingB.generated.line,
-			);
-		if (cmp !== 0) {
-			return cmp;
-		}
-
-		cmp =
-			___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
-				mappingA.generated.column,
-			) -
-			___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
-				mappingB.generated.column,
-			);
-		if (cmp !== 0) {
-			return cmp;
-		}
-
-		cmp = ___R$$priv$project$rome$$romefrontend$codec$source$map$util_ts$strcmp(
-			mappingA.source,
-			mappingB.source,
-		);
-		if (cmp !== 0) {
-			return cmp;
-		}
-
-		if (mappingA.original == null) {
-			if (mappingB.original != null) {
-				return 1;
-			}
-		} else if (mappingB.original == null) {
-			return -1;
-		} else {
-			cmp =
-				___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
-					mappingA.original.line,
-				) -
-				___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
-					mappingB.original.line,
-				);
-			if (cmp !== 0) {
-				return cmp;
-			}
-
-			cmp =
-				___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
-					mappingA.original.column,
-				) -
-				___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
-					mappingB.original.column,
-				);
-			if (cmp !== 0) {
-				return cmp;
-			}
-		}
-
-		return ___R$$priv$project$rome$$romefrontend$codec$source$map$util_ts$strcmp(
-			mappingA.name,
-			mappingB.name,
-		);
-	}
-
-	function ___R$project$rome$$romefrontend$codec$source$map$util_ts$toRelativeUrl(
-		root,
-		path,
-	) {
-		if (root === "") {
-			root = ".";
-		}
-
-		root = root.replace(/\/$/, "");
-
-		// It is possible for the path to be above the root. In this case, simply
-
-		// checking whether the root is a prefix of the path won't work. Instead, we
-
-		// need to remove components from the root one by one, until either we find
-
-		// a prefix that fits, or we run out of components to remove.
-		let level = 0;
-		while (path.indexOf(root + "/") !== 0) {
-			const index = root.lastIndexOf("/");
-			if (index < 0) {
-				return path;
-			}
-
-			// If the only part of the root that is left is the scheme (i.e. http://,
-
-			// file:///, etc.), one or more slashes (/), or simply nothing at all, we
-
-			// have exhausted all components, so the path is not relative to the root.
-			root = root.slice(0, index);
-			if (root.match(/^([^\/]+:\/)?\/*$/)) {
-				return path;
-			}
-
-			++level;
-		}
-
-		// Make sure we add a '../' for each component we removed from the root.
-
-		return "../".repeat(level) + path.substr(root.length + 1);
-	}
-
-
-  // project-rome/@romefrontend/codec-source-map/ArraySet.ts
-class ___R$project$rome$$romefrontend$codec$source$map$ArraySet_ts$default {
-		constructor() {
-			this.array = [];
-			this.set = new Map();
-		}
-
-		/**
-   * Static method for creating ArraySet instances from 'an existing array.
-   */
-		static fromArray(array, allowDuplicates) {
-			const set = new ___R$project$rome$$romefrontend$codec$source$map$ArraySet_ts$default();
-			for (const item of array) {
-				set.add(item, allowDuplicates);
-			}
-			return set;
-		}
-
-		/**
-   * Add the given string to this set.
-   */
-		add(str, allowDuplicates) {
-			const isDuplicate = this.has(str);
-			const idx = this.array.length;
-
-			if (isDuplicate === false || allowDuplicates === true) {
-				this.array.push(str);
-			}
-
-			if (isDuplicate === false) {
-				this.set.set(str, idx);
-			}
-		}
-
-		/**
-   * Is the given string a member of this set?
-   */
-		has(str) {
-			return this.set.has(str);
-		}
-
-		/**
-   * What is the index of the given string in the array?
-   */
-		indexOf(str) {
-			const idx = this.set.get(str);
-			if (idx === undefined || idx < 0) {
-				throw new Error(str + " is not in the set");
-			}
-			return idx;
-		}
-
-		/**
-   * What is the element at the given index?
-   */
-		at(idx) {
-			if (idx >= 0 && idx < this.array.length) {
-				return this.array[idx];
-			} else {
-				throw new Error("No element indexed by " + idx);
-			}
-		}
-
-		/**
-   * Returns the array representation of this set (which has the proper indices
-   * indicated by indexOf). Note that this is a copy of the internal array used
-   * for storing the members so that no one can mess with internal state.
-   */
-		toArray() {
-			return this.array.slice();
-		}
-	}
-
-
-  // project-rome/@romefrontend/codec-source-map/MappingList.ts
-/**
- * Determine whether mappingB is after mappingA with respect to generated
- * position.
- */
-	function ___R$$priv$project$rome$$romefrontend$codec$source$map$MappingList_ts$generatedPositionAfter(
-		mappingA,
-		mappingB,
-	) {
-		// Optimized for most common case
-		const lineA = mappingA.generated.line;
-		const lineB = mappingB.generated.line;
-		const columnA = mappingA.generated.column;
-		const columnB = mappingB.generated.column;
-		return (
-			lineB > lineA ||
-			(lineB === lineA && columnB >= columnA) ||
-			___R$project$rome$$romefrontend$codec$source$map$util_ts$compareByGeneratedPositionsInflated(
-				mappingA,
-				mappingB,
-			) <= 0
-		);
-	}
-
-	/**
- * A data structure to provide a sorted view of accumulated mappings in a
- * performance conscious manner. It trades a negligible overhead in general
- * case for a large speedup in case of mappings being added in order.
- */
-	class ___R$project$rome$$romefrontend$codec$source$map$MappingList_ts$default {
-		constructor() {
-			this.array = [];
-			this.sorted = true;
-			this.last = {
-				generated: {
-					index: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0,
-					line: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1Neg1,
-					column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0,
-				},
-				// TODO: original: undefined
-				original: {
-					line: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1Neg1,
-					column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0,
-				},
-				source: undefined,
-				name: undefined,
-			};
-		}
-
-		/**
-   * Add the given source mapping.
-   */
-		add(mapping) {
-			if (
-				___R$$priv$project$rome$$romefrontend$codec$source$map$MappingList_ts$generatedPositionAfter(
-					this.last,
-					mapping,
-				)
-			) {
-				this.last = mapping;
-				this.array.push(mapping);
-			} else {
-				this.sorted = false;
-				this.array.push(mapping);
-			}
-		}
-
-		/**
-   * Returns the flat, sorted array of mappings. The mappings are sorted by
-   * generated position.
-   *
-   * WARNING: This method returns internal data without copying, for
-   * performance. The return value must NOT be mutated, and should be treated as
-   * an immutable borrow. If you want to take ownership, you must make your own
-   * copy.
-   */
-		toArray() {
-			if (this.sorted === false) {
-				this.array.sort(
-					___R$project$rome$$romefrontend$codec$source$map$util_ts$compareByGeneratedPositionsInflated,
-				);
-				this.sorted = true;
-			}
-			return this.array;
-		}
-	}
-
-
-  // project-rome/@romefrontend/codec-source-map/SourceMapConsumer.ts
-function ___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$getParsedMappingKey(
-		line,
-		column,
-	) {
-		return String(line) + ":" + String(column);
-	}
-
-	class ___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$default {
-		constructor(file, getMappings) {
-			this.file = file;
-			this._getMappings = getMappings;
-			this.mappings = undefined;
-		}
-
-		static charIsMappingSeparator(str, index) {
-			const c = str.charAt(index);
-			return c === ";" || c === ",";
-		}
-
-		static fromJSON(sourceMap) {
-			return new ___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$default(
-				sourceMap.file,
-				() =>
-					___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$default.parseMappings(
-						sourceMap,
-					)
-				,
-			);
-		}
-
-		static fromJSONLazy(file, getSourceMap) {
-			return new ___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$default(
-				file,
-				() =>
-					___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$default.parseMappings(
-						getSourceMap(),
-					)
-				,
-			);
-		}
-
-		static parseMappings(sourceMap) {
-			const rawStr = sourceMap.mappings;
-			const map = new Map();
-
-			let generatedLine = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1;
-			let previousGeneratedColumn = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0;
-			let previousOriginalLine = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1;
-			let previousOriginalColumn = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0;
-			let previousSource = 0;
-			let previousName = 0;
-			let length = rawStr.length;
-			let index = 0;
-			let cachedSegments = {};
-			let value;
-
-			while (index < length) {
-				const char = rawStr[index];
-				if (char === ";") {
-					generatedLine = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(
-						generatedLine,
-					);
-					index++;
-					previousGeneratedColumn = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0;
-				} else if (char === ",") {
-					index++;
-				} else {
-					const mapping = {
-						generated: {
-							line: generatedLine,
-							column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0,
-						},
-						original: {
-							line: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1,
-							column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0,
-						},
-						source: undefined,
-						name: undefined,
-					};
-
-					// Because each offset is encoded relative to the previous one,
-					// many segments often have the same encoding. We can exploit this
-					// fact by caching the parsed variable length fields of each segment,
-					// allowing us to avoid a second parse if we encounter the same
-					// segment again.
-					let end = index;
-					for (; end < length; end++) {
-						if (
-							___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$default.charIsMappingSeparator(
-								rawStr,
-								end,
-							)
-						) {
-							break;
-						}
-					}
-					const str = rawStr.slice(index, end);
-
-					let segment = cachedSegments[str];
-					if (segment) {
-						index += str.length;
-					} else {
-						segment = [];
-						while (index < end) {
-							[value, index] = ___R$project$rome$$romefrontend$codec$source$map$base64_ts$decodeVLQ(
-								rawStr,
-								index,
-							);
-							segment.push(value);
-						}
-
-						if (segment.length === 2) {
-							throw new Error("Found a source, but no line and column");
-						}
-
-						if (segment.length === 3) {
-							throw new Error("Found a source and line, but no column");
-						}
-
-						cachedSegments[str] = segment;
-					}
-
-					// Generated column
-					mapping.generated.column = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
-						previousGeneratedColumn,
-						segment[0],
-					);
-					previousGeneratedColumn = mapping.generated.column;
-
-					if (segment.length > 1) {
-						// Original source
-						mapping.source = sourceMap.sources[previousSource + segment[1]];
-						previousSource += segment[1];
-
-						// Original line
-						const newOriginalLine = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
-							previousOriginalLine,
-							segment[2],
-						);
-						previousOriginalLine = newOriginalLine;
-
-						// Lines are stored 0-based
-						mapping.original.line = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
-							newOriginalLine,
-							1,
-						);
-
-						// Original column
-						const newOriginalColumn = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
-							previousOriginalColumn,
-							segment[3],
-						);
-						mapping.original.column = newOriginalColumn;
-						previousOriginalColumn = newOriginalColumn;
-
-						if (segment.length > 4) {
-							// Original name
-							mapping.name = sourceMap.names[previousName + segment[4]];
-							previousName += segment[4];
-						}
-					}
-
-					map.set(
-						___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$getParsedMappingKey(
-							mapping.generated.line,
-							mapping.generated.column,
-						),
-						mapping,
-					);
-				}
-			}
-
-			return map;
-		}
-
-		clearCache() {
-			this.mappings = undefined;
-		}
-
-		getMappings() {
-			if (this.mappings === undefined) {
-				const mappings = this._getMappings();
-				this.mappings = mappings;
-				return mappings;
-			} else {
-				return this.mappings;
-			}
-		}
-
-		approxOriginalPositionFor(line, column) {
-			while (___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(column) >= 0) {
-				const mapping = this.exactOriginalPositionFor(line, column);
-				if (mapping === undefined) {
-					column = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Dec(column);
-					continue;
-				} else {
-					return mapping;
-				}
-			}
-
-			return undefined;
-		}
-
-		exactOriginalPositionFor(line, column) {
-			const key = ___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$getParsedMappingKey(
-				line,
-				column,
-			);
-			const mapping = this.getMappings().get(key);
-			if (mapping === undefined) {
-				return undefined;
-			}
-
-			const source = mapping.source === undefined ? this.file : mapping.source;
-			if (source === undefined) {
-				throw new Error("Mapping provided unknown source");
-			}
-
-			return {
-				found: true,
-				source,
-				line: mapping.original.line,
-				column: mapping.original.column,
-				name: mapping.name,
-			};
-		}
-	}
-
-
-  // project-rome/@romefrontend/codec-source-map/SourceMapGenerator.ts
-class ___R$project$rome$$romefrontend$codec$source$map$SourceMapGenerator_ts$default {
-		constructor(args) {
-			this.file = args.file;
-			this.sourceRoot = args.sourceRoot;
-
-			this.sourcesContents = new Map();
-			this.map = undefined;
-			this.sources = new ___R$project$rome$$romefrontend$codec$source$map$ArraySet_ts$default();
-			this.names = new ___R$project$rome$$romefrontend$codec$source$map$ArraySet_ts$default();
-			this.mappings = new ___R$project$rome$$romefrontend$codec$source$map$MappingList_ts$default();
-			this.materializeCallbacks = [];
-		}
-
-		assertUnlocked() {
-			if (this.map !== undefined) {
-				throw new Error(
-					"Source map has already been materialized, serialize() should be your final call",
-				);
-			}
-		}
-
-		addMaterializer(fn) {
-			this.materializeCallbacks.push(fn);
-		}
-
-		/**
-   * Add a single mapping from 'original source line and column to the generated
-   * source's line and column for this source map being created. The mapping
-   * object should have the following properties:
-   *
-   *   - generated: An object with the generated line and column positions.
-   *   - original: An object with the original line and column positions.
-   *   - source: The original source file (relative to the sourceRoot).
-   *   - name: An optional original token name for this mapping.
-   */
-		addMapping(mapping) {
-			this.assertUnlocked();
-
-			const {name, source} = mapping;
-
-			this.validatePosition(
-				"generated",
-				mapping.generated.line,
-				mapping.generated.column,
-			);
-
-			if (mapping.original) {
-				this.validatePosition(
-					"original",
-					mapping.original.line,
-					mapping.original.column,
-				);
-			}
-
-			if (source !== undefined) {
-				this.sources.add(source);
-			}
-
-			if (name !== undefined) {
-				this.names.add(name);
-			}
-
-			this.mappings.add(mapping);
-		}
-
-		/**
-   * Set the source content for a source file.
-   */
-		setSourceContent(source, sourceContent) {
-			this.assertUnlocked();
-
-			if (this.sourceRoot !== undefined) {
-				source = ___R$project$rome$$romefrontend$codec$source$map$util_ts$toRelativeUrl(
-					this.sourceRoot,
-					source,
-				);
-			}
-
-			if (sourceContent !== undefined) {
-				// Add the source content to the _sourcesContents map.
-				this.sourcesContents.set(source, sourceContent);
-			} else {
-				// Remove the source file from the _sourcesContents map.
-				this.sourcesContents.delete(source);
-			}
-		}
-
-		validatePosition(key, line, column) {
-			if (___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(line) <= 0) {
-				throw new Error(key + " line should be >= 1 but is " + line);
-			}
-
-			if (___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(column) < 0) {
-				throw new Error(key + " column should be >= 0 but is " + column);
-			}
-		}
-
-		/**
-   * Serialize the accumulated mappings in to the stream of base 64 VLQs
-   * specified by the source map format.
-   */
-		serializeMappings() {
-			let previousGeneratedColumn = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0;
-			let previousGeneratedLine = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1;
-			let previousOriginalColumn = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0;
-			let previousOriginalLine = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1;
-			let previousName = 0;
-			let previousSource = 0;
-			let result = "";
-
-			const mappings = this.mappings.toArray();
-			for (let i = 0; i < mappings.length; i++) {
-				const mapping = mappings[i];
-				let next = "";
-
-				if (mapping.generated.line !== previousGeneratedLine) {
-					previousGeneratedColumn = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0;
-					while (mapping.generated.line !== previousGeneratedLine) {
-						next += ";";
-						previousGeneratedLine = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(
-							previousGeneratedLine,
-						);
-					}
-				} else if (i > 0) {
-					if (
-						!___R$project$rome$$romefrontend$codec$source$map$util_ts$compareByGeneratedPositionsInflated(
-							mapping,
-							mappings[i - 1],
-						)
-					) {
-						continue;
-					}
-					next += ",";
-				}
-
-				next += ___R$project$rome$$romefrontend$codec$source$map$base64_ts.encodeVLQ(
-					___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
-						mapping.generated.column,
-					) -
-					___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
-						previousGeneratedColumn,
-					),
-				);
-				previousGeneratedColumn = mapping.generated.column;
-
-				if (mapping.source !== undefined) {
-					const sourceIdx = this.sources.indexOf(mapping.source);
-					next += ___R$project$rome$$romefrontend$codec$source$map$base64_ts.encodeVLQ(
-						sourceIdx - previousSource,
-					);
-					previousSource = sourceIdx;
-
-					if (mapping.original) {
-						next += ___R$project$rome$$romefrontend$codec$source$map$base64_ts.encodeVLQ(
-							___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
-								mapping.original.line,
-							) -
-							___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
-								previousOriginalLine,
-							),
-						);
-						previousOriginalLine = mapping.original.line;
-
-						next += ___R$project$rome$$romefrontend$codec$source$map$base64_ts.encodeVLQ(
-							___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
-								mapping.original.column,
-							) -
-							___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
-								previousOriginalColumn,
-							),
-						);
-						previousOriginalColumn = mapping.original.column;
-
-						if (mapping.name !== undefined) {
-							const nameIdx = this.names.indexOf(mapping.name);
-							next += ___R$project$rome$$romefrontend$codec$source$map$base64_ts.encodeVLQ(
-								nameIdx - previousName,
-							);
-							previousName = nameIdx;
-						}
-					}
-
-					// TODO: else, assert mapping.name is undefined since it can't be encoded without an original position
-				}
-
-				// TODO: else, assert mapping.original is undefined since it can't be encoded without a source
-				result += next;
-			}
-
-			return result;
-		}
-
-		generateSourcesContent(sources, sourceRoot) {
-			return sources.map((source) => {
-				if (sourceRoot !== undefined) {
-					source = ___R$project$rome$$romefrontend$codec$source$map$util_ts$toRelativeUrl(
-						sourceRoot,
-						source,
-					);
-				}
-				const content = this.sourcesContents.get(source);
-				if (content === undefined) {
-					throw new Error("Expected content");
-				}
-				return content;
-			});
-		}
-
-		materialize() {
-			for (const fn of this.materializeCallbacks) {
-				fn();
-			}
-			this.materializeCallbacks = [];
-		}
-
-		/**
-   * Externalize the source map.
-   */
-		serialize() {
-			if (this.map !== undefined) {
-				return this.map;
-			}
-
-			this.materialize();
-
-			const sources = this.sources.toArray();
-			this.map = {
-				version: 3,
-				file: this.file,
-				names: this.names.toArray(),
-				mappings: this.serializeMappings(),
-				sourceRoot: this.sourceRoot,
-				sources,
-				sourcesContent: this.generateSourcesContent(sources, this.sourceRoot),
-			};
-			return this.map;
-		}
-
-		toComment() {
-			const jsonMap = this.toJSON();
-			const base64Map = new Buffer(jsonMap).toString("base64");
-			const comment =
-				"//# sourceMappingURL=data:application/json;charset=utf-8;base64," +
-				base64Map;
-			return comment;
-		}
-
-		toConsumer() {
-			return new ___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$default(
-				this.file,
-				() => {
-					const parsedMappings = new Map();
-
-					for (const mapping of this.getMappings()) {
-						parsedMappings.set(
-							___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$getParsedMappingKey(
-								mapping.generated.line,
-								mapping.generated.column,
-							),
-							mapping,
-						);
-					}
-
-					return parsedMappings;
-				},
-			);
-		}
-
-		getMappings() {
-			this.materialize();
-			return this.mappings.toArray();
-		}
-
-		toJSON() {
-			return JSON.stringify(this.serialize());
-		}
-	}
-
-
-  // project-rome/@romefrontend/codec-source-map/SourceMapConsumerCollection.ts
-class ___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumerCollection_ts$default {
-		constructor() {
-			this.maps = new Map();
-		}
-
-		hasAny() {
-			return this.maps.size > 0;
-		}
-
-		has(file) {
-			return file !== undefined && this.maps.has(file);
-		}
-
-		add(file, map) {
-			this.maps.set(file, map);
-		}
-
-		get(file) {
-			return this.maps.get(file);
-		}
-
-		normalizeResolved(source, line, column, loc) {
-			if (loc === undefined) {
-				return {
-					found: false,
-					source,
-					line,
-					column,
-					name: undefined,
-				};
-			} else {
-				return loc;
-			}
-		}
-
-		assertApproxOriginalPositionFor(file, line, column) {
-			return this.normalizeResolved(
-				file,
-				line,
-				column,
-				this.approxOriginalPositionFor(file, line, column),
-			);
-		}
-
-		assertExactOriginalPositionFor(file, line, column) {
-			return this.normalizeResolved(
-				file,
-				line,
-				column,
-				this.exactOriginalPositionFor(file, line, column),
-			);
-		}
-
-		approxOriginalPositionFor(file, line, column) {
-			const map = this.get(file);
-			if (map === undefined) {
-				return undefined;
-			} else {
-				return map.approxOriginalPositionFor(line, column);
-			}
-		}
-
-		exactOriginalPositionFor(file, line, column) {
-			const map = this.get(file);
-			if (map === undefined) {
-				return undefined;
-			} else {
-				return map.exactOriginalPositionFor(line, column);
-			}
-		}
-	}
-
-
-  // project-rome/@romefrontend/codec-source-map/types.ts
-
-
-
-  // project-rome/@romefrontend/codec-source-map/index.ts
-
-
-
-  // project-rome/@romefrontend/v8/types.ts
-const ___R$project$rome$$romefrontend$v8$types_ts = {};
-	const ___R$$priv$project$rome$$romefrontend$v8$types_ts$inspector = require(
-		"inspector",
-	);
-
-
-  // project-rome/@romefrontend/v8/errors.ts
-const ___R$project$rome$$romefrontend$v8$errors_ts = {
-		get ERROR_FRAMES_PROP() {
-			return ___R$project$rome$$romefrontend$v8$errors_ts$ERROR_FRAMES_PROP;
-		},
-		getErrorStructure: ___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure,
-		getSourceLocationFromErrorFrame: ___R$project$rome$$romefrontend$v8$errors_ts$getSourceLocationFromErrorFrame,
-	};
-	Object.keys(___R$project$rome$$romefrontend$v8$types_ts).forEach(function(key) {
-		if (key === "default") return undefined;
-		Object.defineProperty(
-			___R$project$rome$$romefrontend$v8$errors_ts,
-			key,
-			{
-				enumerable: true,
-				configurable: true,
-				get: function get() {
-					return ___R$project$rome$$romefrontend$v8$types_ts[key];
-				},
-			},
-		);
-	});
-	const ___R$project$rome$$romefrontend$v8$errors_ts$ERROR_FRAMES_PROP = "ERROR_FRAMES";
-
-	function ___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(
-		err,
-		framesToShift = 0,
-	) {
-		// Make some node errors more pretty
-		if (err instanceof Error) {
-			err = ___R$project$rome$$romefrontend$node$errors_ts$convertPossibleNodeError(
-				err,
-			);
-		}
-
-		let name = "Error";
-		let message = "Unknown message";
-		let stack = undefined;
-		let frames = [];
-		let looksLikeValidError = false;
-
-		if (
-			___R$project$rome$$romefrontend$typescript$helpers$index_ts$isPlainObject(
-				err,
-			)
-		) {
-			if (typeof err.name === "string") {
-				looksLikeValidError = true;
-				name = err.name;
-			}
-
-			if (typeof err.message === "string") {
-				looksLikeValidError = true;
-				message = err.message;
-			}
-
-			if (typeof err.stack === "string") {
-				looksLikeValidError = true;
-				stack = err.stack;
-			}
-
-			if (
-				Array.isArray(
-					err[___R$project$rome$$romefrontend$v8$errors_ts$ERROR_FRAMES_PROP],
-				)
-			) {
-				// @ts-ignore
-				frames = err[___R$project$rome$$romefrontend$v8$errors_ts$ERROR_FRAMES_PROP];
-			}
-		}
-
-		frames = frames.slice(framesToShift);
-
-		if (!looksLikeValidError) {
-			message = "Not an error instance: " + String(err);
-		}
-
-		return {
-			name,
-			message,
-			stack,
-			frames,
-		};
-	}
-
-	function ___R$project$rome$$romefrontend$v8$errors_ts$getSourceLocationFromErrorFrame(
-		frame,
-	) {
-		const pos = {
-			index: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0Neg1,
-			line: frame.lineNumber === undefined
-				? ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1
-				: frame.lineNumber,
-			column: frame.columnNumber === undefined
-				? ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0
-				: frame.columnNumber,
-		};
-
-		return {
-			filename: frame.filename === undefined ? "unknown" : frame.filename,
-			start: pos,
-			end: pos,
-		};
-	}
-
-
-  // project-rome/@romefrontend/v8/sourceMapManager.ts
-let ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$inited = false;
-
-	function ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$prepareStackTrace(
-		err,
-		frames,
-	) {
-		try {
-			___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$addErrorFrames(
-				err,
-				frames,
-			);
-			return ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$buildStackString(
-				err,
-			);
-		} catch (err2) {
-			return (
-				err.name +
-				": " +
-				err.message +
-				"\n  Failed to generate stacktrace: " +
-				err2.message
-			);
-		}
-	}
-
-	function ___R$project$rome$$romefrontend$v8$sourceMapManager_ts$initErrorHooks() {
-		if (!___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$inited) {
-			___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$inited = true;
-			Error.prepareStackTrace = ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$prepareStackTrace;
-		}
-	}
-
-	function ___R$project$rome$$romefrontend$v8$sourceMapManager_ts$teardown() {
-		Error.prepareStackTrace = undefined;
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$buildStackString(
-		err,
-	) {
-		const {frames} = ___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(
-			err,
-		);
-		const lines = [];
-
-		lines.push(err.name + ": " + err.message);
-
-		for (const frame of frames) {
-			const {
-				resolvedLocation,
-				methodName,
-				functionName,
-				typeName,
-				isNative,
-				isAsync,
-				isEval,
-				isConstructor,
-				filename,
-				lineNumber,
-				columnNumber,
-			} = frame;
-			const parts = [];
-
-			if (isAsync) {
-				parts.push("await");
-			}
-
-			if (isEval) {
-				parts.push("eval");
-			}
-
-			if (isConstructor) {
-				parts.push("new");
-			}
-
-			let name = "<anonymous>";
-			if (functionName !== undefined) {
-				name = functionName;
-			}
-			if (methodName !== undefined) {
-				name = methodName;
-			}
-			if (typeName !== undefined) {
-				parts.push(typeName + "." + name);
-			} else {
-				parts.push(name);
-			}
-
-			if (isNative) {
-				parts.push("native");
-			} else if (
-				filename !== undefined &&
-				lineNumber !== undefined &&
-				columnNumber !== undefined
-			) {
-				parts.push("(" + filename + ":" + lineNumber + ":" + columnNumber + ")");
-			}
-
-			if (resolvedLocation === false) {
-				parts.push("generated source location");
-			}
-
-			lines.push("  at " + parts.join(" "));
-		}
-
-		return lines.join("\n");
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$noNull(
-		val,
-	) {
-		if (val === null) {
-			return undefined;
-		} else {
-			return val;
-		}
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$addErrorFrames(
-		err,
-		frames,
-	) {
-		if (err[___R$project$rome$$romefrontend$v8$errors_ts$ERROR_FRAMES_PROP]) {
-			return;
-		}
-
-		let builtFrames = frames.map((frameApi) => {
-			const filename = frameApi.getFileName();
-			const lineNumber = frameApi.getLineNumber();
-			const columnNumber = frameApi.getColumnNumber();
-
-			const frame = {
-				typeName: ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$noNull(
-					frameApi.getTypeName(),
-				),
-				functionName: ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$noNull(
-					frameApi.getFunctionName(),
-				),
-				methodName: ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$noNull(
-					frameApi.getMethodName(),
-				),
-				isTopLevel: frameApi.isToplevel(),
-				isEval: frameApi.isEval(),
-				isNative: frameApi.isNative(),
-				isConstructor: frameApi.isConstructor(),
-				// TODO frameApi.isAsync
-				isAsync: false,
-				resolvedLocation: true,
-				filename: ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$noNull(
-					filename,
-				),
-				lineNumber: lineNumber == null
-					? undefined
-					: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(lineNumber),
-				// Rome expects 0-indexed columns, V8 provides 1-indexed
-				columnNumber: columnNumber == null
-					? undefined
-					: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1To0(
-							columnNumber,
-						),
-			};
-
-			if (
-				frame.filename !== undefined &&
-				frame.lineNumber !== undefined &&
-				frame.columnNumber !== undefined
-			) {
-				const {found, line, column, source, name} = ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$sourceMaps.assertApproxOriginalPositionFor(
-					frame.filename,
-					frame.lineNumber,
-					frame.columnNumber,
-				);
-
-				return Object.assign(
-					{},
-					frame,
-					{
-						functionName: frame.functionName === undefined
-							? name
-							: frame.functionName,
-						methodName: frame.methodName === undefined ? name : frame.methodName,
-						resolvedLocation: found,
-						lineNumber: line,
-						columnNumber: column,
-						filename: source,
-					},
-				);
-			} else {
-				return frame;
-			}
-		});
-
-		err[___R$project$rome$$romefrontend$v8$errors_ts$ERROR_FRAMES_PROP] = builtFrames;
-	}
-
-	const ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$sourceMaps = new ___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumerCollection_ts$default();
-	const ___R$project$rome$$romefrontend$v8$sourceMapManager_ts$default = ___R$$priv$project$rome$$romefrontend$v8$sourceMapManager_ts$sourceMaps;
-
-
-  // project-rome/@romefrontend/v8/utils.ts
-const ___R$project$rome$$romefrontend$v8$utils_ts = {
-		hrTime: ___R$project$rome$$romefrontend$v8$utils_ts$hrTime,
-		urlToFilename: ___R$project$rome$$romefrontend$v8$utils_ts$urlToFilename,
-	};
-	function ___R$project$rome$$romefrontend$v8$utils_ts$hrTime() {
-		const hrtime = process.hrtime(); // [seconds, nanoseconds]
-		const ts = hrtime[0] * 1_000_000 + Math.round(hrtime[1] / 1_000); // microseconds
-		return ts;
-	}
-
-	const ___R$$priv$project$rome$$romefrontend$v8$utils_ts$FILE_PROTOCOL = "file://";
-
-	function ___R$project$rome$$romefrontend$v8$utils_ts$urlToFilename(url) {
-		if (
-			url.startsWith(
-				___R$$priv$project$rome$$romefrontend$v8$utils_ts$FILE_PROTOCOL,
-			)
-		) {
-			return url.slice(
-				___R$$priv$project$rome$$romefrontend$v8$utils_ts$FILE_PROTOCOL.length,
-			);
-		} else {
-			return url;
-		}
-	}
-
-
-  // project-rome/@romefrontend/v8/Profiler.ts
-const ___R$$priv$project$rome$$romefrontend$v8$Profiler_ts$inspector = require(
-		"inspector",
-	);
-	class ___R$project$rome$$romefrontend$v8$Profiler_ts$default {
-		constructor() {
-			this.session = undefined;
-			this.memoryInterval = undefined;
-			this.memorySamples = [];
-		}
-
-		async startProfiling(samplingInterval) {
-			this.session = new ___R$$priv$project$rome$$romefrontend$v8$Profiler_ts$inspector.Session();
-			this.session.connect();
-
-			this.memoryInterval = setInterval(
-				() => {
-					const time = ___R$project$rome$$romefrontend$v8$utils_ts$hrTime();
-					const size = process.memoryUsage().heapUsed;
-					this.memorySamples.push([time, size]);
-				},
-				100,
-			);
-
-			await Promise.all([
-				this.sendCommand(
-					"Profiler.setSamplingInterval",
-					{
-						interval: samplingInterval,
-					},
-				),
-				this.sendCommand("Profiler.enable"),
-				this.sendCommand("Profiler.start"),
-			]);
-		}
-
-		async sendCommand(method, params) {
-			const {session} = this;
-			if (session === undefined) {
-				return Promise.reject(new Error("No current profiler session"));
-			} else {
-				return new Promise((resolve, reject) => {
-					session.post(
-						method,
-						params,
-						(err) => {
-							if (err === null) {
-								resolve();
-							} else {
-								reject(err);
-							}
-						},
-					);
-				});
-			}
-		}
-
-		destroy() {
-			const {session} = this;
-			if (session !== undefined) {
-				if (this.memoryInterval !== undefined) {
-					clearInterval(this.memoryInterval);
-				}
-				this.memorySamples = [];
-				session.disconnect();
-			}
-		}
-
-		async stopProfiling() {
-			const {session} = this;
-			if (session === undefined) {
-				return Promise.reject(new Error("No current profiler session"));
-			}
-
-			const {memorySamples} = this;
-
-			const res = await new Promise((resolve, reject) => {
-				session.post(
-					"Profiler.stop",
-					(err, params) => {
-						if (err === null) {
-							resolve(params);
-						} else {
-							reject(err);
-						}
-					},
-				);
-			});
-
-			this.destroy();
-
-			return {
-				pid: process.pid,
-				cpuProfile: res.profile,
-				memorySamples,
-			};
-		}
-	}
-
-
-  // project-rome/@romefrontend/v8/Trace.ts
-class ___R$project$rome$$romefrontend$v8$Trace_ts$default {
-		constructor() {
-			this.tid = 0;
-			this.eventId = 0;
-			this.events = [];
-		}
-
-		getEventId() {
-			const id = this.eventId;
-			this.eventId++;
-			return id;
-		}
-
-		decodeProfileSourceMap(profile) {
-			// This method mutates the profile for performance/ergonomics
-			// Nothing else should be relying on this so it doesn't really matter
-			for (const node of profile.cpuProfile.nodes) {
-				const {callFrame} = node;
-
-				// Call frame line numbers are 0-index while Rome is 1-indexed
-				const resolved = ___R$project$rome$$romefrontend$v8$sourceMapManager_ts$default.approxOriginalPositionFor(
-					___R$project$rome$$romefrontend$v8$utils_ts$urlToFilename(
-						callFrame.url,
-					),
-					___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce0To1(
-						___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce0(
-							callFrame.lineNumber,
-						),
-					),
-					___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce0(
-						callFrame.columnNumber,
-					),
-				);
-				if (resolved !== undefined) {
-					callFrame.url = resolved.source;
-					callFrame.lineNumber = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
-						___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1To0(
-							resolved.line,
-						),
-					);
-					callFrame.columnNumber = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
-						resolved.column,
-					);
-
-					if (resolved.name !== undefined) {
-						callFrame.functionName = resolved.name;
-					}
-				}
-			}
-		}
-
-		addProfile(name, profile) {
-			this.decodeProfileSourceMap(profile);
-
-			const {startTime, endTime} = profile.cpuProfile;
-
-			const common = {
-				pid: 1,
-				tid: profile.pid,
-			};
-
-			this.events.push(
-				Object.assign(
-					{},
-					common,
-					{ts: 0, ph: "M", cat: "__metadata", name: "thread_name", args: {name}},
-				),
-			);
-
-			this.events.push(
-				Object.assign(
-					{},
-					common,
-					{
-						ph: "P",
-						name: "CpuProfile",
-						id: this.getEventId(),
-						cat: "disabled-by-default-v8.cpu_profiler",
-						ts: endTime,
-						args: {
-							data: {
-								cpuProfile: profile.cpuProfile,
-							},
-						},
-					},
-				),
-			);
-
-			this.events.push(
-				Object.assign(
-					{},
-					common,
-					{
-						ph: "X",
-						name: "EvaluateScript",
-						id: this.getEventId(),
-						cat: "devtools.timeline",
-						ts: startTime,
-						dur: endTime - startTime,
-						args: {
-							data: {
-								url: "rome.js",
-								lineNumber: 1,
-								columnNumber: 1,
-								frame: "0xFFF",
-							},
-						},
-					},
-				),
-			);
-
-			for (const [time, size] of profile.memorySamples) {
-				this.events.push(
-					Object.assign(
-						{},
-						common,
-						{
-							ts: time,
-							ph: "I",
-							cat: "disabled-by-default-devtools.timeline",
-							name: "UpdateCounters",
-							args: {
-								data: {
-									jsHeapSizeUsed: size,
-								},
-							},
-							s: "t",
-						},
-					),
-				);
-			}
-		}
-
-		build() {
-			return this.events;
-		}
-	}
-
-
-  // project-rome/@romefrontend/v8/InspectorClient.ts
-class ___R$project$rome$$romefrontend$v8$InspectorClient_ts$InspectorClientCloseError
-		extends Error {
-		constructor() {
-			super("Inspector connection closed");
-		}
-	}
-
-	class ___R$project$rome$$romefrontend$v8$InspectorClient_ts$default {
-		constructor(socket) {
-			this.socket = socket;
-			this.id = 0;
-
-			this.subscriptions = new Map();
-			this.callbacks = new Map();
-
-			this.alive = true;
-
-			this.init();
-		}
-
-		end() {
-			this.socket.end();
-		}
-
-		init() {
-			const {socket} = this;
-
-			socket.errorEvent.subscribe((err) => {
-				this.alive = false;
-				for (const [, {reject}] of this.callbacks) {
-					reject(err);
-				}
-				this.callbacks.clear();
-				this.end();
-			});
-
-			socket.endEvent.subscribe(() => {
-				this.alive = false;
-				for (const [, {reject}] of this.callbacks) {
-					reject(
-						new ___R$project$rome$$romefrontend$v8$InspectorClient_ts$InspectorClientCloseError(),
-					);
-				}
-				this.callbacks.clear();
-			});
-
-			socket.completeFrameEvent.subscribe((frame) => {
-				const json = frame.payload.toString();
-				const data = ___R$project$rome$$romefrontend$codec$json$index_ts$consumeJSON({
-					input: json,
-				});
-
-				// Message reply
-				const id = data.get("id").asNumberOrVoid();
-				if (id !== undefined) {
-					const handler = this.callbacks.get(id);
-					if (handler !== undefined) {
-						if (data.has("error")) {
-							const errorMessage = data.get("error").get("message").asString();
-							handler.reject(new Error(errorMessage));
-						} else {
-							handler.resolve(data.get("result"));
-						}
-						this.callbacks.delete(id);
-					}
-					return;
-				}
-
-				// Event
-				const method = data.get("method").asStringOrVoid();
-				if (method !== undefined) {
-					const subs = this.subscriptions.get(method);
-					if (subs !== undefined) {
-						for (const sub of subs) {
-							const {callback, once} = sub;
-							callback(data.get("params"));
-							if (once) {
-								subs.delete(sub);
-							}
-						}
-					}
-				}
-			});
-		}
-
-		subscribe(method, sub) {
-			let subs = this.subscriptions.get(method);
-			if (subs === undefined) {
-				subs = new Set();
-				this.subscriptions.set(method, subs);
-			}
-			subs.add(sub);
-		}
-
-		assertAlive() {
-			if (!this.alive) {
-				throw new Error("InspectorClient has no active socket");
-			}
-		}
-
-		async wait(method) {
-			return new Promise((resolve) => {
-				this.assertAlive();
-				this.subscribe(
-					method,
-					{
-						once: true,
-						callback: resolve,
-					},
-				);
-			});
-		}
-
-		call(method, params) {
-			const id = ++this.id;
-
-			return new Promise((resolve, reject) => {
-				this.assertAlive();
-				this.callbacks.set(id, {resolve, reject});
-
-				this.socket.sendJSON({
-					id,
-					method,
-					params,
-				});
-			});
-		}
-	}
-
-
-  // project-rome/@romefrontend/v8/CoverageCollector.ts
-const ___R$$priv$project$rome$$romefrontend$v8$CoverageCollector_ts$inspector = require(
-		"inspector",
-	);
-	function ___R$$priv$project$rome$$romefrontend$v8$CoverageCollector_ts$createCoverageFileStats(
-		covered,
-		uncovered,
-	) {
-		const total = uncovered + covered;
-		return {
-			uncovered,
-			covered,
-			total,
-			percent: total === 0 ? 100 : 100 / total * covered,
-		};
-	}
-
-	class ___R$project$rome$$romefrontend$v8$CoverageCollector_ts$default {
-		constructor() {
-			this.sourceMaps = new Map();
-		}
-
-		addSourceMap(filename, code, map) {
-			this.sourceMaps.set(
-				filename,
-				{
-					ranges: [],
-					map,
-					code,
-				},
-			);
-		}
-
-		addCoverage(entries) {
-			for (const entry of entries) {
-				const filename = ___R$project$rome$$romefrontend$v8$utils_ts$urlToFilename(
-					entry.url,
-				);
-
-				const data = this.sourceMaps.get(filename);
-				if (data === undefined) {
-					continue;
-				}
-
-				for (const {ranges, functionName, isBlockCoverage} of entry.functions) {
-					data.ranges = data.ranges.concat(
-						ranges.map((range) => {
-							let kind = "expression";
-							if (functionName !== "") {
-								kind = "function";
-							} else if (isBlockCoverage) {
-								kind = "branch";
-							}
-
-							return Object.assign({kind}, range);
-						}),
-					);
-				}
-			}
-		}
-
-		generate() {
-			const insertedLocs = new Map();
-			const locs = [];
-
-			for (const data of this.sourceMaps.values()) {
-				const {ranges, code, map} = data;
-
-				// Turn an index into a position in the compiled source
-				let line = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1;
-				let column = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0;
-				let index = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0;
-				const indexCache = new Map();
-				function findIndex(newIndex) {
-					const cached = indexCache.get(newIndex);
-					if (cached !== undefined) {
-						return cached;
-					}
-
-					if (newIndex < index) {
-						throw new Error(
-							"Expected newIndex(" + newIndex + ") >= index(" + index + ")",
-						);
-					}
-
-					if (
-						___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(newIndex) >
-						code.length
-					) {
-						throw new Error(
-							"Expected newIndex(" +
-							newIndex +
-							") <= code.length(" +
-							code.length +
-							")",
-						);
-					}
-
-					while (index < newIndex) {
-						const char = code[___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
-							index,
-						)];
-						if (char === "\n") {
-							line = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(line);
-							column = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0;
-						} else {
-							column = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(
-								column,
-							);
-						}
-						index = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(index);
-					}
-
-					const pos = {
-						index: newIndex,
-						line,
-						column,
-					};
-					indexCache.set(newIndex, pos);
-					return pos;
-				}
-
-				// Prefetch all sorted indexes
-				const offsets = [];
-				for (const {startOffset, endOffset} of ranges) {
-					offsets.push(
-						___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce0(startOffset),
-					);
-					offsets.push(
-						___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce0(endOffset),
-					);
-				}
-				offsets.sort((a, b) =>
-					___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(a) -
-					___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(b)
-				);
-				for (const index of offsets) {
-					findIndex(index);
-				}
-
-				//
-				for (const {kind, startOffset, endOffset, count} of ranges) {
-					const originalStart = findIndex(
-						___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce0(startOffset),
-					);
-					const originalEnd = findIndex(
-						___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce0(endOffset),
-					);
-
-					const sourceStart = map.approxOriginalPositionFor(
-						originalStart.line,
-						originalStart.column,
-					);
-					if (sourceStart === undefined) {
-						continue;
-					}
-
-					const sourceEnd = map.approxOriginalPositionFor(
-						originalEnd.line,
-						originalEnd.column,
-					);
-					if (sourceEnd === undefined) {
-						continue;
-					}
-
-					if (sourceStart.source !== sourceEnd.source) {
-						throw new Error(
-							"Expected the same source for start and end: " +
-							sourceStart.source +
-							" !== " +
-							sourceEnd.source,
-						);
-					}
-
-					const key =
-						sourceStart.source +
-						":" +
-						String(startOffset) +
-						"-" +
-						String(endOffset);
-					const alreadyInserted = insertedLocs.get(key);
-					if (alreadyInserted !== undefined) {
-						alreadyInserted.count += count;
-						continue;
-					}
-
-					const loc = {
-						kind,
-						filename: sourceStart.source,
-						count,
-						start: {
-							index: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce0(
-								startOffset,
-							),
-							line: sourceStart.line,
-							column: sourceStart.column,
-						},
-						end: {
-							index: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce0(
-								endOffset,
-							),
-							line: sourceEnd.line,
-							column: sourceEnd.column,
-						},
-					};
-					insertedLocs.set(key, loc);
-					locs.push(loc);
-				}
-
-				map.clearCache();
-			}
-
-			// Assemble files
-			const rangesByFile = new Map();
-			for (const loc of locs) {
-				let ranges = rangesByFile.get(loc.filename);
-				if (ranges === undefined) {
-					ranges = [];
-					rangesByFile.set(loc.filename, ranges);
-				}
-				ranges.push(loc);
-			}
-
-			const files = [];
-			for (const [filename, ranges] of rangesByFile) {
-				const coveredLines = new Set();
-				const uncoveredLines = new Set();
-
-				let uncoveredFunctions = new Set();
-				let coveredFunctions = new Set();
-				let uncoveredBranches = new Set();
-				let coveredBranches = new Set();
-
-				for (const {count, kind, start, end} of ranges) {
-					// Fill in lines
-					for (
-						let i = start.line;
-						i <= end.line;
-						i = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(i)
-					) {
-						if (count === 0) {
-							uncoveredLines.add(i);
-						} else {
-							coveredLines.add(i);
-						}
-					}
-
-					// Mark covered kind
-					if (kind === "function") {
-						if (count === 0) {
-							uncoveredBranches.add(start.index);
-							uncoveredFunctions.add(start.line);
-						} else {
-							coveredFunctions.add(start.line);
-							coveredBranches.add(start.index);
-						}
-					} else if (kind === "branch") {
-						if (count === 0) {
-							uncoveredBranches.add(start.index);
-						} else {
-							coveredBranches.add(start.index);
-						}
-					}
-				}
-
-				for (const line of coveredLines) {
-					uncoveredLines.delete(line);
-				}
-
-				for (const index of coveredBranches) {
-					uncoveredBranches.delete(index);
-				}
-
-				for (const index of coveredFunctions) {
-					uncoveredFunctions.delete(index);
-				}
-
-				// No point showing fully covered files
-				if (
-					uncoveredLines.size === 0 &&
-					uncoveredBranches.size === 0 &&
-					uncoveredFunctions.size === 0
-				) {
-					continue;
-				}
-
-				files.push({
-					filename,
-					lines: ___R$$priv$project$rome$$romefrontend$v8$CoverageCollector_ts$createCoverageFileStats(
-						coveredLines.size,
-						uncoveredLines.size,
-					),
-					branches: ___R$$priv$project$rome$$romefrontend$v8$CoverageCollector_ts$createCoverageFileStats(
-						coveredBranches.size,
-						uncoveredBranches.size,
-					),
-					functions: ___R$$priv$project$rome$$romefrontend$v8$CoverageCollector_ts$createCoverageFileStats(
-						coveredFunctions.size,
-						uncoveredFunctions.size,
-					),
-				});
-			}
-			return files;
-		}
-	}
-
-
-  // project-rome/@romefrontend/v8/index.ts
-
-
-
-  // project-rome/@romefrontend/node/errors.ts
-const ___R$project$rome$$romefrontend$node$errors_ts = {
-		convertPossibleNodeError: ___R$project$rome$$romefrontend$node$errors_ts$convertPossibleNodeError,
-	};
-	function ___R$$priv$project$rome$$romefrontend$node$errors_ts$changeMessage(
-		old,
-		msg,
-	) {
-		const err = new Error(msg);
-
-		// Inherit some NodeJS.ErrnoException props
-		err.code = old.code;
-		err.path = old.path;
-		err.syscall = old.syscall;
-
-		// Without doing something jank we can't retain the original Error constructor ie. TypeError etc
-		// We probably don't need to or actually care
-		err.name = old.name;
-
-		// Populate ERROR_FRAMES_PROP
-		old.stack;
-		err[___R$project$rome$$romefrontend$v8$errors_ts$ERROR_FRAMES_PROP] = old[___R$project$rome$$romefrontend$v8$errors_ts$ERROR_FRAMES_PROP];
-		err.stack;
-
-		return err;
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$node$errors_ts$convertNodeErrorWithPath(
-		err,
-		path,
-	) {
-		switch (err.code) {
-			case "ENOENT":
-				return ___R$$priv$project$rome$$romefrontend$node$errors_ts$changeMessage(
-					err,
-					"'" + path + "' does not exist",
-				);
-
-			case "EPERM":
-				return ___R$$priv$project$rome$$romefrontend$node$errors_ts$changeMessage(
-					err,
-					"Cannot access '" + path + "'",
-				);
-
-			default:
-				return err;
-		}
-	}
-
-	function ___R$project$rome$$romefrontend$node$errors_ts$convertPossibleNodeError(
-		err,
-	) {
-		if (err.path !== undefined) {
-			return ___R$$priv$project$rome$$romefrontend$node$errors_ts$convertNodeErrorWithPath(
-				err,
-				err.path,
-			);
-		}
-
-		return err;
-	}
-
-
-  // project-rome/@romefrontend/node/index.ts
-
 
 
   // project-rome/@romefrontend/fs/index.ts
@@ -60064,14 +57611,34 @@ const ___R$$priv$project$rome$$romefrontend$fs$index_ts$fs = require("fs");
 		);
 	}
 
+	function ___R$project$rome$$romefrontend$fs$index_ts$copyFile(src, dest) {
+		return ___R$$priv$project$rome$$romefrontend$fs$index_ts$promisifyVoid(
+			src,
+			(src, callback) =>
+				___R$$priv$project$rome$$romefrontend$fs$index_ts$fs.copyFile(
+					src,
+					dest.join(),
+					callback,
+				)
+			,
+		);
+	}
+
+	function ___R$project$rome$$romefrontend$fs$index_ts$copyFileSync(src, dest) {
+		return ___R$$priv$project$rome$$romefrontend$fs$index_ts$fs.copyFileSync(
+			src.join(),
+			dest.join(),
+		);
+	}
+
 	// readdir
 	function ___R$$priv$project$rome$$romefrontend$fs$index_ts$createReaddirReturn(
-		folder,
+		directory,
 		files,
 	) {
 		return new ___R$project$rome$$romefrontend$path$collections_ts$AbsoluteFilePathSet(
-			files.map((basename) => {
-				return folder.append(basename);
+			files.sort().map((basename) => {
+				return directory.append(basename);
 			}),
 		);
 	}
@@ -61418,26 +58985,26 @@ const ___R$project$rome$$romefrontend$project$load_ts = {
 	}
 
 	async function ___R$project$rome$$romefrontend$project$load_ts$loadCompleteProjectConfig(
-		projectFolder,
+		projectDirectory,
 		configPath,
 	) {
 		// TODO use consumer.capture somehow here to aggregate errors
 		const {partial, meta} = await ___R$$priv$project$rome$$romefrontend$project$load_ts$loadPartialProjectConfig(
-			projectFolder,
+			projectDirectory,
 			configPath,
 		);
 		const {consumer} = meta;
 
-		// Produce a defaultConfig with some folder specific values
+		// Produce a defaultConfig with some directory specific values
 		const _defaultConfig = ___R$project$rome$$romefrontend$project$types_ts$createDefaultProjectConfig();
 		const defaultConfig = Object.assign(
 			{},
 			_defaultConfig,
-			{vcs: Object.assign({}, _defaultConfig.vcs, {root: projectFolder})},
+			{vcs: Object.assign({}, _defaultConfig.vcs, {root: projectDirectory})},
 		);
 
 		const name = consumer.get("name").asString(
-			"project-" + projectFolder.getBasename(),
+			"project-" + projectDirectory.getBasename(),
 		);
 
 		const config = Object.assign(
@@ -61482,7 +59049,7 @@ const ___R$project$rome$$romefrontend$project$load_ts = {
 	}
 
 	async function ___R$$priv$project$rome$$romefrontend$project$load_ts$loadPartialProjectConfig(
-		projectFolder,
+		projectDirectory,
 		configPath,
 	) {
 		const configFile = await ___R$project$rome$$romefrontend$fs$index_ts$readFileText(
@@ -61497,7 +59064,7 @@ const ___R$project$rome$$romefrontend$project$load_ts = {
 			res,
 			configPath,
 			configFile,
-			projectFolder,
+			projectDirectory,
 		);
 	}
 
@@ -61505,7 +59072,7 @@ const ___R$project$rome$$romefrontend$project$load_ts = {
 		res,
 		configPath,
 		configFile,
-		projectFolder,
+		projectDirectory,
 	) {
 		let {consumer} = res;
 
@@ -61546,14 +59113,14 @@ const ___R$project$rome$$romefrontend$project$load_ts = {
 		}
 
 		const meta = {
-			projectFolder,
+			projectDirectory,
 			configPath,
 			consumer,
 			consumersChain: [consumer],
 			configHashes: [hash],
 			configSourceSubKey,
 			configDependencies: ___R$project$rome$$romefrontend$project$utils_ts$getParentConfigDependencies(
-				projectFolder,
+				projectDirectory,
 			),
 		};
 
@@ -61628,13 +59195,13 @@ const ___R$project$rome$$romefrontend$project$load_ts = {
 
 			if (typeChecking.has("libs")) {
 				const libs = ___R$$priv$project$rome$$romefrontend$project$load_ts$normalizeTypeCheckingLibs(
-					projectFolder,
+					projectDirectory,
 					typeChecking.get("libs"),
 				);
 				config.typeCheck.libs = libs.files;
 				meta.configDependencies = new ___R$project$rome$$romefrontend$path$collections_ts$AbsoluteFilePathSet([
 					...meta.configDependencies,
-					...libs.folders,
+					...libs.directories,
 					...libs.files,
 				]);
 			}
@@ -61699,7 +59266,7 @@ const ___R$project$rome$$romefrontend$project$load_ts = {
 			)
 		) {
 			if (files.has("vendorPath")) {
-				config.files.vendorPath = projectFolder.resolve(
+				config.files.vendorPath = projectDirectory.resolve(
 					files.get("vendorPath").asString(),
 				);
 			}
@@ -61720,7 +59287,7 @@ const ___R$project$rome$$romefrontend$project$load_ts = {
 			___R$$priv$project$rome$$romefrontend$project$load_ts$categoryExists(vcs)
 		) {
 			if (vcs.has("root")) {
-				config.vcs.root = projectFolder.resolve(vcs.get("root").asString());
+				config.vcs.root = projectDirectory.resolve(vcs.get("root").asString());
 			}
 		}
 
@@ -61758,7 +59325,7 @@ const ___R$project$rome$$romefrontend$project$load_ts = {
 
 		if (_extends.exists()) {
 			return await ___R$$priv$project$rome$$romefrontend$project$load_ts$extendProjectConfig(
-				projectFolder,
+				projectDirectory,
 				_extends,
 				config,
 				meta,
@@ -61772,20 +59339,20 @@ const ___R$project$rome$$romefrontend$project$load_ts = {
 	}
 
 	function ___R$$priv$project$rome$$romefrontend$project$load_ts$normalizeTypeCheckingLibs(
-		projectFolder,
+		projectDirectory,
 		consumer,
 	) {
 		const libFiles = new ___R$project$rome$$romefrontend$path$collections_ts$AbsoluteFilePathSet();
 
-		// Normalize library folders
-		const folders = ___R$project$rome$$romefrontend$project$utils_ts$arrayOfStrings(
+		// Normalize library directories
+		const directories = ___R$project$rome$$romefrontend$project$utils_ts$arrayOfStrings(
 			consumer,
-		).map((libFolder) => projectFolder.resolve(libFolder));
+		).map((libDirectory) => projectDirectory.resolve(libDirectory));
 
-		// Crawl library folders and add their files
-		for (const folder of folders) {
+		// Crawl library directories and add their files
+		for (const directory of directories) {
 			const files = ___R$project$rome$$romefrontend$fs$index_ts$readDirectorySync(
-				folder,
+				directory,
 			);
 			for (const file of files) {
 				const stats = ___R$project$rome$$romefrontend$fs$index_ts$lstatSync(
@@ -61794,19 +59361,19 @@ const ___R$project$rome$$romefrontend$project$load_ts = {
 				if (stats.isFile()) {
 					libFiles.add(file);
 				} else if (stats.isDirectory()) {
-					folders.push(file);
+					directories.push(file);
 				}
 			}
 		}
 
 		return {
 			files: libFiles,
-			folders,
+			directories,
 		};
 	}
 
 	async function ___R$$priv$project$rome$$romefrontend$project$load_ts$extendProjectConfig(
-		projectFolder,
+		projectDirectory,
 		extendsStrConsumer,
 		config,
 		meta,
@@ -61817,7 +59384,7 @@ const ___R$project$rome$$romefrontend$project$load_ts = {
 			// TODO maybe do some magic here?
 		}
 
-		const extendsPath = projectFolder.resolve(extendsRelative);
+		const extendsPath = projectDirectory.resolve(extendsRelative);
 		const {partial: extendsObj, meta: extendsMeta} = await ___R$$priv$project$rome$$romefrontend$project$load_ts$loadPartialProjectConfig(
 			extendsPath.getParent(),
 			extendsPath,
@@ -62042,7 +59609,7 @@ function ___R$$priv$project$rome$$romefrontend$ast$utils$removeLoc_ts$removeProp
 		const context = new ___R$project$rome$$romefrontend$compiler$lib$CompilerContext_ts$default({
 			ast: ___R$project$rome$$romefrontend$ast$js$core$JSRoot_ts$MOCK_PROGRAM,
 			project: {
-				folder: undefined,
+				directory: undefined,
 				config: ___R$project$rome$$romefrontend$project$types_ts$createDefaultProjectConfig(),
 			},
 		});
@@ -62730,7 +60297,6 @@ function ___R$project$rome$$romefrontend$formatter$index_ts$formatAST(
 			format = "pretty",
 			typeAnnotations = true,
 			sourceMaps = false,
-			comments,
 			indent = 0,
 			allowInterpreterDirective = true,
 		} = {},
@@ -62742,7 +60308,9 @@ function ___R$project$rome$$romefrontend$formatter$index_ts$formatAST(
 				typeAnnotations,
 				allowInterpreterDirective,
 			},
-			ast.type === "JSRoot" ? ast.comments : comments,
+			___R$project$rome$$romefrontend$ast$utils$isRoot_ts$isRoot(ast)
+				? ast.comments
+				: [],
 		);
 		const token = builder.tokenize(
 			ast,
@@ -62973,6 +60541,7421 @@ const ___R$project$rome$$romefrontend$compiler$lint$decisions_ts = {
 	}
 
 
+  // project-rome/@romefrontend/cli-diagnostics/highlightCode.ts
+// Max file size to avoid doing expensive highlighting for massive files - 100KB
+	// NB: This should probably be lower
+	const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$FILE_SIZE_MAX = 100_000;
+
+	function ___R$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$default(
+		opts,
+	) {
+		if (
+			opts.input.length >
+			___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$FILE_SIZE_MAX ||
+			!opts.highlight
+		) {
+			return ___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
+				opts.input,
+			);
+		}
+
+		switch (opts.language) {
+			case "js":
+				return ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$highlightJS(
+					opts,
+					// js-parser does not accept an "unknown" sourceType
+					opts.sourceTypeJS === undefined || opts.sourceTypeJS === "unknown"
+						? "script"
+						: opts.sourceTypeJS,
+				);
+
+			case "html":
+				return ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$highlightHTML(
+					opts,
+				);
+
+			case "json":
+				return ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$highlightJSON(
+					opts,
+				);
+
+			default:
+				return ___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
+					opts.input,
+				);
+		}
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$reduceParserCore(
+		input,
+		tokens,
+		callback,
+	) {
+		return ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$reduce(
+			input,
+			tokens,
+			(token, value, prev, next) => {
+				switch (token.type) {
+					case "Invalid":
+						return ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$invalidHighlight(
+							value,
+						);
+
+					// Will never be hit
+					case "EOF":
+					case "SOF":
+						return {value: ""};
+
+					default:
+						// We should have refined `token` to not include any of the base tokens
+						return callback(token, value, prev, next);
+				}
+			},
+		);
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$reduce(
+		input,
+		tokens,
+		callback,
+	) {
+		let prevEnd = 0;
+		let buff = "";
+
+		for (let i = 0; i < tokens.length; i++) {
+			const token = tokens[i];
+			const start = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
+				token.start,
+			);
+			const end = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
+				token.end,
+			);
+			let value = input.slice(start, end);
+
+			// Add on text between tokens
+			buff += ___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
+				input.slice(prevEnd, start),
+			);
+			prevEnd = end;
+
+			// We need to break up the token text into lines, so that we can easily split the highlighted newlines and have the ansi codes be unbroken
+			const lines = value.split("\n");
+
+			const values = lines.map((line) => {
+				if (line === "") {
+					return "";
+				} else {
+					const prev = tokens[i - 1];
+					const next = tokens[i + 1];
+					const escapedLine = ___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
+						line,
+					);
+					const res = callback(token, escapedLine, prev, next);
+					if (res === undefined) {
+						return escapedLine;
+					} else {
+						const {value = escapedLine, type} = res;
+						if (type === undefined) {
+							return value;
+						} else {
+							return ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
+								"token",
+								value,
+								{type},
+							);
+						}
+					}
+				}
+			});
+
+			buff += values.join("\n");
+		}
+
+		return buff;
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$invalidHighlight(
+		line,
+	) {
+		return {
+			value: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
+				"emphasis",
+				___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
+					"color",
+					line,
+					{bg: "red"},
+				),
+			),
+		};
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$highlightJSON(
+		{input, path},
+	) {
+		const tokens = ___R$project$rome$$romefrontend$codec$json$index_ts$tokenizeJSON({
+			input,
+			// Wont be used anywhere but activates JSON extensions if necessary
+			path,
+		});
+
+		return ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$reduceParserCore(
+			input,
+			tokens,
+			(token) => {
+				// Try to keep the highlighting in line with JS where possible
+				switch (token.type) {
+					case "BlockComment":
+					case "LineComment":
+						return {type: "comment"};
+
+					case "String":
+						return {type: "string"};
+
+					case "Number":
+						return {type: "number"};
+
+					case "Word":
+						switch (token.value) {
+							case "true":
+							case "false":
+							case "null":
+								return {type: "boolean"};
+
+							default:
+								return undefined;
+						}
+
+					case "Comma":
+					case "Colon":
+					case "Dot":
+						return {type: "operator"};
+
+					case "BracketOpen":
+					case "BracketClose":
+					case "BraceOpen":
+					case "BraceClose":
+					case "Minus":
+					case "Plus":
+						return {type: "punctuation"};
+
+					default:
+						return undefined;
+				}
+			},
+		);
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$highlightHTML(
+		{input, path},
+	) {
+		const tokens = ___R$project$rome$$romefrontend$html$parser$index_ts$tokenizeHTML({
+			input,
+			path,
+		});
+
+		return ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$reduceParserCore(
+			input,
+			tokens,
+			(token, value, prev) => {
+				// All these tokens appear only inside of tags
+				switch (token.type) {
+					case "Equals":
+						return {type: "attr-equals"};
+
+					case "Identifier":
+						return {
+							type: prev !== undefined && prev.type === "TagStartOpen"
+								? "tag"
+								: "attr-name",
+						};
+
+					case "String":
+						return {type: "attr-value"};
+
+					case "TagEndOpen":
+					case "TagEnd":
+					case "TagSelfClosing":
+					case "TagStartOpen":
+						return {type: "punctuation"};
+
+					default:
+						return undefined;
+				}
+			},
+		);
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$highlightJS(
+		{input, path},
+		sourceType,
+	) {
+		const tokens = ___R$project$rome$$romefrontend$js$parser$index_ts$tokenizeJS({
+			input,
+			sourceType,
+			path,
+		});
+
+		return ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$reduce(
+			input,
+			tokens,
+			(token, value, prev, next) => {
+				const {type} = token;
+
+				switch (type.label) {
+					case "break":
+					case "case":
+					case "catch":
+					case "continue":
+					case "debugger":
+					case "default":
+					case "do":
+					case "else":
+					case "finally":
+					case "for":
+					case "function":
+					case "if":
+					case "return":
+					case "switch":
+					case "throw":
+					case "try":
+					case "var":
+					case "const":
+					case "while":
+					case "with":
+					case "new":
+					case "this":
+					case "super":
+					case "class":
+					case "extends":
+					case "export":
+					case "import":
+					case "in":
+					case "instanceof":
+					case "typeof":
+					case "void":
+					case "delete":
+						return {type: "keyword"};
+
+					case "true":
+					case "false":
+					case "null":
+						return {type: "boolean"};
+
+					case "num":
+					case "bigint":
+						return {type: "number"};
+
+					case "regexp":
+						return {type: "regex"};
+
+					case "string":
+					case "template":
+					case "`":
+						return {type: "string"};
+
+					case "invalid":
+						return ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$invalidHighlight(
+							value,
+						);
+
+					case "comment":
+						return {type: "comment"};
+
+					case ",":
+					case ";":
+					case ":":
+					case "::":
+					case "${":
+					case ".":
+					case "?":
+					case "?.":
+					case "[":
+					case "]":
+					case "{":
+					case "{|":
+					case "}":
+					case "|}":
+					case "(":
+					case ")":
+						return {type: "punctuation"};
+
+					case "name": {
+						if (next !== undefined && next.type.label === "(") {
+							return {type: "function"};
+						}
+
+						// These are contextual keywords
+						if (
+							value === "from" ||
+							value === "let" ||
+							value === "async" ||
+							value === "await"
+						) {
+							return {type: "keyword"};
+						}
+
+						return {type: "variable"};
+					}
+
+					case "jsxName":
+						return {
+							type: prev !== undefined &&
+							(prev.type.label === "jsxTagStart" || prev.type.label === "/")
+								? "variable"
+								: "attr-name",
+						};
+
+					case "=>":
+					case "...":
+					case "@":
+					case "#":
+					case "=":
+					case "_=":
+					case "++/--":
+					case "!":
+					case "~":
+					case "??":
+					case "||":
+					case "&&":
+					case "|":
+					case "^":
+					case "&":
+					case "==/!=":
+					case "</>":
+					case "<</>>":
+					case "+/-":
+					case "%":
+					case "*":
+					case "/":
+					case "**":
+						return {type: "operator"};
+
+					default:
+						return undefined;
+				}
+			},
+		);
+	}
+
+
+  // project-rome/@romefrontend/cli-layout/ansi.ts
+const ___R$project$rome$$romefrontend$cli$layout$ansi_ts = {
+		get pattern() {
+			return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$pattern;
+		},
+		get regex() {
+			return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$regex;
+		},
+		formatAnsiRGB: ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsiRGB,
+		get formatAnsi() {
+			return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi;
+		},
+		stripAnsi: ___R$project$rome$$romefrontend$cli$layout$ansi_ts$stripAnsi,
+		hasAnsi: ___R$project$rome$$romefrontend$cli$layout$ansi_ts$hasAnsi,
+		get ansiEscapes() {
+			return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$ansiEscapes;
+		},
+	};
+	const ___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$ESC = "\x1b[";
+
+	const ___R$project$rome$$romefrontend$cli$layout$ansi_ts$pattern = [
+		"[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:[a-zA-Z\\d]*(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)",
+		"(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))",
+	].join("|");
+
+	const ___R$project$rome$$romefrontend$cli$layout$ansi_ts$regex = new RegExp(
+		___R$project$rome$$romefrontend$cli$layout$ansi_ts$pattern,
+		"g",
+	);
+
+	function ___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+		num,
+	) {
+		return (
+			"" +
+			___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$ESC +
+			String(num) +
+			"m"
+		);
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$rgbTo8BitAnsi(
+		[r, g, b],
+	) {
+		if (r === g && g === b) {
+			if (r < 8) {
+				return 16;
+			}
+
+			if (r > 248) {
+				return 231;
+			}
+
+			return Math.round((r - 8) / 247 * 24) + 232;
+		}
+
+		const ansi =
+			16 +
+			36 * Math.round(r / 255 * 5) +
+			6 * Math.round(g / 255 * 5) +
+			Math.round(b / 255 * 5);
+
+		return ansi;
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$saturation(
+		rgb,
+	) {
+		const r = rgb[0] / 255;
+		const g = rgb[1] / 255;
+		const b = rgb[2] / 255;
+		const v = Math.max(r, g, b);
+		const diff = v - Math.min(r, g, b);
+
+		let s;
+		if (diff === 0) {
+			s = 0;
+		} else {
+			s = diff / v;
+		}
+
+		return s * 100;
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$rgbTo4BitAnsi(
+		color,
+	) {
+		const [r, g, b] = color;
+		let value = ___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$saturation(
+			color,
+		);
+
+		value = Math.round(value / 50);
+
+		if (value === 0) {
+			return 30;
+		}
+
+		let ansi =
+			30 +
+			(Math.round(b / 255) << 2 | Math.round(g / 255) << 1 | Math.round(r / 255));
+
+		if (value === 2) {
+			ansi += 60;
+		}
+
+		return ansi;
+	}
+
+	function ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsiRGB(
+		str,
+		color,
+		features,
+	) {
+		switch (features.colorDepth) {
+			case 1:
+				return str;
+
+			case 4:
+				return (
+					___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+						___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$rgbTo4BitAnsi(
+							color,
+						),
+					) +
+					str +
+					___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+						39,
+					)
+				);
+
+			case 8:
+				return (
+					"\x1b[38;5;" +
+					___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$rgbTo8BitAnsi(
+						color,
+					) +
+					"m" +
+					str +
+					___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+						39,
+					)
+				);
+
+			case 24:
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.rgb(
+					str,
+					color,
+				);
+		}
+	}
+
+	const ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi = {
+		reset(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(0) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(0)
+			);
+		},
+		fileHyperlink(name, filename) {
+			let href = "file://";
+			const {HOSTNAME} = process.env;
+			if (HOSTNAME != null) {
+				href += HOSTNAME + "/";
+			}
+			href += filename;
+			return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.hyperlink(
+				name,
+				href,
+			);
+		},
+		hyperlink(name, href) {
+			return "\x1b]8;;" + href + "\x07" + name + "\x1b]8;;\x07";
+		},
+		rgb(str, color) {
+			return (
+				"\x1b[38;2;" +
+				color.join(";") +
+				"m" +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					39,
+				)
+			);
+		},
+		bgRgb(str, color) {
+			return (
+				"\x1b[48;2;" +
+				color.join(";") +
+				"m" +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					49,
+				)
+			);
+		},
+		bold(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(1) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					22,
+				)
+			);
+		},
+		dim(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(2) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					22,
+				)
+			);
+		},
+		italic(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(3) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					23,
+				)
+			);
+		},
+		underline(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(4) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					24,
+				)
+			);
+		},
+		inverse(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(7) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					27,
+				)
+			);
+		},
+		hidden(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(8) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					28,
+				)
+			);
+		},
+		strikethrough(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(9) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					29,
+				)
+			);
+		},
+		black(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					30,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					39,
+				)
+			);
+		},
+		brightBlack(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					90,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					39,
+				)
+			);
+		},
+		red(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					31,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					39,
+				)
+			);
+		},
+		brightRed(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					91,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					39,
+				)
+			);
+		},
+		green(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					32,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					39,
+				)
+			);
+		},
+		brightGreen(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					92,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					39,
+				)
+			);
+		},
+		yellow(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					33,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					39,
+				)
+			);
+		},
+		brightYellow(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					93,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					39,
+				)
+			);
+		},
+		blue(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					34,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					39,
+				)
+			);
+		},
+		brightBlue(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					94,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					39,
+				)
+			);
+		},
+		magenta(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					35,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					39,
+				)
+			);
+		},
+		brightMagenta(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					95,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					39,
+				)
+			);
+		},
+		cyan(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					36,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					39,
+				)
+			);
+		},
+		brightCyan(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					96,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					39,
+				)
+			);
+		},
+		white(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					37,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					39,
+				)
+			);
+		},
+		brightWhite(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					97,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					39,
+				)
+			);
+		},
+		bgBlack(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					40,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					49,
+				)
+			);
+		},
+		bgBrightBlack(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					100,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					49,
+				)
+			);
+		},
+		bgRed(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					41,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					49,
+				)
+			);
+		},
+		bgBrightRed(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					101,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					49,
+				)
+			);
+		},
+		bgGreen(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					42,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					49,
+				)
+			);
+		},
+		bgBrightGreen(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					102,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					49,
+				)
+			);
+		},
+		bgYellow(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					43,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					49,
+				)
+			);
+		},
+		bgBrightYellow(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					103,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					49,
+				)
+			);
+		},
+		bgBlue(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					44,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					49,
+				)
+			);
+		},
+		bgBrightBlue(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					104,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					49,
+				)
+			);
+		},
+		bgMagenta(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					45,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					49,
+				)
+			);
+		},
+		bgBrightMagenta(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					105,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					49,
+				)
+			);
+		},
+		bgCyan(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					46,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					49,
+				)
+			);
+		},
+		bgBrightCyan(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					106,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					49,
+				)
+			);
+		},
+		bgWhite(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					47,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					49,
+				)
+			);
+		},
+		bgBrightWhite(str) {
+			return (
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					107,
+				) +
+				str +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$createEscape(
+					49,
+				)
+			);
+		},
+	};
+
+	function ___R$project$rome$$romefrontend$cli$layout$ansi_ts$stripAnsi(str) {
+		return str.replace(
+			___R$project$rome$$romefrontend$cli$layout$ansi_ts$regex,
+			"",
+		);
+	}
+
+	function ___R$project$rome$$romefrontend$cli$layout$ansi_ts$hasAnsi(str) {
+		return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$regex.test(str);
+	}
+
+	const ___R$project$rome$$romefrontend$cli$layout$ansi_ts$ansiEscapes = {
+		clearScreen: "\x1bc",
+		eraseLine: ___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$ESC +
+		"2K",
+		cursorUp(count = 1) {
+			return (
+				"" +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$ESC +
+				count +
+				"A"
+			);
+		},
+		cursorTo(x, y) {
+			if (y === undefined) {
+				return (
+					"" +
+					___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$ESC +
+					(x + 1) +
+					"G"
+				);
+			}
+
+			return (
+				"" +
+				___R$$priv$project$rome$$romefrontend$cli$layout$ansi_ts$ESC +
+				(y + 1) +
+				";" +
+				(x + 1) +
+				"H"
+			);
+		},
+	};
+
+
+  // project-rome/@romefrontend/cli-layout/syntax-theme/OneDarkPro.json
+const ___R$project$rome$$romefrontend$cli$layout$syntax$theme$OneDarkPro_json$default = {
+		"name": "One Dark Pro",
+		"type": "dark",
+		"semanticHighlighting": true,
+		"semanticTokenColors": {
+			"enumMember": {"foreground": "#56b6c2"},
+			"variable.constant": {"foreground": "#d19a66"},
+			"variable.defaultLibrary": {"foreground": "#e5c07b"},
+		},
+		"tokenColors": [
+			{
+				"name": "unison punctuation",
+				"scope": "punctuation.definition.delayed.unison,punctuation.definition.list.begin.unison,punctuation.definition.list.end.unison,punctuation.definition.ability.begin.unison,punctuation.definition.ability.end.unison,punctuation.operator.assignment.as.unison,punctuation.separator.pipe.unison,punctuation.separator.delimiter.unison,punctuation.definition.hash.unison",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "haskell variable generic-type",
+				"scope": "variable.other.generic-type.haskell",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "haskell storage type",
+				"scope": "storage.type.haskell",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "support.variable.magic.python",
+				"scope": "support.variable.magic.python",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "punctuation.separator.parameters.python",
+				"scope": "punctuation.separator.period.python,punctuation.separator.element.python,punctuation.parenthesis.begin.python,punctuation.parenthesis.end.python",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "variable.parameter.function.language.special.self.python",
+				"scope": "variable.parameter.function.language.special.self.python",
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "storage.modifier.lifetime.rust",
+				"scope": "storage.modifier.lifetime.rust",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "support.function.std.rust",
+				"scope": "support.function.std.rust",
+				"settings": {"foreground": "#61afef"},
+			},
+			{
+				"name": "entity.name.lifetime.rust",
+				"scope": "entity.name.lifetime.rust",
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "variable.language.rust",
+				"scope": "variable.language.rust",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "support.constant.edge",
+				"scope": "support.constant.edge",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "regexp constant character-class",
+				"scope": "constant.other.character-class.regexp",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "regexp operator.quantifier",
+				"scope": "keyword.operator.quantifier.regexp",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "punctuation.definition",
+				"scope": "punctuation.definition.string.begin,punctuation.definition.string.end",
+				"settings": {"foreground": "#98c379"},
+			},
+			{
+				"name": "Text",
+				"scope": "variable.parameter.function",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "Comment Markup Link",
+				"scope": "comment markup.link",
+				"settings": {"foreground": "#5c6370"},
+			},
+			{
+				"name": "markup diff",
+				"scope": "markup.changed.diff",
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "diff",
+				"scope": "meta.diff.header.from-file,meta.diff.header.to-file,punctuation.definition.from-file.diff,punctuation.definition.to-file.diff",
+				"settings": {"foreground": "#61afef"},
+			},
+			{
+				"name": "inserted.diff",
+				"scope": "markup.inserted.diff",
+				"settings": {"foreground": "#98c379"},
+			},
+			{
+				"name": "deleted.diff",
+				"scope": "markup.deleted.diff",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "c++ function",
+				"scope": "meta.function.c,meta.function.cpp",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "c++ block",
+				"scope": "punctuation.section.block.begin.bracket.curly.cpp,punctuation.section.block.end.bracket.curly.cpp,punctuation.terminator.statement.c,punctuation.section.block.begin.bracket.curly.c,punctuation.section.block.end.bracket.curly.c,punctuation.section.parens.begin.bracket.round.c,punctuation.section.parens.end.bracket.round.c,punctuation.section.parameters.begin.bracket.round.c,punctuation.section.parameters.end.bracket.round.c",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "js/ts punctuation separator key-value",
+				"scope": "punctuation.separator.key-value",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "js/ts import keyword",
+				"scope": "keyword.operator.expression.import",
+				"settings": {"foreground": "#61afef"},
+			},
+			{
+				"name": "math js/ts",
+				"scope": "support.constant.math",
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "math property js/ts",
+				"scope": "support.constant.property.math",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "js/ts variable.other.constant",
+				"scope": "variable.other.constant",
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "java type",
+				"scope": [
+					"storage.type.annotation.java",
+					"storage.type.object.array.java",
+				],
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "java source",
+				"scope": "source.java",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "java modifier.import",
+				"scope": "punctuation.section.block.begin.java,punctuation.section.block.end.java,punctuation.definition.method-parameters.begin.java,punctuation.definition.method-parameters.end.java,meta.method.identifier.java,punctuation.section.method.begin.java,punctuation.section.method.end.java,punctuation.terminator.java,punctuation.section.class.begin.java,punctuation.section.class.end.java,punctuation.section.inner-class.begin.java,punctuation.section.inner-class.end.java,meta.method-call.java,punctuation.section.class.begin.bracket.curly.java,punctuation.section.class.end.bracket.curly.java,punctuation.section.method.begin.bracket.curly.java,punctuation.section.method.end.bracket.curly.java,punctuation.separator.period.java,punctuation.bracket.angle.java,punctuation.definition.annotation.java,meta.method.body.java",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "java modifier.import",
+				"scope": "meta.method.java",
+				"settings": {"foreground": "#61afef"},
+			},
+			{
+				"name": "java modifier.import",
+				"scope": "storage.modifier.import.java,storage.type.java,storage.type.generic.java",
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "java instanceof",
+				"scope": "keyword.operator.instanceof.java",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "java variable.name",
+				"scope": "meta.definition.variable.name.java",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "operator logical",
+				"scope": "keyword.operator.logical",
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "operator bitwise",
+				"scope": "keyword.operator.bitwise",
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "operator channel",
+				"scope": "keyword.operator.channel",
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "support.constant.property-value.scss",
+				"scope": "support.constant.property-value.scss,support.constant.property-value.css",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "CSS/SCSS/LESS Operators",
+				"scope": "keyword.operator.css,keyword.operator.scss,keyword.operator.less",
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "css color standard name",
+				"scope": "support.constant.color.w3c-standard-color-name.css,support.constant.color.w3c-standard-color-name.scss",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "css comma",
+				"scope": "punctuation.separator.list.comma.css",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "css attribute-name.id",
+				"scope": "support.constant.color.w3c-standard-color-name.css",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "css property-name",
+				"scope": "support.type.vendored.property-name.css",
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "js/ts module",
+				"scope": "support.module.node,support.type.object.module,support.module.node",
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "entity.name.type.module",
+				"scope": "entity.name.type.module",
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "js variable readwrite",
+				"scope": "variable.other.readwrite,meta.object-literal.key,support.variable.property,support.variable.object.process,support.variable.object.node",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "js/ts json",
+				"scope": "support.constant.json",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "js/ts Keyword",
+				"scope": [
+					"keyword.operator.expression.instanceof",
+					"keyword.operator.new",
+					"keyword.operator.ternary",
+					"keyword.operator.optional",
+					"keyword.operator.expression.keyof",
+				],
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "js/ts console",
+				"scope": "support.type.object.console",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "js/ts support.variable.property.process",
+				"scope": "support.variable.property.process",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "js console function",
+				"scope": "entity.name.function,support.function.console",
+				"settings": {"foreground": "#61afef"},
+			},
+			{
+				"name": "keyword.operator.misc.rust",
+				"scope": "keyword.operator.misc.rust",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "operator",
+				"scope": "keyword.operator.delete",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "js dom",
+				"scope": "support.type.object.dom",
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "js dom variable",
+				"scope": "support.variable.dom,support.variable.property.dom",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "keyword.operator",
+				"scope": "keyword.operator.arithmetic,keyword.operator.comparison,keyword.operator.decrement,keyword.operator.increment,keyword.operator.relational",
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "C operator assignment",
+				"scope": "keyword.operator.assignment.c,keyword.operator.comparison.c,keyword.operator.c,keyword.operator.increment.c,keyword.operator.decrement.c,keyword.operator.bitwise.shift.c,keyword.operator.assignment.cpp,keyword.operator.comparison.cpp,keyword.operator.cpp,keyword.operator.increment.cpp,keyword.operator.decrement.cpp,keyword.operator.bitwise.shift.cpp",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "Punctuation",
+				"scope": "punctuation.separator.delimiter",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "Other punctuation .c",
+				"scope": "punctuation.separator.c,punctuation.separator.cpp",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "C type posix-reserved",
+				"scope": "support.type.posix-reserved.c,support.type.posix-reserved.cpp",
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "keyword.operator.sizeof.c",
+				"scope": "keyword.operator.sizeof.c,keyword.operator.sizeof.cpp",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "python parameter",
+				"scope": "variable.parameter.function.language.python",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "python type",
+				"scope": "support.type.python",
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "python logical",
+				"scope": "keyword.operator.logical.python",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "pyCs",
+				"scope": "variable.parameter.function.python",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "python block",
+				"scope": "punctuation.definition.arguments.begin.python,punctuation.definition.arguments.end.python,punctuation.separator.arguments.python,punctuation.definition.list.begin.python,punctuation.definition.list.end.python",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "python function-call.generic",
+				"scope": "meta.function-call.generic.python",
+				"settings": {"foreground": "#61afef"},
+			},
+			{
+				"name": "python placeholder reset to normal string",
+				"scope": "constant.character.format.placeholder.other.python",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "Operators",
+				"scope": "keyword.operator",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "Compound Assignment Operators",
+				"scope": "keyword.operator.assignment.compound",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "Keywords",
+				"scope": "keyword",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "Variables",
+				"scope": "variable",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "Variables",
+				"scope": "variable.c",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "Language variables",
+				"scope": "variable.language",
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "Java Variables",
+				"scope": "token.variable.parameter.java",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "Java Imports",
+				"scope": "import.storage.java",
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "Packages",
+				"scope": "token.package.keyword",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "Packages",
+				"scope": "token.package",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "Functions",
+				"scope": [
+					"entity.name.function",
+					"meta.require",
+					"support.function.any-method",
+					"variable.function",
+				],
+				"settings": {"foreground": "#61afef"},
+			},
+			{
+				"name": "Classes",
+				"scope": "entity.name.type.namespace",
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "Classes",
+				"scope": "support.class, entity.name.type.class",
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "Class name",
+				"scope": "entity.name.class.identifier.namespace.type",
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "Class name",
+				"scope": [
+					"entity.name.class",
+					"variable.other.class.js",
+					"variable.other.class.ts",
+				],
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "Class name php",
+				"scope": "variable.other.class.php",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "Type Name",
+				"scope": "entity.name.type",
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "Keyword Control",
+				"scope": "keyword.control",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "Control Elements",
+				"scope": "control.elements, keyword.operator.less",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "Methods",
+				"scope": "keyword.other.special-method",
+				"settings": {"foreground": "#61afef"},
+			},
+			{
+				"name": "Storage",
+				"scope": "storage",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "Storage JS TS",
+				"scope": "token.storage",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "Source Js Keyword Operator Delete,source Js Keyword Operator In,source Js Keyword Operator Of,source Js Keyword Operator Instanceof,source Js Keyword Operator New,source Js Keyword Operator Typeof,source Js Keyword Operator Void",
+				"scope": "keyword.operator.expression.delete,keyword.operator.expression.in,keyword.operator.expression.of,keyword.operator.expression.instanceof,keyword.operator.new,keyword.operator.expression.typeof,keyword.operator.expression.void",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "Java Storage",
+				"scope": "token.storage.type.java",
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "Support",
+				"scope": "support.function",
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "Support type",
+				"scope": "support.type.property-name",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "Support type",
+				"scope": "support.constant.property-value",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "Support type",
+				"scope": "support.constant.font-name",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "Meta tag",
+				"scope": "meta.tag",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "Strings",
+				"scope": "string",
+				"settings": {"foreground": "#98c379"},
+			},
+			{
+				"name": "Inherited Class",
+				"scope": "entity.other.inherited-class",
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "Constant other symbol",
+				"scope": "constant.other.symbol",
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "Integers",
+				"scope": "constant.numeric",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "Constants",
+				"scope": "constant",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "Constants",
+				"scope": "punctuation.definition.constant",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "Tags",
+				"scope": "entity.name.tag",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "Attributes",
+				"scope": "entity.other.attribute-name",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "Attribute IDs",
+				"scope": "entity.other.attribute-name.id",
+				"settings": {"fontStyle": "normal", "foreground": "#61afef"},
+			},
+			{
+				"name": "Attribute class",
+				"scope": "entity.other.attribute-name.class.css",
+				"settings": {"fontStyle": "normal", "foreground": "#d19a66"},
+			},
+			{
+				"name": "Selector",
+				"scope": "meta.selector",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "Headings",
+				"scope": "markup.heading",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "Headings",
+				"scope": "markup.heading punctuation.definition.heading, entity.name.section",
+				"settings": {"foreground": "#61afef"},
+			},
+			{
+				"name": "Units",
+				"scope": "keyword.other.unit",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "Bold",
+				"scope": "markup.bold,todo.bold",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "Bold",
+				"scope": "punctuation.definition.bold",
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "markup Italic",
+				"scope": "markup.italic, punctuation.definition.italic,todo.emphasis",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "emphasis md",
+				"scope": "emphasis md",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "[VSCODE-CUSTOM] Markdown headings",
+				"scope": "entity.name.section.markdown",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "[VSCODE-CUSTOM] Markdown heading Punctuation Definition",
+				"scope": "punctuation.definition.heading.markdown",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "punctuation.definition.list.begin.markdown",
+				"scope": "punctuation.definition.list.begin.markdown",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "[VSCODE-CUSTOM] Markdown heading setext",
+				"scope": "markup.heading.setext",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "[VSCODE-CUSTOM] Markdown Punctuation Definition Bold",
+				"scope": "punctuation.definition.bold.markdown",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "[VSCODE-CUSTOM] Markdown Inline Raw",
+				"scope": "markup.inline.raw.markdown",
+				"settings": {"foreground": "#98c379"},
+			},
+			{
+				"name": "[VSCODE-CUSTOM] Markdown Inline Raw",
+				"scope": "markup.inline.raw.string.markdown",
+				"settings": {"foreground": "#98c379"},
+			},
+			{
+				"name": "[VSCODE-CUSTOM] Markdown List Punctuation Definition",
+				"scope": "punctuation.definition.list.markdown",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "[VSCODE-CUSTOM] Markdown Punctuation Definition String",
+				"scope": [
+					"punctuation.definition.string.begin.markdown",
+					"punctuation.definition.string.end.markdown",
+					"punctuation.definition.metadata.markdown",
+				],
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "beginning.punctuation.definition.list.markdown",
+				"scope": ["beginning.punctuation.definition.list.markdown"],
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "[VSCODE-CUSTOM] Markdown Punctuation Definition Link",
+				"scope": "punctuation.definition.metadata.markdown",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "[VSCODE-CUSTOM] Markdown Underline Link/Image",
+				"scope": "markup.underline.link.markdown,markup.underline.link.image.markdown",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "[VSCODE-CUSTOM] Markdown Link Title/Description",
+				"scope": "string.other.link.title.markdown,string.other.link.description.markdown",
+				"settings": {"foreground": "#61afef"},
+			},
+			{
+				"name": "Regular Expressions",
+				"scope": "string.regexp",
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "Escape Characters",
+				"scope": "constant.character.escape",
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "Embedded",
+				"scope": "punctuation.section.embedded, variable.interpolation",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "Embedded",
+				"scope": "punctuation.section.embedded.begin,punctuation.section.embedded.end",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "illegal",
+				"scope": "invalid.illegal",
+				"settings": {"foreground": "#ffffff"},
+			},
+			{
+				"name": "illegal",
+				"scope": "invalid.illegal.bad-ampersand.html",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "Broken",
+				"scope": "invalid.broken",
+				"settings": {"foreground": "#ffffff"},
+			},
+			{
+				"name": "Deprecated",
+				"scope": "invalid.deprecated",
+				"settings": {"foreground": "#ffffff"},
+			},
+			{
+				"name": "Unimplemented",
+				"scope": "invalid.unimplemented",
+				"settings": {"foreground": "#ffffff"},
+			},
+			{
+				"name": "Source Json Meta Structure Dictionary Json > String Quoted Json",
+				"scope": "source.json meta.structure.dictionary.json > string.quoted.json",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "Source Json Meta Structure Dictionary Json > String Quoted Json > Punctuation String",
+				"scope": "source.json meta.structure.dictionary.json > string.quoted.json > punctuation.string",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "Source Json Meta Structure Dictionary Json > Value Json > String Quoted Json,source Json Meta Structure Array Json > Value Json > String Quoted Json,source Json Meta Structure Dictionary Json > Value Json > String Quoted Json > Punctuation,source Json Meta Structure Array Json > Value Json > String Quoted Json > Punctuation",
+				"scope": "source.json meta.structure.dictionary.json > value.json > string.quoted.json,source.json meta.structure.array.json > value.json > string.quoted.json,source.json meta.structure.dictionary.json > value.json > string.quoted.json > punctuation,source.json meta.structure.array.json > value.json > string.quoted.json > punctuation",
+				"settings": {"foreground": "#98c379"},
+			},
+			{
+				"name": "Source Json Meta Structure Dictionary Json > Constant Language Json,source Json Meta Structure Array Json > Constant Language Json",
+				"scope": "source.json meta.structure.dictionary.json > constant.language.json,source.json meta.structure.array.json > constant.language.json",
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "[VSCODE-CUSTOM] JSON Property Name",
+				"scope": "support.type.property-name.json",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "[VSCODE-CUSTOM] JSON Punctuation for Property Name",
+				"scope": "support.type.property-name.json punctuation",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "laravel blade tag",
+				"scope": "text.html.laravel-blade source.php.embedded.line.html entity.name.tag.laravel-blade",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "laravel blade @",
+				"scope": "text.html.laravel-blade source.php.embedded.line.html support.constant.laravel-blade",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "use statement for other classes",
+				"scope": "support.other.namespace.use.php,support.other.namespace.use-as.php,support.other.namespace.php,entity.other.alias.php,meta.interface.php",
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "error suppression",
+				"scope": "keyword.operator.error-control.php",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "php instanceof",
+				"scope": "keyword.operator.type.php",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "style double quoted array index normal begin",
+				"scope": "punctuation.section.array.begin.php",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "style double quoted array index normal end",
+				"scope": "punctuation.section.array.end.php",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "php illegal.non-null-typehinted",
+				"scope": "invalid.illegal.non-null-typehinted.php",
+				"settings": {"foreground": "#f44747"},
+			},
+			{
+				"name": "php types",
+				"scope": "storage.type.php,meta.other.type.phpdoc.php,keyword.other.type.php,keyword.other.array.phpdoc.php",
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "php call-function",
+				"scope": "meta.function-call.php,meta.function-call.object.php,meta.function-call.static.php",
+				"settings": {"foreground": "#61afef"},
+			},
+			{
+				"name": "php function-resets",
+				"scope": "punctuation.definition.parameters.begin.bracket.round.php,punctuation.definition.parameters.end.bracket.round.php,punctuation.separator.delimiter.php,punctuation.section.scope.begin.php,punctuation.section.scope.end.php,punctuation.terminator.expression.php,punctuation.definition.arguments.begin.bracket.round.php,punctuation.definition.arguments.end.bracket.round.php,punctuation.definition.storage-type.begin.bracket.round.php,punctuation.definition.storage-type.end.bracket.round.php,punctuation.definition.array.begin.bracket.round.php,punctuation.definition.array.end.bracket.round.php,punctuation.definition.begin.bracket.round.php,punctuation.definition.end.bracket.round.php,punctuation.definition.begin.bracket.curly.php,punctuation.definition.end.bracket.curly.php,punctuation.definition.section.switch-block.end.bracket.curly.php,punctuation.definition.section.switch-block.start.bracket.curly.php,punctuation.definition.section.switch-block.begin.bracket.curly.php,punctuation.definition.section.switch-block.end.bracket.curly.php",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "support php constants",
+				"scope": "support.constant.core.rust",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "support php constants",
+				"scope": "support.constant.ext.php,support.constant.std.php,support.constant.core.php,support.constant.parser-token.php",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "php goto",
+				"scope": "entity.name.goto-label.php,support.other.php",
+				"settings": {"foreground": "#61afef"},
+			},
+			{
+				"name": "php logical/bitwise operator",
+				"scope": "keyword.operator.logical.php,keyword.operator.bitwise.php,keyword.operator.arithmetic.php",
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "php regexp operator",
+				"scope": "keyword.operator.regexp.php",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "php comparison",
+				"scope": "keyword.operator.comparison.php",
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "php heredoc/nowdoc",
+				"scope": "keyword.operator.heredoc.php,keyword.operator.nowdoc.php",
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "python function decorator @",
+				"scope": "meta.function.decorator.python",
+				"settings": {"foreground": "#61afef"},
+			},
+			{
+				"name": "python function support",
+				"scope": "support.token.decorator.python,meta.function.decorator.identifier.python",
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "parameter function js/ts",
+				"scope": "function.parameter",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "brace function",
+				"scope": "function.brace",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "parameter function ruby cs",
+				"scope": "function.parameter.ruby, function.parameter.cs",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "constant.language.symbol.ruby",
+				"scope": "constant.language.symbol.ruby",
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "rgb-value",
+				"scope": "rgb-value",
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "rgb value",
+				"scope": "inline-color-decoration rgb-value",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "rgb value less",
+				"scope": "less rgb-value",
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "sass selector",
+				"scope": "selector.sass",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "ts primitive/builtin types",
+				"scope": "support.type.primitive.ts,support.type.builtin.ts,support.type.primitive.tsx,support.type.builtin.tsx",
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "block scope",
+				"scope": "block.scope.end,block.scope.begin",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "cs storage type",
+				"scope": "storage.type.cs",
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "cs local variable",
+				"scope": "entity.name.variable.local.cs",
+				"settings": {"foreground": "#e06c75"},
+			},
+			{"scope": "token.info-token", "settings": {"foreground": "#61afef"}},
+			{"scope": "token.warn-token", "settings": {"foreground": "#d19a66"}},
+			{"scope": "token.error-token", "settings": {"foreground": "#f44747"}},
+			{"scope": "token.debug-token", "settings": {"foreground": "#c678dd"}},
+			{
+				"name": "String interpolation",
+				"scope": [
+					"punctuation.definition.template-expression.begin",
+					"punctuation.definition.template-expression.end",
+					"punctuation.section.embedded",
+				],
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "Reset JavaScript string interpolation expression",
+				"scope": ["meta.template.expression"],
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "Import module JS",
+				"scope": ["keyword.operator.module"],
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "js Flowtype",
+				"scope": ["support.type.type.flowtype"],
+				"settings": {"foreground": "#61afef"},
+			},
+			{
+				"name": "js Flow",
+				"scope": ["support.type.primitive"],
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "js class prop",
+				"scope": ["meta.property.object"],
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "js func parameter",
+				"scope": ["variable.parameter.function.js"],
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "js template literals begin",
+				"scope": ["keyword.other.template.begin"],
+				"settings": {"foreground": "#98c379"},
+			},
+			{
+				"name": "js template literals end",
+				"scope": ["keyword.other.template.end"],
+				"settings": {"foreground": "#98c379"},
+			},
+			{
+				"name": "js template literals variable braces begin",
+				"scope": ["keyword.other.substitution.begin"],
+				"settings": {"foreground": "#98c379"},
+			},
+			{
+				"name": "js template literals variable braces end",
+				"scope": ["keyword.other.substitution.end"],
+				"settings": {"foreground": "#98c379"},
+			},
+			{
+				"name": "js operator.assignment",
+				"scope": ["keyword.operator.assignment"],
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "go operator",
+				"scope": [
+					"keyword.operator.assignment.go",
+					"keyword.operator.address.go",
+				],
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "Go package name",
+				"scope": ["entity.name.package.go"],
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "elm prelude",
+				"scope": ["support.type.prelude.elm"],
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "elm constant",
+				"scope": ["support.constant.elm"],
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "template literal",
+				"scope": ["punctuation.quasi.element"],
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "html/pug (jade) escaped characters and entities",
+				"scope": ["constant.character.entity"],
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "styling css pseudo-elements/classes to be able to differentiate from classes which are the same colour",
+				"scope": [
+					"entity.other.attribute-name.pseudo-element",
+					"entity.other.attribute-name.pseudo-class",
+				],
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "Clojure globals",
+				"scope": ["entity.global.clojure"],
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "Clojure symbols",
+				"scope": ["meta.symbol.clojure"],
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "Clojure constants",
+				"scope": ["constant.keyword.clojure"],
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "CoffeeScript Function Argument",
+				"scope": ["meta.arguments.coffee", "variable.parameter.function.coffee"],
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "Ini Default Text",
+				"scope": ["source.ini"],
+				"settings": {"foreground": "#98c379"},
+			},
+			{
+				"name": "Makefile prerequisities",
+				"scope": ["meta.scope.prerequisites.makefile"],
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "Makefile text colour",
+				"scope": ["source.makefile"],
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "Groovy import names",
+				"scope": ["storage.modifier.import.groovy"],
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "Groovy Methods",
+				"scope": ["meta.method.groovy"],
+				"settings": {"foreground": "#61afef"},
+			},
+			{
+				"name": "Groovy Variables",
+				"scope": ["meta.definition.variable.name.groovy"],
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "Groovy Inheritance",
+				"scope": ["meta.definition.class.inherited.classes.groovy"],
+				"settings": {"foreground": "#98c379"},
+			},
+			{
+				"name": "HLSL Semantic",
+				"scope": ["support.variable.semantic.hlsl"],
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "HLSL Types",
+				"scope": [
+					"support.type.texture.hlsl",
+					"support.type.sampler.hlsl",
+					"support.type.object.hlsl",
+					"support.type.object.rw.hlsl",
+					"support.type.fx.hlsl",
+					"support.type.object.hlsl",
+				],
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "SQL Variables",
+				"scope": ["text.variable", "text.bracketed"],
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "types",
+				"scope": ["support.type.swift", "support.type.vb.asp"],
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "heading 1, keyword",
+				"scope": ["entity.name.function.xi"],
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "heading 2, callable",
+				"scope": ["entity.name.class.xi"],
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "heading 3, property",
+				"scope": ["constant.character.character-class.regexp.xi"],
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "heading 4, type, class, interface",
+				"scope": ["constant.regexp.xi"],
+				"settings": {"foreground": "#c678dd"},
+			},
+			{
+				"name": "heading 5, enums, preprocessor, constant, decorator",
+				"scope": ["keyword.control.xi"],
+				"settings": {"foreground": "#56b6c2"},
+			},
+			{
+				"name": "heading 6, number",
+				"scope": ["invalid.xi"],
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "string",
+				"scope": ["beginning.punctuation.definition.quote.markdown.xi"],
+				"settings": {"foreground": "#98c379"},
+			},
+			{
+				"name": "comments",
+				"scope": ["beginning.punctuation.definition.list.markdown.xi"],
+				"settings": {"foreground": "#7f848e"},
+			},
+			{
+				"name": "link",
+				"scope": ["constant.character.xi"],
+				"settings": {"foreground": "#61afef"},
+			},
+			{
+				"name": "accent",
+				"scope": ["accent.xi"],
+				"settings": {"foreground": "#61afef"},
+			},
+			{
+				"name": "wikiword",
+				"scope": ["wikiword.xi"],
+				"settings": {"foreground": "#d19a66"},
+			},
+			{
+				"name": "language operators like '+', '-' etc",
+				"scope": ["constant.other.color.rgb-value.xi"],
+				"settings": {"foreground": "#ffffff"},
+			},
+			{
+				"name": "elements to dim",
+				"scope": ["punctuation.definition.tag.xi"],
+				"settings": {"foreground": "#5c6370"},
+			},
+			{
+				"name": "C++/C#",
+				"scope": [
+					"entity.name.label.cs",
+					"entity.name.scope-resolution.function.call",
+					"entity.name.scope-resolution.function.definition",
+				],
+				"settings": {"foreground": "#e5c07b"},
+			},
+			{
+				"name": "Markdown underscore-style headers",
+				"scope": [
+					"entity.name.label.cs",
+					"markup.heading.setext.1.markdown",
+					"markup.heading.setext.2.markdown",
+				],
+				"settings": {"foreground": "#e06c75"},
+			},
+			{
+				"name": "meta.brace.square",
+				"scope": [" meta.brace.square"],
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "Comments",
+				"scope": "comment, punctuation.definition.comment",
+				"settings": {"fontStyle": "italic", "foreground": "#7f848e"},
+			},
+			{
+				"name": "[VSCODE-CUSTOM] Markdown Quote",
+				"scope": "markup.quote.markdown",
+				"settings": {"foreground": "#5c6370"},
+			},
+			{
+				"name": "punctuation.definition.block.sequence.item.yaml",
+				"scope": "punctuation.definition.block.sequence.item.yaml",
+				"settings": {"foreground": "#abb2bf"},
+			},
+			{
+				"name": "js/ts italic",
+				"scope": "entity.other.attribute-name.js,entity.other.attribute-name.ts,entity.other.attribute-name.jsx,entity.other.attribute-name.tsx,variable.parameter,variable.language.super",
+				"settings": {"fontStyle": "italic"},
+			},
+			{
+				"name": "comment",
+				"scope": "comment.line.double-slash,comment.block.documentation",
+				"settings": {"fontStyle": "italic"},
+			},
+			{
+				"name": "Python Keyword Control",
+				"scope": "keyword.control.import.python,keyword.control.flow.python",
+				"settings": {"fontStyle": "italic"},
+			},
+			{
+				"name": "markup.italic.markdown",
+				"scope": "markup.italic.markdown",
+				"settings": {"fontStyle": "italic"},
+			},
+		],
+		"colors": {
+			"activityBar.background": "#282c34",
+			"activityBar.foreground": "#d7dae0",
+			"activityBarBadge.background": "#4d78cc",
+			"activityBarBadge.foreground": "#f8fafd",
+			"badge.background": "#282c34",
+			"button.background": "#404754",
+			"debugToolBar.background": "#21252b",
+			"diffEditor.insertedTextBackground": "#00809b33",
+			"dropdown.background": "#21252b",
+			"dropdown.border": "#21252b",
+			"editor.background": "#282c34",
+			"editor.findMatchBackground": "#42557b",
+			"editor.findMatchBorder": "#457dff",
+			"editor.findMatchHighlightBackground": "#6199ff2f",
+			"editor.foreground": "#abb2bf",
+			"editor.lineHighlightBackground": "#2c313c",
+			"editor.selectionBackground": "#67769660",
+			"editor.selectionHighlightBackground": "#ffffff10",
+			"editor.selectionHighlightBorder": "#dddddd",
+			"editor.wordHighlightBackground": "#d2e0ff2f",
+			"editor.wordHighlightBorder": "#7f848e",
+			"editor.wordHighlightStrongBackground": "#abb2bf26",
+			"editor.wordHighlightStrongBorder": "#7f848e",
+			"editorActiveLineNumber.foreground": "#737984",
+			"editorBracketMatch.background": "#515a6b",
+			"editorBracketMatch.border": "#515a6b",
+			"editorCursor.background": "#ffffffc9",
+			"editorCursor.foreground": "#528bff",
+			"editorError.foreground": "#c24038",
+			"editorGroup.background": "#181a1f",
+			"editorGroup.border": "#181a1f",
+			"editorGroupHeader.tabsBackground": "#21252b",
+			"editorHoverWidget.background": "#21252b",
+			"editorHoverWidget.border": "#181a1f",
+			"editorIndentGuide.activeBackground": "#c8c8c859",
+			"editorIndentGuide.background": "#3b4048",
+			"editorLineNumber.foreground": "#495162",
+			"editorMarkerNavigation.background": "#21252b",
+			"editorRuler.foreground": "#abb2bf26",
+			"editorSuggestWidget.background": "#21252b",
+			"editorSuggestWidget.border": "#181a1f",
+			"editorSuggestWidget.selectedBackground": "#2c313a",
+			"editorWarning.foreground": "#d19a66",
+			"editorWhitespace.foreground": "#3b4048",
+			"editorWidget.background": "#21252b",
+			"focusBorder": "#464646",
+			"input.background": "#1d1f23",
+			"list.activeSelectionBackground": "#2c313a",
+			"list.activeSelectionForeground": "#d7dae0",
+			"list.focusBackground": "#383e4a",
+			"list.highlightForeground": "#c5c5c5",
+			"list.hoverBackground": "#292d35",
+			"list.inactiveSelectionBackground": "#2c313a",
+			"list.inactiveSelectionForeground": "#d7dae0",
+			"list.warningForeground": "#d19a66",
+			"menu.foreground": "#c8c8c8",
+			"panelSectionHeader.background": "#21252b",
+			"peekViewEditor.background": "#1b1d23",
+			"peekViewEditor.matchHighlightBackground": "#29244b",
+			"peekViewResult.background": "#22262b",
+			"scrollbarSlider.activeBackground": "#747d9180",
+			"scrollbarSlider.background": "#4e566660",
+			"scrollbarSlider.hoverBackground": "#5a637580",
+			"sideBar.background": "#21252b",
+			"sideBarSectionHeader.background": "#282c34",
+			"statusBar.background": "#21252b",
+			"statusBar.debuggingBackground": "#cc6633",
+			"statusBar.debuggingBorder": "#66017a",
+			"statusBar.debuggingForeground": "#ffffff",
+			"statusBar.foreground": "#9da5b4",
+			"statusBar.noFolderBackground": "#21252b",
+			"statusBarItem.hoverBackground": "#2c313a",
+			"statusBarItem.remoteBackground": "#4d78cc",
+			"statusBarItem.remoteForeground": "#f8fafd",
+			"tab.activeBackground": "#282c34",
+			"tab.activeForeground": "#dcdcdc",
+			"tab.border": "#181a1f",
+			"tab.hoverBackground": "#323842",
+			"tab.inactiveBackground": "#21252b",
+			"tab.unfocusedHoverBackground": "#323842",
+			"terminal.ansiBlack": "#3f4451",
+			"terminal.ansiBlue": "#4aa5f0",
+			"terminal.ansiBrightBlack": "#4f5666",
+			"terminal.ansiBrightBlue": "#4dc4ff",
+			"terminal.ansiBrightCyan": "#4cd1e0",
+			"terminal.ansiBrightGreen": "#a5e075",
+			"terminal.ansiBrightMagenta": "#de73ff",
+			"terminal.ansiBrightRed": "#ff616e",
+			"terminal.ansiBrightWhite": "#d7dae0",
+			"terminal.ansiBrightYellow": "#f0a45d",
+			"terminal.ansiCyan": "#42b3c2",
+			"terminal.ansiGreen": "#8cc265",
+			"terminal.ansiMagenta": "#c162de",
+			"terminal.ansiRed": "#e05561",
+			"terminal.ansiWhite": "#e6e6e6",
+			"terminal.ansiYellow": "#d18f52",
+			"terminal.background": "#282c34",
+			"terminal.border": "#abb2bf",
+			"terminal.foreground": "#abb2bf",
+			"terminal.selectionBackground": "#abb2bf30",
+			"textLink.foreground": "#61afef",
+			"titleBar.activeBackground": "#282c34",
+			"titleBar.activeForeground": "#9da5b4",
+			"titleBar.inactiveBackground": "#21252b",
+			"titleBar.inactiveForeground": "#6b717d",
+		},
+	};
+
+
+  // project-rome/@romefrontend/cli-layout/tags.ts
+const ___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$stringValidator = (
+		value,
+	) => value;
+
+	const ___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$booleanValidator = (
+		value,
+		key,
+	) => {
+		if (value === "false") {
+			return false;
+		}
+
+		if (value === "true" || value === key) {
+			return true;
+		}
+
+		return undefined;
+	};
+	const ___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$numberValidator = (
+		value,
+	) => {
+		const num = parseFloat(value);
+		if (isNaN(num)) {
+			return undefined;
+		} else {
+			return num;
+		}
+	};
+
+	const ___R$project$rome$$romefrontend$cli$layout$tags_ts$globalAttributes = new Map([
+		[
+			"emphasis",
+			___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$booleanValidator,
+		],
+		[
+			"dim",
+			___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$booleanValidator,
+		],
+	]);
+
+	const ___R$project$rome$$romefrontend$cli$layout$tags_ts$tags = new Map();
+
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"emphasis",
+		new Map(),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"number",
+		new Map([
+			[
+				"approx",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$booleanValidator,
+			],
+			[
+				"pluralSuffix",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$stringValidator,
+			],
+			[
+				"singularSuffix",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$stringValidator,
+			],
+		]),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"indent",
+		new Map(),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"view",
+		new Map([
+			[
+				"extraSoftWrapIndent",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$numberValidator,
+			],
+			[
+				"lineWrap",
+				___R$project$rome$$romefrontend$cli$layout$tags_ts$lineWrapValidator,
+			],
+			[
+				"align",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$alignValidator,
+			],
+		]),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"viewLinePrefix",
+		new Map([
+			[
+				"type",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$stringValidator,
+			],
+			[
+				"align",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$alignValidator,
+			],
+		]),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"viewPointer",
+		new Map([
+			[
+				"char",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$stringValidator,
+			],
+			[
+				"line",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$numberValidator,
+			],
+			[
+				"start",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$numberValidator,
+			],
+			[
+				"end",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$numberValidator,
+			],
+		]),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"grammarNumber",
+		new Map([
+			[
+				"plural",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$stringValidator,
+			],
+			[
+				"singular",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$stringValidator,
+			],
+			[
+				"none",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$stringValidator,
+			],
+		]),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"hyperlink",
+		new Map([
+			[
+				"target",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$stringValidator,
+			],
+		]),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"filelink",
+		new Map([
+			[
+				"target",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$stringValidator,
+			],
+			[
+				"column",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$numberValidator,
+			],
+			[
+				"line",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$numberValidator,
+			],
+		]),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"inverse",
+		new Map(),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set("dim", new Map());
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"filesize",
+		new Map(),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"duration",
+		new Map([
+			[
+				"approx",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$booleanValidator,
+			],
+		]),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"italic",
+		new Map(),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"underline",
+		new Map(),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"strike",
+		new Map(),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"token",
+		new Map([
+			[
+				"type",
+				___R$project$rome$$romefrontend$cli$layout$tags_ts$validateTokenType,
+			],
+		]),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"error",
+		new Map(),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"success",
+		new Map(),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set("warn", new Map());
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set("info", new Map());
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"command",
+		new Map(),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"color",
+		new Map([
+			["fg", ___R$project$rome$$romefrontend$cli$layout$tags_ts$validateColor],
+			["bg", ___R$project$rome$$romefrontend$cli$layout$tags_ts$validateColor],
+		]),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"highlight",
+		new Map([
+			[
+				"i",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$numberValidator,
+			],
+			[
+				"legend",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$booleanValidator,
+			],
+		]),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"table",
+		new Map(),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set("tr", new Map());
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"td",
+		new Map([
+			[
+				"align",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$alignValidator,
+			],
+		]),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set("hr", new Map());
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"pad",
+		new Map([
+			[
+				"width",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$numberValidator,
+			],
+			[
+				"align",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$alignValidator,
+			],
+		]),
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set("nobr", new Map());
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set("li", new Map());
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set("ul", new Map());
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.set(
+		"ol",
+		new Map([
+			[
+				"reversed",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$booleanValidator,
+			],
+			[
+				"start",
+				___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$numberValidator,
+			],
+		]),
+	);
+
+	// Tags that only support certain other tags as their children
+	const ___R$project$rome$$romefrontend$cli$layout$tags_ts$tagsToOnlyChildren = new Map();
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tagsToOnlyChildren.set(
+		"table",
+		["tr"],
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tagsToOnlyChildren.set(
+		"tr",
+		["td"],
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tagsToOnlyChildren.set(
+		"ol",
+		["li"],
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tagsToOnlyChildren.set(
+		"ul",
+		["li"],
+	);
+
+	// Tags that should only be children of other tags
+	const ___R$project$rome$$romefrontend$cli$layout$tags_ts$tagsToOnlyParent = new Map();
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tagsToOnlyParent.set(
+		"tr",
+		["table"],
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tagsToOnlyParent.set(
+		"td",
+		["tr"],
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tagsToOnlyParent.set(
+		"li",
+		["ol", "ul"],
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tagsToOnlyParent.set(
+		"viewLinePrefix",
+		["view"],
+	);
+	___R$project$rome$$romefrontend$cli$layout$tags_ts$tagsToOnlyParent.set(
+		"viewPointer",
+		["view"],
+	);
+
+	function ___R$$priv$project$rome$$romefrontend$cli$layout$tags_ts$alignValidator(
+		align,
+	) {
+		if (align === "left" || align === "right") {
+			return align;
+		}
+
+		return undefined;
+	}
+
+	// Validators
+	function ___R$project$rome$$romefrontend$cli$layout$tags_ts$lineWrapValidator(
+		mode,
+	) {
+		if (mode === "none" || mode === "word-break" || mode === "char-break") {
+			return mode;
+		}
+
+		return undefined;
+	}
+
+	function ___R$project$rome$$romefrontend$cli$layout$tags_ts$validateTokenType(
+		type,
+	) {
+		switch (type) {
+			case "boolean":
+			case "keyword":
+			case "number":
+			case "regex":
+			case "string":
+			case "comment":
+			case "operator":
+			case "punctuation":
+			case "variable":
+			case "attr-name":
+			case "function":
+			case "attr-value":
+			case "attr-equals":
+			case "tag":
+				return type;
+
+			default:
+				return undefined;
+		}
+	}
+
+	function ___R$project$rome$$romefrontend$cli$layout$tags_ts$validateColor(
+		color,
+	) {
+		switch (color) {
+			case "black":
+			case "brightBlack":
+			case "red":
+			case "brightRed":
+			case "green":
+			case "brightGreen":
+			case "yellow":
+			case "brightYellow":
+			case "blue":
+			case "brightBlue":
+			case "magenta":
+			case "brightMagenta":
+			case "cyan":
+			case "brightCyan":
+			case "white":
+			case "brightWhite":
+				return color;
+
+			default:
+				return undefined;
+		}
+	}
+
+
+  // project-rome/@romefrontend/cli-layout/grid/formatANSI.ts
+function ___R$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$ansiFormatText(
+		{name: tagName, attributes},
+		value,
+		grid,
+	) {
+		const {features} = grid;
+
+		switch (tagName) {
+			case "hyperlink": {
+				if (features.hyperlinks) {
+					return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.hyperlink(
+						attributes.get("target").asString(""),
+						value,
+					);
+				} else {
+					return value;
+				}
+			}
+
+			case "filelink": {
+				if (features.hyperlinks) {
+					const {filename} = ___R$project$rome$$romefrontend$cli$layout$util_ts$buildFileLink(
+						attributes,
+						grid.options,
+					);
+					return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.hyperlink(
+						value,
+						"file://" + filename,
+					);
+				} else {
+					return value;
+				}
+			}
+		}
+
+		if (features.colorDepth === 1) {
+			return value;
+		}
+
+		switch (tagName) {
+			case "inverse":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.inverse(
+					value,
+				);
+
+			case "emphasis":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.bold(
+					value,
+				);
+
+			case "dim":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.dim(
+					value,
+				);
+
+			case "italic":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.italic(
+					value,
+				);
+
+			case "underline":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.underline(
+					value,
+				);
+
+			case "strike":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.strikethrough(
+					value,
+				);
+
+			case "error":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.red(
+					value,
+				);
+
+			case "success":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.green(
+					value,
+				);
+
+			case "warn":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.yellow(
+					value,
+				);
+
+			case "info":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.blue(
+					value,
+				);
+
+			case "command":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.italic(
+					value,
+				);
+
+			case "highlight": {
+				const index = Math.min(0, attributes.get("i").asNumber(0));
+				const fn = ___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$ansiHighlightFactories[index %
+				___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$ansiHighlightFactories.length];
+				return fn(value);
+			}
+
+			case "color":
+				return ___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$formatAnsiBackground(
+					___R$project$rome$$romefrontend$cli$layout$tags_ts$validateColor(
+						attributes.get("bg").asStringOrVoid(),
+					),
+					___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$formatAnsiForeground(
+						___R$project$rome$$romefrontend$cli$layout$tags_ts$validateColor(
+							attributes.get("fg").asStringOrVoid(),
+						),
+						value,
+					),
+				);
+
+			case "token":
+				return ___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$formatToken(
+					___R$project$rome$$romefrontend$cli$layout$tags_ts$validateTokenType(
+						attributes.get("type").asStringOrVoid(),
+					),
+					value,
+					grid,
+				);
+
+			default:
+				return value;
+		}
+	}
+
+	const ___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$scopeToTokenTypes = {
+		"constant": ["number", "boolean"],
+		"constant.numeric": ["number"],
+		"constant.language.boolean": ["boolean"],
+		"variable.other.constant": ["boolean"],
+
+		"string": ["string"],
+		"string.regexp": ["regex"],
+
+		"comment": ["comment"],
+		"entity.name.function": ["function"],
+		//"": "operator"],
+		"punctuation": ["punctuation"],
+		//"variable": ["variable"],
+		"keyword": ["keyword"],
+
+		"entity.name.tag.html": ["tag"],
+		"punctuation.separator.key-value.html": ["attr-equals"],
+		"string.quoted.double.html": ["attr-value"],
+		"entity.other.attribute-name": ["attr-name"],
+		"entity.other.attribute-name.js": ["attr-name"],
+	};
+
+	function ___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$normalizeFontStyle(
+		style,
+	) {
+		switch (style) {
+			case "italic":
+				return style;
+
+			default:
+				return "normal";
+		}
+	}
+
+	const ___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$tokenColorsCache = new Map();
+	let ___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$defaultTokenColors;
+
+	function ___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$getTokenColors(
+		consumer,
+	) {
+		if (consumer === undefined) {
+			if (
+				___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$defaultTokenColors ===
+				undefined
+			) {
+				___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$defaultTokenColors = Object.assign(
+					{},
+					___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$getTokenColors(
+						___R$project$rome$$romefrontend$consume$index_ts$consumeUnknown(
+							___R$project$rome$$romefrontend$cli$layout$syntax$theme$OneDarkPro_json$default,
+							"parse/vscodeTheme",
+						),
+					),
+					{kind: "default"},
+				);
+			}
+
+			return ___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$defaultTokenColors;
+		}
+
+		const cached = ___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$tokenColorsCache.get(
+			consumer,
+		);
+		if (cached !== undefined) {
+			return cached;
+		}
+
+		const theme = {
+			kind: "user",
+			tokens: {},
+		};
+		___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$tokenColorsCache.set(
+			consumer,
+			theme,
+		);
+
+		for (const prop of consumer.get("tokenColors").asArray()) {
+			const settings = prop.get("settings");
+			const scope = prop.get("scope");
+			const scopes = Array.isArray(scope.asUnknown())
+				? scope.asArray().map((elem) => elem.asString())
+				: scope.asString().split(",").map((scope) => scope.trim());
+
+			for (const scope of scopes) {
+				const tokenTypes = ___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$scopeToTokenTypes[scope];
+				if (tokenTypes === undefined) {
+					continue;
+				}
+
+				for (const tokenType of tokenTypes) {
+					const existing = theme.tokens[tokenType];
+
+					const newSettings = {};
+
+					if (settings.has("foreground")) {
+						newSettings.rgb = ___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$hexToRgb(
+							settings.get("foreground").asString(),
+						);
+					}
+
+					if (settings.has("fontStyle")) {
+						newSettings.fontStyle = ___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$normalizeFontStyle(
+							settings.get("fontStyle").asString(),
+						);
+					}
+
+					theme.tokens[tokenType] = Object.assign({}, existing, newSettings);
+				}
+			}
+		}
+
+		return theme;
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$formatToken(
+		type,
+		value,
+		grid,
+	) {
+		if (type === undefined) {
+			return value;
+		}
+
+		const theme = ___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$getTokenColors(
+			(grid.options == null ? undefined : grid.options.userConfig) == null
+				? undefined
+				: (grid.options == null ? undefined : grid.options.userConfig).syntaxTheme,
+		);
+
+		// Only use our default syntax theme when we are confident the terminal has a dark background
+		if (theme.kind === "default" && grid.features.background !== "dark") {
+			return value;
+		}
+
+		const format = theme.tokens[type];
+		if (format === undefined) {
+			return value;
+		}
+
+		if (format.fontStyle === "italic") {
+			value = ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.italic(
+				value,
+			);
+		}
+
+		if (format.rgb === undefined) {
+			return value;
+		}
+
+		return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsiRGB(
+			value,
+			format.rgb,
+			grid.features,
+		);
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$hexToRgb(
+		hex,
+	) {
+		if (hex === undefined) {
+			throw new Error("No color string passed");
+		}
+
+		const match = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+		if (match == null) {
+			throw new Error(hex + " is not a valid hex color");
+		}
+
+		return [
+			parseInt(match[1], 16),
+			parseInt(match[2], 16),
+			parseInt(match[3], 16),
+		];
+	}
+
+	// TODO fill this
+	const ___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$ansiHighlightFactories = [
+		___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.magenta,
+		___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.cyan,
+	];
+
+	function ___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$formatAnsiBackground(
+		bg,
+		text,
+	) {
+		if (bg === undefined) {
+			return text;
+		}
+
+		switch (bg) {
+			case "black":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.bgBlack(
+					text,
+				);
+
+			case "brightBlack":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.bgBrightBlack(
+					text,
+				);
+
+			case "red":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.bgRed(
+					text,
+				);
+
+			case "brightRed":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.bgBrightRed(
+					text,
+				);
+
+			case "green":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.bgGreen(
+					text,
+				);
+
+			case "brightGreen":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.bgBrightGreen(
+					text,
+				);
+
+			case "yellow":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.bgYellow(
+					text,
+				);
+
+			case "brightYellow":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.bgBrightYellow(
+					text,
+				);
+
+			case "blue":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.bgBlue(
+					text,
+				);
+
+			case "brightBlue":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.bgBrightBlue(
+					text,
+				);
+
+			case "magenta":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.bgMagenta(
+					text,
+				);
+
+			case "brightMagenta":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.bgBrightMagenta(
+					text,
+				);
+
+			case "cyan":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.bgCyan(
+					text,
+				);
+
+			case "brightCyan":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.bgBrightCyan(
+					text,
+				);
+
+			case "white":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.bgWhite(
+					text,
+				);
+
+			case "brightWhite":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.bgBrightWhite(
+					text,
+				);
+
+			default:
+				return text;
+		}
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$formatAnsiForeground(
+		fg,
+		text,
+	) {
+		if (fg === undefined) {
+			return text;
+		}
+
+		switch (fg) {
+			case "black":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.black(
+					text,
+				);
+
+			case "brightBlack":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.brightBlack(
+					text,
+				);
+
+			case "red":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.red(
+					text,
+				);
+
+			case "brightRed":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.brightRed(
+					text,
+				);
+
+			case "green":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.green(
+					text,
+				);
+
+			case "brightGreen":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.brightGreen(
+					text,
+				);
+
+			case "yellow":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.yellow(
+					text,
+				);
+
+			case "brightYellow":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.brightYellow(
+					text,
+				);
+
+			case "blue":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.blue(
+					text,
+				);
+
+			case "brightBlue":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.brightBlue(
+					text,
+				);
+
+			case "magenta":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.magenta(
+					text,
+				);
+
+			case "brightMagenta":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.brightMagenta(
+					text,
+				);
+
+			case "cyan":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.cyan(
+					text,
+				);
+
+			case "brightCyan":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.brightCyan(
+					text,
+				);
+
+			case "white":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.white(
+					text,
+				);
+
+			case "brightWhite":
+				return ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.brightWhite(
+					text,
+				);
+
+			default:
+				return text;
+		}
+	}
+
+
+  // project-rome/@romefrontend/cli-layout/grid/formatHTML.ts
+function ___R$project$rome$$romefrontend$cli$layout$grid$formatHTML_ts$htmlFormatText(
+		{name: tagName, attributes},
+		value,
+	) {
+		switch (tagName) {
+			case "hyperlink": {
+				return (
+					'<a href="' +
+					___R$project$rome$$romefrontend$html$parser$xhtmlEntities_ts$escapeXHTMLEntities(
+						attributes.get("target").asString(""),
+					) +
+					'">' +
+					value +
+					"</a>"
+				);
+			}
+
+			case "filelink": {
+				// We probably don't need filelinks if it's just for presentation in the browser?
+				//const filename = getFileLinkFilename(attributes, opts);
+				//return `<a href="file://${escapeXHTMLEntities(filename)}">${value}</a>`;
+				return (
+					'<span style="text-decoration-style: dotted;">' + value + "</span>"
+				);
+			}
+
+			case "inverse":
+				return (
+					'<span style="color: white; background-color: #ddd;">' +
+					value +
+					"</span>"
+				);
+
+			case "emphasis":
+				return "<strong>" + value + "</strong>";
+
+			case "dim":
+				return '<span style="opacity: 0.8;">' + value + '</span>"';
+
+			case "italic":
+				return "<i>" + value + '</i>"';
+
+			case "underline":
+				return "<u>" + value + '</u>"';
+
+			case "strike":
+				return "<strike>" + value + '</strike>"';
+
+			case "error":
+				return '<span style="color: Tomato;">' + value + "</span>";
+
+			case "success":
+				return '<span style="color: MediumSeaGreen;">' + value + "</span>";
+
+			case "warn":
+				return '<span style="color: Orange;">' + value + "</span>";
+
+			case "info":
+				return '<span style="color: DodgerBlue;">' + value + "</span>";
+
+			case "command":
+				return "<i>" + value + "</i>";
+
+			case "highlight": {
+				const index = Math.min(0, attributes.get("i").asNumber(0));
+				const color = ___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatHTML_ts$highlightColors[index %
+				___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatHTML_ts$highlightColors.length];
+				return '<span style="color: ' + color + ';">' + value + "</span>";
+			}
+
+			case "color": {
+				const styles = [];
+
+				const fg = ___R$project$rome$$romefrontend$cli$layout$tags_ts$validateColor(
+					attributes.get("fg").asStringOrVoid(),
+				);
+				if (fg !== undefined) {
+					styles.push("color: " + fg);
+				}
+
+				const bg = ___R$project$rome$$romefrontend$cli$layout$tags_ts$validateColor(
+					attributes.get("bg").asStringOrVoid(),
+				);
+				if (bg !== undefined) {
+					styles.push("background-color: " + bg);
+				}
+
+				return '<span style="' + styles.join("; ") + '">' + value + "</span>";
+			}
+
+			case "token":
+				return (
+					'<span class="token ' +
+					attributes.get("type").asString("") +
+					'">' +
+					value +
+					"</span>"
+				);
+
+			default:
+				return value;
+		}
+	}
+
+	// TODO fill this with more
+	const ___R$$priv$project$rome$$romefrontend$cli$layout$grid$formatHTML_ts$highlightColors = [
+		"magenta",
+		"cyan",
+	];
+
+
+  // project-rome/@romefrontend/events/Event.ts
+function ___R$$priv$project$rome$$romefrontend$events$Event_ts$noPromise(ret) {
+		if (ret instanceof Promise) {
+			throw new Error("Subscription returned promise for a callSync");
+		} else {
+			return ret;
+		}
+	}
+
+	class ___R$project$rome$$romefrontend$events$Event_ts$default {
+		constructor(opts) {
+			this.subscriptions = new Set();
+			this.rootSubscription = undefined;
+			this.name = opts.name;
+			this.options = opts;
+		}
+
+		onSubscriptionChange() {
+			// Hook for BridgeEvent
+		}
+
+		onError(err) {
+			const {onError} = this.options;
+			if (onError !== undefined) {
+				onError(err);
+			}
+		}
+
+		clear() {
+			this.subscriptions.clear();
+			this.rootSubscription = undefined;
+		}
+
+		hasSubscribers() {
+			return this.hasSubscriptions();
+		}
+
+		hasSubscriptions() {
+			return this.rootSubscription !== undefined;
+		}
+
+		// Dispatch the event without caring about the return values
+		send(param) {
+			const {rootSubscription} = this;
+			if (rootSubscription === undefined) {
+				return;
+			}
+
+			rootSubscription(param);
+
+			for (const callback of this.subscriptions) {
+				callback(param);
+			}
+		}
+
+		callSync(param) {
+			try {
+				const {rootSubscription, subscriptions} = this;
+				if (rootSubscription === undefined) {
+					throw new Error("No subscription for event " + this.name);
+				}
+
+				const ret = ___R$$priv$project$rome$$romefrontend$events$Event_ts$noPromise(
+					rootSubscription(param),
+				);
+				for (const callback of subscriptions) {
+					___R$$priv$project$rome$$romefrontend$events$Event_ts$noPromise(
+						callback(param),
+					);
+				}
+				return ret;
+			} catch (err) {
+				this.onError(err);
+				throw err;
+			}
+		}
+
+		async call(param) {
+			const {rootSubscription, subscriptions} = this;
+			if (rootSubscription === undefined) {
+				throw new Error("No subscription for event " + this.name);
+			}
+
+			try {
+				if (this.options.serial === true) {
+					const ret = await rootSubscription(param);
+					for (const callback of subscriptions) {
+						await callback(param);
+					}
+					return ret;
+				} else {
+					const res = await Promise.all([
+						rootSubscription(param),
+						...Array.from(subscriptions, (callback) => callback(param)),
+					]);
+
+					// Return the root subscription value
+					return res[0];
+				}
+			} catch (err) {
+				this.onError(err);
+				throw err;
+			}
+		}
+
+		wait(val, timeout) {
+			return new Promise((resolve, reject) => {
+				let timeoutId;
+				let timedOut = false;
+
+				if (timeout !== undefined) {
+					timeoutId = setTimeout(
+						() => {
+							timedOut = true;
+							listener.unsubscribe();
+							reject(
+								new Error(
+									"Timed out after waiting " + timeout + "ms for " + this.name,
+								),
+							);
+						},
+						timeout,
+					);
+				}
+
+				const listener = this.subscribe((param) => {
+					if (timedOut) {
+						return val;
+					}
+
+					if (timeoutId !== undefined) {
+						clearTimeout(timeoutId);
+					}
+
+					listener.unsubscribe();
+					resolve(param);
+					return val;
+				});
+			});
+		}
+
+		async callOptional(param) {
+			if (this.rootSubscription === undefined) {
+				return undefined;
+			} else {
+				return this.call(param);
+			}
+		}
+
+		subscribe(callback, makeRoot) {
+			if (this.options.unique === true && this.subscriptions.size !== 0) {
+				throw new Error(
+					"Event " + this.name + " only allows a single subscription",
+				);
+			}
+
+			if (this.rootSubscription === callback || this.subscriptions.has(callback)) {
+				throw new Error("Cannot double subscribe a callback");
+			}
+
+			if (this.rootSubscription === undefined) {
+				this.rootSubscription = callback;
+			} else if (makeRoot === true) {
+				this.subscriptions.add(this.rootSubscription);
+				this.rootSubscription = callback;
+			} else {
+				this.subscriptions.add(callback);
+			}
+
+			this.onSubscriptionChange();
+
+			return {
+				unsubscribe: async () => {
+					this.unsubscribe(callback);
+				},
+			};
+		}
+
+		unsubscribe(callback) {
+			if (this.subscriptions.has(callback)) {
+				this.subscriptions.delete(callback);
+				this.onSubscriptionChange();
+				return;
+			}
+
+			// If this callback was the root subscription, then set it to the next one
+			if (callback === this.rootSubscription) {
+				this.rootSubscription = Array.from(this.subscriptions)[0];
+				this.subscriptions.delete(this.rootSubscription);
+				this.onSubscriptionChange();
+				return;
+			}
+		}
+	}
+
+
+  // project-rome/@romefrontend/events/BridgeError.ts
+class ___R$project$rome$$romefrontend$events$BridgeError_ts$default
+		extends Error {
+		constructor(message, bridge) {
+			super(message);
+			this.bridge = bridge;
+		}
+	}
+
+
+  // project-rome/@romefrontend/events/BridgeEvent.ts
+function ___R$$priv$project$rome$$romefrontend$events$BridgeEvent_ts$validateDirection(
+		// rome-ignore lint/js/noExplicitAny
+		event,
+		invalidDirections,
+		verb,
+	) {
+		invalidDirections.push(["server<->client", "server&client"]);
+
+		for (const [eventDirection, bridgeType] of invalidDirections) {
+			if (event.direction === eventDirection && event.bridge.type === bridgeType) {
+				throw new Error(
+					"The " +
+					eventDirection +
+					' event "' +
+					event.name +
+					'" cannot be ' +
+					verb +
+					" by a " +
+					bridgeType +
+					" bridge",
+				);
+			}
+		}
+	}
+
+	class ___R$project$rome$$romefrontend$events$BridgeEvent_ts$default
+		extends ___R$project$rome$$romefrontend$events$Event_ts$default {
+		constructor(opts, bridge) {
+			super(opts);
+
+			this.bridge = bridge;
+			this.requestCallbacks = new Map();
+			this.direction = opts.direction;
+		}
+
+		clear() {
+			super.clear();
+			this.requestCallbacks.clear();
+		}
+
+		end(err) {
+			for (const {reject} of this.requestCallbacks.values()) {
+				reject(err);
+			}
+		}
+
+		onSubscriptionChange() {
+			___R$$priv$project$rome$$romefrontend$events$BridgeEvent_ts$validateDirection(
+				this,
+				[["server->client", "client"], ["server<-client", "server"]],
+				"subscribed",
+			);
+			this.bridge.sendSubscriptions();
+		}
+
+		dispatchRequest(param) {
+			return super.call(param);
+		}
+
+		dispatchResponse(id, data) {
+			const callbacks = this.requestCallbacks.get(id);
+			if (!callbacks) {
+				// ???
+				return;
+			}
+
+			this.requestCallbacks.delete(id);
+
+			if (data.responseStatus === "success") {
+				// @ts-ignore
+				callbacks.resolve(data.value);
+			} else if (data.responseStatus === "error") {
+				try {
+					callbacks.reject(this.bridge.buildError(data.value, data.metadata));
+				} catch (err) {
+					callbacks.reject(err);
+				}
+			} else {
+				// ???
+			}
+
+			if (callbacks.completed !== undefined) {
+				callbacks.completed();
+			}
+		}
+
+		hasSubscribers() {
+			return this.bridge.listeners.has(this.name);
+		}
+
+		validateCanSend() {
+			___R$$priv$project$rome$$romefrontend$events$BridgeEvent_ts$validateDirection(
+				this,
+				[["server<-client", "client"], ["server->client", "server"]],
+				"called",
+			);
+		}
+
+		send(param) {
+			if (!this.hasSubscribers()) {
+				// No point in sending over a subscription that doesn't have a listener
+				return;
+			}
+
+			this.validateCanSend();
+			this.bridge.assertAlive();
+			this.bridge.sendMessage({
+				type: "request",
+				event: this.name,
+				param,
+				priority: false,
+			});
+		}
+
+		async call(param, opts = {}) {
+			const {priority = false, timeout} = opts;
+			this.validateCanSend();
+
+			try {
+				return await new Promise((resolve, reject) => {
+					this.bridge.assertAlive();
+
+					const id = this.bridge.getNextMessageId();
+
+					let completed;
+					if (timeout !== undefined) {
+						const timeoutId = setTimeout(
+							() => {
+								// Remove the request callback
+								this.requestCallbacks.delete(id);
+
+								// Reject the promise
+								reject(
+									new ___R$project$rome$$romefrontend$events$BridgeError_ts$default(
+										"Timeout of " +
+										String(timeout) +
+										"ms for " +
+										this.name +
+										"(" +
+										String(JSON.stringify(param)) +
+										") event exceeded",
+										this.bridge,
+									),
+								);
+							},
+							timeout,
+						);
+
+						// Cancel the timeout if the response returns before the timer
+						completed = () => {
+							clearTimeout(timeoutId);
+						};
+					}
+
+					this.requestCallbacks.set(
+						id,
+						{
+							completed,
+							reject,
+							resolve,
+						},
+					);
+
+					this.bridge.sendMessage({
+						id,
+						event: this.name,
+						param,
+						type: "request",
+						priority,
+					});
+				});
+			} catch (err) {
+				this.onError(err);
+				throw err;
+			}
+		}
+
+		callSync() {
+			throw new Error("callSync not allowed on BridgeEvent " + this.name);
+		}
+
+		callOptional() {
+			throw new Error("callOptional not allowed on BridgeEvent " + this.name);
+		}
+	}
+
+
+  // project-rome/@romefrontend/events/Bridge.ts
+class ___R$project$rome$$romefrontend$events$Bridge_ts$default {
+		constructor(opts) {
+			this.errorTransports = new Map();
+
+			this.alive = true;
+			this.endError = undefined;
+			this.type = opts.type;
+			this.opts = opts;
+
+			this.messageIdCounter = 0;
+			this.events = new Map();
+
+			this.hasHandshook = false;
+			this.handshakeEvent = new ___R$project$rome$$romefrontend$events$Event_ts$default({
+				name: "Bridge.handshake",
+			});
+			this.endEvent = new ___R$project$rome$$romefrontend$events$Event_ts$default({
+				name: "Bridge.end",
+				serial: true,
+			});
+			this.updatedListenersEvent = new ___R$project$rome$$romefrontend$events$Event_ts$default({
+				name: "Bridge.updatedListenersEvent",
+			});
+
+			// A Set of event names that are being listened to on the other end
+
+			// We track this to avoid sending over subscriptions that aren't needed
+			this.listeners = new Set();
+
+			this.prioritizedResponses = new Set();
+			this.deprioritizedResponseQueue = [];
+
+			this.postHandshakeQueue = [];
+
+			this.heartbeatEvent = this.createEvent({
+				name: "Bridge.heartbeat",
+				direction: "server<->client",
+			});
+
+			if (this.type !== "server&client") {
+				this.heartbeatEvent.subscribe(() => {
+					return undefined;
+				});
+			}
+
+			this.init();
+		}
+
+		attachEndSubscriptionRemoval(subscription) {
+			this.endEvent.subscribe(() => {
+				subscription.unsubscribe();
+			});
+		}
+
+		monitorHeartbeat(timeout, onExceeded) {
+			if (this.type === "server&client") {
+				// No point in monitoring this since we're the same process
+				return;
+			}
+
+			this.heartbeatTimeout = setTimeout(
+				async () => {
+					try {
+						await this.heartbeatEvent.call(undefined, {timeout});
+						this.monitorHeartbeat(timeout, onExceeded);
+					} catch (err) {
+						if (
+							err instanceof
+							___R$project$rome$$romefrontend$events$BridgeError_ts$default
+						) {
+							if (this.alive) {
+								onExceeded();
+							}
+						} else {
+							throw err;
+						}
+					}
+				},
+				1_000,
+			);
+		}
+
+		clearPrioritization(id) {
+			this.prioritizedResponses.delete(id);
+
+			if (this.prioritizedResponses.size === 0) {
+				for (const msg of this.deprioritizedResponseQueue) {
+					this.sendMessage(msg);
+				}
+				this.deprioritizedResponseQueue = [];
+			}
+		}
+
+		async handshake(opts = {}) {
+			if (this.hasHandshook) {
+				throw new Error("Already performed handshake");
+			}
+
+			const {timeout, second = false} = opts;
+
+			// Send a handshake in case we were the first
+			if (!second) {
+				this.sendMessage({
+					type: "handshake",
+					first: true,
+					subscriptions: this.getSubscriptions(),
+				});
+			}
+
+			// Wait for a handshake from the other end
+			const res = await this.handshakeEvent.wait(undefined, timeout);
+
+			if (res.first) {
+				// Send the handshake again, as it wouldn't have received the first
+				this.sendMessage({
+					type: "handshake",
+					first: false,
+					subscriptions: this.getSubscriptions(),
+				});
+			}
+
+			this.receivedSubscriptions(res.subscriptions);
+
+			this.hasHandshook = true;
+
+			for (const msg of this.postHandshakeQueue) {
+				this.sendMessage(msg);
+			}
+			this.postHandshakeQueue = [];
+		}
+
+		getSubscriptions() {
+			const names = [];
+			for (const event of this.events.values()) {
+				if (event.hasSubscriptions()) {
+					names.push(event.name);
+				}
+			}
+			return names;
+		}
+
+		sendSubscriptions() {
+			if (!this.hasHandshook) {
+				// If we haven't had the handshake then no point sending them. They'll be sent all at once after
+				return;
+			}
+
+			// Nobody to send an update to
+			if (!this.alive) {
+				return;
+			}
+
+			// Notify the other side of what we're currently subscribed to
+			// We send over a list of all of our subscriptions every time
+			// This is fine since we don't change subscriptions often and they aren't very large
+			// If we have a lot of subscriptions, or are changing them a lot in the future then this could be optimized
+			this.sendMessage({
+				type: "subscriptions",
+				names: this.getSubscriptions(),
+			});
+		}
+
+		receivedSubscriptions(names) {
+			this.listeners = new Set(names);
+			this.updatedListenersEvent.send(this.listeners);
+		}
+
+		init() {
+			// This method can be overridden by subclasses, it allows you to add logic such as error serializers
+		}
+
+		clear() {
+			for (const [, event] of this.events) {
+				event.clear();
+			}
+		}
+
+		getNextMessageId() {
+			return ++this.messageIdCounter;
+		}
+
+		createEvent(opts) {
+			if (this.events.has(opts.name)) {
+				throw new Error("Duplicate event");
+			}
+
+			const event = new ___R$project$rome$$romefrontend$events$BridgeEvent_ts$default(
+				opts,
+				this,
+			);
+			this.events.set(opts.name, event);
+			return event;
+		}
+
+		//# Connection death
+		assertAlive() {
+			if (this.endError !== undefined) {
+				throw this.endError;
+			}
+		}
+
+		endWithError(err) {
+			if (this.alive === false) {
+				return;
+			}
+
+			this.alive = false;
+			this.endError = err;
+
+			// Reject any pending requests
+			for (const [, event] of this.events) {
+				event.end(err);
+			}
+			this.clear();
+
+			// Clear any currently processing heartbeat
+			if (this.heartbeatTimeout !== undefined) {
+				clearTimeout(this.heartbeatTimeout);
+			}
+
+			// Notify listeners
+			this.endEvent.callSync(err);
+		}
+
+		end(message = "Connection died") {
+			this.endWithError(
+				new ___R$project$rome$$romefrontend$events$BridgeError_ts$default(
+					message,
+					this,
+				),
+			);
+		}
+
+		//# Error serialization
+		buildError(struct, data) {
+			const transport = this.errorTransports.get(struct.name);
+			if (transport === undefined) {
+				const err = new Error(struct.message);
+				err.name = struct.name || "Error";
+				err.stack = struct.stack;
+				err[___R$project$rome$$romefrontend$v8$errors_ts$ERROR_FRAMES_PROP] = struct.frames;
+				return err;
+			} else {
+				return transport.hydrate(struct, data);
+			}
+		}
+
+		buildErrorResponse(id, event, errRaw) {
+			// Just in case something that wasn't an Error was thrown
+			const err = errRaw instanceof Error ? errRaw : new Error(String(errRaw));
+
+			// Fetch some metadata for hydration
+			const tranport = this.errorTransports.get(err.name);
+			const metadata = tranport === undefined ? {} : tranport.serialize(err);
+
+			return {
+				id,
+				event,
+				type: "response",
+				responseStatus: "error",
+				value: ___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(
+					err,
+				),
+				metadata,
+			};
+		}
+
+		addErrorTransport(name, transport) {
+			this.errorTransports.set(name, transport);
+		}
+
+		//# Message transmission
+		sendMessage(msg) {
+			// There's no try-catch gated around sendMessage because the call stack here will include some other error handler
+			// We need to be specific for handleMessage because it could come from anywhere
+			if (msg.type !== "handshake" && !this.hasHandshook) {
+				this.postHandshakeQueue.push(msg);
+				return;
+			}
+
+			this.assertAlive();
+
+			if (msg.type === "response") {
+				if (
+					this.prioritizedResponses.size > 0 &&
+					!this.prioritizedResponses.has(msg.id)
+				) {
+					this.deprioritizedResponseQueue.push(msg);
+					return;
+				}
+
+				if (this.prioritizedResponses.has(msg.id)) {
+					this.clearPrioritization(msg.id);
+				}
+			}
+
+			const {opts} = this;
+			opts.sendMessage(msg);
+			if (opts.onSendMessage !== undefined) {
+				opts.onSendMessage(msg);
+			}
+		}
+
+		handleJSONMessage(str) {
+			try {
+				const data = JSON.parse(str);
+				this.handleMessage(data);
+			} catch (err) {
+				if (err instanceof SyntaxError) {
+					this.endWithError(
+						new ___R$project$rome$$romefrontend$events$BridgeError_ts$default(
+							"Error parsing message JSON: " + err.message,
+							this,
+						),
+					);
+				} else {
+					this.endWithError(err);
+				}
+			}
+		}
+
+		handleMessage(msg) {
+			try {
+				this.assertAlive();
+
+				if (msg.type === "handshake") {
+					this.handshakeEvent.send({
+						subscriptions: msg.subscriptions,
+						first: msg.first,
+					});
+				}
+
+				if (msg.type === "subscriptions") {
+					this.receivedSubscriptions(msg.names);
+				}
+
+				if (msg.type === "request") {
+					this.handleMessageRequest(msg);
+				}
+
+				if (msg.type === "response") {
+					this.handleMessageResponse(msg);
+				}
+			} catch (err) {
+				this.endWithError(err);
+			}
+		}
+
+		handleMessageResponse(data) {
+			const {id, event} = data;
+			if (id === undefined) {
+				throw new Error("Expected id");
+			}
+			if (event === undefined) {
+				throw new Error("Expected event");
+			}
+
+			const eventHandler = this.events.get(event);
+			if (eventHandler === undefined) {
+				throw new Error("Unknown event");
+			}
+
+			eventHandler.dispatchResponse(id, data);
+		}
+
+		handleMessageRequest(data) {
+			const {id, event, param, priority} = data;
+			if (event === undefined) {
+				throw new Error("Expected event in message request but received none");
+			}
+
+			const eventHandler = this.events.get(event);
+			if (eventHandler === undefined) {
+				throw new Error("Unknown event " + event);
+			}
+
+			if (id === undefined) {
+				// We don't need to do anything with the return value of this since
+				// there's nothing on the other end to catch it
+				eventHandler.dispatchRequest(param);
+			} else {
+				if (priority) {
+					this.prioritizedResponses.add(id);
+				}
+
+				eventHandler.dispatchRequest(param).then((value) => {
+					this.sendMessage({
+						event,
+						id,
+						type: "response",
+						responseStatus: "success",
+						value,
+					});
+				}).catch((err) => {
+					this.sendMessage(this.buildErrorResponse(id, event, err));
+				}).catch((err) => this.endWithError(err));
+			}
+		}
+	}
+
+
+  // project-rome/@romefrontend/pretty-format/index.ts
+const ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$DEFAULT_OPTIONS = {
+		allowCustom: true,
+		maxDepth: Infinity,
+		markup: false,
+		indent: "",
+		depth: 0,
+		stack: [],
+		compact: false,
+	};
+
+	const ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$INDENT = "\t";
+
+	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$maybeEscapeMarkup(
+		str,
+		opts,
+	) {
+		if (opts.markup) {
+			return ___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
+				str,
+			);
+		} else {
+			return str;
+		}
+	}
+
+	const ___R$project$rome$$romefrontend$pretty$format$index_ts$CUSTOM_PRETTY_FORMAT = Symbol.for(
+		"custom-pretty-format",
+	);
+
+	function ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+		obj,
+		rawOpts = {},
+	) {
+		const opts = ___R$project$rome$$romefrontend$typescript$helpers$index_ts$mergeObjects(
+			___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$DEFAULT_OPTIONS,
+			rawOpts,
+		);
+
+		if (opts.maxDepth === opts.depth) {
+			return "[depth exceeded]";
+		}
+
+		switch (typeof obj) {
+			case "symbol": {
+				const val = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$maybeEscapeMarkup(
+					___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatSymbol(
+						obj,
+					),
+					opts,
+				);
+				return opts.markup
+					? ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
+							"token",
+							val,
+							{type: "string"},
+						)
+					: val;
+			}
+
+			case "string": {
+				const val = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$maybeEscapeMarkup(
+					___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatString(
+						obj,
+					),
+					opts,
+				);
+				return opts.markup
+					? ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
+							"token",
+							val,
+							{type: "string"},
+						)
+					: val;
+			}
+
+			case "bigint":
+			case "number": {
+				const val = ___R$project$rome$$romefrontend$pretty$format$index_ts$formatNumber(
+					obj,
+				);
+				return opts.markup
+					? ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
+							"token",
+							val,
+							{type: "number"},
+						)
+					: val;
+			}
+
+			case "boolean": {
+				const val = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatBoolean(
+					obj,
+				);
+				return opts.markup
+					? ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
+							"token",
+							val,
+							{type: "boolean"},
+						)
+					: val;
+			}
+
+			case "undefined": {
+				const val = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatUndefined();
+				return opts.markup
+					? ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
+							"color",
+							val,
+							{fg: "brightBlack"},
+						)
+					: val;
+			}
+
+			case "function":
+				return ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatFunction(
+					obj,
+					opts,
+				);
+
+			case "object":
+				return ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatObjectish(
+					(obj),
+					opts,
+				);
+
+			default:
+				throw new Error("Unknown type");
+		}
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$joinList(
+		items,
+		opts,
+	) {
+		if (items.length === 0) {
+			return "";
+		}
+
+		const lines = [];
+
+		for (const item of items) {
+			lines.push("" + opts.indent + item);
+		}
+
+		return lines.join("\n");
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$isNativeFunction(
+		val,
+	) {
+		return val.toString().endsWith("{ [native code] }");
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatSymbol(
+		val,
+	) {
+		return String(val);
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatString(
+		val,
+	) {
+		return ___R$project$rome$$romefrontend$string$escape$escapeJSString_ts$default(
+			val,
+			{
+				quote: '"',
+			},
+		);
+	}
+
+	// This function is used by rome-json so make sure it can parse whatever you return here
+	function ___R$project$rome$$romefrontend$pretty$format$index_ts$formatNumber(
+		val,
+	) {
+		if (typeof val === "bigint") {
+			return (
+				___R$project$rome$$romefrontend$string$utils$humanizeNumber_ts$humanizeNumber(
+					val,
+					"_",
+				) + "n"
+			);
+		} else if (isNaN(val)) {
+			return "NaN";
+		} else if (Object.is(val, -0)) {
+			return "-0";
+		} else if (isFinite(val)) {
+			return ___R$project$rome$$romefrontend$string$utils$humanizeNumber_ts$humanizeNumber(
+				val,
+				"_",
+			);
+		} else if (Object.is(val, -Infinity)) {
+			return "-Infinity";
+		} else if (Object.is(val, +Infinity)) {
+			return "Infinity";
+		} else {
+			throw new Error("Don't know how to format this number");
+		}
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatUndefined() {
+		return "undefined";
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatNull() {
+		return "null";
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatBoolean(
+		val,
+	) {
+		return val === true ? "true" : "false";
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatFunction(
+		val,
+		opts,
+	) {
+		const name =
+			val.name === ""
+				? "anonymous"
+				: ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$maybeEscapeMarkup(
+						val.name,
+						opts,
+					);
+		let label = "Function " + name;
+
+		if (
+			___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$isNativeFunction(
+				val,
+			)
+		) {
+			label = "Native" + label;
+		}
+
+		if (Object.keys(val).length === 0) {
+			return label;
+		}
+
+		// rome-ignore lint/js/noExplicitAny
+		return ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatObject(
+			label,
+			(val),
+			opts,
+			[],
+		);
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$getExtraObjectProps(
+		obj,
+		opts,
+	) {
+		const props = [];
+		const ignoreKeys = {};
+
+		if (obj instanceof Map) {
+			for (const [key, val] of obj) {
+				const formattedKey =
+					typeof key === "string"
+						? ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatKey(
+								key,
+								opts,
+							)
+						: ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+								key,
+								opts,
+							);
+				props.push(
+					formattedKey +
+					" => " +
+					___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+						val,
+						opts,
+					),
+				);
+			}
+		} else if (
+			___R$project$rome$$romefrontend$typescript$helpers$index_ts$isIterable(
+				obj,
+			)
+		) {
+			let i = 0;
+			for (const val of obj) {
+				ignoreKeys[String(i++)] = val;
+				props.push(
+					___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+						val,
+						opts,
+					),
+				);
+			}
+		}
+
+		return {ignoreKeys, props};
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatKey(
+		rawKey,
+		opts,
+	) {
+		const key = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$maybeEscapeMarkup(
+			rawKey,
+			opts,
+		);
+
+		// Format as a string if it contains any special characters
+		if (/[^A-Za-z0-9_$]/g.test(key)) {
+			return ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatString(
+				key,
+			);
+		} else {
+			return key;
+		}
+	}
+
+	// These are object keys that should always go at the top and ignore any alphabetization
+	// This is fairly arbitrary but should include generic identifier keys
+	const ___R$project$rome$$romefrontend$pretty$format$index_ts$PRIORITIZE_KEYS = [
+		"id",
+		"type",
+		"kind",
+		"key",
+		"name",
+		"value",
+	];
+
+	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$sortKeys(
+		obj,
+	) {
+		const sortedKeys = new Set(
+			Object.keys(obj).sort(
+				___R$project$rome$$romefrontend$string$utils$naturalCompare_ts$naturalCompare,
+			),
+		);
+
+		const priorityKeys = [];
+		const otherKeys = [];
+		const objectKeys = [];
+
+		for (const key of ___R$project$rome$$romefrontend$pretty$format$index_ts$PRIORITIZE_KEYS) {
+			if (sortedKeys.has(key)) {
+				priorityKeys.push({key, object: false});
+				sortedKeys.delete(key);
+			}
+		}
+
+		for (const key of sortedKeys) {
+			const val = obj[key];
+
+			// Objects with properties should be at the bottom
+			let isObject = false;
+			if (typeof val === "object" && val != null && Object.keys(val).length > 0) {
+				isObject = true;
+			}
+			if (Array.isArray(val) && val.length > 0) {
+				isObject = true;
+			}
+			if (isObject) {
+				objectKeys.push({key, object: true});
+			} else {
+				otherKeys.push({key, object: false});
+			}
+		}
+
+		return [...priorityKeys, ...otherKeys, ...objectKeys];
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$lineCount(
+		str,
+	) {
+		return str.split("\n").length;
+		___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatKey;
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$lineCountCompare(
+		a,
+		b,
+	) {
+		return (
+			___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$lineCount(a) -
+			___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$lineCount(b)
+		);
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatObjectLabel(
+		label,
+		opts,
+	) {
+		return opts.markup
+			? ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
+					"color",
+					label,
+					{fg: "cyan"},
+				)
+			: label;
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatObject(
+		label,
+		obj,
+		opts,
+		labelKeys,
+	) {
+		// Detect circular references, and create a pointer to the specific value
+		const {stack} = opts;
+		if (stack.length > 0 && stack.includes(obj)) {
+			label = "Circular " + label + " " + stack.indexOf(obj);
+			return ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatObjectLabel(
+				label,
+				opts,
+			);
+		}
+
+		const customFormat = obj[___R$project$rome$$romefrontend$pretty$format$index_ts$CUSTOM_PRETTY_FORMAT];
+		if (opts.allowCustom && typeof customFormat === "function") {
+			const custom = ___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
+				String(customFormat.call(obj)),
+			);
+			return opts.markup
+				? ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
+						"dim",
+						custom,
+					)
+				: custom;
+		}
+
+		//
+		const nextOpts = Object.assign(
+			{},
+			opts,
+			{
+				stack: [...stack, obj],
+				depth: opts.depth + 1,
+				indent: opts.indent +
+				___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$INDENT,
+			},
+		);
+		const {ignoreKeys, props} = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$getExtraObjectProps(
+			obj,
+			nextOpts,
+		);
+
+		// For props that have object values, we always put them at the end, sorted by line count
+		const objProps = [];
+
+		// Get string props
+		for (const {key, object} of ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$sortKeys(
+			obj,
+		)) {
+			const val = obj[key];
+			if (key in ignoreKeys && ignoreKeys[key] === val) {
+				continue;
+			}
+
+			if (opts.compact && val === undefined) {
+				continue;
+			}
+
+			// Ignore any properties already displayed in the label
+			if (labelKeys.includes(key)) {
+				continue;
+			}
+
+			const prop =
+				___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatKey(
+					key,
+					opts,
+				) +
+				": " +
+				___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+					val,
+					nextOpts,
+				);
+			if (object) {
+				objProps.push(prop);
+			} else {
+				props.push(prop);
+			}
+		}
+
+		// Sort object props by line count and push them on
+		for (const prop of objProps.sort(
+			___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$lineCountCompare,
+		)) {
+			props.push(prop);
+		}
+
+		// Get symbol props
+		for (const sym of Object.getOwnPropertySymbols(obj)) {
+			const val = Reflect.get(obj, sym);
+			props.push(
+				___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+					sym,
+					opts,
+				) +
+				": " +
+				___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+					val,
+					nextOpts,
+				),
+			);
+		}
+
+		//
+		let open = "{";
+		let close = "}";
+		if (
+			___R$project$rome$$romefrontend$typescript$helpers$index_ts$isIterable(
+				obj,
+			)
+		) {
+			open = "[";
+			close = "]";
+		}
+
+		//
+		let inner = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$joinList(
+			props,
+			nextOpts,
+		);
+		if (inner !== "") {
+			if (props.length === 1 && !inner.includes("\n")) {
+				// Single prop with no newlines shouldn't be indented
+				inner = inner.trim();
+			} else {
+				inner = "\n" + inner + "\n" + opts.indent;
+			}
+		}
+
+		return (
+			___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatObjectLabel(
+				label,
+				opts,
+			) +
+			" " +
+			open +
+			inner +
+			close
+		);
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatRegExp(
+		val,
+	) {
+		return String(val);
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatDate(
+		val,
+	) {
+		return val.toISOString();
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatObjectish(
+		val,
+		opts,
+	) {
+		if (val === null) {
+			const val = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatNull();
+			return opts.markup
+				? ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
+						"emphasis",
+						val,
+					)
+				: val;
+		}
+
+		if (val instanceof RegExp) {
+			const str = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatRegExp(
+				val,
+			);
+			return opts.markup
+				? ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
+						"color",
+						str,
+						{fg: "red"},
+					)
+				: str;
+		}
+
+		if (val instanceof Date) {
+			const str = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatDate(
+				val,
+			);
+			return opts.markup
+				? ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
+						"color",
+						str,
+						{fg: "magenta"},
+					)
+				: str;
+		}
+
+		let label = "null";
+
+		if (val.constructor !== undefined) {
+			label = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$maybeEscapeMarkup(
+				val.constructor.name,
+				opts,
+			);
+		}
+
+		let labelKeys = [];
+
+		// If there's a string type or kind property then use it as the label
+		if (typeof val.type === "string") {
+			label = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$maybeEscapeMarkup(
+				val.type,
+				opts,
+			);
+			labelKeys.push("type");
+		} else if (typeof val.kind === "string") {
+			label = ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$maybeEscapeMarkup(
+				val.kind,
+				opts,
+			);
+			labelKeys.push("kind");
+		}
+
+		return ___R$$priv$project$rome$$romefrontend$pretty$format$index_ts$formatObject(
+			label,
+			val,
+			opts,
+			labelKeys,
+		);
+	}
+
+
+  // project-rome/@romefrontend/events/bridgeCreators.ts
+const ___R$project$rome$$romefrontend$events$bridgeCreators_ts = {
+		createBridgeFromWebSocketInterface: ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromWebSocketInterface,
+		createBridgeFromBrowserWebSocket: ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromBrowserWebSocket,
+		createBridgeFromSocket: ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromSocket,
+		createBridgeFromLocal: ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromLocal,
+		createBridgeFromChildProcess: ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromChildProcess,
+		createBridgeFromParentProcess: ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromParentProcess,
+	};
+	const ___R$$priv$project$rome$$romefrontend$events$bridgeCreators_ts$SOCKET_LENGTH = /^(\d+):/;
+
+	// JSON.stringify but throw on bad data types
+	// Most likely slower... But safer and our data structures are usually fairly shallow
+	function ___R$$priv$project$rome$$romefrontend$events$bridgeCreators_ts$stringify(
+		obj,
+	) {
+		return JSON.stringify(
+			obj,
+			(key, value) => {
+				const type = typeof value;
+
+				if (value === undefined || value === null) {
+					return value;
+				}
+
+				// Primitives
+				if (type === "string" || type === "number" || type === "boolean") {
+					return value;
+				}
+
+				// Arrays and plain objects
+				if (Array.isArray(value) || value.constructor === Object) {
+					return value;
+				}
+
+				throw new Error(
+					"Illegal data type not allowed in JSON: " +
+					___R$project$rome$$romefrontend$pretty$format$index_ts$default(value) +
+					" in " +
+					___R$project$rome$$romefrontend$pretty$format$index_ts$default(obj),
+				);
+			},
+		);
+	}
+
+	function ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromWebSocketInterface(
+		CustomBridge,
+		inf,
+		opts,
+	) {
+		const bridge = new CustomBridge(
+			Object.assign(
+				{},
+				opts,
+				{
+					sendMessage: (data) => {
+						inf.sendJSON(data);
+					},
+				},
+			),
+		);
+
+		const {socket} = inf;
+
+		bridge.endEvent.subscribe(() => {
+			socket.end();
+		});
+
+		inf.completeFrameEvent.subscribe((frame) => {
+			const json = frame.payload.toString();
+			bridge.handleJSONMessage(json);
+		});
+
+		socket.on(
+			"error",
+			(err) => {
+				bridge.endWithError(err);
+			},
+		);
+
+		socket.on(
+			"end",
+			() => {
+				bridge.end("RPC WebSocket died");
+			},
+		);
+
+		return bridge;
+	}
+
+	function ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromBrowserWebSocket(
+		CustomBridge,
+		socket,
+		opts,
+	) {
+		const bridge = new CustomBridge(
+			Object.assign(
+				{},
+				opts,
+				{
+					sendMessage: (data) => {
+						socket.send(
+							___R$$priv$project$rome$$romefrontend$events$bridgeCreators_ts$stringify(
+								data,
+							),
+						);
+					},
+				},
+			),
+		);
+
+		bridge.endEvent.subscribe(() => {
+			socket.close();
+		});
+
+		socket.onmessage = function(event) {
+			bridge.handleJSONMessage(String(event.data));
+		};
+
+		socket.onclose = () => {
+			bridge.end("RPC WebSocket disconnected");
+		};
+
+		return bridge;
+	}
+
+	function ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromSocket(
+		CustomBridge,
+		socket,
+		opts,
+	) {
+		const bridge = new CustomBridge(
+			Object.assign(
+				{},
+				opts,
+				{
+					sendMessage: (data) => {
+						const serialized = ___R$$priv$project$rome$$romefrontend$events$bridgeCreators_ts$stringify(
+							data,
+						);
+						socket.write(serialized.length + ":" + serialized);
+					},
+				},
+			),
+		);
+
+		bridge.endEvent.subscribe(() => {
+			socket.end();
+		});
+
+		// buffer data and parse message on newline
+		let buff = "";
+		let messageLength = 0;
+		socket.setEncoding("utf8");
+		function checkForPossibleMessage() {
+			// we're awaiting a message and have received it
+			if (messageLength > 0 && buff.length >= messageLength) {
+				// retrieve the message from the buffer
+				const msg = buff.slice(0, messageLength);
+
+				// clear the next message length and remove the current message from the buffer
+				buff = buff.slice(messageLength);
+				messageLength = 0;
+
+				// parse it
+				bridge.handleJSONMessage(msg);
+			}
+
+			// if we aren't waiting for a message and we have a buffer then check for an incoming message
+			if (messageLength === 0 && buff !== "") {
+				// check if we've received the starting info of a message
+				const possibleLength = buff.match(
+					___R$$priv$project$rome$$romefrontend$events$bridgeCreators_ts$SOCKET_LENGTH,
+				);
+				if (possibleLength != null) {
+					// get the message length
+					messageLength = Number(possibleLength[1]);
+
+					// remove the length designator
+					buff = buff.slice(possibleLength[0].length);
+
+					// check if we have a full message
+					checkForPossibleMessage();
+				}
+			}
+		}
+
+		socket.on(
+			"data",
+			(chunk) => {
+				buff += chunk;
+				checkForPossibleMessage();
+			},
+		);
+
+		socket.on(
+			"error",
+			(err) => {
+				bridge.endWithError(err);
+			},
+		);
+
+		socket.on(
+			"end",
+			() => {
+				bridge.end("Socket disconnected");
+			},
+		);
+
+		return bridge;
+	}
+
+	function ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromLocal(
+		CustomBridge,
+		opts,
+	) {
+		const bridge = new CustomBridge(
+			Object.assign(
+				{},
+				opts,
+				{
+					type: "server&client",
+					sendMessage: (msg) => {
+						bridge.handleMessage(msg);
+					},
+				},
+			),
+		);
+
+		return bridge;
+	}
+
+	function ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromChildProcess(
+		CustomBridge,
+		proc,
+		opts,
+	) {
+		const bridge = new CustomBridge(
+			Object.assign(
+				{},
+				opts,
+				{
+					sendMessage: (data) => {
+						proc.send(data);
+					},
+				},
+			),
+		);
+
+		bridge.endEvent.subscribe(() => {
+			proc.kill();
+		});
+
+		proc.on(
+			"error",
+			(err) => {
+				bridge.endWithError(err);
+			},
+		);
+
+		proc.on(
+			"message",
+			(msg) => {
+				bridge.handleMessage((msg));
+			},
+		);
+
+		// Catch process dying and reject any requests in flight
+		proc.on(
+			"close",
+			() => {
+				bridge.end("RPC child process died");
+			},
+		);
+
+		return bridge;
+	}
+
+	function ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromParentProcess(
+		CustomBridge,
+		opts,
+	) {
+		const bridge = new CustomBridge(
+			Object.assign(
+				{},
+				opts,
+				{
+					sendMessage: (data) => {
+						if (typeof process.send === "function") {
+							process.send(data);
+						} else {
+							throw new Error("No process.send found");
+						}
+					},
+				},
+			),
+		);
+
+		process.on(
+			"message",
+			(data) => {
+				bridge.handleMessage(data);
+			},
+		);
+
+		// I doubt any of these will have time to dispatch but for consistency sake...
+		process.on(
+			"exit",
+			() => {
+				bridge.end("RPC self process died");
+			},
+		);
+
+		return bridge;
+	}
+
+
+  // project-rome/@romefrontend/events/types.ts
+const ___R$project$rome$$romefrontend$events$types_ts = {};
+
+
+  // project-rome/@romefrontend/events/utils.ts
+const ___R$project$rome$$romefrontend$events$utils_ts = {
+		mergeEventSubscriptions: ___R$project$rome$$romefrontend$events$utils_ts$mergeEventSubscriptions,
+	};
+	function ___R$project$rome$$romefrontend$events$utils_ts$mergeEventSubscriptions(
+		subs,
+	) {
+		return {
+			async unsubscribe() {
+				for (const sub of subs) {
+					await sub.unsubscribe();
+				}
+			},
+		};
+	}
+
+
+  // project-rome/@romefrontend/events/index.ts
+
+
+
+  // project-rome/@romefrontend/cli-environment/index.ts
+const ___R$$priv$project$rome$$romefrontend$cli$environment$index_ts$stream = require(
+		"stream",
+	);
+	const ___R$$priv$project$rome$$romefrontend$cli$environment$index_ts$tty = require(
+		"tty",
+	);
+	const ___R$project$rome$$romefrontend$cli$environment$index_ts$DEFAULT_TERMINAL_FEATURES = {
+		background: "unknown",
+		isTTY: false,
+		columns: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(100),
+		cursor: false,
+		unicode: true,
+		hyperlinks: false,
+		colorDepth: 4,
+	};
+
+	function ___R$project$rome$$romefrontend$cli$environment$index_ts$getEnvVar(
+		key,
+	) {
+		const value = process.env[key];
+		if (value === undefined) {
+			return {type: "UNDEFINED", value: undefined};
+		}
+		if (value === "0" || value === "false") {
+			return {type: "DISABLED", value: false};
+		}
+		if (value === "1" || value === "true") {
+			return {type: "ENABLED", value: true};
+		}
+		return {type: "ENABLED", value};
+	}
+
+	function ___R$project$rome$$romefrontend$cli$environment$index_ts$inferTerminalFeatures(
+		stdout,
+		force = {},
+	) {
+		let columns = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(100);
+		let colorDepth = 1;
+		let isTTY = force.isTTY === true;
+		let unicode = false;
+		let isCI = ___R$project$rome$$romefrontend$cli$environment$index_ts$isCIEnv();
+		let background = "unknown";
+
+		// Increase column size for CI
+		if (isCI) {
+			columns = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(200);
+			colorDepth = 4;
+		}
+
+		// Only apply this environment sniffing when we've been given a process stdout stream
+		// Otherwise it'll be some custom stream and if they really want to infer from the environment
+		// Then they will do it on process.stdout and pass the features as the force param
+		if (
+			stdout instanceof
+			___R$$priv$project$rome$$romefrontend$cli$environment$index_ts$tty.WriteStream
+		) {
+			isTTY = true;
+			unicode = process.platform !== "win32";
+			colorDepth = (stdout.getColorDepth());
+			columns = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(
+				stdout.columns,
+			);
+
+			// Sniff for the background
+			// https://github.com/vim/vim/blob/e3f915d12c8fe0466918a29ab4eaef153f71a2cd/src/term.c#L2943-L2952
+			const COLORFGBG = ___R$project$rome$$romefrontend$cli$environment$index_ts$getEnvVar(
+				"COLORFGBG",
+			);
+			if (COLORFGBG.type === "ENABLED") {
+				const color = parseInt(String(COLORFGBG.value).split(";").pop());
+				if (!isNaN(color)) {
+					if ((color >= 0 && color <= 6) || color === 8) {
+						background = "dark";
+					} else {
+						background = "light";
+					}
+				}
+			}
+		}
+
+		const fancyAnsi = isTTY && !isCI;
+
+		let features = ___R$project$rome$$romefrontend$typescript$helpers$index_ts$mergeObjects(
+			{
+				isTTY,
+				background,
+				columns,
+				cursor: fancyAnsi,
+				hyperlinks: fancyAnsi,
+				colorDepth,
+				unicode,
+			},
+			force,
+		);
+
+		const updateEvent = new ___R$project$rome$$romefrontend$events$Event_ts$default({
+			name: "update",
+		});
+
+		let closeUpdateEvent = () => {};
+		let setupUpdateEvent = () => {};
+
+		// Watch for resizing, unless force.columns has been set and we'll consider it to be fixed
+		if (
+			stdout instanceof
+			___R$$priv$project$rome$$romefrontend$cli$environment$index_ts$tty.WriteStream &&
+			force.columns === undefined
+		) {
+			function onStdoutResize() {
+				if (
+					stdout instanceof
+					___R$$priv$project$rome$$romefrontend$cli$environment$index_ts$tty.WriteStream
+				) {
+					features = Object.assign(
+						{},
+						features,
+						{
+							columns: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(
+								stdout.columns,
+							),
+						},
+					);
+					updateEvent.send(features);
+				}
+			}
+
+			setupUpdateEvent = () => {
+				stdout.on("resize", onStdoutResize);
+			};
+
+			closeUpdateEvent = () => {
+				stdout.off("resize", onStdoutResize);
+			};
+		}
+
+		return {
+			updateEvent,
+			features,
+			setupUpdateEvent,
+			closeUpdateEvent,
+		};
+	}
+
+	const ___R$$priv$project$rome$$romefrontend$cli$environment$index_ts$CI_ENV_NAMES = [
+		"CI",
+		"TRAVIS",
+		"CIRCLECI",
+		"APPVEYOR",
+		"GITLAB_CI",
+		"GITHUB_ACTIONS",
+	];
+
+	function ___R$project$rome$$romefrontend$cli$environment$index_ts$isCIEnv() {
+		for (const key of ___R$$priv$project$rome$$romefrontend$cli$environment$index_ts$CI_ENV_NAMES) {
+			if (
+				___R$project$rome$$romefrontend$cli$environment$index_ts$getEnvVar(key).type ===
+				"ENABLED"
+			) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+  // project-rome/@romefrontend/cli-layout/grid/Grid.ts
+function ___R$$priv$project$rome$$romefrontend$cli$layout$grid$Grid_ts$createTag(
+		name,
+		attributes = ___R$project$rome$$romefrontend$cli$layout$util_ts$createEmptyAttributes(),
+		children = [],
+	) {
+		return {
+			type: "Tag",
+			name,
+			attributes,
+			children,
+		};
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$cli$layout$grid$Grid_ts$extractViewTags(
+		tag,
+	) {
+		let pointer;
+		let linePrefixes = [];
+		let children = [];
+
+		for (const child of tag.children) {
+			if (child.type === "Tag") {
+				if (child.name === "viewLinePrefix") {
+					linePrefixes.push(child);
+					continue;
+				} else if (child.name === "viewPointer") {
+					pointer = child;
+					continue;
+				}
+			}
+
+			children.push(child);
+		}
+
+		return {pointer, linePrefixes, children};
+	}
+
+	class ___R$project$rome$$romefrontend$cli$layout$grid$Grid_ts$default {
+		constructor(opts) {
+			this.viewportWidth = opts.columns === undefined ? undefined : opts.columns;
+			this.options = opts;
+
+			this.features =
+				opts.features === undefined
+					? ___R$project$rome$$romefrontend$cli$environment$index_ts$DEFAULT_TERMINAL_FEATURES
+					: opts.features;
+
+			this.cursor = {
+				line: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1,
+				column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1,
+			};
+
+			this.sourceCursor = {
+				currentLineText: "",
+				currentLine: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1,
+				currentColumn: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1,
+			};
+
+			this.lineStartMeta = {
+				softWrapped: false,
+				indentationCount: 0,
+				sourceColumn: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1,
+			};
+
+			const {lineWrapMode = "word-break"} = opts.view;
+			this.lineWrapMode = lineWrapMode;
+			this.width = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1;
+
+			this.lines = [];
+		}
+
+		alignRight() {
+			const viewportWidth = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get(
+				this.viewportWidth,
+			);
+			if (viewportWidth === undefined) {
+				return;
+			}
+
+			this.lines = this.lines.map(({ranges, columns}) => {
+				const newColumns = [...columns];
+				let offset = 0;
+
+				// Pad out line to viewport width
+				while (newColumns.length < viewportWidth) {
+					offset++;
+					newColumns.unshift(" ");
+				}
+
+				// Skip if all it contains is spaces
+
+				let onlySpaces = true;
+				for (const char of newColumns) {
+					if (char !== " ") {
+						onlySpaces = false;
+					}
+				}
+				if (onlySpaces) {
+					return {
+						columns: newColumns,
+						ranges,
+					};
+				}
+
+				const newRanges = ranges.map((range) => {
+					return {
+						start: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+							range.start,
+							offset,
+						),
+						end: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+							range.end,
+							offset,
+						),
+						ancestry: range.ancestry,
+					};
+				});
+
+				return {
+					ranges: newRanges,
+					columns: newColumns,
+				};
+			});
+		}
+
+		doesOverflowViewport(column) {
+			return (
+				this.lineWrapMode !== "none" &&
+				this.viewportWidth !== undefined &&
+				___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(column) >
+				___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(this.viewportWidth)
+			);
+		}
+
+		getHeight() {
+			return ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(
+				this.lines.length,
+			);
+		}
+
+		getLine(line) {
+			const lineIndex =
+				___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(line) - 1;
+			for (let i = lineIndex; i >= 0 && this.lines[i] === undefined; i--) {
+				this.clearLine(
+					___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(i + 1),
+				);
+			}
+			return this.lines[lineIndex];
+		}
+
+		clearLine(line) {
+			this.lines[___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(line) - 1] = {
+				ranges: [],
+				columns: [],
+			};
+		}
+
+		getLineWidth(line) {
+			return ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(
+				this.getLine(line).columns.length,
+			);
+		}
+
+		getWidth() {
+			return this.width;
+		}
+
+		getSize() {
+			return {
+				height: this.getHeight(),
+				width: this.getWidth(),
+			};
+		}
+
+		getCursor() {
+			return Object.assign({}, this.cursor);
+		}
+
+		getLines(format) {
+			switch (format) {
+				case "ansi":
+					return this.getFormattedAnsiLines();
+
+				case "html":
+					return this.getFormattedHtmlLines();
+
+				case "none":
+					return this.getUnformattedLines();
+			}
+		}
+
+		getTrimmedLines() {
+			const lines = [...this.lines];
+
+			// Remove empty columns
+			// Explicit newlines will have at least one column with an empty field
+			while (lines.length > 0 && lines[lines.length - 1].columns.length === 0) {
+				lines.pop();
+			}
+
+			return lines;
+		}
+
+		getUnformattedLines() {
+			return this.lines.map(({columns}) => {
+				return columns.join("").trimRight();
+			});
+		}
+
+		getFormattedLines(opts) {
+			const lines = [];
+
+			for (const {ranges, columns} of this.getTrimmedLines()) {
+				// Sort ranges from last to first
+				const sortedRanges = ranges.sort((a, b) =>
+					___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(b.end) -
+					___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(a.end)
+				);
+
+				let line = "";
+
+				let lastEnd = undefined;
+
+				function catchUp(end) {
+					line = "" + columns.slice(end, lastEnd).join("") + line;
+					lastEnd = end;
+				}
+
+				for (const {start, end, ancestry} of sortedRanges) {
+					const startIndex =
+						___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(start) - 1;
+					const endIndex =
+						___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(end) - 1;
+					catchUp(endIndex);
+
+					let substr = opts.normalizeText(
+						columns.slice(startIndex, endIndex).join(""),
+					);
+
+					// Format tags in reverse
+					for (let i = ancestry.length - 1; i >= 0; i--) {
+						const tag = ancestry[i];
+						substr = opts.formatTag(tag, substr);
+					}
+
+					substr = opts.wrapRange(substr);
+
+					line = "" + substr + line;
+					lastEnd = startIndex;
+				}
+
+				catchUp(0);
+
+				lines.push(line.trimRight());
+			}
+
+			return lines;
+		}
+
+		getFormattedHtmlLines() {
+			return this.getFormattedLines({
+				normalizeText: (text) =>
+					___R$project$rome$$romefrontend$html$parser$xhtmlEntities_ts$escapeXHTMLEntities(
+						text,
+					)
+				,
+				formatTag: (tag, inner) =>
+					___R$project$rome$$romefrontend$cli$layout$grid$formatHTML_ts$htmlFormatText(
+						tag,
+						inner,
+					)
+				,
+				wrapRange: (str) => str,
+			});
+		}
+
+		getFormattedAnsiLines() {
+			return this.getFormattedLines({
+				normalizeText: (text) => text,
+				formatTag: (tag, inner) => {
+					return ___R$project$rome$$romefrontend$cli$layout$grid$formatANSI_ts$ansiFormatText(
+						tag,
+						inner,
+						this,
+					);
+				},
+				wrapRange: (str) =>
+					___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.reset(
+						str,
+					)
+				,
+			});
+		}
+
+		fillCursor(cursor) {
+			const line = this.getLine(cursor.line);
+
+			const colIndex =
+				___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(cursor.column) - 1;
+			for (let i = colIndex - 1; i >= 0 && line.columns[i] === undefined; i--) {
+				line.columns[i] = " ";
+			}
+		}
+
+		moveCursor(cursor) {
+			if (cursor.line !== this.cursor.line) {
+				this.lineStartMeta.softWrapped = false;
+				this.lineStartMeta.indentationCount = 0;
+				this.lineStartMeta.sourceColumn = this.sourceCursor.currentColumn;
+			}
+
+			this.cursor = cursor;
+		}
+
+		moveCursorRight(
+			columns = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1,
+		) {
+			const newColumns = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+				this.cursor.column,
+				columns,
+			);
+
+			// Perform character line wrap
+			if (this.doesOverflowViewport(newColumns)) {
+				const currentLine = this.getLine(this.cursor.line);
+				const previousLineSoftWrapped = this.lineStartMeta.softWrapped;
+
+				this.newline();
+
+				// Soft wrap, inherit the previous lines indentation
+				if (currentLine !== undefined) {
+					for (
+						let i = 0;
+						i < currentLine.columns.length && currentLine.columns[i] === " ";
+						i++
+					) {
+						this.moveCursorRight();
+						this.lineStartMeta.indentationCount++;
+					}
+
+					const {extraSoftWrapIndent} = this.options.view;
+					if (previousLineSoftWrapped) {
+						this.lineStartMeta.softWrapped = true;
+					} else if (extraSoftWrapIndent !== undefined) {
+						this.lineStartMeta.softWrapped = true;
+						for (let i = 0; i < extraSoftWrapIndent; i++) {
+							this.moveCursorRight();
+						}
+					}
+				}
+			} else {
+				this.moveCursor({
+					line: this.cursor.line,
+					column: newColumns,
+				});
+			}
+		}
+
+		userNewline() {
+			this.newline();
+			this.writeToCursor(this.cursor, "");
+		}
+
+		newline() {
+			this.moveCursor({
+				line: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(
+					this.getHeight(),
+				),
+				column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1,
+			});
+		}
+
+		moveCursorStart() {
+			this.moveCursor({
+				line: this.cursor.line,
+				column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1,
+			});
+		}
+
+		moveCursorDown(
+			lines = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1,
+		) {
+			this.moveCursor({
+				line: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+					this.cursor.line,
+					lines,
+				),
+				column: this.cursor.column,
+			});
+		}
+
+		writeToCursor(cursor, char) {
+			this.fillCursor(cursor);
+
+			const line = this.getLine(cursor.line);
+			const colIndex =
+				___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(cursor.column) - 1;
+			line.columns[colIndex] = char;
+
+			if (cursor.column > this.width) {
+				this.width = cursor.column;
+			}
+		}
+
+		writeChar(char) {
+			if (char === "\n") {
+				this.userNewline();
+				return;
+			}
+
+			this.writeToCursor(this.cursor, char);
+			this.moveCursorRight();
+		}
+
+		drawText(tag, ancestry) {
+			this.writeText(tag.value, ancestry, tag.source);
+
+			if (!tag.source && tag.sourceValue !== undefined) {
+				for (const char of tag.sourceValue) {
+					this.moveSourceCursor(char);
+				}
+			}
+		}
+
+		moveSourceCursor(char) {
+			if (char === "\n") {
+				this.sourceCursor.currentLineText = "";
+				this.sourceCursor.currentColumn = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1;
+				this.sourceCursor.currentLine = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(
+					this.sourceCursor.currentLine,
+				);
+			} else {
+				this.sourceCursor.currentLineText += char;
+				this.sourceCursor.currentColumn = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(
+					this.sourceCursor.currentColumn,
+				);
+			}
+		}
+
+		isInsidePointer() {
+			const {sourceCursor} = this;
+			const {pointer} = this.options.view;
+
+			if (pointer === undefined) {
+				return false;
+			}
+
+			if (sourceCursor.currentLine !== pointer.line) {
+				return false;
+			}
+
+			return (
+				sourceCursor.currentColumn >= pointer.columnStart &&
+				sourceCursor.currentColumn <= pointer.columnEnd
+			);
+		}
+
+		writeText(text, ancestry, source) {
+			if (text === "") {
+				return;
+			}
+
+			const start = this.getCursor();
+
+			const words = text.split(" ");
+
+			let forceNextWordOverflow = false;
+
+			for (let i = 0; i < words.length; i++) {
+				const word = words[i];
+				const isLastWord = i === words.length - 1;
+
+				// Check if printing this word would overflow the viewport
+				// If the whole word itself wouldn't fit on it's own line then we will
+				// perform hard line wrapping in writeChar
+				const willOverflow =
+					this.lineWrapMode === "word-break" &&
+					(forceNextWordOverflow ||
+					(this.doesOverflowViewport(
+						___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+							this.cursor.column,
+							word.length - 1,
+						),
+					) &&
+					!this.doesOverflowViewport(
+						___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(word.length),
+					)));
+				if (willOverflow) {
+					this.newline();
+				}
+				forceNextWordOverflow = false;
+
+				for (const char of word.split(/(?:){1}/u)) {
+					this.writeChar(char);
+
+					if (source) {
+						this.moveSourceCursor(char);
+					}
+				}
+
+				let ignoreTrailingSpace = false;
+
+				// Start of a sentence that was caused by line wrapping
+				if (
+					!word.endsWith("\n") &&
+					this.cursor.column ===
+					___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1 &&
+					word !== ""
+				) {
+					ignoreTrailingSpace = true;
+				}
+
+				// If the next word will cause an overflow then don't print a leading space as it will be pointless
+				const nextWord = words[i + 1];
+				if (
+					this.lineWrapMode === "word-break" &&
+					nextWord !== undefined &&
+					this.doesOverflowViewport(
+						___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+							this.cursor.column,
+							nextWord.length,
+						),
+					)
+				) {
+					ignoreTrailingSpace = true;
+					forceNextWordOverflow = true;
+				}
+
+				if (isLastWord) {
+					ignoreTrailingSpace = true;
+				}
+
+				if (!ignoreTrailingSpace) {
+					this.writeChar(" ");
+				}
+			}
+
+			const end = this.getCursor();
+			this.addCursorRange(start, end, ancestry);
+		}
+
+		setRange(line, start, end, ancestry) {
+			if (start === end) {
+				// Nothing to format. Empty tag.
+				return;
+			}
+
+			if (end < start) {
+				throw new Error(
+					"Range end for line index " +
+					line +
+					" is before the start. end(" +
+					end +
+					") < start(" +
+					start +
+					").\nLine content: " +
+					JSON.stringify(this.getLine(line).columns.join("")),
+				);
+			}
+
+			const {ranges} = this.getLine(line);
+
+			for (const range of ranges) {
+				if (
+					(start >= range.start && end <= range.end) ||
+					(range.start >= start && range.end <= end)
+				) {
+					throw new Error(
+						"The ranges " +
+						range.start +
+						"-" +
+						range.end +
+						" and " +
+						start +
+						"-" +
+						end +
+						" overlap",
+					);
+				}
+			}
+
+			ranges.push({
+				start,
+				end,
+				ancestry,
+			});
+		}
+
+		addCursorRange(start, end, ancestry) {
+			if (ancestry.length === 0) {
+				// No point storing a range without ancestry
+				return;
+			}
+
+			if (start.line === end.line) {
+				if (start.column === end.column) {
+					// Empty range
+					return;
+				}
+
+				this.setRange(start.line, start.column, end.column, ancestry);
+			} else {
+				// Add first line
+				this.setRange(
+					start.line,
+					start.column,
+					___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(
+						this.getLineWidth(start.line),
+					),
+					ancestry,
+				);
+
+				// Add middle lines
+				for (
+					let i =
+						___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(start.line) + 1;
+					i < ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(end.line);
+					i++
+				) {
+					const line = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(
+						i,
+					);
+					this.setRange(
+						line,
+						___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(1),
+						this.getLineWidth(line),
+						ancestry,
+					);
+				}
+
+				// Add last line
+				this.setRange(
+					end.line,
+					___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(1),
+					end.column,
+					ancestry,
+				);
+			}
+		}
+
+		drawList(tag, ancestry) {
+			let items = [];
+			for (const child of tag.children) {
+				if (child.type === "Tag" && child.name === "li") {
+					items.push(child);
+				}
+			}
+			if (items.length === 0) {
+				return;
+			}
+
+			this.newline();
+
+			const ordered = tag.name === "ol";
+
+			if (ordered) {
+				const reversed = tag.attributes.get("reversed").asBoolean(false);
+				const startOffset = tag.attributes.get("start").asNumber(0);
+
+				const highestNumSize = ___R$project$rome$$romefrontend$string$utils$humanizeNumber_ts$humanizeNumber(
+					items.length + startOffset,
+				).length;
+
+				for (let i = 0; i < items.length; i++) {
+					const item = items[i];
+
+					let num = startOffset;
+					if (reversed) {
+						num += items.length - i;
+					} else {
+						num += i + 1;
+					}
+
+					const humanNum = ___R$project$rome$$romefrontend$string$utils$humanizeNumber_ts$humanizeNumber(
+						num,
+					);
+					const padding = " ".repeat(highestNumSize - humanNum.length);
+					this.writeText(
+						"" + padding + humanNum + ". ",
+						[
+							___R$$priv$project$rome$$romefrontend$cli$layout$grid$Grid_ts$createTag(
+								"dim",
+								___R$project$rome$$romefrontend$cli$layout$util_ts$createEmptyAttributes(),
+							),
+						],
+						false,
+					);
+					this.drawView(item, ancestry);
+					this.newline();
+				}
+			} else {
+				for (const item of items) {
+					this.writeText(
+						"- ",
+						[
+							___R$$priv$project$rome$$romefrontend$cli$layout$grid$Grid_ts$createTag(
+								"dim",
+								___R$project$rome$$romefrontend$cli$layout$util_ts$createEmptyAttributes(),
+							),
+						],
+						false,
+					);
+					this.drawView(item, ancestry);
+					this.newline();
+				}
+			}
+		}
+
+		drawPointer() {
+			const {pointer} = this.options.view;
+			const {sourceCursor, lineStartMeta, cursor} = this;
+			if (pointer === undefined) {
+				return false;
+			}
+
+			if (sourceCursor.currentLine !== pointer.line) {
+				// I'm not quite sure what we are meant to do here
+				return false;
+			}
+
+			let start = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
+				pointer.columnStart,
+			);
+			let end = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
+				pointer.columnEnd,
+			);
+
+			if (cursor.line !== sourceCursor.currentLine) {
+				start = 0;
+				end =
+					end -
+					___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
+						lineStartMeta.sourceColumn,
+					);
+			}
+
+			let markerOffset = start;
+			let markerSize = end - start;
+
+			// Account for soft indentation
+			markerOffset += lineStartMeta.indentationCount;
+
+			// If the marker includes tabs then increase the size
+			for (let i = start; i < end; i++) {
+				if (sourceCursor.currentLineText[i] === "\t") {
+					markerSize++;
+				}
+			}
+
+			markerSize = Math.max(1, markerSize);
+
+			// If any previous text on this line contains tabs then increase the offset
+			for (let i = 0; i < start; i++) {
+				if (sourceCursor.currentLineText[i] === "\t") {
+					markerOffset++;
+				}
+			}
+
+			this.newline();
+
+			// Pointer offset
+			this.writeText(" ".repeat(markerOffset), [], false);
+
+			// Pointer character
+			if (pointer.char.length === 0) {
+				this.writeText("^".repeat(markerSize), [], false);
+			} else {
+				for (let i = 0; i < markerSize; i++) {
+					this.drawChildren(pointer.char, []);
+				}
+			}
+
+			// Pointer message
+			if (pointer.message.length > 0) {
+				this.writeText(" ", [], false);
+				this.drawView(
+					___R$$priv$project$rome$$romefrontend$cli$layout$grid$Grid_ts$createTag(
+						"view",
+						undefined,
+						pointer.message,
+					),
+					[],
+				);
+			}
+
+			return true;
+		}
+
+		parse(sub, offsetPosition) {
+			if (sub === undefined) {
+				return [];
+			}
+
+			return this.normalizeChildren(
+				___R$project$rome$$romefrontend$cli$layout$parse_ts$parseMarkup(
+					sub,
+					{offsetPosition, sourceText: this.options.sourceText},
+				),
+			);
+		}
+
+		parseAttribute(attributes, key) {
+			return this.parse(
+				attributes.get(key).asStringOrVoid(),
+				attributes.get(key).getDiagnosticLocation("inner-value").start,
+			);
+		}
+
+		getViewLinePrefixes(children, ancestry) {
+			const prefixes = [];
+
+			let linePrefixFirst;
+			let linePrefixMiddle;
+			let linePrefixLast;
+			let linePrefixPointer;
+
+			// Extract viewLinePrefix tags
+			for (const child of children) {
+				switch (child.attributes.get("type").asStringOrVoid()) {
+					case "first": {
+						linePrefixFirst = child;
+						prefixes.push(linePrefixFirst);
+						break;
+					}
+
+					case "middle": {
+						linePrefixMiddle = child;
+						if (linePrefixLast === undefined) {
+							linePrefixLast = child;
+						}
+						prefixes.push(child);
+						break;
+					}
+
+					case "end": {
+						linePrefixLast = child;
+						prefixes.push(child);
+						break;
+					}
+
+					case "pointer": {
+						linePrefixPointer = child;
+						prefixes.push(child);
+						break;
+					}
+
+					case undefined: {
+						if (
+							linePrefixPointer === undefined ||
+							linePrefixFirst === undefined ||
+							linePrefixMiddle === undefined ||
+							linePrefixLast === undefined
+						) {
+							prefixes.push(child);
+						}
+						if (linePrefixFirst === undefined) {
+							linePrefixFirst = child;
+						}
+						if (linePrefixMiddle === undefined) {
+							linePrefixMiddle = child;
+						}
+						if (linePrefixLast === undefined) {
+							linePrefixLast = child;
+						}
+						if (linePrefixPointer === undefined) {
+							linePrefixPointer = child;
+						}
+						break;
+					}
+				}
+			}
+
+			const childrenToGrid = new Map();
+			let maxWidth = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(0);
+
+			// Get the maxWidth
+			for (const prefix of prefixes) {
+				const grid = new ___R$project$rome$$romefrontend$cli$layout$grid$Grid_ts$default(
+					Object.assign({}, this.options, {columns: undefined}),
+				);
+				grid.drawChildren(prefix.children, ancestry);
+				const width = grid.getSize().width;
+				if (width > maxWidth) {
+					maxWidth = width;
+				}
+			}
+
+			// Now actually render the grids
+			for (const prefix of prefixes) {
+				const grid = new ___R$project$rome$$romefrontend$cli$layout$grid$Grid_ts$default(
+					Object.assign({}, this.options, {columns: maxWidth}),
+				);
+				grid.drawChildren(prefix.children, ancestry);
+				grid.maybeAlign(prefix);
+				childrenToGrid.set(prefix, grid);
+			}
+
+			return {
+				width: maxWidth,
+				pointer: childrenToGrid.get(linePrefixPointer),
+				first: childrenToGrid.get(linePrefixFirst),
+				middle: childrenToGrid.get(linePrefixMiddle),
+				last: childrenToGrid.get(linePrefixLast),
+			};
+		}
+
+		getViewPointer({attributes, children}) {
+			return {
+				char: this.parse(
+					attributes.get("char").asString(""),
+					attributes.get("char").getDiagnosticLocation("inner-value").start,
+				),
+				message: children,
+				line: attributes.get("line").asOneIndexedNumber(0),
+				columnStart: attributes.get("start").asOneIndexedNumber(0),
+				columnEnd: attributes.get("end").asOneIndexedNumber(0),
+			};
+		}
+
+		drawView(tag, ancestry, shrinkViewport) {
+			const tags = ___R$$priv$project$rome$$romefrontend$cli$layout$grid$Grid_ts$extractViewTags(
+				tag,
+			);
+			const {children} = tags;
+			const {attributes} = tag;
+
+			const pointer =
+				tags.pointer === undefined
+					? undefined
+					: this.getViewPointer(tags.pointer);
+			const linePrefixes = this.getViewLinePrefixes(tags.linePrefixes, ancestry);
+			const startCursor = this.getCursor();
+
+			// Calculate size of view
+			let subViewport = undefined;
+			const {viewportWidth} = this;
+			if (viewportWidth !== undefined) {
+				subViewport = viewportWidth;
+				subViewport = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Sub(
+					subViewport,
+					startCursor.column,
+				);
+				// We add on one because we can place a character on the cursor position
+				subViewport = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+					subViewport,
+					1,
+				);
+				subViewport = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Sub(
+					subViewport,
+					linePrefixes.width,
+				);
+				if (shrinkViewport !== undefined) {
+					subViewport = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Sub(
+						subViewport,
+						shrinkViewport,
+					);
+				}
+			}
+
+			const lineWrapMode = ___R$project$rome$$romefrontend$cli$layout$tags_ts$lineWrapValidator(
+				attributes.get("lineWrap").asStringOrVoid(),
+			);
+
+			// Bail and just render the children if this view is redundant
+			// This can happen since we wrap some other elements in views
+			if (
+				lineWrapMode === undefined &&
+				pointer === undefined &&
+				subViewport === this.viewportWidth &&
+				linePrefixes.width ===
+				___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(0)
+			) {
+				this.drawChildren(children, ancestry);
+				return;
+			}
+
+			// Render first prefix
+			if (linePrefixes.first !== undefined) {
+				this.drawGrid(linePrefixes.first);
+			}
+			this.moveCursor(
+				Object.assign(
+					{},
+					startCursor,
+					{
+						column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+							startCursor.column,
+							linePrefixes.width,
+						),
+					},
+				),
+			);
+
+			const grid = new ___R$project$rome$$romefrontend$cli$layout$grid$Grid_ts$default(
+				Object.assign(
+					{},
+					this.options,
+					{
+						view: {
+							extraSoftWrapIndent: attributes.get("extraSoftWrapIndent").asNumberOrVoid(),
+							pointer,
+							lineWrapMode,
+						},
+						columns: subViewport,
+					},
+				),
+			);
+			for (const child of children) {
+				grid.drawChild(child, ancestry);
+			}
+			const drewPointer = grid.drawPointer();
+			grid.maybeAlign(tag);
+			this.drawGrid(grid);
+
+			// Add on any subsequent line prefixes if we wrapped
+			const height = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
+				grid.getHeight(),
+			);
+			for (let i = 1; i < height; i++) {
+				let linePrefix = linePrefixes.middle;
+
+				if (i === height - 1) {
+					if (drewPointer) {
+						// Don't prefix a pointer
+						linePrefix = linePrefixes.pointer;
+					} else {
+						linePrefix = linePrefixes.last;
+					}
+				}
+
+				// Correct last offset if we drew a pointer
+				if (drewPointer && i === height - 2) {
+					linePrefix = linePrefixes.last;
+				}
+
+				if (linePrefix !== undefined) {
+					this.moveCursor({
+						line: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+							startCursor.line,
+							i,
+						),
+						column: startCursor.column,
+					});
+
+					this.drawGrid(linePrefix);
+				}
+			}
+
+			this.newline();
+		}
+
+		drawTable(tag, ancestry) {
+			var ___R$;
+			const rows = [];
+
+			for (const child of tag.children) {
+				if (child.type === "Tag" && child.name === "tr") {
+					const row = [];
+
+					for (const field of child.children) {
+						if (field.type === "Tag" && field.name === "td") {
+							row.push(field);
+						} else {
+							// Probably error?
+						}
+					}
+
+					rows.push(row);
+				} else {
+					// Probably error?
+				}
+			}
+
+			// Get the max number of columns for a row
+			const columnCount =
+				(___R$ = Math,
+				___R$.max.apply(___R$, [...rows.map((columns) => columns.length)]));
+
+			// Get column widths
+			const columnWidths = [];
+			for (let i = 0; i < columnCount; i++) {
+				var ___R$1;
+				const widths = rows.map((row) => {
+					const field = row[i];
+					if (field === undefined) {
+						// Could be an excessive column
+						return 0;
+					} else {
+						const grid = new ___R$project$rome$$romefrontend$cli$layout$grid$Grid_ts$default(
+							Object.assign({}, this.options, {columns: undefined}),
+						);
+						grid.drawTag(field, ancestry);
+						return ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
+							grid.getSize().width,
+						);
+					}
+				});
+				columnWidths[i] = (___R$1 = Math, ___R$1.max.apply(___R$1, [...widths]));
+			}
+
+			// If the column size exceed the stream columns then scale them all down
+			const colsNeeded = columnWidths.reduce((a, b) => a + b, 0);
+			const {viewportWidth} = this;
+			let availableCols =
+				viewportWidth === undefined
+					? undefined
+					: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get(viewportWidth) -
+						columnCount -
+						1;
+			if (availableCols !== undefined && colsNeeded > availableCols) {
+				// Find the biggest column
+				let biggestColIndex = 0;
+				for (let i = 0; i < columnWidths.length; i++) {
+					const ourSize = columnWidths[i];
+					const biggestSize = columnWidths[biggestColIndex];
+
+					if (ourSize > biggestSize) {
+						biggestColIndex = i;
+					}
+				}
+
+				// Remove all columns from availableCols
+				for (let i = 0; i < columnWidths.length; i++) {
+					if (i !== biggestColIndex) {
+						availableCols -= columnWidths[i];
+					}
+				}
+
+				// Set biggest column to the availableCols
+				columnWidths[biggestColIndex] = availableCols;
+			}
+
+			for (const row of rows) {
+				for (let colIndex = 0; colIndex < row.length; colIndex++) {
+					const field = row[colIndex];
+					const width = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(
+						columnWidths[colIndex],
+					);
+
+					const grid = new ___R$project$rome$$romefrontend$cli$layout$grid$Grid_ts$default(
+						Object.assign({}, this.options, {columns: width}),
+					);
+					grid.drawTag(field, ancestry);
+					grid.maybeAlign(field);
+
+					this.drawGrid(grid);
+					this.moveCursorRight(
+						___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(width),
+					);
+				}
+
+				this.newline();
+			}
+		}
+
+		// Sometimes we derive a Grid from a tag that accepts an align attribute
+		maybeAlign(tag) {
+			if (tag.attributes.get("align").asStringOrVoid() === "right") {
+				this.alignRight();
+			}
+		}
+
+		drawGrid(grid) {
+			const lines = grid.getTrimmedLines();
+			const cursor = this.getCursor();
+
+			for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+				const {columns, ranges} = lines[lineIndex];
+
+				const correctLine = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+					cursor.line,
+					lineIndex,
+				);
+
+				for (let colIndex = 0; colIndex < columns.length; colIndex++) {
+					const char = columns[colIndex];
+
+					this.writeToCursor(
+						{
+							line: correctLine,
+							column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+								cursor.column,
+								colIndex,
+							),
+						},
+						char,
+					);
+				}
+
+				for (const range of ranges) {
+					this.setRange(
+						correctLine,
+						___R$project$rome$$romefrontend$ob1$index_ts$ob1Dec(
+							___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+								cursor.column,
+								range.start,
+							),
+						),
+						___R$project$rome$$romefrontend$ob1$index_ts$ob1Dec(
+							___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+								cursor.column,
+								range.end,
+							),
+						),
+						range.ancestry,
+					);
+				}
+			}
+		}
+
+		drawTag(tag, ancestry) {
+			const hook = ___R$$priv$project$rome$$romefrontend$cli$layout$grid$Grid_ts$hooks.get(
+				tag.name,
+			);
+
+			const subAncestry = [...ancestry, tag];
+
+			const oldLineWrapMode = this.lineWrapMode;
+
+			if (tag.name === "nobr") {
+				this.lineWrapMode = "none";
+			}
+
+			if (hook !== undefined && hook.before !== undefined) {
+				hook.before(tag, this, ancestry);
+			}
+
+			switch (tag.name) {
+				case "ol":
+				case "ul": {
+					this.drawList(tag, subAncestry);
+					break;
+				}
+
+				case "table": {
+					this.drawTable(tag, subAncestry);
+					break;
+				}
+
+				case "view": {
+					this.drawView(tag, subAncestry);
+					break;
+				}
+
+				case "indent": {
+					// Optimization for nested indents
+					let levels = 1;
+					let children = tag.children;
+					while (
+						children.length === 1 &&
+						children[0].type === "Tag" &&
+						children[0].name === "indent"
+					) {
+						children = children[0].children;
+						levels++;
+					}
+
+					for (let i = 0; i < levels; i++) {
+						this.writeChar(" ");
+						this.writeChar(" ");
+					}
+
+					this.drawView(
+						___R$$priv$project$rome$$romefrontend$cli$layout$grid$Grid_ts$createTag(
+							"view",
+							___R$project$rome$$romefrontend$cli$layout$util_ts$createEmptyAttributes(),
+							children,
+						),
+						ancestry,
+						___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(levels * 2),
+					);
+					break;
+				}
+
+				default: {
+					this.drawChildren(tag.children, subAncestry);
+					break;
+				}
+			}
+
+			if (hook !== undefined && hook.after !== undefined) {
+				hook.after(tag, this, ancestry);
+			}
+
+			this.lineWrapMode = oldLineWrapMode;
+		}
+
+		drawChild(child, ancestry) {
+			if (child.type === "Text") {
+				this.drawText(child, ancestry);
+			} else {
+				this.drawTag(child, ancestry);
+			}
+		}
+
+		drawChildren(children, ancestry) {
+			for (const child of children) {
+				this.drawChild(child, ancestry);
+			}
+		}
+
+		normalizeChildren(children) {
+			let newChildren = [];
+
+			for (const child of children) {
+				newChildren = newChildren.concat(this.normalizeChild(child));
+			}
+
+			return newChildren;
+		}
+
+		normalizeChild(child) {
+			if (child.type === "Text") {
+				let {value} = child;
+
+				if (value.includes("\t")) {
+					const splitTabs = value.split("\t");
+					const children = [];
+
+					for (let i = 0; i < splitTabs.length; i++) {
+						if (i > 0) {
+							children.push({
+								type: "Text",
+								source: false,
+								sourceValue: "\t",
+								value: "  ",
+							});
+						}
+
+						const value = splitTabs[i];
+						children.push({
+							type: "Text",
+							source: true,
+							value,
+						});
+					}
+
+					return children;
+				}
+
+				// Remove '\r' in case it snuck in as file contents
+				value = value.replace(/\r/g, "");
+
+				return [
+					{
+						type: "Text",
+						source: true,
+						value,
+					},
+				];
+			}
+
+			const tag = child;
+			const children = this.normalizeChildren(tag.children);
+			const textLength = ___R$$priv$project$rome$$romefrontend$cli$layout$grid$Grid_ts$getChildrenTextLength(
+				children,
+			);
+			const hasText = textLength > 0;
+
+			let attributesWithoutEmphasis = tag.attributes;
+			if (attributesWithoutEmphasis.has("emphasis")) {
+				const emphasis = attributesWithoutEmphasis.get("emphasis").asBoolean(
+					false,
+				);
+				attributesWithoutEmphasis = attributesWithoutEmphasis.copy({
+					emphasis: undefined,
+				});
+				if (emphasis) {
+					return this.normalizeChild(
+						___R$$priv$project$rome$$romefrontend$cli$layout$grid$Grid_ts$createTag(
+							"emphasis",
+							___R$project$rome$$romefrontend$cli$layout$util_ts$createEmptyAttributes(),
+							[Object.assign({}, tag, {attributes: attributesWithoutEmphasis})],
+						),
+					);
+				}
+			}
+
+			let attributes = attributesWithoutEmphasis;
+			if (attributes.has("dim")) {
+				const dim = attributes.get("dim").asBoolean(false);
+				attributes = attributes.copy({dim: undefined});
+				if (dim) {
+					return this.normalizeChild(
+						___R$$priv$project$rome$$romefrontend$cli$layout$grid$Grid_ts$createTag(
+							"dim",
+							___R$project$rome$$romefrontend$cli$layout$util_ts$createEmptyAttributes(),
+							[Object.assign({}, tag, {attributes})],
+						),
+					);
+				}
+			}
+
+			// Insert padding
+			if (tag.name === "pad") {
+				const width = attributes.get("width").asNumber(0);
+				const paddingSize = width - textLength;
+				if (paddingSize > 0) {
+					const paddingTextNode = {
+						type: "Text",
+						source: false,
+						value: " ".repeat(paddingSize),
+					};
+					if (tag.attributes.get("align").asStringOrVoid() === "right") {
+						return [paddingTextNode, ...tag.children];
+					} else {
+						return [...tag.children, paddingTextNode];
+					}
+				} else {
+					return tag.children;
+				}
+			}
+
+			// Insert highlight legend
+			if (tag.name === "highlight" && attributes.get("legend").asBoolean(false)) {
+				const index = Math.min(0, attributes.get("i").asNumber(0));
+				return [
+					Object.assign(
+						{},
+						tag,
+						{attributes: attributes.copy({legend: undefined})},
+					),
+					___R$$priv$project$rome$$romefrontend$cli$layout$grid$Grid_ts$createTag(
+						"dim",
+						___R$project$rome$$romefrontend$cli$layout$util_ts$createEmptyAttributes(),
+						[
+							{
+								type: "Text",
+								source: false,
+								value: "[" + String(index + 1) + "]",
+							},
+						],
+					),
+				];
+			}
+
+			if (hasText) {
+				if (tag.name === "hr") {
+					return [
+						Object.assign(
+							{},
+							tag,
+							{
+								children: [
+									{
+										type: "Text",
+										source: false,
+										value: " ",
+									},
+									...children,
+									{
+										type: "Text",
+										source: false,
+										value: " ",
+									},
+								],
+							},
+						),
+					];
+				}
+			} else {
+				if (tag.name === "filelink") {
+					return [
+						Object.assign(
+							{},
+							tag,
+							{
+								children: [
+									{
+										type: "Text",
+										source: false,
+										value: ___R$project$rome$$romefrontend$cli$layout$util_ts$buildFileLink(
+											tag.attributes,
+											this.options,
+										).text,
+									},
+								],
+							},
+						),
+					];
+				} else if (tag.name === "hyperlink") {
+					return [
+						Object.assign(
+							{},
+							tag,
+							{
+								children: [
+									{
+										type: "Text",
+										source: false,
+										value: tag.attributes.get("target").asString(""),
+									},
+								],
+							},
+						),
+					];
+				}
+			}
+
+			// These tags only expect text inside off them
+			const singleInnerText =
+				children.length === 1 && children[0].type === "Text"
+					? children[0].value
+					: undefined;
+			if (singleInnerText !== undefined) {
+				switch (tag.name) {
+					case "filesize":
+						return [
+							Object.assign(
+								{},
+								tag,
+								{
+									children: [
+										{
+											type: "Text",
+											source: false,
+											sourceValue: singleInnerText,
+											value: ___R$project$rome$$romefrontend$string$utils$humanizeFileSize_ts$humanizeFileSize(
+												Number(singleInnerText),
+											),
+										},
+									],
+								},
+							),
+						];
+
+					case "duration":
+						return [
+							Object.assign(
+								{},
+								tag,
+								{
+									children: [
+										{
+											type: "Text",
+											source: false,
+											sourceValue: singleInnerText,
+											value: ___R$project$rome$$romefrontend$cli$layout$util_ts$formatApprox(
+												attributes,
+												___R$project$rome$$romefrontend$string$utils$humanizeTime_ts$humanizeTime(
+													Number(singleInnerText),
+													true,
+												),
+											),
+										},
+									],
+								},
+							),
+						];
+
+					case "number":
+						return [
+							Object.assign(
+								{},
+								tag,
+								{
+									children: [
+										{
+											type: "Text",
+											source: false,
+											sourceValue: singleInnerText,
+											value: ___R$project$rome$$romefrontend$cli$layout$util_ts$formatNumber(
+												attributes,
+												singleInnerText,
+											),
+										},
+									],
+								},
+							),
+						];
+
+					case "grammarNumber":
+						return [
+							Object.assign(
+								{},
+								tag,
+								{
+									children: [
+										{
+											type: "Text",
+											source: false,
+											sourceValue: singleInnerText,
+											value: ___R$project$rome$$romefrontend$cli$layout$util_ts$formatGrammarNumber(
+												attributes,
+												singleInnerText,
+											),
+										},
+									],
+								},
+							),
+						];
+				}
+			}
+
+			return [Object.assign({}, tag, {children})];
+		}
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$cli$layout$grid$Grid_ts$getChildrenTextLength(
+		children,
+	) {
+		let length = 0;
+
+		for (const child of children) {
+			if (child.type === "Text") {
+				length += child.value.length;
+			}
+
+			if (child.type === "Tag") {
+				length += ___R$$priv$project$rome$$romefrontend$cli$layout$grid$Grid_ts$getChildrenTextLength(
+					child.children,
+				);
+			}
+		}
+
+		return length;
+	}
+
+	const ___R$$priv$project$rome$$romefrontend$cli$layout$grid$Grid_ts$hooks = new Map();
+
+	___R$$priv$project$rome$$romefrontend$cli$layout$grid$Grid_ts$hooks.set(
+		"hr",
+		{
+			after: (tag, grid, ancestry) => {
+				let viewportWidth =
+					grid.viewportWidth === undefined
+						? 100
+						: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
+								grid.viewportWidth,
+							);
+				let size =
+					viewportWidth -
+					___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
+						grid.cursor.column,
+					) +
+					1;
+				size = Math.max(size, 0);
+				grid.writeText("\u2501".repeat(size), ancestry, false);
+			},
+		},
+	);
+
+
+  // project-rome/@romefrontend/cli-layout/format.ts
+function ___R$$priv$project$rome$$romefrontend$cli$layout$format_ts$buildTag(
+		tag,
+		inner,
+		opts,
+	) {
+		let {attributes} = tag;
+
+		switch (tag.name) {
+			// Normalize filename of <filelink target>
+			case "filelink": {
+				// Clone
+				attributes = attributes.copy();
+
+				const {filename, line, column, text} = ___R$project$rome$$romefrontend$cli$layout$util_ts$buildFileLink(
+					attributes,
+					opts,
+				);
+				inner = ___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
+					text,
+				);
+				attributes.get("column").setValue(column);
+				attributes.get("line").setValue(line);
+				attributes.get("target").setValue(filename);
+				if (opts.stripPositions) {
+					attributes.get("line").setValue(undefined);
+					attributes.get("column").setValue(undefined);
+				}
+				break;
+			}
+
+			// We don't technically need to normalize this but it's one less tag to have to support
+			// if other tools need to consume it
+			case "grammarNumber":
+				return ___R$project$rome$$romefrontend$cli$layout$util_ts$formatGrammarNumber(
+					attributes,
+					inner,
+				);
+		}
+
+		let open = "<" + tag.name;
+
+		// Print attributes
+		for (const [key, value] of attributes.asMap()) {
+			if (!value.exists()) {
+				continue;
+			}
+
+			const raw = value.asUnknown();
+			if (raw === true) {
+				open += " " + key;
+			} else {
+				const escapedValue = ___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
+					String(raw),
+				);
+				open += " " + key + '="' + escapedValue + '"';
+			}
+		}
+
+		if (inner === "") {
+			return open + " />";
+		} else {
+			return open + ">" + inner + "</" + tag.name + ">";
+		}
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$cli$layout$format_ts$normalizeMarkupChildren(
+		children,
+		opts,
+		remainingChars,
+	) {
+		// Sometimes we'll populate the inner text of a tag with no children
+		if (children.length === 0) {
+			return {text: "", textLength: 0};
+		}
+
+		let textLength = 0;
+
+		let buff = "";
+		for (const child of children) {
+			if (child.type === "Text") {
+				let text = ___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
+					child.value,
+				);
+				textLength += text.length;
+				const isVisible = remainingChars > 0;
+				if (text.length > remainingChars) {
+					text = ___R$project$rome$$romefrontend$string$utils$sliceEscaped_ts$sliceEscaped(
+						text,
+						remainingChars,
+					);
+				}
+				remainingChars -= text.length;
+				if (isVisible) {
+					buff += text;
+				}
+			} else if (child.type === "Tag") {
+				const inner = ___R$$priv$project$rome$$romefrontend$cli$layout$format_ts$normalizeMarkupChildren(
+					child.children,
+					opts,
+					remainingChars,
+				);
+
+				if (remainingChars > 0) {
+					buff += ___R$$priv$project$rome$$romefrontend$cli$layout$format_ts$buildTag(
+						child,
+						inner.text,
+						opts,
+					);
+				}
+				textLength += inner.textLength;
+				remainingChars -= inner.textLength;
+			} else {
+				throw new Error("Unknown child node type");
+			}
+		}
+
+		return {
+			text: buff,
+			textLength,
+		};
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$cli$layout$format_ts$renderGrid(
+		input,
+		opts = {},
+		format,
+	) {
+		const grid = new ___R$project$rome$$romefrontend$cli$layout$grid$Grid_ts$default(
+			Object.assign({}, opts, {sourceText: input, view: {}}),
+		);
+		grid.drawChildren(grid.parse(input, undefined), []);
+		return {
+			width: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
+				grid.getWidth(),
+			),
+			lines: grid.getLines(format),
+		};
+	}
+
+	function ___R$project$rome$$romefrontend$cli$layout$format_ts$markupToPlainText(
+		input,
+		opts = {},
+	) {
+		return ___R$$priv$project$rome$$romefrontend$cli$layout$format_ts$renderGrid(
+			input,
+			opts,
+			"none",
+		);
+	}
+
+	function ___R$project$rome$$romefrontend$cli$layout$format_ts$markupToAnsi(
+		input,
+		opts = {},
+	) {
+		return ___R$$priv$project$rome$$romefrontend$cli$layout$format_ts$renderGrid(
+			input,
+			opts,
+			"ansi",
+		);
+	}
+
+	function ___R$project$rome$$romefrontend$cli$layout$format_ts$markupToHtml(
+		input,
+		opts = {},
+	) {
+		return ___R$$priv$project$rome$$romefrontend$cli$layout$format_ts$renderGrid(
+			input,
+			opts,
+			"html",
+		);
+	}
+
+	function ___R$project$rome$$romefrontend$cli$layout$format_ts$joinMarkupLines(
+		{lines},
+	) {
+		return lines.join("\n");
+	}
+
+	function ___R$project$rome$$romefrontend$cli$layout$format_ts$normalizeMarkup(
+		input,
+		opts = {},
+		maxLength = Infinity,
+	) {
+		const {textLength, text} = ___R$$priv$project$rome$$romefrontend$cli$layout$format_ts$normalizeMarkupChildren(
+			___R$project$rome$$romefrontend$cli$layout$parse_ts$parseMarkup(input),
+			opts,
+			maxLength,
+		);
+
+		const isTruncated = textLength > maxLength;
+
+		return {
+			textLength,
+			text,
+			truncated: isTruncated,
+			visibleTextLength: isTruncated ? maxLength : textLength,
+			truncatedLength: isTruncated ? textLength - maxLength : 0,
+		};
+	}
+
+
+  // project-rome/@romefrontend/cli-diagnostics/utils.ts
+const ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts = {
+		showInvisibles: ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$showInvisibles,
+		cleanEquivalentString: ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$cleanEquivalentString,
+		splitLines: ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$splitLines,
+		toLines: ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$toLines,
+		inferDiagnosticLanguageFromRootAST: ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$inferDiagnosticLanguageFromRootAST,
+	};
+	const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$unicodeControls = /[\u0000-\u001f\u007f-\u00a0]/u;
+
+	function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$isWhitespace(
+		char,
+	) {
+		return char === " " || char === "\t" || char === "\r" || char === "\n";
+	}
+
+	function ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$showInvisibles(
+		str,
+		{atLineStart, atLineEnd},
+	) {
+		let hadNonWhitespace = false;
+		let ret = "";
+
+		// Get the first trailing whitespace character in the string
+		let trailingWhitespaceIndex = str.length;
+		while (
+			___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$isWhitespace(
+				str[trailingWhitespaceIndex - 1],
+			)
+		) {
+			trailingWhitespaceIndex--;
+		}
+
+		for (let i = 0; i < str.length; i++) {
+			const char = str[i];
+			let showInvisible = true;
+
+			// Only highlight spaces when surrounded by other spaces
+			if (char === " ") {
+				showInvisible = false;
+
+				if (
+					___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$isWhitespace(
+						str[i - 1],
+					) ||
+					___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$isWhitespace(
+						str[i + 1],
+					)
+				) {
+					showInvisible = false;
+				}
+			}
+
+			// Don't show leading tabs
+			if (atLineStart && !hadNonWhitespace && char === "\t") {
+				showInvisible = false;
+			}
+
+			// Always show if at the end of line
+			if (atLineEnd && i >= trailingWhitespaceIndex) {
+				showInvisible = true;
+			}
+
+			if (!showInvisible) {
+				if (
+					!___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$isWhitespace(
+						char,
+					)
+				) {
+					hadNonWhitespace = true;
+				}
+				ret += char;
+				continue;
+			}
+
+			const visible = ___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$showInvisibleChar(
+				char,
+			);
+			if (visible !== undefined) {
+				ret += visible;
+				continue;
+			}
+
+			if (
+				___R$project$rome$$romefrontend$js$parser$utils$whitespace_ts$nonASCIIwhitespace.test(
+					char,
+				) ||
+				___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$unicodeControls.test(
+					char,
+				)
+			) {
+				ret += ___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$showUnicodeChar(
+					char,
+				);
+				continue;
+			}
+
+			ret += char;
+		}
+
+		return {
+			hadNonWhitespace,
+			value: ret,
+		};
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$showUnicodeChar(
+		char,
+	) {
+		// We use inverse to make it clear that it's not in the source
+		return "<inverse>U+" + char.codePointAt(0).toString(16) + "</inverse>";
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$showInvisibleChar(
+		char,
+	) {
+		switch (char) {
+			case " ":
+				return "\xb7"; // Middle Dot
+
+			case "\r":
+				return "\u240d"; // Carriage Return Symbol
+
+			case "\n":
+				return "\u23ce"; // Return Symbol
+
+			case "\t":
+				return "\u21b9"; // Left Arrow To Bar Over Right Arrow To Bar
+
+			case "\0":
+				return "\u2400"; // Null Symbol
+
+			case "\x0b":
+				return "\u240b"; // Vertical Tabulation Symbol
+
+			case "\b":
+				return "\u232b"; // Backspace Symbol
+
+			case "\f":
+				return "\u21a1"; // Downards Two Headed Arrow
+
+			// These are display characters we use above. Remove the ambiguity by escaping them
+			case "\u240d":
+			case "\u23ce":
+			case "\u21b9":
+			case "\u2400":
+			case "\u240b":
+			case "\u232b":
+			case "\u21a1":
+				return ___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$showUnicodeChar(
+					char,
+				);
+
+			default:
+				return undefined;
+		}
+	}
+
+	function ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$cleanEquivalentString(
+		str,
+	) {
+		str = ___R$project$rome$$romefrontend$cli$layout$format_ts$joinMarkupLines(
+			___R$project$rome$$romefrontend$cli$layout$format_ts$markupToPlainText(
+				str,
+			),
+		);
+
+		// Replace all whitespace with spaces
+		str = str.replace(/[\s\n]+/g, " ");
+
+		// Remove trailing dot
+		str = str.replace(/\.+$/, "");
+
+		// Remove surrounding quotes
+		str = str.replace(/^"(.*?)"$/, "$1");
+
+		return str;
+	}
+
+	function ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$splitLines(
+		src,
+	) {
+		return src.split(
+			___R$project$rome$$romefrontend$js$parser$utils$whitespace_ts$NEWLINE,
+		);
+	}
+
+	function ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$toLines(
+		opts,
+	) {
+		const input = ___R$project$rome$$romefrontend$string$utils$removeCarriageReturn_ts$removeCarriageReturn(
+			opts.input,
+		);
+		const raw = ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$splitLines(
+			input,
+		);
+		const highlighted = ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$splitLines(
+			___R$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$default(
+				Object.assign({}, opts, {input}),
+			),
+		);
+
+		if (raw.length !== highlighted.length) {
+			throw new Error(
+				opts.path.join() +
+				": raw and highlighted line count mismatch " +
+				raw.length +
+				" !== " +
+				highlighted.length,
+			);
+		}
+
+		return {
+			length: raw.length,
+			raw,
+			highlighted,
+		};
+	}
+
+	function ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$inferDiagnosticLanguageFromRootAST(
+		ast,
+	) {
+		switch (ast.type) {
+			case "JSRoot":
+				return "js";
+
+			case "HTMLRoot":
+				return "html";
+
+			case "CSSRoot":
+				return "css";
+
+			case "MarkdownRoot":
+				return "md";
+		}
+	}
+
+
   // project-rome/@romefrontend/compiler/lib/CompilerContext.ts
 function ___R$$priv$project$rome$$romefrontend$compiler$lib$CompilerContext_ts$getFormattedCodeFromExitResult(
 		result,
@@ -63004,7 +67987,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lib$CompilerContext_ts$g
 				frozen = false,
 				options = {},
 				project = {
-					folder: undefined,
+					directory: undefined,
 					config: ___R$project$rome$$romefrontend$project$types_ts$createDefaultProjectConfig(),
 				},
 				suppressions,
@@ -63024,7 +68007,9 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lib$CompilerContext_ts$g
 			this.options = options;
 			this.origin = origin;
 			this.cacheDependencies = new Set();
-			this.language = ast.type === "JSRoot" ? "js" : "css";
+			this.language = ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$inferDiagnosticLanguageFromRootAST(
+				ast,
+			);
 			this.sourceTypeJS = ast.type === "JSRoot" ? ast.sourceType : undefined;
 			this.rootScope = new ___R$project$rome$$romefrontend$compiler$scope$Scope_ts$RootScope(
 				this,
@@ -63166,6 +68151,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lib$CompilerContext_ts$g
 
 				advice.push({
 					type: "diff",
+					language: this.language,
 					diff: ___R$project$rome$$romefrontend$string$diff$index_ts$default(
 						___R$$priv$project$rome$$romefrontend$compiler$lib$CompilerContext_ts$getFormattedCodeFromExitResult(
 							old,
@@ -63253,6 +68239,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lib$CompilerContext_ts$g
 
 					advice.push({
 						type: "diff",
+						language: this.language,
 						diff: ___R$project$rome$$romefrontend$string$diff$index_ts$default(
 							___R$$priv$project$rome$$romefrontend$compiler$lib$CompilerContext_ts$getFormattedCodeFromExitResult(
 								old,
@@ -63375,8 +68362,8 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lib$CompilerContext_ts$g
 							filename: this.filename,
 							start: loc === undefined ? undefined : loc.start,
 							end: loc === undefined ? undefined : loc.end,
-							language: this.language,
 							sourceTypeJS: this.sourceTypeJS,
+							language: this.language,
 						},
 						origins,
 					},
@@ -63871,7 +68858,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$suppressions_ts$get
 
 
   // project-rome/@romefrontend/compiler/lint/rules/js/camelCase.ts
-function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$camelCase_ts$normalizeCamelCase(
+function ___R$project$rome$$romefrontend$compiler$lint$rules$js$camelCase_ts$normalizeCamelCase(
 		name,
 	) {
 		if (
@@ -63888,51 +68875,8 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$camelCase_
 
 		return name;
 	}
-
-	// Allow prefixed underscores
-	function ___R$project$rome$$romefrontend$compiler$lint$rules$js$camelCase_ts$toVariableCamelCase(
-		name,
-		forceCapitalize,
-	) {
-		// Allow shouty constants
-		if (name.toUpperCase() === name) {
-			return ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$camelCase_ts$normalizeCamelCase(
-				name,
-			);
-		}
-
-		let prefix = "";
-		let suffix = "";
-
-		const prefixDashes = name.match(/^_+/);
-		if (prefixDashes != null) {
-			prefix = prefixDashes[0];
-		}
-
-		const suffixDashes = name.match(/_+$/);
-		if (suffixDashes != null) {
-			suffix = suffixDashes[0];
-		}
-
-		// Remove prefix and suffix
-		let slicedName = name.slice(prefix.length);
-		if (suffix.length > 0) {
-			slicedName = slicedName.slice(0, -suffix.length);
-		}
-
-		const camelName =
-			prefix +
-			___R$project$rome$$romefrontend$string$utils$toCamelCase_ts$toCamelCase(
-				slicedName,
-				forceCapitalize,
-			) +
-			suffix;
-		return ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$camelCase_ts$normalizeCamelCase(
-			camelName,
-		);
-	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$camelCase_ts$default = {
-		name: "camelCase",
+		name: "js/camelCase",
 		enter(path) {
 			const {node, scope, context} = path;
 
@@ -63941,8 +68885,13 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$camelCase_
 				const renames = new Map();
 
 				for (const [name, binding] of scope.getOwnBindings()) {
-					const camelName = ___R$project$rome$$romefrontend$compiler$lint$rules$js$camelCase_ts$toVariableCamelCase(
-						name,
+					const camelName = ___R$project$rome$$romefrontend$compiler$lint$rules$js$camelCase_ts$normalizeCamelCase(
+						___R$project$rome$$romefrontend$string$utils$toCamelCase_ts$toCamelCase(
+							name,
+							{
+								allowShouty: true,
+							},
+						),
 					);
 					if (camelName !== undefined && camelName !== name) {
 						const {suppressed} = context.addNodeDiagnostic(
@@ -63967,39 +68916,6 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$camelCase_
 				}
 			}
 
-			// Check regular jsIdentifiers, variable jsIdentifiers have already been checked above
-			if (
-				___R$project$rome$$romefrontend$js$ast$utils$isIdentifierish_ts$isIdentifierish(
-					node,
-				) &&
-				!___R$project$rome$$romefrontend$js$ast$utils$isVariableIdentifier_ts$isVariableIdentifier(
-					node,
-				)
-			) {
-				const {name} = node;
-				const camelName = ___R$project$rome$$romefrontend$compiler$lint$rules$js$camelCase_ts$toVariableCamelCase(
-					name,
-				);
-				if (camelName !== undefined && camelName !== name) {
-					return context.addFixableDiagnostic(
-						{
-							old: node,
-							suggestions: [
-								{
-									title: "Convert to camelCase",
-									description: "This may not be safe. Are you passing this into a third party module?",
-									fixed: Object.assign({}, node, {name: camelName}),
-								},
-							],
-						},
-						___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.LINT.JS_IDENTIFIER_CAMEL_CASE(
-							name,
-							camelName,
-						),
-					);
-				}
-			}
-
 			return node;
 		},
 	};
@@ -64007,7 +68923,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$camelCase_
 
   // project-rome/@romefrontend/compiler/lint/rules/js/caseSingleStatement.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$caseSingleStatement_ts$default = {
-		name: "caseSingleStatement",
+		name: "js/caseSingleStatement",
 		enter(path) {
 			const {node, context} = path;
 
@@ -64155,7 +69071,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$js$confusingLanguage_j
 		};
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$confusingLanguage_ts$default = {
-		name: "inconsiderateLanguage",
+		name: "js/inconsiderateLanguage",
 		enter(path) {
 			const {node, context} = path;
 
@@ -64244,13 +69160,18 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$defaultExp
 			basename = path.getParent().getExtensionlessBasename();
 		}
 
-		return ___R$project$rome$$romefrontend$compiler$lint$rules$js$camelCase_ts$toVariableCamelCase(
-			basename,
-			capitalize,
+		return ___R$project$rome$$romefrontend$compiler$lint$rules$js$camelCase_ts$normalizeCamelCase(
+			___R$project$rome$$romefrontend$string$utils$toCamelCase_ts$toCamelCase(
+				basename,
+				{
+					forcePascal: capitalize,
+					allowShouty: true,
+				},
+			),
 		);
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$defaultExportSameBasename_ts$default = {
-		name: "defaultExportSameBasename",
+		name: "js/defaultExportSameBasename",
 		enter(path) {
 			const {context, node} = path;
 
@@ -64315,7 +69236,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$defaultExp
   // project-rome/@romefrontend/compiler/lint/rules/js/doubleEquals.ts
 const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$doubleEquals_ts$SUGGESTION_DESCRIPTION = "This may be unsafe if you are relying on type coercion";
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$doubleEquals_ts$default = {
-		name: "doubleEquals",
+		name: "js/doubleEquals",
 		enter(path) {
 			const {node, context} = path;
 
@@ -64364,7 +69285,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$doubleEquals_
 
   // project-rome/@romefrontend/compiler/lint/rules/js/duplicateImportSource.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$duplicateImportSource_ts$default = {
-		name: "duplicateImport",
+		name: "js/duplicateImport",
 		enter(path) {
 			const {node} = path;
 
@@ -64488,7 +69409,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$emptyBlock
 		return false;
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$emptyBlocks_ts$default = {
-		name: "emptyBlocks",
+		name: "js/emptyBlocks",
 		enter(path) {
 			const {node, context} = path;
 
@@ -64564,7 +69485,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$emptyMatch
 		}
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$emptyMatches_ts$default = {
-		name: "emptyMatches",
+		name: "js/emptyMatches",
 		enter(path) {
 			const {context, node} = path;
 			if (
@@ -64585,7 +69506,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$emptyMatch
 
   // project-rome/@romefrontend/compiler/lint/rules/js/getterReturn.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$getterReturn_ts$default = {
-		name: "getterReturn",
+		name: "js/getterReturn",
 		enter(path) {
 			const {node} = path;
 
@@ -64614,7 +69535,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$js$getterReturn_ts$def
 
   // project-rome/@romefrontend/compiler/lint/rules/js/importDefaultBasename.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$importDefaultBasename_ts$default = {
-		name: "importDefaultBasename",
+		name: "js/importDefaultBasename",
 		enter(path) {
 			const {node} = path;
 
@@ -64645,8 +69566,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$js$importDefaultBasena
 						node,
 						___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.LINT.JS_IMPORT_DEFAULT_BASENAME(
 							localName,
-							expectedName,
-							expectedNameCapital,
+							[expectedName, expectedNameCapital],
 						),
 					);
 				}
@@ -64668,7 +69588,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$negationEl
 		);
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$negationElse_ts$default = {
-		name: "negationElse",
+		name: "js/negationElse",
 		enter(path) {
 			const {node} = path;
 
@@ -64726,7 +69646,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$negationEl
 
   // project-rome/@romefrontend/compiler/lint/rules/js/noArguments.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noArguments_ts$default = {
-		name: "noArguments",
+		name: "js/noArguments",
 		enter(path) {
 			const {node, scope} = path;
 
@@ -64747,7 +69667,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noArguments_ts$defa
 
   // project-rome/@romefrontend/compiler/lint/rules/js/noAsyncPromiseExecutor.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noAsyncPromiseExecutor_ts$default = {
-		name: "noAsyncPromiseExecutor",
+		name: "js/noAsyncPromiseExecutor",
 		enter(path) {
 			const {node, context} = path;
 
@@ -64773,7 +69693,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noAsyncPromiseExecu
 
   // project-rome/@romefrontend/compiler/lint/rules/js/noCatchAssign.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noCatchAssign_ts$default = {
-		name: "noCatchAssign",
+		name: "js/noCatchAssign",
 		enter(path) {
 			const {node, context, scope} = path;
 
@@ -64795,7 +69715,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noCatchAssign_ts$de
 
   // project-rome/@romefrontend/compiler/lint/rules/js/noCommaOperator.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noCommaOperator_ts$default = {
-		name: "noCommaOperator",
+		name: "js/noCommaOperator",
 		enter(path) {
 			const {node} = path;
 
@@ -64834,7 +69754,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noCompareNegZ
 		);
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noCompareNegZero_ts$default = {
-		name: "noCompareNegZero",
+		name: "js/noCompareNegZero",
 		enter(path) {
 			const {node} = path;
 
@@ -64877,7 +69797,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noCompareNegZ
 
   // project-rome/@romefrontend/compiler/lint/rules/js/noCondAssign.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noCondAssign_ts$default = {
-		name: "noCondAssign",
+		name: "js/noCondAssign",
 		enter(path) {
 			const {node} = path;
 
@@ -64903,7 +69823,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noCondAssign_ts$def
 
   // project-rome/@romefrontend/compiler/lint/rules/js/noDebugger.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noDebugger_ts$default = {
-		name: "noDebugger",
+		name: "js/noDebugger",
 		enter(path) {
 			const {node} = path;
 
@@ -64924,7 +69844,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noDebugger_ts$defau
 
   // project-rome/@romefrontend/compiler/lint/rules/js/noDelete.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noDelete_ts$default = {
-		name: "noDelete",
+		name: "js/noDelete",
 		enter(path) {
 			const {context, node} = path;
 
@@ -64962,7 +69882,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noDelete_ts$default
 
   // project-rome/@romefrontend/compiler/lint/rules/js/noDeleteVars.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noDeleteVars_ts$default = {
-		name: "noDeleteVars",
+		name: "js/noDeleteVars",
 		enter(path) {
 			const {node} = path;
 
@@ -64984,7 +69904,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noDeleteVars_ts$def
 
   // project-rome/@romefrontend/compiler/lint/rules/js/noDupeArgs.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noDupeArgs_ts$default = {
-		name: "noDupeArgs",
+		name: "js/noDupeArgs",
 		enter(path) {
 			const {node, context} = path;
 
@@ -65075,7 +69995,7 @@ class ___R$project$rome$$romefrontend$compiler$lib$DiagnosticsDuplicateHelper_ts
 
   // project-rome/@romefrontend/compiler/lint/rules/js/noDuplicateCase.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noDuplicateCase_ts$default = {
-		name: "noDuplicateCase",
+		name: "js/noDuplicateCase",
 		enter(path) {
 			const {node, context} = path;
 
@@ -65128,7 +70048,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noDuplicateCase_ts$
 
   // project-rome/@romefrontend/compiler/lint/rules/js/noDuplicateGroupNamesInRegularExpressions.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noDuplicateGroupNamesInRegularExpressions_ts$default = {
-		name: "noDuplicateGroupNamesInRegularExpressions",
+		name: "js/noDuplicateGroupNamesInRegularExpressions",
 		enter(path) {
 			const {context, node} = path;
 
@@ -65177,7 +70097,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noDuplicat
 		return undefined;
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noDuplicateKeys_ts$default = {
-		name: "noDuplicateKeys",
+		name: "js/noDuplicateKeys",
 		enter(path) {
 			const {node, context} = path;
 
@@ -65210,7 +70130,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noDuplicat
 
   // project-rome/@romefrontend/compiler/lint/rules/js/noEmptyCharacterClass.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noEmptyCharacterClass_ts$default = {
-		name: "noEmptyCharacterClass",
+		name: "js/noEmptyCharacterClass",
 		enter(path) {
 			const {context, node} = path;
 
@@ -65288,7 +70208,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noExtraBoo
 		return undefined;
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noExtraBooleanCast_ts$default = {
-		name: "noExtraBooleanCast",
+		name: "js/noExtraBooleanCast",
 		enter(path) {
 			const {context} = path;
 
@@ -65320,7 +70240,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noExtraBoo
 
   // project-rome/@romefrontend/compiler/lint/rules/js/noFunctionAssign.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noFunctionAssign_ts$default = {
-		name: "noFunctionAssign",
+		name: "js/noFunctionAssign",
 		enter(path) {
 			const {node, scope} = path;
 
@@ -65358,7 +70278,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noImportAs
 		}
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noImportAssign_ts$default = {
-		name: "noImportAssign",
+		name: "js/noImportAssign",
 		enter(path) {
 			const {node, scope} = path;
 
@@ -65388,7 +70308,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noImportAs
 
   // project-rome/@romefrontend/compiler/lint/rules/js/noLabelVar.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noLabelVar_ts$default = {
-		name: "noLabelVar",
+		name: "js/noLabelVar",
 		enter(path) {
 			const {node, scope} = path;
 
@@ -65499,7 +70419,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noMultiple
 		return node;
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noMultipleSpacesInRegularExpressionLiterals_ts$default = {
-		name: "noMultipleSpacesInRegularExpressionLiterals",
+		name: "js/noMultipleSpacesInRegularExpressionLiterals",
 		enter(path) {
 			const {context, node} = path;
 
@@ -65517,7 +70437,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noMultiple
 
   // project-rome/@romefrontend/compiler/lint/rules/js/noNestedTernary.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noNestedTernary_ts$default = {
-		name: "jsNoNestedTernary",
+		name: "js/jsNoNestedTernary",
 		enter(path) {
 			const {node} = path;
 
@@ -65569,7 +70489,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noPosixInR
 		return node;
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noPosixInRegularExpression_ts$default = {
-		name: "noPosixInRegularExpression",
+		name: "js/noPosixInRegularExpression",
 		enter(path) {
 			const {context, node} = path;
 
@@ -65607,7 +70527,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noReferenc
 		return captureGroups;
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noReferenceToNonExistingGroup_ts$default = {
-		name: "noReferenceToNonExistingGroup",
+		name: "js/noReferenceToNonExistingGroup",
 		enter(path) {
 			const {node, context} = path;
 
@@ -65641,7 +70561,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noReferenc
 
   // project-rome/@romefrontend/compiler/lint/rules/js/noSetterReturn.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noSetterReturn_ts$default = {
-		name: "noSetterReturn",
+		name: "js/noSetterReturn",
 		enter(path) {
 			const {node} = path;
 
@@ -65678,7 +70598,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noShadowRestr
 		...___R$project$rome$$romefrontend$compiler$scope$globals_ts$es2017,
 	]);
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noShadowRestrictedNames_ts$default = {
-		name: "noShadowRestrictedNames",
+		name: "js/noShadowRestrictedNames",
 		enter(path) {
 			const {node, context, scope} = path;
 
@@ -65706,7 +70626,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noShadowRestr
 
   // project-rome/@romefrontend/compiler/lint/rules/js/noShorthandArrayType.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noShorthandArrayType_ts$default = {
-		name: "noShorthandArrayType",
+		name: "js/noShorthandArrayType",
 		enter(path) {
 			const {node, context} = path;
 
@@ -65734,7 +70654,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noShorthandArrayTyp
 
   // project-rome/@romefrontend/compiler/lint/rules/js/noTemplateCurlyInString.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noTemplateCurlyInString_ts$default = {
-		name: "noTemplateCurlyInString",
+		name: "js/noTemplateCurlyInString",
 		enter(path) {
 			const {node, context} = path;
 
@@ -65756,7 +70676,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noTemplateCurlyInSt
 
   // project-rome/@romefrontend/compiler/lint/rules/js/noUnsafeFinally.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noUnsafeFinally_ts$default = {
-		name: "noUnsafeFinally",
+		name: "js/noUnsafeFinally",
 		enter(path) {
 			const {node, context} = path;
 
@@ -65794,7 +70714,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noUnusedTe
 		return /['"\n]/.test(node.raw);
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noUnusedTemplateLiteral_ts$default = {
-		name: "jsNoUnusedTemplateLiteral",
+		name: "js/jsNoUnusedTemplateLiteral",
 		enter(path) {
 			const {context, node} = path;
 
@@ -65834,7 +70754,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noUnusedVaria
 	];
 
 	const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noUnusedVariables_ts$provider = ___R$project$rome$$romefrontend$compiler$api$createHook_ts$default({
-		name: "noUnusedVariablesProvider",
+		name: "js/noUnusedVariablesProvider",
 		initialState: ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noUnusedVariables_ts$initialState,
 		call(path, state) {
 			const {node} = path;
@@ -65900,7 +70820,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noUnusedVaria
 		},
 	});
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noUnusedVariables_ts$default = {
-		name: "unusedVariables",
+		name: "js/unusedVariables",
 		enter(path) {
 			const {node, scope} = path;
 
@@ -66025,7 +70945,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noUnusedVaria
 
   // project-rome/@romefrontend/compiler/lint/rules/js/noVar.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noVar_ts$default = {
-		name: "noVar",
+		name: "js/noVar",
 		enter(path) {
 			const {context, node: declaration} = path;
 
@@ -66046,7 +70966,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$js$noVar_ts$default = 
 
   // project-rome/@romefrontend/compiler/lint/rules/js/preferBlockStatements.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$preferBlockStatements_ts$default = {
-		name: "preferBlockStatements",
+		name: "js/preferBlockStatements",
 		enter(path) {
 			const {context, node} = path;
 
@@ -66145,7 +71065,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$js$preferBlockStatemen
 // This hook is created with a list of initial JSVariableDeclarators that contain functions we want to convert
 	// We then remove any JSArrowFunctionExpression JSVariableDeclarators that contain a valid JSThisExpression
 	const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$preferFunctionDeclarations_ts$hook = ___R$project$rome$$romefrontend$compiler$api$createHook_ts$default({
-		name: "preferFunctionDeclarationsHook",
+		name: "js/preferFunctionDeclarationsHook",
 		initialState: {
 			declarators: [],
 		},
@@ -66247,7 +71167,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$js$preferBlockStatemen
 		},
 	});
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$preferFunctionDeclarations_ts$default = {
-		name: "preferFunctionDeclarations",
+		name: "js/preferFunctionDeclarations",
 		enter(path) {
 			const {node} = path;
 
@@ -66599,7 +71519,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$js$preferBlockStatemen
 		return false;
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$preferTemplate_ts$default = {
-		name: "preferTemplate",
+		name: "js/preferTemplate",
 		enter(path) {
 			const {node} = path;
 
@@ -66644,7 +71564,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$js$preferBlockStatemen
 
   // project-rome/@romefrontend/compiler/lint/rules/js/preferWhile.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$preferWhile_ts$default = {
-		name: "preferWhile",
+		name: "js/preferWhile",
 		enter(path) {
 			const {context, node} = path;
 
@@ -66685,7 +71605,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$restrictedGlo
 		"error",
 	];
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$restrictedGlobals_ts$default = {
-		name: "restrictedGlobal",
+		name: "js/restrictedGlobal",
 		enter(path) {
 			const {node, scope} = path;
 
@@ -66723,9 +71643,43 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$restrictedGlo
 	};
 
 
+  // project-rome/@romefrontend/compiler/lint/rules/js/shoutyConstants.ts
+const ___R$project$rome$$romefrontend$compiler$lint$rules$js$shoutyConstants_ts$default = {
+		name: "js/shoutyConstants",
+		enter(path) {
+			const {node, scope} = path;
+
+			if (node.type === "JSReferenceIdentifier") {
+				const binding = scope.getBinding(node.name);
+				if (
+					binding instanceof
+					___R$project$rome$$romefrontend$compiler$scope$bindings_ts$ConstBinding &&
+					binding.value !== undefined &&
+					binding.value.type === "JSStringLiteral" &&
+					binding.value.value === node.name &&
+					!binding.isExported &&
+					(binding.scope.kind === "block" || binding.scope.kind === "program")
+				) {
+					return path.context.addFixableDiagnostic(
+						{
+							old: node,
+							fixed: binding.value,
+						},
+						___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.LINT.JS_SHOUTY_CONSTANTS(
+							binding.node.loc,
+						),
+					);
+				}
+			}
+
+			return node;
+		},
+	};
+
+
   // project-rome/@romefrontend/compiler/lint/rules/js/singleVarDeclarator.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$singleVarDeclarator_ts$default = {
-		name: "singleVarDeclarator",
+		name: "js/singleVarDeclarator",
 		enter(path) {
 			const {node} = path;
 
@@ -66812,7 +71766,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$sortImport
 		return false;
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$sortImportExportSpecifiers_ts$default = {
-		name: "sortImportExportSpecifiers",
+		name: "js/sortImportExportSpecifiers",
 		enter(path) {
 			const {context, node} = path;
 
@@ -66896,7 +71850,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$sortImport
 
   // project-rome/@romefrontend/compiler/lint/rules/js/sparseArray.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$sparseArray_ts$default = {
-		name: "sparseArray",
+		name: "js/sparseArray",
 		enter(path) {
 			const {node, parent} = path;
 
@@ -66974,7 +71928,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$undeclaredVar
 		"Thenable",
 	];
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$undeclaredVariables_ts$default = {
-		name: "undeclaredVariables",
+		name: "js/undeclaredVariables",
 		enter(path) {
 			const {node, scope} = path;
 
@@ -67021,7 +71975,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$undeclaredVar
 
   // project-rome/@romefrontend/compiler/lint/rules/js/unsafeNegation.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$js$unsafeNegation_ts$default = {
-		name: "unsafeNegation",
+		name: "js/unsafeNegation",
 		enter(path) {
 			const {node} = path;
 
@@ -67152,7 +72106,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$altT
 		attr.value.value === "image");
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$altText_ts$default = {
-		name: "jsxA11YAltText",
+		name: "jsx-a11y/altText",
 		enter(path) {
 			const {node} = path;
 
@@ -67225,7 +72179,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$anch
 		);
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$anchorHasContent_ts$default = {
-		name: "jsxA11YAnchorHasContent",
+		name: "jsx-a11y/anchorHasContent",
 		enter(path) {
 			const {node} = path;
 			if (
@@ -67290,7 +72244,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$anch
 		return false;
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$anchorIsValid_ts$default = {
-		name: "jsxA11YAnchorIsValid",
+		name: "jsx-a11y/anchorIsValid",
 		enter(path) {
 			const {node} = path;
 
@@ -68602,7 +73556,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$utils$aria$types_ts = {};
 
   // project-rome/@romefrontend/compiler/lint/rules/jsx-a11y/ariaProps.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$ariaProps_ts$default = {
-		name: "jsxA11YAriaProps",
+		name: "jsx-a11y/ariaProps",
 		enter(path) {
 			const {node, context} = path;
 
@@ -68745,7 +73699,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$aria
 		}
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$ariaProptypes_ts$default = {
-		name: "jsxA11YAriaProptypes",
+		name: "jsx-a11y/ariaProptypes",
 		enter(path) {
 			const {node} = path;
 
@@ -68845,7 +73799,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$aria
 		);
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$ariaUnsupportedElements_ts$default = {
-		name: "ariaUnsupportedElements",
+		name: "jsx-a11y/ariaUnsupportedElements",
 		enter(path) {
 			const {node} = path;
 
@@ -68888,7 +73842,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$aria
 
   // project-rome/@romefrontend/compiler/lint/rules/jsx-a11y/clickEventsHaveKeyEvents.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$clickEventsHaveKeyEvents_ts$default = {
-		name: "clickEventsHaveKeyEvents",
+		name: "jsx-a11y/clickEventsHaveKeyEvents",
 		enter(path) {
 			const {node} = path;
 
@@ -68963,7 +73917,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$heading
 		);
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$headingHasContent_ts$default = {
-		name: "jsxA11YHeadingHasContent",
+		name: "jsx-a11y/headingHasContent",
 		enter(path) {
 			const {node} = path;
 
@@ -69026,7 +73980,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$html
 		return false;
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$htmlHasLang_ts$default = {
-		name: "jsxA11YHTMLHasLang",
+		name: "jsx-a11y/htmlHasLang",
 
 		enter(path) {
 			const {node} = path;
@@ -69095,7 +74049,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$ifra
 		return false;
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$iframeHasTitle_ts$default = {
-		name: "jsxA11YIframeHasTitle",
+		name: "jsx-a11y/iframeHasTitle",
 
 		enter(path) {
 			const {node} = path;
@@ -69151,7 +74105,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$imgR
 		);
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$imgRedundantAlt_ts$default = {
-		name: "jsxA11YImgRedundantAlt",
+		name: "jsx-a11y/imgRedundantAlt",
 
 		enter(path) {
 			const {node} = path;
@@ -69640,7 +74594,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$lang_ts
 		return false;
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$lang_ts$default = {
-		name: "jsxA11YLang",
+		name: "jsx-a11y/lang",
 		enter(path) {
 			const {node} = path;
 
@@ -69698,7 +74652,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$medi
 		);
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$mediaHasCaption_ts$default = {
-		name: "mediaHasCaption",
+		name: "jsx-a11y/mediaHasCaption",
 		enter(path) {
 			const {node} = path;
 
@@ -69745,7 +74699,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$medi
 
   // project-rome/@romefrontend/compiler/lint/rules/jsx-a11y/mouseEventsHaveKeyEvents.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$mouseEventsHaveKeyEvents_ts$default = {
-		name: "mouseEventsHaveKeyEvents",
+		name: "jsx-a11y/mouseEventsHaveKeyEvents",
 		enter(path) {
 			const {node} = path;
 
@@ -69802,7 +74756,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$mouseEventsHa
 
   // project-rome/@romefrontend/compiler/lint/rules/jsx-a11y/noAccessKey.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$noAccessKey_ts$default = {
-		name: "jsxA11YNoAccessKey",
+		name: "jsx-a11y/noAccessKey",
 
 		enter(path) {
 			const {node} = path;
@@ -69843,7 +74797,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$noAccessKey_t
 
   // project-rome/@romefrontend/compiler/lint/rules/jsx-a11y/noAutofocus.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$noAutofocus_ts$default = {
-		name: "jsxA11YNoAutofocus",
+		name: "jsx-a11y/noAutofocus",
 
 		enter(path) {
 			const {node} = path;
@@ -69888,7 +74842,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$noDistr
 		"marquee",
 	];
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$noDistractingElements_ts$default = {
-		name: "jsxA11YNoDistractingElements",
+		name: "jsx-a11y/noDistractingElements",
 
 		enter(path) {
 			const {node} = path;
@@ -69920,7 +74874,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$noDistr
 
   // project-rome/@romefrontend/compiler/lint/rules/jsx-a11y/noNoninteractiveElementToInteractiveRole.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$noNoninteractiveElementToInteractiveRole_ts$default = {
-		name: "jsxA11YNoNoninteractiveElementToInteractiveRole",
+		name: "jsx-a11y/noNoninteractiveElementToInteractiveRole",
 		enter(path) {
 			const {node} = path;
 
@@ -70003,7 +74957,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$noNo
 		return undefined;
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$noNoninteractiveTabindex_ts$default = {
-		name: "jsxA11YNoNoninteractiveTabindex",
+		name: "jsx-a11y/noNoninteractiveTabindex",
 		enter(path) {
 			const {node} = path;
 
@@ -70112,7 +75066,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$noNo
 
   // project-rome/@romefrontend/compiler/lint/rules/jsx-a11y/noOnChange.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$noOnChange_ts$default = {
-		name: "noOnChange",
+		name: "jsx-a11y/noOnChange",
 		enter(path) {
 			const {context, node} = path;
 
@@ -70227,7 +75181,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$noRe
 		);
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$noRedundantRoles_ts$default = {
-		name: "jsxA11YNoRedundantRoles",
+		name: "jsx-a11y/noRedundantRoles",
 		enter(path) {
 			const {node, context} = path;
 
@@ -70358,7 +75312,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$noTa
 		);
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$noTargetBlank_ts$default = {
-		name: "jsxA11YNoTargetBlank",
+		name: "jsx-a11y/noTargetBlank",
 
 		enter(path) {
 			const {node} = path;
@@ -70404,7 +75358,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$noTa
 
   // project-rome/@romefrontend/compiler/lint/rules/jsx-a11y/roleHasRequiredAriaProps.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$roleHasRequiredAriaProps_ts$default = {
-		name: "jsxA11YRoleHasRequiredAriaProps",
+		name: "jsx-a11y/roleHasRequiredAriaProps",
 		enter(path) {
 			const {node} = path;
 
@@ -70461,7 +75415,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$roleHasRequir
 
   // project-rome/@romefrontend/compiler/lint/rules/jsx-a11y/scope.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$scope_ts$default = {
-		name: "jsxA11YScope",
+		name: "jsx-a11y/scope",
 
 		enter(path) {
 			const {node} = path;
@@ -70525,7 +75479,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$tabi
 		);
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$a11y$tabindexNoPositive_ts$default = {
-		name: "tabindexNoPositive",
+		name: "jsx-a11y/tabindexNoPositive",
 		enter(path) {
 			const {node} = path;
 
@@ -70601,7 +75555,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$fileExtensio
 		);
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$fileExtension_ts$default = {
-		name: "jsxFileExtension",
+		name: "jsx/fileExtension",
 		enter(path) {
 			const {node, context} = path;
 
@@ -70630,7 +75584,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$fileExtensio
   // project-rome/@romefrontend/compiler/lint/rules/jsx/noCommentText.ts
 const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$noCommentText_ts$commentPattern = /(^(\/\*\*|\/\*|\/\/)|\*\/$)/gm;
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$noCommentText_ts$default = {
-		name: "jsxNoCommentText",
+		name: "jsx/noCommentText",
 		enter(path) {
 			const {node} = path;
 
@@ -70674,7 +75628,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$noDuplica
 		return typeof name === "string" ? name : name.name;
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$noDuplicateProps_ts$default = {
-		name: "jsxNoDuplicateProps",
+		name: "jsx/noDuplicateProps",
 
 		enter(path) {
 			const {context, node} = path;
@@ -70708,7 +75662,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$jsx$noDuplica
 
   // project-rome/@romefrontend/compiler/lint/rules/jsx/noImplicitBoolean.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$noImplicitBoolean_ts$default = {
-		name: "jsxNoImplicitBoolean",
+		name: "jsx/noImplicitBoolean",
 		enter(path) {
 			const {context, node} = path;
 
@@ -70739,7 +75693,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$noImplicitBoolean_
 
   // project-rome/@romefrontend/compiler/lint/rules/jsx/pascalCase.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$pascalCase_ts$default = {
-		name: "jsxPascalCase",
+		name: "jsx/pascalCase",
 		enter(path) {
 			const {node} = path;
 
@@ -70747,11 +75701,16 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$pascalCase_ts$defa
 				node.type === "JSXElement" &&
 				node.name.type === "JSXReferenceIdentifier"
 			) {
-				const pascalCaseName = ___R$project$rome$$romefrontend$string$utils$toCamelCase_ts$toCamelCase(
-					node.name.name,
-					true,
+				const pascalCaseName = ___R$project$rome$$romefrontend$compiler$lint$rules$js$camelCase_ts$normalizeCamelCase(
+					___R$project$rome$$romefrontend$string$utils$toCamelCase_ts$toCamelCase(
+						node.name.name,
+						{
+							allowShouty: false,
+							forcePascal: true,
+						},
+					),
 				);
-				if (node.name.name !== pascalCaseName) {
+				if (pascalCaseName !== undefined && node.name.name !== pascalCaseName) {
 					path.context.addNodeDiagnostic(
 						node,
 						___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.LINT.JSX_PASCAL_CASE(
@@ -70768,7 +75727,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$pascalCase_ts$defa
 
   // project-rome/@romefrontend/compiler/lint/rules/jsx/propsNoSpreading.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$jsx$propsNoSpreading_ts$default = {
-		name: "jsxPropsNoSpreading",
+		name: "jsx/propsNoSpreading",
 		enter(path) {
 			const {node} = path;
 
@@ -71161,7 +76120,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$react$buttonHasT
 		return false;
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$react$buttonHasType_ts$default = {
-		name: "reactButtonHasType",
+		name: "react/buttonHasType",
 		enter(path) {
 			const {node, scope} = path;
 
@@ -71196,7 +76155,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$react$buttonHasT
 
   // project-rome/@romefrontend/compiler/lint/rules/react/jsxFragments.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$react$jsxFragments_ts$default = {
-		name: "reactJsxFragments",
+		name: "react/jsxFragments",
 		enter(path) {
 			const {node, context, scope} = path;
 
@@ -71270,7 +76229,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$react$jsxKey_
 		return undefined;
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$react$jsxKey_ts$default = {
-		name: "reactJsxKey",
+		name: "react/jsxKey",
 		enter(path) {
 			const {node, context} = path;
 
@@ -71348,7 +76307,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$react$jsxKey_
 
   // project-rome/@romefrontend/compiler/lint/rules/react/noAccessStateInSetState.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$react$noAccessStateInSetState_ts$default = {
-		name: "reactNoAccessStateInSetState",
+		name: "react/noAccessStateInSetState",
 		enter(path) {
 			const {node} = path;
 			if (
@@ -71567,7 +76526,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$react$noArray
 		return false;
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$react$noArrayIndexKey_ts$default = {
-		name: "reactNoArrayIndexKey",
+		name: "react/noArrayIndexKey",
 		enter(path) {
 			const {node, scope} = path;
 
@@ -71717,7 +76676,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$react$noChild
 		);
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$react$noChildrenProp_ts$default = {
-		name: "reactNoChildrenProp",
+		name: "react/noChildrenProp",
 		enter(path) {
 			const {node, scope} = path;
 			const childrenProp =
@@ -71754,7 +76713,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$react$noDange
 		);
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$react$noDanger_ts$default = {
-		name: "reactNoDanger",
+		name: "react/noDanger",
 		enter(path) {
 			const {node, scope} = path;
 			const dangerProp =
@@ -71830,7 +76789,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$react$noDange
 		);
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$react$noDangerWithChildren_ts$default = {
-		name: "reactNoDangerWithChildren",
+		name: "react/noDangerWithChildren",
 
 		enter(path) {
 			const {node, scope} = path;
@@ -71879,7 +76838,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$react$noDidMo
 		);
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$react$noDidMountSetState_ts$default = {
-		name: "reactNoDidMountSetState",
+		name: "react/noDidMountSetState",
 		enter(path) {
 			const {node} = path;
 
@@ -71927,7 +76886,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$react$noDidUp
 		);
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$react$noDidUpdateSetState_ts$default = {
-		name: "reactNoDidUpdateSetState",
+		name: "react/noDidUpdateSetState",
 		enter(path) {
 			const {node} = path;
 
@@ -72025,7 +76984,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$react$noDidUp
 		return false;
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$react$noDirectMutationState_ts$default = {
-		name: "reactNoDirectMutationState",
+		name: "react/noDirectMutationState",
 		enter(path) {
 			const {node} = path;
 
@@ -72058,7 +77017,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$react$noFindDOMN
 		importName: "ReactDOM",
 	};
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$react$noFindDOMNode_ts$default = {
-		name: "reactNoFindDOMNode",
+		name: "react/noFindDOMNode",
 
 		enter(path) {
 			const {node, scope} = path;
@@ -72091,7 +77050,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$react$noFindDOMN
 
   // project-rome/@romefrontend/compiler/lint/rules/react/noRedundantShouldComponentUpdate.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$react$noRedundantShouldComponentUpdate_ts$default = {
-		name: "reactNoRedundantShouldComponentUpdate",
+		name: "react/noRedundantShouldComponentUpdate",
 		enter(path) {
 			const {node, scope} = path;
 
@@ -72128,7 +77087,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$react$noRedundantShoul
 
   // project-rome/@romefrontend/compiler/lint/rules/react/noRenderReturnValue.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$react$noRenderReturnValue_ts$default = {
-		name: "reactNoRenderReturnValue",
+		name: "react/noRenderReturnValue",
 
 		enter(path) {
 			const {node, parent, scope} = path;
@@ -72185,7 +77144,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$react$noStrin
 		);
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$react$noStringRefs_ts$default = {
-		name: "reactNoStringRefs",
+		name: "react/noStringRefs",
 		enter(path) {
 			const {context, node} = path;
 
@@ -72246,7 +77205,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$react$noStrin
 
   // project-rome/@romefrontend/compiler/lint/rules/react/noThisInSFC.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$react$noThisInSFC_ts$default = {
-		name: "reactNoThisInSFC",
+		name: "react/noThisInSFC",
 		enter(path) {
 			const {node} = path;
 
@@ -72331,7 +77290,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$react$noUnsafe_t
 		);
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$react$noUnsafe_ts$default = {
-		name: "reactNoUnsafe",
+		name: "react/noUnsafe",
 
 		enter(path) {
 			const {node} = path;
@@ -72473,7 +77432,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$react$noWillU
 		);
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$react$noWillUpdateSetState_ts$default = {
-		name: "reactNoWillUpdateSetState",
+		name: "react/noWillUpdateSetState",
 		enter(path) {
 			const {node} = path;
 
@@ -72800,7 +77759,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$react$sortComp_t
 		return {nodesToMove, nodesInOrder};
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$react$sortComp_ts$default = {
-		name: "reactSortComp",
+		name: "react/sortComp",
 		enter(path) {
 			const {node} = path;
 
@@ -72896,7 +77855,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$react$sortComp_t
 
   // project-rome/@romefrontend/compiler/lint/rules/react/stylePropObject.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$react$stylePropObject_ts$default = {
-		name: "reactStylePropObject",
+		name: "react/stylePropObject",
 		enter(path) {
 			const {node} = path;
 
@@ -72939,7 +77898,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$react$voidDomEle
 		"wbr",
 	]);
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$react$voidDomElementsNoChildren_ts$default = {
-		name: "reactVoidDomElementsNoChildren",
+		name: "react/voidDomElementsNoChildren",
 		enter(path) {
 			const {node, context, scope} = path;
 			const elementType = ___R$project$rome$$romefrontend$compiler$lint$utils$react$getCreateElementType_ts$default(
@@ -73064,7 +78023,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$react$voidDomEle
 
   // project-rome/@romefrontend/compiler/lint/rules/ts/noExplicitAny.ts
 const ___R$project$rome$$romefrontend$compiler$lint$rules$ts$noExplicitAny_ts$default = {
-		name: "tsNoExplicitAny",
+		name: "ts/noExplicitAny",
 		enter(path) {
 			const {context, node} = path;
 
@@ -73132,7 +78091,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$ts$preferInte
 		return {extends: _extends, members};
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$ts$preferInterfaces_ts$default = {
-		name: "tsPreferInterfaces",
+		name: "ts/preferInterfaces",
 		enter(path) {
 			const {node} = path;
 
@@ -73219,6 +78178,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$index_ts$lintTransform
 		___R$project$rome$$romefrontend$compiler$lint$rules$js$preferTemplate_ts$default,
 		___R$project$rome$$romefrontend$compiler$lint$rules$js$preferWhile_ts$default,
 		___R$project$rome$$romefrontend$compiler$lint$rules$js$restrictedGlobals_ts$default,
+		___R$project$rome$$romefrontend$compiler$lint$rules$js$shoutyConstants_ts$default,
 		___R$project$rome$$romefrontend$compiler$lint$rules$js$singleVarDeclarator_ts$default,
 		___R$project$rome$$romefrontend$compiler$lint$rules$js$sortImportExportSpecifiers_ts$default,
 		___R$project$rome$$romefrontend$compiler$lint$rules$js$sparseArray_ts$default,
@@ -73289,7 +78249,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$index_ts$lintCache = n
 	async function ___R$project$rome$$romefrontend$compiler$lint$index_ts$default(
 		req,
 	) {
-		const {ast, sourceText, project, applyRecommendedFixes, options} = req;
+		const {ast, project, applyRecommendedFixes, options} = req;
 
 		const query = ___R$project$rome$$romefrontend$compiler$lib$Cache_ts$default.buildQuery(
 			req,
@@ -73327,12 +78287,6 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$index_ts$lintCache = n
 		}
 		const formattedCode = ___R$project$rome$$romefrontend$formatter$index_ts$formatAST(
 			formatAst,
-			{
-				typeAnnotations: true,
-				sourceMaps: true,
-				format: "pretty",
-				sourceText,
-			},
 		).code;
 
 		// Run lints (could be with the autofixed AST)
@@ -73486,7 +78440,6 @@ const ___R$$priv$project$rome$$romefrontend$compiler$api$compile_ts$compileCache
 				typeAnnotations: false,
 				indent: req.stage === "compileForBundle" ? 1 : 0,
 				sourceMaps: true,
-				sourceText,
 				allowInterpreterDirective: false,
 			},
 		);
@@ -75829,7 +80782,7 @@ function ___R$$priv$project$rome$$romefrontend$consume$Consumer_ts$isComputedPar
 			this.usedNames = new Set(opts.usedNames);
 			this.forkCache = new Map();
 			this.forceDiagnosticTarget = opts.forceDiagnosticTarget;
-			this.declared = false;
+			this.declared = opts.declared === true;
 
 			// See shouldDispatchUnexpected for explanation
 			this.hasHandledUnexpected = false;
@@ -75865,6 +80818,11 @@ function ___R$$priv$project$rome$$romefrontend$consume$Consumer_ts$isComputedPar
 				);
 			}
 			return result;
+		}
+
+		// Just for JSON.stringify debugging of Consumer instances
+		toJSON() {
+			return this.value;
 		}
 
 		handleThrownDiagnostics(callback) {
@@ -76220,6 +81178,7 @@ function ___R$$priv$project$rome$$romefrontend$consume$Consumer_ts$isComputedPar
 			return new ___R$project$rome$$romefrontend$consume$Consumer_ts$default(
 				Object.assign(
 					{
+						declared: this.declared,
 						usedNames: this.usedNames,
 						onDefinition: this.onDefinition,
 						handleUnexpectedDiagnostic: this.handleUnexpected,
@@ -76400,6 +81359,32 @@ function ___R$$priv$project$rome$$romefrontend$consume$Consumer_ts$isComputedPar
 					value.enforceUsedProperties(type, true);
 				}
 			}
+		}
+
+		asPossibleNumberString(def) {
+			this.declareDefinition({
+				type: "number",
+				default: def,
+				required: def === undefined,
+			});
+
+			if (this.exists()) {
+				const str = this.asUndeclaredString();
+				const num = parseFloat(str);
+				if (isNaN(num)) {
+					this.unexpected(
+						___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.CONSUME.EXPECTED_VALID_NUMBER,
+					);
+				} else {
+					return this.cloneConsumer({
+						value: num,
+					});
+				}
+			}
+
+			return this.cloneConsumer({
+				value: def,
+			});
 		}
 
 		asPossibleParsedJSON() {
@@ -76678,7 +81663,7 @@ function ___R$$priv$project$rome$$romefrontend$consume$Consumer_ts$isComputedPar
 		}
 
 		asUndeclaredStringSet(validValues, def) {
-			const value = this.asUndeclaredString(String(def));
+			const value = this.asUndeclaredString(def);
 
 			// @ts-ignore
 			if (validValues.includes(value)) {
@@ -76699,16 +81684,16 @@ function ___R$$priv$project$rome$$romefrontend$consume$Consumer_ts$isComputedPar
 			}
 		}
 
-		asStringSetOrVoid(validValues, def) {
+		asStringSetOrVoid(validValues) {
 			this.declareDefinition({
 				type: "string",
-				default: def,
+				default: undefined,
 				required: false,
 				allowedValues: validValues,
 			});
 
 			if (this.exists()) {
-				return this.asUndeclaredStringSet(validValues, def);
+				return this.asUndeclaredStringSet(validValues);
 			} else {
 				return undefined;
 			}
@@ -76753,11 +81738,11 @@ function ___R$$priv$project$rome$$romefrontend$consume$Consumer_ts$isComputedPar
 			return BigInt("0");
 		}
 
-		_declareOptionalFilePath(def) {
+		_declareOptionalFilePath() {
 			this.declareDefinition(
 				{
 					type: "string",
-					default: def,
+					default: undefined,
 					required: false,
 				},
 				"path",
@@ -76827,11 +81812,11 @@ function ___R$$priv$project$rome$$romefrontend$consume$Consumer_ts$isComputedPar
 			}
 		}
 
-		asAbsoluteFilePathOrVoid(def, cwd) {
+		asAbsoluteFilePathOrVoid(cwd) {
 			if (this.exists()) {
-				return this.asAbsoluteFilePath(def, cwd);
+				return this.asAbsoluteFilePath(undefined, cwd);
 			} else {
-				this._declareOptionalFilePath(def);
+				this._declareOptionalFilePath();
 				return undefined;
 			}
 		}
@@ -76919,46 +81904,6 @@ function ___R$$priv$project$rome$$romefrontend$consume$Consumer_ts$isComputedPar
 				: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(num);
 		}
 
-		asNumberFromString(def) {
-			this.declareDefinition({
-				type: "number",
-				default: def,
-				required: def === undefined,
-			});
-			return this.asUndeclaredNumberFromString(def);
-		}
-
-		asNumberFromStringOrVoid() {
-			this.declareDefinition({
-				type: "number",
-				default: undefined,
-				required: false,
-			});
-
-			if (this.exists()) {
-				return this.asUndeclaredNumberFromString();
-			} else {
-				return undefined;
-			}
-		}
-
-		asUndeclaredNumberFromString(def) {
-			if (def !== undefined && !this.exists()) {
-				return def;
-			}
-
-			const str = this.asUndeclaredString();
-			const num = Number(str);
-			if (isNaN(num)) {
-				this.unexpected(
-					___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.CONSUME.EXPECTED_VALID_NUMBER,
-				);
-				return NaN;
-			} else {
-				return num;
-			}
-		}
-
 		asNumber(def) {
 			this.declareDefinition({
 				type: "number",
@@ -77022,6 +81967,53 @@ function ___R$$priv$project$rome$$romefrontend$consume$Consumer_ts$isComputedPar
 			return value;
 		}
 
+		asNumberSet(validValues, def) {
+			this.declareDefinition({
+				type: "number",
+				default: def,
+				required: def === undefined,
+				allowedValues: validValues,
+			});
+			return this.asUndeclaredNumberSet(validValues, def);
+		}
+
+		asUndeclaredNumberSet(validValues, def) {
+			const value = this.asUndeclaredNumber(def);
+
+			// @ts-ignore
+			if (validValues.includes(value)) {
+				// @ts-ignore
+				return value;
+			} else {
+				this.unexpected(
+					___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.CONSUME.INVALID_NUMBER_SET_VALUE(
+						value,
+						// rome-ignore lint/js/noExplicitAny
+						((validValues)),
+					),
+					{
+						target: "value",
+					},
+				);
+				return validValues[0];
+			}
+		}
+
+		asNumberSetOrVoid(validValues) {
+			this.declareDefinition({
+				type: "number",
+				default: undefined,
+				required: false,
+				allowedValues: validValues,
+			});
+
+			if (this.exists()) {
+				return this.asUndeclaredNumberSet(validValues);
+			} else {
+				return undefined;
+			}
+		}
+
 		asUnknown() {
 			return this.value;
 		}
@@ -77072,15 +82064,15 @@ const ___R$$priv$project$rome$$romefrontend$consume$index_ts$EMPTY_CONSUME_OPTIO
 	}
 
 
-  // project-rome/@romefrontend/string-markup/util.ts
-function ___R$project$rome$$romefrontend$string$markup$util_ts$createEmptyAttributes() {
+  // project-rome/@romefrontend/cli-layout/util.ts
+function ___R$project$rome$$romefrontend$cli$layout$util_ts$createEmptyAttributes() {
 		return ___R$project$rome$$romefrontend$consume$index_ts$consumeUnknown(
 			{},
 			"parse/stringMarkup",
 		);
 	}
 
-	function ___R$project$rome$$romefrontend$string$markup$util_ts$humanizeMarkupFilename(
+	function ___R$project$rome$$romefrontend$cli$layout$util_ts$humanizeMarkupFilename(
 		filename,
 		opts = {},
 	) {
@@ -77096,7 +82088,7 @@ function ___R$project$rome$$romefrontend$string$markup$util_ts$createEmptyAttrib
 		).format(opts.cwd);
 	}
 
-	function ___R$project$rome$$romefrontend$string$markup$util_ts$buildFileLink(
+	function ___R$project$rome$$romefrontend$cli$layout$util_ts$buildFileLink(
 		attributes,
 		opts,
 	) {
@@ -77127,7 +82119,7 @@ function ___R$project$rome$$romefrontend$string$markup$util_ts$createEmptyAttrib
 			}
 		}
 
-		let text = ___R$project$rome$$romefrontend$string$markup$util_ts$humanizeMarkupFilename(
+		let text = ___R$project$rome$$romefrontend$cli$layout$util_ts$humanizeMarkupFilename(
 			filename,
 			opts,
 		);
@@ -77149,7 +82141,7 @@ function ___R$project$rome$$romefrontend$string$markup$util_ts$createEmptyAttrib
 		};
 	}
 
-	function ___R$project$rome$$romefrontend$string$markup$util_ts$formatApprox(
+	function ___R$project$rome$$romefrontend$cli$layout$util_ts$formatApprox(
 		attributes,
 		value,
 	) {
@@ -77160,7 +82152,7 @@ function ___R$project$rome$$romefrontend$string$markup$util_ts$createEmptyAttrib
 		}
 	}
 
-	function ___R$project$rome$$romefrontend$string$markup$util_ts$formatGrammarNumber(
+	function ___R$project$rome$$romefrontend$cli$layout$util_ts$formatGrammarNumber(
 		attributes,
 		value,
 	) {
@@ -77184,7 +82176,7 @@ function ___R$project$rome$$romefrontend$string$markup$util_ts$createEmptyAttrib
 		return "";
 	}
 
-	function ___R$project$rome$$romefrontend$string$markup$util_ts$formatNumber(
+	function ___R$project$rome$$romefrontend$cli$layout$util_ts$formatNumber(
 		attributes,
 		value,
 	) {
@@ -77192,7 +82184,7 @@ function ___R$project$rome$$romefrontend$string$markup$util_ts$createEmptyAttrib
 		const human = ___R$project$rome$$romefrontend$string$utils$humanizeNumber_ts$humanizeNumber(
 			num,
 		);
-		const humanWithApprox = ___R$project$rome$$romefrontend$string$markup$util_ts$formatApprox(
+		const humanWithApprox = ___R$project$rome$$romefrontend$cli$layout$util_ts$formatApprox(
 			attributes,
 			human,
 		);
@@ -77200,439 +82192,13 @@ function ___R$project$rome$$romefrontend$string$markup$util_ts$createEmptyAttrib
 	}
 
 
-  // project-rome/@romefrontend/string-markup/tags.ts
-const ___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$stringValidator = (
-		value,
-	) => value;
-
-	const ___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$booleanValidator = (
-		value,
-		key,
-	) => {
-		if (value === "false") {
-			return false;
-		}
-
-		if (value === "true" || value === key) {
-			return true;
-		}
-
-		return undefined;
-	};
-	const ___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$numberValidator = (
-		value,
-	) => {
-		const num = parseFloat(value);
-		if (isNaN(num)) {
-			return undefined;
-		} else {
-			return num;
-		}
-	};
-
-	const ___R$project$rome$$romefrontend$string$markup$tags_ts$globalAttributes = new Map([
-		[
-			"emphasis",
-			___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$booleanValidator,
-		],
-		[
-			"dim",
-			___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$booleanValidator,
-		],
-	]);
-
-	const ___R$project$rome$$romefrontend$string$markup$tags_ts$tags = new Map();
-
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"emphasis",
-		new Map(),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"number",
-		new Map([
-			[
-				"approx",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$booleanValidator,
-			],
-			[
-				"pluralSuffix",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$stringValidator,
-			],
-			[
-				"singularSuffix",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$stringValidator,
-			],
-		]),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"indent",
-		new Map(),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"view",
-		new Map([
-			[
-				"extraSoftWrapIndent",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$numberValidator,
-			],
-			[
-				"lineWrap",
-				___R$project$rome$$romefrontend$string$markup$tags_ts$lineWrapValidator,
-			],
-			[
-				"align",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$alignValidator,
-			],
-		]),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"viewLinePrefix",
-		new Map([
-			[
-				"type",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$stringValidator,
-			],
-			[
-				"align",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$alignValidator,
-			],
-		]),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"viewPointer",
-		new Map([
-			[
-				"char",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$stringValidator,
-			],
-			[
-				"line",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$numberValidator,
-			],
-			[
-				"start",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$numberValidator,
-			],
-			[
-				"end",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$numberValidator,
-			],
-		]),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"grammarNumber",
-		new Map([
-			[
-				"plural",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$stringValidator,
-			],
-			[
-				"singular",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$stringValidator,
-			],
-			[
-				"none",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$stringValidator,
-			],
-		]),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"hyperlink",
-		new Map([
-			[
-				"target",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$stringValidator,
-			],
-		]),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"filelink",
-		new Map([
-			[
-				"target",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$stringValidator,
-			],
-			[
-				"column",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$numberValidator,
-			],
-			[
-				"line",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$numberValidator,
-			],
-		]),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"inverse",
-		new Map(),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"dim",
-		new Map(),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"filesize",
-		new Map(),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"duration",
-		new Map([
-			[
-				"approx",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$booleanValidator,
-			],
-		]),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"italic",
-		new Map(),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"underline",
-		new Map(),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"strike",
-		new Map(),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"token",
-		new Map([
-			[
-				"type",
-				___R$project$rome$$romefrontend$string$markup$tags_ts$validateTokenType,
-			],
-		]),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"error",
-		new Map(),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"success",
-		new Map(),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"warn",
-		new Map(),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"info",
-		new Map(),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"command",
-		new Map(),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"color",
-		new Map([
-			[
-				"fg",
-				___R$project$rome$$romefrontend$string$markup$tags_ts$validateColor,
-			],
-			[
-				"bg",
-				___R$project$rome$$romefrontend$string$markup$tags_ts$validateColor,
-			],
-		]),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"highlight",
-		new Map([
-			[
-				"i",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$numberValidator,
-			],
-			[
-				"legend",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$booleanValidator,
-			],
-		]),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"table",
-		new Map(),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"tr",
-		new Map(),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"td",
-		new Map([
-			[
-				"align",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$alignValidator,
-			],
-		]),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"hr",
-		new Map(),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"pad",
-		new Map([
-			[
-				"width",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$numberValidator,
-			],
-			[
-				"align",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$alignValidator,
-			],
-		]),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"nobr",
-		new Map(),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"li",
-		new Map(),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"ul",
-		new Map(),
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tags.set(
-		"ol",
-		new Map([
-			[
-				"reversed",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$booleanValidator,
-			],
-			[
-				"start",
-				___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$numberValidator,
-			],
-		]),
-	);
-
-	// Tags that only support certain other tags as their children
-	const ___R$project$rome$$romefrontend$string$markup$tags_ts$tagsToOnlyChildren = new Map();
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tagsToOnlyChildren.set(
-		"table",
-		["tr"],
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tagsToOnlyChildren.set(
-		"tr",
-		["td"],
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tagsToOnlyChildren.set(
-		"ol",
-		["li"],
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tagsToOnlyChildren.set(
-		"ul",
-		["li"],
-	);
-
-	// Tags that should only be children of other tags
-	const ___R$project$rome$$romefrontend$string$markup$tags_ts$tagsToOnlyParent = new Map();
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tagsToOnlyParent.set(
-		"tr",
-		["table"],
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tagsToOnlyParent.set(
-		"td",
-		["tr"],
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tagsToOnlyParent.set(
-		"li",
-		["ol", "ul"],
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tagsToOnlyParent.set(
-		"viewLinePrefix",
-		["view"],
-	);
-	___R$project$rome$$romefrontend$string$markup$tags_ts$tagsToOnlyParent.set(
-		"viewPointer",
-		["view"],
-	);
-
-	function ___R$$priv$project$rome$$romefrontend$string$markup$tags_ts$alignValidator(
-		align,
-	) {
-		if (align === "left" || align === "right") {
-			return align;
-		}
-
-		return undefined;
-	}
-
-	// Validators
-	function ___R$project$rome$$romefrontend$string$markup$tags_ts$lineWrapValidator(
-		mode,
-	) {
-		if (mode === "none" || mode === "word-break" || mode === "char-break") {
-			return mode;
-		}
-
-		return undefined;
-	}
-
-	function ___R$project$rome$$romefrontend$string$markup$tags_ts$validateTokenType(
-		type,
-	) {
-		switch (type) {
-			case "boolean":
-			case "keyword":
-			case "number":
-			case "regex":
-			case "string":
-			case "comment":
-			case "operator":
-			case "punctuation":
-			case "variable":
-			case "attr-name":
-			case "function":
-			case "attr-value":
-			case "attr-equals":
-			case "tag":
-				return type;
-
-			default:
-				return undefined;
-		}
-	}
-
-	function ___R$project$rome$$romefrontend$string$markup$tags_ts$validateColor(
-		color,
-	) {
-		switch (color) {
-			case "black":
-			case "brightBlack":
-			case "red":
-			case "brightRed":
-			case "green":
-			case "brightGreen":
-			case "yellow":
-			case "brightYellow":
-			case "blue":
-			case "brightBlue":
-			case "magenta":
-			case "brightMagenta":
-			case "cyan":
-			case "brightCyan":
-			case "white":
-			case "brightWhite":
-				return color;
-
-			default:
-				return undefined;
-		}
-	}
-
-
-  // project-rome/@romefrontend/string-markup/parse.ts
-const ___R$project$rome$$romefrontend$string$markup$parse_ts = {
-		isTagStartChar: ___R$project$rome$$romefrontend$string$markup$parse_ts$isTagStartChar,
-		parseMarkup: ___R$project$rome$$romefrontend$string$markup$parse_ts$parseMarkup,
+  // project-rome/@romefrontend/cli-layout/parse.ts
+const ___R$project$rome$$romefrontend$cli$layout$parse_ts = {
+		isTagStartChar: ___R$project$rome$$romefrontend$cli$layout$parse_ts$isTagStartChar,
+		parseMarkup: ___R$project$rome$$romefrontend$cli$layout$parse_ts$parseMarkup,
 	};
 	//
-	function ___R$$priv$project$rome$$romefrontend$string$markup$parse_ts$isStringValueChar(
+	function ___R$$priv$project$rome$$romefrontend$cli$layout$parse_ts$isStringValueChar(
 		char,
 		index,
 		input,
@@ -77650,18 +82216,18 @@ const ___R$project$rome$$romefrontend$string$markup$parse_ts = {
 		return true;
 	}
 
-	function ___R$$priv$project$rome$$romefrontend$string$markup$parse_ts$isTextChar(
+	function ___R$$priv$project$rome$$romefrontend$cli$layout$parse_ts$isTextChar(
 		char,
 		index,
 		input,
 	) {
-		return !___R$project$rome$$romefrontend$string$markup$parse_ts$isTagStartChar(
+		return !___R$project$rome$$romefrontend$cli$layout$parse_ts$isTagStartChar(
 			index,
 			input,
 		);
 	}
 
-	function ___R$project$rome$$romefrontend$string$markup$parse_ts$isTagStartChar(
+	function ___R$project$rome$$romefrontend$cli$layout$parse_ts$isTagStartChar(
 		index,
 		input,
 	) {
@@ -77675,7 +82241,7 @@ const ___R$project$rome$$romefrontend$string$markup$parse_ts = {
 		);
 	}
 
-	const ___R$$priv$project$rome$$romefrontend$string$markup$parse_ts$createStringMarkupParser = ___R$project$rome$$romefrontend$parser$core$index_ts$createParser((
+	const ___R$$priv$project$rome$$romefrontend$cli$layout$parse_ts$createStringMarkupParser = ___R$project$rome$$romefrontend$parser$core$index_ts$createParser((
 		ParserCore,
 	) =>
 		class StringMarkupParser extends ParserCore {
@@ -77725,7 +82291,7 @@ const ___R$project$rome$$romefrontend$string$markup$parse_ts = {
 					if (char === '"') {
 						const [value, stringValueEnd, unclosed] = this.readInputFrom(
 							___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(index),
-							___R$$priv$project$rome$$romefrontend$string$markup$parse_ts$isStringValueChar,
+							___R$$priv$project$rome$$romefrontend$cli$layout$parse_ts$isStringValueChar,
 						);
 
 						if (unclosed) {
@@ -77743,7 +82309,7 @@ const ___R$project$rome$$romefrontend$string$markup$parse_ts = {
 							state,
 							token: this.finishValueToken(
 								"String",
-								___R$project$rome$$romefrontend$string$markup$escape_ts$unescapeTextValue(
+								___R$project$rome$$romefrontend$cli$layout$escape_ts$unescapeTextValue(
 									value,
 								),
 								end,
@@ -77760,7 +82326,7 @@ const ___R$project$rome$$romefrontend$string$markup$parse_ts = {
 				}
 
 				if (
-					___R$project$rome$$romefrontend$string$markup$parse_ts$isTagStartChar(
+					___R$project$rome$$romefrontend$cli$layout$parse_ts$isTagStartChar(
 						index,
 						this.input,
 					)
@@ -77774,13 +82340,13 @@ const ___R$project$rome$$romefrontend$string$markup$parse_ts = {
 				// Keep eating text until we hit a <
 				const [value, end] = this.readInputFrom(
 					index,
-					___R$$priv$project$rome$$romefrontend$string$markup$parse_ts$isTextChar,
+					___R$$priv$project$rome$$romefrontend$cli$layout$parse_ts$isTextChar,
 				);
 				return {
 					state,
 					token: {
 						type: "Text",
-						value: ___R$project$rome$$romefrontend$string$markup$escape_ts$unescapeTextValue(
+						value: ___R$project$rome$$romefrontend$cli$layout$escape_ts$unescapeTextValue(
 							value,
 						),
 						start: index,
@@ -77799,7 +82365,7 @@ const ___R$project$rome$$romefrontend$string$markup$parse_ts = {
 				const nameToken = this.expectToken("Word");
 				const tagName = (nameToken.value);
 
-				const allowedAttributes = ___R$project$rome$$romefrontend$string$markup$tags_ts$tags.get(
+				const allowedAttributes = ___R$project$rome$$romefrontend$cli$layout$tags_ts$tags.get(
 					tagName,
 				);
 				if (allowedAttributes === undefined) {
@@ -77812,7 +82378,7 @@ const ___R$project$rome$$romefrontend$string$markup$parse_ts = {
 				}
 
 				// Check if this tag is restricted to certain parents
-				const onlyAllowedAsChild = ___R$project$rome$$romefrontend$string$markup$tags_ts$tagsToOnlyParent.get(
+				const onlyAllowedAsChild = ___R$project$rome$$romefrontend$cli$layout$tags_ts$tagsToOnlyParent.get(
 					tagName,
 				);
 				if (onlyAllowedAsChild !== undefined) {
@@ -77833,7 +82399,7 @@ const ___R$project$rome$$romefrontend$string$markup$parse_ts = {
 
 				// Check if the parent only allows certain children
 				if (parentTagName !== undefined) {
-					const onlyAllowedAsParent = ___R$project$rome$$romefrontend$string$markup$tags_ts$tagsToOnlyChildren.get(
+					const onlyAllowedAsParent = ___R$project$rome$$romefrontend$cli$layout$tags_ts$tagsToOnlyChildren.get(
 						parentTagName,
 					);
 					if (
@@ -77851,7 +82417,7 @@ const ___R$project$rome$$romefrontend$string$markup$parse_ts = {
 					}
 				}
 
-				const attributes = ___R$project$rome$$romefrontend$string$markup$util_ts$createEmptyAttributes();
+				const attributes = ___R$project$rome$$romefrontend$cli$layout$util_ts$createEmptyAttributes();
 				const children = [];
 				let selfClosing = false;
 
@@ -77866,7 +82432,7 @@ const ___R$project$rome$$romefrontend$string$markup$parse_ts = {
 
 						const validator =
 							allowedAttributes.get(key) ||
-							___R$project$rome$$romefrontend$string$markup$tags_ts$globalAttributes.get(
+							___R$project$rome$$romefrontend$cli$layout$tags_ts$globalAttributes.get(
 								key,
 							);
 						if (validator === undefined) {
@@ -77876,7 +82442,7 @@ const ___R$project$rome$$romefrontend$string$markup$parse_ts = {
 									key,
 									[
 										...allowedAttributes.keys(),
-										...___R$project$rome$$romefrontend$string$markup$tags_ts$globalAttributes.keys(),
+										...___R$project$rome$$romefrontend$cli$layout$tags_ts$globalAttributes.keys(),
 									],
 								),
 							});
@@ -78026,7 +82592,7 @@ const ___R$project$rome$$romefrontend$string$markup$parse_ts = {
 				if (token.type === "Text") {
 					// If this tag has restricted children then no text is allowed
 					if (parentTagName !== undefined) {
-						const onlyAllowedAsParent = ___R$project$rome$$romefrontend$string$markup$tags_ts$tagsToOnlyChildren.get(
+						const onlyAllowedAsParent = ___R$project$rome$$romefrontend$cli$layout$tags_ts$tagsToOnlyChildren.get(
 							parentTagName,
 						);
 						if (onlyAllowedAsParent !== undefined) {
@@ -78071,12 +82637,12 @@ const ___R$project$rome$$romefrontend$string$markup$parse_ts = {
 		}
 	);
 
-	function ___R$project$rome$$romefrontend$string$markup$parse_ts$parseMarkup(
+	function ___R$project$rome$$romefrontend$cli$layout$parse_ts$parseMarkup(
 		input,
 		opts = {},
 	) {
 		try {
-			return ___R$$priv$project$rome$$romefrontend$string$markup$parse_ts$createStringMarkupParser(
+			return ___R$$priv$project$rome$$romefrontend$cli$layout$parse_ts$createStringMarkupParser(
 				Object.assign({}, opts, {input}),
 			).parse();
 		} catch (err) {
@@ -78085,5603 +82651,11 @@ const ___R$project$rome$$romefrontend$string$markup$parse_ts = {
 	}
 
 
-  // project-rome/@romefrontend/string-markup/types.ts
+  // project-rome/@romefrontend/cli-layout/types.ts
 
 
 
-  // project-rome/@romefrontend/string-markup/ansi.ts
-const ___R$project$rome$$romefrontend$string$markup$ansi_ts = {
-		get pattern() {
-			return ___R$project$rome$$romefrontend$string$markup$ansi_ts$pattern;
-		},
-		get regex() {
-			return ___R$project$rome$$romefrontend$string$markup$ansi_ts$regex;
-		},
-		get formatAnsi() {
-			return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi;
-		},
-		stripAnsi: ___R$project$rome$$romefrontend$string$markup$ansi_ts$stripAnsi,
-		hasAnsi: ___R$project$rome$$romefrontend$string$markup$ansi_ts$hasAnsi,
-		get ansiEscapes() {
-			return ___R$project$rome$$romefrontend$string$markup$ansi_ts$ansiEscapes;
-		},
-	};
-	/**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-	const ___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$ESC = "\x1b[";
-
-	const ___R$project$rome$$romefrontend$string$markup$ansi_ts$pattern = [
-		"[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:[a-zA-Z\\d]*(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)",
-		"(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))",
-	].join("|");
-
-	const ___R$project$rome$$romefrontend$string$markup$ansi_ts$regex = new RegExp(
-		___R$project$rome$$romefrontend$string$markup$ansi_ts$pattern,
-		"g",
-	);
-
-	function ___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-		num,
-	) {
-		return (
-			"" +
-			___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$ESC +
-			String(num) +
-			"m"
-		);
-	}
-
-	const ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi = {
-		reset(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					0,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					0,
-				)
-			);
-		},
-		fileHyperlink(name, filename) {
-			let href = "file://";
-			const {HOSTNAME} = process.env;
-			if (HOSTNAME != null) {
-				href += HOSTNAME + "/";
-			}
-			href += filename;
-			return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.hyperlink(
-				name,
-				href,
-			);
-		},
-		hyperlink(name, href) {
-			return "\x1b]8;;" + href + "\x07" + name + "\x1b]8;;\x07";
-		},
-		rgb(str, color) {
-			return (
-				"\x1b[38;2;" +
-				color.join(";") +
-				"m" +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					39,
-				)
-			);
-		},
-		bgRgb(str, color) {
-			return (
-				"\x1b[48;2;" +
-				color.join(";") +
-				"m" +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					49,
-				)
-			);
-		},
-		bold(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					1,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					22,
-				)
-			);
-		},
-		dim(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					2,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					22,
-				)
-			);
-		},
-		italic(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					3,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					23,
-				)
-			);
-		},
-		underline(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					4,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					24,
-				)
-			);
-		},
-		inverse(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					7,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					27,
-				)
-			);
-		},
-		hidden(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					8,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					28,
-				)
-			);
-		},
-		strikethrough(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					9,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					29,
-				)
-			);
-		},
-		black(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					30,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					39,
-				)
-			);
-		},
-		brightBlack(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					90,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					39,
-				)
-			);
-		},
-		red(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					31,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					39,
-				)
-			);
-		},
-		brightRed(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					91,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					39,
-				)
-			);
-		},
-		green(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					32,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					39,
-				)
-			);
-		},
-		brightGreen(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					92,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					39,
-				)
-			);
-		},
-		yellow(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					33,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					39,
-				)
-			);
-		},
-		brightYellow(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					93,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					39,
-				)
-			);
-		},
-		blue(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					34,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					39,
-				)
-			);
-		},
-		brightBlue(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					94,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					39,
-				)
-			);
-		},
-		magenta(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					35,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					39,
-				)
-			);
-		},
-		brightMagenta(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					95,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					39,
-				)
-			);
-		},
-		cyan(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					36,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					39,
-				)
-			);
-		},
-		brightCyan(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					96,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					39,
-				)
-			);
-		},
-		white(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					37,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					39,
-				)
-			);
-		},
-		brightWhite(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					97,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					39,
-				)
-			);
-		},
-		bgBlack(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					40,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					49,
-				)
-			);
-		},
-		bgBrightBlack(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					100,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					49,
-				)
-			);
-		},
-		bgRed(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					41,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					49,
-				)
-			);
-		},
-		bgBrightRed(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					101,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					49,
-				)
-			);
-		},
-		bgGreen(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					42,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					49,
-				)
-			);
-		},
-		bgBrightGreen(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					102,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					49,
-				)
-			);
-		},
-		bgYellow(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					43,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					49,
-				)
-			);
-		},
-		bgBrightYellow(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					103,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					49,
-				)
-			);
-		},
-		bgBlue(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					44,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					49,
-				)
-			);
-		},
-		bgBrightBlue(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					104,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					49,
-				)
-			);
-		},
-		bgMagenta(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					45,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					49,
-				)
-			);
-		},
-		bgBrightMagenta(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					105,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					49,
-				)
-			);
-		},
-		bgCyan(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					46,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					49,
-				)
-			);
-		},
-		bgBrightCyan(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					106,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					49,
-				)
-			);
-		},
-		bgWhite(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					47,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					49,
-				)
-			);
-		},
-		bgBrightWhite(str) {
-			return (
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					107,
-				) +
-				str +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$createEscape(
-					49,
-				)
-			);
-		},
-	};
-
-	function ___R$project$rome$$romefrontend$string$markup$ansi_ts$stripAnsi(str) {
-		return str.replace(
-			___R$project$rome$$romefrontend$string$markup$ansi_ts$regex,
-			"",
-		);
-	}
-
-	function ___R$project$rome$$romefrontend$string$markup$ansi_ts$hasAnsi(str) {
-		return ___R$project$rome$$romefrontend$string$markup$ansi_ts$regex.test(str);
-	}
-
-	const ___R$project$rome$$romefrontend$string$markup$ansi_ts$ansiEscapes = {
-		clearScreen: "\x1bc",
-		eraseLine: ___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$ESC +
-		"2K",
-		cursorUp(count = 1) {
-			return (
-				"" +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$ESC +
-				count +
-				"A"
-			);
-		},
-		cursorTo(x, y) {
-			if (y === undefined) {
-				return (
-					"" +
-					___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$ESC +
-					(x + 1) +
-					"G"
-				);
-			}
-
-			return (
-				"" +
-				___R$$priv$project$rome$$romefrontend$string$markup$ansi_ts$ESC +
-				(y + 1) +
-				";" +
-				(x + 1) +
-				"H"
-			);
-		},
-	};
-
-
-  // project-rome/@romefrontend/string-markup/syntax-theme/OneDarkPro.json
-const ___R$project$rome$$romefrontend$string$markup$syntax$theme$OneDarkPro_json$default = {
-		"name": "One Dark Pro",
-		"type": "dark",
-		"semanticHighlighting": true,
-		"semanticTokenColors": {
-			"enumMember": {"foreground": "#56b6c2"},
-			"variable.constant": {"foreground": "#d19a66"},
-			"variable.defaultLibrary": {"foreground": "#e5c07b"},
-		},
-		"tokenColors": [
-			{
-				"name": "unison punctuation",
-				"scope": "punctuation.definition.delayed.unison,punctuation.definition.list.begin.unison,punctuation.definition.list.end.unison,punctuation.definition.ability.begin.unison,punctuation.definition.ability.end.unison,punctuation.operator.assignment.as.unison,punctuation.separator.pipe.unison,punctuation.separator.delimiter.unison,punctuation.definition.hash.unison",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "haskell variable generic-type",
-				"scope": "variable.other.generic-type.haskell",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "haskell storage type",
-				"scope": "storage.type.haskell",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "support.variable.magic.python",
-				"scope": "support.variable.magic.python",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "punctuation.separator.parameters.python",
-				"scope": "punctuation.separator.period.python,punctuation.separator.element.python,punctuation.parenthesis.begin.python,punctuation.parenthesis.end.python",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "variable.parameter.function.language.special.self.python",
-				"scope": "variable.parameter.function.language.special.self.python",
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "storage.modifier.lifetime.rust",
-				"scope": "storage.modifier.lifetime.rust",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "support.function.std.rust",
-				"scope": "support.function.std.rust",
-				"settings": {"foreground": "#61afef"},
-			},
-			{
-				"name": "entity.name.lifetime.rust",
-				"scope": "entity.name.lifetime.rust",
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "variable.language.rust",
-				"scope": "variable.language.rust",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "support.constant.edge",
-				"scope": "support.constant.edge",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "regexp constant character-class",
-				"scope": "constant.other.character-class.regexp",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "regexp operator.quantifier",
-				"scope": "keyword.operator.quantifier.regexp",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "punctuation.definition",
-				"scope": "punctuation.definition.string.begin,punctuation.definition.string.end",
-				"settings": {"foreground": "#98c379"},
-			},
-			{
-				"name": "Text",
-				"scope": "variable.parameter.function",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "Comment Markup Link",
-				"scope": "comment markup.link",
-				"settings": {"foreground": "#5c6370"},
-			},
-			{
-				"name": "markup diff",
-				"scope": "markup.changed.diff",
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "diff",
-				"scope": "meta.diff.header.from-file,meta.diff.header.to-file,punctuation.definition.from-file.diff,punctuation.definition.to-file.diff",
-				"settings": {"foreground": "#61afef"},
-			},
-			{
-				"name": "inserted.diff",
-				"scope": "markup.inserted.diff",
-				"settings": {"foreground": "#98c379"},
-			},
-			{
-				"name": "deleted.diff",
-				"scope": "markup.deleted.diff",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "c++ function",
-				"scope": "meta.function.c,meta.function.cpp",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "c++ block",
-				"scope": "punctuation.section.block.begin.bracket.curly.cpp,punctuation.section.block.end.bracket.curly.cpp,punctuation.terminator.statement.c,punctuation.section.block.begin.bracket.curly.c,punctuation.section.block.end.bracket.curly.c,punctuation.section.parens.begin.bracket.round.c,punctuation.section.parens.end.bracket.round.c,punctuation.section.parameters.begin.bracket.round.c,punctuation.section.parameters.end.bracket.round.c",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "js/ts punctuation separator key-value",
-				"scope": "punctuation.separator.key-value",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "js/ts import keyword",
-				"scope": "keyword.operator.expression.import",
-				"settings": {"foreground": "#61afef"},
-			},
-			{
-				"name": "math js/ts",
-				"scope": "support.constant.math",
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "math property js/ts",
-				"scope": "support.constant.property.math",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "js/ts variable.other.constant",
-				"scope": "variable.other.constant",
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "java type",
-				"scope": [
-					"storage.type.annotation.java",
-					"storage.type.object.array.java",
-				],
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "java source",
-				"scope": "source.java",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "java modifier.import",
-				"scope": "punctuation.section.block.begin.java,punctuation.section.block.end.java,punctuation.definition.method-parameters.begin.java,punctuation.definition.method-parameters.end.java,meta.method.identifier.java,punctuation.section.method.begin.java,punctuation.section.method.end.java,punctuation.terminator.java,punctuation.section.class.begin.java,punctuation.section.class.end.java,punctuation.section.inner-class.begin.java,punctuation.section.inner-class.end.java,meta.method-call.java,punctuation.section.class.begin.bracket.curly.java,punctuation.section.class.end.bracket.curly.java,punctuation.section.method.begin.bracket.curly.java,punctuation.section.method.end.bracket.curly.java,punctuation.separator.period.java,punctuation.bracket.angle.java,punctuation.definition.annotation.java,meta.method.body.java",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "java modifier.import",
-				"scope": "meta.method.java",
-				"settings": {"foreground": "#61afef"},
-			},
-			{
-				"name": "java modifier.import",
-				"scope": "storage.modifier.import.java,storage.type.java,storage.type.generic.java",
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "java instanceof",
-				"scope": "keyword.operator.instanceof.java",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "java variable.name",
-				"scope": "meta.definition.variable.name.java",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "operator logical",
-				"scope": "keyword.operator.logical",
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "operator bitwise",
-				"scope": "keyword.operator.bitwise",
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "operator channel",
-				"scope": "keyword.operator.channel",
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "support.constant.property-value.scss",
-				"scope": "support.constant.property-value.scss,support.constant.property-value.css",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "CSS/SCSS/LESS Operators",
-				"scope": "keyword.operator.css,keyword.operator.scss,keyword.operator.less",
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "css color standard name",
-				"scope": "support.constant.color.w3c-standard-color-name.css,support.constant.color.w3c-standard-color-name.scss",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "css comma",
-				"scope": "punctuation.separator.list.comma.css",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "css attribute-name.id",
-				"scope": "support.constant.color.w3c-standard-color-name.css",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "css property-name",
-				"scope": "support.type.vendored.property-name.css",
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "js/ts module",
-				"scope": "support.module.node,support.type.object.module,support.module.node",
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "entity.name.type.module",
-				"scope": "entity.name.type.module",
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "js variable readwrite",
-				"scope": "variable.other.readwrite,meta.object-literal.key,support.variable.property,support.variable.object.process,support.variable.object.node",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "js/ts json",
-				"scope": "support.constant.json",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "js/ts Keyword",
-				"scope": [
-					"keyword.operator.expression.instanceof",
-					"keyword.operator.new",
-					"keyword.operator.ternary",
-					"keyword.operator.optional",
-					"keyword.operator.expression.keyof",
-				],
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "js/ts console",
-				"scope": "support.type.object.console",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "js/ts support.variable.property.process",
-				"scope": "support.variable.property.process",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "js console function",
-				"scope": "entity.name.function,support.function.console",
-				"settings": {"foreground": "#61afef"},
-			},
-			{
-				"name": "keyword.operator.misc.rust",
-				"scope": "keyword.operator.misc.rust",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "operator",
-				"scope": "keyword.operator.delete",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "js dom",
-				"scope": "support.type.object.dom",
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "js dom variable",
-				"scope": "support.variable.dom,support.variable.property.dom",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "keyword.operator",
-				"scope": "keyword.operator.arithmetic,keyword.operator.comparison,keyword.operator.decrement,keyword.operator.increment,keyword.operator.relational",
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "C operator assignment",
-				"scope": "keyword.operator.assignment.c,keyword.operator.comparison.c,keyword.operator.c,keyword.operator.increment.c,keyword.operator.decrement.c,keyword.operator.bitwise.shift.c,keyword.operator.assignment.cpp,keyword.operator.comparison.cpp,keyword.operator.cpp,keyword.operator.increment.cpp,keyword.operator.decrement.cpp,keyword.operator.bitwise.shift.cpp",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "Punctuation",
-				"scope": "punctuation.separator.delimiter",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "Other punctuation .c",
-				"scope": "punctuation.separator.c,punctuation.separator.cpp",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "C type posix-reserved",
-				"scope": "support.type.posix-reserved.c,support.type.posix-reserved.cpp",
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "keyword.operator.sizeof.c",
-				"scope": "keyword.operator.sizeof.c,keyword.operator.sizeof.cpp",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "python parameter",
-				"scope": "variable.parameter.function.language.python",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "python type",
-				"scope": "support.type.python",
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "python logical",
-				"scope": "keyword.operator.logical.python",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "pyCs",
-				"scope": "variable.parameter.function.python",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "python block",
-				"scope": "punctuation.definition.arguments.begin.python,punctuation.definition.arguments.end.python,punctuation.separator.arguments.python,punctuation.definition.list.begin.python,punctuation.definition.list.end.python",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "python function-call.generic",
-				"scope": "meta.function-call.generic.python",
-				"settings": {"foreground": "#61afef"},
-			},
-			{
-				"name": "python placeholder reset to normal string",
-				"scope": "constant.character.format.placeholder.other.python",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "Operators",
-				"scope": "keyword.operator",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "Compound Assignment Operators",
-				"scope": "keyword.operator.assignment.compound",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "Keywords",
-				"scope": "keyword",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "Variables",
-				"scope": "variable",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "Variables",
-				"scope": "variable.c",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "Language variables",
-				"scope": "variable.language",
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "Java Variables",
-				"scope": "token.variable.parameter.java",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "Java Imports",
-				"scope": "import.storage.java",
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "Packages",
-				"scope": "token.package.keyword",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "Packages",
-				"scope": "token.package",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "Functions",
-				"scope": [
-					"entity.name.function",
-					"meta.require",
-					"support.function.any-method",
-					"variable.function",
-				],
-				"settings": {"foreground": "#61afef"},
-			},
-			{
-				"name": "Classes",
-				"scope": "entity.name.type.namespace",
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "Classes",
-				"scope": "support.class, entity.name.type.class",
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "Class name",
-				"scope": "entity.name.class.identifier.namespace.type",
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "Class name",
-				"scope": [
-					"entity.name.class",
-					"variable.other.class.js",
-					"variable.other.class.ts",
-				],
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "Class name php",
-				"scope": "variable.other.class.php",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "Type Name",
-				"scope": "entity.name.type",
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "Keyword Control",
-				"scope": "keyword.control",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "Control Elements",
-				"scope": "control.elements, keyword.operator.less",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "Methods",
-				"scope": "keyword.other.special-method",
-				"settings": {"foreground": "#61afef"},
-			},
-			{
-				"name": "Storage",
-				"scope": "storage",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "Storage JS TS",
-				"scope": "token.storage",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "Source Js Keyword Operator Delete,source Js Keyword Operator In,source Js Keyword Operator Of,source Js Keyword Operator Instanceof,source Js Keyword Operator New,source Js Keyword Operator Typeof,source Js Keyword Operator Void",
-				"scope": "keyword.operator.expression.delete,keyword.operator.expression.in,keyword.operator.expression.of,keyword.operator.expression.instanceof,keyword.operator.new,keyword.operator.expression.typeof,keyword.operator.expression.void",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "Java Storage",
-				"scope": "token.storage.type.java",
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "Support",
-				"scope": "support.function",
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "Support type",
-				"scope": "support.type.property-name",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "Support type",
-				"scope": "support.constant.property-value",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "Support type",
-				"scope": "support.constant.font-name",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "Meta tag",
-				"scope": "meta.tag",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "Strings",
-				"scope": "string",
-				"settings": {"foreground": "#98c379"},
-			},
-			{
-				"name": "Inherited Class",
-				"scope": "entity.other.inherited-class",
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "Constant other symbol",
-				"scope": "constant.other.symbol",
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "Integers",
-				"scope": "constant.numeric",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "Constants",
-				"scope": "constant",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "Constants",
-				"scope": "punctuation.definition.constant",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "Tags",
-				"scope": "entity.name.tag",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "Attributes",
-				"scope": "entity.other.attribute-name",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "Attribute IDs",
-				"scope": "entity.other.attribute-name.id",
-				"settings": {"fontStyle": "normal", "foreground": "#61afef"},
-			},
-			{
-				"name": "Attribute class",
-				"scope": "entity.other.attribute-name.class.css",
-				"settings": {"fontStyle": "normal", "foreground": "#d19a66"},
-			},
-			{
-				"name": "Selector",
-				"scope": "meta.selector",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "Headings",
-				"scope": "markup.heading",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "Headings",
-				"scope": "markup.heading punctuation.definition.heading, entity.name.section",
-				"settings": {"foreground": "#61afef"},
-			},
-			{
-				"name": "Units",
-				"scope": "keyword.other.unit",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "Bold",
-				"scope": "markup.bold,todo.bold",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "Bold",
-				"scope": "punctuation.definition.bold",
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "markup Italic",
-				"scope": "markup.italic, punctuation.definition.italic,todo.emphasis",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "emphasis md",
-				"scope": "emphasis md",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "[VSCODE-CUSTOM] Markdown headings",
-				"scope": "entity.name.section.markdown",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "[VSCODE-CUSTOM] Markdown heading Punctuation Definition",
-				"scope": "punctuation.definition.heading.markdown",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "punctuation.definition.list.begin.markdown",
-				"scope": "punctuation.definition.list.begin.markdown",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "[VSCODE-CUSTOM] Markdown heading setext",
-				"scope": "markup.heading.setext",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "[VSCODE-CUSTOM] Markdown Punctuation Definition Bold",
-				"scope": "punctuation.definition.bold.markdown",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "[VSCODE-CUSTOM] Markdown Inline Raw",
-				"scope": "markup.inline.raw.markdown",
-				"settings": {"foreground": "#98c379"},
-			},
-			{
-				"name": "[VSCODE-CUSTOM] Markdown Inline Raw",
-				"scope": "markup.inline.raw.string.markdown",
-				"settings": {"foreground": "#98c379"},
-			},
-			{
-				"name": "[VSCODE-CUSTOM] Markdown List Punctuation Definition",
-				"scope": "punctuation.definition.list.markdown",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "[VSCODE-CUSTOM] Markdown Punctuation Definition String",
-				"scope": [
-					"punctuation.definition.string.begin.markdown",
-					"punctuation.definition.string.end.markdown",
-					"punctuation.definition.metadata.markdown",
-				],
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "beginning.punctuation.definition.list.markdown",
-				"scope": ["beginning.punctuation.definition.list.markdown"],
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "[VSCODE-CUSTOM] Markdown Punctuation Definition Link",
-				"scope": "punctuation.definition.metadata.markdown",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "[VSCODE-CUSTOM] Markdown Underline Link/Image",
-				"scope": "markup.underline.link.markdown,markup.underline.link.image.markdown",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "[VSCODE-CUSTOM] Markdown Link Title/Description",
-				"scope": "string.other.link.title.markdown,string.other.link.description.markdown",
-				"settings": {"foreground": "#61afef"},
-			},
-			{
-				"name": "Regular Expressions",
-				"scope": "string.regexp",
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "Escape Characters",
-				"scope": "constant.character.escape",
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "Embedded",
-				"scope": "punctuation.section.embedded, variable.interpolation",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "Embedded",
-				"scope": "punctuation.section.embedded.begin,punctuation.section.embedded.end",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "illegal",
-				"scope": "invalid.illegal",
-				"settings": {"foreground": "#ffffff"},
-			},
-			{
-				"name": "illegal",
-				"scope": "invalid.illegal.bad-ampersand.html",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "Broken",
-				"scope": "invalid.broken",
-				"settings": {"foreground": "#ffffff"},
-			},
-			{
-				"name": "Deprecated",
-				"scope": "invalid.deprecated",
-				"settings": {"foreground": "#ffffff"},
-			},
-			{
-				"name": "Unimplemented",
-				"scope": "invalid.unimplemented",
-				"settings": {"foreground": "#ffffff"},
-			},
-			{
-				"name": "Source Json Meta Structure Dictionary Json > String Quoted Json",
-				"scope": "source.json meta.structure.dictionary.json > string.quoted.json",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "Source Json Meta Structure Dictionary Json > String Quoted Json > Punctuation String",
-				"scope": "source.json meta.structure.dictionary.json > string.quoted.json > punctuation.string",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "Source Json Meta Structure Dictionary Json > Value Json > String Quoted Json,source Json Meta Structure Array Json > Value Json > String Quoted Json,source Json Meta Structure Dictionary Json > Value Json > String Quoted Json > Punctuation,source Json Meta Structure Array Json > Value Json > String Quoted Json > Punctuation",
-				"scope": "source.json meta.structure.dictionary.json > value.json > string.quoted.json,source.json meta.structure.array.json > value.json > string.quoted.json,source.json meta.structure.dictionary.json > value.json > string.quoted.json > punctuation,source.json meta.structure.array.json > value.json > string.quoted.json > punctuation",
-				"settings": {"foreground": "#98c379"},
-			},
-			{
-				"name": "Source Json Meta Structure Dictionary Json > Constant Language Json,source Json Meta Structure Array Json > Constant Language Json",
-				"scope": "source.json meta.structure.dictionary.json > constant.language.json,source.json meta.structure.array.json > constant.language.json",
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "[VSCODE-CUSTOM] JSON Property Name",
-				"scope": "support.type.property-name.json",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "[VSCODE-CUSTOM] JSON Punctuation for Property Name",
-				"scope": "support.type.property-name.json punctuation",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "laravel blade tag",
-				"scope": "text.html.laravel-blade source.php.embedded.line.html entity.name.tag.laravel-blade",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "laravel blade @",
-				"scope": "text.html.laravel-blade source.php.embedded.line.html support.constant.laravel-blade",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "use statement for other classes",
-				"scope": "support.other.namespace.use.php,support.other.namespace.use-as.php,support.other.namespace.php,entity.other.alias.php,meta.interface.php",
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "error suppression",
-				"scope": "keyword.operator.error-control.php",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "php instanceof",
-				"scope": "keyword.operator.type.php",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "style double quoted array index normal begin",
-				"scope": "punctuation.section.array.begin.php",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "style double quoted array index normal end",
-				"scope": "punctuation.section.array.end.php",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "php illegal.non-null-typehinted",
-				"scope": "invalid.illegal.non-null-typehinted.php",
-				"settings": {"foreground": "#f44747"},
-			},
-			{
-				"name": "php types",
-				"scope": "storage.type.php,meta.other.type.phpdoc.php,keyword.other.type.php,keyword.other.array.phpdoc.php",
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "php call-function",
-				"scope": "meta.function-call.php,meta.function-call.object.php,meta.function-call.static.php",
-				"settings": {"foreground": "#61afef"},
-			},
-			{
-				"name": "php function-resets",
-				"scope": "punctuation.definition.parameters.begin.bracket.round.php,punctuation.definition.parameters.end.bracket.round.php,punctuation.separator.delimiter.php,punctuation.section.scope.begin.php,punctuation.section.scope.end.php,punctuation.terminator.expression.php,punctuation.definition.arguments.begin.bracket.round.php,punctuation.definition.arguments.end.bracket.round.php,punctuation.definition.storage-type.begin.bracket.round.php,punctuation.definition.storage-type.end.bracket.round.php,punctuation.definition.array.begin.bracket.round.php,punctuation.definition.array.end.bracket.round.php,punctuation.definition.begin.bracket.round.php,punctuation.definition.end.bracket.round.php,punctuation.definition.begin.bracket.curly.php,punctuation.definition.end.bracket.curly.php,punctuation.definition.section.switch-block.end.bracket.curly.php,punctuation.definition.section.switch-block.start.bracket.curly.php,punctuation.definition.section.switch-block.begin.bracket.curly.php,punctuation.definition.section.switch-block.end.bracket.curly.php",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "support php constants",
-				"scope": "support.constant.core.rust",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "support php constants",
-				"scope": "support.constant.ext.php,support.constant.std.php,support.constant.core.php,support.constant.parser-token.php",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "php goto",
-				"scope": "entity.name.goto-label.php,support.other.php",
-				"settings": {"foreground": "#61afef"},
-			},
-			{
-				"name": "php logical/bitwise operator",
-				"scope": "keyword.operator.logical.php,keyword.operator.bitwise.php,keyword.operator.arithmetic.php",
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "php regexp operator",
-				"scope": "keyword.operator.regexp.php",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "php comparison",
-				"scope": "keyword.operator.comparison.php",
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "php heredoc/nowdoc",
-				"scope": "keyword.operator.heredoc.php,keyword.operator.nowdoc.php",
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "python function decorator @",
-				"scope": "meta.function.decorator.python",
-				"settings": {"foreground": "#61afef"},
-			},
-			{
-				"name": "python function support",
-				"scope": "support.token.decorator.python,meta.function.decorator.identifier.python",
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "parameter function js/ts",
-				"scope": "function.parameter",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "brace function",
-				"scope": "function.brace",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "parameter function ruby cs",
-				"scope": "function.parameter.ruby, function.parameter.cs",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "constant.language.symbol.ruby",
-				"scope": "constant.language.symbol.ruby",
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "rgb-value",
-				"scope": "rgb-value",
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "rgb value",
-				"scope": "inline-color-decoration rgb-value",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "rgb value less",
-				"scope": "less rgb-value",
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "sass selector",
-				"scope": "selector.sass",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "ts primitive/builtin types",
-				"scope": "support.type.primitive.ts,support.type.builtin.ts,support.type.primitive.tsx,support.type.builtin.tsx",
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "block scope",
-				"scope": "block.scope.end,block.scope.begin",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "cs storage type",
-				"scope": "storage.type.cs",
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "cs local variable",
-				"scope": "entity.name.variable.local.cs",
-				"settings": {"foreground": "#e06c75"},
-			},
-			{"scope": "token.info-token", "settings": {"foreground": "#61afef"}},
-			{"scope": "token.warn-token", "settings": {"foreground": "#d19a66"}},
-			{"scope": "token.error-token", "settings": {"foreground": "#f44747"}},
-			{"scope": "token.debug-token", "settings": {"foreground": "#c678dd"}},
-			{
-				"name": "String interpolation",
-				"scope": [
-					"punctuation.definition.template-expression.begin",
-					"punctuation.definition.template-expression.end",
-					"punctuation.section.embedded",
-				],
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "Reset JavaScript string interpolation expression",
-				"scope": ["meta.template.expression"],
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "Import module JS",
-				"scope": ["keyword.operator.module"],
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "js Flowtype",
-				"scope": ["support.type.type.flowtype"],
-				"settings": {"foreground": "#61afef"},
-			},
-			{
-				"name": "js Flow",
-				"scope": ["support.type.primitive"],
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "js class prop",
-				"scope": ["meta.property.object"],
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "js func parameter",
-				"scope": ["variable.parameter.function.js"],
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "js template literals begin",
-				"scope": ["keyword.other.template.begin"],
-				"settings": {"foreground": "#98c379"},
-			},
-			{
-				"name": "js template literals end",
-				"scope": ["keyword.other.template.end"],
-				"settings": {"foreground": "#98c379"},
-			},
-			{
-				"name": "js template literals variable braces begin",
-				"scope": ["keyword.other.substitution.begin"],
-				"settings": {"foreground": "#98c379"},
-			},
-			{
-				"name": "js template literals variable braces end",
-				"scope": ["keyword.other.substitution.end"],
-				"settings": {"foreground": "#98c379"},
-			},
-			{
-				"name": "js operator.assignment",
-				"scope": ["keyword.operator.assignment"],
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "go operator",
-				"scope": [
-					"keyword.operator.assignment.go",
-					"keyword.operator.address.go",
-				],
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "Go package name",
-				"scope": ["entity.name.package.go"],
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "elm prelude",
-				"scope": ["support.type.prelude.elm"],
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "elm constant",
-				"scope": ["support.constant.elm"],
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "template literal",
-				"scope": ["punctuation.quasi.element"],
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "html/pug (jade) escaped characters and entities",
-				"scope": ["constant.character.entity"],
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "styling css pseudo-elements/classes to be able to differentiate from classes which are the same colour",
-				"scope": [
-					"entity.other.attribute-name.pseudo-element",
-					"entity.other.attribute-name.pseudo-class",
-				],
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "Clojure globals",
-				"scope": ["entity.global.clojure"],
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "Clojure symbols",
-				"scope": ["meta.symbol.clojure"],
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "Clojure constants",
-				"scope": ["constant.keyword.clojure"],
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "CoffeeScript Function Argument",
-				"scope": ["meta.arguments.coffee", "variable.parameter.function.coffee"],
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "Ini Default Text",
-				"scope": ["source.ini"],
-				"settings": {"foreground": "#98c379"},
-			},
-			{
-				"name": "Makefile prerequisities",
-				"scope": ["meta.scope.prerequisites.makefile"],
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "Makefile text colour",
-				"scope": ["source.makefile"],
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "Groovy import names",
-				"scope": ["storage.modifier.import.groovy"],
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "Groovy Methods",
-				"scope": ["meta.method.groovy"],
-				"settings": {"foreground": "#61afef"},
-			},
-			{
-				"name": "Groovy Variables",
-				"scope": ["meta.definition.variable.name.groovy"],
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "Groovy Inheritance",
-				"scope": ["meta.definition.class.inherited.classes.groovy"],
-				"settings": {"foreground": "#98c379"},
-			},
-			{
-				"name": "HLSL Semantic",
-				"scope": ["support.variable.semantic.hlsl"],
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "HLSL Types",
-				"scope": [
-					"support.type.texture.hlsl",
-					"support.type.sampler.hlsl",
-					"support.type.object.hlsl",
-					"support.type.object.rw.hlsl",
-					"support.type.fx.hlsl",
-					"support.type.object.hlsl",
-				],
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "SQL Variables",
-				"scope": ["text.variable", "text.bracketed"],
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "types",
-				"scope": ["support.type.swift", "support.type.vb.asp"],
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "heading 1, keyword",
-				"scope": ["entity.name.function.xi"],
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "heading 2, callable",
-				"scope": ["entity.name.class.xi"],
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "heading 3, property",
-				"scope": ["constant.character.character-class.regexp.xi"],
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "heading 4, type, class, interface",
-				"scope": ["constant.regexp.xi"],
-				"settings": {"foreground": "#c678dd"},
-			},
-			{
-				"name": "heading 5, enums, preprocessor, constant, decorator",
-				"scope": ["keyword.control.xi"],
-				"settings": {"foreground": "#56b6c2"},
-			},
-			{
-				"name": "heading 6, number",
-				"scope": ["invalid.xi"],
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "string",
-				"scope": ["beginning.punctuation.definition.quote.markdown.xi"],
-				"settings": {"foreground": "#98c379"},
-			},
-			{
-				"name": "comments",
-				"scope": ["beginning.punctuation.definition.list.markdown.xi"],
-				"settings": {"foreground": "#7f848e"},
-			},
-			{
-				"name": "link",
-				"scope": ["constant.character.xi"],
-				"settings": {"foreground": "#61afef"},
-			},
-			{
-				"name": "accent",
-				"scope": ["accent.xi"],
-				"settings": {"foreground": "#61afef"},
-			},
-			{
-				"name": "wikiword",
-				"scope": ["wikiword.xi"],
-				"settings": {"foreground": "#d19a66"},
-			},
-			{
-				"name": "language operators like '+', '-' etc",
-				"scope": ["constant.other.color.rgb-value.xi"],
-				"settings": {"foreground": "#ffffff"},
-			},
-			{
-				"name": "elements to dim",
-				"scope": ["punctuation.definition.tag.xi"],
-				"settings": {"foreground": "#5c6370"},
-			},
-			{
-				"name": "C++/C#",
-				"scope": [
-					"entity.name.label.cs",
-					"entity.name.scope-resolution.function.call",
-					"entity.name.scope-resolution.function.definition",
-				],
-				"settings": {"foreground": "#e5c07b"},
-			},
-			{
-				"name": "Markdown underscore-style headers",
-				"scope": [
-					"entity.name.label.cs",
-					"markup.heading.setext.1.markdown",
-					"markup.heading.setext.2.markdown",
-				],
-				"settings": {"foreground": "#e06c75"},
-			},
-			{
-				"name": "meta.brace.square",
-				"scope": [" meta.brace.square"],
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "Comments",
-				"scope": "comment, punctuation.definition.comment",
-				"settings": {"fontStyle": "italic", "foreground": "#7f848e"},
-			},
-			{
-				"name": "[VSCODE-CUSTOM] Markdown Quote",
-				"scope": "markup.quote.markdown",
-				"settings": {"foreground": "#5c6370"},
-			},
-			{
-				"name": "punctuation.definition.block.sequence.item.yaml",
-				"scope": "punctuation.definition.block.sequence.item.yaml",
-				"settings": {"foreground": "#abb2bf"},
-			},
-			{
-				"name": "js/ts italic",
-				"scope": "entity.other.attribute-name.js,entity.other.attribute-name.ts,entity.other.attribute-name.jsx,entity.other.attribute-name.tsx,variable.parameter,variable.language.super",
-				"settings": {"fontStyle": "italic"},
-			},
-			{
-				"name": "comment",
-				"scope": "comment.line.double-slash,comment.block.documentation",
-				"settings": {"fontStyle": "italic"},
-			},
-			{
-				"name": "Python Keyword Control",
-				"scope": "keyword.control.import.python,keyword.control.flow.python",
-				"settings": {"fontStyle": "italic"},
-			},
-			{
-				"name": "markup.italic.markdown",
-				"scope": "markup.italic.markdown",
-				"settings": {"fontStyle": "italic"},
-			},
-		],
-		"colors": {
-			"activityBar.background": "#282c34",
-			"activityBar.foreground": "#d7dae0",
-			"activityBarBadge.background": "#4d78cc",
-			"activityBarBadge.foreground": "#f8fafd",
-			"badge.background": "#282c34",
-			"button.background": "#404754",
-			"debugToolBar.background": "#21252b",
-			"diffEditor.insertedTextBackground": "#00809b33",
-			"dropdown.background": "#21252b",
-			"dropdown.border": "#21252b",
-			"editor.background": "#282c34",
-			"editor.findMatchBackground": "#42557b",
-			"editor.findMatchBorder": "#457dff",
-			"editor.findMatchHighlightBackground": "#6199ff2f",
-			"editor.foreground": "#abb2bf",
-			"editor.lineHighlightBackground": "#2c313c",
-			"editor.selectionBackground": "#67769660",
-			"editor.selectionHighlightBackground": "#ffffff10",
-			"editor.selectionHighlightBorder": "#dddddd",
-			"editor.wordHighlightBackground": "#d2e0ff2f",
-			"editor.wordHighlightBorder": "#7f848e",
-			"editor.wordHighlightStrongBackground": "#abb2bf26",
-			"editor.wordHighlightStrongBorder": "#7f848e",
-			"editorActiveLineNumber.foreground": "#737984",
-			"editorBracketMatch.background": "#515a6b",
-			"editorBracketMatch.border": "#515a6b",
-			"editorCursor.background": "#ffffffc9",
-			"editorCursor.foreground": "#528bff",
-			"editorError.foreground": "#c24038",
-			"editorGroup.background": "#181a1f",
-			"editorGroup.border": "#181a1f",
-			"editorGroupHeader.tabsBackground": "#21252b",
-			"editorHoverWidget.background": "#21252b",
-			"editorHoverWidget.border": "#181a1f",
-			"editorIndentGuide.activeBackground": "#c8c8c859",
-			"editorIndentGuide.background": "#3b4048",
-			"editorLineNumber.foreground": "#495162",
-			"editorMarkerNavigation.background": "#21252b",
-			"editorRuler.foreground": "#abb2bf26",
-			"editorSuggestWidget.background": "#21252b",
-			"editorSuggestWidget.border": "#181a1f",
-			"editorSuggestWidget.selectedBackground": "#2c313a",
-			"editorWarning.foreground": "#d19a66",
-			"editorWhitespace.foreground": "#3b4048",
-			"editorWidget.background": "#21252b",
-			"focusBorder": "#464646",
-			"input.background": "#1d1f23",
-			"list.activeSelectionBackground": "#2c313a",
-			"list.activeSelectionForeground": "#d7dae0",
-			"list.focusBackground": "#383e4a",
-			"list.highlightForeground": "#c5c5c5",
-			"list.hoverBackground": "#292d35",
-			"list.inactiveSelectionBackground": "#2c313a",
-			"list.inactiveSelectionForeground": "#d7dae0",
-			"list.warningForeground": "#d19a66",
-			"menu.foreground": "#c8c8c8",
-			"panelSectionHeader.background": "#21252b",
-			"peekViewEditor.background": "#1b1d23",
-			"peekViewEditor.matchHighlightBackground": "#29244b",
-			"peekViewResult.background": "#22262b",
-			"scrollbarSlider.activeBackground": "#747d9180",
-			"scrollbarSlider.background": "#4e566660",
-			"scrollbarSlider.hoverBackground": "#5a637580",
-			"sideBar.background": "#21252b",
-			"sideBarSectionHeader.background": "#282c34",
-			"statusBar.background": "#21252b",
-			"statusBar.debuggingBackground": "#cc6633",
-			"statusBar.debuggingBorder": "#66017a",
-			"statusBar.debuggingForeground": "#ffffff",
-			"statusBar.foreground": "#9da5b4",
-			"statusBar.noFolderBackground": "#21252b",
-			"statusBarItem.hoverBackground": "#2c313a",
-			"statusBarItem.remoteBackground": "#4d78cc",
-			"statusBarItem.remoteForeground": "#f8fafd",
-			"tab.activeBackground": "#282c34",
-			"tab.activeForeground": "#dcdcdc",
-			"tab.border": "#181a1f",
-			"tab.hoverBackground": "#323842",
-			"tab.inactiveBackground": "#21252b",
-			"tab.unfocusedHoverBackground": "#323842",
-			"terminal.ansiBlack": "#3f4451",
-			"terminal.ansiBlue": "#4aa5f0",
-			"terminal.ansiBrightBlack": "#4f5666",
-			"terminal.ansiBrightBlue": "#4dc4ff",
-			"terminal.ansiBrightCyan": "#4cd1e0",
-			"terminal.ansiBrightGreen": "#a5e075",
-			"terminal.ansiBrightMagenta": "#de73ff",
-			"terminal.ansiBrightRed": "#ff616e",
-			"terminal.ansiBrightWhite": "#d7dae0",
-			"terminal.ansiBrightYellow": "#f0a45d",
-			"terminal.ansiCyan": "#42b3c2",
-			"terminal.ansiGreen": "#8cc265",
-			"terminal.ansiMagenta": "#c162de",
-			"terminal.ansiRed": "#e05561",
-			"terminal.ansiWhite": "#e6e6e6",
-			"terminal.ansiYellow": "#d18f52",
-			"terminal.background": "#282c34",
-			"terminal.border": "#abb2bf",
-			"terminal.foreground": "#abb2bf",
-			"terminal.selectionBackground": "#abb2bf30",
-			"textLink.foreground": "#61afef",
-			"titleBar.activeBackground": "#282c34",
-			"titleBar.activeForeground": "#9da5b4",
-			"titleBar.inactiveBackground": "#21252b",
-			"titleBar.inactiveForeground": "#6b717d",
-		},
-	};
-
-
-  // project-rome/@romefrontend/string-markup/grid/formatANSI.ts
-function ___R$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$ansiFormatText(
-		{name: tagName, attributes},
-		value,
-		opts,
-		features,
-	) {
-		switch (tagName) {
-			case "hyperlink": {
-				if (features.hyperlinks) {
-					return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.hyperlink(
-						attributes.get("target").asString(""),
-						value,
-					);
-				} else {
-					return value;
-				}
-			}
-
-			case "filelink": {
-				if (features.hyperlinks) {
-					const {filename} = ___R$project$rome$$romefrontend$string$markup$util_ts$buildFileLink(
-						attributes,
-						opts,
-					);
-					return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.hyperlink(
-						value,
-						"file://" + filename,
-					);
-				} else {
-					return value;
-				}
-			}
-		}
-
-		if (!features.color) {
-			return value;
-		}
-
-		switch (tagName) {
-			case "inverse":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.inverse(
-					value,
-				);
-
-			case "emphasis":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.bold(
-					value,
-				);
-
-			case "dim":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.dim(
-					value,
-				);
-
-			case "italic":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.italic(
-					value,
-				);
-
-			case "underline":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.underline(
-					value,
-				);
-
-			case "strike":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.strikethrough(
-					value,
-				);
-
-			case "error":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.red(
-					value,
-				);
-
-			case "success":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.green(
-					value,
-				);
-
-			case "warn":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.yellow(
-					value,
-				);
-
-			case "info":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.blue(
-					value,
-				);
-
-			case "command":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.italic(
-					value,
-				);
-
-			case "highlight": {
-				const index = Math.min(0, attributes.get("i").asNumber(0));
-				const fn = ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$ansiHighlightFactories[index %
-				___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$ansiHighlightFactories.length];
-				return fn(value);
-			}
-
-			case "color":
-				return ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$formatAnsiBackground(
-					___R$project$rome$$romefrontend$string$markup$tags_ts$validateColor(
-						attributes.get("bg").asStringOrVoid(),
-					),
-					___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$formatAnsiForeground(
-						___R$project$rome$$romefrontend$string$markup$tags_ts$validateColor(
-							attributes.get("fg").asStringOrVoid(),
-						),
-						value,
-					),
-				);
-
-			case "token":
-				return ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$formatToken(
-					___R$project$rome$$romefrontend$string$markup$tags_ts$validateTokenType(
-						attributes.get("type").asStringOrVoid(),
-					),
-					value,
-					opts,
-				);
-
-			default:
-				return value;
-		}
-	}
-
-	const ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$scopeToTokenTypes = {
-		"constant": ["number", "boolean"],
-		"constant.numeric": ["number"],
-		"constant.language.boolean": ["boolean"],
-		"variable.other.constant": ["boolean"],
-
-		"string": ["string"],
-		"string.regexp": ["regex"],
-
-		"comment": ["comment"],
-		"entity.name.function": ["function"],
-		//"": "operator"],
-		"punctuation": ["punctuation"],
-		//"variable": ["variable"],
-		"keyword": ["keyword"],
-
-		"entity.name.tag.html": ["tag"],
-		"punctuation.separator.key-value.html": ["attr-equals"],
-		"string.quoted.double.html": ["attr-value"],
-		"entity.other.attribute-name": ["attr-name"],
-		"entity.other.attribute-name.js": ["attr-name"],
-	};
-
-	function ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$normalizeFontStyle(
-		style,
-	) {
-		switch (style) {
-			case "italic":
-				return style;
-
-			default:
-				return "normal";
-		}
-	}
-
-	const ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$tokenColorsCache = new Map();
-	let ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$defaultTokenColors;
-
-	function ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$getTokenColors(
-		consumer,
-	) {
-		if (consumer === undefined) {
-			if (
-				___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$defaultTokenColors ===
-				undefined
-			) {
-				___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$defaultTokenColors = ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$getTokenColors(
-					___R$project$rome$$romefrontend$consume$index_ts$consumeUnknown(
-						___R$project$rome$$romefrontend$string$markup$syntax$theme$OneDarkPro_json$default,
-						"parse/vscodeTheme",
-					),
-				);
-			}
-
-			return ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$defaultTokenColors;
-		}
-
-		const cached = ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$tokenColorsCache.get(
-			consumer,
-		);
-		if (cached !== undefined) {
-			return cached;
-		}
-
-		const tokenTypeFormat = {};
-		___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$tokenColorsCache.set(
-			consumer,
-			tokenTypeFormat,
-		);
-
-		for (const prop of consumer.get("tokenColors").asArray()) {
-			const settings = prop.get("settings");
-			const scope = prop.get("scope");
-			const scopes = Array.isArray(scope.asUnknown())
-				? scope.asArray().map((elem) => elem.asString())
-				: scope.asString().split(",").map((scope) => scope.trim());
-
-			for (const scope of scopes) {
-				const tokenTypes = ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$scopeToTokenTypes[scope];
-				if (tokenTypes === undefined) {
-					continue;
-				}
-
-				for (const tokenType of tokenTypes) {
-					const existing = tokenTypeFormat[tokenType];
-
-					const newSettings = {};
-
-					if (settings.has("foreground")) {
-						newSettings.rgb = ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$hexToRgb(
-							settings.get("foreground").asString(),
-						);
-					}
-
-					if (settings.has("fontStyle")) {
-						newSettings.fontStyle = ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$normalizeFontStyle(
-							settings.get("fontStyle").asString(),
-						);
-					}
-
-					tokenTypeFormat[tokenType] = Object.assign({}, existing, newSettings);
-				}
-			}
-		}
-
-		return tokenTypeFormat;
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$formatToken(
-		type,
-		value,
-		opts,
-	) {
-		if (type === undefined) {
-			return value;
-		}
-
-		const tokenTypeFormat = ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$getTokenColors(
-			(opts == null ? undefined : opts.userConfig) == null
-				? undefined
-				: (opts == null ? undefined : opts.userConfig).syntaxTheme,
-		);
-		const format = tokenTypeFormat[type];
-
-		if (format === undefined) {
-			return value;
-		}
-
-		if (format.fontStyle === "italic") {
-			value = ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.italic(
-				value,
-			);
-		}
-
-		if (format.rgb === undefined) {
-			return value;
-		}
-
-		return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.rgb(
-			value,
-			format.rgb,
-		);
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$hexToRgb(
-		hex,
-	) {
-		if (hex === undefined) {
-			throw new Error("No color string passed");
-		}
-
-		const match = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-		if (match == null) {
-			throw new Error(hex + " is not a valid hex color");
-		}
-
-		return [
-			parseInt(match[1], 16),
-			parseInt(match[2], 16),
-			parseInt(match[3], 16),
-		];
-	}
-
-	// TODO fill this
-	const ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$ansiHighlightFactories = [
-		___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.magenta,
-		___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.cyan,
-	];
-
-	function ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$formatAnsiBackground(
-		bg,
-		text,
-	) {
-		if (bg === undefined) {
-			return text;
-		}
-
-		switch (bg) {
-			case "black":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.bgBlack(
-					text,
-				);
-
-			case "brightBlack":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.bgBrightBlack(
-					text,
-				);
-
-			case "red":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.bgRed(
-					text,
-				);
-
-			case "brightRed":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.bgBrightRed(
-					text,
-				);
-
-			case "green":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.bgGreen(
-					text,
-				);
-
-			case "brightGreen":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.bgBrightGreen(
-					text,
-				);
-
-			case "yellow":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.bgYellow(
-					text,
-				);
-
-			case "brightYellow":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.bgBrightYellow(
-					text,
-				);
-
-			case "blue":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.bgBlue(
-					text,
-				);
-
-			case "brightBlue":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.bgBrightBlue(
-					text,
-				);
-
-			case "magenta":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.bgMagenta(
-					text,
-				);
-
-			case "brightMagenta":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.bgBrightMagenta(
-					text,
-				);
-
-			case "cyan":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.bgCyan(
-					text,
-				);
-
-			case "brightCyan":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.bgBrightCyan(
-					text,
-				);
-
-			case "white":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.bgWhite(
-					text,
-				);
-
-			case "brightWhite":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.bgBrightWhite(
-					text,
-				);
-
-			default:
-				return text;
-		}
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$formatAnsiForeground(
-		fg,
-		text,
-	) {
-		if (fg === undefined) {
-			return text;
-		}
-
-		switch (fg) {
-			case "black":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.black(
-					text,
-				);
-
-			case "brightBlack":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.brightBlack(
-					text,
-				);
-
-			case "red":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.red(
-					text,
-				);
-
-			case "brightRed":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.brightRed(
-					text,
-				);
-
-			case "green":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.green(
-					text,
-				);
-
-			case "brightGreen":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.brightGreen(
-					text,
-				);
-
-			case "yellow":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.yellow(
-					text,
-				);
-
-			case "brightYellow":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.brightYellow(
-					text,
-				);
-
-			case "blue":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.blue(
-					text,
-				);
-
-			case "brightBlue":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.brightBlue(
-					text,
-				);
-
-			case "magenta":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.magenta(
-					text,
-				);
-
-			case "brightMagenta":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.brightMagenta(
-					text,
-				);
-
-			case "cyan":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.cyan(
-					text,
-				);
-
-			case "brightCyan":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.brightCyan(
-					text,
-				);
-
-			case "white":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.white(
-					text,
-				);
-
-			case "brightWhite":
-				return ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.brightWhite(
-					text,
-				);
-
-			default:
-				return text;
-		}
-	}
-
-
-  // project-rome/@romefrontend/string-markup/grid/formatHTML.ts
-function ___R$project$rome$$romefrontend$string$markup$grid$formatHTML_ts$htmlFormatText(
-		{name: tagName, attributes},
-		value,
-	) {
-		switch (tagName) {
-			case "hyperlink": {
-				return (
-					'<a href="' +
-					___R$project$rome$$romefrontend$html$parser$xhtmlEntities_ts$escapeXHTMLEntities(
-						attributes.get("target").asString(""),
-					) +
-					'">' +
-					value +
-					"</a>"
-				);
-			}
-
-			case "filelink": {
-				// We probably don't need filelinks if it's just for presentation in the browser?
-				//const filename = getFileLinkFilename(attributes, opts);
-				//return `<a href="file://${escapeXHTMLEntities(filename)}">${value}</a>`;
-				return (
-					'<span style="text-decoration-style: dotted;">' + value + "</span>"
-				);
-			}
-
-			case "inverse":
-				return (
-					'<span style="color: white; background-color: #ddd;">' +
-					value +
-					"</span>"
-				);
-
-			case "emphasis":
-				return "<strong>" + value + "</strong>";
-
-			case "dim":
-				return '<span style="opacity: 0.8;">' + value + '</span>"';
-
-			case "italic":
-				return "<i>" + value + '</i>"';
-
-			case "underline":
-				return "<u>" + value + '</u>"';
-
-			case "strike":
-				return "<strike>" + value + '</strike>"';
-
-			case "error":
-				return '<span style="color: Tomato;">' + value + "</span>";
-
-			case "success":
-				return '<span style="color: MediumSeaGreen;">' + value + "</span>";
-
-			case "warn":
-				return '<span style="color: Orange;">' + value + "</span>";
-
-			case "info":
-				return '<span style="color: DodgerBlue;">' + value + "</span>";
-
-			case "command":
-				return "<i>" + value + "</i>";
-
-			case "highlight": {
-				const index = Math.min(0, attributes.get("i").asNumber(0));
-				const color = ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatHTML_ts$highlightColors[index %
-				___R$$priv$project$rome$$romefrontend$string$markup$grid$formatHTML_ts$highlightColors.length];
-				return '<span style="color: ' + color + ';">' + value + "</span>";
-			}
-
-			case "color": {
-				const styles = [];
-
-				const fg = ___R$project$rome$$romefrontend$string$markup$tags_ts$validateColor(
-					attributes.get("fg").asStringOrVoid(),
-				);
-				if (fg !== undefined) {
-					styles.push("color: " + fg);
-				}
-
-				const bg = ___R$project$rome$$romefrontend$string$markup$tags_ts$validateColor(
-					attributes.get("bg").asStringOrVoid(),
-				);
-				if (bg !== undefined) {
-					styles.push("background-color: " + bg);
-				}
-
-				return '<span style="' + styles.join("; ") + '">' + value + "</span>";
-			}
-
-			case "token":
-				return (
-					'<span class="token ' +
-					attributes.get("type").asString("") +
-					'">' +
-					value +
-					"</span>"
-				);
-
-			default:
-				return value;
-		}
-	}
-
-	// TODO fill this with more
-	const ___R$$priv$project$rome$$romefrontend$string$markup$grid$formatHTML_ts$highlightColors = [
-		"magenta",
-		"cyan",
-	];
-
-
-  // project-rome/@romefrontend/events/Event.ts
-function ___R$$priv$project$rome$$romefrontend$events$Event_ts$noPromise(ret) {
-		if (ret instanceof Promise) {
-			throw new Error("Subscription returned promise for a callSync");
-		} else {
-			return ret;
-		}
-	}
-
-	class ___R$project$rome$$romefrontend$events$Event_ts$default {
-		constructor(opts) {
-			this.subscriptions = new Set();
-			this.rootSubscription = undefined;
-			this.name = opts.name;
-			this.options = opts;
-		}
-
-		onSubscriptionChange() {
-			// Hook for BridgeEvent
-		}
-
-		onError(err) {
-			const {onError} = this.options;
-			if (onError !== undefined) {
-				onError(err);
-			}
-		}
-
-		clear() {
-			this.subscriptions.clear();
-			this.rootSubscription = undefined;
-		}
-
-		hasSubscribers() {
-			return this.hasSubscriptions();
-		}
-
-		hasSubscriptions() {
-			return this.rootSubscription !== undefined;
-		}
-
-		// Dispatch the event without caring about the return values
-		send(param) {
-			const {rootSubscription} = this;
-			if (rootSubscription === undefined) {
-				return;
-			}
-
-			rootSubscription(param);
-
-			for (const callback of this.subscriptions) {
-				callback(param);
-			}
-		}
-
-		callSync(param) {
-			try {
-				const {rootSubscription, subscriptions} = this;
-				if (rootSubscription === undefined) {
-					throw new Error("No subscription for event " + this.name);
-				}
-
-				const ret = ___R$$priv$project$rome$$romefrontend$events$Event_ts$noPromise(
-					rootSubscription(param),
-				);
-				for (const callback of subscriptions) {
-					___R$$priv$project$rome$$romefrontend$events$Event_ts$noPromise(
-						callback(param),
-					);
-				}
-				return ret;
-			} catch (err) {
-				this.onError(err);
-				throw err;
-			}
-		}
-
-		async call(param) {
-			const {rootSubscription, subscriptions} = this;
-			if (rootSubscription === undefined) {
-				throw new Error("No subscription for event " + this.name);
-			}
-
-			try {
-				if (this.options.serial === true) {
-					const ret = await rootSubscription(param);
-					for (const callback of subscriptions) {
-						await callback(param);
-					}
-					return ret;
-				} else {
-					const res = await Promise.all([
-						rootSubscription(param),
-						...Array.from(subscriptions, (callback) => callback(param)),
-					]);
-
-					// Return the root subscription value
-					return res[0];
-				}
-			} catch (err) {
-				this.onError(err);
-				throw err;
-			}
-		}
-
-		wait(val, timeout) {
-			return new Promise((resolve, reject) => {
-				let timeoutId;
-				let timedOut = false;
-
-				if (timeout !== undefined) {
-					timeoutId = setTimeout(
-						() => {
-							timedOut = true;
-							listener.unsubscribe();
-							reject(
-								new Error(
-									"Timed out after waiting " + timeout + "ms for " + this.name,
-								),
-							);
-						},
-						timeout,
-					);
-				}
-
-				const listener = this.subscribe((param) => {
-					if (timedOut) {
-						return val;
-					}
-
-					if (timeoutId !== undefined) {
-						clearTimeout(timeoutId);
-					}
-
-					listener.unsubscribe();
-					resolve(param);
-					return val;
-				});
-			});
-		}
-
-		async callOptional(param) {
-			if (this.rootSubscription === undefined) {
-				return undefined;
-			} else {
-				return this.call(param);
-			}
-		}
-
-		subscribe(callback, makeRoot) {
-			if (this.options.unique === true && this.subscriptions.size !== 0) {
-				throw new Error(
-					"Event " + this.name + " only allows a single subscription",
-				);
-			}
-
-			if (this.rootSubscription === callback || this.subscriptions.has(callback)) {
-				throw new Error("Cannot double subscribe a callback");
-			}
-
-			if (this.rootSubscription === undefined) {
-				this.rootSubscription = callback;
-			} else if (makeRoot === true) {
-				this.subscriptions.add(this.rootSubscription);
-				this.rootSubscription = callback;
-			} else {
-				this.subscriptions.add(callback);
-			}
-
-			this.onSubscriptionChange();
-
-			return {
-				unsubscribe: async () => {
-					this.unsubscribe(callback);
-				},
-			};
-		}
-
-		unsubscribe(callback) {
-			if (this.subscriptions.has(callback)) {
-				this.subscriptions.delete(callback);
-				this.onSubscriptionChange();
-				return;
-			}
-
-			// If this callback was the root subscription, then set it to the next one
-			if (callback === this.rootSubscription) {
-				this.rootSubscription = Array.from(this.subscriptions)[0];
-				this.subscriptions.delete(this.rootSubscription);
-				this.onSubscriptionChange();
-				return;
-			}
-		}
-	}
-
-
-  // project-rome/@romefrontend/events/BridgeError.ts
-class ___R$project$rome$$romefrontend$events$BridgeError_ts$default
-		extends Error {
-		constructor(message, bridge) {
-			super(message);
-			this.bridge = bridge;
-		}
-	}
-
-
-  // project-rome/@romefrontend/events/BridgeEvent.ts
-function ___R$$priv$project$rome$$romefrontend$events$BridgeEvent_ts$validateDirection(
-		// rome-ignore lint/js/noExplicitAny
-		event,
-		invalidDirections,
-		verb,
-	) {
-		invalidDirections.push(["server<->client", "server&client"]);
-
-		for (const [eventDirection, bridgeType] of invalidDirections) {
-			if (event.direction === eventDirection && event.bridge.type === bridgeType) {
-				throw new Error(
-					"The " +
-					eventDirection +
-					' event "' +
-					event.name +
-					'" cannot be ' +
-					verb +
-					" by a " +
-					bridgeType +
-					" bridge",
-				);
-			}
-		}
-	}
-
-	class ___R$project$rome$$romefrontend$events$BridgeEvent_ts$default
-		extends ___R$project$rome$$romefrontend$events$Event_ts$default {
-		constructor(opts, bridge) {
-			super(opts);
-
-			this.bridge = bridge;
-			this.requestCallbacks = new Map();
-			this.direction = opts.direction;
-		}
-
-		clear() {
-			super.clear();
-			this.requestCallbacks.clear();
-		}
-
-		end(err) {
-			for (const {reject} of this.requestCallbacks.values()) {
-				reject(err);
-			}
-		}
-
-		onSubscriptionChange() {
-			___R$$priv$project$rome$$romefrontend$events$BridgeEvent_ts$validateDirection(
-				this,
-				[["server->client", "client"], ["server<-client", "server"]],
-				"subscribed",
-			);
-			this.bridge.sendSubscriptions();
-		}
-
-		dispatchRequest(param) {
-			return super.call(param);
-		}
-
-		dispatchResponse(id, data) {
-			const callbacks = this.requestCallbacks.get(id);
-			if (!callbacks) {
-				// ???
-				return;
-			}
-
-			this.requestCallbacks.delete(id);
-
-			if (data.responseStatus === "success") {
-				// @ts-ignore
-				callbacks.resolve(data.value);
-			} else if (data.responseStatus === "error") {
-				try {
-					callbacks.reject(this.bridge.buildError(data.value, data.metadata));
-				} catch (err) {
-					callbacks.reject(err);
-				}
-			} else {
-				// ???
-			}
-
-			if (callbacks.completed !== undefined) {
-				callbacks.completed();
-			}
-		}
-
-		hasSubscribers() {
-			return this.bridge.listeners.has(this.name);
-		}
-
-		validateCanSend() {
-			___R$$priv$project$rome$$romefrontend$events$BridgeEvent_ts$validateDirection(
-				this,
-				[["server<-client", "client"], ["server->client", "server"]],
-				"called",
-			);
-		}
-
-		send(param) {
-			if (!this.hasSubscribers()) {
-				// No point in sending over a subscription that doesn't have a listener
-				return;
-			}
-
-			this.validateCanSend();
-			this.bridge.assertAlive();
-			this.bridge.sendMessage({
-				type: "request",
-				event: this.name,
-				param,
-				priority: false,
-			});
-		}
-
-		async call(param, opts = {}) {
-			const {priority = false, timeout} = opts;
-			this.validateCanSend();
-
-			try {
-				return await new Promise((resolve, reject) => {
-					this.bridge.assertAlive();
-
-					const id = this.bridge.getNextMessageId();
-
-					let completed;
-					if (timeout !== undefined) {
-						const timeoutId = setTimeout(
-							() => {
-								// Remove the request callback
-								this.requestCallbacks.delete(id);
-
-								// Reject the promise
-								reject(
-									new ___R$project$rome$$romefrontend$events$BridgeError_ts$default(
-										"Timeout of " +
-										String(timeout) +
-										"ms for " +
-										this.name +
-										"(" +
-										String(JSON.stringify(param)) +
-										") event exceeded",
-										this.bridge,
-									),
-								);
-							},
-							timeout,
-						);
-
-						// Cancel the timeout if the response returns before the timer
-						completed = () => {
-							clearTimeout(timeoutId);
-						};
-					}
-
-					this.requestCallbacks.set(
-						id,
-						{
-							completed,
-							reject,
-							resolve,
-						},
-					);
-
-					this.bridge.sendMessage({
-						id,
-						event: this.name,
-						param,
-						type: "request",
-						priority,
-					});
-				});
-			} catch (err) {
-				this.onError(err);
-				throw err;
-			}
-		}
-
-		callSync() {
-			throw new Error("callSync not allowed on BridgeEvent " + this.name);
-		}
-
-		callOptional() {
-			throw new Error("callOptional not allowed on BridgeEvent " + this.name);
-		}
-	}
-
-
-  // project-rome/@romefrontend/events/Bridge.ts
-class ___R$project$rome$$romefrontend$events$Bridge_ts$default {
-		constructor(opts) {
-			this.errorTransports = new Map();
-
-			this.alive = true;
-			this.endError = undefined;
-			this.type = opts.type;
-			this.opts = opts;
-
-			this.messageIdCounter = 0;
-			this.events = new Map();
-
-			this.hasHandshook = false;
-			this.handshakeEvent = new ___R$project$rome$$romefrontend$events$Event_ts$default({
-				name: "Bridge.handshake",
-			});
-			this.endEvent = new ___R$project$rome$$romefrontend$events$Event_ts$default({
-				name: "Bridge.end",
-				serial: true,
-			});
-			this.updatedListenersEvent = new ___R$project$rome$$romefrontend$events$Event_ts$default({
-				name: "Bridge.updatedListenersEvent",
-			});
-
-			// A Set of event names that are being listened to on the other end
-
-			// We track this to avoid sending over subscriptions that aren't needed
-			this.listeners = new Set();
-
-			this.prioritizedResponses = new Set();
-			this.deprioritizedResponseQueue = [];
-
-			this.postHandshakeQueue = [];
-
-			this.heartbeatEvent = this.createEvent({
-				name: "Bridge.heartbeat",
-				direction: "server<->client",
-			});
-
-			if (this.type !== "server&client") {
-				this.heartbeatEvent.subscribe(() => {
-					return undefined;
-				});
-			}
-
-			this.init();
-		}
-
-		attachEndSubscriptionRemoval(subscription) {
-			this.endEvent.subscribe(() => {
-				subscription.unsubscribe();
-			});
-		}
-
-		monitorHeartbeat(timeout, onExceeded) {
-			if (this.type === "server&client") {
-				// No point in monitoring this since we're the same process
-				return;
-			}
-
-			this.heartbeatTimeout = setTimeout(
-				async () => {
-					try {
-						await this.heartbeatEvent.call(undefined, {timeout});
-						this.monitorHeartbeat(timeout, onExceeded);
-					} catch (err) {
-						if (
-							err instanceof
-							___R$project$rome$$romefrontend$events$BridgeError_ts$default
-						) {
-							if (this.alive) {
-								onExceeded();
-							}
-						} else {
-							throw err;
-						}
-					}
-				},
-				1_000,
-			);
-		}
-
-		clearPrioritization(id) {
-			this.prioritizedResponses.delete(id);
-
-			if (this.prioritizedResponses.size === 0) {
-				for (const msg of this.deprioritizedResponseQueue) {
-					this.sendMessage(msg);
-				}
-				this.deprioritizedResponseQueue = [];
-			}
-		}
-
-		async handshake(opts = {}) {
-			if (this.hasHandshook) {
-				throw new Error("Already performed handshake");
-			}
-
-			const {timeout, second = false} = opts;
-
-			// Send a handshake in case we were the first
-			if (!second) {
-				this.sendMessage({
-					type: "handshake",
-					first: true,
-					subscriptions: this.getSubscriptions(),
-				});
-			}
-
-			// Wait for a handshake from the other end
-			const res = await this.handshakeEvent.wait(undefined, timeout);
-
-			if (res.first) {
-				// Send the handshake again, as it wouldn't have received the first
-				this.sendMessage({
-					type: "handshake",
-					first: false,
-					subscriptions: this.getSubscriptions(),
-				});
-			}
-
-			this.receivedSubscriptions(res.subscriptions);
-
-			this.hasHandshook = true;
-
-			for (const msg of this.postHandshakeQueue) {
-				this.sendMessage(msg);
-			}
-			this.postHandshakeQueue = [];
-		}
-
-		getSubscriptions() {
-			const names = [];
-			for (const event of this.events.values()) {
-				if (event.hasSubscriptions()) {
-					names.push(event.name);
-				}
-			}
-			return names;
-		}
-
-		sendSubscriptions() {
-			if (!this.hasHandshook) {
-				// If we haven't had the handshake then no point sending them. They'll be sent all at once after
-				return;
-			}
-
-			// Nobody to send an update to
-			if (!this.alive) {
-				return;
-			}
-
-			// Notify the other side of what we're currently subscribed to
-			// We send over a list of all of our subscriptions every time
-			// This is fine since we don't change subscriptions often and they aren't very large
-			// If we have a lot of subscriptions, or are changing them a lot in the future then this could be optimized
-			this.sendMessage({
-				type: "subscriptions",
-				names: this.getSubscriptions(),
-			});
-		}
-
-		receivedSubscriptions(names) {
-			this.listeners = new Set(names);
-			this.updatedListenersEvent.send(this.listeners);
-		}
-
-		init() {
-			// This method can be overridden by subclasses, it allows you to add logic such as error serializers
-		}
-
-		clear() {
-			for (const [, event] of this.events) {
-				event.clear();
-			}
-		}
-
-		getNextMessageId() {
-			return ++this.messageIdCounter;
-		}
-
-		createEvent(opts) {
-			if (this.events.has(opts.name)) {
-				throw new Error("Duplicate event");
-			}
-
-			const event = new ___R$project$rome$$romefrontend$events$BridgeEvent_ts$default(
-				opts,
-				this,
-			);
-			this.events.set(opts.name, event);
-			return event;
-		}
-
-		//# Connection death
-		assertAlive() {
-			if (this.endError !== undefined) {
-				throw this.endError;
-			}
-		}
-
-		endWithError(err) {
-			if (this.alive === false) {
-				return;
-			}
-
-			this.alive = false;
-			this.endError = err;
-
-			// Reject any pending requests
-			for (const [, event] of this.events) {
-				event.end(err);
-			}
-			this.clear();
-
-			// Clear any currently processing heartbeat
-			if (this.heartbeatTimeout !== undefined) {
-				clearTimeout(this.heartbeatTimeout);
-			}
-
-			// Notify listeners
-			this.endEvent.callSync(err);
-		}
-
-		end(message = "Connection died") {
-			this.endWithError(
-				new ___R$project$rome$$romefrontend$events$BridgeError_ts$default(
-					message,
-					this,
-				),
-			);
-		}
-
-		//# Error serialization
-		buildError(struct, data) {
-			const transport = this.errorTransports.get(struct.name);
-			if (transport === undefined) {
-				const err = new Error(struct.message);
-				err.name = struct.name || "Error";
-				err.stack = struct.stack;
-				err[___R$project$rome$$romefrontend$v8$errors_ts$ERROR_FRAMES_PROP] = struct.frames;
-				return err;
-			} else {
-				return transport.hydrate(struct, data);
-			}
-		}
-
-		buildErrorResponse(id, event, errRaw) {
-			// Just in case something that wasn't an Error was thrown
-			const err = errRaw instanceof Error ? errRaw : new Error(String(errRaw));
-
-			// Fetch some metadata for hydration
-			const tranport = this.errorTransports.get(err.name);
-			const metadata = tranport === undefined ? {} : tranport.serialize(err);
-
-			return {
-				id,
-				event,
-				type: "response",
-				responseStatus: "error",
-				value: ___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(
-					err,
-				),
-				metadata,
-			};
-		}
-
-		addErrorTransport(name, transport) {
-			this.errorTransports.set(name, transport);
-		}
-
-		//# Message transmission
-		sendMessage(msg) {
-			// There's no try-catch gated around sendMessage because the call stack here will include some other error handler
-			// We need to be specific for handleMessage because it could come from anywhere
-			if (msg.type !== "handshake" && !this.hasHandshook) {
-				this.postHandshakeQueue.push(msg);
-				return;
-			}
-
-			this.assertAlive();
-
-			if (msg.type === "response") {
-				if (
-					this.prioritizedResponses.size > 0 &&
-					!this.prioritizedResponses.has(msg.id)
-				) {
-					this.deprioritizedResponseQueue.push(msg);
-					return;
-				}
-
-				if (this.prioritizedResponses.has(msg.id)) {
-					this.clearPrioritization(msg.id);
-				}
-			}
-
-			const {opts} = this;
-			opts.sendMessage(msg);
-			if (opts.onSendMessage !== undefined) {
-				opts.onSendMessage(msg);
-			}
-		}
-
-		handleJSONMessage(str) {
-			try {
-				const data = JSON.parse(str);
-				this.handleMessage(data);
-			} catch (err) {
-				if (err instanceof SyntaxError) {
-					this.endWithError(
-						new ___R$project$rome$$romefrontend$events$BridgeError_ts$default(
-							"Error parsing message JSON: " + err.message,
-							this,
-						),
-					);
-				} else {
-					this.endWithError(err);
-				}
-			}
-		}
-
-		handleMessage(msg) {
-			try {
-				this.assertAlive();
-
-				if (msg.type === "handshake") {
-					this.handshakeEvent.send({
-						subscriptions: msg.subscriptions,
-						first: msg.first,
-					});
-				}
-
-				if (msg.type === "subscriptions") {
-					this.receivedSubscriptions(msg.names);
-				}
-
-				if (msg.type === "request") {
-					this.handleMessageRequest(msg);
-				}
-
-				if (msg.type === "response") {
-					this.handleMessageResponse(msg);
-				}
-			} catch (err) {
-				this.endWithError(err);
-			}
-		}
-
-		handleMessageResponse(data) {
-			const {id, event} = data;
-			if (id === undefined) {
-				throw new Error("Expected id");
-			}
-			if (event === undefined) {
-				throw new Error("Expected event");
-			}
-
-			const eventHandler = this.events.get(event);
-			if (eventHandler === undefined) {
-				throw new Error("Unknown event");
-			}
-
-			eventHandler.dispatchResponse(id, data);
-		}
-
-		handleMessageRequest(data) {
-			const {id, event, param, priority} = data;
-			if (event === undefined) {
-				throw new Error("Expected event in message request but received none");
-			}
-
-			const eventHandler = this.events.get(event);
-			if (eventHandler === undefined) {
-				throw new Error("Unknown event " + event);
-			}
-
-			if (id === undefined) {
-				// We don't need to do anything with the return value of this since
-				// there's nothing on the other end to catch it
-				eventHandler.dispatchRequest(param);
-			} else {
-				if (priority) {
-					this.prioritizedResponses.add(id);
-				}
-
-				eventHandler.dispatchRequest(param).then((value) => {
-					this.sendMessage({
-						event,
-						id,
-						type: "response",
-						responseStatus: "success",
-						value,
-					});
-				}).catch((err) => {
-					this.sendMessage(this.buildErrorResponse(id, event, err));
-				}).catch((err) => this.endWithError(err));
-			}
-		}
-	}
-
-
-  // project-rome/@romefrontend/events/bridgeCreators.ts
-const ___R$project$rome$$romefrontend$events$bridgeCreators_ts = {
-		createBridgeFromWebSocketInterface: ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromWebSocketInterface,
-		createBridgeFromBrowserWebSocket: ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromBrowserWebSocket,
-		createBridgeFromSocket: ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromSocket,
-		createBridgeFromLocal: ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromLocal,
-		createBridgeFromChildProcess: ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromChildProcess,
-		createBridgeFromParentProcess: ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromParentProcess,
-	};
-	const ___R$$priv$project$rome$$romefrontend$events$bridgeCreators_ts$SOCKET_LENGTH = /^(\d+):/;
-
-	// JSON.stringify but throw on bad data types
-	// Most likely slower... But safer and our data structures are usually fairly shallow
-	function ___R$$priv$project$rome$$romefrontend$events$bridgeCreators_ts$stringify(
-		obj,
-	) {
-		return JSON.stringify(
-			obj,
-			(key, value) => {
-				const type = typeof value;
-
-				if (value === undefined || value === null) {
-					return value;
-				}
-
-				// Primitives
-				if (type === "string" || type === "number" || type === "boolean") {
-					return value;
-				}
-
-				// Arrays and plain objects
-				if (Array.isArray(value) || value.constructor === Object) {
-					return value;
-				}
-
-				throw new Error(
-					"Illegal data type not allowed in JSON: " +
-					___R$project$rome$$romefrontend$pretty$format$index_ts$default(value) +
-					" in " +
-					___R$project$rome$$romefrontend$pretty$format$index_ts$default(obj),
-				);
-			},
-		);
-	}
-
-	function ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromWebSocketInterface(
-		CustomBridge,
-		inf,
-		opts,
-	) {
-		const bridge = new CustomBridge(
-			Object.assign(
-				{},
-				opts,
-				{
-					sendMessage: (data) => {
-						inf.sendJSON(data);
-					},
-				},
-			),
-		);
-
-		const {socket} = inf;
-
-		bridge.endEvent.subscribe(() => {
-			socket.end();
-		});
-
-		inf.completeFrameEvent.subscribe((frame) => {
-			const json = frame.payload.toString();
-			bridge.handleJSONMessage(json);
-		});
-
-		socket.on(
-			"error",
-			(err) => {
-				bridge.endWithError(err);
-			},
-		);
-
-		socket.on(
-			"end",
-			() => {
-				bridge.end("RPC WebSocket died");
-			},
-		);
-
-		return bridge;
-	}
-
-	function ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromBrowserWebSocket(
-		CustomBridge,
-		socket,
-		opts,
-	) {
-		const bridge = new CustomBridge(
-			Object.assign(
-				{},
-				opts,
-				{
-					sendMessage: (data) => {
-						socket.send(
-							___R$$priv$project$rome$$romefrontend$events$bridgeCreators_ts$stringify(
-								data,
-							),
-						);
-					},
-				},
-			),
-		);
-
-		bridge.endEvent.subscribe(() => {
-			socket.close();
-		});
-
-		socket.onmessage = function(event) {
-			bridge.handleJSONMessage(String(event.data));
-		};
-
-		socket.onclose = () => {
-			bridge.end("RPC WebSocket disconnected");
-		};
-
-		return bridge;
-	}
-
-	function ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromSocket(
-		CustomBridge,
-		socket,
-		opts,
-	) {
-		const bridge = new CustomBridge(
-			Object.assign(
-				{},
-				opts,
-				{
-					sendMessage: (data) => {
-						const serialized = ___R$$priv$project$rome$$romefrontend$events$bridgeCreators_ts$stringify(
-							data,
-						);
-						socket.write(serialized.length + ":" + serialized);
-					},
-				},
-			),
-		);
-
-		bridge.endEvent.subscribe(() => {
-			socket.end();
-		});
-
-		// buffer data and parse message on newline
-		let buff = "";
-		let messageLength = 0;
-		socket.setEncoding("utf8");
-		function checkForPossibleMessage() {
-			// we're awaiting a message and have received it
-			if (messageLength > 0 && buff.length >= messageLength) {
-				// retrieve the message from the buffer
-				const msg = buff.slice(0, messageLength);
-
-				// clear the next message length and remove the current message from the buffer
-				buff = buff.slice(messageLength);
-				messageLength = 0;
-
-				// parse it
-				bridge.handleJSONMessage(msg);
-			}
-
-			// if we aren't waiting for a message and we have a buffer then check for an incoming message
-			if (messageLength === 0 && buff !== "") {
-				// check if we've received the starting info of a message
-				const possibleLength = buff.match(
-					___R$$priv$project$rome$$romefrontend$events$bridgeCreators_ts$SOCKET_LENGTH,
-				);
-				if (possibleLength != null) {
-					// get the message length
-					messageLength = Number(possibleLength[1]);
-
-					// remove the length designator
-					buff = buff.slice(possibleLength[0].length);
-
-					// check if we have a full message
-					checkForPossibleMessage();
-				}
-			}
-		}
-
-		socket.on(
-			"data",
-			(chunk) => {
-				buff += chunk;
-				checkForPossibleMessage();
-			},
-		);
-
-		socket.on(
-			"error",
-			(err) => {
-				bridge.endWithError(err);
-			},
-		);
-
-		socket.on(
-			"end",
-			() => {
-				bridge.end("Socket disconnected");
-			},
-		);
-
-		return bridge;
-	}
-
-	function ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromLocal(
-		CustomBridge,
-		opts,
-	) {
-		const bridge = new CustomBridge(
-			Object.assign(
-				{},
-				opts,
-				{
-					type: "server&client",
-					sendMessage: (msg) => {
-						bridge.handleMessage(msg);
-					},
-				},
-			),
-		);
-
-		return bridge;
-	}
-
-	function ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromChildProcess(
-		CustomBridge,
-		proc,
-		opts,
-	) {
-		const bridge = new CustomBridge(
-			Object.assign(
-				{},
-				opts,
-				{
-					sendMessage: (data) => {
-						proc.send(data);
-					},
-				},
-			),
-		);
-
-		bridge.endEvent.subscribe(() => {
-			proc.kill();
-		});
-
-		proc.on(
-			"error",
-			(err) => {
-				bridge.endWithError(err);
-			},
-		);
-
-		proc.on(
-			"message",
-			(msg) => {
-				bridge.handleMessage((msg));
-			},
-		);
-
-		// Catch process dying and reject any requests in flight
-		proc.on(
-			"close",
-			() => {
-				bridge.end("RPC child process died");
-			},
-		);
-
-		return bridge;
-	}
-
-	function ___R$project$rome$$romefrontend$events$bridgeCreators_ts$createBridgeFromParentProcess(
-		CustomBridge,
-		opts,
-	) {
-		const bridge = new CustomBridge(
-			Object.assign(
-				{},
-				opts,
-				{
-					sendMessage: (data) => {
-						if (typeof process.send === "function") {
-							process.send(data);
-						} else {
-							throw new Error("No process.send found");
-						}
-					},
-				},
-			),
-		);
-
-		process.on(
-			"message",
-			(data) => {
-				bridge.handleMessage(data);
-			},
-		);
-
-		// I doubt any of these will have time to dispatch but for consistency sake...
-		process.on(
-			"exit",
-			() => {
-				bridge.end("RPC self process died");
-			},
-		);
-
-		return bridge;
-	}
-
-
-  // project-rome/@romefrontend/events/types.ts
-const ___R$project$rome$$romefrontend$events$types_ts = {};
-
-
-  // project-rome/@romefrontend/events/utils.ts
-const ___R$project$rome$$romefrontend$events$utils_ts = {
-		mergeEventSubscriptions: ___R$project$rome$$romefrontend$events$utils_ts$mergeEventSubscriptions,
-	};
-	function ___R$project$rome$$romefrontend$events$utils_ts$mergeEventSubscriptions(
-		subs,
-	) {
-		return {
-			async unsubscribe() {
-				for (const sub of subs) {
-					await sub.unsubscribe();
-				}
-			},
-		};
-	}
-
-
-  // project-rome/@romefrontend/events/index.ts
-
-
-
-  // project-rome/@romefrontend/environment/index.ts
-const ___R$$priv$project$rome$$romefrontend$environment$index_ts$stream = require(
-		"stream",
-	);
-	const ___R$project$rome$$romefrontend$environment$index_ts$TERMINAL_FEATURES_DEFAULT = {
-		columns: 100,
-		cursor: true,
-		progressBars: true,
-		unicode: true,
-		hyperlinks: true,
-		color: true,
-	};
-
-	function ___R$project$rome$$romefrontend$environment$index_ts$getEnvVar(key) {
-		const value = process.env[key];
-		if (value === undefined) {
-			return {type: "UNDEFINED", value: undefined};
-		}
-		if (value === "0" || value === "false") {
-			return {type: "DISABLED", value: false};
-		}
-		if (value === "1" || value === "true") {
-			return {type: "ENABLED", value: true};
-		}
-		return {type: "ENABLED", value};
-	}
-
-	function ___R$project$rome$$romefrontend$environment$index_ts$inferTerminalFeatures(
-		stdout,
-		force = {},
-	) {
-		const isTTY = (stdout == null ? undefined : stdout.isTTY) === true;
-
-		let columns = ___R$project$rome$$romefrontend$environment$index_ts$TERMINAL_FEATURES_DEFAULT.columns;
-		let unicode = false;
-		let isCI = false;
-
-		// Only apply this environment sniffing when we've been given a process stdout stream
-		// Otherwise it'll be some custom stream and if they really want to infer from the environment
-		// Then they will do it on process.stdout and pass the features as the force param
-		if (
-			stdout !== undefined &&
-			(stdout === process.stdout || stdout === process.stderr)
-		) {
-			unicode = process.platform !== "win32";
-			isCI = ___R$project$rome$$romefrontend$environment$index_ts$isCIEnv();
-		}
-
-		if (stdout === undefined || stdout.columns === undefined) {
-			// Increase column size for CI
-			if (isCI) {
-				columns = 200;
-			}
-		} else if (stdout.columns !== undefined) {
-			columns = stdout.columns;
-		}
-
-		const fancyAnsi = isTTY && !isCI;
-
-		let features = ___R$project$rome$$romefrontend$typescript$helpers$index_ts$mergeObjects(
-			{
-				columns,
-				cursor: fancyAnsi,
-				hyperlinks: fancyAnsi,
-				progressBars: fancyAnsi,
-				color: isTTY || isCI,
-				unicode,
-			},
-			force,
-		);
-
-		const updateEvent = new ___R$project$rome$$romefrontend$events$Event_ts$default({
-			name: "update",
-		});
-
-		let closeUpdateEvent = () => {};
-		let setupUpdateEvent = () => {};
-
-		// Watch for resizing, unless force.columns has been set and we'll consider it to be fixed
-		if (stdout !== undefined && force.columns === undefined) {
-			function onStdoutResize() {
-				if ((stdout == null ? undefined : stdout.columns) !== undefined) {
-					features = Object.assign({}, features, {columns: stdout.columns});
-					updateEvent.send(features);
-				}
-			}
-
-			setupUpdateEvent = () => {
-				stdout.on("resize", onStdoutResize);
-			};
-
-			closeUpdateEvent = () => {
-				stdout.off("resize", onStdoutResize);
-			};
-		}
-
-		return {
-			updateEvent,
-			features,
-			setupUpdateEvent,
-			closeUpdateEvent,
-		};
-	}
-
-	const ___R$$priv$project$rome$$romefrontend$environment$index_ts$CI_ENV_NAMES = [
-		"TRAVIS",
-		"CIRCLECI",
-		"APPVEYOR",
-		"GITLAB_CI",
-		"GITHUB_ACTIONS",
-	];
-
-	function ___R$project$rome$$romefrontend$environment$index_ts$isCIEnv() {
-		for (const key of ___R$$priv$project$rome$$romefrontend$environment$index_ts$CI_ENV_NAMES) {
-			if (
-				___R$project$rome$$romefrontend$environment$index_ts$getEnvVar(key).type ===
-				"ENABLED"
-			) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-
-  // project-rome/@romefrontend/string-markup/grid/Grid.ts
-function ___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$cursorToIndex(
-		cursor,
-	) {
-		return {
-			line: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(cursor.line) -
-			1,
-			column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
-				cursor.column,
-			) - 1,
-		};
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$createTag(
-		name,
-		attributes = ___R$project$rome$$romefrontend$string$markup$util_ts$createEmptyAttributes(),
-		children = [],
-	) {
-		return {
-			type: "Tag",
-			name,
-			attributes,
-			children,
-		};
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$extractViewTags(
-		tag,
-	) {
-		let pointer;
-		let linePrefixes = [];
-		let children = [];
-
-		for (const child of tag.children) {
-			if (child.type === "Tag") {
-				if (child.name === "viewLinePrefix") {
-					linePrefixes.push(child);
-					continue;
-				} else if (child.name === "viewPointer") {
-					pointer = child;
-					continue;
-				}
-			}
-
-			children.push(child);
-		}
-
-		return {pointer, linePrefixes, children};
-	}
-
-	class ___R$project$rome$$romefrontend$string$markup$grid$Grid_ts$default {
-		constructor(opts) {
-			this.viewportWidth =
-				opts.columns === undefined
-					? undefined
-					: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(
-							opts.columns,
-						);
-			this.options = opts;
-
-			this.features =
-				opts.features === undefined
-					? ___R$project$rome$$romefrontend$environment$index_ts$TERMINAL_FEATURES_DEFAULT
-					: opts.features;
-
-			this.cursor = {
-				line: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1,
-				column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1,
-			};
-
-			this.sourceCursor = {
-				currentLineText: "",
-				currentLine: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1,
-				currentColumn: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1,
-			};
-
-			this.lineStartMeta = {
-				softWrapped: false,
-				indentationCount: 0,
-				sourceColumn: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1,
-			};
-
-			const {lineWrapMode = "word-break"} = opts.view;
-			this.lineWrapMode = lineWrapMode;
-			this.width = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1;
-
-			this.lines = [];
-		}
-
-		alignRight() {
-			const viewportWidth = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get(
-				this.viewportWidth,
-			);
-			if (viewportWidth === undefined) {
-				return;
-			}
-
-			this.lines = this.lines.map(({ranges, columns}) => {
-				const newColumns = [...columns];
-				let offset = 0;
-
-				// Pad out line to viewport width
-				while (newColumns.length < viewportWidth) {
-					offset++;
-					newColumns.unshift(" ");
-				}
-
-				// Skip if all it contains is spaces
-
-				let onlySpaces = true;
-				for (const char of newColumns) {
-					if (char !== " ") {
-						onlySpaces = false;
-					}
-				}
-				if (onlySpaces) {
-					return {
-						columns: newColumns,
-						ranges,
-					};
-				}
-
-				const newRanges = ranges.map((range) => {
-					return {
-						start: range.start + offset,
-						end: range.end + offset,
-						ancestry: range.ancestry,
-					};
-				});
-
-				return {
-					ranges: newRanges,
-					columns: newColumns,
-				};
-			});
-		}
-
-		doesOverflowViewport(column) {
-			return (
-				this.lineWrapMode !== "none" &&
-				this.viewportWidth !== undefined &&
-				___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(column) >
-				___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(this.viewportWidth)
-			);
-		}
-
-		getHeight() {
-			return ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(
-				this.lines.length,
-			);
-		}
-
-		getLine(lineIndex) {
-			// Pad lines
-			for (let i = lineIndex; i >= 0 && this.lines[i] === undefined; i--) {
-				this.lines[i] = {ranges: [], columns: []};
-			}
-			return this.lines[lineIndex];
-		}
-
-		getLineWidth(lineIndex) {
-			return this.getLine(lineIndex).columns.length;
-		}
-
-		getWidth() {
-			return this.width;
-		}
-
-		getSize() {
-			return {
-				height: this.getHeight(),
-				width: this.getWidth(),
-			};
-		}
-
-		getCursor() {
-			return Object.assign({}, this.cursor);
-		}
-
-		getLines(format) {
-			switch (format) {
-				case "ansi":
-					return this.getFormattedAnsiLines();
-
-				case "html":
-					return this.getFormattedHtmlLines();
-
-				case "none":
-					return this.getUnformattedLines();
-			}
-		}
-
-		getTrimmedLines(trimColumns = true) {
-			// Remove trailing spaces
-			let lines = this.lines;
-
-			if (trimColumns) {
-				lines = lines.map((line) => {
-					let {columns} = line;
-
-					if (columns[columns.length - 1] === " ") {
-						columns = [...columns];
-						while (columns[columns.length - 1] === " ") {
-							columns.pop();
-						}
-						return Object.assign({}, line, {columns});
-					}
-
-					return line;
-				});
-			} else {
-				lines = [...this.lines];
-			}
-
-			// Remove empty columns
-			// Explicit newlines will have at least one column with an empty field
-			while (lines.length > 0 && lines[lines.length - 1].columns.length === 0) {
-				lines.pop();
-			}
-
-			return lines;
-		}
-
-		getUnformattedLines() {
-			return this.lines.map(({columns}) => {
-				return columns.join("").trimRight();
-			});
-		}
-
-		getFormattedLines(opts) {
-			const lines = [];
-
-			for (const {ranges, columns} of this.getTrimmedLines()) {
-				// Sort ranges from last to first
-				const sortedRanges = ranges.sort((a, b) => b.end - a.end);
-
-				let line = "";
-
-				let lastEnd = undefined;
-
-				function catchUp(end) {
-					line = "" + columns.slice(end, lastEnd).join("") + line;
-					lastEnd = end;
-				}
-
-				for (const {start, end, ancestry} of sortedRanges) {
-					catchUp(end);
-
-					let substr = opts.normalizeText(columns.slice(start, end).join(""));
-
-					// Format tags in reverse
-					for (let i = ancestry.length - 1; i >= 0; i--) {
-						const tag = ancestry[i];
-						substr = opts.formatTag(tag, substr);
-					}
-
-					line = "" + substr + line;
-					lastEnd = start;
-				}
-
-				catchUp(0);
-
-				lines.push(line.trimRight());
-			}
-
-			return lines;
-		}
-
-		getFormattedHtmlLines() {
-			return this.getFormattedLines({
-				normalizeText: (text) =>
-					___R$project$rome$$romefrontend$html$parser$xhtmlEntities_ts$escapeXHTMLEntities(
-						text,
-					)
-				,
-				formatTag: (tag, inner) =>
-					___R$project$rome$$romefrontend$string$markup$grid$formatHTML_ts$htmlFormatText(
-						tag,
-						inner,
-					)
-				,
-			});
-		}
-
-		getFormattedAnsiLines() {
-			return this.getFormattedLines({
-				normalizeText: (text) => text,
-				formatTag: (tag, inner) => {
-					return ___R$project$rome$$romefrontend$string$markup$grid$formatANSI_ts$ansiFormatText(
-						tag,
-						inner,
-						this.options,
-						this.features,
-					);
-				},
-			});
-		}
-
-		fillCursor(cursor) {
-			const {line: lineIndex, column: colIndex} = ___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$cursorToIndex(
-				cursor,
-			);
-
-			// Pad columns
-			const line = this.getLine(lineIndex);
-			for (let i = colIndex - 1; i >= 0 && line.columns[i] === undefined; i--) {
-				line.columns[i] = " ";
-			}
-		}
-
-		moveCursor(cursor) {
-			if (cursor.line !== this.cursor.line) {
-				this.lineStartMeta.softWrapped = false;
-				this.lineStartMeta.indentationCount = 0;
-				this.lineStartMeta.sourceColumn = this.sourceCursor.currentColumn;
-			}
-
-			this.cursor = cursor;
-		}
-
-		moveCursorBottomStart() {
-			this.moveCursor({
-				line: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(
-					this.getHeight(),
-				),
-				column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1,
-			});
-		}
-
-		moveCursorRight(
-			columns = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1,
-		) {
-			const newColumns = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
-				this.cursor.column,
-				columns,
-			);
-
-			// Perform character line wrap
-			if (this.doesOverflowViewport(newColumns)) {
-				const currentLine = this.getLine(
-					___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(this.cursor.line) -
-					1,
-				);
-				const previousLineSoftWrapped = this.lineStartMeta.softWrapped;
-
-				this.moveCursorBottomStart();
-
-				// Soft wrap, inherit the previous lines indentation
-				if (currentLine !== undefined) {
-					for (
-						let i = 0;
-						i < currentLine.columns.length && currentLine.columns[i] === " ";
-						i++
-					) {
-						this.moveCursorRight();
-						this.lineStartMeta.indentationCount++;
-					}
-
-					const {extraSoftWrapIndent} = this.options.view;
-					if (previousLineSoftWrapped) {
-						this.lineStartMeta.softWrapped = true;
-					} else if (extraSoftWrapIndent !== undefined) {
-						this.lineStartMeta.softWrapped = true;
-						for (let i = 0; i < extraSoftWrapIndent; i++) {
-							this.moveCursorRight();
-						}
-					}
-				}
-			} else {
-				this.moveCursor({
-					line: this.cursor.line,
-					column: newColumns,
-				});
-			}
-		}
-
-		ensureNewline() {
-			if (
-				this.cursor.column !==
-				___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1
-			) {
-				this.newline();
-			}
-		}
-
-		newline() {
-			this.moveCursorBottomStart();
-			this.writeToCursor(this.cursor, "");
-		}
-
-		moveCursorStart() {
-			this.moveCursor({
-				line: this.cursor.line,
-				column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1,
-			});
-		}
-
-		moveCursorDown(
-			lines = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1,
-		) {
-			this.moveCursor({
-				line: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
-					this.cursor.line,
-					lines,
-				),
-				column: this.cursor.column,
-			});
-		}
-
-		writeToCursor(cursor, char) {
-			this.fillCursor(cursor);
-
-			const {line: lineIndex, column: colIndex} = ___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$cursorToIndex(
-				cursor,
-			);
-			const line = this.getLine(lineIndex);
-			line.columns[colIndex] = char;
-
-			if (cursor.column > this.width) {
-				this.width = cursor.column;
-			}
-		}
-
-		writeChar(char) {
-			if (char === "\n") {
-				this.newline();
-				return;
-			}
-
-			this.writeToCursor(this.cursor, char);
-			this.moveCursorRight();
-		}
-
-		drawText(tag, ancestry) {
-			this.writeText(tag.value, ancestry, tag.source);
-
-			if (!tag.source && tag.sourceValue !== undefined) {
-				for (const char of tag.sourceValue) {
-					this.moveSourceCursor(char);
-				}
-			}
-		}
-
-		moveSourceCursor(char) {
-			if (char === "\n") {
-				this.sourceCursor.currentLineText = "";
-				this.sourceCursor.currentColumn = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1;
-				this.sourceCursor.currentLine = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(
-					this.sourceCursor.currentLine,
-				);
-			} else {
-				this.sourceCursor.currentLineText += char;
-				this.sourceCursor.currentColumn = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(
-					this.sourceCursor.currentColumn,
-				);
-			}
-		}
-
-		isInsidePointer() {
-			const {sourceCursor} = this;
-			const {pointer} = this.options.view;
-
-			if (pointer === undefined) {
-				return false;
-			}
-
-			if (sourceCursor.currentLine !== pointer.line) {
-				return false;
-			}
-
-			return (
-				sourceCursor.currentColumn >= pointer.columnStart &&
-				sourceCursor.currentColumn <= pointer.columnEnd
-			);
-		}
-
-		writeText(text, ancestry, source) {
-			if (text === "") {
-				return;
-			}
-
-			const start = this.getCursor();
-
-			const words = text.split(" ");
-
-			let forceNextWordOverflow = false;
-
-			for (let i = 0; i < words.length; i++) {
-				const word = words[i];
-				const isLastWord = i === words.length - 1;
-
-				// Check if printing this word would overflow the viewport
-				// If the whole word itself wouldn't fit on it's own line then we will
-				// perform hard line wrapping in writeChar
-				const willOverflow =
-					this.lineWrapMode === "word-break" &&
-					(forceNextWordOverflow ||
-					(this.doesOverflowViewport(
-						___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
-							this.cursor.column,
-							word.length - 1,
-						),
-					) &&
-					!this.doesOverflowViewport(
-						___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(word.length),
-					)));
-				if (willOverflow) {
-					this.moveCursorBottomStart();
-				}
-				forceNextWordOverflow = false;
-
-				for (const char of word.split(/(?:){1}/u)) {
-					this.writeChar(char);
-
-					if (source) {
-						this.moveSourceCursor(char);
-					}
-				}
-
-				let ignoreTrailingSpace = false;
-
-				// Start of a sentence that was caused by line wrapping
-				if (
-					!word.endsWith("\n") &&
-					this.cursor.column ===
-					___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1 &&
-					word !== ""
-				) {
-					ignoreTrailingSpace = true;
-				}
-
-				// If the next word will cause an overflow then don't print a leading space as it will be pointless
-				const nextWord = words[i + 1];
-				if (
-					this.lineWrapMode === "word-break" &&
-					nextWord !== undefined &&
-					this.doesOverflowViewport(
-						___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
-							this.cursor.column,
-							nextWord.length,
-						),
-					)
-				) {
-					ignoreTrailingSpace = true;
-					forceNextWordOverflow = true;
-				}
-
-				if (isLastWord) {
-					ignoreTrailingSpace = true;
-				}
-
-				if (!ignoreTrailingSpace) {
-					this.writeChar(" ");
-				}
-			}
-
-			const end = this.getCursor();
-			this.addCursorRange(start, end, ancestry);
-		}
-
-		setRange(line, start, end, ancestry) {
-			if (start === end) {
-				// Nothing to format. Empty tag.
-				return;
-			}
-
-			if (end < start) {
-				throw new Error(
-					"Range end for line index " +
-					line +
-					" is before the start. end(" +
-					end +
-					") < start(" +
-					start +
-					"). Line content: " +
-					JSON.stringify(this.getLine(line).columns),
-				);
-			}
-
-			this.getLine(line).ranges.push({
-				start,
-				end,
-				ancestry,
-			});
-		}
-
-		addCursorRange(_start, _end, ancestry) {
-			if (ancestry.length === 0) {
-				// No point storing a range without ancestry
-				return;
-			}
-
-			const start = ___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$cursorToIndex(
-				_start,
-			);
-			const end = ___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$cursorToIndex(
-				_end,
-			);
-
-			if (start.line === end.line) {
-				if (start.column === end.column) {
-					// Empty range
-					return;
-				}
-
-				this.setRange(start.line, start.column, end.column, ancestry);
-			} else {
-				// Add first line
-				this.setRange(
-					start.line,
-					start.column,
-					this.getLineWidth(start.line),
-					ancestry,
-				);
-
-				// Add middle lines
-				for (let line = start.line + 1; line < end.line; line++) {
-					this.setRange(line, 0, this.getLineWidth(line), ancestry);
-				}
-
-				// Add last line
-				this.setRange(end.line, 0, end.column, ancestry);
-			}
-		}
-
-		drawList(tag, ancestry) {
-			let items = [];
-			for (const child of tag.children) {
-				if (child.type === "Tag" && child.name === "li") {
-					items.push(child);
-				}
-			}
-			if (items.length === 0) {
-				return;
-			}
-
-			this.ensureNewline();
-
-			const ordered = tag.name === "ol";
-
-			if (ordered) {
-				const reversed = tag.attributes.get("reversed").asBoolean(false);
-				const startOffset = tag.attributes.get("start").asNumber(0);
-
-				const highestNumSize = ___R$project$rome$$romefrontend$string$utils$humanizeNumber_ts$humanizeNumber(
-					items.length + startOffset,
-				).length;
-
-				for (let i = 0; i < items.length; i++) {
-					const item = items[i];
-
-					let num = startOffset;
-					if (reversed) {
-						num += items.length - i;
-					} else {
-						num += i + 1;
-					}
-
-					const humanNum = ___R$project$rome$$romefrontend$string$utils$humanizeNumber_ts$humanizeNumber(
-						num,
-					);
-					const padding = " ".repeat(highestNumSize - humanNum.length);
-					this.writeText(
-						"" + padding + humanNum + ". ",
-						[
-							___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$createTag(
-								"dim",
-								___R$project$rome$$romefrontend$string$markup$util_ts$createEmptyAttributes(),
-							),
-						],
-						false,
-					);
-					this.drawListItem(item, ancestry);
-				}
-			} else {
-				for (const item of items) {
-					this.writeText(
-						"- ",
-						[
-							___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$createTag(
-								"dim",
-								___R$project$rome$$romefrontend$string$markup$util_ts$createEmptyAttributes(),
-							),
-						],
-						false,
-					);
-					this.drawListItem(item, ancestry);
-				}
-			}
-		}
-
-		getSubColumns(columns) {
-			return this.viewportWidth === undefined
-				? undefined
-				: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
-						___R$project$rome$$romefrontend$ob1$index_ts$ob1Sub(
-							this.viewportWidth,
-							columns,
-						),
-					) + 1;
-		}
-
-		drawListItem(item, ancestry) {
-			const grid = new ___R$project$rome$$romefrontend$string$markup$grid$Grid_ts$default(
-				Object.assign(
-					{},
-					this.options,
-					{columns: this.getSubColumns(this.cursor.column)},
-				),
-			);
-			grid.drawTag(item, ancestry);
-			this.drawGrid(grid);
-			this.moveCursorBottomStart();
-		}
-
-		drawPointer() {
-			const {pointer} = this.options.view;
-			const {sourceCursor, lineStartMeta, cursor} = this;
-			if (pointer === undefined) {
-				return false;
-			}
-
-			if (sourceCursor.currentLine !== pointer.line) {
-				// I'm not quite sure what we are meant to do here
-				return false;
-			}
-
-			let start = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
-				pointer.columnStart,
-			);
-			let end = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
-				pointer.columnEnd,
-			);
-
-			if (cursor.line !== sourceCursor.currentLine) {
-				start = 0;
-				end =
-					end -
-					___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
-						lineStartMeta.sourceColumn,
-					);
-			}
-
-			let markerOffset = start;
-			let markerSize = end - start;
-
-			// Account for soft indentation
-			markerOffset += lineStartMeta.indentationCount;
-
-			// If the marker includes tabs then increase the size
-			for (let i = start; i < end; i++) {
-				if (sourceCursor.currentLineText[i] === "\t") {
-					markerSize++;
-				}
-			}
-
-			// If any previous text on this line contains tabs then increase the offset
-			for (let i = 0; i < start; i++) {
-				if (sourceCursor.currentLineText[i] === "\t") {
-					markerOffset++;
-				}
-			}
-
-			this.moveCursorBottomStart();
-
-			// Pointer offset
-			this.writeText(" ".repeat(markerOffset), [], false);
-
-			// Pointer character
-			if (pointer.char.length === 0) {
-				this.writeText("^".repeat(markerSize), [], false);
-			} else {
-				for (let i = 0; i < markerSize; i++) {
-					this.drawChildren(pointer.char, []);
-				}
-			}
-
-			// Pointer message
-			if (pointer.message.length > 0) {
-				this.writeText(" ", [], false);
-				this.drawView(
-					___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$createTag(
-						"view",
-						undefined,
-						pointer.message,
-					),
-					[],
-				);
-			}
-
-			return true;
-		}
-
-		parse(sub, offsetPosition) {
-			if (sub === undefined) {
-				return [];
-			}
-
-			return this.normalizeChildren(
-				___R$project$rome$$romefrontend$string$markup$parse_ts$parseMarkup(
-					sub,
-					{offsetPosition, sourceText: this.options.sourceText},
-				),
-			);
-		}
-
-		parseAttribute(attributes, key) {
-			return this.parse(
-				attributes.get(key).asStringOrVoid(),
-				attributes.get(key).getDiagnosticLocation("inner-value").start,
-			);
-		}
-
-		getViewLinePrefixes(children, ancestry) {
-			const prefixes = [];
-
-			let linePrefixFirst;
-			let linePrefixMiddle;
-			let linePrefixLast;
-			let linePrefixPointer;
-
-			// Extract viewLinePrefix tags
-			for (const child of children) {
-				switch (child.attributes.get("type").asStringOrVoid()) {
-					case "first": {
-						linePrefixFirst = child;
-						prefixes.push(linePrefixFirst);
-						break;
-					}
-
-					case "middle": {
-						linePrefixMiddle = child;
-						if (linePrefixLast === undefined) {
-							linePrefixLast = child;
-						}
-						prefixes.push(child);
-						break;
-					}
-
-					case "end": {
-						linePrefixLast = child;
-						prefixes.push(child);
-						break;
-					}
-
-					case "pointer": {
-						linePrefixPointer = child;
-						prefixes.push(child);
-						break;
-					}
-
-					case undefined: {
-						if (
-							linePrefixPointer === undefined ||
-							linePrefixFirst === undefined ||
-							linePrefixMiddle === undefined ||
-							linePrefixLast === undefined
-						) {
-							prefixes.push(child);
-						}
-						if (linePrefixFirst === undefined) {
-							linePrefixFirst = child;
-						}
-						if (linePrefixMiddle === undefined) {
-							linePrefixMiddle = child;
-						}
-						if (linePrefixLast === undefined) {
-							linePrefixLast = child;
-						}
-						if (linePrefixPointer === undefined) {
-							linePrefixPointer = child;
-						}
-						break;
-					}
-				}
-			}
-
-			const childrenToGrid = new Map();
-			let maxWidth = 0;
-
-			// Get the maxWidth
-			for (const prefix of prefixes) {
-				const grid = new ___R$project$rome$$romefrontend$string$markup$grid$Grid_ts$default(
-					Object.assign({}, this.options, {columns: undefined}),
-				);
-				grid.drawChildren(prefix.children, ancestry);
-				const width = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
-					grid.getSize().width,
-				);
-				if (width > maxWidth) {
-					maxWidth = width;
-				}
-			}
-
-			// Now actually render the grids
-			for (const prefix of prefixes) {
-				const grid = new ___R$project$rome$$romefrontend$string$markup$grid$Grid_ts$default(
-					Object.assign({}, this.options, {columns: maxWidth}),
-				);
-				grid.drawChildren(prefix.children, ancestry);
-				grid.maybeAlign(prefix);
-				childrenToGrid.set(prefix, grid);
-			}
-
-			return {
-				width: maxWidth,
-				pointer: childrenToGrid.get(linePrefixPointer),
-				first: childrenToGrid.get(linePrefixFirst),
-				middle: childrenToGrid.get(linePrefixMiddle),
-				last: childrenToGrid.get(linePrefixLast),
-			};
-		}
-
-		getViewPointer({attributes, children}) {
-			return {
-				char: this.parse(
-					attributes.get("char").asString(""),
-					attributes.get("char").getDiagnosticLocation("inner-value").start,
-				),
-				message: children,
-				line: attributes.get("line").asOneIndexedNumber(0),
-				columnStart: attributes.get("start").asOneIndexedNumber(0),
-				columnEnd: attributes.get("end").asOneIndexedNumber(0),
-			};
-		}
-
-		drawView(tag, ancestry, shrinkViewport = 0) {
-			const tags = ___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$extractViewTags(
-				tag,
-			);
-			const {children} = tags;
-			const {attributes} = tag;
-
-			const pointer =
-				tags.pointer === undefined
-					? undefined
-					: this.getViewPointer(tags.pointer);
-			const linePrefixes = this.getViewLinePrefixes(tags.linePrefixes, ancestry);
-			const startCursor = this.getCursor();
-
-			// Calculate size of view
-			let columns = this.getSubColumns(
-				___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
-					startCursor.column,
-					(linePrefixes == null ? undefined : linePrefixes.width) || 0,
-				),
-			);
-			if (columns !== undefined) {
-				columns -= shrinkViewport;
-			}
-
-			if (linePrefixes !== undefined) {
-				if (linePrefixes.first !== undefined) {
-					this.drawGrid(linePrefixes.first);
-				}
-				this.moveCursor(
-					Object.assign(
-						{},
-						startCursor,
-						{
-							column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
-								startCursor.column,
-								linePrefixes.width,
-							),
-						},
-					),
-				);
-			}
-
-			const lineWrapMode = ___R$project$rome$$romefrontend$string$markup$tags_ts$lineWrapValidator(
-				attributes.get("lineWrap").asStringOrVoid(),
-			);
-
-			const grid = new ___R$project$rome$$romefrontend$string$markup$grid$Grid_ts$default(
-				Object.assign(
-					{},
-					this.options,
-					{
-						view: {
-							extraSoftWrapIndent: attributes.get("extraSoftWrapIndent").asNumberOrVoid(),
-							pointer,
-							lineWrapMode,
-						},
-						columns,
-					},
-				),
-			);
-			for (const child of children) {
-				grid.drawChild(child, ancestry);
-			}
-			const drewPointer = grid.drawPointer();
-			grid.maybeAlign(tag);
-			this.drawGrid(grid);
-
-			if (linePrefixes) {
-				const height = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
-					grid.getHeight(),
-				);
-
-				// Add on any subsequent line prefixes if we wrapped
-				for (let i = 1; i < height; i++) {
-					let thisLinePrefix = linePrefixes.middle;
-
-					if (i === height - 1) {
-						if (drewPointer) {
-							// Don't prefix a pointer
-							thisLinePrefix = linePrefixes.pointer;
-						} else {
-							thisLinePrefix = linePrefixes.last;
-						}
-					}
-
-					// Correct last offset if we drew a pointer
-					if (drewPointer && i === height - 2) {
-						thisLinePrefix = linePrefixes.last;
-					}
-
-					this.moveCursor({
-						line: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
-							startCursor.line,
-							i,
-						),
-						column: startCursor.column,
-					});
-
-					if (thisLinePrefix !== undefined) {
-						this.drawGrid(thisLinePrefix);
-					}
-				}
-			}
-
-			this.moveCursor({
-				line: this.getHeight(),
-				column: startCursor.column,
-			});
-		}
-
-		drawTable(tag, ancestry) {
-			var ___R$;
-			const rows = [];
-
-			for (const child of tag.children) {
-				if (child.type === "Tag" && child.name === "tr") {
-					const row = [];
-
-					for (const field of child.children) {
-						if (field.type === "Tag" && field.name === "td") {
-							row.push(field);
-						} else {
-							// Probably error?
-						}
-					}
-
-					rows.push(row);
-				} else {
-					// Probably error?
-				}
-			}
-
-			// Get the max number of columns for a row
-			const columnCount =
-				(___R$ = Math,
-				___R$.max.apply(___R$, [...rows.map((columns) => columns.length)]));
-
-			// Get column widths
-			const columnWidths = [];
-			for (let i = 0; i < columnCount; i++) {
-				var ___R$1;
-				const widths = rows.map((row) => {
-					const field = row[i];
-					if (field === undefined) {
-						// Could be an excessive column
-						return 0;
-					} else {
-						const grid = new ___R$project$rome$$romefrontend$string$markup$grid$Grid_ts$default(
-							Object.assign({}, this.options, {columns: undefined}),
-						);
-						grid.drawTag(field, ancestry);
-						return ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
-							grid.getSize().width,
-						);
-					}
-				});
-				columnWidths[i] = (___R$1 = Math, ___R$1.max.apply(___R$1, [...widths]));
-			}
-
-			// If the column size exceed the stream columns then scale them all down
-			const colsNeeded = columnWidths.reduce((a, b) => a + b, 0);
-			const {viewportWidth} = this;
-			let availableCols =
-				viewportWidth === undefined
-					? undefined
-					: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get(viewportWidth) -
-						columnCount -
-						1;
-			if (availableCols !== undefined && colsNeeded > availableCols) {
-				// Find the biggest column
-				let biggestColIndex = 0;
-				for (let i = 0; i < columnWidths.length; i++) {
-					const ourSize = columnWidths[i];
-					const biggestSize = columnWidths[biggestColIndex];
-
-					if (ourSize > biggestSize) {
-						biggestColIndex = i;
-					}
-				}
-
-				// Remove all columns from availableCols
-				for (let i = 0; i < columnWidths.length; i++) {
-					if (i !== biggestColIndex) {
-						availableCols -= columnWidths[i];
-					}
-				}
-
-				// Set biggest column to the availableCols
-				columnWidths[biggestColIndex] = availableCols;
-			}
-
-			for (const row of rows) {
-				for (let colIndex = 0; colIndex < row.length; colIndex++) {
-					const field = row[colIndex];
-					const width = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(
-						columnWidths[colIndex],
-					);
-
-					const grid = new ___R$project$rome$$romefrontend$string$markup$grid$Grid_ts$default(
-						Object.assign(
-							{},
-							this.options,
-							{
-								columns: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
-									width,
-								),
-							},
-						),
-					);
-					grid.drawTag(field, ancestry);
-					grid.maybeAlign(field);
-
-					this.drawGrid(grid);
-					this.moveCursorRight(
-						___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(width),
-					);
-				}
-
-				this.moveCursorBottomStart();
-			}
-		}
-
-		// Sometimes we derive a Grid from a tag that accepts an align attribute
-		maybeAlign(tag) {
-			if (tag.attributes.get("align").asStringOrVoid() === "right") {
-				this.alignRight();
-			}
-		}
-
-		drawGrid(grid) {
-			const lines = grid.getTrimmedLines(false);
-			const cursor = ___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$cursorToIndex(
-				this.getCursor(),
-			);
-
-			for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
-				const {columns, ranges} = lines[lineIndex];
-
-				const correctLine = cursor.line + lineIndex;
-
-				for (let colIndex = 0; colIndex < columns.length; colIndex++) {
-					const char = columns[colIndex];
-
-					this.writeToCursor(
-						{
-							line: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(
-								correctLine + 1,
-							),
-							column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce1(
-								cursor.column + colIndex + 1,
-							),
-						},
-						char,
-					);
-				}
-
-				for (const range of ranges) {
-					this.setRange(
-						correctLine,
-						cursor.column + range.start,
-						cursor.column + range.end,
-						range.ancestry,
-					);
-				}
-			}
-		}
-
-		drawTag(tag, ancestry) {
-			const hook = ___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$hooks.get(
-				tag.name,
-			);
-
-			const subAncestry = [...ancestry, tag];
-
-			const oldLineWrapMode = this.lineWrapMode;
-
-			if (tag.name === "nobr") {
-				this.lineWrapMode = "none";
-			}
-
-			if (hook !== undefined && hook.before !== undefined) {
-				hook.before(tag, this, ancestry);
-			}
-
-			switch (tag.name) {
-				case "ol":
-				case "ul": {
-					this.drawList(tag, subAncestry);
-					break;
-				}
-
-				case "table": {
-					this.drawTable(tag, subAncestry);
-					break;
-				}
-
-				case "view": {
-					this.drawView(tag, subAncestry);
-					break;
-				}
-
-				case "indent": {
-					// Optimization for nested indents
-					let levels = 1;
-					let children = tag.children;
-					while (
-						children.length === 1 &&
-						children[0].type === "Tag" &&
-						children[0].name === "indent"
-					) {
-						children = children[0].children;
-						levels++;
-					}
-
-					for (let i = 0; i < levels; i++) {
-						this.writeChar(" ");
-						this.writeChar(" ");
-					}
-
-					this.drawView(
-						___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$createTag(
-							"view",
-							___R$project$rome$$romefrontend$string$markup$util_ts$createEmptyAttributes(),
-							children,
-						),
-						ancestry,
-						levels * 2,
-					);
-					break;
-				}
-
-				default: {
-					this.drawChildren(tag.children, subAncestry);
-					break;
-				}
-			}
-
-			if (hook !== undefined && hook.after !== undefined) {
-				hook.after(tag, this, ancestry);
-			}
-
-			this.lineWrapMode = oldLineWrapMode;
-		}
-
-		drawChild(child, ancestry) {
-			if (child.type === "Text") {
-				this.drawText(child, ancestry);
-			} else {
-				this.drawTag(child, ancestry);
-			}
-		}
-
-		drawChildren(children, ancestry) {
-			for (const child of children) {
-				this.drawChild(child, ancestry);
-			}
-		}
-
-		normalizeChildren(children) {
-			let newChildren = [];
-
-			for (const child of children) {
-				newChildren = newChildren.concat(this.normalizeChild(child));
-			}
-
-			return newChildren;
-		}
-
-		normalizeChild(child) {
-			if (child.type === "Text") {
-				let {value} = child;
-
-				if (value.includes("\t")) {
-					const splitTabs = value.split("\t");
-					const children = [];
-
-					for (let i = 0; i < splitTabs.length; i++) {
-						if (i > 0) {
-							children.push({
-								type: "Text",
-								source: false,
-								sourceValue: "\t",
-								value: "  ",
-							});
-						}
-
-						const value = splitTabs[i];
-						children.push({
-							type: "Text",
-							source: true,
-							value,
-						});
-					}
-
-					return children;
-				}
-
-				// Remove '\r' in case it snuck in as file contents
-				value = value.replace(/\r/g, "");
-
-				return [
-					{
-						type: "Text",
-						source: true,
-						value,
-					},
-				];
-			}
-
-			const tag = child;
-			const children = this.normalizeChildren(tag.children);
-			const textLength = ___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$getChildrenTextLength(
-				children,
-			);
-			const hasText = textLength > 0;
-
-			let attributesWithoutEmphasis = tag.attributes;
-			if (attributesWithoutEmphasis.has("emphasis")) {
-				const emphasis = attributesWithoutEmphasis.get("emphasis").asBoolean(
-					false,
-				);
-				attributesWithoutEmphasis = attributesWithoutEmphasis.copy({
-					emphasis: undefined,
-				});
-				if (emphasis) {
-					return this.normalizeChild(
-						___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$createTag(
-							"emphasis",
-							___R$project$rome$$romefrontend$string$markup$util_ts$createEmptyAttributes(),
-							[Object.assign({}, tag, {attributes: attributesWithoutEmphasis})],
-						),
-					);
-				}
-			}
-
-			let attributes = attributesWithoutEmphasis;
-			if (attributes.has("dim")) {
-				const dim = attributes.get("dim").asBoolean(false);
-				attributes = attributes.copy({dim: undefined});
-				if (dim) {
-					return this.normalizeChild(
-						___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$createTag(
-							"dim",
-							___R$project$rome$$romefrontend$string$markup$util_ts$createEmptyAttributes(),
-							[Object.assign({}, tag, {attributes})],
-						),
-					);
-				}
-			}
-
-			// Insert padding
-			if (tag.name === "pad") {
-				const width = attributes.get("width").asNumber(0);
-				const paddingSize = width - textLength;
-				if (paddingSize > 0) {
-					const paddingTextNode = {
-						type: "Text",
-						source: false,
-						value: " ".repeat(paddingSize),
-					};
-					if (tag.attributes.get("align").asStringOrVoid() === "right") {
-						return [paddingTextNode, ...tag.children];
-					} else {
-						return [...tag.children, paddingTextNode];
-					}
-				} else {
-					return tag.children;
-				}
-			}
-
-			// Insert highlight legend
-			if (tag.name === "highlight" && attributes.get("legend").asBoolean(false)) {
-				const index = Math.min(0, attributes.get("i").asNumber(0));
-				return [
-					Object.assign(
-						{},
-						tag,
-						{attributes: attributes.copy({legend: undefined})},
-					),
-					___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$createTag(
-						"dim",
-						___R$project$rome$$romefrontend$string$markup$util_ts$createEmptyAttributes(),
-						[
-							{
-								type: "Text",
-								source: false,
-								value: "[" + String(index + 1) + "]",
-							},
-						],
-					),
-				];
-			}
-
-			if (hasText) {
-				if (tag.name === "hr") {
-					return [
-						Object.assign(
-							{},
-							tag,
-							{
-								children: [
-									{
-										type: "Text",
-										source: false,
-										value: " ",
-									},
-									...children,
-									{
-										type: "Text",
-										source: false,
-										value: " ",
-									},
-								],
-							},
-						),
-					];
-				}
-			} else {
-				if (tag.name === "filelink") {
-					return [
-						Object.assign(
-							{},
-							tag,
-							{
-								children: [
-									{
-										type: "Text",
-										source: false,
-										value: ___R$project$rome$$romefrontend$string$markup$util_ts$buildFileLink(
-											tag.attributes,
-											this.options,
-										).text,
-									},
-								],
-							},
-						),
-					];
-				} else if (tag.name === "hyperlink") {
-					return [
-						Object.assign(
-							{},
-							tag,
-							{
-								children: [
-									{
-										type: "Text",
-										source: false,
-										value: tag.attributes.get("target").asString(""),
-									},
-								],
-							},
-						),
-					];
-				}
-			}
-
-			// These tags only expect text inside off them
-			const singleInnerText =
-				children.length === 1 && children[0].type === "Text"
-					? children[0].value
-					: undefined;
-			if (singleInnerText !== undefined) {
-				switch (tag.name) {
-					case "filesize":
-						return [
-							Object.assign(
-								{},
-								tag,
-								{
-									children: [
-										{
-											type: "Text",
-											source: false,
-											sourceValue: singleInnerText,
-											value: ___R$project$rome$$romefrontend$string$utils$humanizeFileSize_ts$humanizeFileSize(
-												Number(singleInnerText),
-											),
-										},
-									],
-								},
-							),
-						];
-
-					case "duration":
-						return [
-							Object.assign(
-								{},
-								tag,
-								{
-									children: [
-										{
-											type: "Text",
-											source: false,
-											sourceValue: singleInnerText,
-											value: ___R$project$rome$$romefrontend$string$markup$util_ts$formatApprox(
-												attributes,
-												___R$project$rome$$romefrontend$string$utils$humanizeTime_ts$humanizeTime(
-													Number(singleInnerText),
-													true,
-												),
-											),
-										},
-									],
-								},
-							),
-						];
-
-					case "number":
-						return [
-							Object.assign(
-								{},
-								tag,
-								{
-									children: [
-										{
-											type: "Text",
-											source: false,
-											sourceValue: singleInnerText,
-											value: ___R$project$rome$$romefrontend$string$markup$util_ts$formatNumber(
-												attributes,
-												singleInnerText,
-											),
-										},
-									],
-								},
-							),
-						];
-
-					case "grammarNumber":
-						return [
-							Object.assign(
-								{},
-								tag,
-								{
-									children: [
-										{
-											type: "Text",
-											source: false,
-											sourceValue: singleInnerText,
-											value: ___R$project$rome$$romefrontend$string$markup$util_ts$formatGrammarNumber(
-												attributes,
-												singleInnerText,
-											),
-										},
-									],
-								},
-							),
-						];
-				}
-			}
-
-			return [Object.assign({}, tag, {children})];
-		}
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$getChildrenTextLength(
-		children,
-	) {
-		let length = 0;
-
-		for (const child of children) {
-			if (child.type === "Text") {
-				length += child.value.length;
-			}
-
-			if (child.type === "Tag") {
-				length += ___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$getChildrenTextLength(
-					child.children,
-				);
-			}
-		}
-
-		return length;
-	}
-
-	const ___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$hooks = new Map();
-
-	___R$$priv$project$rome$$romefrontend$string$markup$grid$Grid_ts$hooks.set(
-		"hr",
-		{
-			after: (tag, grid, ancestry) => {
-				let size =
-					grid.viewportWidth === undefined
-						? 100
-						: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
-								grid.viewportWidth,
-							) -
-							___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
-								grid.cursor.column,
-							) +
-							1;
-				size = Math.max(size, 0);
-				grid.writeText("\u2501".repeat(size), ancestry, false);
-			},
-		},
-	);
-
-
-  // project-rome/@romefrontend/string-markup/format.ts
-function ___R$$priv$project$rome$$romefrontend$string$markup$format_ts$buildTag(
-		tag,
-		inner,
-		opts,
-	) {
-		let {attributes} = tag;
-
-		switch (tag.name) {
-			// Normalize filename of <filelink target>
-			case "filelink": {
-				// Clone
-				attributes = attributes.copy();
-
-				const {filename, line, column, text} = ___R$project$rome$$romefrontend$string$markup$util_ts$buildFileLink(
-					attributes,
-					opts,
-				);
-				attributes.get("column").setValue(column);
-				attributes.get("line").setValue(line);
-				attributes.get("target").setValue(filename);
-				if (opts.stripPositions) {
-					attributes.get("line").setValue(undefined);
-					attributes.get("column").setValue(undefined);
-				}
-				inner = text;
-				break;
-			}
-
-			// We don't technically need to normalize this but it's one less tag to have to support
-			// if other tools need to consume it
-			case "grammarNumber":
-				return ___R$project$rome$$romefrontend$string$markup$util_ts$formatGrammarNumber(
-					attributes,
-					inner,
-				);
-		}
-
-		let open = "<" + tag.name;
-
-		// Print attributes
-		for (const [key, value] of attributes.asMap()) {
-			if (!value.exists()) {
-				continue;
-			}
-
-			const raw = value.asUnknown();
-			if (raw === true) {
-				open += " " + key;
-			} else {
-				const escapedValue = ___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
-					String(raw),
-				);
-				open += " " + key + '="' + escapedValue + '"';
-			}
-		}
-
-		if (inner === "") {
-			return open + " />";
-		} else {
-			return open + ">" + inner + "</" + tag.name + ">";
-		}
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$string$markup$format_ts$normalizeMarkupChildren(
-		children,
-		opts,
-		remainingChars,
-	) {
-		// Sometimes we'll populate the inner text of a tag with no children
-		if (children.length === 0) {
-			return {text: "", textLength: 0};
-		}
-
-		let textLength = 0;
-
-		let buff = "";
-		for (const child of children) {
-			if (child.type === "Text") {
-				let text = ___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
-					child.value,
-				);
-				textLength += text.length;
-				const isVisible = remainingChars > 0;
-				if (text.length > remainingChars) {
-					text = ___R$project$rome$$romefrontend$string$utils$sliceEscaped_ts$sliceEscaped(
-						text,
-						remainingChars,
-					);
-				}
-				remainingChars -= text.length;
-				if (isVisible) {
-					buff += text;
-				}
-			} else if (child.type === "Tag") {
-				const inner = ___R$$priv$project$rome$$romefrontend$string$markup$format_ts$normalizeMarkupChildren(
-					child.children,
-					opts,
-					remainingChars,
-				);
-
-				if (remainingChars > 0) {
-					buff += ___R$$priv$project$rome$$romefrontend$string$markup$format_ts$buildTag(
-						child,
-						inner.text,
-						opts,
-					);
-				}
-				textLength += inner.textLength;
-				remainingChars -= inner.textLength;
-			} else {
-				throw new Error("Unknown child node type");
-			}
-		}
-
-		return {
-			text: buff,
-			textLength,
-		};
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$string$markup$format_ts$renderGrid(
-		input,
-		opts = {},
-		format,
-	) {
-		const grid = new ___R$project$rome$$romefrontend$string$markup$grid$Grid_ts$default(
-			Object.assign({}, opts, {sourceText: input, view: {}}),
-		);
-		grid.drawChildren(grid.parse(input, undefined), []);
-		return {
-			width: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
-				grid.getWidth(),
-			),
-			lines: grid.getLines(format),
-		};
-	}
-
-	function ___R$project$rome$$romefrontend$string$markup$format_ts$markupToPlainText(
-		input,
-		opts = {},
-	) {
-		return ___R$$priv$project$rome$$romefrontend$string$markup$format_ts$renderGrid(
-			input,
-			opts,
-			"none",
-		);
-	}
-
-	function ___R$project$rome$$romefrontend$string$markup$format_ts$markupToAnsi(
-		input,
-		opts = {},
-	) {
-		return ___R$$priv$project$rome$$romefrontend$string$markup$format_ts$renderGrid(
-			input,
-			opts,
-			"ansi",
-		);
-	}
-
-	function ___R$project$rome$$romefrontend$string$markup$format_ts$markupToHtml(
-		input,
-		opts = {},
-	) {
-		return ___R$$priv$project$rome$$romefrontend$string$markup$format_ts$renderGrid(
-			input,
-			opts,
-			"html",
-		);
-	}
-
-	function ___R$project$rome$$romefrontend$string$markup$format_ts$joinMarkupLines(
-		{lines},
-	) {
-		return lines.join("\n");
-	}
-
-	function ___R$project$rome$$romefrontend$string$markup$format_ts$normalizeMarkup(
-		input,
-		opts = {},
-		maxLength = Infinity,
-	) {
-		const {textLength, text} = ___R$$priv$project$rome$$romefrontend$string$markup$format_ts$normalizeMarkupChildren(
-			___R$project$rome$$romefrontend$string$markup$parse_ts$parseMarkup(input),
-			opts,
-			maxLength,
-		);
-
-		const isTruncated = textLength > maxLength;
-
-		return {
-			textLength,
-			text,
-			truncated: isTruncated,
-			visibleTextLength: isTruncated ? maxLength : textLength,
-			truncatedLength: isTruncated ? textLength - maxLength : 0,
-		};
-	}
-
-
-  // project-rome/@romefrontend/string-markup/index.ts
+  // project-rome/@romefrontend/cli-layout/index.ts
 
 
 
@@ -83917,9 +82891,15 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$ProgressBase_ts$DEFAULT
 				);
 
 				for (const stream of this.reporter.streams) {
+					if (stream.features.columns === undefined) {
+						continue;
+					}
+
 					// We remove the bouncer width from the total columns since we'll append it
 					const width =
-						stream.features.columns -
+						___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(
+							stream.features.columns,
+						) -
 						___R$$priv$project$rome$$romefrontend$cli$reporter$Progress_ts$BOUNCER_WIDTH;
 
 					// Position to place the bouncer
@@ -84041,7 +83021,7 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$ProgressBase_ts$DEFAULT
 				if (this.isBoldCharacter(i, boldRanges)) {
 					return [
 						i,
-						___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.bold(
+						___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.bold(
 							char,
 						),
 					];
@@ -84063,12 +83043,12 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$ProgressBase_ts$DEFAULT
 
 				if (isBounce) {
 					if (this.paused) {
-						fullBar += ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.inverse(
+						fullBar += ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.inverse(
 							char,
 						);
 					} else {
-						fullBar += ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.white(
-							___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.bgYellow(
+						fullBar += ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.white(
+							___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.bgYellow(
 								char,
 							),
 						);
@@ -84080,20 +83060,22 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$ProgressBase_ts$DEFAULT
 			return fullBar;
 		}
 
-		buildProgressBar(stream, bar, total) {
+		buildProgressBar(stream, columns, bar, total) {
 			const ratio = Math.min(Math.max(this.current / total, 0), 1);
 
-			const completeLength = Math.round(stream.features.columns * ratio);
+			const completeLength = Math.round(
+				___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(columns) * ratio,
+			);
 			let fullBar = "";
 			for (const [i, char] of bar) {
 				if (i < completeLength) {
 					if (this.paused) {
-						fullBar += ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.inverse(
+						fullBar += ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.inverse(
 							char,
 						);
 					} else {
-						fullBar += ___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.white(
-							___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.bgGreen(
+						fullBar += ___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.white(
+							___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.bgGreen(
 								char,
 							),
 						);
@@ -84105,7 +83087,7 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$ProgressBase_ts$DEFAULT
 			return fullBar;
 		}
 
-		buildBar(stream) {
+		buildBar(stream, columns) {
 			const {total, current, title} = this;
 
 			// Text ranges that we should make bold
@@ -84198,7 +83180,8 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$ProgressBase_ts$DEFAULT
 			}
 
 			// Get the full width of the bar. We take off 3 for padding.
-			const width = stream.features.columns - 3;
+			const width =
+				___R$project$rome$$romefrontend$ob1$index_ts$ob1Get1(columns) - 3;
 
 			// The amount of spaces to put between the title and counter
 			const spacerLength = Math.max(0, width - prefix.length - suffix.length);
@@ -84219,7 +83202,7 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$ProgressBase_ts$DEFAULT
 			if (total === undefined) {
 				return this.buildProgressBouncer(stream, chars);
 			} else {
-				return this.buildProgressBar(stream, chars, total);
+				return this.buildProgressBar(stream, columns, chars, total);
 			}
 		}
 
@@ -84234,13 +83217,17 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$ProgressBase_ts$DEFAULT
 			this.lastRenderTime = Date.now();
 
 			for (const stream of this.reporter.getStreams(false)) {
-				if (stream.format === "ansi" && stream.features.progressBars) {
+				if (
+					stream.format === "ansi" &&
+					stream.features.cursor &&
+					stream.features.columns !== undefined
+				) {
 					stream.write(
-						___R$project$rome$$romefrontend$string$markup$ansi_ts$ansiEscapes.cursorTo(
+						___R$project$rome$$romefrontend$cli$layout$ansi_ts$ansiEscapes.cursorTo(
 							0,
 						),
 					);
-					stream.write(this.buildBar(stream));
+					stream.write(this.buildBar(stream, stream.features.columns));
 				}
 			}
 		}
@@ -84502,18 +83489,18 @@ function ___R$$priv$project$rome$$romefrontend$cli$reporter$select_ts$formatShor
 		function cleanup() {
 			for (let i = 0; i < optionCount; i++) {
 				reporter.writeAll(
-					___R$project$rome$$romefrontend$string$markup$ansi_ts$ansiEscapes.eraseLine,
+					___R$project$rome$$romefrontend$cli$layout$ansi_ts$ansiEscapes.eraseLine,
 				);
 
 				// Don't move above the top line
 				if (i !== optionCount - 1) {
 					reporter.writeAll(
-						___R$project$rome$$romefrontend$string$markup$ansi_ts$ansiEscapes.cursorUp(),
+						___R$project$rome$$romefrontend$cli$layout$ansi_ts$ansiEscapes.cursorUp(),
 					);
 				}
 			}
 			reporter.writeAll(
-				___R$project$rome$$romefrontend$string$markup$ansi_ts$ansiEscapes.cursorTo(
+				___R$project$rome$$romefrontend$cli$layout$ansi_ts$ansiEscapes.cursorTo(
 					0,
 				),
 			);
@@ -84596,18 +83583,18 @@ function ___R$$priv$project$rome$$romefrontend$cli$reporter$select_ts$formatShor
 
 				// Remove initial help message
 				reporter.writeAll(
-					___R$project$rome$$romefrontend$string$markup$ansi_ts$ansiEscapes.cursorUp(),
+					___R$project$rome$$romefrontend$cli$layout$ansi_ts$ansiEscapes.cursorUp(),
 				);
 				reporter.writeAll(
-					___R$project$rome$$romefrontend$string$markup$ansi_ts$ansiEscapes.eraseLine,
+					___R$project$rome$$romefrontend$cli$layout$ansi_ts$ansiEscapes.eraseLine,
 				);
 
 				// Remove initial log message
 				reporter.writeAll(
-					___R$project$rome$$romefrontend$string$markup$ansi_ts$ansiEscapes.cursorUp(),
+					___R$project$rome$$romefrontend$cli$layout$ansi_ts$ansiEscapes.cursorUp(),
 				);
 				reporter.writeAll(
-					___R$project$rome$$romefrontend$string$markup$ansi_ts$ansiEscapes.eraseLine,
+					___R$project$rome$$romefrontend$cli$layout$ansi_ts$ansiEscapes.eraseLine,
 				);
 
 				prompt += ": ";
@@ -84691,21 +83678,23 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$Reporter_ts$stream = re
 		}
 
 		attachStdoutStreams(stdout, stderr, force = {}) {
-			const {features, updateEvent, setupUpdateEvent, closeUpdateEvent} = ___R$project$rome$$romefrontend$environment$index_ts$inferTerminalFeatures(
+			const {features, updateEvent, setupUpdateEvent, closeUpdateEvent} = ___R$project$rome$$romefrontend$cli$environment$index_ts$inferTerminalFeatures(
 				stdout,
 				force,
 			);
 
-			const {format = features.color ? "ansi" : "none"} = force;
+			const {format = features.colorDepth > 1 ? "ansi" : "none"} = force;
 
 			const stdoutWrite = (chunk) => {
 				if (stdout !== undefined) {
+					// @ts-ignore
 					stdout.write(chunk);
 				}
 			};
 
 			const stderrWrite = (chunk) => {
 				if (stderr !== undefined) {
+					// @ts-ignore
 					stderr.write(chunk);
 				}
 			};
@@ -84769,13 +83758,17 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$Reporter_ts$stream = re
 			return cond;
 		}
 
-		attachCaptureStream(format = "none") {
+		attachCaptureStream(format = "none", features = {}) {
 			let buff = "";
 
 			const stream = {
 				format,
 				type: "all",
-				features: ___R$project$rome$$romefrontend$environment$index_ts$TERMINAL_FEATURES_DEFAULT,
+				features: Object.assign(
+					{},
+					___R$project$rome$$romefrontend$cli$environment$index_ts$DEFAULT_TERMINAL_FEATURES,
+					features,
+				),
 				write(chunk) {
 					buff += chunk;
 				},
@@ -84968,10 +83961,10 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$Reporter_ts$stream = re
 
 						// Replace initial prompt
 						this.writeAll(
-							___R$project$rome$$romefrontend$string$markup$ansi_ts$ansiEscapes.cursorUp(),
+							___R$project$rome$$romefrontend$cli$layout$ansi_ts$ansiEscapes.cursorUp(),
 						);
 						this.writeAll(
-							___R$project$rome$$romefrontend$string$markup$ansi_ts$ansiEscapes.eraseLine,
+							___R$project$rome$$romefrontend$cli$layout$ansi_ts$ansiEscapes.eraseLine,
 						);
 
 						let prompt = origPrompt;
@@ -85080,6 +84073,10 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$Reporter_ts$stream = re
 		}
 
 		//# Control
+
+		getAllStreams() {
+			return this.streams;
+		}
 
 		getStreams(stderr) {
 			if (this.shouldRedirectOutToErr) {
@@ -85214,10 +84211,10 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$Reporter_ts$stream = re
 		clearLineSpecific(stream) {
 			if (stream.format === "ansi" && stream.features.cursor) {
 				stream.write(
-					___R$project$rome$$romefrontend$string$markup$ansi_ts$ansiEscapes.eraseLine,
+					___R$project$rome$$romefrontend$cli$layout$ansi_ts$ansiEscapes.eraseLine,
 				);
 				stream.write(
-					___R$project$rome$$romefrontend$string$markup$ansi_ts$ansiEscapes.cursorTo(
+					___R$project$rome$$romefrontend$cli$layout$ansi_ts$ansiEscapes.cursorTo(
 						0,
 					),
 				);
@@ -85250,7 +84247,7 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$Reporter_ts$stream = re
 			for (const stream of this.getStreams(false)) {
 				if (stream.format === "ansi" && stream.features.cursor) {
 					stream.write(
-						___R$project$rome$$romefrontend$string$markup$ansi_ts$ansiEscapes.clearScreen,
+						___R$project$rome$$romefrontend$cli$layout$ansi_ts$ansiEscapes.clearScreen,
 					);
 				}
 			}
@@ -85305,15 +84302,15 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$Reporter_ts$stream = re
 					for (const stream of this.getStreams(false)) {
 						if (stream.format === "ansi" && stream.features.cursor) {
 							stream.write(
-								___R$project$rome$$romefrontend$string$markup$ansi_ts$ansiEscapes.cursorTo(
+								___R$project$rome$$romefrontend$cli$layout$ansi_ts$ansiEscapes.cursorTo(
 									0,
 								),
 							);
 							stream.write(
-								___R$project$rome$$romefrontend$string$markup$ansi_ts$ansiEscapes.cursorUp(),
+								___R$project$rome$$romefrontend$cli$layout$ansi_ts$ansiEscapes.cursorUp(),
 							);
 							stream.write(
-								___R$project$rome$$romefrontend$string$markup$ansi_ts$ansiEscapes.eraseLine,
+								___R$project$rome$$romefrontend$cli$layout$ansi_ts$ansiEscapes.eraseLine,
 							);
 						}
 					}
@@ -85344,8 +84341,8 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$Reporter_ts$stream = re
 		}
 
 		stripMarkup(str) {
-			return ___R$project$rome$$romefrontend$string$markup$format_ts$joinMarkupLines(
-				___R$project$rome$$romefrontend$string$markup$format_ts$markupToPlainText(
+			return ___R$project$rome$$romefrontend$cli$layout$format_ts$joinMarkupLines(
+				___R$project$rome$$romefrontend$cli$layout$format_ts$markupToPlainText(
 					str,
 					this.markupOptions,
 				),
@@ -85377,26 +84374,26 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$Reporter_ts$stream = re
 
 			switch (stream.format) {
 				case "ansi":
-					return ___R$project$rome$$romefrontend$string$markup$format_ts$markupToAnsi(
+					return ___R$project$rome$$romefrontend$cli$layout$format_ts$markupToAnsi(
 						built,
 						gridMarkupOptions,
 					).lines;
 
 				case "html":
-					return ___R$project$rome$$romefrontend$string$markup$format_ts$markupToHtml(
+					return ___R$project$rome$$romefrontend$cli$layout$format_ts$markupToHtml(
 						built,
 						gridMarkupOptions,
 					).lines;
 
 				case "none":
-					return ___R$project$rome$$romefrontend$string$markup$format_ts$markupToPlainText(
+					return ___R$project$rome$$romefrontend$cli$layout$format_ts$markupToPlainText(
 						built,
 						gridMarkupOptions,
 					).lines;
 
 				case "markup":
 					return [
-						___R$project$rome$$romefrontend$string$markup$format_ts$normalizeMarkup(
+						___R$project$rome$$romefrontend$cli$layout$format_ts$normalizeMarkup(
 							built,
 							this.markupOptions,
 						).text,
@@ -85458,7 +84455,7 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$Reporter_ts$stream = re
 				return;
 			}
 
-			let inner = ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
+			let inner = ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
 				opts.markupTag,
 				rawInner,
 			);
@@ -85466,7 +84463,7 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$Reporter_ts$stream = re
 			if (args.length > 0) {
 				const formattedArgs = args.map((arg) => {
 					if (typeof arg === "string") {
-						return ___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
+						return ___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
 							arg,
 						);
 					} else {
@@ -85494,9 +84491,9 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$Reporter_ts$stream = re
 				const prefixInner = stream.features.unicode
 					? opts.unicodePrefix
 					: opts.rawPrefix;
-				const prefix = ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
+				const prefix = ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
 					"emphasis",
-					___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
+					___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
 						opts.markupTag,
 						prefixInner,
 					),
@@ -85573,7 +84570,9 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$Reporter_ts$stream = re
 		}
 
 		command(command) {
-			this.logAll("<dim>$ " + command + "</dim>");
+			this.logAll(
+				___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<dim>$ ${command}</dim>`,
+			);
 		}
 
 		processedList(items, callback, opts = {}) {
@@ -85598,14 +84597,15 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$Reporter_ts$stream = re
 					streams: [],
 				});
 				const stream = reporter.attachCaptureStream("markup");
-				callback(reporter, item);
+				const str = callback(reporter, item);
 				stream.remove();
-				buff += "<li>" + stream.read() + "</li>";
+				let inner = str === undefined ? stream.read().trimRight() : str;
+				buff += "<li>" + inner + "</li>";
 			}
 
 			if (opts.ordered) {
 				this.logAll(
-					___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
+					___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
 						"ol",
 						buff,
 						{start, reversed: opts.reverse},
@@ -85629,7 +84629,7 @@ const ___R$$priv$project$rome$$romefrontend$cli$reporter$Reporter_ts$stream = re
 			return this.processedList(
 				items,
 				(reporter, str) => {
-					reporter.logAll(str, {newline: false});
+					return str;
 				},
 				opts,
 			);
@@ -85780,610 +84780,6 @@ const ___R$project$rome$$romefrontend$cli$reporter$types_ts = {};
 
 
 
-  // project-rome/@romefrontend/cli-diagnostics/highlightCode.ts
-// Max file size to avoid doing expensive highlighting for massive files - 100KB
-	// NB: This should probably be lower
-	const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$FILE_SIZE_MAX = 100_000;
-
-	function ___R$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$default(
-		opts,
-	) {
-		if (
-			opts.input.length >
-			___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$FILE_SIZE_MAX
-		) {
-			return ___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
-				opts.input,
-			);
-		}
-
-		switch (opts.language) {
-			case "js":
-				return ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$highlightJS(
-					opts,
-					// js-parser does not accept an "unknown" sourceType
-					opts.sourceTypeJS === undefined || opts.sourceTypeJS === "unknown"
-						? "script"
-						: opts.sourceTypeJS,
-				);
-
-			case "html":
-				return ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$highlightHTML(
-					opts,
-				);
-
-			case "json":
-				return ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$highlightJSON(
-					opts,
-				);
-
-			default:
-				return ___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
-					opts.input,
-				);
-		}
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$reduceParserCore(
-		input,
-		tokens,
-		callback,
-	) {
-		return ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$reduce(
-			input,
-			tokens,
-			(token, value, prev, next) => {
-				switch (token.type) {
-					case "Invalid":
-						return ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$invalidHighlight(
-							value,
-						);
-
-					// Will never be hit
-					case "EOF":
-					case "SOF":
-						return {value: ""};
-
-					default:
-						// We should have refined `token` to not include any of the base tokens
-						return callback(token, value, prev, next);
-				}
-			},
-		);
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$reduce(
-		input,
-		tokens,
-		callback,
-	) {
-		let prevEnd = 0;
-		let buff = "";
-
-		for (let i = 0; i < tokens.length; i++) {
-			const token = tokens[i];
-			const start = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
-				token.start,
-			);
-			const end = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
-				token.end,
-			);
-			let value = input.slice(start, end);
-
-			// Add on text between tokens
-			buff += ___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
-				input.slice(prevEnd, start),
-			);
-			prevEnd = end;
-
-			// We need to break up the token text into lines, so that we can easily split the highlighted newlines and have the ansi codes be unbroken
-			const lines = value.split("\n");
-
-			const values = lines.map((line) => {
-				if (line === "") {
-					return "";
-				} else {
-					const prev = tokens[i - 1];
-					const next = tokens[i + 1];
-					const escapedLine = ___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
-						line,
-					);
-					const res = callback(token, escapedLine, prev, next);
-					if (res === undefined) {
-						return escapedLine;
-					} else {
-						const {value = escapedLine, type} = res;
-						if (type === undefined) {
-							return value;
-						} else {
-							return ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
-								"token",
-								value,
-								{type},
-							);
-						}
-					}
-				}
-			});
-
-			buff += values.join("\n");
-		}
-
-		return buff;
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$invalidHighlight(
-		line,
-	) {
-		return {
-			value: ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
-				"emphasis",
-				___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
-					"color",
-					line,
-					{bg: "red"},
-				),
-			),
-		};
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$highlightJSON(
-		{input, path},
-	) {
-		const tokens = ___R$project$rome$$romefrontend$codec$json$index_ts$tokenizeJSON({
-			input,
-			// Wont be used anywhere but activates JSON extensions if necessary
-			path,
-		});
-
-		return ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$reduceParserCore(
-			input,
-			tokens,
-			(token) => {
-				// Try to keep the highlighting in line with JS where possible
-				switch (token.type) {
-					case "BlockComment":
-					case "LineComment":
-						return {type: "comment"};
-
-					case "String":
-						return {type: "string"};
-
-					case "Number":
-						return {type: "number"};
-
-					case "Word":
-						switch (token.value) {
-							case "true":
-							case "false":
-							case "null":
-								return {type: "boolean"};
-
-							default:
-								return undefined;
-						}
-
-					case "Comma":
-					case "Colon":
-					case "Dot":
-						return {type: "operator"};
-
-					case "BracketOpen":
-					case "BracketClose":
-					case "BraceOpen":
-					case "BraceClose":
-					case "Minus":
-					case "Plus":
-						return {type: "punctuation"};
-
-					default:
-						return undefined;
-				}
-			},
-		);
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$highlightHTML(
-		{input, path},
-	) {
-		const tokens = ___R$project$rome$$romefrontend$html$parser$index_ts$tokenizeHTML({
-			input,
-			path,
-		});
-
-		return ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$reduceParserCore(
-			input,
-			tokens,
-			(token, value, prev) => {
-				// All these tokens appear only inside of tags
-				switch (token.type) {
-					case "Equals":
-						return {type: "attr-equals"};
-
-					case "Identifier":
-						return {
-							type: prev !== undefined && prev.type === "TagStartOpen"
-								? "tag"
-								: "attr-name",
-						};
-
-					case "String":
-						return {type: "attr-value"};
-
-					case "TagEndOpen":
-					case "TagEnd":
-					case "TagSelfClosing":
-					case "TagStartOpen":
-						return {type: "punctuation"};
-
-					default:
-						return undefined;
-				}
-			},
-		);
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$highlightJS(
-		{input, path},
-		sourceType,
-	) {
-		const tokens = ___R$project$rome$$romefrontend$js$parser$index_ts$tokenizeJS({
-			input,
-			sourceType,
-			path,
-		});
-
-		return ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$reduce(
-			input,
-			tokens,
-			(token, value, prev, next) => {
-				const {type} = token;
-
-				switch (type.label) {
-					case "break":
-					case "case":
-					case "catch":
-					case "continue":
-					case "debugger":
-					case "default":
-					case "do":
-					case "else":
-					case "finally":
-					case "for":
-					case "function":
-					case "if":
-					case "return":
-					case "switch":
-					case "throw":
-					case "try":
-					case "var":
-					case "const":
-					case "while":
-					case "with":
-					case "new":
-					case "this":
-					case "super":
-					case "class":
-					case "extends":
-					case "export":
-					case "import":
-					case "in":
-					case "instanceof":
-					case "typeof":
-					case "void":
-					case "delete":
-						return {type: "keyword"};
-
-					case "true":
-					case "false":
-					case "null":
-						return {type: "boolean"};
-
-					case "num":
-					case "bigint":
-						return {type: "number"};
-
-					case "regexp":
-						return {type: "regex"};
-
-					case "string":
-					case "template":
-					case "`":
-						return {type: "string"};
-
-					case "invalid":
-						return ___R$$priv$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$invalidHighlight(
-							value,
-						);
-
-					case "comment":
-						return {type: "comment"};
-
-					case ",":
-					case ";":
-					case ":":
-					case "::":
-					case "${":
-					case ".":
-					case "?":
-					case "?.":
-					case "[":
-					case "]":
-					case "{":
-					case "{|":
-					case "}":
-					case "|}":
-					case "(":
-					case ")":
-						return {type: "punctuation"};
-
-					case "name": {
-						if (next !== undefined && next.type.label === "(") {
-							return {type: "function"};
-						}
-
-						// These are contextual keywords
-						if (value === "from" || value === "let" || value === "async") {
-							return {type: "keyword"};
-						}
-
-						return {type: "variable"};
-					}
-
-					case "jsxName":
-						return {
-							type: prev !== undefined &&
-							(prev.type.label === "jsxTagStart" || prev.type.label === "/")
-								? "variable"
-								: "attr-name",
-						};
-
-					case "=>":
-					case "...":
-					case "@":
-					case "#":
-					case "=":
-					case "_=":
-					case "++/--":
-					case "!":
-					case "~":
-					case "??":
-					case "||":
-					case "&&":
-					case "|":
-					case "^":
-					case "&":
-					case "==/!=":
-					case "</>":
-					case "<</>>":
-					case "+/-":
-					case "%":
-					case "*":
-					case "/":
-					case "**":
-						return {type: "operator"};
-
-					default:
-						return undefined;
-				}
-			},
-		);
-	}
-
-
-  // project-rome/@romefrontend/cli-diagnostics/utils.ts
-const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$unicodeControls = /[\u0000-\u001f\u007f-\u00a0]/u;
-
-	function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$isWhitespace(
-		char,
-	) {
-		return char === " " || char === "\t" || char === "\r" || char === "\n";
-	}
-
-	function ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$showInvisibles(
-		str,
-		{atLineStart, atLineEnd},
-	) {
-		let hadNonWhitespace = false;
-		let ret = "";
-
-		// Get the first trailing whitespace character in the string
-		let trailingWhitespaceIndex = str.length;
-		while (
-			___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$isWhitespace(
-				str[trailingWhitespaceIndex - 1],
-			)
-		) {
-			trailingWhitespaceIndex--;
-		}
-
-		for (let i = 0; i < str.length; i++) {
-			const char = str[i];
-			let showInvisible = true;
-
-			// Only highlight spaces when surrounded by other spaces
-			if (char === " ") {
-				showInvisible = false;
-
-				if (
-					___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$isWhitespace(
-						str[i - 1],
-					) ||
-					___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$isWhitespace(
-						str[i + 1],
-					)
-				) {
-					showInvisible = false;
-				}
-			}
-
-			// Don't show leading tabs
-			if (atLineStart && !hadNonWhitespace && char === "\t") {
-				showInvisible = false;
-			}
-
-			// Always show if at the end of line
-			if (atLineEnd && i >= trailingWhitespaceIndex) {
-				showInvisible = true;
-			}
-
-			if (!showInvisible) {
-				if (
-					!___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$isWhitespace(
-						char,
-					)
-				) {
-					hadNonWhitespace = true;
-				}
-				ret += char;
-				continue;
-			}
-
-			const visible = ___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$showInvisibleChar(
-				char,
-			);
-			if (visible !== undefined) {
-				ret += visible;
-				continue;
-			}
-
-			if (
-				___R$project$rome$$romefrontend$js$parser$utils$whitespace_ts$nonASCIIwhitespace.test(
-					char,
-				) ||
-				___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$unicodeControls.test(
-					char,
-				)
-			) {
-				ret += ___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$showUnicodeChar(
-					char,
-				);
-				continue;
-			}
-
-			ret += char;
-		}
-
-		return {
-			hadNonWhitespace,
-			value: ret,
-		};
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$showUnicodeChar(
-		char,
-	) {
-		// We use inverse to make it clear that it's not in the source
-		return "<inverse>U+" + char.codePointAt(0).toString(16) + "</inverse>";
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$showInvisibleChar(
-		char,
-	) {
-		switch (char) {
-			case " ":
-				return "\xb7"; // Middle Dot
-
-			case "\r":
-				return "\u240d"; // Carriage Return Symbol
-
-			case "\n":
-				return "\u23ce"; // Return Symbol
-
-			case "\t":
-				return "\u21b9"; // Left Arrow To Bar Over Right Arrow To Bar
-
-			case "\0":
-				return "\u2400"; // Null Symbol
-
-			case "\x0b":
-				return "\u240b"; // Vertical Tabulation Symbol
-
-			case "\b":
-				return "\u232b"; // Backspace Symbol
-
-			case "\f":
-				return "\u21a1"; // Downards Two Headed Arrow
-
-			// These are display characters we use above. Remove the ambiguity by escaping them
-			case "\u240d":
-			case "\u23ce":
-			case "\u21b9":
-			case "\u2400":
-			case "\u240b":
-			case "\u232b":
-			case "\u21a1":
-				return ___R$$priv$project$rome$$romefrontend$cli$diagnostics$utils_ts$showUnicodeChar(
-					char,
-				);
-
-			default:
-				return undefined;
-		}
-	}
-
-	function ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$cleanEquivalentString(
-		str,
-	) {
-		str = ___R$project$rome$$romefrontend$string$markup$format_ts$joinMarkupLines(
-			___R$project$rome$$romefrontend$string$markup$format_ts$markupToPlainText(
-				str,
-			),
-		);
-
-		// Replace all whitespace with spaces
-		str = str.replace(/[\s\n]+/g, " ");
-
-		// Remove trailing dot
-		str = str.replace(/\.+$/, "");
-
-		// Remove surrounding quotes
-		str = str.replace(/^"(.*?)"$/, "$1");
-
-		return str;
-	}
-
-	function ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$splitLines(
-		src,
-	) {
-		return src.split(
-			___R$project$rome$$romefrontend$js$parser$utils$whitespace_ts$NEWLINE,
-		);
-	}
-
-	function ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$toLines(
-		opts,
-	) {
-		const input = ___R$project$rome$$romefrontend$string$utils$removeCarriageReturn_ts$removeCarriageReturn(
-			opts.input,
-		);
-		const raw = ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$splitLines(
-			input,
-		);
-		const highlighted = ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$splitLines(
-			___R$project$rome$$romefrontend$cli$diagnostics$highlightCode_ts$default(
-				Object.assign({}, opts, {input}),
-			),
-		);
-
-		if (raw.length !== highlighted.length) {
-			throw new Error(
-				opts.path.join() +
-				": raw and highlighted line count mismatch " +
-				raw.length +
-				" !== " +
-				highlighted.length,
-			);
-		}
-
-		return {
-			length: raw.length,
-			raw,
-			highlighted,
-		};
-	}
-
-
   // project-rome/@romefrontend/cli-diagnostics/constants.ts
 const ___R$project$rome$$romefrontend$cli$diagnostics$constants_ts = {
 		get GUTTER() {
@@ -86440,7 +84836,7 @@ function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$buildPatchCodeFra
 	) {
 		let atLineStart = true;
 		return diffs.map(([type, text], i) => {
-			const escaped = ___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
+			const escaped = ___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
 				text,
 			);
 			const res = ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$showInvisibles(
@@ -86460,7 +84856,7 @@ function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$buildPatchCodeFra
 			) {
 				return escaped;
 			} else {
-				return ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
+				return ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
 					"emphasis",
 					value,
 				);
@@ -86468,11 +84864,11 @@ function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$buildPatchCodeFra
 		}).join("");
 	}
 
-	const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$buildPatchCodeFrame_ts$DELETE_MARKER = ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
+	const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$buildPatchCodeFrame_ts$DELETE_MARKER = ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
 		"error",
 		"-",
 	);
-	const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$buildPatchCodeFrame_ts$ADD_MARKER = ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
+	const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$buildPatchCodeFrame_ts$ADD_MARKER = ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
 		"success",
 		"+",
 	);
@@ -86480,7 +84876,7 @@ function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$buildPatchCodeFra
 	function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$buildPatchCodeFrame_ts$formatSingleLineMarker(
 		text,
 	) {
-		return ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`<emphasis>${text}</emphasis>: `;
+		return ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<emphasis>${text}</emphasis>: `;
 	}
 
 	function ___R$project$rome$$romefrontend$cli$diagnostics$buildPatchCodeFrame_ts$default(
@@ -86671,18 +85067,18 @@ function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$buildPatchCodeFra
 			);
 		}
 
-		if (legend !== undefined) {
+		if (legend !== undefined && !singleLine) {
 			frame.push("");
 			frame.push(
 				"<error>- " +
-				___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
+				___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
 					legend.delete,
 				) +
 				"</error>",
 			);
 			frame.push(
 				"<success>+ " +
-				___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
+				___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
 					legend.add,
 				) +
 				"</success>",
@@ -86708,7 +85104,7 @@ function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$buildCodeFrame_ts
 		};
 
 		if (gutterLength > 0) {
-			line += ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
+			line += ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
 				"viewLinePrefix",
 				'<pad align="right" width="' +
 				gutterLength +
@@ -86721,7 +85117,7 @@ function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$buildCodeFrame_ts
 				},
 			);
 
-			line += ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
+			line += ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
 				"viewLinePrefix",
 				"<dim>\u21e5</dim>" +
 				___R$project$rome$$romefrontend$cli$diagnostics$constants_ts$GUTTER,
@@ -86731,7 +85127,7 @@ function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$buildCodeFrame_ts
 				},
 			);
 
-			line += ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
+			line += ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
 				"viewLinePrefix",
 				___R$project$rome$$romefrontend$cli$diagnostics$constants_ts$GUTTER,
 				{
@@ -86742,7 +85138,7 @@ function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$buildCodeFrame_ts
 		}
 
 		if (marker !== undefined) {
-			line += ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
+			line += ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
 				"viewPointer",
 				marker.message,
 				{
@@ -86754,7 +85150,7 @@ function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$buildCodeFrame_ts
 			);
 		}
 
-		return ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
+		return ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
 			"view",
 			line,
 			attributes,
@@ -86992,8 +85388,8 @@ function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$buildCodeFrame_ts
 					text,
 				) ===
 				___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$cleanEquivalentString(
-					___R$project$rome$$romefrontend$string$markup$format_ts$joinMarkupLines(
-						___R$project$rome$$romefrontend$string$markup$format_ts$markupToPlainText(
+					___R$project$rome$$romefrontend$cli$layout$format_ts$joinMarkupLines(
+						___R$project$rome$$romefrontend$cli$layout$format_ts$markupToPlainText(
 							markerMessage,
 						),
 					),
@@ -87625,6 +86021,11 @@ function ___R$$priv$project$rome$$romefrontend$cli$flags$Parser_ts$splitCommandN
 
 			if (definedCommand !== undefined) {
 				this.ranCommand = definedCommand.command;
+				if (definedCommand.command.hidden === true) {
+					this.reporter.warn(
+						"This command has been hidden. Consider its usage to be experimental and do not expect support or backwards compatibility.",
+					);
+				}
 				await definedCommand.command.callback(definedCommand.flags);
 			}
 
@@ -87702,7 +86103,7 @@ function ___R$$priv$project$rome$$romefrontend$cli$flags$Parser_ts$splitCommandN
 
 				optionOutput.push({
 					argName,
-					arg: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`<color fg="brightBlack">${argCol}</color>`,
+					arg: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<color fg="brightBlack">${argCol}</color>`,
 					description: descCol,
 				});
 			}
@@ -87959,7 +86360,13 @@ function ___R$$priv$project$rome$$romefrontend$cli$flags$Parser_ts$splitCommandN
 					}
 
 					for (const category of sortedCategoryNames) {
-						const commands = commandsByCategory.get(category);
+						const commands = commandsByCategory.get(category).filter((c) => {
+							return !c.hidden;
+						});
+
+						if (commands.length === 0) {
+							continue;
+						}
 
 						if (category !== undefined) {
 							reporter.logAll("<emphasis>" + category + " Commands</emphasis>");
@@ -88472,14 +86879,14 @@ const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$printAdvice_ts$DID_P
 
 		const truncatedLength =
 			!opts.flags.verboseDiagnostics &&
-			item.code.length >
+			item.sourceText.length >
 			___R$project$rome$$romefrontend$cli$diagnostics$constants_ts$MAX_CODE_LENGTH;
 		let code = truncatedLength
-			? item.code.slice(
+			? item.sourceText.slice(
 					0,
 					___R$project$rome$$romefrontend$cli$diagnostics$constants_ts$MAX_CODE_LENGTH,
 				)
-			: item.code;
+			: item.sourceText;
 
 		const {frame, truncated: truncatedLines} = ___R$project$rome$$romefrontend$cli$diagnostics$buildCodeFrame_ts$default({
 			type: "all",
@@ -88492,6 +86899,7 @@ const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$printAdvice_ts$DID_P
 				),
 				sourceTypeJS: item.sourceTypeJS,
 				language: item.language,
+				highlight: opts.printer.shouldHighlight(),
 			}),
 		});
 		if (frame.trim() === "") {
@@ -88503,7 +86911,7 @@ const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$printAdvice_ts$DID_P
 		if (truncatedLength) {
 			___R$$priv$project$rome$$romefrontend$cli$diagnostics$printAdvice_ts$printTruncated(
 				reporter,
-				item.code.length -
+				item.sourceText.length -
 				___R$project$rome$$romefrontend$cli$diagnostics$constants_ts$MAX_CODE_LENGTH,
 			);
 		}
@@ -88525,7 +86933,7 @@ const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$printAdvice_ts$DID_P
 
 		let cleanMarker = "";
 		if (marker !== undefined) {
-			cleanMarker = ___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
+			cleanMarker = ___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
 				"emphasis",
 				___R$$priv$project$rome$$romefrontend$cli$diagnostics$printAdvice_ts$cleanMessage(
 					marker,
@@ -88543,7 +86951,11 @@ const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$printAdvice_ts$DID_P
 				path,
 				input: sourceText,
 				sourceTypeJS: item.location.sourceTypeJS,
-				language: item.location.language,
+				language: ___R$project$rome$$romefrontend$core$common$file$handlers$index_ts$inferDiagnosticLanguageFromFilename(
+					path,
+					item.location.language,
+				),
+				highlight: opts.printer.shouldHighlight(),
 			});
 		} else if (filename !== undefined) {
 			const source = opts.fileSources.get(path);
@@ -88599,7 +87011,7 @@ const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$printAdvice_ts$DID_P
 			const {title} = item;
 			if (title !== undefined) {
 				opts.reporter.info(
-					___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
+					___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
 						title,
 					),
 				);
@@ -88615,10 +87027,10 @@ const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$printAdvice_ts$DID_P
 					object,
 					suffix,
 					property,
+					language,
 					prefix,
 					line,
 					column,
-					language,
 					sourceText: code,
 				} = frame;
 
@@ -88627,9 +87039,9 @@ const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$printAdvice_ts$DID_P
 				// Add prefix
 				if (prefix !== undefined) {
 					logParts.push(
-						___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
+						___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
 							"dim",
-							___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
+							___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
 								prefix,
 							),
 						),
@@ -88640,9 +87052,9 @@ const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$printAdvice_ts$DID_P
 				const objParts = [];
 				if (object !== undefined) {
 					objParts.push(
-						___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
+						___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
 							"highlight",
-							___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
+							___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
 								object,
 							),
 							{i: 0},
@@ -88651,9 +87063,9 @@ const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$printAdvice_ts$DID_P
 				}
 				if (property !== undefined) {
 					objParts.push(
-						___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
+						___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
 							"highlight",
-							___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
+							___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
 								property,
 							),
 							{i: 1},
@@ -88667,9 +87079,9 @@ const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$printAdvice_ts$DID_P
 				// Add suffix
 				if (suffix !== undefined) {
 					logParts.push(
-						___R$project$rome$$romefrontend$string$markup$escape_ts$markupTag(
+						___R$project$rome$$romefrontend$cli$layout$escape_ts$markupTag(
 							"success",
-							___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
+							___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
 								suffix,
 							),
 						),
@@ -88680,6 +87092,7 @@ const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$printAdvice_ts$DID_P
 				if (filename !== undefined && line !== undefined && column !== undefined) {
 					const header = ___R$project$rome$$romefrontend$diagnostics$helpers_ts$diagnosticLocationToMarkupFilelink({
 						filename,
+						language,
 						start: {
 							index: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0Neg1,
 							line,
@@ -88690,7 +87103,7 @@ const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$printAdvice_ts$DID_P
 					if (logParts.length === 0) {
 						logParts.push(header);
 					} else {
-						logParts.push("(<dim>" + header + "</dim>)");
+						logParts.push("<dim>(" + header + ")</dim>");
 					}
 				}
 
@@ -88708,12 +87121,12 @@ const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$printAdvice_ts$DID_P
 						column,
 					};
 
-					const skipped = ___R$$priv$project$rome$$romefrontend$cli$diagnostics$printAdvice_ts$printFrame(
+					const frame = ___R$$priv$project$rome$$romefrontend$cli$diagnostics$printAdvice_ts$printFrame(
 						{
 							type: "frame",
 							location: {
-								language,
 								filename,
+								language,
 								sourceTypeJS: "module",
 								start: pos,
 								end: pos,
@@ -88722,8 +87135,7 @@ const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$printAdvice_ts$DID_P
 						},
 						Object.assign({}, opts, {reporter}),
 					);
-					if (!skipped) {
-						reporter.br(true);
+					if (frame.printed) {
 						shownCodeFrames++;
 					}
 				}
@@ -88751,7 +87163,7 @@ const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$printAdvice_ts$DID_P
 			text.length >
 			___R$project$rome$$romefrontend$cli$diagnostics$constants_ts$MAX_LOG_LENGTH
 		) {
-			({truncated, text, truncatedLength} = ___R$project$rome$$romefrontend$string$markup$format_ts$normalizeMarkup(
+			({truncated, text, truncatedLength} = ___R$project$rome$$romefrontend$cli$layout$format_ts$normalizeMarkup(
 				text,
 				{},
 				___R$project$rome$$romefrontend$cli$diagnostics$constants_ts$MAX_LOG_LENGTH,
@@ -100313,19 +98725,28 @@ const ___R$project$rome$$romefrontend$cli$diagnostics$banners$error_json$default
 
 
   // project-rome/@romefrontend/cli-diagnostics/DiagnosticsPrinter.ts
-function ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$readDiagnosticsFileLocal(
-		path,
-	) {
-		if (!___R$project$rome$$romefrontend$fs$index_ts$existsSync(path)) {
-			return;
-		}
+const ___R$$priv$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$DEFAULT_FILE_READERS = {
+		async read(path) {
+			if (await ___R$project$rome$$romefrontend$fs$index_ts$exists(path)) {
+				return await ___R$project$rome$$romefrontend$fs$index_ts$readFileText(
+					path,
+				);
+			} else {
+				return undefined;
+			}
+		},
 
-		const src = ___R$project$rome$$romefrontend$fs$index_ts$readFileTextSync(
-			path,
-		);
-		const mtime = ___R$project$rome$$romefrontend$fs$index_ts$lstatSync(path).mtimeMs;
-		return {content: src, mtime};
-	}
+		async getMtime(path) {
+			if (await ___R$project$rome$$romefrontend$fs$index_ts$exists(path)) {
+				const stats = await ___R$project$rome$$romefrontend$fs$index_ts$lstat(
+					path,
+				);
+				return stats.mtimeMs;
+			} else {
+				return undefined;
+			}
+		},
+	};
 
 	function ___R$$priv$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$equalPosition(
 		a,
@@ -100368,18 +98789,20 @@ function ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$r
 
 			this.reporter = reporter;
 			this.flags = flags;
-			this.readFile =
-				opts.readFile === undefined
-					? ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$readDiagnosticsFileLocal
-					: opts.readFile;
+			this.fileReaders =
+				opts.fileReaders === undefined
+					? [
+							___R$$priv$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$DEFAULT_FILE_READERS,
+						]
+					: [
+							opts.fileReaders,
+							___R$$priv$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$DEFAULT_FILE_READERS,
+						];
 			this.cwd =
 				cwd === undefined
 					? ___R$project$rome$$romefrontend$path$index_ts$CWD_PATH
 					: cwd;
-			this.processor =
-				opts.processor === undefined
-					? new ___R$project$rome$$romefrontend$diagnostics$DiagnosticsProcessor_ts$default()
-					: opts.processor;
+			this.processor = opts.processor;
 
 			this.displayedCount = 0;
 			this.problemCount = 0;
@@ -100436,10 +98859,6 @@ function ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$r
 			}
 		}
 
-		getDiagnostics() {
-			return this.processor.getSortedDiagnostics();
-		}
-
 		shouldIgnore(diag) {
 			const {grep, inverseGrep} = this.flags;
 
@@ -100450,8 +98869,8 @@ function ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$r
 
 			// Match against the supplied grep pattern
 			let ignored =
-				___R$project$rome$$romefrontend$string$markup$format_ts$joinMarkupLines(
-					___R$project$rome$$romefrontend$string$markup$format_ts$markupToPlainText(
+				___R$project$rome$$romefrontend$cli$layout$format_ts$joinMarkupLines(
+					___R$project$rome$$romefrontend$cli$layout$format_ts$markupToPlainText(
 						diag.description.message.value,
 					),
 				).toLowerCase().includes(grep) === false;
@@ -100461,19 +98880,59 @@ function ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$r
 			return ignored;
 		}
 
-		addFileSource(info, stats) {
-			this.fileMtimes.set(info.path, stats.mtime);
+		// Only highlight if we have a reporter stream enabled that isn't format: "none"
+		shouldHighlight() {
+			for (const stream of this.reporter.getAllStreams()) {
+				if (stream.format !== "none") {
+					return true;
+				}
+			}
+			return false;
+		}
 
-			if (info.type === "reference") {
+		async addFileSource(dep) {
+			const path = dep.path.assertAbsolute();
+
+			let mtime;
+			for (const reader of this.fileReaders) {
+				if (mtime !== undefined) {
+					break;
+				}
+				mtime = await reader.getMtime(path);
+			}
+			if (mtime === undefined) {
+				this.missingFileSources.add(path);
+				return;
+			}
+
+			this.fileMtimes.set(dep.path, mtime);
+
+			if (dep.type === "reference") {
+				let sourceText = dep.sourceText;
+				for (const reader of this.fileReaders) {
+					if (sourceText !== undefined) {
+						break;
+					}
+					sourceText = await reader.read(path);
+				}
+				if (sourceText === undefined) {
+					this.missingFileSources.add(path);
+					return;
+				}
+
 				this.fileSources.set(
-					info.path,
+					dep.path,
 					{
-						sourceText: stats.content,
+						sourceText,
 						lines: ___R$project$rome$$romefrontend$cli$diagnostics$utils_ts$toLines({
-							path: info.path,
-							input: stats.content,
-							sourceTypeJS: info.sourceType,
-							language: info.language,
+							highlight: this.shouldHighlight(),
+							path: dep.path,
+							input: sourceText,
+							sourceTypeJS: dep.sourceTypeJS,
+							language: ___R$project$rome$$romefrontend$core$common$file$handlers$index_ts$inferDiagnosticLanguageFromFilename(
+								dep.path,
+								dep.language,
+							),
 						}),
 					},
 				);
@@ -100487,7 +98946,7 @@ function ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$r
 				const {
 					dependencies,
 					description: {advice},
-					location: {language, sourceTypeJS: sourceType, mtime, filename},
+					location: {language, sourceTypeJS, sourceText, mtime, filename},
 				} = diag;
 
 				if (filename !== undefined) {
@@ -100496,7 +98955,8 @@ function ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$r
 						path: this.createFilePath(filename),
 						mtime,
 						language,
-						sourceType,
+						sourceTypeJS,
+						sourceText,
 					});
 				}
 
@@ -100513,16 +98973,27 @@ function ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$r
 				for (const item of advice) {
 					if (item.type === "frame") {
 						const {location} = item;
-						if (
-							location.filename !== undefined &&
-							location.sourceText === undefined
-						) {
+						if (location.filename !== undefined) {
 							deps.push({
 								type: "reference",
 								path: this.createFilePath(location.filename),
 								language: location.language,
-								sourceType: location.sourceTypeJS,
+								sourceTypeJS: location.sourceTypeJS,
 								mtime: location.mtime,
+								sourceText: location.sourceText,
+							});
+						}
+					}
+
+					if (item.type === "stacktrace") {
+						for (const frame of item.frames) {
+							deps.push({
+								type: "reference",
+								path: this.createFilePath(frame.filename),
+								language: undefined,
+								sourceTypeJS: undefined,
+								mtime: undefined,
+								sourceText: frame.sourceText,
 							});
 						}
 					}
@@ -100540,15 +99011,31 @@ function ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$r
 
 				const existing = depsMap.get(path);
 
-				// reference dependency can override change since it has more metadata that needs conflict resolution
+				// "reference" dependency can override "change" since it has more metadata that needs conflict resolution
 				if (existing === undefined || existing.type === "change") {
 					depsMap.set(dep.path, dep);
 					continue;
 				}
 
 				if (dep.type === "reference") {
-					if (existing.sourceType !== dep.sourceType) {
-						existing.sourceType = "unknown";
+					if (
+						dep.sourceText !== undefined &&
+						existing.sourceText !== undefined &&
+						dep.sourceText !== existing.sourceText
+					) {
+						throw new Error(
+							"Found multiple sourceText entires for " +
+							dep.path.join() +
+							" that didn't match",
+						);
+					}
+
+					if (existing.sourceText === undefined) {
+						existing.sourceText = dep.sourceText;
+					}
+
+					if (existing.sourceTypeJS !== dep.sourceTypeJS) {
+						existing.sourceTypeJS = "unknown";
 					}
 
 					if (existing.language !== dep.language) {
@@ -100560,43 +99047,40 @@ function ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$r
 			return Array.from(depsMap.values());
 		}
 
-		fetchFileSources(diagnostics) {
+		async fetchFileSources(diagnostics) {
 			for (const dep of this.getDependenciesFromDiagnostics(diagnostics)) {
 				const {path} = dep;
 				if (!path.isAbsolute()) {
 					continue;
 				}
 
-				const abs = path.assertAbsolute();
-				const stats = this.readFile(abs);
-				if (stats === undefined) {
-					this.missingFileSources.add(abs);
-				} else {
-					this.wrapError("addFileSource", () => this.addFileSource(dep, stats));
-				}
+				await this.wrapError(
+					"addFileSource(" + dep.path.join() + ")",
+					() => this.addFileSource(dep),
+				);
 			}
 		}
 
-		print() {
-			this.wrapError(
+		async print() {
+			await this.wrapError(
 				"root",
-				() => {
+				async () => {
 					const filteredDiagnostics = this.filterDiagnostics();
-					this.fetchFileSources(filteredDiagnostics);
-					this.printDiagnostics(filteredDiagnostics);
+					await this.fetchFileSources(filteredDiagnostics);
+					await this.printDiagnostics(filteredDiagnostics);
 				},
 			);
 		}
 
-		wrapError(reason, callback) {
+		async wrapError(reason, callback) {
 			const {reporter} = this;
 			try {
-				callback();
+				await callback();
 			} catch (err) {
 				// Sometimes we'll run into issues displaying diagnostics
 				// We can safely catch them here since the presence of diagnostics is considered a critical failure anyway
 				// Display diagnostics is idempotent meaning we can bail at any point
-				// We don't use reporter.error here since the error could have been thrown by string-markup
+				// We don't use reporter.error here since the error could have been thrown by cli-layout
 				reporter.logAllRaw(
 					"Encountered an error during diagnostics printing in " + reason,
 				);
@@ -100604,7 +99088,7 @@ function ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$r
 			}
 		}
 
-		printDiagnostics(diagnostics) {
+		async printDiagnostics(diagnostics) {
 			const {reporter} = this;
 			const restoreRedirect = reporter.redirectOutToErr(true);
 
@@ -100613,7 +99097,10 @@ function ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$r
 			}
 
 			for (const diag of diagnostics) {
-				this.wrapError("printDiagnostic", () => this.printDiagnostic(diag));
+				await this.wrapError(
+					"printDiagnostic",
+					async () => this.printDiagnostic(diag),
+				);
 			}
 
 			reporter.redirectOutToErr(restoreRedirect);
@@ -100681,8 +99168,8 @@ function ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$r
 						"::error " +
 						parts.join(",") +
 						"::" +
-						___R$project$rome$$romefrontend$string$markup$format_ts$joinMarkupLines(
-							___R$project$rome$$romefrontend$string$markup$format_ts$markupToPlainText(
+						___R$project$rome$$romefrontend$cli$layout$format_ts$joinMarkupLines(
+							___R$project$rome$$romefrontend$cli$layout$format_ts$markupToPlainText(
 								message.value,
 							),
 						);
@@ -100780,7 +99267,7 @@ function ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$r
 					outdatedAdvice.push({
 						type: "list",
 						list: outdatedFilesArr.map((filename) =>
-							___R$project$rome$$romefrontend$string$markup$escape_ts$markup`<filelink target="${filename}" />`
+							___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<filelink target="${filename}" />`
 						),
 					});
 				}
@@ -100841,7 +99328,7 @@ function ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$r
 		}
 
 		filterDiagnostics() {
-			const diagnostics = this.getDiagnostics();
+			const diagnostics = this.processor.getDiagnostics();
 			const filteredDiagnostics = [];
 
 			for (const diag of diagnostics) {
@@ -100861,10 +99348,10 @@ function ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$r
 		}
 
 		inject(printer) {
-			this.processor.addDiagnostics(printer.getDiagnostics());
+			this.processor.addDiagnostics(printer.processor.getDiagnostics());
 			for (const fn of printer.onFooterPrintCallbacks) {
-				this.onFooterPrint((reporter) => {
-					fn(reporter, printer.problemCount > 0);
+				this.onFooterPrint(async (reporter) => {
+					return fn(reporter, printer.problemCount > 0);
 				});
 			}
 		}
@@ -100882,13 +99369,16 @@ function ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$r
 			this.onFooterPrintCallbacks.push(fn);
 		}
 
-		footer() {
-			this.wrapError(
-				"footer",
-				() => {
-					const {reporter, problemCount} = this;
+		hasProblems() {
+			return this.problemCount > 0;
+		}
 
-					const isError = problemCount > 0;
+		async footer() {
+			await this.wrapError(
+				"footer",
+				async () => {
+					const {reporter} = this;
+					const isError = this.hasProblems();
 
 					if (isError) {
 						const restoreRedirect = reporter.redirectOutToErr(true);
@@ -100917,7 +99407,7 @@ function ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$r
 					}
 
 					for (const handler of this.onFooterPrintCallbacks) {
-						const stop = handler(reporter, isError);
+						const stop = await handler(reporter, isError);
 						if (stop) {
 							return;
 						}
@@ -100946,7 +99436,7 @@ function ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$r
 
 						const pallete = banner.palettes[palleteIndex];
 						stream.write(
-							___R$project$rome$$romefrontend$string$markup$ansi_ts$formatAnsi.bgRgb(
+							___R$project$rome$$romefrontend$cli$layout$ansi_ts$formatAnsi.bgRgb(
 								" ",
 								[pallete[0], pallete[1], pallete[2]],
 							).repeat(times),
@@ -100989,7 +99479,7 @@ function ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$r
 
 
   // project-rome/@romefrontend/cli-diagnostics/index.ts
-function ___R$project$rome$$romefrontend$cli$diagnostics$index_ts$printDiagnostics(
+async function ___R$project$rome$$romefrontend$cli$diagnostics$index_ts$printDiagnostics(
 		{
 			diagnostics,
 			suppressions,
@@ -101002,23 +99492,31 @@ function ___R$project$rome$$romefrontend$cli$diagnostics$index_ts$printDiagnosti
 		);
 		printer.processor.addDiagnostics(diagnostics);
 		printer.processor.addSuppressions(suppressions);
-		printer.print();
-		if (!excludeFooter) {
-			printer.footer();
+		await printer.print();
+		if (!excludeFooter || !printer.hasProblems()) {
+			await printer.footer();
 		}
 		return printer;
 	}
 
-	function ___R$project$rome$$romefrontend$cli$diagnostics$index_ts$printDiagnosticsToString(
+	async function ___R$project$rome$$romefrontend$cli$diagnostics$index_ts$printDiagnosticsToString(
 		opts,
 	) {
 		const reporter = new ___R$project$rome$$romefrontend$cli$reporter$Reporter_ts$default();
-		const stream = reporter.attachCaptureStream(opts.format);
-		___R$project$rome$$romefrontend$cli$diagnostics$index_ts$printDiagnostics(
+		const stream = reporter.attachCaptureStream(opts.format, opts.features);
+		await ___R$project$rome$$romefrontend$cli$diagnostics$index_ts$printDiagnostics(
 			Object.assign(
 				{},
 				opts,
-				{printerOptions: Object.assign({reporter}, opts.printerOptions)},
+				{
+					printerOptions: Object.assign(
+						{
+							reporter,
+							processor: new ___R$project$rome$$romefrontend$diagnostics$DiagnosticsProcessor_ts$default(),
+						},
+						opts.printerOptions,
+					),
+				},
 			),
 		);
 		return stream.read();
@@ -101073,10 +99571,17 @@ const ___R$project$rome$$romefrontend$diagnostics$errors_ts = {
 			message += "\n";
 
 			___R$$priv$project$rome$$romefrontend$diagnostics$errors_ts$insideDiagnosticsErrorSerial = true;
-			message += ___R$project$rome$$romefrontend$cli$diagnostics$index_ts$printDiagnosticsToString({
-				diagnostics: this.diagnostics,
-				suppressions: this.suppressions,
+
+			const reporter = new ___R$project$rome$$romefrontend$cli$reporter$Reporter_ts$default();
+			const stream = reporter.attachCaptureStream();
+			const printer = new ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$default({
+				reporter,
+				processor: new ___R$project$rome$$romefrontend$diagnostics$DiagnosticsProcessor_ts$default(),
 			});
+			for (const diag of this.diagnostics) {
+				printer.printDiagnostic(diag);
+			}
+			message += stream.read();
 			___R$$priv$project$rome$$romefrontend$diagnostics$errors_ts$insideDiagnosticsErrorSerial = false;
 
 			this._memoMessage = message;
@@ -101168,17 +99673,18 @@ const ___R$project$rome$$romefrontend$diagnostics$helpers_ts = {
 			advice.push({
 				type: "log",
 				category: "info",
-				text: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Did you mean <emphasis>${topRatingFormatted}</emphasis> or <emphasis>${strings[0]}</emphasis>?`,
+				text: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Did you mean <emphasis>${topRatingFormatted}</emphasis> or <emphasis>${strings[0]}</emphasis>?`,
 			});
 		} else {
 			advice.push({
 				type: "log",
 				category: "info",
-				text: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Did you mean <emphasis>${topRatingFormatted}</emphasis>?`,
+				text: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Did you mean <emphasis>${topRatingFormatted}</emphasis>?`,
 			});
 
 			advice.push({
 				type: "diff",
+				language: "unknown",
 				diff: ___R$project$rome$$romefrontend$string$diff$index_ts$default(
 					value,
 					topRatingRaw,
@@ -101195,7 +99701,7 @@ const ___R$project$rome$$romefrontend$diagnostics$helpers_ts = {
 				advice.push({
 					type: "list",
 					list: strings.map((str) =>
-						___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
+						___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
 							str,
 						)
 					),
@@ -101280,10 +99786,10 @@ const ___R$project$rome$$romefrontend$diagnostics$helpers_ts = {
 		}
 
 		if (start === undefined) {
-			return ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`<filelink target="${filename}" />`;
+			return ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<filelink target="${filename}" />`;
 		}
 
-		return ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`<filelink target="${filename}" line="${start.line}" column="${start.column}" />`;
+		return ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<filelink target="${filename}" line="${start.line}" column="${start.column}" />`;
 	}
 
 
@@ -101296,7 +99802,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$flags_ts$flags = 
 				{
 					type: "log",
 					category: "info",
-					text: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Use <emphasis>${___R$project$rome$$romefrontend$string$utils$toKebabCase_ts$toKebabCase(
+					text: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Use <emphasis>${___R$project$rome$$romefrontend$string$utils$toKebabCase_ts$toKebabCase(
 						flag,
 					)}</emphasis> instead`,
 				},
@@ -101337,18 +99843,18 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$flags_ts$flags = 
 			command,
 		) => ({
 			category: "flags/invalid",
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Unknown command <emphasis>${unknownCommandName}</emphasis>`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Unknown command <emphasis>${unknownCommandName}</emphasis>`,
 			advice: [
 				{
 					type: "log",
 					category: "info",
-					text: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Did you mean <emphasis>${commandName}</emphasis> instead?` +
+					text: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Did you mean <emphasis>${commandName}</emphasis> instead?` +
 					(description === undefined ? "" : " " + description),
 				},
 				{
 					type: "code",
 					language: "shell",
-					code: command,
+					sourceText: command,
 				},
 			],
 		}),
@@ -101356,7 +99862,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$flags_ts$flags = 
 			category: "flags/invalid",
 			message: commandName === ""
 				? "No command specified"
-				: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Unknown command <emphasis>${commandName}</emphasis>`,
+				: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Unknown command <emphasis>${commandName}</emphasis>`,
 			advice: [
 				...___R$project$rome$$romefrontend$diagnostics$helpers_ts$buildSuggestionAdvice(
 					commandName,
@@ -101382,14 +99888,14 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$parserCore_ts$par
 		EXPECTED_EOF: "Expected end of file",
 		UNEXPECTED_EOF: "Unexpected end of file",
 		UNEXPECTED: (type) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Unexpected ${type}`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Unexpected ${type}`,
 		}),
 		UNEXPECTED_CHARACTER: (char) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Unexpected character <emphasis>${char}</emphasis>`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Unexpected character <emphasis>${char}</emphasis>`,
 		}),
 		EXPECTED_TOKEN: (got, expected) => {
 			return {
-				message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Expected token ${expected} but got ${got}`,
+				message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Expected token ${expected} but got ${got}`,
 			};
 		},
 	});
@@ -101428,7 +99934,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$json_ts$json = __
 		TRAILING_COMMA_IN_JSON: "Trailing commas aren't allowed in JSON",
 		REGEX_IN_JSON: "Regular expressions aren't allowed in JSON",
 		UNKNOWN_WORD_IN_JSON: (word) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`${word} isn't a valid JSON word`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`${word} isn't a valid JSON word`,
 		}),
 		STRING_NEWLINES_IN_JSON: 'Newlines aren\'t allowed in JSON, you insert a newline by escaping it like this "\\n"',
 		UNDEFINED_IN_JSON: "undefined isn't allowed in JSON, you could use null instead",
@@ -101448,7 +99954,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$semver_ts$semver 
 		INVALID_RANGE: "A semver range can only be defined with versions",
 		BARE_PIPE_WITHOUT_LOOSE: "Bare pipes are only allowed in loose mode",
 		UNEXPECTED_WORD: (word) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Unexpected word <emphasis>${word}</emphasis>`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Unexpected word <emphasis>${word}</emphasis>`,
 		}),
 		UNKNOWN_START: "Unknown start of atom",
 		EXPECTED_VERSION: "Unexpected value for version",
@@ -101464,7 +99970,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$v8_ts$v8 = ___R$p
   // project-rome/@romefrontend/diagnostics/descriptions/lintCommand.ts
 const ___R$project$rome$$romefrontend$diagnostics$descriptions$lintCommand_ts$lintCommand = ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$createDiagnosticsCategory({
 		INVALID_DECISION_ACTION: (action) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`<emphasis>${action}</emphasis> is not a valid decision action`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<emphasis>${action}</emphasis> is not a valid decision action`,
 		}),
 		INVALID_DECISION_PART_COUNT: (i) => ({
 			message: "Segment " + i + " contains an invalid number of decision parts",
@@ -101482,7 +99988,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$projectManager_ts
 						{
 							type: "log",
 							category: "info",
-							text: "Version control root was set to the project root as it was not configured. To configure a different folder run",
+							text: "Version control root was set to the project root as it was not configured. To configure a different directory run",
 						},
 						{
 							type: "command",
@@ -101503,12 +100009,12 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$projectManager_ts
 		}),
 		DUPLICATE_PACKAGE: (packageName, existing) => ({
 			category: "projectManager/nameCollision",
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Duplicate package name <emphasis>${packageName}</emphasis>`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Duplicate package name <emphasis>${packageName}</emphasis>`,
 			advice: [
 				{
 					type: "log",
 					category: "info",
-					text: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Defined already by <filelink target="${existing}" />`,
+					text: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Defined already by <filelink target="${existing}" />`,
 				},
 			],
 		}),
@@ -101519,13 +100025,13 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$projectManager_ts
 				{
 					type: "log",
 					category: "info",
-					text: "Run <command>rome init</command> in this folder to initialize a project",
+					text: "Run <command>rome init</command> in this directory to initialize a project",
 				},
 			],
 		},
 		INCORRECT_CONFIG_FILENAME: (validFilenames) => ({
 			category: "projectManager/incorrectConfigFilename",
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Invalid rome config filename, <emphasis>${validFilenames.join(
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Invalid rome config filename, <emphasis>${validFilenames.join(
 				" or ",
 			)}</emphasis> are the only valid filename`,
 		}),
@@ -101577,10 +100083,10 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$stringMarkup_ts$s
 		UNKNOWN_START: "Unknown child start",
 		EXPECTED_ATTRIBUTE_NAME: "Expected attribute name",
 		INCORRECT_CLOSING_TAG_NAME: (expected, got) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Expected to close ${expected} but found ${got}`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Expected to close ${expected} but found ${got}`,
 		}),
 		UNCLOSED_TAG: (tagName, openLocation) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Unclosed ${tagName} tag`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Unclosed ${tagName} tag`,
 			advice: [
 				{type: "log", category: "info", text: "Tag started here"},
 				{
@@ -101590,34 +100096,34 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$stringMarkup_ts$s
 			],
 		}),
 		INVALID_ATTRIBUTE_VALUE: (tagName, attributeName, attributeValue) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`<emphasis>${attributeValue}</emphasis> is not a valid attribute value for <emphasis>${attributeName}</emphasis> in a <emphasis>${tagName}</emphasis>`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<emphasis>${attributeValue}</emphasis> is not a valid attribute value for <emphasis>${attributeName}</emphasis> in a <emphasis>${tagName}</emphasis>`,
 		}),
 		INVALID_ATTRIBUTE_NAME_FOR_TAG: (tagName, attributeName, validAttributes) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`<emphasis>${attributeName}</emphasis> is not a valid attribute name for <emphasis>${tagName}</emphasis>`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<emphasis>${attributeName}</emphasis> is not a valid attribute name for <emphasis>${tagName}</emphasis>`,
 			advice: ___R$project$rome$$romefrontend$diagnostics$helpers_ts$buildSuggestionAdvice(
 				attributeName,
 				validAttributes,
 			),
 		}),
 		UNKNOWN_TAG_NAME: (tagName) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Unknown tag name <emphasis>${tagName}</emphasis>`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Unknown tag name <emphasis>${tagName}</emphasis>`,
 		}),
 		RESTRICTED_CHILD: (tagName, allowedParents, gotParentName = "none") => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`The tag <emphasis>${tagName}</emphasis> should only appear as a child of ${___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$orJoin(
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`The tag <emphasis>${tagName}</emphasis> should only appear as a child of ${___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$orJoin(
 				___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$addEmphasis(
 					allowedParents,
 				),
 			)} not <emphasis>${gotParentName}</emphasis>`,
 		}),
 		RESTRICTED_PARENT: (tagName, allowedChildren, gotChildName) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`The tag <emphasis>${tagName}</emphasis> should only contain the tags ${___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$orJoin(
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`The tag <emphasis>${tagName}</emphasis> should only contain the tags ${___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$orJoin(
 				___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$addEmphasis(
 					allowedChildren,
 				),
 			)} not <emphasis>${gotChildName}</emphasis>`,
 		}),
 		RESTRICTED_PARENT_TEXT: (tagName) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`The tag <emphasis>${tagName}</emphasis> should not contain any text`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`The tag <emphasis>${tagName}</emphasis> should not contain any text`,
 		}),
 	});
 
@@ -101689,11 +100195,11 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$suppressions_ts$s
 		},
 		DUPLICATE: (category) => ({
 			category: "suppressions/duplicate",
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Duplicate suppression category <emphasis>${category}</emphasis>`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Duplicate suppression category <emphasis>${category}</emphasis>`,
 		}),
 		OVERLAP: (category) => ({
 			category: "suppressions/overlap",
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`overlap suppression category <emphasis>${category}</emphasis>`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`overlap suppression category <emphasis>${category}</emphasis>`,
 		}),
 		INCORRECT_SUPPRESSION_START: {
 			category: "suppressions/incorrectSuppressionStart",
@@ -101722,6 +100228,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$snapshots_ts$snap
 			advice: [
 				{
 					type: "diff",
+					language: "unknown",
 					diff: ___R$project$rome$$romefrontend$string$diff$index_ts$default(
 						expected,
 						got,
@@ -101836,7 +100343,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$resolver_ts$resol
 
 			return {
 				message: messagePrefix +
-				___R$project$rome$$romefrontend$string$markup$escape_ts$markup` <emphasis>${source}</emphasis> from <filelink emphasis target="${location.filename}" />`,
+				___R$project$rome$$romefrontend$cli$layout$escape_ts$markup` <emphasis>${source}</emphasis> from <filelink emphasis target="${location.filename}" />`,
 				category,
 			};
 		},
@@ -101864,14 +100371,14 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$resolver_ts$resol
 
 								if (location !== undefined) {
 									if (location.start === undefined) {
-										name = ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`<filelink target="${location.filename}">${name}</filelink>`;
+										name = ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<filelink target="${location.filename}">${name}</filelink>`;
 									} else {
-										name = ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`<filelink target="${location.filename}" line="${location.start.line}" column="${location.start.column}">${name}</filelink>`;
+										name = ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<filelink target="${location.filename}" line="${location.start.line}" column="${location.start.column}">${name}</filelink>`;
 									}
 								}
 
 								if (source !== undefined) {
-									name += ___R$project$rome$$romefrontend$string$markup$escape_ts$markup` <dim>(from <filelink target="${source}" />)</dim>`;
+									name += ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup` <dim>(from <filelink target="${source}" />)</dim>`;
 								}
 
 								return name;
@@ -101880,13 +100387,13 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$resolver_ts$resol
 					),
 		}),
 		UNKNOWN_EXPORT_POSSIBLE_UNEXPORTED_LOCAL: (name, source, location) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Couldn't find export <emphasis>${name}</emphasis> in <filelink emphasis target="${source}" />`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Couldn't find export <emphasis>${name}</emphasis> in <filelink emphasis target="${source}" />`,
 			category: "resolver/unknownExport",
 			advice: [
 				{
 					type: "log",
 					category: "info",
-					text: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`However we found a matching local variable in <filelink emphasis target="${location.filename}" />. Did you forget to export it?`,
+					text: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`However we found a matching local variable in <filelink emphasis target="${location.filename}" />. Did you forget to export it?`,
 				},
 				{
 					type: "frame",
@@ -101900,7 +100407,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$resolver_ts$resol
   // project-rome/@romefrontend/diagnostics/descriptions/spdx.ts
 const ___R$project$rome$$romefrontend$diagnostics$descriptions$spdx_ts$spdx = ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$createDiagnosticsCategory({
 		UNKNOWN_LICENSE: (id, knownLicenses) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Unknown SPDX license <emphasis>${id}</emphasis>`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Unknown SPDX license <emphasis>${id}</emphasis>`,
 			advice: ___R$project$rome$$romefrontend$diagnostics$helpers_ts$buildSuggestionAdvice(
 				id,
 				knownLicenses,
@@ -102091,7 +100598,7 @@ function ___R$$priv$project$rome$$romefrontend$diagnostics$descriptions$jsParser
 		ACCESSOR_WITH_TYPE_PARAMS: "An accessor cannot have type parameters",
 		UNEXPECTED_SPREAD: "Unexpected spread",
 		DUPLICATE_LABEL: (label, loc) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Label <emphasis>${label}</emphasis> is already declared`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Label <emphasis>${label}</emphasis> is already declared`,
 			advice: ___R$project$rome$$romefrontend$diagnostics$helpers_ts$buildDuplicateLocationAdvice([
 				loc,
 			]),
@@ -102099,7 +100606,7 @@ function ___R$$priv$project$rome$$romefrontend$diagnostics$descriptions$jsParser
 		UNKNOWN_LABEL: (label) => ({
 			message: label === undefined
 				? "No loop label found"
-				: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Unknown label <emphasis>${label}</emphasis>`,
+				: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Unknown label <emphasis>${label}</emphasis>`,
 		}),
 		IMPORT_EXPORT_IN_SCRIPT: (manifestPath) => ({
 			message: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module",
@@ -102276,7 +100783,7 @@ function ___R$$priv$project$rome$$romefrontend$diagnostics$descriptions$jsParser
 			propertyName,
 		}),
 		ARGUMENT_CLASH_IN_STRICT: (name, loc) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Argument <emphasis>${name}</emphasis> name clash in strict mode`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Argument <emphasis>${name}</emphasis> name clash in strict mode`,
 			advice: ___R$project$rome$$romefrontend$diagnostics$helpers_ts$buildDuplicateLocationAdvice([
 				loc,
 			]),
@@ -102318,13 +100825,13 @@ function ___R$$priv$project$rome$$romefrontend$diagnostics$descriptions$jsParser
 			],
 		}),
 		EXPECTED_KEYWORD: (keyword) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Expected keyword ${keyword}`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Expected keyword ${keyword}`,
 		}),
 		ESCAPE_SEQUENCE_IN_WORD: (word) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`${word} can't contain a unicode escape`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`${word} can't contain a unicode escape`,
 		}),
 		EXPECTED_ENABLE_SYNTAX: (syntaxName) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Expected ${syntaxName} syntax to be enabled`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Expected ${syntaxName} syntax to be enabled`,
 		}),
 		UNEXPECTED_HASH: (exclamationFollowed) => ({
 			message: "Unexpected character #",
@@ -102344,12 +100851,12 @@ function ___R$$priv$project$rome$$romefrontend$diagnostics$descriptions$jsParser
 			equivalentChar,
 			equivalentName,
 		) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Unexpected Unicode character '<emphasis>${char}</emphasis>' (<emphasis>${unicodeName}</emphasis>)`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Unexpected Unicode character '<emphasis>${char}</emphasis>' (<emphasis>${unicodeName}</emphasis>)`,
 			advice: [
 				{
 					type: "log",
 					category: "info",
-					text: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Did you mean '<emphasis>${equivalentChar}</emphasis>' (<emphasis>${equivalentName}</emphasis>)? Both characters look the same, but are not.`,
+					text: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Did you mean '<emphasis>${equivalentChar}</emphasis>' (<emphasis>${equivalentName}</emphasis>)? Both characters look the same, but are not.`,
 				},
 			],
 		}),
@@ -102409,7 +100916,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$typeCheck_ts$type
 			),
 		}),
 		UNKNOWN_PROP: (key, possibleNames) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Property ${key} not found in`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Property ${key} not found in`,
 			category: "typeCheck/unknownProperty",
 			advice: ___R$project$rome$$romefrontend$diagnostics$helpers_ts$buildSuggestionAdvice(
 				key,
@@ -102418,7 +100925,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$typeCheck_ts$type
 		}),
 		UNDECLARED_VARIABLE: (name, possibleNames) => ({
 			category: "typeCheck/undeclaredVariable",
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Undeclared variable ${name}`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Undeclared variable ${name}`,
 			advice: ___R$project$rome$$romefrontend$diagnostics$helpers_ts$buildSuggestionAdvice(
 				name,
 				possibleNames,
@@ -102462,8 +100969,22 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$consume_ts$consum
 		EXPECTED_NUMBER_LOWER: (num) => ({
 			message: "Expected number lower than " + num,
 		}),
+		INVALID_NUMBER_SET_VALUE: (value, validValues) => ({
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Invalid value <emphasis>${value}</emphasis>`,
+			advice: [
+				{
+					type: "log",
+					category: "info",
+					text: "Possible values are",
+				},
+				{
+					type: "list",
+					list: validValues.map((num) => "<number>" + num + "</number>"),
+				},
+			],
+		}),
 		INVALID_STRING_SET_VALUE: (value, validValues) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Invalid value <emphasis>${value}</emphasis>`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Invalid value <emphasis>${value}</emphasis>`,
 			advice: [
 				{
 					type: "log",
@@ -102473,7 +100994,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$consume_ts$consum
 				{
 					type: "list",
 					list: validValues.map((str) =>
-						___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
+						___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
 							str,
 						)
 					),
@@ -102481,7 +101002,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$consume_ts$consum
 			],
 		}),
 		UNUSED_PROPERTY: (key, type, knownProperties) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Unknown <emphasis>${key}</emphasis> ${type}`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Unknown <emphasis>${key}</emphasis> ${type}`,
 			advice: ___R$project$rome$$romefrontend$diagnostics$helpers_ts$buildSuggestionAdvice(
 				key,
 				knownProperties,
@@ -102510,7 +101031,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$manifest_ts$manif
 		ORG_TOO_MANY_PARTS: "contains too many name separators",
 		REDUNDANT_ORG_NAME_START: "Redundant <emphasis>@</emphasis> in org name",
 		INVALID_NAME_CHAR: (char) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`The character <emphasis>${char}</emphasis> isn't allowed`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`The character <emphasis>${char}</emphasis> isn't allowed`,
 		}),
 		INCORRECT_CASING: (typoKey, correctKey) => ({
 			message: typoKey + " has incorrect casing, should be " + correctKey,
@@ -102546,6 +101067,26 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$projectConfig_ts$
 
   // project-rome/@romefrontend/diagnostics/descriptions/lint.ts
 const ___R$project$rome$$romefrontend$diagnostics$descriptions$lint_ts$lint = ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$createDiagnosticsCategory({
+		JS_SHOUTY_CONSTANTS: (constantLocation = {}) => ({
+			category: "lint/js/shoutyConstants",
+			message: "Redundant constant reference",
+			advice: [
+				{
+					type: "log",
+					category: "info",
+					text: "You should avoid declaring constants with a string that's the same value as the variable name. It introduces a level of unnecessary indirection when it's only two additional characters to inline.",
+				},
+				{
+					type: "log",
+					category: "info",
+					text: "This constant is declared here",
+				},
+				{
+					type: "frame",
+					location: constantLocation,
+				},
+			],
+		}),
 		JS_NO_UNUSED_TEMPLATE_LITERAL: {
 			category: "lint/js/noUnusedTemplateLiteral",
 			message: "Do not use template literals if interpolation and special-character handling are not needed.",
@@ -103157,13 +101698,19 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$lint_ts$lint = __
 		},
 		REACT_VOID_DOM_ELEMENTS_NO_CHILDREN: (element, properties) => ({
 			category: "lint/react/voidDomElementsNoChildren",
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`<emphasis>${element}</emphasis> is a void element tag and must not have <emphasis>${___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$orJoin(
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<emphasis>${element}</emphasis> is a void element tag and must not have <emphasis>${___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$orJoin(
 				properties,
 			)}</emphasis>.`,
 		}),
-		JS_IMPORT_DEFAULT_BASENAME: (prev, basename, capitalBasename) => ({
+		JS_IMPORT_DEFAULT_BASENAME: (prev, basenames) => ({
 			category: "lint/js/importDefaultBasename",
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Use the basename <emphasis>${basename}</emphasis> or <emphasis>${capitalBasename}</emphasis> when importing the default.`,
+			message: "Use the basename " +
+			___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$orJoin(
+				___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$addEmphasis(
+					basenames,
+				),
+			) +
+			" when importing the default.",
 			advice: [
 				{
 					type: "log",
@@ -103172,7 +101719,8 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$lint_ts$lint = __
 				},
 				{
 					type: "code",
-					code: "import {default as " + prev + "}",
+					language: "js",
+					sourceText: "import {default as " + prev + "}",
 				},
 			],
 		}),
@@ -103224,7 +101772,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$lint_ts$lint = __
 		},
 		JS_NO_UNUSED_VARIABLES: (kind, name) => ({
 			category: "lint/js/noUnusedVariables",
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`The ${kind} variable <emphasis>${name}</emphasis> is unused.`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`The ${kind} variable <emphasis>${name}</emphasis> is unused.`,
 			advice: [
 				{
 					type: "log",
@@ -103235,7 +101783,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$lint_ts$lint = __
 		}),
 		JS_UNDECLARED_VARIABLES: (name, bindingsInScope) => ({
 			category: "lint/js/undeclaredVariables",
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`The <emphasis>${name}</emphasis> variable is undeclared`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`The <emphasis>${name}</emphasis> variable is undeclared`,
 			advice: ___R$project$rome$$romefrontend$diagnostics$helpers_ts$buildSuggestionAdvice(
 				name,
 				bindingsInScope,
@@ -103243,11 +101791,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$lint_ts$lint = __
 		}),
 		JS_VARIABLE_CAMEL_CASE: (name, camelCaseName) => ({
 			category: "lint/js/camelCase",
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`The <emphasis>${name}</emphasis> variable should be camel cased as <emphasis>${camelCaseName}</emphasis>.`,
-		}),
-		JS_IDENTIFIER_CAMEL_CASE: (name, camelCaseName) => ({
-			category: "lint/js/camelCase",
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`The <emphasis>${name}</emphasis> identifier should be camel cased as <emphasis>${camelCaseName}</emphasis>.`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`The <emphasis>${name}</emphasis> variable should be camel cased as <emphasis>${camelCaseName}</emphasis>.`,
 		}),
 		JS_CASE_SINGLE_STATEMENT: {
 			category: "lint/js/caseSingleStatement",
@@ -103261,7 +101805,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$lint_ts$lint = __
 				{
 					type: "log",
 					category: "info",
-					text: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Consider using <emphasis>${suggestion}</emphasis> instead`,
+					text: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Consider using <emphasis>${suggestion}</emphasis> instead`,
 				},
 			],
 		}),
@@ -103341,13 +101885,13 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$lint_ts$lint = __
 		},
 		JS_NO_SHORTHAND_ARRAY_TYPE: {
 			category: "lint/js/noShorthandArrayType",
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
 				"Use <emphasis>Array<T> syntax</emphasis> instead of <emphasis>shorthand T[] syntax</emphasis>.",
 			),
 		},
 		JS_NO_UNSAFE_FINALLY: (type) => ({
 			category: "lint/js/noUnsafeFinally",
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Using <emphasis>${type}</emphasis> inside a <emphasis>finally</emphasis> clause is unsafe.`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Using <emphasis>${type}</emphasis> inside a <emphasis>finally</emphasis> clause is unsafe.`,
 			advice: [
 				{
 					type: "log",
@@ -103369,7 +101913,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$lint_ts$lint = __
 		},
 		JS_NO_SHADOW_RESTRICTED_NAMES: (name) => ({
 			category: "lint/js/noShadowRestrictedNames",
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Do not shadow the global <emphasis>${name}</emphasis> property.`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Do not shadow the global <emphasis>${name}</emphasis> property.`,
 			advice: [
 				{
 					type: "log",
@@ -103404,7 +101948,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$lint_ts$lint = __
 		}),
 		JS_NO_IMPORT_ASSIGN: (name) => ({
 			category: "lint/js/noImportAssign",
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`The imported variable <emphasis>${name}</emphasis> is read-only.`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`The imported variable <emphasis>${name}</emphasis> is read-only.`,
 			advice: [
 				{
 					type: "log",
@@ -103465,7 +102009,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$lint_ts$lint = __
 		},
 		JS_NO_DUPLICATE_CASE: (value) => ({
 			category: "lint/js/noDuplicateCase",
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Do not duplicate the <emphasis>${value}</emphasis> case.`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Do not duplicate the <emphasis>${value}</emphasis> case.`,
 			advice: [
 				{
 					type: "log",
@@ -103628,7 +102172,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$lint_ts$lint = __
 		},
 		JS_RESTRICTED_GLOBALS: (globalName) => ({
 			category: "lint/js/restrictedGlobals",
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Do not use the global variable <emphasis>${globalName}</emphasis>.`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Do not use the global variable <emphasis>${globalName}</emphasis>.`,
 			advice: [
 				{
 					type: "log",
@@ -103645,12 +102189,13 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$lint_ts$lint = __
 			category: "lint/js/sortImportExportSpecifiers",
 			message: "The specifiers of the import declaration should be sorted alphabetically.",
 		},
-		PENDING_FIXES: (relativeFilename, original, formatted) => ({
+		PENDING_FIXES: (relativeFilename, language, original, formatted) => ({
 			category: "lint/pendingFixes",
 			message: "Pending formatting and recommended autofixes",
 			advice: [
 				{
 					type: "diff",
+					language,
 					diff: ___R$project$rome$$romefrontend$string$diff$index_ts$default(
 						original,
 						formatted,
@@ -103708,11 +102253,11 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$htmlParser_ts$htm
 		UNKNOWN_START: "Unknown child start",
 		EXPECTED_ATTRIBUTE_NAME: "Expected attribute name",
 		INCORRECT_CLOSING_TAG_NAME: (expected, got) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Expected to close ${expected} but found ${got}`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Expected to close ${expected} but found ${got}`,
 		}),
 		UNOPENED_TAG: "Ending tag with no opening tag",
 		UNCLOSED_TAG: (tagName, openLocation) => ({
-			message: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Unclosed ${tagName} tag`,
+			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Unclosed ${tagName} tag`,
 			advice: [
 				{type: "log", category: "info", text: "Tag started here"},
 				{
@@ -103786,7 +102331,9 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts = {
 	function ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$addEmphasis(
 		items,
 	) {
-		return items.map((item) => "<emphasis>" + item + "</emphasis>");
+		return items.map((item) =>
+			___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<emphasis>${item}</emphasis>`
+		);
 	}
 
 	function ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$createDiagnosticsCategory(
@@ -103887,6 +102434,8 @@ class ___R$project$rome$$romefrontend$diagnostics$DiagnosticsNormalizer_ts$defau
 			this.sourceMaps = sourceMaps;
 			this.inlineSourceText = new Map();
 			this.hasMarkupOptions = markupOptions !== undefined;
+
+			this.inlinedSourceTextFilenames = new Set();
 
 			this.markupOptions = this.createMarkupOptions(markupOptions);
 		}
@@ -104033,12 +102582,35 @@ class ___R$project$rome$$romefrontend$diagnostics$DiagnosticsNormalizer_ts$defau
 
 			const normalizedFilename = this.normalizeFilename(filename);
 
+			// Inline sourceText. We keep track of filenames we've already inlined to avoid duplicating sourceText
+			// During printing we'll fill it back in
 			let {sourceText} = location;
-			if (sourceText === undefined && filename !== undefined) {
-				sourceText = this.inlineSourceText.get(filename);
-			}
-			if (sourceText === undefined && normalizedFilename !== undefined) {
-				sourceText = this.inlineSourceText.get(normalizedFilename);
+			if (
+				filename !== undefined &&
+				!this.inlinedSourceTextFilenames.has(filename)
+			) {
+				if (sourceText === undefined && filename !== undefined) {
+					sourceText = this.inlineSourceText.get(filename);
+				}
+				if (sourceText === undefined && normalizedFilename !== undefined) {
+					sourceText = this.inlineSourceText.get(normalizedFilename);
+				}
+
+				// Remove sourceText if it's not pointing anywhere
+				if (start === undefined && end === undefined) {
+					sourceText = undefined;
+				}
+
+				// Register filename as inlined if necessary
+				if (sourceText !== undefined) {
+					if (filename !== undefined) {
+						this.inlinedSourceTextFilenames.add(filename);
+					}
+
+					if (normalizedFilename !== undefined) {
+						this.inlinedSourceTextFilenames.add(normalizedFilename);
+					}
+				}
 			}
 
 			return Object.assign(
@@ -104055,7 +102627,7 @@ class ___R$project$rome$$romefrontend$diagnostics$DiagnosticsNormalizer_ts$defau
 		}
 
 		normalizeMarkup(markup) {
-			return ___R$project$rome$$romefrontend$string$markup$format_ts$normalizeMarkup(
+			return ___R$project$rome$$romefrontend$cli$layout$format_ts$normalizeMarkup(
 				markup,
 				this.markupOptions,
 			).text;
@@ -104381,7 +102953,7 @@ const ___R$project$rome$$romefrontend$diagnostics$derive_ts = {
 			description: Object.assign(
 				{
 					message: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$createBlessedDiagnosticMessage(
-						___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
+						___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
 							message,
 						),
 					),
@@ -104448,7 +103020,7 @@ const ___R$project$rome$$romefrontend$diagnostics$derive_ts = {
 			advice.push({
 				type: "list",
 				list: cleanStack.split("\n").map((line) =>
-					___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
+					___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
 						line.trim(),
 					)
 				),
@@ -104495,6 +103067,7 @@ const ___R$project$rome$$romefrontend$diagnostics$derive_ts = {
 				}
 
 				return {
+					language: "unknown",
 					suffix,
 					prefix,
 					object,
@@ -104537,73 +103110,9 @@ const ___R$project$rome$$romefrontend$diagnostics$derive_ts = {
 	}
 
 
-  // project-rome/@romefrontend/diagnostics/wrap.ts
-const ___R$project$rome$$romefrontend$diagnostics$wrap_ts = {
-		catchDiagnostics: ___R$project$rome$$romefrontend$diagnostics$wrap_ts$catchDiagnostics,
-		catchDiagnosticsSync: ___R$project$rome$$romefrontend$diagnostics$wrap_ts$catchDiagnosticsSync,
-	};
-	async function ___R$project$rome$$romefrontend$diagnostics$wrap_ts$catchDiagnostics(
-		promise,
-		origin,
-	) {
-		try {
-			const value = await promise();
-
-			return {value, diagnostics: undefined};
-		} catch (err) {
-			const diagnostics = ___R$project$rome$$romefrontend$diagnostics$errors_ts$getDiagnosticsFromError(
-				err,
-			);
-
-			if (diagnostics) {
-				return {
-					value: undefined,
-					diagnostics: origin === undefined
-						? diagnostics
-						: ___R$project$rome$$romefrontend$diagnostics$derive_ts$addOriginsToDiagnostics(
-								[origin],
-								diagnostics,
-							),
-				};
-			} else {
-				throw err;
-			}
-		}
-	}
-
-	function ___R$project$rome$$romefrontend$diagnostics$wrap_ts$catchDiagnosticsSync(
-		callback,
-		origin,
-	) {
-		try {
-			const value = callback();
-
-			return {value, diagnostics: undefined};
-		} catch (err) {
-			const diagnostics = ___R$project$rome$$romefrontend$diagnostics$errors_ts$getDiagnosticsFromError(
-				err,
-			);
-
-			if (diagnostics) {
-				return {
-					value: undefined,
-					diagnostics: origin === undefined
-						? diagnostics
-						: ___R$project$rome$$romefrontend$diagnostics$derive_ts$addOriginsToDiagnostics(
-								[origin],
-								diagnostics,
-							),
-				};
-			} else {
-				throw err;
-			}
-		}
-	}
-
-
   // project-rome/@romefrontend/diagnostics/DiagnosticsProcessor.ts
 const ___R$$priv$project$rome$$romefrontend$diagnostics$DiagnosticsProcessor_ts$DEFAULT_UNIQUE = [
-		["category", "filename", "message", "start.line", "start.column"],
+		["label", "category", "filename", "message", "start.line", "start.column"],
 	];
 
 	class ___R$project$rome$$romefrontend$diagnostics$DiagnosticsProcessor_ts$default {
@@ -104768,6 +103277,10 @@ const ___R$$priv$project$rome$$romefrontend$diagnostics$DiagnosticsProcessor_ts$
 
 			for (const rule of this.unique) {
 				const parts = [];
+
+				if (rule.includes("label")) {
+					parts.push("label:" + diag.label);
+				}
 
 				if (rule.includes("category")) {
 					parts.push("category:" + diag.description.category);
@@ -104975,6 +103488,94 @@ const ___R$$priv$project$rome$$romefrontend$diagnostics$DiagnosticsProcessor_ts$
 	}
 
 
+  // project-rome/@romefrontend/diagnostics/wrap.ts
+const ___R$project$rome$$romefrontend$diagnostics$wrap_ts = {
+		catchDiagnostics: ___R$project$rome$$romefrontend$diagnostics$wrap_ts$catchDiagnostics,
+		interceptDiagnostics: ___R$project$rome$$romefrontend$diagnostics$wrap_ts$interceptDiagnostics,
+		catchDiagnosticsSync: ___R$project$rome$$romefrontend$diagnostics$wrap_ts$catchDiagnosticsSync,
+	};
+	async function ___R$project$rome$$romefrontend$diagnostics$wrap_ts$catchDiagnostics(
+		promise,
+		origin,
+	) {
+		try {
+			const value = await promise();
+
+			return {value, diagnostics: undefined};
+		} catch (err) {
+			const diagnostics = ___R$project$rome$$romefrontend$diagnostics$errors_ts$getDiagnosticsFromError(
+				err,
+			);
+
+			if (diagnostics) {
+				return {
+					value: undefined,
+					diagnostics: origin === undefined
+						? diagnostics
+						: ___R$project$rome$$romefrontend$diagnostics$derive_ts$addOriginsToDiagnostics(
+								[origin],
+								diagnostics,
+							),
+				};
+			} else {
+				throw err;
+			}
+		}
+	}
+
+	async function ___R$project$rome$$romefrontend$diagnostics$wrap_ts$interceptDiagnostics(
+		promise,
+		process,
+		origin,
+	) {
+		const res = await ___R$project$rome$$romefrontend$diagnostics$wrap_ts$catchDiagnostics(
+			promise,
+			origin,
+		);
+
+		if (res.diagnostics !== undefined) {
+			const processor = new ___R$project$rome$$romefrontend$diagnostics$DiagnosticsProcessor_ts$default();
+			process(processor);
+			processor.addDiagnostics(res.diagnostics);
+			throw new ___R$project$rome$$romefrontend$diagnostics$errors_ts$DiagnosticsError(
+				"Intercepted diagnostics",
+				processor.getDiagnostics(),
+			);
+		}
+
+		return res.value;
+	}
+
+	function ___R$project$rome$$romefrontend$diagnostics$wrap_ts$catchDiagnosticsSync(
+		callback,
+		origin,
+	) {
+		try {
+			const value = callback();
+
+			return {value, diagnostics: undefined};
+		} catch (err) {
+			const diagnostics = ___R$project$rome$$romefrontend$diagnostics$errors_ts$getDiagnosticsFromError(
+				err,
+			);
+
+			if (diagnostics) {
+				return {
+					value: undefined,
+					diagnostics: origin === undefined
+						? diagnostics
+						: ___R$project$rome$$romefrontend$diagnostics$derive_ts$addOriginsToDiagnostics(
+								[origin],
+								diagnostics,
+							),
+				};
+			} else {
+				throw err;
+			}
+		}
+	}
+
+
   // project-rome/@romefrontend/diagnostics/constants.ts
 const ___R$project$rome$$romefrontend$diagnostics$constants_ts = {
 		get INTERNAL_ERROR_LOG_ADVICE() {
@@ -104996,6 +103597,1953 @@ const ___R$project$rome$$romefrontend$diagnostics$categories_ts = {};
 
 
 
+  // project-rome/@romefrontend/codec-json/parse.ts
+// Words can't start with a digit
+	function ___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isWordStartChar(
+		char,
+	) {
+		return (
+			___R$project$rome$$romefrontend$parser$core$index_ts$isAlpha(char) ||
+			char === "_" ||
+			char === "$"
+		);
+	}
+
+	// But a digit can appear inside of a word
+	function ___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isWordChar(
+		char,
+	) {
+		return (
+			___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isWordStartChar(
+				char,
+			) || ___R$project$rome$$romefrontend$parser$core$index_ts$isDigit(char)
+		);
+	}
+
+	// Check if an input string is a valid word, this is used by the stringifier to
+	// determine if a property key should be quoted
+	function ___R$project$rome$$romefrontend$codec$json$parse_ts$isValidWord(word) {
+		if (
+			word.length === 0 ||
+			___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isWordStartChar(
+				word[0],
+			) === false
+		) {
+			return false;
+		}
+
+		for (const char of word) {
+			if (
+				___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isWordChar(
+					char,
+				) ===
+				false
+			) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	// Check if a character is a part of a string, returning false for a newline or unescaped quote char
+	function ___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isJSONStringValueChar(
+		char,
+		index,
+		input,
+	) {
+		if (char === "\n") {
+			return false;
+		}
+
+		return ___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isRJSONStringValueChar(
+			char,
+			index,
+			input,
+		);
+	}
+
+	// NOTE: Different methods as we allow newlines in RJSON strings
+	function ___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isRJSONStringValueChar(
+		char,
+		index,
+		input,
+	) {
+		if (
+			char === '"' &&
+			!___R$project$rome$$romefrontend$string$utils$isEscaped_ts$isEscaped(
+				index,
+				input,
+			)
+		) {
+			return false;
+		}
+
+		return true;
+	}
+
+	// Turn a path into a string key we can use
+	function ___R$project$rome$$romefrontend$codec$json$parse_ts$toPathKey(parts) {
+		// Right now this could conflict weirdly with properties with dots in them if they cause collisions
+		// We have this method abstracted so we can make changes later if it's necessary (probably not worth it)
+		return parts.join(".");
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isntNewline(
+		char,
+	) {
+		return char !== "\n";
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isntBlockCommentEnd(
+		char,
+		index,
+		input,
+	) {
+		const nextChar = input[___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
+			index,
+		) + 1];
+		return char !== "*" && nextChar !== "/";
+	}
+
+	// Used for Number token validation, allow underscore as a separatore
+	function ___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isNumberChar(
+		char,
+	) {
+		return (
+			___R$project$rome$$romefrontend$parser$core$index_ts$isDigit(char) ||
+			char === "_"
+		);
+	}
+
+	const ___R$project$rome$$romefrontend$codec$json$parse_ts$createJSONParser = ___R$project$rome$$romefrontend$parser$core$index_ts$createParser((
+		ParserCore,
+	) =>
+		(() => {
+			class JSONParser extends ParserCore {
+				constructor(opts) {
+					super(
+						Object.assign({}, opts, {retainCarriageReturn: true}),
+						"parse/json",
+						{},
+					);
+
+					this.options = opts;
+					this.ignoreWhitespaceTokens = true;
+
+					this.hasExtensions =
+						this.path !== undefined &&
+						this.path.getBasename().endsWith(".rjson");
+
+					this.pathKeys = [];
+					this.paths = new Map();
+					this.pathToComments = new Map();
+					this.consumeDiagnosticCategory =
+						opts.consumeDiagnosticCategory === undefined
+							? "parse/json"
+							: opts.consumeDiagnosticCategory;
+				}
+
+				getPathInfo(path) {
+					return this.paths.get(path.join("."));
+				}
+
+				setComments(pathComments) {
+					const key = this.pathKeys.join(".");
+
+					const existing = this.pathToComments.get(key);
+					if (existing === undefined) {
+						this.pathToComments.set(key, pathComments);
+					} else {
+						this.pathToComments.set(
+							key,
+							{
+								inner: [...existing.inner, ...pathComments.inner],
+								outer: [...existing.outer, ...pathComments.outer],
+							},
+						);
+					}
+				}
+
+				setPath(info) {
+					this.paths.set(this.pathKeys.join("."), info);
+					this.pathKeys.pop();
+				}
+
+				tokenize(index) {
+					const char = this.getInputCharOnly(index);
+					const nextChar = this.getInputCharOnly(index, 1);
+
+					// Line comment
+					if (char === "/" && nextChar === "/") {
+						const commentValueIndex = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+							index,
+							2,
+						);
+						const [value] = this.readInputFrom(
+							commentValueIndex,
+							___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isntNewline,
+						);
+						// (comment content start + comment content length)
+						return this.finishValueToken(
+							"LineComment",
+							value,
+							___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+								commentValueIndex,
+								value.length,
+							),
+						);
+					}
+
+					// BlockComment
+					if (char === "/" && nextChar === "*") {
+						const commentValueIndex = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+							index,
+							2,
+						);
+						const [value] = this.readInputFrom(
+							commentValueIndex,
+							___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isntBlockCommentEnd,
+						);
+
+						// (comment content start + comment content length + 2 characters for comment end)
+						const endIndex = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+							___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+								commentValueIndex,
+								value.length,
+							),
+							2,
+						);
+
+						// Ensure the comment is closed
+						if (
+							this.input[___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
+								endIndex,
+							) - 2] !== "*" ||
+							this.input[___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
+								endIndex,
+							) - 1] !== "/"
+						) {
+							throw this.unexpected({
+								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.UNCLOSED_BLOCK_COMMENT,
+								start: this.getPositionFromIndex(endIndex),
+							});
+						}
+
+						return this.finishValueToken("BlockComment", value, endIndex);
+					}
+
+					// Single character token starters
+					switch (char) {
+						case '"': {
+							const [value, end, overflow] = this.readInputFrom(
+								___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(index),
+								this.hasExtensions
+									? ___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isRJSONStringValueChar
+									: ___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isJSONStringValueChar,
+							);
+
+							if (overflow) {
+								throw this.unexpected({
+									description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.UNCLOSED_STRING,
+									start: this.getPositionFromIndex(end),
+								});
+							}
+
+							// Don't allow newlines in JSON
+							if (!this.hasExtensions) {
+								for (let strIndex = 0; strIndex < value.length; strIndex++) {
+									const char = value[strIndex];
+
+									if (char === "\n") {
+										throw this.unexpected({
+											description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.STRING_NEWLINES_IN_JSON,
+											start: this.getPositionFromIndex(
+												___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+													index,
+													strIndex,
+												),
+											),
+										});
+									}
+								}
+							}
+
+							// Unescape the string
+							const unescaped = ___R$project$rome$$romefrontend$string$escape$unescapeJSONString_ts$default(
+								value,
+								(metadata, strIndex) => {
+									throw this.unexpected({
+										description: metadata,
+										start: this.getPositionFromIndex(
+											___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+												index,
+												strIndex,
+											),
+										),
+									});
+								},
+								this.hasExtensions,
+							);
+
+							// increment to take the trailing quote
+							return this.finishValueToken(
+								"String",
+								unescaped,
+								___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(end),
+							);
+						}
+
+						case "'":
+							throw this.unexpected({
+								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.SINGLE_QUOTE_USAGE,
+								start: this.getPositionFromIndex(index),
+							});
+
+						case "/":
+							throw this.unexpected({
+								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.REGEX_IN_JSON,
+								start: this.getPositionFromIndex(index),
+							});
+
+						case ",":
+							return this.finishToken("Comma");
+
+						case ".":
+							return this.finishToken("Dot");
+
+						case "-":
+							return this.finishToken("Minus");
+
+						case "+":
+							return this.finishToken("Plus");
+
+						case ":":
+							return this.finishToken("Colon");
+
+						case "{":
+							return this.finishToken("BraceOpen");
+
+						case "}":
+							return this.finishToken("BraceClose");
+
+						case "[":
+							return this.finishToken("BracketOpen");
+
+						case "]":
+							return this.finishToken("BracketClose");
+					}
+
+					// Numbers
+					if (___R$project$rome$$romefrontend$parser$core$index_ts$isDigit(char)) {
+						const value = this.removeUnderscores(
+							index,
+							this.readInputFrom(
+								index,
+								___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isNumberChar,
+							)[0],
+						);
+						const num = Number(value);
+						return this.finishValueToken(
+							"Number",
+							num,
+							___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+								index,
+								value.length,
+							),
+						);
+					}
+
+					// Word - boolean, undefined etc
+					if (
+						___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isWordStartChar(
+							char,
+						)
+					) {
+						const [value] = this.readInputFrom(
+							index,
+							___R$$priv$project$rome$$romefrontend$codec$json$parse_ts$isWordChar,
+						);
+						return this.finishValueToken(
+							"Word",
+							value,
+							___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+								index,
+								value.length,
+							),
+						);
+					}
+
+					// Unknown character
+					return undefined;
+				}
+
+				parseObject(firstKeyStart, firstKey) {
+					const obj = {};
+
+					let innerComments = [];
+					let isFirstProp = true;
+
+					// These are comments that the next property should take in case the previous accidently took them
+					let nextLeadingComments;
+
+					do {
+						if (this.matchToken("BraceClose")) {
+							break;
+						}
+
+						// Eat all the comments that appeared before this property, it's the most common and natural place to put them,
+
+						// and is where we'll print all comments for a property.
+						let leadingComments = this.eatComments();
+
+						// Take any leading comments that were left by the previous property
+						if (nextLeadingComments !== undefined) {
+							leadingComments = [...nextLeadingComments, ...leadingComments];
+							nextLeadingComments = undefined;
+						}
+
+						// Throw a meainingful error for redundant commas
+						if (this.matchToken("Comma")) {
+							throw this.unexpected({
+								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.REDUNDANT_COMMA,
+							});
+						}
+
+						// If there's no property key indicator then delegate any comments we have to object
+						const hasKey = isFirstProp && firstKey !== undefined;
+						if (
+							!hasKey &&
+							!this.matchToken("String") &&
+							!this.matchToken("Word")
+						) {
+							innerComments = [...innerComments, ...leadingComments];
+							break;
+						}
+
+						const keyStart =
+							isFirstProp && firstKeyStart !== undefined
+								? firstKeyStart
+								: this.getPosition();
+
+						// Parse the property key
+						let key;
+						if (isFirstProp && firstKey !== undefined) {
+							// If this is the first property and we've been given a property key then use it instead
+							key = firstKey;
+						} else {
+							key = this.parsePropertyKey();
+						}
+						isFirstProp = false;
+
+						const keyEnd = this.getPosition();
+						this.expectToken("Colon");
+
+						// Having comments before the value is a really weird place to put them, but we'll handle it
+
+						// anyway to avoid throwing a parser error. When stringified, the comments will all be before
+
+						// the property.
+						const leadingValueComments = this.eatComments();
+
+						this.pathKeys.push(key);
+
+						// Parse the value.
+						const valueStart = this.getPosition();
+						const value = this.parseExpression();
+						const valueEnd = this.getLastEndPosition();
+
+						// Eat the comments after the expression and associate the comments with them
+						let trailingValueComments = this.eatComments();
+
+						// If the next token isn't a comma or closing brace then we've just stolen
+
+						// the leading comments of the next property
+						if (!this.matchToken("Comma") && !this.matchToken("BraceClose")) {
+							nextLeadingComments = trailingValueComments;
+							trailingValueComments = [];
+						}
+
+						this.setComments({
+							inner: [],
+							outer: [
+								...leadingComments,
+								...leadingValueComments,
+								...trailingValueComments,
+							],
+						});
+
+						this.setPath({
+							keyStart,
+							keyEnd,
+							valueStart,
+							valueEnd,
+							originalValue: value,
+						});
+
+						// Set the object correctly, accounting for JS weirdness
+						if (key === "__proto__") {
+							// Need to use defineProperty to avoid triggering the Object.prototype.__proto__ setter
+							Object.defineProperty(
+								obj,
+								"__proto__",
+								{
+									value,
+									configurable: true,
+									writable: true,
+									enumerable: true,
+								},
+							);
+						} else {
+							obj[key] = value;
+						}
+					} while (this.eatPropertySeparator());
+
+					// Take any loose leading comments
+					if (nextLeadingComments !== undefined) {
+						innerComments = [...innerComments, ...nextLeadingComments];
+					}
+
+					// If we were passed a first key then this was an implicit object so there's no end token
+					if (firstKey === undefined) {
+						this.expectToken("BraceClose");
+					}
+
+					this.setComments({
+						inner: innerComments,
+						outer: [],
+					});
+
+					return obj;
+				}
+
+				// Remove underscores from 'a string, this is used for numeric separators eg. 100_000
+				removeUnderscores(index, raw) {
+					let str = "";
+
+					for (let i = 0; i < raw.length; i++) {
+						const char = raw[i];
+
+						if (char === "_") {
+							// Don't allow separators in JSON
+							if (!this.hasExtensions) {
+								throw this.unexpected({
+									description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.NUMERIC_SEPARATORS_IN_JSON,
+									start: this.getPositionFromIndex(
+										___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(index),
+									),
+								});
+							}
+						} else {
+							str += char;
+						}
+					}
+
+					return str;
+				}
+
+				eatComments() {
+					const comments = [];
+
+					while (true) {
+						const token = this.getToken();
+
+						if (token.type === "LineComment") {
+							comments.push({
+								type: "LineComment",
+								value: token.value,
+							});
+						} else if (token.type === "BlockComment") {
+							comments.push({
+								type: "BlockComment",
+								value: token.value,
+							});
+						} else {
+							break;
+						}
+
+						// Comments aren't allowed in regular JSON
+						if (!this.hasExtensions) {
+							throw this.unexpected({
+								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.COMMENTS_IN_JSON,
+							});
+						}
+
+						this.nextToken();
+					}
+
+					return comments;
+				}
+
+				parseArray() {
+					this.expectToken("BracketOpen");
+
+					const arr = [];
+					let innerComments = [];
+					let i = 0;
+
+					do {
+						if (this.matchToken("BracketClose")) {
+							break;
+						}
+
+						// Eat all the comments before an element
+						const leadingComments = this.eatComments();
+
+						if (this.matchToken("Comma")) {
+							throw this.unexpected({
+								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.REDUNDANT_COMMA,
+							});
+						}
+
+						// If we're at the end of the array then associate these comments with the array
+						if (this.matchToken("BracketClose")) {
+							innerComments = [...innerComments, ...leadingComments];
+							break;
+						}
+
+						const start = this.getPosition();
+						this.pathKeys.push(i);
+						i++;
+
+						// Parse the value
+						const item = this.parseExpression();
+						arr.push(item);
+						const end = this.getLastEndPosition();
+
+						// Trailing comments are really weird, but let's handle them just like object properties
+						const trailingComments = this.eatComments();
+
+						this.setComments({
+							outer: [...leadingComments, ...trailingComments],
+							inner: [],
+						});
+
+						this.setPath({
+							originalValue: item,
+							keyStart: start,
+							keyEnd: end,
+							valueStart: start,
+							valueEnd: end,
+						});
+
+						// Have a meaningful error message when an object is incorrectly using brackets: ["foo": "bar"]
+						if (this.matchToken("Colon")) {
+							throw this.unexpected({
+								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.MISTAKEN_ARRAY_IDENTITY,
+							});
+						}
+					} while (this.eatPropertySeparator());
+
+					this.expectToken("BracketClose");
+
+					this.setComments({
+						inner: innerComments,
+						outer: [],
+					});
+
+					return arr;
+				}
+
+				// Check if the current token is a property separator and eat it if necessary
+				eatPropertySeparator() {
+					const token = this.getToken();
+
+					// Implicit commas are only allowed in rjson
+					if (this.hasExtensions) {
+						// Eat the token, don't care if we're in RJSON
+						if (token.type === "Comma") {
+							this.nextToken();
+						}
+
+						// An object or array close is an instant failure
+
+						// Doesn't matter what we're parsing since the subsequent tokens will be validated
+						if (token.type === "BraceClose" || token.type === "BracketClose") {
+							return false;
+						}
+
+						return true;
+					} else {
+						if (token.type !== "Comma") {
+							return false;
+						}
+
+						// Make sure this isn't a trailing comma
+						const lookahead = this.lookaheadToken();
+						if (
+							lookahead.type === "BraceClose" ||
+							lookahead.type === "BracketClose"
+						) {
+							throw this.unexpected({
+								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.TRAILING_COMMA_IN_JSON,
+							});
+						}
+
+						this.nextToken();
+						return true;
+					}
+				}
+
+				parseWord(isStart) {
+					const start = this.getPosition();
+					const token = this.expectToken("Word");
+
+					switch (token.value) {
+						case "true":
+							return true;
+
+						case "false":
+							return false;
+
+						case "null":
+							return null;
+
+						case "undefined":
+							throw this.unexpected({
+								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.UNDEFINED_IN_JSON,
+							});
+					}
+
+					if (isStart && this.matchToken("Colon")) {
+						if (this.hasExtensions) {
+							return this.parseObject(start, token.value);
+						} else {
+							throw this.unexpected({
+								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.IMPLICIT_OBJECT_IN_JSON,
+							});
+						}
+					}
+
+					throw this.unexpected({
+						description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.UNKNOWN_WORD_IN_JSON(
+							token.value,
+						),
+					});
+				}
+
+				parseNumber() {
+					const isNegative = this.eatToken("Minus") !== undefined;
+
+					// Get a string of the current number that we'll parse later
+					const token = this.expectToken("Number");
+					let value = String(token.value);
+
+					// Decimals
+					if (this.eatToken("Dot")) {
+						value += ".";
+
+						const decimal = this.expectToken("Number");
+						value += String(decimal.value);
+					}
+
+					// Scientific notation
+					const nextToken = this.getToken();
+					if (
+						nextToken.type === "Word" &&
+						(nextToken.value === "e" || nextToken.value === "E")
+					) {
+						value += "e";
+
+						// Operator
+						const operator = this.nextToken();
+						if (operator.type === "Minus") {
+							value += "-";
+						} else if (operator.type === "Plus") {
+							value += "+";
+						} else {
+							throw this.unexpected();
+						}
+
+						// Factor
+						this.nextToken();
+						const factor = this.expectToken("Number");
+						value += String(factor.value);
+					}
+
+					// BigInt
+					const nextToken2 = this.getToken();
+					if (nextToken2.type === "Word" && nextToken2.value === "n") {
+						throw this.unexpected({
+							description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.BIGINT_IN_JSON,
+						});
+					}
+
+					// Turn the string into an actual number
+					let num = Number(value);
+					if (isNegative) {
+						num = -num;
+					}
+					return num;
+				}
+
+				parsePropertyKey() {
+					const token = this.getToken();
+
+					switch (token.type) {
+						case "String": {
+							this.nextToken();
+							return token.value;
+						}
+
+						case "Word":
+							if (this.hasExtensions) {
+								this.nextToken();
+								return token.value;
+							} else {
+								throw this.unexpected({
+									description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.PROPERTY_KEY_UNQUOTED_IN_JSON,
+								});
+							}
+
+						default:
+							throw this.unexpected();
+					}
+				}
+
+				parseString(isStart) {
+					const start = this.getPosition();
+					const token = this.expectToken("String");
+
+					if (isStart && this.nextToken().type === "Colon") {
+						if (this.hasExtensions) {
+							return this.parseObject(start, token.value);
+						} else {
+							throw this.unexpected({
+								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.IMPLICIT_OBJECT_IN_JSON,
+							});
+						}
+					} else {
+						return token.value;
+					}
+				}
+
+				parseExpression(isStart = false) {
+					const token = this.getToken();
+
+					switch (token.type) {
+						case "String":
+							return this.parseString(isStart);
+
+						case "Minus":
+						case "Number":
+							return this.parseNumber();
+
+						case "Word":
+							return this.parseWord(isStart);
+
+						case "BracketOpen":
+							return this.parseArray();
+
+						case "BraceOpen": {
+							this.nextToken();
+							return this.parseObject();
+						}
+
+						default:
+							throw this.unexpected();
+					}
+				}
+
+				parseEntry() {
+					if (this.matchToken("EOF")) {
+						if (this.hasExtensions) {
+							// If we're in RJSON mode then an empty input is an implicit object
+							return {};
+						} else {
+							throw this.unexpected({
+								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.JSON.EMPTY_INPUT_IN_JSON,
+							});
+						}
+					} else {
+						return this.parseExpression(true);
+					}
+				}
+
+				parse() {
+					let expectSyntaxError = false;
+
+					if (!this.hasExtensions) {
+						// If we're in regular JSON, try the native JSON.parse
+						try {
+							const value = JSON.parse(this.input);
+
+							// Lazy parse when we need location information
+							let context;
+							const getContext = () => {
+								if (context === undefined) {
+									const res = this._parse();
+									context = res.context;
+									return res.context;
+								} else {
+									return context;
+								}
+							};
+
+							return {
+								context: {
+									category: this.consumeDiagnosticCategory,
+									normalizeKey(path) {
+										return getContext().normalizeKey(path);
+									},
+									getOriginalValue(path) {
+										return getContext().getOriginalValue(path);
+									},
+									getDiagnosticLocation(keys, target) {
+										return getContext().getDiagnosticLocation(keys, target);
+									},
+								},
+								value,
+							};
+						} catch (err) {
+							// On syntax errors we'll fall back to our parser which is slower, but produces more meaningful errors
+							if (err instanceof SyntaxError) {
+								expectSyntaxError = true;
+							} else {
+								throw err;
+							}
+						}
+					}
+
+					const res = this._parse();
+
+					if (expectSyntaxError) {
+						throw new Error(
+							"JSON.parse failed but our custom JSON parser was successful... That doesn't smell right",
+						);
+					}
+
+					return res;
+				}
+
+				_parse() {
+					const leadingComments = this.eatComments();
+
+					const expr = this.parseEntry();
+
+					const trailingComments = this.eatComments();
+					this.setComments({
+						inner: [],
+						outer: [...leadingComments, ...trailingComments],
+					});
+
+					this.finalize();
+
+					const context = {
+						category: this.consumeDiagnosticCategory,
+						normalizeKey: (key) => key,
+						getDiagnosticLocation: (keys, target) => {
+							const info = this.getPathInfo(keys);
+							if (info === undefined) {
+								return {
+									language: "json",
+									filename: this.filename,
+								};
+							}
+
+							let start = info.keyStart;
+							let end = info.valueEnd;
+
+							if (target === "key") {
+								end = info.keyEnd;
+							}
+
+							if (target === "value" || target === "inner-value") {
+								start = info.valueStart;
+							}
+
+							let loc = {
+								filename: this.filename,
+								start,
+								end,
+							};
+
+							if (target === "inner-value") {
+								const originalValue = context.getOriginalValue(keys);
+
+								// Remove quote marks for strings
+								if (typeof originalValue === "string") {
+									loc = Object.assign(
+										{},
+										loc,
+										{
+											start: Object.assign(
+												{},
+												loc.start,
+												{
+													column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Add(
+														loc.start.column,
+														1,
+													),
+												},
+											),
+											end: Object.assign(
+												{},
+												loc.end,
+												{
+													column: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Sub(
+														loc.end.column,
+														1,
+													),
+												},
+											),
+										},
+									);
+								}
+							}
+
+							return Object.assign(
+								{language: "json"},
+								loc,
+								{mtime: this.mtime, sourceText: undefined},
+							);
+						},
+						getOriginalValue: (keys) => {
+							const info = this.getPathInfo(keys);
+							if (info !== undefined) {
+								return info.originalValue;
+							}
+						},
+					};
+
+					return {
+						value: expr,
+						context,
+					};
+				}
+			}
+			return JSONParser;
+		})()
+	);
+
+
+  // project-rome/@romefrontend/codec-json/stringify.ts
+function ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$joinList(
+		open,
+		close,
+		indent,
+		items,
+	) {
+		if (items.length === 0) {
+			return open + close;
+		} else {
+			return [open, ...items, indent + close].join("\n");
+		}
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyKey(
+		key,
+	) {
+		if (___R$project$rome$$romefrontend$codec$json$parse_ts$isValidWord(key)) {
+			// A property key doesn't need quotes if it's a valid word
+			return key;
+		} else {
+			return ___R$project$rome$$romefrontend$string$escape$escapeJSString_ts$default(
+				key,
+				{
+					quote: '"',
+					ignoreWhitespaceEscapes: true,
+					json: true,
+				},
+			);
+		}
+	}
+
+	function ___R$project$rome$$romefrontend$codec$json$stringify_ts$stringifyComments(
+		indent,
+		comments,
+	) {
+		return comments.map((node) => {
+			if (node.type === "BlockComment") {
+				return indent + "/*" + node.value + "*/";
+			} else {
+				// node.type === 'LineComment'
+				return indent + "//" + node.value;
+			}
+		});
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyPrimitives(
+		value,
+	) {
+		if (value === null) {
+			return "null";
+		}
+
+		// Coerce primitive objects to their primitive form, as specified in ECMA262 24.5.2.1
+		if (
+			value instanceof Number ||
+			value instanceof String ||
+			value instanceof Boolean
+		) {
+			value = value.valueOf();
+		}
+
+		// Basic primitive types
+		switch (typeof value) {
+			case "symbol":
+			case "function":
+			case "undefined":
+				return "null";
+
+			case "boolean":
+				return value ? "true" : "false";
+
+			case "string":
+				return ___R$project$rome$$romefrontend$string$escape$escapeJSString_ts$default(
+					value,
+					{
+						quote: '"',
+						json: true,
+						ignoreWhitespaceEscapes: true,
+					},
+				);
+
+			case "bigint":
+				// This is the actual V8 message lol
+				throw new Error("Do not know how to serialize a BigInt");
+
+			case "number":
+				return ___R$project$rome$$romefrontend$pretty$format$index_ts$formatNumber(
+					value,
+				);
+		}
+
+		return undefined;
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$sortMapKeys(
+		map,
+	) {
+		return new Set(
+			Array.from(map.keys()).sort(
+				___R$project$rome$$romefrontend$string$utils$naturalCompare_ts$naturalCompare,
+			),
+		);
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$sortMap(
+		map,
+	) {
+		const sortedMap = new Map();
+		const sortedKeys = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$sortMapKeys(
+			map,
+		);
+
+		// Add any prioritized keys so they're before anything alphabetized
+		for (const key of ___R$project$rome$$romefrontend$pretty$format$index_ts$PRIORITIZE_KEYS) {
+			if (sortedKeys.has(key)) {
+				sortedKeys.delete(key);
+
+				const val = map.get(key);
+				if (val === undefined) {
+					throw new Error("Expected value");
+				}
+
+				sortedMap.set(key, val);
+			}
+		}
+
+		// Now add the rest
+		for (const key of sortedKeys) {
+			const val = map.get(key);
+			if (val === undefined) {
+				throw new Error("Expected value");
+			}
+
+			sortedMap.set(key, val);
+		}
+
+		return sortedMap;
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$getComments(
+		consumer,
+		opts,
+	) {
+		const comments = opts.comments.get(consumer.keyPath.join("."));
+		if (comments === undefined) {
+			return {
+				inner: [],
+				outer: [],
+			};
+		} else {
+			return comments;
+		}
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyArray(
+		consumer,
+		info,
+	) {
+		const {level, prevIndent, nextIndent, stack} = info;
+
+		let buff = [];
+
+		const arr = consumer.asArray();
+		for (const consumer of arr) {
+			// Add element comments
+			const comments = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$getComments(
+				consumer,
+				info,
+			).outer;
+			buff = buff.concat(
+				___R$project$rome$$romefrontend$codec$json$stringify_ts$stringifyComments(
+					nextIndent,
+					comments,
+				),
+			);
+
+			// Add the actual element line
+			const element = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyConsumer(
+				consumer,
+				{
+					comments: info.comments,
+					isTopLevel: false,
+					level: level + 1,
+					stack,
+				},
+			);
+			buff.push("" + nextIndent + element);
+		}
+
+		// Add inner comments
+		const innerComments = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$getComments(
+			consumer,
+			info,
+		).inner;
+		buff = buff.concat(
+			___R$project$rome$$romefrontend$codec$json$stringify_ts$stringifyComments(
+				nextIndent,
+				innerComments,
+			),
+		);
+
+		return ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$joinList(
+			"[",
+			"]",
+			prevIndent,
+			buff,
+		);
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyPlainObject(
+		consumer,
+		info,
+	) {
+		const {level, prevIndent, stack, isTopLevel} = info;
+		let {nextIndent} = info;
+
+		// Must be an object if we failed all the other conditions
+		let buff = [];
+		const map = consumer.asMap();
+
+		// Remove function, symbol, and undefined properties
+		for (const [key, consumer] of map) {
+			const value = consumer.asUnknown();
+
+			if (
+				typeof value === "function" ||
+				typeof value === "undefined" ||
+				typeof value === "symbol"
+			) {
+				map.delete(key);
+			}
+		}
+
+		let propLevel = level + 1;
+
+		// We only want to increase the level for properties when we aren't at the top
+		if (isTopLevel && level === 0) {
+			propLevel = 0;
+			nextIndent = "";
+		}
+
+		// Build properties
+		for (const [key, consumer] of ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$sortMap(
+			map,
+		)) {
+			// Add property comments
+			const comments = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$getComments(
+				consumer,
+				info,
+			).outer;
+			buff = buff.concat(
+				___R$project$rome$$romefrontend$codec$json$stringify_ts$stringifyComments(
+					nextIndent,
+					comments,
+				),
+			);
+
+			// Add the actual property line
+			const propKey = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyKey(
+				key,
+			);
+			const propValue = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyConsumer(
+				consumer,
+				{
+					comments: info.comments,
+					isTopLevel: false,
+					level: propLevel,
+					stack,
+				},
+			);
+			buff.push("" + nextIndent + propKey + ": " + propValue);
+		}
+
+		// We track this so we know whether we can safely put everything at the top level
+
+		// If we only have comments then there's no way the parser could infer it was originally an object
+		const hasProps = buff.length > 0;
+
+		// Add inner comments
+		const innerComments = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$getComments(
+			consumer,
+			info,
+		).inner;
+		buff = buff.concat(
+			___R$project$rome$$romefrontend$codec$json$stringify_ts$stringifyComments(
+				nextIndent,
+				innerComments,
+			),
+		);
+
+		if (level === 0 && isTopLevel) {
+			if (hasProps) {
+				return buff.join("\n");
+			} else if (buff.length > 0) {
+				// Otherwise we just have a bunch of comments
+				// Indent them correctly and just output it as a normal object
+				buff = buff.map((str) => {
+					return "  " + str;
+				});
+			}
+		}
+
+		return ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$joinList(
+			"{",
+			"}",
+			prevIndent,
+			buff,
+		);
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyObject(
+		consumer,
+		value,
+		opts,
+	) {
+		const {isTopLevel, level, stack} = opts;
+
+		const info = {
+			comments: opts.comments,
+			isTopLevel,
+			nextIndent: "\t".repeat(level + 1),
+			prevIndent: level === 0 ? "" : "\t".repeat(level - 1),
+			level,
+			stack,
+		};
+
+		try {
+			stack.add(value);
+
+			if (Array.isArray(value) || value instanceof Set) {
+				return ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyArray(
+					consumer,
+					info,
+				);
+			}
+
+			return ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyPlainObject(
+				consumer,
+				info,
+			);
+		} finally {
+			stack.delete(value);
+		}
+	}
+
+	function ___R$project$rome$$romefrontend$codec$json$stringify_ts$stringifyRootConsumer(
+		consumer,
+		pathToComments,
+	) {
+		const opts = {
+			comments: pathToComments,
+			isTopLevel: true,
+			level: 0,
+			stack: new Set(),
+		};
+
+		// Nothing else handles comments at the top level
+		const inner = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyConsumer(
+			consumer,
+			opts,
+		);
+		const comments = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$getComments(
+			consumer,
+			opts,
+		);
+		const outer = ___R$project$rome$$romefrontend$codec$json$stringify_ts$stringifyComments(
+			"",
+			comments.outer,
+		);
+
+		return [...outer, inner].join("\n");
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyConsumer(
+		consumer,
+		opts,
+	) {
+		const value = consumer.asUnknown();
+
+		// Stringify primitives
+		const asPrim = ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyPrimitives(
+			value,
+		);
+		if (asPrim !== undefined) {
+			return asPrim;
+		}
+
+		// Check if we're already stringfying this value to prevent recursion
+		if (opts.stack.has(value)) {
+			throw new TypeError("Recursive");
+		}
+
+		return ___R$$priv$project$rome$$romefrontend$codec$json$stringify_ts$stringifyObject(
+			consumer,
+			value,
+			opts,
+		);
+	}
+
+
+  // project-rome/@romefrontend/codec-json/index.ts
+function ___R$project$rome$$romefrontend$codec$json$index_ts$consumeJSON(opts) {
+		return ___R$project$rome$$romefrontend$codec$json$index_ts$consumeJSONExtra(
+			opts,
+		).consumer;
+	}
+
+	function ___R$project$rome$$romefrontend$codec$json$index_ts$consumeJSONExtra(
+		opts,
+	) {
+		const parser = ___R$project$rome$$romefrontend$codec$json$parse_ts$createJSONParser(
+			opts,
+		);
+		const {value, context} = parser.parse();
+
+		return {
+			hasExtensions: parser.hasExtensions,
+			consumer: ___R$project$rome$$romefrontend$consume$index_ts$consume({
+				filePath: parser.path,
+				context,
+				objectPath: [],
+				value,
+				parent: undefined,
+			}),
+			comments: parser.pathToComments,
+		};
+	}
+
+	function ___R$project$rome$$romefrontend$codec$json$index_ts$parseJSON(opts) {
+		return ___R$project$rome$$romefrontend$codec$json$parse_ts$createJSONParser(
+			opts,
+		).parse().value;
+	}
+
+	function ___R$project$rome$$romefrontend$codec$json$index_ts$tokenizeJSON(
+		opts,
+	) {
+		return ___R$project$rome$$romefrontend$codec$json$parse_ts$createJSONParser(
+			opts,
+		).tokenizeAll();
+	}
+
+	function ___R$project$rome$$romefrontend$codec$json$index_ts$stringifyRJSONFromConsumer(
+		opts,
+	) {
+		return ___R$project$rome$$romefrontend$codec$json$stringify_ts$stringifyRootConsumer(
+			opts.consumer,
+			opts.comments,
+		);
+	}
+
+	function ___R$project$rome$$romefrontend$codec$json$index_ts$stringifyJSONExtra(
+		res,
+	) {
+		if (res.hasExtensions) {
+			return ___R$project$rome$$romefrontend$codec$json$index_ts$stringifyRJSONFromConsumer(
+				res,
+			);
+		} else {
+			return ___R$project$rome$$romefrontend$codec$json$index_ts$stringifyJSON(
+				res.consumer.asUnknown(),
+			);
+		}
+	}
+
+	function ___R$project$rome$$romefrontend$codec$json$index_ts$stringifyRJSON(
+		value,
+	) {
+		return ___R$project$rome$$romefrontend$codec$json$stringify_ts$stringifyRootConsumer(
+			___R$project$rome$$romefrontend$consume$index_ts$consumeUnknown(
+				value,
+				"parse/json",
+			),
+			new Map(),
+		);
+	}
+
+	function ___R$project$rome$$romefrontend$codec$json$index_ts$stringifyJSON(
+		value,
+	) {
+		return JSON.stringify(value, null, "\t");
+	}
+
+
+  // project-rome/@romefrontend/v8/InspectorClient.ts
+class ___R$project$rome$$romefrontend$v8$InspectorClient_ts$InspectorClientCloseError
+		extends Error {
+		constructor() {
+			super("Inspector connection closed");
+		}
+	}
+
+	class ___R$project$rome$$romefrontend$v8$InspectorClient_ts$default {
+		constructor(socket) {
+			this.socket = socket;
+			this.id = 0;
+
+			this.subscriptions = new Map();
+			this.callbacks = new Map();
+
+			this.alive = true;
+
+			this.init();
+		}
+
+		end() {
+			this.socket.end();
+		}
+
+		init() {
+			const {socket} = this;
+
+			socket.errorEvent.subscribe((err) => {
+				this.alive = false;
+				for (const [, {reject}] of this.callbacks) {
+					reject(err);
+				}
+				this.callbacks.clear();
+				this.end();
+			});
+
+			socket.endEvent.subscribe(() => {
+				this.alive = false;
+				for (const [, {reject}] of this.callbacks) {
+					reject(
+						new ___R$project$rome$$romefrontend$v8$InspectorClient_ts$InspectorClientCloseError(),
+					);
+				}
+				this.callbacks.clear();
+			});
+
+			socket.completeFrameEvent.subscribe((frame) => {
+				const json = frame.payload.toString();
+				const data = ___R$project$rome$$romefrontend$codec$json$index_ts$consumeJSON({
+					input: json,
+				});
+
+				// Message reply
+				const id = data.get("id").asNumberOrVoid();
+				if (id !== undefined) {
+					const handler = this.callbacks.get(id);
+					if (handler !== undefined) {
+						if (data.has("error")) {
+							const errorMessage = data.get("error").get("message").asString();
+							handler.reject(new Error(errorMessage));
+						} else {
+							handler.resolve(data.get("result"));
+						}
+						this.callbacks.delete(id);
+					}
+					return;
+				}
+
+				// Event
+				const method = data.get("method").asStringOrVoid();
+				if (method !== undefined) {
+					const subs = this.subscriptions.get(method);
+					if (subs !== undefined) {
+						for (const sub of subs) {
+							const {callback, once} = sub;
+							callback(data.get("params"));
+							if (once) {
+								subs.delete(sub);
+							}
+						}
+					}
+				}
+			});
+		}
+
+		subscribe(method, sub) {
+			let subs = this.subscriptions.get(method);
+			if (subs === undefined) {
+				subs = new Set();
+				this.subscriptions.set(method, subs);
+			}
+			subs.add(sub);
+		}
+
+		assertAlive() {
+			if (!this.alive) {
+				throw new Error("InspectorClient has no active socket");
+			}
+		}
+
+		async wait(method) {
+			return new Promise((resolve) => {
+				this.assertAlive();
+				this.subscribe(
+					method,
+					{
+						once: true,
+						callback: resolve,
+					},
+				);
+			});
+		}
+
+		call(method, params) {
+			const id = ++this.id;
+
+			return new Promise((resolve, reject) => {
+				this.assertAlive();
+				this.callbacks.set(id, {resolve, reject});
+
+				this.socket.sendJSON({
+					id,
+					method,
+					params,
+				});
+			});
+		}
+	}
+
+
+  // project-rome/@romefrontend/v8/CoverageCollector.ts
+const ___R$$priv$project$rome$$romefrontend$v8$CoverageCollector_ts$inspector = require(
+		"inspector",
+	);
+	function ___R$$priv$project$rome$$romefrontend$v8$CoverageCollector_ts$createCoverageFileStats(
+		covered,
+		uncovered,
+	) {
+		const total = uncovered + covered;
+		return {
+			uncovered,
+			covered,
+			total,
+			percent: total === 0 ? 100 : 100 / total * covered,
+		};
+	}
+
+	class ___R$project$rome$$romefrontend$v8$CoverageCollector_ts$default {
+		constructor() {
+			this.sourceMaps = new Map();
+		}
+
+		addSourceMap(filename, code, map) {
+			this.sourceMaps.set(
+				filename,
+				{
+					ranges: [],
+					map,
+					code,
+				},
+			);
+		}
+
+		addCoverage(entries) {
+			for (const entry of entries) {
+				const filename = ___R$project$rome$$romefrontend$v8$utils_ts$urlToFilename(
+					entry.url,
+				);
+
+				const data = this.sourceMaps.get(filename);
+				if (data === undefined) {
+					continue;
+				}
+
+				for (const {ranges, functionName, isBlockCoverage} of entry.functions) {
+					data.ranges = data.ranges.concat(
+						ranges.map((range) => {
+							let kind = "expression";
+							if (functionName !== "") {
+								kind = "function";
+							} else if (isBlockCoverage) {
+								kind = "branch";
+							}
+
+							return Object.assign({kind}, range);
+						}),
+					);
+				}
+			}
+		}
+
+		generate() {
+			const insertedLocs = new Map();
+			const locs = [];
+
+			for (const data of this.sourceMaps.values()) {
+				const {ranges, code, map} = data;
+
+				// Turn an index into a position in the compiled source
+				let line = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number1;
+				let column = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0;
+				let index = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0;
+				const indexCache = new Map();
+				function findIndex(newIndex) {
+					const cached = indexCache.get(newIndex);
+					if (cached !== undefined) {
+						return cached;
+					}
+
+					if (newIndex < index) {
+						throw new Error(
+							"Expected newIndex(" + newIndex + ") >= index(" + index + ")",
+						);
+					}
+
+					if (
+						___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(newIndex) >
+						code.length
+					) {
+						throw new Error(
+							"Expected newIndex(" +
+							newIndex +
+							") <= code.length(" +
+							code.length +
+							")",
+						);
+					}
+
+					while (index < newIndex) {
+						const char = code[___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(
+							index,
+						)];
+						if (char === "\n") {
+							line = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(line);
+							column = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Number0;
+						} else {
+							column = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(
+								column,
+							);
+						}
+						index = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(index);
+					}
+
+					const pos = {
+						index: newIndex,
+						line,
+						column,
+					};
+					indexCache.set(newIndex, pos);
+					return pos;
+				}
+
+				// Prefetch all sorted indexes
+				const offsets = [];
+				for (const {startOffset, endOffset} of ranges) {
+					offsets.push(
+						___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce0(startOffset),
+					);
+					offsets.push(
+						___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce0(endOffset),
+					);
+				}
+				offsets.sort((a, b) =>
+					___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(a) -
+					___R$project$rome$$romefrontend$ob1$index_ts$ob1Get0(b)
+				);
+				for (const index of offsets) {
+					findIndex(index);
+				}
+
+				//
+				for (const {kind, startOffset, endOffset, count} of ranges) {
+					const originalStart = findIndex(
+						___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce0(startOffset),
+					);
+					const originalEnd = findIndex(
+						___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce0(endOffset),
+					);
+
+					const sourceStart = map.approxOriginalPositionFor(
+						originalStart.line,
+						originalStart.column,
+					);
+					if (sourceStart === undefined) {
+						continue;
+					}
+
+					const sourceEnd = map.approxOriginalPositionFor(
+						originalEnd.line,
+						originalEnd.column,
+					);
+					if (sourceEnd === undefined) {
+						continue;
+					}
+
+					if (sourceStart.source !== sourceEnd.source) {
+						throw new Error(
+							"Expected the same source for start and end: " +
+							sourceStart.source +
+							" !== " +
+							sourceEnd.source,
+						);
+					}
+
+					const key =
+						sourceStart.source +
+						":" +
+						String(startOffset) +
+						"-" +
+						String(endOffset);
+					const alreadyInserted = insertedLocs.get(key);
+					if (alreadyInserted !== undefined) {
+						alreadyInserted.count += count;
+						continue;
+					}
+
+					const loc = {
+						kind,
+						filename: sourceStart.source,
+						count,
+						start: {
+							index: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce0(
+								startOffset,
+							),
+							line: sourceStart.line,
+							column: sourceStart.column,
+						},
+						end: {
+							index: ___R$project$rome$$romefrontend$ob1$index_ts$ob1Coerce0(
+								endOffset,
+							),
+							line: sourceEnd.line,
+							column: sourceEnd.column,
+						},
+					};
+					insertedLocs.set(key, loc);
+					locs.push(loc);
+				}
+
+				map.clearCache();
+			}
+
+			// Assemble files
+			const rangesByFile = new Map();
+			for (const loc of locs) {
+				let ranges = rangesByFile.get(loc.filename);
+				if (ranges === undefined) {
+					ranges = [];
+					rangesByFile.set(loc.filename, ranges);
+				}
+				ranges.push(loc);
+			}
+
+			const files = [];
+			for (const [filename, ranges] of rangesByFile) {
+				const coveredLines = new Set();
+				const uncoveredLines = new Set();
+
+				let uncoveredFunctions = new Set();
+				let coveredFunctions = new Set();
+				let uncoveredBranches = new Set();
+				let coveredBranches = new Set();
+
+				for (const {count, kind, start, end} of ranges) {
+					// Fill in lines
+					for (
+						let i = start.line;
+						i <= end.line;
+						i = ___R$project$rome$$romefrontend$ob1$index_ts$ob1Inc(i)
+					) {
+						if (count === 0) {
+							uncoveredLines.add(i);
+						} else {
+							coveredLines.add(i);
+						}
+					}
+
+					// Mark covered kind
+					if (kind === "function") {
+						if (count === 0) {
+							uncoveredBranches.add(start.index);
+							uncoveredFunctions.add(start.line);
+						} else {
+							coveredFunctions.add(start.line);
+							coveredBranches.add(start.index);
+						}
+					} else if (kind === "branch") {
+						if (count === 0) {
+							uncoveredBranches.add(start.index);
+						} else {
+							coveredBranches.add(start.index);
+						}
+					}
+				}
+
+				for (const line of coveredLines) {
+					uncoveredLines.delete(line);
+				}
+
+				for (const index of coveredBranches) {
+					uncoveredBranches.delete(index);
+				}
+
+				for (const index of coveredFunctions) {
+					uncoveredFunctions.delete(index);
+				}
+
+				// No point showing fully covered files
+				if (
+					uncoveredLines.size === 0 &&
+					uncoveredBranches.size === 0 &&
+					uncoveredFunctions.size === 0
+				) {
+					continue;
+				}
+
+				files.push({
+					filename,
+					lines: ___R$$priv$project$rome$$romefrontend$v8$CoverageCollector_ts$createCoverageFileStats(
+						coveredLines.size,
+						uncoveredLines.size,
+					),
+					branches: ___R$$priv$project$rome$$romefrontend$v8$CoverageCollector_ts$createCoverageFileStats(
+						coveredBranches.size,
+						uncoveredBranches.size,
+					),
+					functions: ___R$$priv$project$rome$$romefrontend$v8$CoverageCollector_ts$createCoverageFileStats(
+						coveredFunctions.size,
+						uncoveredFunctions.size,
+					),
+				});
+			}
+			return files;
+		}
+	}
+
+
+  // project-rome/@romefrontend/v8/index.ts
+
+
+
   // project-rome/ackage.json
 const ___R$project$rome$ackage_json$default = {
 		"name": "rome-root",
@@ -105011,12 +105559,6 @@ const ___R$project$rome$ackage_json$default = {
 			"@types/react-dom": "^16.9.8",
 			"@types/vscode": "^1.46.0",
 			"typescript": "^4.0.0-beta",
-		},
-		"scripts": {
-			"dev-rome": "node ./scripts/dev-rome",
-			"test": "node ./scripts/dev-rome test",
-			"lint": "node ./scripts/dev-rome check",
-			"fix": "node ./scripts/dev-rome --fix",
 		},
 		"rome": {
 			"root": true,
@@ -105112,7 +105654,9 @@ const ___R$project$rome$$romefrontend$core$common$constants_ts = {
 	// Vendor Rome and Trunk Rome could have the same version number if there was no release in between
 	// Ensure they are properly namespaced to avoid having daemon socket conflicts
 	if (
-		___R$project$rome$$romefrontend$environment$index_ts$getEnvVar("ROME_DEV").type ===
+		___R$project$rome$$romefrontend$cli$environment$index_ts$getEnvVar(
+			"ROME_DEV",
+		).type ===
 		"ENABLED"
 	) {
 		___R$project$rome$$romefrontend$core$common$constants_ts$VERSION += "-dev";
@@ -105184,6 +105728,7 @@ const ___R$project$rome$$romefrontend$core$client$commands$init_ts$default = ___
 		description: "create a project config",
 		usage: "",
 		examples: [],
+		hidden: true,
 		defineFlags() {
 			return {};
 		},
@@ -105252,6 +105797,7 @@ const ___R$project$rome$$romefrontend$core$client$commands$develop_ts$default = 
 		description: "TODO",
 		usage: "",
 		examples: [],
+		hidden: true,
 		defineFlags() {
 			return {};
 		},
@@ -105317,7 +105863,7 @@ const ___R$$priv$project$rome$$romefrontend$core$common$utils$executeMain_ts$int
 	async function ___R$project$rome$$romefrontend$core$common$utils$executeMain_ts$default(
 		opts,
 	) {
-		const {path, code, sourceMap, globals} = opts;
+		const {path, code, sourceMap, globals, args = []} = opts;
 
 		const filename = path.join();
 
@@ -105325,7 +105871,7 @@ const ___R$$priv$project$rome$$romefrontend$core$common$utils$executeMain_ts$int
 		const sandbox = Object.assign(
 			{
 				process: {
-					argv: [process.argv[0], filename],
+					argv: [process.argv[0], filename, ...args],
 					__proto__: process,
 				},
 				Buffer,
@@ -105414,7 +105960,15 @@ const ___R$$priv$project$rome$$romefrontend$core$common$utils$executeMain_ts$int
 				sourceMap,
 			);
 		}
-		await script.runInContext(context);
+		const res = await script.runInContext(context);
+
+		if (typeof res === "object" && res != null && typeof res.main === "function") {
+			const code = await Promise.resolve(res.main(args));
+			if (typeof code === "number") {
+				process.exit(code);
+			}
+		}
+
 		return {syntaxError: undefined};
 	}
 
@@ -105425,6 +105979,9 @@ const ___R$project$rome$$romefrontend$core$client$commands$run_ts$default = ___R
 		description: "TODO",
 		usage: "",
 		examples: [],
+		hidden: ___R$project$rome$$romefrontend$cli$environment$index_ts$getEnvVar(
+			"ROME_DEV",
+		).type !== "ENABLED",
 		defineFlags() {
 			return {};
 		},
@@ -105464,13 +106021,8 @@ const ___R$project$rome$$romefrontend$core$client$commands$run_ts$default = ___R
 
 				switch (type) {
 					case "executeCode": {
-						process.execArgv = [...process.execArgv, process.argv[1], "run"];
-						process.argv = [
-							process.argv[0],
-							String(data.filename),
-							...process.argv.slice(4),
-						];
 						const {syntaxError} = await ___R$project$rome$$romefrontend$core$common$utils$executeMain_ts$default({
+							args: req.query.args,
 							path: ___R$project$rome$$romefrontend$path$index_ts$createAbsoluteFilePath(
 								data.get("filename").asString(),
 							),
@@ -105484,7 +106036,6 @@ const ___R$project$rome$$romefrontend$core$client$commands$run_ts$default = ___R
 								syntaxError,
 							);
 						}
-						await new Promise(() => {});
 						break;
 					}
 				}
@@ -105858,7 +106409,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$ServerRequest_ts$crypto 
 				reporter: this.reporter,
 				cwd: this.client.flags.cwd,
 				flags: this.getDiagnosticsPrinterFlags(),
-				readFile: this.server.readDiagnosticsPrinterFile.bind(this.server),
+				fileReaders: this.server.createDiagnosticsPrinterFileReaders(),
 			});
 		}
 
@@ -106044,7 +106595,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$ServerRequest_ts$crypto 
 				const location = this.getDiagnosticPointerForClientCwd();
 				const project = await this.assertClientCwdProject();
 				resolvedArgs.push({
-					path: project.folder,
+					path: project.directory,
 					location,
 					project,
 				});
@@ -106069,7 +106620,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$ServerRequest_ts$crypto 
 							const resolvedAlternate = await this.server.resolver.resolveEntry({
 								origin: cwd,
 								source: alternateSource,
-								requestedType: "folder",
+								requestedType: "directory",
 							});
 							if (resolvedAlternate.type === "FOUND") {
 								resolved = resolvedAlternate;
@@ -106082,7 +106633,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$ServerRequest_ts$crypto 
 							{
 								origin: cwd,
 								source,
-								requestedType: "folder",
+								requestedType: "directory",
 							},
 							{
 								location,
@@ -106325,7 +106876,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$ServerRequest_ts$crypto 
 
 		startMarker(opts) {
 			this.server.logger.info(
-				___R$project$rome$$romefrontend$string$markup$escape_ts$markup`[ServerRequest] Started marker: ${opts.label}`,
+				___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`[ServerRequest] Started marker: ${opts.label}`,
 			);
 			return Object.assign({}, opts, {start: Date.now()});
 		}
@@ -106333,7 +106884,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$ServerRequest_ts$crypto 
 		endMarker(startMarker) {
 			const endMarker = Object.assign({}, startMarker, {end: Date.now()});
 			this.server.logger.info(
-				___R$project$rome$$romefrontend$string$markup$escape_ts$markup`[ServerRequest] Started marker: ${startMarker.label}`,
+				___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`[ServerRequest] Started marker: ${startMarker.label}`,
 			);
 			this.markerEvent.send(endMarker);
 			return endMarker;
@@ -106385,7 +106936,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$ServerRequest_ts$crypto 
 											{
 												type: "log",
 												category: "info",
-												text: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Error occurred while requesting <emphasis>${method}</emphasis> for <filelink emphasis target="${ref.uid}" />`,
+												text: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Error occurred while requesting <emphasis>${method}</emphasis> for <filelink emphasis target="${ref.uid}" />`,
 											},
 										],
 									},
@@ -106413,8 +106964,8 @@ const ___R$$priv$project$rome$$romefrontend$core$server$ServerRequest_ts$crypto 
 			await this.wrapRequestDiagnostic(
 				"updateBuffer",
 				path,
-				async (bridge, file) => {
-					await bridge.updateBuffer.call({file, content});
+				async (bridge, ref) => {
+					await bridge.updateBuffer.call({ref, content});
 					this.server.memoryFs.addBuffer(path, content);
 					this.server.refreshFileEvent.send(path);
 				},
@@ -106428,8 +106979,8 @@ const ___R$$priv$project$rome$$romefrontend$core$server$ServerRequest_ts$crypto 
 			return this.wrapRequestDiagnostic(
 				"patchBuffer",
 				path,
-				async (bridge, file) => {
-					const buffer = await bridge.patchBuffer.call({file, patches});
+				async (bridge, ref) => {
+					const buffer = await bridge.patchBuffer.call({ref, patches});
 					this.server.memoryFs.addBuffer(path, buffer);
 					this.server.refreshFileEvent.send(path);
 					return buffer;
@@ -106444,8 +106995,8 @@ const ___R$$priv$project$rome$$romefrontend$core$server$ServerRequest_ts$crypto 
 			await this.wrapRequestDiagnostic(
 				"updateBuffer",
 				path,
-				async (bridge, file) => {
-					await bridge.clearBuffer.call({file});
+				async (bridge, ref) => {
+					await bridge.clearBuffer.call({ref});
 					this.server.memoryFs.clearBuffer(path);
 					this.server.refreshFileEvent.send(path);
 				},
@@ -106459,7 +107010,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$ServerRequest_ts$crypto 
 			return this.wrapRequestDiagnostic(
 				"parse",
 				path,
-				(bridge, file) => bridge.parse.call({file, options: opts}),
+				(bridge, ref) => bridge.parse.call({ref, options: opts}),
 			);
 		}
 
@@ -106469,8 +107020,8 @@ const ___R$$priv$project$rome$$romefrontend$core$server$ServerRequest_ts$crypto 
 			return this.wrapRequestDiagnostic(
 				"updateInlineSnapshots",
 				path,
-				(bridge, file) =>
-					bridge.updateInlineSnapshots.call({file, updates, parseOptions})
+				(bridge, ref) =>
+					bridge.updateInlineSnapshots.call({ref, updates, parseOptions})
 				,
 			);
 		}
@@ -106502,7 +107053,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$ServerRequest_ts$crypto 
 			const res = await this.wrapRequestDiagnostic(
 				"lint",
 				path,
-				(bridge, file) => bridge.lint.call({file, options, parseOptions: {}}),
+				(bridge, ref) => bridge.lint.call({ref, options, parseOptions: {}}),
 			);
 
 			await cache.update(
@@ -106517,13 +107068,13 @@ const ___R$$priv$project$rome$$romefrontend$core$server$ServerRequest_ts$crypto 
 			return res;
 		}
 
-		async requestWorkerFormat(path, parseOptions) {
+		async requestWorkerFormat(path, options, parseOptions) {
 			this.checkCancelled();
 
 			return await this.wrapRequestDiagnostic(
 				"format",
 				path,
-				(bridge, file) => bridge.format.call({file, parseOptions}),
+				(bridge, ref) => bridge.format.call({ref, options, parseOptions}),
 			);
 		}
 
@@ -106551,13 +107102,13 @@ const ___R$$priv$project$rome$$romefrontend$core$server$ServerRequest_ts$crypto 
 			const compileRes = await this.wrapRequestDiagnostic(
 				"compile",
 				path,
-				(bridge, file) => {
+				(bridge, ref) => {
 					// We allow options to be passed in as undefined so we can compute an easy cache key
 					if (options === undefined) {
 						options = {};
 					}
 
-					return bridge.compile.call({file, stage, options, parseOptions});
+					return bridge.compile.call({ref, stage, options, parseOptions});
 				},
 			);
 
@@ -106595,7 +107146,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$ServerRequest_ts$crypto 
 			const res = await this.wrapRequestDiagnostic(
 				"analyzeDependencies",
 				path,
-				(bridge, file) => bridge.analyzeDependencies.call({file, parseOptions}),
+				(bridge, ref) => bridge.analyzeDependencies.call({ref, parseOptions}),
 			);
 			await cache.update(
 				path,
@@ -106620,7 +107171,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$ServerRequest_ts$crypto 
 			const res = await this.wrapRequestDiagnostic(
 				"moduleSignature",
 				path,
-				(bridge, file) => bridge.moduleSignatureJS.call({file, parseOptions}),
+				(bridge, ref) => bridge.moduleSignatureJS.call({ref, parseOptions}),
 			);
 			await cache.update(
 				path,
@@ -106863,10 +107414,11 @@ async function ___R$$priv$project$rome$$romefrontend$core$client$review_ts$check
 		}
 
 		const printer = new ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$default({
+			processor: new ___R$project$rome$$romefrontend$diagnostics$DiagnosticsProcessor_ts$default(),
 			reporter,
 		});
 		diag = printer.processor.addDiagnosticAssert(diag);
-		printer.print();
+		await printer.print();
 
 		const answer = await reporter.radio(
 			"How do you want to resolve this?",
@@ -106982,11 +107534,12 @@ async function ___R$$priv$project$rome$$romefrontend$core$client$review_ts$check
 			reporter.success("Nothing to review!");
 		} else {
 			if (res.type === "DIAGNOSTICS") {
-				___R$project$rome$$romefrontend$cli$diagnostics$index_ts$printDiagnostics({
+				await ___R$project$rome$$romefrontend$cli$diagnostics$index_ts$printDiagnostics({
 					diagnostics: res.diagnostics,
 					suppressions: [],
 					excludeFooter: true,
 					printerOptions: {
+						processor: new ___R$project$rome$$romefrontend$diagnostics$DiagnosticsProcessor_ts$default(),
 						reporter,
 					},
 				});
@@ -108159,7 +108712,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$dependencies$DependencyG
 				return node;
 			}
 
-			const progressText = ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`<filelink target="${filename}" />`;
+			const progressText = ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<filelink target="${filename}" />`;
 
 			if (analyzeProgress !== undefined) {
 				analyzeProgress.pushText(progressText);
@@ -108214,7 +108767,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$dependencies$DependencyG
 											location: Object.assign(
 												{sourceText: undefined},
 												dep.loc,
-												{language: "js", mtime: undefined},
+												{mtime: undefined},
 											),
 										},
 							);
@@ -115594,7 +116147,7 @@ class ___R$project$rome$$romefrontend$core$server$bundler$Bundler_ts$default {
 
 			// TODO inherit some manifest properties from project configs
 			const project = this.server.projectManager.findProjectExisting(
-				manifestDef.folder,
+				manifestDef.directory,
 			);
 			if (project !== undefined) {
 				if (newManifest.name === undefined) {
@@ -115609,7 +116162,7 @@ class ___R$project$rome$$romefrontend$core$server$bundler$Bundler_ts$default {
 			// Copy manifest.files
 			if (manifest.files !== undefined) {
 				const paths = await this.server.memoryFs.glob(
-					manifestDef.folder,
+					manifestDef.directory,
 					{
 						overrideIgnore: ___R$project$rome$$romefrontend$path$match$index_ts$flipPathPatterns(
 							manifest.files,
@@ -115618,7 +116171,7 @@ class ___R$project$rome$$romefrontend$core$server$bundler$Bundler_ts$default {
 				);
 
 				for (const path of paths) {
-					const relative = manifestDef.folder.relative(path).join();
+					const relative = manifestDef.directory.relative(path).join();
 					const buffer = await ___R$project$rome$$romefrontend$fs$index_ts$readFile(
 						path,
 					);
@@ -115645,7 +116198,7 @@ class ___R$project$rome$$romefrontend$core$server$bundler$Bundler_ts$default {
 							{},
 							this.config.resolver,
 							{
-								origin: manifestDef.folder,
+								origin: manifestDef.directory,
 								source: ___R$project$rome$$romefrontend$path$index_ts$createUnknownFilePath(
 									relative,
 								).toExplicitRelative(),
@@ -115679,10 +116232,7 @@ class ___R$project$rome$$romefrontend$core$server$bundler$Bundler_ts$default {
 		}
 
 		async bundle(resolvedEntry, options = {}, reporter = this.reporter) {
-			reporter.info(
-				"Bundling <emphasis>" + resolvedEntry.toMarkup() + "</emphasis>",
-			);
-
+			//reporter.info(`Bundling <emphasis>${resolvedEntry.toMarkup()}</emphasis>`);
 			const req = this.createBundleRequest(resolvedEntry, options, reporter);
 			const res = await req.bundle();
 
@@ -115750,14 +116300,15 @@ const ___R$project$rome$$romefrontend$core$server$commands$run_ts$default = ___R
 		description: "TODO",
 		usage: "",
 		examples: [],
+		hidden: true,
 		defineFlags() {
 			return {};
 		},
 		async callback(req) {
-			const {args} = req.query;
 			const {flags} = req.client;
 			const {server} = req;
 			req.expectArgumentLength(1);
+			const arg = req.query.args[0];
 
 			async function executeCode(path) {
 				const bundler = ___R$project$rome$$romefrontend$core$server$bundler$Bundler_ts$default.createFromServerRequest(
@@ -115775,27 +116326,10 @@ const ___R$project$rome$$romefrontend$core$server$commands$run_ts$default = ___R
 			// Get the current project
 			const project = await server.projectManager.findProject(flags.cwd);
 
-			// check for absolute paths
-			const target = args[0];
-			const resolved = await server.resolver.resolveEntry(
-				Object.assign(
-					{},
-					req.getResolverOptionsFromFlags(),
-					{
-						source: ___R$project$rome$$romefrontend$path$index_ts$createRelativeFilePath(
-							target,
-						),
-					},
-				),
-			);
-			if (resolved.type === "FOUND") {
-				return executeCode(resolved.path);
-			}
-
-			// check for bin files in any manifests that belong to any projects
+			// Check for bin files in any manifests that belong to any projects
 			if (project !== undefined) {
-				for (const {manifest, folder} of project.packages.values()) {
-					const relative = manifest.bin.get(target);
+				for (const {manifest, directory} of project.packages.values()) {
+					const relative = manifest.bin.get(arg);
 					if (relative === undefined) {
 						continue;
 					}
@@ -115805,7 +116339,7 @@ const ___R$project$rome$$romefrontend$core$server$commands$run_ts$default = ___R
 							{},
 							req.getResolverOptionsFromFlags(),
 							{
-								origin: folder,
+								origin: directory,
 								platform: "node",
 								source: ___R$project$rome$$romefrontend$path$index_ts$createRelativeFilePath(
 									relative,
@@ -115821,7 +116355,10 @@ const ___R$project$rome$$romefrontend$core$server$commands$run_ts$default = ___R
 			// TODO check node_modules/.bin
 
 			// TODO check package.json scripts
-			throw new Error('Failed to find "' + target + '"');
+
+			// Assumed absolute paths
+			const target = await req.resolveEntryAssertPathArg(0);
+			return executeCode(target);
 		},
 	});
 
@@ -115832,6 +116369,7 @@ const ___R$project$rome$$romefrontend$core$server$commands$publish_ts$default = 
 		description: "TODO",
 		usage: "",
 		examples: [],
+		hidden: true,
 		defineFlags() {
 			return {};
 		},
@@ -116862,7 +117400,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$web$index_ts$http = requ
 				const ansiReporterStream = {
 					type: "all",
 					format: "ansi",
-					features: ___R$project$rome$$romefrontend$environment$index_ts$TERMINAL_FEATURES_DEFAULT,
+					features: ___R$project$rome$$romefrontend$cli$environment$index_ts$DEFAULT_TERMINAL_FEATURES,
 					write(chunk) {
 						data.stdoutAnsi += chunk;
 					},
@@ -116871,7 +117409,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$web$index_ts$http = requ
 				const htmlReporterStream = {
 					type: "all",
 					format: "html",
-					features: ___R$project$rome$$romefrontend$environment$index_ts$TERMINAL_FEATURES_DEFAULT,
+					features: ___R$project$rome$$romefrontend$cli$environment$index_ts$DEFAULT_TERMINAL_FEATURES,
 					write(chunk) {
 						data.stdoutHTML += chunk;
 					},
@@ -116960,7 +117498,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$web$index_ts$http = requ
 
 			let buf = msg.data.map((arg) => {
 				if (typeof arg === "string") {
-					return ___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
+					return ___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
 						arg,
 					);
 				} else {
@@ -116997,10 +117535,10 @@ const ___R$$priv$project$rome$$romefrontend$core$server$web$index_ts$http = requ
 
 		async pathnameToAbsolutePath(pathname) {
 			const project = await this.serverRequest.assertClientCwdProject();
-			const possibleStaticPath = project.folder.append(pathname);
+			const possibleStaticPath = project.directory.append(pathname);
 
 			// This check makes sure that files outside of the project directory cannot be served
-			if (possibleStaticPath.isRelativeTo(project.folder)) {
+			if (possibleStaticPath.isRelativeTo(project.directory)) {
 				return possibleStaticPath;
 			} else {
 				return undefined;
@@ -117066,6 +117604,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$commands$develop_ts$DEFA
 		description: "start a web server",
 		usage: "",
 		examples: [],
+		hidden: true,
 		defineFlags(c) {
 			return {
 				port: c.get("port").asNumber(
@@ -117092,17 +117631,10 @@ const ___R$$priv$project$rome$$romefrontend$core$server$commands$develop_ts$DEFA
 
 
   // project-rome/@romefrontend/core/common/userConfig.ts
-const ___R$$priv$project$rome$$romefrontend$core$common$userConfig_ts$VERSION_PATH = ___R$project$rome$$romefrontend$path$index_ts$TEMP_PATH.append(
-		"rome-" + ___R$project$rome$$romefrontend$core$common$constants_ts$VERSION,
-	);
-
-	const ___R$project$rome$$romefrontend$core$common$userConfig_ts$DEFAULT_USER_CONFIG = {
+const ___R$project$rome$$romefrontend$core$common$userConfig_ts$DEFAULT_USER_CONFIG = {
 		configPath: undefined,
-		runtimeModulesPath: ___R$$priv$project$rome$$romefrontend$core$common$userConfig_ts$VERSION_PATH.append(
-			"runtime",
-		),
-		cachePath: ___R$$priv$project$rome$$romefrontend$core$common$userConfig_ts$VERSION_PATH.append(
-			"cache",
+		cachePath: ___R$project$rome$$romefrontend$path$index_ts$TEMP_PATH.append(
+			"rome-" + ___R$project$rome$$romefrontend$core$common$constants_ts$VERSION,
 		),
 		syntaxTheme: undefined,
 	};
@@ -117118,13 +117650,6 @@ const ___R$$priv$project$rome$$romefrontend$core$common$userConfig_ts$VERSION_PA
 
 		if (consumer.has("cachePath")) {
 			userConfig.cachePath = consumer.get("cachePath").asAbsoluteFilePath(
-				undefined,
-				configPath.getParent(),
-			);
-		}
-
-		if (consumer.has("runtimeModulesPath")) {
-			userConfig.runtimeModulesPath = consumer.get("runtimeModulesPath").asAbsoluteFilePath(
 				undefined,
 				configPath.getParent(),
 			);
@@ -117156,12 +117681,21 @@ const ___R$$priv$project$rome$$romefrontend$core$common$userConfig_ts$VERSION_PA
 		return userConfig;
 	}
 
+	let ___R$$priv$project$rome$$romefrontend$core$common$userConfig_ts$loadedUserConfig;
+
 	function ___R$project$rome$$romefrontend$core$common$userConfig_ts$loadUserConfig() {
+		if (
+			___R$$priv$project$rome$$romefrontend$core$common$userConfig_ts$loadedUserConfig !==
+			undefined
+		) {
+			return ___R$$priv$project$rome$$romefrontend$core$common$userConfig_ts$loadedUserConfig;
+		}
+
 		for (const configFilename of ___R$project$rome$$romefrontend$project$constants_ts$ROME_CONFIG_FILENAMES) {
-			const configPath = ___R$project$rome$$romefrontend$path$index_ts$HOME_PATH.append([
+			const configPath = ___R$project$rome$$romefrontend$path$index_ts$HOME_PATH.appendList(
 				".config",
 				configFilename,
-			]);
+			);
 
 			if (!___R$project$rome$$romefrontend$fs$index_ts$existsSync(configPath)) {
 				continue;
@@ -117175,20 +117709,22 @@ const ___R$$priv$project$rome$$romefrontend$core$common$userConfig_ts$VERSION_PA
 				input: configFile,
 			});
 
-			return ___R$project$rome$$romefrontend$core$common$userConfig_ts$normalizeUserConfig(
+			___R$$priv$project$rome$$romefrontend$core$common$userConfig_ts$loadedUserConfig = ___R$project$rome$$romefrontend$core$common$userConfig_ts$normalizeUserConfig(
 				consumer,
 				configPath,
 			);
+			return ___R$$priv$project$rome$$romefrontend$core$common$userConfig_ts$loadedUserConfig;
 		}
 
-		return ___R$project$rome$$romefrontend$core$common$userConfig_ts$DEFAULT_USER_CONFIG;
+		___R$$priv$project$rome$$romefrontend$core$common$userConfig_ts$loadedUserConfig = ___R$project$rome$$romefrontend$core$common$userConfig_ts$DEFAULT_USER_CONFIG;
+		return ___R$$priv$project$rome$$romefrontend$core$common$userConfig_ts$loadedUserConfig;
 	}
 
 
   // project-rome/@romefrontend/core/server/commands/config.ts
 const ___R$project$rome$$romefrontend$core$server$commands$config_ts$default = ___R$project$rome$$romefrontend$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$romefrontend$core$common$commands_ts$commandCategories.PROJECT_MANAGEMENT,
-		description: "Modify a project config",
+		description: "modify a project config",
 		usage: "(enable|disable|set) key [value]",
 		examples: [
 			{
@@ -117210,7 +117746,7 @@ const ___R$project$rome$$romefrontend$core$server$commands$config_ts$default = _
 				req.client.flags.cwd,
 			);
 			const cwd =
-				(project == null ? undefined : project.folder) ||
+				(project == null ? undefined : project.directory) ||
 				___R$project$rome$$romefrontend$path$index_ts$HOME_PATH;
 
 			const [action, keyParts, ...values] = req.query.args;
@@ -117236,7 +117772,7 @@ const ___R$project$rome$$romefrontend$core$server$commands$config_ts$default = _
 				case "set-directory": {
 					req.expectArgumentLength(3);
 
-					// If the value is an absolute path, then make it relative to the project folder
+					// If the value is an absolute path, then make it relative to the project directory
 					const path = ___R$project$rome$$romefrontend$path$index_ts$createUnknownFilePath(
 						value,
 					);
@@ -117307,7 +117843,7 @@ const ___R$project$rome$$romefrontend$core$server$commands$config_ts$default = _
 					" <emphasis>" +
 					keyParts +
 					"</emphasis> to <emphasis>" +
-					___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
+					___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
 						JSON.stringify(value),
 					) +
 					"</emphasis> in the config <emphasis>" +
@@ -117318,10 +117854,10 @@ const ___R$project$rome$$romefrontend$core$server$commands$config_ts$default = _
 				if (value === "true" || value === "false") {
 					const suggestedCommand = value === "true" ? "enable" : "disable";
 					reporter.warn(
-						___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Value is the string <emphasis>${value}</emphasis> but it looks like a boolean. You probably meant to use the command:`,
+						___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Value is the string <emphasis>${value}</emphasis> but it looks like a boolean. You probably meant to use the command:`,
 					);
 					reporter.command(
-						___R$project$rome$$romefrontend$string$markup$escape_ts$markup`config ${suggestedCommand} ${keyParts}`,
+						___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`config ${suggestedCommand} ${keyParts}`,
 					);
 				}
 
@@ -117347,29 +117883,23 @@ const ___R$project$rome$$romefrontend$core$server$commands$config_ts$default = _
 				);
 
 				// Test if this project config doesn't result in errors
-				let {diagnostics} = ___R$project$rome$$romefrontend$diagnostics$wrap_ts$catchDiagnosticsSync(() => {
-					// Reconsume with new stringified config
-					const res = ___R$project$rome$$romefrontend$codec$json$index_ts$consumeJSONExtra({
-						path: configPath,
-						input: stringified,
-					});
+				await ___R$project$rome$$romefrontend$diagnostics$wrap_ts$interceptDiagnostics(
+					async () => {
+						// Reconsume with new stringified config
+						const res = ___R$project$rome$$romefrontend$codec$json$index_ts$consumeJSONExtra({
+							path: configPath,
+							input: stringified,
+						});
 
-					validate(res, stringified);
-				});
-
-				if (diagnostics !== undefined) {
-					const processor = new ___R$project$rome$$romefrontend$diagnostics$DiagnosticsProcessor_ts$default();
-					processor.normalizer.setInlineSourceText(
-						configPath.join(),
-						stringified,
-					);
-					processor.addDiagnostics(diagnostics);
-
-					throw new ___R$project$rome$$romefrontend$diagnostics$errors_ts$DiagnosticsError(
-						"Diagnostics produced while testing new project config",
-						processor.getDiagnostics(),
-					);
-				}
+						validate(res, stringified);
+					},
+					(processor) => {
+						processor.normalizer.setInlineSourceText(
+							configPath.join(),
+							stringified,
+						);
+					},
+				);
 
 				// Write it out
 				await ___R$project$rome$$romefrontend$fs$index_ts$writeFile(
@@ -117384,10 +117914,10 @@ const ___R$project$rome$$romefrontend$core$server$commands$config_ts$default = _
 
 					let configPath;
 					if (existingConfigPath === undefined) {
-						configPath = ___R$project$rome$$romefrontend$path$index_ts$HOME_PATH.append([
+						configPath = ___R$project$rome$$romefrontend$path$index_ts$HOME_PATH.appendList(
 							".config",
 							"rome.rjson",
-						]);
+						);
 						await ___R$project$rome$$romefrontend$fs$index_ts$writeFile(
 							configPath,
 							"",
@@ -117426,7 +117956,7 @@ const ___R$project$rome$$romefrontend$core$server$commands$config_ts$default = _
 								res,
 								meta.configPath,
 								stringified,
-								meta.projectFolder,
+								meta.projectDirectory,
 							);
 						},
 					);
@@ -117447,6 +117977,7 @@ const ___R$project$rome$$romefrontend$core$server$commands$compile_ts$default = 
 		description: "compile a single file",
 		usage: "",
 		examples: [],
+		hidden: true,
 		defineFlags(c) {
 			return {
 				bundle: c.get("bundle").asBoolean(false),
@@ -117487,6 +118018,7 @@ const ___R$project$rome$$romefrontend$core$server$commands$resolve_ts$default = 
 		description: "resolve a file",
 		usage: "",
 		examples: [],
+		hidden: true,
 		defineFlags() {
 			return {};
 		},
@@ -117550,6 +118082,7 @@ function ___R$$priv$project$rome$$romefrontend$core$server$commands$analyzeDepen
 		description: "analyze and dump the dependencies of a file",
 		usage: "",
 		examples: [],
+		hidden: true,
 		defineFlags(c) {
 			return {
 				compact: c.get("compact").asBoolean(false),
@@ -117642,6 +118175,7 @@ const ___R$project$rome$$romefrontend$core$server$commands$parse_ts$default = __
 		description: "parse a single file and dump its ast",
 		usage: "",
 		examples: [],
+		hidden: true,
 		defineFlags(c) {
 			return {
 				allowDiagnostics: c.get("allowDiagnostics").asBoolean(false),
@@ -117656,7 +118190,7 @@ const ___R$project$rome$$romefrontend$core$server$commands$parse_ts$default = __
 			let ast = await req.requestWorkerParse(
 				filename,
 				{
-					sourceType: flags.sourceType,
+					sourceTypeJS: flags.sourceType,
 					allowParserDiagnostics: flags.allowDiagnostics,
 				},
 			);
@@ -117678,6 +118212,7 @@ const ___R$project$rome$$romefrontend$core$server$commands$bundle_ts$default = _
 		description: "build a standalone js bundle for a package",
 		usage: "",
 		examples: [],
+		hidden: true,
 		defineFlags(consumer) {
 			return {
 				quiet: consumer.get("quiet").asBoolean(false),
@@ -117689,7 +118224,7 @@ const ___R$project$rome$$romefrontend$core$server$commands$bundle_ts$default = _
 			const {reporter} = req;
 			req.expectArgumentLength(2);
 
-			const [entryFilename, outputFolder] = args;
+			const [entryFilename, outputDirectory] = args;
 			const bundler = ___R$project$rome$$romefrontend$core$server$bundler$Bundler_ts$default.createFromServerRequest(
 				req,
 			);
@@ -117698,13 +118233,13 @@ const ___R$project$rome$$romefrontend$core$server$commands$bundle_ts$default = _
 			const {files: outFiles} = await bundler.bundleManifest(resolution);
 
 			const savedList = [];
-			const dir = flags.cwd.resolve(outputFolder);
+			const dir = flags.cwd.resolve(outputDirectory);
 			for (const [filename, {kind, content}] of outFiles) {
 				const buff = content();
 				const file = dir.append(filename);
 				const loc = file.join();
 				savedList.push(
-					___R$project$rome$$romefrontend$string$markup$escape_ts$markup`<filelink target="${loc}">${filename}</filelink> <filesize dim>${Buffer.byteLength(
+					___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<filelink target="${loc}">${filename}</filelink> <filesize dim>${Buffer.byteLength(
 						buff,
 					)}</filesize> <inverse> ${kind} </inverse>`,
 				);
@@ -117731,7 +118266,7 @@ const ___R$project$rome$$romefrontend$core$server$commands$bundle_ts$default = _
   // project-rome/@romefrontend/core/server/commands/format.ts
 const ___R$project$rome$$romefrontend$core$server$commands$format_ts$default = ___R$project$rome$$romefrontend$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$romefrontend$core$common$commands_ts$commandCategories.INTERNAL,
-		description: "TODO",
+		description: "formats a single file",
 		usage: "",
 		examples: [],
 		defineFlags(c) {
@@ -117745,6 +118280,7 @@ const ___R$project$rome$$romefrontend$core$server$commands$format_ts$default = _
 
 			const res = await req.requestWorkerFormat(
 				filename,
+				{},
 				{
 					allowParserDiagnostics: flags.allowDiagnostics,
 				},
@@ -117770,7 +118306,7 @@ function ___R$$priv$project$rome$$romefrontend$core$server$linter$Linter_ts$crea
 	) {
 		const printer = request.createDiagnosticsPrinter(processor);
 
-		printer.onFooterPrint((reporter, isError) => {
+		printer.onFooterPrint(async (reporter, isError) => {
 			if (isError) {
 				let hasPendingFixes = false;
 
@@ -117869,7 +118405,7 @@ function ___R$$priv$project$rome$$romefrontend$core$server$linter$Linter_ts$crea
 
 			queue.addCallback(async (path) => {
 				const filename = path.join();
-				const text = ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`<filelink target="${filename}" />`;
+				const text = ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<filelink target="${filename}" />`;
 				progress.pushText(text);
 
 				let compilerOptions = lintCompilerOptionsPerFile[filename];
@@ -118209,7 +118745,7 @@ function ___R$$priv$project$rome$$romefrontend$core$server$linter$Linter_ts$crea
 					);
 
 					const result = await runner.run({firstRun, evictedPaths, processor});
-					events.onChanges(result, initial, runner);
+					await events.onChanges(result, initial, runner);
 					firstRun = false;
 				},
 			);
@@ -118228,7 +118764,9 @@ function ___R$$priv$project$rome$$romefrontend$core$server$linter$Linter_ts$crea
 				createProgress: (opts) => {
 					return reporter.progress(opts);
 				},
-				onChanges: ({evictedPaths, changes, totalCount, savedCount, runner}) => {
+				onChanges: async (
+					{evictedPaths, changes, totalCount, savedCount, runner},
+				) => {
 					const printer = ___R$$priv$project$rome$$romefrontend$core$server$linter$Linter_ts$createDiagnosticsPrinter(
 						request,
 						this.createDiagnosticsProcessor(evictedPaths, runner),
@@ -118251,8 +118789,8 @@ function ___R$$priv$project$rome$$romefrontend$core$server$linter$Linter_ts$crea
 					}
 
 					reporter.clearScreen();
-					printer.print();
-					printer.footer();
+					await printer.print();
+					await printer.footer();
 				},
 			});
 
@@ -118626,8 +119164,8 @@ function ___R$project$rome$$romefrontend$core$server$lsp$utils_ts$convertPositio
 					);
 					if (abs !== undefined) {
 						relatedInformation.push({
-							message: ___R$project$rome$$romefrontend$string$markup$format_ts$joinMarkupLines(
-								___R$project$rome$$romefrontend$string$markup$format_ts$markupToPlainText(
+							message: ___R$project$rome$$romefrontend$cli$layout$format_ts$joinMarkupLines(
+								___R$project$rome$$romefrontend$cli$layout$format_ts$markupToPlainText(
 									item.text,
 								),
 							),
@@ -118647,8 +119185,8 @@ function ___R$project$rome$$romefrontend$core$server$lsp$utils_ts$convertPositio
 				range: ___R$project$rome$$romefrontend$core$server$lsp$utils_ts$convertDiagnosticLocationToLSPRange(
 					location,
 				),
-				message: ___R$project$rome$$romefrontend$string$markup$format_ts$joinMarkupLines(
-					___R$project$rome$$romefrontend$string$markup$format_ts$markupToPlainText(
+				message: ___R$project$rome$$romefrontend$cli$layout$format_ts$joinMarkupLines(
+					___R$project$rome$$romefrontend$cli$layout$format_ts$markupToPlainText(
 						description.message.value,
 					),
 				),
@@ -118974,9 +119512,9 @@ class ___R$project$rome$$romefrontend$core$server$lsp$LSPServer_ts$default {
 						);
 					}
 
-					const workspaceFolders = params.get("workspaceFolders");
-					if (workspaceFolders.exists()) {
-						for (const elem of workspaceFolders.asArray()) {
+					const workspaceDirectories = params.get("workspaceDirectories");
+					if (workspaceDirectories.exists()) {
+						for (const elem of workspaceDirectories.asArray()) {
 							await this.initProject(
 								___R$project$rome$$romefrontend$core$server$lsp$utils_ts$getPathFromTextDocument(
 									elem,
@@ -118993,7 +119531,7 @@ class ___R$project$rome$$romefrontend$core$server$lsp$LSPServer_ts$default {
 								change: 2,
 							},
 							documentFormattingProvider: true,
-							workspaceFolders: {
+							workspaceDirectories: {
 								supported: true,
 								changeNotifications: true,
 							},
@@ -119016,7 +119554,7 @@ class ___R$project$rome$$romefrontend$core$server$lsp$LSPServer_ts$default {
 					}
 
 					const {value, diagnostics} = await ___R$project$rome$$romefrontend$diagnostics$wrap_ts$catchDiagnostics(async () => {
-						return this.request.requestWorkerFormat(path, {});
+						return this.request.requestWorkerFormat(path, {}, {});
 					});
 
 					this.logDiagnostics(path, diagnostics);
@@ -119043,7 +119581,7 @@ class ___R$project$rome$$romefrontend$core$server$lsp$LSPServer_ts$default {
 
 		async handleNotification(method, params) {
 			switch (method) {
-				case "workspace/didChangeWorkspaceFolders": {
+				case "workspace/didChangeWorkspaceDirectories": {
 					for (const elem of params.get("added").asArray()) {
 						await this.initProject(
 							___R$project$rome$$romefrontend$core$server$lsp$utils_ts$getPathFromTextDocument(
@@ -119155,9 +119693,24 @@ const ___R$project$rome$$romefrontend$core$server$commands$check_ts$default = __
 				decisions: consumer.get("decisions").asImplicitArray().map((item) =>
 					item.asString()
 				),
-				apply: consumer.get("apply").asBoolean(false),
-				formatOnly: consumer.get("formatOnly").asBoolean(false),
-				changed: consumer.get("changed").asStringOrVoid(),
+				apply: consumer.get(
+					"apply",
+					{
+						description: "recommended autofixes and formatting is applied",
+					},
+				).asBoolean(false),
+				formatOnly: consumer.get(
+					"formatOnly",
+					{
+						description: "only formatting is applied",
+					},
+				).asBoolean(false),
+				changed: consumer.get(
+					"changed",
+					{
+						description: "only include files that have changed from the specified branch/commit (defaults to main)",
+					},
+				).asStringOrVoid(),
 			};
 		},
 		async callback(req, flags) {
@@ -119214,7 +119767,7 @@ const ___R$project$rome$$romefrontend$core$server$commands$check_ts$default = __
 					);
 					reporter.list(
 						args.map((arg) =>
-							___R$project$rome$$romefrontend$string$markup$escape_ts$markup`<filelink target="${arg}" />`
+							___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<filelink target="${arg}" />`
 						),
 					);
 					reporter.hr();
@@ -119307,27 +119860,27 @@ function ___R$project$rome$$romefrontend$core$server$testing$utils_ts$sortMapKey
 		}
 	}
 
-	function ___R$project$rome$$romefrontend$core$server$testing$utils_ts$percentInsideCoverageFolder(
-		folder,
+	function ___R$project$rome$$romefrontend$core$server$testing$utils_ts$percentInsideCoverageDirectory(
+		directory,
 	) {
 		let totalFiles = 0;
 		let functions = 0;
 		let branches = 0;
 		let lines = 0;
 
-		const folders = [folder];
-		while (folders.length > 0) {
-			const folder = folders.shift();
+		const directories = [directory];
+		while (directories.length > 0) {
+			const directory = directories.shift();
 
-			for (const file of folder.files.values()) {
+			for (const file of directory.files.values()) {
 				totalFiles++;
 				functions += file.functions.percent;
 				branches += file.branches.percent;
 				lines += file.lines.percent;
 			}
 
-			for (const subFolder of folder.folders.values()) {
-				folders.push(subFolder);
+			for (const subDirectory of directory.directories.values()) {
+				directories.push(subDirectory);
 			}
 		}
 
@@ -119364,7 +119917,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$testing$TestServerRunner
 	function ___R$$priv$project$rome$$romefrontend$core$server$testing$TestServerRunner_ts$getProgressTestRefText(
 		ref,
 	) {
-		return ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`<filelink target="${ref.filename}" />: ${ref.testName}`;
+		return ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<filelink target="${ref.filename}" />: ${ref.testName}`;
 	}
 
 	function ___R$$priv$project$rome$$romefrontend$core$server$testing$TestServerRunner_ts$findAvailablePort() {
@@ -119527,9 +120080,9 @@ const ___R$$priv$project$rome$$romefrontend$core$server$testing$TestServerRunner
 					const {focusedTests} = await bridge.prepareTest.call({
 						id,
 						options: opts,
-						projectFolder: req.server.projectManager.assertProjectExisting(
+						projectDirectory: req.server.projectManager.assertProjectExisting(
 							ref.real,
-						).folder.join(),
+						).directory.join(),
 						file: req.server.projectManager.getTransportFileReference(ref.real),
 						cwd: flags.cwd.join(),
 						code,
@@ -120007,7 +120560,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$testing$TestServerRunner
 													{
 														type: "log",
 														category: "info",
-														text: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Was executing test file <filelink emphasis target="${ref.filename}" />`,
+														text: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Was executing test file <filelink emphasis target="${ref.filename}" />`,
 													},
 												],
 											},
@@ -120085,7 +120638,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$testing$TestServerRunner
 
 			let root = {
 				name: undefined,
-				folders: new Map(),
+				directories: new Map(),
 				files: new Map(),
 			};
 
@@ -120123,27 +120676,27 @@ const ___R$$priv$project$rome$$romefrontend$core$server$testing$TestServerRunner
 				let target = root;
 
 				for (const part of filenameParts) {
-					const existingFolder = target.folders.get(part);
-					if (existingFolder === undefined) {
-						const newFolder = {
+					const existingDirectory = target.directories.get(part);
+					if (existingDirectory === undefined) {
+						const newDirectory = {
 							name: part,
-							folders: new Map(),
+							directories: new Map(),
 							files: new Map(),
 						};
-						target.folders.set(part, newFolder);
-						target = newFolder;
+						target.directories.set(part, newDirectory);
+						target = newDirectory;
 					} else {
-						target = existingFolder;
+						target = existingDirectory;
 					}
 				}
 
 				target.files.set(basename, file);
 			}
 
-			// Continuously merge all entries with only a single folder from the root
-			while (root.folders.size === 1 && root.files.size === 0) {
-				// Awkward way to get the first value out of the folders map...
-				const newRoot = root.folders.values().next().value;
+			// Continuously merge all entries with only a single directory from the root
+			while (root.directories.size === 1 && root.files.size === 0) {
+				// Awkward way to get the first value out of the directories map...
+				const newRoot = root.directories.values().next().value;
 				root = Object.assign(
 					{},
 					newRoot,
@@ -120162,22 +120715,23 @@ const ___R$$priv$project$rome$$romefrontend$core$server$testing$TestServerRunner
 			// then truncate the output
 			const showAllCoverage = this.options.showAllCoverage || totalFiles < 15;
 
-			function buildRows(folder, depth) {
-				const name = folder.name === undefined ? "All files" : folder.name + "/";
-				const folderPercent = ___R$project$rome$$romefrontend$core$server$testing$utils_ts$percentInsideCoverageFolder(
-					folder,
+			function buildRows(directory, depth) {
+				const name =
+					directory.name === undefined ? "All files" : directory.name + "/";
+				const directoryPercent = ___R$project$rome$$romefrontend$core$server$testing$utils_ts$percentInsideCoverageDirectory(
+					directory,
 				);
 
 				rows.push([
 					" ".repeat(depth) + "<emphasis>" + name + "</emphasis>",
 					___R$project$rome$$romefrontend$core$server$testing$utils_ts$formatPercent(
-						folderPercent.functions,
+						directoryPercent.functions,
 					),
 					___R$project$rome$$romefrontend$core$server$testing$utils_ts$formatPercent(
-						folderPercent.branches,
+						directoryPercent.branches,
 					),
 					___R$project$rome$$romefrontend$core$server$testing$utils_ts$formatPercent(
-						folderPercent.lines,
+						directoryPercent.lines,
 					),
 				]);
 
@@ -120188,7 +120742,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$testing$TestServerRunner
 
 				const fileIndent = " ".repeat(depth + 1);
 				for (const [name, file] of ___R$project$rome$$romefrontend$core$server$testing$utils_ts$sortMapKeys(
-					folder.files,
+					directory.files,
 				)) {
 					let absolute = file.filename;
 
@@ -120202,7 +120756,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$testing$TestServerRunner
 
 					rows.push([
 						fileIndent +
-						___R$project$rome$$romefrontend$string$markup$escape_ts$markup`<filelink target="${absolute}">${name}</filelink>`,
+						___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<filelink target="${absolute}">${name}</filelink>`,
 						___R$project$rome$$romefrontend$core$server$testing$utils_ts$formatPercent(
 							file.functions.percent,
 						),
@@ -120215,10 +120769,10 @@ const ___R$$priv$project$rome$$romefrontend$core$server$testing$TestServerRunner
 					]);
 				}
 
-				for (const subFolder of ___R$project$rome$$romefrontend$core$server$testing$utils_ts$sortMapKeys(
-					folder.folders,
+				for (const subDirectory of ___R$project$rome$$romefrontend$core$server$testing$utils_ts$sortMapKeys(
+					directory.directories,
 				).values()) {
-					buildRows(subFolder, depth + 1);
+					buildRows(subDirectory, depth + 1);
 				}
 			}
 
@@ -120256,7 +120810,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$testing$TestServerRunner
 					location,
 				);
 
-				return ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`<emphasis>${testName}</emphasis> at <emphasis>${___R$project$rome$$romefrontend$string$markup$escape_ts$safeMarkup(
+				return ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<emphasis>${testName}</emphasis> at <emphasis>${___R$project$rome$$romefrontend$cli$layout$escape_ts$safeMarkup(
 					___R$project$rome$$romefrontend$diagnostics$helpers_ts$diagnosticLocationToMarkupFilelink(
 						loc,
 					),
@@ -120333,7 +120887,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$testing$TestServerRunner
 		throwPrinter() {
 			const {printer} = this;
 
-			printer.onFooterPrint((reporter, isError) => {
+			printer.onFooterPrint(async (reporter, isError) => {
 				this.printCoverageReport(isError);
 				this.printSnapshotCounts(reporter);
 				this.printFocusedTestWarning(reporter);
@@ -120456,7 +121010,12 @@ const ___R$project$rome$$romefrontend$core$server$commands$ci_ts$default = ___R$
 		examples: [],
 		defineFlags(consumer) {
 			return {
-				fix: consumer.get("fix").asBoolean(false),
+				fix: consumer.get(
+					"fix",
+					{
+						description: "enables --update-snapshots for test, and --apply for the lint command",
+					},
+				).asBoolean(false),
 			};
 		},
 		async callback(req, flags) {
@@ -120567,6 +121126,7 @@ const ___R$project$rome$$romefrontend$core$server$commands$_evict_ts$default = _
 		category: ___R$project$rome$$romefrontend$core$common$commands_ts$commandCategories.INTERNAL,
 		usage: "",
 		examples: [],
+		hidden: true,
 		defineFlags() {
 			return {};
 		},
@@ -120597,6 +121157,7 @@ const ___R$project$rome$$romefrontend$core$server$commands$_moduleSignature_ts$d
 		description: "get the module type signature of a file",
 		usage: "",
 		examples: [],
+		hidden: true,
 		defineFlags() {
 			return {};
 		},
@@ -120614,6 +121175,7 @@ const ___R$project$rome$$romefrontend$core$server$commands$_projectDump_ts$defau
 		description: "TODO",
 		usage: "",
 		examples: [],
+		hidden: true,
 		defineFlags(c) {
 			return {
 				complete: c.get("complete").asBoolean(false),
@@ -120624,7 +121186,7 @@ const ___R$project$rome$$romefrontend$core$server$commands$_projectDump_ts$defau
 			let project = req.server.projectManager.assertProjectExisting(path);
 
 			while (project !== undefined) {
-				req.reporter.logAll(project.folder.toMarkup());
+				req.reporter.logAll(project.directory.toMarkup());
 				if (flags.complete) {
 					req.reporter.inspect(project.config);
 				} else {
@@ -120991,7 +121553,7 @@ function ___R$$priv$project$rome$$romefrontend$core$server$project$ProjectManage
 			this.projectIdCounter = 0;
 			this.projectConfigDependenciesToIds = new ___R$project$rome$$romefrontend$path$collections_ts$AbsoluteFilePathMap();
 			this.projectLoadingLocks = new ___R$project$rome$$romefrontend$core$common$utils$lockers_ts$FilePathLocker();
-			this.projectFolderToProject = new ___R$project$rome$$romefrontend$path$collections_ts$AbsoluteFilePathMap();
+			this.projectDirectoryToProject = new ___R$project$rome$$romefrontend$path$collections_ts$AbsoluteFilePathMap();
 			this.projects = new Map();
 
 			// We maintain these maps so we can reverse any uids, and protect against collisions
@@ -121002,6 +121564,8 @@ function ___R$$priv$project$rome$$romefrontend$core$server$project$ProjectManage
 		}
 
 		async init() {
+			this.injectVirtualModules();
+
 			this.server.memoryFs.deletedFileEvent.subscribe((path) => {
 				this.handleDeleted(path);
 			});
@@ -121012,15 +121576,34 @@ function ___R$$priv$project$rome$$romefrontend$core$server$project$ProjectManage
 				{name: "rome-internal-remote"},
 			);
 			const defaultVendorPath = vendorProjectConfig.files.vendorPath;
+			// TODO find a way to do th
 			await ___R$project$rome$$romefrontend$fs$index_ts$createDirectory(
 				defaultVendorPath,
 			);
 			await this.declareProject({
-				projectFolder: defaultVendorPath,
+				projectDirectory: defaultVendorPath,
 				meta: ___R$project$rome$$romefrontend$project$types_ts$createDefaultProjectConfigMeta(),
 				config: vendorProjectConfig,
 			});
 			await this.server.memoryFs.watch(defaultVendorPath);
+		}
+
+		// Add a default project for virtual modules
+		// This will automatically be sent to workers
+		async injectVirtualModules() {
+			const projectDirectory = this.server.virtualModules.nullAbsolute;
+
+			const projectConfig = Object.assign(
+				{},
+				___R$project$rome$$romefrontend$project$types_ts$createDefaultProjectConfig(),
+				{name: "rome-virtual-modules"},
+			);
+
+			await this.declareProject({
+				projectDirectory,
+				meta: ___R$project$rome$$romefrontend$project$types_ts$createDefaultProjectConfigMeta(),
+				config: projectConfig,
+			});
 		}
 
 		handleDeleted(path) {
@@ -121128,13 +121711,13 @@ function ___R$$priv$project$rome$$romefrontend$core$server$project$ProjectManage
 			// Format of uids will be <PROJECT_NAME>/<PACKAGE_NAME>/<RELATIVE>
 			const parts = [];
 
-			let root = project.folder;
+			let root = project.directory;
 
 			// Push on parent package names
 			let targetPackagePath = path;
 			while (true) {
 				const pkg = this.server.memoryFs.getOwnedManifest(targetPackagePath);
-				if (pkg === undefined || pkg.folder.equal(project.folder)) {
+				if (pkg === undefined || pkg.directory.equal(project.directory)) {
 					break;
 				} else {
 					const name = ___R$project$rome$$romefrontend$codec$js$manifest$name_ts$manifestNameToString(
@@ -121144,10 +121727,10 @@ function ___R$$priv$project$rome$$romefrontend$core$server$project$ProjectManage
 						parts.unshift(name);
 
 						if (targetPackagePath === path) {
-							root = pkg.folder;
+							root = pkg.directory;
 						}
 					}
-					targetPackagePath = pkg.folder.getParent();
+					targetPackagePath = pkg.directory.getParent();
 				}
 			}
 
@@ -121178,7 +121761,7 @@ function ___R$$priv$project$rome$$romefrontend$core$server$project$ProjectManage
 				project: project.id,
 				real: path,
 				manifest: pkg === undefined ? undefined : pkg.id,
-				relative: project.folder.relative(path).assertRelative(),
+				relative: project.directory.relative(path).assertRelative(),
 				remote: this.localPathToRemote.has(path),
 			};
 		}
@@ -121268,7 +121851,7 @@ function ___R$$priv$project$rome$$romefrontend$core$server$project$ProjectManage
 					projects: [
 						{
 							id: evictProjectId,
-							folder: project.folder.join(),
+							directory: project.directory.join(),
 							config: undefined,
 						},
 					],
@@ -121288,11 +121871,11 @@ function ___R$$priv$project$rome$$romefrontend$core$server$project$ProjectManage
 
 			// Delete the project from 'our internal map
 			this.projects.delete(evictProjectId);
-			this.projectFolderToProject.delete(project.folder);
+			this.projectDirectoryToProject.delete(project.directory);
 
 			// Evict all files that belong to this project and delete their project mapping
 			const ownedFiles = [];
-			for (const path of this.server.memoryFs.glob(project.folder)) {
+			for (const path of this.server.memoryFs.glob(project.directory)) {
 				this.handleDeleted(path);
 				ownedFiles.push(path);
 			}
@@ -121301,7 +121884,7 @@ function ___R$$priv$project$rome$$romefrontend$core$server$project$ProjectManage
 			);
 
 			// Tell the MemoryFileSystem to stop watching and clear it's maps
-			this.server.memoryFs.unwatch(project.folder);
+			this.server.memoryFs.unwatch(project.directory);
 		}
 
 		getProjects() {
@@ -121373,22 +121956,22 @@ function ___R$$priv$project$rome$$romefrontend$core$server$project$ProjectManage
 		}
 
 		addDiskProject(opts) {
-			const {projectFolder, configPath} = opts;
+			const {projectDirectory, configPath} = opts;
 
 			return this.projectLoadingLocks.wrapLock(
-				projectFolder,
+				projectDirectory,
 				async () => {
-					if (this.hasLoadedProjectFolder(projectFolder)) {
+					if (this.hasLoadedProjectDirectory(projectDirectory)) {
 						return;
 					}
 
 					const {config, meta} = await ___R$project$rome$$romefrontend$project$load_ts$loadCompleteProjectConfig(
-						projectFolder,
+						projectDirectory,
 						configPath,
 					);
 
 					await this.declareProject({
-						projectFolder: opts.projectFolder,
+						projectDirectory: opts.projectDirectory,
 						meta,
 						config,
 					});
@@ -121398,7 +121981,7 @@ function ___R$$priv$project$rome$$romefrontend$core$server$project$ProjectManage
 
 		async declareProject(
 			{
-				projectFolder,
+				projectDirectory,
 				meta,
 				config,
 			},
@@ -121410,19 +121993,21 @@ function ___R$$priv$project$rome$$romefrontend$core$server$project$ProjectManage
 						"Conflicting project name " +
 						config.name +
 						". " +
-						projectFolder.join() +
+						projectDirectory.join() +
 						" and " +
-						project.folder.join(),
+						project.directory.join(),
 					);
 				}
 			}
 
 			// Declare the project
-			const parentProject = this.findProjectExisting(projectFolder.getParent());
+			const parentProject = this.findProjectExisting(
+				projectDirectory.getParent(),
+			);
 			const project = {
 				config,
 				meta,
-				folder: projectFolder,
+				directory: projectDirectory,
 				id: this.projectIdCounter++,
 				packages: new Map(),
 				manifests: new Map(),
@@ -121431,7 +122016,7 @@ function ___R$$priv$project$rome$$romefrontend$core$server$project$ProjectManage
 			};
 
 			this.projects.set(project.id, project);
-			this.projectFolderToProject.set(projectFolder, project);
+			this.projectDirectoryToProject.set(projectDirectory, project);
 
 			if (parentProject !== undefined) {
 				parentProject.children.add(project);
@@ -121503,7 +122088,7 @@ function ___R$$priv$project$rome$$romefrontend$core$server$project$ProjectManage
 						project.config,
 					),
 					id: project.id,
-					folder: project.folder.join(),
+					directory: project.directory.join(),
 				});
 
 				for (const def of project.manifests.values()) {
@@ -121554,8 +122139,8 @@ function ___R$$priv$project$rome$$romefrontend$core$server$project$ProjectManage
 			}
 		}
 
-		hasLoadedProjectFolder(path) {
-			return this.projectFolderToProject.has(path);
+		hasLoadedProjectDirectory(path) {
+			return this.projectDirectoryToProject.has(path);
 		}
 
 		// Convenience method to get the project config and pass it to the file handler class
@@ -121606,8 +122191,8 @@ function ___R$$priv$project$rome$$romefrontend$core$server$project$ProjectManage
 					path.join() +
 					" only have " +
 					Array.from(
-						this.projectFolderToProject.keys(),
-						(folder) => folder.join(),
+						this.projectDirectoryToProject.keys(),
+						(directory) => directory.join(),
 					).join(", "),
 				);
 			}
@@ -121616,7 +122201,7 @@ function ___R$$priv$project$rome$$romefrontend$core$server$project$ProjectManage
 
 		findProjectExisting(path) {
 			for (const dir of path.getChain()) {
-				const project = this.projectFolderToProject.get(dir);
+				const project = this.projectDirectoryToProject.get(dir);
 				if (project !== undefined) {
 					return project;
 				}
@@ -121850,7 +122435,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$WorkerManager_ts$child =
 
 				for (const {filename, content} of buffers) {
 					await newWorker.bridge.updateBuffer.call({
-						file: this.server.projectManager.getTransportFileReference(
+						ref: this.server.projectManager.getTransportFileReference(
 							___R$project$rome$$romefrontend$path$index_ts$createAbsoluteFilePath(
 								filename,
 							),
@@ -122139,7 +122724,7 @@ function ___R$project$rome$$romefrontend$core$server$fs$resolverSuggest_ts$defau
 
 				if (resolved.type === "FOUND") {
 					validPlatforms.push(
-						___R$project$rome$$romefrontend$string$markup$escape_ts$markup`<emphasis>${PLATFORM}</emphasis> at <filelink emphasis target="${resolved.ref.uid}" />`,
+						___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<emphasis>${PLATFORM}</emphasis> at <filelink emphasis target="${resolved.ref.uid}" />`,
 					);
 				}
 			}
@@ -122154,7 +122739,7 @@ function ___R$project$rome$$romefrontend$core$server$fs$resolverSuggest_ts$defau
 					advice.push({
 						type: "log",
 						category: "info",
-						text: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`No module found for the platform <emphasis>${query.platform}</emphasis> but we found these others`,
+						text: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`No module found for the platform <emphasis>${query.platform}</emphasis> but we found these others`,
 					});
 				}
 
@@ -122197,7 +122782,7 @@ function ___R$project$rome$$romefrontend$core$server$fs$resolverSuggest_ts$defau
 					localQuery,
 				);
 				if (suggestions.size > 0) {
-					const originFolder = resolver.getOriginFolder(localQuery);
+					const originDirectory = resolver.getOriginDirectory(localQuery);
 
 					// Relative paths to absolute
 					const relativeToAbsolute = new Map();
@@ -122210,7 +122795,7 @@ function ___R$project$rome$$romefrontend$core$server$fs$resolverSuggest_ts$defau
 								return human;
 							}
 
-							let relativePath = originFolder.relative(absolute);
+							let relativePath = originDirectory.relative(absolute);
 
 							// If the user didn't use extensions, then neither should we
 							if (!query.source.hasExtensions()) {
@@ -122238,7 +122823,7 @@ function ___R$project$rome$$romefrontend$core$server$fs$resolverSuggest_ts$defau
 										throw new Error("Should be valid");
 									}
 
-									return ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`<filelink target="${absolute}">${relative}</filelink>`;
+									return ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`<filelink target="${absolute}">${relative}</filelink>`;
 								},
 							},
 						),
@@ -122289,14 +122874,14 @@ function ___R$project$rome$$romefrontend$core$server$fs$resolverSuggest_ts$defau
 		query,
 	) {
 		const {source} = query;
-		const originFolder = resolver.getOriginFolder(query);
+		const originDirectory = resolver.getOriginDirectory(query);
 		const suggestions = new Map();
 
 		// Try normal resolved
 		___R$$priv$project$rome$$romefrontend$core$server$fs$resolverSuggest_ts$tryPathSuggestions(
 			resolver,
 			suggestions,
-			originFolder.resolve(source),
+			originDirectory.resolve(source),
 		);
 
 		// Remove . and .. entries from beginning
@@ -122307,11 +122892,12 @@ function ___R$project$rome$$romefrontend$core$server$fs$resolverSuggest_ts$defau
 
 		// Try parent directories of the origin
 
-		for (const path of originFolder.getChain()) {
+		for (const path of originDirectory.getChain()) {
+			var ___R$;
 			___R$$priv$project$rome$$romefrontend$core$server$fs$resolverSuggest_ts$tryPathSuggestions(
 				resolver,
 				suggestions,
-				path.append(sourceParts),
+				(___R$ = path, ___R$.appendList.apply(___R$, [...sourceParts])),
 			);
 		}
 
@@ -122371,12 +122957,14 @@ function ___R$project$rome$$romefrontend$core$server$fs$resolverSuggest_ts$defau
 				);
 
 				for (const rating of ratings) {
+					var ___R$1;
 					___R$$priv$project$rome$$romefrontend$core$server$fs$resolverSuggest_ts$tryPathSuggestions(
 						resolver,
 						suggestions,
-						___R$project$rome$$romefrontend$path$index_ts$createUnknownFilePath(
+						(___R$1 = ___R$project$rome$$romefrontend$path$index_ts$createUnknownFilePath(
 							rating.target,
-						).append(segments.slice(1)).assertAbsolute(),
+						),
+						___R$1.appendList.apply(___R$1, [...segments.slice(1)])).assertAbsolute(),
 					);
 				}
 			}
@@ -122399,7 +122987,7 @@ function ___R$project$rome$$romefrontend$core$server$fs$resolverSuggest_ts$defau
 
 			for (const project of projects) {
 				for (const [name, value] of project.packages) {
-					possibleGlobalPackages.set(name, value.folder.join());
+					possibleGlobalPackages.set(name, value.directory.join());
 				}
 			}
 		}
@@ -122623,7 +123211,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$Resolver_ts$https = r
 			};
 		}
 
-		// TODO check for folder aliases
+		// TODO check for directory aliases
 		return undefined;
 	}
 
@@ -122906,7 +123494,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$Resolver_ts$https = r
 			};
 		}
 
-		getOriginFolder(query) {
+		getOriginDirectory(query) {
 			const {memoryFs} = this.server;
 			const {origin} = query;
 
@@ -122921,8 +123509,8 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$Resolver_ts$https = r
 			const {memoryFs} = this.server;
 
 			// Resolve the path heiarchy
-			const originFolder = this.getOriginFolder(query);
-			const resolvedOrigin = originFolder.resolve(query.source);
+			const originDirectory = this.getOriginDirectory(query);
+			const resolvedOrigin = originDirectory.resolve(query.source);
 
 			// Check if this is an absolute filename
 			if (memoryFs.isFile(resolvedOrigin)) {
@@ -122960,9 +123548,9 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$Resolver_ts$https = r
 				}
 			}
 
-			// check if this is a folder
+			// check if this is a directory
 			if (memoryFs.isDirectory(resolvedOrigin)) {
-				if (query.requestedType === "folder") {
+				if (query.requestedType === "directory") {
 					return this.finishResolverQueryResponse(resolvedOrigin, types);
 				}
 
@@ -123024,7 +123612,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$Resolver_ts$https = r
 			return ___R$$priv$project$rome$$romefrontend$core$server$fs$Resolver_ts$QUERY_RESPONSE_MISSING;
 		}
 
-		resolvePackageFolder(query, moduleName) {
+		resolvePackageDirectory(query, moduleName) {
 			// Find the project
 			const project = this.server.projectManager.findProjectExisting(
 				query.origin,
@@ -123049,11 +123637,12 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$Resolver_ts$https = r
 		}
 
 		resolvePackage(query, moduleName, moduleNameParts) {
-			const manifestDef = this.resolvePackageFolder(query, moduleName);
+			const manifestDef = this.resolvePackageDirectory(query, moduleName);
 			return this.resolveManifest(query, manifestDef, moduleNameParts);
 		}
 
 		resolveManifest(query, manifestDef, moduleNameParts) {
+			var ___R$;
 			if (manifestDef === undefined) {
 				return ___R$$priv$project$rome$$romefrontend$core$server$fs$Resolver_ts$QUERY_RESPONSE_MISSING;
 			}
@@ -123084,7 +123673,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$Resolver_ts$https = r
 						Object.assign(
 							{},
 							query,
-							{source: manifestDef.folder.append(alias.value)},
+							{source: manifestDef.directory.append(alias.value)},
 						),
 						true,
 						["package"],
@@ -123101,7 +123690,10 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$Resolver_ts$https = r
 				Object.assign(
 					{},
 					query,
-					{source: manifestDef.folder.append(moduleNameParts)},
+					{
+						source: (___R$ = manifestDef.directory,
+						___R$.appendList.apply(___R$, [...moduleNameParts])),
+					},
 				),
 				true,
 				["package"],
@@ -123165,9 +123757,9 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$Resolver_ts$https = r
 			const project = this.server.projectManager.findProjectExisting(origin);
 
 			// Get all the parent directories for when we crawl up
-			const parentDirectories = this.getOriginFolder(query).getChain();
+			const parentDirectories = this.getOriginDirectory(query).getChain();
 
-			// If mocks are enabled for this query then check all parent mocks folder
+			// If mocks are enabled for this query then check all parent mocks directory
 			if (query.mocks === true) {
 				const mockResolved = this.resolveMock(query, project, parentDirectories);
 				if (
@@ -123183,13 +123775,19 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$Resolver_ts$https = r
 			const [moduleName, moduleNameParts] = this.splitModuleName(source);
 
 			// Resolve a virtual module
-			const virtualResolved = this.server.virtualModules.resolve(moduleName);
+			const virtualResolved = this.server.virtualModules.resolvePossibleVirtualModuleName(
+				moduleName,
+			);
 			if (virtualResolved !== undefined) {
+				var ___R$1;
 				return this.resolvePath(
 					Object.assign(
 						{},
 						query,
-						{source: virtualResolved.append(moduleNameParts)},
+						{
+							source: (___R$1 = virtualResolved,
+							___R$1.appendList.apply(___R$1, [...moduleNameParts])),
+						},
 					),
 					true,
 					["virtual"],
@@ -123421,8 +124019,8 @@ class ___R$project$rome$$romefrontend$core$common$utils$Logger_ts$default
 					format: "markup",
 					features: Object.assign(
 						{},
-						___R$project$rome$$romefrontend$environment$index_ts$TERMINAL_FEATURES_DEFAULT,
-						{columns: Infinity},
+						___R$project$rome$$romefrontend$cli$environment$index_ts$DEFAULT_TERMINAL_FEATURES,
+						{columns: undefined},
 					),
 					write,
 				},
@@ -123490,17 +124088,17 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 		}
 
 		// If a manifest is in node_modules, then make sure we're directly inside
-		// a folder in node_modules.
+		// a directory in node_modules.
 		//
 		// For unscoped package, the segments should be:
 		//   -1: package.json
-		//   -2: module folder
+		//   -2: module directory
 		//   -3: node_modules
 		//
 		// For scoped package (@scope/some-module), the segments should be:
 		//   -1: package.json
-		//   -2: module folder
-		//   -3: scope folder
+		//   -2: module directory
+		//   -3: scope directory
 		//   -4: node_modules
 		const segments = path.getSegments();
 		if (segments.includes("node_modules")) {
@@ -123532,23 +124130,23 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 	async function ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$createWatcher(
 		memoryFs,
 		diagnostics,
-		projectFolder,
+		projectDirectory,
 	) {
 		const {logger} = memoryFs.server;
-		const projectFolderMarkup =
-			"<emphasis>" + projectFolder.toMarkup() + "</emphasis>";
+		const projectDirectoryMarkup =
+			"<emphasis>" + projectDirectory.toMarkup() + "</emphasis>";
 
 		// Create activity spinners for all connected reporters
 		const activity = memoryFs.server.connectedReporters.progress({
 			initDelay: 1_000,
-			title: "Adding project " + projectFolderMarkup,
+			title: "Adding project " + projectDirectoryMarkup,
 		});
 
 		const watchers = new ___R$project$rome$$romefrontend$path$collections_ts$AbsoluteFilePathMap();
 
 		try {
-			function onFoundDirectory(folderPath) {
-				if (watchers.has(folderPath)) {
+			function onFoundDirectory(directoryPath) {
+				if (watchers.has(directoryPath)) {
 					return;
 				}
 
@@ -123557,18 +124155,18 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 				if (process.platform === "linux") {
 					// Node on Linux doesn't support recursive directory watching so we need an fs.watch for every directory...
 					recursive = false;
-				} else if (!folderPath.equal(projectFolder)) {
-					// If we're on any other platform then only watch the root project folder
+				} else if (!directoryPath.equal(projectDirectory)) {
+					// If we're on any other platform then only watch the root project directory
 					return;
 				}
 
 				const watcher = ___R$project$rome$$romefrontend$fs$index_ts$watch(
-					folderPath,
+					directoryPath,
 					{recursive, persistent: false},
 					(eventType, filename) => {
 						memoryFs.server.logger.info(
 							"[MemoryFileSystem] Raw fs.watch event in <emphasis>" +
-							folderPath.toMarkup() +
+							directoryPath.toMarkup() +
 							"</emphasis> type " +
 							eventType +
 							" for " +
@@ -123581,21 +124179,21 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 						}
 
 						memoryFs.refreshPath(
-							folderPath.resolve(filename),
+							directoryPath.resolve(filename),
 							{onFoundDirectory},
 							"Processing fs.watch changes",
 						);
 					},
 				);
-				watchers.set(folderPath, watcher);
+				watchers.set(directoryPath, watcher);
 			}
 
-			// No need to call watch() on the projectFolder since it will call us
+			// No need to call watch() on the projectDirectory since it will call us
 
 			// Perform an initial crawl
-			const stats = await memoryFs.hardStat(projectFolder);
+			const stats = await memoryFs.hardStat(projectDirectory);
 			await memoryFs.addDirectory(
-				projectFolder,
+				projectDirectory,
 				stats,
 				{
 					diagnostics,
@@ -123605,9 +124203,9 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 			);
 			logger.info(
 				"[MemoryFileSystem] Finished initial crawl for <emphasis>" +
-				projectFolder.toMarkup() +
+				projectDirectory.toMarkup() +
 				"</emphasis> - added <number>" +
-				memoryFs.countFiles(projectFolder) +
+				memoryFs.countFiles(projectDirectory) +
 				"</number> files",
 			);
 		} finally {
@@ -123644,7 +124242,40 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 			});
 		}
 
-		init() {}
+		async init() {
+			await this.injectVirtualModules();
+		}
+
+		// Inject virtual modules so they are discoverable
+		async injectVirtualModules() {
+			const files = this.server.virtualModules.getStatMap();
+
+			for (const [path, {stats, content}] of files) {
+				if (stats.type === "directory") {
+					this.directories.set(path, stats);
+				} else {
+					this.files.set(path, stats);
+					this.addFileToDirectoryListing(path);
+
+					if (
+						___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$isValidManifest(
+							path,
+						)
+					) {
+						await this.declareManifest({
+							content,
+							diagnostics: this.server.createDisconnectedDiagnosticsProcessor([]),
+							dirname: path.getParent(),
+							path,
+						});
+					}
+				}
+			}
+		}
+
+		hasBuffer(path) {
+			return this.buffers.has(path);
+		}
 
 		addBuffer(path, content) {
 			this.buffers.set(
@@ -123757,9 +124388,9 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 		}
 
 		async handleDeletion(path) {
-			// If a folder then evict all children
-			const folderInfo = this.directories.get(path);
-			if (folderInfo !== undefined) {
+			// If a directory then evict all children
+			const directoryInfo = this.directories.get(path);
+			if (directoryInfo !== undefined) {
 				this.directories.delete(path);
 
 				const listing = this.directoryListings.get(path);
@@ -123778,7 +124409,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 			);
 
 			// Only emit these events for files
-			if (folderInfo === undefined) {
+			if (directoryInfo === undefined) {
 				await this.deletedFileEvent.call(path);
 				this.server.refreshFileEvent.send(path);
 			}
@@ -123801,17 +124432,17 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 		}
 
 		handleDeletedManifest(path) {
-			const folder = path.getParent();
-			const def = this.manifests.get(folder);
+			const directory = path.getParent();
+			const def = this.manifests.get(directory);
 			if (def !== undefined) {
-				this.manifests.delete(folder);
+				this.manifests.delete(directory);
 			}
 		}
 
-		async waitIfInitializingWatch(projectFolderPath) {
-			// Defer if we're initializing a parent folder
+		async waitIfInitializingWatch(projectDirectoryPath) {
+			// Defer if we're initializing a parent directory
 			for (const [path, promise] of this.watchPromises) {
-				if (projectFolderPath.isRelativeTo(path)) {
+				if (projectDirectoryPath.isRelativeTo(path)) {
 					await promise;
 					return;
 				}
@@ -123819,34 +124450,35 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 
 			// Wait if we're initializing descendents
 			for (const [path, promise] of this.watchPromises) {
-				if (path.isRelativeTo(projectFolderPath)) {
+				if (path.isRelativeTo(projectDirectoryPath)) {
 					await promise;
 				}
 			}
 		}
 
-		async watch(projectFolder) {
+		async watch(projectDirectory) {
 			const {logger} = this.server;
-			const folderLink = "<emphasis>" + projectFolder.toMarkup() + "</emphasis>";
+			const directoryLink =
+				"<emphasis>" + projectDirectory.toMarkup() + "</emphasis>";
 
 			// Defer if we're already currently initializing this project
-			const cached = this.watchPromises.get(projectFolder);
+			const cached = this.watchPromises.get(projectDirectory);
 			if (cached !== undefined) {
 				await cached;
 				return undefined;
 			}
 
-			// Check if we're already watching this folder
-			if (this.watchers.has(projectFolder)) {
+			// Check if we're already watching this directory
+			if (this.watchers.has(projectDirectory)) {
 				return undefined;
 			}
 
 			// Check if we're already watching a parent directory
 			for (const {path} of this.watchers.values()) {
-				if (projectFolder.isRelativeTo(path)) {
+				if (projectDirectory.isRelativeTo(path)) {
 					logger.info(
 						"[MemoryFileSystem] Skipped crawl for " +
-						folderLink +
+						directoryLink +
 						" because we're already watching the parent directory " +
 						path.join(),
 					);
@@ -123855,14 +124487,16 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 			}
 
 			// Wait for other initializations
-			await this.waitIfInitializingWatch(projectFolder);
+			await this.waitIfInitializingWatch(projectDirectory);
 
 			// New watch target
-			logger.info("[MemoryFileSystem] Adding new project folder " + folderLink);
+			logger.info(
+				"[MemoryFileSystem] Adding new project directory " + directoryLink,
+			);
 
-			// Remove watchers that are descedents of this folder as this watcher will handle them
+			// Remove watchers that are descedents of this directory as this watcher will handle them
 			for (const [loc, {close, path}] of this.watchers) {
-				if (path.isRelativeTo(projectFolder)) {
+				if (path.isRelativeTo(projectDirectory)) {
 					this.watchers.delete(loc);
 					close();
 				}
@@ -123872,28 +124506,28 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 				origins: [
 					{
 						category: "memory-fs",
-						message: "Crawling project folder",
+						message: "Crawling project directory",
 					},
 				],
 			});
 
-			logger.info("[MemoryFileSystem] Watching " + folderLink);
+			logger.info("[MemoryFileSystem] Watching " + directoryLink);
 			const promise = ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$createWatcher(
 				this,
 				diagnostics,
-				projectFolder,
+				projectDirectory,
 			);
-			this.watchPromises.set(projectFolder, promise);
+			this.watchPromises.set(projectDirectory, promise);
 
 			const watcherClose = await promise;
 			this.watchers.set(
-				projectFolder,
+				projectDirectory,
 				{
-					path: projectFolder,
+					path: projectDirectory,
 					close: watcherClose,
 				},
 			);
-			this.watchPromises.delete(projectFolder);
+			this.watchPromises.delete(projectDirectory);
 
 			diagnostics.maybeThrowDiagnosticsError();
 		}
@@ -123991,7 +124625,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 		// This is a wrapper around _declareManifest as it can produce diagnostics
 		async declareManifest(opts) {
 			const {diagnostics} = await ___R$project$rome$$romefrontend$diagnostics$wrap_ts$catchDiagnostics(() => {
-				return this._declareManifest(opts);
+				return this.declareManifestWithPossibleDiagnosticsThrow(opts);
 			});
 
 			if (diagnostics !== undefined) {
@@ -123999,16 +124633,18 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 			}
 		}
 
-		async _declareManifest(
+		async declareManifestWithPossibleDiagnosticsThrow(
 			{
 				path,
 				diagnostics,
+				content,
 			},
 		) {
 			// Fetch the manifest
-			const manifestRaw = await ___R$project$rome$$romefrontend$fs$index_ts$readFileText(
-				path,
-			);
+			const manifestRaw =
+				content === undefined
+					? await ___R$project$rome$$romefrontend$fs$index_ts$readFileText(path)
+					: content;
 			const hash = ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$crypto.createHash(
 				"sha256",
 			).update(manifestRaw).digest("hex");
@@ -124033,18 +124669,18 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 				return;
 			}
 
-			const folder = path.getParent();
+			const directory = path.getParent();
 			const manifestId = this.manifestCounter++;
 			const def = {
 				id: manifestId,
 				path,
-				folder,
+				directory,
 				consumer,
 				manifest,
 				hash,
 			};
 
-			this.manifests.set(folder, def);
+			this.manifests.set(directory, def);
 
 			// If we aren't in node_modules then this is a project package
 			const isProjectPackage = this.isInsideProject(path);
@@ -124057,7 +124693,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 				)
 			) {
 				await projectManager.addDiskProject({
-					projectFolder: folder,
+					projectDirectory: directory,
 					configPath: path,
 				});
 			}
@@ -124149,7 +124785,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 					continue;
 				}
 
-				// Crawl if we're a folder
+				// Crawl if we're a directory
 				// NOTE: We still continue crawling on implicit matches
 				const listing = this.directoryListings.get(path);
 				if (listing !== undefined) {
@@ -124157,22 +124793,22 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 					continue;
 				}
 
-				// TODO maybe throw? not a file or folder, doesn't exist!
+				// TODO maybe throw? not a file or directory, doesn't exist!
 			}
 
 			return paths;
 		}
 
-		getAllFilesInFolder(folder) {
+		getAllFilesInDirectory(directory) {
 			let files = [];
 
-			const listing = this.directoryListings.get(folder);
+			const listing = this.directoryListings.get(directory);
 			if (listing !== undefined) {
 				for (const file of listing.keys()) {
 					if (this.files.has(file)) {
 						files.push(file);
 					} else {
-						files = files.concat(this.getAllFilesInFolder(file));
+						files = files.concat(this.getAllFilesInDirectory(file));
 					}
 				}
 			}
@@ -124180,10 +124816,10 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 			return files;
 		}
 
-		countFiles(folder) {
+		countFiles(directory) {
 			let count = 0;
 
-			const listing = this.directoryListings.get(folder);
+			const listing = this.directoryListings.get(directory);
 			if (listing !== undefined) {
 				for (const file of listing.keys()) {
 					count++;
@@ -124199,30 +124835,30 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 			return oldStats === undefined || newStats.mtime !== oldStats.mtime;
 		}
 
-		async addDirectory(folderPath, stats, opts) {
-			if (!this.hasStatsChanged(folderPath, stats)) {
+		async addDirectory(directoryPath, stats, opts) {
+			if (!this.hasStatsChanged(directoryPath, stats)) {
 				return false;
 			}
 
-			// Check if this folder has been ignored
-			if (this.isIgnored(folderPath, "directory")) {
+			// Check if this directory has been ignored
+			if (this.isIgnored(directoryPath, "directory")) {
 				return false;
 			}
 
 			if (opts.tick !== undefined) {
-				opts.tick(folderPath);
+				opts.tick(directoryPath);
 			}
 
-			this.addFileToDirectoryListing(folderPath);
-			this.directories.set(folderPath, stats);
+			this.addFileToDirectoryListing(directoryPath);
+			this.directories.set(directoryPath, stats);
 
 			if (opts.onFoundDirectory !== undefined) {
-				opts.onFoundDirectory(folderPath);
+				opts.onFoundDirectory(directoryPath);
 			}
 
-			// Crawl the folder
+			// Crawl the directory
 			const files = await ___R$project$rome$$romefrontend$fs$index_ts$readDirectory(
-				folderPath,
+				directoryPath,
 			);
 
 			// Declare the file
@@ -124258,13 +124894,13 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 			}
 
 			// If we're still performing an initial crawl of any path higher in the tree then we don't know if it exists yet
-			for (const projectFolder of this.watchPromises.keys()) {
-				if (path.isRelativeTo(projectFolder)) {
+			for (const projectDirectory of this.watchPromises.keys()) {
+				if (path.isRelativeTo(projectDirectory)) {
 					return undefined;
 				}
 			}
 
-			// if we're watching the parent folder then we'd have it in our cache if it existed
+			// if we're watching the parent directory then we'd have it in our cache if it existed
 			const parent = path.getParent();
 			if (this.directories.has(parent)) {
 				return false;
@@ -124355,7 +124991,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 				)
 			) {
 				await projectManager.addDiskProject({
-					projectFolder: dirname,
+					projectDirectory: dirname,
 					configPath: path,
 				});
 			}
@@ -124366,6 +125002,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 				)
 			) {
 				await this.declareManifest({
+					content: undefined,
 					diagnostics: opts.diagnostics,
 					dirname,
 					path,
@@ -124418,16 +125055,30 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 
 	class ___R$project$rome$$romefrontend$core$server$Cache_ts$default {
 		constructor(server) {
+			let disabled = false;
+			if (
+				___R$project$rome$$romefrontend$cli$environment$index_ts$getEnvVar(
+					"ROME_DEV",
+				).type ===
+				"ENABLED"
+			) {
+				disabled = true;
+			}
+			if (
+				___R$project$rome$$romefrontend$cli$environment$index_ts$getEnvVar(
+					"ROME_CACHE",
+				).type ===
+				"DISABLED"
+			) {
+				disabled = true;
+			}
+			if (server.options.forceCacheEnabled) {
+				disabled = false;
+			}
+
 			this.server = server;
 			this.loadedEntries = new ___R$project$rome$$romefrontend$path$collections_ts$AbsoluteFilePathMap();
-			this.disabled =
-				!server.options.forceCacheEnabled &&
-				(___R$project$rome$$romefrontend$environment$index_ts$getEnvVar(
-					"ROME_CACHE",
-				).type === "ENABLED" ||
-				___R$project$rome$$romefrontend$environment$index_ts$getEnvVar(
-					"ROME_DEV",
-				).type === "ENABLED");
+			this.disabled = disabled;
 			this.cachePath = server.userConfig.cachePath;
 
 			this.runningWritePromise = undefined;
@@ -124469,6 +125120,9 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 			const filelinks = [];
 			for (const [path, entry] of pendingWrites) {
 				filelinks.push(path.toMarkup());
+				await ___R$project$rome$$romefrontend$fs$index_ts$createDirectory(
+					path.getParent(),
+				);
 				await ___R$project$rome$$romefrontend$fs$index_ts$writeFile(
 					path,
 					___R$project$rome$$romefrontend$codec$json$index_ts$stringifyJSON(
@@ -124520,7 +125174,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 
 			const entry = {
 				version: ___R$project$rome$$romefrontend$core$common$constants_ts$VERSION,
-				projectDir: project.folder.join(),
+				projectDir: project.directory.join(),
 				configHash: configHashes.join(";"),
 				mtime: memoryFs.getMtime(path),
 				compile: {},
@@ -124615,7 +125269,6 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 
 			const entry = Object.assign({}, currEntry, partialEntry);
 
-			// TODO should batch these and write during idle time
 			const cacheFilename = this.getCacheFilename(path);
 			this.loadedEntries.set(path, entry);
 
@@ -124623,9 +125276,13 @@ const ___R$$priv$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$c
 				return;
 			}
 
-			await ___R$project$rome$$romefrontend$fs$index_ts$createDirectory(
-				cacheFilename.getParent(),
-			);
+			// If we have a file buffer then there's no point at all in writing this cache file
+			// Since it will have an mtime that doesn't exist on disk, and will never be validated
+			// if the server is restarted.
+			if (this.server.memoryFs.hasBuffer(path)) {
+				return;
+			}
+
 			this.addPendingWrite(cacheFilename, entry);
 		}
 	}
@@ -124691,83 +125348,142 @@ class ___R$project$rome$$romefrontend$core$server$ServerReporter_ts$default
 	}
 
 
-  // project-rome/@romefrontend/core/server/fs/runtime-modules.ts
-const ___R$project$rome$$romefrontend$core$server$fs$runtime$modules_ts$modules = new Map();
+  // project-rome/@romefrontend/core/common/virtual-modules.ts
+const ___R$project$rome$$romefrontend$core$common$virtual$modules_ts$modules = new Map();
 
-	// EVERYTHING BELOW IS AUTOGENERATED. SEE SCRIPTS FOLDER FOR UPDATE SCRIPTS
-	___R$project$rome$$romefrontend$core$server$fs$runtime$modules_ts$modules.set(
+	// EVERYTHING BELOW IS AUTOGENERATED. SEE SCRIPTS FOLDER FOR UPDATE SCRIPTS hash(95c857b5c60c5d987ee5ab2129bb8340a774f712)
+	___R$project$rome$$romefrontend$core$common$virtual$modules_ts$modules.set(
 		"rome",
 		new Map([
 			[
 				"index.ts",
-				'/**\n * Copyright (c) Facebook, Inc. and its affiliates.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE file in the root directory of this source tree.\n */\n\nexport {TestHelper, test, testOptions} from "./test";\n',
+				{
+					"mtime": 1_594_195_489_483.3164,
+					"content": '/**\n * Copyright (c) Facebook, Inc. and its affiliates.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE file in the root directory of this source tree.\n */\n\nexport {TestHelper, test, testOptions} from "./test";\n',
+				},
 			],
 			[
 				"package.json",
-				'{\n\t"name": "@romefrontend-runtime/rome",\n\t"type": "module",\n\t"private": true,\n\t"main": "index.ts"\n}\n',
+				{
+					"mtime": 1_594_195_489_483.4382,
+					"content": '{\n\t"name": "@romefrontend-runtime/rome",\n\t"type": "module",\n\t"private": true,\n\t"main": "index.ts"\n}\n',
+				},
 			],
 			[
 				"test.ts",
-				'/**\n * Copyright (c) Facebook, Inc. and its affiliates.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE file in the root directory of this source tree.\n */\n\nimport {JSONPropertyValue} from "./types";\n\nexport type AsyncFunc = () => void | undefined | Promise<void>;\n\nexport type SyncThrower = () => void;\n\nexport type ExpectedError = undefined | string | RegExp | Function;\n\nexport type TestSnapshotOptions = {\n\tfilename?: string;\n\tlanguage?: string;\n};\n\n// These diagnostics are subsets of the official diagnostics\n// We can potentially normalize these and ensure backwards compatibility with the official diagnostics\n\nexport type TestDiagnosticLogCategory = "none" | "info" | "warn" | "error";\n\nexport type TestDiagnosticAdviceInspect = {\n\ttype: "inspect";\n\tdata: JSONPropertyValue;\n};\n\nexport type TestDiagnosticAdviceList = {\n\ttype: "list";\n\tlist: Array<string>;\n};\n\nexport type TestDiagnosticAdviceCode = {\n\ttype: "code";\n\tcode: string;\n};\n\nexport type TestDiagnosticAdviceLog = {\n\ttype: "log";\n\tcategory: TestDiagnosticLogCategory;\n\ttext: string;\n};\n\nexport type TestDiagnosticAdviceItem =\n\t| TestDiagnosticAdviceInspect\n\t| TestDiagnosticAdviceCode\n\t| TestDiagnosticAdviceLog\n\t| TestDiagnosticAdviceList;\n\nexport interface TestHelper {\n\taddToAdvice(\n\t\titem: TestDiagnosticAdviceItem | (() => TestDiagnosticAdviceItem),\n\t): void;\n\tclearAdvice(): void;\n\tonTeardown(callback: AsyncFunc): void;\n\tclearTimeout(): void;\n\textendTimeout(time: number): void;\n\tsetTimeout(time: number): void;\n\tcheckTimeout(): void;\n\ttruthy(value: unknown, message?: string): void;\n\tfalsy(value: unknown, message?: string): void;\n\ttrue(value: unknown, message?: string): void;\n\tfalse(value: unknown, message?: string): void;\n\tis(received: unknown, expected: unknown, message?: string): void;\n\tnot(received: unknown, expected: unknown, message?: string): void;\n\tlooksLike(received: unknown, expected: unknown, message?: string): void;\n\tnotLooksLike(received: unknown, expected: unknown, message?: string): void;\n\tthrows(\n\t\tthrower: SyncThrower,\n\t\texpected?: ExpectedError,\n\t\tmessage?: string,\n\t): void;\n\tthrowsAsync(\n\t\tthrower: AsyncFunc,\n\t\texpected?: ExpectedError,\n\t\tmessage?: string,\n\t): Promise<void>;\n\tnotThrows(nonThrower: SyncThrower, message?: string): void;\n\tnotThrowsAsync(nonThrower: AsyncFunc, message?: string): Promise<void>;\n\tregex(contents: string, regex: RegExp, message?: string): void;\n\tnotRegex(contents: string, regex: RegExp, message?: string): void;\n\tsnapshot(\n\t\texpected: unknown,\n\t\tmessage?: string,\n\t\topts?: TestSnapshotOptions,\n\t): string;\n\tinlineSnapshot(received: unknown, expected?: string | boolean | number): void;\n\tnamedSnapshot(\n\t\tname: string,\n\t\texpected: unknown,\n\t\tmessage?: string,\n\t\topts?: TestSnapshotOptions,\n\t): string;\n}\n\nexport type TestName = string | Array<string>;\n\ndeclare const __ROME__TEST_OPTIONS__: GlobalTestOptions;\n\nexport type GlobalTestOptions =\n\t| undefined\n\t| {\n\t\t\tdirname?: string;\n\t\t\tregister?: (err: Error, opts: TestOptions, callback: TestCallback) => void;\n\t\t};\n\ntype NamelessTestOptions = {\n\ttimeout?: number;\n\tonly?: boolean;\n};\n\nexport type TestCallback = (t: TestHelper) => void | undefined | Promise<void>;\n\nexport type TestOptions = NamelessTestOptions & {\n\tname: TestName;\n};\n\ntype TestArg = TestName | NamelessTestOptions | TestCallback | undefined;\n\nexport const testOptions: NonNullable<GlobalTestOptions> =\n\t__ROME__TEST_OPTIONS__ === undefined ? {} : __ROME__TEST_OPTIONS__;\n\nfunction registerTest(\n\tcallsiteError: Error,\n\topts: TestOptions,\n\tcallback: TestCallback,\n) {\n\tconst register = testOptions.register;\n\n\tif (typeof register !== "function") {\n\t\tthrow new Error("Test harness does not exist");\n\t}\n\n\tregister(callsiteError, opts, callback);\n}\n\nfunction isOptionsObject(arg: TestArg): arg is NamelessTestOptions {\n\treturn typeof arg === "object" && arg != null && !Array.isArray(arg);\n}\n\nfunction splitArgs(\n\targs: TestRegisterFunctionArgs,\n): {\n\toptions: TestOptions;\n\tcallback: TestCallback;\n} {\n\tconst name = args.shift();\n\tif (typeof name !== "string" && !Array.isArray(name)) {\n\t\tthrow new Error("Expected test name to be a string or an array of strings");\n\t}\n\n\tconst callback = args.pop();\n\tif (typeof callback !== "function") {\n\t\tthrow new Error("Expected options callback");\n\t}\n\n\tconst options = args.pop();\n\tif (options !== undefined && !isOptionsObject(options)) {\n\t\tthrow new Error("Expected options object");\n\t}\n\n\tif (args.length > 0) {\n\t\tthrow new Error("Expected to have exhausted test register arguments");\n\t}\n\n\treturn {\n\t\toptions: {\n\t\t\t...options,\n\t\t\tname,\n\t\t},\n\t\tcallback,\n\t};\n}\n\ntype TestRegisterFunctionArgs =\n\t| [TestName, TestCallback]\n\t| [TestName, NamelessTestOptions, TestCallback];\n\ntype TestRegisterFunction = (...args: TestRegisterFunctionArgs) => void;\n\nexport const test: TestRegisterFunction & {\n\tonly: TestRegisterFunction;\n} = function(...args: TestRegisterFunctionArgs) {\n\tconst {options, callback} = splitArgs(args);\n\tregisterTest(new Error(), options, callback);\n};\n\ntest.only = function(...args: TestRegisterFunctionArgs) {\n\tconst {options, callback} = splitArgs(args);\n\tregisterTest(\n\t\tnew Error(),\n\t\t{\n\t\t\t...options,\n\t\t\tonly: true,\n\t\t},\n\t\tcallback,\n\t);\n};\n',
+				{
+					"mtime": 1_595_005_957_418.6194,
+					"content": '/**\n * Copyright (c) Facebook, Inc. and its affiliates.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE file in the root directory of this source tree.\n */\n\nimport {JSONPropertyValue} from "./types";\n\nexport type AsyncFunc = () => void | undefined | Promise<void>;\n\nexport type SyncThrower = () => void;\n\nexport type ExpectedError = undefined | string | RegExp | Function;\n\nexport type TestSnapshotOptions = {\n\tfilename?: string;\n\tlanguage?: string;\n};\n\n// These diagnostics are subsets of the official diagnostics\n// We can potentially normalize these and ensure backwards compatibility with the official diagnostics\n\nexport type TestDiagnosticLogCategory = "none" | "info" | "warn" | "error";\n\nexport type TestDiagnosticAdviceInspect = {\n\ttype: "inspect";\n\tdata: JSONPropertyValue;\n};\n\nexport type TestDiagnosticAdviceList = {\n\ttype: "list";\n\tlist: Array<string>;\n};\n\nexport type TestDiagnosticAdviceCode = {\n\ttype: "code";\n\tsourceText: string;\n};\n\nexport type TestDiagnosticAdviceLog = {\n\ttype: "log";\n\tcategory: TestDiagnosticLogCategory;\n\ttext: string;\n};\n\nexport type TestDiagnosticAdviceItem =\n\t| TestDiagnosticAdviceInspect\n\t| TestDiagnosticAdviceCode\n\t| TestDiagnosticAdviceLog\n\t| TestDiagnosticAdviceList;\n\nexport interface TestHelper {\n\taddToAdvice(\n\t\titem: TestDiagnosticAdviceItem | (() => TestDiagnosticAdviceItem),\n\t): void;\n\tclearAdvice(): void;\n\tonTeardown(callback: AsyncFunc): void;\n\tclearTimeout(): void;\n\textendTimeout(time: number): void;\n\tsetTimeout(time: number): void;\n\tcheckTimeout(): void;\n\ttruthy(value: unknown, message?: string): void;\n\tfalsy(value: unknown, message?: string): void;\n\ttrue(value: unknown, message?: string): void;\n\tfalse(value: unknown, message?: string): void;\n\tis(received: unknown, expected: unknown, message?: string): void;\n\tnot(received: unknown, expected: unknown, message?: string): void;\n\tlooksLike(received: unknown, expected: unknown, message?: string): void;\n\tnotLooksLike(received: unknown, expected: unknown, message?: string): void;\n\tthrows(\n\t\tthrower: SyncThrower,\n\t\texpected?: ExpectedError,\n\t\tmessage?: string,\n\t): void;\n\tthrowsAsync(\n\t\tthrower: AsyncFunc,\n\t\texpected?: ExpectedError,\n\t\tmessage?: string,\n\t): Promise<void>;\n\tnotThrows(nonThrower: SyncThrower, message?: string): void;\n\tnotThrowsAsync(nonThrower: AsyncFunc, message?: string): Promise<void>;\n\tregex(contents: string, regex: RegExp, message?: string): void;\n\tnotRegex(contents: string, regex: RegExp, message?: string): void;\n\tsnapshot(\n\t\texpected: unknown,\n\t\tmessage?: string,\n\t\topts?: TestSnapshotOptions,\n\t): string;\n\tinlineSnapshot(received: unknown, expected?: string | boolean | number): void;\n\tnamedSnapshot(\n\t\tname: string,\n\t\texpected: unknown,\n\t\tmessage?: string,\n\t\topts?: TestSnapshotOptions,\n\t): string;\n}\n\nexport type TestName = string | Array<string>;\n\ndeclare const __ROME__TEST_OPTIONS__: GlobalTestOptions;\n\nexport type GlobalTestOptions =\n\t| undefined\n\t| {\n\t\t\tdirname?: string;\n\t\t\tregister?: (err: Error, opts: TestOptions, callback: TestCallback) => void;\n\t\t};\n\ntype NamelessTestOptions = {\n\ttimeout?: number;\n\tonly?: boolean;\n};\n\nexport type TestCallback = (t: TestHelper) => void | undefined | Promise<void>;\n\nexport type TestOptions = NamelessTestOptions & {\n\tname: TestName;\n};\n\ntype TestArg = TestName | NamelessTestOptions | TestCallback | undefined;\n\nexport const testOptions: NonNullable<GlobalTestOptions> =\n\ttypeof __ROME__TEST_OPTIONS__ === "undefined" ? {} : __ROME__TEST_OPTIONS__;\n\nfunction registerTest(\n\tcallsiteError: Error,\n\topts: TestOptions,\n\tcallback: TestCallback,\n) {\n\tconst register = testOptions.register;\n\n\tif (typeof register !== "function") {\n\t\tthrow new Error("Test harness does not exist");\n\t}\n\n\tregister(callsiteError, opts, callback);\n}\n\nfunction isOptionsObject(arg: TestArg): arg is NamelessTestOptions {\n\treturn typeof arg === "object" && arg != null && !Array.isArray(arg);\n}\n\nfunction splitArgs(\n\targs: TestRegisterFunctionArgs,\n): {\n\toptions: TestOptions;\n\tcallback: TestCallback;\n} {\n\tconst name = args.shift();\n\tif (typeof name !== "string" && !Array.isArray(name)) {\n\t\tthrow new Error("Expected test name to be a string or an array of strings");\n\t}\n\n\tconst callback = args.pop();\n\tif (typeof callback !== "function") {\n\t\tthrow new Error("Expected options callback");\n\t}\n\n\tconst options = args.pop();\n\tif (options !== undefined && !isOptionsObject(options)) {\n\t\tthrow new Error("Expected options object");\n\t}\n\n\tif (args.length > 0) {\n\t\tthrow new Error("Expected to have exhausted test register arguments");\n\t}\n\n\treturn {\n\t\toptions: {\n\t\t\t...options,\n\t\t\tname,\n\t\t},\n\t\tcallback,\n\t};\n}\n\ntype TestRegisterFunctionArgs =\n\t| [TestName, TestCallback]\n\t| [TestName, NamelessTestOptions, TestCallback];\n\ntype TestRegisterFunction = (...args: TestRegisterFunctionArgs) => void;\n\nexport const test: TestRegisterFunction & {\n\tonly: TestRegisterFunction;\n} = function(...args: TestRegisterFunctionArgs) {\n\tconst {options, callback} = splitArgs(args);\n\tregisterTest(new Error(), options, callback);\n};\n\ntest.only = function(...args: TestRegisterFunctionArgs) {\n\tconst {options, callback} = splitArgs(args);\n\tregisterTest(\n\t\tnew Error(),\n\t\t{\n\t\t\t...options,\n\t\t\tonly: true,\n\t\t},\n\t\tcallback,\n\t);\n};\n',
+				},
 			],
 			[
 				"types.ts",
-				"/**\n * Copyright (c) Facebook, Inc. and its affiliates.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE file in the root directory of this source tree.\n */\n\n// These are copied from packages/@romefrontend/codec-json/types.ts\nexport type JSONValue =\n\t| null\n\t| string\n\t| number\n\t| boolean\n\t| JSONObject\n\t| JSONArray;\n\nexport type JSONPropertyValue = undefined | void | JSONValue;\n\nexport type JSONObject = {\n\t[x: string]: JSONPropertyValue;\n};\n\nexport type JSONArray = Array<JSONValue>;\n",
+				{
+					"mtime": 1_594_195_489_483.7175,
+					"content": "/**\n * Copyright (c) Facebook, Inc. and its affiliates.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE file in the root directory of this source tree.\n */\n\n// These are copied from packages/@romefrontend/codec-json/types.ts\nexport type JSONValue =\n\t| null\n\t| string\n\t| number\n\t| boolean\n\t| JSONObject\n\t| JSONArray;\n\nexport type JSONPropertyValue = undefined | void | JSONValue;\n\nexport type JSONObject = {\n\t[x: string]: JSONPropertyValue;\n};\n\nexport type JSONArray = Array<JSONValue>;\n",
+				},
 			],
 		]),
 	);
 
 
-  // project-rome/@romefrontend/core/server/fs/VirtualModules.ts
-class ___R$project$rome$$romefrontend$core$server$fs$VirtualModules_ts$default {
-		constructor(server) {
-			this.server = server;
-			this.runtimeModulesPath = server.userConfig.runtimeModulesPath;
+  // project-rome/@romefrontend/core/common/VirtualModules.ts
+class ___R$project$rome$$romefrontend$core$common$VirtualModules_ts$default {
+		constructor() {
+			// A NULL character isn't allowed in Windows or Unix file paths
+			// We abuse that to distinguish and represent virtual paths
+			this.nullAbsolute = ___R$project$rome$$romefrontend$path$index_ts$createAbsoluteFilePath(
+				"/\0",
+			);
+
+			this.statMap = new ___R$project$rome$$romefrontend$path$collections_ts$AbsoluteFilePathMap();
 		}
 
-		async init() {
-			const {runtimeModulesPath} = this;
+		init() {
+			const {statMap} = this;
 
-			// Materalize virtual files to disk
-			// We could technically keep these in memory and never materialize them but
-			// this way we can have something to point at on disk for errors etc
-			await ___R$project$rome$$romefrontend$fs$index_ts$createDirectory(
-				runtimeModulesPath,
-			);
-			for (const [name, files] of ___R$project$rome$$romefrontend$core$server$fs$runtime$modules_ts$modules) {
-				const modulePath = runtimeModulesPath.append(name);
-				await ___R$project$rome$$romefrontend$fs$index_ts$createDirectory(
-					modulePath,
-				);
-				for (const [basename, content] of files) {
-					await ___R$project$rome$$romefrontend$fs$index_ts$writeFile(
-						modulePath.append(basename),
-						content,
+			for (const [moduleName, files] of ___R$project$rome$$romefrontend$core$common$virtual$modules_ts$modules) {
+				for (const [subpath, {content, mtime}] of files) {
+					statMap.set(
+						this.nullAbsolute.append(moduleName).append(subpath),
+						{
+							content,
+							stats: {
+								type: "file",
+								size: content.length,
+								mtime,
+							},
+						},
 					);
 				}
 			}
 
-			// Initialize as project
-			const projectConfig = Object.assign(
-				{},
-				___R$project$rome$$romefrontend$project$types_ts$createDefaultProjectConfig(),
-				{name: "rome-runtime"},
-			);
-			await this.server.projectManager.declareProject({
-				projectFolder: runtimeModulesPath,
-				meta: ___R$project$rome$$romefrontend$project$types_ts$createDefaultProjectConfigMeta(),
-				config: projectConfig,
-			});
-			await this.server.memoryFs.watch(runtimeModulesPath);
+			// Add directories
+			for (const [path, {stats: fileStats}] of statMap) {
+				if (fileStats.type !== "file") {
+					continue;
+				}
+
+				for (const directory of path.getParent().getChain()) {
+					const directoryEntry = statMap.get(directory);
+					if (directoryEntry !== undefined) {
+						// Directory mtime is the newest file
+						if (fileStats.mtime > directoryEntry.stats.mtime) {
+							directoryEntry.stats.mtime = fileStats.mtime;
+						}
+						continue;
+					}
+
+					if (directory.getBasename() === "\0") {
+						// Reached the "root"
+						break;
+					}
+
+					statMap.set(
+						directory,
+						{
+							content: undefined,
+							stats: {
+								type: "directory",
+								size: 0,
+								// Init to mtime of the first entry. We'll pick the highest mtime of all listings later if necessary.
+								mtime: fileStats.mtime,
+							},
+						},
+					);
+				}
+			}
 		}
 
-		resolve(name) {
+		getStatMap() {
+			return this.statMap;
+		}
+
+		isVirtualPath(path) {
+			const segments = path.getRawSegments();
+			return segments[0] === "" && segments[1] === "\0";
+		}
+
+		getPossibleVirtualFileContents(path) {
+			if (this.isVirtualPath(path)) {
+				const entry = this.statMap.get(path);
+				if (entry === undefined) {
+					throw new Error("Given a virtual module path but no entry found");
+				} else {
+					return entry.content;
+				}
+			}
+
+			return undefined;
+		}
+
+		resolvePossibleVirtualModuleName(name) {
 			if (
-				___R$project$rome$$romefrontend$core$server$fs$runtime$modules_ts$modules.has(
+				___R$project$rome$$romefrontend$core$common$virtual$modules_ts$modules.has(
 					name,
 				)
 			) {
-				return this.runtimeModulesPath.append(name);
+				return this.nullAbsolute.append(name);
 			} else {
 				return undefined;
 			}
@@ -124945,9 +125661,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$Server_ts$STDOUT_MAX_CHU
 			);
 			this.logger.updateStream();
 
-			this.virtualModules = new ___R$project$rome$$romefrontend$core$server$fs$VirtualModules_ts$default(
-				this,
-			);
+			this.virtualModules = new ___R$project$rome$$romefrontend$core$common$VirtualModules_ts$default();
 			this.memoryFs = new ___R$project$rome$$romefrontend$core$server$fs$MemoryFileSystem_ts$default(
 				this,
 			);
@@ -124986,7 +125700,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$Server_ts$STDOUT_MAX_CHU
 		onFatalError(err) {
 			const message =
 				"<emphasis>Fatal error occurred</emphasis>: " +
-				___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
+				___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
 					err.stack || err.message,
 				);
 			this.logger.error(message);
@@ -125014,29 +125728,41 @@ const ___R$$priv$project$rome$$romefrontend$core$server$Server_ts$STDOUT_MAX_CHU
 				"Generated diagnostics without a current request",
 			);
 
-			___R$project$rome$$romefrontend$cli$diagnostics$index_ts$printDiagnostics({
+			await ___R$project$rome$$romefrontend$cli$diagnostics$index_ts$printDiagnostics({
 				diagnostics,
 				suppressions: [],
 				printerOptions: {
 					processor: this.createDiagnosticsProcessor(),
 					reporter: this.connectedReporters,
-					readFile: this.readDiagnosticsPrinterFile.bind(this),
+					fileReaders: this.createDiagnosticsPrinterFileReaders(),
 				},
 			});
 		}
 
-		readDiagnosticsPrinterFile(path) {
-			const remoteToLocal = this.projectManager.remoteToLocalPath.get(path);
+		createDiagnosticsPrinterFileReaders() {
+			return {
+				read: async (path) => {
+					const virtualContents = this.virtualModules.getPossibleVirtualFileContents(
+						path,
+					);
+					if (virtualContents === undefined) {
+						return undefined;
+					} else {
+						return virtualContents;
+					}
+				},
 
-			if (remoteToLocal === undefined) {
-				return ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$readDiagnosticsFileLocal(
-					path,
-				);
-			} else {
-				return ___R$project$rome$$romefrontend$cli$diagnostics$DiagnosticsPrinter_ts$readDiagnosticsFileLocal(
-					remoteToLocal,
-				);
-			}
+				getMtime: async (path) => {
+					const virtualContents = this.virtualModules.getPossibleVirtualFileContents(
+						path,
+					);
+					if (virtualContents === undefined) {
+						return undefined;
+					} else {
+						return this.memoryFs.getMtime(path);
+					}
+				},
+			};
 		}
 
 		createDiagnosticsProcessor(opts = {}) {
@@ -125147,19 +125873,19 @@ const ___R$$priv$project$rome$$romefrontend$core$server$Server_ts$STDOUT_MAX_CHU
 
 		async init() {
 			this.maybeSetupGlobalErrorHandlers();
-			this.memoryFs.init();
-			await this.projectManager.init();
-			this.fileAllocator.init();
-			this.resolver.init();
-			await this.cache.init();
 			await this.virtualModules.init();
+			await this.projectManager.init();
+			await this.memoryFs.init();
+			await this.fileAllocator.init();
+			await this.resolver.init();
+			await this.cache.init();
 			await this.workerManager.init();
 		}
 
 		async end() {
 			this.logger.info("[Server] Teardown triggered");
 
-			// Unwatch all project folders
+			// Unwatch all project directories
 			// We do this before anything else as we don't want events firing while we're in a teardown state
 			this.memoryFs.unwatchAll();
 
@@ -125391,8 +126117,13 @@ const ___R$$priv$project$rome$$romefrontend$core$server$Server_ts$STDOUT_MAX_CHU
 			}
 			this.connectedReporters.addStream(errStream);
 
-			// Warn about disabled disk caching
-			if (this.cache.disabled) {
+			// Warn about disabled disk caching. Don't bother if it's only been set due to ROME_DEV. We don't care to see it in development.
+			if (
+				this.cache.disabled &&
+				___R$project$rome$$romefrontend$cli$environment$index_ts$getEnvVar(
+					"ROME_DEV",
+				).type !== "ENABLED"
+			) {
 				reporter.warn(
 					"Disk caching has been disabled due to the <emphasis>ROME_CACHE=0</emphasis> environment variable",
 				);
@@ -125655,7 +126386,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$Server_ts$STDOUT_MAX_CHU
 					throw new Error("Unknown command " + String(query.commandName));
 				}
 			} catch (err) {
-				let diagnostics = this.handleRequestError(req, err);
+				let diagnostics = await this.handleRequestError(req, err);
 
 				if (diagnostics === undefined) {
 					return {
@@ -125696,7 +126427,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$Server_ts$STDOUT_MAX_CHU
 			}
 		}
 
-		handleRequestError(req, rawErr) {
+		async handleRequestError(req, rawErr) {
 			let err = rawErr;
 
 			// If we can derive diagnostics from the error then create a diagnostics printer
@@ -125743,18 +126474,18 @@ const ___R$$priv$project$rome$$romefrontend$core$server$Server_ts$STDOUT_MAX_CHU
 				}
 
 				if (shouldPrint) {
-					printer.print();
+					await printer.print();
 
 					// Don't output the footer if this is a notifier for an invalid request as it will be followed by a help screen
 					if (
 						!(rawErr instanceof
 						___R$project$rome$$romefrontend$core$server$ServerRequest_ts$ServerRequestInvalid)
 					) {
-						printer.footer();
+						await printer.footer();
 					}
 				}
 
-				return printer.getDiagnostics();
+				return printer.processor.getDiagnostics();
 			}
 
 			if (!req.bridge.alive) {
@@ -125797,7 +126528,7 @@ const ___R$$priv$project$rome$$romefrontend$core$server$Server_ts$STDOUT_MAX_CHU
 					},
 				),
 			);
-			printer.print();
+			await printer.print();
 
 			// We could probably return printer.getDiagnostics() but we just want to print to the console
 			// We will still want to send the `error` property
@@ -126349,13 +127080,13 @@ const ___R$$priv$project$rome$$romefrontend$core$client$Client_ts$stream = requi
 			await this.subscribeLogs(
 				true,
 				(chunk) => {
-					logsPlain += ___R$project$rome$$romefrontend$string$markup$format_ts$joinMarkupLines(
-						___R$project$rome$$romefrontend$string$markup$format_ts$markupToPlainText(
+					logsPlain += ___R$project$rome$$romefrontend$cli$layout$format_ts$joinMarkupLines(
+						___R$project$rome$$romefrontend$cli$layout$format_ts$markupToPlainText(
 							chunk,
 						),
 					);
-					logsHTML += ___R$project$rome$$romefrontend$string$markup$format_ts$joinMarkupLines(
-						___R$project$rome$$romefrontend$string$markup$format_ts$markupToHtml(
+					logsHTML += ___R$project$rome$$romefrontend$cli$layout$format_ts$joinMarkupLines(
+						___R$project$rome$$romefrontend$cli$layout$format_ts$markupToHtml(
 							chunk,
 						),
 					);
@@ -126434,14 +127165,6 @@ const ___R$$priv$project$rome$$romefrontend$core$client$Client_ts$stream = requi
 					);
 				}
 
-				// Add client flags
-				writer.append(
-					{name: "clientFlags.json"},
-					___R$project$rome$$romefrontend$codec$json$index_ts$stringifyJSON(
-						this.getClientJSONFlags(),
-					),
-				);
-
 				function indent(val) {
 					const str =
 						typeof val === "string"
@@ -126458,16 +127181,20 @@ const ___R$$priv$project$rome$$romefrontend$core$client$Client_ts$stream = requi
 				}
 
 				const env = [];
+
 				env.push("PATH: " + indent(process.env.PATH));
 				env.push(
-					"Rome version: " +
+					"Rome Version: " +
 					indent(
 						___R$project$rome$$romefrontend$core$common$constants_ts$VERSION,
 					),
 				);
-				env.push("Node version: " + indent(process.versions.node));
+				env.push("Node Version: " + indent(process.versions.node));
 				env.push("Platform: " + indent(process.platform + " " + process.arch));
-				writer.append({name: "environment.txt"}, env.join("\n\n") + "\n");
+				env.push(
+					"Terminal Features: " + indent(this.derivedReporterStreams.features),
+				);
+				env.push("Client Flags: " + indent(this.getClientJSONFlags()));
 
 				// Don't do this if we never connected to the server
 				const bridgeStatus = this.getBridgeStatus();
@@ -126480,17 +127207,11 @@ const ___R$$priv$project$rome$$romefrontend$core$client$Client_ts$stream = requi
 						"server",
 					);
 					if (status.type === "SUCCESS") {
-						writer.append(
-							{name: "status.txt"},
-							___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-								status.data,
-								{
-									compact: true,
-								},
-							) + "\n",
-						);
+						env.push("Server Status: " + indent(status.data));
 					}
 				}
+
+				writer.append({name: "environment.txt"}, env.join("\n\n") + "\n");
 
 				await writer.finalize();
 				this.reporter.success(
@@ -135377,7 +136098,7 @@ const ___R$project$rome$$romefrontend$js$analysis$index_ts = {
 		}
 
 		async updateInlineSnapshots(ref, updates, parseOptions) {
-			let {ast, sourceText} = await this.worker.parse(ref, parseOptions);
+			let {ast} = await this.worker.parse(ref, parseOptions);
 
 			const appliedUpdatesToCallees = new Set();
 			const pendingUpdates = new Set(updates);
@@ -135474,7 +136195,6 @@ const ___R$project$rome$$romefrontend$js$analysis$index_ts = {
 			if (diags.length === 0) {
 				const formatted = ___R$project$rome$$romefrontend$formatter$index_ts$formatAST(
 					ast,
-					{sourceText},
 				).code;
 				await this.worker.writeFile(ref.real, formatted);
 			}
@@ -135578,14 +136298,14 @@ const ___R$project$rome$$romefrontend$js$analysis$index_ts = {
 		async parse(ref, opts) {
 			let {ast, astModifiedFromSource} = await this.worker.parse(
 				ref,
-				Object.assign({}, opts, {sourceType: opts.sourceType, cache: false}),
+				Object.assign({}, opts, {sourceTypeJS: opts.sourceTypeJS, cache: false}),
 			);
 
 			return this.interceptDiagnostics(ast, {astModifiedFromSource});
 		}
 
-		async format(ref, opts) {
-			const res = await this._format(ref, opts);
+		async format(ref, formatOptions, parseOptions) {
+			const res = await this._format(ref, formatOptions, parseOptions);
 			if (res === undefined) {
 				return undefined;
 			} else {
@@ -135596,11 +136316,12 @@ const ___R$project$rome$$romefrontend$js$analysis$index_ts = {
 					),
 					original: res.sourceText,
 					diagnostics: res.diagnostics,
+					suppressions: res.suppressions,
 				};
 			}
 		}
 
-		async _format(ref, parseOptions) {
+		async _format(ref, formatOptions, parseOptions) {
 			const project = this.worker.getProject(ref.project);
 			this.logger.info("Formatting:", ref.real.toMarkup());
 
@@ -135630,9 +136351,7 @@ const ___R$project$rome$$romefrontend$js$analysis$index_ts = {
 
 			const out = ___R$project$rome$$romefrontend$formatter$index_ts$formatAST(
 				ast,
-				{
-					sourceText,
-				},
+				formatOptions,
 			);
 
 			return this.interceptDiagnostics(
@@ -135670,7 +136389,7 @@ const ___R$project$rome$$romefrontend$js$analysis$index_ts = {
 					if (handler.canLint) {
 						return this.compilerLint(ref, options, parseOptions);
 					} else {
-						return this._format(ref, parseOptions);
+						return this._format(ref, {}, parseOptions);
 					}
 				},
 				{
@@ -135743,6 +136462,7 @@ const ___R$project$rome$$romefrontend$js$analysis$index_ts = {
 						},
 						description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.LINT.PENDING_FIXES(
 							ref.relative.join(),
+							handler.language,
 							sourceText,
 							formatted,
 						),
@@ -135903,6 +136623,7 @@ class ___R$project$rome$$romefrontend$core$worker$Worker_ts$default {
 			this.astCache = new ___R$project$rome$$romefrontend$path$collections_ts$AbsoluteFilePathMap();
 			this.moduleSignatureCache = new ___R$project$rome$$romefrontend$path$collections_ts$UnknownFilePathMap();
 			this.buffers = new ___R$project$rome$$romefrontend$path$collections_ts$AbsoluteFilePathMap();
+			this.virtualModules = new ___R$project$rome$$romefrontend$core$common$VirtualModules_ts$default();
 
 			this.logger = new ___R$project$rome$$romefrontend$core$common$utils$Logger_ts$default(
 				"worker",
@@ -135950,6 +136671,8 @@ class ___R$project$rome$$romefrontend$core$worker$Worker_ts$default {
 		}
 
 		async init() {
+			this.virtualModules.init();
+
 			const bridge = this.bridge;
 
 			bridge.endEvent.subscribe(() => {
@@ -135977,7 +136700,7 @@ class ___R$project$rome$$romefrontend$core$worker$Worker_ts$default {
 			bridge.compile.subscribe((payload) => {
 				return this.api.compile(
 					___R$project$rome$$romefrontend$core$common$types$files_ts$convertTransportFileReference(
-						payload.file,
+						payload.ref,
 					),
 					payload.stage,
 					payload.options,
@@ -135988,7 +136711,7 @@ class ___R$project$rome$$romefrontend$core$worker$Worker_ts$default {
 			bridge.parse.subscribe((payload) => {
 				return this.api.parse(
 					___R$project$rome$$romefrontend$core$common$types$files_ts$convertTransportFileReference(
-						payload.file,
+						payload.ref,
 					),
 					payload.options,
 				);
@@ -135997,7 +136720,7 @@ class ___R$project$rome$$romefrontend$core$worker$Worker_ts$default {
 			bridge.lint.subscribe((payload) => {
 				return this.api.lint(
 					___R$project$rome$$romefrontend$core$common$types$files_ts$convertTransportFileReference(
-						payload.file,
+						payload.ref,
 					),
 					payload.options,
 					payload.parseOptions,
@@ -136007,8 +136730,9 @@ class ___R$project$rome$$romefrontend$core$worker$Worker_ts$default {
 			bridge.format.subscribe((payload) => {
 				return this.api.format(
 					___R$project$rome$$romefrontend$core$common$types$files_ts$convertTransportFileReference(
-						payload.file,
+						payload.ref,
 					),
+					payload.options,
 					payload.parseOptions,
 				);
 			});
@@ -136016,7 +136740,7 @@ class ___R$project$rome$$romefrontend$core$worker$Worker_ts$default {
 			bridge.updateInlineSnapshots.subscribe((payload) => {
 				return this.api.updateInlineSnapshots(
 					___R$project$rome$$romefrontend$core$common$types$files_ts$convertTransportFileReference(
-						payload.file,
+						payload.ref,
 					),
 					payload.updates,
 					payload.parseOptions,
@@ -136026,7 +136750,7 @@ class ___R$project$rome$$romefrontend$core$worker$Worker_ts$default {
 			bridge.analyzeDependencies.subscribe((payload) => {
 				return this.api.analyzeDependencies(
 					___R$project$rome$$romefrontend$core$common$types$files_ts$convertTransportFileReference(
-						payload.file,
+						payload.ref,
 					),
 					payload.parseOptions,
 				);
@@ -136044,7 +136768,7 @@ class ___R$project$rome$$romefrontend$core$worker$Worker_ts$default {
 			bridge.moduleSignatureJS.subscribe((payload) => {
 				return this.api.moduleSignatureJS(
 					___R$project$rome$$romefrontend$core$common$types$files_ts$convertTransportFileReference(
-						payload.file,
+						payload.ref,
 					),
 					payload.parseOptions,
 				);
@@ -136070,7 +136794,7 @@ class ___R$project$rome$$romefrontend$core$worker$Worker_ts$default {
 			bridge.updateBuffer.subscribe((payload) => {
 				return this.updateBuffer(
 					___R$project$rome$$romefrontend$core$common$types$files_ts$convertTransportFileReference(
-						payload.file,
+						payload.ref,
 					),
 					payload.content,
 				);
@@ -136079,7 +136803,7 @@ class ___R$project$rome$$romefrontend$core$worker$Worker_ts$default {
 			bridge.patchBuffer.subscribe((payload) => {
 				return this.patchBuffer(
 					___R$project$rome$$romefrontend$core$common$types$files_ts$convertTransportFileReference(
-						payload.file,
+						payload.ref,
 					),
 					payload.patches,
 				);
@@ -136088,7 +136812,7 @@ class ___R$project$rome$$romefrontend$core$worker$Worker_ts$default {
 			bridge.clearBuffer.subscribe((payload) => {
 				return this.clearBuffer(
 					___R$project$rome$$romefrontend$core$common$types$files_ts$convertTransportFileReference(
-						payload.file,
+						payload.ref,
 					),
 				);
 			});
@@ -136181,7 +136905,7 @@ class ___R$project$rome$$romefrontend$core$worker$Worker_ts$default {
 					case "OWNED":
 						return this.api.moduleSignatureJS(
 							___R$project$rome$$romefrontend$core$common$types$files_ts$convertTransportFileReference(
-								value.file,
+								value.ref,
 							),
 							parseOptions,
 						);
@@ -136222,13 +136946,18 @@ class ___R$project$rome$$romefrontend$core$worker$Worker_ts$default {
 		async readFile(path) {
 			try {
 				const buffer = this.buffers.get(path);
-				if (buffer === undefined) {
-					return await ___R$project$rome$$romefrontend$fs$index_ts$readFileText(
-						path,
-					);
-				} else {
+				if (buffer !== undefined) {
 					return buffer;
 				}
+
+				const virtual = this.virtualModules.getPossibleVirtualFileContents(path);
+				if (virtual !== undefined) {
+					return virtual;
+				}
+
+				return await ___R$project$rome$$romefrontend$fs$index_ts$readFileText(
+					path,
+				);
 			} catch (err) {
 				if (err.code === "ENOENT") {
 					throw new ___R$project$rome$$romefrontend$core$common$FileNotFound_ts$FileNotFound(
@@ -136260,8 +136989,8 @@ class ___R$project$rome$$romefrontend$core$worker$Worker_ts$default {
 
 			// Get source type
 			let sourceTypeJS;
-			if (options.sourceType !== undefined) {
-				sourceTypeJS = options.sourceType;
+			if (options.sourceTypeJS !== undefined) {
+				sourceTypeJS = options.sourceTypeJS;
 			} else if (handler.sourceTypeJS !== undefined) {
 				sourceTypeJS = handler.sourceTypeJS;
 			} else {
@@ -136307,7 +137036,17 @@ class ___R$project$rome$$romefrontend$core$worker$Worker_ts$default {
 
 			this.logger.info("Parsing:", path.toMarkup());
 
-			const stat = await ___R$project$rome$$romefrontend$fs$index_ts$lstat(path);
+			// Get the file mtime to warn about outdated diagnostics
+			// If we have a buffer or virtual module for this file then don't set an mtime since our diagnostics
+			// explicitly do not match the file system
+			let mtime;
+			if (!this.buffers.has(path) && !this.virtualModules.isVirtualPath(path)) {
+				const stat = await ___R$project$rome$$romefrontend$fs$index_ts$lstat(
+					path,
+				);
+				mtime = stat.mtimeMs;
+			}
+
 			let manifestPath;
 			if (ref.manifest !== undefined) {
 				manifestPath = this.getPartialManifest(ref.manifest).path;
@@ -136319,7 +137058,7 @@ class ___R$project$rome$$romefrontend$core$worker$Worker_ts$default {
 					uid,
 				),
 				manifestPath,
-				stat,
+				mtime,
 				file: ref,
 				worker: this,
 				project,
@@ -136327,7 +137066,7 @@ class ___R$project$rome$$romefrontend$core$worker$Worker_ts$default {
 			});
 
 			// If the AST is corrupt then we don't under any circumstance allow it
-			if (ast.corrupt) {
+			if (ast.corrupt && !options.allowCorrupt) {
 				throw new ___R$project$rome$$romefrontend$diagnostics$errors_ts$DiagnosticsError(
 					"Corrupt AST",
 					ast.diagnostics,
@@ -136335,8 +137074,11 @@ class ___R$project$rome$$romefrontend$core$worker$Worker_ts$default {
 			}
 
 			// Sometimes we may want to allow the "fixed" AST
-			const allowDiagnostics = options.allowParserDiagnostics === true;
-			if (!allowDiagnostics && ast.diagnostics.length > 0) {
+			if (
+				!options.allowParserDiagnostics &&
+				!options.allowCorrupt &&
+				ast.diagnostics.length > 0
+			) {
 				throw new ___R$project$rome$$romefrontend$diagnostics$errors_ts$DiagnosticsError(
 					"AST diagnostics aren't allowed",
 					ast.diagnostics,
@@ -136397,15 +137139,15 @@ class ___R$project$rome$$romefrontend$core$worker$Worker_ts$default {
 		}
 
 		updateProjects(projects) {
-			for (const {config, folder, id} of projects) {
+			for (const {config, directory, id} of projects) {
 				if (config === undefined) {
 					this.projects.delete(id);
 				} else {
 					this.projects.set(
 						id,
 						{
-							folder: ___R$project$rome$$romefrontend$path$index_ts$createAbsoluteFilePath(
-								folder,
+							directory: ___R$project$rome$$romefrontend$path$index_ts$createAbsoluteFilePath(
+								directory,
 							),
 							config: ___R$project$rome$$romefrontend$project$transport_ts$hydrateJSONProjectConfig(
 								config,
@@ -136414,814 +137156,6 @@ class ___R$project$rome$$romefrontend$core$worker$Worker_ts$default {
 					);
 				}
 			}
-		}
-	}
-
-
-  // project-rome/@romefrontend/core/test-worker/TestAPI.ts
-function ___R$$priv$project$rome$$romefrontend$core$test$worker$TestAPI_ts$formatExpectedError(
-		expected,
-	) {
-		if (typeof expected === "string") {
-			return JSON.stringify(expected);
-		}
-
-		if (expected instanceof RegExp) {
-			return String(expected);
-		}
-
-		if (typeof expected === "function") {
-			return expected.name;
-		}
-
-		return "unknown";
-	}
-
-	function ___R$$priv$project$rome$$romefrontend$core$test$worker$TestAPI_ts$matchExpectedError(
-		error,
-		expected,
-	) {
-		if (expected === undefined) {
-			return true;
-		}
-
-		if (typeof expected === "string") {
-			return error.message.includes(expected);
-		}
-
-		if (expected instanceof RegExp) {
-			return expected.test(error.message);
-		}
-
-		if (typeof expected === "function") {
-			return error instanceof expected;
-		}
-
-		return false;
-	}
-
-	class ___R$project$rome$$romefrontend$core$test$worker$TestAPI_ts$default {
-		constructor(
-			{
-				testName,
-				onTimeout,
-				file,
-				snapshotManager,
-				options,
-				emitDiagnostic,
-			},
-		) {
-			this.testName = testName;
-			this.options = options;
-			this.snapshotManager = snapshotManager;
-			this.snapshotCounter = 0;
-			this.file = file;
-			this.teardownEvent = new ___R$project$rome$$romefrontend$events$Event_ts$default({
-				name: "TestAPI.teardown",
-			});
-			this.startTime = Date.now();
-			this.onTimeout = onTimeout;
-			this.emitDiagnostic = emitDiagnostic;
-			this.timeoutMax = 0;
-			this.timeoutId = undefined;
-			this.setTimeout(5_000);
-			this.advice = [];
-		}
-
-		getAdvice(startAdvice = []) {
-			const {advice} = this;
-
-			if (advice.length === 0) {
-				return startAdvice;
-			}
-
-			return [
-				...startAdvice,
-				{
-					type: "group",
-					title: "User-specified test advice",
-					advice: advice.map((item) => {
-						if (typeof item === "function") {
-							return item();
-						} else {
-							return item;
-						}
-					}),
-				},
-			];
-		}
-
-		buildMatchAdvice(
-			received,
-			expected,
-			{
-				visualMethod,
-				expectedAlias,
-				receivedAlias,
-			} = {},
-		) {
-			let expectedFormat;
-			let receivedFormat;
-			if (typeof received === "string" && typeof expected === "string") {
-				expectedFormat = expected;
-				receivedFormat = received;
-			} else {
-				expectedFormat = ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-					expected,
-				);
-				receivedFormat = ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-					received,
-				);
-			}
-
-			const advice = [];
-
-			if (expectedFormat === receivedFormat) {
-				// Better error message when both values are visually identical
-				advice.push({
-					type: "log",
-					category: "info",
-					text: "Both the received and expected values are visually identical",
-				});
-
-				advice.push({
-					type: "code",
-					code: expectedFormat,
-				});
-
-				if (visualMethod !== undefined) {
-					advice.push({
-						type: "log",
-						category: "info",
-						text: "Try using t." +
-						visualMethod +
-						" if you wanted a visual match",
-					});
-				}
-			} else {
-				const bothSingleLine =
-					!expectedFormat.match(/\n/g) && !receivedFormat.match(/\n/g);
-
-				if (!bothSingleLine) {
-					advice.push({
-						type: "log",
-						category: "info",
-						text: "Expected to receive",
-					});
-
-					advice.push({
-						type: "code",
-						code: expectedFormat,
-					});
-
-					advice.push({
-						type: "log",
-						category: "info",
-						text: "But got",
-					});
-
-					advice.push({
-						type: "code",
-						code: receivedFormat,
-					});
-
-					advice.push({
-						type: "log",
-						category: "info",
-						text: "Diff",
-					});
-				}
-
-				advice.push({
-					type: "diff",
-					diff: ___R$project$rome$$romefrontend$string$diff$index_ts$default(
-						expectedFormat,
-						receivedFormat,
-					),
-					legend: {
-						add: receivedAlias ? receivedAlias : "Received",
-						delete: expectedAlias ? expectedAlias : "Expected",
-					},
-				});
-			}
-
-			return advice;
-		}
-
-		// We allow lazy construction of test advice when an error actually occurs
-		addToAdvice(item) {
-			this.advice.push(item);
-		}
-
-		clearAdvice() {
-			this.advice = [];
-		}
-
-		onTeardown(callback) {
-			this.teardownEvent.subscribe(callback);
-		}
-
-		clearTimeout() {
-			if (this.timeoutId !== undefined) {
-				clearTimeout(this.timeoutId);
-			}
-
-			this.timeoutMax = undefined;
-			this.timeoutStart = undefined;
-		}
-
-		extendTimeout(time) {
-			const {timeoutMax, timeoutStart} = this;
-			if (timeoutMax === undefined || timeoutStart === undefined) {
-				throw new Error("No timeout set");
-			}
-
-			const elapsed = Date.now() - timeoutStart;
-			const newTime = timeoutMax - elapsed + time;
-			this.setTimeout(newTime);
-		}
-
-		setTimeout(time) {
-			this.clearTimeout();
-
-			this.timeoutStart = Date.now();
-			this.timeoutMax = time;
-
-			this.timeoutId = setTimeout(
-				() => {
-					this.onTimeout(time);
-				},
-				time,
-			);
-		}
-
-		checkTimeout() {
-			const {startTime, timeoutMax} = this;
-			if (timeoutMax === undefined) {
-				return;
-			}
-
-			const delta = Date.now() - startTime;
-			if (delta > timeoutMax) {
-				throw new Error("Test timeout - exceeded " + String(timeoutMax) + "ms");
-			}
-		}
-
-		fail(
-			message = "Test failure triggered by t.fail()",
-			advice = [],
-			framesToShift = 0,
-		) {
-			const diag = ___R$project$rome$$romefrontend$diagnostics$derive_ts$deriveDiagnosticFromErrorStructure(
-				___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(
-					new Error(),
-					framesToShift + 1,
-				),
-				{
-					description: {
-						category: "tests/failure",
-						message: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$createBlessedDiagnosticMessage(
-							message,
-						),
-						advice,
-					},
-				},
-			);
-			throw ___R$project$rome$$romefrontend$diagnostics$errors_ts$createSingleDiagnosticError(
-				diag,
-			);
-		}
-
-		truthy(value, message = "Expected value to be truthy") {
-			if (Boolean(value) === false) {
-				this.fail(
-					message,
-					[
-						{
-							type: "log",
-							category: "info",
-							text: "Received",
-						},
-						{
-							type: "code",
-							code: ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-								value,
-							),
-						},
-					],
-					1,
-				);
-			}
-		}
-
-		falsy(value, message = "Expected value to be falsy") {
-			if (Boolean(value) === true) {
-				this.fail(
-					message,
-					[
-						{
-							type: "log",
-							category: "info",
-							text: "Received",
-						},
-						{
-							type: "code",
-							code: ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-								value,
-							),
-						},
-					],
-					1,
-				);
-			}
-		}
-
-		true(value, message = "Expected value to be true") {
-			if (value !== true) {
-				this.fail(
-					message,
-					[
-						{
-							type: "log",
-							category: "info",
-							text: "Received",
-						},
-						{
-							type: "code",
-							code: ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-								value,
-							),
-						},
-					],
-					1,
-				);
-			}
-		}
-
-		false(value, message = "Expected value to be false") {
-			if (value !== false) {
-				this.fail(
-					message,
-					[
-						{
-							type: "log",
-							category: "info",
-							text: "Received",
-						},
-						{
-							type: "code",
-							code: ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-								value,
-							),
-						},
-					],
-					1,
-				);
-			}
-		}
-
-		is(received, expected, message = "t.is() failed, using Object.is semantics") {
-			if (Object.is(received, expected) !== true) {
-				this.fail(
-					message,
-					this.buildMatchAdvice(
-						received,
-						expected,
-						{
-							visualMethod: "looksLike",
-						},
-					),
-					1,
-				);
-			}
-		}
-
-		not(
-			received,
-			expected,
-			message = "t.not() failed, using !Object.is semantics",
-		) {
-			if (Object.is(received, expected) === true) {
-				this.fail(
-					message,
-					this.buildMatchAdvice(
-						received,
-						expected,
-						{
-							visualMethod: "notLooksLike",
-						},
-					),
-					1,
-				);
-			}
-		}
-
-		looksLike(
-			received,
-			expected,
-			message = "t.looksLike() failed, using prettyFormat semantics",
-		) {
-			const actualInspect = ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-				received,
-			);
-			const expectedInspect = ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-				expected,
-			);
-
-			if (actualInspect !== expectedInspect) {
-				this.fail(message, this.buildMatchAdvice(received, expected), 1);
-			}
-		}
-
-		notLooksLike(
-			received,
-			expected,
-			message = "t.notLooksLike() failed, using !prettyFormat semantics",
-		) {
-			const actualInspect = ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-				received,
-			);
-			const expectedInspect = ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-				expected,
-			);
-
-			if (actualInspect === expectedInspect) {
-				this.fail(message, this.buildMatchAdvice(received, expected), 1);
-			}
-		}
-
-		throws(
-			thrower,
-			expected,
-			message = "t.throws() failed, callback did not throw an error",
-		) {
-			try {
-				thrower();
-			} catch (err) {
-				if (
-					___R$$priv$project$rome$$romefrontend$core$test$worker$TestAPI_ts$matchExpectedError(
-						err,
-						expected,
-					)
-				) {
-					return undefined;
-				} else {
-					this.fail(
-						"t.throws() expected an error to be thrown that matches " +
-						___R$$priv$project$rome$$romefrontend$core$test$worker$TestAPI_ts$formatExpectedError(
-							expected,
-						) +
-						" but got " +
-						err.name +
-						": " +
-						JSON.stringify(err.message),
-						___R$project$rome$$romefrontend$diagnostics$derive_ts$getErrorStackAdvice(
-							___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(
-								err,
-							),
-							"Incorrect error stack trace",
-						),
-						1,
-					);
-				}
-			}
-
-			this.fail(message, undefined, 1);
-		}
-
-		async throwsAsync(
-			thrower,
-			expected,
-			message = "t.throwsAsync() failed, callback did not throw an error",
-		) {
-			try {
-				await thrower();
-			} catch (err) {
-				if (
-					___R$$priv$project$rome$$romefrontend$core$test$worker$TestAPI_ts$matchExpectedError(
-						err,
-						expected,
-					)
-				) {
-					return undefined;
-				} else {
-					this.fail(
-						"t.throwsAsync() expected an error to be thrown that matches " +
-						___R$$priv$project$rome$$romefrontend$core$test$worker$TestAPI_ts$formatExpectedError(
-							expected,
-						) +
-						" but got " +
-						err.name +
-						": " +
-						JSON.stringify(err.message),
-						___R$project$rome$$romefrontend$diagnostics$derive_ts$getErrorStackAdvice(
-							___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(
-								err,
-							),
-							"Incorrect error stack trace",
-						),
-						1,
-					);
-				}
-			}
-			this.fail(message, undefined, 1);
-		}
-
-		notThrows(
-			nonThrower,
-			message = "t.notThrows() failed, callback threw an error",
-		) {
-			try {
-				nonThrower();
-			} catch (err) {
-				const advice = ___R$project$rome$$romefrontend$diagnostics$derive_ts$getErrorStackAdvice(
-					___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(err),
-					"t.notThrows() did not expect an error to be thrown but got " +
-					err.name +
-					": " +
-					JSON.stringify(err.message),
-				);
-				this.fail(message, advice, 1);
-			}
-		}
-
-		async notThrowsAsync(
-			nonThrower,
-			message = "t.notThrowsAsync() failed, callback threw an error",
-		) {
-			try {
-				await nonThrower();
-			} catch (err) {
-				const advice = ___R$project$rome$$romefrontend$diagnostics$derive_ts$getErrorStackAdvice(
-					___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(err),
-					"t.notThrowsAsync() did not expect an error to be thrown but got " +
-					err.name +
-					": " +
-					JSON.stringify(err.message),
-				);
-				this.fail(message, advice, 1);
-			}
-		}
-
-		regex(
-			contents,
-			regex,
-			message = "t.regex() failed, using RegExp.test semantics",
-		) {
-			if (!regex.test(contents)) {
-				this.fail(
-					message,
-					[
-						{
-							type: "log",
-							category: "info",
-							text: "Expected",
-						},
-						{
-							type: "code",
-							code: ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-								contents,
-							),
-						},
-						{
-							type: "log",
-							category: "info",
-							text: "to match pattern",
-						},
-						{
-							type: "code",
-							code: ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-								regex.source,
-							),
-						},
-					],
-					1,
-				);
-			}
-		}
-
-		notRegex(
-			contents,
-			regex,
-			message = "t.notRegex() failed, using !RegExp.test semantics",
-		) {
-			if (regex.test(contents)) {
-				this.fail(
-					message,
-					[
-						{
-							type: "log",
-							category: "info",
-							text: "Expected",
-						},
-						{
-							type: "code",
-							code: ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-								contents,
-							),
-						},
-						{
-							type: "log",
-							category: "info",
-							text: "to not match pattern",
-						},
-						{
-							type: "code",
-							code: ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-								regex.source,
-							),
-						},
-					],
-					1,
-				);
-			}
-		}
-
-		inlineSnapshot(received, snapshot) {
-			const callFrame = ___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(
-				new Error(),
-			).frames[1];
-			const callError = ___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(
-				new Error(),
-				1,
-			);
-
-			this.onTeardown(async () => {
-				const {status} = this.snapshotManager.testInlineSnapshot(
-					callFrame,
-					received,
-					snapshot,
-				);
-
-				if (status === "UPDATE" && this.options.freezeSnapshots) {
-					await this.emitDiagnostic(
-						___R$project$rome$$romefrontend$diagnostics$derive_ts$deriveDiagnosticFromErrorStructure(
-							callError,
-							{
-								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.SNAPSHOTS.INLINE_FROZEN,
-							},
-						),
-					);
-				}
-
-				if (status === "NO_MATCH") {
-					await this.emitDiagnostic(
-						___R$project$rome$$romefrontend$diagnostics$derive_ts$deriveDiagnosticFromErrorStructure(
-							callError,
-							{
-								description: Object.assign(
-									{},
-									___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.SNAPSHOTS.INLINE_BAD_MATCH,
-									{
-										advice: this.buildMatchAdvice(
-											received,
-											snapshot,
-											{
-												receivedAlias: "What the code gave us",
-												expectedAlias: "Existing inline snapshot",
-											},
-										),
-									},
-								),
-							},
-						),
-					);
-				}
-			});
-		}
-
-		snapshot(expected, message, opts) {
-			const id = this.snapshotCounter++;
-			return this.bufferSnapshot({
-				entryName: String(id),
-				expected,
-				message,
-				opts,
-			});
-		}
-
-		namedSnapshot(entryName, expected, message, opts) {
-			return this.bufferSnapshot({
-				entryName,
-				expected,
-				message,
-				opts,
-			});
-		}
-
-		bufferSnapshot(
-			{
-				entryName,
-				message,
-				expected,
-				opts = {},
-			},
-		) {
-			let language = opts.language;
-
-			let formatted = "";
-			if (typeof expected === "string") {
-				formatted = expected;
-			} else {
-				language = "javascript";
-				formatted = ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-					expected,
-				);
-			}
-
-			const callError = ___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(
-				new Error(),
-				2,
-			);
-
-			this.onTeardown(async () => {
-				// Get the current snapshot
-				const existingSnapshot = await this.snapshotManager.get(
-					this.testName,
-					entryName,
-					opts.filename,
-				);
-				if (existingSnapshot === undefined) {
-					if (this.options.freezeSnapshots) {
-						await this.emitDiagnostic(
-							___R$project$rome$$romefrontend$diagnostics$derive_ts$deriveDiagnosticFromErrorStructure(
-								callError,
-								{
-									description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.SNAPSHOTS.FROZEN,
-								},
-							),
-						);
-					} else {
-						// No snapshot exists, let's save this one!
-						this.snapshotManager.set({
-							testName: this.testName,
-							entryName,
-							value: formatted,
-							language,
-							optionalFilename: opts.filename,
-						});
-					}
-					return;
-				}
-
-				// Compare the snapshots
-				if (formatted !== existingSnapshot) {
-					const advice = this.buildMatchAdvice(
-						formatted,
-						existingSnapshot,
-						{
-							receivedAlias: "What the code gave us",
-							expectedAlias: "Existing snapshot",
-						},
-					);
-
-					if (message === undefined) {
-						message =
-							"Snapshot " +
-							___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
-								entryName,
-							) +
-							" at <emphasis>" +
-							this.snapshotManager.defaultSnapshotPath.toMarkup() +
-							"</emphasis> doesn't match";
-					} else {
-						message = ___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
-							message,
-						);
-
-						advice.push({
-							type: "log",
-							category: "info",
-							text: "Snapshot can be found at <emphasis>" +
-							this.snapshotManager.defaultSnapshotPath.toMarkup() +
-							"</emphasis>",
-						});
-					}
-
-					advice.push({
-						type: "log",
-						category: "info",
-						text: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Run <command>rome test <filelink target="${this.file.uid}" /> --update-snapshots</command> to update this snapshot`,
-					});
-
-					await this.emitDiagnostic(
-						___R$project$rome$$romefrontend$diagnostics$derive_ts$deriveDiagnosticFromErrorStructure(
-							callError,
-							{
-								description: {
-									category: "tests/snapshots/incorrect",
-									message: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$createBlessedDiagnosticMessage(
-										message,
-									),
-									advice,
-								},
-							},
-						),
-					);
-				}
-			});
-
-			return entryName;
 		}
 	}
 
@@ -137656,7 +137590,9 @@ function ___R$$priv$project$rome$$romefrontend$core$test$worker$SnapshotManager_
 
 			lines.push("# `" + this.testPath.getBasename() + "`");
 			pushNewline();
-			const relativeTestPath = this.runner.projectFolder.relative(this.testPath).join();
+			const relativeTestPath = this.runner.projectDirectory.relative(
+				this.testPath,
+			).join();
 			lines.push(
 				"**DO NOT MODIFY**. This file has been autogenerated. Run `rome test " +
 				relativeTestPath +
@@ -137883,7 +137819,7 @@ function ___R$$priv$project$rome$$romefrontend$core$test$worker$SnapshotManager_
   // project-rome/@romefrontend/core/test-worker/TestWorkerRunner.ts
 const ___R$$priv$project$rome$$romefrontend$core$test$worker$TestWorkerRunner_ts$MAX_RUNNING_TESTS = 20;
 
-	function ___R$$priv$project$rome$$romefrontend$core$test$worker$TestWorkerRunner_ts$cleanFrames(
+	function ___R$project$rome$$romefrontend$core$test$worker$TestWorkerRunner_ts$cleanFrames(
 		frames,
 	) {
 		// TODO we should actually get the frames before module init and do it that way
@@ -137937,8 +137873,8 @@ const ___R$$priv$project$rome$$romefrontend$core$test$worker$TestWorkerRunner_ts
 			);
 			this.options = opts.options;
 			this.bridge = bridge;
-			this.projectFolder = ___R$project$rome$$romefrontend$path$index_ts$createAbsoluteFilePath(
-				opts.projectFolder,
+			this.projectDirectory = ___R$project$rome$$romefrontend$path$index_ts$createAbsoluteFilePath(
+				opts.projectDirectory,
 			);
 
 			this.snapshotManager = new ___R$project$rome$$romefrontend$core$test$worker$SnapshotManager_ts$default(
@@ -137965,48 +137901,49 @@ const ___R$$priv$project$rome$$romefrontend$core$test$worker$TestWorkerRunner_ts
 
 		createConsole() {
 			const addDiagnostic = (category, args) => {
-				let textParts = [];
-				if (args.length === 1 && typeof args[0] === "string") {
-					textParts.push(
-						___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
-							args[0],
-						),
-					);
-				} else {
-					textParts = args.map((arg) =>
-						___R$project$rome$$romefrontend$pretty$format$index_ts$default(
-							arg,
-							{allowCustom: false, markup: true},
-						)
-					);
-				}
-				let text = textParts.join(" ");
-
-				if (text === "") {
-					text = "<dim>empty log</dim>";
-				}
-
 				const err = new Error();
 
 				// Remove the first two frames to get to the actual source
-				const frames = ___R$$priv$project$rome$$romefrontend$core$test$worker$TestWorkerRunner_ts$cleanFrames(
+				const frames = ___R$project$rome$$romefrontend$core$test$worker$TestWorkerRunner_ts$cleanFrames(
 					___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(err).frames.slice(
 						2,
 					),
 				);
 
-				this.consoleAdvice.push({
-					type: "log",
-					category,
-					text,
-				});
-				this.consoleAdvice = this.consoleAdvice.concat(
-					___R$project$rome$$romefrontend$diagnostics$derive_ts$getErrorStackAdvice(
-						___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(
-							Object.assign({}, err, {frames}),
+				this.consoleAdvice.push(() => {
+					let textParts = [];
+					if (args.length === 1 && typeof args[0] === "string") {
+						textParts.push(
+							___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
+								args[0],
+							),
+						);
+					} else {
+						textParts = args.map((arg) =>
+							___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+								arg,
+								{allowCustom: false, markup: true},
+							)
+						);
+					}
+					let text = textParts.join(" ");
+
+					if (text === "") {
+						text = "<dim>empty log</dim>";
+					}
+					return [
+						{
+							type: "log",
+							category,
+							text,
+						},
+						...___R$project$rome$$romefrontend$diagnostics$derive_ts$getErrorStackAdvice(
+							___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(
+								Object.assign({}, err, {frames}),
+							),
 						),
-					),
-				);
+					];
+				});
 			};
 
 			function log(...args) {
@@ -138198,12 +138135,12 @@ const ___R$$priv$project$rome$$romefrontend$core$test$worker$TestWorkerRunner_ts
 		async emitDiagnostic(diag, test) {
 			let label = diag.label;
 			if (label === undefined && test !== undefined) {
-				label = ___R$project$rome$$romefrontend$string$markup$escape_ts$escapeMarkup(
+				label = ___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
 					test.name,
 				);
 			}
 
-			diag = Object.assign({}, diag, {label});
+			diag = Object.assign({}, diag, {label, unique: true});
 
 			this.hasDiagnostics = true;
 			await this.bridge.testDiagnostic.call({
@@ -138220,7 +138157,7 @@ const ___R$$priv$project$rome$$romefrontend$core$test$worker$TestWorkerRunner_ts
 						category: "tests/failure",
 					},
 					filename: this.file.real.join(),
-					cleanFrames: ___R$$priv$project$rome$$romefrontend$core$test$worker$TestWorkerRunner_ts$cleanFrames,
+					cleanFrames: ___R$project$rome$$romefrontend$core$test$worker$TestWorkerRunner_ts$cleanFrames,
 				},
 			);
 		}
@@ -138247,7 +138184,7 @@ const ___R$$priv$project$rome$$romefrontend$core$test$worker$TestWorkerRunner_ts
 					advice.push({
 						type: "log",
 						category: "info",
-						text: ___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
+						text: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
 					});
 					break;
 				}
@@ -138454,9 +138391,13 @@ const ___R$$priv$project$rome$$romefrontend$core$test$worker$TestWorkerRunner_ts
 			await this.snapshotManager.save();
 
 			if (this.hasDiagnostics && this.consoleAdvice.length > 0) {
+				let advice = [];
+				for (const factory of this.consoleAdvice) {
+					advice = advice.concat(factory());
+				}
 				await this.emitDiagnostic({
 					description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.TESTS.LOGS(
-						this.consoleAdvice,
+						advice,
 					),
 					location: {
 						filename: this.file.uid,
@@ -138514,6 +138455,859 @@ const ___R$$priv$project$rome$$romefrontend$core$test$worker$TestWorkerRunner_ts
 				this.lockTests();
 			});
 			return {focusedTests: this.focusedTests};
+		}
+	}
+
+
+  // project-rome/@romefrontend/core/test-worker/TestAPI.ts
+function ___R$$priv$project$rome$$romefrontend$core$test$worker$TestAPI_ts$formatExpectedError(
+		expected,
+	) {
+		if (typeof expected === "string") {
+			return JSON.stringify(expected);
+		}
+
+		if (expected instanceof RegExp) {
+			return String(expected);
+		}
+
+		if (typeof expected === "function") {
+			return expected.name;
+		}
+
+		return "unknown";
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$core$test$worker$TestAPI_ts$matchExpectedError(
+		error,
+		expected,
+	) {
+		if (expected === undefined) {
+			return true;
+		}
+
+		if (typeof expected === "string") {
+			return error.message.includes(expected);
+		}
+
+		if (expected instanceof RegExp) {
+			return expected.test(error.message);
+		}
+
+		if (typeof expected === "function") {
+			return error instanceof expected;
+		}
+
+		return false;
+	}
+
+	function ___R$$priv$project$rome$$romefrontend$core$test$worker$TestAPI_ts$normalizeUserAdvice(
+		advice,
+	) {
+		return advice.map((item) => {
+			if (typeof item === "function") {
+				return ___R$$priv$project$rome$$romefrontend$core$test$worker$TestAPI_ts$normalizeUserAdviceItem(
+					item(),
+				);
+			} else {
+				return ___R$$priv$project$rome$$romefrontend$core$test$worker$TestAPI_ts$normalizeUserAdviceItem(
+					item,
+				);
+			}
+		});
+	}
+
+	// Once we have a public test framework we should perform normalization here
+	function ___R$$priv$project$rome$$romefrontend$core$test$worker$TestAPI_ts$normalizeUserAdviceItem(
+		item,
+	) {
+		switch (item.type) {
+			case "code":
+				return Object.assign({}, item, {language: "unknown"});
+
+			default:
+				return item;
+		}
+	}
+
+	class ___R$project$rome$$romefrontend$core$test$worker$TestAPI_ts$default {
+		constructor(
+			{
+				testName,
+				onTimeout,
+				file,
+				snapshotManager,
+				options,
+				emitDiagnostic,
+			},
+		) {
+			this.testName = testName;
+			this.options = options;
+			this.snapshotManager = snapshotManager;
+			this.snapshotCounter = 0;
+			this.file = file;
+			this.teardownEvent = new ___R$project$rome$$romefrontend$events$Event_ts$default({
+				name: "TestAPI.teardown",
+			});
+			this.startTime = Date.now();
+			this.onTimeout = onTimeout;
+			this.emitDiagnostic = emitDiagnostic;
+			this.timeoutMax = 0;
+			this.timeoutId = undefined;
+			this.setTimeout(5_000);
+			this.advice = [];
+		}
+
+		getAdvice(startAdvice = []) {
+			const {advice} = this;
+
+			if (advice.length === 0) {
+				return startAdvice;
+			}
+
+			const userAdvice = ___R$$priv$project$rome$$romefrontend$core$test$worker$TestAPI_ts$normalizeUserAdvice(
+				advice,
+			);
+
+			return [
+				...startAdvice,
+				{
+					type: "group",
+					title: "User-specified test advice",
+					advice: userAdvice,
+				},
+			];
+		}
+
+		buildMatchAdvice(
+			received,
+			expected,
+			{
+				visualMethod,
+				expectedAlias,
+				receivedAlias,
+			} = {},
+		) {
+			let expectedFormat;
+			let receivedFormat;
+			if (typeof received === "string" && typeof expected === "string") {
+				expectedFormat = expected;
+				receivedFormat = received;
+			} else {
+				expectedFormat = ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+					expected,
+				);
+				receivedFormat = ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+					received,
+				);
+			}
+
+			const advice = [];
+
+			if (expectedFormat === receivedFormat) {
+				// Better error message when both values are visually identical
+				advice.push({
+					type: "log",
+					category: "info",
+					text: "Both the received and expected values are visually identical",
+				});
+
+				advice.push({
+					type: "code",
+					language: "unknown",
+					sourceText: expectedFormat,
+				});
+
+				if (visualMethod !== undefined) {
+					advice.push({
+						type: "log",
+						category: "info",
+						text: "Try using t." +
+						visualMethod +
+						" if you wanted a visual match",
+					});
+				}
+			} else {
+				const bothSingleLine =
+					!expectedFormat.match(/\n/g) && !receivedFormat.match(/\n/g);
+
+				if (!bothSingleLine) {
+					advice.push({
+						type: "log",
+						category: "info",
+						text: "Expected to receive",
+					});
+
+					advice.push({
+						type: "code",
+						language: "unknown",
+						sourceText: expectedFormat,
+					});
+
+					advice.push({
+						type: "log",
+						category: "info",
+						text: "But got",
+					});
+
+					advice.push({
+						type: "code",
+						language: "unknown",
+						sourceText: receivedFormat,
+					});
+
+					advice.push({
+						type: "log",
+						category: "info",
+						text: "Diff",
+					});
+				}
+
+				advice.push({
+					type: "diff",
+					language: "unknown",
+					diff: ___R$project$rome$$romefrontend$string$diff$index_ts$default(
+						expectedFormat,
+						receivedFormat,
+					),
+					legend: {
+						add: receivedAlias ? receivedAlias : "Received",
+						delete: expectedAlias ? expectedAlias : "Expected",
+					},
+				});
+			}
+
+			return advice;
+		}
+
+		// We allow lazy construction of test advice when an error actually occurs
+		addToAdvice(item) {
+			this.advice.push(item);
+		}
+
+		clearAdvice() {
+			this.advice = [];
+		}
+
+		onTeardown(callback) {
+			this.teardownEvent.subscribe(callback);
+		}
+
+		clearTimeout() {
+			if (this.timeoutId !== undefined) {
+				clearTimeout(this.timeoutId);
+			}
+
+			this.timeoutMax = undefined;
+			this.timeoutStart = undefined;
+		}
+
+		extendTimeout(time) {
+			const {timeoutMax, timeoutStart} = this;
+			if (timeoutMax === undefined || timeoutStart === undefined) {
+				throw new Error("No timeout set");
+			}
+
+			const elapsed = Date.now() - timeoutStart;
+			const newTime = timeoutMax - elapsed + time;
+			this.setTimeout(newTime);
+		}
+
+		setTimeout(time) {
+			this.clearTimeout();
+
+			this.timeoutStart = Date.now();
+			this.timeoutMax = time;
+
+			this.timeoutId = setTimeout(
+				() => {
+					this.onTimeout(time);
+				},
+				time,
+			);
+		}
+
+		checkTimeout() {
+			const {startTime, timeoutMax} = this;
+			if (timeoutMax === undefined) {
+				return;
+			}
+
+			const delta = Date.now() - startTime;
+			if (delta > timeoutMax) {
+				throw new Error("Test timeout - exceeded " + String(timeoutMax) + "ms");
+			}
+		}
+
+		fail(
+			message = "Test failure triggered by t.fail()",
+			advice = [],
+			framesToShift = 0,
+		) {
+			const diag = ___R$project$rome$$romefrontend$diagnostics$derive_ts$deriveDiagnosticFromErrorStructure(
+				___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(
+					new Error(),
+					framesToShift + 1,
+				),
+				{
+					description: {
+						category: "tests/failure",
+						message: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$createBlessedDiagnosticMessage(
+							___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
+								message,
+							),
+						),
+						advice,
+					},
+				},
+			);
+			throw ___R$project$rome$$romefrontend$diagnostics$errors_ts$createSingleDiagnosticError(
+				diag,
+			);
+		}
+
+		truthy(value, message = "Expected value to be truthy") {
+			if (Boolean(value) === false) {
+				this.fail(
+					message,
+					[
+						{
+							type: "log",
+							category: "info",
+							text: "Received",
+						},
+						{
+							type: "code",
+							language: "unknown",
+							sourceText: ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+								value,
+							),
+						},
+					],
+					1,
+				);
+			}
+		}
+
+		falsy(value, message = "Expected value to be falsy") {
+			if (Boolean(value) === true) {
+				this.fail(
+					message,
+					[
+						{
+							type: "log",
+							category: "info",
+							text: "Received",
+						},
+						{
+							type: "code",
+							language: "unknown",
+							sourceText: ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+								value,
+							),
+						},
+					],
+					1,
+				);
+			}
+		}
+
+		true(value, message = "Expected value to be true") {
+			if (value !== true) {
+				this.fail(
+					message,
+					[
+						{
+							type: "log",
+							category: "info",
+							text: "Received",
+						},
+						{
+							type: "code",
+							language: "unknown",
+							sourceText: ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+								value,
+							),
+						},
+					],
+					1,
+				);
+			}
+		}
+
+		false(value, message = "Expected value to be false") {
+			if (value !== false) {
+				this.fail(
+					message,
+					[
+						{
+							type: "log",
+							category: "info",
+							text: "Received",
+						},
+						{
+							type: "code",
+							language: "unknown",
+							sourceText: ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+								value,
+							),
+						},
+					],
+					1,
+				);
+			}
+		}
+
+		is(received, expected, message = "t.is() failed, using Object.is semantics") {
+			if (Object.is(received, expected) !== true) {
+				this.fail(
+					message,
+					this.buildMatchAdvice(
+						received,
+						expected,
+						{
+							visualMethod: "looksLike",
+						},
+					),
+					1,
+				);
+			}
+		}
+
+		not(
+			received,
+			expected,
+			message = "t.not() failed, using !Object.is semantics",
+		) {
+			if (Object.is(received, expected) === true) {
+				this.fail(
+					message,
+					this.buildMatchAdvice(
+						received,
+						expected,
+						{
+							visualMethod: "notLooksLike",
+						},
+					),
+					1,
+				);
+			}
+		}
+
+		looksLike(
+			received,
+			expected,
+			message = "t.looksLike() failed, using prettyFormat semantics",
+		) {
+			const actualInspect = ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+				received,
+			);
+			const expectedInspect = ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+				expected,
+			);
+
+			if (actualInspect !== expectedInspect) {
+				this.fail(message, this.buildMatchAdvice(received, expected), 1);
+			}
+		}
+
+		notLooksLike(
+			received,
+			expected,
+			message = "t.notLooksLike() failed, using !prettyFormat semantics",
+		) {
+			const actualInspect = ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+				received,
+			);
+			const expectedInspect = ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+				expected,
+			);
+
+			if (actualInspect === expectedInspect) {
+				this.fail(message, this.buildMatchAdvice(received, expected), 1);
+			}
+		}
+
+		throws(
+			thrower,
+			expected,
+			message = "t.throws() failed, callback did not throw an error",
+		) {
+			try {
+				thrower();
+			} catch (err) {
+				if (
+					___R$$priv$project$rome$$romefrontend$core$test$worker$TestAPI_ts$matchExpectedError(
+						err,
+						expected,
+					)
+				) {
+					return undefined;
+				} else {
+					this.fail(
+						"t.throws() expected an error to be thrown that matches " +
+						___R$$priv$project$rome$$romefrontend$core$test$worker$TestAPI_ts$formatExpectedError(
+							expected,
+						) +
+						" but got " +
+						err.name +
+						": " +
+						JSON.stringify(err.message),
+						___R$project$rome$$romefrontend$diagnostics$derive_ts$getErrorStackAdvice(
+							___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(
+								err,
+							),
+							"Incorrect error stack trace",
+						),
+						1,
+					);
+				}
+			}
+
+			this.fail(message, undefined, 1);
+		}
+
+		async throwsAsync(
+			thrower,
+			expected,
+			message = "t.throwsAsync() failed, callback did not throw an error",
+		) {
+			try {
+				await thrower();
+			} catch (err) {
+				if (
+					___R$$priv$project$rome$$romefrontend$core$test$worker$TestAPI_ts$matchExpectedError(
+						err,
+						expected,
+					)
+				) {
+					return undefined;
+				} else {
+					this.fail(
+						"t.throwsAsync() expected an error to be thrown that matches " +
+						___R$$priv$project$rome$$romefrontend$core$test$worker$TestAPI_ts$formatExpectedError(
+							expected,
+						) +
+						" but got " +
+						err.name +
+						": " +
+						JSON.stringify(err.message),
+						___R$project$rome$$romefrontend$diagnostics$derive_ts$getErrorStackAdvice(
+							___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(
+								err,
+							),
+							"Incorrect error stack trace",
+						),
+						1,
+					);
+				}
+			}
+			this.fail(message, undefined, 1);
+		}
+
+		notThrows(
+			nonThrower,
+			message = "t.notThrows() failed, callback threw an error",
+		) {
+			try {
+				nonThrower();
+			} catch (err) {
+				const advice = ___R$project$rome$$romefrontend$diagnostics$derive_ts$getErrorStackAdvice(
+					___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(err),
+					"t.notThrows() did not expect an error to be thrown but got " +
+					err.name +
+					": " +
+					JSON.stringify(err.message),
+				);
+				this.fail(message, advice, 1);
+			}
+		}
+
+		async notThrowsAsync(
+			nonThrower,
+			message = "t.notThrowsAsync() failed, callback threw an error",
+		) {
+			try {
+				await nonThrower();
+			} catch (err) {
+				const advice = ___R$project$rome$$romefrontend$diagnostics$derive_ts$getErrorStackAdvice(
+					___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(err),
+					"t.notThrowsAsync() did not expect an error to be thrown but got " +
+					err.name +
+					": " +
+					JSON.stringify(err.message),
+				);
+				this.fail(message, advice, 1);
+			}
+		}
+
+		regex(
+			contents,
+			regex,
+			message = "t.regex() failed, using RegExp.test semantics",
+		) {
+			if (!regex.test(contents)) {
+				this.fail(
+					message,
+					[
+						{
+							type: "log",
+							category: "info",
+							text: "Expected",
+						},
+						{
+							type: "code",
+							language: "unknown",
+							sourceText: ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+								contents,
+							),
+						},
+						{
+							type: "log",
+							category: "info",
+							text: "to match pattern",
+						},
+						{
+							type: "code",
+							language: "unknown",
+							sourceText: ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+								regex.source,
+							),
+						},
+					],
+					1,
+				);
+			}
+		}
+
+		notRegex(
+			contents,
+			regex,
+			message = "t.notRegex() failed, using !RegExp.test semantics",
+		) {
+			if (regex.test(contents)) {
+				this.fail(
+					message,
+					[
+						{
+							type: "log",
+							category: "info",
+							text: "Expected",
+						},
+						{
+							type: "code",
+							language: "unknown",
+							sourceText: ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+								contents,
+							),
+						},
+						{
+							type: "log",
+							category: "info",
+							text: "to not match pattern",
+						},
+						{
+							type: "code",
+							language: "unknown",
+							sourceText: ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+								regex.source,
+							),
+						},
+					],
+					1,
+				);
+			}
+		}
+
+		inlineSnapshot(received, snapshot) {
+			const callFrame = ___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(
+				new Error(),
+			).frames[1];
+			const callError = ___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(
+				new Error(),
+				1,
+			);
+
+			this.onTeardown(async () => {
+				const {status} = this.snapshotManager.testInlineSnapshot(
+					callFrame,
+					received,
+					snapshot,
+				);
+
+				if (status === "UPDATE" && this.options.freezeSnapshots) {
+					await this.emitDiagnostic(
+						___R$project$rome$$romefrontend$diagnostics$derive_ts$deriveDiagnosticFromErrorStructure(
+							callError,
+							{
+								description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.SNAPSHOTS.INLINE_FROZEN,
+								cleanFrames: ___R$project$rome$$romefrontend$core$test$worker$TestWorkerRunner_ts$cleanFrames,
+							},
+						),
+					);
+				}
+
+				if (status === "NO_MATCH") {
+					await this.emitDiagnostic(
+						___R$project$rome$$romefrontend$diagnostics$derive_ts$deriveDiagnosticFromErrorStructure(
+							callError,
+							{
+								cleanFrames: ___R$project$rome$$romefrontend$core$test$worker$TestWorkerRunner_ts$cleanFrames,
+								description: Object.assign(
+									{},
+									___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.SNAPSHOTS.INLINE_BAD_MATCH,
+									{
+										advice: this.buildMatchAdvice(
+											received,
+											snapshot,
+											{
+												receivedAlias: "What the code gave us",
+												expectedAlias: "Existing inline snapshot",
+											},
+										),
+									},
+								),
+							},
+						),
+					);
+				}
+			});
+		}
+
+		snapshot(expected, message, opts) {
+			const id = this.snapshotCounter++;
+			return this.bufferSnapshot({
+				entryName: String(id),
+				expected,
+				message,
+				opts,
+			});
+		}
+
+		namedSnapshot(entryName, expected, message, opts) {
+			return this.bufferSnapshot({
+				entryName,
+				expected,
+				message,
+				opts,
+			});
+		}
+
+		bufferSnapshot(
+			{
+				entryName,
+				message,
+				expected,
+				opts = {},
+			},
+		) {
+			let language = opts.language;
+
+			let formatted = "";
+			if (typeof expected === "string") {
+				formatted = expected;
+			} else {
+				language = "javascript";
+				formatted = ___R$project$rome$$romefrontend$pretty$format$index_ts$default(
+					expected,
+				);
+			}
+
+			const callError = ___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(
+				new Error(),
+				2,
+			);
+
+			this.onTeardown(async () => {
+				// Get the current snapshot
+				const existingSnapshot = await this.snapshotManager.get(
+					this.testName,
+					entryName,
+					opts.filename,
+				);
+				if (existingSnapshot === undefined) {
+					if (this.options.freezeSnapshots) {
+						await this.emitDiagnostic(
+							___R$project$rome$$romefrontend$diagnostics$derive_ts$deriveDiagnosticFromErrorStructure(
+								callError,
+								{
+									cleanFrames: ___R$project$rome$$romefrontend$core$test$worker$TestWorkerRunner_ts$cleanFrames,
+									description: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$descriptions.SNAPSHOTS.FROZEN,
+								},
+							),
+						);
+					} else {
+						// No snapshot exists, let's save this one!
+						this.snapshotManager.set({
+							testName: this.testName,
+							entryName,
+							value: formatted,
+							language,
+							optionalFilename: opts.filename,
+						});
+					}
+					return;
+				}
+
+				// Compare the snapshots
+				if (formatted !== existingSnapshot) {
+					const advice = this.buildMatchAdvice(
+						formatted,
+						existingSnapshot,
+						{
+							receivedAlias: "What the code gave us",
+							expectedAlias: "Existing snapshot",
+						},
+					);
+
+					if (message === undefined) {
+						message =
+							"Snapshot " +
+							___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
+								entryName,
+							) +
+							" at <emphasis>" +
+							this.snapshotManager.defaultSnapshotPath.toMarkup() +
+							"</emphasis> doesn't match";
+					} else {
+						message = ___R$project$rome$$romefrontend$cli$layout$escape_ts$escapeMarkup(
+							message,
+						);
+
+						advice.push({
+							type: "log",
+							category: "info",
+							text: "Snapshot can be found at <emphasis>" +
+							this.snapshotManager.defaultSnapshotPath.toMarkup() +
+							"</emphasis>",
+						});
+					}
+
+					advice.push({
+						type: "log",
+						category: "info",
+						text: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Run <command>rome test <filelink target="${this.file.uid}" /> --update-snapshots</command> to update this snapshot`,
+					});
+
+					await this.emitDiagnostic(
+						___R$project$rome$$romefrontend$diagnostics$derive_ts$deriveDiagnosticFromErrorStructure(
+							callError,
+							{
+								cleanFrames: ___R$project$rome$$romefrontend$core$test$worker$TestWorkerRunner_ts$cleanFrames,
+								description: {
+									category: "tests/snapshots/incorrect",
+									message: ___R$project$rome$$romefrontend$diagnostics$descriptions$index_ts$createBlessedDiagnosticMessage(
+										message,
+									),
+									advice,
+								},
+							},
+						),
+					);
+				}
+			});
+
+			return entryName;
 		}
 	}
 
@@ -138867,7 +139661,7 @@ const ___R$$priv$project$rome$$romefrontend$cli$cli_ts$fs = require("fs");
 	async function ___R$project$rome$$romefrontend$cli$cli_ts$default() {
 		___R$project$rome$$romefrontend$cli$utils$setProcessTitle_ts$default("cli");
 		const p = ___R$project$rome$$romefrontend$cli$flags$index_ts$parseCLIFlagsFromProcess({
-			programName: ___R$project$rome$$romefrontend$environment$index_ts$getEnvVar(
+			programName: ___R$project$rome$$romefrontend$cli$environment$index_ts$getEnvVar(
 				"ROME_DEV",
 			).type === "ENABLED"
 				? "dev-rome"
@@ -138896,19 +139690,31 @@ const ___R$$priv$project$rome$$romefrontend$cli$cli_ts$fs = require("fs");
 				return {
 					terminalFeatures: {
 						format: c.get(
-							"consoleFormat",
+							"outputFormat",
 							{
 								description: "Change the output format. By default it is automatically inferred from terminal settings.",
 							},
 						).asStringSetOrVoid(["ansi", "html", "none"]),
+						isTTY: c.get(
+							"outputTty",
+							{
+								description: "Treat output as TTY regardless of terminal information. This will enable things like ANSI cursor, progress bars etc.",
+							},
+						).asBooleanOrVoid(),
 						columns: c.get(
-							"consoleColumns",
+							"outputColumns",
 							{
 								description: "Change the display width. By default it is automatically inferred and updated from the terminal.",
 							},
-						).asNumberFromStringOrVoid(),
+						).asPossibleNumberString().asOneIndexedNumberOrVoid(),
+						colorDepth: c.get(
+							"outputColorDepth",
+							{
+								description: "Change the display width. By default it is automatically inferred and updated from the terminal.",
+							},
+						).asPossibleNumberString().asNumberSetOrVoid([1, 4, 8, 24]),
 						redirectError: c.get(
-							"consoleRedirectError",
+							"outputRedirectError",
 							{
 								description: "Redirect stderr to stdout.",
 							},
@@ -139158,6 +139964,7 @@ const ___R$$priv$project$rome$$romefrontend$cli$cli_ts$fs = require("fs");
 					ignoreFlags: local.ignoreFlags,
 					examples: local.examples,
 					usage: local.usage,
+					hidden: local.hidden,
 					callback(_commandFlags) {
 						commandFlags = _commandFlags;
 						args = p.getArgs();
@@ -139179,6 +139986,7 @@ const ___R$$priv$project$rome$$romefrontend$cli$cli_ts$fs = require("fs");
 					ignoreFlags: server.ignoreFlags,
 					usage: server.usage,
 					examples: server.examples,
+					hidden: server.hidden,
 					callback(_commandFlags) {
 						commandFlags = _commandFlags;
 						args = p.getArgs();
@@ -139229,7 +140037,7 @@ const ___R$$priv$project$rome$$romefrontend$cli$cli_ts$fs = require("fs");
 		// Default according to env vars
 		if (requestFlags.auxiliaryDiagnosticFormat === undefined) {
 			if (
-				___R$project$rome$$romefrontend$environment$index_ts$getEnvVar(
+				___R$project$rome$$romefrontend$cli$environment$index_ts$getEnvVar(
 					"GITHUB_ACTIONS",
 				).type ===
 				"ENABLED"
@@ -139304,7 +140112,7 @@ const ___R$$priv$project$rome$$romefrontend$cli$cli_ts$fs = require("fs");
 						);
 
 						client.reporter.success(
-							___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Wrote CPU profile to <emphasis>${resolvedProfilePath.toMarkup()}</emphasis>`,
+							___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Wrote CPU profile to <emphasis>${resolvedProfilePath.toMarkup()}</emphasis>`,
 						);
 					},
 				);
@@ -139331,8 +140139,8 @@ const ___R$$priv$project$rome$$romefrontend$cli$cli_ts$fs = require("fs");
 							client.reporter.logAll(chunk, {newline: false});
 						} else {
 							fileout.write(
-								___R$project$rome$$romefrontend$string$markup$format_ts$joinMarkupLines(
-									___R$project$rome$$romefrontend$string$markup$format_ts$markupToPlainText(
+								___R$project$rome$$romefrontend$cli$layout$format_ts$joinMarkupLines(
+									___R$project$rome$$romefrontend$cli$layout$format_ts$markupToPlainText(
 										chunk,
 									),
 								),
@@ -139378,7 +140186,7 @@ const ___R$$priv$project$rome$$romefrontend$cli$cli_ts$fs = require("fs");
 			);
 
 			client.reporter.success(
-				___R$project$rome$$romefrontend$string$markup$escape_ts$markup`Wrote markers to <emphasis>${markersPath.toMarkup()}</emphasis>`,
+				___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`Wrote markers to <emphasis>${markersPath.toMarkup()}</emphasis>`,
 			);
 		}
 
@@ -139489,7 +140297,7 @@ async function ___R$project$rome$$romefrontend$cli$testWorker_ts$default() {
 			programName: "rome test-worker",
 			defineFlags(c) {
 				return {
-					inspectorPort: c.get("inspectorPort").asNumberFromString(),
+					inspectorPort: c.get("inspectorPort").asPossibleNumberString().asNumber(),
 				};
 			},
 		});
@@ -139541,15 +140349,6 @@ async function ___R$$priv$project$rome$$romefrontend$cli$bin$rome_ts$main() {
 		}
 	}
 
-	setInterval(
-		() => {
-			// We want to exit on our own terms
-		},
-		1_000_000,
-	);
-
-	___R$project$rome$$romefrontend$v8$sourceMapManager_ts$initErrorHooks();
-
 	___R$project$rome$$romefrontend$v8$sourceMapManager_ts$default.add(
 		___R$project$rome$$romefrontend$core$common$constants_ts$BIN.join(),
 		___R$project$rome$$romefrontend$codec$source$map$SourceMapConsumer_ts$default.fromJSONLazy(
@@ -139564,26 +140363,44 @@ async function ___R$$priv$project$rome$$romefrontend$cli$bin$rome_ts$main() {
 		),
 	);
 
-	___R$project$rome$$romefrontend$diagnostics$wrap_ts$catchDiagnostics(
-		___R$$priv$project$rome$$romefrontend$cli$bin$rome_ts$main,
-	).then(({diagnostics}) => {
-		if (diagnostics !== undefined) {
-			const reporter = ___R$project$rome$$romefrontend$cli$reporter$Reporter_ts$default.fromProcess();
-			___R$project$rome$$romefrontend$cli$diagnostics$index_ts$printDiagnostics({
-				diagnostics,
-				suppressions: [],
-				printerOptions: {
-					reporter,
-				},
-			});
-			process.exit(1);
-		}
-	}).catch((err) => {
-		console.error("Error thrown inside the CLI handler");
-		console.error(
-			___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(err).stack,
+	function ___R$project$rome$$romefrontend$cli$bin$rome_ts$executeCLIMain() {
+		___R$project$rome$$romefrontend$v8$sourceMapManager_ts$initErrorHooks();
+
+		setInterval(
+			() => {
+				// We want to exit on our own terms
+			},
+			1_000_000,
 		);
-	});
+
+		___R$project$rome$$romefrontend$diagnostics$wrap_ts$catchDiagnostics(
+			___R$$priv$project$rome$$romefrontend$cli$bin$rome_ts$main,
+		).then(({diagnostics}) => {
+			if (diagnostics !== undefined) {
+				___R$project$rome$$romefrontend$cli$diagnostics$index_ts$printDiagnostics({
+					diagnostics,
+					suppressions: [],
+					printerOptions: {
+						processor: new ___R$project$rome$$romefrontend$diagnostics$DiagnosticsProcessor_ts$default(),
+						reporter: ___R$project$rome$$romefrontend$cli$reporter$Reporter_ts$default.fromProcess(),
+					},
+				}).catch((err) => {
+					console.error("Error while printing diagnostics");
+					console.error(err.stack);
+				}).finally(() => {
+					process.exit(1);
+				});
+			}
+		}).catch((err) => {
+			console.error("Error thrown inside the CLI handler");
+			console.error(
+				___R$project$rome$$romefrontend$v8$errors_ts$getErrorStructure(err).stack,
+			);
+			process.exit(1);
+		});
+	}
+
+	___R$project$rome$$romefrontend$cli$bin$rome_ts$executeCLIMain();
 
 
   // project-rome/rome/bin/rome.ts

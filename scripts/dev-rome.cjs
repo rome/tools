@@ -1,9 +1,11 @@
 // @ts-check
+
 const child = require("child_process");
 const path = require("path");
 const net = require("net");
 const fs = require("fs");
 const os = require("os");
+const tty = require("tty");
 
 //# Utils
 
@@ -136,17 +138,28 @@ async function buildTrunk() {
 	lines++;
 
 	return new Promise((resolve) => {
+		let args = [
+			path.join(__dirname, "vendor/rome.cjs"),
+			"bundle",
+			path.join(projectRoot, "packages/@romefrontend/cli/bin/rome.ts"),
+			tempDevBuildFolder,
+			"--quiet",
+		];
+
+		if (process.stdout instanceof tty.WriteStream) {
+			args = [
+				...args,
+				"--output-columns",
+				String(process.stdout.columns),
+				"--output-tty",
+				"--output-color-depth",
+				String(process.stdout.getColorDepth()),
+			];
+		}
+
 		const proc = child.spawn(
 			process.execPath,
-			[
-				path.join(__dirname, "vendor/rome.cjs"),
-				"bundle",
-				path.join(projectRoot, "packages/@romefrontend/cli/bin/rome.ts"),
-				tempDevBuildFolder,
-				"--quiet",
-				// "--output-columns", process.stdout.columns,
-				// "--output-tty"
-			],
+			args,
 		);
 
 		proc.stdout.pipe(process.stdout);
@@ -156,7 +169,10 @@ async function buildTrunk() {
 		 * @param chunk {Buffer} 
 		 */
 		function countLines(chunk) {
-			lines += chunk.toString().match(/\n/g).length;
+			const match = chunk.toString().match(/\n/g);
+			if (match != null) {
+				lines += match.length;
+			}
 		}
 
 		proc.stdout.on("data", countLines);

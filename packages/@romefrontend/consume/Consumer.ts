@@ -941,7 +941,7 @@ export default class Consumer {
 		validValues: Array<ValidValue>,
 		def?: ValidValue,
 	): ValidValue {
-		const value = this.asUndeclaredString(String(def));
+		const value = this.asUndeclaredString(def);
 
 		// @ts-ignore
 		if (validValues.includes(value)) {
@@ -964,17 +964,16 @@ export default class Consumer {
 
 	asStringSetOrVoid<ValidValue extends string>(
 		validValues: Array<ValidValue>,
-		def?: ValidValue,
 	): undefined | ValidValue {
 		this.declareDefinition({
 			type: "string",
-			default: def,
+			default: undefined,
 			required: false,
 			allowedValues: validValues,
 		});
 
 		if (this.exists()) {
-			return this.asUndeclaredStringSet(validValues, def);
+			return this.asUndeclaredStringSet(validValues);
 		} else {
 			return undefined;
 		}
@@ -1017,11 +1016,11 @@ export default class Consumer {
 		return BigInt("0");
 	}
 
-	_declareOptionalFilePath(def?: string) {
+	_declareOptionalFilePath() {
 		this.declareDefinition(
 			{
 				type: "string",
-				default: def,
+				default: undefined,
 				required: false,
 			},
 			"path",
@@ -1082,13 +1081,12 @@ export default class Consumer {
 	}
 
 	asAbsoluteFilePathOrVoid(
-		def?: string,
 		cwd?: AbsoluteFilePath,
 	): undefined | AbsoluteFilePath {
 		if (this.exists()) {
-			return this.asAbsoluteFilePath(def, cwd);
+			return this.asAbsoluteFilePath(undefined, cwd);
 		} else {
-			this._declareOptionalFilePath(def);
+			this._declareOptionalFilePath();
 			return undefined;
 		}
 	}
@@ -1240,6 +1238,61 @@ export default class Consumer {
 			return 0;
 		}
 		return value;
+	}
+
+	asNumberSet<ValidValue extends number>(
+		validValues: Array<ValidValue>,
+		def?: ValidValue,
+	): ValidValue {
+		this.declareDefinition({
+			type: "number",
+			default: def,
+			required: def === undefined,
+			allowedValues: validValues,
+		});
+		return this.asUndeclaredNumberSet(validValues, def);
+	}
+
+	asUndeclaredNumberSet<ValidValue extends number>(
+		validValues: Array<ValidValue>,
+		def?: ValidValue,
+	): ValidValue {
+		const value = this.asUndeclaredNumber(def);
+
+		// @ts-ignore
+		if (validValues.includes(value)) {
+			// @ts-ignore
+			return value;
+		} else {
+			this.unexpected(
+				descriptions.CONSUME.INVALID_NUMBER_SET_VALUE(
+					value,
+					// rome-ignore lint/js/noExplicitAny
+					((validValues as any) as Array<number>),
+				),
+				{
+					target: "value",
+				},
+			);
+			return validValues[0];
+		}
+	}
+
+	asNumberSetOrVoid<ValidValue extends number>(
+		validValues: Array<ValidValue>
+	): undefined | ValidValue {
+		this.declareDefinition({
+			type: "number",
+			default: undefined,
+			required: false,
+			allowedValues: validValues,
+		});
+
+		if (this.exists()) {
+			return this.asUndeclaredNumberSet(validValues);
+		} else {
+			return undefined;
+		}
 	}
 
 	asUnknown(): unknown {

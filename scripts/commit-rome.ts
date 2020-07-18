@@ -7,11 +7,11 @@ export async function main() {
 	const tempFolder = TEMP_PATH.append("vendor-rome");
 
 	try {
-		buildRelease([tempFolder.join()]);
+		await buildRelease([tempFolder.join()]);
 
 		const outPath = ROOT.append("scripts/vendor/rome.cjs");
-		copyFile(tempFolder.append("bin/rome/index.js"), outPath);
-		copyFile(
+		await copyFile(tempFolder.append("bin/rome/index.js"), outPath);
+		await copyFile(
 			tempFolder.append("bin/rome/index.js.map"),
 			outPath.addExtension(".map"),
 		);
