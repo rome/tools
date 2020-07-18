@@ -110,7 +110,7 @@ export async function main() {
 	function getDocRuleDescription(content: string): string {
 		const description = content.match(/description:(.*)/);
 		if (description) {
-			return description[1];
+			return description[1].trim();
 		} else {
 			return "";
 		}
@@ -153,6 +153,8 @@ export async function main() {
 					);
 				}
 			}
+
+			lines.push("");
 
 			return {lines};
 		},

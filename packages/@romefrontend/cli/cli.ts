@@ -131,7 +131,7 @@ export default async function cli() {
 						{
 							description: "Path where to write markers. When ommitted defaults to Marker-TIMESTAMP.json",
 						},
-					).asAbsoluteFilePathOrVoid(undefined, cwd),
+					).asAbsoluteFilePathOrVoid(cwd),
 					profile: c.get(
 						"profile",
 						{
@@ -143,7 +143,7 @@ export default async function cli() {
 						{
 							description: "Path where to write profile. When omitted defaults to Profile-TIMESTAMP.json",
 						},
-					).asAbsoluteFilePathOrVoid(undefined, cwd),
+					).asAbsoluteFilePathOrVoid(cwd),
 					profileTimeout: c.get(
 						"profileTimeout",
 						{
@@ -181,7 +181,7 @@ export default async function cli() {
 						{
 							description: "Path where to write rage tarball. When omitted defaults to Rage-TIMESTAMP.tgz",
 						},
-					).asAbsoluteFilePathOrVoid(undefined, cwd),
+					).asAbsoluteFilePathOrVoid(cwd),
 					logs: c.get(
 						"logs",
 						{
@@ -199,7 +199,7 @@ export default async function cli() {
 						{
 							description: "Path where to output logs. When omitted logs are not written anywhere",
 						},
-					).asAbsoluteFilePathOrVoid(undefined, cwd),
+					).asAbsoluteFilePathOrVoid(cwd),
 				},
 				requestFlags: {
 					auxiliaryDiagnosticFormat: c.get(
@@ -207,10 +207,7 @@ export default async function cli() {
 						{
 							description: "When printing diagnostics, output another format alongside",
 						},
-					).asStringSetOrVoid(
-						["github-actions"],
-						DEFAULT_CLIENT_REQUEST_FLAGS.auxiliaryDiagnosticFormat,
-					),
+					).asStringSetOrVoid(["github-actions"]),
 					benchmark: c.get(
 						"benchmark",
 						{
