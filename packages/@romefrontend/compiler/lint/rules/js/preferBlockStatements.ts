@@ -11,7 +11,7 @@ import {descriptions} from "@romefrontend/diagnostics";
 import {commentInjector} from "../../../transforms/defaultHooks";
 
 export default {
-	name: "preferBlockStatements",
+	name: "js/preferBlockStatements",
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 

@@ -12,7 +12,7 @@ import {descriptions} from "@romefrontend/diagnostics";
 const commentPattern = /(^(\/\*\*|\/\*|\/\/)|\*\/$)/gm;
 
 export default {
-	name: "jsxNoCommentText",
+	name: "jsx/noCommentText",
 	enter(path: Path): AnyNode {
 		const {node} = path;
 

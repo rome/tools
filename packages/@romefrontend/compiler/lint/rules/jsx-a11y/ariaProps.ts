@@ -8,7 +8,7 @@ import {
 } from "@romefrontend/compiler/lint/utils/aria";
 
 export default {
-	name: "jsxA11YAriaProps",
+	name: "jsx-a11y/ariaProps",
 	enter(path: Path): TransformExitResult {
 		const {node, context} = path;
 

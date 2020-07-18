@@ -6,8 +6,9 @@
  */
 
 import {Diagnostics, DiagnosticsProcessor} from "@romefrontend/diagnostics";
-import {printDiagnosticsToString} from "@romefrontend/cli-diagnostics";
+import {DiagnosticsPrinter} from "@romefrontend/cli-diagnostics";
 import {Diagnostic, DiagnosticSuppressions} from "./types";
+import {Reporter} from "@romefrontend/cli-reporter";
 
 // If printDiagnosticsToString throws a DiagnosticsError then we'll be trapped in a loop forever
 // since we'll continuously be trying to serialize diagnostics
@@ -53,10 +54,17 @@ export class DiagnosticsError extends Error {
 		message += "\n";
 
 		insideDiagnosticsErrorSerial = true;
-		message += printDiagnosticsToString({
-			diagnostics: this.diagnostics,
-			suppressions: this.suppressions,
+
+		const reporter = new Reporter();
+		const stream = reporter.attachCaptureStream();
+		const printer = new DiagnosticsPrinter({
+			reporter,
+			processor: new DiagnosticsProcessor(),
 		});
+		for (const diag of this.diagnostics) {
+			printer.printDiagnostic(diag);
+		}
+		message += stream.read();
 		insideDiagnosticsErrorSerial = false;
 
 		this._memoMessage = message;

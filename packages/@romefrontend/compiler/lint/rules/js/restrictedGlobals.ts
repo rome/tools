@@ -13,7 +13,7 @@ import {descriptions} from "@romefrontend/diagnostics";
 const RESTRICTED_GLOBALS = ["event", "error"];
 
 export default {
-	name: "restrictedGlobal",
+	name: "js/restrictedGlobal",
 	enter(path: Path): AnyNode {
 		const {node, scope} = path;
 

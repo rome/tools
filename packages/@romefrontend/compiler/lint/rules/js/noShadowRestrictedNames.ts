@@ -18,7 +18,7 @@ import {descriptions} from "@romefrontend/diagnostics";
 const restrictedNames = new Set([...builtin, ...es5, ...es2015, ...es2017]);
 
 export default {
-	name: "noShadowRestrictedNames",
+	name: "js/noShadowRestrictedNames",
 	enter(path: Path): TransformExitResult {
 		const {node, context, scope} = path;
 

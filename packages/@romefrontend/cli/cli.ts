@@ -85,19 +85,25 @@ export default async function cli() {
 			return {
 				terminalFeatures: {
 					format: c.get(
-						"consoleFormat",
+						"outputFormat",
 						{
 							description: "Change the output format. By default it is automatically inferred from terminal settings.",
 						},
 					).asStringSetOrVoid(["ansi", "html", "none"]),
+					isTTY: c.get(
+						"outputTTY",
+						{
+							description: "Treat output as TTY regardless of terminal information. This will enable things like ANSI cursor, progress bars etc.",
+						},
+					).asBooleanOrVoid(),
 					columns: c.get(
-						"consoleColumns",
+						"outputColumns",
 						{
 							description: "Change the display width. By default it is automatically inferred and updated from the terminal.",
 						},
 					).asPossibleNumberString().asOneIndexedNumberOrVoid(),
 					redirectError: c.get(
-						"consoleRedirectError",
+						"outputRedirectError",
 						{
 							description: "Redirect stderr to stdout.",
 						},

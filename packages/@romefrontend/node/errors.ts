@@ -31,6 +31,12 @@ function convertNodeErrorWithPath(
 		case "EPERM":
 			return changeMessage(err, `Cannot access '${path}'`);
 
+		case "EISDIR":
+			return changeMessage(
+				err,
+				`Trying to perform a file operation on the folder '${path}'`,
+			);
+
 		default:
 			return err;
 	}

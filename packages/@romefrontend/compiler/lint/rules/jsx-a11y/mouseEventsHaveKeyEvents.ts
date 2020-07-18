@@ -3,7 +3,7 @@ import {descriptions} from "@romefrontend/diagnostics";
 import {getJSXAttribute, hasJSXAttribute} from "@romefrontend/js-ast-utils";
 
 export default {
-	name: "mouseEventsHaveKeyEvents",
+	name: "jsx-a11y/mouseEventsHaveKeyEvents",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

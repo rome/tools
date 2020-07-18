@@ -53,7 +53,7 @@ function isStateMutated(node: AnyNode): boolean {
 }
 
 export default {
-	name: "reactNoDirectMutationState",
+	name: "react/noDirectMutationState",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

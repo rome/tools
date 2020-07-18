@@ -233,10 +233,10 @@ export class WebServer {
 		pathname: string,
 	): Promise<undefined | AbsoluteFilePath> {
 		const project = await this.serverRequest.assertClientCwdProject();
-		const possibleStaticPath = project.folder.append(pathname);
+		const possibleStaticPath = project.directory.append(pathname);
 
 		// This check makes sure that files outside of the project directory cannot be served
-		if (possibleStaticPath.isRelativeTo(project.folder)) {
+		if (possibleStaticPath.isRelativeTo(project.directory)) {
 			return possibleStaticPath;
 		} else {
 			return undefined;

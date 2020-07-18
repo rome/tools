@@ -239,9 +239,6 @@ greet();
 
   ✖ Avoid using the any type.
 
-    function greet(param: Array<any>): Array<any> { return param; };greet();
-                                             ^^^
-
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

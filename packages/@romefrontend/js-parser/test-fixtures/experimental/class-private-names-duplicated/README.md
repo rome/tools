@@ -18,9 +18,9 @@ for (var f1 in feat) for (var f2 in feat) for (var p1 in placement) for (var p2 
   ${placement[p2]}${feat[f2]}
 }`;
   var name = `${p1}-${f1}-${p2}-${f2}`;
-  var folder = "packages/babel-parser/test/fixtures/experimental/class-private-names-duplicated/" + name;
+  var directory = "packages/babel-parser/test/fixtures/experimental/class-private-names-duplicated/" + name;
 
-  if (!fs.existsSync(folder)) fs.mkdirSync(folder);
-  fs.writeFileSync(folder + "/input.js", code);
+  if (!fs.existsSync(directory)) fs.mkdirSync(directory);
+  fs.writeFileSync(directory + "/input.js", code);
 }
 ```

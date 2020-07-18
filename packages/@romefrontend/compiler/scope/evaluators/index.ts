@@ -35,6 +35,7 @@ import JSClassMethod from "./JSClassMethod";
 import TSDeclareMethod from "./TSDeclareMethod";
 import JSForInStatement from "./JSForInStatement";
 import TSMappedType from "./TSMappedType";
+import TSFunctionType from "./TSFunctionType";
 import {AnyNode} from "@romefrontend/ast";
 
 export type ScopeEvaluator = {
@@ -48,6 +49,7 @@ export function createScopeEvaluator<T extends ScopeEvaluator>(obj: T): T {
 
 const evaluators: Map<string, ScopeEvaluator> = new Map();
 
+evaluators.set("TSFunctionType", TSFunctionType);
 evaluators.set("TSMappedType", TSMappedType);
 evaluators.set("TSTypeParameter", TSTypeParameter);
 evaluators.set("TSTypeParameterDeclaration", TSTypeParameterDeclaration);

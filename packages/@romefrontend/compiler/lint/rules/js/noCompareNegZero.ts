@@ -21,7 +21,7 @@ function isNegZero(node: AnyNode): boolean {
 }
 
 export default {
-	name: "noCompareNegZero",
+	name: "js/noCompareNegZero",
 	enter(path: Path) {
 		const {node} = path;
 

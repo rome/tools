@@ -44,7 +44,7 @@ function jsxAnchorHasExternalLink(node: AnyNode) {
 }
 
 export default {
-	name: "jsxA11YNoTargetBlank",
+	name: "jsx-a11y/noTargetBlank",
 
 	enter(path: Path) {
 		const {node} = path;

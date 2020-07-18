@@ -10,7 +10,7 @@ import {Path} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 
 export default {
-	name: "noArguments",
+	name: "js/noArguments",
 	enter(path: Path): AnyNode {
 		const {node, scope} = path;
 

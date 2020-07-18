@@ -38,7 +38,7 @@ import {ManifestDefinition} from "@romefrontend/codec-js-manifest";
 import {AbsoluteFilePath} from "@romefrontend/path";
 import {ob1Coerce0To1} from "@romefrontend/ob1";
 import {
-	CoverageFolder,
+	CoverageDirectory,
 	TestServerRunnerConstructorOptions,
 	TestServerRunnerOptions,
 	TestSource,
@@ -46,7 +46,11 @@ import {
 	TestWorkerContainer,
 	TestWorkerContainers,
 } from "./types";
-import {formatPercent, percentInsideCoverageFolder, sortMapKeys} from "./utils";
+import {
+	formatPercent,
+	percentInsideCoverageDirectory,
+	sortMapKeys,
+} from "./utils";
 import {markup, safeMarkup} from "@romefrontend/cli-layout";
 import {MAX_WORKER_COUNT} from "@romefrontend/core/common/constants";
 import {TestWorkerFlags} from "@romefrontend/core/test-worker/TestWorker";
@@ -279,9 +283,9 @@ export default class TestServerRunner {
 				const {focusedTests} = await bridge.prepareTest.call({
 					id,
 					options: opts,
-					projectFolder: req.server.projectManager.assertProjectExisting(
+					projectDirectory: req.server.projectManager.assertProjectExisting(
 						ref.real,
-					).folder.join(),
+					).directory.join(),
 					file: req.server.projectManager.getTransportFileReference(ref.real),
 					cwd: flags.cwd.join(),
 					code,
@@ -795,9 +799,9 @@ export default class TestServerRunner {
 			testedPackages.add(server.memoryFs.getOwnedManifest(ref.real));
 		}
 
-		let root: CoverageFolder = {
+		let root: CoverageDirectory = {
 			name: undefined,
-			folders: new Map(),
+			directories: new Map(),
 			files: new Map(),
 		};
 
@@ -830,30 +834,30 @@ export default class TestServerRunner {
 				throw new Error("Should always be at least one element from a split()");
 			}
 
-			let target: CoverageFolder = root;
+			let target: CoverageDirectory = root;
 
 			for (const part of filenameParts) {
-				const existingFolder = target.folders.get(part);
-				if (existingFolder === undefined) {
-					const newFolder = {
+				const existingDirectory = target.directories.get(part);
+				if (existingDirectory === undefined) {
+					const newDirectory = {
 						name: part,
-						folders: new Map(),
+						directories: new Map(),
 						files: new Map(),
 					};
-					target.folders.set(part, newFolder);
-					target = newFolder;
+					target.directories.set(part, newDirectory);
+					target = newDirectory;
 				} else {
-					target = existingFolder;
+					target = existingDirectory;
 				}
 			}
 
 			target.files.set(basename, file);
 		}
 
-		// Continuously merge all entries with only a single folder from the root
-		while (root.folders.size === 1 && root.files.size === 0) {
-			// Awkward way to get the first value out of the folders map...
-			const newRoot = root.folders.values().next().value;
+		// Continuously merge all entries with only a single directory from the root
+		while (root.directories.size === 1 && root.files.size === 0) {
+			// Awkward way to get the first value out of the directories map...
+			const newRoot = root.directories.values().next().value;
 			root = {
 				...newRoot,
 				name: root.name !== undefined && newRoot.name !== undefined
@@ -869,15 +873,16 @@ export default class TestServerRunner {
 		// then truncate the output
 		const showAllCoverage = this.options.showAllCoverage || totalFiles < 15;
 
-		function buildRows(folder: CoverageFolder, depth: number) {
-			const name = folder.name === undefined ? "All files" : `${folder.name}/`;
-			const folderPercent = percentInsideCoverageFolder(folder);
+		function buildRows(directory: CoverageDirectory, depth: number) {
+			const name =
+				directory.name === undefined ? "All files" : `${directory.name}/`;
+			const directoryPercent = percentInsideCoverageDirectory(directory);
 
 			rows.push([
 				`${" ".repeat(depth)}<emphasis>${name}</emphasis>`,
-				formatPercent(folderPercent.functions),
-				formatPercent(folderPercent.branches),
-				formatPercent(folderPercent.lines),
+				formatPercent(directoryPercent.functions),
+				formatPercent(directoryPercent.branches),
+				formatPercent(directoryPercent.lines),
 			]);
 
 			// Don't ever show anything deeper than a single level when showAllCoverage is off
@@ -886,7 +891,7 @@ export default class TestServerRunner {
 			}
 
 			const fileIndent = " ".repeat(depth + 1);
-			for (const [name, file] of sortMapKeys(folder.files)) {
+			for (const [name, file] of sortMapKeys(directory.files)) {
 				let absolute = file.filename;
 
 				// Exchange any UIDs
@@ -905,8 +910,8 @@ export default class TestServerRunner {
 				]);
 			}
 
-			for (const subFolder of sortMapKeys(folder.folders).values()) {
-				buildRows(subFolder, depth + 1);
+			for (const subDirectory of sortMapKeys(directory.directories).values()) {
+				buildRows(subDirectory, depth + 1);
 			}
 		}
 
@@ -1008,7 +1013,7 @@ export default class TestServerRunner {
 	throwPrinter() {
 		const {printer} = this;
 
-		printer.onFooterPrint((reporter, isError) => {
+		printer.onFooterPrint(async (reporter, isError) => {
 			this.printCoverageReport(isError);
 			this.printSnapshotCounts(reporter);
 			this.printFocusedTestWarning(reporter);

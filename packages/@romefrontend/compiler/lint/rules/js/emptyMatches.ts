@@ -36,7 +36,7 @@ function lintEmptyMatches(expr: AnyJSRegExpExpression): boolean {
 }
 
 export default {
-	name: "emptyMatches",
+	name: "js/emptyMatches",
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 		if (node.type === "JSRegExpLiteral" && lintEmptyMatches(node.expression)) {

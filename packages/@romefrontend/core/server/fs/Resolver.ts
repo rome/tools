@@ -101,8 +101,8 @@ const NODE_MODULES = "node_modules";
 export type ResolverRemoteQuery = Omit<ResolverOptions, "origin"> & {
 	origin: URLFilePath | AbsoluteFilePath;
 	source: UnknownFilePath;
-	// Allows a resolution to stop at a folder or package boundary
-	requestedType?: "package" | "folder";
+	// Allows a resolution to stop at a directory or package boundary
+	requestedType?: "package" | "directory";
 	// Treat the source as a path (without being explicitly relative), and then a module/package if it fails to resolve
 	entry?: boolean;
 	// Strict disables implicit extensions
@@ -272,7 +272,7 @@ function getExportsAlias(
 		};
 	}
 
-	// TODO check for folder aliases
+	// TODO check for directory aliases
 	return undefined;
 }
 
@@ -553,7 +553,7 @@ export default class Resolver {
 		};
 	}
 
-	getOriginFolder(query: ResolverLocalQuery): AbsoluteFilePath {
+	getOriginDirectory(query: ResolverLocalQuery): AbsoluteFilePath {
 		const {memoryFs} = this.server;
 		const {origin} = query;
 
@@ -572,8 +572,8 @@ export default class Resolver {
 		const {memoryFs} = this.server;
 
 		// Resolve the path heiarchy
-		const originFolder = this.getOriginFolder(query);
-		const resolvedOrigin = originFolder.resolve(query.source);
+		const originDirectory = this.getOriginDirectory(query);
+		const resolvedOrigin = originDirectory.resolve(query.source);
 
 		// Check if this is an absolute filename
 		if (memoryFs.isFile(resolvedOrigin)) {
@@ -604,9 +604,9 @@ export default class Resolver {
 			}
 		}
 
-		// check if this is a folder
+		// check if this is a directory
 		if (memoryFs.isDirectory(resolvedOrigin)) {
-			if (query.requestedType === "folder") {
+			if (query.requestedType === "directory") {
 				return this.finishResolverQueryResponse(resolvedOrigin, types);
 			}
 
@@ -660,7 +660,7 @@ export default class Resolver {
 		return QUERY_RESPONSE_MISSING;
 	}
 
-	resolvePackageFolder(
+	resolvePackageDirectory(
 		query: ResolverLocalQuery,
 		moduleName: string,
 	): undefined | ManifestDefinition {
@@ -688,7 +688,7 @@ export default class Resolver {
 		moduleName: string,
 		moduleNameParts: Array<string>,
 	): ResolverQueryResponse {
-		const manifestDef = this.resolvePackageFolder(query, moduleName);
+		const manifestDef = this.resolvePackageDirectory(query, moduleName);
 		return this.resolveManifest(query, manifestDef, moduleNameParts);
 	}
 
@@ -724,7 +724,7 @@ export default class Resolver {
 				const resolved = this.resolvePath(
 					{
 						...query,
-						source: manifestDef.folder.append(alias.value),
+						source: manifestDef.directory.append(alias.value),
 					},
 					true,
 					["package"],
@@ -737,7 +737,7 @@ export default class Resolver {
 		return this.resolvePath(
 			{
 				...query,
-				source: manifestDef.folder.append(moduleNameParts),
+				source: manifestDef.directory.appendList(...moduleNameParts),
 			},
 			true,
 			["package"],
@@ -797,9 +797,9 @@ export default class Resolver {
 		const project = this.server.projectManager.findProjectExisting(origin);
 
 		// Get all the parent directories for when we crawl up
-		const parentDirectories = this.getOriginFolder(query).getChain();
+		const parentDirectories = this.getOriginDirectory(query).getChain();
 
-		// If mocks are enabled for this query then check all parent mocks folder
+		// If mocks are enabled for this query then check all parent mocks directory
 		if (query.mocks === true) {
 			const mockResolved = this.resolveMock(query, project, parentDirectories);
 			if (shouldReturnQueryResponse(mockResolved)) {
@@ -811,12 +811,14 @@ export default class Resolver {
 		const [moduleName, moduleNameParts] = this.splitModuleName(source);
 
 		// Resolve a virtual module
-		const virtualResolved = this.server.virtualModules.resolve(moduleName);
+		const virtualResolved = this.server.virtualModules.resolvePossibleVirtualModuleName(
+			moduleName,
+		);
 		if (virtualResolved !== undefined) {
 			return this.resolvePath(
 				{
 					...query,
-					source: virtualResolved.append(moduleNameParts),
+					source: virtualResolved.appendList(...moduleNameParts),
 				},
 				true,
 				["virtual"],

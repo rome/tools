@@ -250,9 +250,6 @@ JSRoot {
 
   ✖ Unclosed catch clause param
 
-    try {} catch (answer()) {}
-                 ^
-
   ℹ We expected to find the closing character ) here
 
     try {} catch (answer()) {}

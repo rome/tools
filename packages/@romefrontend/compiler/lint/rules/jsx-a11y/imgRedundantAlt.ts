@@ -25,7 +25,7 @@ function jsxImgRedundantAlt(node: AnyNode) {
 }
 
 export default {
-	name: "jsxA11YImgRedundantAlt",
+	name: "jsx-a11y/imgRedundantAlt",
 
 	enter(path: Path): AnyNode {
 		const {node} = path;

@@ -28,7 +28,7 @@ export default createServerCommand({
 		);
 
 		while (project !== undefined) {
-			req.reporter.logAll(project.folder.toMarkup());
+			req.reporter.logAll(project.directory.toMarkup());
 			if (flags.complete) {
 				req.reporter.inspect(project.config);
 			} else {

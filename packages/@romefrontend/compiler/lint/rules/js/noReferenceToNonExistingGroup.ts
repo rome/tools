@@ -29,7 +29,7 @@ function findCaptureGroups(path: Path): Array<JSRegExpGroupCapture> | undefined 
 }
 
 export default {
-	name: "noReferenceToNonExistingGroup",
+	name: "js/noReferenceToNonExistingGroup",
 	enter(path: Path): AnyNode {
 		const {node, context} = path;
 

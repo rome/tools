@@ -32,7 +32,7 @@ function extractPropertyKey(
 }
 
 export default {
-	name: "noDuplicateKeys",
+	name: "js/noDuplicateKeys",
 	enter(path: Path): TransformExitResult {
 		const {node, context} = path;
 

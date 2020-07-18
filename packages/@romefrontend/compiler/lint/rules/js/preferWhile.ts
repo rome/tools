@@ -10,7 +10,7 @@ import {Path, TransformExitResult} from "@romefrontend/compiler";
 import {jsBooleanLiteral, jsWhileStatement} from "@romefrontend/ast";
 
 export default {
-	name: "preferWhile",
+	name: "js/preferWhile",
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 

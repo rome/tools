@@ -48,7 +48,7 @@ export function removeLoc(ast: AnyNode) {
 	const context = new CompilerContext({
 		ast: MOCK_PROGRAM,
 		project: {
-			folder: undefined,
+			directory: undefined,
 			config: createDefaultProjectConfig(),
 		},
 	});

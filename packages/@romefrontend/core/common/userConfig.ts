@@ -15,17 +15,13 @@ import {descriptions} from "@romefrontend/diagnostics";
 
 export type UserConfig = {
 	configPath: undefined | AbsoluteFilePath;
-	runtimeModulesPath: AbsoluteFilePath;
 	cachePath: AbsoluteFilePath;
 	syntaxTheme: undefined | Consumer;
 };
 
-const VERSION_PATH = TEMP_PATH.append(`rome-${VERSION}`);
-
 export const DEFAULT_USER_CONFIG: UserConfig = {
 	configPath: undefined,
-	runtimeModulesPath: VERSION_PATH.append("runtime"),
-	cachePath: VERSION_PATH.append("cache"),
+	cachePath: TEMP_PATH.append(`rome-${VERSION}`),
 	syntaxTheme: undefined,
 };
 
@@ -39,13 +35,6 @@ export function normalizeUserConfig(
 
 	if (consumer.has("cachePath")) {
 		userConfig.cachePath = consumer.get("cachePath").asAbsoluteFilePath(
-			undefined,
-			configPath.getParent(),
-		);
-	}
-
-	if (consumer.has("runtimeModulesPath")) {
-		userConfig.runtimeModulesPath = consumer.get("runtimeModulesPath").asAbsoluteFilePath(
 			undefined,
 			configPath.getParent(),
 		);
@@ -81,7 +70,7 @@ export function loadUserConfig(): UserConfig {
 	}
 
 	for (const configFilename of ROME_CONFIG_FILENAMES) {
-		const configPath = HOME_PATH.append([".config", configFilename]);
+		const configPath = HOME_PATH.appendList(".config", configFilename);
 
 		if (!existsSync(configPath)) {
 			continue;

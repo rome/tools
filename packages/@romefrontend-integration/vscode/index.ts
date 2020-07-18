@@ -82,7 +82,7 @@ async function getRomeLocation(): Promise<
 		return undefined;
 	}
 
-	// Find relative to workspace folders
+	// Find relative to workspace directories
 	for (const {uri} of workspaceFolders) {
 		if (uri.scheme === "file") {
 			const manifest = await tryManifest(uri.path);

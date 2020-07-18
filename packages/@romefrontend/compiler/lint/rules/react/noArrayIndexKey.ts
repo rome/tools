@@ -120,7 +120,7 @@ function hasArrayIndexKey(keyValue: string, node: AnyNode) {
 }
 
 export default {
-	name: "reactNoArrayIndexKey",
+	name: "react/noArrayIndexKey",
 	enter(path: Path): TransformExitResult {
 		const {node, scope} = path;
 

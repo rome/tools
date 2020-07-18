@@ -53,7 +53,10 @@ import {printDiagnosticsToString} from "@romefrontend/cli-diagnostics";
 import crypto = require("crypto");
 import stream = require("stream");
 import {ExtensionHandler} from "../core/common/file-handlers/types";
-import {DiagnosticsProcessor} from "@romefrontend/diagnostics";
+import {
+	DiagnosticsProcessor,
+	interceptDiagnostics,
+} from "@romefrontend/diagnostics";
 import {markupToPlainText} from "@romefrontend/cli-layout";
 import {joinMarkupLines} from "@romefrontend/cli-layout/format";
 
@@ -76,12 +79,14 @@ type IntegrationTestOptions = {
 	flags?: Partial<ClientFlags>;
 };
 
-async function generateTempFolder(): Promise<AbsoluteFilePath> {
+export async function generateTempDirectory(
+	prefix: string = "rome",
+): Promise<AbsoluteFilePath> {
 	const key = crypto.randomBytes(16).toString("base64");
-	const path = TEMP_PATH.append(`rome-integration-${key}`);
+	const path = TEMP_PATH.append(`${prefix}-${key}`);
 	if (await exists(path)) {
 		// Extremely rare collision which is only possible if we haven't cleaned up
-		return generateTempFolder();
+		return generateTempDirectory(prefix);
 	} else {
 		await createDirectory(path);
 		return path;
@@ -91,9 +96,10 @@ async function generateTempFolder(): Promise<AbsoluteFilePath> {
 export type IntegrationWorker = {
 	worker: Worker;
 	addProject: (config: ProjectConfig) => number;
-	createFileReference: (
+	performFileOperation: <T>(
 		opts: IntegrationWorkerFileRefOptions,
-	) => IntegrationWorkerFileRefReturn;
+		callback: (ref: FileReference) => Promise<T>,
+	) => Promise<T>;
 };
 
 type IntegrationWorkerFileRefOptions = {
@@ -102,11 +108,6 @@ type IntegrationWorkerFileRefOptions = {
 	project?: number;
 	once?: boolean;
 	uid: string;
-};
-
-type IntegrationWorkerFileRefReturn = {
-	ref: FileReference;
-	teardown: () => void;
 };
 
 export function findFixtureInput(
@@ -139,9 +140,7 @@ export function findFixtureInput(
 
 let cachedIntegrationWorker: undefined | IntegrationWorker;
 
-export function createIntegrationWorker(
-	force: boolean = false,
-): IntegrationWorker {
+export function createMockWorker(force: boolean = false): IntegrationWorker {
 	if (!force && cachedIntegrationWorker !== undefined) {
 		return cachedIntegrationWorker;
 	}
@@ -156,14 +155,15 @@ export function createIntegrationWorker(
 
 	let projectIdCounter = 0;
 
-	function createFileReference(
+	async function performFileOperation<T>(
 		{
 			project = defaultProjectId,
 			real,
 			sourceText,
 			uid,
 		}: IntegrationWorkerFileRefOptions,
-	): IntegrationWorkerFileRefReturn {
+		callback: (ref: FileReference) => Promise<T>,
+	): Promise<T> {
 		let relative = createRelativeFilePath(uid);
 
 		if (real === undefined && sourceText === undefined) {
@@ -189,12 +189,20 @@ export function createIntegrationWorker(
 			worker.updateBuffer(ref, sourceText);
 		}
 
-		return {
-			ref,
-			teardown: () => {
-				worker.clearBuffer(ref);
-			},
-		};
+		try {
+			return await interceptDiagnostics(
+				async () => {
+					return await callback(ref);
+				},
+				(processor) => {
+					if (sourceText !== undefined) {
+						processor.normalizer.setInlineSourceText(ref.uid, sourceText);
+					}
+				},
+			);
+		} finally {
+			worker.clearBuffer(ref);
+		}
 	}
 
 	function addProject(config: ProjectConfig): number {
@@ -203,7 +211,7 @@ export function createIntegrationWorker(
 			{
 				config: serializeJSONProjectConfig(config),
 				id,
-				folder: `/project-${id}`,
+				directory: `/project-${id}`,
 			},
 		]);
 		return id;
@@ -213,7 +221,7 @@ export function createIntegrationWorker(
 
 	const int: IntegrationWorker = {
 		addProject,
-		createFileReference,
+		performFileOperation,
 		worker,
 	};
 	if (!force) {
@@ -223,7 +231,7 @@ export function createIntegrationWorker(
 }
 
 export async function declareParserTests() {
-	const {worker, createFileReference} = createIntegrationWorker();
+	const {worker, performFileOperation} = createMockWorker();
 
 	return createFixtureTests(async (fixture, t) => {
 		const {options} = fixture;
@@ -235,21 +243,22 @@ export async function declareParserTests() {
 		]);
 		const inputContent = removeCarriageReturn(input.content.toString());
 
-		const {ref, teardown} = createFileReference({
-			uid: input.relative.join(),
-			sourceText: inputContent,
-		});
-
-		const {ast} = await worker.parse(
-			ref,
+		const {ast} = await performFileOperation(
 			{
-				cache: false,
-				sourceTypeJS,
-				allowCorrupt: true,
+				uid: input.relative.join(),
+				sourceText: inputContent,
+			},
+			async (ref) => {
+				return await worker.parse(
+					ref,
+					{
+						cache: false,
+						sourceTypeJS,
+						allowCorrupt: true,
+					},
+				);
 			},
 		);
-
-		teardown();
 
 		// Inline diagnostics
 		const processor = new DiagnosticsProcessor();
@@ -262,7 +271,7 @@ export async function declareParserTests() {
 		).join();
 		t.namedSnapshot("ast", ast, undefined, {filename: outputFile});
 
-		const printedDiagnostics = printDiagnosticsToString({
+		const printedDiagnostics = await printDiagnosticsToString({
 			diagnostics,
 			suppressions: [],
 		});
@@ -288,7 +297,7 @@ export function createIntegrationTest(
 	callback: (t: TestHelper, helper: IntegrationTestHelper) => Promise<void>,
 ): (t: TestHelper) => Promise<void> {
 	return async function(t: TestHelper) {
-		const temp = await generateTempFolder();
+		const temp = await generateTempDirectory("rome-integration");
 
 		const projectPath = temp.append("project");
 		await createDirectory(projectPath);
@@ -305,7 +314,6 @@ export function createIntegrationTest(
 		const userConfig: UserConfig = {
 			configPath: undefined,
 			cachePath,
-			runtimeModulesPath: virtualModulesPath,
 			syntaxTheme: undefined,
 		};
 
@@ -388,7 +396,7 @@ export function createIntegrationTest(
 				const {server, bridge, serverClient} = await client.startInternalServer({
 					// Only one worker running inside of this process. Don't fork workers.
 					inbandOnly: true,
-					// Force cache to be enabled (which will be at our generated folder specified above)
+					// Force cache to be enabled (which will be at our generated directory specified above)
 					// This will ignore any ROME_CACHE env variable specified by scripts/dev-rome
 					forceCacheEnabled: true,
 					userConfig,

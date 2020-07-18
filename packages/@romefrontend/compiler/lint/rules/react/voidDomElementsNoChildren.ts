@@ -37,7 +37,7 @@ const VOID_DOM_ELEMENTS = new Set([
 ]);
 
 export default {
-	name: "reactVoidDomElementsNoChildren",
+	name: "react/voidDomElementsNoChildren",
 	enter(path: Path): TransformExitResult {
 		const {node, context, scope} = path;
 		const elementType = getCreateElementType(node, scope);

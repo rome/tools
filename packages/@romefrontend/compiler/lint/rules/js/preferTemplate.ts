@@ -260,7 +260,7 @@ function shouldReplace(expressions: Array<AnyJSExpression>): boolean {
 }
 
 export default {
-	name: "preferTemplate",
+	name: "js/preferTemplate",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

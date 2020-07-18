@@ -12,7 +12,7 @@ import {
 } from "@romefrontend/compiler/lint/utils/aria";
 
 export default {
-	name: "jsxA11YNoNoninteractiveElementToInteractiveRole",
+	name: "jsx-a11y/noNoninteractiveElementToInteractiveRole",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

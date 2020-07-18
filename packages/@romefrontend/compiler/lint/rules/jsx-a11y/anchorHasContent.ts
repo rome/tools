@@ -14,7 +14,7 @@ function hasAnchorContent(node: JSXElement): boolean {
 }
 
 export default {
-	name: "jsxA11YAnchorHasContent",
+	name: "jsx-a11y/anchorHasContent",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 		if (isJSXElement(node, "a") && !hasAnchorContent(node)) {

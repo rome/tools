@@ -212,7 +212,7 @@ function findOutOfOrderNodes(
 }
 
 export default {
-	name: "reactSortComp",
+	name: "react/sortComp",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

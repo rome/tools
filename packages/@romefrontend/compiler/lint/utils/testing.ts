@@ -11,10 +11,7 @@ import {
 	DiagnosticsProcessor,
 } from "@romefrontend/diagnostics";
 import {printDiagnosticsToString} from "@romefrontend/cli-diagnostics";
-import {
-	IntegrationWorker,
-	createIntegrationWorker,
-} from "@romefrontend/test-helpers";
+import {IntegrationWorker, createMockWorker} from "@romefrontend/test-helpers";
 
 type TestLintOptions = {
 	category: undefined | DiagnosticCategory;
@@ -25,7 +22,7 @@ type TestLintOptions = {
 };
 
 export async function testLint(t: TestHelper, opts: TestLintOptions) {
-	const int = createIntegrationWorker();
+	const int = createMockWorker();
 	const {valid = [], invalid = []} = opts;
 
 	let i = 0;
@@ -41,7 +38,7 @@ export async function testLint(t: TestHelper, opts: TestLintOptions) {
 
 async function testLintExpect(
 	t: TestHelper,
-	{worker, createFileReference}: IntegrationWorker,
+	{worker, performFileOperation}: IntegrationWorker,
 	input: string,
 	{
 		category,
@@ -71,24 +68,26 @@ async function testLintExpect(
 	});
 
 	const uid = `${category}/${expectValid ? "pass" : "reject"}/${index}/${filename}`;
-	const {ref, teardown} = createFileReference({
-		uid,
-		sourceText: input,
-	});
 
-	const res = await worker.api.lint(
-		ref,
+	const res = await performFileOperation(
 		{
-			applyRecommendedFixes: true,
-			prefetchedModuleSignatures: {},
-			save: true,
+			uid,
+			sourceText: input,
 		},
-		{
-			//allowCorrupt: true,
+		async (ref) => {
+			return await worker.api.lint(
+				ref,
+				{
+					applyRecommendedFixes: true,
+					prefetchedModuleSignatures: {},
+					save: true,
+				},
+				{
+					//allowCorrupt: true,
+				},
+			);
 		},
 	);
-
-	teardown();
 
 	t.addToAdvice({
 		type: "log",
@@ -122,7 +121,7 @@ async function testLintExpect(
 	}
 
 	const snapshotName = t.snapshot(
-		printDiagnosticsToString({
+		await printDiagnosticsToString({
 			diagnostics,
 			suppressions: res.suppressions,
 		}),

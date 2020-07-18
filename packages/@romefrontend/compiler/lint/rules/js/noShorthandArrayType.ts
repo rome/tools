@@ -15,7 +15,7 @@ import {
 import {descriptions} from "@romefrontend/diagnostics";
 
 export default {
-	name: "noShorthandArrayType",
+	name: "js/noShorthandArrayType",
 	enter(path: Path): TransformExitResult {
 		const {node, context} = path;
 

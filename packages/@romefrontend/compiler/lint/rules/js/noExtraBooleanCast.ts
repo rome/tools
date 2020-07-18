@@ -60,7 +60,7 @@ function getNode(path: Path): undefined | AnyNode {
 }
 
 export default {
-	name: "noExtraBooleanCast",
+	name: "js/noExtraBooleanCast",
 	enter(path: Path): AnyNode {
 		const {context} = path;
 

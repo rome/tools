@@ -9,7 +9,7 @@ function getAttributeKey(node: JSXAttribute): string {
 }
 
 export default {
-	name: "jsxNoDuplicateProps",
+	name: "jsx/noDuplicateProps",
 
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;

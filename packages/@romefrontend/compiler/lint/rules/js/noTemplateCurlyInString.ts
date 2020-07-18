@@ -9,7 +9,7 @@ import {Path} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 
 export default {
-	name: "noTemplateCurlyInString",
+	name: "js/noTemplateCurlyInString",
 	enter(path: Path) {
 		const {node, context} = path;
 

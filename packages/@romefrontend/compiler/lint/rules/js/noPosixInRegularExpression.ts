@@ -37,7 +37,7 @@ function checkRegEx(
 }
 
 export default {
-	name: "noPosixInRegularExpression",
+	name: "js/noPosixInRegularExpression",
 	enter(path: Path): AnyNode {
 		const {context, node} = path;
 

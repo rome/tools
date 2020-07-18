@@ -20,7 +20,7 @@ const initialState: State = {
 const ignoreVariables = ["React"];
 
 const provider = createHook<State, undefined, AnyNode>({
-	name: "noUnusedVariablesProvider",
+	name: "js/noUnusedVariablesProvider",
 	initialState,
 	call(path: Path, state: State): HookCallReturn<AnyNode, State> {
 		const {node} = path;
@@ -78,7 +78,7 @@ const provider = createHook<State, undefined, AnyNode>({
 });
 
 export default {
-	name: "unusedVariables",
+	name: "js/unusedVariables",
 	enter(path: Path): AnyNode {
 		const {node, scope} = path;
 

@@ -3,7 +3,7 @@ import {descriptions} from "@romefrontend/diagnostics";
 import {doesNodeMatchReactPattern} from "../../utils/react";
 
 export default {
-	name: "reactNoRedundantShouldComponentUpdate",
+	name: "react/noRedundantShouldComponentUpdate",
 	enter(path: Path): TransformExitResult {
 		const {node, scope} = path;
 

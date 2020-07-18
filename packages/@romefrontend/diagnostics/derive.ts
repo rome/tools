@@ -149,7 +149,7 @@ export function deriveRootAdviceFromDiagnostic(
 	return {header, advice};
 }
 
-type DeriveErrorDiagnosticOpts = {
+type DeriveErrorDiagnosticOptions = {
 	description: RequiredProps<Partial<DiagnosticDescription>, "category">;
 	label?: string;
 	filename?: string;
@@ -158,7 +158,7 @@ type DeriveErrorDiagnosticOpts = {
 
 export function deriveDiagnosticFromErrorStructure(
 	struct: StructuredError,
-	opts: DeriveErrorDiagnosticOpts,
+	opts: DeriveErrorDiagnosticOptions,
 ): Diagnostic {
 	const {filename} = opts;
 
@@ -207,7 +207,7 @@ export function deriveDiagnosticFromErrorStructure(
 
 export function deriveDiagnosticFromError(
 	error: unknown,
-	opts: DeriveErrorDiagnosticOpts,
+	opts: DeriveErrorDiagnosticOptions,
 ): Diagnostic {
 	return deriveDiagnosticFromErrorStructure(getErrorStructure(error), opts);
 }

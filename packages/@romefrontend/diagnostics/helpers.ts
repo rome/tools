@@ -107,7 +107,8 @@ export function buildSuggestionAdvice(
 	return advice;
 }
 
-// Sometimes we'll have big blobs of JS in a diagnostic when we'll only show a snippet. This method pads it out then truncates the rest for efficient transmission. We will have crappy ANSI formatting in the console and elsewhere but for places where we need to truncate we probably don't care (generated code).
+// Sometimes we'll want to inline sourceText into diagnostics but the file size could be huge.
+// This method trims the sourceText and pads it to fit within a certain range.
 export function truncateSourceText(
 	code: string,
 	start: Position,

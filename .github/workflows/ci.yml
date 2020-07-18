@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: '13.x'
       - name: rome ci
-        run: node scripts/dev-rome ci
+        run: ./rome ci
 
   tests:
     name: rome test
@@ -34,7 +34,7 @@ jobs:
         with:
           node-version: '13.x'
       - name: rome test
-        run: node scripts/dev-rome test --freeze-snapshots
+        run: ./rome test --freeze-snapshots
 
   typescript:
     runs-on: ubuntu-latest
@@ -58,4 +58,4 @@ jobs:
         with:
           node-version: '13.x'
       - name: Check if generated files need to be updated
-        run: node scripts/assert-generated
+        run: ./rome run scripts/generate-files

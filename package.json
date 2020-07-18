@@ -15,12 +15,6 @@
 		"@types/vscode": "^1.46.0",
 		"typescript": "^4.0.0-beta"
 	},
-	"scripts": {
-		"dev-rome": "node ./scripts/dev-rome",
-		"test": "node ./scripts/dev-rome test",
-		"lint": "node ./scripts/dev-rome check",
-		"fix": "node ./scripts/dev-rome --fix"
-	},
 	"rome": {
 		"root": true,
 		"bundler": {

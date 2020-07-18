@@ -10,7 +10,7 @@ import {jsReferenceIdentifier} from "@romefrontend/ast";
 import {descriptions} from "@romefrontend/diagnostics";
 
 export default {
-	name: "sparseArray",
+	name: "js/sparseArray",
 	enter(path: Path): TransformExitResult {
 		const {node, parent} = path;
 

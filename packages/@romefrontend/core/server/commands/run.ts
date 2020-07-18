@@ -54,7 +54,7 @@ export default createServerCommand({
 
 		// Check for bin files in any manifests that belong to any projects
 		if (project !== undefined) {
-			for (const {manifest, folder} of project.packages.values()) {
+			for (const {manifest, directory} of project.packages.values()) {
 				const relative = manifest.bin.get(arg);
 				if (relative === undefined) {
 					continue;
@@ -62,7 +62,7 @@ export default createServerCommand({
 
 				const resolved = await server.resolver.resolveEntryAssertPath({
 					...req.getResolverOptionsFromFlags(),
-					origin: folder,
+					origin: directory,
 					platform: "node",
 					source: createRelativeFilePath(relative),
 				});

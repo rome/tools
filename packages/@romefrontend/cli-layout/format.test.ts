@@ -25,7 +25,7 @@ test(
 				throw new Error(`"${input}" should have thrown a syntax error`);
 			} else {
 				t.snapshot(
-					printDiagnosticsToString({
+					await printDiagnosticsToString({
 						diagnostics,
 						suppressions: [],
 					}),

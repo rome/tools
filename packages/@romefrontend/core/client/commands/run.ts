@@ -13,13 +13,14 @@ import executeMain from "../../common/utils/executeMain";
 import {createAbsoluteFilePath} from "@romefrontend/path";
 import {createSingleDiagnosticError} from "@romefrontend/diagnostics";
 import {SourceMapConsumer} from "@romefrontend/codec-source-map";
+import {getEnvVar} from "@romefrontend/cli-environment";
 
 export default createLocalCommand({
 	category: commandCategories.PROJECT_MANAGEMENT,
 	description: "TODO",
 	usage: "",
 	examples: [],
-	hidden: true,
+	hidden: getEnvVar("ROME_DEV").type !== "ENABLED",
 	defineFlags() {
 		return {};
 	},
@@ -56,13 +57,8 @@ export default createLocalCommand({
 
 			switch (type) {
 				case "executeCode": {
-					process.execArgv = [...process.execArgv, process.argv[1], "run"];
-					process.argv = [
-						process.argv[0],
-						String(data.filename),
-						...process.argv.slice(4),
-					];
 					const {syntaxError} = await executeMain({
+						args: req.query.args,
 						path: createAbsoluteFilePath(data.get("filename").asString()),
 						code: data.get("code").asString(),
 						sourceMap: SourceMapConsumer.fromJSON(data.get("map").asAny()),
@@ -70,7 +66,6 @@ export default createLocalCommand({
 					if (syntaxError !== undefined) {
 						throw createSingleDiagnosticError(syntaxError);
 					}
-					await new Promise(() => {});
 					break;
 				}
 			}

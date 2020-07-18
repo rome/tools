@@ -6,70 +6,104 @@ Our [Discord server](https://discord.gg/9WxHa5d) is open for help and more adhoc
 
 ## Getting Started
 
-Getting started with developing Rome is as easy as three commands. You will need Node v12 or above.
+Getting started with developing Rome takes only three commands. You will only need Node v12 or above.
 
 ```bash
 git clone https://github.com/romefrontend/rome
 cd rome
-./scripts/dev-rome --help
+./rome --help
 ```
-
-**Note:** If you previously ran the user-facing [installation instructions](https://romefrontend.dev/docs/introduction/installation), the `dist` directory must be deleted before running any development commands.
 
 No dependency installation step is required as we check in our `node_modules` folder that contains only a copy of TypeScript and some definitions.
 
-If files specific to your local development environment should be ignored,
-please add these files to a global git ignore file rather than to a git ignore
-file within Rome. You can find more information on this process [here](https://help.github.com/en/github/using-git/ignoring-files#configuring-ignored-files-for-all-repositories-on-your-computer).
+### User files
 
-Refer to [Getting Started](https://romefrontend.dev/docs/introduction/getting-started/) for more usage documentation.
+If files specific to your local development environment should be ignored, please add these files to a global git ignore file rather than to a git ignore file within Rome.
 
-## Linting
+You can find more information on this process [here](https://help.github.com/en/github/using-git/ignoring-files#configuring-ignored-files-for-all-repositories-on-your-computer).
 
-You can run the linter with the following command:
+## Website
 
-```bash
-./scripts/dev-rome check
-```
-
-This will run all the lint rules and verify formatting.
-
-Many of the lint rules are autofixable and formatting can also be automatically applied by running:
+The [Rome website](https://romefrontend.dev/) is built with [Eleventy](https://www.11ty.dev/). To start a development server you can run the following commands:
 
 ```bash
-./scripts/dev-rome check --apply
+cd website
+npm install
+npm start
 ```
 
-## Testing
+## Checks
 
-You can run the test suite with the following command:
+When working on Rome you will want to run the tests and linter to validate your changes. You can do both of these with a single command:
 
 ```bash
-./scripts/dev-rome test
+./rome ci
 ```
 
-This will run all tests inside of any `__rtests__` directories.
+This is the main command we run when you submit a PR, so running it locally and making sure it passes will make it easier to review and merge your changes.
 
-## Type Checking
-
-Run TypeScript with code emitting disabled to perform a full typecheck outside the editor.
+To automatically update test snapshots, apply formatting and autofixes, add the `--fix` flag.
 
 ```bash
-node_modules/.bin/tsc --noEmit
+./rome ci --fix
 ```
 
-## Developing on Windows
+You can alternatively run more specific commands if you need to, but they shouldn't be necessary.
 
-You may run into errors when trying to run the Rome commands on Windows
+### Linting
+
+To run just the linter use:
+
+```bash
+./rome check
+```
+
+And to automatically apply formatting and autofixes:
+
+```bash
+./rome check --apply
+```
+
+### Testing
+
+If you would like to run only the test runner:
+
+```bash
+./rome test
+```
+
+And to update snapshots:
+
+```bash
+./rome test --update-snapshots
+```
+
+### Generated files
+
+If you are adding a new lint rule, or modifying some core code, you might need to regenerate some files. We have generated files to avoid having to write a lot of boilerplate and automate common tasks.
+
+```bash
+./rome run scripts/generate-files
+```
+
+## Scripts
+
+Here are some other scripts that you might find useful.
+
+### `lint-create-rule`
+
+This is used to generate new lint rules and boilperlate.
+
+```bash
+./rome run scripts/lint-create-rule [category]/[ruleName]
+```
+
+The `category` is one of the lint category folders defined in [`packages/@romefrontend/compiler/lint/rules`](https://github.com/romefrontend/rome/tree/main/packages/@romefrontend/compiler/lint/rules). Some of these represent specific languages, or general themes.
+
+For example, to create a rule in the `js` category called `camelCase` run:
 
 ```
-PS C:\code\rome> scripts/dev-rome --help
-ResourceUnavailable: Program 'dev-rome' failed to run: No application is associated with the specified file for this operation.At line:1 char:1
-+ scripts/dev-rome --help
-+ ~~~~~~~~~~~~~~~~~~~~~~~.
+./rome run scripts/lint-create-rule js/camelCase
 ```
 
-This is because the command uses shebangs to automatically invoke itself as a Node script. You can fix this in a couple of ways:
-
-- Use a terminal that supports shebangs on Windows such a Git Bash
-- Prefix any commands with `node` eg. `node scripts/dev-rome`
+The created files will be listed in the console output. See those files for inline comments on what to insert. Use other lint rules as a reference.

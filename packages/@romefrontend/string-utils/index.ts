@@ -19,6 +19,6 @@ export {preserveCasing} from "./preserveCasing";
 export {removeCarriageReturn} from "./removeCarriageReturn";
 export {removePrefix} from "./removePrefix";
 export {removeSuffix} from "./removeSuffix";
-export {toCamelCase} from "./toCamelCase";
+export {CamelCaseOptions, toCamelCase} from "./toCamelCase";
 export {toKebabCase} from "./toKebabCase";
 export {sliceEscaped} from "./sliceEscaped";

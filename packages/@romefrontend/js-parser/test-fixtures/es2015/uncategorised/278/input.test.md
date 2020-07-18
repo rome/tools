@@ -323,9 +323,6 @@ JSRoot {
 
   ✖ Unclosed function params
 
-    function f(a, ...b = 0)
-              ^
-
   ℹ We expected to find the closing character ) here
 
     function f(a, ...b = 0)

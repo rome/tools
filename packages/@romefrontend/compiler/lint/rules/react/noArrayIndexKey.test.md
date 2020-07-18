@@ -23,11 +23,6 @@
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ React.Children.map(this.props.children, (child, index) => (
-  > 2 │   React.cloneElement(child, { key: index })
-      │         ^^^^^^^^^^^^
-    3 │ ))
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -64,11 +59,6 @@ React.Children.map(
  lint/react/noArrayIndexKey/reject/2/file.tsx:2:14 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
-
-    1 │ React.Children.map(this.props.children, function (child, index) {
-  > 2 │   return React.cloneElement(child, { key: index })
-      │                ^^^^^^^^^^^^
-    3 │ })
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -109,12 +99,6 @@ React.Children.map(
  lint/react/noArrayIndexKey/reject/3/file.tsx:2:19 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
-
-    1 │ React.Children.map(this.props.children, function (child, index) {
-  > 2 │   const foo = React.cloneElement(child, { key: index })
-      │                     ^^^^^^^^^^^^
-    3 │   return foo;
-    4 │ })
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -255,11 +239,6 @@ Children.map(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ Children.map(this.props.children, (child, index) => (
-  > 2 │   React.cloneElement(child, { key: index })
-      │         ^^^^^^^^^^^^
-    3 │ ))
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -328,11 +307,6 @@ React.Children.map(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ React.Children.forEach(this.props.children, (child, index) => (
-  > 2 │   React.cloneElement(child, { key: index })
-      │         ^^^^^^^^^^^^
-    3 │ ))
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -369,11 +343,6 @@ React.Children.forEach(
  lint/react/noArrayIndexKey/reject/10/file.tsx:2:14 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
-
-    1 │ React.Children.forEach(this.props.children, function (child, index) {
-  > 2 │   return React.cloneElement(child, { key: index })
-      │                ^^^^^^^^^^^^
-    3 │ })
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -414,12 +383,6 @@ React.Children.forEach(
  lint/react/noArrayIndexKey/reject/11/file.tsx:2:19 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
-
-    1 │ React.Children.forEach(this.props.children, function (child, index) {
-  > 2 │   const foo = React.cloneElement(child, { key: index })
-      │                     ^^^^^^^^^^^^
-    3 │   return foo;
-    4 │ })
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
@@ -560,11 +523,6 @@ Children.forEach(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ Children.forEach(this.props.children, (child, index) => (
-  > 2 │   React.cloneElement(child, { key: index })
-      │         ^^^^^^^^^^^^
-    3 │ ))
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -690,11 +648,6 @@ things.map(function(thing, index) {
  lint/react/noArrayIndexKey/reject/19/file.tsx:2:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
-
-    1 │ things.map((thing, index) => (
-  > 2 │   React.cloneElement(thing, { key: index })
-      │         ^^^^^^^^^^^^
-    3 │ ));
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 

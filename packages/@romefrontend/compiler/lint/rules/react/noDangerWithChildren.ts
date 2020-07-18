@@ -51,7 +51,7 @@ function createElementDangerWithChildren(node: AnyNode, scope: Scope): boolean {
 }
 
 export default {
-	name: "reactNoDangerWithChildren",
+	name: "react/noDangerWithChildren",
 
 	enter(path: Path): AnyNode {
 		const {node, scope} = path;

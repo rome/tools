@@ -105,9 +105,6 @@ JSRoot {
 
   ✖ Unclosed block
 
-    {
-    ^
-
   ℹ We expected to find the closing character } here
 
     {

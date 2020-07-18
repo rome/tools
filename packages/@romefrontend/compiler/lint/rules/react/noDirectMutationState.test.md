@@ -220,13 +220,6 @@ class Hello extends React.Component {
 
   ✖ Avoid mutating this.state directly.
 
-    2 │   testFunc() {
-    3 │     this.state.person.name.first = 'bar';
-  > 4 │     this.state.person.name.last = 'baz';
-      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    5 │     return <div>Hello</div>;
-    6 │   }
-
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 

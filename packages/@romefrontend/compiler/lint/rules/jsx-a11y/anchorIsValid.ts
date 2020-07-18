@@ -34,7 +34,7 @@ function falsyHref(attr: JSXAttribute | undefined): boolean {
 }
 
 export default {
-	name: "jsxA11YAnchorIsValid",
+	name: "jsx-a11y/anchorIsValid",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

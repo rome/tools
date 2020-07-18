@@ -141,9 +141,6 @@ console.log(`${1}foo` * 2);
 
   ✖ Template literals are preferred over string concatenation.
 
-    console.log((1 * (2 + 'foo')) + 'bar')
-                      ^^^^^^^^^
-
   ℹ Recommended fix
 
   - 2 + "foo"

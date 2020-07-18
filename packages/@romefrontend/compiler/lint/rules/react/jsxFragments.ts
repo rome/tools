@@ -5,7 +5,7 @@ import {hasJSXAttribute} from "@romefrontend/js-ast-utils";
 import {doesNodeMatchReactPattern} from "../../utils/react";
 
 export default {
-	name: "reactJsxFragments",
+	name: "react/jsxFragments",
 	enter(path: Path): TransformExitResult {
 		const {node, context, scope} = path;
 

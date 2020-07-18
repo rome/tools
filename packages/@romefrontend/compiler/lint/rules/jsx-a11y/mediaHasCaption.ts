@@ -12,7 +12,7 @@ function hasTrack(node: JSXElement): boolean {
 }
 
 export default {
-	name: "mediaHasCaption",
+	name: "jsx-a11y/mediaHasCaption",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

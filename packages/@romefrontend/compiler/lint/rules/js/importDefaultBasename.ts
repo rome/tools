@@ -12,7 +12,7 @@ import {createUnknownFilePath} from "@romefrontend/path";
 import {filenameToId} from "./defaultExportSameBasename";
 
 export default {
-	name: "importDefaultBasename",
+	name: "js/importDefaultBasename",
 	enter(path: Path): AnyNode {
 		const {node} = path;
 
@@ -35,8 +35,7 @@ export default {
 					node,
 					descriptions.LINT.JS_IMPORT_DEFAULT_BASENAME(
 						localName,
-						expectedName,
-						expectedNameCapital,
+						[expectedName, expectedNameCapital],
 					),
 				);
 			}

@@ -3,7 +3,7 @@ import {descriptions} from "@romefrontend/diagnostics";
 import {isFunctionNode} from "@romefrontend/js-ast-utils";
 
 export default {
-	name: "reactNoThisInSFC",
+	name: "react/noThisInSFC",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

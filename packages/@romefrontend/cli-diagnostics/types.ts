@@ -21,19 +21,15 @@ export type DiagnosticsPrinterFlags = {
 	showAllDiagnostics: boolean;
 };
 
-export type DiagnosticsFileReader = (
-	path: AbsoluteFilePath,
-) => undefined | DiagnosticsFileReaderStats;
-
-export type DiagnosticsFileReaderStats = {
-	content: string;
-	mtime: number;
+export type DiagnosticsFileReaders = {
+	read: (path: AbsoluteFilePath) => Promise<undefined | string>;
+	getMtime: (path: AbsoluteFilePath) => Promise<undefined | number>;
 };
 
 export type DiagnosticsPrinterOptions = {
-	processor?: DiagnosticsProcessor;
+	processor: DiagnosticsProcessor;
 	reporter: Reporter;
 	cwd?: AbsoluteFilePath;
 	flags?: DiagnosticsPrinterFlags;
-	readFile?: DiagnosticsFileReader;
+	fileReaders?: DiagnosticsFileReaders;
 };

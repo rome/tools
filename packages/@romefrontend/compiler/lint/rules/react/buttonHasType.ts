@@ -47,7 +47,7 @@ function jsxMissingType(node: AnyNode, scope: Scope) {
 }
 
 export default {
-	name: "reactButtonHasType",
+	name: "react/buttonHasType",
 	enter(path: Path): TransformExitResult {
 		const {node, scope} = path;
 

@@ -19,7 +19,7 @@ function hasHeadingContent(node: JSXElement): boolean {
 }
 
 export default {
-	name: "jsxA11YHeadingHasContent",
+	name: "jsx-a11y/headingHasContent",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

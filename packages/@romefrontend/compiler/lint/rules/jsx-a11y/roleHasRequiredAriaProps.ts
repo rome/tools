@@ -4,7 +4,7 @@ import {getJSXAttribute, hasJSXAttribute} from "@romefrontend/js-ast-utils";
 import {ariaRolesMap} from "@romefrontend/compiler/lint/utils/aria";
 
 export default {
-	name: "jsxA11YRoleHasRequiredAriaProps",
+	name: "jsx-a11y/roleHasRequiredAriaProps",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

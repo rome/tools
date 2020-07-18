@@ -21,7 +21,7 @@ import {SemverRangeNode} from "@romefrontend/codec-semver";
 // Project wrapper that contains some other metadata
 export type ProjectDefinition = {
 	id: number;
-	folder: AbsoluteFilePath;
+	directory: AbsoluteFilePath;
 	meta: ProjectConfigMeta;
 	config: ProjectConfig;
 	packages: Map<string, ManifestDefinition>;
@@ -125,7 +125,7 @@ type PartialProjectValue<Type> = Type extends Map<string, any>
 	: Partial<Type>;
 
 export type ProjectConfigMeta = {
-	projectFolder: undefined | AbsoluteFilePath;
+	projectDirectory: undefined | AbsoluteFilePath;
 	configPath: undefined | AbsoluteFilePath;
 	configHashes: Array<string>;
 	configDependencies: AbsoluteFilePathSet;
@@ -136,7 +136,7 @@ export type ProjectConfigMeta = {
 
 export type ProjectConfigMetaHard = RequiredProps<
 	ProjectConfigMeta,
-	"consumer" | "projectFolder" | "configPath"
+	"consumer" | "projectDirectory" | "configPath"
 >;
 
 // Final project config
@@ -144,7 +144,7 @@ export type ProjectConfig = ProjectConfigBase & ProjectConfigObjects;
 
 export function createDefaultProjectConfigMeta(): ProjectConfigMeta {
 	return {
-		projectFolder: undefined,
+		projectDirectory: undefined,
 		configPath: undefined,
 		configHashes: [],
 		configDependencies: new AbsoluteFilePathSet(),

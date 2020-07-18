@@ -243,9 +243,9 @@ export default class LSPServer {
 					await this.initProject(createAbsoluteFilePath(rootUri.asString()));
 				}
 
-				const workspaceFolders = params.get("workspaceFolders");
-				if (workspaceFolders.exists()) {
-					for (const elem of workspaceFolders.asArray()) {
+				const workspaceDirectories = params.get("workspaceDirectories");
+				if (workspaceDirectories.exists()) {
+					for (const elem of workspaceDirectories.asArray()) {
 						await this.initProject(getPathFromTextDocument(elem));
 					}
 				}
@@ -258,7 +258,7 @@ export default class LSPServer {
 							change: 2,
 						},
 						documentFormattingProvider: true,
-						workspaceFolders: {
+						workspaceDirectories: {
 							supported: true,
 							changeNotifications: true,
 						},
@@ -303,7 +303,7 @@ export default class LSPServer {
 
 	async handleNotification(method: string, params: Consumer): Promise<void> {
 		switch (method) {
-			case "workspace/didChangeWorkspaceFolders": {
+			case "workspace/didChangeWorkspaceDirectories": {
 				for (const elem of params.get("added").asArray()) {
 					await this.initProject(getPathFromTextDocument(elem));
 				}

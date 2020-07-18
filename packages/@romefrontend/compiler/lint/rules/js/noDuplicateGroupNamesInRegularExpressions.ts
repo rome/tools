@@ -11,7 +11,7 @@ import {descriptions} from "@romefrontend/diagnostics";
 import {DiagnosticsDuplicateHelper} from "../../../lib/DiagnosticsDuplicateHelper";
 
 export default {
-	name: "noDuplicateGroupNamesInRegularExpressions",
+	name: "js/noDuplicateGroupNamesInRegularExpressions",
 	enter(path: Path): AnyNode {
 		const {context, node} = path;
 

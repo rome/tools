@@ -250,9 +250,6 @@ JSRoot {
 
   ✖ Label x is already declared
 
-    x: while (true) { x: while (true) { } }
-                      ^
-
   ℹ Defined already here
 
     x: while (true) { x: while (true) { } }

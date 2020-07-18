@@ -16,7 +16,7 @@ import {
 import prettyFormat from "@romefrontend/pretty-format";
 
 export default {
-	name: "noDuplicateCase",
+	name: "js/noDuplicateCase",
 	enter(path: Path): AnyNode {
 		const {node, context} = path;
 

@@ -59,7 +59,7 @@ Array [
 		name: "info"
 		children: Array [
 			Text {
-				value: "[MemoryFileSystem] Adding new project folder C:\\Users\\sebmck\\rome"
+				value: "[MemoryFileSystem] Adding new project directory C:\\Users\\sebmck\\rome"
 				source: true
 			}
 		]
@@ -88,7 +88,7 @@ Array [
 ```javascript
 Array [
 	Text {
-		value: "  <info>[MemoryFileSystem] Adding new project folder C:\\Users\\Sebastian\\rome\\</info>\n        "
+		value: "  <info>[MemoryFileSystem] Adding new project directory C:\\Users\\Sebastian\\rome\\</info>\n        "
 		source: true
 	}
 	Tag {

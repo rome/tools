@@ -29,7 +29,7 @@ function getUnsafeDef(node: AnyNode) {
 }
 
 export default {
-	name: "reactNoUnsafe",
+	name: "react/noUnsafe",
 
 	enter(path: Path): TransformExitResult {
 		const {node} = path;

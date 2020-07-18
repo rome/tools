@@ -31,6 +31,7 @@ import {
 	TestHelper,
 	TestSnapshotOptions,
 } from "@romefrontend-runtime/rome/test";
+import {cleanFrames} from "./TestWorkerRunner";
 
 function formatExpectedError(expected: ExpectedError): string {
 	if (typeof expected === "string") {
@@ -674,6 +675,7 @@ export default class TestAPI implements TestHelper {
 						callError,
 						{
 							description: descriptions.SNAPSHOTS.INLINE_FROZEN,
+							cleanFrames,
 						},
 					),
 				);
@@ -684,6 +686,7 @@ export default class TestAPI implements TestHelper {
 					deriveDiagnosticFromErrorStructure(
 						callError,
 						{
+							cleanFrames,
 							description: {
 								...descriptions.SNAPSHOTS.INLINE_BAD_MATCH,
 								advice: this.buildMatchAdvice(
@@ -763,6 +766,7 @@ export default class TestAPI implements TestHelper {
 						deriveDiagnosticFromErrorStructure(
 							callError,
 							{
+								cleanFrames,
 								description: descriptions.SNAPSHOTS.FROZEN,
 							},
 						),
@@ -813,6 +817,7 @@ export default class TestAPI implements TestHelper {
 					deriveDiagnosticFromErrorStructure(
 						callError,
 						{
+							cleanFrames,
 							description: {
 								category: "tests/snapshots/incorrect",
 								message: createBlessedDiagnosticMessage(message),

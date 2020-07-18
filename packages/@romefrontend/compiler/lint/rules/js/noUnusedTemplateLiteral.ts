@@ -7,7 +7,7 @@ function containsSpecialCharacters(node: JSTemplateElement): boolean {
 }
 
 export default {
-	name: "jsNoUnusedTemplateLiteral",
+	name: "js/jsNoUnusedTemplateLiteral",
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 

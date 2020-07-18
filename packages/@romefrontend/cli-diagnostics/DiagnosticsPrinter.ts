@@ -16,8 +16,7 @@ import {
 } from "@romefrontend/diagnostics";
 import {Reporter} from "@romefrontend/cli-reporter";
 import {
-	DiagnosticsFileReader,
-	DiagnosticsFileReaderStats,
+	DiagnosticsFileReaders,
 	DiagnosticsPrinterFlags,
 	DiagnosticsPrinterOptions,
 } from "./types";
@@ -36,7 +35,7 @@ import {
 	createUnknownFilePath,
 } from "@romefrontend/path";
 import {Number0, Number1, ob1Get0, ob1Get1} from "@romefrontend/ob1";
-import {existsSync, lstatSync, readFileTextSync} from "@romefrontend/fs";
+import {exists, lstat, readFileText} from "@romefrontend/fs";
 import {joinMarkupLines} from "@romefrontend/cli-layout/format";
 import {inferDiagnosticLanguageFromFilename} from "@romefrontend/core/common/file-handlers";
 
@@ -52,17 +51,24 @@ type PositionLike = {
 	column?: undefined | Number0;
 };
 
-export function readDiagnosticsFileLocal(
-	path: AbsoluteFilePath,
-): ReturnType<DiagnosticsFileReader> {
-	if (!existsSync(path)) {
-		return;
-	}
+const DEFAULT_FILE_READERS: DiagnosticsFileReaders = {
+	async read(path) {
+		if (await exists(path)) {
+			return await readFileText(path);
+		} else {
+			return undefined;
+		}
+	},
 
-	const src = readFileTextSync(path);
-	const mtime = lstatSync(path).mtimeMs;
-	return {content: src, mtime};
-}
+	async getMtime(path) {
+		if (await exists(path)) {
+			const stats = await lstat(path);
+			return stats.mtimeMs;
+		} else {
+			return undefined;
+		}
+	},
+};
 
 function equalPosition(
 	a: undefined | PositionLike,
@@ -82,7 +88,7 @@ function equalPosition(
 type FooterPrintCallback = (
 	reporter: Reporter,
 	error: boolean,
-) => void | boolean;
+) => Promise<void | boolean>;
 
 export const DEFAULT_PRINTER_FLAGS: DiagnosticsPrinterFlags = {
 	auxiliaryDiagnosticFormat: undefined,
@@ -106,8 +112,9 @@ type ReferenceFileDependency = {
 	type: "reference";
 	path: UnknownFilePath;
 	mtime: undefined | number;
-	sourceType: undefined | DiagnosticSourceType;
+	sourceTypeJS: undefined | DiagnosticSourceType;
 	language: undefined | DiagnosticLanguage;
+	sourceText: undefined | string;
 };
 
 type FileDependency = ChangeFileDependency | ReferenceFileDependency;
@@ -130,11 +137,12 @@ export default class DiagnosticsPrinter extends Error {
 
 		this.reporter = reporter;
 		this.flags = flags;
-		this.readFile =
-			opts.readFile === undefined ? readDiagnosticsFileLocal : opts.readFile;
+		this.fileReaders =
+			opts.fileReaders === undefined
+				? [DEFAULT_FILE_READERS]
+				: [opts.fileReaders, DEFAULT_FILE_READERS];
 		this.cwd = cwd === undefined ? CWD_PATH : cwd;
-		this.processor =
-			opts.processor === undefined ? new DiagnosticsProcessor() : opts.processor;
+		this.processor = opts.processor;
 
 		this.displayedCount = 0;
 		this.problemCount = 0;
@@ -154,7 +162,7 @@ export default class DiagnosticsPrinter extends Error {
 	onFooterPrintCallbacks: Array<FooterPrintCallback>;
 	flags: DiagnosticsPrinterFlags;
 	cwd: AbsoluteFilePath;
-	readFile: DiagnosticsFileReader;
+	fileReaders: Array<DiagnosticsFileReaders>;
 	hasTruncatedDiagnostics: boolean;
 	missingFileSources: AbsoluteFilePathSet;
 	fileSources: DiagnosticsPrinterFileSources;
@@ -206,10 +214,6 @@ export default class DiagnosticsPrinter extends Error {
 		}
 	}
 
-	getDiagnostics(): Diagnostics {
-		return this.processor.getSortedDiagnostics();
-	}
-
 	shouldIgnore(diag: Diagnostic): boolean {
 		const {grep, inverseGrep} = this.flags;
 
@@ -239,25 +243,48 @@ export default class DiagnosticsPrinter extends Error {
 		return false;
 	}
 
-	addFileSource(
-		info: ChangeFileDependency | ReferenceFileDependency,
-		stats: DiagnosticsFileReaderStats,
-	) {
-		this.fileMtimes.set(info.path, stats.mtime);
+	async addFileSource(dep: ChangeFileDependency | ReferenceFileDependency) {
+		const path = dep.path.assertAbsolute();
 
-		if (info.type === "reference") {
+		let mtime;
+		for (const reader of this.fileReaders) {
+			if (mtime !== undefined) {
+				break;
+			}
+			mtime = await reader.getMtime(path);
+		}
+		if (mtime === undefined) {
+			this.missingFileSources.add(path);
+			return;
+		}
+
+		this.fileMtimes.set(dep.path, mtime);
+
+		if (dep.type === "reference") {
+			let sourceText = dep.sourceText;
+			for (const reader of this.fileReaders) {
+				if (sourceText !== undefined) {
+					break;
+				}
+				sourceText = await reader.read(path);
+			}
+			if (sourceText === undefined) {
+				this.missingFileSources.add(path);
+				return;
+			}
+
 			this.fileSources.set(
-				info.path,
+				dep.path,
 				{
-					sourceText: stats.content,
+					sourceText,
 					lines: toLines({
 						highlight: this.shouldHighlight(),
-						path: info.path,
-						input: stats.content,
-						sourceTypeJS: info.sourceType,
+						path: dep.path,
+						input: sourceText,
+						sourceTypeJS: dep.sourceTypeJS,
 						language: inferDiagnosticLanguageFromFilename(
-							info.path,
-							info.language,
+							dep.path,
+							dep.language,
 						),
 					}),
 				},
@@ -274,7 +301,7 @@ export default class DiagnosticsPrinter extends Error {
 			const {
 				dependencies,
 				description: {advice},
-				location: {language, sourceTypeJS: sourceType, mtime, filename},
+				location: {language, sourceTypeJS, sourceText, mtime, filename},
 			} = diag;
 
 			if (filename !== undefined) {
@@ -283,7 +310,8 @@ export default class DiagnosticsPrinter extends Error {
 					path: this.createFilePath(filename),
 					mtime,
 					language,
-					sourceType,
+					sourceTypeJS,
+					sourceText,
 				});
 			}
 
@@ -300,16 +328,14 @@ export default class DiagnosticsPrinter extends Error {
 			for (const item of advice) {
 				if (item.type === "frame") {
 					const {location} = item;
-					if (
-						location.filename !== undefined &&
-						location.sourceText === undefined
-					) {
+					if (location.filename !== undefined) {
 						deps.push({
 							type: "reference",
 							path: this.createFilePath(location.filename),
 							language: location.language,
-							sourceType: location.sourceTypeJS,
+							sourceTypeJS: location.sourceTypeJS,
 							mtime: location.mtime,
+							sourceText: location.sourceText,
 						});
 					}
 				}
@@ -320,8 +346,9 @@ export default class DiagnosticsPrinter extends Error {
 							type: "reference",
 							path: this.createFilePath(frame.filename),
 							language: undefined,
-							sourceType: undefined,
+							sourceTypeJS: undefined,
 							mtime: undefined,
+							sourceText: frame.sourceText,
 						});
 					}
 				}
@@ -339,15 +366,29 @@ export default class DiagnosticsPrinter extends Error {
 
 			const existing = depsMap.get(path);
 
-			// reference dependency can override change since it has more metadata that needs conflict resolution
+			// "reference" dependency can override "change" since it has more metadata that needs conflict resolution
 			if (existing === undefined || existing.type === "change") {
 				depsMap.set(dep.path, dep);
 				continue;
 			}
 
 			if (dep.type === "reference") {
-				if (existing.sourceType !== dep.sourceType) {
-					existing.sourceType = "unknown";
+				if (
+					dep.sourceText !== undefined &&
+					existing.sourceText !== undefined &&
+					dep.sourceText !== existing.sourceText
+				) {
+					throw new Error(
+						`Found multiple sourceText entires for ${dep.path.join()} that didn't match`,
+					);
+				}
+
+				if (existing.sourceText === undefined) {
+					existing.sourceText = dep.sourceText;
+				}
+
+				if (existing.sourceTypeJS !== dep.sourceTypeJS) {
+					existing.sourceTypeJS = "unknown";
 				}
 
 				if (existing.language !== dep.language) {
@@ -359,38 +400,35 @@ export default class DiagnosticsPrinter extends Error {
 		return Array.from(depsMap.values());
 	}
 
-	fetchFileSources(diagnostics: Diagnostics) {
+	async fetchFileSources(diagnostics: Diagnostics) {
 		for (const dep of this.getDependenciesFromDiagnostics(diagnostics)) {
 			const {path} = dep;
 			if (!path.isAbsolute()) {
 				continue;
 			}
 
-			const abs = path.assertAbsolute();
-			const stats = this.readFile(abs);
-			if (stats === undefined) {
-				this.missingFileSources.add(abs);
-			} else {
-				this.wrapError("addFileSource", () => this.addFileSource(dep, stats));
-			}
+			await this.wrapError(
+				`addFileSource(${dep.path.join()})`,
+				() => this.addFileSource(dep),
+			);
 		}
 	}
 
-	print() {
-		this.wrapError(
+	async print() {
+		await this.wrapError(
 			"root",
-			() => {
+			async () => {
 				const filteredDiagnostics = this.filterDiagnostics();
-				this.fetchFileSources(filteredDiagnostics);
-				this.printDiagnostics(filteredDiagnostics);
+				await this.fetchFileSources(filteredDiagnostics);
+				await this.printDiagnostics(filteredDiagnostics);
 			},
 		);
 	}
 
-	wrapError(reason: string, callback: () => void) {
+	async wrapError(reason: string, callback: () => Promise<void>) {
 		const {reporter} = this;
 		try {
-			callback();
+			await callback();
 		} catch (err) {
 			// Sometimes we'll run into issues displaying diagnostics
 			// We can safely catch them here since the presence of diagnostics is considered a critical failure anyway
@@ -403,7 +441,7 @@ export default class DiagnosticsPrinter extends Error {
 		}
 	}
 
-	printDiagnostics(diagnostics: Diagnostics) {
+	async printDiagnostics(diagnostics: Diagnostics) {
 		const {reporter} = this;
 		const restoreRedirect = reporter.redirectOutToErr(true);
 
@@ -412,7 +450,10 @@ export default class DiagnosticsPrinter extends Error {
 		}
 
 		for (const diag of diagnostics) {
-			this.wrapError("printDiagnostic", () => this.printDiagnostic(diag));
+			await this.wrapError(
+				"printDiagnostic",
+				async () => this.printDiagnostic(diag),
+			);
 		}
 
 		reporter.redirectOutToErr(restoreRedirect);
@@ -607,7 +648,7 @@ export default class DiagnosticsPrinter extends Error {
 	}
 
 	filterDiagnostics(): Diagnostics {
-		const diagnostics = this.getDiagnostics();
+		const diagnostics = this.processor.getDiagnostics();
 		const filteredDiagnostics: Diagnostics = [];
 
 		for (const diag of diagnostics) {
@@ -627,10 +668,10 @@ export default class DiagnosticsPrinter extends Error {
 	}
 
 	inject(printer: DiagnosticsPrinter) {
-		this.processor.addDiagnostics(printer.getDiagnostics());
+		this.processor.addDiagnostics(printer.processor.getDiagnostics());
 		for (const fn of printer.onFooterPrintCallbacks) {
-			this.onFooterPrint((reporter) => {
-				fn(reporter, printer.problemCount > 0);
+			this.onFooterPrint(async (reporter) => {
+				return fn(reporter, printer.problemCount > 0);
 			});
 		}
 	}
@@ -650,10 +691,10 @@ export default class DiagnosticsPrinter extends Error {
 		return this.problemCount > 0;
 	}
 
-	footer() {
-		this.wrapError(
+	async footer() {
+		await this.wrapError(
 			"footer",
-			() => {
+			async () => {
 				const {reporter} = this;
 				const isError = this.hasProblems();
 
@@ -680,7 +721,7 @@ export default class DiagnosticsPrinter extends Error {
 				}
 
 				for (const handler of this.onFooterPrintCallbacks) {
-					const stop = handler(reporter, isError);
+					const stop = await handler(reporter, isError);
 					if (stop) {
 						return;
 					}

@@ -2,7 +2,7 @@ import {Path, TransformExitResult} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 
 export default {
-	name: "jsxPropsNoSpreading",
+	name: "jsx/propsNoSpreading",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

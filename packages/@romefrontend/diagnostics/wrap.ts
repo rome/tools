@@ -7,7 +7,8 @@
 
 import {DiagnosticOrigin, Diagnostics} from "./types";
 import {addOriginsToDiagnostics} from "./derive";
-import {getDiagnosticsFromError} from "./errors";
+import {DiagnosticsError, getDiagnosticsFromError} from "./errors";
+import DiagnosticsProcessor from "./DiagnosticsProcessor";
 
 type WrapResult<T> =
 	| {
@@ -41,6 +42,26 @@ export async function catchDiagnostics<T>(
 			throw err;
 		}
 	}
+}
+
+export async function interceptDiagnostics<T>(
+	promise: () => Promise<T>,
+	process: (processor: DiagnosticsProcessor) => void,
+	origin?: DiagnosticOrigin,
+): Promise<T> {
+	const res = await catchDiagnostics(promise, origin);
+
+	if (res.diagnostics !== undefined) {
+		const processor = new DiagnosticsProcessor();
+		process(processor);
+		processor.addDiagnostics(res.diagnostics);
+		throw new DiagnosticsError(
+			"Intercepted diagnostics",
+			processor.getDiagnostics(),
+		);
+	}
+
+	return res.value;
 }
 
 export function catchDiagnosticsSync<T>(

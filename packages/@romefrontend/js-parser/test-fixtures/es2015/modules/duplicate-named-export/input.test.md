@@ -224,10 +224,6 @@ JSRoot {
 
   ✖ `foo` has already been exported. Exported identifiers must be unique.
 
-    1 │ export { foo };
-  > 2 │ export { bar as foo };
-      │          ^^^^^^^^^^
-
   ℹ Defined already here
 
   > 1 │ export { foo };

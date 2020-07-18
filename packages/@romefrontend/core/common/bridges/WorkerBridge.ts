@@ -33,7 +33,7 @@ import {FormatterOptions} from "@romefrontend/formatter";
 
 export type WorkerProjects = Array<{
 	id: number;
-	folder: string;
+	directory: string;
 	config: undefined | ProjectConfigJSON;
 }>;
 

@@ -10,13 +10,11 @@ import {toCamelCase} from "@romefrontend/string-utils";
 import {Binding} from "@romefrontend/compiler/scope/bindings";
 import {descriptions} from "@romefrontend/diagnostics";
 import {
-	isIdentifierish,
 	isValidIdentifierName,
-	isVariableIdentifier,
 	renameBindings,
 } from "@romefrontend/js-ast-utils";
 
-function normalizeCamelCase(name: string): undefined | string {
+export function normalizeCamelCase(name: string): undefined | string {
 	if (!isValidIdentifierName(name)) {
 		return undefined;
 	}
@@ -28,41 +26,8 @@ function normalizeCamelCase(name: string): undefined | string {
 	return name;
 }
 
-// Allow prefixed underscores
-export function toVariableCamelCase(
-	name: string,
-	forceCapitalize?: boolean,
-): undefined | string {
-	// Allow shouty constants
-	if (name.toUpperCase() === name) {
-		return normalizeCamelCase(name);
-	}
-
-	let prefix = "";
-	let suffix = "";
-
-	const prefixDashes = name.match(/^_+/);
-	if (prefixDashes != null) {
-		prefix = prefixDashes[0];
-	}
-
-	const suffixDashes = name.match(/_+$/);
-	if (suffixDashes != null) {
-		suffix = suffixDashes[0];
-	}
-
-	// Remove prefix and suffix
-	let slicedName = name.slice(prefix.length);
-	if (suffix.length > 0) {
-		slicedName = slicedName.slice(0, -suffix.length);
-	}
-
-	const camelName = prefix + toCamelCase(slicedName, forceCapitalize) + suffix;
-	return normalizeCamelCase(camelName);
-}
-
 export default {
-	name: "camelCase",
+	name: "js/camelCase",
 	enter(path: Path): TransformExitResult {
 		const {node, scope, context} = path;
 
@@ -71,7 +36,14 @@ export default {
 			const renames: Map<Binding, string> = new Map();
 
 			for (const [name, binding] of scope.getOwnBindings()) {
-				const camelName = toVariableCamelCase(name);
+				const camelName = normalizeCamelCase(
+					toCamelCase(
+						name,
+						{
+							allowShouty: true,
+						},
+					),
+				);
 				if (camelName !== undefined && camelName !== name) {
 					const {suppressed} = context.addNodeDiagnostic(
 						binding.node,
@@ -86,27 +58,6 @@ export default {
 
 			if (renames.size > 0) {
 				return renameBindings(path, renames);
-			}
-		}
-
-		// Check regular jsIdentifiers, variable jsIdentifiers have already been checked above
-		if (isIdentifierish(node) && !isVariableIdentifier(node)) {
-			const {name} = node;
-			const camelName = toVariableCamelCase(name);
-			if (camelName !== undefined && camelName !== name) {
-				return context.addFixableDiagnostic(
-					{
-						old: node,
-						suggestions: [
-							{
-								title: "Convert to camelCase",
-								description: "This may not be safe. Are you passing this into a third party module?",
-								fixed: {...node, name: camelName},
-							},
-						],
-					},
-					descriptions.LINT.JS_IDENTIFIER_CAMEL_CASE(name, camelName),
-				);
 			}
 		}
 

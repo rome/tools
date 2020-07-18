@@ -12,10 +12,6 @@
 
   ✖ Redundant constant reference
 
-    1 │ const FOO = "FOO";
-  > 2 │ console.log(FOO);
-      │             ^^^
-
   ℹ You should avoid declaring constants with a string that's the same value as the variable name.
     It introduces a level of unnecessary indirection when it's only two additional characters to
     inline.
@@ -52,12 +48,6 @@ console.log("FOO");
  lint/js/shoutyConstants/reject/2/file.ts:3:8 lint/js/shoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Redundant constant reference
-
-    1 │ const FOO = "FOO";
-    2 │ function f() {
-  > 3 │   return FOO;
-      │          ^^^
-    4 │ }
 
   ℹ You should avoid declaring constants with a string that's the same value as the variable name.
     It introduces a level of unnecessary indirection when it's only two additional characters to
@@ -98,10 +88,6 @@ function f() {
  lint/js/shoutyConstants/reject/3/file.ts:2:12 lint/js/shoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━━━━━
 
   ✖ Redundant constant reference
-
-    1 │ const FOO = "FOO", BAR = "bar";
-  > 2 │ console.log(FOO);
-      │             ^^^
 
   ℹ You should avoid declaring constants with a string that's the same value as the variable name.
     It introduces a level of unnecessary indirection when it's only two additional characters to

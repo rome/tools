@@ -39,6 +39,7 @@ import {lint} from "./lint";
 import {userConfig} from "./userConfig";
 import {htmlParser} from "./htmlParser";
 import {markdownParser} from "@romefrontend/diagnostics/descriptions/markdownParser";
+import {markup} from "@romefrontend/cli-layout";
 
 type DiagnosticMetadataString = Omit<Partial<DiagnosticDescription>, "message"> & {
 	message: string;
@@ -74,7 +75,7 @@ export function orJoin(items: Array<string>): string {
 }
 
 export function addEmphasis(items: Array<string>): Array<string> {
-	return items.map((item) => `<emphasis>${item}</emphasis>`);
+	return items.map((item) => markup`<emphasis>${item}</emphasis>`);
 }
 
 // rome-ignore lint/js/noExplicitAny

@@ -14,7 +14,7 @@ import {
 import {descriptions} from "@romefrontend/diagnostics";
 
 export default {
-	name: "noDelete",
+	name: "js/noDelete",
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 

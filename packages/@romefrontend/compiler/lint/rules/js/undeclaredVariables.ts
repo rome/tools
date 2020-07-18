@@ -66,7 +66,7 @@ const TS_VARIABLES = [
 ];
 
 export default {
-	name: "undeclaredVariables",
+	name: "js/undeclaredVariables",
 	enter(path: Path): AnyNode {
 		const {node, scope} = path;
 

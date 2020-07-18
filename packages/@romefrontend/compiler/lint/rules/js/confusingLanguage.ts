@@ -103,7 +103,7 @@ function check(
 }
 
 export default {
-	name: "inconsiderateLanguage",
+	name: "js/inconsiderateLanguage",
 	enter(path: Path): AnyNode {
 		const {node, context} = path;
 

@@ -18,7 +18,7 @@ function isNegation(node: AnyJSExpression): node is JSUnaryExpression {
 }
 
 export default {
-	name: "negationElse",
+	name: "js/negationElse",
 	enter(path: Path) {
 		const {node} = path;
 
