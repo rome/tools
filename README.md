@@ -8,7 +8,7 @@
 
 **Rome** has been built from scratch without the usage of existing libraries. **Rome** contains no third-party library dependencies.
 
-**Rome** has strong conventions and aims to have minimal configuration. Read more about our project philosophy [here](https://romefrontend.dev/contributing/philosophy).
+**Rome** has strong conventions and aims to have minimal configuration. Read more about our project philosophy [here](https://romefrontend.dev/about#philosophy).
 
 **Rome** is maintained by a [team of volunteers](https://romefrontend.dev/contributing/team). **Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io) and [Yarn](https://yarnpkg.com).
 
@@ -52,7 +52,7 @@ See [Getting Started](https://romefrontend.dev/docs/getting-started/) for more u
 
 ## Philosophy
 
-Project philosophy can be found on our [website](https://romefrontend.dev/contributing/philosophy).
+Project philosophy can be found on our [website](https://romefrontend.dev/about#philosophy).
 
 ## Community
 
