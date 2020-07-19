@@ -24,7 +24,6 @@
   @include desktop-only() {
     border-top-width: 0;
     transition-duration: 150ms;
-    padding-top: 32px;
     margin-top: 5px;
   }
 
@@ -50,7 +49,7 @@
       min-width: 256px;
     }
   }
-  
+
   &.toc {
     z-index: 0;
     flex-grow: 1;
@@ -190,10 +189,6 @@
   position: relative;
   border-bottom: 1px solid var(--soft-border-color);
 
-  @include desktop-only() {
-    border-top: 1px solid var(--soft-border-color);
-  }
-
   #search-icon {
     z-index: 99999;
     position: absolute;
@@ -217,7 +212,7 @@
       color: inherit;
       opacity: 1;
     }
-  
+
     // Yellow outline on desktop focus
     @include desktop-only() {
       &:focus {

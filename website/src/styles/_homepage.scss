@@ -144,7 +144,7 @@ article.latest-post {
   flex-direction: column;
 
   @include desktop-only() {
-    min-height: 32px + 64px + 1px;
+    min-height: 32px + 64px;
   }
 
   div.info {
