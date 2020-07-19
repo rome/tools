@@ -218,8 +218,8 @@ window.addEventListener("scroll", handleScroll, false);
 function toggleColorSchemeSwitch() {
 	let currentScheme = window.localStorage.getItem("data-theme");
 	if (currentScheme === undefined) {
-		const prefersDarkMode = matchMedia('(prefers-color-scheme: dark)').matches;
-		currentScheme = prefersDarkMode ? 'dark' : 'light';
+		const prefersDarkMode = matchMedia("(prefers-color-scheme: dark)").matches;
+		currentScheme = prefersDarkMode ? "dark" : "light";
 	}
 
 	const newScheme = currentScheme === "dark" ? "light" : "dark";
