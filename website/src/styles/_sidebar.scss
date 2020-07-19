@@ -4,26 +4,33 @@
   }
 }
 
+.sidebar-container {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  height: 100vh;
+}
+
+.sidebar-stripe {
+  @include inset-border-top;
+  height: 5px;
+  width: 100%;
+}
 
 .sidebar {
   @include transition-timing;
   list-style: none;
   font-size: 0.95rem;
-  position: sticky;
-  z-index: 99999;
-  top: 0;
-  height: 100vh;
   transition-property: transform;
-  z-index: 2;
   display: flex;
   flex-direction: column;
-  width: 20%;
+  width: 100%;
 
   @include desktop-only() {
-    @include top-border;
     border-top-width: 0;
     transition-duration: 150ms;
-    padding-top: 37px;
+    padding-top: 32px;
+    margin-top: 5px;
   }
 
   @include mobile-only() {
@@ -46,6 +53,7 @@
     border-left: 1px solid var(--soft-border-color);
 
     @include desktop-only() {
+      margin-top: 0;
       min-width: 256px;
     }
   }

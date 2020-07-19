@@ -34,7 +34,6 @@
 				"prelude.ts",
 				"@romefrontend-web",
 				"out",
-				"website/.eleventy.js",
 				"vscode/node_modules"
 			]
 		}
