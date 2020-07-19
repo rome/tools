@@ -240,20 +240,27 @@ elements.colorSchemeSwitcher.addEventListener(
 if (elements.wipBanner) {
 	let hasScrolled = false;
 
-	window.addEventListener("scroll", () => {
-		if (hasScrolled) {
-			return;
-		}
+	window.addEventListener(
+		"scroll",
+		() => {
+			if (hasScrolled) {
+				return;
+			}
 
-		if (window.scrollY > 0) {
-			hasScrolled = true;
-			setTimeout(() => {
-				elements.wipBanner.classList.add("hidden");
-			}, 2000);
-		}
-	}, {
-		passive: true,
-	});
+			if (window.scrollY > 0) {
+				hasScrolled = true;
+				setTimeout(
+					() => {
+						elements.wipBanner.classList.add("hidden");
+					},
+					2_000,
+				);
+			}
+		},
+		{
+			passive: true,
+		},
+	);
 }
 
 //# Team list shuffle
