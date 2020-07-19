@@ -26,6 +26,7 @@ import {
 	parseObjectPropertyKey,
 	parseReferenceIdentifier,
 	parseStringLiteral,
+	parseTSConstKeyword,
 	parseTemplate,
 	parseVarStatement,
 	toBindingIdentifier,
@@ -54,6 +55,7 @@ import {
 	JSVariableDeclarationKind,
 	JSVariableDeclarationStatement,
 	TSCallSignatureDeclaration,
+	TSConstKeyword,
 	TSConstructSignatureDeclaration,
 	TSConstructorType,
 	TSDeclareFunction,
@@ -540,10 +542,10 @@ export function parseTSTypeParameters(
 
 export function tryTSNextParseConstantContext(
 	parser: JSParser,
-): undefined | TSTypeReference {
+): undefined | TSConstKeyword {
 	if (parser.lookaheadState().tokenType === tt._const) {
 		parser.next();
-		return parseTSTypeReference(parser);
+		return parseTSConstKeyword(parser);
 	} else {
 		return undefined;
 	}
@@ -1243,7 +1245,6 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
 		description: descriptions.JS_PARSER.TS_UNKNOWN_NON_ARRAY_START,
 	});
 	parser.next();
-
 	return parser.finishNode(
 		parser.getPosition(),
 		{

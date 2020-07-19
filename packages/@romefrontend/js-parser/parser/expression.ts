@@ -83,6 +83,7 @@ import {
 	JSYieldExpression,
 	LogicalOperator,
 	TSAsExpression,
+	TSConstKeyword,
 	TSDeclareFunction,
 	TSDeclareMethod,
 	TSTypeParameterInstantiation,
@@ -3447,6 +3448,20 @@ export function parseReferenceIdentifier(
 	liberal?: boolean,
 ): JSReferenceIdentifier {
 	return toReferenceIdentifier(parser, parseIdentifier(parser, liberal));
+}
+
+export function parseTSConstKeyword(parser: JSParser): TSConstKeyword {
+	return toTSConstKeyword(parser, parseIdentifier(parser));
+}
+
+export function toTSConstKeyword(
+	parser: JSParser,
+	node: JSReferenceIdentifier | JSIdentifier | JSBindingIdentifier,
+): TSConstKeyword {
+	return parser.finalizeNode({
+		...node,
+		type: "TSConstKeyword",
+	});
 }
 
 export function toBindingIdentifier(
