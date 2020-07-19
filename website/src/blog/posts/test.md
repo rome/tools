@@ -1,7 +1,7 @@
 ---
 title: This is my first post
 description: This is a post on My Blog about agile frameworks.
-author_name: Sebastian Mckenzie
+author_name: Sebastian McKenzie
 author_url: https://twitter.com/sebmck
 date: 2018-05-03
 tags:
