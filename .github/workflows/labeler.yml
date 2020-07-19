@@ -1,6 +1,7 @@
 name: "Pull Request Labeler"
 on:
-- pull_request
+  pull_request:
+    types: [opened, synchronize]
 
 jobs:
   triage:
