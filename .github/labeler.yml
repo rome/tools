@@ -1,0 +1,59 @@
+# Internal
+core:
+- packages/@romefrontend/core/**/*
+compiler:
+- packages/@romefrontend/compiler/**/*
+formatter:
+- packages/@romefrontend/formatter/**/*
+linter:
+- packages/@romefrontend/compiler/lint/**/*
+- packages/@romefrontend/core/server/linter/**/*
+- lint.ts
+parser:
+- packages/@romefrontend/*-parser/**/*
+- parse.ts
+diagnostics:
+- packages/@romefrontend/diagnostics/**/*
+- packages/@romefrontend/cli-diagnostics/**/*
+cli:
+- packages/@romefrontend/cli-*/**/*
+- packages/@romefrontend/cli/**/*
+- packages/rome
+
+# Meta
+tooling:
+- scripts/**/*
+- .github/**/*
+governance:
+- GOVERNANCE.md
+
+# User support
+design:
+- assets/**/*
+docs:
+- website/src/docs/**/*
+website:
+- website/**/*
+
+# Integration
+vscode:
+- packages/@romefrontend-integration/vscode/**/*
+lsp:
+- packages/@romefrontend/core/server/lsp/**/*
+- lsp.ts
+
+# Languages
+html:
+- packages/@romefrontend/html-parser/**/*
+- html/**/*
+css:
+- packages/@romefrontend/css-parser/**/*
+- css/**/*
+markdown:
+- packages/@romefrontend/markdown-parser/**/*
+javascript:
+- packages/@romefrontend/js-*/**/*
+- js/**/*
+typescript:
+- packages/@romefrontend/js-parser/parser/typescript.ts/**/*
+- ts/**/*
