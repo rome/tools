@@ -1,19 +1,16 @@
 .sidebar {
   @include transition-timing;
-  width: $sidebar-width;
   list-style: none;
   font-size: 0.95rem;
   position: sticky;
   z-index: 99999;
   top: 0;
   height: 100vh;
-  border-right: 1px solid var(--soft-border-color);
-  border-left: 1px solid var(--soft-border-color);
   transition-property: transform;
   z-index: 2;
-  min-width: 256px;
   display: flex;
   flex-direction: column;
+  width: 20%;
 
   @include desktop-only() {
     @include top-border;
@@ -35,20 +32,27 @@
     &.visible {
       transform: translateX(0);
     }
-
   }
 
-  &.right{
+  &.left {
     border-right: 1px solid var(--soft-border-color);
-    border-left: none;
+    border-left: 1px solid var(--soft-border-color);
+
+    @include desktop-only() {
+      min-width: 256px;
+    }
+  }
+  
+  &.right {
     z-index: 0;
+    flex-grow: 1;
 
     @include desktop-only() {
       padding-top: 0;
-      min-width: 200px;
+      min-width: 256px;
     }
 
-    h2{
+    h2 {
       text-transform: uppercase;
       font-size: .8em;
       font-weight: bold;
@@ -64,28 +68,27 @@
       &.visible {
         transform: translateX(0);
       }
-
     }
-
   }
 
-  .menu-wrapper{
+  .menu-wrapper {
     overflow-y: auto;
     overflow-x: hidden;
+    height: 100%;
+  }
+
+  h2 {
+    text-transform: uppercase;
+    font-size: 0.8em;
+    font-weight: bold;
+    font-family: inherit;
+    color: var(--sub-text-color);
   }
 
   .menu {
     border-bottom: 1px solid var(--soft-border-color);
     font-weight: bold;
     padding: $unit 0 $unit $unit * 2;
-
-    h2 {
-      text-transform: uppercase;
-      font-size: 0.8em;
-      font-weight: bold;
-      font-family: inherit;
-      color: var(--sub-text-color);
-    }
 
     ul {
       margin: 0;
@@ -112,18 +115,15 @@
     a:hover {
       text-decoration: underline;
     }
-
   }
 
   .external-links {
+    border-bottom: none;
+    box-shadow: 1px 1px var(--soft-border-color);
 
-    svg{
+    svg {
       width: 24px;
       height: 24px;
-    }
-
-    @include desktop-only() {
-      border-top: 1px solid var(--soft-border-color);
     }
 
     ul {
@@ -146,9 +146,8 @@
 }
 
 // Better look on mobile
-// solution from https://github.com/algolia/docsearch/issues/181
+// Solution from https://github.com/algolia/docsearch/issues/181
 .algolia-autocomplete {
-
   @include mobile-only() {
     .ds-dropdown-menu {
       max-width: calc(100vw - 32px) !important;
@@ -170,7 +169,7 @@
 
 }
 
-.algolia-autocomplete, input#docusearch {
+.algolia-autocomplete, input#docsearch {
   width: 100%;
   display: block;
 }
@@ -179,18 +178,42 @@
   left: $unit * 2 !important;
 }
 
-input#docusearch {
-  padding: 32px 8px 32px 32px;
-  border: 0;
+#docsearch-container {
+  position: relative;
   border-bottom: 1px solid var(--soft-border-color);
-  height: $unit * 2;
-  background: var(--background-color);
-  font-size: 1em;
-  color: var(--font-color);
-}
 
-input#docusearch::placeholder {
-  color: var(--sub-text-color);
+  @include desktop-only() {
+    border-top: 1px solid var(--soft-border-color);
+  }
+
+  #search-icon {
+    z-index: 99999;
+    position: absolute;
+    left: 20px;
+    top: 17px;
+    height: 15px;
+    width: 15px;
+    pointer-events: none;
+  }
+
+  input#docsearch {
+    padding: 24px 32px;
+    padding-left: 42px;
+    border: 0;
+    height: $unit * 2;
+    background: rgba(0, 0, 0, 0.05);
+    font-size: 1.1em;
+    color: inherit;
+
+    &::placeholder {
+      color: inherit;
+      opacity: 1;
+    }
+  
+    &:focus {
+      outline: 2px solid var(--primary-color);
+    }
+  }
 }
 
 html[data-theme='dark'] .color-scheme-switch:after {

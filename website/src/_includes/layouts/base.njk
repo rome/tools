@@ -4,46 +4,44 @@
     <title>{{ title }}{{ " — " if title }}Rome Frontend Toolchain</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="mask-icon" href="{{ '/static/img/pinned-rome-logo.svg' | url }}" color="#000000">
-    <link rel="alternate icon" type="image/png" href="{{ '/static/img/favicon.png' | url }}">
-    <link rel="icon" type="image/svg+xml" href="{{ '/static/img/favicon.svg' | url }}">
+    <link rel="mask-icon" href="{{ '/img/pinned-rome-logo.svg' | url }}" color="#000000">
+    <link rel="alternate icon" type="image/png" href="{{ '/img/favicon.png' | url }}">
+    <link rel="icon" type="image/svg+xml" href="{{ '/img/favicon.svg' | url }}">
 
     <meta name="description" content="Standardizing the web development experience.">
     <meta name="theme-color" content="#FFC905">
     <meta property="og:title" content="{{ title }}{{ " — " if title }}Rome Frontend Toolchain">
     <meta property="og:description" content="Standardizing the web development experience.">
-    <meta property="og:image" content="https://romefrontend.dev/static/img/social-logo.png">
-    <meta property="twitter:image" content="https://romefrontend.dev/static/img/social-logo.png">
+    <meta property="og:image" content="https://romefrontend.dev/img/social-logo.png">
+    <meta property="twitter:image" content="https://romefrontend.dev/img/social-logo.png">
     <meta property="twitter:site" content="@romefrontend">
     <meta property="twitter:creator" content="@romefrontend">
     <meta property="twitter:image:alt" content="Logo for the Rome Frontend Toolchain Project">
     <meta property="twitter:card" content="summary_large_image">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" /> 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
-    <link rel="stylesheet" href="{{ '/static/styles.css' | url }}">
+    <link rel="stylesheet" href="{{ '/styles/index.css' | url }}">
+    
     <script>
-
       (function () {
         // Fix white flickering when on dark mode and respect color scheme preference
-        let currentTheme = window.localStorage.getItem('data-theme');
-        const $doc = document.documentElement;
-        const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        let currentTheme = localStorage.getItem('data-theme');
+        const prefersDarkMode = matchMedia('(prefers-color-scheme: dark)').matches;
 
-        if(!currentTheme)	{
+        if (!currentTheme)	{
           currentTheme = prefersDarkMode ? 'dark' : 'light';
         }
 
-        window.localStorage.setItem('data-theme', currentTheme);
-        $doc.setAttribute("data-theme", currentTheme);
+        localStorage.setItem('data-theme', currentTheme);
+        document.documentElement.setAttribute("data-theme", currentTheme);
       })();
-
     </script>
   </head>
 
   <body>
-    <div class="container">
+    {% set tocHTML = content | toc | shouldIncludeTOC | safe %}
+    <div class="container {{ "has-right-sidebar " if tocHTML != "" }}">
       <div class="skip-to-content">
         <a href="#main-content">Skip to main content</a>
       </div>
@@ -62,7 +60,7 @@
         </a>
       </div>
 
-      <div class="sidebar">
+      <div class="sidebar left">
         <div class="header-desktop">
           <a class="logo" href="{{ '/' | url }}">
             {% include "./svg/rome-logo.njk" %}
@@ -70,44 +68,22 @@
           </a>
         </div>
 
-        <nav aria-labelledby="external-links" class="menu external-links">
-          <h2 id="external-links" class="sr-only">External Links</h2>
-          <ul>
-          <li>
-            <a target="_blank" rel="noopener" href="https://github.com/romefrontend/rome">
-              <span class="sr-only">GitHub Repo</span>
-              {% include "./svg/github.njk" %}
-            </a>
-          </li>
-          <li>
-            <a target="_blank" rel="noopener" href="https://twitter.com/romefrontend">
-              <span class="sr-only">Twitter Account</span>
-              {% include "./svg/twitter.njk" %}
-            </a>
-          </li>
-          <li>
-            <a target="_blank" rel="noopener" href="https://opencollective.com/romefrontend">
-              <span class="sr-only">Open Collective</span>
-              {% include "./svg/open-collective.njk" %}
-            </a>
-          </li>
-          </ul>
-        </nav>
-
-        <input type="text" id="docusearch" placeholder="Search" />
+        <div id="docsearch-container">
+          <svg id="search-icon" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-1 0 136 136.21852">
+            <path d="M 93.148438 80.832031 C 109.5 57.742188 104.03125 25.769531 80.941406 9.421875 C 57.851562 -6.925781 25.878906 -1.460938 9.53125 21.632812 C -6.816406 44.722656 -1.351562 76.691406 21.742188 93.039062 C 38.222656 104.707031 60.011719 105.605469 77.394531 95.339844 L 115.164062 132.882812 C 119.242188 137.175781 126.027344 137.347656 130.320312 133.269531 C 134.613281 129.195312 134.785156 122.410156 130.710938 118.117188 C 130.582031 117.980469 130.457031 117.855469 130.320312 117.726562 Z M 51.308594 84.332031 C 33.0625 84.335938 18.269531 69.554688 18.257812 51.308594 C 18.253906 33.0625 33.035156 18.269531 51.285156 18.261719 C 69.507812 18.253906 84.292969 33.011719 84.328125 51.234375 C 84.359375 69.484375 69.585938 84.300781 51.332031 84.332031 C 51.324219 84.332031 51.320312 84.332031 51.308594 84.332031 Z M 51.308594 84.332031" fill="currentColor" />
+          </svg>
+          <input type="text" id="docsearch" placeholder="Search" />
+        </div>
 
         <div class="menu-wrapper">
           <nav aria-labelledby="site-navigation" class="menu">
             <h2 id="site-navigation" class="sr-only">Site Navigation</h2>
             <ul>
               <li>
+                <a href="{{ '/about' | url }}">About</a>
+              </li>
+              <li>
                 <a href="{{ '/blog' | url }}">Blog</a>
-              </li>
-              <li>
-                <a href="{{ '/contributing/team' | url }}">Team</a>
-              </li>
-              <li>
-                <a href="{{ '/contributing/philosophy' | url }}">Philosophy</a>
               </li>
               <li>
                 <a href="{{ '/sitemap' | url }}">Sitemap</a>
@@ -115,8 +91,8 @@
             </ul>
           </nav>
 
-          <nav aria-labelledby="site-navigation-core-documentation" class="menu">
-            <h2 id="site-navigation-core-documentation">Core Documentation</h2>
+          <nav aria-labelledby="site-navigation-guides" class="menu">
+            <h2 id="site-navigation-guides">Guides</h2>
             <ul>
               <li>
                 <a href="{{ '/docs/getting-started' | url }}">Getting Started</a>
@@ -147,7 +123,33 @@
               </li>
             </ul>
           </nav>
+
+          <nav aria-labelledby="external-links" class="menu external-links">
+            <h2 id="external-links" class="sr-only">External Links</h2>
+            <ul>
+              <li>
+                <a target="_blank" rel="noopener" href="https://github.com/romefrontend/rome">
+                  <span class="sr-only">GitHub Repo</span>
+                  {% include "./svg/github.njk" %}
+                </a>
+              </li>
+              <li>
+                <a target="_blank" rel="noopener" href="https://twitter.com/romefrontend">
+                  <span class="sr-only">Twitter Account</span>
+                  {% include "./svg/twitter.njk" %}
+                </a>
+              </li>
+              <li>
+                <a target="_blank" rel="noopener" href="https://opencollective.com/romefrontend">
+                  <span class="sr-only">Open Collective</span>
+                  {% include "./svg/open-collective.njk" %}
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
+
+        {% include "../color-scheme-switch.njk" %}
       </div>
 
       <div class="main">
@@ -177,32 +179,29 @@
 
         {{ content | safe }}
       </div>
-      <div class="sidebar right">
-        <nav aria-labelledby="table-of-content" class="table-of-contents">
-          <h2 id="table-of-content">Table of Contents</h2>
-          <div class="toc-container">
-            {{ content | toc(tags=['h1', 'h2'], wrapper='div  ', wrapperClass='fixed toc')  | safe }}
-          </div>
-        </nav>
 
-        <div class="color-scheme-switch-container">
-          <h2>Color scheme switch</h2>
-          <button id="color-scheme-switch" class="color-scheme-switch">
-            <span id="color-scheme-switch-text" class="sr-only">
-            </span>
-          </button>
+      {% if tocHTML != "" %}
+        <div class="sidebar right">
+          <nav aria-labelledby="table-of-content" class="table-of-contents">
+            <h2 id="table-of-content">Table of Contents</h2>
+            <div class="toc-container">
+              {{ tocHTML }}
+            </div>
+          </nav>
         </div>
-      </div>
+      {% endif %}
     </div>
 
-    <div class="wip-banner">
-      <strong>Rome is still in development</strong>. We have not had an official supported release so documentation may appear out of date until then.
-    </div>
+    {% if myProject.environment == "production" %}
+      <div class="wip-banner">
+        <strong>Rome is still in development</strong>. We have not had an official supported release so documentation may appear out of date until then.
+      </div>
+    {% endif %}
 
 		<footer aria-labelledby="footer" class="footer">
       <h1 id="footer" class="sr-only">Footer</h1>
 
-      <div class="container">
+      <div class="footer-container">
         <div class="row">
           <div>
             <nav aria-labelledby="community-navigation">
@@ -231,10 +230,12 @@
               </ul>
             </nav>
           </div>
-
-          <a href="https://www.netlify.com">
-            <img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg" alt="Deploys by Netlify" />
-          </a>
+          
+          <div class="netlify-badge">
+            <a href="https://www.netlify.com">
+              <img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg" alt="Deploys by Netlify" />
+            </a>
+          </div>
         </div>
 
         <div class="logo">
@@ -244,13 +245,13 @@
       </div>
     </footer>
 
-    <script src="{{ '/static/js/index.js' | url }}"></script>
+    <script src="{{ '/js/index.js' | url }}"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
     <script type="text/javascript">
       docsearch({
         apiKey: '66db1ad366d458c6acded7cbc23dba7e',
         indexName: 'romefrontend',
-        inputSelector: '#docusearch',
+        inputSelector: '#docsearch',
         debug: false // Set debug to true if you want to inspect the dropdown
       });
     </script>

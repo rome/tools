@@ -10,7 +10,15 @@ layout: layouts/base.njk
     <h3>
      <a href="{{ post.url }}">{{ post.data.title }}</a>
     </h3>
-    <div class="author">by {{ post.data.author }} at {{ post.date | dateFormat }} </div>
+    <div class="author">
+      by
+      {% if post.data.author_url %}
+        <a href="{{ post.data.author_url }}">{{ post.data.author_name }}</a>
+      {% else %}
+        {{ post.data.author_name }}
+      {% endif %}
+      at {{ post.date | dateFormat }}
+    </div>
   </div>
 </article>
 

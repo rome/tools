@@ -1,7 +1,6 @@
 ---
 title: Lint Rules
 layout: layouts/page.njk
-showHero: false
 eleventyNavigation: {
 	key: lint-rules,
 	parent: linting,

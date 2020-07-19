@@ -77,8 +77,6 @@ a:active {
   color: var(--primary-color);
 }
 
-
-
 .no-scroll {
   overflow: hidden;
 }
@@ -216,8 +214,7 @@ ul.breadcrumbs {
     box-shadow: 4px 4px 10.4px -6px var(--breadcrumbs-submenu-shadow-color);
 
     li {
-
-      a{
+      a {
         padding: $unit / 2 $unit;
         display: block;
       }
@@ -229,7 +226,7 @@ ul.breadcrumbs {
 
 .main {
   overflow: hidden;
-  width: 80%;
+  width: 100%;
   border-right: 1px solid var(--soft-border-color);
   @include mobile-only() {
     margin-top: $unit * 4;

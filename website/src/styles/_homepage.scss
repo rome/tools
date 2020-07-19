@@ -2,7 +2,7 @@
   position: relative;
   padding: $unit * 2;
   border-bottom: 1px solid var(--soft-border-color);
-  @include pattern-white;
+  @include pattern;
 
   @include mobile-only() {
     text-align: center;

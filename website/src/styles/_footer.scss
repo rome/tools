@@ -1,13 +1,18 @@
 .footer {
-  max-width: $container-width;
+  max-width: 100%;
   margin: 0 auto;
   padding: $unit;
   padding-bottom: $unit * 2;
   border-top: 1px solid var(--soft-border-color);
-  @include pattern-white;
+  @include pattern;
 
-  .container{
-    display: block;
+  .footer-container {
+    margin: auto;
+    max-width: 1075px;
+  }
+
+  .netlify-badge {
+    margin-top: $unit;
   }
 
   .logo {

@@ -1,6 +1,6 @@
 ---
 title: Contributing
-showHero: false
+layout: layouts/page.njk
 ---
 
 {% rootmd "CONTRIBUTING.md" %}

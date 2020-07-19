@@ -2,20 +2,27 @@ const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const eleventyNavigationPlugin = require("@11ty/eleventy-navigation");
 const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
+const pluginSass = require("eleventy-plugin-sass");
 const fs = require("fs");
 const pluginTOC = require("eleventy-plugin-nesting-toc");
 const path = require("path");
 
 module.exports = function(eleventyConfig) {
-	// Aything listed in .gitignore will be ignored by the watch process,
-	// workaround to let eleventry rebuild when the css stylesheet gets rebuild.
-	eleventyConfig.setUseGitIgnore(false);
+	eleventyConfig.addPassthroughCopy({"static": "."});
 
-	eleventyConfig.addPassthroughCopy("static");
-  eleventyConfig.addPassthroughCopy({"static-root": "."});
+	eleventyConfig.addPlugin(pluginSass, {
+		sourcemaps: true,
+		watch: ["src/**/*.{scss,sass}"],
+	});
 
 	eleventyConfig.addPlugin(syntaxHighlight);
-	eleventyConfig.addPlugin(pluginTOC);
+	
+	eleventyConfig.addPlugin(pluginTOC, {
+		tags: ['h2', 'h3'],
+		wrapper: 'div  ',
+		wrapperClass: 'fixed toc',
+	});
+
 	eleventyConfig.addPlugin(eleventyNavigationPlugin);
 
 	const md = markdownIt({
@@ -49,7 +56,7 @@ module.exports = function(eleventyConfig) {
 		},
 	);
 
-	// get from https://github.com/11ty/eleventy-base-blog/blob/master/_11ty/getTagList.js
+	// Taken from https://github.com/11ty/eleventy-base-blog/blob/master/_11ty/getTagList.js
 	eleventyConfig.addCollection("tagList", function(collection) {
 		let tagSet = new Set();
 		collection.getAll().forEach(function(item) {
@@ -75,7 +82,7 @@ module.exports = function(eleventyConfig) {
 			}
 		});
 
-		// returning an array in addCollection works in Eleventy 0.5.3
+		// Returning an array in addCollection works in Eleventy 0.5.3
 		return [...tagSet];
 	});
 
@@ -85,6 +92,15 @@ module.exports = function(eleventyConfig) {
 
 	eleventyConfig.addFilter("kebabCase", function(string) {
 		return string.toLowerCase().replace(/\s/g, '-');
+	});
+
+	eleventyConfig.addFilter("shouldIncludeTOC", function(content) {
+		const li = content.match(/<li/g);
+		if (li == null || li.length <= 2) {
+			return "";
+		} else {
+			return content;
+		}
 	});
 
 	return {
