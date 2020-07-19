@@ -3,22 +3,25 @@ core:
 - packages/@romefrontend/core/**/*
 compiler:
 - packages/@romefrontend/compiler/**/*
+- "**/compile.ts"
 formatter:
 - packages/@romefrontend/formatter/**/*
+- "**/format.ts"
 linter:
 - packages/@romefrontend/compiler/lint/**/*
 - packages/@romefrontend/core/server/linter/**/*
-- lint.ts
+- "**/lint.ts"
 parser:
 - packages/@romefrontend/*-parser/**/*
-- parse.ts
+- "**/parse.ts"
 diagnostics:
 - packages/@romefrontend/diagnostics/**/*
 - packages/@romefrontend/cli-diagnostics/**/*
 cli:
 - packages/@romefrontend/cli-*/**/*
 - packages/@romefrontend/cli/**/*
-- packages/rome
+- packages/rome/**/*
+- packages/@romefrontend/core/client/commands/**/*
 
 # Meta
 tooling:
@@ -40,20 +43,27 @@ vscode:
 - packages/@romefrontend-integration/vscode/**/*
 lsp:
 - packages/@romefrontend/core/server/lsp/**/*
-- lsp.ts
+- "**/lsp.ts"
 
 # Languages
 html:
 - packages/@romefrontend/html-parser/**/*
-- html/**/*
+- "**/html/**/*"
+- "**/html.ts"
 css:
 - packages/@romefrontend/css-parser/**/*
-- css/**/*
+- "**/css/**/*"
+- "**/css.ts"
 markdown:
-- packages/@romefrontend/markdown-parser/**/*
+- packages/@romefrontend/markdown-*/**/*
+- "**/markdown/**/*"
+- "**/markdown.ts"
+- "**/md.ts"
 javascript:
 - packages/@romefrontend/js-*/**/*
-- js/**/*
+- "**/js/**/*"
+- "**/js.ts"
+- "**/javascript.ts"
 typescript:
-- packages/@romefrontend/js-parser/parser/typescript.ts/**/*
-- ts/**/*
+- "**/ts/**/*"
+- "**/typescript.ts"
