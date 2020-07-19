@@ -43,7 +43,7 @@ $gray-8: lighten(#27272A, 80%);
   --font-color: #{lighten(#27272A, 65%)};
   --top-border-color: #{$color-4};
   --soft-border-color: rgba(0, 0, 0, 0.2);
-  --pattern-color: #{rgba($gray-3, 0.4)};
+  --pattern-color: #{$gray-3};
   --pattern-color-2: #{rgba(0, 0, 0, 0)};
   --pattern-img-path: url("/img/pattern-black.png");
   --toc-background-active: #{$gray-3};
