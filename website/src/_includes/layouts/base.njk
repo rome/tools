@@ -199,9 +199,11 @@
       {% endif %}
     </div>
 
-    {% if environment == "production" %}
+    {% if environment != "production" %}
       <div class="wip-banner">
-        <strong>Rome is still in development</strong>. We have not had an official supported release so documentation may appear out of date until then.
+        <p>
+          <strong>Rome is still in development</strong>. We have not had an official supported release so documentation may appear out of date until then.
+        </p>
       </div>
     {% endif %}
 
