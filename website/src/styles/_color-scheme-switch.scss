@@ -1,5 +1,7 @@
 .color-scheme-switch-container {
   padding: 18px 0;
+  height: 66px;
+  flex-shrink: 0;
   align-items: center;
   position: relative;
   width: 100%;
@@ -11,9 +13,11 @@
 .color-scheme-switch {
   position: relative;
   width: 60px;
+  height: 30px;
   line-height: 16px;
   background-color: var(--color-scheme-switcher-color);
   border-radius: 15px;
+  flex-shrink: 0;
   cursor: pointer;
   display: flex;
 
