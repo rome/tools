@@ -1,6 +1,7 @@
 // @ts-check
 /**
  * @type {{
+ *   wipBanner: HTMLElement;
  *   mobileHandleTOC: HTMLElement;
  *   mobileHandleNav: HTMLElement;
  *   toc: HTMLElement;
@@ -14,6 +15,7 @@
  * }}
  */
 const elements = {
+	wipBanner: document.querySelector(".wip-banner"),
 	mobileHandleTOC: document.querySelector(".mobile-handle-toc"),
 	mobileHandleNav: document.querySelector(".mobile-handle-nav"),
 	toc: document.querySelector(".toc-container"),
@@ -232,6 +234,27 @@ elements.colorSchemeSwitcher.addEventListener(
 	toggleColorSchemeSwitch,
 	false,
 );
+
+//# Hide development after scrolling
+
+if (elements.wipBanner) {
+	let hasScrolled = false;
+
+	window.addEventListener("scroll", () => {
+		if (hasScrolled) {
+			return;
+		}
+
+		if (window.scrollY > 0) {
+			hasScrolled = true;
+			setTimeout(() => {
+				elements.wipBanner.classList.add("hidden");
+			}, 2000);
+		}
+	}, {
+		passive: true,
+	});
+}
 
 //# Team list shuffle
 
