@@ -35,7 +35,6 @@
         if (!currentTheme)	{
           currentTheme = prefersDarkMode ? 'dark' : 'light';
         }
-        localStorage.setItem('data-theme', currentTheme);
         document.documentElement.setAttribute("data-theme", currentTheme);
       })();
     </script>
