@@ -2,7 +2,7 @@
 	"name": "rome-website",
 	"private": true,
 	"scripts": {
-		"build": "eleventy",
+		"build": "cross-env ELEVENTY_ENV=production eleventy",
 		"start": "eleventy --serve"
 	},
 	"devDependencies": {
@@ -11,6 +11,20 @@
 		"eleventy-plugin-nesting-toc": "^1.2.0",
 		"markdown-it-anchor": "^5.3.0",
 		"@11ty/eleventy-navigation": "^0.1.6",
-		"eleventy-plugin-sass": "^1.0.0"
+		"eleventy-plugin-sass": "^1.0.0",
+		"cross-env": "^7.0.2"
+	},
+	"rome": {
+		"extends": "../package.json",
+		"bundler": {
+			"externals": [
+				"@11ty/eleventy-plugin-syntaxhighlight",
+				"@11ty/eleventy-navigation",
+				"markdown-it",
+				"markdown-it-anchor",
+				"eleventy-plugin-sass",
+				"eleventy-plugin-nesting-toc"
+			]
+		}
 	}
 }

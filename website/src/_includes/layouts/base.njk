@@ -1,6 +1,8 @@
+{{ environment }}
 <!doctype html>
 <html lang="en" data-theme="light" class="js-disabled">
 	<head>
+    <meta charset="utf8" />
     <title>{{ title }}{{ " — " if title }}Rome Frontend Toolchain</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -61,96 +63,99 @@
         </a>
       </div>
 
-      <div class="sidebar left">
-        <div class="header-desktop">
-          <a class="logo" href="{{ '/' | url }}">
-            {% include "./svg/rome-logo.njk" %}
-            <h1 class="logo-text">Rome</h1>
-          </a>
+      <div class="sidebar-container">
+        <div class="sidebar-stripe"></div>
+        <div class="sidebar left">
+          <div class="header-desktop">
+            <a class="logo" href="{{ '/' | url }}">
+              {% include "./svg/rome-logo.njk" %}
+              <h1 class="logo-text">Rome</h1>
+            </a>
+          </div>
+
+          <div id="docsearch-container">
+            <svg id="search-icon" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-1 0 136 136.21852">
+              <path d="M 93.148438 80.832031 C 109.5 57.742188 104.03125 25.769531 80.941406 9.421875 C 57.851562 -6.925781 25.878906 -1.460938 9.53125 21.632812 C -6.816406 44.722656 -1.351562 76.691406 21.742188 93.039062 C 38.222656 104.707031 60.011719 105.605469 77.394531 95.339844 L 115.164062 132.882812 C 119.242188 137.175781 126.027344 137.347656 130.320312 133.269531 C 134.613281 129.195312 134.785156 122.410156 130.710938 118.117188 C 130.582031 117.980469 130.457031 117.855469 130.320312 117.726562 Z M 51.308594 84.332031 C 33.0625 84.335938 18.269531 69.554688 18.257812 51.308594 C 18.253906 33.0625 33.035156 18.269531 51.285156 18.261719 C 69.507812 18.253906 84.292969 33.011719 84.328125 51.234375 C 84.359375 69.484375 69.585938 84.300781 51.332031 84.332031 C 51.324219 84.332031 51.320312 84.332031 51.308594 84.332031 Z M 51.308594 84.332031" fill="currentColor" />
+            </svg>
+            <input type="text" id="docsearch" placeholder="Search" />
+          </div>
+
+          <div class="menu-wrapper">
+            <nav aria-labelledby="site-navigation" class="menu">
+              <h2 id="site-navigation" class="sr-only">Site Navigation</h2>
+              <ul>
+                <li>
+                  <a href="{{ '/about' | url }}">About</a>
+                </li>
+                <li>
+                  <a href="{{ '/blog' | url }}">Blog</a>
+                </li>
+                <li>
+                  <a href="{{ '/sitemap' | url }}">Sitemap</a>
+                </li>
+              </ul>
+            </nav>
+
+            <nav aria-labelledby="site-navigation-guides" class="menu">
+              <h2 id="site-navigation-guides">Guides</h2>
+              <ul>
+                <li>
+                  <a href="{{ '/docs/getting-started' | url }}">Getting Started</a>
+                </li>
+                <li>
+                  <a href="{{ '/docs/lint' | url }}">Linting</a>
+                </li>
+              </ul>
+            </nav>
+
+            <nav aria-labelledby="site-navigation-documentation" class="menu">
+              <h2 id="site-navigation-documentation">Documentation</h2>
+              <ul>
+                <li>
+                  <a href="{{ '/docs/cli' | url }}">CLI</a>
+                </li>
+                <li>
+                  <a href="{{ '/docs/diagnostics' | url }}">Diagnostics</a>
+                </li>
+                <li>
+                  <a href="{{ '/docs/editor-integration' | url }}">Editor Integration</a>
+                </li>
+                <li>
+                  <a href="{{ '/docs/language-support' | url }}">Language Support</a>
+                </li>
+                <li>
+                  <a href="{{ '/docs/project-config' | url }}">Project Config</a>
+                </li>
+              </ul>
+            </nav>
+
+            <nav aria-labelledby="external-links" class="menu external-links">
+              <h2 id="external-links" class="sr-only">External Links</h2>
+              <ul>
+                <li>
+                  <a target="_blank" rel="noopener" href="https://github.com/romefrontend/rome">
+                    <span class="sr-only">GitHub Repo</span>
+                    {% include "./svg/github.njk" %}
+                  </a>
+                </li>
+                <li>
+                  <a target="_blank" rel="noopener" href="https://twitter.com/romefrontend">
+                    <span class="sr-only">Twitter Account</span>
+                    {% include "./svg/twitter.njk" %}
+                  </a>
+                </li>
+                <li>
+                  <a target="_blank" rel="noopener" href="https://opencollective.com/romefrontend">
+                    <span class="sr-only">Open Collective</span>
+                    {% include "./svg/open-collective.njk" %}
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+
+          {% include "../color-scheme-switch.njk" %}
         </div>
-
-        <div id="docsearch-container">
-          <svg id="search-icon" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-1 0 136 136.21852">
-            <path d="M 93.148438 80.832031 C 109.5 57.742188 104.03125 25.769531 80.941406 9.421875 C 57.851562 -6.925781 25.878906 -1.460938 9.53125 21.632812 C -6.816406 44.722656 -1.351562 76.691406 21.742188 93.039062 C 38.222656 104.707031 60.011719 105.605469 77.394531 95.339844 L 115.164062 132.882812 C 119.242188 137.175781 126.027344 137.347656 130.320312 133.269531 C 134.613281 129.195312 134.785156 122.410156 130.710938 118.117188 C 130.582031 117.980469 130.457031 117.855469 130.320312 117.726562 Z M 51.308594 84.332031 C 33.0625 84.335938 18.269531 69.554688 18.257812 51.308594 C 18.253906 33.0625 33.035156 18.269531 51.285156 18.261719 C 69.507812 18.253906 84.292969 33.011719 84.328125 51.234375 C 84.359375 69.484375 69.585938 84.300781 51.332031 84.332031 C 51.324219 84.332031 51.320312 84.332031 51.308594 84.332031 Z M 51.308594 84.332031" fill="currentColor" />
-          </svg>
-          <input type="text" id="docsearch" placeholder="Search" />
-        </div>
-
-        <div class="menu-wrapper">
-          <nav aria-labelledby="site-navigation" class="menu">
-            <h2 id="site-navigation" class="sr-only">Site Navigation</h2>
-            <ul>
-              <li>
-                <a href="{{ '/about' | url }}">About</a>
-              </li>
-              <li>
-                <a href="{{ '/blog' | url }}">Blog</a>
-              </li>
-              <li>
-                <a href="{{ '/sitemap' | url }}">Sitemap</a>
-              </li>
-            </ul>
-          </nav>
-
-          <nav aria-labelledby="site-navigation-guides" class="menu">
-            <h2 id="site-navigation-guides">Guides</h2>
-            <ul>
-              <li>
-                <a href="{{ '/docs/getting-started' | url }}">Getting Started</a>
-              </li>
-              <li>
-                <a href="{{ '/docs/lint' | url }}">Linting</a>
-              </li>
-            </ul>
-          </nav>
-
-          <nav aria-labelledby="site-navigation-documentation" class="menu">
-            <h2 id="site-navigation-documentation">Documentation</h2>
-            <ul>
-              <li>
-                <a href="{{ '/docs/cli' | url }}">CLI</a>
-              </li>
-              <li>
-                <a href="{{ '/docs/diagnostics' | url }}">Diagnostics</a>
-              </li>
-              <li>
-                <a href="{{ '/docs/editor-integration' | url }}">Editor Integration</a>
-              </li>
-              <li>
-                <a href="{{ '/docs/language-support' | url }}">Language Support</a>
-              </li>
-              <li>
-                <a href="{{ '/docs/project-config' | url }}">Project Config</a>
-              </li>
-            </ul>
-          </nav>
-
-          <nav aria-labelledby="external-links" class="menu external-links">
-            <h2 id="external-links" class="sr-only">External Links</h2>
-            <ul>
-              <li>
-                <a target="_blank" rel="noopener" href="https://github.com/romefrontend/rome">
-                  <span class="sr-only">GitHub Repo</span>
-                  {% include "./svg/github.njk" %}
-                </a>
-              </li>
-              <li>
-                <a target="_blank" rel="noopener" href="https://twitter.com/romefrontend">
-                  <span class="sr-only">Twitter Account</span>
-                  {% include "./svg/twitter.njk" %}
-                </a>
-              </li>
-              <li>
-                <a target="_blank" rel="noopener" href="https://opencollective.com/romefrontend">
-                  <span class="sr-only">Open Collective</span>
-                  {% include "./svg/open-collective.njk" %}
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-
-        {% include "../color-scheme-switch.njk" %}
       </div>
 
       <div class="main">
@@ -182,18 +187,20 @@
       </div>
 
       {% if tocHTML != "" %}
-        <div class="sidebar right">
-          <nav aria-labelledby="table-of-content" class="table-of-contents">
-            <h2 id="table-of-content">Table of Contents</h2>
-            <div class="toc-container">
-              {{ tocHTML }}
-            </div>
-          </nav>
+        <div class="sidebar-container">
+          <div class="sidebar right">
+            <nav aria-labelledby="table-of-content" class="table-of-contents">
+              <h2 id="table-of-content">Table of Contents</h2>
+              <div class="toc-container">
+                {{ tocHTML }}
+              </div>
+            </nav>
+          </div>
         </div>
       {% endif %}
     </div>
 
-    {% if myProject.environment == "production" %}
+    {% if environment == "production" %}
       <div class="wip-banner">
         <strong>Rome is still in development</strong>. We have not had an official supported release so documentation may appear out of date until then.
       </div>

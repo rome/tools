@@ -19,12 +19,7 @@ body {
   color: var(--font-color);
   line-height: 1.5;
   margin: 0;
-}
-
-body, .sidebar.left {
-  @include desktop-only() {
-    box-shadow: inset 0 5px var(--top-border-color);
-  }
+  @include inset-border-top;
 }
 
 code {
@@ -229,8 +224,9 @@ ul.breadcrumbs {
 .main {
   overflow: hidden;
   width: 100%;
-  padding-top: 5px;
+  margin-top: 5px;
   border-right: 1px solid var(--soft-border-color);
+
   @include mobile-only() {
     margin-top: $unit * 4;
     margin-left: 0;
