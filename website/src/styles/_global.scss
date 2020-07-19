@@ -19,7 +19,10 @@ body {
   color: var(--font-color);
   line-height: 1.5;
   margin: 0;
-  @include inset-border-top;
+
+  @include desktop-only {
+    @include inset-border-top;
+  }
 }
 
 code {
