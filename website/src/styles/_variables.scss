@@ -12,7 +12,7 @@ $gray-3: darken(#27272A, 3%);
 $gray-4: #27272A; //logo gray
 $gray-5: lighten(#27272A, 25%);
 $gray-6: lighten(#27272A, 45%);
-$gray-7: lighten(#27272A, 75%);
+$gray-7: lighten(#27272A, 70%);
 $gray-8: lighten(#27272A, 80%);
 
 :root {
@@ -22,10 +22,10 @@ $gray-8: lighten(#27272A, 80%);
   --font-color: #{$gray-4};
   --sub-text-color: #{$gray-6};
   --top-border-color: #{$gray-4};
-  --soft-border-color: #{$gray-7};
-  --pattern-color: #{rgba($gray-7, 0.6)};
+  --soft-border-color: rgba(39, 39, 42, 0.2);
+  --pattern-color: #{rgba($gray-7, 0.45)};
   --pattern-color-2: #{rgba(255, 255, 255, 0)};
-  --pattern-img-path: url("/static/img/pattern-white.png");
+  --pattern-img-path: url("/img/pattern-white.png");
   --toc-background-active: #{$gray-8};
   --toc-link-color-hover: #{$gray-6};
   --toc-link-color-active: #{$gray-4};
@@ -34,17 +34,18 @@ $gray-8: lighten(#27272A, 80%);
   --breadcrumbs-background-active: #{lighten(#27272A, 70%)};
   --breadcrumbs-background-hover: #{$gray-7};
   --breadcrumbs-submenu-shadow-color: #{$gray-6};
+  --color-scheme-switcher-color: #{$gray-4};
 }
 
-html[data-theme='dark'] {
+@mixin dark-root {
   --logo-font-color: #{$gray-8};
   --background-color: #{$gray-4};
   --font-color: #{lighten(#27272A, 65%)};
   --top-border-color: #{$color-4};
-  --soft-border-color: #{$gray-3};
+  --soft-border-color: rgba(0, 0, 0, 0.2);
   --pattern-color: #{rgba($gray-3, 0.4)};
   --pattern-color-2: #{rgba(0, 0, 0, 0)};
-  --pattern-img-path: url("/static/img/pattern-black.png");
+  --pattern-img-path: url("/img/pattern-black.png");
   --toc-background-active: #{$gray-3};
   --toc-link-color-hover: #{$gray-6};
   --toc-link-color-active: #{$gray-8};
@@ -53,12 +54,21 @@ html[data-theme='dark'] {
   --breadcrumbs-background-active: #{darken(#27272A, 7%)};
   --breadcrumbs-background-hover: #{darken(#27272A, 4%)};
   --breadcrumbs-submenu-shadow-color: #{$gray-2};
+  --color-scheme-switcher-color: #000;
+}
+
+html[data-theme='dark'] {
+  @include dark-root;
+}
+
+// If JS is disabled then we just force prefers-color-scheme
+@media (prefers-color-scheme: dark) {
+  html.js-disabled {
+    @include dark-root;
+  }
 }
 
 $body-line-height: 1.5em;
-
-$sidebar-width: 20%;
-$container-width: 100%;
 
 $unit: 16px;
 $unit-border-radius: 4px;

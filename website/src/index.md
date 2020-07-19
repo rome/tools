@@ -12,9 +12,9 @@ layout: layouts/homepage.njk
 
 **Rome** has been built from scratch without the usage of existing libraries. **Rome** contains no third-party library dependencies.
 
-**Rome** has strong conventions and aims to have minimal configuration. Read more about our project philosophy [here](https://romefrontend.dev/contributing/philosophy).
+**Rome** has strong conventions and aims to have minimal configuration. Read more about our project philosophy [here](https://romefrontend.dev/about#philosophy).
 
-**Rome** is maintained by a [team of contributors](https://romefrontend.dev/contributing/team). **Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io) and [Yarn](https://yarnpkg.com).
+**Rome** is maintained by a [team of volunteers](https://romefrontend.dev/contributing/team). **Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io) and [Yarn](https://yarnpkg.com).
 
 ## Preview
 

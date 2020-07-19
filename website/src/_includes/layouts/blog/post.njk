@@ -4,7 +4,11 @@ layout: layouts/blog/base.njk
 <div class="post">
   <h1 id="{{ title | kebabCase }} ">{{ title }}</a></h1>
   <div class="info">
-    <div>by {{ author }}</div>
+    {%- if author_url -%}
+      <div>by <a href="{{ author_url }}">{{ author_name }}</a></div>
+    {%- else -%}
+      <div>by {{ author_name }}</div>
+    {%- endif -%}
     <time datetime="{{ date }}"> {{ date | dateFormat }} </time>
   </div>
 
