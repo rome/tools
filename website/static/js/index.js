@@ -1,12 +1,12 @@
 // @ts-check
 /**
  * @type {{
- *   mobileHandle: HTMLElement;
+ *   mobileHandleTOC: HTMLElement;
+ *   mobileHandleNav: HTMLElement;
  *   toc: HTMLElement;
  *   tocLinks: NodeListOf<HTMLElement>;
- *   sidebar: HTMLElement;
- *   sidebarRight: HTMLElement;
- *   overlay: HTMLElement;
+ *   sidebarNav: HTMLElement;
+ *   sidebarTOC: HTMLElement;
  *   headings: NodeListOf<HTMLElement>;
  *   headerMobile: HTMLElement;
  *   colorSchemeSwitcher: HTMLElement;
@@ -14,12 +14,12 @@
  * }}
  */
 const elements = {
-	mobileHandle: document.querySelector(".mobile-handle"),
+	mobileHandleTOC: document.querySelector(".mobile-handle-toc"),
+	mobileHandleNav: document.querySelector(".mobile-handle-nav"),
 	toc: document.querySelector(".toc-container"),
 	tocLinks: document.querySelectorAll(".toc-container a"),
-	sidebar: document.querySelector(".sidebar"),
-	sidebarRight: document.querySelector(".sidebar.right"),
-	overlay: document.querySelector(".overlay"),
+	sidebarNav: document.querySelector(".sidebar.nav"),
+	sidebarTOC: document.querySelector(".sidebar.toc"),
 	headings: document.querySelectorAll(".content h1, .content h2"),
 	headerMobile: document.querySelector(".header-mobile"),
 	colorSchemeSwitcher: document.querySelector(".color-scheme-switch"),
@@ -31,7 +31,7 @@ const elements = {
  */
 function isMobile() {
 	return (
-		elements.sidebar.classList.contains("visible") ||
+		elements.sidebarNav.classList.contains("visible") ||
 		/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 			navigator.userAgent,
 		)
@@ -104,7 +104,7 @@ const toc = {
 			scrollToHeading(hash);
 
 			if (isMobile()) {
-				mobileToggleEvent(event);
+				toggleMobileNav(event);
 			}
 		}
 	},
@@ -137,13 +137,40 @@ function handleScroll() {
 	toc.highlight();
 }
 
-function mobileToggleEvent(event) {
+/**
+ * @type {undefined | "toc" | "nav"}
+ */
+let mobileSidebarActive;
+
+function toggleMobileNav(event) {
+	if (mobileSidebarActive === "nav") {
+		mobileSidebarActive = undefined;
+	} else {
+		if (mobileSidebarActive === "toc") {
+			toggleMobileTOC(event);
+		}
+		mobileSidebarActive = "nav";
+	}
+
+	event.preventDefault();
+	elements.sidebarNav.classList.toggle("visible");
+	document.body.classList.toggle("no-scroll");
+}
+
+function toggleMobileTOC(event) {
+	if (mobileSidebarActive === "toc") {
+		mobileSidebarActive = undefined;
+	} else {
+		if (mobileSidebarActive === "nav") {
+			toggleMobileTOC(event);
+		}
+		mobileSidebarActive = "toc";
+	}
+
 	const bodyClassList = document.body.classList;
 	event.preventDefault();
-	elements.sidebar.classList.toggle("visible");
-	elements.sidebarRight.classList.toggle("visible");
-	elements.overlay.classList.toggle("visible");
-	bodyClassList.toggle("no-scroll");
+	elements.sidebarTOC.classList.toggle("visible");
+	document.body.classList.toggle("no-scroll");
 	toc.highlight();
 }
 
@@ -183,9 +210,8 @@ if (elements.toc) {
 	elements.toc.addEventListener("click", toc.handleClick, false);
 }
 
-elements.mobileHandle.addEventListener("click", mobileToggleEvent, false);
-elements.overlay.addEventListener("click", mobileToggleEvent, false);
-elements.overlay.addEventListener("touchstart", mobileToggleEvent, false);
+elements.mobileHandleNav.addEventListener("click", toggleMobileNav, false);
+elements.mobileHandleTOC.addEventListener("click", toggleMobileTOC, false);
 window.addEventListener("scroll", handleScroll, false);
 
 //# Color scheme switcher

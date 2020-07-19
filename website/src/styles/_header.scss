@@ -80,7 +80,13 @@
 
 .mobile-handle {
   height: 32px;
+  width: 32px;
   display: none;
+
+  svg {
+    height: 32px;
+    width: 32px;
+  }
 
   svg path {
     fill: var(--top-border-color);

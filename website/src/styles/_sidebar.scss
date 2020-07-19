@@ -1,9 +1,3 @@
-@include mobile-only() {
-  .container.no-right-sidebar .sidebar {
-    width: 100%;
-  }
-}
-
 .sidebar-container {
   position: sticky;
   z-index: 2;
@@ -40,8 +34,6 @@
     padding-top: 59px;
     background: var(--background-color);
     height: 100%;
-    width: 50%;
-    min-width: auto;
     -webkit-overflow-scrolling: touch;
 
     &.visible {
@@ -49,7 +41,7 @@
     }
   }
 
-  &.left {
+  &.nav {
     border-right: 1px solid var(--soft-border-color);
     border-left: 1px solid var(--soft-border-color);
 
@@ -59,7 +51,7 @@
     }
   }
   
-  &.right {
+  &.toc {
     z-index: 0;
     flex-grow: 1;
 

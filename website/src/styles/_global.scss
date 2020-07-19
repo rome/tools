@@ -81,30 +81,6 @@ a:active {
   overflow: hidden;
 }
 
-.overlay {
-  transform: translateX(100%);
-  width: 100%;
-  height: 100%;
-
-  @include desktop-only() {
-    display: none;
-  }
-
-  @include mobile-only() {
-    @include transition-timing;
-    position: fixed;
-    background: #181818;
-    opacity: 0;
-    transition-property: opacity, transform;
-    display: block;
-    z-index: 1;
-    &.visible {
-      transform: translateX(0);
-      opacity: 0;
-    }
-  }
-}
-
 ul.breadcrumbs {
   background-color: var(--background-color);
   border-bottom: 1px solid var(--soft-border-color);
