@@ -16,7 +16,7 @@
     @include top-border;
     border-top-width: 0;
     transition-duration: 150ms;
-    padding-top: $unit * 2;
+    padding-top: 37px;
   }
 
   @include mobile-only() {

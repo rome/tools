@@ -1,5 +1,5 @@
 <!doctype html>
-<html data-theme="light" lang="en">
+<html lang="en" data-theme="light" class="js-disabled">
 	<head>
     <title>{{ title }}{{ " — " if title }}Rome Frontend Toolchain</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,14 +25,15 @@
     
     <script>
       (function () {
+        document.documentElement.classList.remove("js-disabled");
+        document.documentElement.classList.add("js-enabled");
+
         // Fix white flickering when on dark mode and respect color scheme preference
         let currentTheme = localStorage.getItem('data-theme');
         const prefersDarkMode = matchMedia('(prefers-color-scheme: dark)').matches;
-
         if (!currentTheme)	{
           currentTheme = prefersDarkMode ? 'dark' : 'light';
         }
-
         localStorage.setItem('data-theme', currentTheme);
         document.documentElement.setAttribute("data-theme", currentTheme);
       })();

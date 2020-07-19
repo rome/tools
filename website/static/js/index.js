@@ -135,12 +135,6 @@ function handleScroll() {
 	}
 
 	toc.highlight();
-
-	if (window.scrollY > 6) {
-		elements.sidebar.style["border-top-width"] = "5.3333333333px";
-	} else {
-		elements.sidebar.style["border-top-width"] = "0px";
-	}
 }
 
 function mobileToggleEvent(event) {

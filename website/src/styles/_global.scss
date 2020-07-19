@@ -19,9 +19,11 @@ body {
   color: var(--font-color);
   line-height: 1.5;
   margin: 0;
+}
 
+body, .sidebar.left {
   @include desktop-only() {
-    border-top: $unit / 3 solid var(--top-border-color);
+    box-shadow: inset 0 5px var(--top-border-color);
   }
 }
 
@@ -227,6 +229,7 @@ ul.breadcrumbs {
 .main {
   overflow: hidden;
   width: 100%;
+  padding-top: 5px;
   border-right: 1px solid var(--soft-border-color);
   @include mobile-only() {
     margin-top: $unit * 4;
@@ -277,6 +280,10 @@ ul.breadcrumbs {
   overflow: visible !important;
   clip: auto !important;
   white-space: normal !important;
+}
+
+html.js-disabled .hide-no-js {
+  display: none;
 }
 
 .icon {

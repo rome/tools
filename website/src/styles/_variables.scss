@@ -37,7 +37,7 @@ $gray-8: lighten(#27272A, 80%);
   --color-scheme-switcher-color: #{$gray-4};
 }
 
-html[data-theme='dark'] {
+@mixin dark-root {
   --logo-font-color: #{$gray-8};
   --background-color: #{$gray-4};
   --font-color: #{lighten(#27272A, 65%)};
@@ -55,6 +55,17 @@ html[data-theme='dark'] {
   --breadcrumbs-background-hover: #{darken(#27272A, 4%)};
   --breadcrumbs-submenu-shadow-color: #{$gray-2};
   --color-scheme-switcher-color: #000;
+}
+
+html[data-theme='dark'] {
+  @include dark-root;
+}
+
+// If JS is disabled then we just force prefers-color-scheme
+@media (prefers-color-scheme: dark) {
+  html.js-disabled {
+    @include dark-root;
+  }
 }
 
 $body-line-height: 1.5em;
