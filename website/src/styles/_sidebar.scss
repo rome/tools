@@ -1,3 +1,10 @@
+@include mobile-only() {
+  .container.no-right-sidebar .sidebar {
+    width: 100%;
+  }
+}
+
+
 .sidebar {
   @include transition-timing;
   list-style: none;
@@ -210,8 +217,18 @@
       opacity: 1;
     }
   
-    &:focus {
-      outline: 2px solid var(--primary-color);
+    // Yellow outline on desktop focus
+    @include desktop-only() {
+      &:focus {
+        outline: 2px solid var(--primary-color);
+      }
+    }
+
+    // Yellow inset box shadow on mobile focus
+    @include mobile-only() {
+      &:focus {
+        box-shadow: inset 2px 2px var(--primary-color), inset -2px -2px var(--primary-color);
+      }
     }
   }
 }

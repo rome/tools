@@ -135,7 +135,7 @@ pre.homepage-example {
   }
 }
 
-article.latest-post{
+article.latest-post {
   border-bottom: 1px solid var(--soft-border-color);
   padding: $unit $unit * 2;
   display: flex;
@@ -146,17 +146,25 @@ article.latest-post{
     min-height: 32px + 64px + 1px;
   }
 
-  div.info{
-    display: flex;
-    align-items: center;
+  div.info {
+    @include desktop-only {
+      display: flex;
+      align-items: center;
+    }
 
-    div{
+    @include mobile-only {
+      h3, .author {
+        display: inline;
+      }
+    }
+
+    .author {
       margin-left: auto;
       color: var(--sub-text-color);
     }
   }
 
-  h2{
+  h2 {
     text-transform: uppercase;
     font-size: .8em;
     font-weight: bold;
@@ -165,7 +173,7 @@ article.latest-post{
     margin-top: 0;
   }
 
-  h3{
+  h3 {
     font-size: 1em;
     margin: 0;
   }

@@ -42,7 +42,7 @@
 
   <body>
     {% set tocHTML = content | toc | shouldIncludeTOC | safe %}
-    <div class="container {{ "has-right-sidebar " if tocHTML != "" }}">
+    <div class="container{{ " has-right-sidebar" if tocHTML != "" }}{{ " no-right-sidebar" if tocHTML == "" }}">
       <div class="skip-to-content">
         <a href="#main-content">Skip to main content</a>
       </div>
