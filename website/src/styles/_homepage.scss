@@ -6,6 +6,7 @@
 
   @include mobile-only() {
     text-align: center;
+    padding: $unit * 2 $unit;
   }
 
   h1, h2 {
