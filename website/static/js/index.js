@@ -167,7 +167,6 @@ function toggleMobileTOC(event) {
 		mobileSidebarActive = "toc";
 	}
 
-	const bodyClassList = document.body.classList;
 	event.preventDefault();
 	elements.sidebarTOC.classList.toggle("visible");
 	document.body.classList.toggle("no-scroll");
@@ -217,7 +216,12 @@ window.addEventListener("scroll", handleScroll, false);
 //# Color scheme switcher
 
 function toggleColorSchemeSwitch() {
-	const currentScheme = window.localStorage.getItem("data-theme") || "light";
+	let currentScheme = window.localStorage.getItem("data-theme");
+	if (currentScheme === undefined) {
+		const prefersDarkMode = matchMedia('(prefers-color-scheme: dark)').matches;
+		currentScheme = prefersDarkMode ? 'dark' : 'light';
+	}
+
 	const newScheme = currentScheme === "dark" ? "light" : "dark";
 	window.localStorage.setItem("data-theme", newScheme);
 	document.documentElement.setAttribute("data-theme", newScheme);
