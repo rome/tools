@@ -37,7 +37,7 @@
   @include mobile-only() {
     transform: translateX(-100%);
     position: fixed;
-    padding-top: 64px;
+    padding-top: 59px;
     background: var(--background-color);
     height: 100%;
     width: 50%;
