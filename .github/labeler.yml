@@ -25,10 +25,16 @@ cli:
 
 # Meta
 tooling:
+- rome
+- rome.bat
+- .*
+- "*.json"
 - scripts/**/*
 - .github/**/*
 governance:
 - GOVERNANCE.md
+- CODE_OF_CONDUCT.md
+- LICENSE
 
 # User support
 design:
