@@ -159,7 +159,7 @@ export function diffTextEdits(
 export function getWorkerBufferPatches(
 	contentChanges: Consumer,
 ): Array<WorkerBufferPatch> {
-	return contentChanges.asArray().map((change) => {
+	return contentChanges.asMappedArray((change) => {
 		const start = change.get("range").get("start");
 		const end = change.get("range").get("end");
 

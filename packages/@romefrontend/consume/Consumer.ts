@@ -611,6 +611,11 @@ export default class Consumer {
 		return this.fork(key, value[key], metadata);
 	}
 
+	getIndex(index: number): Consumer {
+		const arr = this.asPlainArray();
+		return this.fork(index, arr[index]);
+	}
+
 	markUsedProperty(name: string) {
 		this.usedNames.add(name);
 	}
@@ -649,37 +654,34 @@ export default class Consumer {
 		}
 	}
 
-	asPossibleNumberString(def?: number): Consumer {
+	asNumberString(def?: string): number {
 		this.declareDefinition({
 			type: "number",
 			default: def,
 			required: def === undefined,
 		});
 
-		if (this.exists()) {
-			const str = this.asUndeclaredString();
-			const num = parseFloat(str);
-			if (isNaN(num)) {
-				this.unexpected(descriptions.CONSUME.EXPECTED_VALID_NUMBER);
-			} else {
-				return this.cloneConsumer({
-					value: num,
-				});
-			}
+		const str = this.asString(def);
+		const num = parseFloat(str);
+		if (isNaN(num)) {
+			this.unexpected(descriptions.CONSUME.EXPECTED_VALID_NUMBER);
+			return 0;
+		} else {
+			return num;
 		}
-
-		return this.cloneConsumer({
-			value: def,
-		});
 	}
 
-	asPossibleParsedJSON(): Consumer {
-		if (typeof this.asUnknown() === "string") {
-			return this.cloneConsumer({
-				value: JSON.parse(this.asString()),
-			});
+	asNumberStringOrVoid(): undefined | number {
+		this.declareDefinition({
+			type: "number",
+			default: undefined,
+			required: false,
+		});
+
+		if (this.exists()) {
+			return this.asNumberString();
 		} else {
-			return this;
+			return undefined;
 		}
 	}
 
@@ -712,7 +714,7 @@ export default class Consumer {
 
 	asJSONArray(): JSONArray {
 		const arr: JSONArray = [];
-		for (const value of this.asArray()) {
+		for (const value of this.asIterable()) {
 			arr.push(value.asJSONValue());
 		}
 		return arr;
@@ -812,7 +814,7 @@ export default class Consumer {
 		return [...value];
 	}
 
-	asArray(optional?: boolean): Array<Consumer> {
+	asIterable(optional?: boolean): Iterable<Consumer> {
 		const arr = this.asPlainArray(optional);
 
 		return arr.map((val, index) => {
@@ -820,11 +822,15 @@ export default class Consumer {
 		});
 	}
 
-	asImplicitArray(): Array<Consumer> {
+	asMappedArray<T>(callback: (c: Consumer) => T): Array<T> {
+		return Array.from(this.asIterable(), callback);
+	}
+
+	asImplicitMappedArray<T>(callback: (c: Consumer) => T): Array<T> {
 		if (Array.isArray(this.asUnknown())) {
-			return this.asArray();
+			return this.asMappedArray(callback);
 		} else if (this.exists()) {
-			return [this];
+			return [callback(this)];
 		} else {
 			return [];
 		}
@@ -837,7 +843,7 @@ export default class Consumer {
 			required: false,
 		});
 		if (this.exists()) {
-			return this.asUndeclaredDate();
+			return this.asDate();
 		} else {
 			return undefined;
 		}
@@ -849,10 +855,6 @@ export default class Consumer {
 			default: def,
 			required: def === undefined,
 		});
-		return this.asUndeclaredDate(def);
-	}
-
-	asUndeclaredDate(def?: Date): Date {
 		const value = this.getValue(def);
 		if (!(value instanceof Date)) {
 			this.unexpected(descriptions.CONSUME.EXPECTED_DATE);
@@ -868,7 +870,7 @@ export default class Consumer {
 			required: false,
 		});
 		if (this.exists()) {
-			return this.asUndeclaredBoolean();
+			return this.asBoolean();
 		} else {
 			return undefined;
 		}
@@ -880,10 +882,6 @@ export default class Consumer {
 			default: def,
 			required: def === undefined,
 		});
-		return this.asUndeclaredBoolean(def);
-	}
-
-	asUndeclaredBoolean(def?: boolean): boolean {
 		const value = this.getValue(def);
 		if (typeof value !== "boolean") {
 			this.unexpected(descriptions.CONSUME.EXPECTED_BOOLEAN);
@@ -900,7 +898,7 @@ export default class Consumer {
 		});
 
 		if (this.exists()) {
-			return this.asUndeclaredString();
+			return this.asString();
 		} else {
 			return undefined;
 		}
@@ -912,10 +910,7 @@ export default class Consumer {
 			default: def,
 			required: def === undefined,
 		});
-		return this.asUndeclaredString(def);
-	}
 
-	asUndeclaredString(def?: string): string {
 		const value = this.getValue(def);
 		if (typeof value !== "string") {
 			this.unexpected(descriptions.CONSUME.EXPECTED_STRING);
@@ -934,14 +929,8 @@ export default class Consumer {
 			required: def === undefined,
 			allowedValues: validValues,
 		});
-		return this.asUndeclaredStringSet(validValues, def);
-	}
 
-	asUndeclaredStringSet<ValidValue extends string>(
-		validValues: Array<ValidValue>,
-		def?: ValidValue,
-	): ValidValue {
-		const value = this.asUndeclaredString(def);
+		const value = this.asString(def);
 
 		// @ts-ignore
 		if (validValues.includes(value)) {
@@ -973,7 +962,7 @@ export default class Consumer {
 		});
 
 		if (this.exists()) {
-			return this.asUndeclaredStringSet(validValues);
+			return this.asStringSet(validValues);
 		} else {
 			return undefined;
 		}
@@ -986,7 +975,7 @@ export default class Consumer {
 			required: false,
 		});
 		if (this.exists()) {
-			return this.asUndeclaredBigInt();
+			return this.asBigInt();
 		} else {
 			return undefined;
 		}
@@ -998,10 +987,7 @@ export default class Consumer {
 			default: def,
 			required: def === undefined,
 		});
-		return this.asUndeclaredBigInt(def);
-	}
 
-	asUndeclaredBigInt(def?: number | bigint): bigint {
 		const value = this.getValue(def);
 
 		if (typeof value === "number") {
@@ -1056,7 +1042,7 @@ export default class Consumer {
 			"path",
 		);
 
-		return createUnknownFilePath(this.asUndeclaredString(def));
+		return createUnknownFilePath(this.asString(def));
 	}
 
 	asUnknownFilePathOrVoid(): undefined | UnknownFilePath {
@@ -1136,7 +1122,7 @@ export default class Consumer {
 		});
 
 		if (this.exists()) {
-			return this.asUndeclaredNumber();
+			return this.asNumber();
 		} else {
 			return undefined;
 		}
@@ -1166,7 +1152,13 @@ export default class Consumer {
 			default: def,
 			required: def === undefined,
 		});
-		return this.asUndeclaredNumber(def);
+
+		const value = this.getValue(def);
+		if (typeof value !== "number") {
+			this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER);
+			return 0;
+		}
+		return value;
 	}
 
 	asNumberInRange(
@@ -1200,17 +1192,19 @@ export default class Consumer {
 			default?: UnknownNumber;
 		},
 	): UnknownNumber {
-		const num = this.asUndeclaredNumber(opts.default);
 		const min = ob1Get(opts.min);
 		const max = ob1Get(opts.max);
+		const def = ob1Get(opts.default);
 
 		this.declareDefinition({
 			type: "number",
-			default: opts.default,
-			required: opts.default !== undefined,
+			default: def,
+			required: def !== undefined,
 			min,
 			max,
 		});
+
+		const num = this.asNumber(def);
 
 		// Nice error message when both min and max are specified
 		if (min !== undefined && max !== undefined && (num < min || num > max)) {
@@ -1229,15 +1223,6 @@ export default class Consumer {
 		return num;
 	}
 
-	asUndeclaredNumber(def?: UnknownNumber): number {
-		const value = this.getValue(def);
-		if (typeof value !== "number") {
-			this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER);
-			return 0;
-		}
-		return value;
-	}
-
 	asNumberSet<ValidValue extends number>(
 		validValues: Array<ValidValue>,
 		def?: ValidValue,
@@ -1248,14 +1233,8 @@ export default class Consumer {
 			required: def === undefined,
 			allowedValues: validValues,
 		});
-		return this.asUndeclaredNumberSet(validValues, def);
-	}
 
-	asUndeclaredNumberSet<ValidValue extends number>(
-		validValues: Array<ValidValue>,
-		def?: ValidValue,
-	): ValidValue {
-		const value = this.asUndeclaredNumber(def);
+		const value = this.asNumber(def);
 
 		// @ts-ignore
 		if (validValues.includes(value)) {
@@ -1287,7 +1266,7 @@ export default class Consumer {
 		});
 
 		if (this.exists()) {
-			return this.asUndeclaredNumberSet(validValues);
+			return this.asNumberSet(validValues);
 		} else {
 			return undefined;
 		}

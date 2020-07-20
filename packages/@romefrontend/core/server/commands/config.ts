@@ -123,7 +123,7 @@ export default createServerCommand<Flags>({
 			switch (action) {
 				case "push": {
 					keyConsumer.setValue([
-						...keyConsumer.asArray(true).map((c) => c.asUnknown()),
+						...Array.from(keyConsumer.asIterable(true), (c) => c.asUnknown()),
 						...(Array.isArray(value) ? value : []),
 					]);
 					break;

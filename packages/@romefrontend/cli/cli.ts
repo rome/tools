@@ -101,13 +101,13 @@ export default async function cli() {
 						{
 							description: "Change the display width. By default it is automatically inferred and updated from the terminal.",
 						},
-					).asPossibleNumberString().asOneIndexedNumberOrVoid(),
+					).asOneIndexedNumberOrVoid(),
 					colorDepth: c.get(
 						"outputColorDepth",
 						{
 							description: "Change the display width. By default it is automatically inferred and updated from the terminal.",
 						},
-					).asPossibleNumberString().asNumberSetOrVoid([1, 4, 8, 24]),
+					).asNumberSetOrVoid([1, 4, 8, 24]),
 					redirectError: c.get(
 						"outputRedirectError",
 						{

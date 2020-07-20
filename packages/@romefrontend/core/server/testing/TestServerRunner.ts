@@ -556,7 +556,10 @@ export default class TestServerRunner {
 
 		const frames: Array<ErrorFrame> = [];
 
-		const callFrames = params.get("callFrames").asArray().slice(0, 20);
+		const callFrames = Array.from(params.get("callFrames").asIterable()).slice(
+			0,
+			20,
+		);
 		for (const callFrame of callFrames) {
 			const loc = callFrame.get("location");
 
@@ -566,7 +569,7 @@ export default class TestServerRunner {
 				loc.get("columnNumber").asZeroIndexedNumber(),
 			);
 
-			const name = callFrame.get("scopeChain").asArray()[0].get("name").asString(
+			const name = callFrame.get("scopeChain").getIndex(0).get("name").asString(
 				"",
 			).split("$").pop();
 

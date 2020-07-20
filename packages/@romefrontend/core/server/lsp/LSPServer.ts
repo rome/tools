@@ -245,7 +245,7 @@ export default class LSPServer {
 
 				const workspaceDirectories = params.get("workspaceDirectories");
 				if (workspaceDirectories.exists()) {
-					for (const elem of workspaceDirectories.asArray()) {
+					for (const elem of workspaceDirectories.asIterable()) {
 						await this.initProject(getPathFromTextDocument(elem));
 					}
 				}
@@ -304,10 +304,10 @@ export default class LSPServer {
 	async handleNotification(method: string, params: Consumer): Promise<void> {
 		switch (method) {
 			case "workspace/didChangeWorkspaceDirectories": {
-				for (const elem of params.get("added").asArray()) {
+				for (const elem of params.get("added").asIterable()) {
 					await this.initProject(getPathFromTextDocument(elem));
 				}
-				for (const elem of params.get("removed").asArray()) {
+				for (const elem of params.get("removed").asIterable()) {
 					this.unwatchProject(getPathFromTextDocument(elem));
 				}
 				break;
@@ -326,11 +326,11 @@ export default class LSPServer {
 				const path = getPathFromTextDocument(params.get("textDocument"));
 				const contentChanges = params.get("contentChanges");
 
-				if (contentChanges.asArray()[0].has("range")) {
+				if (contentChanges.getIndex(0).has("range")) {
 					const patches = getWorkerBufferPatches(contentChanges);
 					await this.request.requestWorkerPatchBuffer(path, patches);
 				} else {
-					const content = contentChanges.asArray()[0].get("text").asString();
+					const content = contentChanges.getIndex(0).get("text").asString();
 					await this.request.requestWorkerUpdateBuffer(path, content);
 				}
 				break;

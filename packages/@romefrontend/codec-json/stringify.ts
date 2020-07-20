@@ -164,7 +164,7 @@ function stringifyArray(consumer: Consumer, info: StringifyObjectOptions) {
 
 	let buff: Array<string> = [];
 
-	const arr = consumer.asArray();
+	const arr = consumer.asIterable();
 	for (const consumer of arr) {
 		// Add element comments
 		const comments = getComments(consumer, info).outer;
