@@ -1,8 +1,12 @@
 .sidebar-container {
 	position: sticky;
 	z-index: 2;
-	top: 0;
-	height: 100vh;
+  top: 0;
+
+  @include desktop-only() {
+    height: 100vh;
+  }
+
 }
 
 .sidebar-stripe {
