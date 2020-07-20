@@ -90,12 +90,13 @@
     font-weight: bold;
     font-family: inherit;
     color: var(--sub-text-color);
+    padding-left: 32px;
   }
 
   .menu {
     border-bottom: 1px solid var(--soft-border-color);
     font-weight: bold;
-    padding: $unit 0 $unit $unit * 2;
+    padding: $unit 0;
 
     ul {
       margin: 0;
@@ -115,13 +116,28 @@
       height: auto;
       padding: $unit / 5 $unit / 2;
       display: inline-block;
-      padding-left: 0;
+      padding-left: 32px;
       margin-left: 0;
+      width: 100%;
+
+      @include mobile-only() {
+        padding-top: 6px;
+        padding-bottom: 6px;
+      }
+
+      padding-left: 32px;
     }
 
     a:hover {
       text-decoration: underline;
+      background: rgba(0,0,0,.05);
+      color: var(--font-color);
     }
+
+    a:active {
+      color: var(--primary-color);
+    }
+
   }
 
   .external-links {
