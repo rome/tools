@@ -7,7 +7,7 @@ export default function MarkdownListItem(
 ): Token {
 	const tokens: Tokens = [];
 	if (node.checked !== undefined) {
-		tokens.push(`[ ${node.checked ? "x" : " "} ]`);
+		tokens.push(`[${node.checked ? "x" : " "}]`);
 	}
 
 	tokens.push(builder.tokenizeStatementList(node.children, node));

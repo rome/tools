@@ -12,11 +12,10 @@ export default function MarkdownHeadingBlock(
 	builder: Builder,
 	node: MarkdownHeadingBlock,
 ): Token {
-	const tokens: Tokens = [...Array.from({length: node.level}).map(() => "#")];
-
-	tokens.push(space);
-
-	tokens.push(node.value);
-
-	return concat([...tokens, hardline]);
+  return concat([
+    "#".repeat(node.level),
+    space,
+    node.value,
+    hardline,
+  ]);
 }
