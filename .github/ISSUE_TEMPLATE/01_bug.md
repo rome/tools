@@ -22,8 +22,8 @@ $ rome rage --summary
 <!-- Provide a detailed list of steps that reproduce the issue. -->
 <!-- The more information and included steps, the quicker your reort can be confirmed and addressed! -->
 
-1. 
-2. 
+1.
+2.
 
 ## Expected Results
 

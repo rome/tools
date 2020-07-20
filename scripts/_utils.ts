@@ -50,7 +50,10 @@ export async function modifyGeneratedFile(
 		return;
 	}
 
-	await writeFile(path, file + trailing);
+	// Make sure there's a trailing newline
+	const final = (file + trailing).trim() + "\n";
+
+	await writeFile(path, final);
 }
 
 async function readGeneratedFile(
