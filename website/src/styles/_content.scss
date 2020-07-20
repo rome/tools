@@ -1,76 +1,76 @@
 .content {
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 0 $unit * 2 $unit * 2 $unit * 2;
+	max-width: 100%;
+	margin: 0 auto;
+	padding: 0 $unit * 2 $unit * 2 $unit * 2;
 
-  .header-anchor {
-    display: none;
-    text-decoration: none;
-    color: $color-4;
+	.header-anchor {
+		display: none;
+		text-decoration: none;
+		color: $color-4;
 
-    &:hover {
-      text-decoration: underline;
-    }
-  }
+		&:hover {
+			text-decoration: underline;
+		}
+	}
 
-  ul {
-    padding: 0;
-    margin: 0 0 0 12px;
+	ul {
+		padding: 0;
+		margin: 0 0 0 12px;
 
-    li {
-      margin: 4px 0;
-    }
-  }
+		li {
+			margin: 4px 0;
+		}
+	}
 
-  h1:hover .header-anchor,
-  h2:hover .header-anchor,
-  h3:hover .header-anchor {
-    display: inline-block;
-  }
+	h1:hover .header-anchor,
+	h2:hover .header-anchor,
+	h3:hover .header-anchor {
+		display: inline-block;
+	}
 
-  pre {
-    border-radius: $unit-border-radius;
-  }
+	pre {
+		border-radius: $unit-border-radius;
+	}
 
-  h1 {
-    border-bottom: 1px solid var(--soft-border-color);
-    padding: $unit 0;
-    margin-top: $unit;
-  }
+	h1 {
+		border-bottom: 1px solid var(--soft-border-color);
+		padding: $unit 0;
+		margin-top: $unit;
+	}
 
-  h2,
-  h3,
-  h4 {
-    padding: $unit / 4 0;
-  }
+	h2,
+	h3,
+	h4 {
+		padding: $unit / 4 0;
+	}
 
-  table {
-    border-collapse: collapse;
-    width: 100%;
-  }
+	table {
+		border-collapse: collapse;
+		width: 100%;
+	}
 
-  thead th {
-    text-align: left;
-    padding: $unit / 2;
-  }
+	thead th {
+		text-align: left;
+		padding: $unit / 2;
+	}
 
-  tbody td {
-    padding: $unit / 2;
-    border: 1px solid var(--soft-border-color);
-  }
+	tbody td {
+		padding: $unit / 2;
+		border: 1px solid var(--soft-border-color);
+	}
 
-  tbody tr:nth-child(even) {
-    background-color: var(--toc-background-active);
-  }
+	tbody tr:nth-child(even) {
+		background-color: var(--toc-background-active);
+	}
 
-  blockquote {
-    border-left: $unit * 0.5 solid var(--blockquote-color);
-    margin: $unit 0 $unit * 1.5 0;
-    padding: $unit;
+	blockquote {
+		border-left: $unit * 0.5 solid var(--blockquote-color);
+		margin: $unit 0 $unit * 1.5 0;
+		padding: $unit;
 
-    > p {
-      margin: 0;
-    }
-  }
+		> p {
+			margin: 0;
+		}
+	}
 
 }

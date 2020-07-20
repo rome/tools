@@ -32,6 +32,8 @@ function findRoot(): AbsoluteFilePath {
 	throw new Error("Could not find the root");
 }
 
+let forceGenerated = false;
+
 export async function modifyGeneratedFile(
 	path: AbsoluteFilePath,
 	callback: () => Promise<{
@@ -40,7 +42,7 @@ export async function modifyGeneratedFile(
 	}>,
 ): Promise<void> {
 	const {lines, hash} = await callback();
-	const trailing = lines.join("\n");
+	const trailing = lines.map((line) => line.trimRight()).join("\n");
 
 	const file = await readGeneratedFile(path, hash || trailing);
 	if (file === undefined) {
@@ -56,6 +58,10 @@ export async function modifyGeneratedFile(
 	await writeFile(path, final);
 }
 
+export function setForceGenerated(force: boolean) {
+	forceGenerated = force;
+}
+
 async function readGeneratedFile(
 	path: AbsoluteFilePath,
 	hashContent: undefined | string,
@@ -69,7 +75,7 @@ async function readGeneratedFile(
 		hash = crypto.createHash("sha1").update(hashContent).digest("hex");
 
 		const currentHash = file.match(/hash\((.*?)\)/);
-		if (currentHash != null && hash === currentHash[1]) {
+		if (!forceGenerated && currentHash != null && hash === currentHash[1]) {
 			return undefined;
 		}
 	}

@@ -729,24 +729,24 @@ export default class Parser<T> {
       # initial state
       cmds=""
       local_flags=""
-      
+
       __is_flag()
       {
         case $1 in
           -*) echo "true"
         esac
       }
-      
+
       __${prg}_gen_completions()
       {
         local suggestions func flags index
-         
+
         index="$((\${#COMP_WORDS[@]} - 1))"
-      
+
         flags="$global_flags $local_flags"
-      
+
         func="_"
-      
+
         for ((i=0; i < index; i++))
         do
           leaf=$(echo \${COMP_WORDS[$i]} | grep -o '[^/]*$')
@@ -754,11 +754,11 @@ export default class Parser<T> {
             func="\${func}_\${leaf}"
           fi
         done
-          
+
         $func 2> /dev/null
-      
+
         if [[ $(__is_flag \${COMP_WORDS[$index]}) ]]; then
-          suggestions=$flags 
+          suggestions=$flags
         else
           suggestions=$cmds
         fi

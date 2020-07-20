@@ -13,9 +13,9 @@ Standard JavaScript comments are supported. Both line and block comments.
 
 ```
 {
-  // Line comment
-  /* Block comment */
-  foo: "bar"
+	// Line comment
+	/* Block comment */
+	foo: "bar"
 }
 ```
 
@@ -35,7 +35,7 @@ If a property key is a valid identifier then the quotes can be omitted, just lik
 
 ```
 {
-  unquotedKey: true
+	unquotedKey: true
 }
 ```
 
@@ -47,9 +47,9 @@ Commas are not required to separate elements of an array:
 
 ```
 [
-  1
-  2
-  3
+	1
+	2
+	3
 ]
 ```
 
@@ -57,9 +57,9 @@ or an object:
 
 ```
 {
-  a: 1
-  b: 2
-  c: 3
+	a: 1
+	b: 2
+	c: 3
 }
 ```
 

@@ -304,8 +304,11 @@ export default class ServerRequest {
 		this.normalizedCommandFlags = normalized;
 	}
 
-	async resolveEntryAssertPathArg(index: number): Promise<AbsoluteFilePath> {
-		this.expectArgumentLength(index + 1);
+	async resolveEntryAssertPathArg(
+		index: number,
+		max: boolean = true,
+	): Promise<AbsoluteFilePath> {
+		this.expectArgumentLength(index + 1, max ? undefined : Infinity);
 		const arg = this.query.args[index];
 
 		return await this.server.resolver.resolveEntryAssertPath(

@@ -6,7 +6,7 @@ layout: layouts/blog/base.njk
 
 <div class="tags-page">
 {% for tag in collections.tagList | sort(false, true) %}
-  {% set tagUrl %}/blog/tags/{{ tag }}/{% endset %}
-  <a href="{{ tagUrl | url }}" class="tag">{{ tag }} {{collections[tag].length}} </a>
+	{% set tagUrl %}/blog/tags/{{ tag }}/{% endset %}
+	<a href="{{ tagUrl | url }}" class="tag">{{ tag }} {{collections[tag].length}} </a>
 {% endfor %}
 </div>

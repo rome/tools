@@ -2,11 +2,10 @@
 title: Lint Rule js/shoutyConstants
 layout: layouts/page.njk
 description: MISSING DOCUMENTATION
-eleventyNavigation: {
-	key: lint-rules/js/shoutyConstants,
-	parent: lint-rules,
+eleventyNavigation:
+	key: lint-rules/js/shoutyConstants
+	parent: lint-rules
 	title: js/shoutyConstants
-}
 ---
 
 # js/shoutyConstants
