@@ -23,7 +23,12 @@
 		justify-content: center;
 
 		svg {
-			width: 1em;
+			width: 170px;
+
+			@include mobile-only() {
+				width: 150px;
+			}
+
 			margin-right: $unit / 2;
 			opacity: 0.7;
 
@@ -35,20 +40,6 @@
 				fill: var(--logo-font-color);
 			}
 
-		}
-
-		.logo-text {
-			color: var(--logo-font-color);
-			opacity: 0.7;
-			line-height: 1em;
-			font-size: 1em;
-			font-family: Libre Baskerville, serif;
-			font-weight: bold;
-			position: relative;
-			top: 4.5px;
-			@include mobile-only() {
-				top: 3.5px;
-			}
 		}
 
 		@include mobile-only() {

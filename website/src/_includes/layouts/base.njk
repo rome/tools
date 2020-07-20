@@ -52,7 +52,7 @@
 
 					{% include "./svg/rome-logo.njk" %}
 
-					<span class="logo-text">Rome</span>
+					<span class="logo-text sr-only">Rome</span>
 				</a>
 				<div class="stretch"></div>
 
@@ -71,7 +71,7 @@
 					<div class="header-desktop">
 						<a class="logo" href="{{ '/' | url }}">
 							{% include "./svg/rome-logo.njk" %}
-							<h1 class="logo-text">Rome</h1>
+							<h1 class="logo-text sr-only">Rome</h1>
 						</a>
 					</div>
 
@@ -199,7 +199,7 @@
 			{% endif %}
 		</div>
 
-		{% if environment != "production" %}
+		{% if environment == "production" %}
 			<div class="wip-banner">
 				<p>
 					<strong>Rome is still in development</strong>. We have not had an official supported release so documentation may appear out of date until then.
@@ -249,7 +249,7 @@
 
 				<div class="logo">
 					{% include "./svg/rome-logo.njk" %}
-					<span class="logo-text">Rome</span>
+					<span class="logo-text sr-only">Rome</span>
 				</div>
 			</div>
 		</footer>

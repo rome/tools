@@ -2,7 +2,11 @@
 	position: sticky;
 	z-index: 2;
 	top: 0;
-	height: 100vh;
+
+	@include desktop-only() {
+		height: 100vh;
+	}
+
 }
 
 .sidebar-stripe {
@@ -24,7 +28,6 @@
 	@include desktop-only() {
 		border-top-width: 0;
 		transition-duration: 150ms;
-		padding-top: 32px;
 		margin-top: 5px;
 	}
 
@@ -91,12 +94,13 @@
 		font-weight: bold;
 		font-family: inherit;
 		color: var(--sub-text-color);
+		padding-left: 32px;
 	}
 
 	.menu {
 		border-bottom: 1px solid var(--soft-border-color);
 		font-weight: bold;
-		padding: $unit 0 $unit $unit * 2;
+		padding: $unit 0;
 
 		ul {
 			margin: 0;
@@ -116,18 +120,36 @@
 			height: auto;
 			padding: $unit / 5 $unit / 2;
 			display: inline-block;
-			padding-left: 0;
+			padding-left: 32px;
 			margin-left: 0;
+			width: 100%;
+
+			@include mobile-only() {
+				padding-top: 6px;
+				padding-bottom: 6px;
+			}
+
+			padding-left: 32px;
 		}
 
 		a:hover {
 			text-decoration: underline;
+			background: rgba(0,0,0,.05);
+			color: var(--font-color);
 		}
+
+		a:active {
+			color: var(--primary-color);
+		}
+
 	}
 
 	.external-links {
 		border-bottom: none;
 		box-shadow: 1px 1px var(--soft-border-color);
+		padding: 0;
+		width: 100%;
+
 
 		svg {
 			width: 24px;
@@ -138,12 +160,14 @@
 			display: flex;
 		}
 
-		a {
-			margin-right: $unit / 3;
+		li{
+			flex-grow: 1;
 		}
 
-		a:active {
-			padding-left: 0;
+		a {
+			margin: 0;
+			padding: 16px;
+			text-align: center;
 		}
 
 		img {
@@ -189,10 +213,6 @@
 #docsearch-container {
 	position: relative;
 	border-bottom: 1px solid var(--soft-border-color);
-
-	@include desktop-only() {
-		border-top: 1px solid var(--soft-border-color);
-	}
 
 	#search-icon {
 		z-index: 99999;
