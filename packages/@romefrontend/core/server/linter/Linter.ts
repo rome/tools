@@ -271,7 +271,6 @@ class LintRunner {
 			firstRun,
 		}: LintRunOptions,
 	): Promise<AbsoluteFilePathSet> {
-		return evictedPaths;
 		const {graph} = this;
 
 		// Get all the current dependency nodes for the evicted files, and invalidate their nodes
