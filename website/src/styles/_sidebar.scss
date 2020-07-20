@@ -143,6 +143,9 @@
   .external-links {
     border-bottom: none;
     box-shadow: 1px 1px var(--soft-border-color);
+    padding: 0;
+    width: 100%;
+
 
     svg {
       width: 24px;
@@ -153,12 +156,14 @@
       display: flex;
     }
 
-    a {
-      margin-right: $unit / 3;
+    li{
+      flex-grow: 1;
     }
 
-    a:active {
-      padding-left: 0;
+    a {
+      margin: 0;
+      padding: 16px;
+      text-align: center;
     }
 
     img {
