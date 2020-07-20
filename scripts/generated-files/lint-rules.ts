@@ -107,12 +107,12 @@ export async function main() {
 	);
 
 	// Extract the description field from the docs frontmatter
-	function getDocRuleDescription(content: string): string {
-		const description = content.match(/description:(.*)/);
+	function getDocRuleDescription(path: AbsoluteFilePath, content: string): string {
+		const description = content.match(/description:(.*)\n/);
 		if (description) {
 			return description[1].trim();
 		} else {
-			return "";
+			throw new Error(`${path.join()} did not contain a description`)
 		}
 	}
 
@@ -147,7 +147,7 @@ export async function main() {
 					}
 
 					const content = await readFileText(docs);
-					const description = getDocRuleDescription(content);
+					const description = getDocRuleDescription(docs, content);
 					lines.push(
 						`- [${basename}](/docs/lint/rules/${ruleName}): ${description}`,
 					);

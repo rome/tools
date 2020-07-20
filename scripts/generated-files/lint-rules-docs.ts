@@ -106,39 +106,52 @@ export async function main() {
 
 				lines.push("## Examples");
 
-				lines.push("### Invalid");
+				let hasInvalid = false;
+				let hasValid = false;
+				for (const {invalid, valid} of cases) {
+					if (invalid && invalid.length > 0) {
+						hasInvalid = true;
+					}
+					if (valid && valid.length > 0) {
+						hasValid = true;
+					}
+				}
 
-				for (const {filename, invalid} of cases) {
-					if (invalid) {
-						for (let i = 0; i < invalid.length; i++) {
-							if (i > 0) {
-								lines.push("");
-								lines.push("---------------");
-								lines.push("");
+				if (hasInvalid) {
+					lines.push("### Invalid");
+
+					for (const {filename, invalid} of cases) {
+						if (invalid) {
+							for (let i = 0; i < invalid.length; i++) {
+								if (i > 0) {
+									lines.push("");
+									lines.push("---------------");
+									lines.push("");
+								}
+								lines.push(
+									await run(
+										(`lint/${ruleName}` as DiagnosticCategory),
+										i,
+										filename,
+										dedent(invalid[i]),
+									),
+								);
 							}
-							lines.push(
-								await run(
-									(`lint/${ruleName}` as DiagnosticCategory),
-									i,
-									filename,
-									dedent(invalid[i]),
-								),
-							);
 						}
 					}
 				}
 
-				lines.push("### Valid");
-
-				for (const {filename, valid} of cases) {
-					if (valid) {
-						for (const code of valid) {
-							lines.push(highlightPre(filename, dedent(code)));
+				if (hasValid) {
+					lines.push("### Valid");
+					for (const {filename, valid} of cases) {
+						if (valid) {
+							for (const code of valid) {
+								lines.push(highlightPre(filename, dedent(code)));
+							}
 						}
 					}
+					lines.push("");
 				}
-
-				lines.push("");
 
 				return {lines};
 			},

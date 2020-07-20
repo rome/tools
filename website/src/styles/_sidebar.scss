@@ -1,242 +1,242 @@
 .sidebar-container {
-  position: sticky;
-  z-index: 2;
-  top: 0;
-  height: 100vh;
+	position: sticky;
+	z-index: 2;
+	top: 0;
+	height: 100vh;
 }
 
 .sidebar-stripe {
-  @include inset-border-top;
-  height: 5px;
-  width: 100%;
+	@include inset-border-top;
+	height: 5px;
+	width: 100%;
 }
 
 .sidebar {
-  @include transition-timing;
-  list-style: none;
-  font-size: 0.95rem;
-  transition-property: transform;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
+	@include transition-timing;
+	list-style: none;
+	font-size: 0.95rem;
+	transition-property: transform;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
 
-  @include desktop-only() {
-    border-top-width: 0;
-    transition-duration: 150ms;
-    padding-top: 32px;
-    margin-top: 5px;
-  }
+	@include desktop-only() {
+		border-top-width: 0;
+		transition-duration: 150ms;
+		padding-top: 32px;
+		margin-top: 5px;
+	}
 
-  @include mobile-only() {
-    transform: translateX(-100%);
-    position: fixed;
-    padding-top: 59px;
-    background: var(--background-color);
-    height: 100%;
-    -webkit-overflow-scrolling: touch;
+	@include mobile-only() {
+		transform: translateX(-100%);
+		position: fixed;
+		padding-top: 59px;
+		background: var(--background-color);
+		height: 100%;
+		-webkit-overflow-scrolling: touch;
 
-    &.visible {
-      transform: translateX(0);
-    }
-  }
+		&.visible {
+			transform: translateX(0);
+		}
+	}
 
-  &.nav {
-    border-right: 1px solid var(--soft-border-color);
-    border-left: 1px solid var(--soft-border-color);
+	&.nav {
+		border-right: 1px solid var(--soft-border-color);
+		border-left: 1px solid var(--soft-border-color);
 
-    @include desktop-only() {
-      margin-top: 0;
-      min-width: 256px;
-    }
-  }
-  
-  &.toc {
-    z-index: 0;
-    flex-grow: 1;
+		@include desktop-only() {
+			margin-top: 0;
+			min-width: 256px;
+		}
+	}
 
-    @include desktop-only() {
-      padding-top: 0;
-      min-width: 256px;
-    }
+	&.toc {
+		z-index: 0;
+		flex-grow: 1;
 
-    h2 {
-      text-transform: uppercase;
-      font-size: .8em;
-      font-weight: bold;
-      font-family: inherit;
-      color: var(--sub-text-color);
-      margin-bottom: $unit;
-    }
+		@include desktop-only() {
+			padding-top: 0;
+			min-width: 256px;
+		}
 
-    @include mobile-only() {
-      right: 0;
-      transform: translateX(100%);
+		h2 {
+			text-transform: uppercase;
+			font-size: .8em;
+			font-weight: bold;
+			font-family: inherit;
+			color: var(--sub-text-color);
+			margin-bottom: $unit;
+		}
 
-      &.visible {
-        transform: translateX(0);
-      }
-    }
-  }
+		@include mobile-only() {
+			right: 0;
+			transform: translateX(100%);
 
-  .menu-wrapper {
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: 100%;
-  }
+			&.visible {
+				transform: translateX(0);
+			}
+		}
+	}
 
-  h2 {
-    text-transform: uppercase;
-    font-size: 0.8em;
-    font-weight: bold;
-    font-family: inherit;
-    color: var(--sub-text-color);
-  }
+	.menu-wrapper {
+		overflow-y: auto;
+		overflow-x: hidden;
+		height: 100%;
+	}
 
-  .menu {
-    border-bottom: 1px solid var(--soft-border-color);
-    font-weight: bold;
-    padding: $unit 0 $unit $unit * 2;
+	h2 {
+		text-transform: uppercase;
+		font-size: 0.8em;
+		font-weight: bold;
+		font-family: inherit;
+		color: var(--sub-text-color);
+	}
 
-    ul {
-      margin: 0;
-      padding: 0;
-    }
+	.menu {
+		border-bottom: 1px solid var(--soft-border-color);
+		font-weight: bold;
+		padding: $unit 0 $unit $unit * 2;
 
-    li {
-      list-style-type: none;
-    }
+		ul {
+			margin: 0;
+			padding: 0;
+		}
 
-    a {
-      @include transition-timing;
-      text-decoration: none;
-      font-size: 1.1em;
-      transition-duration: 100ms;
-      transition-property: padding-left;
-      height: auto;
-      padding: $unit / 5 $unit / 2;
-      display: inline-block;
-      padding-left: 0;
-      margin-left: 0;
-    }
+		li {
+			list-style-type: none;
+		}
 
-    a:hover {
-      text-decoration: underline;
-    }
-  }
+		a {
+			@include transition-timing;
+			text-decoration: none;
+			font-size: 1.1em;
+			transition-duration: 100ms;
+			transition-property: padding-left;
+			height: auto;
+			padding: $unit / 5 $unit / 2;
+			display: inline-block;
+			padding-left: 0;
+			margin-left: 0;
+		}
 
-  .external-links {
-    border-bottom: none;
-    box-shadow: 1px 1px var(--soft-border-color);
+		a:hover {
+			text-decoration: underline;
+		}
+	}
 
-    svg {
-      width: 24px;
-      height: 24px;
-    }
+	.external-links {
+		border-bottom: none;
+		box-shadow: 1px 1px var(--soft-border-color);
 
-    ul {
-      display: flex;
-    }
+		svg {
+			width: 24px;
+			height: 24px;
+		}
 
-    a {
-      margin-right: $unit / 3;
-    }
+		ul {
+			display: flex;
+		}
 
-    a:active {
-      padding-left: 0;
-    }
+		a {
+			margin-right: $unit / 3;
+		}
 
-    img {
-      width: 24px;
-      height: 24px;
-    }
-  }
+		a:active {
+			padding-left: 0;
+		}
+
+		img {
+			width: 24px;
+			height: 24px;
+		}
+	}
 }
 
 // Better look on mobile
 // Solution from https://github.com/algolia/docsearch/issues/181
 .algolia-autocomplete {
-  @include mobile-only() {
-    .ds-dropdown-menu {
-      max-width: calc(100vw - 32px) !important;
-      min-width: calc(100vw - 32px) !important;
-      width: calc(100vw - 32px) !important;
-      margin-left: 16px !important;
-    }
-    .algolia-docsearch-suggestion--content {
-      width: 100% !important;
-      padding-left: 0 !important;
-    }
-    .algolia-docsearch-suggestion--content:before  {
-      display: none !important;
-    }
-    .algolia-docsearch-suggestion--subcategory-column {
-      display: none !important;
-    }
-  }
+	@include mobile-only() {
+		.ds-dropdown-menu {
+			max-width: calc(100vw - 32px) !important;
+			min-width: calc(100vw - 32px) !important;
+			width: calc(100vw - 32px) !important;
+			margin-left: 16px !important;
+		}
+		.algolia-docsearch-suggestion--content {
+			width: 100% !important;
+			padding-left: 0 !important;
+		}
+		.algolia-docsearch-suggestion--content:before	{
+			display: none !important;
+		}
+		.algolia-docsearch-suggestion--subcategory-column {
+			display: none !important;
+		}
+	}
 
 }
 
 .algolia-autocomplete, input#docsearch {
-  width: 100%;
-  display: block;
+	width: 100%;
+	display: block;
 }
 
 .ds-dropdown-menu{
-  left: $unit * 2 !important;
+	left: $unit * 2 !important;
 }
 
 #docsearch-container {
-  position: relative;
-  border-bottom: 1px solid var(--soft-border-color);
+	position: relative;
+	border-bottom: 1px solid var(--soft-border-color);
 
-  @include desktop-only() {
-    border-top: 1px solid var(--soft-border-color);
-  }
+	@include desktop-only() {
+		border-top: 1px solid var(--soft-border-color);
+	}
 
-  #search-icon {
-    z-index: 99999;
-    position: absolute;
-    left: 20px;
-    top: 17px;
-    height: 15px;
-    width: 15px;
-    pointer-events: none;
-  }
+	#search-icon {
+		z-index: 99999;
+		position: absolute;
+		left: 20px;
+		top: 17px;
+		height: 15px;
+		width: 15px;
+		pointer-events: none;
+	}
 
-  input#docsearch {
-    padding: 24px 32px;
-    padding-left: 42px;
-    border: 0;
-    height: $unit * 2;
-    background: rgba(0, 0, 0, 0.05);
-    font-size: 1.1em;
-    color: inherit;
+	input#docsearch {
+		padding: 24px 32px;
+		padding-left: 42px;
+		border: 0;
+		height: $unit * 2;
+		background: rgba(0, 0, 0, 0.05);
+		font-size: 1.1em;
+		color: inherit;
 
-    &::placeholder {
-      color: inherit;
-      opacity: 1;
-    }
-  
-    // Yellow outline on desktop focus
-    @include desktop-only() {
-      &:focus {
-        outline: 2px solid var(--primary-color);
-      }
-    }
+		&::placeholder {
+			color: inherit;
+			opacity: 1;
+		}
 
-    // Yellow inset box shadow on mobile focus
-    @include mobile-only() {
-      &:focus {
-        box-shadow: inset 2px 2px var(--primary-color), inset -2px -2px var(--primary-color);
-      }
-    }
-  }
+		// Yellow outline on desktop focus
+		@include desktop-only() {
+			&:focus {
+				outline: 2px solid var(--primary-color);
+			}
+		}
+
+		// Yellow inset box shadow on mobile focus
+		@include mobile-only() {
+			&:focus {
+				box-shadow: inset 2px 2px var(--primary-color), inset -2px -2px var(--primary-color);
+			}
+		}
+	}
 }
 
 html[data-theme='dark'] .color-scheme-switch:after {
-  left: 50%;
-  margin-right: 5px;
-  transform: translateX(100%);
-  border-radius: 32px 96px 96px 32px;
+	left: 50%;
+	margin-right: 5px;
+	transform: translateX(100%);
+	border-radius: 32px 96px 96px 32px;
 }

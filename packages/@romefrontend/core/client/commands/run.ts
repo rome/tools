@@ -58,7 +58,8 @@ export default createLocalCommand({
 			switch (type) {
 				case "executeCode": {
 					const {syntaxError} = await executeMain({
-						args: req.query.args,
+						// Remove the first argument which will be the file path
+						args: data.get("args").asArray().map(item => item.asString()),
 						path: createAbsoluteFilePath(data.get("filename").asString()),
 						code: data.get("code").asString(),
 						sourceMap: SourceMapConsumer.fromJSON(data.get("map").asAny()),
