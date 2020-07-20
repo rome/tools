@@ -1,15 +1,17 @@
 <!--
-  Thanks for submitting a pull request!
+	Thanks for submitting a pull request!
 
-  We appreciate you spending the time to work on these changes. Please provide enough information so that others can review your pull request. The three fields below are mandatory.
+	We appreciate you spending the time to work on these changes. Please provide enough information so that others can review your pull request.
 
-  Before submitting a pull request, please make sure the following is done:
+	Once created, your PR will be automatically labeled according to changed files.
+
+	Before submitting a pull request, please make sure the following is done:
 
 	1. Format and resolve any lint errors: `./rome check --apply`
 	2. Verify that tests pass: `./rome test`
 	3. Ensure there are no TypeScript errors: `./node_modules/.bin/tsc`
 
-  Learn more about contributing: https://github.com/romefrontend/rome/blob/main/CONTRIBUTING.md
+	Learn more about contributing: https://github.com/romefrontend/rome/blob/main/CONTRIBUTING.md
 -->
 
 ## Summary
