@@ -4,8 +4,6 @@
 
 ## `smoke`
 
-### `ast`
-
 ```javascript
 MarkdownRoot {
 	comments: Array []
@@ -399,11 +397,4 @@ MarkdownRoot {
 		}
 	]
 }
-```
-
-### `diagnostics`
-
-```
-✔ No known problems!
-
 ```
