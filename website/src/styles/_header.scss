@@ -11,7 +11,7 @@
   right: 0;
   top: 0;
   align-items: center;
-  padding: 0 $unit;
+  padding-left: $unit;
   border-top: 5px solid var(--top-border-color);
 
   .stretch {
@@ -53,9 +53,12 @@
   align-items: flex-end;
   text-decoration: none;
   font-size: 44px;
-  margin-left: $unit;
   margin-bottom: $unit * 2;
   opacity: 1;
+
+  @include desktop-only() {
+    margin-left: $unit;
+  }
 
   svg {
     width: 1em;
@@ -87,10 +90,11 @@
 }
 
 .mobile-handle {
-  height: 32px;
-  width: 32px;
   display: none;
-  margin-left: 16px;
+  width: 58px;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 
   svg {
     height: 32px;
@@ -103,6 +107,6 @@
 
 
   @include mobile-only() {
-    display: inline-block;
+    display: inline-flex;
   }
 }
