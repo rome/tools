@@ -173,11 +173,11 @@ function getTokenColors(consumer: undefined | Consumer): Theme {
 	};
 	tokenColorsCache.set(consumer, theme);
 
-	for (const prop of consumer.get("tokenColors").asArray()) {
+	for (const prop of consumer.get("tokenColors").asIterable()) {
 		const settings = prop.get("settings");
 		const scope = prop.get("scope");
 		const scopes = Array.isArray(scope.asUnknown())
-			? scope.asArray().map((elem) => elem.asString())
+			? scope.asMappedArray((elem) => elem.asString())
 			: scope.asString().split(",").map((scope) => scope.trim());
 
 		for (const scope of scopes) {

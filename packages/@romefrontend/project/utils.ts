@@ -31,7 +31,7 @@ export function assertHardMeta(meta: ProjectConfigMeta): ProjectConfigMetaHard {
 
 export function arrayOfStrings(consumer: Consumer): Array<string> {
 	if (consumer.exists()) {
-		return consumer.asArray().map((item) => item.asString());
+		return consumer.asMappedArray((item) => item.asString());
 	} else {
 		return [];
 	}
@@ -39,7 +39,7 @@ export function arrayOfStrings(consumer: Consumer): Array<string> {
 
 export function arrayOfPatterns(consumer: Consumer): PathPatterns {
 	// TODO consumer.handleThrownDiagnostics
-	return consumer.asArray().map((item) => {
+	return consumer.asMappedArray((item) => {
 		return parsePathPattern({
 			path: consumer.filename,
 			input: item.asString(),

@@ -97,7 +97,7 @@ function normalizeStringArray(consumer: Consumer, loose: boolean): Array<string>
 			}
 		}
 
-		return consumer.asArray().map((item) => item.asString());
+		return consumer.asMappedArray((item) => item.asString());
 	} else {
 		return [];
 	}
@@ -193,7 +193,7 @@ function normalizeLicense(
 	// Support some legacy ways of specifying licenses: https://docs.npmjs.com/files/package.json#license
 	const raw = licenseProp.asUnknown();
 	if (loose && Array.isArray(raw)) {
-		const licenseIds = licenseProp.asArray().map((consumer) =>
+		const licenseIds = licenseProp.asMappedArray((consumer) =>
 			extractLicenseFromObjectConsumer(consumer)[0]
 		);
 		licenseId = `(${licenseIds.join(" OR ")})`;
@@ -347,7 +347,7 @@ function normalizePeople(
 
 	const people: Array<ManifestPerson> = [];
 
-	for (const item of consumer.asArray()) {
+	for (const item of consumer.asIterable()) {
 		people.push(normalizePerson(item, loose));
 	}
 
@@ -498,7 +498,7 @@ function normalizeExportsConditions(value: Consumer): ManifestExportConditions {
 		);
 	} else if (Array.isArray(unknown)) {
 		// Find the first item that passes validation
-		for (const elem of value.asArray()) {
+		for (const elem of value.asIterable()) {
 			const {consumer, diagnostics} = elem.capture();
 			const result = normalizeExportsConditions(consumer);
 			if (diagnostics.length === 0) {

@@ -295,7 +295,7 @@ export async function normalizeProjectConfig(
 		}
 
 		if (files.has("assetExtensions")) {
-			config.files.assetExtensions = files.get("assetExtensions").asArray().map((
+			config.files.assetExtensions = files.get("assetExtensions").asMappedArray((
 				item,
 			) => item.asString());
 		}
@@ -317,7 +317,7 @@ export async function normalizeProjectConfig(
 	if (categoryExists(targets)) {
 		for (const [name, object] of targets.asMap()) {
 			const target: ProjectConfigTarget = {
-				constraints: object.get("constraints").asImplicitArray().map((item) =>
+				constraints: object.get("constraints").asImplicitMappedArray((item) =>
 					item.asString()
 				),
 			};

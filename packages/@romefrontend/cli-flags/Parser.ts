@@ -235,6 +235,11 @@ export default class Parser<T> {
 					return;
 				}
 
+				// These flags are ambiguous with how we handle `--no-` booleans
+				if (toKebabCase(key).startsWith("no-")) {
+					throw new Error(`CLI flag ${key} cannot start with "no"`);
+				}
+
 				const value = flags[key];
 
 				// Allow omitting a string flag value
@@ -248,6 +253,13 @@ export default class Parser<T> {
 					definition: def,
 				});
 				defaultFlags[key] = (def.default as FlagValue);
+
+				// Automatically convert number strings
+				if (def.type === "number" && typeof value !== "number") {
+					if (valueConsumer.exists() || def.required) {
+						valueConsumer.setValue(valueConsumer.asNumberString());
+					}
+				}
 
 				// We've parsed arguments like `--foo bar` as `{foo: 'bar}`
 				// However, --foo may be a boolean flag, so `bar` needs to be correctly added to args

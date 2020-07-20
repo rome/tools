@@ -36,7 +36,7 @@ export default createServerCommand<Flags>({
 	examples: [],
 	defineFlags(consumer: Consumer): Flags {
 		return {
-			decisions: consumer.get("decisions").asImplicitArray().map((item) =>
+			decisions: consumer.get("decisions").asImplicitMappedArray((item) =>
 				item.asString()
 			),
 			apply: consumer.get(
