@@ -39,8 +39,12 @@ ul.home-actions {
 	}
 
 	a.getting-started {
-		border: var(--logo-font-color) 4px solid;
-		border-radius: 60px;
+		border-bottom: $color-2 5px solid;
+		border-top: $color-2 1px solid;
+		border-right: $color-2 1px solid;
+		border-left: $color-2 1px solid;
+		background: var(--primary-color);
+		border-radius: 8px;
 		padding: 12px 32px;
 		perspective: inherit;
 		position: relative;
@@ -49,22 +53,9 @@ ul.home-actions {
 		display: inline;
 
 		&:hover{
-			background: var(--logo-font-color);
-			color: var(--background-color);
+			border-color: $color-4;
+			background: $color-6;
 		}
-	}
-
-	a.getting-started:before {
-		content: " ";
-		position: absolute;
-		z-index: -1;
-		border-radius: 60px;
-		top: 4px;
-		left: 4px;
-		right: 4px;
-		bottom: 4px;
-		background: var(--primary-color);
-
 	}
 
 	//align text to icon
@@ -98,6 +89,12 @@ ul.home-actions {
 		&:last-child {
 			border-right: none;
 		}
+	}
+}
+
+html[data-theme='dark'] {
+	a.getting-started {
+		opacity: 0.9;
 	}
 }
 
