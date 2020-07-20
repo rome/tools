@@ -38,7 +38,7 @@ jobs:
 
   typescript:
     runs-on: ubuntu-latest
-    name: TypeScript check
+    name: TypeScript Check
 
     steps:
       - uses: actions/checkout@v2
@@ -49,7 +49,7 @@ jobs:
         run: node ./node_modules/.bin/tsc --noEmit
 
   generated:
-    name: Generated files check
+    name: Generated Files Check
     runs-on: ubuntu-latest
 
     steps:
