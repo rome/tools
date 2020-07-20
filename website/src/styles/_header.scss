@@ -90,15 +90,17 @@
   height: 32px;
   width: 32px;
   display: none;
+  margin-left: 16px;
 
   svg {
     height: 32px;
     width: 32px;
   }
 
-  svg path {
+  svg rect, svg path {
     fill: var(--top-border-color);
   }
+
 
   @include mobile-only() {
     display: inline-block;
