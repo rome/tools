@@ -190,7 +190,7 @@ export function inferDiagnosticLanguageFromRootAST(
 		case "HTMLRoot":
 			return "html";
 
-		case "CSSRoot":
+		case "CSSStylesheet":
 			return "css";
 
 		case "MarkdownRoot":

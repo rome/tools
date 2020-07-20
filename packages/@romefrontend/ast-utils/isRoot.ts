@@ -6,7 +6,7 @@ export function isRoot(node: TransformExitResult): node is AnyRoot {
 		!Array.isArray(node) &&
 		typeof node !== "symbol" &&
 		(node.type === "JSRoot" ||
-		node.type === "CSSRoot" ||
+		node.type === "CSSStylesheet" ||
 		node.type === "MarkdownRoot" ||
 		node.type === "HTMLRoot")
 	);

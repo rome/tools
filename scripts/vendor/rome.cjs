@@ -19006,7 +19006,7 @@ const ___R$project$rome$$romefrontend$compiler$scope$globals_ts = {
 		"CSSRuleList",
 		"CSSStyleDeclaration",
 		"CSSStyleRule",
-		"CSSStyleSheet",
+		"CSSStylesheet",
 		"CSSSupportsRule",
 		"CustomElementRegistry",
 		"customElements",

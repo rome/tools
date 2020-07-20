@@ -1,14 +1,23 @@
 import {
 	BaseTokens,
 	ComplexToken,
-	ParserOptions,
+	ParserOptionsWithRequiredPath,
 	SimpleToken,
 	ValueToken,
 } from "@romefrontend/parser-core";
 import {DiagnosticCategory} from "@romefrontend/diagnostics";
+import {
+	CSSBlock,
+	CSSDimension,
+	CSSFunction,
+	CSSIdent,
+	CSSNumber,
+	CSSPercentage,
+	CSSRaw,
+} from "@romefrontend/ast";
 
 export interface CSSParserOptions extends Omit<
-	ParserOptions,
+	ParserOptionsWithRequiredPath,
 	"ignoreWhitespaceTokens"
 > {
 	consumeDiagnosticCategory?: DiagnosticCategory;
@@ -35,8 +44,10 @@ export type Tokens = BaseTokens & {
 	BadString: SimpleToken<"BadString">;
 	BadURL: SimpleToken<"BadURL">;
 	CDC: SimpleToken<"CDC">;
+	CDO: SimpleToken<"CDO">;
 	Colon: SimpleToken<"Colon">;
 	Comma: SimpleToken<"Comma">;
+	Comment: ValueToken<"Comment", string>;
 	Delim: ValueToken<"Delim", string>;
 	Dimension: ComplexToken<"Dimension", DimensionData>;
 	Function: ValueToken<"Function", string>;
@@ -55,3 +66,14 @@ export type Tokens = BaseTokens & {
 	URL: ValueToken<"URL", string>;
 	Whitespace: SimpleToken<"Whitespace">;
 };
+
+export type AnyCSSToken = Tokens[keyof Tokens];
+
+export type AnyCSSValue =
+	| CSSFunction
+	| CSSBlock
+	| CSSDimension
+	| CSSPercentage
+	| CSSIdent
+	| CSSNumber
+	| CSSRaw;
