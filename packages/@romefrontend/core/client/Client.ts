@@ -364,7 +364,12 @@ export default class Client {
 		}
 		push("Environment Variables", env);
 
-		push("User Config", (getUserConfigFile()?.consumer).asUnknown());
+		const userConfig = getUserConfigFile();
+		push(
+			"User Config",
+			userConfig === undefined ? "unset" : userConfig.consumer.asUnknown(),
+		);
+
 		push("Rome Version", VERSION);
 		push("Node Version", process.versions.node);
 		push("Platform", `${process.platform} ${process.arch} ${os.release()}`);
