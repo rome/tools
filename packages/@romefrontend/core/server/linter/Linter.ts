@@ -271,6 +271,7 @@ class LintRunner {
 			firstRun,
 		}: LintRunOptions,
 	): Promise<AbsoluteFilePathSet> {
+		return evictedPaths;
 		const {graph} = this;
 
 		// Get all the current dependency nodes for the evicted files, and invalidate their nodes
@@ -404,7 +405,12 @@ class LintRunner {
 			changes.push({
 				type: "absolute",
 				filename,
-				diagnostics: diagnosticsByFilename.get(filename) || [],
+				diagnostics: [
+					...(diagnosticsByFilename.get(filename) || []),
+
+					// Could have been a UID that we turned into an absolute path so turn it back
+					...(diagnosticsByFilename.get(this.server.projectManager.getUid(path)) || []),
+				],
 			});
 		}
 

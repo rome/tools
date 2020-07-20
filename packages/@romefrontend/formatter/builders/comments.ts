@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, AnyNode, AnyRoot} from "@romefrontend/ast";
+import {AnyComment, AnyNode} from "@romefrontend/ast";
 import {getLinesBetween} from "../node";
 import {
 	Token,
@@ -17,25 +17,52 @@ import {
 	lineSuffix,
 	space,
 } from "@romefrontend/formatter";
+import {DiagnosticLanguage} from "@romefrontend/diagnostics";
 
 export function hasInnerComments(node: AnyNode): boolean {
 	return node.innerComments !== undefined && node.innerComments.length > 0;
 }
 
-export function printComment(
+type CommentWrapper = [string, string];
+
+const CSS_COMMENT_WRAPPER: CommentWrapper = ["/*", "*/"];
+const HTML_COMMENT_WRAPPER: CommentWrapper = ["<!--", "-->"];
+
+const languageToBlockCommentWrapper: {
+	[language in DiagnosticLanguage]?: CommentWrapper
+} = {
+	html: HTML_COMMENT_WRAPPER,
+	md: HTML_COMMENT_WRAPPER,
+	css: CSS_COMMENT_WRAPPER,
+	js: CSS_COMMENT_WRAPPER,
+	json: CSS_COMMENT_WRAPPER,
+};
+
+export function tokenizeComment(
 	node: AnyComment,
-	rootType: undefined | AnyRoot["type"],
+	language: DiagnosticLanguage,
 ): Token {
 	// Only JS can have line comments
-	if (rootType === "JSRoot" && node.type === "CommentLine") {
+	if (language === "js" && node.type === "CommentLine") {
+		// NB: We assume that node.value doesn't have any newlines. Is that a safe assumption to make?
 		return comment(`//${node.value.trimEnd()}`);
 	}
 
+	const wrapper = languageToBlockCommentWrapper[language];
+	if (wrapper === undefined) {
+		throw new Error(`No block comment wrapper found for language ${language}`);
+	}
+
+	const [prefix, suffix] = wrapper;
 	const lines = node.value.split("\n");
-	if (lines.every((line) => line.trimStart().charAt(0) === "*")) {
+
+	if (
+		wrapper === CSS_COMMENT_WRAPPER &&
+		lines.every((line) => line.trimStart().charAt(0) === "*")
+	) {
 		return comment(
 			concat([
-				"/*",
+				prefix,
 				join(
 					hardline,
 					lines.map((line, index) =>
@@ -44,15 +71,15 @@ export function printComment(
 							: ` ${index < lines.length - 1 ? line.trim() : line.trimStart()}`
 					),
 				),
-				"*/",
+				suffix,
 			]),
 		);
 	} else {
-		return comment(`/*${node.value}*/`);
+		return comment(`${prefix}${node.value}${suffix}`);
 	}
 }
 
-function printCommentSeparator(left: AnyNode, right: AnyNode): Token {
+function tokenizeCommentSeparator(left: AnyNode, right: AnyNode): Token {
 	const linesBetween = getLinesBetween(left, right);
 	if (linesBetween === 0) {
 		return space;
@@ -63,25 +90,25 @@ function printCommentSeparator(left: AnyNode, right: AnyNode): Token {
 	return concat([hardline, hardline]);
 }
 
-export function printLeadingComment(
+export function tokenizeLeadingComment(
 	node: AnyComment,
 	next: AnyNode,
-	rootType: undefined | AnyRoot["type"],
+	language: DiagnosticLanguage,
 ): Token {
-	const comment = printComment(node, rootType);
+	const comment = tokenizeComment(node, language);
 	if (node.type === "CommentLine") {
 		return concat([comment, hardline]);
 	} else {
-		return concat([comment, printCommentSeparator(node, next)]);
+		return concat([comment, tokenizeCommentSeparator(node, next)]);
 	}
 }
 
-export function printTrailingComment(
+export function tokenizeTrailingComment(
 	node: AnyComment,
 	previous: AnyNode,
-	rootType: undefined | AnyRoot["type"],
+	language: DiagnosticLanguage,
 ): Token {
-	const comment = printComment(node, rootType);
+	const comment = tokenizeComment(node, language);
 	const linesBetween = getLinesBetween(previous, node);
 
 	if (linesBetween >= 1) {

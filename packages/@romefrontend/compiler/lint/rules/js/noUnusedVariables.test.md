@@ -10,7 +10,7 @@
 
  lint/js/noUnusedVariables/reject/1/file.ts:1:6 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ The constant variable a is unused.
+  ✖ The const variable a is unused.
 
     const a = 4;
           ^
@@ -36,7 +36,7 @@ const a = 4;
 
  lint/js/noUnusedVariables/reject/2/file.ts:1:4 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ The variable variable a is unused.
+  ✖ The let variable a is unused.
 
     let a = 4;
         ^
@@ -140,7 +140,7 @@ foo();
 
  lint/js/noUnusedVariables/reject/5/file.ts:1:6 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ The constant variable foo is unused.
+  ✖ The const variable foo is unused.
 
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 

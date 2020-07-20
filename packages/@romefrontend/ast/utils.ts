@@ -28,10 +28,8 @@ type JustNodeKeys<T> = ExcludeCoreNodeKeys<
 
 type ExcludeCoreNodeKeys<T> = Exclude<T, keyof NodeBaseWithComments>;
 
-// rome-ignore lint/js/noUnusedVariables
 type VisitorKeys<T> = {[K in JustNodeKeys<T>]: true};
 
-// rome-ignore lint/js/noUnusedVariables
 type BindingKeys<T> = {[K in JustNodeKeys<T>]?: true};
 
 type CreateBuilderOptions<Node> = {

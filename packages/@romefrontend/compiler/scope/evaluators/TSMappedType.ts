@@ -13,7 +13,7 @@ export default createScopeEvaluator({
 	enter(node: AnyNode, parent: AnyNode, scope: Scope) {
 		node = tsMappedType.assert(node);
 		const newScope = scope.fork("type-generic", node);
-		newScope.injectEvaluate(node.typeParameter);
+		newScope.injectEvaluate(node.typeParameter, node);
 		return newScope;
 	},
 });

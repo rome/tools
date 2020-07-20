@@ -14,7 +14,7 @@
 ## Child Scopes
 	# Scope program
 	## Variables
-	 * variable foo
+	 * var foo
 ```
 
 ### `1`
@@ -41,8 +41,8 @@
 		## Child Scopes
 			# Scope block
 			## Variables
-			 * variable bar
-			 * variable car
+			 * var bar
+			 * var car
 			## Child Scopes
 				# Scope block
 ```

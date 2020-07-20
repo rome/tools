@@ -379,10 +379,12 @@ export default class DiagnosticsProcessor {
 				continue;
 			}
 
-			diagnostics.push({
-				location: suppression.commentLocation,
-				description: descriptions.SUPPRESSIONS.UNUSED(suppression),
-			});
+			diagnostics.push(
+				this.normalizer.normalizeDiagnostic({
+					location: suppression.commentLocation,
+					description: descriptions.SUPPRESSIONS.UNUSED(suppression),
+				}),
+			);
 		}
 
 		this.cachedDiagnostics = diagnostics;

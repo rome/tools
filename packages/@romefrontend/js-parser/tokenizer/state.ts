@@ -23,7 +23,6 @@ import {
 	ob1Number1,
 } from "@romefrontend/ob1";
 
-// rome-ignore lint/js/noUnusedVariables
 type Scopes = {[K in ScopeType]?: Array<unknown>};
 
 export type State = ParserCoreState & {

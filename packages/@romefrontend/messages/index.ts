@@ -20,7 +20,6 @@ type MessagesShape = {
 
 type Factory = (...args: Array<unknown>) => string;
 
-// rome-ignore lint/js/noUnusedVariables
 type FactoryObject<Messages extends MessagesShape> = {
 	[P in keyof Messages]: Factory
 };
