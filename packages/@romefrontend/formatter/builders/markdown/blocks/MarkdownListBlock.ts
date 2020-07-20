@@ -5,6 +5,7 @@ import {
 	Tokens,
 	concat,
 	hardline,
+	space,
 } from "@romefrontend/formatter";
 
 export default function MarkdownListBlock(
@@ -14,10 +15,12 @@ export default function MarkdownListBlock(
 	const tokens: Tokens = node.children.reduce(
 		(tokens, child, index) => {
 			if (node.ordered) {
-				tokens.push(`${index + 1}. `);
+				tokens.push(`${index + 1}.`);
+				tokens.push(space);
 			} else {
 				if (child.value) {
-					tokens.push(`${child.value} `);
+					tokens.push(`${child.value}`);
+					tokens.push(space);
 				}
 			}
 			tokens.push(builder.tokenize(child, node));
