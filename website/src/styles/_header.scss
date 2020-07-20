@@ -2,17 +2,17 @@
 // so i can align the website in the middle of the page
 
 .header-mobile {
-  background: var(--background-color);
-  z-index: 3;
-  height: $unit * 4;
-  display: none;
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  align-items: center;
-  padding-left: $unit;
-  border-top: 5px solid var(--top-border-color);
+	background: var(--background-color);
+	z-index: 3;
+	height: $unit * 4;
+	display: none;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	align-items: center;
+	padding-left: $unit;
+	border-top: 5px solid var(--top-border-color);
 
 	.stretch {
 		flex-grow: 1;
@@ -26,64 +26,64 @@
 }
 
 .header-desktop {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  justify-content: center;
-  height: 96px;
-  min-height: 96px;
-  border-bottom: 1px solid var(--soft-border-color);
+	display: flex;
+	align-items: center;
+	width: 100%;
+	justify-content: center;
+	height: 96px;
+	min-height: 96px;
+	border-bottom: 1px solid var(--soft-border-color);
 
-  @include mobile-only() {
-    display: none;
-  }
+	@include mobile-only() {
+		display: none;
+	}
 
-  .logo {
-    margin: 0;
-    padding: 0;
-  }
+	.logo {
+		margin: 0;
+		padding: 0;
+	}
 
-  a:hover{
-    opacity: 1;
-  }
+	a:hover{
+		opacity: 1;
+	}
 }
 
 .logo {
-  display: inline-flex;
-  align-items: flex-end;
-  text-decoration: none;
-  font-size: 44px;
-  margin-bottom: $unit * 2;
-  opacity: 1;
+	display: inline-flex;
+	align-items: flex-end;
+	text-decoration: none;
+	font-size: 44px;
+	margin-bottom: $unit * 2;
+	opacity: 1;
 
-  @include desktop-only() {
-    margin-left: $unit;
-  }
+	@include desktop-only() {
+		margin-left: $unit;
+	}
 
-  svg {
-    width: 210px;
-    @include mobile-only() {
-      width: 140px;
-    }
+	svg {
+		width: 210px;
+		@include mobile-only() {
+			width: 140px;
+		}
 
 		.cls-1 {
 			fill: var(--logo-font-color);
 		}
 	}
 
-  .logo-text {
-    color: var(--logo-font-color);
-    line-height: 1em;
-    font-size: 1em;
-    font-family: Libre Baskerville, serif;
-    font-weight: bold;
-    position: relative;
-    top: 6.9px;
-    margin: 0;
-    @include mobile-only() {
-      top: 4.7px;
-    }
-  }
+	.logo-text {
+		color: var(--logo-font-color);
+		line-height: 1em;
+		font-size: 1em;
+		font-family: Libre Baskerville, serif;
+		font-weight: bold;
+		position: relative;
+		top: 6.9px;
+		margin: 0;
+		@include mobile-only() {
+			top: 4.7px;
+		}
+	}
 
 	@include mobile-only() {
 		font-size: 32px;
@@ -92,23 +92,23 @@
 }
 
 .mobile-handle {
-  display: none;
-  width: 58px;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
+	display: none;
+	width: 58px;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
 
 	svg {
 		height: 32px;
 		width: 32px;
 	}
 
-  svg rect, svg path {
-    fill: var(--top-border-color);
-  }
+	svg rect, svg path {
+		fill: var(--top-border-color);
+	}
 
 
-  @include mobile-only() {
-    display: inline-flex;
-  }
+	@include mobile-only() {
+		display: inline-flex;
+	}
 }

@@ -201,19 +201,19 @@ ul.breadcrumbs {
 }
 
 .main {
-  overflow: hidden;
-  width: 100%;
-  margin-top: 5px;
+	overflow: hidden;
+	width: 100%;
+	margin-top: 5px;
 
-  @include desktop-only() {
-    border-right: 1px solid var(--soft-border-color);
-  }
+	@include desktop-only() {
+		border-right: 1px solid var(--soft-border-color);
+	}
 
-  @include mobile-only() {
-    margin-top: $unit * 4;
-    margin-left: 0;
-    width: 100%;
-  }
+	@include mobile-only() {
+		margin-top: $unit * 4;
+		margin-left: 0;
+		width: 100%;
+	}
 }
 
 .skip-to-content a {

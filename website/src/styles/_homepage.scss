@@ -134,45 +134,45 @@ pre.homepage-example {
 }
 
 article.latest-post {
-  border-bottom: 1px solid var(--soft-border-color);
-  padding: $unit $unit * 2;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
+	border-bottom: 1px solid var(--soft-border-color);
+	padding: $unit $unit * 2;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
 
-  @include desktop-only() {
-    min-height: 32px + 64px;
-  }
+	@include desktop-only() {
+		min-height: 32px + 64px;
+	}
 
-  div.info {
-    @include desktop-only {
-      display: flex;
-      align-items: center;
-    }
+	div.info {
+		@include desktop-only {
+			display: flex;
+			align-items: center;
+		}
 
-    @include mobile-only {
-      h3, .author {
-        display: inline;
-      }
-    }
+		@include mobile-only {
+			h3, .author {
+				display: inline;
+			}
+		}
 
-    .author {
-      margin-left: auto;
-      color: var(--sub-text-color);
-    }
-  }
+		.author {
+			margin-left: auto;
+			color: var(--sub-text-color);
+		}
+	}
 
-  h2 {
-    text-transform: uppercase;
-    font-size: .8em;
-    font-weight: bold;
-    font-family: inherit;
-    color: var(--sub-text-color);
-    margin-top: 0;
-  }
+	h2 {
+		text-transform: uppercase;
+		font-size: .8em;
+		font-weight: bold;
+		font-family: inherit;
+		color: var(--sub-text-color);
+		margin-top: 0;
+	}
 
-  h3 {
-    font-size: 1em;
-    margin: 0;
-  }
+	h3 {
+		font-size: 1em;
+		margin: 0;
+	}
 }
