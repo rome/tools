@@ -17,8 +17,8 @@ MarkdownRoot {
 		filename: "input.md"
 		end: Object {
 			column: 3
-			index: 167
-			line: 19
+			index: 146
+			line: 13
 		}
 		start: Object {
 			column: 0
@@ -195,34 +195,35 @@ MarkdownRoot {
 			}
 		}
 		MarkdownListBlock {
-			kind: "dot-list"
+			ordered: true
 			loc: Object {
 				filename: "input.md"
 				end: Object {
 					column: 0
-					index: 130
-					line: 12
+					index: 129
+					line: 11
 				}
 				start: Object {
 					column: 0
-					index: 101
-					line: 10
+					index: 100
+					line: 9
 				}
 			}
 			children: Array [
 				MarkdownListItem {
-					checked: null
+					value: undefined
+					checked: undefined
 					loc: Object {
 						filename: "input.md"
 						end: Object {
 							column: 0
-							index: 115
-							line: 11
+							index: 114
+							line: 10
 						}
 						start: Object {
 							column: 3
-							index: 104
-							line: 10
+							index: 103
+							line: 9
 						}
 					}
 					children: Array [
@@ -231,13 +232,13 @@ MarkdownRoot {
 								filename: "input.md"
 								end: Object {
 									column: 0
-									index: 115
-									line: 11
+									index: 114
+									line: 10
 								}
 								start: Object {
 									column: 3
-									index: 104
-									line: 10
+									index: 103
+									line: 9
 								}
 							}
 							children: Array [
@@ -247,13 +248,13 @@ MarkdownRoot {
 										filename: "input.md"
 										end: Object {
 											column: 13
-											index: 114
-											line: 10
+											index: 113
+											line: 9
 										}
 										start: Object {
 											column: 13
-											index: 114
-											line: 10
+											index: 113
+											line: 9
 										}
 									}
 								}
@@ -262,18 +263,19 @@ MarkdownRoot {
 					]
 				}
 				MarkdownListItem {
-					checked: null
+					value: undefined
+					checked: undefined
 					loc: Object {
 						filename: "input.md"
 						end: Object {
 							column: 0
-							index: 130
-							line: 12
+							index: 129
+							line: 11
 						}
 						start: Object {
 							column: 3
-							index: 118
-							line: 11
+							index: 117
+							line: 10
 						}
 					}
 					children: Array [
@@ -282,13 +284,13 @@ MarkdownRoot {
 								filename: "input.md"
 								end: Object {
 									column: 0
-									index: 130
-									line: 12
+									index: 129
+									line: 11
 								}
 								start: Object {
 									column: 3
-									index: 118
-									line: 11
+									index: 117
+									line: 10
 								}
 							}
 							children: Array [
@@ -298,13 +300,13 @@ MarkdownRoot {
 										filename: "input.md"
 										end: Object {
 											column: 14
-											index: 129
-											line: 11
+											index: 128
+											line: 10
 										}
 										start: Object {
 											column: 14
-											index: 129
-											line: 11
+											index: 128
+											line: 10
 										}
 									}
 								}
@@ -320,13 +322,13 @@ MarkdownRoot {
 				filename: "input.md"
 				end: Object {
 					column: 3
-					index: 133
-					line: 12
+					index: 132
+					line: 11
 				}
 				start: Object {
 					column: 3
-					index: 133
-					line: 12
+					index: 132
+					line: 11
 				}
 			}
 		}
@@ -335,13 +337,13 @@ MarkdownRoot {
 				filename: "input.md"
 				end: Object {
 					column: 0
-					index: 164
-					line: 19
+					index: 143
+					line: 13
 				}
 				start: Object {
 					column: 0
-					index: 135
-					line: 14
+					index: 133
+					line: 12
 				}
 			}
 			children: Array [
@@ -351,13 +353,13 @@ MarkdownRoot {
 						filename: "input.md"
 						end: Object {
 							column: 9
-							index: 144
-							line: 14
+							index: 142
+							line: 12
 						}
 						start: Object {
 							column: 9
-							index: 144
-							line: 14
+							index: 142
+							line: 12
 						}
 					}
 				}
@@ -367,141 +369,13 @@ MarkdownRoot {
 						filename: "input.md"
 						end: Object {
 							column: 9
-							index: 144
-							line: 14
+							index: 142
+							line: 12
 						}
 						start: Object {
 							column: 9
-							index: 144
-							line: 14
-						}
-					}
-				}
-				MarkdownText {
-					value: "feeeffeef"
-					loc: Object {
-						filename: "input.md"
-						end: Object {
-							column: 9
-							index: 154
-							line: 15
-						}
-						start: Object {
-							column: 9
-							index: 154
-							line: 15
-						}
-					}
-				}
-				MarkdownText {
-					value: "\n"
-					loc: Object {
-						filename: "input.md"
-						end: Object {
-							column: 9
-							index: 154
-							line: 15
-						}
-						start: Object {
-							column: 9
-							index: 154
-							line: 15
-						}
-					}
-				}
-				MarkdownText {
-					value: "ef"
-					loc: Object {
-						filename: "input.md"
-						end: Object {
-							column: 2
-							index: 157
-							line: 16
-						}
-						start: Object {
-							column: 2
-							index: 157
-							line: 16
-						}
-					}
-				}
-				MarkdownText {
-					value: "\n"
-					loc: Object {
-						filename: "input.md"
-						end: Object {
-							column: 2
-							index: 157
-							line: 16
-						}
-						start: Object {
-							column: 2
-							index: 157
-							line: 16
-						}
-					}
-				}
-				MarkdownText {
-					value: "ef"
-					loc: Object {
-						filename: "input.md"
-						end: Object {
-							column: 2
-							index: 160
-							line: 17
-						}
-						start: Object {
-							column: 2
-							index: 160
-							line: 17
-						}
-					}
-				}
-				MarkdownText {
-					value: "\n"
-					loc: Object {
-						filename: "input.md"
-						end: Object {
-							column: 2
-							index: 160
-							line: 17
-						}
-						start: Object {
-							column: 2
-							index: 160
-							line: 17
-						}
-					}
-				}
-				MarkdownText {
-					value: "ef"
-					loc: Object {
-						filename: "input.md"
-						end: Object {
-							column: 2
-							index: 163
-							line: 18
-						}
-						start: Object {
-							column: 2
-							index: 163
-							line: 18
-						}
-					}
-				}
-				MarkdownText {
-					value: "\n"
-					loc: Object {
-						filename: "input.md"
-						end: Object {
-							column: 2
-							index: 163
-							line: 18
-						}
-						start: Object {
-							column: 2
-							index: 163
-							line: 18
+							index: 142
+							line: 12
 						}
 					}
 				}
@@ -513,13 +387,13 @@ MarkdownRoot {
 				filename: "input.md"
 				end: Object {
 					column: 3
-					index: 167
-					line: 19
+					index: 146
+					line: 13
 				}
 				start: Object {
 					column: 3
-					index: 167
-					line: 19
+					index: 146
+					line: 13
 				}
 			}
 		}
