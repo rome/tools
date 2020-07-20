@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="Rome, logo of an ancient Greek spartan helmet" src="https://github.com/romefrontend/rome/raw/main/assets/PNG/logo_transparent.png" width="700">
+	<img alt="Rome, logo of an ancient Greek spartan helmet" src="https://github.com/romefrontend/rome/raw/main/assets/PNG/logo_transparent.png" width="700">
 </p>
 
 **Rome** is a linter, compiler, bundler, and [more](https://romefrontend.dev/#development-status) for JavaScript, TypeScript, HTML, Markdown, and CSS. Read more about our language support [here](https://romefrontend.dev/docs/language-support).

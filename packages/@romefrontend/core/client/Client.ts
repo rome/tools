@@ -33,20 +33,26 @@ import {VERSION} from "../common/constants";
 import {TarWriter} from "@romefrontend/codec-tar";
 import {Profile, Profiler, Trace, TraceEvent} from "@romefrontend/v8";
 import {PartialServerQueryRequest} from "../common/bridges/ServerBridge";
-import {UserConfig, loadUserConfig} from "../common/userConfig";
+import {
+	UserConfig,
+	getUserConfigFile,
+	loadUserConfig,
+} from "../common/userConfig";
 import {removeFile} from "@romefrontend/fs";
 import {stringifyJSON} from "@romefrontend/codec-json";
 import stream = require("stream");
 import net = require("net");
 import zlib = require("zlib");
 import fs = require("fs");
+import os = require("os");
 import child = require("child_process");
-import {mergeObjects} from "@romefrontend/typescript-helpers";
+import {Dict, mergeObjects} from "@romefrontend/typescript-helpers";
 import {
 	joinMarkupLines,
 	markupToHtml,
 	markupToPlainText,
 } from "@romefrontend/cli-layout/format";
+import {escapeMarkup} from "@romefrontend/cli-layout";
 
 export function getFilenameTimestamp(): string {
 	return new Date().toISOString().replace(/[^0-9a-zA-Z]/g, "");
@@ -312,6 +318,82 @@ export default class Client {
 		});
 	}
 
+	async generateRageSummary(): Promise<string> {
+		let summary = "";
+
+		function push(name: string, value: unknown) {
+			const formatted =
+				typeof value === "string"
+					? escapeMarkup(value)
+					: prettyFormat(
+							value,
+							{
+								compact: true,
+								markup: true,
+							},
+						);
+			summary += `<emphasis>${name}</emphasis>\n<indent>${formatted}</indent>\n\n`;
+		}
+
+		const envVars: Array<string> = [
+			"PATH",
+			"ROME_CACHE",
+			"USER",
+			"LANG",
+			"COLORFGBG",
+
+			// Variables used by process.stdout.getColorDepth
+			"FORCE_COLOR",
+			"NODE_DISABLE_COLORS",
+			"NO_COLOR",
+			"TERM",
+			"TMUX",
+			"CI",
+			"TRAVIS",
+			"CIRCLECI",
+			"APPVEYOR",
+			"GITLAB_CI",
+			"CI_NAME",
+			"TEAMCITY_VERSION",
+			"TERM_PROGRAM",
+			"COLORTERM",
+		];
+		const env: Dict<string | undefined> = {};
+		for (const key of envVars) {
+			env[key] = process.env[key];
+		}
+		push("Environment Variables", env);
+
+		const userConfig = getUserConfigFile();
+		push(
+			"User Config",
+			userConfig === undefined ? "unset" : userConfig.consumer.asUnknown(),
+		);
+
+		push("Rome Version", VERSION);
+		push("Node Version", process.versions.node);
+		push("Platform", `${process.platform} ${process.arch} ${os.release()}`);
+		push("Terminal Features", this.derivedReporterStreams.features);
+		push("Client Flags", this.getClientJSONFlags());
+
+		// Don't do this if we never connected to the server
+		const bridgeStatus = this.getBridgeStatus();
+		if (bridgeStatus !== undefined) {
+			const status = await this.query(
+				{
+					silent: true,
+					commandName: "status",
+				},
+				"server",
+			);
+			if (status.type === "SUCCESS") {
+				push("Server Status", status.data);
+			}
+		}
+
+		return summary;
+	}
+
 	async rage(ragePath: string, profileOpts: ClientProfileOptions) {
 		const {bridge} = this.assertBridgeStatus();
 
@@ -376,48 +458,10 @@ export default class Client {
 				);
 			}
 
-			function indent(val: unknown): string {
-				const str =
-					typeof val === "string"
-						? val
-						: prettyFormat(
-								val,
-								{
-									compact: true,
-								},
-							);
-				const lines = str.trim().split("\n");
-				const indented = lines.join("\n  ");
-				return `\n  ${indented}`;
-			}
-
-			const env = [];
-
-			env.push(`PATH: ${indent(process.env.PATH)}`);
-			env.push(`Rome Version: ${indent(VERSION)}`);
-			env.push(`Node Version: ${indent(process.versions.node)}`);
-			env.push(`Platform: ${indent(`${process.platform} ${process.arch}`)}`);
-			env.push(
-				`Terminal Features: ${indent(this.derivedReporterStreams.features)}`,
+			writer.append(
+				{name: "summary.txt"},
+				joinMarkupLines(markupToPlainText(await this.generateRageSummary())),
 			);
-			env.push(`Client Flags: ${indent(this.getClientJSONFlags())}`);
-
-			// Don't do this if we never connected to the server
-			const bridgeStatus = this.getBridgeStatus();
-			if (bridgeStatus !== undefined) {
-				const status = await this.query(
-					{
-						silent: true,
-						commandName: "status",
-					},
-					"server",
-				);
-				if (status.type === "SUCCESS") {
-					env.push(`Server Status: ${indent(status.data)}`);
-				}
-			}
-
-			writer.append({name: "environment.txt"}, `${env.join("\n\n")}\n`);
 
 			await writer.finalize();
 			this.reporter.success(

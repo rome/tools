@@ -361,7 +361,14 @@ export default async function cli() {
 		name: "rage",
 		category: commandCategories.INTERNAL,
 		description: "TODO",
-		callback() {
+		defineFlags(c) {
+			return {
+				summary: c.get("summary").asBoolean(false),
+			};
+		},
+		callback(_commandFlags) {
+			commandFlags = _commandFlags;
+
 			overrideCLIFlags = {
 				rage: true,
 			};
@@ -434,11 +441,17 @@ export default async function cli() {
 		};
 
 		if (cliFlags.rage) {
-			const {ragePath} = cliFlags;
-			const filename = clientFlags.cwd.resolve(
-				ragePath === undefined ? `Rage-${getFilenameTimestamp()}.tgz` : ragePath,
-			).join();
-			await client.rage(filename, profileOptions);
+			if (commandFlags.summary === true) {
+				client.reporter.logAll(await client.generateRageSummary());
+			} else {
+				const {ragePath} = cliFlags;
+				const filename = clientFlags.cwd.resolve(
+					ragePath === undefined
+						? `Rage-${getFilenameTimestamp()}.tgz`
+						: ragePath,
+				).join();
+				await client.rage(filename, profileOptions);
+			}
 			return;
 		}
 

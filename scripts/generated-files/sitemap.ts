@@ -4,7 +4,7 @@ import {AbsoluteFilePath} from "@romefrontend/path";
 
 type Node = {
 	type: "file" | "folder";
-	heading: undefined | string;
+	title: undefined | string;
 	link: boolean;
 	url: string;
 	name: string;
@@ -41,12 +41,13 @@ export async function main() {
 					const stats = await lstat(path);
 					if (stats.isFile() && path.hasEndExtension("md")) {
 						const file = await readFileText(path);
-						const headingMatch = file.match(/# (.*?)\n/);
-						const heading = headingMatch == null ? undefined : headingMatch[1];
+						const titleMatch =
+							file.match(/title:(.*?)\n/) || file.match(/# (.*?)\n/);
+						const title = titleMatch == null ? undefined : titleMatch[1].trim();
 
 						children.push({
 							type: "file",
-							heading,
+							title,
 							link: true,
 							children: [],
 							url,
@@ -76,7 +77,7 @@ export async function main() {
 						? "/"
 						: `/${websiteSource.relative(folderPath).join()}`,
 					link: index !== undefined,
-					heading: index === undefined ? undefined : index.heading,
+					title: index === undefined ? undefined : index.title,
 					name: folderPath === websiteSource ? "" : folderPath.getBasename(),
 					children,
 				};
@@ -89,8 +90,8 @@ export async function main() {
 					text = `[${text}](${node.url})`;
 				}
 
-				if (node.heading) {
-					text += `: ${node.heading}`;
+				if (node.title) {
+					text += `: ${node.title}`;
 				}
 
 				const indent = "\t".repeat(level);

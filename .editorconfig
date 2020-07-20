@@ -4,7 +4,16 @@ root = true
 end_of_line = lf
 trim_trailing_whitespace = true
 insert_final_newline = true
-
-[{*.ts,*.json,*.cjs}]
+charset = utf-8
 indent_style = tab
+indent_size = 2
+
+# YAML doesn't support hard tabs 🙃
+[{*.yml}]
+indent_style = space
+indent_size = 2
+
+# Templates that will be weird with hard tabs in the website editor
+[.github/**.md]
+indent_style = space
 indent_size = 2

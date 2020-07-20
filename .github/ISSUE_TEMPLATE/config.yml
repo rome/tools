@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🗣️ Chat
+    url: https://discord.gg/rome
+    about: Our Discord server is active and is used for real-time discussions including contribution collaboratio, questions, and more!
+  - name: 🤔 Support
+    url: https://discord.gg/rome
+    about: "This issue tracker is not for support questions. Visit our community Discord and the #support channel for assistance!"
+  - name: 🆘 Code of Conduct Reports
+    url: https://github.com/romefrontend/rome/blob/main/CODE_OF_CONDUCT.md#contributor-covenant-code-of-conduct
+    about: Please use the contact information in Code of Conduct as issues created here are public

@@ -5,10 +5,10 @@ author_name: Sebastian McKenzie
 author_url: https://twitter.com/sebmck
 date: 2018-05-03
 tags:
-  - post
-  - another
-  - release
-  - another-tag
+	- post
+	- another
+	- release
+	- another-tag
 layout: layouts/blog/post.njk
 ---
 

@@ -1,11 +1,10 @@
 ---
 title: Lint Rules
 layout: layouts/page.njk
-eleventyNavigation: {
-	key: lint-rules,
-	parent: linting,
+eleventyNavigation:
+	key: lint-rules
+	parent: linting
 	title: Rules
-}
 ---
 
 # Rules

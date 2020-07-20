@@ -1,266 +1,268 @@
 <!doctype html>
 <html lang="en" data-theme="light" class="js-disabled">
 	<head>
-    <meta charset="utf8" />
-    <title>{{ title }}{{ " — " if title }}Rome Frontend Toolchain</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="utf8" />
+		<title>{{ title }}{{ " — " if title }}Rome Frontend Toolchain</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="mask-icon" href="{{ '/img/pinned-rome-logo.svg' | url }}" color="#000000">
-    <link rel="alternate icon" type="image/png" href="{{ '/img/favicon.png' | url }}">
-    <link rel="icon" type="image/svg+xml" href="{{ '/img/favicon.svg' | url }}">
+		<link rel="mask-icon" href="{{ '/img/pinned-rome-logo.svg' | url }}" color="#000000">
+		<link rel="alternate icon" type="image/png" href="{{ '/img/favicon.png' | url }}">
+		<link rel="icon" type="image/svg+xml" href="{{ '/img/favicon.svg' | url }}">
 
-    <meta name="description" content="Standardizing the web development experience.">
-    <meta name="theme-color" content="#FFC905">
-    <meta property="og:title" content="{{ title }}{{ " — " if title }}Rome Frontend Toolchain">
-    <meta property="og:description" content="Standardizing the web development experience.">
-    <meta property="og:image" content="https://romefrontend.dev/img/social-logo.png">
-    <meta property="twitter:image" content="https://romefrontend.dev/img/social-logo.png">
-    <meta property="twitter:site" content="@romefrontend">
-    <meta property="twitter:creator" content="@romefrontend">
-    <meta property="twitter:image:alt" content="Logo for the Rome Frontend Toolchain Project">
-    <meta property="twitter:card" content="summary_large_image">
+		<meta name="description" content="Standardizing the web development experience.">
+		<meta name="theme-color" content="#FFC905">
+		<meta property="og:title" content="{{ title }}{{ " — " if title }}Rome Frontend Toolchain">
+		<meta property="og:description" content="Standardizing the web development experience.">
+		<meta property="og:image" content="https://romefrontend.dev/img/social-logo.png">
+		<meta property="twitter:image" content="https://romefrontend.dev/img/social-logo.png">
+		<meta property="twitter:site" content="@romefrontend">
+		<meta property="twitter:creator" content="@romefrontend">
+		<meta property="twitter:image:alt" content="Logo for the Rome Frontend Toolchain Project">
+		<meta property="twitter:card" content="summary_large_image">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" /> 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
-    <link rel="stylesheet" href="{{ '/styles/index.css' | url }}">
-    
-    <script>
-      (function () {
-        document.documentElement.classList.remove("js-disabled");
-        document.documentElement.classList.add("js-enabled");
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+		<link rel="stylesheet" href="{{ '/styles/index.css' | url }}">
 
-        // Fix white flickering when on dark mode and respect color scheme preference
-        let currentTheme = localStorage.getItem('data-theme');
-        const prefersDarkMode = matchMedia('(prefers-color-scheme: dark)').matches;
-        if (!currentTheme)	{
-          currentTheme = prefersDarkMode ? 'dark' : 'light';
-        }
-        document.documentElement.setAttribute("data-theme", currentTheme);
-      })();
-    </script>
-  </head>
+		<script>
+			(function () {
+				document.documentElement.classList.remove("js-disabled");
+				document.documentElement.classList.add("js-enabled");
 
-  <body>
-    {% set tocHTML = content | toc | shouldIncludeTOC | safe %}
-    <div class="container{{ " has-right-sidebar" if tocHTML != "" }}{{ " no-right-sidebar" if tocHTML == "" }}">
-      <div class="skip-to-content">
-        <a href="#main-content">Skip to main content</a>
-      </div>
+				// Fix white flickering when on dark mode and respect color scheme preference
+				let currentTheme = localStorage.getItem('data-theme');
+				const prefersDarkMode = matchMedia('(prefers-color-scheme: dark)').matches;
+				if (!currentTheme)	{
+					currentTheme = prefersDarkMode ? 'dark' : 'light';
+				}
+				document.documentElement.setAttribute("data-theme", currentTheme);
+			})();
+		</script>
+	</head>
 
-      <div class="header-mobile">
-        <a class="logo" href="{{ '/' | url }}">
+	<body>
+		{% set tocHTML = content | toc | shouldIncludeTOC | safe %}
+		<div class="container{{ " has-right-sidebar" if tocHTML != "" }}{{ " no-right-sidebar" if tocHTML == "" }}">
+			<div class="skip-to-content">
+				<a href="#main-content">Skip to main content</a>
+			</div>
 
-          {% include "./svg/rome-logo.njk" %}
+			<div class="header-mobile">
+				<a class="logo" href="{{ '/' | url }}">
 
-          <span class="logo-text">Rome</span>
-        </a>
-        <div class="stretch"></div>
+					{% include "./svg/rome-logo.njk" %}
 
-        <a href="#" class="mobile-handle mobile-handle-toc">
-          {% include "./svg/mobile-toc-handle.njk" %}
-        </a>
+					<span class="logo-text">Rome</span>
+				</a>
+				<div class="stretch"></div>
 
-        <a href="#" class="mobile-handle mobile-handle-nav">
-          {% include "./svg/mobile-nav-handle.njk" %}
-        </a>
-      </div>
+				<a href="#" class="mobile-handle mobile-handle-toc">
+					{% include "./svg/mobile-toc-handle.njk" %}
+				</a>
 
-      <div class="sidebar-container">
-        <div class="sidebar-stripe"></div>
-        <div class="sidebar nav">
-          <div class="header-desktop">
-            <a class="logo" href="{{ '/' | url }}">
-              {% include "./svg/rome-logo.njk" %}
-              <h1 class="logo-text">Rome</h1>
-            </a>
-          </div>
+				<a href="#" class="mobile-handle mobile-handle-nav">
+					{% include "./svg/mobile-nav-handle.njk" %}
+				</a>
+			</div>
 
-          <div id="docsearch-container">
-            {% include "./svg/search-icon.njk" %}
-            <input type="text" id="docsearch" placeholder="Search" />
-          </div>
+			<div class="sidebar-container">
+				<div class="sidebar-stripe"></div>
+				<div class="sidebar nav">
+					<div class="header-desktop">
+						<a class="logo" href="{{ '/' | url }}">
+							{% include "./svg/rome-logo.njk" %}
+							<h1 class="logo-text">Rome</h1>
+						</a>
+					</div>
 
-          <div class="menu-wrapper">
-            <nav aria-labelledby="site-navigation" class="menu">
-              <h2 id="site-navigation" class="sr-only">Site Navigation</h2>
-              <ul>
-                <li>
-                  <a href="{{ '/about' | url }}">About</a>
-                </li>
-                <li>
-                  <a href="{{ '/blog' | url }}">Blog</a>
-                </li>
-                <li>
-                  <a href="{{ '/sitemap' | url }}">Sitemap</a>
-                </li>
-              </ul>
-            </nav>
+					<div id="docsearch-container">
+						{% include "./svg/search-icon.njk" %}
+						<input type="text" id="docsearch" placeholder="Search" />
+					</div>
 
-            <nav aria-labelledby="site-navigation-guides" class="menu">
-              <h2 id="site-navigation-guides">Guides</h2>
-              <ul>
-                <li>
-                  <a href="{{ '/docs/getting-started' | url }}">Getting Started</a>
-                </li>
-                <li>
-                  <a href="{{ '/docs/lint' | url }}">Linting</a>
-                </li>
-              </ul>
-            </nav>
+					<div class="menu-wrapper">
+						<nav aria-labelledby="site-navigation" class="menu">
+							<h2 id="site-navigation" class="sr-only">Site Navigation</h2>
+							<ul>
+								<li>
+									<a href="{{ '/about' | url }}">About</a>
+								</li>
+								<li>
+									<a href="{{ '/blog' | url }}">Blog</a>
+								</li>
+								<li>
+									<a href="{{ '/sitemap' | url }}">Sitemap</a>
+								</li>
+							</ul>
+						</nav>
 
-            <nav aria-labelledby="site-navigation-documentation" class="menu">
-              <h2 id="site-navigation-documentation">Documentation</h2>
-              <ul>
-                <li>
-                  <a href="{{ '/docs/cli' | url }}">CLI</a>
-                </li>
-                <li>
-                  <a href="{{ '/docs/diagnostics' | url }}">Diagnostics</a>
-                </li>
-                <li>
-                  <a href="{{ '/docs/editor-integration' | url }}">Editor Integration</a>
-                </li>
-                <li>
-                  <a href="{{ '/docs/language-support' | url }}">Language Support</a>
-                </li>
-                <li>
-                  <a href="{{ '/docs/project-config' | url }}">Project Config</a>
-                </li>
-              </ul>
-            </nav>
+						<nav aria-labelledby="site-navigation-guides" class="menu">
+							<h2 id="site-navigation-guides">Guides</h2>
+							<ul>
+								<li>
+									<a href="{{ '/docs/getting-started' | url }}">Getting Started</a>
+								</li>
+								<li>
+									<a href="{{ '/docs/lint' | url }}">Linting</a>
+								</li>
+							</ul>
+						</nav>
 
-            <nav aria-labelledby="external-links" class="menu external-links">
-              <h2 id="external-links" class="sr-only">External Links</h2>
-              <ul>
-                <li>
-                  <a target="_blank" rel="noopener" href="https://github.com/romefrontend/rome">
-                    <span class="sr-only">GitHub Repo</span>
-                    {% include "./svg/github.njk" %}
-                  </a>
-                </li>
-                <li>
-                  <a target="_blank" rel="noopener" href="https://twitter.com/romefrontend">
-                    <span class="sr-only">Twitter Account</span>
-                    {% include "./svg/twitter.njk" %}
-                  </a>
-                </li>
-                <li>
-                  <a target="_blank" rel="noopener" href="https://opencollective.com/romefrontend">
-                    <span class="sr-only">Open Collective</span>
-                    {% include "./svg/open-collective.njk" %}
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
+						<nav aria-labelledby="site-navigation-documentation" class="menu">
+							<h2 id="site-navigation-documentation">Documentation</h2>
+							<ul>
+								<li>
+									<a href="{{ '/docs/cli' | url }}">CLI</a>
+								</li>
+								<li>
+									<a href="{{ '/docs/diagnostics' | url }}">Diagnostics</a>
+								</li>
+								<li>
+									<a href="{{ '/docs/editor-integration' | url }}">Editor Integration</a>
+								</li>
+								<li>
+									<a href="{{ '/docs/language-support' | url }}">Language Support</a>
+								</li>
+								<li>
+									<a href="{{ '/docs/project-config' | url }}">Project Config</a>
+								</li>
+							</ul>
+						</nav>
 
-          {% include "../color-scheme-switch.njk" %}
-        </div>
-      </div>
+						<nav aria-labelledby="external-links" class="menu external-links">
+							<h2 id="external-links" class="sr-only">External Links</h2>
+							<ul>
+								<li>
+									<a target="_blank" rel="noopener" href="https://github.com/romefrontend/rome">
+										<span class="sr-only">GitHub Repo</span>
+										{% include "./svg/github.njk" %}
+									</a>
+								</li>
+								<li>
+									<a target="_blank" rel="noopener" href="https://twitter.com/romefrontend">
+										<span class="sr-only">Twitter Account</span>
+										{% include "./svg/twitter.njk" %}
+									</a>
+								</li>
+								<li>
+									<a target="_blank" rel="noopener" href="https://opencollective.com/romefrontend">
+										<span class="sr-only">Open Collective</span>
+										{% include "./svg/open-collective.njk" %}
+									</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
 
-      <div class="main">
-        {% if eleventyNavigation.key %}
-          <ul class="breadcrumbs">
-            {% set navPages = collections.all | eleventyNavigationBreadcrumb(eleventyNavigation.key) %}
-            {%- for entry in navPages %}
-              <li>
-                <a href="{{ entry.url | url }}"><span>{{ entry.title }}</span></a>
+					{% include "../color-scheme-switch.njk" %}
+				</div>
+			</div>
 
-                <ul class="sub-menu">
-                  {% set subNavPages = collections.all | eleventyNavigation(entry.key) %}
-                  {%- for entry in subNavPages %}
-                    <li>
-                      <a href="{{ entry.url | url }}">{{ entry.title }}</a>
-                    </li>
-                  {%- endfor %}
-                </ul>
-              </li>
-            {%- endfor %}
-            <li class="active">
-              {{ eleventyNavigation.title }}
-            </li>
-          </ul>
-        {% endif %}
+			<div class="main">
+				{% if eleventyNavigation.key %}
+					<ul class="breadcrumbs">
+						{% set navPages = collections.all | eleventyNavigationBreadcrumb(eleventyNavigation.key) %}
+						{%- for entry in navPages %}
+							<li>
+								<a href="{{ entry.url | url }}"><span>{{ entry.title }}</span></a>
 
-        {{ content | safe }}
-      </div>
+								<ul class="sub-menu">
+									{% set subNavPages = collections.all | eleventyNavigation(entry.key) %}
+									{%- for entry in subNavPages %}
+										<li>
+											<a href="{{ entry.url | url }}">{{ entry.title }}</a>
+										</li>
+									{%- endfor %}
+								</ul>
+							</li>
+						{%- endfor %}
+						<li class="active">
+							{{ eleventyNavigation.title }}
+						</li>
+					</ul>
+				{% endif %}
 
-      {% if tocHTML != "" %}
-        <div class="sidebar-container">
-          <div class="sidebar toc">
-            <nav aria-labelledby="table-of-content" class="table-of-contents">
-              <h2 id="table-of-content">Table of Contents</h2>
-              <div class="toc-container">
-                {{ tocHTML }}
-              </div>
-            </nav>
-          </div>
-        </div>
-      {% endif %}
-    </div>
+				{{ content | safe }}
+			</div>
 
-    {% if environment == "production" %}
-      <div class="wip-banner">
-        <strong>Rome is still in development</strong>. We have not had an official supported release so documentation may appear out of date until then.
-      </div>
-    {% endif %}
+			{% if tocHTML != "" %}
+				<div class="sidebar-container">
+					<div class="sidebar toc">
+						<nav aria-labelledby="table-of-content" class="table-of-contents">
+							<h2 id="table-of-content">Table of Contents</h2>
+							<div class="toc-container">
+								{{ tocHTML }}
+							</div>
+						</nav>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+
+		{% if environment != "production" %}
+			<div class="wip-banner">
+				<p>
+					<strong>Rome is still in development</strong>. We have not had an official supported release so documentation may appear out of date until then.
+				</p>
+			</div>
+		{% endif %}
 
 		<footer aria-labelledby="footer" class="footer">
-      <h1 id="footer" class="sr-only">Footer</h1>
+			<h1 id="footer" class="sr-only">Footer</h1>
 
-      <div class="footer-container">
-        <div class="row">
-          <div>
-            <nav aria-labelledby="community-navigation">
-              <h2 id="community-navigation">Community</h2>
-              <ul>
-                <li>
-                  <a href="https://github.com/romefrontend/rome/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
-                </li>
-                <li>
-                  <a href="https://discord.gg/9WxHa5d">Discord</a>
-                </li>
-                <li>
-                  <a href="https://twitter.com/romefrontend">Twitter</a>
-                </li>
-              </ul>
-            </nav>
-          </div>
+			<div class="footer-container">
+				<div class="row">
+					<div>
+						<nav aria-labelledby="community-navigation">
+							<h2 id="community-navigation">Community</h2>
+							<ul>
+								<li>
+									<a href="https://github.com/romefrontend/rome/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
+								</li>
+								<li>
+									<a href="https://discord.gg/9WxHa5d">Discord</a>
+								</li>
+								<li>
+									<a href="https://twitter.com/romefrontend">Twitter</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
 
-          <div>
-            <nav aria-labelledby="resources-navigation">
-              <h2 id="resources-navigation">Resources</h2>
-              <ul>
-                <li>
-                  <a href="https://github.com/romefrontend/rome">GitHub</a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-          
-          <div class="netlify-badge">
-            <a href="https://www.netlify.com">
-              <img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg" alt="Deploys by Netlify" />
-            </a>
-          </div>
-        </div>
+					<div>
+						<nav aria-labelledby="resources-navigation">
+							<h2 id="resources-navigation">Resources</h2>
+							<ul>
+								<li>
+									<a href="https://github.com/romefrontend/rome">GitHub</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
 
-        <div class="logo">
-          {% include "./svg/rome-logo.njk" %}
-          <span class="logo-text">Rome</span>
-        </div>
-      </div>
-    </footer>
+					<div class="netlify-badge">
+						<a href="https://www.netlify.com">
+							<img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg" alt="Deploys by Netlify" />
+						</a>
+					</div>
+				</div>
 
-    <script src="{{ '/js/index.js' | url }}"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
-    <script type="text/javascript">
-      docsearch({
-        apiKey: '66db1ad366d458c6acded7cbc23dba7e',
-        indexName: 'romefrontend',
-        inputSelector: '#docsearch',
-        debug: false // Set debug to true if you want to inspect the dropdown
-      });
-    </script>
-  </body>
+				<div class="logo">
+					{% include "./svg/rome-logo.njk" %}
+					<span class="logo-text">Rome</span>
+				</div>
+			</div>
+		</footer>
+
+		<script src="{{ '/js/index.js' | url }}"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+		<script type="text/javascript">
+			docsearch({
+				apiKey: '66db1ad366d458c6acded7cbc23dba7e',
+				indexName: 'romefrontend',
+				inputSelector: '#docsearch',
+				debug: false // Set debug to true if you want to inspect the dropdown
+			});
+		</script>
+	</body>
 </html>

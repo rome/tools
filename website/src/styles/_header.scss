@@ -14,15 +14,15 @@
   padding-left: $unit;
   border-top: 5px solid var(--top-border-color);
 
-  .stretch {
-    flex-grow: 1;
-  }
+	.stretch {
+		flex-grow: 1;
+	}
 
-  @include mobile-only() {
-    width: 100%;
-    border-bottom: 1px solid var(--soft-border-color);
-    display: flex;
-  }
+	@include mobile-only() {
+		width: 100%;
+		border-bottom: 1px solid var(--soft-border-color);
+		display: flex;
+	}
 }
 
 .header-desktop {
@@ -64,10 +64,10 @@
     width: 1em;
     margin-right: $unit / 2;
 
-    .cls-1 {
-      fill: var(--logo-font-color);
-    }
-  }
+		.cls-1 {
+			fill: var(--logo-font-color);
+		}
+	}
 
   .logo-text {
     color: var(--logo-font-color);
@@ -83,10 +83,10 @@
     }
   }
 
-  @include mobile-only() {
-    font-size: 32px;
-    margin-bottom: 0;
-  }
+	@include mobile-only() {
+		font-size: 32px;
+		margin-bottom: 0;
+	}
 }
 
 .mobile-handle {
@@ -96,10 +96,10 @@
   align-items: center;
   justify-content: center;
 
-  svg {
-    height: 32px;
-    width: 32px;
-  }
+	svg {
+		height: 32px;
+		width: 32px;
+	}
 
   svg rect, svg path {
     fill: var(--top-border-color);

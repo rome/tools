@@ -8,6 +8,11 @@ const fs = require("fs");
 const pluginTOC = require("eleventy-plugin-nesting-toc");
 const path = require("path");
 
+/**
+ * @type {any}
+ */
+const grayMatter = require("gray-matter");
+
 module.exports = function(eleventyConfig) {
 	eleventyConfig.addPassthroughCopy({"static": "."});
 
@@ -115,6 +120,19 @@ module.exports = function(eleventyConfig) {
 			}
 		},
 	);
+
+	// Customize YAML engine so we can parse hard tabs lol...
+	eleventyConfig.setFrontMatterParsingOptions({
+		engines: {
+			yaml: {
+				...grayMatter.engines.yaml,
+				parse(content) {
+					content = content.replace(/\t/g, "  ");
+					return grayMatter.engines.yaml.parse(content);
+				},
+			},
+		},
+	});
 
 	return {
 		dir: {

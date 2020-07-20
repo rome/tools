@@ -1,139 +1,139 @@
 .hero {
-  position: relative;
-  padding: $unit * 2;
-  border-bottom: 1px solid var(--soft-border-color);
-  @include pattern;
+	position: relative;
+	padding: $unit * 2;
+	border-bottom: 1px solid var(--soft-border-color);
+	@include pattern;
 
-  @include mobile-only() {
-    text-align: center;
-    padding: $unit * 2 $unit;
-  }
+	@include mobile-only() {
+		text-align: center;
+		padding: $unit * 2 $unit;
+	}
 
-  h1, h2 {
-    line-height: 1.5em;
-  }
+	h1, h2 {
+		line-height: 1.5em;
+	}
 
-  > :last-child {
-    margin-bottom: 0;
-  }
+	> :last-child {
+		margin-bottom: 0;
+	}
 }
 
 ul.home-actions {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: stretch;
-  font-size: 1.4em;
-  margin: $unit * 2 0;
-  border-radius: 5px;
-  text-align: center;
-  justify-items: center;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	align-items: stretch;
+	font-size: 1.4em;
+	margin: $unit * 2 0;
+	border-radius: 5px;
+	text-align: center;
+	justify-items: center;
 
-  @media only screen and (max-width: 1060px) {
-    flex-direction: column;
-  }
+	@media only screen and (max-width: 1060px) {
+		flex-direction: column;
+	}
 
-  svg {
-    width: 40px;
-    height: 40px;
-  }
+	svg {
+		width: 40px;
+		height: 40px;
+	}
 
-  a.getting-started {
-    border: var(--logo-font-color) 4px solid;
-    border-radius: 60px;
-    padding: 12px 32px;
-    perspective: inherit;
-    position: relative;
-    color: #27272A;
-    text-decoration: none;
-    display: inline;
+	a.getting-started {
+		border: var(--logo-font-color) 4px solid;
+		border-radius: 60px;
+		padding: 12px 32px;
+		perspective: inherit;
+		position: relative;
+		color: #27272A;
+		text-decoration: none;
+		display: inline;
 
-    &:hover{
-      background: var(--logo-font-color);
-      color: var(--background-color);
-    }
-  }
+		&:hover{
+			background: var(--logo-font-color);
+			color: var(--background-color);
+		}
+	}
 
-  a.getting-started:before {
-    content: " ";
-    position: absolute;
-    z-index: -1;
-    border-radius: 60px;
-    top: 4px;
-    left: 4px;
-    right: 4px;
-    bottom: 4px;
-    background: var(--primary-color);
+	a.getting-started:before {
+		content: " ";
+		position: absolute;
+		z-index: -1;
+		border-radius: 60px;
+		top: 4px;
+		left: 4px;
+		right: 4px;
+		bottom: 4px;
+		background: var(--primary-color);
 
-  }
+	}
 
-  //align text to icon
-  a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-  }
+	//align text to icon
+	a {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-weight: bold;
+	}
 
-  svg {
-    margin-right: 16px;
-  }
+	svg {
+		margin-right: 16px;
+	}
 
-  &:last-child{
-    margin-bottom: 0;
-  }
+	&:last-child{
+		margin-bottom: 0;
+	}
 
-  li {
-    padding: 10px;
-    flex: 1;
-    text-align: center;
-    list-style: none;
-    border-right: 1px solid var(--soft-border-color);
-    white-space: nowrap;
+	li {
+		padding: 10px;
+		flex: 1;
+		text-align: center;
+		list-style: none;
+		border-right: 1px solid var(--soft-border-color);
+		white-space: nowrap;
 
-    @media only screen and (max-width: 1060px) {
-      border-right: none;
-    }
+		@media only screen and (max-width: 1060px) {
+			border-right: none;
+		}
 
-    &:last-child {
-      border-right: none;
-    }
-  }
+		&:last-child {
+			border-right: none;
+		}
+	}
 }
 
 html.js-enabled pre.homepage-example.collapsed {
-  height: 300px;
-  overflow: hidden;
-  box-shadow: inset 0 -10px 50px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
+	height: 300px;
+	overflow: hidden;
+	box-shadow: inset 0 -10px 50px rgba(0, 0, 0, 0.2);
+	cursor: pointer;
 
-  .expand {
-    display: block;
-    background: rgba($gray-4, 0.8);
-    border-top: 1px solid rgba($gray-3, 0.6);
-  }
+	.expand {
+		display: block;
+		background: rgba($gray-4, 0.8);
+		border-top: 1px solid rgba($gray-3, 0.6);
+	}
 }
 
 pre.homepage-example {
-  position: relative;
-  transition: all 200ms ease-in-out;
+	position: relative;
+	transition: all 200ms ease-in-out;
 
-  .expand {
-    display: none;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-weight: bold;
-    line-height: 40px;
-    color: #fff;
-    font-family: inherit;
-  }
+	.expand {
+		display: none;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		text-align: center;
+		font-weight: bold;
+		line-height: 40px;
+		color: #fff;
+		font-family: inherit;
+	}
 
-  code {
-    line-height: 0;
-  }
+	code {
+		line-height: 0;
+	}
 }
 
 article.latest-post {

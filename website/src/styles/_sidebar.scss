@@ -1,14 +1,14 @@
 .sidebar-container {
-  position: sticky;
-  z-index: 2;
-  top: 0;
-  height: 100vh;
+	position: sticky;
+	z-index: 2;
+	top: 0;
+	height: 100vh;
 }
 
 .sidebar-stripe {
-  @include inset-border-top;
-  height: 5px;
-  width: 100%;
+	@include inset-border-top;
+	height: 5px;
+	width: 100%;
 }
 
 .sidebar {
@@ -176,34 +176,34 @@
 // Better look on mobile
 // Solution from https://github.com/algolia/docsearch/issues/181
 .algolia-autocomplete {
-  @include mobile-only() {
-    .ds-dropdown-menu {
-      max-width: calc(100vw - 32px) !important;
-      min-width: calc(100vw - 32px) !important;
-      width: calc(100vw - 32px) !important;
-      margin-left: 16px !important;
-    }
-    .algolia-docsearch-suggestion--content {
-      width: 100% !important;
-      padding-left: 0 !important;
-    }
-    .algolia-docsearch-suggestion--content:before  {
-      display: none !important;
-    }
-    .algolia-docsearch-suggestion--subcategory-column {
-      display: none !important;
-    }
-  }
+	@include mobile-only() {
+		.ds-dropdown-menu {
+			max-width: calc(100vw - 32px) !important;
+			min-width: calc(100vw - 32px) !important;
+			width: calc(100vw - 32px) !important;
+			margin-left: 16px !important;
+		}
+		.algolia-docsearch-suggestion--content {
+			width: 100% !important;
+			padding-left: 0 !important;
+		}
+		.algolia-docsearch-suggestion--content:before	{
+			display: none !important;
+		}
+		.algolia-docsearch-suggestion--subcategory-column {
+			display: none !important;
+		}
+	}
 
 }
 
 .algolia-autocomplete, input#docsearch {
-  width: 100%;
-  display: block;
+	width: 100%;
+	display: block;
 }
 
 .ds-dropdown-menu{
-  left: $unit * 2 !important;
+	left: $unit * 2 !important;
 }
 
 #docsearch-container {
@@ -251,8 +251,8 @@
 }
 
 html[data-theme='dark'] .color-scheme-switch:after {
-  left: 50%;
-  margin-right: 5px;
-  transform: translateX(100%);
-  border-radius: 32px 96px 96px 32px;
+	left: 50%;
+	margin-right: 5px;
+	transform: translateX(100%);
+	border-radius: 32px 96px 96px 32px;
 }

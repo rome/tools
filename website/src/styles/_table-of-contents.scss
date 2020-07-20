@@ -1,43 +1,43 @@
 .toc-container{
-  font-size: 0.9em;
+	font-size: 0.9em;
 }
 
 .table-of-contents {
-  margin-left: $unit;
-  margin-top: $unit;
+	margin-left: $unit;
+	margin-top: $unit;
 
-  ol {
-    margin: 0;
-    padding: 0;
+	ol {
+		margin: 0;
+		padding: 0;
 
-    ol {
-      margin-left: $unit;
-    }
-  }
+		ol {
+			margin-left: $unit;
+		}
+	}
 
-  a {
-    text-decoration: none;
-    height: auto;
-    padding: $unit / 5 0;
-    margin-left: $unit / 2;
-    border-radius: 2px;
-    display: inline-block;
-    @include transition-timing;
-    transition-property: background-color;
-    transition-duration: 100ms;
-    font-weight: normal;
+	a {
+		text-decoration: none;
+		height: auto;
+		padding: $unit / 5 0;
+		margin-left: $unit / 2;
+		border-radius: 2px;
+		display: inline-block;
+		@include transition-timing;
+		transition-property: background-color;
+		transition-duration: 100ms;
+		font-weight: normal;
 
-    &:hover{
-      text-decoration: underline;
-    }
+		&:hover{
+			text-decoration: underline;
+		}
 
-    &.active {
-      color: var(--toc-link-color-active);
-      font-weight: bold;
-    }
-  }
+		&.active {
+			color: var(--toc-link-color-active);
+			font-weight: bold;
+		}
+	}
 
-  li {
-    list-style-type: none;
-  }
+	li {
+		list-style-type: none;
+	}
 }

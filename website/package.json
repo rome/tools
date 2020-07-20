@@ -23,7 +23,8 @@
 				"markdown-it",
 				"markdown-it-anchor",
 				"eleventy-plugin-sass",
-				"eleventy-plugin-nesting-toc"
+				"eleventy-plugin-nesting-toc",
+				"gray-matter"
 			]
 		}
 	}

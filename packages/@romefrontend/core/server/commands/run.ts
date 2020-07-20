@@ -16,6 +16,7 @@ import {AbsoluteFilePath, createRelativeFilePath} from "@romefrontend/path";
 // This will be dispatched to the client where it has a special case for `executeCode`
 type RunResult = {
 	type: "executeCode";
+	args: Array<string>;
 	filename: string;
 	code: string;
 	map: SourceMap;
@@ -33,14 +34,15 @@ export default createServerCommand({
 	async callback(req: ServerRequest): Promise<RunResult> {
 		const {flags} = req.client;
 		const {server} = req;
-		req.expectArgumentLength(1);
-		const arg = req.query.args[0];
+		req.expectArgumentLength(1, Infinity);
+		const [arg, ...args] = req.query.args;
 
 		async function executeCode(path: AbsoluteFilePath): Promise<RunResult> {
 			const bundler = Bundler.createFromServerRequest(req);
 			const {entry} = await bundler.bundle(path);
 			return {
 				type: "executeCode",
+				args,
 				filename: path.join(),
 				code: entry.js.content,
 				map: entry.sourceMap.map.serialize(),
@@ -75,8 +77,8 @@ export default createServerCommand({
 
 		// TODO check package.json scripts
 
-		// Assumed absolute paths
-		const target = await req.resolveEntryAssertPathArg(0);
+		// Resolve path otherwise
+		const target = await req.resolveEntryAssertPathArg(0, false);
 		return executeCode(target);
 	},
 });

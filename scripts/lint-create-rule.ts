@@ -25,19 +25,19 @@ export async function main([ruleName]: Array<string>): Promise<number> {
 		dedent`
 			import {Path, TransformExitResult} from "@romefrontend/compiler";
 			import {descriptions} from "@romefrontend/diagnostics";
-			
+
 			export default {
 			name: "${ruleName}",
 			enter(path: Path): TransformExitResult {
 				const {node} = path;
-			
+
 				if (false) {
 						path.context.addNodeDiagnostic(
 							node,
 							descriptions.LINT.${descriptionKey},
 						);
 				}
-			
+
 				return node;
 			},
 			};
@@ -71,15 +71,14 @@ export async function main([ruleName]: Array<string>): Promise<number> {
 			layout: layouts/page.njk
 			showHero: false
 			description: MISSING DOCUMENTATION
-			eleventyNavigation: {
-				key: lint-rules/${ruleName},
-				parent: lint-rules,
+			eleventyNavigation:
+				key: lint-rules/${ruleName}
+				parent: lint-rules
 				title: ${ruleName}
-			}
 			---
-			
+
 			# ${ruleName}
-			
+
 			MISSING DOCUMENTATION
 		`,
 	);

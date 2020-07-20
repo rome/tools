@@ -1,0 +1,75 @@
+# Internal
+core:
+- packages/@romefrontend/core/**/*
+compiler:
+- packages/@romefrontend/compiler/**/*
+- "**/compile.ts"
+formatter:
+- packages/@romefrontend/formatter/**/*
+- "**/format.ts"
+linter:
+- packages/@romefrontend/compiler/lint/**/*
+- packages/@romefrontend/core/server/linter/**/*
+- "**/lint.ts"
+parser:
+- packages/@romefrontend/*-parser/**/*
+- "**/parse.ts"
+diagnostics:
+- packages/@romefrontend/diagnostics/**/*
+- packages/@romefrontend/cli-diagnostics/**/*
+cli:
+- packages/@romefrontend/cli-*/**/*
+- packages/@romefrontend/cli/**/*
+- packages/rome/**/*
+- packages/@romefrontend/core/client/commands/**/*
+
+# Meta
+tooling:
+- rome
+- rome.bat
+- .*
+- "*.json"
+- scripts/**/*
+- .github/**/*
+governance:
+- GOVERNANCE.md
+- CODE_OF_CONDUCT.md
+- LICENSE
+
+# User support
+design:
+- assets/**/*
+docs:
+- website/src/docs/**/*
+website:
+- website/**/*
+
+# Integration
+vscode:
+- packages/@romefrontend-integration/vscode/**/*
+lsp:
+- packages/@romefrontend/core/server/lsp/**/*
+- "**/lsp.ts"
+
+# Languages
+html:
+- packages/@romefrontend/html-parser/**/*
+- "**/html/**/*"
+- "**/html.ts"
+css:
+- packages/@romefrontend/css-parser/**/*
+- "**/css/**/*"
+- "**/css.ts"
+markdown:
+- packages/@romefrontend/markdown-*/**/*
+- "**/markdown/**/*"
+- "**/markdown.ts"
+- "**/md.ts"
+javascript:
+- packages/@romefrontend/js-*/**/*
+- "**/js/**/*"
+- "**/js.ts"
+- "**/javascript.ts"
+typescript:
+- "**/ts/**/*"
+- "**/typescript.ts"

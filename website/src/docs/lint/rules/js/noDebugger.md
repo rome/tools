@@ -2,11 +2,10 @@
 title: Lint Rule js/noDebugger
 layout: layouts/page.njk
 description: MISSING DOCUMENTATION
-eleventyNavigation: {
-	key: lint-rules/js/noDebugger,
-	parent: lint-rules,
+eleventyNavigation:
+	key: lint-rules/js/noDebugger
+	parent: lint-rules
 	title: js/noDebugger
-}
 ---
 
 # js/noDebugger

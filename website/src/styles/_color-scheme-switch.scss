@@ -1,60 +1,60 @@
 .color-scheme-switch-container {
-  padding: 18px 0;
-  height: 66px;
-  flex-shrink: 0;
-  align-items: center;
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  border-top: 1px solid var(--soft-border-color);
+	padding: 18px 0;
+	height: 66px;
+	flex-shrink: 0;
+	align-items: center;
+	position: relative;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	border-top: 1px solid var(--soft-border-color);
 }
 
 .color-scheme-switch {
-  position: relative;
-  width: 60px;
-  height: 30px;
-  line-height: 16px;
-  background-color: var(--color-scheme-switcher-color);
-  border-radius: 15px;
-  flex-shrink: 0;
-  cursor: pointer;
-  display: flex;
+	position: relative;
+	width: 60px;
+	height: 30px;
+	line-height: 16px;
+	background-color: var(--color-scheme-switcher-color);
+	border-radius: 15px;
+	flex-shrink: 0;
+	cursor: pointer;
+	display: flex;
 
-  svg {
-    pointer-events: none;
-    user-select: none;
+	svg {
+		pointer-events: none;
+		user-select: none;
 
-    &.sun {
-      color: $color-6;
-      margin: 4px 0;
-      margin-left: 2px;
-      width: 22px;
-      height: 22px;
-    }
+		&.sun {
+			color: $color-6;
+			margin: 4px 0;
+			margin-left: 2px;
+			width: 22px;
+			height: 22px;
+		}
 
-    &.moon {
-      width: 16px;
-      height: 16px;
-      color: white;
-      margin: 7px;
-    }
-  }
+		&.moon {
+			width: 16px;
+			height: 16px;
+			color: white;
+			margin: 7px;
+		}
+	}
 
-  .selector {
-    @include transition-timing;
-    transition-property: left;
-    background-color: #fff;
-    position: absolute;
-    left: 3px;
-    top: 3px;
-    bottom: 0;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-  }
+	.selector {
+		@include transition-timing;
+		transition-property: left;
+		background-color: #fff;
+		position: absolute;
+		left: 3px;
+		top: 3px;
+		bottom: 0;
+		border-radius: 50%;
+		width: 24px;
+		height: 24px;
+	}
 }
 
 html[data-theme=dark] .color-scheme-switch .selector {
-  left: 33px;
+	left: 33px;
 }

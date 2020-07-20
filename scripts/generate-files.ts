@@ -3,11 +3,29 @@ import {main as ast} from "./generated-files/ast";
 import {main as lintRules} from "./generated-files/lint-rules";
 import {main as lintRulesDocs} from "./generated-files/lint-rules-docs";
 import {main as sitemap} from "./generated-files/sitemap";
-import {reporter} from "./_utils";
+import {reporter, setForceGenerated} from "./_utils";
 import {escapeMarkup} from "@romefrontend/cli-layout";
+import {parseCLIFlags} from "@romefrontend/cli-flags";
 import child = require("child_process");
 
-export async function main() {
+export async function main(args: Array<string>) {
+	const flags = await parseCLIFlags(
+		reporter,
+		args,
+		{
+			programName: "./rome run scripts/lint-rules-docs",
+			defineFlags(c) {
+				return {
+					force: c.get("force").asBoolean(false),
+				};
+			},
+		},
+	).init();
+
+	if (flags.force) {
+		setForceGenerated(true);
+	}
+
 	reporter.info("Generating files");
 
 	await Promise.all([
