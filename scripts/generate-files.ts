@@ -5,18 +5,22 @@ import {main as lintRulesDocs} from "./generated-files/lint-rules-docs";
 import {main as sitemap} from "./generated-files/sitemap";
 import {reporter, setForceGenerated} from "./_utils";
 import {escapeMarkup} from "@romefrontend/cli-layout";
-import { parseCLIFlags } from "@romefrontend/cli-flags";
+import {parseCLIFlags} from "@romefrontend/cli-flags";
 import child = require("child_process");
 
 export async function main(args: Array<string>) {
-	const flags = await parseCLIFlags(reporter, args, {
-		programName: "./rome run scripts/lint-rules-docs",
-		defineFlags(c) {
-			return {
-				force: c.get("force").asBoolean(false),
-			};
+	const flags = await parseCLIFlags(
+		reporter,
+		args,
+		{
+			programName: "./rome run scripts/lint-rules-docs",
+			defineFlags(c) {
+				return {
+					force: c.get("force").asBoolean(false),
+				};
+			},
 		},
-	}).init();
+	).init();
 
 	if (flags.force) {
 		setForceGenerated(true);

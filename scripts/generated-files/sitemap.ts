@@ -41,7 +41,8 @@ export async function main() {
 					const stats = await lstat(path);
 					if (stats.isFile() && path.hasEndExtension("md")) {
 						const file = await readFileText(path);
-						const titleMatch = file.match(/title:(.*?)\n/) || file.match(/# (.*?)\n/);
+						const titleMatch =
+							file.match(/title:(.*?)\n/) || file.match(/# (.*?)\n/);
 						const title = titleMatch == null ? undefined : titleMatch[1].trim();
 
 						children.push({

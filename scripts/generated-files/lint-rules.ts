@@ -107,12 +107,15 @@ export async function main() {
 	);
 
 	// Extract the description field from the docs frontmatter
-	function getDocRuleDescription(path: AbsoluteFilePath, content: string): string {
+	function getDocRuleDescription(
+		path: AbsoluteFilePath,
+		content: string,
+	): string {
 		const description = content.match(/description:(.*)\n/);
 		if (description) {
 			return description[1].trim();
 		} else {
-			throw new Error(`${path.join()} did not contain a description`)
+			throw new Error(`${path.join()} did not contain a description`);
 		}
 	}
 

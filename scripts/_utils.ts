@@ -42,7 +42,7 @@ export async function modifyGeneratedFile(
 	}>,
 ): Promise<void> {
 	const {lines, hash} = await callback();
-	const trailing = lines.map(line => line.trimRight()).join("\n");
+	const trailing = lines.map((line) => line.trimRight()).join("\n");
 
 	const file = await readGeneratedFile(path, hash || trailing);
 	if (file === undefined) {

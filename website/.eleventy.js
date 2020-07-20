@@ -130,8 +130,8 @@ module.exports = function(eleventyConfig) {
 					content = content.replace(/\t/g, "  ");
 					return grayMatter.engines.yaml.parse(content);
 				},
-			}
-		}
+			},
+		},
 	});
 
 	return {
