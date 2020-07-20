@@ -108,7 +108,6 @@ type TokenFormat = {
 	fontStyle?: FontStyle;
 };
 
-// rome-ignore lint/js/noUnusedVariables
 type Theme = {
 	kind: "default" | "user";
 	tokens: {[type in MarkupTokenType]?: TokenFormat};

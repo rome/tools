@@ -141,7 +141,7 @@ export default class Scope {
 		return scope;
 	}
 
-	injectEvaluate(node: undefined | AnyNode, parent: AnyNode = MOCK_PARENT): void {
+	injectEvaluate(node: undefined | AnyNode, parent: AnyNode): void {
 		if (node === undefined) {
 			return;
 		}

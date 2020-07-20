@@ -5,10 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat} from "@romefrontend/formatter";
-import {AnyComment} from "@romefrontend/ast";
+import {Token} from "@romefrontend/formatter";
 
-export default function CommentBlock(builder: Builder, node: AnyComment): Token {
-	// TODO to review this part
-	return concat(["<!-- ", node.value, " -->"]);
+// Printing of comments is handled in packages/@romefrontend/formatter/builders/comments.ts
+export default function CommentBlock(): Token {
+	throw new Error("Unexpected comment printing");
 }

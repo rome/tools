@@ -2,7 +2,10 @@ import {AnyNode} from "@romefrontend/ast";
 import {Path, Scope, createHook} from "@romefrontend/compiler";
 import {getBindingIdentifiers} from "@romefrontend/js-ast-utils";
 import {Dict} from "@romefrontend/typescript-helpers";
-import {ArgumentsBinding} from "@romefrontend/compiler/scope/bindings";
+import {
+	ArgumentsBinding,
+	TypeBinding,
+} from "@romefrontend/compiler/scope/bindings";
 import {descriptions} from "@romefrontend/diagnostics";
 import {HookCallReturn} from "@romefrontend/compiler/api/createHook";
 
@@ -93,6 +96,11 @@ export default {
 				}
 
 				if (binding.isExported) {
+					continue;
+				}
+
+				// Type parameter of a mapped type is always used as it's a property key
+				if (binding instanceof TypeBinding && binding.typeKind === "mapped type") {
 					continue;
 				}
 

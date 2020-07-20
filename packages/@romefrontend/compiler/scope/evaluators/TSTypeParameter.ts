@@ -21,7 +21,7 @@ export default createScopeEvaluator({
 					scope,
 				},
 				node,
-				"parameter",
+				parent.type === "TSMappedType" ? "mapped type" : "parameter",
 			),
 		);
 	},

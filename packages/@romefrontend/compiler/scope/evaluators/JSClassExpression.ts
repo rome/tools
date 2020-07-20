@@ -14,7 +14,7 @@ export default createScopeEvaluator({
 		node =
 			node.type === "JSClassExpression" ? node : jsClassDeclaration.assert(node);
 		const newScope = scope.fork("class", node);
-		newScope.injectEvaluate(node.meta.typeParameters);
+		newScope.injectEvaluate(node.meta.typeParameters, node);
 		return newScope;
 	},
 });

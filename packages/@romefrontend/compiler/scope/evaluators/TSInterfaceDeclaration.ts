@@ -29,7 +29,7 @@ export default createScopeEvaluator({
 	enter(node: AnyNode, parent: AnyNode, scope: Scope) {
 		node = tsInterfaceDeclaration.assert(node);
 		const newScope = scope.fork("type-generic", node);
-		newScope.injectEvaluate(node.typeParameters);
+		newScope.injectEvaluate(node.typeParameters, node);
 		return newScope;
 	},
 });

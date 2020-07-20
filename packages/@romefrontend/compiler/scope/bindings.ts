@@ -12,11 +12,23 @@ type BindingOpts = {
 	scope: Scope;
 	node: AnyNode;
 	name: string;
-	kind?: string;
+	kind?: BindingKind;
 };
 
+export type BindingKind =
+	| "let"
+	| "const"
+	| "var"
+	| "type"
+	| "class"
+	| "import"
+	| "arguments"
+	| "function"
+	| "catch"
+	| "parameter";
+
 export class Binding {
-	constructor(opts: BindingOpts, defaultKind: string = "variable") {
+	constructor(opts: BindingOpts, defaultKind: BindingKind) {
 		this.isExported = false;
 		this.scope = opts.scope;
 		this.name = opts.name;
@@ -25,7 +37,7 @@ export class Binding {
 	}
 
 	name: string;
-	kind: string;
+	kind: BindingKind;
 	scope: Scope;
 	node: AnyNode;
 	isExported: boolean;
@@ -52,18 +64,26 @@ export class ConstBinding extends Binding {
 	constructor(
 		opts: BindingOpts,
 		value: undefined | AnyNode,
-		kind: string = "constant",
+		defaultKind: BindingKind = "const",
 	) {
-		super(opts, kind);
+		super(opts, defaultKind);
 		this.value = value;
 	}
 
 	value: undefined | AnyNode;
 }
 
-export class LetBinding extends Binding {}
+export class LetBinding extends Binding {
+	constructor(opts: BindingOpts) {
+		super(opts, "let");
+	}
+}
 
-export class VarBinding extends Binding {}
+export class VarBinding extends Binding {
+	constructor(opts: BindingOpts) {
+		super(opts, "var");
+	}
+}
 
 export class ImportBinding extends Binding {
 	constructor(opts: BindingOpts, meta: ImportBindingMeta) {
@@ -93,7 +113,8 @@ export type TypeBindingKind =
 	| "alias"
 	| "parameter"
 	| "enum"
-	| "parameter";
+	| "parameter"
+	| "mapped type";
 
 export class TypeBinding extends ConstBinding {
 	constructor(

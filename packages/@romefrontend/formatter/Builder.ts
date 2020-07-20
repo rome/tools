@@ -5,22 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, AnyNode, AnyRoot} from "@romefrontend/ast";
+import {AnyComment, AnyNode} from "@romefrontend/ast";
 import {
 	isTypeExpressionWrapperNode,
 	isTypeNode,
 } from "@romefrontend/js-ast-utils";
 import CommentsConsumer from "@romefrontend/js-parser/CommentsConsumer";
 import {
-	printComment,
-	printLeadingComment,
-	printTrailingComment,
+	tokenizeComment,
+	tokenizeLeadingComment,
+	tokenizeTrailingComment,
 } from "./builders/comments";
 import builders from "./builders/index";
 import * as n from "./node/index";
 import {Token, Tokens, concat, hardline, indent, join, mark} from "./tokens";
 import {ob1Get1} from "@romefrontend/ob1";
 import {isRoot} from "@romefrontend/ast-utils";
+import {DiagnosticLanguage} from "@romefrontend/diagnostics";
+import {inferDiagnosticLanguageFromRootAST} from "@romefrontend/cli-diagnostics";
 
 export type BuilderMethod<T extends AnyNode = AnyNode> = (
 	builder: Builder,
@@ -42,14 +44,24 @@ export default class Builder {
 		this.comments = new CommentsConsumer(comments);
 		this.printedComments = new Set();
 		this.printStack = [];
-		this.rootType = undefined;
+		this.language = undefined;
 	}
 
-	rootType: undefined | AnyRoot["type"];
+	language: undefined | DiagnosticLanguage;
 	options: BuilderOptions;
 	comments: CommentsConsumer;
 	printedComments: Set<string>;
 	printStack: Array<AnyNode>;
+
+	getLanguage(): DiagnosticLanguage {
+		const {language} = this;
+		if (language === undefined) {
+			throw new Error(
+				"This operation needs to know the root language but none was found",
+			);
+		}
+		return language;
+	}
 
 	tokenize(node: undefined | AnyNode, parent: AnyNode): Token {
 		if (node === undefined) {
@@ -71,12 +83,12 @@ export default class Builder {
 			);
 		}
 
-		const oldRootType = this.rootType;
+		const oldRootType = this.language;
 		let changedRootType = false;
 
 		if (isRoot(node)) {
 			changedRootType = true;
-			this.rootType = node.type;
+			this.language = inferDiagnosticLanguageFromRootAST(node);
 		}
 		this.printStack.push(node);
 
@@ -91,7 +103,9 @@ export default class Builder {
 			for (let i = leadingComments.length - 1; i >= 0; i--) {
 				const comment = leadingComments[i];
 				this.printedComments.add(comment.id);
-				tokens.unshift(printLeadingComment(comment, next, this.rootType));
+				tokens.unshift(
+					tokenizeLeadingComment(comment, next, this.getLanguage()),
+				);
 				next = comment;
 			}
 		}
@@ -102,9 +116,6 @@ export default class Builder {
 		const needsParens = n.needsParens(node, parent, this.printStack);
 
 		this.printStack.pop();
-		if (changedRootType) {
-			this.rootType = oldRootType;
-		}
 
 		if (printedNode !== "") {
 			if (this.options.sourceMaps && node.loc !== undefined) {
@@ -129,9 +140,15 @@ export default class Builder {
 
 			for (const comment of trailingComments) {
 				this.printedComments.add(comment.id);
-				tokens.push(printTrailingComment(comment, previous, this.rootType));
+				tokens.push(
+					tokenizeTrailingComment(comment, previous, this.getLanguage()),
+				);
 				previous = comment;
 			}
+		}
+
+		if (changedRootType) {
+			this.language = oldRootType;
 		}
 
 		return concat(tokens);
@@ -181,7 +198,7 @@ export default class Builder {
 
 		for (const comment of innerComments) {
 			this.printedComments.add(comment.id);
-			tokens.push(printComment(comment, this.rootType));
+			tokens.push(tokenizeComment(comment, this.getLanguage()));
 		}
 
 		return shouldIndent

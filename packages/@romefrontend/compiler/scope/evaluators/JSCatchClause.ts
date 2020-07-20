@@ -18,14 +18,12 @@ export default createScopeEvaluator({
 		if (node.param !== undefined) {
 			for (const id of getBindingIdentifiers(node.param)) {
 				newScope.addBinding(
-					new LetBinding(
-						{
-							node: id,
-							name: id.name,
-							scope: newScope,
-						},
-						"catch",
-					),
+					new LetBinding({
+						node: id,
+						name: id.name,
+						scope: newScope,
+						kind: "catch",
+					}),
 				);
 			}
 		}
