@@ -51,7 +51,7 @@ export async function main(
 
 	// Write builder
 	await writeFile(
-		PACKAGES.appendList("formatter", "builder", `${joined}.ts`),
+		PACKAGES.appendList("formatter", "builders", `${joined}.ts`),
 		dedent`
 			import {${nodeType}} from "@romefrontend/ast";
 			import {Builder, Token} from "@romefrontend/formatter";
@@ -65,7 +65,12 @@ export async function main(
 	// Write analysis
 	if (language === "js") {
 		await writeFile(
-			PACKAGES.appendList("js-analysis", category, `${nodeType}.ts`),
+			PACKAGES.appendList(
+				"js-analysis",
+				"evaluators",
+				category,
+				`${nodeType}.ts`,
+			),
 			dedent`
 				import {AnyNode, ${nodeType}, ${builderName}} from "@romefrontend/ast";
 
