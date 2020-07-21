@@ -57,6 +57,7 @@
 	&.toc {
 		z-index: 0;
 		flex-grow: 1;
+		padding-top: 64px;
 
 		@include desktop-only() {
 			padding-top: 0;
@@ -210,11 +211,11 @@
 	left: $unit * 2 !important;
 }
 
-#docsearch-container {
+.docsearch-container {
 	position: relative;
 	border-bottom: 1px solid var(--soft-border-color);
 
-	#search-icon {
+	.search-icon {
 		z-index: 99999;
 		position: absolute;
 		left: 20px;
@@ -224,7 +225,7 @@
 		pointer-events: none;
 	}
 
-	input#docsearch {
+	input.docsearch {
 		padding: 24px 32px;
 		padding-left: 42px;
 		border: 0;
@@ -232,6 +233,7 @@
 		background: rgba(0, 0, 0, 0.05);
 		font-size: 1.1em;
 		color: inherit;
+		width: 100%;
 
 		&::placeholder {
 			color: inherit;
@@ -250,6 +252,18 @@
 			&:focus {
 				box-shadow: inset 2px 2px var(--primary-color), inset -2px -2px var(--primary-color);
 			}
+		}
+	}
+
+	&.mobile{
+		@include desktop-only(){
+			display: none;
+		}
+	}
+
+	&.desktop{
+		@include mobile-only(){
+			display: none;
 		}
 	}
 }

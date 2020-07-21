@@ -57,7 +57,7 @@
 				<div class="stretch"></div>
 
 				<a href="#" class="mobile-handle mobile-handle-toc">
-					{% include "./svg/mobile-toc-handle.njk" %}
+					{% include "./svg/search-icon.njk" %}
 				</a>
 
 				<a href="#" class="mobile-handle mobile-handle-nav">
@@ -75,9 +75,9 @@
 						</a>
 					</div>
 
-					<div id="docsearch-container">
+					<div class="docsearch-container desktop">
 						{% include "./svg/search-icon.njk" %}
-						<input type="text" id="docsearch" placeholder="Search" />
+						<input type="text" id="docsearch-desktop" class="docsearch" placeholder="Search" />
 					</div>
 
 					<div class="menu-wrapper">
@@ -188,6 +188,10 @@
 			{% if tocHTML != "" %}
 				<div class="sidebar-container">
 					<div class="sidebar toc">
+						<div class="docsearch-container mobile">
+							{% include "./svg/search-icon.njk" %}
+							<input type="text" id="docsearch-mobile" class="docsearch" placeholder="Search" />
+						</div>
 						<nav aria-labelledby="table-of-content" class="table-of-contents">
 							<h2 id="table-of-content">Table of Contents</h2>
 							<div class="toc-container">
@@ -260,7 +264,7 @@
 			docsearch({
 				apiKey: '66db1ad366d458c6acded7cbc23dba7e',
 				indexName: 'romefrontend',
-				inputSelector: '#docsearch',
+				inputSelector: window.innerWidth > 768 ? '#docsearch-desktop' : "#docsearch-mobile",
 				debug: false // Set debug to true if you want to inspect the dropdown
 			});
 		</script>
