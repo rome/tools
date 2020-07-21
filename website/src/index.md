@@ -6,13 +6,13 @@ layout: layouts/homepage.njk
 # The Rome Frontend Toolchain
 -->
 
-**Rome** is a linter, compiler, bundler, and [more](https://romefrontend.dev/#development-status) for JavaScript, TypeScript, HTML, Markdown, and CSS. Read more about our language support [here](https://romefrontend.dev/docs/language-support).
+**Rome** is a linter, compiler, bundler, and [more](https://romefrontend.dev/#development-status) for JavaScript, TypeScript, HTML, Markdown, and CSS. Read more about our [language support](https://romefrontend.dev/docs/language-support).
 
 **Rome** unifies functionality that has previously been completely separate tools. Most frontend tooling have a significant overlap in responsibilities and implementation. There is value in these being a single tool. Building upon a shared base allows us to provide a cohesive experience for processing code, displaying errors, parallelizing work, caching, and configuration.
 
 **Rome** has been built from scratch without the usage of existing libraries. **Rome** contains no third-party library dependencies.
 
-**Rome** has strong conventions and aims to have minimal configuration. Read more about our project philosophy [here](https://romefrontend.dev/about#philosophy).
+**Rome** has strong conventions and aims to have minimal configuration. Read more about our [project philosophy](https://romefrontend.dev/about#philosophy).
 
 **Rome** is maintained by a [team of volunteers](https://romefrontend.dev/contributing/team). **Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io) and [Yarn](https://yarnpkg.com).
 
