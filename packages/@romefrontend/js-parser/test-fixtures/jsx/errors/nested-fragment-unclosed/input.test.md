@@ -30,51 +30,6 @@ JSRoot {
 			line: 1
 		}
 	}
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse/js"}]
-			location: Object {
-				filename: "input.jsx"
-				mtime: undefined
-				sourceText: undefined
-				end: Object {
-					column: 7
-					index: 7
-					line: 1
-				}
-				start: Object {
-					column: 7
-					index: 7
-					line: 1
-				}
-			}
-			description: Object {
-				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unclosed JSX element"}
-				advice: Array [
-					log {
-						category: "info"
-						text: "Originated from this opening tag"
-					}
-					frame {
-						location: Object {
-							filename: "input.jsx"
-							end: Object {
-								column: 2
-								index: 2
-								line: 1
-							}
-							start: Object {
-								column: 0
-								index: 0
-								line: 1
-							}
-						}
-					}
-				]
-			}
-		}
-	]
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
@@ -117,6 +72,57 @@ JSRoot {
 							start: Object {
 								column: 2
 								index: 2
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse/js"}]
+			location: Object {
+				filename: "input.jsx"
+				mtime: undefined
+				sourceText: undefined
+				end: Object {
+					column: 7
+					index: 7
+					line: 1
+				}
+				start: Object {
+					column: 7
+					index: 7
+					line: 1
+				}
+			}
+			description: Object {
+				category: "parse/js"
+				message: SAFE_MARKUP {
+					value: "Unclosed JSX element"
+					toString: Function toString
+				}
+				advice: Array [
+					log {
+						category: "info"
+						text: SAFE_MARKUP {
+							value: "Originated from this opening tag"
+							toString: Function toString
+						}
+					}
+					frame {
+						location: Object {
+							filename: "input.jsx"
+							end: Object {
+								column: 2
+								index: 2
+								line: 1
+							}
+							start: Object {
+								column: 0
+								index: 0
 								line: 1
 							}
 						}

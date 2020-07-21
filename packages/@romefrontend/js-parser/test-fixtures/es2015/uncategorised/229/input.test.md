@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected keyword super"}
+				message: SAFE_MARKUP {
+					value: "Unexpected keyword super"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

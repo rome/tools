@@ -97,7 +97,7 @@ export const DEFAULT_PRINTER_FLAGS: DiagnosticsPrinterFlags = {
 	showAllDiagnostics: true,
 	fieri: false,
 	verboseDiagnostics: false,
-	maxDiagnostics: 100,
+	maxDiagnostics: 20,
 };
 
 // Dependency that may not be included in the output diagnostic but whose changes may effect the validity of this one
@@ -224,7 +224,7 @@ export default class DiagnosticsPrinter extends Error {
 
 		// Match against the supplied grep pattern
 		let ignored =
-			joinMarkupLines(markupToPlainText(diag.description.message.value)).toLowerCase().includes(
+			joinMarkupLines(markupToPlainText(diag.description.message)).toLowerCase().includes(
 				grep,
 			) === false;
 		if (inverseGrep) {
@@ -430,6 +430,10 @@ export default class DiagnosticsPrinter extends Error {
 		try {
 			await callback();
 		} catch (err) {
+			if (!this.options.wrapErrors) {
+				throw err;
+			}
+
 			// Sometimes we'll run into issues displaying diagnostics
 			// We can safely catch them here since the presence of diagnostics is considered a critical failure anyway
 			// Display diagnostics is idempotent meaning we can bail at any point
@@ -508,7 +512,7 @@ export default class DiagnosticsPrinter extends Error {
 				}
 
 				let log = `::error ${parts.join(",")}::${joinMarkupLines(
-					markupToPlainText(message.value),
+					markupToPlainText(message),
 				)}`;
 				this.reporter.logAllRaw(log);
 				break;
@@ -571,13 +575,13 @@ export default class DiagnosticsPrinter extends Error {
 				outdatedAdvice.push({
 					type: "log",
 					category: "warn",
-					text: "This file has been changed since the diagnostic was produced and may be out of date",
+					text: markup`This file has been changed since the diagnostic was produced and may be out of date`,
 				});
 			} else {
 				outdatedAdvice.push({
 					type: "log",
 					category: "warn",
-					text: "This diagnostic may be out of date as it relies on the following files that have been changed since the diagnostic was generated",
+					text: markup`This diagnostic may be out of date as it relies on the following files that have been changed since the diagnostic was generated`,
 				});
 
 				outdatedAdvice.push({
@@ -630,13 +634,13 @@ export default class DiagnosticsPrinter extends Error {
 
 				if (origins !== undefined && origins.length > 0) {
 					reporter.br();
-					reporter.info("Why are you seeing this diagnostic?");
+					reporter.info(markup`Why are you seeing this diagnostic?`);
 					reporter.br();
 					reporter.list(
 						origins.map((origin) => {
-							let res = `<emphasis>${origin.category}</emphasis>`;
+							let res = markup`<emphasis>${origin.category}</emphasis>`;
 							if (origin.message !== undefined) {
-								res += `: ${origin.message}`;
+								res = markup`${res}: ${origin.message}`;
 							}
 							return res;
 						}),
@@ -706,7 +710,7 @@ export default class DiagnosticsPrinter extends Error {
 
 				if (this.hasTruncatedDiagnostics) {
 					reporter.warn(
-						"Some diagnostics have been truncated. Use the --verbose-diagnostics flag to disable truncation.",
+						markup`Some diagnostics have been truncated. Use the --verbose-diagnostics flag to disable truncation.`,
 					);
 				}
 
@@ -730,7 +734,7 @@ export default class DiagnosticsPrinter extends Error {
 				if (isError) {
 					this.footerError();
 				} else {
-					reporter.success("No known problems!");
+					reporter.success(markup`No known problems!`);
 				}
 			},
 		);
@@ -764,10 +768,12 @@ export default class DiagnosticsPrinter extends Error {
 		const {reporter, filteredCount} = this;
 
 		const displayableProblems = this.getDisplayedProblemsCount();
-		let str = `Found <number emphasis>${displayableProblems}</number> <grammarNumber plural="problems" singular="problem">${displayableProblems}</grammarNumber>`;
+		let str = markup`Found <emphasis>${displayableProblems}</emphasis> <grammarNumber plural="problems" singular="problem">${String(
+			displayableProblems,
+		)}</grammarNumber>`;
 
 		if (filteredCount > 0) {
-			str += `<dim> (${filteredCount} filtered)</dim>`;
+			str = markup`${str} <dim>(${filteredCount} filtered)</dim>`;
 		}
 
 		reporter.error(str);
@@ -775,8 +781,7 @@ export default class DiagnosticsPrinter extends Error {
 		if (this.truncatedCount > 0) {
 			const {maxDiagnostics} = this.flags;
 			reporter.warn(
-				`Only <number>${maxDiagnostics}</number> errors shown, add the <emphasis>--show-all-diagnostics</emphasis> flag to view the remaining <number>${displayableProblems -
-				maxDiagnostics}</number> errors`,
+				markup`Only <emphasis>${maxDiagnostics}</emphasis> errors shown. Add the <code>--show-all-diagnostics</code> flag or specify <code>--max-diagnostics ${"<num>"}</code> to view the remaining ${displayableProblems - maxDiagnostics} errors`,
 			);
 		}
 	}

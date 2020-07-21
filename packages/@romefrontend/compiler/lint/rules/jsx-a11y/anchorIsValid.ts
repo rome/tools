@@ -6,6 +6,7 @@ import {
 	isJSXElement,
 } from "@romefrontend/js-ast-utils";
 import {JSXAttribute} from "@romefrontend/ast";
+import {markup} from "@romefrontend/cli-layout";
 
 function hrefValue(attr: JSXAttribute | undefined, value: string): boolean {
 	if (attr === undefined) {
@@ -45,7 +46,7 @@ export default {
 				path.context.addNodeDiagnostic(
 					node,
 					descriptions.LINT.JSX_A11Y_ANCHOR_IS_VALID(
-						"Provide a <emphasis>href</emphasis> attribute for the <emphasis>a</emphasis> element.",
+						markup`Provide a <emphasis>href</emphasis> attribute for the <emphasis>a</emphasis> element.`,
 					),
 				);
 			}
@@ -55,7 +56,7 @@ export default {
 					path.context.addNodeDiagnostic(
 						node,
 						descriptions.LINT.JSX_A11Y_ANCHOR_IS_VALID(
-							"Provide a valid <emphasis>href</emphasis> attribute for the <emphasis>a</emphasis> element.",
+							markup`Provide a valid <emphasis>href</emphasis> attribute for the <emphasis>a</emphasis> element.`,
 						),
 					);
 				}
@@ -69,7 +70,7 @@ export default {
 				path.context.addNodeDiagnostic(
 					node,
 					descriptions.LINT.JSX_A11Y_ANCHOR_IS_VALID(
-						"Use a <emphasis>button</emphasis> element instead of an <emphasis>a</emphasis> element.",
+						markup`Use a <emphasis>button</emphasis> element instead of an <emphasis>a</emphasis> element.`,
 					),
 				);
 			}

@@ -12,6 +12,7 @@ import {
 } from "@romefrontend/diagnostics";
 import Consumer from "./Consumer";
 import {UnknownFilePath} from "@romefrontend/path";
+import {Markup} from "@romefrontend/cli-layout";
 
 export type ConsumeComments = Array<string>;
 
@@ -36,7 +37,7 @@ export type ConsumeContext = {
 };
 
 export type ConsumePropertyMetadata = {
-	description?: string;
+	description?: Markup;
 	inputName?: string;
 	getDiagnosticLocation?: (
 		target: ConsumeSourceLocationRequestTarget,

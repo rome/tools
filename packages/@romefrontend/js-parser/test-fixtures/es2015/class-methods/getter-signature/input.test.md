@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "getter should have no parameters"}
+				message: SAFE_MARKUP {
+					value: "getter should have no parameters"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

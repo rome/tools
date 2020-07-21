@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Lexical declaration cannot appear in a single-statement context"}
+				message: SAFE_MARKUP {
+					value: "Lexical declaration cannot appear in a single-statement context"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

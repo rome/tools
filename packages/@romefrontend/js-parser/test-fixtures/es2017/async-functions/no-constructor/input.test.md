@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Constructor cannot be async"}
+				message: SAFE_MARKUP {
+					value: "Constructor cannot be async"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

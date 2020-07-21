@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "JSX attribute value should be either an expression or a quoted JSX text"}
+				message: SAFE_MARKUP {
+					value: "JSX attribute value should be either an expression or a quoted JSX text"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.jsx"

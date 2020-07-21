@@ -8,10 +8,11 @@
 import {commandCategories} from "../../common/commands";
 import {createLocalCommand} from "../commands";
 import ClientRequest from "../ClientRequest";
+import {markup} from "@romefrontend/cli-layout";
 
 export default createLocalCommand({
 	category: commandCategories.PROCESS_MANAGEMENT,
-	description: "TODO",
+	description: markup`TODO`,
 	usage: "",
 	examples: [],
 	hidden: true,

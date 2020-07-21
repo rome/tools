@@ -6,7 +6,6 @@
  */
 
 import os = require("os");
-import {escapeMarkup} from "@romefrontend/cli-layout";
 
 type FilePathOptions<Super> = {
 	filename?: string;
@@ -66,10 +65,6 @@ class BaseFilePath<Super extends UnknownFilePath> {
 	// Actually meant to be CUSTOM_PRETTY_FORMAT from "@romefrontend/pretty-format" but it causes a module cycle
 	[Symbol.for("custom-pretty-format")](): string {
 		return `Path<${this.type}> ${this.join()}`;
-	}
-
-	toMarkup(): string {
-		return `<filelink target="${escapeMarkup(this.join())}" />`;
 	}
 
 	getParsed(): ParsedPath {
@@ -813,6 +808,8 @@ function createUnknownFilePathFromSegments(parsed: ParsedPath): UnknownFilePath 
 
 	if (path.isAbsolute()) {
 		return path.assertAbsolute();
+	} else if (path.isURL()) {
+		return path.assertURL();
 	} else {
 		return path.assertRelative();
 	}

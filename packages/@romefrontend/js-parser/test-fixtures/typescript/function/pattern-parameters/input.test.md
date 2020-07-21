@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "A binding pattern parameter cannot be optional in an implementation signature."}
+				message: SAFE_MARKUP {
+					value: "A binding pattern parameter cannot be optional in an implementation signature."
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.ts"

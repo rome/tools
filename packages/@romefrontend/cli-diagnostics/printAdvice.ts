@@ -27,7 +27,10 @@ import {ToLines, toLines} from "./utils";
 import buildPatchCodeFrame from "./buildPatchCodeFrame";
 import buildCodeFrame from "./buildCodeFrame";
 import {
-	escapeMarkup,
+	Markup,
+	isEmptyMarkup,
+	concatMarkup,
+	markup,
 	markupTag,
 	normalizeMarkup,
 } from "@romefrontend/cli-layout";
@@ -131,7 +134,7 @@ function printGroup(
 
 	let truncated = false;
 
-	reporter.logAll(`<emphasis>${item.title}</emphasis>`);
+	reporter.logAll(markup`<emphasis>${item.title}</emphasis>`);
 	reporter.br();
 	reporter.indent(() => {
 		({truncated} = printAdvice(item.advice, opts));
@@ -217,7 +220,7 @@ function generateDiffHint(diffs: Diffs): undefined | DiagnosticAdviceItem {
 		return {
 			type: "log",
 			category: "info",
-			text: "Only difference is leading and trailing whitespace",
+			text: markup`Only difference is leading and trailing whitespace`,
 		};
 	}
 
@@ -226,7 +229,7 @@ function generateDiffHint(diffs: Diffs): undefined | DiagnosticAdviceItem {
 		return {
 			type: "log",
 			category: "info",
-			text: "Identical except the received uses CRLF newlines, while the expected does not",
+			text: markup`Identical except the received uses CRLF newlines, while the expected does not`,
 		};
 	}
 
@@ -235,7 +238,7 @@ function generateDiffHint(diffs: Diffs): undefined | DiagnosticAdviceItem {
 		return {
 			type: "log",
 			category: "info",
-			text: "Identical except the expected uses CRLF newlines, while the received does not",
+			text: markup`Identical except the expected uses CRLF newlines, while the received does not`,
 		};
 	}
 
@@ -250,7 +253,7 @@ function printDiff(
 		item,
 		opts.flags.verboseDiagnostics !== false,
 	);
-	if (frame === "") {
+	if (isEmptyMarkup(frame)) {
 		return DID_NOT_PRINT;
 	}
 
@@ -293,7 +296,7 @@ function printList(
 
 function printTruncated(reporter: Reporter, chars: number) {
 	reporter.logAll(
-		`<dim><number>${chars}</number> more characters truncated</dim>`,
+		markup`<dim>${chars} more characters truncated</dim>`,
 	);
 }
 
@@ -321,7 +324,7 @@ function printCode(
 			highlight: opts.printer.shouldHighlight(),
 		}),
 	});
-	if (frame.trim() === "") {
+	if (isEmptyMarkup(frame)) {
 		return DID_NOT_PRINT;
 	}
 
@@ -346,16 +349,7 @@ function printFrame(
 	let {sourceText} = item.location;
 	const path = opts.printer.createFilePath(filename);
 
-	let cleanMarker: string = "";
-	if (marker !== undefined) {
-		cleanMarker = markupTag("emphasis", cleanMessage(marker));
-	}
-
-	let lines: ToLines = {
-		length: 0,
-		raw: [],
-		highlighted: [],
-	};
+	let lines: ToLines = [];
 	if (sourceText !== undefined) {
 		lines = toLines({
 			path,
@@ -377,11 +371,7 @@ function printFrame(
 		path.isAbsolute() &&
 		opts.missingFileSources.has(path.assertAbsolute())
 	) {
-		lines = {
-			length: 1,
-			raw: ["File does not exist"],
-			highlighted: ["<dim>File does not exist</dim>"],
-		};
+		lines = [["File does not exist", markup`<dim>File does not exist</dim>`]];
 	}
 
 	if (sourceText === undefined) {
@@ -394,9 +384,9 @@ function printFrame(
 		lines,
 		start,
 		end,
-		markerMessage: cleanMarker,
+		markerMessage: marker,
 	});
-	if (frame.trim() === "") {
+	if (isEmptyMarkup(frame)) {
 		return DID_NOT_PRINT;
 	}
 
@@ -420,7 +410,7 @@ function printStacktrace(
 	if (!isFirstPart) {
 		const {title} = item;
 		if (title !== undefined) {
-			opts.reporter.info(escapeMarkup(title));
+			opts.reporter.info(markup`${title}`);
 			opts.reporter.br(true);
 		}
 	}
@@ -440,28 +430,28 @@ function printStacktrace(
 				sourceText: code,
 			} = frame;
 
-			const logParts = [];
+			const logParts: Array<Markup> = [];
 
 			// Add prefix
 			if (prefix !== undefined) {
-				logParts.push(markupTag("dim", escapeMarkup(prefix)));
+				logParts.push(markupTag("dim", markup`${prefix}`));
 			}
 
 			// Build path
-			const objParts = [];
+			const objParts: Array<Markup> = [];
 			if (object !== undefined) {
-				objParts.push(markupTag("highlight", escapeMarkup(object), {i: 0}));
+				objParts.push(markupTag("highlight", markup`${object}`, {i: 0}));
 			}
 			if (property !== undefined) {
-				objParts.push(markupTag("highlight", escapeMarkup(property), {i: 1}));
+				objParts.push(markupTag("highlight", markup`${property}`, {i: 1}));
 			}
 			if (objParts.length > 0) {
-				logParts.push(objParts.join("."));
+				logParts.push(concatMarkup(objParts, markup`.`));
 			}
 
 			// Add suffix
 			if (suffix !== undefined) {
-				logParts.push(markupTag("success", escapeMarkup(suffix)));
+				logParts.push(markupTag("success", markup`${suffix}`));
 			}
 
 			// Add source
@@ -479,11 +469,11 @@ function printStacktrace(
 				if (logParts.length === 0) {
 					logParts.push(header);
 				} else {
-					logParts.push(`<dim>(${header})</dim>`);
+					logParts.push(markup`<dim>(${header})</dim>`);
 				}
 			}
 
-			reporter.logAll(logParts.join(" "));
+			reporter.logAll(concatMarkup(logParts, markup` `));
 
 			if (
 				shownCodeFrames < 2 &&
@@ -538,7 +528,7 @@ function printLog(
 
 	let truncated = false;
 	let truncatedLength = 0;
-	if (text.length > MAX_LOG_LENGTH) {
+	if (text.value.length > MAX_LOG_LENGTH) {
 		({truncated, text, truncatedLength} = normalizeMarkup(
 			text,
 			{},
@@ -581,12 +571,4 @@ function printLog(
 		printed: !item.compact,
 		truncated,
 	};
-}
-
-function cleanMessage(msg: string): string {
-	msg = msg.trim();
-	if (msg.endsWith(".")) {
-		msg = msg.slice(0, -1);
-	}
-	return msg;
 }

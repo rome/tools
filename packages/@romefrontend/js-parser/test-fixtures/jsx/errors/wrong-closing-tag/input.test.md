@@ -50,11 +50,17 @@ JSRoot {
 			}
 			description: Object {
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Expected a corresponding JSX closing tag for <emphasis>Foo</emphasis>"}
+				message: SAFE_MARKUP {
+					value: "Expected a corresponding JSX closing tag for <emphasis>Foo</emphasis>"
+					toString: Function toString
+				}
 				advice: Array [
 					log {
 						category: "info"
-						text: "Originated from opening tag of <emphasis>Foo</emphasis>"
+						text: SAFE_MARKUP {
+							value: "Originated from opening tag of <emphasis>Foo</emphasis>"
+							toString: Function toString
+						}
 					}
 					frame {
 						location: Object {

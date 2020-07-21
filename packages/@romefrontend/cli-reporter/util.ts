@@ -8,6 +8,7 @@
 import {ReporterProgress} from "./types";
 import Reporter from "./Reporter";
 import readline = require("readline");
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 export function mergeProgresses(
 	progresses: Array<ReporterProgress>,
@@ -32,19 +33,21 @@ export function mergeProgresses(
 				progress.setTotal(total, approximate);
 			}
 		},
-		setText: (text: string) => {
+		setText: (text: Markup) => {
 			for (const progress of progresses) {
 				progress.setText(text);
 			}
 		},
-		pushText: (text: string) => {
+		pushText: (text: Markup) => {
+			let id = "";
 			for (const progress of progresses) {
-				progress.pushText(text);
+				progress.pushText(text, id);
 			}
+			return id;
 		},
-		popText: (text: string) => {
+		popText: (id: string) => {
 			for (const progress of progresses) {
-				progress.popText(text);
+				progress.popText(id);
 			}
 		},
 		setApproximateETA: (duration: number) => {
@@ -96,7 +99,7 @@ export function onKeypress(
 			case "c": {
 				if (key.ctrl) {
 					reporter.br(true);
-					reporter.warn("Cancelled by user");
+					reporter.warn(markup`Cancelled by user`);
 					process.exit(1);
 				}
 				return;
@@ -104,7 +107,7 @@ export function onKeypress(
 
 			case "escape": {
 				reporter.br(true);
-				reporter.warn("Cancelled by user");
+				reporter.warn(markup`Cancelled by user`);
 				process.exit(1);
 				return;
 			}

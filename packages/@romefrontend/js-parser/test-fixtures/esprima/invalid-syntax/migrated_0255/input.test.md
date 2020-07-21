@@ -30,51 +30,6 @@ JSRoot {
 			line: 1
 		}
 	}
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse/js"}]
-			location: Object {
-				filename: "input.js"
-				mtime: undefined
-				sourceText: undefined
-				end: Object {
-					column: 0
-					index: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					index: 0
-					line: 1
-				}
-			}
-			description: Object {
-				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unclosed block"}
-				advice: Array [
-					log {
-						category: "info"
-						text: "We expected to find the closing character <emphasis>}</emphasis> here"
-					}
-					frame {
-						location: Object {
-							filename: "input.js"
-							end: Object {
-								column: 0
-								index: 7
-								line: 2
-							}
-							start: Object {
-								column: 0
-								index: 7
-								line: 2
-							}
-						}
-					}
-				]
-			}
-		}
-	]
 	body: Array [
 		JSBlockStatement {
 			directives: Array []
@@ -123,6 +78,57 @@ JSRoot {
 					}
 				}
 			]
+		}
+	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse/js"}]
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceText: undefined
+				end: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			description: Object {
+				category: "parse/js"
+				message: SAFE_MARKUP {
+					value: "Unclosed block"
+					toString: Function toString
+				}
+				advice: Array [
+					log {
+						category: "info"
+						text: SAFE_MARKUP {
+							value: "We expected to find the closing character <emphasis>}</emphasis> here"
+							toString: Function toString
+						}
+					}
+					frame {
+						location: Object {
+							filename: "input.js"
+							end: Object {
+								column: 0
+								index: 7
+								line: 2
+							}
+							start: Object {
+								column: 0
+								index: 7
+								line: 2
+							}
+						}
+					}
+				]
+			}
 		}
 	]
 }

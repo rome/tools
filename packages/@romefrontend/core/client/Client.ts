@@ -52,7 +52,12 @@ import {
 	markupToHtml,
 	markupToPlainText,
 } from "@romefrontend/cli-layout/format";
-import {escapeMarkup} from "@romefrontend/cli-layout";
+import {
+	Markup,
+	convertToMarkupFromRandomString,
+	concatMarkup,
+	markup,
+} from "@romefrontend/cli-layout";
 
 export function getFilenameTimestamp(): string {
 	return new Date().toISOString().replace(/[^0-9a-zA-Z]/g, "");
@@ -181,7 +186,7 @@ export default class Client {
 	}
 
 	async profile(opts: ClientProfileOptions, callback: ProfileCallback) {
-		this.reporter.info("Starting CPU profile...");
+		this.reporter.info(markup`Starting CPU profile...`);
 		return this._profile(opts, callback);
 	}
 
@@ -273,10 +278,10 @@ export default class Client {
 			}
 
 			// Fetch profiles
-			const progress = this.reporter.progress({title: "Fetching profiles"});
+			const progress = this.reporter.progress({title: markup`Fetching profiles`});
 			progress.setTotal(fetchers.length);
 			for (const [text, callback] of fetchers) {
-				progress.setText(text);
+				progress.setText(markup`${text}`);
 				const profile = await callback();
 				trace.addProfile(text, profile);
 				progress.tick();
@@ -318,21 +323,22 @@ export default class Client {
 		});
 	}
 
-	async generateRageSummary(): Promise<string> {
-		let summary = "";
+	async generateRageSummary(): Promise<Markup> {
+		let summary: Array<Markup> = [];
 
 		function push(name: string, value: unknown) {
 			const formatted =
 				typeof value === "string"
-					? escapeMarkup(value)
+					? markup`${value}`
 					: prettyFormat(
 							value,
 							{
 								compact: true,
-								markup: true,
 							},
 						);
-			summary += `<emphasis>${name}</emphasis>\n<indent>${formatted}</indent>\n\n`;
+			summary.push(
+				markup`<emphasis>${name}</emphasis>\n<indent>${formatted}</indent>\n\n`,
+			);
 		}
 
 		const envVars: Array<string> = [
@@ -391,21 +397,25 @@ export default class Client {
 			}
 		}
 
-		return summary;
+		return concatMarkup(summary);
 	}
 
 	async rage(ragePath: string, profileOpts: ClientProfileOptions) {
 		const {bridge} = this.assertBridgeStatus();
 
-		this.reporter.info("Rage enabled \u{1f620}");
+		this.reporter.info(markup`Rage enabled \u{1f620}`);
 
 		let logsHTML = "";
 		let logsPlain = "";
 		await this.subscribeLogs(
 			true,
 			(chunk) => {
-				logsPlain += joinMarkupLines(markupToPlainText(chunk));
-				logsHTML += joinMarkupLines(markupToHtml(chunk));
+				logsPlain += joinMarkupLines(
+					markupToPlainText(convertToMarkupFromRandomString(chunk)),
+				);
+				logsHTML += joinMarkupLines(
+					markupToHtml(convertToMarkupFromRandomString(chunk)),
+				);
 			},
 		);
 
@@ -465,7 +475,7 @@ export default class Client {
 
 			await writer.finalize();
 			this.reporter.success(
-				`Rage archive written to <emphasis><filelink target="${ragePath}" /></emphasis>`,
+				markup`Rage archive written to <emphasis><filelink target="${ragePath}" /></emphasis>`,
 			);
 		});
 	}
@@ -641,7 +651,7 @@ export default class Client {
 	async forceStartDaemon(): Promise<ServerBridge> {
 		const daemon = await this.startDaemon();
 		if (daemon === undefined) {
-			this.reporter.error("Failed to start daemon");
+			this.reporter.error(markup`Failed to start daemon`);
 			throw new Error("Failed to start daemon");
 		} else {
 			return daemon;
@@ -655,7 +665,7 @@ export default class Client {
 			throw new Error("Already started server");
 		}
 
-		reporter.info("No running daemon found. Starting one...");
+		reporter.info(markup`No running daemon found. Starting one...`);
 
 		let exited = false;
 		let proc: undefined | child.ChildProcess;
@@ -663,7 +673,7 @@ export default class Client {
 		const newDaemon: undefined | ServerBridge = await new Promise((resolve) => {
 			const timeout = setTimeout(
 				() => {
-					reporter.error("Daemon connection timed out");
+					reporter.error(markup`Daemon connection timed out`);
 					cleanup();
 					resolve();
 				},
@@ -676,7 +686,7 @@ export default class Client {
 				resolve(
 					this.tryConnectToExistingDaemon().then((bridge) => {
 						if (bridge !== undefined) {
-							this.reporter.success("Started daemon!");
+							this.reporter.success(markup`Started daemon!`);
 						}
 						return bridge;
 					}),
@@ -719,9 +729,9 @@ export default class Client {
 
 		// as a final precaution kill the server
 		if (exited) {
-			reporter.error("Daemon died while initialising.");
+			reporter.error(markup`Daemon died while initialising.`);
 		} else {
-			reporter.error("Failed to connect. Killing daemon.");
+			reporter.error(markup`Failed to connect. Killing daemon.`);
 		}
 
 		if (proc !== undefined) {
@@ -778,7 +788,7 @@ export default class Client {
 			},
 		);
 		await this.attachBridge({socket, bridge, dedicated: true});
-		this.reporter.success("Connected to daemon");
+		this.reporter.success(markup`Connected to daemon`);
 		return bridge;
 	}
 }

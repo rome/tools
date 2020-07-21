@@ -11,12 +11,12 @@ import stringDiff from "@romefrontend/string-diff";
 import {Position} from "@romefrontend/parser-core";
 import {ob1Get1} from "@romefrontend/ob1";
 import {NEWLINE} from "@romefrontend/js-parser-utils";
-import {escapeMarkup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 type BuildSuggestionAdviceOptions = {
 	minRating?: number;
 	ignoreCase?: boolean;
-	formatItem?: (item: string) => string;
+	formatItem?: (item: string) => Markup;
 };
 
 export function buildSuggestionAdvice(
@@ -31,7 +31,6 @@ export function buildSuggestionAdvice(
 		items,
 		{
 			minRating,
-			formatItem,
 			ignoreCase,
 		},
 	);
@@ -81,12 +80,12 @@ export function buildSuggestionAdvice(
 			advice.push({
 				type: "log",
 				category: "info",
-				text: "Or one of these?",
+				text: markup`Or one of these?`,
 			});
 
 			advice.push({
 				type: "list",
-				list: strings.map((str) => escapeMarkup(str)),
+				list: strings.map((str) => markup`${str}`),
 				truncate: true,
 			});
 		}
@@ -100,7 +99,7 @@ export function buildSuggestionAdvice(
 		advice.push({
 			type: "log",
 			category: "warn",
-			text: "This operation is case sensitive",
+			text: markup`This operation is case sensitive`,
 		});
 	}
 
@@ -132,7 +131,7 @@ export function buildDuplicateLocationAdvice(
 			return {
 				type: "log",
 				category: "warn",
-				text: "Unable to find location",
+				text: markup`Unable to find location`,
 			};
 		} else {
 			return {
@@ -146,7 +145,7 @@ export function buildDuplicateLocationAdvice(
 		{
 			type: "log",
 			category: "info",
-			text: "Defined already here",
+			text: markup`Defined already here`,
 		},
 		...locationAdvice,
 	];
@@ -154,16 +153,18 @@ export function buildDuplicateLocationAdvice(
 
 export function diagnosticLocationToMarkupFilelink(
 	loc: DiagnosticLocation,
-): string {
+): Markup {
 	const {start, filename} = loc;
 
 	if (filename === undefined) {
-		return "unknown";
+		return markup`unknown`;
 	}
 
 	if (start === undefined) {
 		return markup`<filelink target="${filename}" />`;
 	}
 
-	return markup`<filelink target="${filename}" line="${start.line}" column="${start.column}" />`;
+	return markup`<filelink target="${filename}" line="${String(start.line)}" column="${String(
+		start.column,
+	)}" />`;
 }

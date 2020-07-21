@@ -8,10 +8,11 @@
 import {commandCategories} from "../../common/commands";
 import {createLocalCommand} from "../commands";
 import ClientRequest from "../ClientRequest";
+import {markup} from "@romefrontend/cli-layout";
 
 export default createLocalCommand({
 	category: commandCategories.PROCESS_MANAGEMENT,
-	description: "start daemon (if none running)",
+	description: markup`start daemon (if none running)`,
 	usage: "",
 	examples: [],
 	defineFlags() {
@@ -20,7 +21,7 @@ export default createLocalCommand({
 	async callback(req: ClientRequest) {
 		const existingServer = await req.client.tryConnectToExistingDaemon();
 		if (existingServer) {
-			req.client.reporter.success("Already running server.");
+			req.client.reporter.success(markup`Already running server.`);
 			return true;
 		}
 

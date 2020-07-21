@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "In non-strict mode code, functions can only be declared at top level, inside a block, or as the body of an if statement"}
+				message: SAFE_MARKUP {
+					value: "In non-strict mode code, functions can only be declared at top level, inside a block, or as the body of an if statement"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

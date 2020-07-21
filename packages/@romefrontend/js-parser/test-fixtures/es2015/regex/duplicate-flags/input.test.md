@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Duplicate regular expression flag"}
+				message: SAFE_MARKUP {
+					value: "Duplicate regular expression flag"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

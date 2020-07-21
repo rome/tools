@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Function parameter type annotation? Possibly forgot curlies around an object. Possibly forgot async keyword."}
+				message: SAFE_MARKUP {
+					value: "Function parameter type annotation? Possibly forgot curlies around an object. Possibly forgot async keyword."
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.ts"

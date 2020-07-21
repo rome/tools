@@ -8,9 +8,10 @@
 import {commandCategories} from "../../common/commands";
 import {createLocalCommand} from "../commands";
 import ClientRequest from "../ClientRequest";
+import {markup} from "@romefrontend/cli-layout";
 
 export default createLocalCommand({
-	description: "connect to an lsp",
+	description: markup`connect to an lsp`,
 	category: commandCategories.PROJECT_MANAGEMENT,
 	usage: "",
 	examples: [],

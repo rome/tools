@@ -9,9 +9,9 @@ import {Diagnostic, DiagnosticAdviceItem, DiagnosticLocation} from "./types";
 import {SourceMapConsumerCollection} from "@romefrontend/codec-source-map";
 import {
 	MarkupFormatNormalizeOptions,
+	Markup,
 	normalizeMarkup,
 } from "@romefrontend/cli-layout";
-import {createBlessedDiagnosticMessage} from "./descriptions";
 import {ob1Number0, ob1Number0Neg1, ob1Number1} from "@romefrontend/ob1";
 import {RequiredProps} from "@romefrontend/typescript-helpers";
 import {Position} from "@romefrontend/parser-core";
@@ -220,11 +220,11 @@ export default class DiagnosticsNormalizer {
 		};
 	}
 
-	normalizeMarkup(markup: string): string {
+	normalizeMarkup(markup: Markup): Markup {
 		return normalizeMarkup(markup, this.markupOptions).text;
 	}
 
-	maybeNormalizeMarkup(markup: undefined | string): undefined | string {
+	maybeNormalizeMarkup(markup: undefined | Markup): undefined | Markup {
 		return markup === undefined ? undefined : this.normalizeMarkup(markup);
 	}
 
@@ -331,9 +331,7 @@ export default class DiagnosticsNormalizer {
 			location: this.normalizeLocation(diag.location),
 			description: {
 				...description,
-				message: createBlessedDiagnosticMessage(
-					this.normalizeMarkup(description.message.value),
-				),
+				message: this.normalizeMarkup(description.message),
 				advice,
 			},
 		};

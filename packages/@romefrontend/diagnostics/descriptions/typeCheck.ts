@@ -1,5 +1,5 @@
 import {createDiagnosticsCategory} from "./index";
-import {markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/cli-layout";
 import {buildSuggestionAdvice} from "../helpers";
 import {SourceLocation} from "@romefrontend/parser-core";
 
@@ -7,16 +7,16 @@ import {SourceLocation} from "@romefrontend/parser-core";
 export const typeCheck = createDiagnosticsCategory({
 	NOT_CALLABLE: {
 		category: "typeCheck/uncallable",
-		message: `This type isn't callable`,
+		message: markup`This type isn't callable`,
 	},
-	INCOMPATIBILITY: (upper: string, originLoc: undefined | SourceLocation) => ({
+	INCOMPATIBILITY: (upper: Markup, originLoc: undefined | SourceLocation) => ({
 		category: "typeCheck/incompatible",
-		message: "Type incompatibility found",
+		message: markup`Type incompatibility found`,
 		advice: [
 			{
 				type: "log",
 				category: "error",
-				text: "This type is incompatible with expected type of",
+				text: markup`This type is incompatible with expected type of`,
 			},
 			originLoc === undefined
 				? {
@@ -39,7 +39,7 @@ export const typeCheck = createDiagnosticsCategory({
 		possibleNames: Array<string>,
 	) => ({
 		category: "typeCheck/unknownImport",
-		message: `Unknown import '${importedName}' in '${source}'`,
+		message: markup`Unknown import '${importedName}' in '${source}'`,
 		advice: buildSuggestionAdvice(importedName, possibleNames),
 	}),
 	UNKNOWN_PROP: (key: string, possibleNames: Array<string>) => ({
@@ -52,13 +52,13 @@ export const typeCheck = createDiagnosticsCategory({
 		message: markup`Undeclared variable ${name}`,
 		advice: buildSuggestionAdvice(name, possibleNames),
 	}),
-	NOT_EXHAUSTIVE: (only: string, target: string) => ({
+	NOT_EXHAUSTIVE: (only: Markup, target: Markup) => ({
 		category: "typeCheck/notExhaustive",
 		//message += `but allows ${this.extraenous.map(type => this.utils.humanize(type)).join(' | ')}`;
-		message: `Expected only a ${only} but got ${target}`,
+		message: markup`Expected only a ${only} but got ${target}`,
 	}),
-	MISSING_CONDITION: (missing: Array<string>) => ({
+	MISSING_CONDITION: (missing: Array<Markup>) => ({
 		category: "typeCheck/missingCondition",
-		message: `Missing the conditions ${missing.join(", ")}`,
+		message: markup`Missing the conditions ${missing.join(", ")}`,
 	}),
 });

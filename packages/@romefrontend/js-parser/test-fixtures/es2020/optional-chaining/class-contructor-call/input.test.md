@@ -50,11 +50,17 @@ JSRoot {
 			}
 			description: Object {
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "constructors in/after an Optional Chain are not allowed"}
+				message: SAFE_MARKUP {
+					value: "constructors in/after an Optional Chain are not allowed"
+					toString: Function toString
+				}
 				advice: Array [
 					log {
 						category: "info"
-						text: "Optional chain member responsible"
+						text: SAFE_MARKUP {
+							value: "Optional chain member responsible"
+							toString: Function toString
+						}
 					}
 					frame {
 						location: Object {

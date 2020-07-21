@@ -7,47 +7,74 @@
 
 import {Dict} from "@romefrontend/typescript-helpers";
 import {MarkupTagName} from "./types";
+import { RelativeFilePath, AbsoluteFilePath, URLFilePath } from "@romefrontend/path";
+
+// Awkward name since we should only be doing this very very sparingly
+export function convertToMarkupFromRandomString(unsafe: string): Markup {
+	return safeMarkup(unsafe);
+}
 
 // A tagged template literal helper that will escape all interpolated strings, ensuring only markup works
 export function markup(
 	strs: TemplateStringsArray,
-	...values: Array<unknown>
-): string {
+	...values: Array<Markup | string | number | RelativeFilePath | AbsoluteFilePath | URLFilePath>
+): Markup {
 	let out = "";
 
 	for (let i = 0; i < strs.length; i++) {
 		const str = strs[i];
 		out += str;
-
-		const interpolated = values[i];
-
-		if (interpolated instanceof SafeMarkup) {
-			out += interpolated.value;
+		if (i === strs.length - 1) {
 			continue;
 		}
 
-		if (interpolated !== undefined) {
-			out += escapeMarkup(String(interpolated));
+		const value = values[i];
+
+		if (typeof value === "number") {
+			out += `<number>${String(value)}</number>`;
+		} else if (value instanceof URLFilePath) {
+			out += markup`<hyperlink target="${value.join()}" />`.value;
+		} else if (value instanceof RelativeFilePath || value instanceof AbsoluteFilePath) {
+			out += markup`<filelink target="${value.join()}" />`.value;
+		} else if (typeof value === "object" && value != null && value.type === "SAFE_MARKUP") {
+			out += value.value;
+		} else {
+			out += escapeMarkup(String(value));
+			continue;
 		}
 	}
 
-	return out;
+	return safeMarkup(out);
 }
 
-class SafeMarkup {
-	constructor(value: string) {
-		this.value = value;
-	}
+export function isEmptyMarkup(safe: Markup): boolean {
+	return safe.value === "";
+}
 
+export type Markup = {
+	type: "SAFE_MARKUP";
 	value: string;
+};
+
+export function concatMarkup(
+	items: Array<Markup>,
+	separator: Markup = markup``,
+): Markup {
+	return safeMarkup(items.map((item) => item.value).join(separator.value));
 }
 
-export function safeMarkup(input: string): SafeMarkup {
-	return new SafeMarkup(input);
+function safeMarkup(input: string): Markup {
+	return {
+		type: "SAFE_MARKUP",
+		value: input,
+		toString() {
+			throw new Error(`Wtf??? ${input}`);
+		},
+	};
 }
 
 // Escape all \ and >
-export function escapeMarkup(input: string): string {
+function escapeMarkup(input: string): string {
 	let escaped = "";
 	for (let i = 0; i < input.length; i++) {
 		const char = input[i];
@@ -67,23 +94,23 @@ export function escapeMarkup(input: string): string {
 
 export function markupTag(
 	tagName: MarkupTagName,
-	text: string,
+	text: Markup,
 	attrs?: Dict<undefined | string | number | boolean>,
-): string {
+): Markup {
 	let ret = `<${tagName}`;
 
 	if (attrs !== undefined) {
 		for (const key in attrs) {
 			const value = attrs[key];
 			if (value !== undefined) {
-				ret += markup` ${key}="${String(value)}"`;
+				ret += markup` ${key}="${String(value)}"`.value;
 			}
 		}
 	}
 
-	ret += `>${text}</${tagName}>`;
+	ret += `>${text.value}</${tagName}>`;
 
-	return ret;
+	return safeMarkup(ret);
 }
 
 export function unescapeTextValue(str: string): string {

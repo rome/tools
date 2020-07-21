@@ -53,27 +53,42 @@ Object {
 			}
 			description: Object {
 				category: "analyzeDependencies/cjsExportInES"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "You cannot use CommonJS exports in an ES module"}
+				message: SAFE_MARKUP {
+					value: "You cannot use CommonJS exports in an ES module"
+					toString: Function toString
+				}
 				advice: Array [
 					action {
 						command: "check"
 						extra: undefined
 						hidden: true
-						instruction: "To suppress this error run"
-						noun: "Add suppression comment"
 						shortcut: "s"
 						args: Array ["unknown"]
 						commandFlags: Object {decisions: Array ["suppress-analyzeDependencies/cjsExportInES-unknown-1"]}
+						instruction: SAFE_MARKUP {
+							value: "To suppress this error run"
+							toString: Function toString
+						}
+						noun: SAFE_MARKUP {
+							value: "Add suppression comment"
+							toString: Function toString
+						}
 					}
 					action {
 						args: Array []
 						command: "check"
 						extra: true
 						hidden: true
-						instruction: "To add suppression comments for ALL files with this category run"
-						noun: "Add suppression comments for ALL files with this category"
 						shortcut: undefined
 						commandFlags: Object {decisions: Array ["global-suppress-analyzeDependencies/cjsExportInES"]}
+						instruction: SAFE_MARKUP {
+							value: "To add suppression comments for ALL files with this category run"
+							toString: Function toString
+						}
+						noun: SAFE_MARKUP {
+							value: "Add suppression comments for ALL files with this category"
+							toString: Function toString
+						}
 					}
 				]
 			}
@@ -290,20 +305,6 @@ Object {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse/js"}]
-			description: Object {
-				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
-				advice: Array [
-					log {
-						category: "info"
-						text: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"
-					}
-					log {
-						category: "info"
-						text: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"package.json\" />"
-					}
-				]
-			}
 			location: Object {
 				filename: "unknown"
 				mtime: undefined
@@ -318,6 +319,29 @@ Object {
 					index: 0
 					line: 1
 				}
+			}
+			description: Object {
+				category: "parse/js"
+				message: SAFE_MARKUP {
+					value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"
+					toString: Function toString
+				}
+				advice: Array [
+					log {
+						category: "info"
+						text: SAFE_MARKUP {
+							value: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"
+							toString: Function toString
+						}
+					}
+					log {
+						category: "info"
+						text: SAFE_MARKUP {
+							value: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"package.json\" />"
+							toString: Function toString
+						}
+					}
+				]
 			}
 		}
 	]

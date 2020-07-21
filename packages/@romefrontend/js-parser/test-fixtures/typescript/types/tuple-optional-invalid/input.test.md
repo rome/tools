@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "A required element cannot follow an optional element."}
+				message: SAFE_MARKUP {
+					value: "A required element cannot follow an optional element."
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.ts"

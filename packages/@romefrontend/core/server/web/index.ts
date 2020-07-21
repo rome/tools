@@ -10,8 +10,6 @@ import Bundler from "../bundler/Bundler";
 import {WebSocketInterface} from "@romefrontend/codec-websocket";
 import prettyFormat from "@romefrontend/pretty-format";
 import http = require("http");
-
-import {escapeMarkup} from "@romefrontend/cli-layout";
 import {Reporter, ReporterStream} from "@romefrontend/cli-reporter";
 import {
 	ServerQueryRequest,
@@ -26,6 +24,7 @@ import {PLATFORMS} from "../../common/types/platform";
 import {HmrClientLogMessage, HmrServerMessage} from "./hmr";
 import {ConsumableUrl} from "@romefrontend/codec-url";
 import {DEFAULT_TERMINAL_FEATURES} from "@romefrontend/cli-environment";
+import {concatMarkup, markup} from "@romefrontend/cli-layout";
 
 export type WebServerTime = {
 	startTime: number;
@@ -188,22 +187,27 @@ export class WebServer {
 
 		//this.reporter.clear();
 		const url = `http://localhost:${String(port)}`;
-		this.reporter.success(`Listening on <hyperlink emphasis>${url}</hyperlink>`);
+		this.reporter.success(
+			markup`Listening on <hyperlink emphasis>${url}</hyperlink>`,
+		);
 		this.reporter.info(
-			`Web console available at <hyperlink emphasis>${url}/__rome__</hyperlink>`,
+			markup`Web console available at <hyperlink emphasis>${url}/__rome__</hyperlink>`,
 		);
 	}
 
 	printConsoleLog(msg: HmrClientLogMessage) {
 		const {reporter} = this.serverRequest;
 
-		let buf = msg.data.map((arg) => {
-			if (typeof arg === "string") {
-				return escapeMarkup(arg);
-			} else {
-				return prettyFormat(arg, {markup: true});
-			}
-		}).join(" ");
+		let buf = concatMarkup(
+			msg.data.map((arg) => {
+				if (typeof arg === "string") {
+					return markup`${arg}`;
+				} else {
+					return prettyFormat(arg);
+				}
+			}),
+			markup` `,
+		);
 
 		switch (msg.level) {
 			case "info": {
@@ -218,14 +222,14 @@ export class WebServer {
 
 			case "log":
 			case "trace": {
-				reporter.verboseForce(buf);
+				//reporter.verboseForce(buf);
 				break;
 			}
 
 			case "group":
 			case "groupCollapsed":
 			case "groupEnd":
-				reporter.logAll("TODO");
+				reporter.logAll(markup`TODO`);
 		}
 	}
 

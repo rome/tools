@@ -8,6 +8,7 @@
 import {ServerRequest} from "@romefrontend/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
+import {markup} from "@romefrontend/cli-layout";
 
 type Flags = {
 	hang: boolean;
@@ -15,21 +16,22 @@ type Flags = {
 
 export default createServerCommand<Flags>({
 	category: commandCategories.INTERNAL,
-	description: "TODO",
+	description: markup`TODO`,
 	usage: "",
 	examples: [],
 	defineFlags(c) {
 		return {
-			hang: c.get("hang", {description: "Hang rather than instantly quitting"}).asBoolean(
-				false,
-			),
+			hang: c.get(
+				"hang",
+				{description: markup`Hang rather than instantly quitting`},
+			).asBoolean(false),
 		};
 	},
 	async callback(req: ServerRequest, flags: Flags): Promise<void> {
 		if (flags.hang) {
 			if (!req.server.options.dedicated) {
 				req.reporter.warn(
-					"Passed <emphasis>--hang</emphasis> flag but server not connected to a dedicated server so request will hang forever",
+					markup`Passed <emphasis>--hang</emphasis> flag but server not connected to a dedicated server so request will hang forever`,
 				);
 			}
 			await req.endEvent.wait();

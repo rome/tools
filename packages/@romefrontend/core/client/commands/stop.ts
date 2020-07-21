@@ -8,10 +8,11 @@
 import {commandCategories} from "../../common/commands";
 import {createLocalCommand} from "../commands";
 import ClientRequest from "../ClientRequest";
+import {markup} from "@romefrontend/cli-layout";
 
 export default createLocalCommand({
 	category: commandCategories.PROCESS_MANAGEMENT,
-	description: "stop a running daemon if one exists",
+	description: markup`stop a running daemon if one exists`,
 	usage: "",
 	examples: [],
 	defineFlags() {
@@ -29,13 +30,13 @@ export default createLocalCommand({
 				"server",
 			);
 			if (stop.type === "ERROR" && stop.fatal) {
-				reporter.success("Stopped server.");
+				reporter.success(markup`Stopped server.`);
 			} else {
-				reporter.error("Failed to stop server.");
+				reporter.error(markup`Failed to stop server.`);
 				return false;
 			}
 		} else {
-			reporter.warn("No running server to stop.");
+			reporter.warn(markup`No running server to stop.`);
 		}
 		return true;
 	},

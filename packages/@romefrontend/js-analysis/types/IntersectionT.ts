@@ -10,6 +10,7 @@ import {HydrateData, HydrateTypeFactory} from "../Evaluator";
 import T, {SerialTypeFactory, TypeCompatibilityReturn} from "./T";
 import {Scope} from "../scopes";
 import {HumanBuilder} from "../Utils";
+import {Markup, concatMarkup, markup} from "@romefrontend/cli-layout";
 
 export default class IntersectionT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, types: Array<T>) {
@@ -49,7 +50,10 @@ export default class IntersectionT extends T {
 		return true;
 	}
 
-	humanize(builder: HumanBuilder): string {
-		return this.types.map((type) => builder.humanize(type)).join(" & ");
+	humanize(builder: HumanBuilder): Markup {
+		return concatMarkup(
+			this.types.map((type) => builder.humanize(type)),
+			markup` & `,
+		);
 	}
 }

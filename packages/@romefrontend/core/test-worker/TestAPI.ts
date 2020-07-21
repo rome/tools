@@ -9,7 +9,6 @@ import {
 	Diagnostic,
 	DiagnosticAdvice,
 	DiagnosticAdviceItem,
-	createBlessedDiagnosticMessage,
 	createSingleDiagnosticError,
 	deriveDiagnosticFromErrorStructure,
 	descriptions,
@@ -20,9 +19,9 @@ import {TestServerRunnerOptions} from "../server/testing/types";
 import {Event} from "@romefrontend/events";
 import stringDiff from "@romefrontend/string-diff";
 import {getErrorStructure} from "@romefrontend/v8";
-import prettyFormat from "@romefrontend/pretty-format";
+import {prettyFormatToString} from "@romefrontend/pretty-format";
 import {FileReference} from "../common/types/files";
-import {escapeMarkup, markup} from "@romefrontend/cli-layout";
+import {markup, markupToPlainText} from "@romefrontend/cli-layout";
 import {
 	AsyncFunc,
 	ExpectedError,
@@ -32,6 +31,7 @@ import {
 	TestSnapshotOptions,
 } from "@romefrontend-runtime/rome/test";
 import {cleanFrames} from "./TestWorkerRunner";
+import {joinMarkupLines} from "@romefrontend/cli-layout/format";
 
 function formatExpectedError(expected: ExpectedError): string {
 	if (typeof expected === "string") {
@@ -99,6 +99,18 @@ function normalizeUserAdviceItem(
 			return {
 				...item,
 				language: "unknown",
+			};
+
+		case "log":
+			return {
+				...item,
+				text: markup`${item.text}`,
+			};
+
+		case "list":
+			return {
+				...item,
+				list: item.list.map((item) => markup`${item}`),
 			};
 
 		default:
@@ -172,7 +184,7 @@ export default class TestAPI implements TestHelper {
 			...startAdvice,
 			{
 				type: "group",
-				title: "User-specified test advice",
+				title: markup`User-specified test advice`,
 				advice: userAdvice,
 			},
 		];
@@ -197,8 +209,8 @@ export default class TestAPI implements TestHelper {
 			expectedFormat = expected;
 			receivedFormat = received;
 		} else {
-			expectedFormat = prettyFormat(expected);
-			receivedFormat = prettyFormat(received);
+			expectedFormat = prettyFormatToString(expected);
+			receivedFormat = prettyFormatToString(received);
 		}
 
 		const advice: DiagnosticAdvice = [];
@@ -208,7 +220,7 @@ export default class TestAPI implements TestHelper {
 			advice.push({
 				type: "log",
 				category: "info",
-				text: "Both the received and expected values are visually identical",
+				text: markup`Both the received and expected values are visually identical`,
 			});
 
 			advice.push({
@@ -221,44 +233,15 @@ export default class TestAPI implements TestHelper {
 				advice.push({
 					type: "log",
 					category: "info",
-					text: `Try using t.${visualMethod} if you wanted a visual match`,
+					text: markup`Try using t.${visualMethod} if you wanted a visual match`,
 				});
 			}
 		} else {
-			const bothSingleLine =
-				!expectedFormat.match(/\n/g) && !receivedFormat.match(/\n/g);
-
-			if (!bothSingleLine) {
-				advice.push({
-					type: "log",
-					category: "info",
-					text: "Expected to receive",
-				});
-
-				advice.push({
-					type: "code",
-					language: "unknown",
-					sourceText: expectedFormat,
-				});
-
-				advice.push({
-					type: "log",
-					category: "info",
-					text: "But got",
-				});
-
-				advice.push({
-					type: "code",
-					language: "unknown",
-					sourceText: receivedFormat,
-				});
-
-				advice.push({
-					type: "log",
-					category: "info",
-					text: "Diff",
-				});
-			}
+			advice.push({
+				type: "log",
+				category: "info",
+				text: markup`Comparison`
+			});
 
 			advice.push({
 				type: "diff",
@@ -343,7 +326,7 @@ export default class TestAPI implements TestHelper {
 			{
 				description: {
 					category: "tests/failure",
-					message: createBlessedDiagnosticMessage(escapeMarkup(message)),
+					message: markup`${message}`,
 					advice,
 				},
 			},
@@ -359,12 +342,12 @@ export default class TestAPI implements TestHelper {
 					{
 						type: "log",
 						category: "info",
-						text: "Received",
+						text: markup`Received`,
 					},
 					{
 						type: "code",
 						language: "unknown",
-						sourceText: prettyFormat(value),
+						sourceText: prettyFormatToString(value),
 					},
 				],
 				1,
@@ -380,12 +363,12 @@ export default class TestAPI implements TestHelper {
 					{
 						type: "log",
 						category: "info",
-						text: "Received",
+						text: markup`Received`,
 					},
 					{
 						type: "code",
 						language: "unknown",
-						sourceText: prettyFormat(value),
+						sourceText: prettyFormatToString(value),
 					},
 				],
 				1,
@@ -401,12 +384,12 @@ export default class TestAPI implements TestHelper {
 					{
 						type: "log",
 						category: "info",
-						text: "Received",
+						text: markup`Received`,
 					},
 					{
 						type: "code",
 						language: "unknown",
-						sourceText: prettyFormat(value),
+						sourceText: prettyFormatToString(value),
 					},
 				],
 				1,
@@ -422,12 +405,12 @@ export default class TestAPI implements TestHelper {
 					{
 						type: "log",
 						category: "info",
-						text: "Received",
+						text: markup`Received`,
 					},
 					{
 						type: "code",
 						language: "unknown",
-						sourceText: prettyFormat(value),
+						sourceText: prettyFormatToString(value),
 					},
 				],
 				1,
@@ -480,8 +463,8 @@ export default class TestAPI implements TestHelper {
 		expected: unknown,
 		message: string = "t.looksLike() failed, using prettyFormat semantics",
 	): void {
-		const actualInspect = prettyFormat(received);
-		const expectedInspect = prettyFormat(expected);
+		const actualInspect = prettyFormatToString(received);
+		const expectedInspect = prettyFormatToString(expected);
 
 		if (actualInspect !== expectedInspect) {
 			this.fail(message, this.buildMatchAdvice(received, expected), 1);
@@ -493,8 +476,8 @@ export default class TestAPI implements TestHelper {
 		expected: unknown,
 		message: string = "t.notLooksLike() failed, using !prettyFormat semantics",
 	): void {
-		const actualInspect = prettyFormat(received);
-		const expectedInspect = prettyFormat(expected);
+		const actualInspect = prettyFormatToString(received);
+		const expectedInspect = prettyFormatToString(expected);
 
 		if (actualInspect === expectedInspect) {
 			this.fail(message, this.buildMatchAdvice(received, expected), 1);
@@ -518,7 +501,7 @@ export default class TestAPI implements TestHelper {
 					)} but got ${err.name}: ${JSON.stringify(err.message)}`,
 					getErrorStackAdvice(
 						getErrorStructure(err),
-						"Incorrect error stack trace",
+						markup`Incorrect error stack trace`,
 					),
 					1,
 				);
@@ -545,7 +528,7 @@ export default class TestAPI implements TestHelper {
 					)} but got ${err.name}: ${JSON.stringify(err.message)}`,
 					getErrorStackAdvice(
 						getErrorStructure(err),
-						"Incorrect error stack trace",
+						markup`Incorrect error stack trace`,
 					),
 					1,
 				);
@@ -563,7 +546,7 @@ export default class TestAPI implements TestHelper {
 		} catch (err) {
 			const advice = getErrorStackAdvice(
 				getErrorStructure(err),
-				`t.notThrows() did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
+				markup`t.notThrows() did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
 					err.message,
 				)}`,
 			);
@@ -580,7 +563,7 @@ export default class TestAPI implements TestHelper {
 		} catch (err) {
 			const advice = getErrorStackAdvice(
 				getErrorStructure(err),
-				`t.notThrowsAsync() did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
+				markup`t.notThrowsAsync() did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
 					err.message,
 				)}`,
 			);
@@ -600,22 +583,22 @@ export default class TestAPI implements TestHelper {
 					{
 						type: "log",
 						category: "info",
-						text: "Expected",
+						text: markup`Expected`,
 					},
 					{
 						type: "code",
 						language: "unknown",
-						sourceText: prettyFormat(contents),
+						sourceText: prettyFormatToString(contents),
 					},
 					{
 						type: "log",
 						category: "info",
-						text: "to match pattern",
+						text: markup`to match pattern`,
 					},
 					{
 						type: "code",
 						language: "unknown",
-						sourceText: prettyFormat(regex.source),
+						sourceText: prettyFormatToString(regex.source),
 					},
 				],
 				1,
@@ -635,22 +618,22 @@ export default class TestAPI implements TestHelper {
 					{
 						type: "log",
 						category: "info",
-						text: "Expected",
+						text: markup`Expected`,
 					},
 					{
 						type: "code",
 						language: "unknown",
-						sourceText: prettyFormat(contents),
+						sourceText: prettyFormatToString(contents),
 					},
 					{
 						type: "log",
 						category: "info",
-						text: "to not match pattern",
+						text: markup`to not match pattern`,
 					},
 					{
 						type: "code",
 						language: "unknown",
-						sourceText: prettyFormat(regex.source),
+						sourceText: prettyFormatToString(regex.source),
 					},
 				],
 				1,
@@ -747,8 +730,9 @@ export default class TestAPI implements TestHelper {
 		if (typeof expected === "string") {
 			formatted = expected;
 		} else {
+			// Close enough syntax highlighting to pretty-format
 			language = "javascript";
-			formatted = prettyFormat(expected);
+			formatted = prettyFormatToString(expected);
 		}
 
 		const callError = getErrorStructure(new Error(), 2);
@@ -785,6 +769,7 @@ export default class TestAPI implements TestHelper {
 			}
 
 			// Compare the snapshots
+			const snapshotPath = this.snapshotManager.normalizeSnapshotPath(opts.filename);
 			if (formatted !== existingSnapshot) {
 				const advice: DiagnosticAdvice = this.buildMatchAdvice(
 					formatted,
@@ -795,22 +780,24 @@ export default class TestAPI implements TestHelper {
 					},
 				);
 
+				let markupMessage;
+
 				if (message === undefined) {
-					message = `Snapshot ${escapeMarkup(entryName)} at <emphasis>${this.snapshotManager.defaultSnapshotPath.toMarkup()}</emphasis> doesn't match`;
+					markupMessage = markup`Snapshot ${entryName} at <emphasis>${snapshotPath}</emphasis> doesn't match`;
 				} else {
-					message = escapeMarkup(message);
+					markupMessage = markup`${message}`;
 
 					advice.push({
 						type: "log",
 						category: "info",
-						text: `Snapshot can be found at <emphasis>${this.snapshotManager.defaultSnapshotPath.toMarkup()}</emphasis>`,
+						text: markup`Snapshot can be found at <emphasis>${snapshotPath}</emphasis>`,
 					});
 				}
 
 				advice.push({
 					type: "log",
 					category: "info",
-					text: markup`Run <command>rome test <filelink target="${this.file.uid}" /> --update-snapshots</command> to update this snapshot`,
+					text: markup`Run <code>rome test <filelink target="${this.file.uid}" /> --update-snapshots</code> to update this snapshot`,
 				});
 
 				await this.emitDiagnostic(
@@ -820,7 +807,7 @@ export default class TestAPI implements TestHelper {
 							cleanFrames,
 							description: {
 								category: "tests/snapshots/incorrect",
-								message: createBlessedDiagnosticMessage(message),
+								message: markupMessage,
 								advice,
 							},
 						},

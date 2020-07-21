@@ -5,11 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	DiagnosticAdvice,
-	DiagnosticBlessedMessage,
-	DiagnosticDescription,
-} from "../types";
+import {DiagnosticAdvice, DiagnosticDescription} from "../types";
 import {flags} from "./flags";
 import {parserCore} from "./parserCore";
 import {regexp} from "./regexp";
@@ -39,70 +35,58 @@ import {lint} from "./lint";
 import {userConfig} from "./userConfig";
 import {htmlParser} from "./htmlParser";
 import {markdownParser} from "@romefrontend/diagnostics/descriptions/markdownParser";
-import {markup} from "@romefrontend/cli-layout";
+import {Markup, concatMarkup, markup} from "@romefrontend/cli-layout";
 
-type DiagnosticMetadataString = Omit<Partial<DiagnosticDescription>, "message"> & {
-	message: string;
-};
-
-// The purpose of this is so that we're explicit whenever we want to create a diagnostic message outside of this file
-export function createBlessedDiagnosticMessage(
-	value: string,
-): DiagnosticBlessedMessage {
-	return {
-		type: "PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE",
-		value,
-	};
-}
-
-export function join(conjunction: string, items: Array<string>): string {
+export function join(conjunction: string, items: Array<Markup>): Markup {
 	if (items.length === 0) {
-		return "";
+		return markup``;
 	} else if (items.length === 1) {
 		return items[0];
 	} else {
 		const popped = items.pop()!;
-		return [...items, `${conjunction} ${popped}`].join(", ");
+		return concatMarkup([...items, markup`${conjunction} ${popped}`], markup`, `);
 	}
 }
 
-export function andJoin(items: Array<string>): string {
+export function andJoin(items: Array<Markup>): Markup {
 	return join("and", items);
 }
 
-export function orJoin(items: Array<string>): string {
+export function orJoin(items: Array<Markup>): Markup {
 	return join("or", items);
 }
 
-export function addEmphasis(items: Array<string>): Array<string> {
+export function addEmphasis(items: Array<Markup>): Array<Markup> {
 	return items.map((item) => markup`<emphasis>${item}</emphasis>`);
 }
 
 // rome-ignore lint/js/noExplicitAny
-type InputMessagesFactory = (...params: Array<any>) => DiagnosticMetadataString;
+type InputMessagesFactory = (
+	...params: Array<any>
+) => Partial<DiagnosticDescription>;
 
 export type InputMessagesCategory = {
-	[key: string]: string | DiagnosticMetadataString | InputMessagesFactory;
+	[key: string]: Partial<DiagnosticDescription> | InputMessagesFactory;
 };
 
-type OuputMessagesFactoryReturn<Ret extends DiagnosticMetadataString> = Omit<
+type OuputMessagesFactoryReturn<Ret extends Partial<DiagnosticDescription>> = Omit<
 	Ret,
 	"message" | "advice"
 > & {
 	advice: DiagnosticAdvice;
-	message: DiagnosticBlessedMessage;
+	message: Markup;
 };
 
 type OutputMessagesFactory<Func extends InputMessagesFactory> = (
 	...params: Parameters<Func>
 ) => OuputMessagesFactoryReturn<ReturnType<Func>>;
 
-type OutputMessagesValue<Value> = Value extends string
+type OutputMessagesValue<Value> = Value extends Markup
 	? {
-			message: DiagnosticBlessedMessage;
+			message: Markup;
 			advice: DiagnosticAdvice;
 		}
-	: Value extends DiagnosticMetadataString
+	: Value extends Partial<DiagnosticDescription>
 		? OuputMessagesFactoryReturn<Value>
 		: Value extends InputMessagesFactory
 			? OutputMessagesFactory<Value>
@@ -121,21 +105,17 @@ export function createDiagnosticsCategory<Input extends InputMessagesCategory>(
 	for (const key in input) {
 		const value = input[key];
 
-		if (typeof value === "string") {
-			category[key] = {
-				advice: [],
-				message: createBlessedDiagnosticMessage(value),
-			};
-		} else if (typeof value === "function") {
+		if (typeof value === "function") {
 			// rome-ignore lint/js/noExplicitAny
 			const callback: InputMessagesFactory = (value as any);
 
+			// @ts-ignore trust me lol
 			category[key] = function(...params) {
 				const {message, advice = [], ...ret} = callback(...params);
 				return {
 					...ret,
 					advice,
-					message: createBlessedDiagnosticMessage(message),
+					message,
 				};
 			};
 		} else {
@@ -144,7 +124,7 @@ export function createDiagnosticsCategory<Input extends InputMessagesCategory>(
 			category[key] = {
 				...obj,
 				advice,
-				message: createBlessedDiagnosticMessage(message),
+				message,
 			};
 		}
 	}

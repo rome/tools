@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "setter should have exactly one param"}
+				message: SAFE_MARKUP {
+					value: "setter should have exactly one param"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

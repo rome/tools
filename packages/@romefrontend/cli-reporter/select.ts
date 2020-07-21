@@ -5,7 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ansiEscapes} from "@romefrontend/cli-layout";
+import {
+	Markup,
+	ansiEscapes,
+	concatMarkup,
+	markup,
+} from "@romefrontend/cli-layout";
 import Reporter from "./Reporter";
 import {SelectArguments, SelectOption, SelectOptions} from "./types";
 import {onKeypress, setRawMode} from "./util";
@@ -20,7 +25,7 @@ function formatShortcut({shortcut}: SelectOption): string {
 
 export default async function select<Options extends SelectOptions>(
 	reporter: Reporter,
-	message: string,
+	message: Markup,
 	{
 		options,
 		defaults = [],
@@ -58,16 +63,16 @@ export default async function select<Options extends SelectOptions>(
 		return new Set(defaults);
 	}
 
-	let prompt = `<dim>❯</dim> <emphasis>${message}</emphasis>`;
+	let prompt = markup`<dim>❯</dim> <emphasis>${message}</emphasis>`;
 	reporter.logAll(prompt);
 
 	if (radio) {
 		reporter.info(
-			"Use arrow keys and then <emphasis>enter</emphasis> to select an option",
+			markup`Use arrow keys and then <emphasis>enter</emphasis> to select an option`,
 		);
 	} else {
 		reporter.info(
-			"Use arrow keys and <emphasis>space</emphasis> to select or deselect options and then <emphasis>enter</emphasis> to confirm",
+			markup`Use arrow keys and <emphasis>space</emphasis> to select or deselect options and then <emphasis>enter</emphasis> to confirm`,
 		);
 	}
 
@@ -106,7 +111,7 @@ export default async function select<Options extends SelectOptions>(
 
 			let formattedLabel =
 				optionNames.indexOf(key) === activeOption
-					? `<underline>${label}</underline>`
+					? markup`<underline>${label}</underline>`
 					: label;
 
 			let symbol = "";
@@ -117,7 +122,7 @@ export default async function select<Options extends SelectOptions>(
 			}
 
 			reporter.logAll(
-				`  ${symbol} ${formattedLabel}${shortcut}`,
+				markup`  ${symbol} ${formattedLabel}${shortcut}`,
 				{
 					// Don't put a newline on the last option
 					newline: i !== optionNames.length - 1,
@@ -220,13 +225,14 @@ export default async function select<Options extends SelectOptions>(
 			reporter.writeAll(ansiEscapes.cursorUp());
 			reporter.writeAll(ansiEscapes.eraseLine);
 
-			prompt += ": ";
+			prompt = markup`${prompt}: `;
 			if (selectedOptions.size > 0) {
-				prompt += Array.from(selectedOptions, (key) => options[key]!.label).join(
-					", ",
-				);
+				prompt = markup`${prompt}${concatMarkup(
+					Array.from(selectedOptions, (key) => options[key]!.label),
+					markup`, `,
+				)}`;
 			} else {
-				prompt += "<dim>none</dim>";
+				prompt = markup`${prompt}<dim>none</dim>`;
 			}
 			reporter.logAll(prompt);
 

@@ -8,6 +8,7 @@
 import {AnyNode} from "@romefrontend/ast";
 import {Scope} from "../scopes";
 import T from "./T";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 export default class BlockT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, body: Array<T>) {
@@ -38,7 +39,7 @@ export default class BlockT extends T {
 		}
 	}
 
-	humanize(): string {
-		return "{}";
+	humanize(): Markup {
+		return markup`{}`;
 	}
 }

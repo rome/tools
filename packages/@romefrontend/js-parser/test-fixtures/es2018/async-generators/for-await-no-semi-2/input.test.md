@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Can't have an await on a regular for loop"}
+				message: SAFE_MARKUP {
+					value: "Can't have an await on a regular for loop"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

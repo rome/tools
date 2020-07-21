@@ -7,6 +7,6 @@ export const lintCommand = createDiagnosticsCategory({
 		message: markup`<emphasis>${action}</emphasis> is not a valid decision action`,
 	}),
 	INVALID_DECISION_PART_COUNT: (i: number) => ({
-		message: `Segment ${i} contains an invalid number of decision parts`,
+		message: markup`Segment ${String(i)} contains an invalid number of decision parts`,
 	}),
 });

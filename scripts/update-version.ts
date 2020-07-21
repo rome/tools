@@ -5,6 +5,7 @@ import http = require("http");
 
 import child = require("child_process");
 import {readFileText} from "@romefrontend/fs";
+import {markup} from "@romefrontend/cli-layout";
 
 async function runNPMVersion(
 	args: Array<string>,
@@ -19,7 +20,7 @@ async function runNPMVersion(
 	);
 
 	if (res.exitCode !== 0) {
-		reporter.error(res.stderr.toString());
+		reporter.error(markup`${res.stderr.toString()}`);
 		process.exit(1);
 	}
 
@@ -34,14 +35,14 @@ export async function main(args: Array<string>) {
 	);
 	const branch = branchRes.stdout.toString().trim();
 	if (branch !== "main") {
-		reporter.error(`On branch ${branch} instead of main`);
+		reporter.error(markup`On branch ${branch} instead of main`);
 		return 1;
 	}
 
 	// Ensure git isn"t dirty
 	const gitRes = child.spawnSync("git", ["diff", "--exit-code"]);
 	if (gitRes.status === 1) {
-		reporter.error("Uncommitted changes");
+		reporter.error(markup`Uncommitted changes`);
 		return 1;
 	}
 
@@ -52,7 +53,7 @@ export async function main(args: Array<string>) {
 
 	// Update root
 	const version = (await runNPMVersion(args, ROOT)).slice(1);
-	reporter.info(`New version: ${version}`);
+	reporter.info(markup`New version: ${version}`);
 
 	// Check this isn't an already published version
 	const res: http.IncomingMessage = await new Promise((resolve) => {
@@ -66,7 +67,7 @@ export async function main(args: Array<string>) {
 
 	if (res.statusCode !== 404) {
 		reporter.error(
-			"This version already exists. Reverting root version update.",
+			markup`This version already exists. Reverting root version update.`,
 		);
 		await runNPMVersion([currentVersion], ROOT);
 		return 1;
@@ -81,7 +82,7 @@ export async function main(args: Array<string>) {
 	await exec("git", ["push"]);
 	await exec("git", ["push", "origin", `v${version}`]);
 
-	reporter.success("Created tag and release commit. To publish run:");
-	reporter.info("./rome run scripts/publish");
+	reporter.success(markup`Created tag and release commit. To publish run:`);
+	reporter.info(markup`./rome run scripts/publish`);
 	return 0;
 }

@@ -75,7 +75,7 @@ export function convertDiagnosticsToLSP(
 		lspDiagnostics.push({
 			severity: 1,
 			range: convertDiagnosticLocationToLSPRange(location),
-			message: joinMarkupLines(markupToPlainText(description.message.value)),
+			message: joinMarkupLines(markupToPlainText(description.message)),
 			code: description.category,
 			source: "rome",
 			relatedInformation,

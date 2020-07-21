@@ -21,6 +21,7 @@ import {ProjectDefinition} from "@romefrontend/project";
 import {HmrClientMessage} from "./hmr";
 import {ConsumableUrl, consumeUrl} from "@romefrontend/codec-url";
 import http = require("http");
+import {markup} from "@romefrontend/cli-layout";
 
 const waitForever = new Promise(() => {});
 
@@ -119,7 +120,7 @@ export default class WebRequest {
 				printer.processor.addDiagnostics(diagnostics);
 				await printer.print();
 			} catch (err) {
-				this.reporter.warn("Failed trying to print diagnostics");
+				this.reporter.warn(markup`Failed trying to print diagnostics`);
 				this.reporter.error(err.stack);
 			}
 
@@ -193,7 +194,7 @@ export default class WebRequest {
 			}
 		}
 
-		this.reporter.error("Unknown request for", req.url);
+		this.reporter.error(markup`Unknown request for ${String(req.url)}`);
 		res.writeHead(404);
 		res.end("Not found");
 	}
@@ -294,7 +295,7 @@ export default class WebRequest {
 			},
 		);
 
-		this.reporter.success("Device websocket client connected");
+		this.reporter.success(markup`Device websocket client connected`);
 
 		socket.completeFrameEvent.subscribe((frame) => {
 			const text = frame.payload.toString();
@@ -346,7 +347,7 @@ export default class WebRequest {
 
 		await bridge.handshake();
 
-		this.reporter.success("Frontend websocket client connected");
+		this.reporter.success(markup`Frontend websocket client connected`);
 
 		this.webServer.sendRequests(bridge);
 

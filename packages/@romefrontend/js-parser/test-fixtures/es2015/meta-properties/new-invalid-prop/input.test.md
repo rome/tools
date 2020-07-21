@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "The only valid meta property for new is new.target"}
+				message: SAFE_MARKUP {
+					value: "The only valid meta property for new is new.target"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

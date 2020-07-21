@@ -10,6 +10,7 @@ import {AnyNode} from "@romefrontend/ast";
 import {Scope} from "../scopes";
 import ObjT from "./ObjT";
 import T from "./T";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 export default class StringLiteralT extends ObjT {
 	constructor(scope: Scope, originNode: undefined | AnyNode, value: string) {
@@ -40,13 +41,9 @@ export default class StringLiteralT extends ObjT {
 		return new StringLiteralT(scope, originNode, String(data.value));
 	}
 
-	humanize(): string {
+	humanize(): Markup {
 		let str: string = JSON.stringify(this.value);
-		if (this.value.includes("'")) {
-			return str;
-		} else {
-			return `'${str.slice(1, -1)}'`;
-		}
+		return markup`${str}`;
 	}
 
 	compatibleWith(type: T): boolean {

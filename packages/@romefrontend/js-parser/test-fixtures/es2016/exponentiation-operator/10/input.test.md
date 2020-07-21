@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Illegal expression. Wrap left hand side or entire exponentiation in parentheses."}
+				message: SAFE_MARKUP {
+					value: "Illegal expression. Wrap left hand side or entire exponentiation in parentheses."
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

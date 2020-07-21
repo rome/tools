@@ -9,6 +9,7 @@ import {AnyNode} from "@romefrontend/ast";
 import {HydrateData} from "../Evaluator";
 import {Scope} from "../scopes";
 import T from "./T";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 export default class VoidT extends T {
 	static type = "VoidT";
@@ -21,7 +22,7 @@ export default class VoidT extends T {
 		return new VoidT(scope, originNode);
 	}
 
-	humanize(): string {
-		return "void";
+	humanize(): Markup {
+		return markup`void`;
 	}
 }

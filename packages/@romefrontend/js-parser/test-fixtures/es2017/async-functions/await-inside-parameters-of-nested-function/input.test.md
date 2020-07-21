@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Expected a comma to separate items in function params"}
+				message: SAFE_MARKUP {
+					value: "Expected a comma to separate items in function params"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

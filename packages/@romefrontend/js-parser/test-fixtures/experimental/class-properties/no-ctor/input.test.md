@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Classes may not have a non-static field named 'constructor'"}
+				message: SAFE_MARKUP {
+					value: "Classes may not have a non-static field named 'constructor'"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

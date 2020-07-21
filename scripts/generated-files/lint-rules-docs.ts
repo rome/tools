@@ -12,6 +12,7 @@ import {createUnknownFilePath} from "@romefrontend/path";
 import {dedent} from "@romefrontend/string-utils";
 import {ob1Coerce1} from "@romefrontend/ob1";
 import {ROOT, modifyGeneratedFile} from "../_utils";
+import {concatMarkup} from "@romefrontend/cli-layout";
 
 const {worker, performFileOperation} = createMockWorker();
 
@@ -24,13 +25,16 @@ function highlightPre(filename: string, code: string): string {
 	return pre(
 		joinMarkupLines(
 			markupToHtml(
-				highlightCode({
-					path,
-					input: code,
-					sourceTypeJS: undefined,
-					language: inferDiagnosticLanguageFromFilename(path),
-					highlight: true,
-				}),
+				concatMarkup(
+					highlightCode({
+						path,
+						input: code,
+						sourceTypeJS: undefined,
+						language: inferDiagnosticLanguageFromFilename(path),
+						highlight: true,
+					}),
+					markup`\n`,
+				),
 			),
 		),
 	);

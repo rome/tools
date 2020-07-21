@@ -1,12 +1,12 @@
 import {createDiagnosticsCategory} from "./index";
-import {markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/cli-layout";
 import {toKebabCase} from "@romefrontend/string-utils";
 import {buildSuggestionAdvice} from "../helpers";
 
 export const flags = createDiagnosticsCategory({
-	UNSUPPORTED_SHORTHANDS: "Shorthand flags are not supported",
+	UNSUPPORTED_SHORTHANDS: {message: markup`Shorthand flags are not supported`},
 	INCORRECT_CASED_FLAG: (flag: string) => ({
-		message: "Incorrect cased flag name",
+		message: markup`Incorrect cased flag name`,
 		advice: [
 			{
 				type: "log",
@@ -15,32 +15,34 @@ export const flags = createDiagnosticsCategory({
 			},
 		],
 	}),
-	INCORRECT_ARG_COUNT: (excessive: boolean, message: string) => ({
-		message: excessive ? "Too many arguments" : "Missing arguments",
+	INCORRECT_ARG_COUNT: (excessive: boolean, text: Markup) => ({
+		message: excessive ? markup`Too many arguments` : markup`Missing arguments`,
 		advice: [
 			{
 				type: "log",
 				category: "info",
-				text: message,
+				text,
 			},
 		],
 	}),
 	DISALLOWED_REVIEW_FLAG: (key: string) => ({
-		message: `Flag <emphasis>${key}</emphasis> is not allowed with <emphasis>review</emphasis>`,
+		message: markup`Flag <emphasis>${key}</emphasis> is not allowed with <emphasis>review</emphasis>`,
 	}),
 	DISALLOWED_REQUEST_FLAG: (key: string) => ({
-		message: `This command does not support the <emphasis>${key}</emphasis> flag`,
+		message: markup`This command does not support the <emphasis>${key}</emphasis> flag`,
 	}),
 	UNKNOWN_ACTION: (action: string) => ({
-		message: `Unknown action ${action}`,
+		message: markup`Unknown action ${action}`,
 	}),
 	NO_FILES_FOUND: (noun: undefined | string) => ({
-		message: noun === undefined ? "No files found" : `No files to ${noun} found`,
+		message: noun === undefined
+			? markup`No files found`
+			: markup`No files to ${noun} found`,
 	}),
 	UNKNOWN_COMMAND_SUGGESTED: (
 		unknownCommandName: string,
 		commandName: string,
-		description: undefined | string,
+		description: undefined | Markup,
 		command: string,
 	) => ({
 		category: "flags/invalid",
@@ -49,8 +51,10 @@ export const flags = createDiagnosticsCategory({
 			{
 				type: "log",
 				category: "info",
-				text: markup`Did you mean <emphasis>${commandName}</emphasis> instead?` +
-				(description === undefined ? "" : ` ${description}`),
+				text: markup`Did you mean <emphasis>${commandName}</emphasis> instead? ${description ===
+				undefined
+					? ""
+					: markup` ${description}`}`,
 			},
 			{
 				type: "code",
@@ -66,14 +70,14 @@ export const flags = createDiagnosticsCategory({
 	) => ({
 		category: "flags/invalid",
 		message: commandName === ""
-			? "No command specified"
+			? markup`No command specified`
 			: markup`Unknown command <emphasis>${commandName}</emphasis>`,
 		advice: [
 			...buildSuggestionAdvice(commandName, knownCommands),
 			{
 				type: "log",
 				category: "info",
-				text: "To see available commands run",
+				text: markup`To see available commands run`,
 			},
 			{
 				type: "command",

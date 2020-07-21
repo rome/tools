@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "JSX attribute cannot be an empty expression"}
+				message: SAFE_MARKUP {
+					value: "JSX attribute cannot be an empty expression"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.jsx"

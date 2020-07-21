@@ -30,6 +30,7 @@ import {Dict} from "@romefrontend/typescript-helpers";
 import {Reporter} from "@romefrontend/cli-reporter";
 import WorkerQueue from "../WorkerQueue";
 import {dedent} from "@romefrontend/string-utils";
+import {markup} from "@romefrontend/cli-layout";
 
 export type BundleOptions = {
 	prefix?: string;
@@ -98,7 +99,7 @@ export default class BundleRequest {
 
 		const analyzeProgress = reporter.progress({
 			name: `bundler:analyze:${this.resolvedEntryUid}`,
-			title: "Analyzing",
+			title: markup`Analyzing`,
 		});
 		this.diagnostics.setThrowAfter(100);
 		try {
@@ -122,18 +123,17 @@ export default class BundleRequest {
 
 		const compilingSpinner = reporter.progress({
 			name: `bundler:compile:${this.resolvedEntryUid}`,
-			title: "Compiling",
+			title: markup`Compiling`,
 		});
 		compilingSpinner.setTotal(paths.length);
 
 		const queue: WorkerQueue<void> = new WorkerQueue(server);
 
 		queue.addCallback(async (path) => {
-			const progressText = path.toMarkup();
-			compilingSpinner.pushText(progressText);
+			const progressId = compilingSpinner.pushText(markup`${path}`);
 			await this.compileJS(path);
+			compilingSpinner.popText(progressId);
 			compilingSpinner.tick();
-			compilingSpinner.popText(progressText);
 		});
 
 		for (const path of paths) {

@@ -13,7 +13,6 @@ import {
 	Diagnostics,
 	DiagnosticsError,
 	catchDiagnosticsSync,
-	createBlessedDiagnosticMessage,
 	createSingleDiagnosticError,
 	descriptions,
 } from "@romefrontend/diagnostics";
@@ -59,6 +58,7 @@ import {
 	createURLFilePath,
 	createUnknownFilePath,
 } from "@romefrontend/path";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 type UnexpectedConsumerOptions = {
 	loc?: SourceLocation;
@@ -333,9 +333,9 @@ export default class Consumer {
 	}
 
 	generateUnexpectedMessage(
-		msg: string,
+		msg: Markup,
 		opts: UnexpectedConsumerOptions,
-	): string {
+	): Markup {
 		const {at = "suffix", atParent = false} = opts;
 		const {parent} = this;
 
@@ -351,9 +351,9 @@ export default class Consumer {
 		}
 
 		if (at === "suffix") {
-			msg += ` at <emphasis>${target.getKeyPathString()}</emphasis>`;
+			msg = markup`${msg} at <emphasis>${target.getKeyPathString()}</emphasis>`;
 		} else {
-			msg = `<emphasis>${target.getKeyPathString()}</emphasis> ${msg}`;
+			msg = markup`<emphasis>${target.getKeyPathString()}</emphasis> ${msg}`;
 		}
 
 		return msg;
@@ -369,13 +369,10 @@ export default class Consumer {
 		let location = this.getDiagnosticLocation(target);
 		const fromSource = location !== undefined;
 
-		const message = this.generateUnexpectedMessage(
-			description.message.value,
-			opts,
-		);
+		const message = this.generateUnexpectedMessage(description.message, opts);
 		description = {
 			...description,
-			message: createBlessedDiagnosticMessage(message),
+			message,
 		};
 
 		const advice: DiagnosticAdvice = [...(description.advice || [])];
@@ -386,7 +383,7 @@ export default class Consumer {
 				advice.push({
 					type: "log",
 					category: "warn",
-					text: "Our internal value has been modified since we read the original source",
+					text: markup`Our internal value has been modified since we read the original source`,
 				});
 			}
 		} else {
@@ -404,7 +401,7 @@ export default class Consumer {
 			// If consumer is undefined and we have no filename then we were not able to find a location,
 			// in this case, just throw a normal error
 			if (consumer === undefined && filename === undefined) {
-				throw new Error(message);
+				throw new Error(message.value);
 			}
 
 			// Warn that we didn't find this value in the source if it's parent wasn't either
@@ -412,7 +409,7 @@ export default class Consumer {
 				advice.push({
 					type: "log",
 					category: "warn",
-					text: `This value was expected to be found at <emphasis>${this.getKeyPathString()}</emphasis> but was not in the original source`,
+					text: markup`This value was expected to be found at <emphasis>${this.getKeyPathString()}</emphasis> but was not in the original source`,
 				});
 			}
 		}
@@ -422,7 +419,7 @@ export default class Consumer {
 		}
 
 		if (location === undefined) {
-			throw new Error(message);
+			throw new Error(message.value);
 		}
 
 		const diagnostic: Diagnostic = {

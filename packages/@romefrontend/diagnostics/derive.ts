@@ -13,17 +13,16 @@ import {
 	DiagnosticOrigin,
 	Diagnostics,
 } from "./types";
-import {escapeMarkup} from "@romefrontend/cli-layout";
 import {
 	ErrorFrames,
 	StructuredError,
 	getErrorStructure,
 	getSourceLocationFromErrorFrame,
 } from "@romefrontend/v8";
-import {createBlessedDiagnosticMessage} from "./descriptions";
 import DiagnosticsNormalizer from "./DiagnosticsNormalizer";
 import {diagnosticLocationToMarkupFilelink} from "./helpers";
 import {RequiredProps} from "@romefrontend/typescript-helpers";
+import {Markup, isEmptyMarkup, markup} from "@romefrontend/cli-layout";
 
 function normalizeArray<T>(val: undefined | Array<T>): Array<T> {
 	if (Array.isArray(val)) {
@@ -79,7 +78,7 @@ export function deriveRootAdviceFromDiagnostic(
 	},
 ): {
 	advice: DiagnosticAdvice;
-	header: string;
+	header: Markup;
 } {
 	const advice: DiagnosticAdvice = [];
 	const {description, fixable, location} = diag;
@@ -87,23 +86,23 @@ export function deriveRootAdviceFromDiagnostic(
 	let header = diagnosticLocationToMarkupFilelink(location);
 
 	if (diag.label !== undefined) {
-		header = `<emphasis>${diag.label}</emphasis> ${header}`;
+		header = markup`<emphasis>${diag.label}</emphasis> ${header}`;
 
 		if (description.category !== undefined) {
-			header += ` <dim>${description.category}</dim>`;
+			header = markup`${header} <dim>${description.category}</dim>`;
 		}
 	} else {
 		if (description.category !== undefined) {
-			header += ` <emphasis>${description.category}</emphasis>`;
+			header = markup`${header} <emphasis>${description.category}</emphasis>`;
 		}
 	}
 
 	if (fixable === true) {
-		header += " <inverse> FIXABLE </inverse>";
+		header = markup`${header} <inverse> FIXABLE </inverse>`;
 	}
 
 	if (opts.outdated === true) {
-		header += " <inverse> OUTDATED </inverse>";
+		header = markup`${header} <inverse> OUTDATED </inverse>`;
 	}
 
 	if (opts.includeHeaderInAdvice === true) {
@@ -114,13 +113,13 @@ export function deriveRootAdviceFromDiagnostic(
 		});
 	}
 
-	const message = description.message.value;
+	const message = description.message;
 
-	if (message === "") {
+	if (isEmptyMarkup(message)) {
 		advice.push({
 			type: "log",
 			category: "none",
-			text: "<dim>no diagnostic message specified</dim>",
+			text: markup`<dim>no diagnostic message specified</dim>`,
 		});
 	} else {
 		advice.push({
@@ -151,7 +150,7 @@ export function deriveRootAdviceFromDiagnostic(
 
 type DeriveErrorDiagnosticOptions = {
 	description: RequiredProps<Partial<DiagnosticDescription>, "category">;
-	label?: string;
+	label?: Markup;
 	filename?: string;
 	cleanFrames?: (frames: ErrorFrames) => ErrorFrames;
 };
@@ -191,7 +190,7 @@ export function deriveDiagnosticFromErrorStructure(
 
 	return {
 		description: {
-			message: createBlessedDiagnosticMessage(escapeMarkup(message)),
+			message: markup`${message}`,
 			...opts.description,
 			advice: [...advice, ...(opts.description?.advice || [])],
 		},
@@ -214,7 +213,7 @@ export function deriveDiagnosticFromError(
 
 export function getErrorStackAdvice(
 	error: StructuredError,
-	title?: string,
+	title?: Markup,
 ): DiagnosticAdvice {
 	const advice: DiagnosticAdvice = [];
 	const {frames, stack} = error;
@@ -240,12 +239,12 @@ export function getErrorStackAdvice(
 		advice.push({
 			type: "log",
 			category: "warn",
-			text: "Raw stack trace is being displayed as we did not receive any frames",
+			text: markup`Raw stack trace is being displayed as we did not receive any frames`,
 		});
 
 		advice.push({
 			type: "list",
-			list: cleanStack.split("\n").map((line) => escapeMarkup(line.trim())),
+			list: cleanStack.split("\n").map((line) => markup`${line.trim()}`),
 		});
 	} else {
 		const adviceFrames: DiagnosticAdviceStacktrace["frames"] = frames.map((

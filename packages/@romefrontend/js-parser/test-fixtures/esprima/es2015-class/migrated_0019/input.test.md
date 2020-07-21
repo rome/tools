@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Duplicate constructor in the same class"}
+				message: SAFE_MARKUP {
+					value: "Duplicate constructor in the same class"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

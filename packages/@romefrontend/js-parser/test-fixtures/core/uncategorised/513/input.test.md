@@ -53,7 +53,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "static is a reserved word"}
+				message: SAFE_MARKUP {
+					value: "static is a reserved word"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

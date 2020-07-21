@@ -9,10 +9,11 @@ import {ServerRequest} from "@romefrontend/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {createUnknownFilePath} from "@romefrontend/path";
+import {markup} from "@romefrontend/cli-layout";
 
 export default createServerCommand({
 	category: commandCategories.SOURCE_CODE,
-	description: "resolve a file",
+	description: markup`resolve a file`,
 	usage: "",
 	examples: [],
 	hidden: true,
@@ -51,8 +52,7 @@ export default createServerCommand({
 				location: req.getDiagnosticPointerFromFlags({type: "arg", key}),
 			},
 		);
-		const filename = resolved.ref.real.join();
-		reporter.logAll(filename);
-		return filename;
+		reporter.logAll(markup`${resolved.ref.real}`);
+		return resolved.ref.real.join();
 	},
 });

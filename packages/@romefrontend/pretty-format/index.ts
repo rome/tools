@@ -11,15 +11,20 @@ import {
 	mergeObjects,
 } from "@romefrontend/typescript-helpers";
 import {escapeJSString} from "@romefrontend/string-escape";
-import {humanizeNumber, naturalCompare} from "@romefrontend/string-utils";
-import {escapeMarkup, markupTag} from "@romefrontend/cli-layout";
+import {naturalCompare} from "@romefrontend/string-utils";
+import {
+	Markup,
+	concatMarkup,
+	markup,
+	markupTag,
+	markupToPlainText,
+} from "@romefrontend/cli-layout";
+import {joinMarkupLines} from "@romefrontend/cli-layout/format";
 
 type RecursiveStack = Array<unknown>;
 
 type FormatOptions = {
 	allowCustom: boolean;
-	markup: boolean;
-	indent: string;
 	stack: RecursiveStack;
 	depth: number;
 	maxDepth: number;
@@ -29,8 +34,6 @@ type FormatOptions = {
 type FormatPartialOptions = {
 	allowCustom?: boolean;
 	maxDepth?: number;
-	markup?: boolean;
-	indent?: string;
 	stack?: RecursiveStack;
 	compact?: boolean;
 };
@@ -38,60 +41,69 @@ type FormatPartialOptions = {
 const DEFAULT_OPTIONS: FormatOptions = {
 	allowCustom: true,
 	maxDepth: Infinity,
-	markup: false,
-	indent: "",
 	depth: 0,
 	stack: [],
 	compact: false,
 };
 
-const INDENT = "\t";
+export const CUSTOM_PRETTY_FORMAT = Symbol.for("custom-pretty-format");
 
-function maybeEscapeMarkup(str: string, opts: FormatOptions): string {
-	if (opts.markup) {
-		return escapeMarkup(str);
-	} else {
-		return str;
-	}
+export function prettyFormatToString(value: unknown): string {
+	return joinMarkupLines(
+		markupToPlainText(prettyFormat(value)),
+	);
 }
 
-export const CUSTOM_PRETTY_FORMAT = Symbol.for("custom-pretty-format");
+export function pretty(
+	strs: TemplateStringsArray,
+	...values: Array<unknown>
+): string {
+	let out = "";
+
+	for (let i = 0; i < strs.length; i++) {
+		const str = strs[i];
+		out += str;
+		if (i === strs.length - 1) {
+			continue;
+		}
+
+		const value = values[i];
+		out += prettyFormatToString(value);
+	}
+
+	return out;;
+}
 
 export default function prettyFormat(
 	obj: unknown,
 	rawOpts: FormatPartialOptions = {},
-): string {
+): Markup {
 	const opts: FormatOptions = mergeObjects(DEFAULT_OPTIONS, rawOpts);
 
 	if (opts.maxDepth === opts.depth) {
-		return "[depth exceeded]";
+		return markup`[depth exceeded]`;
 	}
 
 	switch (typeof obj) {
 		case "symbol": {
-			const val = maybeEscapeMarkup(formatSymbol(obj), opts);
-			return opts.markup ? markupTag("token", val, {type: "string"}) : val;
+			return markupTag("token", formatSymbol(obj), {type: "string"});
 		}
 
 		case "string": {
-			const val = maybeEscapeMarkup(formatString(obj), opts);
-			return opts.markup ? markupTag("token", val, {type: "string"}) : val;
+			return markupTag("token", formatString(obj), {type: "string"});
 		}
 
 		case "bigint":
 		case "number": {
-			const val = formatNumber(obj);
-			return opts.markup ? markupTag("token", val, {type: "number"}) : val;
+			return markupTag("token", formatNumber(obj), {type: "number"});
 		}
 
 		case "boolean": {
-			const val = formatBoolean(obj);
-			return opts.markup ? markupTag("token", val, {type: "boolean"}) : val;
+			return markupTag("token", formatBoolean(obj), {type: "boolean"});
 		}
 
 		case "undefined": {
-			const val = formatUndefined();
-			return opts.markup ? markupTag("color", val, {fg: "brightBlack"}) : val;
+			return markupTag("color", formatUndefined(), {fg: "brightBlack"});
 		}
 
 		case "function":
@@ -105,74 +117,60 @@ export default function prettyFormat(
 	}
 }
 
-function joinList(items: Array<string>, opts: FormatOptions): string {
-	if (items.length === 0) {
-		return "";
-	}
-
-	const lines = [];
-
-	for (const item of items) {
-		lines.push(`${opts.indent}${item}`);
-	}
-
-	return lines.join("\n");
-}
-
 function isNativeFunction(val: Function): boolean {
 	return val.toString().endsWith("{ [native code] }");
 }
 
-function formatSymbol(val: Symbol): string {
-	return String(val);
+function formatSymbol(val: Symbol): Markup {
+	return markup`${String(val)}`;
 }
 
-function formatString(val: string): string {
-	return escapeJSString(
+function formatString(val: string): Markup {
+	return markup`${escapeJSString(
 		val,
 		{
 			quote: '"',
 		},
-	);
+	)}`;
 }
 
 // This function is used by rome-json so make sure it can parse whatever you return here
-export function formatNumber(val: bigint | number): string {
+export function formatNumber(val: bigint | number): Markup {
 	if (typeof val === "bigint") {
-		return `${humanizeNumber(val, "_")}n`;
+		return markup`<number>${String(val)}</number>n`;
 	} else if (isNaN(val)) {
-		return "NaN";
+		return markup`NaN`;
 	} else if (Object.is(val, -0)) {
-		return "-0";
+		return markup`-0`;
 	} else if (isFinite(val)) {
-		return humanizeNumber(val, "_");
+		return markup`${val}`;
 	} else if (Object.is(val, -Infinity)) {
-		return "-Infinity";
+		return markup`-Infinity`;
 	} else if (Object.is(val, +Infinity)) {
-		return "Infinity";
+		return markup`Infinity`;
 	} else {
 		throw new Error("Don't know how to format this number");
 	}
 }
 
-function formatUndefined(): string {
-	return "undefined";
+function formatUndefined(): Markup {
+	return markup`undefined`;
 }
 
-function formatNull(): string {
-	return "null";
+function formatNull(): Markup {
+	return markup`null`;
 }
 
-function formatBoolean(val: boolean): string {
-	return val === true ? "true" : "false";
+function formatBoolean(val: boolean): Markup {
+	return val === true ? markup`true` : markup`false`;
 }
 
-function formatFunction(val: Function, opts: FormatOptions): string {
-	const name = val.name === "" ? "anonymous" : maybeEscapeMarkup(val.name, opts);
-	let label = `Function ${name}`;
+function formatFunction(val: Function, opts: FormatOptions): Markup {
+	const name = val.name === "" ? "anonymous" : val.name;
+	let label = markup`Function ${name}`;
 
 	if (isNativeFunction(val)) {
-		label = `Native${label}`;
+		label = markup`Native${label}`;
 	}
 
 	if (Object.keys(val).length === 0) {
@@ -187,37 +185,35 @@ function getExtraObjectProps(
 	obj: Objectish,
 	opts: FormatOptions,
 ): {
-	props: Array<string>;
+	props: Array<Markup>;
 	ignoreKeys: UnknownObject;
 } {
-	const props: Array<string> = [];
+	const props: Array<Markup> = [];
 	const ignoreKeys: UnknownObject = {};
 
 	if (obj instanceof Map) {
 		for (const [key, val] of obj) {
 			const formattedKey =
-				typeof key === "string" ? formatKey(key, opts) : prettyFormat(key, opts);
-			props.push(`${formattedKey} => ${prettyFormat(val, opts)}`);
+				typeof key === "string" ? formatKey(key) : prettyFormat(key, opts);
+			props.push(markup`${formattedKey} => ${prettyFormat(val, opts)}`);
 		}
 	} else if (isIterable(obj)) {
 		let i = 0;
 		for (const val of obj) {
 			ignoreKeys[String(i++)] = val;
-			props.push(`${prettyFormat(val, opts)}`);
+			props.push(markup`${prettyFormat(val, opts)}`);
 		}
 	}
 
 	return {ignoreKeys, props};
 }
 
-function formatKey(rawKey: string, opts: FormatOptions): string {
-	const key = maybeEscapeMarkup(rawKey, opts);
-
+function formatKey(rawKey: string): Markup {
 	// Format as a string if it contains any special characters
-	if (/[^A-Za-z0-9_$]/g.test(key)) {
-		return formatString(key);
+	if (/[^A-Za-z0-9_$]/g.test(rawKey)) {
+		return formatString(rawKey);
 	} else {
-		return key;
+		return markup`${rawKey}`;
 	}
 }
 
@@ -267,34 +263,32 @@ function sortKeys(obj: Objectish): Array<KeyInfo> {
 
 function lineCount(str: string): number {
 	return str.split("\n").length;
-	formatKey;
 }
 
 function lineCountCompare(a: string, b: string): number {
 	return lineCount(a) - lineCount(b);
 }
 
-function formatObjectLabel(label: string, opts: FormatOptions): string {
-	return opts.markup ? markupTag("color", label, {fg: "cyan"}) : label;
+function formatObjectLabel(label: Markup): Markup {
+	return markupTag("color", label, {fg: "cyan"});
 }
 
 function formatObject(
-	label: string,
+	label: Markup,
 	obj: Objectish,
 	opts: FormatOptions,
 	labelKeys: Array<string>,
-): string {
+): Markup {
 	// Detect circular references, and create a pointer to the specific value
 	const {stack} = opts;
 	if (stack.length > 0 && stack.includes(obj)) {
-		label = `Circular ${label} ${stack.indexOf(obj)}`;
-		return formatObjectLabel(label, opts);
+		label = markup`Circular ${label} ${String(stack.indexOf(obj))}`;
+		return formatObjectLabel(label);
 	}
 
 	const customFormat = obj[CUSTOM_PRETTY_FORMAT];
 	if (opts.allowCustom && typeof customFormat === "function") {
-		const custom = escapeMarkup(String(customFormat.call(obj)));
-		return opts.markup ? markupTag("dim", custom) : custom;
+		return markupTag("dim", markup`${String(customFormat.call(obj))}`);
 	}
 
 	//
@@ -302,12 +296,11 @@ function formatObject(
 		...opts,
 		stack: [...stack, obj],
 		depth: opts.depth + 1,
-		indent: opts.indent + INDENT,
 	};
 	const {ignoreKeys, props} = getExtraObjectProps(obj, nextOpts);
 
 	// For props that have object values, we always put them at the end, sorted by line count
-	const objProps = [];
+	const objProps: Array<Markup> = [];
 
 	// Get string props
 	for (const {key, object} of sortKeys(obj)) {
@@ -325,7 +318,7 @@ function formatObject(
 			continue;
 		}
 
-		const prop = `${formatKey(key, opts)}: ${prettyFormat(val, nextOpts)}`;
+		const prop = markup`${formatKey(key)}: ${prettyFormat(val, nextOpts)}`;
 		if (object) {
 			objProps.push(prop);
 		} else {
@@ -334,14 +327,16 @@ function formatObject(
 	}
 
 	// Sort object props by line count and push them on
-	for (const prop of objProps.sort(lineCountCompare)) {
+	for (const prop of objProps.sort((a, b) => lineCountCompare(a.value, b.value))) {
 		props.push(prop);
 	}
 
 	// Get symbol props
 	for (const sym of Object.getOwnPropertySymbols(obj)) {
 		const val: unknown = Reflect.get(obj, sym);
-		props.push(`${prettyFormat(sym, opts)}: ${prettyFormat(val, nextOpts)}`);
+		props.push(
+			markup`${prettyFormat(sym, opts)}: ${prettyFormat(val, nextOpts)}`,
+		);
 	}
 
 	//
@@ -353,25 +348,20 @@ function formatObject(
 	}
 
 	//
-	let inner = joinList(props, nextOpts);
-	if (inner !== "") {
-		if (props.length === 1 && !inner.includes("\n")) {
-			// Single prop with no newlines shouldn't be indented
-			inner = inner.trim();
-		} else {
-			inner = `\n${inner}\n${opts.indent}`;
-		}
+	let inner = concatMarkup(props, markup`\n`);
+	if (props.length > 1 || inner.value.includes("\n")) {
+		inner = markup`\n<indent>${inner}</indent>\n`;
 	}
 
-	return `${formatObjectLabel(label, opts)} ${open}${inner}${close}`;
+	return markup`${formatObjectLabel(label)} ${open}${inner}${close}`;
 }
 
-function formatRegExp(val: RegExp): string {
-	return String(val);
+function formatRegExp(val: RegExp): Markup {
+	return markup`${String(val)}`;
 }
 
-function formatDate(val: Date): string {
-	return val.toISOString();
+function formatDate(val: Date): Markup {
+	return markup`${val.toISOString()}`;
 }
 
 type Objectish = {
@@ -380,36 +370,34 @@ type Objectish = {
 	[key: string]: unknown;
 };
 
-function formatObjectish(val: null | Objectish, opts: FormatOptions): string {
+function formatObjectish(val: null | Objectish, opts: FormatOptions): Markup {
 	if (val === null) {
-		const val = formatNull();
-		return opts.markup ? markupTag("emphasis", val) : val;
+		return markupTag("emphasis", formatNull());
 	}
 
 	if (val instanceof RegExp) {
-		const str = formatRegExp(val);
-		return opts.markup ? markupTag("color", str, {fg: "red"}) : str;
+		return markupTag("color", formatRegExp(val), {fg: "red"});
 	}
 
 	if (val instanceof Date) {
 		const str = formatDate(val);
-		return opts.markup ? markupTag("color", str, {fg: "magenta"}) : str;
+		return markupTag("color", str, {fg: "magenta"});
 	}
 
-	let label = "null";
+	let label = markup`null`;
 
 	if (val.constructor !== undefined) {
-		label = maybeEscapeMarkup(val.constructor.name, opts);
+		label = markup`${val.constructor.name}`;
 	}
 
 	let labelKeys: Array<string> = [];
 
 	// If there's a string type or kind property then use it as the label
 	if (typeof val.type === "string") {
-		label = maybeEscapeMarkup(val.type, opts);
+		label = markup`${val.type}`;
 		labelKeys.push("type");
 	} else if (typeof val.kind === "string") {
-		label = maybeEscapeMarkup(val.kind, opts);
+		label = markup`${val.kind}`;
 		labelKeys.push("kind");
 	}
 

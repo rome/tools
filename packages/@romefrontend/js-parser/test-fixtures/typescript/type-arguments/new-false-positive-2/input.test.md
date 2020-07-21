@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "In TypeScript, a new expression with type arguments must have parens"}
+				message: SAFE_MARKUP {
+					value: "In TypeScript, a new expression with type arguments must have parens"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.ts"

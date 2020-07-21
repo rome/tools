@@ -11,10 +11,11 @@ import ClientRequest from "../ClientRequest";
 import {Dict} from "@romefrontend/typescript-helpers";
 import {exists, writeFile} from "@romefrontend/fs";
 import {stringifyRJSON} from "@romefrontend/codec-json";
+import {markup} from "@romefrontend/cli-layout";
 
 export default createLocalCommand({
 	category: commandCategories.PROJECT_MANAGEMENT,
-	description: "create a project config",
+	description: markup`create a project config`,
 	usage: "",
 	examples: [],
 	hidden: true,
@@ -27,10 +28,10 @@ export default createLocalCommand({
 		const configPath = req.client.flags.cwd.append("rome.rjson");
 		if (await exists(configPath)) {
 			reporter.error(
-				`<filelink target="${configPath.join()}" emphasis>rome.rjson</filelink> file already exists`,
+				markup`<filelink target="${configPath.join()}" emphasis>rome.rjson</filelink> file already exists`,
 			);
 			reporter.info(
-				"Use <command>rome config</command> to update an existing config",
+				markup`Use <code>rome config</code> to update an existing config`,
 			);
 			return false;
 		}
@@ -44,7 +45,7 @@ export default createLocalCommand({
 
 		// Run lint, capture diagnostics
 
-		reporter.success(`Created config ${configPath.toMarkup()}`);
+		reporter.success(markup`Created config ${configPath}`);
 
 		return true;
 	},

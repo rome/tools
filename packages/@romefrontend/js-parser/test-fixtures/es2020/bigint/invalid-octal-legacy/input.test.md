@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "A bigint can't be an octal"}
+				message: SAFE_MARKUP {
+					value: "A bigint can't be an octal"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

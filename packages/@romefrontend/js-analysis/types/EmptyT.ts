@@ -10,6 +10,7 @@ import {HydrateData} from "../Evaluator";
 import {Scope} from "../scopes";
 import VoidT from "./VoidT";
 import T from "./T";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 export default class EmptyT extends T {
 	static type = "EmptyT";
@@ -22,8 +23,8 @@ export default class EmptyT extends T {
 		return new EmptyT(scope, originNode);
 	}
 
-	humanize(): string {
-		return "empty";
+	humanize(): Markup {
+		return markup`empty`;
 	}
 
 	compatibleWith(otherType: T): boolean {

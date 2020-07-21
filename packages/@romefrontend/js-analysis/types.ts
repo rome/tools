@@ -9,6 +9,7 @@ import {SourceLocation} from "@romefrontend/parser-core";
 import {JSRoot} from "@romefrontend/ast";
 import {HydrateData} from "./Evaluator";
 import {Dict} from "@romefrontend/typescript-helpers";
+import {Markup} from "@romefrontend/cli-layout";
 
 export type CheckProvider = {
 	libs?: Array<JSRoot>;
@@ -21,7 +22,7 @@ export type CheckProvider = {
 export type TypeCheckProvider = CheckProvider;
 
 export type ModuleSignatureType = {
-	human?: string;
+	human?: Markup;
 	origin: undefined | SourceLocation;
 	type: string;
 	data: HydrateData;

@@ -12,24 +12,24 @@ export const suppressions = createDiagnosticsCategory({
 		}
 
 		return {
-			message: "Unused suppression. Did not hide any errors.",
+			message: markup`Unused suppression. Did not hide any errors.`,
 			category: "suppressions/unused",
 			advice: [
 				{
 					type: "log",
 					category: "info",
-					text: `This suppression should hide <emphasis>${description}</emphasis>`,
+					text: markup`This suppression should hide <emphasis>${description}</emphasis>`,
 				},
 			],
 		};
 	},
 	MISSING_SPACE: {
 		category: "suppressions/missingSpace",
-		message: "Missing space between prefix and suppression categories",
+		message: markup`Missing space between prefix and suppression categories`,
 	},
 	MISSING_TARGET: {
 		category: "suppressions/missingTarget",
-		message: "We could not find a target for this suppression",
+		message: markup`We could not find a target for this suppression`,
 	},
 	DUPLICATE: (category: string) => ({
 		category: "suppressions/duplicate",
@@ -41,6 +41,6 @@ export const suppressions = createDiagnosticsCategory({
 	}),
 	INCORRECT_SUPPRESSION_START: {
 		category: "suppressions/incorrectSuppressionStart",
-		message: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?",
+		message: markup`This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?`,
 	},
 });

@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unknown start to an export default declaration"}
+				message: SAFE_MARKUP {
+					value: "Unknown start to an export default declaration"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

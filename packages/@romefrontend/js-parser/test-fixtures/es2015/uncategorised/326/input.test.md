@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected character <emphasis>\u{16af5}</emphasis>"}
+				message: SAFE_MARKUP {
+					value: "Unexpected character <emphasis>\u{16af5}</emphasis>"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

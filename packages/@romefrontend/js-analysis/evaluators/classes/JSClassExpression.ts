@@ -11,6 +11,7 @@ import InstanceT from "../../types/InstanceT";
 import ClassT from "../../types/ClassT";
 import T from "../../types/T";
 import OpenT from "../../types/OpenT";
+import {markup} from "@romefrontend/cli-layout";
 
 export default function JSClassExpression(node: AnyNode, scope: Scope) {
 	node =
@@ -71,7 +72,7 @@ export default function JSClassExpression(node: AnyNode, scope: Scope) {
 		},
 	);
 	if (node.id) {
-		type.setHuman(node.id.name);
+		type.setHuman(markup`${node.id.name}`);
 	}
 
 	//

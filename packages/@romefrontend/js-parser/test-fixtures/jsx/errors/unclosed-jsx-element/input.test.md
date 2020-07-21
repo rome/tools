@@ -50,11 +50,17 @@ JSRoot {
 			}
 			description: Object {
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unclosed JSX element"}
+				message: SAFE_MARKUP {
+					value: "Unclosed JSX element"
+					toString: Function toString
+				}
 				advice: Array [
 					log {
 						category: "info"
-						text: "Originated from opening tag of <emphasis>div</emphasis>"
+						text: SAFE_MARKUP {
+							value: "Originated from opening tag of <emphasis>div</emphasis>"
+							toString: Function toString
+						}
 					}
 					frame {
 						location: Object {

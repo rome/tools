@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Illegal newline after throw"}
+				message: SAFE_MARKUP {
+					value: "Illegal newline after throw"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

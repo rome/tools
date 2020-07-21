@@ -19,7 +19,7 @@ type Flags = {
 
 export default createServerCommand<Flags>({
 	category: commandCategories.SOURCE_CODE,
-	description: "build a standalone js bundle for a package",
+	description: markup`build a standalone js bundle for a package`,
 	usage: "",
 	examples: [],
 	hidden: true,
@@ -47,8 +47,8 @@ export default createServerCommand<Flags>({
 			const file = dir.append(filename);
 			const loc = file.join();
 			savedList.push(
-				markup`<filelink target="${loc}">${filename}</filelink> <filesize dim>${Buffer.byteLength(
-					buff,
+				markup`<filelink target="${loc}">${filename}</filelink> <filesize dim>${String(
+					Buffer.byteLength(buff),
 				)}</filesize> <inverse> ${kind} </inverse>`,
 			);
 			await createDirectory(file.getParent());
@@ -56,10 +56,10 @@ export default createServerCommand<Flags>({
 		}
 
 		if (commandFlags.quiet) {
-			reporter.success(`Saved to <emphasis>${dir.toMarkup()}</emphasis>`);
+			reporter.success(markup`Saved to <emphasis>${dir}</emphasis>`);
 		} else {
 			reporter.success(
-				`Saved the following files to <emphasis>${dir.toMarkup()}</emphasis>`,
+				markup`Saved the following files to <emphasis>${dir}</emphasis>`,
 			);
 			reporter.list(savedList);
 		}

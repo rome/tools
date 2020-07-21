@@ -12,6 +12,7 @@ import {createServerCommand} from "../commands";
 import {DiagnosticsError} from "@romefrontend/diagnostics";
 import {Consumer} from "@romefrontend/consume";
 import Bundler from "../bundler/Bundler";
+import {markup} from "@romefrontend/cli-layout";
 
 type Flags = {
 	bundle: boolean;
@@ -19,7 +20,7 @@ type Flags = {
 
 export default createServerCommand({
 	category: commandCategories.SOURCE_CODE,
-	description: "compile a single file",
+	description: markup`compile a single file`,
 	usage: "",
 	examples: [],
 	hidden: true,

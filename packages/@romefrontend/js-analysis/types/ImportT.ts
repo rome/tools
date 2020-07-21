@@ -10,6 +10,7 @@ import {HumanBuilder} from "../Utils";
 import {HydrateData} from "../Evaluator";
 import {Scope} from "../scopes";
 import T from "./T";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 export default class ImportT extends T {
 	constructor(
@@ -77,20 +78,20 @@ export default class ImportT extends T {
 		);
 	}
 
-	humanize(builder: HumanBuilder): string {
+	humanize(builder: HumanBuilder): Markup {
 		let object;
 		if (this.resolvedType !== undefined) {
 			object = builder.humanize(this.resolvedType);
 		} else if (this.absolute === undefined) {
-			object = `$Exports<"${this.source}", "${this.relative}">`;
+			object = markup`$Exports<"${this.source}", "${this.relative}">`;
 		} else {
-			object = `$Exports<"${this.absolute}">`;
+			object = markup`$Exports<"${this.absolute}">`;
 		}
 
 		if (this.importedName === undefined) {
 			return object;
 		} else {
-			return `${object}.${this.importedName}`;
+			return markup`${object}.${this.importedName}`;
 		}
 	}
 

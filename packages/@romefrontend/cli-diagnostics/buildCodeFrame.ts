@@ -25,73 +25,88 @@ import {
 	ob1Number0,
 	ob1Number1Neg1,
 } from "@romefrontend/ob1";
-import {markupTag, markupToPlainText} from "@romefrontend/cli-layout";
+import {
+	Markup,
+	isEmptyMarkup,
+	concatMarkup,
+	markup,
+	markupTag,
+} from "@romefrontend/cli-layout";
 import {Dict} from "@romefrontend/typescript-helpers";
-import {joinMarkupLines} from "@romefrontend/cli-layout/format";
 
 function formatLineView(
 	{marker, line, gutter}: FormattedLine,
 	gutterLength: number,
-): string {
+): Markup {
 	const attributes: Dict<string | number> = {
 		extraSoftWrapIndent: 2,
 		// NB: The `word-break` default is probably better? lineWrap: "char-break",
 	};
 
+	const parts: Array<Markup> = [line];
+
 	if (gutterLength > 0) {
-		line += markupTag(
-			"viewLinePrefix",
-			`<pad align="right" width="${gutterLength}"><emphasis>${gutter}</emphasis></pad>${GUTTER}`,
-			{
-				type: "first",
-			},
+		parts.push(
+			markupTag(
+				"viewLinePrefix",
+				markup`<pad align="right" width="${String(gutterLength)}"><emphasis>${gutter}</emphasis></pad>${GUTTER}`,
+				{
+					type: "first",
+				},
+			),
 		);
 
-		line += markupTag(
-			"viewLinePrefix",
-			`<dim>⇥</dim>${GUTTER}`,
-			{
-				align: "right",
-				type: "middle",
-			},
+		parts.push(
+			markupTag(
+				"viewLinePrefix",
+				markup`<dim>→</dim>${GUTTER}`,
+				{
+					align: "right",
+					type: "middle",
+				},
+			),
 		);
 
-		line += markupTag(
-			"viewLinePrefix",
-			GUTTER,
-			{
-				align: "right",
-				type: "pointer",
-			},
+		parts.push(
+			markupTag(
+				"viewLinePrefix",
+				GUTTER,
+				{
+					align: "right",
+					type: "pointer",
+				},
+			),
 		);
 	}
 
 	if (marker !== undefined) {
-		line += markupTag(
-			"viewPointer",
-			marker.message,
-			{
-				char: "<error><emphasis>^</emphasis></error>",
-				line: "1",
-				start: String(marker.start),
-				end: String(marker.end),
-			},
+		parts.push(
+			markupTag(
+				"viewPointer",
+				marker.message,
+				{
+					char: "<error><emphasis>^</emphasis></error>",
+					line: "1",
+					start: String(marker.start),
+					end: String(marker.end),
+				},
+			),
 		);
 	}
 
-	return markupTag("view", line, attributes);
+	return markupTag("view", concatMarkup(parts), attributes);
 }
 
 type Marker = {
-	message: string;
+	message: Markup;
 	start: Number0;
 	end: Number0;
 };
 
 type FormattedLine = {
 	marker: undefined | Marker;
-	gutter: string;
-	line: string;
+	gutter: Markup;
+	line: Markup;
 };
 
 export default function buildCodeFrame(
@@ -102,7 +117,7 @@ export default function buildCodeFrame(
 		start,
 		end,
 		type,
-		markerMessage = "",
+		markerMessage = markup``,
 	}: {
 		sourceText: string;
 		lines: ToLines;
@@ -110,10 +125,10 @@ export default function buildCodeFrame(
 		truncateLines?: number;
 		start?: Position;
 		end?: Position;
-		markerMessage?: string;
+		markerMessage?: Markup;
 	},
 ): {
-	frame: string;
+	frame: Markup;
 	truncated: boolean;
 } {
 	// Bail if we have negative line references, we have no lines, or we expected positions and don't have one
@@ -165,11 +180,12 @@ export default function buildCodeFrame(
 
 	let formattedLines: Array<FormattedLine | undefined> = [];
 	for (let i = contextStartIndex; i <= contextEndIndex; i = ob1Inc(i)) {
-		let rawLine: undefined | string = allLines.raw[ob1Get0(i)];
-		let highlightLine: undefined | string = allLines.highlighted[ob1Get0(i)];
-		if (highlightLine === undefined || rawLine === undefined) {
+		let line = allLines[ob1Get0(i)];
+		if (line === undefined) {
 			continue;
 		}
+
+		let [rawLine, highlightLine] = line;
 
 		// Ensure that the frame doesn't start with whitespace
 		if (
@@ -197,7 +213,7 @@ export default function buildCodeFrame(
 			} else if (i === startLineIndex) {
 				// First line in selection
 				marker = {
-					message: "",
+					message: markup``,
 					start: start.column,
 					// line could be highlighted
 					end: ob1Coerce0(rawLine.length),
@@ -214,20 +230,22 @@ export default function buildCodeFrame(
 
 		// Show invisible characters
 		highlightLine = showInvisibles(
-			highlightLine,
+			highlightLine.value,
 			{
+				ignoreLeadingTabs: true,
+				ignoreLoneSpaces: true,
 				atLineStart: true,
 				atLineEnd: true,
 			},
 		).value;
 
 		const lineNo = ob1Coerce0To1(i);
-		let gutter = `${String(lineNo)}`;
+		let gutter = markup`${String(lineNo)}`;
 
 		if (shouldHighlight) {
-			gutter = `${CODE_FRAME_SELECTED_INDENT}${gutter}`;
+			gutter = markup`${CODE_FRAME_SELECTED_INDENT}${gutter}`;
 		} else {
-			gutter = `${CODE_FRAME_INDENT}${gutter}`;
+			gutter = markup`${CODE_FRAME_INDENT}${gutter}`;
 		}
 
 		formattedLines.push({
@@ -256,7 +274,7 @@ export default function buildCodeFrame(
 	// Remove trailing blank lines
 	for (let i = formattedLines.length - 1; i >= 0; i--) {
 		const info = formattedLines[i];
-		if (info !== undefined && info.line === "") {
+		if (info !== undefined && isEmptyMarkup(info.line)) {
 			formattedLines.pop();
 		} else {
 			break;
@@ -281,13 +299,10 @@ export default function buildCodeFrame(
 		String(maxVisibleLineNo).length + CODE_FRAME_INDENT.length;
 
 	// If what the marker is highlighting equals the marker message then it's redundant so don't show the message
-	if (markerMessage !== "" && start !== undefined && end !== undefined) {
+	if (isEmptyMarkup(markerMessage) && start !== undefined && end !== undefined) {
 		const text = sourceText.slice(ob1Get0(start.index), ob1Get0(end.index));
-		if (
-			cleanEquivalentString(text) ===
-			cleanEquivalentString(joinMarkupLines(markupToPlainText(markerMessage)))
-		) {
-			markerMessage = "";
+		if (cleanEquivalentString(text) === cleanEquivalentString(markerMessage)) {
+			markerMessage = markup``;
 		}
 	}
 
@@ -300,19 +315,19 @@ export default function buildCodeFrame(
 			);
 		}
 
-		const result = [`${CODE_FRAME_INDENT}${formatLineView(selection, 0)}`];
-
 		return {
-			frame: result.join("\n"),
+			frame: markup`${CODE_FRAME_INDENT}${formatLineView(selection, 0)}`,
 			truncated,
 		};
 	}
 
 	// Build up the line we display when source lines are omitted
-	const omittedLine = `<emphasis><pad align="right" width="${maxGutterLength}">...</pad></emphasis>${GUTTER}`;
+	const omittedLine = markup`<emphasis><pad align="right" width="${String(
+		maxGutterLength,
+	)}">...</pad></emphasis>${GUTTER}`;
 
 	// Build the frame
-	const result = [];
+	const result: Array<Markup> = [];
 	for (const selection of formattedLines) {
 		if (!selection) {
 			result.push(omittedLine);
@@ -324,12 +339,14 @@ export default function buildCodeFrame(
 
 	if (truncated) {
 		result.push(
-			`${omittedLine} <dim><number>${maxVisibleLineNo - truncateLines!}</number> more lines truncated</dim>`,
+			markup`${omittedLine} <dim><number>${String(
+				maxVisibleLineNo - truncateLines!,
+			)}</number> more lines truncated</dim>`,
 		);
 	}
 
 	return {
 		truncated,
-		frame: result.join("\n"),
+		frame: concatMarkup(result, markup`\n`),
 	};
 }

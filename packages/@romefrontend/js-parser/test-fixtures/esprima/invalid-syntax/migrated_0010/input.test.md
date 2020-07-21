@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Identifier directly after number"}
+				message: SAFE_MARKUP {
+					value: "Identifier directly after number"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

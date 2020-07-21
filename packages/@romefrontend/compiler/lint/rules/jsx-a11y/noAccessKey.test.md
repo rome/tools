@@ -44,8 +44,8 @@ undefined
 
   ℹ Recommended fix
 
-  - <input accessKey={key} />
-  + <input />
+  - <input·accessKey={key}·/>
+  + <input·/>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

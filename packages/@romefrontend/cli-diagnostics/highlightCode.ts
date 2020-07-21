@@ -15,9 +15,16 @@ import {
 import {ConstJSSourceType} from "@romefrontend/ast";
 import {tokenizeJSON} from "@romefrontend/codec-json";
 import {UnknownFilePath} from "@romefrontend/path";
-import {escapeMarkup, markupTag} from "@romefrontend/cli-layout";
+import {
+	Markup,
+	convertToMarkupFromRandomString,
+	concatMarkup,
+	markup,
+	markupTag,
+} from "@romefrontend/cli-layout";
 import {MarkupTokenType} from "@romefrontend/cli-layout/types";
 import {tokenizeHTML} from "@romefrontend/html-parser";
+import {splitLines} from "./utils";
 
 // Max file size to avoid doing expensive highlighting for massive files - 100KB
 // NB: This should probably be lower
@@ -38,45 +45,50 @@ type TokenShape = {
 
 type ReduceCallbackResult = {
 	type?: MarkupTokenType;
-	value?: string;
+	value?: Markup;
 };
 
 type ReduceCallback<Token extends TokenShape> = (
 	token: Token,
-	line: string,
+	line: Markup,
 	prev: undefined | Token,
 	next: undefined | Token,
 ) => undefined | ReduceCallbackResult;
 
-export default function highlightCode(opts: AnsiHighlightOptions): string {
-	if (opts.input.length > FILE_SIZE_MAX || !opts.highlight) {
-		return escapeMarkup(opts.input);
+type HighlightCodeResult = Array<Markup>;
+
+export default function highlightCode(
+	opts: AnsiHighlightOptions,
+): HighlightCodeResult {
+	if (opts.input.length < FILE_SIZE_MAX && opts.highlight) {
+		switch (opts.language) {
+			case "js":
+				return highlightJS(
+					opts,
+					// js-parser does not accept an "unknown" sourceType
+					opts.sourceTypeJS === undefined || opts.sourceTypeJS === "unknown"
+						? "script"
+						: opts.sourceTypeJS,
+				);
+
+			case "html":
+				return highlightHTML(opts);
+
+			case "json":
+				return highlightJSON(opts);
+		}
 	}
 
-	switch (opts.language) {
-		case "js":
-			return highlightJS(
-				opts,
-				// js-parser does not accept an "unknown" sourceType
-				opts.sourceTypeJS === undefined || opts.sourceTypeJS === "unknown"
-					? "script"
-					: opts.sourceTypeJS,
-			);
-
-		case "html":
-			return highlightHTML(opts);
-
-		case "json":
-			return highlightJSON(opts);
-
-		default:
-			return escapeMarkup(opts.input);
-	}
+	return splitLines(opts.input).map((line) => markup`${line}`);
 }
 
 function reduceParserCore<Token extends TokenShape & {
 	type: string;
-}>(input: string, tokens: Array<Token>, callback: ReduceCallback<Token>) {
+}>(
+	input: string,
+	tokens: Array<Token>,
+	callback: ReduceCallback<Token>,
+): HighlightCodeResult {
 	return reduce(
 		input,
 		tokens,
@@ -88,7 +100,7 @@ function reduceParserCore<Token extends TokenShape & {
 				// Will never be hit
 				case "EOF":
 				case "SOF":
-					return {value: ""};
+					return {value: markup``};
 
 				default:
 					// We should have refined `token` to not include any of the base tokens
@@ -102,9 +114,9 @@ function reduce<Token extends TokenShape>(
 	input: string,
 	tokens: Array<Token>,
 	callback: ReduceCallback<Token>,
-): string {
+): HighlightCodeResult {
 	let prevEnd = 0;
-	let buff = "";
+	let parts: Array<Markup> = [];
 
 	for (let i = 0; i < tokens.length; i++) {
 		const token = tokens[i];
@@ -113,44 +125,52 @@ function reduce<Token extends TokenShape>(
 		let value = input.slice(start, end);
 
 		// Add on text between tokens
-		buff += escapeMarkup(input.slice(prevEnd, start));
+		parts.push(markup`${input.slice(prevEnd, start)}`);
 		prevEnd = end;
 
+		// Print this token
 		// We need to break up the token text into lines, so that we can easily split the highlighted newlines and have the ansi codes be unbroken
-		const lines = value.split("\n");
+		const lines = splitLines(value);
+		for (let i = 0; i < lines.length; i++) {
+			const line = lines[i];
 
-		const values: Array<string> = lines.map((line) => {
-			if (line === "") {
-				return "";
-			} else {
+			if (line !== "") {
 				const prev = tokens[i - 1];
 				const next = tokens[i + 1];
-				const escapedLine = escapeMarkup(line);
+				const escapedLine = markup`${line}`;
 				const res = callback(token, escapedLine, prev, next);
 				if (res === undefined) {
-					return escapedLine;
+					parts.push(escapedLine);
 				} else {
 					const {value = escapedLine, type} = res;
 					if (type === undefined) {
-						return value;
+						parts.push(value);
 					} else {
-						return markupTag("token", value, {type});
+						parts.push(markupTag("token", value, {type}));
 					}
 				}
 			}
-		});
 
-		buff += values.join("\n");
+			// Last element isn't a line break
+			const isLast = i === lines.length - 1;
+			if (!isLast) {
+				parts.push(markup`\n`);
+			}
+		}
 	}
 
-	return buff;
+	return splitLines(concatMarkup(parts).value).map((line) =>
+		convertToMarkupFromRandomString(line)
+	);
 }
 
-function invalidHighlight(line: string): ReduceCallbackResult {
-	return {value: markupTag("emphasis", markupTag("color", line, {bg: "red"}))};
+function invalidHighlight(line: Markup): ReduceCallbackResult {
+	return {
+		value: markupTag("emphasis", markupTag("color", line, {bg: "red"})),
+	};
 }
 
-function highlightJSON({input, path}: AnsiHighlightOptions): string {
+function highlightJSON({input, path}: AnsiHighlightOptions): HighlightCodeResult {
 	const tokens = tokenizeJSON({
 		input,
 		// Wont be used anywhere but activates JSON extensions if necessary
@@ -204,7 +224,7 @@ function highlightJSON({input, path}: AnsiHighlightOptions): string {
 	);
 }
 
-function highlightHTML({input, path}: AnsiHighlightOptions): string {
+function highlightHTML({input, path}: AnsiHighlightOptions): HighlightCodeResult {
 	const tokens = tokenizeHTML({
 		input,
 		path,
@@ -245,7 +265,7 @@ function highlightHTML({input, path}: AnsiHighlightOptions): string {
 function highlightJS(
 	{input, path}: AnsiHighlightOptions,
 	sourceType: ConstJSSourceType,
-): string {
+): HighlightCodeResult {
 	const tokens = tokenizeJS({
 		input,
 		sourceType,
@@ -340,11 +360,12 @@ function highlightJS(
 					}
 
 					// These are contextual keywords
+					const word = value.value;
 					if (
-						value === "from" ||
-						value === "let" ||
-						value === "async" ||
-						value === "await"
+						word === "from" ||
+						word === "let" ||
+						word === "async" ||
+						word === "await"
 					) {
 						return {type: "keyword"};
 					}

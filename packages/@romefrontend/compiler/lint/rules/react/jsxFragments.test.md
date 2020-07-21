@@ -21,8 +21,8 @@
 
     1   │ - <Fragment>
       1 │ + <>
-    2 2 │     <Foo />
-    3 3 │     <Foo />
+    2 2 │   → <Foo·/>
+    3 3 │   → <Foo·/>
     4   │ - </Fragment>
       4 │ + </>
 
@@ -59,8 +59,8 @@
 
     1   │ - <React.Fragment>
       1 │ + <>
-    2 2 │     <Foo />
-    3 3 │     <Foo />
+    2 2 │   → <Foo·/>
+    3 3 │   → <Foo·/>
     4   │ - </React.Fragment>
       4 │ + </>
 
@@ -97,8 +97,8 @@
 
     1   │ - <Fragment>
       1 │ + <>
-    2 2 │     <Foo />
-    3 3 │     <Foo />
+    2 2 │   → <Foo·/>
+    3 3 │   → <Foo·/>
     4   │ - </Fragment>
       4 │ + </>
 
@@ -135,8 +135,8 @@ const Hello = <div>
 
     1   │ - <React.Fragment>
       1 │ + <>
-    2 2 │     <Foo />
-    3 3 │     <Foo />
+    2 2 │   → <Foo·/>
+    3 3 │   → <Foo·/>
     4   │ - </React.Fragment>
       4 │ + </>
 
@@ -173,8 +173,8 @@ const Hello = <div>
 
     1   │ - <React.Fragment>
       1 │ + <>
-    2 2 │     <Foo />
-    3 3 │     <Foo />
+    2 2 │   → <Foo·/>
+    3 3 │   → <Foo·/>
     4   │ - </React.Fragment>
       4 │ + </>
 
@@ -211,8 +211,8 @@ const Hello = <>
 
     1   │ - <Fragment>
       1 │ + <>
-    2 2 │     <Foo />
-    3 3 │     <Foo />
+    2 2 │   → <Foo·/>
+    3 3 │   → <Foo·/>
     4   │ - </Fragment>
       4 │ + </>
 
@@ -252,8 +252,8 @@ const Hello = <>
 
     1   │ - <React.Fragment>
       1 │ + <>
-    2 2 │     <Foo />
-    3 3 │     <Foo />
+    2 2 │   → <Foo·/>
+    3 3 │   → <Foo·/>
     4   │ - </React.Fragment>
       4 │ + </>
 
@@ -296,8 +296,8 @@ function Foo() {
 
     1   │ - <Fragment>
       1 │ + <>
-    2 2 │     <Foo />
-    3 3 │     <Foo />
+    2 2 │   → <Foo·/>
+    3 3 │   → <Foo·/>
     4   │ - </Fragment>
       4 │ + </>
 
@@ -339,8 +339,8 @@ function Foo() {
 
     1   │ - <React.Fragment>
       1 │ + <>
-    2 2 │     <Foo />
-    3 3 │     <Foo />
+    2 2 │   → <Foo·/>
+    3 3 │   → <Foo·/>
     4   │ - </React.Fragment>
       4 │ + </>
 
@@ -381,8 +381,8 @@ function Hello() {
 
     1   │ - <Fragment>
       1 │ + <>
-    2 2 │     <Foo />
-    3 3 │     <Foo />
+    2 2 │   → <Foo·/>
+    3 3 │   → <Foo·/>
     4   │ - </Fragment>
       4 │ + </>
 
@@ -421,8 +421,8 @@ function Hello() {
 
     1   │ - <React.Fragment>
       1 │ + <>
-    2 2 │     <Foo />
-    3 3 │     <Foo />
+    2 2 │   → <Foo·/>
+    3 3 │   → <Foo·/>
     4   │ - </React.Fragment>
       4 │ + </>
 
@@ -461,8 +461,8 @@ function Hello() {
 
     1   │ - <Fragment>
       1 │ + <>
-    2 2 │     <Foo />
-    3 3 │     <Foo />
+    2 2 │   → <Foo·/>
+    3 3 │   → <Foo·/>
     4   │ - </Fragment>
       4 │ + </>
 

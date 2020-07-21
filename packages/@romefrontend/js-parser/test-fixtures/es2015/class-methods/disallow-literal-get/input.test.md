@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unknown class property start"}
+				message: SAFE_MARKUP {
+					value: "Unknown class property start"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

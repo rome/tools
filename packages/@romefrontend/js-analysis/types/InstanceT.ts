@@ -13,6 +13,7 @@ import {HumanBuilder} from "../Utils";
 import StringLiteralT from "./StringLiteralT";
 import GetPropT from "./GetPropT";
 import ObjT from "./ObjT";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 export default class InstanceT extends ObjT {
 	constructor(
@@ -67,13 +68,13 @@ export default class InstanceT extends ObjT {
 		);
 	}
 
-	humanize(builder: HumanBuilder): string {
+	humanize(builder: HumanBuilder): Markup {
 		const name = builder.humanize(this.target);
 		const typeParams = this.typeParameters;
 		if (typeParams.length === 0) {
-			return name;
+			return markup`${name}`;
 		} else {
-			return `${name}<${typeParams.map((param) => builder.humanize(param)).join(
+			return markup`${name}<${typeParams.map((param) => builder.humanize(param)).join(
 				", ",
 			)}>`;
 		}

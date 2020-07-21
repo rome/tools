@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Octal literal in strict mode"}
+				message: SAFE_MARKUP {
+					value: "Octal literal in strict mode"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

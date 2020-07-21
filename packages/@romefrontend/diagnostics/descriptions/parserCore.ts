@@ -3,9 +3,9 @@ import {markup} from "@romefrontend/cli-layout";
 
 // @romefrontend/parser-core
 export const parserCore = createDiagnosticsCategory({
-	EXPECTED_SPACE: "Expected no space between",
-	EXPECTED_EOF: "Expected end of file",
-	UNEXPECTED_EOF: "Unexpected end of file",
+	EXPECTED_SPACE: {message: markup`Expected no space between`},
+	EXPECTED_EOF: {message: markup`Expected end of file`},
+	UNEXPECTED_EOF: {message: markup`Unexpected end of file`},
 	UNEXPECTED: (type: string) => ({
 		message: markup`Unexpected ${type}`,
 	}),

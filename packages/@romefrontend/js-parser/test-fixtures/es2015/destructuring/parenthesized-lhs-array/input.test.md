@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Invalid parenthesized binding"}
+				message: SAFE_MARKUP {
+					value: "Invalid parenthesized binding"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

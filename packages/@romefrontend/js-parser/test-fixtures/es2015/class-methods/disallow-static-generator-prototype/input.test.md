@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Classes may not have static property named prototype"}
+				message: SAFE_MARKUP {
+					value: "Classes may not have static property named prototype"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

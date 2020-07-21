@@ -15,6 +15,7 @@ import {
 	ARIARoleDefinition,
 	ariaRolesMap,
 } from "@romefrontend/compiler/lint/utils/aria";
+import {markup} from "@romefrontend/cli-layout";
 
 type CreateFixableDiagnostic = {
 	context: CompilerContext;
@@ -45,8 +46,8 @@ function createFixableDiagnostic(
 	}
 	const titleSuggestion =
 		ariaAttributesToRemove.length > 0
-			? "Remove the role attribute and ARIA attributes."
-			: "Remove the role attribute.";
+			? markup`Remove the role attribute and ARIA attributes.`
+			: markup`Remove the role attribute.`;
 	const fixed = {
 		...node,
 		attributes: node.attributes.filter((attr) => {
@@ -73,7 +74,7 @@ function createFixableDiagnostic(
 			suggestions: [
 				{
 					title: titleSuggestion,
-					description: "",
+					description: markup``,
 					fixed,
 				},
 			],

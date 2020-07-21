@@ -36,7 +36,10 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "await is not allowed in async function parameters"}
+				message: SAFE_MARKUP {
+					value: "await is not allowed in async function parameters"
+					toString: Function toString
+				}
 			}
 			location: Object {
 				filename: "input.js"

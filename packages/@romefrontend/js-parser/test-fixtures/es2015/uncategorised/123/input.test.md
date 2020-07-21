@@ -50,16 +50,6 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse/js"}]
-			description: Object {
-				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "super() is only valid inside a class constructor of a subclass"}
-				advice: Array [
-					log {
-						category: "info"
-						text: "Maybe a typo in the method name ('constructor') or not extending another class?"
-					}
-				]
-			}
 			location: Object {
 				filename: "input.js"
 				mtime: undefined
@@ -74,6 +64,22 @@ JSRoot {
 					index: 40
 					line: 1
 				}
+			}
+			description: Object {
+				category: "parse/js"
+				message: SAFE_MARKUP {
+					value: "super() is only valid inside a class constructor of a subclass"
+					toString: Function toString
+				}
+				advice: Array [
+					log {
+						category: "info"
+						text: SAFE_MARKUP {
+							value: "Maybe a typo in the method name ('constructor') or not extending another class?"
+							toString: Function toString
+						}
+					}
+				]
 			}
 		}
 	]

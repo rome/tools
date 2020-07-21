@@ -8,9 +8,10 @@
 import {commandCategories} from "../../common/commands";
 import {createLocalCommand} from "../commands";
 import ClientRequest from "../ClientRequest";
+import {markup} from "@romefrontend/cli-layout";
 
 export default createLocalCommand({
-	description: "get the current daemon status",
+	description: markup`get the current daemon status`,
 	category: commandCategories.PROCESS_MANAGEMENT,
 	usage: "",
 	examples: [],
@@ -34,7 +35,7 @@ export default createLocalCommand({
 				return false;
 			}
 		} else {
-			reporter.error("Server not running.");
+			reporter.error(markup`Server not running.`);
 			return false;
 		}
 	},
