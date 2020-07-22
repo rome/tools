@@ -20,7 +20,7 @@ $ rome rage --summary
 ## Steps To Reproduce
 
 <!-- Provide a detailed list of steps that reproduce the issue. -->
-<!-- The more information and included steps, the quicker your reort can be confirmed and addressed! -->
+<!-- The more information and included steps, the quicker your report can be confirmed and addressed! -->
 
 1.
 2.

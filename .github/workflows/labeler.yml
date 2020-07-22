@@ -1,11 +1,13 @@
 name: "Pull Request Labeler"
 on:
-- pull_request
+  schedule:
+  - cron: "0 * * * *"
 
 jobs:
   triage:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/labeler@v2
+    - uses: jpmcb/prow-github-actions
       with:
-        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+        jobs: 'pr-labeler'
+        github-token: "${{ secrets.GITHUB_TOKEN }}"

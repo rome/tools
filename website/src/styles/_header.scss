@@ -11,7 +11,7 @@
 	right: 0;
 	top: 0;
 	align-items: center;
-	padding: 0 $unit;
+	padding-left: $unit;
 	border-top: 5px solid var(--top-border-color);
 
 	.stretch {
@@ -26,13 +26,21 @@
 }
 
 .header-desktop {
-	height: $unit * 4;
 	display: flex;
 	align-items: center;
-	padding: 0 $unit;
 	width: 100%;
+	justify-content: center;
+	height: 96px;
+	min-height: 96px;
+	border-bottom: 1px solid var(--soft-border-color);
+
 	@include mobile-only() {
 		display: none;
+	}
+
+	.logo {
+		margin: 0;
+		padding: 0;
 	}
 
 	a:hover{
@@ -45,13 +53,18 @@
 	align-items: flex-end;
 	text-decoration: none;
 	font-size: 44px;
-	margin-left: $unit;
 	margin-bottom: $unit * 2;
 	opacity: 1;
 
+	@include desktop-only() {
+		margin-left: $unit;
+	}
+
 	svg {
-		width: 1em;
-		margin-right: $unit / 2;
+		width: 210px;
+		@include mobile-only() {
+			width: 140px;
+		}
 
 		.cls-1 {
 			fill: var(--logo-font-color);
@@ -65,10 +78,10 @@
 		font-family: Libre Baskerville, serif;
 		font-weight: bold;
 		position: relative;
-		top: 5.5px;
+		top: 6.9px;
 		margin: 0;
 		@include mobile-only() {
-			top: 3.5px;
+			top: 4.7px;
 		}
 	}
 
@@ -79,20 +92,23 @@
 }
 
 .mobile-handle {
-	height: 32px;
-	width: 32px;
 	display: none;
+	width: 58px;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
 
 	svg {
 		height: 32px;
 		width: 32px;
 	}
 
-	svg path {
+	svg rect, svg path {
 		fill: var(--top-border-color);
 	}
 
+
 	@include mobile-only() {
-		display: inline-block;
+		display: inline-flex;
 	}
 }
