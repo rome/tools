@@ -283,6 +283,7 @@ export type AnyTSPrimary =
 	| n.TSConstructorType
 	| n.TSIntersectionTypeAnnotation
 	| n.TSTemplateLiteralTypeAnnotation
+	| n.TSConstKeyword
 	| AnyTSLiteralTypeAnnotation
 	| AnyTSKeywordTypeAnnotation;
 

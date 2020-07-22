@@ -182,10 +182,11 @@ JSRoot {
 									}
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 23
 										index: 166
@@ -195,23 +196,6 @@ JSRoot {
 										column: 18
 										index: 161
 										line: 3
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 23
-											index: 166
-											line: 3
-										}
-										start: Object {
-											column: 18
-											index: 161
-											line: 3
-										}
 									}
 								}
 							}
@@ -295,10 +279,11 @@ JSRoot {
 									line: 4
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 23
 										index: 191
@@ -308,23 +293,6 @@ JSRoot {
 										column: 18
 										index: 186
 										line: 4
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 23
-											index: 191
-											line: 4
-										}
-										start: Object {
-											column: 18
-											index: 186
-											line: 4
-										}
 									}
 								}
 							}
@@ -461,10 +429,11 @@ JSRoot {
 									}
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 20
 										index: 213
@@ -474,23 +443,6 @@ JSRoot {
 										column: 15
 										index: 208
 										line: 5
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 20
-											index: 213
-											line: 5
-										}
-										start: Object {
-											column: 15
-											index: 208
-											line: 5
-										}
 									}
 								}
 							}
@@ -574,10 +526,11 @@ JSRoot {
 									line: 6
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 21
 										index: 236
@@ -587,23 +540,6 @@ JSRoot {
 										column: 16
 										index: 231
 										line: 6
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 21
-											index: 236
-											line: 6
-										}
-										start: Object {
-											column: 16
-											index: 231
-											line: 6
-										}
 									}
 								}
 							}
@@ -721,10 +657,11 @@ JSRoot {
 									line: 7
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 21
 										index: 259
@@ -734,23 +671,6 @@ JSRoot {
 										column: 16
 										index: 254
 										line: 7
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 21
-											index: 259
-											line: 7
-										}
-										start: Object {
-											column: 16
-											index: 254
-											line: 7
-										}
 									}
 								}
 							}
@@ -885,10 +805,11 @@ JSRoot {
 									}
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 20
 										index: 281
@@ -898,23 +819,6 @@ JSRoot {
 										column: 15
 										index: 276
 										line: 8
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 20
-											index: 281
-											line: 8
-										}
-										start: Object {
-											column: 15
-											index: 276
-											line: 8
-										}
 									}
 								}
 							}
@@ -998,10 +902,11 @@ JSRoot {
 									line: 9
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 21
 										index: 304
@@ -1011,23 +916,6 @@ JSRoot {
 										column: 16
 										index: 299
 										line: 9
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 21
-											index: 304
-											line: 9
-										}
-										start: Object {
-											column: 16
-											index: 299
-											line: 9
-										}
 									}
 								}
 							}
@@ -1161,10 +1049,11 @@ JSRoot {
 									}
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 22
 										index: 328
@@ -1174,23 +1063,6 @@ JSRoot {
 										column: 17
 										index: 323
 										line: 10
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 22
-											index: 328
-											line: 10
-										}
-										start: Object {
-											column: 17
-											index: 323
-											line: 10
-										}
 									}
 								}
 							}
@@ -1290,10 +1162,11 @@ JSRoot {
 									}
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 23
 										index: 353
@@ -1303,23 +1176,6 @@ JSRoot {
 										column: 18
 										index: 348
 										line: 11
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 23
-											index: 353
-											line: 11
-										}
-										start: Object {
-											column: 18
-											index: 348
-											line: 11
-										}
 									}
 								}
 							}
@@ -1419,10 +1275,11 @@ JSRoot {
 									}
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 20
 										index: 376
@@ -1432,23 +1289,6 @@ JSRoot {
 										column: 15
 										index: 371
 										line: 13
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 20
-											index: 376
-											line: 13
-										}
-										start: Object {
-											column: 15
-											index: 371
-											line: 13
-										}
 									}
 								}
 							}
@@ -1532,10 +1372,11 @@ JSRoot {
 									line: 14
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 27
 										index: 405
@@ -1545,23 +1386,6 @@ JSRoot {
 										column: 22
 										index: 400
 										line: 14
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 27
-											index: 405
-											line: 14
-										}
-										start: Object {
-											column: 22
-											index: 400
-											line: 14
-										}
 									}
 								}
 							}
@@ -1713,10 +1537,11 @@ JSRoot {
 									line: 15
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 37
 										index: 444
@@ -1726,23 +1551,6 @@ JSRoot {
 										column: 32
 										index: 439
 										line: 15
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 37
-											index: 444
-											line: 15
-										}
-										start: Object {
-											column: 32
-											index: 439
-											line: 15
-										}
 									}
 								}
 							}
@@ -1892,10 +1700,11 @@ JSRoot {
 									line: 16
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 32
 										index: 478
@@ -1905,23 +1714,6 @@ JSRoot {
 										column: 27
 										index: 473
 										line: 16
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 32
-											index: 478
-											line: 16
-										}
-										start: Object {
-											column: 27
-											index: 473
-											line: 16
-										}
 									}
 								}
 							}
@@ -2238,10 +2030,11 @@ JSRoot {
 									line: 18
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 25
 										index: 525
@@ -2251,23 +2044,6 @@ JSRoot {
 										column: 20
 										index: 520
 										line: 18
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 25
-											index: 525
-											line: 18
-										}
-										start: Object {
-											column: 20
-											index: 520
-											line: 18
-										}
 									}
 								}
 							}
@@ -2400,10 +2176,11 @@ JSRoot {
 									line: 19
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 32
 										index: 559
@@ -2413,23 +2190,6 @@ JSRoot {
 										column: 27
 										index: 554
 										line: 19
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 32
-											index: 559
-											line: 19
-										}
-										start: Object {
-											column: 27
-											index: 554
-											line: 19
-										}
 									}
 								}
 							}
@@ -2578,10 +2338,11 @@ JSRoot {
 									line: 21
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 34
 										index: 596
@@ -2591,23 +2352,6 @@ JSRoot {
 										column: 29
 										index: 591
 										line: 21
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 34
-											index: 596
-											line: 21
-										}
-										start: Object {
-											column: 29
-											index: 591
-											line: 21
-										}
 									}
 								}
 							}
@@ -2836,10 +2580,11 @@ JSRoot {
 									line: 22
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 67
 										index: 665
@@ -2849,23 +2594,6 @@ JSRoot {
 										column: 62
 										index: 660
 										line: 22
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 67
-											index: 665
-											line: 22
-										}
-										start: Object {
-											column: 62
-											index: 660
-											line: 22
-										}
 									}
 								}
 							}
@@ -3339,10 +3067,11 @@ JSRoot {
 									line: 23
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 34
 										index: 701
@@ -3352,23 +3081,6 @@ JSRoot {
 										column: 29
 										index: 696
 										line: 23
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 34
-											index: 701
-											line: 23
-										}
-										start: Object {
-											column: 29
-											index: 696
-											line: 23
-										}
 									}
 								}
 							}
@@ -3533,10 +3245,11 @@ JSRoot {
 									line: 24
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 27
 										index: 730
@@ -3546,23 +3259,6 @@ JSRoot {
 										column: 22
 										index: 725
 										line: 24
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 27
-											index: 730
-											line: 24
-										}
-										start: Object {
-											column: 22
-											index: 725
-											line: 24
-										}
 									}
 								}
 							}
@@ -3695,10 +3391,11 @@ JSRoot {
 									line: 25
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 26
 										index: 758
@@ -3708,23 +3405,6 @@ JSRoot {
 										column: 21
 										index: 753
 										line: 25
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 26
-											index: 758
-											line: 25
-										}
-										start: Object {
-											column: 21
-											index: 753
-											line: 25
-										}
 									}
 								}
 							}
@@ -3859,10 +3539,11 @@ JSRoot {
 									line: 26
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 50
 										index: 810
@@ -3872,23 +3553,6 @@ JSRoot {
 										column: 45
 										index: 805
 										line: 26
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 50
-											index: 810
-											line: 26
-										}
-										start: Object {
-											column: 45
-											index: 805
-											line: 26
-										}
 									}
 								}
 							}
@@ -4274,10 +3938,11 @@ JSRoot {
 									}
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 22
 										index: 845
@@ -4287,23 +3952,6 @@ JSRoot {
 										column: 17
 										index: 840
 										line: 28
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 22
-											index: 845
-											line: 28
-										}
-										start: Object {
-											column: 17
-											index: 840
-											line: 28
-										}
 									}
 								}
 							}
@@ -4387,10 +4035,11 @@ JSRoot {
 									line: 29
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 25
 										index: 872
@@ -4400,23 +4049,6 @@ JSRoot {
 										column: 20
 										index: 867
 										line: 29
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 25
-											index: 872
-											line: 29
-										}
-										start: Object {
-											column: 20
-											index: 867
-											line: 29
-										}
 									}
 								}
 							}
@@ -4534,10 +4166,11 @@ JSRoot {
 									line: 30
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 26
 										index: 900
@@ -4547,23 +4180,6 @@ JSRoot {
 										column: 21
 										index: 895
 										line: 30
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 26
-											index: 900
-											line: 30
-										}
-										start: Object {
-											column: 21
-											index: 895
-											line: 30
-										}
 									}
 								}
 							}
@@ -4681,10 +4297,11 @@ JSRoot {
 									line: 31
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 28
 										index: 930
@@ -4694,23 +4311,6 @@ JSRoot {
 										column: 23
 										index: 925
 										line: 31
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 28
-											index: 930
-											line: 31
-										}
-										start: Object {
-											column: 23
-											index: 925
-											line: 31
-										}
 									}
 								}
 							}
@@ -4879,10 +4479,11 @@ JSRoot {
 									line: 33
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 61
 										index: 994
@@ -4892,23 +4493,6 @@ JSRoot {
 										column: 56
 										index: 989
 										line: 33
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 61
-											index: 994
-											line: 33
-										}
-										start: Object {
-											column: 56
-											index: 989
-											line: 33
-										}
 									}
 								}
 							}
@@ -5380,10 +4964,11 @@ JSRoot {
 									}
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 15
 										index: 1_012
@@ -5393,23 +4978,6 @@ JSRoot {
 										column: 10
 										index: 1_007
 										line: 35
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 15
-											index: 1_012
-											line: 35
-										}
-										start: Object {
-											column: 10
-											index: 1_007
-											line: 35
-										}
 									}
 								}
 							}
@@ -5509,10 +5077,11 @@ JSRoot {
 									}
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 15
 										index: 1_033
@@ -5522,23 +5091,6 @@ JSRoot {
 										column: 10
 										index: 1_028
 										line: 36
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 15
-											index: 1_033
-											line: 36
-										}
-										start: Object {
-											column: 10
-											index: 1_028
-											line: 36
-										}
 									}
 								}
 							}
@@ -5638,10 +5190,11 @@ JSRoot {
 									}
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 15
 										index: 1_057
@@ -5651,23 +5204,6 @@ JSRoot {
 										column: 10
 										index: 1_052
 										line: 37
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 15
-											index: 1_057
-											line: 37
-										}
-										start: Object {
-											column: 10
-											index: 1_052
-											line: 37
-										}
 									}
 								}
 							}
@@ -5751,10 +5287,11 @@ JSRoot {
 									line: 38
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 15
 										index: 1_080
@@ -5764,23 +5301,6 @@ JSRoot {
 										column: 10
 										index: 1_075
 										line: 38
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 15
-											index: 1_080
-											line: 38
-										}
-										start: Object {
-											column: 10
-											index: 1_075
-											line: 38
-										}
 									}
 								}
 							}
@@ -5932,10 +5452,11 @@ JSRoot {
 									line: 39
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
 									filename: "input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 15
 										index: 1_108
@@ -5945,23 +5466,6 @@ JSRoot {
 										column: 10
 										index: 1_103
 										line: 39
-									}
-								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 15
-											index: 1_108
-											line: 39
-										}
-										start: Object {
-											column: 10
-											index: 1_103
-											line: 39
-										}
 									}
 								}
 							}
