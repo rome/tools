@@ -24,7 +24,8 @@ For example, to run help:
 .\rome --help
 ```
 or you can directly use `rome` without any path referencing like below:
-```
+
+```bash
 rome --help
 ```
 
