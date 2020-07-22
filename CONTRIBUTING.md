@@ -13,9 +13,12 @@ git clone https://github.com/romefrontend/rome
 cd rome
 ./rome --help
 ```
+
 ## Developing on Windows
-you need to use the backslash(`\`) to run any rome commands on windows in place of forwardslash(`/`)
-For example, to run help
+
+You need to use the backslash (`\`) to run any `rome` command on Windows instead of the slash (`/`); Windows uses backslashes for file paths.
+
+For example, to run help:
 ```
 .\rome --help
 ```
