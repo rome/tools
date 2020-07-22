@@ -50,17 +50,11 @@ JSRoot {
 			}
 			description: Object {
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Label <emphasis>x</emphasis> is already declared"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Label <emphasis>x</emphasis> is already declared"}
 				advice: Array [
 					log {
 						category: "info"
-						text: SAFE_MARKUP {
-							value: "Defined already here"
-							toString: Function toString
-						}
+						text: SAFE_MARKUP {value: "Defined already here"}
 					}
 					frame {
 						location: Object {

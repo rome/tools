@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Unexpected keyword if"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Unexpected keyword if"}
 			}
 			location: Object {
 				filename: "input.js"

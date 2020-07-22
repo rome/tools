@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Object pattern cannot contains methods"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Object pattern cannot contains methods"}
 			}
 			location: Object {
 				filename: "input.js"

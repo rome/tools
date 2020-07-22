@@ -54,10 +54,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Bad character escape sequence"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Bad character escape sequence"}
 			}
 			location: Object {
 				filename: "input.js"

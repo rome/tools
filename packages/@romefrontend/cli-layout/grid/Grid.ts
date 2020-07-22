@@ -51,7 +51,7 @@ import {parseMarkup} from "../parse";
 import {Position} from "@romefrontend/parser-core";
 import {lineWrapValidator} from "../tags";
 import {formatAnsi} from "../ansi";
-import { pretty } from "@romefrontend/pretty-format";
+import {pretty} from "@romefrontend/pretty-format";
 
 type Cursor = {
 	line: Number1;
@@ -79,7 +79,7 @@ function createTag(
 }
 
 function joinColumns(columns: Columns): string {
-	return columns.filter(column => typeof column === "string").join("");
+	return columns.filter((column) => typeof column === "string").join("");
 }
 
 function sliceColumns(columns: Columns, start: Number1, end: Number1): string {
@@ -208,7 +208,7 @@ export default class Grid {
 					ranges: ranges.map(({ancestry, start, end}) => ({
 						start,
 						end,
-						ancestry: ancestry.map(tag => tag.name).join("|"),
+						ancestry: ancestry.map((tag) => tag.name).join("|"),
 					})),
 				};
 			}),
@@ -363,9 +363,7 @@ export default class Grid {
 			for (const {start, end, ancestry} of sortedRanges) {
 				catchUp(ob1Get1(end) - 1);
 
-				let substr = opts.normalizeText(
-					sliceColumns(columns, start, end)
-				);
+				let substr = opts.normalizeText(sliceColumns(columns, start, end));
 
 				// Format tags in reverse
 				for (let i = ancestry.length - 1; i >= 0; i--) {
@@ -450,7 +448,10 @@ export default class Grid {
 			// Soft wrap, inherit the previous lines indentation
 			if (currentLine !== undefined) {
 				let i = 0;
-				while (i < currentLine.columns.length && isWhitespace(currentLine.columns[i])) {
+				while (
+					i < currentLine.columns.length &&
+					isWhitespace(currentLine.columns[i])
+				) {
 					this.moveCursorRight();
 					this.lineStartMeta.indentationCount++;
 					i++;
@@ -685,7 +686,7 @@ export default class Grid {
 
 		if (end < start) {
 			throw new Error(
-			pretty`Range end for line index ${lineNo} is before the start. end(${end}) < start(${start}). Debug state: ${this.debugState()}`,
+				pretty`Range end for line index ${lineNo} is before the start. end(${end}) < start(${start}). Debug state: ${this.debugState()}`,
 			);
 		}
 
@@ -697,7 +698,11 @@ export default class Grid {
 				(range.start >= start && range.end <= end)
 			) {
 				throw new Error(
-					pretty`The line no #${lineNo} ranges ${range.start}-${range.end} (${sliceColumns(line.columns, range.start, range.end)}) and ${start}-${end} (${sliceColumns(line.columns, start, end)}) overlap. Debug state: ${this.debugState()}`,
+					pretty`The line no #${lineNo} ranges ${range.start}-${range.end} (${sliceColumns(
+						line.columns,
+						range.start,
+						range.end,
+					)}) and ${start}-${end} (${sliceColumns(line.columns, start, end)}) overlap. Debug state: ${this.debugState()}`,
 				);
 			}
 		}
@@ -1030,7 +1035,8 @@ export default class Grid {
 		if (
 			lineWrapMode === undefined &&
 			pointer === undefined &&
-			(subViewport !== undefined && subViewport === this.viewportWidth) &&
+			subViewport !== undefined &&
+			subViewport === this.viewportWidth &&
 			linePrefixes.width === ob1Coerce1(0) &&
 			startCursor.column === ob1Number1
 		) {

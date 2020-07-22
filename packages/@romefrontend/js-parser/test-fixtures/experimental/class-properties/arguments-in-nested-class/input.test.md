@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "'arguments' is not allowed in class field initializer"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "'arguments' is not allowed in class field initializer"}
 			}
 			location: Object {
 				filename: "input.js"

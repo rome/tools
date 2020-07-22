@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Statement outside of a case or default block"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Statement outside of a case or default block"}
 			}
 			location: Object {
 				filename: "input.js"

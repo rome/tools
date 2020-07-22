@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Invalid left-hand side in for-of statement"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Invalid left-hand side in for-of statement"}
 			}
 			location: Object {
 				filename: "input.js"

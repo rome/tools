@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Unknown JSX identifier token"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Unknown JSX identifier token"}
 			}
 			location: Object {
 				filename: "input.jsx"

@@ -49,7 +49,7 @@ export function convertPossibleNodeError(err: NodeJS.ErrnoException): Error {
 
 	switch (err.code) {
 		case "EPIPE":
-			return changeMessage(err, `Pipe closed on other end`);
+			return changeMessage(err, "Pipe closed on other end");
 	}
 
 	return err;

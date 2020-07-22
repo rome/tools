@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "super is only allowed in object methods and classes"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "super is only allowed in object methods and classes"}
 			}
 			location: Object {
 				filename: "input.js"

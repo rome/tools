@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Cannot have multiple rest elements when destructuring"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Cannot have multiple rest elements when destructuring"}
 			}
 			location: Object {
 				filename: "input.js"

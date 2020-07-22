@@ -71,7 +71,7 @@ import {writeFile} from "@romefrontend/fs";
 import {getEnvVar} from "@romefrontend/cli-environment";
 import {markup} from "@romefrontend/cli-layout";
 import prettyFormat from "@romefrontend/pretty-format";
-import { convertPossibleNodeError } from "@romefrontend/node";
+import {convertPossibleNodeError} from "@romefrontend/node";
 
 const STDOUT_MAX_CHUNK_LENGTH = 100_000;
 

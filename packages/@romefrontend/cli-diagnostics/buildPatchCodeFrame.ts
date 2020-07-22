@@ -193,8 +193,8 @@ export default function buildPatchCodeFrame(
 					afterLine,
 				)}${GUTTER}${marker} </viewLinePrefix>`,
 				markup`<viewLinePrefix type="middle"><dim>${createLineNos(
-					beforeLine === undefined ? undefined : "→",
-					afterLine === undefined ? undefined : "→",
+					beforeLine === undefined ? undefined : "\u2192",
+					afterLine === undefined ? undefined : "\u2192",
 				)}</dim>${GUTTER}${marker} </viewLinePrefix>`,
 			]);
 			let line = formatDiffLine(diffs);

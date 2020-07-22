@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Escape sequence in keyword const"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Escape sequence in keyword const"}
 			}
 			location: Object {
 				filename: "input.js"

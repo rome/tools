@@ -83,17 +83,11 @@ JSRoot {
 			}
 			description: Object {
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Unclosed array"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Unclosed array"}
 				advice: Array [
 					log {
 						category: "info"
-						text: SAFE_MARKUP {
-							value: "We expected to find the closing character <emphasis>]</emphasis> here"
-							toString: Function toString
-						}
+						text: SAFE_MARKUP {value: "We expected to find the closing character <emphasis>]</emphasis> here"}
 					}
 					frame {
 						location: Object {

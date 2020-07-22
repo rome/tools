@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "implements is a reserved word"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "implements is a reserved word"}
 			}
 			location: Object {
 				filename: "input.js"

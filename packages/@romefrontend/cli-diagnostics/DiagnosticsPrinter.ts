@@ -781,7 +781,8 @@ export default class DiagnosticsPrinter extends Error {
 		if (this.truncatedCount > 0) {
 			const {maxDiagnostics} = this.flags;
 			reporter.warn(
-				markup`Only <emphasis>${maxDiagnostics}</emphasis> errors shown. Add the <code>--show-all-diagnostics</code> flag or specify <code>--max-diagnostics ${"<num>"}</code> to view the remaining ${displayableProblems - maxDiagnostics} errors`,
+				markup`Only <emphasis>${maxDiagnostics}</emphasis> errors shown. Add the <code>--show-all-diagnostics</code> flag or specify <code>--max-diagnostics ${"<num>"}</code> to view the remaining ${displayableProblems -
+				maxDiagnostics} errors`,
 			);
 		}
 	}

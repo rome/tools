@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Unknown start to an class property value"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Unknown start to an class property value"}
 			}
 			location: Object {
 				filename: "input.js"

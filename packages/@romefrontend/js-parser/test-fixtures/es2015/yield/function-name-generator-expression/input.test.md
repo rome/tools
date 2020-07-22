@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Can not use 'yield' as identifier inside a generator"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
 			}
 			location: Object {
 				filename: "input.js"

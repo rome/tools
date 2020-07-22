@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Expected ts syntax to be enabled"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Expected ts syntax to be enabled"}
 			}
 			location: Object {
 				filename: "input.js"

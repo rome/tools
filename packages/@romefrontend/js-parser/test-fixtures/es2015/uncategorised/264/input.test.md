@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Unterminated template"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Unterminated template"}
 			}
 			location: Object {
 				filename: "input.js"

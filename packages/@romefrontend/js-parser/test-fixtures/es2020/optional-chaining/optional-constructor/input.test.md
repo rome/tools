@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "constructors in/after an Optional Chain are not allowed"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "constructors in/after an Optional Chain are not allowed"}
 			}
 			location: Object {
 				filename: "input.js"

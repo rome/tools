@@ -50,17 +50,11 @@ JSRoot {
 			}
 			description: Object {
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Only one default export allowed per module."
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Only one default export allowed per module."}
 				advice: Array [
 					log {
 						category: "info"
-						text: SAFE_MARKUP {
-							value: "Defined already here"
-							toString: Function toString
-						}
+						text: SAFE_MARKUP {value: "Defined already here"}
 					}
 					frame {
 						location: Object {

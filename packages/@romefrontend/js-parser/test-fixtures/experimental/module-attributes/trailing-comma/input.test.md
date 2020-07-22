@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Trailing comma is disallowed inside import(...) arguments"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}
 			}
 			location: Object {
 				filename: "input.js"

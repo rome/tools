@@ -48,7 +48,7 @@ export async function modifyGeneratedFile(
 	const file = await readGeneratedFile(path, hash || trailing);
 	if (file === undefined) {
 		reporter.warn(
-			markup`Generated file <emphasis>${path.toMarkup()}</emphasis> is the same`,
+			markup`Generated file <emphasis>${path}</emphasis> is the same`,
 		);
 		return;
 	}
@@ -131,7 +131,7 @@ export async function writeFile(path: AbsoluteFilePath, sourceText: string) {
 
 	// Write
 	await writeFileReal(path, sourceText);
-	reporter.success(markup`Wrote <emphasis>${path.toMarkup()}</emphasis>`);
+	reporter.success(markup`Wrote <emphasis>${path}</emphasis>`);
 }
 
 export function waitChildProcess(

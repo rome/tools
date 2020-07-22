@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Unexpected character <emphasis>\u200d</emphasis>"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Unexpected character <emphasis>\u200d</emphasis>"}
 			}
 			location: Object {
 				filename: "input.js"

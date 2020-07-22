@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "import() requires exactly one argument"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "import() requires exactly one argument"}
 			}
 			location: Object {
 				filename: "input.js"

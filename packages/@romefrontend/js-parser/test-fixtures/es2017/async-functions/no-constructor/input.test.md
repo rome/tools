@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Constructor cannot be async"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Constructor cannot be async"}
 			}
 			location: Object {
 				filename: "input.js"

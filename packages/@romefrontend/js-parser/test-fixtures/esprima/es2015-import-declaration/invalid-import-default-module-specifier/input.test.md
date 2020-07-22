@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "import missing a source"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "import missing a source"}
 			}
 			location: Object {
 				filename: "input.js"

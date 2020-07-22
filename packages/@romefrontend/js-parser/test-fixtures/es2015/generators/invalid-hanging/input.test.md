@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Generators can only be declared at the top level or inside a block"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Generators can only be declared at the top level or inside a block"}
 			}
 			location: Object {
 				filename: "input.js"

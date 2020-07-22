@@ -33,6 +33,20 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse/js"}]
+			description: Object {
+				category: "parse/js"
+				message: SAFE_MARKUP {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
+				advice: Array [
+					log {
+						category: "info"
+						text: SAFE_MARKUP {value: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"}
+					}
+					log {
+						category: "info"
+						text: SAFE_MARKUP {value: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"undefined\" />"}
+					}
+				]
+			}
 			location: Object {
 				filename: "input.js"
 				mtime: undefined
@@ -47,29 +61,6 @@ JSRoot {
 					index: 0
 					line: 1
 				}
-			}
-			description: Object {
-				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"
-					toString: Function toString
-				}
-				advice: Array [
-					log {
-						category: "info"
-						text: SAFE_MARKUP {
-							value: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"
-							toString: Function toString
-						}
-					}
-					log {
-						category: "info"
-						text: SAFE_MARKUP {
-							value: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"undefined\" />"
-							toString: Function toString
-						}
-					}
-				]
 			}
 		}
 	]

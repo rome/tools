@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Unknown start to an if test"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Unknown start to an if test"}
 			}
 			location: Object {
 				filename: "input.js"

@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "In strict mode code, functions can only be declared at top level or inside a block"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "In strict mode code, functions can only be declared at top level or inside a block"}
 			}
 			location: Object {
 				filename: "input.js"

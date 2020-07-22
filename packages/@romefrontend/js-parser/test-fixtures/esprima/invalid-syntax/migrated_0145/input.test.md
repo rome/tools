@@ -37,10 +37,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Unterminated comment"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Unterminated comment"}
 			}
 			location: Object {
 				filename: "input.js"

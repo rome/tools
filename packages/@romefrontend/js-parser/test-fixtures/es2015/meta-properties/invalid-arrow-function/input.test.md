@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "new.target can only be used in functions or class properties"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "new.target can only be used in functions or class properties"}
 			}
 			location: Object {
 				filename: "input.js"

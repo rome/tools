@@ -27,8 +27,8 @@ import {
 } from "@romefrontend/ob1";
 import {
 	Markup,
-	isEmptyMarkup,
 	concatMarkup,
+	isEmptyMarkup,
 	markup,
 	markupTag,
 } from "@romefrontend/cli-layout";

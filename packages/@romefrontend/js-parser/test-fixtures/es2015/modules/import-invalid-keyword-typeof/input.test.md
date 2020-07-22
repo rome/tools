@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Unexpected keyword typeof"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Unexpected keyword typeof"}
 			}
 			location: Object {
 				filename: "input.js"

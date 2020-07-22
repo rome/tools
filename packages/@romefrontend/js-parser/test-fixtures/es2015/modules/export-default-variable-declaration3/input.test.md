@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Only expressions, functions or classes are allowed as the `default` export."
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Only expressions, functions or classes are allowed as the `default` export."}
 			}
 			location: Object {
 				filename: "input.js"

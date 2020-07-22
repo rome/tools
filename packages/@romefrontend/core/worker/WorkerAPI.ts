@@ -108,9 +108,7 @@ export default class WorkerAPI {
 			);
 		}
 
-		this.logger.info(
-			markup`Generating module signature: ${ref.real}`,
-		);
+		this.logger.info(markup`Generating module signature: ${ref.real}`);
 
 		return await jsAnalysis.getModuleSignature({
 			ast,

@@ -53,10 +53,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Loop variable declaration may not have an initializer"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Loop variable declaration may not have an initializer"}
 			}
 			location: Object {
 				filename: "input.js"

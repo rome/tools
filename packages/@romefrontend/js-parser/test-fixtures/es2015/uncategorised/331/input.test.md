@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Unexpected token"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Unexpected token"}
 			}
 			location: Object {
 				filename: "input.js"

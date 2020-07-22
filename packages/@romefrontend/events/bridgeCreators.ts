@@ -213,11 +213,14 @@ export function createBridgeFromChildProcess<B extends Bridge>(
 	const bridge = new CustomBridge({
 		...opts,
 		sendMessage: (data: BridgeMessage) => {
-			proc.send(data, (err) => {
-				if (err != null) {
-					bridge.endWithError(err);
-				}
-			});
+			proc.send(
+				data,
+				(err) => {
+					if (err != null) {
+						bridge.endWithError(err);
+					}
+				},
+			);
 		},
 	});
 

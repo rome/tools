@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Started with `export async` so we expected to receive an async function but no function keyword was found"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Started with `export async` so we expected to receive an async function but no function keyword was found"}
 			}
 			location: Object {
 				filename: "input.js"

@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "setter function argument must not be a rest parameter"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "setter function argument must not be a rest parameter"}
 			}
 			location: Object {
 				filename: "input.js"

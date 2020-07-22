@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Duplicate regular expression flag"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Duplicate regular expression flag"}
 			}
 			location: Object {
 				filename: "input.js"

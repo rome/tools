@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "async can't contain a unicode escape"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "async can't contain a unicode escape"}
 			}
 			location: Object {
 				filename: "input.js"

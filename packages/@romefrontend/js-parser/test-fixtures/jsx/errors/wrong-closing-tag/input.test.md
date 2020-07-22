@@ -50,17 +50,11 @@ JSRoot {
 			}
 			description: Object {
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Expected a corresponding JSX closing tag for <emphasis>Foo</emphasis>"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Expected a corresponding JSX closing tag for <emphasis>Foo</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
-						text: SAFE_MARKUP {
-							value: "Originated from opening tag of <emphasis>Foo</emphasis>"
-							toString: Function toString
-						}
+						text: SAFE_MARKUP {value: "Originated from opening tag of <emphasis>Foo</emphasis>"}
 					}
 					frame {
 						location: Object {

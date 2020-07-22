@@ -21,7 +21,7 @@ import stringDiff from "@romefrontend/string-diff";
 import {getErrorStructure} from "@romefrontend/v8";
 import {prettyFormatToString} from "@romefrontend/pretty-format";
 import {FileReference} from "../common/types/files";
-import {markup, markupToPlainText} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/cli-layout";
 import {
 	AsyncFunc,
 	ExpectedError,
@@ -31,7 +31,6 @@ import {
 	TestSnapshotOptions,
 } from "@romefrontend-runtime/rome/test";
 import {cleanFrames} from "./TestWorkerRunner";
-import {joinMarkupLines} from "@romefrontend/cli-layout/format";
 
 function formatExpectedError(expected: ExpectedError): string {
 	if (typeof expected === "string") {
@@ -240,7 +239,7 @@ export default class TestAPI implements TestHelper {
 			advice.push({
 				type: "log",
 				category: "info",
-				text: markup`Comparison`
+				text: markup`Comparison`,
 			});
 
 			advice.push({
@@ -769,7 +768,9 @@ export default class TestAPI implements TestHelper {
 			}
 
 			// Compare the snapshots
-			const snapshotPath = this.snapshotManager.normalizeSnapshotPath(opts.filename);
+			const snapshotPath = this.snapshotManager.normalizeSnapshotPath(
+				opts.filename,
+			);
 			if (formatted !== existingSnapshot) {
 				const advice: DiagnosticAdvice = this.buildMatchAdvice(
 					formatted,

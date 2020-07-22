@@ -6,14 +6,14 @@
  */
 
 import {
+	Markup,
 	MarkupFormatOptions,
 	MarkupTagName,
-	Markup,
 	UserMarkupFormatGridOptions,
 	ansiEscapes,
+	concatMarkup,
 	convertToMarkupFromRandomString,
 	isEmptyMarkup,
-	concatMarkup,
 	markup,
 	markupTag,
 	markupToAnsi,
@@ -1017,9 +1017,7 @@ export default class Reporter {
 		}
 
 		if (truncatedCount > 0) {
-			this.logAll(
-				markup`<dim>and ${truncatedCount} others...</dim>`,
-			);
+			this.logAll(markup`<dim>and ${truncatedCount} others...</dim>`);
 			return {truncated: true};
 		} else {
 			return {truncated: false};

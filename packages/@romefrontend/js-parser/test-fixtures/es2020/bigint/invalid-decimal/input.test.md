@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "A bigint can't have a decimal"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "A bigint can't have a decimal"}
 			}
 			location: Object {
 				filename: "input.js"

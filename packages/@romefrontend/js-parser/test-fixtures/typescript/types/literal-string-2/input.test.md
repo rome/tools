@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Template literal types cannot have any substitution"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Template literal types cannot have any substitution"}
 			}
 			location: Object {
 				filename: "input.ts"

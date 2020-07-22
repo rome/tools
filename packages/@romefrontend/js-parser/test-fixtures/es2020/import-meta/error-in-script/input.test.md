@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "import.meta may only appear in a module"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "import.meta may only appear in a module"}
 			}
 			location: Object {
 				filename: "input.js"

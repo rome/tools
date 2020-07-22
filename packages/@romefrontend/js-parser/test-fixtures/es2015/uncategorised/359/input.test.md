@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Can not use 'await' as identifier inside an async function"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Can not use 'await' as identifier inside an async function"}
 			}
 			location: Object {
 				filename: "input.js"

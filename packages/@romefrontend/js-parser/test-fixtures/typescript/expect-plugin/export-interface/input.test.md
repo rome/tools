@@ -33,6 +33,16 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse/js"}]
+			description: Object {
+				category: "parse/js"
+				message: SAFE_MARKUP {value: "A interface declaration is only valid inside of a TypeScript file"}
+				advice: Array [
+					log {
+						category: "info"
+						text: SAFE_MARKUP {value: "To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>"}
+					}
+				]
+			}
 			location: Object {
 				filename: "input.js"
 				mtime: undefined
@@ -47,22 +57,6 @@ JSRoot {
 					index: 7
 					line: 1
 				}
-			}
-			description: Object {
-				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "A interface declaration is only valid inside of a TypeScript file"
-					toString: Function toString
-				}
-				advice: Array [
-					log {
-						category: "info"
-						text: SAFE_MARKUP {
-							value: "To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>"
-							toString: Function toString
-						}
-					}
-				]
 			}
 		}
 	]

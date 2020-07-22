@@ -67,17 +67,11 @@ JSRoot {
 			}
 			description: Object {
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Argument <emphasis>__proto__</emphasis> name clash in strict mode"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Argument <emphasis>__proto__</emphasis> name clash in strict mode"}
 				advice: Array [
 					log {
 						category: "info"
-						text: SAFE_MARKUP {
-							value: "Defined already here"
-							toString: Function toString
-						}
+						text: SAFE_MARKUP {value: "Defined already here"}
 					}
 					frame {
 						location: Object {

@@ -67,6 +67,7 @@ export default createServerCommand({
 								updateSnapshots: flags.fix,
 								showAllCoverage: false,
 								syncTests: false,
+								sourceMaps: true,
 							},
 						);
 					},

@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "A parameter property may not be declared using a binding pattern."
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "A parameter property may not be declared using a binding pattern."}
 			}
 			location: Object {
 				filename: "input.ts"

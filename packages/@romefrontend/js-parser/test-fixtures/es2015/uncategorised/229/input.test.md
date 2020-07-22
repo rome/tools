@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Unexpected keyword super"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Unexpected keyword super"}
 			}
 			location: Object {
 				filename: "input.js"

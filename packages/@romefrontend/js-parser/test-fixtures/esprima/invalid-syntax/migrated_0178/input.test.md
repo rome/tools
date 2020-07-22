@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Unknown label <emphasis>x</emphasis>"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Unknown label <emphasis>x</emphasis>"}
 			}
 			location: Object {
 				filename: "input.js"

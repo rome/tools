@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Flow type cast expressions aren't allowed in TypeScript"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Flow type cast expressions aren't allowed in TypeScript"}
 			}
 			location: Object {
 				filename: "input.ts"

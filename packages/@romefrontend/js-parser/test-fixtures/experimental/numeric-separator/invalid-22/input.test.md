@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Invalid or unexpected int token"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Invalid or unexpected int token"}
 			}
 			location: Object {
 				filename: "input.js"

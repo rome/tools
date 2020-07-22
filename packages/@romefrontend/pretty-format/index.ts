@@ -49,9 +49,7 @@ const DEFAULT_OPTIONS: FormatOptions = {
 export const CUSTOM_PRETTY_FORMAT = Symbol.for("custom-pretty-format");
 
 export function prettyFormatToString(value: unknown): string {
-	return joinMarkupLines(
-		markupToPlainText(prettyFormat(value)),
-	);
+	return joinMarkupLines(markupToPlainText(prettyFormat(value)));
 }
 
 export function pretty(
@@ -71,7 +69,7 @@ export function pretty(
 		out += prettyFormatToString(value);
 	}
 
-	return out;;
+	return out;
 }
 
 export default function prettyFormat(

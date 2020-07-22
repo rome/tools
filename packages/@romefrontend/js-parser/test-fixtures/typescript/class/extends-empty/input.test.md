@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "extends list cannot be empty"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "extends list cannot be empty"}
 			}
 			location: Object {
 				filename: "input.ts"

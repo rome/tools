@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "await* has been removed from the async functions proposal. Use Promise.all() instead."
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "await* has been removed from the async functions proposal. Use Promise.all() instead."}
 			}
 			location: Object {
 				filename: "input.js"

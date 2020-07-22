@@ -116,7 +116,7 @@ function showInvisibleChar(char: string): undefined | string | Markup {
 
 		case "\t":
 			// TODO this should be repeated for tabWidth
-			return "→ "; // Rightwards Arrow
+			return "\u2192 "; // Rightwards Arrow
 
 		case "\0":
 			return "\u2400"; // Null Symbol

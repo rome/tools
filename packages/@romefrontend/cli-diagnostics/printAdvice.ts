@@ -28,8 +28,8 @@ import buildPatchCodeFrame from "./buildPatchCodeFrame";
 import buildCodeFrame from "./buildCodeFrame";
 import {
 	Markup,
-	isEmptyMarkup,
 	concatMarkup,
+	isEmptyMarkup,
 	markup,
 	markupTag,
 	normalizeMarkup,
@@ -295,9 +295,7 @@ function printList(
 }
 
 function printTruncated(reporter: Reporter, chars: number) {
-	reporter.logAll(
-		markup`<dim>${chars} more characters truncated</dim>`,
-	);
+	reporter.logAll(markup`<dim>${chars} more characters truncated</dim>`);
 }
 
 function printCode(

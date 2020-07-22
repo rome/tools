@@ -16,9 +16,9 @@ import {
 import {parseMarkup} from "./parse";
 import {
 	Markup,
+	concatMarkup,
 	convertToMarkupFromRandomString,
 	isEmptyMarkup,
-	concatMarkup,
 	markup,
 } from "./escape";
 import Grid from "./grid/Grid";

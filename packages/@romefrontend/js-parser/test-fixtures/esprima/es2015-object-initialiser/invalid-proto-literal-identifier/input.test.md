@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Redefinition of __proto__ property"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Redefinition of __proto__ property"}
 			}
 			location: Object {
 				filename: "input.js"

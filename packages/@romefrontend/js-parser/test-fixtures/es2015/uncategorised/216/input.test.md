@@ -54,10 +54,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Code point out of bounds"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Code point out of bounds"}
 			}
 			location: Object {
 				filename: "input.js"

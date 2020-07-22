@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Illegal newline after throw"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Illegal newline after throw"}
 			}
 			location: Object {
 				filename: "input.js"

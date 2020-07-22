@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Unexpected token, expected \"number\""
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Unexpected token, expected \"number\""}
 			}
 			location: Object {
 				filename: "input.ts"

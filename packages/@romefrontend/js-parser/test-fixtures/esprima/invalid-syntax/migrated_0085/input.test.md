@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Function parameters can't be parenthesized"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Function parameters can't be parenthesized"}
 			}
 			location: Object {
 				filename: "input.js"

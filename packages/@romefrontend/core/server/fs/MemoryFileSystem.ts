@@ -434,9 +434,7 @@ export default class MemoryFileSystem {
 		}
 
 		// Wait for any subscribers that might need the file's stats
-		this.server.logger.info(
-			markup`[MemoryFileSystem] File deleted: ${path}`,
-		);
+		this.server.logger.info(markup`[MemoryFileSystem] File deleted: ${path}`);
 
 		// Only emit these events for files
 		if (directoryInfo === undefined) {

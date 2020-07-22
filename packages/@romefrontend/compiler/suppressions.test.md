@@ -11,10 +11,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/duplicate"
-				message: SAFE_MARKUP {
-					value: "Duplicate suppression category <emphasis>dog</emphasis>"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Duplicate suppression category <emphasis>dog</emphasis>"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -34,10 +31,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/duplicate"
-				message: SAFE_MARKUP {
-					value: "Duplicate suppression category <emphasis>dog</emphasis>"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Duplicate suppression category <emphasis>dog</emphasis>"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -126,10 +120,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
-				message: SAFE_MARKUP {
-					value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -149,10 +140,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
-				message: SAFE_MARKUP {
-					value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -172,10 +160,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
-				message: SAFE_MARKUP {
-					value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -195,10 +180,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
-				message: SAFE_MARKUP {
-					value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -218,10 +200,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
-				message: SAFE_MARKUP {
-					value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -241,10 +220,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
-				message: SAFE_MARKUP {
-					value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -264,10 +240,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
-				message: SAFE_MARKUP {
-					value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -458,10 +431,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
-				message: SAFE_MARKUP {
-					value: "overlap suppression category <emphasis>foo</emphasis>"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "overlap suppression category <emphasis>foo</emphasis>"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -481,10 +451,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
-				message: SAFE_MARKUP {
-					value: "overlap suppression category <emphasis>foo</emphasis>"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "overlap suppression category <emphasis>foo</emphasis>"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -591,10 +558,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
-				message: SAFE_MARKUP {
-					value: "overlap suppression category <emphasis>foo</emphasis>"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "overlap suppression category <emphasis>foo</emphasis>"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -682,10 +646,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
-				message: SAFE_MARKUP {
-					value: "overlap suppression category <emphasis>foo</emphasis>"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "overlap suppression category <emphasis>foo</emphasis>"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -754,10 +715,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
-				message: SAFE_MARKUP {
-					value: "overlap suppression category <emphasis>foo</emphasis>"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "overlap suppression category <emphasis>foo</emphasis>"}
 			}
 			location: Object {
 				filename: "unknown"

@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Complex binding patterns require an initialization value"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Complex binding patterns require an initialization value"}
 			}
 			location: Object {
 				filename: "input.ts"

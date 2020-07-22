@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Illegal 'use strict' directive in function with non-simple parameter list"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Illegal 'use strict' directive in function with non-simple parameter list"}
 			}
 			location: Object {
 				filename: "input.js"

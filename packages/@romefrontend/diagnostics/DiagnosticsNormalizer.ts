@@ -8,8 +8,8 @@
 import {Diagnostic, DiagnosticAdviceItem, DiagnosticLocation} from "./types";
 import {SourceMapConsumerCollection} from "@romefrontend/codec-source-map";
 import {
-	MarkupFormatNormalizeOptions,
 	Markup,
+	MarkupFormatNormalizeOptions,
 	normalizeMarkup,
 } from "@romefrontend/cli-layout";
 import {ob1Number0, ob1Number0Neg1, ob1Number1} from "@romefrontend/ob1";

@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Unexpected type cast in parameter position"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Unexpected type cast in parameter position"}
 			}
 			location: Object {
 				filename: "input.ts"

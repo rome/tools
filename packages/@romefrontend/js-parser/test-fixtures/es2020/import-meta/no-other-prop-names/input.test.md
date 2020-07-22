@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "The only valid meta property for import is import.meta"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "The only valid meta property for import is import.meta"}
 			}
 			location: Object {
 				filename: "input.js"

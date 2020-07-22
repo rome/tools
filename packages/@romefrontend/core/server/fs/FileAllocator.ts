@@ -96,9 +96,7 @@ export default class FileAllocator {
 			filename,
 		});
 
-		this.server.logger.info(
-			markup`[FileAllocator] Evicted %s ${path}`,
-		);
+		this.server.logger.info(markup`[FileAllocator] Evicted %s ${path}`);
 	}
 
 	async handleDeleted(path: AbsoluteFilePath) {
@@ -153,9 +151,7 @@ export default class FileAllocator {
 				markup`[FileAllocator] Evicted the project belonging to config ${path}`,
 			);
 		} else {
-			logger.info(
-				markup`[FileAllocator] No owner for eviction ${path}`,
-			);
+			logger.info(markup`[FileAllocator] No owner for eviction ${path}`);
 		}
 	}
 

@@ -12,7 +12,7 @@ import {createUnknownFilePath} from "@romefrontend/path";
 import {dedent} from "@romefrontend/string-utils";
 import {ob1Coerce1} from "@romefrontend/ob1";
 import {ROOT, modifyGeneratedFile} from "../_utils";
-import {concatMarkup} from "@romefrontend/cli-layout";
+import {concatMarkup, markup} from "@romefrontend/cli-layout";
 
 const {worker, performFileOperation} = createMockWorker();
 

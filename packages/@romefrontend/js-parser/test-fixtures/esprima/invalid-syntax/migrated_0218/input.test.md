@@ -36,10 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {
-					value: "Legacy octal literals are not allowed in strict mode"
-					toString: Function toString
-				}
+				message: SAFE_MARKUP {value: "Legacy octal literals are not allowed in strict mode"}
 			}
 			location: Object {
 				filename: "input.js"

@@ -7,7 +7,11 @@
 
 import {Dict} from "@romefrontend/typescript-helpers";
 import {MarkupTagName} from "./types";
-import { RelativeFilePath, AbsoluteFilePath, URLFilePath } from "@romefrontend/path";
+import {
+	AbsoluteFilePath,
+	RelativeFilePath,
+	URLFilePath,
+} from "@romefrontend/path";
 
 // Awkward name since we should only be doing this very very sparingly
 export function convertToMarkupFromRandomString(unsafe: string): Markup {
@@ -17,7 +21,9 @@ export function convertToMarkupFromRandomString(unsafe: string): Markup {
 // A tagged template literal helper that will escape all interpolated strings, ensuring only markup works
 export function markup(
 	strs: TemplateStringsArray,
-	...values: Array<Markup | string | number | RelativeFilePath | AbsoluteFilePath | URLFilePath>
+	...values: Array<
+		Markup | string | number | RelativeFilePath | AbsoluteFilePath | URLFilePath
+	>
 ): Markup {
 	let out = "";
 
@@ -34,9 +40,16 @@ export function markup(
 			out += `<number>${String(value)}</number>`;
 		} else if (value instanceof URLFilePath) {
 			out += markup`<hyperlink target="${value.join()}" />`.value;
-		} else if (value instanceof RelativeFilePath || value instanceof AbsoluteFilePath) {
+		} else if (
+			value instanceof RelativeFilePath ||
+			value instanceof AbsoluteFilePath
+		) {
 			out += markup`<filelink target="${value.join()}" />`.value;
-		} else if (typeof value === "object" && value != null && value.type === "SAFE_MARKUP") {
+		} else if (
+			typeof value === "object" &&
+			value != null &&
+			value.type === "SAFE_MARKUP"
+		) {
 			out += value.value;
 		} else {
 			out += escapeMarkup(String(value));
@@ -67,9 +80,6 @@ function safeMarkup(input: string): Markup {
 	return {
 		type: "SAFE_MARKUP",
 		value: input,
-		toString() {
-			throw new Error(`Wtf??? ${input}`);
-		},
 	};
 }
 
