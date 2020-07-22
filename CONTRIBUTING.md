@@ -19,7 +19,8 @@ cd rome
 You need to use the backslash (`\`) to run any `rome` command on Windows instead of the slash (`/`); Windows uses backslashes for file paths.
 
 For example, to run help:
-```
+
+```bash
 .\rome --help
 ```
 or you can directly use `rome` without any path referencing like below:
