@@ -13,6 +13,16 @@ git clone https://github.com/romefrontend/rome
 cd rome
 ./rome --help
 ```
+## developing on windows
+you need to use the backslash(`\`) to run any rome commands on windows in place of forwardslash(`/`)
+For example, to run help
+```
+.\rome --help
+```
+or you can directly use rome without any path referencing like below:
+```
+rome --help
+```
 
 No dependency installation step is required as we check in our `node_modules` folder that contains only a copy of TypeScript and some definitions.
 
