@@ -6,11 +6,14 @@
  */
 
 import {
+	Markup,
 	MarkupFormatOptions,
 	MarkupTagName,
 	UserMarkupFormatGridOptions,
 	ansiEscapes,
-	escapeMarkup,
+	concatMarkup,
+	convertToMarkupFromRandomString,
+	isEmptyMarkup,
 	markup,
 	markupTag,
 	markupToAnsi,
@@ -25,11 +28,9 @@ import {
 	ReporterProgressOptions,
 	ReporterStream,
 	ReporterStreamMeta,
-	ReporterTableField,
 	SelectArguments,
 	SelectOptions,
 } from "./types";
-import {removeSuffix} from "@romefrontend/string-utils";
 import Progress from "./Progress";
 import prettyFormat from "@romefrontend/pretty-format";
 import stream = require("stream");
@@ -83,7 +84,7 @@ export type LogCategoryOptions = LogOptions & {
 	markupTag: MarkupTagName;
 };
 
-type QuestionValidateResult<T> = [false, string] | [true, T];
+type QuestionValidateResult<T> = [false, Markup] | [true, T];
 
 type QuestionOptions = {
 	hint?: string;
@@ -422,7 +423,7 @@ export default class Reporter {
 	}
 
 	async question(
-		message: string,
+		message: Markup,
 		{hint, default: def = "", yes = false}: QuestionOptions = {},
 	): Promise<string> {
 		if (yes) {
@@ -431,15 +432,15 @@ export default class Reporter {
 
 		const stdin = this.getStdin();
 
-		const origPrompt = `<dim emphasis>?</dim> <emphasis>${message}</emphasis>`;
+		const origPrompt = markup`<dim emphasis>?</dim> <emphasis>${message}</emphasis>`;
 		let prompt = origPrompt;
 		if (hint !== undefined) {
-			prompt += ` <dim>${hint}</dim>`;
+			prompt = markup`${prompt} <dim>${hint}</dim>`;
 		}
 		if (def !== "") {
-			prompt += ` (${def})`;
+			prompt = markup`${prompt} (${def})`;
 		}
-		prompt += ": ";
+		prompt = markup`${prompt}: `;
 		this.logAll(
 			prompt,
 			{
@@ -471,11 +472,11 @@ export default class Reporter {
 					this.writeAll(ansiEscapes.eraseLine);
 
 					let prompt = origPrompt;
-					prompt += ": ";
+					prompt = markup`${prompt}: `;
 					if (normalized === "") {
-						prompt += "<dim>empty</dim>";
+						prompt = markup`${prompt}<dim>empty</dim>`;
 					} else {
-						prompt += normalized;
+						prompt = markup`${prompt}${normalized}`;
 					}
 					this.logAll(prompt);
 
@@ -486,7 +487,7 @@ export default class Reporter {
 	}
 
 	async questionValidate<T>(
-		message: string,
+		message: Markup,
 		validate: (value: string) => QuestionValidateResult<T>,
 		options: Omit<QuestionOptions, "normalize"> = {},
 	): Promise<T> {
@@ -494,7 +495,7 @@ export default class Reporter {
 			let res: undefined | QuestionValidateResult<T>;
 
 			await this.question(
-				`${message}`,
+				message,
 				{
 					...options,
 					normalize: (value: string): string => {
@@ -522,17 +523,17 @@ export default class Reporter {
 		}
 	}
 
-	async radioConfirm(message: string): Promise<boolean> {
+	async radioConfirm(message: Markup): Promise<boolean> {
 		const answer = await this.radio(
 			message,
 			{
 				options: {
 					yes: {
-						label: "Yes",
+						label: markup`Yes`,
 						shortcut: "y",
 					},
 					no: {
-						label: "No",
+						label: markup`No`,
 						shortcut: "n",
 					},
 				},
@@ -542,7 +543,7 @@ export default class Reporter {
 	}
 
 	async confirm(message: string = "Press any key to continue"): Promise<void> {
-		this.logAll(`<dim>${message}</dim>`, {newline: false});
+		this.logAll(markup`<dim>${message}</dim>`, {newline: false});
 
 		await new Promise((resolve) => {
 			const keypress = onKeypress(
@@ -555,11 +556,11 @@ export default class Reporter {
 		});
 
 		// Newline
-		this.logAll("");
+		this.logAll(markup``);
 	}
 
 	async radio<Options extends SelectOptions>(
-		message: string,
+		message: Markup,
 		arg: SelectArguments<Options>,
 	): Promise<keyof Options> {
 		const set = await this.select(message, {...arg, radio: true});
@@ -569,7 +570,7 @@ export default class Reporter {
 	}
 
 	async select<Options extends SelectOptions>(
-		message: string,
+		message: Markup,
 		args: SelectArguments<Options>,
 	): Promise<Set<keyof Options>> {
 		return select(this, message, args);
@@ -636,56 +637,26 @@ export default class Reporter {
 		}
 	}
 
-	//# INTERNAL
-	prependEmoji(
-		stream: ReporterStream,
-		msg: string,
-		emoji: string,
-		fallback?: string,
-	): string {
-		if (stream.format === "none") {
-			return `${emoji} ${msg}`;
-		} else {
-			if (fallback === undefined) {
-				return msg;
-			} else {
-				return `${fallback} ${msg}`;
-			}
-		}
-	}
-
-	//# VISUALISATION
-	table(
-		head: Array<ReporterTableField>,
-		rawBody: Array<Array<ReporterTableField>>,
-	) {
-		let body = "";
+	table(head: Array<Markup>, rawBody: Array<Array<Markup>>) {
+		let body: Array<Markup> = [];
 
 		if (head.length > 0) {
-			body += "<tr>";
+			body.push(markup`<tr>`);
 			for (const field of head) {
-				body += `<td><emphasis>${field}</emphasis></td>`;
+				body.push(markup`<td><emphasis>${field}</emphasis></td>`);
 			}
-			body += "</tr>";
+			body.push(markup`</tr>`);
 		}
 
 		for (const row of rawBody) {
-			body += "<tr>";
+			body.push(markup`<tr>`);
 			for (let field of row) {
-				if (typeof field === "string" || typeof field === "number") {
-					field = {align: "left", value: field};
-				}
-
-				let {value, align} = field;
-				if (typeof value === "number") {
-					value = `<number>${value}</number>`;
-				}
-				body += `<td align="${align}">${value}</td>`;
+				body.push(markup`<td>${field}</td>`);
 			}
-			body += "</tr>";
+			body.push(markup`</tr>`);
 		}
 
-		this.logAll(`<table>${body}</table>`);
+		this.logAll(markup`<table>${concatMarkup(body)}</table>`);
 	}
 
 	inspect(value: unknown) {
@@ -694,14 +665,15 @@ export default class Reporter {
 			return;
 		}
 
-		let formatted = value;
-
-		if (typeof formatted !== "number" && typeof formatted !== "string") {
-			formatted = prettyFormat(formatted, {markup: true});
+		let formatted;
+		if (typeof value !== "number" && typeof value !== "string") {
+			formatted = prettyFormat(value);
+		} else {
+			formatted = markup`${String(value)}`;
 		}
 
 		for (const stream of streams) {
-			this.logOne(stream, String(formatted));
+			this.logOne(stream, formatted);
 		}
 	}
 
@@ -751,21 +723,23 @@ export default class Reporter {
 	}
 
 	//# SECTIONS
-	heading(text: string) {
+	heading(text: Markup) {
 		this.br();
-		this.logAll(`<inverse><emphasis> ${text} </emphasis></inverse>`);
+		this.logAll(markup`<inverse><emphasis> ${text} </emphasis></inverse>`);
 		this.br();
 	}
 
-	section(title: undefined | string, callback: () => void) {
-		this.hr(title === undefined ? undefined : `<emphasis>${title}</emphasis>`);
+	section(title: undefined | Markup, callback: () => void) {
+		this.hr(
+			title === undefined ? undefined : markup`<emphasis>${title}</emphasis>`,
+		);
 		this.indent(() => {
 			callback();
 			this.br();
 		});
 	}
 
-	hr(text: string = "") {
+	hr(text: Markup = markup``) {
 		const {hasClearScreen} = this;
 
 		this.br();
@@ -774,13 +748,13 @@ export default class Reporter {
 			return;
 		}
 
-		this.logAll(`<hr>${text}</hr>`);
+		this.logAll(markup`<hr>${text}</hr>`);
 		this.br();
 	}
 
 	async steps(
 		callbacks: Array<{
-			message: string;
+			message: Markup;
 			callback: () => Promise<void>;
 			clear?: boolean;
 		}>,
@@ -810,20 +784,14 @@ export default class Reporter {
 		}
 	}
 
-	step(current: number, total: number, msg: string) {
-		if (msg.endsWith("?")) {
-			msg = `${removeSuffix(msg, "?")}...?`;
-		} else {
-			msg += "...";
-		}
-
-		this.logAll(`<dim>[${current}/${total}]</dim> ${msg}`);
+	step(current: number, total: number, msg: Markup) {
+		this.logAll(markup`<dim>[${String(current)}/${String(total)}]</dim> ${msg}`);
 	}
 
 	br(force: boolean = false) {
 		for (const stream of this.getStreams(false)) {
 			if (!this.streamsWithDoubleNewlineEnd.has(stream) || force) {
-				this.logOne(stream, "");
+				this.logOne(stream, markup``);
 			}
 		}
 	}
@@ -837,24 +805,24 @@ export default class Reporter {
 		}
 	};
 
-	stripMarkup(str: string): string {
+	stripMarkup(str: Markup): string {
 		return joinMarkupLines(markupToPlainText(str, this.markupOptions));
 	}
 
-	format(stream: ReporterStreamMeta, str: string): Array<string> {
-		if (str === "") {
+	format(stream: ReporterStreamMeta, str: Markup): Array<string> {
+		if (isEmptyMarkup(str)) {
 			return [""];
 		}
 
 		const prefix = this.getMessagePrefix();
-		let built = prefix === "" ? str : `${prefix}<view>${str}</view>`;
+		let built = prefix === "" ? str : markup`${prefix}<view>${str}</view>`;
 
 		const shouldIndent =
 			this.indentLevel > 0 && this.streamsWithNewlineEnd.has(stream);
 
 		if (shouldIndent) {
 			for (let i = 0; i < this.indentLevel; i++) {
-				built = `<indent>${built}</indent>`;
+				built = markup`<indent>${built}</indent>`;
 			}
 		}
 
@@ -862,6 +830,8 @@ export default class Reporter {
 			...this.markupOptions,
 			columns: stream.features.columns,
 			features: stream.features,
+			// Printing to a terminal or something so convert tabs to spaces
+			convertTabs: true,
 		};
 
 		switch (stream.format) {
@@ -875,23 +845,23 @@ export default class Reporter {
 				return markupToPlainText(built, gridMarkupOptions).lines;
 
 			case "markup":
-				return [normalizeMarkup(built, this.markupOptions).text];
+				return [normalizeMarkup(built, this.markupOptions).text.value];
 		}
 	}
 
-	logAll(tty: string, opts: LogOptions = {}) {
+	logAll(msg: Markup, opts: LogOptions = {}) {
 		for (const stream of this.getStreams(opts.stderr)) {
-			this.logOne(stream, tty, opts);
+			this.logOne(stream, msg, opts);
 		}
 	}
 
-	logAllRaw(tty: string, opts: LogOptions = {}) {
+	logAllRaw(msg: string, opts: LogOptions = {}) {
 		for (const stream of this.getStreams(opts.stderr)) {
-			this.logOneRaw(stream, tty, opts);
+			this.logOneRaw(stream, msg, opts);
 		}
 	}
 
-	logOne(stream: ReporterStream, msg: string, opts: LogOptions = {}) {
+	logOne(stream: ReporterStream, msg: Markup, opts: LogOptions = {}) {
 		const lines = this.format(stream, msg);
 		for (let i = 0; i < lines.length; i++) {
 			this.logOneRaw(
@@ -926,11 +896,7 @@ export default class Reporter {
 		this.writeSpecific(stream, msg, opts);
 	}
 
-	logAllWithCategory(
-		rawInner: string,
-		args: Array<unknown>,
-		opts: LogCategoryOptions,
-	) {
+	logAllWithCategory(rawInner: Markup, opts: LogCategoryOptions) {
 		const streams = this.getStreams(opts.stderr);
 		if (streams.size === 0) {
 			return;
@@ -938,45 +904,22 @@ export default class Reporter {
 
 		let inner = markupTag(opts.markupTag, rawInner);
 
-		if (args.length > 0) {
-			const formattedArgs: Array<string> = args.map((arg) => {
-				if (typeof arg === "string") {
-					return escapeMarkup(arg);
-				} else {
-					return prettyFormat(arg, {markup: true});
-				}
-			});
-
-			// Interpolate
-			inner = inner.replace(/%s/g, () => formattedArgs.shift()!);
-
-			// Add on left over arguments
-			for (const arg of formattedArgs) {
-				if (inner[inner.length - 1] !== " ") {
-					inner += " ";
-				}
-
-				inner += arg;
-			}
-		}
-
 		for (const stream of streams) {
 			const prefixInner = stream.features.unicode
 				? opts.unicodePrefix
 				: opts.rawPrefix;
 			const prefix = markupTag(
 				"emphasis",
-				markupTag(opts.markupTag, prefixInner),
+				markupTag(opts.markupTag, markup`${prefixInner}`),
 			);
-			const prefixedInner = `${prefix}<view>${inner}</view>`;
+			const prefixedInner = markup`${prefix}<view>${inner}</view>`;
 			this.logOne(stream, prefixedInner);
 		}
 	}
 
-	success(msg: string, ...args: Array<unknown>) {
+	success(msg: Markup) {
 		this.logAllWithCategory(
 			msg,
-			args,
 			{
 				unicodePrefix: "\u2714 ",
 				rawPrefix: "\u221a ",
@@ -985,10 +928,9 @@ export default class Reporter {
 		);
 	}
 
-	error(msg: string, ...args: Array<unknown>) {
+	error(msg: Markup) {
 		this.logAllWithCategory(
 			msg,
-			args,
 			{
 				markupTag: "error",
 				unicodePrefix: "\u2716 ",
@@ -999,13 +941,14 @@ export default class Reporter {
 	}
 
 	errorObj(err: Error) {
-		this.error(err.stack || err.message || err.name || "Unknown Error");
+		this.error(
+			markup`${err.stack || err.message || err.name || "Unknown Error"}`,
+		);
 	}
 
-	info(msg: string, ...args: Array<unknown>) {
+	info(msg: Markup) {
 		this.logAllWithCategory(
 			msg,
-			args,
 			{
 				unicodePrefix: "\u2139 ",
 				rawPrefix: "i ",
@@ -1014,27 +957,14 @@ export default class Reporter {
 		);
 	}
 
-	warn(msg: string, ...args: Array<unknown>) {
+	warn(msg: Markup) {
 		this.logAllWithCategory(
 			msg,
-			args,
 			{
 				unicodePrefix: "\u26a0 ",
 				rawPrefix: "! ",
 				markupTag: "warn",
 				stderr: true,
-			},
-		);
-	}
-
-	verboseForce(msg: string, ...args: Array<unknown>) {
-		this.logAllWithCategory(
-			msg,
-			args,
-			{
-				unicodePrefix: "\u26a1 ",
-				rawPrefix: "* ",
-				markupTag: "dim",
 			},
 		);
 	}
@@ -1045,7 +975,7 @@ export default class Reporter {
 
 	processedList<T>(
 		items: Array<T>,
-		callback: (reporter: Reporter, item: T) => void | string,
+		callback: (reporter: Reporter, item: T) => void | Markup,
 		opts: ListOptions = {},
 	): {
 		truncated: boolean;
@@ -1064,7 +994,7 @@ export default class Reporter {
 			start += truncatedCount;
 		}
 
-		let buff = "";
+		let buff = markup``;
 
 		for (const item of items) {
 			const reporter = this.fork({
@@ -1073,25 +1003,28 @@ export default class Reporter {
 			const stream = reporter.attachCaptureStream("markup");
 			const str = callback(reporter, item);
 			stream.remove();
-			let inner = str === undefined ? stream.read().trimRight() : str;
-			buff += `<li>${inner}</li>`;
+			let inner =
+				str === undefined
+					? convertToMarkupFromRandomString(stream.read().trimRight())
+					: str;
+			buff = markup`${buff}<li>${inner}</li>`;
 		}
 
 		if (opts.ordered) {
 			this.logAll(markupTag("ol", buff, {start, reversed: opts.reverse}));
 		} else {
-			this.logAll(`<ul>${buff}</ul>`);
+			this.logAll(markup`<ul>${buff}</ul>`);
 		}
 
 		if (truncatedCount > 0) {
-			this.logAll(`<dim>and <number>${truncatedCount}</number> others...</dim>`);
+			this.logAll(markup`<dim>and ${truncatedCount} others...</dim>`);
 			return {truncated: true};
 		} else {
 			return {truncated: false};
 		}
 	}
 
-	list(items: Array<string>, opts: ListOptions = {}) {
+	list(items: Array<Markup>, opts: ListOptions = {}) {
 		return this.processedList(
 			items,
 			(reporter, str) => {
@@ -1147,6 +1080,8 @@ export default class Reporter {
 			closed = true;
 		};
 
+		let textIdCounter = 0;
+
 		const progress: ReporterProgress = {
 			render() {
 				// Don't do anything
@@ -1167,7 +1102,7 @@ export default class Reporter {
 					id,
 				});
 			},
-			setText: (text: string) => {
+			setText: (text: Markup) => {
 				dispatch({
 					type: "PROGRESS_SET_TEXT",
 					text,
@@ -1181,17 +1116,22 @@ export default class Reporter {
 					id,
 				});
 			},
-			pushText: (text: string) => {
+			pushText: (text: Markup, textId?: string) => {
+				if (textId === undefined) {
+					textId = String(textIdCounter++);
+				}
 				dispatch({
 					type: "PROGRESS_PUSH_TEXT",
+					textId,
 					text,
 					id,
 				});
+				return textId;
 			},
-			popText: (text: string) => {
+			popText: (textId: string) => {
 				dispatch({
 					type: "PROGRESS_POP_TEXT",
-					text,
+					textId,
 					id,
 				});
 			},

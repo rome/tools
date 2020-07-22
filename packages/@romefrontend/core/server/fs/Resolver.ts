@@ -29,6 +29,7 @@ import https = require("https");
 
 import {MOCKS_FOLDER_NAME} from "@romefrontend/core/common/constants";
 import {Consumer} from "@romefrontend/consume";
+import {markup} from "@romefrontend/cli-layout";
 
 function request(
 	url: string,
@@ -52,7 +53,9 @@ function request(
 							{
 								type: "log",
 								category: "info",
-								text: `<hyperlink target="${url}" /> returned a ${res.statusCode} status code`,
+								text: markup`<hyperlink target="${url}" /> returned a ${String(
+									res.statusCode,
+								)} HTTP status code`,
 							},
 						],
 					});
@@ -87,7 +90,7 @@ function request(
 						{
 							type: "log",
 							category: "info",
-							text: `<hyperlink target="${url}" /> resulted in the error "${err.message}"`,
+							text: markup`<hyperlink target="${url}" /> resulted in the error "${err.message}"`,
 						},
 					],
 				});
@@ -413,7 +416,7 @@ export default class Resolver {
 							{
 								type: "log",
 								category: "info",
-								text: `<emphasis>${protocol}</emphasis> is not a supported remote protocol`,
+								text: markup`<emphasis>${protocol}</emphasis> is not a supported remote protocol`,
 							},
 						],
 					};

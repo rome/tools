@@ -7,15 +7,16 @@
 
 import {HumanBuilder} from "../Utils";
 import UnknownT from "./UnknownT";
+import {Markup, markup} from "@romefrontend/cli-layout";
 import T from "./T";
 
 export default class OpenT extends T {
 	static type = "OpenT";
 
-	humanize(builder: HumanBuilder): string {
+	humanize(builder: HumanBuilder): Markup {
 		const type = this.utils.reduce(this);
 		if (type === this) {
-			return "open";
+			return markup`open`;
 		} else {
 			return builder.humanize(type);
 		}

@@ -11,6 +11,7 @@ import {Scope} from "../scopes";
 import T from "./T";
 import NumericT from "./NumericT";
 import ObjT from "./ObjT";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 export default class NumericLiteralT extends ObjT {
 	constructor(scope: Scope, originNode: undefined | AnyNode, value: number) {
@@ -42,8 +43,8 @@ export default class NumericLiteralT extends ObjT {
 		return new NumericLiteralT(scope, originNode, Number(data.value));
 	}
 
-	humanize(): string {
-		return String(this.value);
+	humanize(): Markup {
+		return markup`${String(this.value)}`;
 	}
 
 	compatibleWith(type: T): boolean {

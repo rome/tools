@@ -277,9 +277,15 @@
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
+ lint/jsx-a11y/anchorIsValid/reject/11/file.jsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Use a button element instead of an a element.
+
+  ℹ Anchor elements should only be used for default section or page navigation.
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✖ Found 1 problem
+✖ Found 2 problems
 
 ```
 
@@ -303,9 +309,15 @@
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
+ lint/jsx-a11y/anchorIsValid/reject/12/file.jsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Use a button element instead of an a element.
+
+  ℹ Anchor elements should only be used for default section or page navigation.
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✖ Found 1 problem
+✖ Found 2 problems
 
 ```
 
@@ -329,9 +341,15 @@
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
+ lint/jsx-a11y/anchorIsValid/reject/13/file.jsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Use a button element instead of an a element.
+
+  ℹ Anchor elements should only be used for default section or page navigation.
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✖ Found 1 problem
+✖ Found 2 problems
 
 ```
 
@@ -355,9 +373,15 @@
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
+ lint/jsx-a11y/anchorIsValid/reject/14/file.jsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Use a button element instead of an a element.
+
+  ℹ Anchor elements should only be used for default section or page navigation.
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✖ Found 1 problem
+✖ Found 2 problems
 
 ```
 
@@ -381,9 +405,15 @@
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
+ lint/jsx-a11y/anchorIsValid/reject/15/file.jsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Use a button element instead of an a element.
+
+  ℹ Anchor elements should only be used for default section or page navigation.
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✖ Found 1 problem
+✖ Found 2 problems
 
 ```
 
@@ -407,9 +437,15 @@
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
+ lint/jsx-a11y/anchorIsValid/reject/16/file.jsx:1 lint/jsx-a11y/anchorIsValid ━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Use a button element instead of an a element.
+
+  ℹ Anchor elements should only be used for default section or page navigation.
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✖ Found 1 problem
+✖ Found 2 problems
 
 ```
 

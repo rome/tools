@@ -6,6 +6,7 @@ import {
 	ARIAProperty,
 	ariaPropsMap,
 } from "@romefrontend/compiler/lint/utils/aria";
+import {markup} from "@romefrontend/cli-layout";
 
 export default {
 	name: "jsx-a11y/ariaProps",
@@ -48,8 +49,8 @@ export default {
 						old: node,
 						suggestions: [
 							{
-								title: "ARIA Spelling Mistake",
-								description: "",
+								title: markup`ARIA Spelling Mistake`,
+								description: markup``,
 								fixed,
 							},
 						],

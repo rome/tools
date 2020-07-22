@@ -9,7 +9,6 @@ import {Reporter, ReporterProgress} from "@romefrontend/cli-reporter";
 import {
 	Diagnostic,
 	DiagnosticsError,
-	createBlessedDiagnosticMessage,
 	deriveDiagnosticFromError,
 	deriveDiagnosticFromErrorStructure,
 	descriptions,
@@ -51,7 +50,7 @@ import {
 	percentInsideCoverageDirectory,
 	sortMapKeys,
 } from "./utils";
-import {markup, safeMarkup} from "@romefrontend/cli-layout";
+import {Markup, concatMarkup, markup} from "@romefrontend/cli-layout";
 import {MAX_WORKER_COUNT} from "@romefrontend/core/common/constants";
 import {TestWorkerFlags} from "@romefrontend/core/test-worker/TestWorker";
 import net = require("net");
@@ -71,8 +70,8 @@ class BridgeDiagnosticsError extends DiagnosticsError {
 	bridge: Bridge;
 }
 
-function grammarNumberTests(num: number): string {
-	return `<grammarNumber plural="tests" singular="test">${num}</grammarNumber>`;
+function grammarNumberTests(num: number): Markup {
+	return markup`<grammarNumber plural="tests" singular="test">${String(num)}</grammarNumber>`;
 }
 
 function getProgressTestRefText(ref: TestRef) {
@@ -149,10 +148,12 @@ export default class TestServerRunner {
 		this.sourceMaps = this.printer.processor.sourceMaps;
 
 		// Add source maps
-		for (const [filename, {code, sourceMap}] of opts.sources) {
-			const consumer = sourceMap.toConsumer();
-			this.coverageCollector.addSourceMap(filename, code, consumer);
-			this.sourceMaps.add(filename, consumer);
+		if (this.options.sourceMaps) {
+			for (const [filename, {code, sourceMap}] of opts.sources) {
+				const consumer = sourceMap.toConsumer();
+				this.coverageCollector.addSourceMap(filename, code, consumer);
+				this.sourceMaps.add(filename, consumer);
+			}
 		}
 	}
 
@@ -276,8 +277,9 @@ export default class TestServerRunner {
 			const id = this.testFileCounter;
 			this.testFileCounter++;
 
-			const progressText = `<filelink target="${ref.uid}" />`;
-			progress.pushText(progressText);
+			const progressId = progress.pushText(
+				markup`<filelink target="${ref.uid}" />`,
+			);
 
 			try {
 				const {focusedTests} = await bridge.prepareTest.call({
@@ -298,7 +300,7 @@ export default class TestServerRunner {
 				this.handlePossibleBridgeError(err);
 			}
 
-			progress.popText(progressText);
+			progress.popText(progressId);
 			progress.tick();
 
 			await prepareTest();
@@ -489,7 +491,7 @@ export default class TestServerRunner {
 
 		// Prepare all tests
 		const progress = this.reporter.progress({
-			title: "Preparing",
+			title: markup`Preparing`,
 		});
 		progress.setTotal(this.sourcesQueue.length);
 		const callbacks = await Promise.all(
@@ -599,14 +601,12 @@ export default class TestServerRunner {
 					{
 						description: {
 							category: "tests/timeout",
-							message: createBlessedDiagnosticMessage(
-								`Test worker was unresponsive for <emphasis>${duration}</emphasis>. Possible infinite loop. Below is a stack trace before the test was terminated.`,
-							),
+							message: markup`Test worker was unresponsive for <emphasis>${duration}</emphasis>. Possible infinite loop. Below is a stack trace before the test was terminated.`,
 							advice: [
 								{
 									type: "log",
 									category: "info",
-									text: "You can find the specific test that caused this by running <command>rome test --sync-tests</command>",
+									text: markup`You can find the specific test that caused this by running <code>rome test --sync-tests</code>`,
 								},
 							],
 						},
@@ -689,7 +689,7 @@ export default class TestServerRunner {
 
 		const progress = this.request.reporter.progress({
 			persistent: true,
-			title: "Running",
+			title: markup`Running`,
 		});
 		progress.setTotal(this.getTotalTests());
 
@@ -720,7 +720,7 @@ export default class TestServerRunner {
 						const errDiag = deriveDiagnosticFromError(
 							error,
 							{
-								label: ref.testName,
+								label: markup`${ref.testName}`,
 								filename: ref.filename,
 								description: {
 									category: "tests/failure",
@@ -744,7 +744,7 @@ export default class TestServerRunner {
 						});
 					} else {
 						this.printer.processor.addDiagnostic({
-							label: ref.testName,
+							label: markup`${ref.testName}`,
 							description: descriptions.TESTS.CANCELLED,
 							location: {
 								filename: ref.filename,
@@ -755,14 +755,15 @@ export default class TestServerRunner {
 			});
 
 			bridge.testStart.subscribe((data) => {
-				ourRunningTests.add(this.refToKey(data.ref));
+				const key = this.refToKey(data.ref);
+				ourRunningTests.add(key);
 				this.onTestStart(container, data.ref, data.timeout);
-				progress.pushText(getProgressTestRefText(data.ref));
+				progress.pushText(getProgressTestRefText(data.ref), key);
 			});
 
 			bridge.testFinish.subscribe((data) => {
 				this.onTestFinished(data.ref);
-				progress.popText(getProgressTestRefText(data.ref));
+				progress.popText(this.refToKey(data.ref));
 				progress.tick();
 			});
 		}
@@ -786,7 +787,7 @@ export default class TestServerRunner {
 			return;
 		}
 
-		reporter.info("Generating coverage");
+		reporter.info(markup`Generating coverage`);
 
 		// Fetch coverage entries
 		const files = coverageCollector.generate();
@@ -794,7 +795,7 @@ export default class TestServerRunner {
 			return;
 		}
 
-		reporter.heading("Code coverage");
+		reporter.heading(markup`Code coverage`);
 
 		// Get the packages associated with all the ran tests, we will filter code coverage to those packages only
 		const testedPackages: Set<undefined | ManifestDefinition> = new Set();
@@ -869,10 +870,9 @@ export default class TestServerRunner {
 			};
 		}
 
-		const rows: Array<Array<string>> = [];
+		const rows: Array<Array<Markup>> = [];
 
 		// If there's more than 15 files to show, and we don't have the explicit showAllCoverage flag
-
 		// then truncate the output
 		const showAllCoverage = this.options.showAllCoverage || totalFiles < 15;
 
@@ -882,7 +882,7 @@ export default class TestServerRunner {
 			const directoryPercent = percentInsideCoverageDirectory(directory);
 
 			rows.push([
-				`${" ".repeat(depth)}<emphasis>${name}</emphasis>`,
+				markup`${" ".repeat(depth)}<emphasis>${name}</emphasis>`,
 				formatPercent(directoryPercent.functions),
 				formatPercent(directoryPercent.branches),
 				formatPercent(directoryPercent.lines),
@@ -906,7 +906,7 @@ export default class TestServerRunner {
 				}
 
 				rows.push([
-					fileIndent + markup`<filelink target="${absolute}">${name}</filelink>`,
+					markup`${fileIndent}<filelink target="${absolute}">${name}</filelink>`,
 					formatPercent(file.functions.percent),
 					formatPercent(file.branches.percent),
 					formatPercent(file.lines.percent),
@@ -920,12 +920,15 @@ export default class TestServerRunner {
 
 		buildRows(root, 0);
 
-		reporter.table(["File", "% Functions", "% Branches", "% Lines"], rows);
+		reporter.table(
+			[markup`File`, markup`% Functions`, markup`% Branches`, markup`% Lines`],
+			rows,
+		);
 
 		if (!showAllCoverage) {
 			reporter.br();
 			reporter.info(
-				"Additional coverage information available. Refine the executed tests or add the <emphasis>--show-all-coverage</emphasis> flag",
+				markup`Additional coverage information available. Refine the executed tests or add the <emphasis>--show-all-coverage</emphasis> flag`,
 			);
 		}
 
@@ -950,25 +953,27 @@ export default class TestServerRunner {
 		const formattedFocusedTests = focusedTests.map(({testName, location}) => {
 			const loc = this.printer.processor.normalizer.normalizeLocation(location);
 
-			return markup`<emphasis>${testName}</emphasis> at <emphasis>${safeMarkup(
-				diagnosticLocationToMarkupFilelink(loc),
+			return markup`<emphasis>${testName}</emphasis> at <emphasis>${diagnosticLocationToMarkupFilelink(
+				loc,
 			)}</emphasis>`;
 		});
 
 		if (focusedTests.length === 1) {
-			reporter.warn(`Only ran the focused test ${formattedFocusedTests[0]}`);
+			reporter.warn(
+				markup`Only ran the focused test ${formattedFocusedTests[0]}`,
+			);
 		} else {
 			reporter.warn(
-				`Only ran the following <number emphasis>${focusedTests.length}</number> focused ${grammarNumberTests(
+				markup`Only ran the following <number emphasis>${String(
 					focusedTests.length,
-				)}`,
+				)}</number> focused ${grammarNumberTests(focusedTests.length)}`,
 			);
 			reporter.list(formattedFocusedTests);
 		}
 
 		const otherTotal = this.progress.totalTests - this.focusedTests.length;
 		reporter.warn(
-			`<number emphasis>${otherTotal}</number> other ${grammarNumberTests(
+			markup`<number emphasis>${String(otherTotal)}</number> other ${grammarNumberTests(
 				otherTotal,
 			)} ignored`,
 		);
@@ -998,19 +1003,23 @@ export default class TestServerRunner {
 		}
 
 		const first = snapshotCounts.shift()!;
-		const parts = [
+		const parts: Array<Markup> = [
 			// Inline snapshots will always be the last element, so if it's inline here then there's no others
-			`<number emphasis>${first.count}</number> ${first.inline ? " inline" : ""}<grammarNumber plural="snapshots" singular="snapshot">${first.count}</grammarNumber> ${first.noun}`,
+			markup`<number emphasis>${String(first.count)}</number> ${first.inline
+				? " inline"
+				: ""}<grammarNumber plural="snapshots" singular="snapshot">${String(
+				first.count,
+			)}</grammarNumber> ${first.noun}`,
 		];
 
 		for (let {inline, count, noun} of snapshotCounts) {
 			if (inline) {
 				noun = `inline ${noun}`;
 			}
-			parts.push(`<number emphasis>${count}</number> ${noun}`);
+			parts.push(markup`<number emphasis>${String(count)}</number> ${noun}`);
 		}
 
-		reporter.success(parts.join(", "));
+		reporter.success(concatMarkup(parts, markup`, `));
 	}
 
 	throwPrinter() {
@@ -1024,7 +1033,7 @@ export default class TestServerRunner {
 			if (!isError) {
 				const totalCount = this.getTotalTests();
 				reporter.success(
-					`<emphasis>${humanizeNumber(totalCount)}</emphasis> ${grammarNumberTests(
+					markup`<emphasis>${humanizeNumber(totalCount)}</emphasis> ${grammarNumberTests(
 						totalCount,
 					)} passed!`,
 				);

@@ -11,6 +11,7 @@ import T, {SerialTypeFactory, TypeCompatibilityReturn} from "./T";
 import {Scope} from "../scopes";
 import {AnyNode} from "@romefrontend/ast";
 
+import {Markup, markup} from "@romefrontend/cli-layout";
 export default class ObjPropT extends T {
 	constructor(
 		scope: Scope,
@@ -56,7 +57,7 @@ export default class ObjPropT extends T {
 		}
 	}
 
-	humanize(builder: HumanBuilder): string {
-		return `${this.key}: ${builder.humanize(this.value)}`;
+	humanize(builder: HumanBuilder): Markup {
+		return markup`${this.key}: ${builder.humanize(this.value)}`;
 	}
 }

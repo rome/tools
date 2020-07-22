@@ -34,6 +34,7 @@ import {
 	getPathFromTextDocument,
 	getWorkerBufferPatches,
 } from "./utils";
+import {markup} from "@romefrontend/cli-layout";
 
 export default class LSPServer {
 	constructor(request: ServerRequest) {
@@ -71,7 +72,7 @@ export default class LSPServer {
 	lintSessions: AbsoluteFilePathMap<ServerRequest>;
 
 	logMessage(path: AbsoluteFilePath, message: string) {
-		this.server.logger.info(`[LSPServer] ${message}`);
+		this.server.logger.info(markup`[LSPServer] ${message}`);
 		this.transport.write({
 			method: "window/logMessage",
 			params: {

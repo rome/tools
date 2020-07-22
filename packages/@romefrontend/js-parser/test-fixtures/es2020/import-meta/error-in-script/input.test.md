@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "import.meta may only appear in a module"}
+				message: SAFE_MARKUP {value: "import.meta may only appear in a module"}
 			}
 			location: Object {
 				filename: "input.js"

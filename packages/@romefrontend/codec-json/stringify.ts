@@ -11,6 +11,10 @@ import {isValidWord} from "./parse";
 import {Consumer} from "@romefrontend/consume";
 import {PRIORITIZE_KEYS, formatNumber} from "@romefrontend/pretty-format";
 import {escapeJSString} from "@romefrontend/string-escape";
+import {
+	joinMarkupLines,
+	markupToPlainText,
+} from "@romefrontend/cli-layout/format";
 
 function joinList(
 	open: string,
@@ -94,7 +98,7 @@ function stringifyPrimitives(value: unknown): undefined | string {
 			throw new Error("Do not know how to serialize a BigInt");
 
 		case "number":
-			return formatNumber(value);
+			return joinMarkupLines(markupToPlainText(formatNumber(value)));
 	}
 
 	return undefined;

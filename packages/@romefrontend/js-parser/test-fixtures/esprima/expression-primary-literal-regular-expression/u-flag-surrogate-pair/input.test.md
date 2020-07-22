@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/regex"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Range values reversed. Start char code is greater than end char code"}
+				message: SAFE_MARKUP {value: "Range values reversed. Start char code is greater than end char code"}
 			}
 			location: Object {
 				filename: "input.js"

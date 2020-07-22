@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unterminated template"}
+				message: SAFE_MARKUP {value: "Unterminated template"}
 			}
 			location: Object {
 				filename: "input.js"

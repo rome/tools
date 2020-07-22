@@ -14,7 +14,7 @@ import {
 	HOME_PATH,
 	createUnknownFilePath,
 } from "@romefrontend/path";
-import {escapeMarkup, markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/cli-layout";
 import {descriptions, interceptDiagnostics} from "@romefrontend/diagnostics";
 import {Consumer} from "@romefrontend/consume";
 import {
@@ -34,12 +34,12 @@ type Flags = {
 
 export default createServerCommand<Flags>({
 	category: commandCategories.PROJECT_MANAGEMENT,
-	description: "modify a project config",
+	description: markup`modify a project config`,
 	usage: "(enable|disable|set) key [value]",
 	examples: [
 		{
 			command: "set name my_awesome_project",
-			description: "Set the project name",
+			description: markup`Set the project name`,
 		},
 	],
 	defineFlags(c) {
@@ -147,9 +147,9 @@ export default createServerCommand<Flags>({
 			}
 
 			reporter.success(
-				`${action === "push" ? "Adding" : "Setting"} <emphasis>${keyParts}</emphasis> to <emphasis>${escapeMarkup(
-					JSON.stringify(value),
-				)}</emphasis> in the config <emphasis>${configPath.toMarkup()}</emphasis>`,
+				markup`${action === "push" ? "Adding" : "Setting"} <emphasis>${keyParts}</emphasis> to <emphasis>${JSON.stringify(
+					value,
+				)}</emphasis> in the config <emphasis>${configPath}</emphasis>`,
 			);
 
 			if (value === "true" || value === "false") {
@@ -157,7 +157,7 @@ export default createServerCommand<Flags>({
 				reporter.warn(
 					markup`Value is the string <emphasis>${value}</emphasis> but it looks like a boolean. You probably meant to use the command:`,
 				);
-				reporter.command(markup`config ${suggestedCommand} ${keyParts}`);
+				reporter.command(`config ${suggestedCommand} ${keyParts}`);
 			}
 
 			// Load the config file again
@@ -209,7 +209,7 @@ export default createServerCommand<Flags>({
 					configPath = HOME_PATH.appendList(".config", "rome.rjson");
 					await writeFile(configPath, "");
 					reporter.info(
-						`Created user config at <emphasis>${configPath.toMarkup()}</emphasis> as it did not exist`,
+						markup`Created user config at <emphasis>${configPath}</emphasis> as it did not exist`,
 					);
 				} else {
 					configPath = existingConfigPath;
@@ -242,7 +242,7 @@ export default createServerCommand<Flags>({
 			}
 		} catch (err) {
 			reporter.warn(
-				"Error occured while validating new config. Your changes have not been saved. Listed locations are not accurate.",
+				markup`Error occured while validating new config. Your changes have not been saved. Listed locations are not accurate.`,
 			);
 			throw err;
 		}

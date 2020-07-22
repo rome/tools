@@ -96,6 +96,7 @@ import {
 import {descriptions} from "@romefrontend/diagnostics";
 import {NumberTokenValue} from "../tokenizer";
 import {toTargetAssignmentPattern} from "./lval";
+import {markup} from "@romefrontend/cli-layout";
 
 type ParsingContext =
 	| "EnumMembers"
@@ -1959,7 +1960,7 @@ export function parseTSEnumDeclaration(
 	isConst: boolean,
 ): TSEnumDeclaration {
 	parser.addDiagnosticFilter({
-		message: descriptions.JS_PARSER.RESERVED_WORD("enum").message.value,
+		message: descriptions.JS_PARSER.RESERVED_WORD("enum").message,
 		start,
 	});
 
@@ -2323,7 +2324,7 @@ export function parseTSTypeExpressionStatement(
 
 		case "interface": {
 			parser.addDiagnosticFilter({
-				message: "interface is a reserved word",
+				message: markup`interface is a reserved word`,
 				start,
 			});
 

@@ -13,10 +13,11 @@ import {JSONPropertyValue} from "@romefrontend/codec-json";
 import {DiagnosticCategory} from "./categories";
 import {Dict} from "@romefrontend/typescript-helpers";
 import {ClientRequestFlags} from "@romefrontend/core";
+import {Markup} from "@romefrontend/cli-layout";
 
 export type DiagnosticFilter = {
 	category?: DiagnosticCategory;
-	message?: string;
+	message?: Markup;
 	filename?: string;
 	start?: Position;
 	line?: Number1;
@@ -41,7 +42,7 @@ export type DiagnosticFilterWithTest = DiagnosticFilter & {
 export type DiagnosticLocation = {
 	sourceText?: string;
 	mtime?: number;
-	marker?: string;
+	marker?: Markup;
 	language?: DiagnosticLanguage;
 	sourceTypeJS?: DiagnosticSourceType;
 	filename?: string;
@@ -77,7 +78,7 @@ export type Diagnostic = {
 	location: DiagnosticLocation;
 	unique?: boolean;
 	fixable?: boolean;
-	label?: string;
+	label?: Markup;
 	origins?: Array<DiagnosticOrigin>;
 	dependencies?: Array<{
 		filename: string;
@@ -90,20 +91,14 @@ export type Diagnostics = Array<Diagnostic>;
 
 export type DiagnosticDescription = {
 	category: DiagnosticCategory;
-	message: DiagnosticBlessedMessage;
+	message: Markup;
 	advice: DiagnosticAdvice;
 };
 
 export type DiagnosticDescriptionOptionalCategory = {
 	category?: DiagnosticCategory;
-	message: DiagnosticBlessedMessage;
+	message: Markup;
 	advice?: DiagnosticAdvice;
-};
-
-// TS doesn't have opaque types so we need to use an intermediate object
-export type DiagnosticBlessedMessage = {
-	type: "PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE";
-	value: string;
 };
 
 export type DiagnosticAdviceItem =
@@ -120,7 +115,7 @@ export type DiagnosticAdviceItem =
 
 export type DiagnosticAdviceGroup = {
 	type: "group";
-	title: string;
+	title: Markup;
 	advice: DiagnosticAdvice;
 };
 
@@ -132,13 +127,13 @@ export type DiagnosticAdviceCommand = {
 export type DiagnosticAdviceLog = {
 	type: "log";
 	category: DiagnosticLogCategory;
-	text: string;
+	text: Markup;
 	compact?: boolean;
 };
 
 export type DiagnosticAdviceList = {
 	type: "list";
-	list: Array<string>;
+	list: Array<Markup>;
 	truncate?: boolean;
 	reverse?: boolean;
 	ordered?: boolean;
@@ -154,8 +149,8 @@ export type DiagnosticAdviceAction = {
 	hidden?: boolean;
 	extra?: boolean;
 	shortcut?: string;
-	instruction: string;
-	noun: string;
+	instruction: Markup;
+	noun: Markup;
 	command: string;
 	commandFlags?: Dict<boolean | string | Array<string>>;
 	requestFlags?: ClientRequestFlags;
@@ -187,7 +182,7 @@ export type DiagnosticAdviceDiff = {
 
 export type DiagnosticAdviceStacktrace = {
 	type: "stacktrace";
-	title?: string;
+	title?: Markup;
 	truncate?: boolean;
 	frames: Array<DiagnosticAdviceStackFrame>;
 };

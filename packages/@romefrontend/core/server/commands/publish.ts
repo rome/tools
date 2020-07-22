@@ -8,10 +8,11 @@
 import {ServerRequest} from "@romefrontend/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
+import {markup} from "@romefrontend/cli-layout";
 
 export default createServerCommand({
 	category: commandCategories.PROJECT_MANAGEMENT,
-	description: "TODO",
+	description: markup`TODO`,
 	usage: "",
 	examples: [],
 	hidden: true,

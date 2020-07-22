@@ -9,6 +9,7 @@ import {AnyNode} from "@romefrontend/ast";
 import {HydrateData} from "../Evaluator";
 import {Scope} from "../scopes";
 import T from "./T";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 export default class BooleanLiteralT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, value: boolean) {
@@ -32,11 +33,11 @@ export default class BooleanLiteralT extends T {
 		return new BooleanLiteralT(scope, originNode, Boolean(data.value));
 	}
 
-	humanize(): string {
+	humanize(): Markup {
 		if (this.value === true) {
-			return "true";
+			return markup`true`;
 		} else {
-			return "false";
+			return markup`false`;
 		}
 	}
 

@@ -164,7 +164,7 @@ export default class DiagnosticsProcessor {
 		for (const filter of this.filters) {
 			if (
 				filter.message !== undefined &&
-				filter.message !== diag.description.message.value
+				filter.message.value !== diag.description.message.value
 			) {
 				continue;
 			}
@@ -224,7 +224,7 @@ export default class DiagnosticsProcessor {
 			const parts = [];
 
 			if (rule.includes("label")) {
-				parts.push(`label:${diag.label}`);
+				parts.push(`label:${diag.label?.value}`);
 			}
 
 			if (rule.includes("category")) {
@@ -236,7 +236,7 @@ export default class DiagnosticsProcessor {
 			}
 
 			if (rule.includes("message")) {
-				parts.push(`message:${diag.description.message}`);
+				parts.push(`message:${diag.description.message.value}`);
 			}
 
 			if (start !== undefined) {

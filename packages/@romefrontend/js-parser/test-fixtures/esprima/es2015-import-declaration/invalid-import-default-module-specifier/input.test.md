@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "import missing a source"}
+				message: SAFE_MARKUP {value: "import missing a source"}
 			}
 			location: Object {
 				filename: "input.js"

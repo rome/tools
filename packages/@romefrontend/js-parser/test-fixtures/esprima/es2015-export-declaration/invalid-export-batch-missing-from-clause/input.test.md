@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Expected `from` for an export node"}
+				message: SAFE_MARKUP {value: "Expected `from` for an export node"}
 			}
 			location: Object {
 				filename: "input.js"

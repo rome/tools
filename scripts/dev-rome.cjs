@@ -9,7 +9,7 @@ const tty = require("tty");
 //# Utils
 
 /**
- * @param str {string} 
+ * @param str {string}
  * @returns {string}
  */
 function red(str) {
@@ -17,7 +17,7 @@ function red(str) {
 }
 
 /**
- * @param str {string} 
+ * @param str {string}
  * @returns {void}
  */
 function heading(str) {
@@ -25,7 +25,7 @@ function heading(str) {
 }
 
 /**
- * @param loc {string} 
+ * @param loc {string}
  * @returns {void}
  */
 function unlink(loc) {
@@ -162,7 +162,7 @@ async function buildTrunk() {
 		proc.stderr.pipe(process.stderr);
 
 		/**
-		 * @param chunk {Buffer} 
+		 * @param chunk {Buffer}
 		 */
 		function countLines(chunk) {
 			const match = chunk.toString().match(/\n/g);

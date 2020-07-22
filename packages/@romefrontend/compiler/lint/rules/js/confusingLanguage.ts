@@ -11,15 +11,42 @@ import {PositionTracker, SourceLocation} from "@romefrontend/parser-core";
 import {ob1Coerce0} from "@romefrontend/ob1";
 import {isIdentifierish} from "@romefrontend/js-ast-utils";
 import {DiagnosticAdvice, descriptions} from "@romefrontend/diagnostics";
-import confusingLanguage from "./confusingLanguage.json";
 import {preserveCasing} from "@romefrontend/string-utils";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 type ConfusingLanguage = Array<{
-	description: string;
+	description: Markup;
 	word: string;
 	suggestion: string;
 	advice: DiagnosticAdvice;
 }>;
+
+export const confusingLanguage: ConfusingLanguage = [
+	{
+		"description": markup`The word <emphasis>whitelist</emphasis> can be considered racially charged language.`,
+		"word": "whitelist",
+		"suggestion": "allowlist",
+		"advice": [
+			{
+				"type": "log",
+				"category": "info",
+				"text": markup`See <hyperlink target=\"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/\" /> for a more detailed explanation.`,
+			},
+		],
+	},
+	{
+		"description": markup`The word <emphasis>blacklist</emphasis> can be considered racially charged language.`,
+		"word": "blacklist",
+		"suggestion": "denylist",
+		"advice": [
+			{
+				"type": "log",
+				"category": "info",
+				"text": markup`See <hyperlink target=\"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/\" /> for a more detailed explanation.`,
+			},
+		],
+	},
+];
 
 // Fast regex for checking if we need to validate a string
 const regex = new RegExp(
@@ -30,7 +57,7 @@ const regex = new RegExp(
 type CheckResult = {
 	loc: SourceLocation;
 	word: string;
-	description: string;
+	description: Markup;
 	suggestion: string;
 	startIndex: number;
 	endIndex: number;
@@ -60,7 +87,7 @@ function check(
 	for (let i = 0; i < lower.length; i++) {
 		const char = lower[i];
 
-		for (const {advice, word, description, suggestion} of (confusingLanguage as ConfusingLanguage)) {
+		for (const {advice, word, description, suggestion} of confusingLanguage) {
 			if (char === word[0] && lower.startsWith(word, i)) {
 				const wordWithSourceCasing = input.slice(i, i + word.length);
 

@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Invalid super suffix operator"}
+				message: SAFE_MARKUP {value: "Invalid super suffix operator"}
 			}
 			location: Object {
 				filename: "input.js"

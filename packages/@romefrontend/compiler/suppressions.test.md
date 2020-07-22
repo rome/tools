@@ -11,7 +11,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/duplicate"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Duplicate suppression category <emphasis>dog</emphasis>"}
+				message: SAFE_MARKUP {value: "Duplicate suppression category <emphasis>dog</emphasis>"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -31,7 +31,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/duplicate"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Duplicate suppression category <emphasis>dog</emphasis>"}
+				message: SAFE_MARKUP {value: "Duplicate suppression category <emphasis>dog</emphasis>"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -120,7 +120,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+				message: SAFE_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -140,7 +140,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+				message: SAFE_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -160,7 +160,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+				message: SAFE_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -180,7 +180,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+				message: SAFE_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -200,7 +200,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+				message: SAFE_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -220,7 +220,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+				message: SAFE_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -240,7 +240,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+				message: SAFE_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -431,7 +431,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "overlap suppression category <emphasis>foo</emphasis>"}
+				message: SAFE_MARKUP {value: "overlap suppression category <emphasis>foo</emphasis>"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -451,7 +451,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "overlap suppression category <emphasis>foo</emphasis>"}
+				message: SAFE_MARKUP {value: "overlap suppression category <emphasis>foo</emphasis>"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -558,7 +558,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "overlap suppression category <emphasis>foo</emphasis>"}
+				message: SAFE_MARKUP {value: "overlap suppression category <emphasis>foo</emphasis>"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -646,7 +646,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "overlap suppression category <emphasis>foo</emphasis>"}
+				message: SAFE_MARKUP {value: "overlap suppression category <emphasis>foo</emphasis>"}
 			}
 			location: Object {
 				filename: "unknown"
@@ -715,7 +715,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "overlap suppression category <emphasis>foo</emphasis>"}
+				message: SAFE_MARKUP {value: "overlap suppression category <emphasis>foo</emphasis>"}
 			}
 			location: Object {
 				filename: "unknown"

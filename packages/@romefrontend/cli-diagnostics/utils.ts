@@ -14,6 +14,11 @@ import {
 } from "@romefrontend/cli-layout/format";
 import {AnyRoot} from "@romefrontend/ast";
 import {DiagnosticLanguage} from "@romefrontend/diagnostics";
+import {
+	Markup,
+	convertToMarkupFromRandomString,
+	markup,
+} from "@romefrontend/cli-layout";
 
 const unicodeControls = /[\u0000-\u001f\u007f-\u00a0]/u;
 
@@ -23,12 +28,14 @@ function isWhitespace(char: undefined | string): boolean {
 
 export function showInvisibles(
 	str: string,
-	{atLineStart, atLineEnd}: {
+	{atLineStart, atLineEnd, ignoreLoneSpaces, ignoreLeadingTabs}: {
+		ignoreLeadingTabs: boolean;
+		ignoreLoneSpaces: boolean;
 		atLineStart: boolean;
 		atLineEnd: boolean;
 	},
 ): {
-	value: string;
+	value: Markup;
 	hadNonWhitespace: boolean;
 } {
 	let hadNonWhitespace = false;
@@ -45,7 +52,7 @@ export function showInvisibles(
 		let showInvisible = true;
 
 		// Only highlight spaces when surrounded by other spaces
-		if (char === " ") {
+		if (char === " " && ignoreLoneSpaces) {
 			showInvisible = false;
 
 			if (isWhitespace(str[i - 1]) || isWhitespace(str[i + 1])) {
@@ -54,7 +61,7 @@ export function showInvisibles(
 		}
 
 		// Don't show leading tabs
-		if (atLineStart && !hadNonWhitespace && char === "\t") {
+		if (atLineStart && !hadNonWhitespace && char === "\t" && ignoreLeadingTabs) {
 			showInvisible = false;
 		}
 
@@ -73,12 +80,12 @@ export function showInvisibles(
 
 		const visible = showInvisibleChar(char);
 		if (visible !== undefined) {
-			ret += visible;
+			ret += markup`<dim>${visible}</dim>`.value;
 			continue;
 		}
 
 		if (nonASCIIwhitespace.test(char) || unicodeControls.test(char)) {
-			ret += showUnicodeChar(char);
+			ret += showUnicodeChar(char).value;
 			continue;
 		}
 
@@ -87,16 +94,16 @@ export function showInvisibles(
 
 	return {
 		hadNonWhitespace,
-		value: ret,
+		value: convertToMarkupFromRandomString(ret),
 	};
 }
 
-function showUnicodeChar(char: string): string {
+function showUnicodeChar(char: string): Markup {
 	// We use inverse to make it clear that it's not in the source
-	return `<inverse>U+${char.codePointAt(0)!.toString(16)}</inverse>`;
+	return markup`<inverse>U+${char.codePointAt(0)!.toString(16)}</inverse>`;
 }
 
-function showInvisibleChar(char: string): undefined | string {
+function showInvisibleChar(char: string): undefined | string | Markup {
 	switch (char) {
 		case " ":
 			return "\xb7"; // Middle Dot
@@ -108,7 +115,8 @@ function showInvisibleChar(char: string): undefined | string {
 			return "\u23ce"; // Return Symbol
 
 		case "\t":
-			return "\u21b9"; // Left Arrow To Bar Over Right Arrow To Bar
+			// TODO this should be repeated for tabWidth
+			return "\u2192 "; // Rightwards Arrow
 
 		case "\0":
 			return "\u2400"; // Null Symbol
@@ -122,23 +130,14 @@ function showInvisibleChar(char: string): undefined | string {
 		case "\f":
 			return "\u21a1"; // Downards Two Headed Arrow
 
-		// These are display characters we use above. Remove the ambiguity by escaping them
-		case "\u240d":
-		case "\u23ce":
-		case "\u21b9":
-		case "\u2400":
-		case "\u240b":
-		case "\u232b":
-		case "\u21a1":
-			return showUnicodeChar(char);
-
 		default:
 			return undefined;
 	}
 }
 
-export function cleanEquivalentString(str: string): string {
-	str = joinMarkupLines(markupToPlainText(str));
+export function cleanEquivalentString(safe: string | Markup): string {
+	let str =
+		typeof safe === "string" ? safe : joinMarkupLines(markupToPlainText(safe));
 
 	// Replace all whitespace with spaces
 	str = str.replace(/[\s\n]+/g, " ");
@@ -156,16 +155,12 @@ export function splitLines(src: string): Array<string> {
 	return src.split(NEWLINE);
 }
 
-export type ToLines = {
-	length: number;
-	raw: Array<string>;
-	highlighted: Array<string>;
-};
+export type ToLines = Array<[string, Markup]>;
 
 export function toLines(opts: AnsiHighlightOptions): ToLines {
 	const input = removeCarriageReturn(opts.input);
 	const raw = splitLines(input);
-	const highlighted = splitLines(highlightCode({...opts, input}));
+	const highlighted = highlightCode({...opts, input});
 
 	if (raw.length !== highlighted.length) {
 		throw new Error(
@@ -173,11 +168,7 @@ export function toLines(opts: AnsiHighlightOptions): ToLines {
 		);
 	}
 
-	return {
-		length: raw.length,
-		raw,
-		highlighted,
-	};
+	return raw.map((line, i) => [line, highlighted[i]]);
 }
 
 export function inferDiagnosticLanguageFromRootAST(

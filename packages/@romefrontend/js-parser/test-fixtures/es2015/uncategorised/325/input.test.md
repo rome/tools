@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Complex binding patterns require an initialization value"}
+				message: SAFE_MARKUP {value: "Complex binding patterns require an initialization value"}
 			}
 			location: Object {
 				filename: "input.js"

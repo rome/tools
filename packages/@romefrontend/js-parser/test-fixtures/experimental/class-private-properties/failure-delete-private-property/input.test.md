@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Deleting a private field is not allowed"}
+				message: SAFE_MARKUP {value: "Deleting a private field is not allowed"}
 			}
 			location: Object {
 				filename: "input.js"

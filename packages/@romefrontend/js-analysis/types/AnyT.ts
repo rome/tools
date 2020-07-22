@@ -9,6 +9,7 @@ import {HydrateData} from "../Evaluator";
 import {AnyNode} from "@romefrontend/ast";
 import {Scope} from "../scopes";
 import T from "./T";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 export default class AnyT extends T {
 	static type = "AnyT";
@@ -25,7 +26,7 @@ export default class AnyT extends T {
 		return true;
 	}
 
-	humanize(): string {
-		return "any";
+	humanize(): Markup {
+		return markup`any`;
 	}
 }

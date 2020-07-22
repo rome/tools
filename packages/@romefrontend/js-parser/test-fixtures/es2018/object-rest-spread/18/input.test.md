@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Invalid rest operator's argument"}
+				message: SAFE_MARKUP {value: "Invalid rest operator's argument"}
 			}
 			location: Object {
 				filename: "input.js"

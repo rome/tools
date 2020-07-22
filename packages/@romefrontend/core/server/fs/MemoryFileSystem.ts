@@ -45,6 +45,7 @@ import {getFileHandler} from "../../common/file-handlers/index";
 import crypto = require("crypto");
 import fs = require("fs");
 import {FileNotFound} from "@romefrontend/core/common/FileNotFound";
+import {markup} from "@romefrontend/cli-layout";
 
 const DEFAULT_DENYLIST = [".hg", ".git"];
 
@@ -144,12 +145,12 @@ async function createWatcher(
 	projectDirectory: AbsoluteFilePath,
 ): Promise<WatcherClose> {
 	const {logger} = memoryFs.server;
-	const projectDirectoryMarkup = `<emphasis>${projectDirectory.toMarkup()}</emphasis>`;
+	const projectDirectoryMarkup = markup`<emphasis>${projectDirectory}</emphasis>`;
 
 	// Create activity spinners for all connected reporters
 	const activity = memoryFs.server.connectedReporters.progress({
 		initDelay: 1_000,
-		title: `Adding project ${projectDirectoryMarkup}`,
+		title: markup`Adding project ${projectDirectoryMarkup}`,
 	});
 
 	const watchers: AbsoluteFilePathMap<fs.FSWatcher> = new AbsoluteFilePathMap();
@@ -175,7 +176,9 @@ async function createWatcher(
 				{recursive, persistent: false},
 				(eventType, filename) => {
 					memoryFs.server.logger.info(
-						`[MemoryFileSystem] Raw fs.watch event in <emphasis>${directoryPath.toMarkup()}</emphasis> type ${eventType} for ${filename}`,
+						markup`[MemoryFileSystem] Raw fs.watch event in <emphasis>${directoryPath}</emphasis> type ${eventType} for ${String(
+							filename,
+						)}`,
 					);
 
 					if (filename === null) {
@@ -207,8 +210,8 @@ async function createWatcher(
 			},
 		);
 		logger.info(
-			`[MemoryFileSystem] Finished initial crawl for <emphasis>${projectDirectory.toMarkup()}</emphasis> - added <number>${memoryFs.countFiles(
-				projectDirectory,
+			markup`[MemoryFileSystem] Finished initial crawl for <emphasis>${projectDirectory}</emphasis> - added <number>${String(
+				memoryFs.countFiles(projectDirectory),
 			)}</number> files`,
 		);
 	} finally {
@@ -431,7 +434,7 @@ export default class MemoryFileSystem {
 		}
 
 		// Wait for any subscribers that might need the file's stats
-		this.server.logger.info("[MemoryFileSystem] File deleted:", path.toMarkup());
+		this.server.logger.info(markup`[MemoryFileSystem] File deleted: ${path}`);
 
 		// Only emit these events for files
 		if (directoryInfo === undefined) {
@@ -485,7 +488,7 @@ export default class MemoryFileSystem {
 
 	async watch(projectDirectory: AbsoluteFilePath): Promise<void> {
 		const {logger} = this.server;
-		const directoryLink = `<emphasis>${projectDirectory.toMarkup()}</emphasis>`;
+		const directoryLink = markup`<emphasis>${projectDirectory}</emphasis>`;
 
 		// Defer if we're already currently initializing this project
 		const cached = this.watchPromises.get(projectDirectory);
@@ -503,7 +506,7 @@ export default class MemoryFileSystem {
 		for (const {path} of this.watchers.values()) {
 			if (projectDirectory.isRelativeTo(path)) {
 				logger.info(
-					`[MemoryFileSystem] Skipped crawl for ${directoryLink} because we're already watching the parent directory ${path.join()}`,
+					markup`[MemoryFileSystem] Skipped crawl for ${directoryLink} because we're already watching the parent directory ${path}`,
 				);
 				return undefined;
 			}
@@ -514,7 +517,7 @@ export default class MemoryFileSystem {
 
 		// New watch target
 		logger.info(
-			`[MemoryFileSystem] Adding new project directory ${directoryLink}`,
+			markup`[MemoryFileSystem] Adding new project directory ${directoryLink}`,
 		);
 
 		// Remove watchers that are descedents of this directory as this watcher will handle them
@@ -534,7 +537,7 @@ export default class MemoryFileSystem {
 			],
 		});
 
-		logger.info(`[MemoryFileSystem] Watching ${directoryLink}`);
+		logger.info(markup`[MemoryFileSystem] Watching ${directoryLink}`);
 		const promise = createWatcher(this, diagnostics, projectDirectory);
 		this.watchPromises.set(projectDirectory, promise);
 
@@ -995,7 +998,7 @@ export default class MemoryFileSystem {
 		const oldStats = this.getFileStats(path);
 		if (oldStats !== undefined && opts.reason === "watch") {
 			this.server.logger.info(
-				`[MemoryFileSystem] File change: <emphasis>${path.toMarkup()}</emphasis>`,
+				markup`[MemoryFileSystem] File change: <emphasis>${path}</emphasis>`,
 			);
 			this.server.refreshFileEvent.send(path);
 			this.changedFileEvent.send({path, oldStats, newStats: stats});

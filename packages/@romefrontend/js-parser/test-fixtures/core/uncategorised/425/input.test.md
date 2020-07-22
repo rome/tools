@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Missing catch or finally clause"}
+				message: SAFE_MARKUP {value: "Missing catch or finally clause"}
 			}
 			location: Object {
 				filename: "input.js"

@@ -2,13 +2,14 @@ import {PACKAGES, ROOT, reporter, writeFile} from "./_utils";
 import {dedent, toCamelCase} from "@romefrontend/string-utils";
 import {readFileText} from "@romefrontend/fs";
 import {main as generateLintRules} from "./generated-files/lint-rules";
+import {markup} from "@romefrontend/cli-layout";
 
 const rulesPath = PACKAGES.appendList("compiler", "lint", "rules");
 
 export async function main([ruleName]: Array<string>): Promise<number> {
 	if (ruleName === undefined) {
 		reporter.error(
-			"./rome run scripts/ast-create-node scripts/lint/add.cjs [ruleName]",
+			markup`./rome run scripts/ast-create-node scripts/lint/add.cjs [ruleName]`,
 		);
 		return 1;
 	}

@@ -7,6 +7,7 @@
 
 import {naturalCompare} from "@romefrontend/string-utils";
 import {CoverageDirectory} from "./types";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 export function sortMapKeys<T>(map: Map<string, T>): Map<string, T> {
 	const sortedKeys = Array.from(map.keys()).sort(naturalCompare);
@@ -21,14 +22,14 @@ export function sortMapKeys<T>(map: Map<string, T>): Map<string, T> {
 	return newMap;
 }
 
-export function formatPercent(num: number): string {
-	const str = String(Math.floor(num));
+export function formatPercent(num: number): Markup {
+	const str = markup`${Math.floor(num)}`;
 	if (num > 80) {
-		return `<success>${str}</success>`;
+		return markup`<success>${str}</success>`;
 	} else if (num > 40) {
-		return `<warn>${str}</warn>`;
+		return markup`<warn>${str}</warn>`;
 	} else {
-		return `<error>${str}</error>`;
+		return markup`<error>${str}</error>`;
 	}
 }
 

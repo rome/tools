@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Tagged Template Literals are not allowed in optionalChain"}
+				message: SAFE_MARKUP {value: "Tagged Template Literals are not allowed in optionalChain"}
 			}
 			location: Object {
 				filename: "input.js"

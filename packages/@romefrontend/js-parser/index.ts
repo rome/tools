@@ -24,13 +24,13 @@ export function parseJS(userOptions: JSParserUserOptions): JSRoot {
 export function tokenizeJS(userOptions: JSParserUserOptions): Array<Token> {
 	const options: JSParserOptions = normalizeOptions(userOptions);
 	const parser = createJSParser({...options, tokens: true});
-	parser.parse();
+	const root = parser.parse();
 
 	const diagnostics = parser.getDiagnostics();
 	let tokens: Array<Token> = parser.state.tokens;
 
 	// If we have any diagnostics, then mark anything from the first as invalid
-	if (diagnostics.length > 0) {
+	if (diagnostics.length > 0 && root.corrupt) {
 		const firstDiag = diagnostics[0];
 		const invalidStart = firstDiag.location.start;
 		const invalidEnd = firstDiag.location.end;

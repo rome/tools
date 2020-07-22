@@ -10,6 +10,7 @@ import AnyT from "./types/AnyT";
 import E from "./types/errors/E";
 import Hub from "./Hub";
 import T, {TypeCompatibilityReturn} from "./types/T";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 class ReduceRecursionError extends Error {}
 
@@ -25,7 +26,7 @@ export class HumanBuilder {
 	}
 
 	stack: Set<T>;
-	aliases: Map<T, string>;
+	aliases: Map<T, Markup>;
 	usedAliases: Set<string>;
 
 	isRecursive(t: T): boolean {
@@ -44,7 +45,7 @@ export class HumanBuilder {
 		return false;
 	}
 
-	humanize(type: T): string {
+	humanize(type: T): Markup {
 		// Check if we already have a human form for this type
 		if (type.human !== undefined) {
 			return type.human;
@@ -61,7 +62,7 @@ export class HumanBuilder {
 
 		// Generate an alias if we've determined this as recursive
 		if (this.isRecursive(type)) {
-			const alias = `Alias${type.id}`;
+			const alias = markup`Alias${type.id}`;
 			this.aliases.set(type, alias);
 			return alias;
 		}
@@ -74,7 +75,7 @@ export class HumanBuilder {
 			// Check if an alias was created
 			const alias = this.aliases.get(type);
 			if (alias !== undefined) {
-				humanized = `${alias} = ${humanized}`;
+				humanized = markup`${alias} = ${humanized}`;
 			}
 			return humanized;
 		} finally {
@@ -201,6 +202,7 @@ export default class Utils {
 		} finally {
 			this.compatibilityDepth--;
 		}
+
 		let res: undefined | TypeCompatibilityReturn;
 		if (ret === true) {
 			res = TYPE_COMPATIBLE;
@@ -217,7 +219,7 @@ export default class Utils {
 		return res;
 	}
 
-	humanize(type: T): string {
+	humanize(type: T): Markup {
 		this.assertClosed();
 
 		return new HumanBuilder().humanize(type);

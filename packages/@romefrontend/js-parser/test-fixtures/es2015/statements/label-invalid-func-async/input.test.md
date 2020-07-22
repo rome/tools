@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Async functions can only be declared at the top level or inside a block"}
+				message: SAFE_MARKUP {value: "Async functions can only be declared at the top level or inside a block"}
 			}
 			location: Object {
 				filename: "input.js"

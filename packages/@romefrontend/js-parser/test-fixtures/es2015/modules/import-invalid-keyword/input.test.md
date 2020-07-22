@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected keyword debugger"}
+				message: SAFE_MARKUP {value: "Unexpected keyword debugger"}
 			}
 			location: Object {
 				filename: "input.js"

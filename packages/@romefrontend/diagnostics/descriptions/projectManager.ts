@@ -5,13 +5,13 @@ import {markup} from "@romefrontend/cli-layout";
 export const projectManager = createDiagnosticsCategory({
 	NO_VCS: (rootConfigLocation: undefined | DiagnosticLocation) => ({
 		category: "projectManager/vscMissing",
-		message: "Can't find any version control for this project",
+		message: markup`Can't find any version control for this project`,
 		advice: rootConfigLocation === undefined
 			? [
 					{
 						type: "log",
 						category: "info",
-						text: "Version control root was set to the project root as it was not configured. To configure a different directory run",
+						text: markup`Version control root was set to the project root as it was not configured. To configure a different directory run`,
 					},
 					{
 						type: "command",
@@ -22,7 +22,7 @@ export const projectManager = createDiagnosticsCategory({
 					{
 						type: "log",
 						category: "info",
-						text: "Version control root was set here",
+						text: markup`Version control root was set here`,
 					},
 					{
 						type: "frame",
@@ -43,12 +43,12 @@ export const projectManager = createDiagnosticsCategory({
 	}),
 	NOT_FOUND: {
 		category: "projectManager/missing",
-		message: `Couldn't find a project`,
+		message: markup`Couldn't find a project`,
 		advice: [
 			{
 				type: "log",
 				category: "info",
-				text: "Run <command>rome init</command> in this directory to initialize a project",
+				text: markup`Run <code>rome init</code> in this directory to initialize a project`,
 			},
 		],
 	},

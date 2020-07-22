@@ -2,6 +2,7 @@ import {TEMP_PATH} from "@romefrontend/path";
 import {readFileText, removeDirectory, writeFile} from "@romefrontend/fs";
 import {exec, reporter} from "./_utils";
 import {main as buildRelease} from "./build-release";
+import {markup} from "@romefrontend/cli-layout";
 
 const releaseFolder = TEMP_PATH.append("rome-publish-release");
 const releaseManifest = releaseFolder.append("package.json");
@@ -25,14 +26,14 @@ async function publishRegistry(registry: string) {
 
 export async function main() {
 	try {
-		reporter.heading("Building release");
+		reporter.heading(markup`Building release`);
 		await buildRelease([releaseFolder.join()]);
 
-		reporter.heading("Publishing to registry.npmjs.com");
+		reporter.heading(markup`Publishing to registry.npmjs.com`);
 		await setName("rome");
 		await publishRegistry("https://registry.npmjs.org/");
 
-		reporter.heading("Publishing to npm.pkg.github.com");
+		reporter.heading(markup`Publishing to npm.pkg.github.com`);
 		await setName("@romefrontend/rome");
 		await publishRegistry("https://npm.pkg.github.com/");
 	} finally {

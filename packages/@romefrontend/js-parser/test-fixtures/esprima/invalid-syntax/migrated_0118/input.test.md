@@ -54,7 +54,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "No loop label found"}
+				message: SAFE_MARKUP {value: "No loop label found"}
 			}
 			location: Object {
 				filename: "input.js"

@@ -35,11 +35,11 @@ JSRoot {
 			origins: Array [Object {category: "parse/js"}]
 			description: Object {
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "A interface declaration is only valid inside of a TypeScript file"}
+				message: SAFE_MARKUP {value: "A interface declaration is only valid inside of a TypeScript file"}
 				advice: Array [
 					log {
 						category: "info"
-						text: "To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>"
+						text: SAFE_MARKUP {value: "To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>"}
 					}
 				]
 			}

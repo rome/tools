@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "eval is a reserved word"}
+				message: SAFE_MARKUP {value: "eval is a reserved word"}
 			}
 			location: Object {
 				filename: "input.js"

@@ -13,6 +13,7 @@ import {HumanBuilder} from "../Utils";
 import E, {ErrorDefinition} from "./errors/E";
 import AnyT from "./AnyT";
 import {descriptions} from "@romefrontend/diagnostics";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 class ENotExhaustive extends E {
 	constructor(
@@ -116,8 +117,8 @@ export default class ExhaustiveT extends T {
 		}
 	}
 
-	humanize(builder: HumanBuilder): string {
-		return `exhaustive ${builder.humanize(this.target)} should only match ${builder.humanize(
+	humanize(builder: HumanBuilder): Markup {
+		return markup`exhaustive ${builder.humanize(this.target)} should only match ${builder.humanize(
 			this.target,
 		)}`;
 	}

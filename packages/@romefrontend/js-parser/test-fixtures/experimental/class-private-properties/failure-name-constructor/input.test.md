@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Classes may not have a private field named '#constructor'"}
+				message: SAFE_MARKUP {value: "Classes may not have a private field named '#constructor'"}
 			}
 			location: Object {
 				filename: "input.js"

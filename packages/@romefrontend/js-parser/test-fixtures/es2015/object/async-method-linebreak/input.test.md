@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "There shouldn't be any newlines between async and the rest of the function"}
+				message: SAFE_MARKUP {value: "There shouldn't be any newlines between async and the rest of the function"}
 			}
 			location: Object {
 				filename: "input.js"

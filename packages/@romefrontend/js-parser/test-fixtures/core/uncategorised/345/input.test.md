@@ -69,11 +69,11 @@ JSRoot {
 			}
 			description: Object {
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unclosed block"}
+				message: SAFE_MARKUP {value: "Unclosed block"}
 				advice: Array [
 					log {
 						category: "info"
-						text: "We expected to find the closing character <emphasis>}</emphasis> here"
+						text: SAFE_MARKUP {value: "We expected to find the closing character <emphasis>}</emphasis> here"}
 					}
 					frame {
 						location: Object {

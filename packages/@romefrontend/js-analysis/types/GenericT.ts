@@ -11,6 +11,7 @@ import {HydrateData, HydrateTypeFactory} from "../Evaluator";
 import {Scope} from "../scopes";
 import ClassT from "./ClassT";
 import InstanceT from "./InstanceT";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 export default class GenericT extends T {
 	constructor(
@@ -50,8 +51,8 @@ export default class GenericT extends T {
 		);
 	}
 
-	humanize(): string {
-		return this.name;
+	humanize(): Markup {
+		return markup`${this.name}`;
 	}
 
 	reduce(): T {

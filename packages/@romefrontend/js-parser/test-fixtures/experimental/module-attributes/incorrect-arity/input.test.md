@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "import() requires exactly one argument"}
+				message: SAFE_MARKUP {value: "import() requires exactly one argument"}
 			}
 			location: Object {
 				filename: "input.js"

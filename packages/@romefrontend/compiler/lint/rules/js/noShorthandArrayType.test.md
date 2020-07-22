@@ -10,7 +10,7 @@
 
  lint/js/noShorthandArrayType/reject/1/file.ts:2:13 lint/js/noShorthandArrayType  FIXABLE  ━━━━━━━━━
 
-  ✖ Use <emphasis>Array<T> syntax</emphasis> instead of <emphasis>shorthand T[] syntax</emphasis>.
+  ✖ Use Array<T> syntax instead of shorthand T[] syntax.
 
     1 │ let valid: Array<foo>;
   > 2 │ let invalid: bar[];

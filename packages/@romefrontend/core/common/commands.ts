@@ -7,16 +7,15 @@
 
 import {Consumer} from "@romefrontend/consume";
 import {Dict} from "@romefrontend/typescript-helpers";
+import {Markup} from "@romefrontend/cli-layout";
+import {Examples} from "@romefrontend/cli-flags/Parser";
 
 export type SharedCommand<Flags extends Dict<unknown>> = {
 	category: string;
-	description: string;
+	description: Markup;
 	defineFlags: (c: Consumer) => Flags;
 	usage: string;
-	examples: Array<{
-		description: string;
-		command: string;
-	}>;
+	examples: Examples;
 	hidden?: boolean;
 	ignoreFlags?: Array<string>;
 	allowRequestFlags?: Array<"review" | "watch">;

@@ -7,6 +7,7 @@ import {
 } from "@romefrontend/js-ast-utils";
 import {JSXAttribute} from "@romefrontend/ast";
 import {insideClassComponent} from "../../utils/react";
+import {markup} from "@romefrontend/cli-layout";
 
 function containsStringLiteral(attribute: JSXAttribute): boolean {
 	return attribute.value?.type === "JSStringLiteral";
@@ -31,7 +32,9 @@ export default {
 		if (insideClassComponent(path) && doesNodeMatchPattern(node, "this.refs")) {
 			context.addNodeDiagnostic(
 				node,
-				descriptions.LINT.REACT_NO_STRING_REFS("<emphasis>this.refs</emphasis>"),
+				descriptions.LINT.REACT_NO_STRING_REFS(
+					markup`<emphasis>this.refs</emphasis>`,
+				),
 			);
 		}
 
@@ -46,7 +49,7 @@ export default {
 				context.addNodeDiagnostic(
 					ref,
 					descriptions.LINT.REACT_NO_STRING_REFS(
-						"string literals in ref attributes",
+						markup`string literals in ref attributes`,
 					),
 				);
 			}

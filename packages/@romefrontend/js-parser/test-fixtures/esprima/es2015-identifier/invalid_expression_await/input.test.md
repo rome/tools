@@ -35,15 +35,15 @@ JSRoot {
 			origins: Array [Object {category: "parse/js"}]
 			description: Object {
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
+				message: SAFE_MARKUP {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
 				advice: Array [
 					log {
 						category: "info"
-						text: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"
+						text: SAFE_MARKUP {value: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"}
 					}
 					log {
 						category: "info"
-						text: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"undefined\" />"
+						text: SAFE_MARKUP {value: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"undefined\" />"}
 					}
 				]
 			}

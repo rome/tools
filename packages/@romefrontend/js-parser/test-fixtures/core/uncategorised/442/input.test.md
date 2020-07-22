@@ -54,7 +54,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unknown start to an statement expression"}
+				message: SAFE_MARKUP {value: "Unknown start to an statement expression"}
 			}
 			location: Object {
 				filename: "input.js"

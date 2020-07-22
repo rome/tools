@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Invalid left-hand side in assignment object property value"}
+				message: SAFE_MARKUP {value: "Invalid left-hand side in assignment object property value"}
 			}
 			location: Object {
 				filename: "input.js"

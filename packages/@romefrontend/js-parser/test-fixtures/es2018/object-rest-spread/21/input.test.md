@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Not a valid assignment target"}
+				message: SAFE_MARKUP {value: "Not a valid assignment target"}
 			}
 			location: Object {
 				filename: "input.js"

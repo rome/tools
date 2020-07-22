@@ -60,6 +60,7 @@ import {
 } from "../lint/decisions";
 import {isRoot} from "@romefrontend/ast-utils";
 import {inferDiagnosticLanguageFromRootAST} from "@romefrontend/cli-diagnostics/utils";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 export type ContextArg = {
 	ast: AnyRoot;
@@ -79,7 +80,7 @@ type AddDiagnosticResult = {
 
 // We only want a Context to create diagnostics that belong to itself
 type ContextDiagnostic = Omit<Diagnostic, "location" | "description"> & {
-	marker?: string;
+	marker?: Markup;
 };
 
 type DiagnosticTarget =
@@ -277,8 +278,8 @@ export default class CompilerContext {
 			old: Old;
 			fixed?: New;
 			suggestions?: Array<{
-				description: string;
-				title: string;
+				description: Markup;
+				title: Markup;
 				fixed: New;
 			}>;
 		},
@@ -299,7 +300,7 @@ export default class CompilerContext {
 			advice.push({
 				type: "log",
 				category: "info",
-				text: "Recommended fix",
+				text: markup`Recommended fix`,
 			});
 
 			advice.push({
@@ -315,7 +316,7 @@ export default class CompilerContext {
 				advice.push({
 					type: "log",
 					category: "error",
-					text: "Unable to find target location",
+					text: markup`Unable to find target location`,
 				});
 			} else {
 				advice.push(
@@ -328,16 +329,16 @@ export default class CompilerContext {
 							start: loc.start,
 						}),
 						shortcut: "f",
-						noun: "Apply fix",
-						instruction: "To apply this fix run",
+						noun: markup`Apply fix`,
+						instruction: markup`To apply this fix run`,
 					}),
 				);
 
 				advice.push(
 					buildLintDecisionAdviceAction({
 						extra: true,
-						noun: "Apply fix for ALL files with this category",
-						instruction: "To apply fix for ALL files with this category run",
+						noun: markup`Apply fix for ALL files with this category`,
+						instruction: markup`To apply fix for ALL files with this category run`,
 						decision: buildLintDecisionGlobalString("fix", category),
 					}),
 				);
@@ -374,7 +375,7 @@ export default class CompilerContext {
 				advice.push({
 					type: "log",
 					category: "none",
-					text: `<emphasis>${titlePrefix}:</emphasis> ${suggestion.title}`,
+					text: markup`<emphasis>${titlePrefix}:</emphasis> ${suggestion.title}`,
 				});
 
 				advice.push({
@@ -396,16 +397,16 @@ export default class CompilerContext {
 					advice.push({
 						type: "log",
 						category: "error",
-						text: "Unable to find target location",
+						text: markup`Unable to find target location`,
 					});
 				} else {
 					advice.push(
 						buildLintDecisionAdviceAction({
 							noun: suggestions.length === 1
-								? "Apply suggested fix"
-								: `Apply suggested fix "${suggestion.title}"`,
+								? markup`Apply suggested fix`
+								: markup`Apply suggested fix "${suggestion.title}"`,
 							shortcut: String(num),
-							instruction: "To apply this fix run",
+							instruction: markup`To apply this fix run`,
 							filename: this.displayFilename,
 							decision: buildLintDecisionString({
 								filename: this.displayFilename,
@@ -464,9 +465,9 @@ export default class CompilerContext {
 		if (loc !== undefined && loc.start !== undefined) {
 			advice.push(
 				buildLintDecisionAdviceAction({
-					noun: "Add suppression comment",
+					noun: markup`Add suppression comment`,
 					shortcut: "s",
-					instruction: "To suppress this error run",
+					instruction: markup`To suppress this error run`,
 					filename: this.displayFilename,
 					decision: buildLintDecisionString({
 						filename: this.displayFilename,
@@ -480,8 +481,8 @@ export default class CompilerContext {
 			advice.push(
 				buildLintDecisionAdviceAction({
 					extra: true,
-					noun: "Add suppression comments for ALL files with this category",
-					instruction: "To add suppression comments for ALL files with this category run",
+					noun: markup`Add suppression comments for ALL files with this category`,
+					instruction: markup`To add suppression comments for ALL files with this category run`,
 					decision: buildLintDecisionGlobalString("suppress", category),
 				}),
 			);

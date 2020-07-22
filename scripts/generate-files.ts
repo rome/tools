@@ -4,9 +4,9 @@ import {main as lintRules} from "./generated-files/lint-rules";
 import {main as lintRulesDocs} from "./generated-files/lint-rules-docs";
 import {main as sitemap} from "./generated-files/sitemap";
 import {reporter, setForceGenerated} from "./_utils";
-import {escapeMarkup} from "@romefrontend/cli-layout";
 import {parseCLIFlags} from "@romefrontend/cli-flags";
 import child = require("child_process");
+import {markup} from "@romefrontend/cli-layout";
 
 export async function main(args: Array<string>) {
 	const flags = await parseCLIFlags(
@@ -26,7 +26,7 @@ export async function main(args: Array<string>) {
 		setForceGenerated(true);
 	}
 
-	reporter.info("Generating files");
+	reporter.info(markup`Generating files`);
 
 	await Promise.all([
 		virtualModulesMain(),
@@ -41,14 +41,12 @@ export async function main(args: Array<string>) {
 	// Check that `git status` is fine
 	const out = child.spawnSync("git", ["ls-files", "-m"]).stdout.toString();
 	if (out === "") {
-		reporter.success("Generated files up-to-date");
+		reporter.success(markup`Generated files up-to-date`);
 	} else {
-		reporter.info("Modified uncomitted files:");
-		reporter.list(
-			out.trim().split("\n").map((filename) => escapeMarkup(filename)),
-		);
+		reporter.info(markup`Modified uncomitted files:`);
+		reporter.list(out.trim().split("\n").map((filename) => markup`${filename}`));
 		reporter.info(
-			"To fix this run <command>./rome run scripts/generate-files</command> and commit the results",
+			markup`To fix this run <code>./rome run scripts/generate-files</code> and commit the results`,
 		);
 		return 1;
 	}

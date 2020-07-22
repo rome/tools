@@ -50,7 +50,7 @@ export function htmlFormatText(
 		case "info":
 			return `<span style="color: DodgerBlue;">${value}</span>`;
 
-		case "command":
+		case "code":
 			return `<i>${value}</i>`;
 
 		case "highlight": {

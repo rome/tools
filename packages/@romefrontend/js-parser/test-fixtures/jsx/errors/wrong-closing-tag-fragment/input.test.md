@@ -83,11 +83,11 @@ JSRoot {
 			}
 			description: Object {
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Expected JSX closing fragment tag"}
+				message: SAFE_MARKUP {value: "Expected JSX closing fragment tag"}
 				advice: Array [
 					log {
 						category: "info"
-						text: "Originated from this opening tag"
+						text: SAFE_MARKUP {value: "Originated from this opening tag"}
 					}
 					frame {
 						location: Object {

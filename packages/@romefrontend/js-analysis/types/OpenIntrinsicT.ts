@@ -10,6 +10,7 @@ import {HydrateData} from "../Evaluator";
 import T from "./T";
 import OpenT from "./OpenT";
 import {AnyNode} from "@romefrontend/ast";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 export default class OpenIntrinsicT extends OpenT {
 	constructor(scope: Scope, originNode: undefined | AnyNode, name: string) {
@@ -35,7 +36,7 @@ export default class OpenIntrinsicT extends OpenT {
 		return scope.intrinsics.get(String(data.name));
 	}
 
-	humanize(): string {
-		return "open intrinsic";
+	humanize(): Markup {
+		return markup`open intrinsic`;
 	}
 }

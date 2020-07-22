@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Invalid or unexpected int token"}
+				message: SAFE_MARKUP {value: "Invalid or unexpected int token"}
 			}
 			location: Object {
 				filename: "input.js"

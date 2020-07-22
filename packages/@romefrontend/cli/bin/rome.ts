@@ -23,6 +23,7 @@ import {
 } from "@romefrontend/diagnostics";
 import {printDiagnostics} from "@romefrontend/cli-diagnostics";
 import {Reporter} from "@romefrontend/cli-reporter";
+import {markup} from "@romefrontend/cli-layout";
 
 async function main(): Promise<void> {
 	switch (
@@ -71,14 +72,14 @@ export function executeCLIMain() {
 					reporter: Reporter.fromProcess(),
 				},
 			}).catch((err) => {
-				console.error("Error while printing diagnostics");
+				console.error(markup`Error while printing diagnostics`);
 				console.error(err.stack);
 			}).finally(() => {
 				process.exit(1);
 			});
 		}
 	}).catch((err: Error) => {
-		console.error("Error thrown inside the CLI handler");
+		console.error(markup`Error thrown inside the CLI handler`);
 		console.error(getErrorStructure(err).stack);
 		process.exit(1);
 	});

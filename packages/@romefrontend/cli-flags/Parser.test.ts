@@ -14,6 +14,7 @@ import {
 	catchDiagnostics,
 } from "@romefrontend/diagnostics";
 import {printDiagnostics} from "@romefrontend/cli-diagnostics";
+import {markup} from "@romefrontend/cli-layout";
 
 async function testParser<T>(
 	t: TestHelper,
@@ -195,7 +196,7 @@ test(
 						name: c.get(
 							"name",
 							{
-								description: "the name of the coolest person in the world",
+								description: markup`the name of the coolest person in the world`,
 							},
 						).asStringOrVoid(),
 					};
@@ -373,7 +374,7 @@ test(
 					commandSuggestions: {
 						foo: {
 							commandName: "foobar",
-							description: "A much cooler command",
+							description: markup`A much cooler command`,
 						},
 					},
 				},

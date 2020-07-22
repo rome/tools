@@ -47,5 +47,10 @@ export function convertPossibleNodeError(err: NodeJS.ErrnoException): Error {
 		return convertNodeErrorWithPath(err, err.path);
 	}
 
+	switch (err.code) {
+		case "EPIPE":
+			return changeMessage(err, "Pipe closed on other end");
+	}
+
 	return err;
 }

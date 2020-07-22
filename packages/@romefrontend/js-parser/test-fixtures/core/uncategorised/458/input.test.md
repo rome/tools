@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected token, expected while"}
+				message: SAFE_MARKUP {value: "Unexpected token, expected while"}
 			}
 			location: Object {
 				filename: "input.js"

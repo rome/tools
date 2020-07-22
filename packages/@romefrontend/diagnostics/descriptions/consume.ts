@@ -1,45 +1,51 @@
 import {createDiagnosticsCategory} from "./index";
-import {escapeMarkup, markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/cli-layout";
 import {buildSuggestionAdvice} from "../helpers";
-import {UnknownNumber} from "@romefrontend/ob1";
+import {UnknownNumber, ob1Get} from "@romefrontend/ob1";
 
 // @romefrontend/consume
 export const consume = createDiagnosticsCategory({
-	SET_PROPERTY_NON_OBJECT: "Attempted to set a property on a non-object",
-	EXPECTED_JSON_VALUE: "Expected a JSON value",
-	EXPECTED_OBJECT: "Expected object",
-	EXPECTED_ARRAY: "Expected array",
-	EXPECTED_DATE: "Expected a date",
-	EXPECTED_BOOLEAN: "Expected a boolean",
-	EXPECTED_STRING: "Expected a string",
-	EXPECTED_BIGINT: "Expected a bigint",
-	EXPECTED_NUMBER: "Expected a number",
-	EXPECTED_URL: "Expected a URL",
-	EXPECTED_VALID_NUMBER: "Expected valid number",
-	EXPECTED_ABSOLUTE_PATH: "Expected an absolute file path",
-	EXPECTED_RELATIVE_PATH: "Expected a relative file path",
-	EXPECTED_EXPLICIT_RELATIVE_PATH: "Expected an explicit relative file path. This is one that starts with <emphasis>./</emphasis> or <emphasis>../</emphasis>",
-	INVALID: "Invalid value",
+	SET_PROPERTY_NON_OBJECT: {
+		message: markup`Attempted to set a property on a non-object`,
+	},
+	EXPECTED_JSON_VALUE: {message: markup`Expected a JSON value`},
+	EXPECTED_OBJECT: {message: markup`Expected object`},
+	EXPECTED_ARRAY: {message: markup`Expected array`},
+	EXPECTED_DATE: {message: markup`Expected a date`},
+	EXPECTED_BOOLEAN: {message: markup`Expected a boolean`},
+	EXPECTED_STRING: {message: markup`Expected a string`},
+	EXPECTED_BIGINT: {message: markup`Expected a bigint`},
+	EXPECTED_NUMBER: {message: markup`Expected a number`},
+	EXPECTED_URL: {message: markup`Expected a URL`},
+	EXPECTED_VALID_NUMBER: {message: markup`Expected valid number`},
+	EXPECTED_ABSOLUTE_PATH: {message: markup`Expected an absolute file path`},
+	EXPECTED_RELATIVE_PATH: {message: markup`Expected a relative file path`},
+	EXPECTED_EXPLICIT_RELATIVE_PATH: {
+		message: markup`Expected an explicit relative file path. This is one that starts with <emphasis>./</emphasis> or <emphasis>../</emphasis>`,
+	},
+	INVALID: {message: markup`Invalid value`},
 	EXPECTED_NUMBER_BETWEEN: (min: UnknownNumber, max: UnknownNumber) => ({
-		message: `Expected number between ${min} and ${max}`,
+		message: markup`Expected number between ${String(ob1Get(min))} and ${String(
+			ob1Get(max),
+		)}`,
 	}),
 	EXPECTED_NUMBER_HIGHER: (num: UnknownNumber) => ({
-		message: `Expected number higher than ${num}`,
+		message: markup`Expected number higher than ${String(ob1Get(num))}`,
 	}),
 	EXPECTED_NUMBER_LOWER: (num: UnknownNumber) => ({
-		message: `Expected number lower than ${num}`,
+		message: markup`Expected number lower than ${String(ob1Get(num))}`,
 	}),
 	INVALID_NUMBER_SET_VALUE: (value: number, validValues: Array<number>) => ({
-		message: markup`Invalid value <emphasis>${value}</emphasis>`,
+		message: markup`Invalid number <emphasis>${value}</emphasis>`,
 		advice: [
 			{
 				type: "log",
 				category: "info",
-				text: "Possible values are",
+				text: markup`Possible values are`,
 			},
 			{
 				type: "list",
-				list: validValues.map((num) => `<number>${num}</number>`),
+				list: validValues.map((num) => markup`${num}`),
 			},
 		],
 	}),
@@ -49,11 +55,11 @@ export const consume = createDiagnosticsCategory({
 			{
 				type: "log",
 				category: "info",
-				text: "Possible values are",
+				text: markup`Possible values are`,
 			},
 			{
 				type: "list",
-				list: validValues.map((str) => escapeMarkup(str)),
+				list: validValues.map((str) => markup`${str}`),
 			},
 		],
 	}),

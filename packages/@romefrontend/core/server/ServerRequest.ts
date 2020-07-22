@@ -258,7 +258,7 @@ export default class ServerRequest {
 		if (this.query.requestFlags.timing) {
 			const end = Date.now();
 			this.reporter.info(
-				`Request took <duration emphasis>${String(end - this.start)}</duration>`,
+				markup`Request took <duration emphasis>${String(end - this.start)}</duration>`,
 			);
 		}
 
@@ -361,6 +361,7 @@ export default class ServerRequest {
 			processor,
 			reporter: this.reporter,
 			cwd: this.client.flags.cwd,
+			wrapErrors: true,
 			flags: this.getDiagnosticsPrinterFlags(),
 			fileReaders: this.server.createDiagnosticsPrinterFileReaders(),
 		});
@@ -388,19 +389,19 @@ export default class ServerRequest {
 		if (min === max) {
 			if (args.length !== min) {
 				if (min === 0) {
-					message = "Expected no arguments";
+					message = markup`Expected no arguments`;
 				} else {
-					message = `Expected exactly <number emphasis>${min}</number> arguments`;
+					message = markup`Expected exactly <number emphasis>${String(min)}</number> arguments`;
 				}
 			}
 		} else {
 			if (args.length < min) {
-				message = `Expected at least <number emphasis>${min}</number> arguments`;
+				message = markup`Expected at least <number emphasis>${String(min)}</number> arguments`;
 			}
 
 			if (args.length > max) {
 				excessive = true;
-				message = `Expected no more than <number emphasis>${min}</number> arguments`;
+				message = markup`Expected no more than <number emphasis>${String(min)}</number> arguments`;
 			}
 		}
 
@@ -750,12 +751,12 @@ export default class ServerRequest {
 						advice.push({
 							type: "log",
 							category: "info",
-							text: "The following files were ignored",
+							text: markup`The following files were ignored`,
 						});
 
 						advice.push({
 							type: "list",
-							list: Array.from(withoutIgnore, (path) => path.toMarkup()),
+							list: Array.from(withoutIgnore, (path) => markup`${path}`),
 							truncate: true,
 						});
 
@@ -775,7 +776,7 @@ export default class ServerRequest {
 							advice.push({
 								type: "log",
 								category: "info",
-								text: "Ignore patterns were defined here",
+								text: markup`Ignore patterns were defined here`,
 							});
 
 							advice.push({
@@ -789,7 +790,7 @@ export default class ServerRequest {
 				diagnostics.push({
 					location: {
 						...location,
-						marker: path.toMarkup(),
+						marker: markup`${path}`,
 					},
 					description: {
 						...descriptions.FLAGS.NO_FILES_FOUND(opts.noun),

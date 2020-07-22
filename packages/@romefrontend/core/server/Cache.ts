@@ -23,6 +23,7 @@ import {
 } from "@romefrontend/fs";
 import {stringifyJSON} from "@romefrontend/codec-json";
 import {getEnvVar} from "@romefrontend/cli-environment";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 export type CacheEntry = {
 	version: string;
@@ -123,9 +124,9 @@ export default class Cache {
 		this.pendingWrites = new AbsoluteFilePathMap();
 
 		// Write pending files
-		const filelinks: Array<string> = [];
+		const filelinks: Array<Markup> = [];
 		for (const [path, entry] of pendingWrites) {
-			filelinks.push(path.toMarkup());
+			filelinks.push(markup`${path}`);
 			await createDirectory(path.getParent());
 			await writeFile(path, stringifyJSON(entry));
 		}
@@ -133,7 +134,7 @@ export default class Cache {
 		// Log
 		const {logger} = this.server;
 		if (filelinks.length > 0) {
-			logger.info(`[Cache] Wrote entries due to ${reason}`);
+			logger.info(markup`[Cache] Wrote entries due to ${reason}`);
 			logger.list(filelinks);
 		}
 	}

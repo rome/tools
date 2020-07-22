@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unknown TS non array type start"}
+				message: SAFE_MARKUP {value: "Unknown TS non array type start"}
 			}
 			location: Object {
 				filename: "input.ts"

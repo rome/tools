@@ -21,6 +21,7 @@ import {ServerQueryResponse} from "../common/bridges/ServerBridge";
 import {ClientRequestFlags} from "../common/types/client";
 import {Dict} from "@romefrontend/typescript-helpers";
 import {EMPTY_SUCCESS_RESPONSE} from "../server/ServerRequest";
+import {markup} from "@romefrontend/cli-layout";
 
 type State = {
 	initial: boolean;
@@ -37,10 +38,10 @@ async function check(
 	reporter.clearScreen();
 
 	if (state.initial) {
-		reporter.info("Fetching initial diagnostics");
+		reporter.info(markup`Fetching initial diagnostics`);
 		state.initial = false;
 	} else {
-		reporter.info("Updating diagnostics");
+		reporter.info(markup`Updating diagnostics`);
 	}
 
 	const res = await req.fork({
@@ -141,12 +142,12 @@ async function ask(
 		less?: SelectOption;
 	} = {
 		ignore: {
-			label: "Do nothing",
+			label: markup`Do nothing`,
 			shortcut: "n",
 		},
 		...actionOptions,
 		exit: {
-			label: "Exit",
+			label: markup`Exit`,
 			shortcut: "escape",
 		},
 	};
@@ -154,12 +155,12 @@ async function ask(
 	if (hasExtraOptions) {
 		if (showMoreOptions) {
 			options.more = {
-				label: "Less options...",
+				label: markup`Less options...`,
 				shortcut: "l",
 			};
 		} else {
 			options.more = {
-				label: "More options...",
+				label: markup`More options...`,
 				shortcut: "m",
 			};
 		}
@@ -168,12 +169,13 @@ async function ask(
 	const printer = new DiagnosticsPrinter({
 		processor: new DiagnosticsProcessor(),
 		reporter,
+		wrapErrors: true,
 	});
 	diag = printer.processor.addDiagnosticAssert(diag);
 	await printer.print();
 
 	const answer = await reporter.radio(
-		"How do you want to resolve this?",
+		markup`How do you want to resolve this?`,
 		{
 			options,
 		},
@@ -185,18 +187,18 @@ async function ask(
 	if (outdatedFiles.size > 0) {
 		const files = Array.from(
 			outdatedFiles,
-			(path) => `<emphasis>${path.toMarkup()}</emphasis>`,
+			(path) => markup`<emphasis>${path}</emphasis>`,
 		);
 
 		reporter.br();
 
 		if (files.length === 1) {
 			reporter.warn(
-				`The file ${files[0]} changed while waiting for your response.`,
+				markup`The file ${files[0]} changed while waiting for your response.`,
 			);
 		} else {
 			reporter.warn(
-				"The following diagnostic dependencies changed while waiting for your response.",
+				markup`The following diagnostic dependencies changed while waiting for your response.`,
 			);
 			reporter.list(files);
 		}
@@ -263,7 +265,7 @@ export default async function review(
 	reporter.clearScreen();
 
 	if (state.seen.size === 0) {
-		reporter.success("Nothing to review!");
+		reporter.success(markup`Nothing to review!`);
 	} else {
 		if (res.type === "DIAGNOSTICS") {
 			await printDiagnostics({
@@ -277,12 +279,16 @@ export default async function review(
 			});
 			reporter.hr();
 			reporter.error(
-				`<number emphasis>${res.diagnostics.length}</number> unresolved <grammarNumber plural="issues" singular="issue">${res.diagnostics.length}</grammarNumber> remaining`,
+				markup`<number emphasis>${String(res.diagnostics.length)}</number> unresolved <grammarNumber plural="issues" singular="issue">${String(
+					res.diagnostics.length,
+				)}</grammarNumber> remaining`,
 			);
 		}
 
 		reporter.success(
-			`<number emphasis>${state.resolvedCount}</number> <grammarNumber plural="issues" singular="issue">${state.resolvedCount}</grammarNumber> resolved`,
+			markup`<number emphasis>${String(state.resolvedCount)}</number> <grammarNumber plural="issues" singular="issue">${String(
+				state.resolvedCount,
+			)}</grammarNumber> resolved`,
 		);
 	}
 

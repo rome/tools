@@ -39,6 +39,7 @@ import WorkerAPI from "./WorkerAPI";
 import {FileNotFound} from "../common/FileNotFound";
 import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
 import VirtualModules from "../common/VirtualModules";
+import {markup} from "@romefrontend/cli-layout";
 
 export type ParseResult = {
 	ast: AnyRoot;
@@ -247,13 +248,13 @@ export default class Worker {
 	}
 
 	clearBuffer({real}: FileReference) {
-		this.logger.info(`Cleared ${real.toMarkup()} buffer`);
+		this.logger.info(markup`Cleared ${real} buffer`);
 		this.buffers.delete(real);
 		this.evict(real);
 	}
 
 	updateBuffer(ref: FileReference, content: string) {
-		this.logger.info(`Updated ${ref.real.toMarkup()} buffer`);
+		this.logger.info(markup`Updated ${ref.real} buffer`);
 		this.buffers.set(ref.real, content);
 		this.evict(ref.real);
 	}
@@ -266,7 +267,7 @@ export default class Worker {
 	}
 
 	patchBuffer(ref: FileReference, patches: Array<WorkerBufferPatch>) {
-		this.logger.info(`Patched ${ref.real.toMarkup()} buffer`);
+		this.logger.info(markup`Patched ${ref.real} buffer`);
 		let buffer = this.buffers.get(ref.real);
 		if (buffer === undefined) {
 			throw new Error(`Can't find buffer to patch for ${ref.real.join()}`);
@@ -448,7 +449,7 @@ export default class Worker {
 			}
 		}
 
-		this.logger.info("Parsing:", path.toMarkup());
+		this.logger.info(markup`Parsing: ${path}`);
 
 		// Get the file mtime to warn about outdated diagnostics
 		// If we have a buffer or virtual module for this file then don't set an mtime since our diagnostics
@@ -527,7 +528,7 @@ export default class Worker {
 	}
 
 	evict(path: AbsoluteFilePath) {
-		this.logger.info(`Evicted ${path.toMarkup()}`);
+		this.logger.info(markup`Evicted ${path}`);
 		this.astCache.delete(path);
 		this.moduleSignatureCache.delete(path);
 	}

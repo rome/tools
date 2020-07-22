@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "implements list cannot be empty"}
+				message: SAFE_MARKUP {value: "implements list cannot be empty"}
 			}
 			location: Object {
 				filename: "input.ts"

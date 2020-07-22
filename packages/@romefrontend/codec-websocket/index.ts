@@ -17,6 +17,8 @@ import http = require("http");
 import net = require("net");
 
 import {Reporter} from "@romefrontend/cli-reporter";
+import {markup} from "@romefrontend/cli-layout";
+import prettyFormat from "@romefrontend/pretty-format";
 
 export function createKey(key: string): string {
 	return crypto.createHash("sha1").update(`${key}${GUID}`).digest("base64");
@@ -113,12 +115,11 @@ export class WebSocketInterface {
 	sendFrame(frameOpts: BuildFrameOpts) {
 		if (this.reporter !== undefined) {
 			this.reporter.info(
-				"Sending frame",
-				{
+				markup`Sending frame ${prettyFormat({
 					fin: frameOpts.fin,
 					opcode: frameOpts.opcode,
 					msg: frameOpts.data,
-				},
+				})}`,
 			);
 		}
 		this.socket.write(buildFrame(frameOpts, this.type === "client"));
@@ -171,12 +172,11 @@ export class WebSocketInterface {
 
 				if (this.reporter !== undefined) {
 					this.reporter.info(
-						"Received complete frame",
-						{
+						markup`Received complete frame ${prettyFormat({
 							opcode: frame.opcode,
 							length: frame.payloadLength,
 							msg: frame.payload,
-						},
+						})}`,
 					);
 				}
 

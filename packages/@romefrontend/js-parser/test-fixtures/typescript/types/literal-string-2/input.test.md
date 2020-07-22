@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Template literal types cannot have any substitution"}
+				message: SAFE_MARKUP {value: "Template literal types cannot have any substitution"}
 			}
 			location: Object {
 				filename: "input.ts"

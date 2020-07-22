@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unknown start to an yield argument"}
+				message: SAFE_MARKUP {value: "Unknown start to an yield argument"}
 			}
 			location: Object {
 				filename: "input.js"

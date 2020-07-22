@@ -9,6 +9,7 @@ import {AnyNode} from "@romefrontend/ast";
 import {HydrateData} from "../Evaluator";
 import {Scope} from "../scopes";
 import T from "./T";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 export default class MixedT extends T {
 	static type = "MixedT";
@@ -25,7 +26,7 @@ export default class MixedT extends T {
 		return false;
 	}
 
-	humanize(): string {
-		return "mixed";
+	humanize(): Markup {
+		return markup`mixed`;
 	}
 }

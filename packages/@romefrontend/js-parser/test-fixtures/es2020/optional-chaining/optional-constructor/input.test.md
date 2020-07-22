@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "constructors in/after an Optional Chain are not allowed"}
+				message: SAFE_MARKUP {value: "constructors in/after an Optional Chain are not allowed"}
 			}
 			location: Object {
 				filename: "input.js"

@@ -10,6 +10,7 @@ import {HydrateData} from "../Evaluator";
 import BooleanLiteralT from "./BooleanLiteralT";
 import {Scope} from "../scopes";
 import T from "./T";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 export default class BooleanT extends T {
 	static type = "BooleanT";
@@ -22,8 +23,8 @@ export default class BooleanT extends T {
 		return new BooleanT(scope, originNode);
 	}
 
-	humanize(): string {
-		return "boolean";
+	humanize(): Markup {
+		return markup`boolean`;
 	}
 
 	compatibleWith(type: T): boolean {

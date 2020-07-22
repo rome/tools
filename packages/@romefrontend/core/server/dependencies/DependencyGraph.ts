@@ -298,9 +298,10 @@ export default class DependencyGraph {
 		}
 
 		const progressText = markup`<filelink target="${filename}" />`;
+		let progressId;
 
 		if (analyzeProgress !== undefined) {
-			analyzeProgress.pushText(progressText);
+			progressId = analyzeProgress.pushText(progressText);
 		}
 
 		let res: WorkerAnalyzeDependencyResult;
@@ -382,8 +383,8 @@ export default class DependencyGraph {
 			);
 		}
 
-		if (analyzeProgress !== undefined) {
-			analyzeProgress.popText(progressText);
+		if (analyzeProgress !== undefined && progressId !== undefined) {
+			analyzeProgress.popText(progressId);
 			analyzeProgress.tick();
 		}
 

@@ -10,6 +10,7 @@ import {HydrateData, HydrateTypeFactory} from "../Evaluator";
 import T, {SerialTypeFactory} from "./T";
 import {Scope} from "../scopes";
 import {HumanBuilder} from "../Utils";
+import {Markup, concatMarkup, markup} from "@romefrontend/cli-layout";
 
 export default class UnionT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, types: Array<T>) {
@@ -118,7 +119,10 @@ export default class UnionT extends T {
 		}
 	}
 
-	humanize(builder: HumanBuilder): string {
-		return this.types.map((type) => builder.humanize(type)).join(" | ");
+	humanize(builder: HumanBuilder): Markup {
+		return concatMarkup(
+			this.types.map((type) => builder.humanize(type)),
+			markup` | `,
+		);
 	}
 }

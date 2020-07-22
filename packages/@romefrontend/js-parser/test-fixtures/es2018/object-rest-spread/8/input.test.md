@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "A trailing comma is not permitted after the rest element"}
+				message: SAFE_MARKUP {value: "A trailing comma is not permitted after the rest element"}
 			}
 			location: Object {
 				filename: "input.js"

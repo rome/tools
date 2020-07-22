@@ -9,6 +9,7 @@ import {AnyNode} from "@romefrontend/ast";
 import {HydrateData} from "../Evaluator";
 import {Scope} from "../scopes";
 import T from "./T";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 export default class OpaqueT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, name: string) {
@@ -31,8 +32,8 @@ export default class OpaqueT extends T {
 		return new OpaqueT(scope, originNode, String(data.name));
 	}
 
-	humanize(): string {
-		return `opaque ${this.name}`;
+	humanize(): Markup {
+		return markup`opaque ${this.name}`;
 	}
 
 	compatibleWith(otherType: T): boolean {

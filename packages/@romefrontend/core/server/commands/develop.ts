@@ -10,6 +10,7 @@ import {Consumer} from "@romefrontend/consume";
 import {WebServer} from "../web/index";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
+import {markup} from "@romefrontend/cli-layout";
 
 type Flags = {
 	port: number;
@@ -19,7 +20,7 @@ const DEFAULT_PORT = 8_081;
 
 export default createServerCommand({
 	category: commandCategories.SOURCE_CODE,
-	description: "start a web server",
+	description: markup`start a web server`,
 	usage: "",
 	examples: [],
 	hidden: true,

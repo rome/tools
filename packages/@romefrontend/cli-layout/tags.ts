@@ -101,7 +101,7 @@ tags.set("error", new Map());
 tags.set("success", new Map());
 tags.set("warn", new Map());
 tags.set("info", new Map());
-tags.set("command", new Map());
+tags.set("code", new Map());
 tags.set("color", new Map([["fg", validateColor], ["bg", validateColor]]));
 tags.set(
 	"highlight",
@@ -115,7 +115,6 @@ tags.set(
 	"pad",
 	new Map([["width", numberValidator], ["align", alignValidator]]),
 );
-tags.set("nobr", new Map());
 tags.set("li", new Map());
 tags.set("ul", new Map());
 tags.set(

@@ -97,14 +97,13 @@ export type Ratings = Array<Rating>;
 
 type OrderBySimilarityOptions = {
 	minRating?: number;
-	formatItem?: (str: string) => string;
 	ignoreCase?: boolean;
 };
 
 export function orderBySimilarity(
 	compareStr: string,
 	targets: Array<string>,
-	{minRating, formatItem, ignoreCase = false}: OrderBySimilarityOptions = {},
+	{minRating, ignoreCase = false}: OrderBySimilarityOptions = {},
 ): Ratings {
 	if (targets.length === 0) {
 		return [];
@@ -114,24 +113,19 @@ export function orderBySimilarity(
 	const ratings: Ratings = Array.from(
 		targets,
 		(target: string): Rating => {
-			let compareTarget = target;
-			if (formatItem !== undefined) {
-				compareTarget = formatItem(target);
-			}
-
 			if (ignoreCase) {
 				return {
 					target,
 					rating: compareTwoStrings(
 						compareStr.toLowerCase(),
-						compareTarget.toLowerCase(),
+						target.toLowerCase(),
 					),
 				};
 			}
 
 			return {
 				target,
-				rating: compareTwoStrings(compareStr, compareTarget),
+				rating: compareTwoStrings(compareStr, target),
 			};
 		},
 	);

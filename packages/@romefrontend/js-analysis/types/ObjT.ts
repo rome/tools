@@ -11,6 +11,7 @@ import T, {SerialTypeFactory, TypeCompatibilityReturn} from "./T";
 import {Scope} from "../scopes";
 import {HumanBuilder} from "../Utils";
 import ObjPropT from "./ObjPropT";
+import {Markup, concatMarkup, markup} from "@romefrontend/cli-layout";
 
 export default class ObjT extends T {
 	constructor(
@@ -107,20 +108,20 @@ export default class ObjT extends T {
 		return true;
 	}
 
-	humanize(builder: HumanBuilder): string {
+	humanize(builder: HumanBuilder): Markup {
 		if (this.props.length === 0) {
-			return "{}";
+			return markup`{}`;
 		} else {
-			return [
-				"{",
-				...this.props.map((prop) => {
-					const val = builder.humanize(prop);
-					let lines = val.split("\n");
-					lines = lines.map((line) => `  ${line}`);
-					return `${lines.join("\n")},`;
-				}),
-				"}",
-			].join("\n");
+			return concatMarkup(
+				[
+					markup`{`,
+					...this.props.map((prop) => {
+						return builder.humanize(prop);
+					}),
+					markup`}`,
+				],
+				markup`\n`,
+			);
 		}
 	}
 }

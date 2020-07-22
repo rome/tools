@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Export from only allows strings"}
+				message: SAFE_MARKUP {value: "Export from only allows strings"}
 			}
 			location: Object {
 				filename: "input.js"

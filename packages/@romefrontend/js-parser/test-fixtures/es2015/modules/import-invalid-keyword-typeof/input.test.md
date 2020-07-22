@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected keyword typeof"}
+				message: SAFE_MARKUP {value: "Unexpected keyword typeof"}
 			}
 			location: Object {
 				filename: "input.js"

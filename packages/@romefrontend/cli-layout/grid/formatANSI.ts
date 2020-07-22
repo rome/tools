@@ -71,7 +71,7 @@ export function ansiFormatText(
 		case "info":
 			return formatAnsi.blue(value);
 
-		case "command":
+		case "code":
 			return formatAnsi.italic(value);
 
 		case "highlight": {

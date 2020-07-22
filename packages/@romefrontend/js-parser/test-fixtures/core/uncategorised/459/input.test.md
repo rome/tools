@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unknown label <emphasis>x</emphasis>"}
+				message: SAFE_MARKUP {value: "Unknown label <emphasis>x</emphasis>"}
 			}
 			location: Object {
 				filename: "input.js"

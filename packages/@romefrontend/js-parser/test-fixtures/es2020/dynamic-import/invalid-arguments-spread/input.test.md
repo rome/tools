@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Spread is not allowed in import()"}
+				message: SAFE_MARKUP {value: "Spread is not allowed in import()"}
 			}
 			location: Object {
 				filename: "input.js"

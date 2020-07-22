@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Only '=' operator can be used for specifying default value."}
+				message: SAFE_MARKUP {value: "Only '=' operator can be used for specifying default value."}
 			}
 			location: Object {
 				filename: "input.js"

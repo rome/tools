@@ -12,6 +12,7 @@ import {HumanBuilder} from "../Utils";
 import {Scope} from "../scopes";
 import VoidT from "./VoidT";
 import NullT from "./NullT";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 export default class MaybeT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, parent: T) {
@@ -37,8 +38,8 @@ export default class MaybeT extends T {
 		return new MaybeT(scope, originNode, getType(data.parent));
 	}
 
-	humanize(builder: HumanBuilder): string {
-		return `?${builder.humanize(this.parent)}`;
+	humanize(builder: HumanBuilder): Markup {
+		return markup`?${builder.humanize(this.parent)}`;
 	}
 
 	explodeUnion(): Array<T> {

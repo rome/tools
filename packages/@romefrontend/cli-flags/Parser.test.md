@@ -15,7 +15,7 @@
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
+  --help                          Show this help screen
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -65,7 +65,7 @@ Object {}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
+  --help                          Show this help screen
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -89,7 +89,7 @@ Object {}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
+  --help                          Show this help screen
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -115,7 +115,7 @@ Object {}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
+  --help                          Show this help screen
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -166,7 +166,7 @@ Object {}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
+  --help                          Show this help screen
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -187,7 +187,7 @@ Object {}
     $ test foo
            ^^^
 
-  ℹ Did you mean foobar instead? A much cooler command
+  ℹ Did you mean foobar instead?  A much cooler command
 
     $ test foobar
 
@@ -210,7 +210,7 @@ Object {}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
+  --help                          Show this help screen
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -252,7 +252,7 @@ Object {}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
+  --help                          Show this help screen
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -298,8 +298,8 @@ Object {name: "sebastian"}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                   --name <input> no description found
+  --help                          Show this help screen
+  --name <input>                  no description found
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -334,8 +334,8 @@ Object {name: "sebastian"}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                   --name <input> the name of the coolest person in the world
+  --help                          Show this help screen
+  --name <input>                  the name of the coolest person in the world
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -370,8 +370,8 @@ Object {run: false}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                            --run no description found
+  --help                          Show this help screen
+  --run                           no description found
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -406,8 +406,8 @@ Object {run: true}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                            --run no description found
+  --help                          Show this help screen
+  --run                           no description found
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -442,8 +442,8 @@ Object {run: true}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                            --run no description found
+  --help                          Show this help screen
+  --run                           no description found
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -478,8 +478,8 @@ Object {name: "sebastian"}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                   --name <input> no description found
+  --help                          Show this help screen
+  --name <input>                  no description found
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -514,8 +514,8 @@ Object {name: undefined}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                   --name <input> no description found
+  --help                          Show this help screen
+  --name <input>                  no description found
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -550,8 +550,8 @@ Object {run: true}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                            --run no description found
+  --help                          Show this help screen
+  --run                           no description found
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -586,8 +586,8 @@ Object {run: true}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                            --run no description found
+  --help                          Show this help screen
+  --run                           no description found
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -622,8 +622,8 @@ Object {name: "sebastian"}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                   --name <input> no description found
+  --help                          Show this help screen
+  --name <input>                  no description found
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -652,8 +652,8 @@ Object {name: "sebastian"}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                   --name <input> no description found
+  --help                          Show this help screen
+  --name <input>                  no description found
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

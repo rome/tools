@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Escape sequence in keyword export"}
+				message: SAFE_MARKUP {value: "Escape sequence in keyword export"}
 			}
 			location: Object {
 				filename: "input.js"

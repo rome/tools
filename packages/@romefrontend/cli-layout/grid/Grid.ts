@@ -51,6 +51,7 @@ import {parseMarkup} from "../parse";
 import {Position} from "@romefrontend/parser-core";
 import {lineWrapValidator} from "../tags";
 import {formatAnsi} from "../ansi";
+import {pretty} from "@romefrontend/pretty-format";
 
 type Cursor = {
 	line: Number1;
@@ -60,6 +61,9 @@ type Cursor = {
 type Rows = Array<Array<TagNode>>;
 
 type Ancestry = Array<TagNode>;
+
+type Column = string | symbol;
+type Columns = Array<Column>;
 
 function createTag(
 	name: TagNode["name"],
@@ -72,6 +76,14 @@ function createTag(
 		attributes,
 		children,
 	};
+}
+
+function joinColumns(columns: Columns): string {
+	return columns.filter((column) => typeof column === "string").join("");
+}
+
+function sliceColumns(columns: Columns, start: Number1, end: Number1): string {
+	return joinColumns(columns.slice(ob1Get1(start) - 1, ob1Get1(end) - 1));
 }
 
 function extractViewTags(
@@ -108,8 +120,14 @@ type GridLine = {
 		end: Number1;
 		ancestry: Ancestry;
 	}>;
-	columns: Array<string>;
+	columns: Columns;
 };
+
+const TAB_PLACEHOLDER_COLUMN = Symbol("TAB_LAYOUT_PLACEHOLDER");
+
+function isWhitespace(char: Column): boolean {
+	return char === " " || char === "\t" || char === TAB_PLACEHOLDER_COLUMN;
+}
 
 export default class Grid {
 	constructor(opts: MarkupFormatGridOptions) {
@@ -141,7 +159,23 @@ export default class Grid {
 		this.width = ob1Number1;
 
 		this.lines = [];
+
+		// TODO make the tab width customizable in userConfig
+		this.tabSize = 2;
+
+		const indentColumns: Columns = [];
+		for (let i = 0; i < this.tabSize; i++) {
+			let char: Column = " ";
+			if (!this.options.convertTabs) {
+				char = i === 0 ? "\t" : TAB_PLACEHOLDER_COLUMN;
+			}
+			indentColumns.push(char);
+		}
+		this.indentColumns = indentColumns;
 	}
+
+	indentColumns: Columns;
+	tabSize: number;
 
 	features: TerminalFeatures;
 	lineWrapMode: MarkupLineWrapMode;
@@ -165,6 +199,22 @@ export default class Grid {
 		sourceColumn: Number1;
 	};
 
+	debugState(): object {
+		return {
+			cursor: this.cursor,
+			lines: this.lines.map(({columns, ranges}) => {
+				return {
+					line: joinColumns(columns),
+					ranges: ranges.map(({ancestry, start, end}) => ({
+						start,
+						end,
+						ancestry: ancestry.map((tag) => tag.name).join("|"),
+					})),
+				};
+			}),
+		};
+	}
+
 	alignRight() {
 		const viewportWidth = ob1Get(this.viewportWidth);
 		if (viewportWidth === undefined) {
@@ -172,24 +222,24 @@ export default class Grid {
 		}
 
 		this.lines = this.lines.map(({ranges, columns}) => {
-			const newColumns = [...columns];
-			let offset = 0;
+			let newColumns = [];
 
 			// Pad out line to viewport width
-			while (newColumns.length < viewportWidth) {
-				offset++;
-				newColumns.unshift(" ");
+			const offset = Math.max(0, viewportWidth - columns.length);
+			for (const char of this.getSpaces(offset)) {
+				newColumns.push(char);
 			}
 
-			// Skip if all it contains is spaces
+			newColumns = newColumns.concat(columns);
 
-			let onlySpaces = true;
+			// Skip if all it contains is whitespace
+			let onlyWhitespace = true;
 			for (const char of newColumns) {
-				if (char !== " ") {
-					onlySpaces = false;
+				if (!isWhitespace(char)) {
+					onlyWhitespace = false;
 				}
 			}
-			if (onlySpaces) {
+			if (onlyWhitespace) {
 				return {
 					columns: newColumns,
 					ranges,
@@ -284,7 +334,7 @@ export default class Grid {
 
 	getUnformattedLines(): Array<string> {
 		return this.lines.map(({columns}) => {
-			return columns.join("").trimRight();
+			return joinColumns(columns).trimRight();
 		});
 	}
 
@@ -306,18 +356,14 @@ export default class Grid {
 			let lastEnd: number | undefined = undefined;
 
 			function catchUp(end: number) {
-				line = `${columns.slice(end, lastEnd).join("")}${line}`;
+				line = `${joinColumns(columns.slice(end, lastEnd))}${line}`;
 				lastEnd = end;
 			}
 
 			for (const {start, end, ancestry} of sortedRanges) {
-				const startIndex = ob1Get1(start) - 1;
-				const endIndex = ob1Get1(end) - 1;
-				catchUp(endIndex);
+				catchUp(ob1Get1(end) - 1);
 
-				let substr = opts.normalizeText(
-					columns.slice(startIndex, endIndex).join(""),
-				);
+				let substr = opts.normalizeText(sliceColumns(columns, start, end));
 
 				// Format tags in reverse
 				for (let i = ancestry.length - 1; i >= 0; i--) {
@@ -328,7 +374,7 @@ export default class Grid {
 				substr = opts.wrapRange(substr);
 
 				line = `${substr}${line}`;
-				lastEnd = startIndex;
+				lastEnd = ob1Get1(start) - 1;
 			}
 
 			catchUp(0);
@@ -357,12 +403,25 @@ export default class Grid {
 		});
 	}
 
+	// Fill current cursor line with spaces until the column
 	fillCursor(cursor: Cursor) {
 		const line = this.getLine(cursor.line);
-
 		const colIndex = ob1Get1(cursor.column) - 1;
-		for (let i = colIndex - 1; i >= 0 && line.columns[i] === undefined; i--) {
-			line.columns[i] = " ";
+
+		// Amount of spaces to insert
+		let count = 0;
+
+		// Calculate how many we need to insert
+		let i = colIndex - 1;
+		while (i >= 0 && (line.columns[i] === undefined || line.columns[i] === "")) {
+			i--;
+			count++;
+		}
+
+		// Insert spaces
+		for (const char of this.getSpaces(count)) {
+			i++;
+			line.columns[i] = char;
 		}
 	}
 
@@ -388,13 +447,14 @@ export default class Grid {
 
 			// Soft wrap, inherit the previous lines indentation
 			if (currentLine !== undefined) {
-				for (
-					let i = 0;
-					i < currentLine.columns.length && currentLine.columns[i] === " ";
-					i++
+				let i = 0;
+				while (
+					i < currentLine.columns.length &&
+					isWhitespace(currentLine.columns[i])
 				) {
 					this.moveCursorRight();
 					this.lineStartMeta.indentationCount++;
+					i++;
 				}
 
 				const {extraSoftWrapIndent} = this.options.view;
@@ -441,11 +501,17 @@ export default class Grid {
 		});
 	}
 
-	writeToCursor(cursor: Cursor, char: string) {
+	writeToCursor(cursor: Cursor, char: Column) {
 		this.fillCursor(cursor);
 
 		const line = this.getLine(cursor.line);
 		const colIndex = ob1Get1(cursor.column) - 1;
+
+		const existing = line.columns[colIndex];
+		if (existing !== undefined && existing !== "") {
+			//throw new Error(pretty`Trying to write ${char} but already populated with ${existing}. Debug state: ${this.debugState()}`);
+		}
+
 		line.columns[colIndex] = char;
 
 		if (cursor.column > this.width) {
@@ -453,12 +519,49 @@ export default class Grid {
 		}
 	}
 
-	writeChar(char: string) {
-		if (char === "\n") {
-			this.userNewline();
-			return;
+	// Build up columns with as many tabs as we can and then spaces
+	getSpaces(count: number): Columns {
+		let columns: Columns = [];
+		if (count === 0) {
+			return columns;
 		}
 
+		while (count >= this.tabSize) {
+			columns = columns.concat(this.indentColumns);
+			count -= this.tabSize;
+		}
+
+		while (count > 0) {
+			columns.push(" ");
+			count--;
+		}
+
+		return columns;
+	}
+
+	drawSpaces(count: number) {
+		for (const char of this.getSpaces(count)) {
+			this.drawChar(char);
+		}
+	}
+
+	drawIndent() {
+		for (const char of this.indentColumns) {
+			this.drawChar(char);
+		}
+	}
+
+	userChar(char: Column) {
+		if (char === "\t") {
+			this.drawIndent();
+		} else if (char === "\n") {
+			this.userNewline();
+		} else {
+			this.drawChar(char);
+		}
+	}
+
+	drawChar(char: Column) {
 		this.writeToCursor(this.cursor, char);
 		this.moveCursorRight();
 	}
@@ -531,7 +634,7 @@ export default class Grid {
 			forceNextWordOverflow = false;
 
 			for (const char of word.split(/(?:){1}/u)) {
-				this.writeChar(char);
+				this.userChar(char);
 
 				if (source) {
 					this.moveSourceCursor(char);
@@ -565,7 +668,7 @@ export default class Grid {
 			}
 
 			if (!ignoreTrailingSpace) {
-				this.writeChar(" ");
+				this.drawChar(" ");
 			}
 		}
 
@@ -573,21 +676,21 @@ export default class Grid {
 		this.addCursorRange(start, end, ancestry);
 	}
 
-	setRange(line: Number1, start: Number1, end: Number1, ancestry: Ancestry) {
+	setRange(lineNo: Number1, start: Number1, end: Number1, ancestry: Ancestry) {
 		if (start === end) {
 			// Nothing to format. Empty tag.
 			return;
 		}
 
+		const line = this.getLine(lineNo);
+
 		if (end < start) {
 			throw new Error(
-				`Range end for line index ${line} is before the start. end(${end}) < start(${start}).\nLine content: ${JSON.stringify(
-					this.getLine(line).columns.join(""),
-				)}`,
+				pretty`Range end for line index ${lineNo} is before the start. end(${end}) < start(${start}). Debug state: ${this.debugState()}`,
 			);
 		}
 
-		const {ranges} = this.getLine(line);
+		const {ranges} = line;
 
 		for (const range of ranges) {
 			if (
@@ -595,7 +698,11 @@ export default class Grid {
 				(range.start >= start && range.end <= end)
 			) {
 				throw new Error(
-					`The ranges ${range.start}-${range.end} and ${start}-${end} overlap`,
+					pretty`The line no #${lineNo} ranges ${range.start}-${range.end} (${sliceColumns(
+						line.columns,
+						range.start,
+						range.end,
+					)}) and ${start}-${end} (${sliceColumns(line.columns, start, end)}) overlap. Debug state: ${this.debugState()}`,
 				);
 			}
 		}
@@ -640,7 +747,7 @@ export default class Grid {
 		}
 	}
 
-	drawList(tag: TagNode, ancestry: Ancestry) {
+	drawListTag(tag: TagNode, ancestry: Ancestry) {
 		let items: Array<TagNode> = [];
 		for (const child of tag.children) {
 			if (child.type === "Tag" && child.name === "li") {
@@ -672,19 +779,19 @@ export default class Grid {
 				}
 
 				const humanNum = humanizeNumber(num);
-				const padding = " ".repeat(highestNumSize - humanNum.length);
+				this.drawSpaces(highestNumSize - humanNum.length);
 				this.writeText(
-					`${padding}${humanNum}. `,
+					`${humanNum}. `,
 					[createTag("dim", createEmptyAttributes())],
 					false,
 				);
-				this.drawView(item, ancestry);
+				this.drawViewTag(item, ancestry);
 				this.newline();
 			}
 		} else {
 			for (const item of items) {
 				this.writeText("- ", [createTag("dim", createEmptyAttributes())], false);
-				this.drawView(item, ancestry);
+				this.drawViewTag(item, ancestry);
 				this.newline();
 			}
 		}
@@ -719,7 +826,7 @@ export default class Grid {
 		// If the marker includes tabs then increase the size
 		for (let i = start; i < end; i++) {
 			if (sourceCursor.currentLineText[i] === "\t") {
-				markerSize++;
+				markerSize += this.tabSize - 1;
 			}
 		}
 
@@ -728,13 +835,14 @@ export default class Grid {
 		// If any previous text on this line contains tabs then increase the offset
 		for (let i = 0; i < start; i++) {
 			if (sourceCursor.currentLineText[i] === "\t") {
-				markerOffset++;
+				markerOffset += this.tabSize - 1;
 			}
 		}
 
 		this.newline();
 
 		// Pointer offset
+		//this.drawSpaces(markerOffset);
 		this.writeText(" ".repeat(markerOffset), [], false);
 
 		// Pointer character
@@ -749,7 +857,7 @@ export default class Grid {
 		// Pointer message
 		if (pointer.message.length > 0) {
 			this.writeText(" ", [], false);
-			this.drawView(createTag("view", undefined, pointer.message), []);
+			this.drawViewTag(createTag("view", undefined, pointer.message), []);
 		}
 
 		return true;
@@ -888,7 +996,7 @@ export default class Grid {
 		};
 	}
 
-	drawView(tag: TagNode, ancestry: Ancestry, shrinkViewport?: Number1) {
+	drawViewTag(tag: TagNode, ancestry: Ancestry, shrinkViewport?: Number1) {
 		const tags = extractViewTags(tag);
 		const {children} = tags;
 		const {attributes} = tag;
@@ -918,11 +1026,19 @@ export default class Grid {
 
 		// Bail and just render the children if this view is redundant
 		// This can happen since we wrap some other elements in views
+		// The following conditions need to be met:
+		// - No custom line wrap mode
+		// - No pointer
+		// - View viewport is the same
+		// - No line prefixes
+		// - Cursor on the first column
 		if (
 			lineWrapMode === undefined &&
 			pointer === undefined &&
+			subViewport !== undefined &&
 			subViewport === this.viewportWidth &&
-			linePrefixes.width === ob1Coerce1(0)
+			linePrefixes.width === ob1Coerce1(0) &&
+			startCursor.column === ob1Number1
 		) {
 			this.drawChildren(children, ancestry);
 			return;
@@ -932,10 +1048,6 @@ export default class Grid {
 		if (linePrefixes.first !== undefined) {
 			this.drawGrid(linePrefixes.first);
 		}
-		this.moveCursor({
-			...startCursor,
-			column: ob1Add(startCursor.column, linePrefixes.width),
-		});
 
 		const grid = new Grid({
 			...this.options,
@@ -951,9 +1063,14 @@ export default class Grid {
 		}
 		const drewPointer = grid.drawPointer();
 		grid.maybeAlign(tag);
+
+		this.moveCursor({
+			...startCursor,
+			column: ob1Add(startCursor.column, linePrefixes.width),
+		});
 		this.drawGrid(grid);
 
-		// Add on any subsequent line prefixes if we wrapped
+		// Add line prefixes if we wrapped
 		const height = ob1Get1(grid.getHeight());
 		for (let i = 1; i < height; i++) {
 			let linePrefix = linePrefixes.middle;
@@ -985,7 +1102,7 @@ export default class Grid {
 		this.newline();
 	}
 
-	drawTable(tag: TagNode, ancestry: Ancestry) {
+	drawTableTag(tag: TagNode, ancestry: Ancestry) {
 		const rows: Rows = [];
 
 		for (const child of tag.children) {
@@ -1073,6 +1190,30 @@ export default class Grid {
 		}
 	}
 
+	drawIndentTag(tag: TagNode, ancestry: Ancestry) {
+		// Optimization for nested indents
+		let levels = 1;
+		let children: Children = tag.children;
+		while (
+			children.length === 1 &&
+			children[0].type === "Tag" &&
+			children[0].name === "indent"
+		) {
+			children = children[0].children;
+			levels++;
+		}
+
+		for (let i = 0; i < levels; i++) {
+			this.drawIndent();
+		}
+
+		this.drawViewTag(
+			createTag("view", createEmptyAttributes(), children),
+			ancestry,
+			ob1Coerce1(levels * 2),
+		);
+	}
+
 	// Sometimes we derive a Grid from a tag that accepts an align attribute
 	maybeAlign(tag: TagNode) {
 		if (tag.attributes.get("align").asStringOrVoid() === "right") {
@@ -1117,12 +1258,6 @@ export default class Grid {
 
 		const subAncestry: Ancestry = [...ancestry, tag];
 
-		const oldLineWrapMode = this.lineWrapMode;
-
-		if (tag.name === "nobr") {
-			this.lineWrapMode = "none";
-		}
-
 		if (hook !== undefined && hook.before !== undefined) {
 			hook.before(tag, this, ancestry);
 		}
@@ -1130,43 +1265,22 @@ export default class Grid {
 		switch (tag.name) {
 			case "ol":
 			case "ul": {
-				this.drawList(tag, subAncestry);
+				this.drawListTag(tag, subAncestry);
 				break;
 			}
 
 			case "table": {
-				this.drawTable(tag, subAncestry);
+				this.drawTableTag(tag, subAncestry);
 				break;
 			}
 
 			case "view": {
-				this.drawView(tag, subAncestry);
+				this.drawViewTag(tag, subAncestry);
 				break;
 			}
 
 			case "indent": {
-				// Optimization for nested indents
-				let levels = 1;
-				let children: Children = tag.children;
-				while (
-					children.length === 1 &&
-					children[0].type === "Tag" &&
-					children[0].name === "indent"
-				) {
-					children = children[0].children;
-					levels++;
-				}
-
-				for (let i = 0; i < levels; i++) {
-					this.writeChar(" ");
-					this.writeChar(" ");
-				}
-
-				this.drawView(
-					createTag("view", createEmptyAttributes(), children),
-					ancestry,
-					ob1Coerce1(levels * 2),
-				);
+				this.drawIndentTag(tag, subAncestry);
 				break;
 			}
 
@@ -1179,8 +1293,6 @@ export default class Grid {
 		if (hook !== undefined && hook.after !== undefined) {
 			hook.after(tag, this, ancestry);
 		}
-
-		this.lineWrapMode = oldLineWrapMode;
 	}
 
 	drawChild(child: ChildNode, ancestry: Ancestry) {
@@ -1211,7 +1323,7 @@ export default class Grid {
 		if (child.type === "Text") {
 			let {value} = child;
 
-			if (value.includes("\t")) {
+			if (this.options.convertTabs && value.includes("\t")) {
 				const splitTabs = value.split("\t");
 				const children: Children = [];
 
@@ -1221,7 +1333,7 @@ export default class Grid {
 							type: "Text",
 							source: false,
 							sourceValue: "\t",
-							value: "  ",
+							value: " ".repeat(this.tabSize),
 						});
 					}
 
@@ -1305,7 +1417,7 @@ export default class Grid {
 				const paddingTextNode: TextNode = {
 					type: "Text",
 					source: false,
-					value: " ".repeat(paddingSize),
+					value: joinColumns(this.getSpaces(paddingSize)),
 				};
 				if (tag.attributes.get("align").asStringOrVoid() === "right") {
 					return [paddingTextNode, ...tag.children];

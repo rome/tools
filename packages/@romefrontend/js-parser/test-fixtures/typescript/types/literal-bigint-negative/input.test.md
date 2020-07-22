@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected token, expected \"number\""}
+				message: SAFE_MARKUP {value: "Unexpected token, expected \"number\""}
 			}
 			location: Object {
 				filename: "input.ts"

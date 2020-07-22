@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Invalid left-hand side in for-in statement"}
+				message: SAFE_MARKUP {value: "Invalid left-hand side in for-in statement"}
 			}
 			location: Object {
 				filename: "input.js"

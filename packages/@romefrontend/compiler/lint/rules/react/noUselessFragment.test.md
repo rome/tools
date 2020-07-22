@@ -21,7 +21,7 @@
   ℹ Recommended fix
 
     1   │ - <>
-    2   │ -   {foo}
+    2   │ - → {foo}
     3   │ - </>
       1 │ + {foo}
 
@@ -55,7 +55,7 @@
   ℹ Recommended fix
 
     1   │ - <>
-    2   │ -   foo
+    2   │ - → foo
     3   │ - </>
       1 │ + foo
 
@@ -123,7 +123,7 @@
   ℹ Recommended fix
 
     1   │ - <React.Fragment>
-    2   │ -   foo
+    2   │ - → foo
     3   │ - </React.Fragment>
       1 │ + foo
 
@@ -157,7 +157,7 @@ foo;
   ℹ Recommended fix
 
     1   │ - <Fragment>
-    2   │ -   foo
+    2   │ - → foo
     3   │ - </Fragment>
       1 │ + foo
 
@@ -197,11 +197,11 @@ foo;
   ℹ Recommended fix
 
     1   │ - <>
-    2   │ -   <div />
-    3   │ -   <div />
+    2   │ - → <div·/>
+    3   │ - → <div·/>
     4   │ - </>
-      1 │ + <div />
-      2 │ + <div />
+      1 │ + <div·/>
+      2 │ + <div·/>
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

@@ -21,8 +21,8 @@ lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━
 
   ℹ Recommended fix
 
-  -  ··
-  +  {3}
+  - ···
+  + ·{3}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -54,8 +54,8 @@ lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━
 
   ℹ Recommended fix
 
-  -   foo
-  +  {2}foo
+  - ··foo
+  + ·{2}foo
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -87,8 +87,8 @@ lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━
 
   ℹ Recommended fix
 
-  - foo ··
-  + foo {3}
+  - foo···
+  + foo·{3}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -120,8 +120,8 @@ lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━
 
   ℹ Recommended fix
 
-  - foo  bar
-  + foo {2}bar
+  - foo··bar
+  + foo·{2}bar
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -153,8 +153,8 @@ lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━
 
   ℹ Recommended fix
 
-  - foo   bar    baz
-  + foo {3}bar {4}baz
+  - foo···bar····baz
+  + foo·{3}bar·{4}baz
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -186,8 +186,8 @@ lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━
 
   ℹ Recommended fix
 
-  - foo [ba]r  b(a|z)
-  + foo [ba]r {2}b(a|z)
+  - foo·[ba]r··b(a|z)
+  + foo·[ba]r·{2}b(a|z)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
