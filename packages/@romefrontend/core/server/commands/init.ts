@@ -15,12 +15,12 @@ export default createServerCommand({
 	defineFlags() {
 		return {};
 	},
-	async callback({server, client}: ServerRequest) {
+	async callback({server, client, reporter}: ServerRequest) {
 		const projectPath = client.flags.cwd;
 		const editorConfigPath = projectPath.append(".editorconfig");
 
 		if (await exists(editorConfigPath)) {
-			client.reporter.info(markup`.editorconfig file already exists`);
+			reporter.info(markup`.editorconfig file already exists`);
 		} else {
 			await server.projectManager.assertProject(projectPath);
 
@@ -92,7 +92,7 @@ export default createServerCommand({
 
 			await writeFile(editorConfigPath, editorConfigTemplate);
 
-			client.reporter.success(markup`.editorconfig successfully created`);
+			reporter.success(markup`.editorconfig successfully created`);
 		}
 
 		return true;

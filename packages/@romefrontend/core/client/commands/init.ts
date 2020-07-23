@@ -18,7 +18,6 @@ export default createLocalCommand({
 	description: markup`create a project config`,
 	usage: "",
 	examples: [],
-	hidden: true,
 	defineFlags() {
 		return {};
 	},
