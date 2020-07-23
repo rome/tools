@@ -45,6 +45,8 @@ export type DiagnosticCategory =
 	| "projectManager/missing"
 	| "projectManager/nameCollision"
 	| "projectManager/vscMissing"
+	| "recoveryStore/diff"
+	| "recoveryStore/notFound"
 	| "resolver/fetchFailed"
 	| "resolver/importTypeMismatch"
 	| "resolver/notFound"

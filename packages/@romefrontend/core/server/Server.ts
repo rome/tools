@@ -55,8 +55,6 @@ import setupGlobalErrorHandlers from "../common/utils/setupGlobalErrorHandlers";
 import {UserConfig, loadUserConfig} from "../common/userConfig";
 import {
 	AbsoluteFilePath,
-	AbsoluteFilePathMap,
-	AbsoluteFilePathSet,
 	createAbsoluteFilePath,
 	createUnknownFilePath,
 } from "@romefrontend/path";
@@ -67,11 +65,11 @@ import VirtualModules from "../common/VirtualModules";
 import {DiagnosticsProcessorOptions} from "@romefrontend/diagnostics/DiagnosticsProcessor";
 import {toKebabCase} from "@romefrontend/string-utils";
 import {FilePathLocker} from "../common/utils/lockers";
-import {writeFile} from "@romefrontend/fs";
 import {getEnvVar} from "@romefrontend/cli-environment";
 import {markup} from "@romefrontend/cli-layout";
 import prettyFormat from "@romefrontend/pretty-format";
 import {convertPossibleNodeError} from "@romefrontend/node";
+import RecoveryStore from "./fs/RecoveryStore";
 
 const STDOUT_MAX_CHUNK_LENGTH = 100_000;
 
@@ -125,6 +123,7 @@ export function partialServerQueryRequestToFull(
 		commandName: partialQuery.commandName,
 		args: partialQuery.args === undefined ? [] : partialQuery.args,
 		noData: partialQuery.noData === true,
+		noFileWrites: partialQuery.noFileWrites === true,
 		requestFlags,
 		silent: partialQuery.silent === true || requestFlags.benchmark,
 		terminateWhenIdle: partialQuery.terminateWhenIdle === true,
@@ -259,6 +258,7 @@ export default class Server {
 		this.logger.updateStream();
 
 		this.virtualModules = new VirtualModules();
+		this.recoveryStore = new RecoveryStore(this);
 		this.memoryFs = new MemoryFileSystem(this);
 		this.projectManager = new ProjectManager(this);
 		this.workerManager = new WorkerManager(this);
@@ -294,6 +294,7 @@ export default class Server {
 	profiling: undefined | ProfilingStartData;
 	options: ServerOptions;
 
+	recoveryStore: RecoveryStore;
 	memoryFs: MemoryFileSystem;
 	virtualModules: VirtualModules;
 	resolver: Resolver;
@@ -432,72 +433,9 @@ export default class Server {
 		});
 	}
 
-	// Utility to write a list of files and wait for all refresh events to be emitted
-	// parameter designed to handle `AbsoluteFileMap#entries`
-	async writeFiles(files: AbsoluteFilePathMap<string | Buffer>) {
-		const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet(files.keys());
-
-		if (files.size === 0) {
-			this.logger.info(markup`[Server] Writing no files`);
-			return;
-		} else {
-			this.logger.info(markup`[Server] Writing files`);
-			this.logger.list(Array.from(paths, (path) => markup`${path}`));
-		}
-
-		const teardowns: Array<() => Promise<void>> = [];
-
-		const waitRefresh = new Promise((resolve) => {
-			const sub = this.refreshFileEvent.subscribe((path) => {
-				paths.delete(path);
-				if (paths.size === 0) {
-					resolve();
-				}
-			});
-
-			teardowns.push(() => sub.unsubscribe());
-		});
-
-		try {
-			for (const [path, content] of files) {
-				await writeFile(path, content);
-
-				// We want writeFiles to only return once all the refreshFileEvent handlers have ran
-				// We call maybeRefreshPath to do a hard check on the filesystem and update our in memory fs
-				// This mitigates slow watch events
-				this.memoryFs.refreshPath(path, {}, "Server.writeFiles");
-			}
-
-			// Protects against file events not being emitted and causing hanging
-			const timeoutPromise = new Promise((resolve, reject) => {
-				const timeout = setTimeout(
-					() => {
-						const lines = [
-							"File events should have been emitted within a second. Did not receive an event for:",
-						];
-						for (const path of paths) {
-							lines.push(` - ${path.join()}`);
-						}
-						reject(new Error(lines.join("\n")));
-					},
-					1_000,
-				);
-
-				teardowns.push(async () => {
-					clearTimeout(timeout);
-				});
-			});
-
-			await Promise.race([waitRefresh, timeoutPromise]);
-		} finally {
-			for (const teardown of teardowns) {
-				await teardown();
-			}
-		}
-	}
-
 	async init() {
 		this.maybeSetupGlobalErrorHandlers();
+		await this.recoveryStore.init();
 		await this.virtualModules.init();
 		await this.projectManager.init();
 		await this.memoryFs.init();
@@ -517,7 +455,7 @@ export default class Server {
 		// Cancel all queries in flight
 		for (const client of this.connectedClients) {
 			for (const req of client.requestsInFlight) {
-				req.cancel();
+				await req.cancel();
 			}
 
 			// Kill socket
@@ -625,7 +563,7 @@ export default class Server {
 		bridge.cancelQuery.subscribe(async (token) => {
 			for (const req of client.requestsInFlight) {
 				if (req.query.cancelToken === token) {
-					req.cancel();
+					await req.cancel();
 				}
 			}
 		});
@@ -769,9 +707,7 @@ export default class Server {
 	}
 
 	async handleRequestStart(req: ServerRequest) {
-		this.logger.info(
-			markup`[Server] Handling CLI request: ${prettyFormat(req.query)}`,
-		);
+		req.log(markup`Request start ${prettyFormat(req.query)}`);
 
 		// Hook used by the web server to track and collect server requests
 		await this.requestStartEvent.callOptional(req);
@@ -787,9 +723,7 @@ export default class Server {
 
 	handleRequestEnd(req: ServerRequest) {
 		this.requestRunningCounter--;
-		this.logger.info(
-			markup`[Server] Replying to CLI request: ${prettyFormat(req.query)}`,
-		);
+		req.log(markup`Request end`);
 
 		// If we're waiting to terminate ourselves when idle, then do so when there's no running requests
 		if (this.terminateWhenIdle && this.requestRunningCounter === 0) {
@@ -841,7 +775,7 @@ export default class Server {
 				[],
 			);
 
-			res = req.teardown(res);
+			res = await req.teardown(res);
 
 			if (res === undefined) {
 				throw new Error(
@@ -851,7 +785,16 @@ export default class Server {
 
 			return res;
 		} catch (err) {
-			req.teardown(undefined);
+			// Unhandled error
+			await req.teardown({
+				type: "ERROR",
+				fatal: false,
+				handled: false,
+				name: err.name,
+				message: err.message,
+				stack: err.stack,
+				markers: [],
+			});
 			throw err;
 		} finally {
 			// We no longer care if the client dies
@@ -945,7 +888,7 @@ export default class Server {
 						return toKebabCase(key);
 					},
 					getDiagnosticLocation: (keys: ConsumePath) => {
-						return req.getDiagnosticPointerFromFlags({
+						return req.getDiagnosticLocationFromFlags({
 							type: "flag",
 							key: String(keys[0]),
 							target: "value",
@@ -1021,6 +964,7 @@ export default class Server {
 			} else {
 				return {
 					type: "DIAGNOSTICS",
+					files: {},
 					hasDiagnostics: diagnostics.length > 0,
 					diagnostics,
 					markers: [],

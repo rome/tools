@@ -34,6 +34,7 @@ import {projectConfig} from "./projectConfig";
 import {lint} from "./lint";
 import {userConfig} from "./userConfig";
 import {htmlParser} from "./htmlParser";
+import {recoveryStore} from "./recoveryStore";
 import {markdownParser} from "@romefrontend/diagnostics/descriptions/markdownParser";
 import {Markup, concatMarkup, markup} from "@romefrontend/cli-layout";
 
@@ -165,4 +166,5 @@ export const descriptions = {
 	USER_CONFIG: userConfig,
 	HTML_PARSER: htmlParser,
 	MARKDOWN_PARSER: markdownParser,
+	RECOVERY_STORE: recoveryStore,
 };

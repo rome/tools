@@ -132,7 +132,7 @@ export class LSPTransport {
 	}
 
 	log(message: Markup) {
-		this.reporter.info(markup`[LSPServer][Transport] ${message}`);
+		this.reporter.info(markup` ${message}`);
 	}
 
 	setStatus(status: Status) {

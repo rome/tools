@@ -49,6 +49,7 @@ unknownVariable
 	}
 }
 
+
 ```
 
 ## `smoke save`
@@ -90,11 +91,13 @@ if (unformatted) {
 	swag;
 }
 
+
 # rome.json
 {
 	"files": {
 		"vendorPath": "../remote"
 	}
 }
+
 
 ```

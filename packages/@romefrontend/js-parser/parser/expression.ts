@@ -1213,7 +1213,9 @@ export function parseExpressionSubscript(
 		return parser.finishNodeWithStarts(
 			[argsStart, startPos],
 			{
-				type: "JSCallExpression",
+				type: state.optionalChainMember
+					? "JSOptionalCallExpression"
+					: "JSCallExpression",
 				callee,
 				arguments: args,
 			},

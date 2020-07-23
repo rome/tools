@@ -177,8 +177,6 @@ class LintRunner {
 		savedCount: number;
 	}> {
 		const {server} = this.request;
-		const saveQueue: AbsoluteFilePathMap<string> = new AbsoluteFilePathMap();
-
 		const {
 			lintCompilerOptionsPerFile = {},
 			globalDecisions = [],
@@ -247,7 +245,7 @@ class LintRunner {
 			processor.addDiagnostics(diagnostics);
 			this.compilerDiagnosticsCache.set(path, {suppressions, diagnostics});
 			if (save !== undefined) {
-				saveQueue.set(path, save);
+				this.request.queueSaveFile(path, save);
 			}
 
 			progress.popText(progressId);
@@ -262,11 +260,8 @@ class LintRunner {
 		progress.end();
 
 		// Run through save queue
-		if (saveQueue.size > 0) {
-			await this.server.writeFiles(saveQueue);
-		}
-
-		return {savedCount: saveQueue.size};
+		const savedCount = await this.request.flushFiles();
+		return {savedCount};
 	}
 
 	async runGraph(

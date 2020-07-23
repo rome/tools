@@ -11,17 +11,20 @@ import {WorkerContainer} from "../WorkerManager";
 import {FilePathLocker} from "../../common/utils/lockers";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@romefrontend/path";
 import {markup} from "@romefrontend/cli-layout";
+import {InfoPrefixLogger} from "@romefrontend/core/common/utils/Logger";
 
 export default class FileAllocator {
 	constructor(server: Server) {
 		this.server = server;
 		this.fileToWorker = new AbsoluteFilePathMap();
 		this.locker = new FilePathLocker();
+		this.log = server.logger.infoPrefix(markup`[FileAllocator]`);
 	}
 
 	server: Server;
 	locker: FilePathLocker;
 	fileToWorker: AbsoluteFilePathMap<number>;
+	log: InfoPrefixLogger;
 
 	init() {
 		this.server.memoryFs.deletedFileEvent.subscribe((path) => {
@@ -96,7 +99,7 @@ export default class FileAllocator {
 			filename,
 		});
 
-		this.server.logger.info(markup`[FileAllocator] Evicted %s ${path}`);
+		this.log(markup`Evicted ${path}`);
 	}
 
 	async handleDeleted(path: AbsoluteFilePath) {
@@ -122,7 +125,7 @@ export default class FileAllocator {
 		oldStats: undefined | Stats,
 		newStats: Stats,
 	) {
-		const {logger, workerManager} = this.server;
+		const {workerManager} = this.server;
 
 		// Send update to worker owner
 		if (this.hasOwner(path)) {
@@ -147,16 +150,14 @@ export default class FileAllocator {
 			workerManager.disown(workerId, oldStats);
 			workerManager.own(workerId, newStats);
 		} else if (await this.server.projectManager.maybeEvictPossibleConfig(path)) {
-			logger.info(
-				markup`[FileAllocator] Evicted the project belonging to config ${path}`,
-			);
+			this.log(markup`Evicted the project belonging to config ${path}`);
 		} else {
-			logger.info(markup`[FileAllocator] No owner for eviction ${path}`);
+			this.log(markup`No owner for eviction ${path}`);
 		}
 	}
 
 	async assignOwner(path: AbsoluteFilePath): Promise<WorkerContainer> {
-		const {workerManager, logger, memoryFs} = this.server;
+		const {workerManager, memoryFs} = this.server;
 
 		const lock = await this.locker.getLock(path);
 
@@ -170,8 +171,8 @@ export default class FileAllocator {
 			const worker = await workerManager.getNextWorker(path);
 
 			// Add ourselves to the file map
-			logger.info(
-				markup`[FileAllocator] File <emphasis>${path}</emphasis> (file size <filesize>${String(
+			this.log(
+				markup`File <emphasis>${path}</emphasis> (file size <filesize>${String(
 					memoryFs.getFileStats(path)?.size,
 				)}</filesize>) assigned to worker ${worker.id}`,
 			);

@@ -36,9 +36,9 @@ import {
 	readFileTextSync,
 } from "@romefrontend/fs";
 import crypto = require("crypto");
-import {ROME_CONFIG_PACKAGE_JSON_FIELD} from "./constants";
 import {parseSemverRange} from "@romefrontend/codec-semver";
 import {descriptions} from "@romefrontend/diagnostics";
+import {PROJECT_CONFIG_PACKAGE_JSON_FIELD} from "./constants";
 
 const IGNORE_FILENAMES = [".gitignore", ".hgignore"];
 
@@ -150,8 +150,8 @@ export async function normalizeProjectConfig(
 		// Infer name from package.json
 		name = consumer.get("name").asStringOrVoid();
 
-		consumer = consumer.get(ROME_CONFIG_PACKAGE_JSON_FIELD);
-		configSourceSubKey = ROME_CONFIG_PACKAGE_JSON_FIELD;
+		consumer = consumer.get(PROJECT_CONFIG_PACKAGE_JSON_FIELD);
+		configSourceSubKey = PROJECT_CONFIG_PACKAGE_JSON_FIELD;
 	}
 
 	const hash = crypto.createHash("sha256").update(configFile).digest("hex");

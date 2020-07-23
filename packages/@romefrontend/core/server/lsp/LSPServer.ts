@@ -113,6 +113,7 @@ export default class LSPServer {
 				commandName,
 				silent: true,
 				noData: false,
+				noFileWrites: false,
 				terminateWhenIdle: false,
 			},
 		});

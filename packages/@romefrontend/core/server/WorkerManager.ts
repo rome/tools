@@ -28,6 +28,7 @@ import child = require("child_process");
 import {AbsoluteFilePath, createAbsoluteFilePath} from "@romefrontend/path";
 import {markup} from "@romefrontend/cli-layout";
 import prettyFormat from "@romefrontend/pretty-format";
+import {InfoPrefixLogger} from "../common/utils/Logger";
 
 export type WorkerContainer = {
 	id: number;
@@ -53,10 +54,13 @@ export default class WorkerManager {
 		this.locker = new Locker();
 		this.workers = new Map();
 		this.idCounter = 0;
+
+		this.log = server.logger.infoPrefix(markup`[WorkerManager]`);
 	}
 
 	server: Server;
 	locker: Locker<number>;
+	log: InfoPrefixLogger;
 
 	selfWorker: boolean;
 	workerStartEvent: Event<WorkerBridge, void>;
@@ -167,8 +171,8 @@ export default class WorkerManager {
 
 		try {
 			const serverWorker = this.getWorkerAssert(0);
-			this.server.logger.info(
-				markup`[WorkerManager] Spawning first worker outside of server after exceeding ${String(
+			this.log(
+				markup`Spawning first worker outside of server after exceeding ${String(
 					MAX_MASTER_BYTES_BEFORE_WORKERS,
 				)} bytes`,
 			);
@@ -253,8 +257,8 @@ export default class WorkerManager {
 			{
 				type: "client",
 				onSendMessage: (data) => {
-					this.server.logger.info(
-						markup`[WorkerManager] Sending worker request to ${String(workerId)}: ${prettyFormat(
+					this.log(
+						markup`Sending worker request to ${String(workerId)}: ${prettyFormat(
 							data,
 						)}`,
 					);
@@ -301,8 +305,8 @@ export default class WorkerManager {
 
 		this.workerStartEvent.send(bridge);
 
-		this.server.logger.info(
-			markup`[WorkerManager] Worker ${String(workerId)} started after <duration>${String(
+		this.log(
+			markup`Worker ${String(workerId)} started after <duration>${String(
 				Date.now() - start,
 			)}</duration>`,
 		);

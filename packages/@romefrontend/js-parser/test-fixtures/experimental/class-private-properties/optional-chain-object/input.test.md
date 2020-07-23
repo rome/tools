@@ -894,7 +894,7 @@ JSRoot {
 													}
 												}
 											}
-											JSCallExpression {
+											JSOptionalCallExpression {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -1104,7 +1104,7 @@ JSRoot {
 													}
 												}
 											}
-											JSCallExpression {
+											JSOptionalCallExpression {
 												arguments: Array []
 												loc: Object {
 													filename: "input.js"

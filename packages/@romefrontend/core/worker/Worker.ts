@@ -28,7 +28,7 @@ import {
 	createAbsoluteFilePath,
 	createUnknownFilePath,
 } from "@romefrontend/path";
-import {lstat, readFileText, writeFile} from "@romefrontend/fs";
+import {lstat, readFileText} from "@romefrontend/fs";
 import {
 	FileReference,
 	convertTransportFileReference,
@@ -43,6 +43,7 @@ import {markup} from "@romefrontend/cli-layout";
 
 export type ParseResult = {
 	ast: AnyRoot;
+	mtime: undefined | number;
 	project: TransformProjectDefinition;
 	path: AbsoluteFilePath;
 	lastAccessed: number;
@@ -500,6 +501,7 @@ export default class Worker {
 			project,
 			path,
 			astModifiedFromSource,
+			mtime,
 		};
 
 		if (cacheEnabled) {
@@ -517,14 +519,6 @@ export default class Worker {
 			);
 		}
 		return config;
-	}
-
-	async writeFile(path: AbsoluteFilePath, content: string): Promise<void> {
-		// Write the file out
-		await writeFile(path, content);
-
-		// We just wrote the file but the server watcher hasn't had time to notify us
-		this.evict(path);
 	}
 
 	evict(path: AbsoluteFilePath) {

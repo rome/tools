@@ -17,6 +17,7 @@ import {
 	DiagnosticCategory,
 	DiagnosticDescription,
 	DiagnosticLocation,
+	DiagnosticSuppressions,
 	Diagnostics,
 	DiagnosticsError,
 	DiagnosticsProcessor,
@@ -28,6 +29,8 @@ import {
 import {
 	DiagnosticsPrinter,
 	DiagnosticsPrinterFlags,
+	DiagnosticsPrinterOptions,
+	printDiagnostics,
 } from "@romefrontend/cli-diagnostics";
 import {ProjectDefinition} from "@romefrontend/project";
 import {ResolverOptions, ResolverQueryResponseFound} from "./fs/Resolver";
@@ -65,10 +68,12 @@ import WorkerBridge, {
 	WorkerLintOptions,
 	WorkerLintResult,
 	WorkerParseOptions,
+	WorkerUpdateInlineSnapshotResult,
 } from "../common/bridges/WorkerBridge";
 import {ModuleSignature} from "@romefrontend/js-analysis";
 import {
 	AbsoluteFilePath,
+	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
 	UnknownFilePath,
 	createAbsoluteFilePath,
@@ -89,6 +94,8 @@ import {VCSClient} from "@romefrontend/vcs";
 import {InlineSnapshotUpdates} from "../test-worker/SnapshotManager";
 import {CacheEntry} from "./Cache";
 import {FormatterOptions} from "@romefrontend/formatter";
+import {InfoPrefixLogger} from "../common/utils/Logger";
+import {RecoverySaveFile} from "./fs/RecoveryStore";
 
 type ServerRequestOptions = {
 	server: Server;
@@ -116,6 +123,7 @@ export const EMPTY_SUCCESS_RESPONSE: ServerQueryResponseSuccess = {
 	hasData: false,
 	data: undefined,
 	markers: [],
+	files: {},
 };
 
 type GetFilesTryAlternateArg = (
@@ -181,7 +189,7 @@ export default class ServerRequest {
 			onError: this.server.onFatalErrorBound,
 		});
 		this.endEvent = new Event({
-			name: "ServerRequest.teardown",
+			name: "ServerRequest.end",
 			onError: this.server.onFatalErrorBound,
 			serial: true,
 		});
@@ -194,21 +202,100 @@ export default class ServerRequest {
 			defaultFlags: {},
 		};
 		this.client.requestsInFlight.add(this);
+
+		this.files = new AbsoluteFilePathMap();
+
+		this.log = opts.server.logger.infoPrefix(
+			markup`[ServerRequest] Request #${this.id}:`,
+		);
 	}
 
+	id: number;
 	start: number;
 	client: ServerClient;
 	query: ServerQueryRequest;
 	server: Server;
 	bridge: ServerBridge;
 	reporter: Reporter;
-	id: number;
 	markerEvent: Event<ServerMarker, void>;
-	endEvent: Event<undefined | ServerQueryResponse, void>;
+	endEvent: Event<ServerQueryResponse, void>;
 	normalizedCommandFlags: NormalizedCommandFlags;
 	markers: Array<ServerMarker>;
 	cancelled: boolean;
 	toredown: boolean;
+	files: AbsoluteFilePathMap<RecoverySaveFile>;
+	log: InfoPrefixLogger;
+
+	queueSaveFile(path: AbsoluteFilePath, opts: RecoverySaveFile) {
+		this.files.set(path, opts);
+	}
+
+	async flushFiles(): Promise<number> {
+		const {files} = this;
+		const {server} = this;
+		const {logger} = server;
+
+		if (files.size === 0) {
+			this.log(markup`No files to write`);
+			return 0;
+		} else if (this.query.noFileWrites) {
+			this.log(markup`Writing no files due to noFileWrites flag being set`);
+			return 0;
+		}
+
+		this.files = new AbsoluteFilePathMap();
+
+		this.log(markup`Flushing files`);
+		logger.list(Array.from(files.keys(), (path) => markup`${path}`));
+
+		// Need to capture this before as it will be modified by server.writeFiles
+		const totalFiles = files.size;
+
+		await this.server.recoveryStore.writeFiles(
+			files,
+			{
+				unsafeWrites: this.query.requestFlags.unsafeWrites,
+			},
+			{
+				onFileDone: () => {
+					// Maybe a progress bar later?
+				},
+				beforeFileWrite: async (path, fd) => {
+					const content = await fd.readFile();
+					await this.server.recoveryStore.save(this, path, content);
+				},
+				unexpectedModified: (path, expectedMtime, actualMtime) => {
+					this.log(
+						markup`Skipped writing file ${path} as the mtime ${actualMtime} of the file on disk was newer than when we read it at ${expectedMtime}`,
+					);
+					this.reporter.warn(
+						markup`File <emphasis>${path}</emphasis> was not updated as it was changed since we read it`,
+					);
+				},
+				expectedExists: (path) => {
+					this.log(
+						markup`Skipped writing file ${path} as it does not exist when we expected it to`,
+					);
+					this.reporter.warn(
+						markup`File <emphasis>${path}</emphasis> was not updated as it does not exist when we expected it to`,
+					);
+				},
+				unexpectedExists: (path) => {
+					this.log(
+						markup`Skipped writing file ${path} as it exists when we didn't expect it`,
+					);
+					this.reporter.warn(
+						markup`File <emphasis>${path}</emphasis> was not written as it exists when we didn't expect it`,
+					);
+				},
+			},
+		);
+
+		await this.server.recoveryStore.commit(this);
+		this.log(markup`Flushed ${totalFiles} files`);
+
+		return totalFiles;
+	}
 
 	updateRequestFlags(flags: Partial<ClientRequestFlags>) {
 		this.query = {
@@ -236,23 +323,24 @@ export default class ServerRequest {
 		}
 	}
 
-	cancel() {
+	async cancel(): Promise<void> {
 		this.cancelled = true;
-		this.teardown({
+		await this.teardown({
 			type: "CANCELLED",
 			markers: [],
 		});
 	}
 
-	teardown(
-		res: undefined | ServerQueryResponse,
-	): undefined | ServerQueryResponse {
+	async teardown(
+		res: ServerQueryResponse,
+	): Promise<undefined | ServerQueryResponse> {
 		if (this.toredown) {
 			return;
 		}
 
 		this.toredown = true;
 		this.client.requestsInFlight.delete(this);
+		this.log(markup`Response type: ${String(res?.type)}`);
 
 		// Output timing information
 		if (this.query.requestFlags.timing) {
@@ -262,40 +350,67 @@ export default class ServerRequest {
 			);
 		}
 
-		if (res !== undefined) {
-			// If the query asked for no data then strip all diagnostics and data values
-			if (this.query.noData) {
-				if (res.type === "SUCCESS") {
+		// If the query asked for no data then strip all diagnostics and data values
+		if (this.query.noData) {
+			switch (res.type) {
+				case "SUCCESS": {
 					res = {
 						...EMPTY_SUCCESS_RESPONSE,
 						hasData: res.data !== undefined,
 					};
-				} else if (res.type === "DIAGNOSTICS") {
+					break;
+				}
+
+				case "DIAGNOSTICS": {
 					res = {
 						type: "DIAGNOSTICS",
 						hasDiagnostics: res.hasDiagnostics,
 						diagnostics: [],
 						markers: [],
+						files: {},
 					};
-				} else if (res.type === "INVALID_REQUEST") {
+					break;
+				}
+
+				case "INVALID_REQUEST": {
 					res = {
 						type: "INVALID_REQUEST",
 						diagnostics: [],
 						markers: [],
 						showHelp: res.showHelp,
 					};
+					break;
 				}
 			}
-
-			// Add on markers
-			res = {
-				...res,
-				markers: this.markers,
-			};
+		} else {
+			switch (res.type) {
+				case "SUCCESS":
+				case "DIAGNOSTICS": {
+					const files: Dict<RecoverySaveFile> = {};
+					for (const [path, opts] of this.files) {
+						files[path.join()] = opts;
+					}
+					res = {
+						...res,
+						files,
+					};
+					break;
+				}
+			}
 		}
 
+		if (res.type === "DIAGNOSTICS" || res.type === "SUCCESS") {
+			await this.flushFiles();
+		}
+
+		// Add on markers
+		res = {
+			...res,
+			markers: this.markers,
+		};
+
+		await this.endEvent.callOptional(res);
 		this.reporter.teardown();
-		this.endEvent.send(res);
 		this.server.handleRequestEnd(this);
 		return res;
 	}
@@ -316,12 +431,12 @@ export default class ServerRequest {
 				...this.getResolverOptionsFromFlags(),
 				source: createUnknownFilePath(arg),
 			},
-			{location: this.getDiagnosticPointerFromFlags({type: "arg", key: index})},
+			{location: this.getDiagnosticLocationFromFlags({type: "arg", key: index})},
 		);
 	}
 
 	async assertClientCwdProject(): Promise<ProjectDefinition> {
-		const location = this.getDiagnosticPointerForClientCwd();
+		const location = this.getDiagnosticLocationForClientCwd();
 		return this.server.projectManager.assertProject(
 			this.client.flags.cwd,
 			location,
@@ -338,6 +453,27 @@ export default class ServerRequest {
 		return this.server.projectManager.maybeGetVCSClient(
 			await this.assertClientCwdProject(),
 		);
+	}
+
+	async printDiagnostics(
+		{diagnostics, suppressions = [], printerOptions, excludeFooter}: {
+			diagnostics: Diagnostics;
+			suppressions?: DiagnosticSuppressions;
+			printerOptions?: DiagnosticsPrinterOptions;
+			excludeFooter?: boolean;
+		},
+	) {
+		await printDiagnostics({
+			diagnostics,
+			suppressions,
+			excludeFooter: excludeFooter !== false,
+			printerOptions: {
+				reporter: this.reporter,
+				processor: this.createDiagnosticsProcessor(),
+				wrapErrors: true,
+				...printerOptions,
+			},
+		});
 	}
 
 	createDiagnosticsProcessor(
@@ -428,7 +564,7 @@ export default class ServerRequest {
 			showHelp?: boolean;
 		},
 	) {
-		const location = this.getDiagnosticPointerFromFlags(target);
+		const location = this.getDiagnosticLocationFromFlags(target);
 
 		let {category} = description;
 		if (category === undefined) {
@@ -450,7 +586,7 @@ export default class ServerRequest {
 		throw new ServerRequestInvalid(description.message.value, [diag], showHelp);
 	}
 
-	getDiagnosticPointerForClientCwd(): DiagnosticLocation {
+	getDiagnosticLocationForClientCwd(): DiagnosticLocation {
 		const cwd = this.client.flags.cwd.join();
 		return {
 			sourceText: cwd,
@@ -468,7 +604,10 @@ export default class ServerRequest {
 		};
 	}
 
-	getDiagnosticPointerFromFlags(target: SerializeCLITarget): DiagnosticLocation {
+	getDiagnosticLocationFromFlags(
+		target: SerializeCLITarget,
+		prefix?: string,
+	): RequiredProps<DiagnosticLocation, "sourceText"> {
 		const {query} = this;
 
 		const rawFlags = {
@@ -494,6 +633,7 @@ export default class ServerRequest {
 
 		return serializeCLIFlags(
 			{
+				prefix,
 				programName: "rome",
 				commandName: query.commandName,
 				flags,
@@ -542,7 +682,7 @@ export default class ServerRequest {
 
 		// If args was explicitly provided then don't assume empty args is the project root
 		if (rawArgs.length === 0 && overrideArgs === undefined) {
-			const location = this.getDiagnosticPointerForClientCwd();
+			const location = this.getDiagnosticLocationForClientCwd();
 			const project = await this.assertClientCwdProject();
 			resolvedArgs.push({
 				path: project.directory,
@@ -554,7 +694,7 @@ export default class ServerRequest {
 			for (let i = 0; i < rawArgs.length; i++) {
 				const arg = rawArgs[i];
 
-				const location = this.getDiagnosticPointerFromFlags({
+				const location = this.getDiagnosticLocationFromFlags({
 					type: "arg",
 					key: i,
 				});
@@ -824,9 +964,7 @@ export default class ServerRequest {
 	startMarker(
 		opts: Omit<ServerUnfinishedMarker, "start">,
 	): ServerUnfinishedMarker {
-		this.server.logger.info(
-			markup`[ServerRequest] Started marker: ${opts.label}`,
-		);
+		this.log(markup`Started marker: ${opts.label}`);
 		return {
 			...opts,
 			start: Date.now(),
@@ -838,9 +976,7 @@ export default class ServerRequest {
 			...startMarker,
 			end: Date.now(),
 		};
-		this.server.logger.info(
-			markup`[ServerRequest] Started marker: ${startMarker.label}`,
-		);
+		this.log(markup`Started marker: ${startMarker.label}`);
 		this.markerEvent.send(endMarker);
 		return endMarker;
 	}
@@ -977,7 +1113,7 @@ export default class ServerRequest {
 		path: AbsoluteFilePath,
 		updates: InlineSnapshotUpdates,
 		parseOptions: WorkerParseOptions,
-	): Promise<Diagnostics> {
+	): Promise<WorkerUpdateInlineSnapshotResult> {
 		this.checkCancelled();
 
 		return this.wrapRequestDiagnostic(

@@ -46,7 +46,7 @@ JSRoot {
 					line: 1
 				}
 			}
-			expression: JSCallExpression {
+			expression: JSOptionalCallExpression {
 				arguments: Array []
 				loc: Object {
 					filename: "input.js"

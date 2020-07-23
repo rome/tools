@@ -22,6 +22,7 @@ export type ExtensionLintInfo = ExtensionHandlerMethodInfo & {
 };
 
 export type ExtensionLintResult = {
+	mtime: undefined | number;
 	sourceText: string;
 	diagnostics: Diagnostics;
 	formatted: string;
