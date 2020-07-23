@@ -38,7 +38,10 @@ export function inferDiagnosticLanguageFromFilename(
 		return existing;
 	}
 	if (filename !== undefined) {
-		const {handler} = getFileHandler(createUnknownFilePath(filename), undefined);
+		const {handler} = getFileHandlerFromPath(
+			createUnknownFilePath(filename),
+			undefined,
+		);
 		if (handler !== undefined) {
 			return handler.language;
 		}
@@ -57,7 +60,7 @@ export function getFileHandlerExtensions(
 	}
 }
 
-export function getFileHandler(
+export function getFileHandlerFromPath(
 	path: UnknownFilePath,
 	projectConfig: undefined | ProjectConfig,
 ): GetFileHandlerResult {
@@ -83,11 +86,28 @@ export function getFileHandler(
 	return {ext, handler};
 }
 
+export function getFileHandlerFromExtension(
+	ext: string,
+	projectConfig: undefined | ProjectConfig,
+) {
+	let handler = DEFAULT_HANDLERS.get(ext.slice(1));
+
+	if (
+		handler === undefined &&
+		projectConfig !== undefined &&
+		projectConfig.files.assetExtensions.includes(ext)
+	) {
+		handler = assetHandler;
+	}
+
+	return handler;
+}
+
 export function getFileHandlerAssert(
 	path: UnknownFilePath,
 	projectConfig: undefined | ProjectConfig,
 ): Required<GetFileHandlerResult> {
-	const {handler, ext} = getFileHandler(path, projectConfig);
+	const {handler, ext} = getFileHandlerFromPath(path, projectConfig);
 
 	if (handler === undefined) {
 		throw new Error(`No file handler found for '${path.join()}'`);
@@ -163,6 +183,9 @@ const DEFAULT_ASSET_EXTENSIONS = [
 	"eot",
 	"ttf",
 	"otf",
+	// YAML
+	"yml",
+	"yaml",
 ];
 
 for (const ext of DEFAULT_ASSET_EXTENSIONS) {

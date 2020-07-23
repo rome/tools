@@ -36,6 +36,7 @@ import {JSONPropertyValue} from "@romefrontend/codec-json";
 import {SharedCommand} from "../common/commands";
 import {DiagnosticsPrinter} from "@romefrontend/cli-diagnostics";
 import {Markup} from "@romefrontend/cli-layout";
+import init from "@romefrontend/core/server/commands/init";
 
 export type ServerCommand<Flags extends Dict<unknown>> = SharedCommand<Flags> & {
 	callback: (
@@ -111,3 +112,4 @@ serverCommands.set("_moduleSignature", _moduleSignature);
 serverCommands.set("noop", noop);
 serverCommands.set("_projectDump", _projectDump);
 serverCommands.set("json", json);
+serverCommands.set("init", init);

@@ -27,6 +27,7 @@ export const jsonHandler: ExtensionHandler = {
 	canLint: false,
 	canFormat: true,
 	language: "json",
+	hasTabs: true,
 
 	async customFormat(
 		info: ExtensionHandlerMethodInfo,

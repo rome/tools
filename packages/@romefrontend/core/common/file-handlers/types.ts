@@ -47,7 +47,7 @@ export type PartialExtensionHandler = {
 	isAsset?: boolean;
 	canHaveScale?: boolean;
 	language: DiagnosticLanguage;
-
+	hasTabs: boolean;
 	canLint: boolean;
 	canFormat: boolean;
 

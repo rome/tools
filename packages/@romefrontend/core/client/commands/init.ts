@@ -12,7 +12,6 @@ import {Dict} from "@romefrontend/typescript-helpers";
 import {exists, writeFile} from "@romefrontend/fs";
 import {stringifyRJSON} from "@romefrontend/codec-json";
 import {markup} from "@romefrontend/cli-layout";
-import {dedent} from "@romefrontend/string-utils";
 
 export default createLocalCommand({
 	category: commandCategories.PROJECT_MANAGEMENT,
@@ -28,25 +27,6 @@ export default createLocalCommand({
 
 		const projectPath = req.client.flags.cwd;
 		const configPath = projectPath.append("rome.rjson");
-		const editorConfigPath = projectPath.append(".editorconfig");
-
-		// create .editorconfig file
-		if (await exists(editorConfigPath)) {
-			reporter.info(markup`.editorconfig file already exists`);
-		} else {
-			await writeFile(
-				editorConfigPath,
-				dedent`
-				[*]
-				end_of_line = auto
-				trim_trailing_whitespace = true
-				insert_final_newline = true
-				charset = utf-8
-				indent_style = tab
-				indent_size = 2
-			`,
-			);
-		}
 
 		if (await exists(configPath)) {
 			reporter.error(
@@ -65,10 +45,10 @@ export default createLocalCommand({
 			reporter.success(markup`Created config ${configPath}`);
 		}
 		// Run lint, capture diagnostics
-
 		const response = await req.client.query(
 			{
 				commandName: "check",
+				silent: true,
 			},
 			"server",
 		);
@@ -89,7 +69,12 @@ export default createLocalCommand({
 		}
 
 		await writeConfig();
-
+		await req.client.query(
+			{
+				commandName: "init",
+			},
+			"server",
+		);
 		return true;
 	},
 });
