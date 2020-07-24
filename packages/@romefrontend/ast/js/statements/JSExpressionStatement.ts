@@ -8,10 +8,10 @@
 import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSExpressionStatement = NodeBaseWithComments & {
+export interface JSExpressionStatement extends NodeBaseWithComments {
 	type: "JSExpressionStatement";
 	expression: AnyJSExpression;
-};
+}
 
 export const jsExpressionStatement = createBuilder<JSExpressionStatement>(
 	"JSExpressionStatement",

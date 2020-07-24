@@ -12,11 +12,11 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSTemplateLiteral = NodeBaseWithComments & {
+export interface JSTemplateLiteral extends NodeBaseWithComments {
 	type: "JSTemplateLiteral";
 	quasis: Array<JSTemplateElement>;
 	expressions: Array<AnyJSExpression>;
-};
+}
 
 export const jsTemplateLiteral = createBuilder<JSTemplateLiteral>(
 	"JSTemplateLiteral",

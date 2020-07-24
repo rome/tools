@@ -8,10 +8,10 @@
 import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSAwaitExpression = NodeBaseWithComments & {
+export interface JSAwaitExpression extends NodeBaseWithComments {
 	type: "JSAwaitExpression";
 	argument?: AnyJSExpression;
-};
+}
 
 export const jsAwaitExpression = createBuilder<JSAwaitExpression>(
 	"JSAwaitExpression",

@@ -14,14 +14,14 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSDeclareMethod = NodeBaseWithComments & {
+export interface TSDeclareMethod extends NodeBaseWithComments {
 	type: "TSDeclareMethod";
 	meta: JSClassPropertyMeta;
 	kind: JSClassMethodKind;
 	key: AnyJSObjectPropertyKey;
 	head: JSFunctionHead;
 	body?: void;
-};
+}
 
 export const tsDeclareMethod = createBuilder<TSDeclareMethod>(
 	"TSDeclareMethod",

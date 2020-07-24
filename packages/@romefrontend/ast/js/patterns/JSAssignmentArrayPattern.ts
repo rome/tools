@@ -12,12 +12,12 @@
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSAssignmentArrayPattern = NodeBaseWithComments & {
+export interface JSAssignmentArrayPattern extends NodeBaseWithComments {
 	type: "JSAssignmentArrayPattern";
 	meta?: JSPatternMeta;
 	elements: Array<JSArrayHole | AnyJSAssignmentPattern>;
 	rest?: AnyJSTargetAssignmentPattern;
-};
+}
 
 export const jsAssignmentArrayPattern = createBuilder<JSAssignmentArrayPattern>(
 	"JSAssignmentArrayPattern",

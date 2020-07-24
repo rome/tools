@@ -12,10 +12,10 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSXExpressionContainer = NodeBaseWithComments & {
+export interface JSXExpressionContainer extends NodeBaseWithComments {
 	type: "JSXExpressionContainer";
 	expression: AnyJSExpression | JSXEmptyExpression;
-};
+}
 
 export const jsxExpressionContainer = createBuilder<JSXExpressionContainer>(
 	"JSXExpressionContainer",

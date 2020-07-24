@@ -8,9 +8,9 @@
 import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSBooleanKeywordTypeAnnotation = NodeBaseWithComments & {
+export interface TSBooleanKeywordTypeAnnotation extends NodeBaseWithComments {
 	type: "TSBooleanKeywordTypeAnnotation";
-};
+}
 
 export const tsBooleanKeywordTypeAnnotation = createBuilder<TSBooleanKeywordTypeAnnotation>(
 	"TSBooleanKeywordTypeAnnotation",

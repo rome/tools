@@ -3,11 +3,11 @@ import {createBuilder} from "../../utils";
 
 // # Something
 // #### Some other thing
-export type MarkdownHeadingBlock = NodeBaseWithComments & {
+export interface MarkdownHeadingBlock extends NodeBaseWithComments {
 	type: "MarkdownHeadingBlock";
 	level: number;
 	value: string;
-};
+}
 
 export const markdownHeadingBlock = createBuilder<MarkdownHeadingBlock>(
 	"MarkdownHeadingBlock",

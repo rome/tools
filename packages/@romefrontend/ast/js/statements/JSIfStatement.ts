@@ -12,12 +12,12 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSIfStatement = NodeBaseWithComments & {
+export interface JSIfStatement extends NodeBaseWithComments {
 	type: "JSIfStatement";
 	test: AnyJSExpression;
 	consequent: AnyJSStatement;
 	alternate?: AnyJSStatement;
-};
+}
 
 export const jsIfStatement = createBuilder<JSIfStatement>(
 	"JSIfStatement",

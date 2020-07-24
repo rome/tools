@@ -4,7 +4,7 @@ import {createBuilder} from "../../utils";
 // [foo]
 // [foo=bar]
 // [foo^=bar]
-export type CSSSelectorAttribute = NodeBaseWithComments & {
+export interface CSSSelectorAttribute extends NodeBaseWithComments {
 	type: "CSSSelectorAttribute";
 	name: CSSIdentifierType;
 	value: undefined | string;
@@ -16,7 +16,7 @@ export type CSSSelectorAttribute = NodeBaseWithComments & {
 		| "suffix"
 		| "contains";
 	caseSensitive?: boolean;
-};
+}
 
 export const cssSelectorAttribute = createBuilder<CSSSelectorAttribute>(
 	"CSSSelectorAttribute",

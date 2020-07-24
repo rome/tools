@@ -8,7 +8,7 @@
 import {AnyJSRegExpExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSRegExpGroupNonCapture = NodeBaseWithComments & {
+export interface JSRegExpGroupNonCapture extends NodeBaseWithComments {
 	type: "JSRegExpGroupNonCapture";
 	expression: AnyJSRegExpExpression;
 	kind?:
@@ -16,7 +16,7 @@ export type JSRegExpGroupNonCapture = NodeBaseWithComments & {
 		| "negative-lookahead"
 		| "positive-lookbehind"
 		| "negative-lookbehind";
-};
+}
 
 export const jsRegExpGroupNonCapture = createBuilder<JSRegExpGroupNonCapture>(
 	"JSRegExpGroupNonCapture",

@@ -7,12 +7,12 @@ import {createBuilder} from "../../utils";
 // @import url("chrome://communicator/skin/");
 // @import "common.css" screen;
 // @import url('landscape.css') screen and (orientation:landscape);
-export type CSSImportAtStatement = NodeBaseWithComments & {
+export interface CSSImportAtStatement extends NodeBaseWithComments {
 	type: "CSSImportAtStatement";
 	url: CSSURLType | CSSStringType;
 	// TODO media queries
 	// TODO supports query
-};
+}
 
 export const cssImportAtStatement = createBuilder<CSSImportAtStatement>(
 	"CSSImportAtStatement",

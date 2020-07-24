@@ -8,12 +8,12 @@
 import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSLogicalExpression = NodeBaseWithComments & {
+export interface JSLogicalExpression extends NodeBaseWithComments {
 	type: "JSLogicalExpression";
 	operator: LogicalOperator;
 	left: AnyJSExpression;
 	right: AnyJSExpression;
-};
+}
 
 export type LogicalOperator = "||" | "&&" | "??";
 

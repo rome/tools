@@ -1,9 +1,9 @@
 import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSConstKeyword = NodeBaseWithComments & {
+export interface TSConstKeyword extends NodeBaseWithComments {
 	type: "TSConstKeyword";
-};
+}
 
 export const tsConstKeyword = createBuilder<TSConstKeyword>(
 	"TSConstKeyword",

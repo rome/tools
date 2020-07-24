@@ -8,10 +8,10 @@
 import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSBigIntLiteral = NodeBaseWithComments & {
+export interface JSBigIntLiteral extends NodeBaseWithComments {
 	type: "JSBigIntLiteral";
 	value: string;
-};
+}
 
 export const jsBigIntLiteral = createBuilder<JSBigIntLiteral>(
 	"JSBigIntLiteral",

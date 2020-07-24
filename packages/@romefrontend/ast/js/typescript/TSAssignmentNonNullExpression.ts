@@ -11,10 +11,10 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSAssignmentNonNullExpression = NodeBaseWithComments & {
+export interface TSAssignmentNonNullExpression extends NodeBaseWithComments {
 	type: "TSAssignmentNonNullExpression";
 	expression: AnyJSTargetAssignmentPattern;
-};
+}
 
 export const tsAssignmentNonNullExpression = createBuilder<TSAssignmentNonNullExpression>(
 	"TSAssignmentNonNullExpression",

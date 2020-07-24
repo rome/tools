@@ -6,13 +6,13 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type HTMLElement = NodeBaseWithComments & {
+export interface HTMLElement extends NodeBaseWithComments {
 	type: "HTMLElement";
 	name: HTMLIdentifier;
 	selfClosing?: boolean;
 	attributes: Array<HTMLAttribute>;
 	children: Array<AnyHTMLChildNode>;
-};
+}
 
 export const htmlElement = createBuilder<HTMLElement>(
 	"HTMLElement",

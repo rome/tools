@@ -15,14 +15,14 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSSignatureDeclarationMeta = NodeBaseWithComments & {
+export interface TSSignatureDeclarationMeta extends NodeBaseWithComments {
 	type: "TSSignatureDeclarationMeta";
 	parameters: Array<
 		JSBindingIdentifier | JSBindingObjectPattern | JSBindingArrayPattern
 	>;
 	rest: undefined | AnyJSTargetBindingPattern;
 	typeParameters: undefined | TSTypeParameterDeclaration;
-};
+}
 
 export const tsSignatureDeclarationMeta = createBuilder<TSSignatureDeclarationMeta>(
 	"TSSignatureDeclarationMeta",

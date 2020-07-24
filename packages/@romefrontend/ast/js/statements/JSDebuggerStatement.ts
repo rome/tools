@@ -8,9 +8,9 @@
 import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSDebuggerStatement = NodeBaseWithComments & {
+export interface JSDebuggerStatement extends NodeBaseWithComments {
 	type: "JSDebuggerStatement";
-};
+}
 
 export const jsDebuggerStatement = createBuilder<JSDebuggerStatement>(
 	"JSDebuggerStatement",

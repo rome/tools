@@ -12,11 +12,11 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSQualifiedName = NodeBaseWithComments & {
+export interface TSQualifiedName extends NodeBaseWithComments {
 	type: "TSQualifiedName";
 	left: AnyTSEntityName;
 	right: JSIdentifier;
-};
+}
 
 export const tsQualifiedName = createBuilder<TSQualifiedName>(
 	"TSQualifiedName",

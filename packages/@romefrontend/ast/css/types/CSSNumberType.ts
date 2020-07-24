@@ -1,10 +1,10 @@
 import {NodeBaseWithComments} from "../../index";
 import {createBuilder} from "../../utils";
 
-export type CSSNumberType = NodeBaseWithComments & {
+export interface CSSNumberType extends NodeBaseWithComments {
 	type: "CSSNumberType";
 	// TODO
-};
+}
 
 export const cssNumberType = createBuilder<CSSNumberType>(
 	"CSSNumberType",

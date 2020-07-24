@@ -6,11 +6,11 @@ import {
 import {createBuilder} from "../../utils";
 
 // foo {}
-export type CSSRulesetStatement = NodeBaseWithComments & {
+export interface CSSRulesetStatement extends NodeBaseWithComments {
 	type: "CSSRulesetStatement";
 	selectors: Array<AnyCSSSelector>;
 	declarations: Array<CSSRuleDeclaration>;
-};
+}
 
 export const cssRulesetStatement = createBuilder<CSSRulesetStatement>(
 	"CSSRulesetStatement",

@@ -12,7 +12,7 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSRegExpLiteral = NodeBaseWithComments & {
+export interface JSRegExpLiteral extends NodeBaseWithComments {
 	type: "JSRegExpLiteral";
 	expression: JSRegExpSubExpression | JSRegExpAlternation;
 	global?: boolean;
@@ -21,7 +21,7 @@ export type JSRegExpLiteral = NodeBaseWithComments & {
 	insensitive?: boolean;
 	noDotNewline?: boolean;
 	unicode?: boolean;
-};
+}
 
 export const jsRegExpLiteral = createBuilder<JSRegExpLiteral>(
 	"JSRegExpLiteral",

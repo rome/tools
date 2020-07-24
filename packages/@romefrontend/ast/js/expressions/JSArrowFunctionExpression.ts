@@ -13,12 +13,12 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSArrowFunctionExpression = NodeBaseWithComments & {
+export interface JSArrowFunctionExpression extends NodeBaseWithComments {
 	type: "JSArrowFunctionExpression";
 	head: JSFunctionHead;
 	body: JSBlockStatement | AnyJSExpression;
 	generator?: void;
-};
+}
 
 export const jsArrowFunctionExpression = createBuilder<JSArrowFunctionExpression>(
 	"JSArrowFunctionExpression",

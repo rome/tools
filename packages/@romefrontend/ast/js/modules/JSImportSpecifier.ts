@@ -12,11 +12,11 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSImportSpecifier = NodeBaseWithComments & {
+export interface JSImportSpecifier extends NodeBaseWithComments {
 	type: "JSImportSpecifier";
 	imported: JSIdentifier;
 	local: JSImportSpecifierLocal;
-};
+}
 
 export const jsImportSpecifier = createBuilder<JSImportSpecifier>(
 	"JSImportSpecifier",

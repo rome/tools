@@ -13,7 +13,7 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSAmbiguousFlowTypeCastExpression = NodeBaseWithComments & {
+export interface JSAmbiguousFlowTypeCastExpression extends NodeBaseWithComments {
 	type: "JSAmbiguousFlowTypeCastExpression";
 	expression: AnyJSExpression | JSSpreadElement;
 	typeAnnotation?: AnyTSPrimary;
@@ -22,7 +22,7 @@ export type JSAmbiguousFlowTypeCastExpression = NodeBaseWithComments & {
 
 	// We should figure out some way to remove this
 	optional?: boolean;
-};
+}
 
 export const jsAmbiguousFlowTypeCastExpression = createBuilder<JSAmbiguousFlowTypeCastExpression>(
 	"JSAmbiguousFlowTypeCastExpression",

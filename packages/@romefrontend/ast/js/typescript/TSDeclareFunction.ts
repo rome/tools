@@ -12,14 +12,14 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSDeclareFunction = NodeBaseWithComments & {
+export interface TSDeclareFunction extends NodeBaseWithComments {
 	type: "TSDeclareFunction";
 	id: JSBindingIdentifier;
 	head: JSFunctionHead;
 
 	// For consistency with JSFunctionDeclaration, this can mostly be ignored
 	declare?: boolean;
-};
+}
 
 export const tsDeclareFunction = createBuilder<TSDeclareFunction>(
 	"TSDeclareFunction",

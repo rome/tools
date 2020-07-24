@@ -12,11 +12,11 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSWithStatement = NodeBaseWithComments & {
+export interface JSWithStatement extends NodeBaseWithComments {
 	type: "JSWithStatement";
 	object: AnyJSExpression;
 	body: AnyJSStatement;
-};
+}
 
 export const jsWithStatement = createBuilder<JSWithStatement>(
 	"JSWithStatement",

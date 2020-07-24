@@ -8,9 +8,9 @@
 import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type MockParent = NodeBaseWithComments & {
+export interface MockParent extends NodeBaseWithComments {
 	type: "MockParent";
-};
+}
 
 export const jsMockParent = createBuilder<MockParent>(
 	"MockParent",

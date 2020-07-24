@@ -1,10 +1,10 @@
 import {NodeBaseWithComments} from "../../index";
 import {createBuilder} from "../../utils";
 
-export type CSSLengthPercentageType = NodeBaseWithComments & {
+export interface CSSLengthPercentageType extends NodeBaseWithComments {
 	type: "CSSLengthPercentageType";
 	// TODO
-};
+}
 
 export const cssLengthPercentageType = createBuilder<CSSLengthPercentageType>(
 	"CSSLengthPercentageType",

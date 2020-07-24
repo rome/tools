@@ -2,10 +2,10 @@ import {CSSStringType, NodeBaseWithComments} from "../../index";
 import {createBuilder} from "../../utils";
 
 // @charset "UTF-8";
-export type CSSCharSetAtStatement = NodeBaseWithComments & {
+export interface CSSCharSetAtStatement extends NodeBaseWithComments {
 	type: "CSSCharSetAtStatement";
 	charset: CSSStringType;
-};
+}
 
 export const cssCharSetAtStatement = createBuilder<CSSCharSetAtStatement>(
 	"CSSCharSetAtStatement",

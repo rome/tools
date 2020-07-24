@@ -13,10 +13,10 @@ import {
 } from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSArrayExpression = NodeBaseWithComments & {
+export interface JSArrayExpression extends NodeBaseWithComments {
 	type: "JSArrayExpression";
 	elements: Array<JSArrayHole | AnyJSExpression | JSSpreadElement>;
-};
+}
 
 export const jsArrayExpression = createQuickBuilder<
 	JSArrayExpression,

@@ -8,10 +8,10 @@
 import {JSIdentifier, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSContinueStatement = NodeBaseWithComments & {
+export interface JSContinueStatement extends NodeBaseWithComments {
 	type: "JSContinueStatement";
 	label?: JSIdentifier;
-};
+}
 
 export const jsContinueStatement = createBuilder<JSContinueStatement>(
 	"JSContinueStatement",

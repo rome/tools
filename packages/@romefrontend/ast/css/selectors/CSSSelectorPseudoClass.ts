@@ -2,10 +2,10 @@ import {CSSIdentifierType, NodeBaseWithComments} from "../../index";
 import {createBuilder} from "../../utils";
 
 // :hover
-export type CSSSelectorPseudoClass = NodeBaseWithComments & {
+export interface CSSSelectorPseudoClass extends NodeBaseWithComments {
 	type: "CSSSelectorPseudoClass";
 	name: CSSIdentifierType;
-};
+}
 
 export const cssSelectorPseudoClass = createBuilder<CSSSelectorPseudoClass>(
 	"CSSSelectorPseudoClass",

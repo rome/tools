@@ -13,11 +13,11 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSObjectProperty = NodeBaseWithComments & {
+export interface JSObjectProperty extends NodeBaseWithComments {
 	type: "JSObjectProperty";
 	key: JSStaticPropertyKey | JSComputedPropertyKey;
 	value: AnyJSExpression;
-};
+}
 
 export const jsObjectProperty = createBuilder<JSObjectProperty>(
 	"JSObjectProperty",

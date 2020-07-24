@@ -14,14 +14,14 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSInterfaceDeclaration = NodeBaseWithComments & {
+export interface TSInterfaceDeclaration extends NodeBaseWithComments {
 	type: "TSInterfaceDeclaration";
 	id: JSBindingIdentifier;
 	body: TSInterfaceBody;
 	typeParameters?: TSTypeParameterDeclaration;
 	extends?: Array<TSExpressionWithTypeArguments>;
 	declare?: boolean;
-};
+}
 
 export const tsInterfaceDeclaration = createBuilder<TSInterfaceDeclaration>(
 	"TSInterfaceDeclaration",

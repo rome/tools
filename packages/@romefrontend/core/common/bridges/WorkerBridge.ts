@@ -259,6 +259,7 @@ export default class WorkerBridge extends Bridge {
 			ref: JSONFileReference;
 			options: WorkerParseOptions;
 		},
+		// @ts-ignore
 		AnyRoot
 	>({name: "parse", direction: "server->client"});
 

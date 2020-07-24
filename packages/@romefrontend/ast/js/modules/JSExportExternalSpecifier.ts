@@ -12,12 +12,12 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSExportExternalSpecifier = NodeBaseWithComments & {
+export interface JSExportExternalSpecifier extends NodeBaseWithComments {
 	type: "JSExportExternalSpecifier";
 	exported: JSIdentifier;
 	local: JSIdentifier;
 	exportKind?: ConstJSExportModuleKind;
-};
+}
 
 export const jsExportExternalSpecifier = createBuilder<JSExportExternalSpecifier>(
 	"JSExportExternalSpecifier",

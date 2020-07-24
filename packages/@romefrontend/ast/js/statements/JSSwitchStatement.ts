@@ -12,11 +12,11 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSSwitchStatement = NodeBaseWithComments & {
+export interface JSSwitchStatement extends NodeBaseWithComments {
 	type: "JSSwitchStatement";
 	discriminant: AnyJSExpression;
 	cases: Array<JSSwitchCase>;
-};
+}
 
 export const jsSwitchStatement = createBuilder<JSSwitchStatement>(
 	"JSSwitchStatement",

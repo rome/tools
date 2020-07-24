@@ -8,11 +8,11 @@
 import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSYieldExpression = NodeBaseWithComments & {
+export interface JSYieldExpression extends NodeBaseWithComments {
 	type: "JSYieldExpression";
 	delegate?: boolean;
 	argument?: AnyJSExpression;
-};
+}
 
 export const jsYieldExpression = createBuilder<JSYieldExpression>(
 	"JSYieldExpression",

@@ -8,11 +8,11 @@
 import {JSIdentifier, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSMetaProperty = NodeBaseWithComments & {
+export interface JSMetaProperty extends NodeBaseWithComments {
 	type: "JSMetaProperty";
 	meta: JSIdentifier;
 	property: JSIdentifier;
-};
+}
 
 export const jsMetaProperty = createBuilder<JSMetaProperty>(
 	"JSMetaProperty",

@@ -12,11 +12,11 @@ import {
 } from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSBlockStatement = NodeBaseWithComments & {
+export interface JSBlockStatement extends NodeBaseWithComments {
 	type: "JSBlockStatement";
 	body: Array<AnyJSStatement>;
 	directives?: Array<JSDirective>;
-};
+}
 
 export const jsBlockStatement = createQuickBuilder<JSBlockStatement, "body">(
 	"JSBlockStatement",

@@ -8,10 +8,10 @@
 import {AnyTSPrimary, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSUnionTypeAnnotation = NodeBaseWithComments & {
+export interface TSUnionTypeAnnotation extends NodeBaseWithComments {
 	type: "TSUnionTypeAnnotation";
 	types: Array<AnyTSPrimary>;
-};
+}
 
 export const tsUnionTypeAnnotation = createBuilder<TSUnionTypeAnnotation>(
 	"TSUnionTypeAnnotation",

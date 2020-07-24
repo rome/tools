@@ -16,16 +16,16 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSRoot = NodeBaseWithComments &
-	RootBase & {
-		type: "JSRoot";
-		directives: Array<JSDirective>;
-		body: Array<AnyJSStatement>;
-		interpreter: undefined | JSInterpreterDirective;
-		sourceType: ConstJSSourceType;
-		syntax: Array<ConstJSProgramSyntax>;
-		hasHoistedVars: boolean;
-	};
+export interface JSRoot extends NodeBaseWithComments,
+RootBase {
+	type: "JSRoot";
+	directives: Array<JSDirective>;
+	body: Array<AnyJSStatement>;
+	interpreter: undefined | JSInterpreterDirective;
+	sourceType: ConstJSSourceType;
+	syntax: Array<ConstJSProgramSyntax>;
+	hasHoistedVars: boolean;
+}
 
 export const MOCK_PROGRAM: JSRoot = {
 	type: "JSRoot",

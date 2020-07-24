@@ -13,12 +13,12 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSExportLocalSpecifier = NodeBaseWithComments & {
+export interface JSExportLocalSpecifier extends NodeBaseWithComments {
 	type: "JSExportLocalSpecifier";
 	exported: JSIdentifier;
 	local: JSReferenceIdentifier;
 	exportKind?: ConstJSExportModuleKind;
-};
+}
 
 export const jsExportLocalSpecifier = createBuilder<JSExportLocalSpecifier>(
 	"JSExportLocalSpecifier",

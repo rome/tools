@@ -12,13 +12,13 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSPropertySignature = NodeBaseWithComments & {
+export interface TSPropertySignature extends NodeBaseWithComments {
 	type: "TSPropertySignature";
 	key: AnyJSObjectPropertyKey;
 	optional?: boolean;
 	readonly?: boolean;
 	typeAnnotation?: AnyTSPrimary;
-};
+}
 
 export const tsPropertySignature = createBuilder<TSPropertySignature>(
 	"TSPropertySignature",

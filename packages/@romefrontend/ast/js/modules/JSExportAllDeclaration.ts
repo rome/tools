@@ -12,12 +12,12 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSExportAllDeclaration = NodeBaseWithComments & {
+export interface JSExportAllDeclaration extends NodeBaseWithComments {
 	type: "JSExportAllDeclaration";
 	source: JSStringLiteral;
 	exportKind?: ConstJSExportModuleKind;
 	declare?: boolean;
-};
+}
 
 export const jsExportAllDeclaration = createBuilder<JSExportAllDeclaration>(
 	"JSExportAllDeclaration",

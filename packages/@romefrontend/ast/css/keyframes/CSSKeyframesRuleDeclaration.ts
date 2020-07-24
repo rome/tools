@@ -7,11 +7,11 @@ import {
 } from "../../index";
 import {createBuilder} from "../../utils";
 
-export type CSSKeyframesRuleDeclaration = NodeBaseWithComments & {
+export interface CSSKeyframesRuleDeclaration extends NodeBaseWithComments {
 	type: "CSSKeyframesRuleDeclaration";
 	selector: CSSPercentageType | CSSKeyframesFromKeyword | CSSKeyframesToKeyword;
 	declarations: Array<CSSRuleDeclaration>;
-};
+}
 
 export const cssKeyframesRuleDeclaration = createBuilder<CSSKeyframesRuleDeclaration>(
 	"CSSKeyframesRuleDeclaration",

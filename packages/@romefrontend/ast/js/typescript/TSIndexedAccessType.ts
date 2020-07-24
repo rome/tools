@@ -8,11 +8,11 @@
 import {AnyTSPrimary, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSIndexedAccessType = NodeBaseWithComments & {
+export interface TSIndexedAccessType extends NodeBaseWithComments {
 	type: "TSIndexedAccessType";
 	objectType: AnyTSPrimary;
 	indexType: AnyTSPrimary;
-};
+}
 
 export const tsIndexedAccessType = createBuilder<TSIndexedAccessType>(
 	"TSIndexedAccessType",

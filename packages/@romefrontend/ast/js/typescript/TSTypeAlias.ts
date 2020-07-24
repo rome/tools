@@ -13,13 +13,13 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSTypeAlias = NodeBaseWithComments & {
+export interface TSTypeAlias extends NodeBaseWithComments {
 	type: "TSTypeAlias";
 	id: JSBindingIdentifier;
 	typeParameters?: TSTypeParameterDeclaration;
 	right: AnyTSPrimary;
 	declare?: boolean | undefined;
-};
+}
 
 export const tsTypeAlias = createBuilder<TSTypeAlias>(
 	"TSTypeAlias",

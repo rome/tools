@@ -14,13 +14,13 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSForOfStatement = NodeBaseWithComments & {
+export interface JSForOfStatement extends NodeBaseWithComments {
 	type: "JSForOfStatement";
 	await?: boolean;
 	left: JSVariableDeclaration | AnyJSTargetAssignmentPattern;
 	right: AnyJSExpression;
 	body: AnyJSStatement;
-};
+}
 
 export const jsForOfStatement = createBuilder<JSForOfStatement>(
 	"JSForOfStatement",
