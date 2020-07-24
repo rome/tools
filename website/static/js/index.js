@@ -106,7 +106,7 @@ const toc = {
 			scrollToHeading(hash);
 
 			if (isMobile()) {
-				toggleMobileNav(event);
+				toggleMobileTOC(event);
 			}
 		}
 	},
