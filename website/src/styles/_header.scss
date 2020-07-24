@@ -98,9 +98,27 @@
 	align-items: center;
 	justify-content: center;
 
-	svg {
-		height: 32px;
-		width: 32px;
+	&.mobile-handle-toc, &.mobile-handle-nav{
+		&.active{
+			.icon{
+				display: none;
+			}
+		}
+	}
+
+	.close{
+		display: none;
+	}
+
+	&.active {
+		.close{
+			display: inline !important;
+		}
+	}
+
+	.icon {
+		height: 24px;
+		width: 24px;
 	}
 
 	svg rect, svg path {

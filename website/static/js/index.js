@@ -155,6 +155,7 @@ function toggleMobileNav(event) {
 	}
 
 	event.preventDefault();
+	elements.mobileHandleNav.classList.toggle("active");
 	elements.sidebarNav.classList.toggle("visible");
 	document.body.classList.toggle("no-scroll");
 }
@@ -164,12 +165,13 @@ function toggleMobileTOC(event) {
 		mobileSidebarActive = undefined;
 	} else {
 		if (mobileSidebarActive === "nav") {
-			toggleMobileTOC(event);
+			toggleMobileNav(event);
 		}
 		mobileSidebarActive = "toc";
 	}
 
 	event.preventDefault();
+	elements.mobileHandleTOC.classList.toggle("active");
 	elements.sidebarTOC.classList.toggle("visible");
 	document.body.classList.toggle("no-scroll");
 	toc.highlight();
@@ -178,6 +180,23 @@ function toggleMobileTOC(event) {
 // Remove permalinkSymbol "#" from table of contents
 for (const link of elements.tocLinks) {
 	link.innerText = link.innerText.replace(/(\s#)$/, "");
+}
+
+/**
+ * @param {string} inputSelector
+ */
+function initDocsearch(inputSelector) {
+	//checks if docsearch wasn't already instantiated
+	const input = document.querySelector(`.algolia-autocomplete ${inputSelector}`);
+
+	if (input == null) {
+		return window.docsearch({
+			apiKey: "66db1ad366d458c6acded7cbc23dba7e",
+			indexName: "romefrontend",
+			inputSelector,
+			debug: false, // Set debug to true if you want to inspect the dropdown
+		});
+	}
 }
 
 window.onload = function() {
@@ -192,16 +211,21 @@ window.onload = function() {
 	script.addEventListener(
 		"load",
 		() => {
-			window.docsearch({
-				apiKey: "66db1ad366d458c6acded7cbc23dba7e",
-				indexName: "romefrontend",
-				inputSelector: "#docsearch",
-				debug: false, // Set debug to true if you want to inspect the dropdown
-			});
+			initDocsearch(
+				window.innerWidth > 768 ? "#docsearch-desktop" : "#docsearch-mobile",
+			);
 		},
 	);
 	document.body.appendChild(script);
 };
+
+const mediaQueryListener = window.matchMedia("(min-width: 768px)");
+
+mediaQueryListener.addListener(() => {
+	initDocsearch(
+		window.innerWidth > 768 ? "#docsearch-desktop" : "#docsearch-mobile",
+	);
+});
 
 document.addEventListener(
 	"click",
