@@ -9,6 +9,7 @@ import {ServerRequest} from "@romefrontend/core";
 import {createServerCommand} from "../commands";
 import {commandCategories} from "../../common/commands";
 import {Consumer} from "@romefrontend/consume";
+import {markup} from "@romefrontend/cli-layout";
 
 type Flags = {
 	allowDiagnostics: boolean;
@@ -16,7 +17,7 @@ type Flags = {
 
 export default createServerCommand({
 	category: commandCategories.INTERNAL,
-	description: "formats a single file",
+	description: markup`formats a single file`,
 	usage: "",
 	examples: [],
 	defineFlags(c: Consumer): Flags {
@@ -37,7 +38,7 @@ export default createServerCommand({
 		);
 
 		if (res === undefined) {
-			reporter.error("No formatter for this file");
+			reporter.error(markup`No formatter for this file`);
 			return undefined;
 		} else {
 			reporter.writeAll(res.formatted);

@@ -14,6 +14,21 @@ cd rome
 ./rome --help
 ```
 
+## Developing on Windows
+
+You need to use the backslash (`\`) to run any `rome` command on Windows instead of the slash (`/`); Windows uses backslashes for file paths.
+
+For example, to run help:
+
+```bash
+.\rome --help
+```
+or you can directly use `rome` without any path referencing like below:
+
+```bash
+rome --help
+```
+
 No dependency installation step is required as we check in our `node_modules` folder that contains only a copy of TypeScript and some definitions.
 
 ### User files
@@ -102,8 +117,26 @@ The `category` is one of the lint category folders defined in [`packages/@romefr
 
 For example, to create a rule in the `js` category called `camelCase` run:
 
-```
+```bash
 ./rome run scripts/lint-create-rule js/camelCase
 ```
 
 The created files will be listed in the console output. See those files for inline comments on what to insert. Use other lint rules as a reference.
+
+### `ast-create-node`
+
+This is used to generate new ast nodes and boilerplate.
+
+```bash
+./rome run scripts/ast-create-node [language] [nodeType] [category]
+```
+
+The `language` is one of the language folders defined in [`https://github.com/romefrontend/rome/tree/main/packages/@romefrontend/ast/`]
+
+The `category` is one of the category folders inside the `language` folders.
+
+```bash
+./rome run scripts/ast-create-node js JSArrayType typescript
+```
+
+The created files will be listed in the console output.

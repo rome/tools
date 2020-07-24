@@ -10,6 +10,7 @@ import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {Consumer} from "@romefrontend/consume";
 import {SourceLocation} from "@romefrontend/parser-core";
+import {markup} from "@romefrontend/cli-layout";
 
 type Flags = {
 	focusSource: undefined | string;
@@ -26,7 +27,7 @@ function removeLoc<T extends {
 
 export default createServerCommand({
 	category: commandCategories.SOURCE_CODE,
-	description: "analyze and dump the dependencies of a file",
+	description: markup`analyze and dump the dependencies of a file`,
 	usage: "",
 	examples: [],
 	hidden: true,

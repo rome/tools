@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Class name is required"}
+				message: SAFE_MARKUP {value: "Class name is required"}
 			}
 			location: Object {
 				filename: "input.js"

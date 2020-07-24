@@ -13,7 +13,6 @@ import {
 	DiagnosticLogCategory,
 	INTERNAL_ERROR_LOG_ADVICE,
 	catchDiagnostics,
-	createBlessedDiagnosticMessage,
 	createSingleDiagnosticError,
 	deriveDiagnosticFromErrorStructure,
 	descriptions,
@@ -44,7 +43,12 @@ import {
 	convertTransportFileReference,
 } from "../common/types/files";
 import {AbsoluteFilePath, createAbsoluteFilePath} from "@romefrontend/path";
-import {escapeMarkup, markup} from "@romefrontend/cli-layout";
+import {
+	Markup,
+	concatMarkup,
+	isEmptyMarkup,
+	markup,
+} from "@romefrontend/cli-layout";
 import {
 	ErrorFrames,
 	StructuredError,
@@ -168,29 +172,29 @@ export default class TestWorkerRunner {
 			const err = new Error();
 
 			// Remove the first two frames to get to the actual source
-			const frames = cleanFrames(getErrorStructure(err).frames.slice(2));
+			const struct = getErrorStructure(err);
+			const frames = cleanFrames(struct.frames.slice(2));
 
 			this.consoleAdvice.push(() => {
-				let textParts: Array<string> = [];
+				let textParts: Array<Markup> = [];
 				if (args.length === 1 && typeof args[0] === "string") {
-					textParts.push(escapeMarkup(args[0]));
+					textParts.push(markup`${args[0]}`);
 				} else {
-					textParts = args.map((arg) =>
-						prettyFormat(arg, {allowCustom: false, markup: true})
-					);
+					textParts = args.map((arg) => prettyFormat(arg, {allowCustom: false}));
 				}
-				let text = textParts.join(" ");
 
-				if (text === "") {
-					text = "<dim>empty log</dim>";
+				let text = concatMarkup(textParts, markup` `);
+				if (isEmptyMarkup(text)) {
+					text = markup`<dim>empty log</dim>`;
 				}
+
 				return [
 					{
 						type: "log",
 						category,
 						text,
 					},
-					...getErrorStackAdvice(getErrorStructure({...err, frames})),
+					...getErrorStackAdvice({...struct, frames}),
 				];
 			});
 		};
@@ -270,13 +274,13 @@ export default class TestWorkerRunner {
 			});
 
 			if (res.syntaxError !== undefined) {
-				const message = `A bundle was generated that contained a syntax error: ${res.syntaxError.description.message.value}`;
+				const message = markup`A bundle was generated that contained a syntax error: ${res.syntaxError.description.message.value}`;
 
 				throw createSingleDiagnosticError({
 					...res.syntaxError,
 					description: {
 						...res.syntaxError.description,
-						message: createBlessedDiagnosticMessage(message),
+						message,
 						advice: [INTERNAL_ERROR_LOG_ADVICE],
 					},
 					location: {
@@ -295,6 +299,15 @@ export default class TestWorkerRunner {
 
 	lockTests() {
 		this.locked = true;
+	}
+
+	isFocusedTest({name, only}: TestOptions): boolean {
+		const {filter} = this.options;
+		if (filter === undefined) {
+			return only === true;
+		} else {
+			return name.includes(filter);
+		}
 	}
 
 	registerTest(
@@ -331,14 +344,7 @@ export default class TestWorkerRunner {
 			},
 		);
 
-		let only = options.only === true;
-
-		const {filter} = this.options;
-		if (filter !== undefined) {
-			only = testName.includes(filter);
-		}
-
-		if (only) {
+		if (this.isFocusedTest(options)) {
 			this.focusedTests.push({
 				testName,
 				location: callsiteLocation,
@@ -353,9 +359,7 @@ export default class TestWorkerRunner {
 					...diag,
 					description: {
 						...diag.description,
-						message: createBlessedDiagnosticMessage(
-							"Focused tests are not allowed due to a set flag",
-						),
+						message: markup`Focused tests are not allowed due to a set flag`,
 					},
 				});
 			}
@@ -365,7 +369,7 @@ export default class TestWorkerRunner {
 	async emitDiagnostic(diag: Diagnostic, test?: FoundTest) {
 		let label = diag.label;
 		if (label === undefined && test !== undefined) {
-			label = escapeMarkup(test.name);
+			label = markup`${test.name}`;
 		}
 
 		diag = {
@@ -440,7 +444,7 @@ export default class TestWorkerRunner {
 				advice.push({
 					type: "log",
 					category: "info",
-					text: `Test declared at <emphasis>${diagnosticLocationToMarkupFilelink(
+					text: markup`Test declared at <emphasis>${diagnosticLocationToMarkupFilelink(
 						origin.test.callsiteLocation,
 					)}:</emphasis>`,
 				});
@@ -456,7 +460,7 @@ export default class TestWorkerRunner {
 				advice.push({
 					type: "log",
 					category: "info",
-					text: `Error occured while running <emphasis>teardown</emphasis> for test declared at <emphasis>${diagnosticLocationToMarkupFilelink(
+					text: markup`Error occured while running <emphasis>teardown</emphasis> for test declared at <emphasis>${diagnosticLocationToMarkupFilelink(
 						origin.test.callsiteLocation,
 					)}:</emphasis>`,
 				});
@@ -594,7 +598,7 @@ export default class TestWorkerRunner {
 		// Execute all the tests
 		for (const test of foundTests.values()) {
 			const {options} = test;
-			if (this.hasFocusedTests && !test.options.only) {
+			if (this.hasFocusedTests && !this.isFocusedTest(test)) {
 				continue;
 			}
 

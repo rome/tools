@@ -27,6 +27,7 @@ import {Dict} from "@romefrontend/typescript-helpers";
 import {readFile} from "@romefrontend/fs";
 import {flipPathPatterns} from "@romefrontend/path-match";
 import {stringifyJSON} from "@romefrontend/codec-json";
+import {markup} from "@romefrontend/cli-layout";
 
 export type BundlerEntryResoluton = {
 	manifestDef: undefined | ManifestDefinition;
@@ -140,7 +141,7 @@ export default class Bundler {
 		);
 		const analyzeProgress = this.reporter.progress({
 			name: `bundler:analyze:${entryUids.join(",")}`,
-			title: "Analyzing",
+			title: markup`Analyzing`,
 		});
 		processor.setThrowAfter(100);
 		await this.graph.seed({
@@ -155,7 +156,7 @@ export default class Bundler {
 		// Now actually bundle them
 		const map: Map<AbsoluteFilePath, BundleResult> = new Map();
 
-		const progress = this.reporter.progress({title: "Bundling"});
+		const progress = this.reporter.progress({title: markup`Bundling`});
 		progress.setTotal(entries.length);
 
 		const silentReporter = this.reporter.fork({
@@ -169,10 +170,9 @@ export default class Bundler {
 			const entry = entries.shift()!;
 
 			const promise = (async () => {
-				const text = entry.toMarkup();
-				progress.pushText(text);
+				const progressId = progress.pushText(markup`${entry}`);
 				map.set(entry, await this.bundle(entry, options, silentReporter));
-				progress.popText(text);
+				progress.popText(progressId);
 				progress.tick();
 			})();
 			promise.then(() => {
@@ -361,7 +361,7 @@ export default class Bundler {
 		options: BundleOptions = {},
 		reporter: Reporter = this.reporter,
 	): Promise<BundleResult> {
-		//reporter.info(`Bundling <emphasis>${resolvedEntry.toMarkup()}</emphasis>`);
+		//reporter.info(markup`Bundling <emphasis>${resolvedEntry}</emphasis>`);
 		const req = this.createBundleRequest(resolvedEntry, options, reporter);
 		const res = await req.bundle();
 
@@ -370,7 +370,7 @@ export default class Bundler {
 		processor.maybeThrowDiagnosticsError();
 
 		if (res.cached) {
-			reporter.warn("Bundle was built completely from cache");
+			reporter.warn(markup`Bundle was built completely from cache`);
 		}
 
 		const prefix = options.prefix === undefined ? "" : `${options.prefix}/`;

@@ -21,7 +21,7 @@ import {
 import {orderBySimilarity} from "@romefrontend/string-utils";
 import {AbsoluteFilePath, createUnknownFilePath} from "@romefrontend/path";
 import {PLATFORMS} from "../../common/types/platform";
-import {markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 export default function resolverSuggest(
 	resolver: Resolver,
@@ -70,13 +70,13 @@ export default function resolverSuggest(
 					advice.push({
 						type: "log",
 						category: "info",
-						text: `This successfully resolves as an implicit index file. Trying adding <emphasis>/index${nonStrictResolved.path.getExtensions()}</emphasis> to the end of the import source`,
+						text: markup`This successfully resolves as an implicit index file. Trying adding <emphasis>/index${nonStrictResolved.path.getExtensions()}</emphasis> to the end of the import source`,
 					});
 				} else if (nonStrictResolved.types.includes("implicitExtension")) {
 					advice.push({
 						type: "log",
 						category: "info",
-						text: `This successfully resolves as an implicit extension. Try adding the extension <emphasis>${nonStrictResolved.path.getExtensions()}</emphasis>`,
+						text: markup`This successfully resolves as an implicit extension. Try adding the extension <emphasis>${nonStrictResolved.path.getExtensions()}</emphasis>`,
 					});
 				}
 			}
@@ -86,7 +86,7 @@ export default function resolverSuggest(
 		let skipSimilaritySuggestions = false;
 
 		// Try other platforms
-		const validPlatforms: Array<string> = [];
+		const validPlatforms: Array<Markup> = [];
 		for (const PLATFORM of PLATFORMS) {
 			if (PLATFORM === query.platform) {
 				continue;
@@ -108,7 +108,7 @@ export default function resolverSuggest(
 				advice.push({
 					type: "log",
 					category: "info",
-					text: "No platform was specified but we found modules for the following platforms",
+					text: markup`No platform was specified but we found modules for the following platforms`,
 				});
 			} else {
 				advice.push({
@@ -135,7 +135,7 @@ export default function resolverSuggest(
 			advice.push({
 				type: "log",
 				category: "info",
-				text: `Found while resolving <emphasis>${query.source}</emphasis> from <filelink emphasis target="${query.origin}" />`,
+				text: markup`Found while resolving <emphasis>${query.source}</emphasis> from <filelink emphasis target="${query.origin}" />`,
 			});
 
 			const origPointer = origQuerySource.location;
@@ -208,7 +208,7 @@ export default function resolverSuggest(
 			advice.push({
 				type: "log",
 				category: "warn",
-				text: "You aren't in a Rome project",
+				text: markup`You aren't in a Rome project`,
 			});
 		}
 	}
@@ -299,12 +299,11 @@ function tryPathSuggestions(
 
 			const ratings = orderBySimilarity(
 				path.getExtensionlessBasename(),
-				entries,
+				entries.map((target) => {
+					return createUnknownFilePath(target).getExtensionlessBasename();
+				}),
 				{
 					minRating: MIN_SIMILARITY,
-					formatItem: (target) => {
-						return createUnknownFilePath(target).getExtensionlessBasename();
-					},
 				},
 			);
 

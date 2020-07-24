@@ -56,10 +56,11 @@ export class DiagnosticsError extends Error {
 		insideDiagnosticsErrorSerial = true;
 
 		const reporter = new Reporter();
-		const stream = reporter.attachCaptureStream();
+		const stream = reporter.attachCaptureStream("none", {columns: undefined});
 		const printer = new DiagnosticsPrinter({
 			reporter,
 			processor: new DiagnosticsProcessor(),
+			wrapErrors: true,
 		});
 		for (const diag of this.diagnostics) {
 			printer.printDiagnostic(diag);

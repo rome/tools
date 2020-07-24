@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected character #"}
+				message: SAFE_MARKUP {value: "Unexpected character #"}
 			}
 			location: Object {
 				filename: "input.js"

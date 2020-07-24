@@ -26,6 +26,7 @@ import {
 	parseObjectPropertyKey,
 	parseReferenceIdentifier,
 	parseStringLiteral,
+	parseTSConstKeyword,
 	parseTemplate,
 	parseVarStatement,
 	toBindingIdentifier,
@@ -54,6 +55,7 @@ import {
 	JSVariableDeclarationKind,
 	JSVariableDeclarationStatement,
 	TSCallSignatureDeclaration,
+	TSConstKeyword,
 	TSConstructSignatureDeclaration,
 	TSConstructorType,
 	TSDeclareFunction,
@@ -96,6 +98,7 @@ import {
 import {descriptions} from "@romefrontend/diagnostics";
 import {NumberTokenValue} from "../tokenizer";
 import {toTargetAssignmentPattern} from "./lval";
+import {markup} from "@romefrontend/cli-layout";
 
 type ParsingContext =
 	| "EnumMembers"
@@ -540,10 +543,10 @@ export function parseTSTypeParameters(
 
 export function tryTSNextParseConstantContext(
 	parser: JSParser,
-): undefined | TSTypeReference {
+): undefined | TSConstKeyword {
 	if (parser.lookaheadState().tokenType === tt._const) {
 		parser.next();
-		return parseTSTypeReference(parser);
+		return parseTSConstKeyword(parser);
 	} else {
 		return undefined;
 	}
@@ -1243,7 +1246,6 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
 		description: descriptions.JS_PARSER.TS_UNKNOWN_NON_ARRAY_START,
 	});
 	parser.next();
-
 	return parser.finishNode(
 		parser.getPosition(),
 		{
@@ -1959,7 +1961,7 @@ export function parseTSEnumDeclaration(
 	isConst: boolean,
 ): TSEnumDeclaration {
 	parser.addDiagnosticFilter({
-		message: descriptions.JS_PARSER.RESERVED_WORD("enum").message.value,
+		message: descriptions.JS_PARSER.RESERVED_WORD("enum").message,
 		start,
 	});
 
@@ -2323,7 +2325,7 @@ export function parseTSTypeExpressionStatement(
 
 		case "interface": {
 			parser.addDiagnosticFilter({
-				message: "interface is a reserved word",
+				message: markup`interface is a reserved word`,
 				start,
 			});
 

@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "'with' in strict mode"}
+				message: SAFE_MARKUP {value: "'with' in strict mode"}
 			}
 			location: Object {
 				filename: "input.js"

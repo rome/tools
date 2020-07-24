@@ -12,6 +12,7 @@ import Graph from "../Graph";
 import {Scope} from "../scopes";
 import Hub from "../Hub";
 import Utils, {HumanBuilder} from "../Utils";
+import {Markup} from "@romefrontend/cli-layout";
 
 let counter = 0;
 
@@ -58,7 +59,7 @@ export default class T {
 
 	compatibilityCache: Map<T, TypeCompatibilityReturn>;
 
-	human: undefined | string;
+	human: undefined | Markup;
 	id: string;
 
 	originNode: undefined | AnyNode;
@@ -70,7 +71,7 @@ export default class T {
 		return this.constructor;
 	}
 
-	setHuman(human: undefined | string) {
+	setHuman(human: undefined | Markup) {
 		this.human = human;
 	}
 
@@ -141,7 +142,7 @@ export default class T {
 		return this;
 	}
 
-	humanize(builder: HumanBuilder): string {
+	humanize(builder: HumanBuilder): Markup {
 		const reduced = this.utils.reduce(this);
 		if (reduced === this) {
 			throw new Error("unimplemented");

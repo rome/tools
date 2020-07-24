@@ -8,10 +8,11 @@
 import {ServerRequest} from "@romefrontend/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
+import {markup} from "@romefrontend/cli-layout";
 
 export default createServerCommand({
 	category: commandCategories.PROCESS_MANAGEMENT,
-	description: "stop daemon",
+	description: markup`stop daemon`,
 	usage: "",
 	examples: [],
 	defineFlags() {

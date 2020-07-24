@@ -51,7 +51,6 @@ import {
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
 import {VERSION} from "../common/constants";
-import {escapeMarkup} from "@romefrontend/cli-layout";
 import setupGlobalErrorHandlers from "../common/utils/setupGlobalErrorHandlers";
 import {UserConfig, loadUserConfig} from "../common/userConfig";
 import {
@@ -70,6 +69,9 @@ import {toKebabCase} from "@romefrontend/string-utils";
 import {FilePathLocker} from "../common/utils/lockers";
 import {writeFile} from "@romefrontend/fs";
 import {getEnvVar} from "@romefrontend/cli-environment";
+import {markup} from "@romefrontend/cli-layout";
+import prettyFormat from "@romefrontend/pretty-format";
+import {convertPossibleNodeError} from "@romefrontend/node";
 
 const STDOUT_MAX_CHUNK_LENGTH = 100_000;
 
@@ -264,7 +266,9 @@ export default class Server {
 		this.resolver = new Resolver(this);
 		this.cache = new Cache(this);
 
-		this.logger.info("[Server] Created Server with options", opts);
+		this.logger.info(
+			markup`[Server] Created Server with options: ${prettyFormat(opts)}`,
+		);
 	}
 
 	userConfig: UserConfig;
@@ -323,9 +327,9 @@ export default class Server {
 	}
 
 	onFatalError(err: Error) {
-		const message = `<emphasis>Fatal error occurred</emphasis>: ${escapeMarkup(
-			err.stack || err.message,
-		)}`;
+		err = convertPossibleNodeError(err);
+		const message = markup`<emphasis>Fatal error occurred</emphasis>: ${err.stack ||
+		err.message}`;
 		this.logger.error(message);
 		this.connectedReporters.error(message);
 		process.exit();
@@ -348,7 +352,7 @@ export default class Server {
 
 	async handleDisconnectedDiagnostics(diagnostics: Diagnostics) {
 		this.connectedReporters.error(
-			"Generated diagnostics without a current request",
+			markup`Generated diagnostics without a current request`,
 		);
 
 		await printDiagnostics({
@@ -434,11 +438,11 @@ export default class Server {
 		const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet(files.keys());
 
 		if (files.size === 0) {
-			this.logger.info("[Server] Writing no files");
+			this.logger.info(markup`[Server] Writing no files`);
 			return;
 		} else {
-			this.logger.info("[Server] Writing files");
-			this.logger.list(Array.from(paths, (path) => path.toMarkup()));
+			this.logger.info(markup`[Server] Writing files`);
+			this.logger.list(Array.from(paths, (path) => markup`${path}`));
 		}
 
 		const teardowns: Array<() => Promise<void>> = [];
@@ -504,7 +508,7 @@ export default class Server {
 	}
 
 	async end() {
-		this.logger.info("[Server] Teardown triggered");
+		this.logger.info(markup`[Server] Teardown triggered`);
 
 		// Unwatch all project directories
 		// We do this before anything else as we don't want events firing while we're in a teardown state
@@ -608,7 +612,7 @@ export default class Server {
 		if (client.version !== VERSION) {
 			// TODO this wont ever actually be printed?
 			client.reporter.error(
-				`Client version ${client.version} does not match server version ${VERSION}. Goodbye lol.`,
+				markup`Client version ${client.version} does not match server version ${VERSION}. Goodbye lol.`,
 			);
 			client.bridge.end();
 			return client;
@@ -715,7 +719,7 @@ export default class Server {
 		// Warn about disabled disk caching. Don't bother if it's only been set due to ROME_DEV. We don't care to see it in development.
 		if (this.cache.disabled && getEnvVar("ROME_DEV").type !== "ENABLED") {
 			reporter.warn(
-				"Disk caching has been disabled due to the <emphasis>ROME_CACHE=0</emphasis> environment variable",
+				markup`Disk caching has been disabled due to the <emphasis>ROME_CACHE=0</emphasis> environment variable`,
 			);
 		}
 
@@ -765,7 +769,9 @@ export default class Server {
 	}
 
 	async handleRequestStart(req: ServerRequest) {
-		this.logger.info("[Server] Handling CLI request:", req.query);
+		this.logger.info(
+			markup`[Server] Handling CLI request: ${prettyFormat(req.query)}`,
+		);
 
 		// Hook used by the web server to track and collect server requests
 		await this.requestStartEvent.callOptional(req);
@@ -781,7 +787,9 @@ export default class Server {
 
 	handleRequestEnd(req: ServerRequest) {
 		this.requestRunningCounter--;
-		this.logger.info("[Server] Replying to CLI request:", req.query);
+		this.logger.info(
+			markup`[Server] Replying to CLI request: ${prettyFormat(req.query)}`,
+		);
 
 		// If we're waiting to terminate ourselves when idle, then do so when there's no running requests
 		if (this.terminateWhenIdle && this.requestRunningCounter === 0) {
@@ -869,7 +877,7 @@ export default class Server {
 		const warmupTook = Date.now() - warmupStart;
 
 		// Benchmark
-		const progress = client.reporter.progress({title: "Running benchmark"});
+		const progress = client.reporter.progress({title: markup`Running benchmark`});
 		progress.setTotal(benchmarkIterations);
 		const benchmarkStart = Date.now();
 		for (let i = 0; i < benchmarkIterations; i++) {
@@ -880,19 +888,21 @@ export default class Server {
 		const benchmarkTook = Date.now() - benchmarkStart;
 
 		reporter.section(
-			"Benchmark results",
+			markup`Benchmark results`,
 			() => {
 				reporter.info(
-					"Request artifacts may have been cached after the first run, artificially decreasing subsequent run time",
+					markup`Request artifacts may have been cached after the first run, artificially decreasing subsequent run time`,
 				);
-				reporter.heading("Query");
+				reporter.heading(markup`Query`);
 				reporter.inspect(req.query);
-				reporter.heading("Stats");
+				reporter.heading(markup`Stats`);
 				reporter.list([
-					`Warmup took <duration emphasis>${warmupTook}</duration>`,
-					`<number emphasis>${benchmarkIterations}</number> runs`,
-					`<duration emphasis>${benchmarkTook}</duration> total`,
-					`<duration emphasis approx>${benchmarkTook / benchmarkIterations}</duration> per run`,
+					markup`Warmup took <duration emphasis>${String(warmupTook)}</duration>`,
+					markup`<number emphasis>${String(benchmarkIterations)}</number> runs`,
+					markup`<duration emphasis>${String(benchmarkTook)}</duration> total`,
+					markup`<duration emphasis approx>${String(
+						benchmarkTook / benchmarkIterations,
+					)}</duration> per run`,
 				]);
 			},
 		);

@@ -11,6 +11,7 @@ import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {ConstJSSourceType} from "@romefrontend/ast";
 import {assertRoot, removeLoc} from "@romefrontend/ast-utils";
+import {markup} from "@romefrontend/cli-layout";
 
 type Flags = {
 	allowDiagnostics: boolean;
@@ -20,7 +21,7 @@ type Flags = {
 
 export default createServerCommand({
 	category: commandCategories.SOURCE_CODE,
-	description: "parse a single file and dump its ast",
+	description: markup`parse a single file and dump its ast`,
 	usage: "",
 	examples: [],
 	hidden: true,

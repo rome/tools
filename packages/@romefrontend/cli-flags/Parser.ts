@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Reporter, ReporterTableField} from "@romefrontend/cli-reporter";
+import {Reporter} from "@romefrontend/cli-reporter";
 import {serializeCLIFlags} from "./serializeCLIFlags";
 import {
 	ConsumePath,
@@ -22,7 +22,7 @@ import {
 } from "@romefrontend/string-utils";
 import {createUnknownFilePath} from "@romefrontend/path";
 import {Dict} from "@romefrontend/typescript-helpers";
-import {markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/cli-layout";
 import {
 	Diagnostic,
 	DiagnosticsError,
@@ -31,7 +31,7 @@ import {
 import {JSONObject} from "@romefrontend/codec-json";
 
 export type Examples = Array<{
-	description: string;
+	description: Markup;
 	command: string;
 }>;
 
@@ -44,7 +44,7 @@ type FlagsConsumer = {
 type CommandOptions<T extends JSONObject> = {
 	name: string;
 	category?: string;
-	description?: string;
+	description?: Markup;
 	usage?: string;
 	examples?: Examples;
 	ignoreFlags?: Array<string>;
@@ -70,14 +70,14 @@ export type ParserOptions<T> = {
 	examples?: Examples;
 	programName: string;
 	usage?: string;
-	description?: string;
+	description?: Markup;
 	version?: string;
 	ignoreFlags?: Array<string>;
 	noProcessExit?: boolean;
 	commandRequired?: boolean;
 	commandSuggestions?: Dict<{
 		commandName: string;
-		description: string;
+		description: Markup;
 	}>;
 	defineFlags: (consumer: Consumer) => T;
 };
@@ -396,11 +396,11 @@ export default class Parser<T> {
 			const shouldDisplayVersion = flags.get(
 				"version",
 				{
-					description: "Show the version",
+					description: markup`Show the version`,
 				},
 			).asBoolean(false);
 			if (shouldDisplayVersion) {
-				this.reporter.logAll(version);
+				this.reporter.logAll(markup`${version}`);
 				this.exit(0);
 			}
 		}
@@ -410,7 +410,7 @@ export default class Parser<T> {
 		const generateAutocomplete: undefined | SupportedAutocompleteShells = flags.get(
 			"generateAutocomplete",
 			{
-				description: "Generate a shell autocomplete",
+				description: markup`Generate a shell autocomplete`,
 				inputName: "shell",
 			},
 		).asStringSetOrVoid(["fish", "bash"]);
@@ -423,7 +423,7 @@ export default class Parser<T> {
 		const shouldShowHelp = flags.get(
 			"help",
 			{
-				description: "Show this help screen",
+				description: markup`Show this help screen`,
 			},
 		).asBoolean(false);
 
@@ -469,7 +469,7 @@ export default class Parser<T> {
 			this.ranCommand = definedCommand.command;
 			if (definedCommand.command.hidden === true) {
 				this.reporter.warn(
-					"This command has been hidden. Consider its usage to be experimental and do not expect support or backwards compatibility.",
+					markup`This command has been hidden. Consider its usage to be experimental and do not expect support or backwards compatibility.`,
 				);
 			}
 			await definedCommand.command.callback(definedCommand.flags);
@@ -478,11 +478,11 @@ export default class Parser<T> {
 		return rootFlags;
 	}
 
-	buildOptionsHelp(keys: Array<string>): Array<Array<ReporterTableField>> {
+	buildOptionsHelp(keys: Array<string>): Array<Array<Markup>> {
 		const optionOutput: Array<{
 			argName: string;
-			arg: string;
-			description: string;
+			arg: Markup;
+			description: Markup;
 		}> = [];
 		let argColumnLength: number = 0;
 
@@ -523,14 +523,14 @@ export default class Parser<T> {
 				argColumnLength = argCol.length;
 			}
 
-			let descCol: string =
+			let descCol: Markup =
 				metadata.description === undefined
-					? "no description found"
+					? markup`no description found`
 					: metadata.description;
 
 			const {default: defaultValue} = def;
 			if (defaultValue !== undefined && isDisplayableHelpValue(defaultValue)) {
-				descCol += ` (default: ${JSON.stringify(defaultValue)})`;
+				descCol = markup`${descCol} (default: ${JSON.stringify(defaultValue)})`;
 			}
 
 			if (def.type === "string" && def.allowedValues !== undefined) {
@@ -538,7 +538,7 @@ export default class Parser<T> {
 					isDisplayableHelpValue(item)
 				);
 				if (displayAllowedValues !== undefined) {
-					descCol += ` (values: ${displayAllowedValues.join("|")})`;
+					descCol = markup`${descCol} (values: ${displayAllowedValues.join("|")})`;
 				}
 			}
 
@@ -554,13 +554,13 @@ export default class Parser<T> {
 
 		// Build table rows
 		return optionOutput.map((opt) => [
-			{align: "right", value: opt.arg},
+			markup`<view align="right">${opt.arg}</view>`,
 			opt.description,
 		]);
 	}
 
 	showUsageHelp(
-		description?: string,
+		description?: Markup,
 		usage: string = "[flags]",
 		prefix?: string,
 	) {
@@ -568,7 +568,7 @@ export default class Parser<T> {
 		const {programName} = this.opts;
 
 		reporter.section(
-			"Usage",
+			markup`Usage`,
 			() => {
 				if (description !== undefined) {
 					reporter.logAll(description);
@@ -606,7 +606,7 @@ export default class Parser<T> {
 		const optRows = this.buildOptionsHelp(argKeys);
 		if (optRows.length > 0) {
 			reporter.section(
-				"Command Flags",
+				markup`Command Flags`,
 				() => {
 					reporter.table([], optRows);
 				},
@@ -614,9 +614,9 @@ export default class Parser<T> {
 		}
 
 		reporter.section(
-			"Global Flags",
+			markup`Global Flags`,
 			() => {
-				reporter.info("To view global flags run");
+				reporter.info(markup`To view global flags run`);
 				reporter.command("rome --help");
 			},
 		);
@@ -625,7 +625,7 @@ export default class Parser<T> {
 	showGlobalFlags() {
 		const {reporter} = this;
 		reporter.section(
-			"Global Flags",
+			markup`Global Flags`,
 			() => {
 				// Show options not attached to any commands
 				const lonerArgKeys = [];
@@ -818,7 +818,7 @@ export default class Parser<T> {
 		}
 
 		reporter.section(
-			"Commands",
+			markup`Commands`,
 			() => {
 				const sortedCategoryNames: Array<string | undefined> = Array.from(
 					categoryNames,
@@ -840,7 +840,7 @@ export default class Parser<T> {
 					}
 
 					if (category !== undefined) {
-						reporter.logAll(`<emphasis>${category} Commands</emphasis>`);
+						reporter.logAll(markup`<emphasis>${category} Commands</emphasis>`);
 					}
 
 					// Sort by name
@@ -848,7 +848,7 @@ export default class Parser<T> {
 
 					reporter.list(
 						commands.map((cmd) => {
-							return `<emphasis>${cmd.name}</emphasis> ${cmd.description ===
+							return markup`<emphasis>${cmd.name}</emphasis> ${cmd.description ===
 							undefined
 								? ""
 								: cmd.description}`;
@@ -857,7 +857,7 @@ export default class Parser<T> {
 					reporter.br();
 				}
 
-				reporter.info("To view help for a specific command run");
+				reporter.info(markup`To view help for a specific command run`);
 				reporter.command(`${programName} command_name --help`);
 			},
 		);
@@ -874,7 +874,7 @@ export default class Parser<T> {
 		}
 
 		reporter.section(
-			"Examples",
+			markup`Examples`,
 			() => {
 				for (const {description, command} of examples) {
 					const commandParts = [];

@@ -7,8 +7,9 @@
 
 import {Path} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
+import {markup} from "@romefrontend/cli-layout";
 
-const SUGGESTION_DESCRIPTION = "This may be unsafe if you are relying on type coercion";
+const SUGGESTION_DESCRIPTION = markup`This may be unsafe if you are relying on type coercion`;
 
 export default {
 	name: "js/doubleEquals",
@@ -26,7 +27,7 @@ export default {
 						old: node,
 						suggestions: [
 							{
-								title: "Use !==",
+								title: markup`Use !==`,
 								description: SUGGESTION_DESCRIPTION,
 								fixed: {
 									...node,
@@ -45,7 +46,7 @@ export default {
 						old: node,
 						suggestions: [
 							{
-								title: "Use ===",
+								title: markup`Use ===`,
 								description: SUGGESTION_DESCRIPTION,
 								fixed: {
 									...node,

@@ -18,8 +18,8 @@
 
   ℹ Recommended fix
 
-  - delete arr[0][2]
-  + arr[0][2] = undefined
+  - delete·arr[0][2]
+  + arr[0][2]·=·undefined
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -49,8 +49,8 @@ arr[0][2] = undefined;
 
   ℹ Recommended fix
 
-  - delete obj.a.b.c
-  + obj.a.b.c = undefined
+  - delete·obj.a.b.c
+  + obj.a.b.c·=·undefined
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unterminated comment"}
+				message: SAFE_MARKUP {value: "Unterminated comment"}
 			}
 			location: Object {
 				filename: "input.js"

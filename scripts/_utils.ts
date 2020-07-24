@@ -5,6 +5,7 @@ import {createMockWorker} from "@romefrontend/test-helpers";
 
 import crypto = require("crypto");
 import child = require("child_process");
+import {markup} from "@romefrontend/cli-layout";
 
 export const reporter = Reporter.fromProcess();
 export const integrationWorker = createMockWorker();
@@ -47,7 +48,7 @@ export async function modifyGeneratedFile(
 	const file = await readGeneratedFile(path, hash || trailing);
 	if (file === undefined) {
 		reporter.warn(
-			`Generated file <emphasis>${path.toMarkup()}</emphasis> is the same`,
+			markup`Generated file <emphasis>${path}</emphasis> is the same`,
 		);
 		return;
 	}
@@ -130,7 +131,7 @@ export async function writeFile(path: AbsoluteFilePath, sourceText: string) {
 
 	// Write
 	await writeFileReal(path, sourceText);
-	reporter.success(`Wrote <emphasis>${path.toMarkup()}</emphasis>`);
+	reporter.success(markup`Wrote <emphasis>${path}</emphasis>`);
 }
 
 export function waitChildProcess(
@@ -165,7 +166,7 @@ export async function exec(
 	);
 
 	if (proc.exitCode !== 0) {
-		reporter.error(`Exit code ${proc.exitCode}`);
+		reporter.error(markup`Exit code ${String(proc.exitCode)}`);
 		process.exit(proc.exitCode || 0);
 	}
 }

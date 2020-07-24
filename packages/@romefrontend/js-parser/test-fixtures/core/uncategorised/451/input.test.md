@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected character <emphasis>\u200d</emphasis>"}
+				message: SAFE_MARKUP {value: "Unexpected character <emphasis>\u200d</emphasis>"}
 			}
 			location: Object {
 				filename: "input.js"

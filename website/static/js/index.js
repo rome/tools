@@ -113,7 +113,7 @@ const toc = {
 };
 
 /**
- * @param {string} hash 
+ * @param {string} hash
  */
 function scrollToHeading(hash) {
 	const heading = document.getElementById(hash.replace(/^(#)/, ""));
@@ -185,6 +185,22 @@ window.onload = function() {
 		scrollToHeading(window.location.hash);
 	}
 	toc.highlight();
+	const script = document.createElement("script");
+	script.src = "https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js";
+	script.async = true;
+	script.defer = true;
+	script.addEventListener(
+		"load",
+		() => {
+			window.docsearch({
+				apiKey: "66db1ad366d458c6acded7cbc23dba7e",
+				indexName: "romefrontend",
+				inputSelector: window.innerWidth > 768 ? '#docsearch-desktop' : "#docsearch-mobile",
+				debug: false, // Set debug to true if you want to inspect the dropdown
+			});
+		},
+	);
+	document.body.appendChild(script);
 };
 
 document.addEventListener(

@@ -14,12 +14,13 @@ import TestServerRunner from "../testing/TestServerRunner";
 import Bundler from "../bundler/Bundler";
 import {JS_EXTENSIONS} from "../../common/file-handlers/javascript";
 import {TestServerRunnerOptions, TestSources} from "../testing/types";
+import {markup} from "@romefrontend/cli-layout";
 
 type Flags = Omit<TestServerRunnerOptions, "verboseDiagnostics">;
 
 export default createServerCommand({
 	category: commandCategories.CODE_QUALITY,
-	description: "run tests",
+	description: markup`run tests`,
 	usage: "",
 	examples: [],
 	defineFlags(c: Consumer): Flags {
@@ -31,6 +32,7 @@ export default createServerCommand({
 			freezeSnapshots: c.get("freezeSnapshots").asBoolean(false),
 			focusAllowed: c.get("focusAllowed").asBoolean(true),
 			syncTests: c.get("syncTests").asBoolean(false),
+			sourceMaps: c.get("sourceMaps").asBoolean(true),
 		};
 	},
 	async callback(req: ServerRequest, commandFlags: Flags): Promise<void> {
@@ -52,7 +54,7 @@ export default createServerCommand({
 				{
 					type: "log",
 					category: "info",
-					text: "Searched for files with <emphasis>.test.*</emphasis> file extension",
+					text: markup`Searched for files with <emphasis>.test.*</emphasis> file extension`,
 				},
 			],
 			extensions: JS_EXTENSIONS,

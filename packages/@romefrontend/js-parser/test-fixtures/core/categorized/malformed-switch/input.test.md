@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Statement outside of a case or default block"}
+				message: SAFE_MARKUP {value: "Statement outside of a case or default block"}
 			}
 			location: Object {
 				filename: "input.js"

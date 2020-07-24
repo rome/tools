@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Binding member expression"}
+				message: SAFE_MARKUP {value: "Binding member expression"}
 			}
 			location: Object {
 				filename: "input.js"

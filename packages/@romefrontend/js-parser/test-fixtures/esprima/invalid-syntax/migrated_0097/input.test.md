@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Parenthesized expression didnt contain anything"}
+				message: SAFE_MARKUP {value: "Parenthesized expression didnt contain anything"}
 			}
 			location: Object {
 				filename: "input.js"

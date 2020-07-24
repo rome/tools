@@ -9,10 +9,11 @@ import {ServerRequest} from "@romefrontend/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {ProjectDefinition} from "@romefrontend/project";
+import {markup} from "@romefrontend/cli-layout";
 
 export default createServerCommand({
 	category: commandCategories.INTERNAL,
-	description: "TODO",
+	description: markup`TODO`,
 	usage: "",
 	examples: [],
 	hidden: true,
@@ -28,7 +29,7 @@ export default createServerCommand({
 		);
 
 		while (project !== undefined) {
-			req.reporter.logAll(project.directory.toMarkup());
+			req.reporter.logAll(markup`${project.directory}`);
 			if (flags.complete) {
 				req.reporter.inspect(project.config);
 			} else {

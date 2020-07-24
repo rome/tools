@@ -18,8 +18,8 @@
 
   ℹ Recommended fix
 
-  - import {b, a, c, D} from "mod";
-  + import {D, a, b, c} from "mod";
+  - import·{b,·a,·c,·D}·from·"mod";
+  + import·{D,·a,·b,·c}·from·"mod";
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -48,8 +48,8 @@ import {D, a, b, c} from "mod";
 
   ℹ Recommended fix
 
-  - import {b as A, a as C, B} from "mod";
-  + import {b as A, B, a as C} from "mod";
+  - import·{b·as·A,·a·as·C,·B}·from·"mod";
+  + import·{b·as·A,·B,·a·as·C}·from·"mod";
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -78,8 +78,8 @@ import {b as A, B, a as C} from "mod";
 
   ℹ Recommended fix
 
-  - import {c, b as b2, b as b1, b} from "mod";
-  + import {b, b as b1, b as b2, c} from "mod";
+  - import·{c,·b·as·b2,·b·as·b1,·b}·from·"mod";
+  + import·{b,·b·as·b1,·b·as·b2,·c}·from·"mod";
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -108,8 +108,8 @@ import {b, b as b1, b as b2, c} from "mod";
 
   ℹ Recommended fix
 
-  - export {b, a, c, D} from "mod";
-  + export {D, a, b, c} from "mod";
+  - export·{b,·a,·c,·D}·from·"mod";
+  + export·{D,·a,·b,·c}·from·"mod";
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -138,8 +138,8 @@ export {D, a, b, c} from "mod";
 
   ℹ Recommended fix
 
-  - export {b as A, a as C, B} from "mod";
-  + export {B, a as C, b as A} from "mod";
+  - export·{b·as·A,·a·as·C,·B}·from·"mod";
+  + export·{B,·a·as·C,·b·as·A}·from·"mod";
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -168,8 +168,8 @@ export {B, a as C, b as A} from "mod";
 
   ℹ Recommended fix
 
-  - export {c, b as b2, b as b1, b} from "mod";
-  + export {b, b as b1, b as b2, c} from "mod";
+  - export·{c,·b·as·b2,·b·as·b1,·b}·from·"mod";
+  + export·{b,·b·as·b1,·b·as·b2,·c}·from·"mod";
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -198,8 +198,8 @@ export {b, b as b1, b as b2, c} from "mod";
 
   ℹ Recommended fix
 
-  - export {b, a, c, D};
-  + export {D, a, b, c};
+  - export·{b,·a,·c,·D};
+  + export·{D,·a,·b,·c};
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -228,8 +228,8 @@ export {D, a, b, c};
 
   ℹ Recommended fix
 
-  - export {b as A, a as C, B};
-  + export {B, a as C, b as A};
+  - export·{b·as·A,·a·as·C,·B};
+  + export·{B,·a·as·C,·b·as·A};
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -258,8 +258,8 @@ export {B, a as C, b as A};
 
   ℹ Recommended fix
 
-  - export {c, b as b2, b as b1, b};
-  + export {b, b as b1, b as b2, c};
+  - export·{c,·b·as·b2,·b·as·b1,·b};
+  + export·{b,·b·as·b1,·b·as·b2,·c};
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

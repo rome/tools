@@ -34,8 +34,7 @@ export const resolver = createDiagnosticsCategory({
 		}
 
 		return {
-			message: messagePrefix +
-			markup` <emphasis>${source}</emphasis> from <filelink emphasis target="${location.filename}" />`,
+			message: markup`${messagePrefix} <emphasis>${source}</emphasis> from <filelink emphasis target="${location.filename!}" />`,
 			category,
 		};
 	},
@@ -50,14 +49,14 @@ export const resolver = createDiagnosticsCategory({
 			source: undefined | string;
 		},
 	) => ({
-		message: `Couldn't find export <emphasis>${name}</emphasis> in <filelink emphasis target="${source}" />`,
+		message: markup`Couldn't find export <emphasis>${name}</emphasis> in <filelink emphasis target="${source}" />`,
 		category: "resolver/unknownExport",
 		advice: exportedNames.length === 0
 			? [
 					{
 						type: "log",
 						category: "info",
-						text: "This file doesn't have any exports",
+						text: markup`This file doesn't have any exports`,
 					},
 				]
 			: buildSuggestionAdvice(
@@ -66,20 +65,23 @@ export const resolver = createDiagnosticsCategory({
 					{
 						formatItem: (name) => {
 							const {location, source} = formatExportedName(name);
+							let format = markup`${name}`;
 
 							if (location !== undefined) {
 								if (location.start === undefined) {
-									name = markup`<filelink target="${location.filename}">${name}</filelink>`;
+									format = markup`<filelink target="${location.filename!}">${name}</filelink>`;
 								} else {
-									name = markup`<filelink target="${location.filename}" line="${location.start.line}" column="${location.start.column}">${name}</filelink>`;
+									format = markup`<filelink target="${location.filename!}" line="${String(
+										location.start.line,
+									)}" column="${String(location.start.column)}">${name}</filelink>`;
 								}
 							}
 
 							if (source !== undefined) {
-								name += markup` <dim>(from <filelink target="${source}" />)</dim>`;
+								format = markup`${format} <dim>(from <filelink target="${source}" />)</dim>`;
 							}
 
-							return name;
+							return format;
 						},
 					},
 				),
@@ -95,7 +97,7 @@ export const resolver = createDiagnosticsCategory({
 			{
 				type: "log",
 				category: "info",
-				text: markup`However we found a matching local variable in <filelink emphasis target="${location.filename}" />. Did you forget to export it?`,
+				text: markup`However we found a matching local variable in <filelink emphasis target="${location.filename!}" />. Did you forget to export it?`,
 			},
 			{
 				type: "frame",

@@ -7,9 +7,10 @@
 
 import {Event} from "@romefrontend/events";
 import {TerminalFeatures} from "@romefrontend/cli-environment";
+import {Markup} from "@romefrontend/cli-layout";
 
 export type SelectOption = {
-	label: string;
+	label: Markup;
 	shortcut?: string;
 };
 
@@ -28,14 +29,6 @@ export type Package = {
 	name: string;
 	version?: string;
 };
-
-export type ReporterTableField =
-	| number
-	| string
-	| {
-			align: "left" | "right";
-			value: number | string;
-		};
 
 export type ReporterStreamMeta = {
 	type: "out" | "error" | "all";
@@ -63,7 +56,7 @@ export type ReporterDerivedStreams = {
 
 export type ReporterProgressOptions = {
 	name?: string;
-	title?: string;
+	title?: Markup;
 	initDelay?: number;
 	elapsed?: boolean;
 	eta?: boolean;
@@ -74,9 +67,9 @@ export type ReporterProgress = {
 	render: () => void;
 	setCurrent: (current: number) => void;
 	setTotal: (total: number, approximate?: boolean) => void;
-	setText: (text: string) => void;
-	pushText: (text: string) => void;
-	popText: (text: string) => void;
+	setText: (text: Markup) => void;
+	pushText: (text: Markup, id?: string) => string;
+	popText: (id: string) => void;
 	setApproximateETA: (duration: number) => void;
 	tick: () => void;
 	end: () => void;
@@ -113,17 +106,18 @@ export type RemoteReporterClientMessage =
 		}
 	| {
 			type: "PROGRESS_SET_TEXT";
-			text: string;
+			text: Markup;
 			id: string;
 		}
 	| {
 			type: "PROGRESS_PUSH_TEXT";
-			text: string;
+			text: Markup;
+			textId: string;
 			id: string;
 		}
 	| {
 			type: "PROGRESS_POP_TEXT";
-			text: string;
+			textId: string;
 			id: string;
 		}
 	| {

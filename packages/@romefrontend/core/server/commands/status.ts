@@ -9,6 +9,7 @@ import {ServerRequest} from "@romefrontend/core";
 import {WorkerStatus} from "../../common/bridges/WorkerBridge";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
+import {markup} from "@romefrontend/cli-layout";
 
 type StatusResult = {
 	server: {
@@ -33,7 +34,7 @@ type StatusWorkerResult = {
 
 export default createServerCommand({
 	category: commandCategories.PROCESS_MANAGEMENT,
-	description: "dump memory and process info of server and workers",
+	description: markup`dump memory and process info of server and workers`,
 	usage: "",
 	examples: [],
 	defineFlags() {

@@ -8,6 +8,7 @@
 import Reporter from "./Reporter";
 import {ReporterProgress, ReporterProgressOptions} from "./types";
 import {mergeObjects} from "@romefrontend/typescript-helpers";
+import {Markup, isEmptyMarkup, markup} from "@romefrontend/cli-layout";
 
 const DEFAULT_PROGRESS_OPTIONS: ReporterProgressOptions = {
 	name: undefined,
@@ -27,7 +28,11 @@ export default class ProgressBase implements ReporterProgress {
 		this.approximateTotal = false;
 		this.approximateETA = undefined;
 
+		this.textIdCounter = 0;
+		this.textIdStack = [];
 		this.textStack = [];
+		this.textIds = new Set();
+
 		this.text = undefined;
 		this.title =
 			opts.title === undefined ? undefined : reporter.stripMarkup(opts.title);
@@ -45,8 +50,12 @@ export default class ProgressBase implements ReporterProgress {
 	current: number;
 	total: undefined | number;
 
-	text: undefined | string;
-	textStack: Array<string>;
+	text: undefined | Markup;
+	textIdCounter: number;
+	textIdStack: Array<string>;
+	textStack: Array<Markup>;
+	textIds: Set<string>;
+
 	title: undefined | string;
 
 	approximateETA: undefined | number;
@@ -72,14 +81,14 @@ export default class ProgressBase implements ReporterProgress {
 
 	getText(): undefined | string {
 		const {text} = this;
-		if (text === undefined || text === "") {
+		if (text === undefined || isEmptyMarkup(text)) {
 			return undefined;
 		} else {
 			return this.reporter.stripMarkup(text);
 		}
 	}
 
-	setText(text: string) {
+	setText(text: Markup) {
 		this.text = text;
 		this.queueRender();
 	}
@@ -94,25 +103,36 @@ export default class ProgressBase implements ReporterProgress {
 		this.queueRender();
 	}
 
-	pushText(text: string) {
+	pushText(text: Markup, id?: string): string {
+		if (id === undefined) {
+			id = String(this.textIdCounter++);
+		}
+		if (this.textIds.has(id)) {
+			throw new Error(`Progress bar text ${id} already exists`);
+		}
 		this.setText(text);
 		this.textStack.push(text);
+		this.textIdStack.push(id);
+		this.textIds.add(id);
+		return id;
 	}
 
-	popText(text: string) {
+	popText(id: string) {
 		// Find
-		const {textStack} = this;
-		const index = textStack.indexOf(text);
+		const {textStack, textIdStack} = this;
+		const index = textIdStack.indexOf(id);
 		if (index === -1) {
-			throw new Error(`No pushed text: ${text}`);
+			throw new Error(`No pushed text for id ${id}`);
 		}
 
 		// Remove
 		textStack.splice(index, 1);
+		textIdStack.splice(index, 1);
+		this.textIds.delete(id);
 
 		// Set last
-		const last: undefined | string = textStack[textStack.length - 1];
-		this.setText(last === undefined ? "" : last);
+		const last: undefined | Markup = textStack[textStack.length - 1];
+		this.setText(last === undefined ? markup`` : last);
 	}
 
 	tick() {

@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "'import' and 'export' may only appear at the top level"}
+				message: SAFE_MARKUP {value: "'import' and 'export' may only appear at the top level"}
 			}
 			location: Object {
 				filename: "input.js"

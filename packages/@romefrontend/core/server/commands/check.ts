@@ -30,7 +30,7 @@ type Flags = {
 
 export default createServerCommand<Flags>({
 	category: commandCategories.CODE_QUALITY,
-	description: "run lint against a set of files",
+	description: markup`run lint against a set of files`,
 	allowRequestFlags: ["watch", "review"],
 	usage: "",
 	examples: [],
@@ -42,19 +42,19 @@ export default createServerCommand<Flags>({
 			apply: consumer.get(
 				"apply",
 				{
-					description: "recommended autofixes and formatting is applied",
+					description: markup`recommended autofixes and formatting is applied`,
 				},
 			).asBoolean(false),
 			formatOnly: consumer.get(
 				"formatOnly",
 				{
-					description: "only formatting is applied",
+					description: markup`only formatting is applied`,
 				},
 			).asBoolean(false),
 			changed: consumer.get(
 				"changed",
 				{
-					description: "only include files that have changed from the specified branch/commit (defaults to main)",
+					description: markup`only include files that have changed from the specified branch/commit (defaults to main)`,
 				},
 			).asStringOrVoid(),
 		};
@@ -102,9 +102,11 @@ export default createServerCommand<Flags>({
 			});
 
 			if (args.length === 0) {
-				reporter.warn(`No files changed from <emphasis>${target}</emphasis>`);
+				reporter.warn(
+					markup`No files changed from <emphasis>${target}</emphasis>`,
+				);
 			} else {
-				reporter.info(`Files changed from <emphasis>${target}</emphasis>`);
+				reporter.info(markup`Files changed from <emphasis>${target}</emphasis>`);
 				reporter.list(args.map((arg) => markup`<filelink target="${arg}" />`));
 				reporter.hr();
 			}

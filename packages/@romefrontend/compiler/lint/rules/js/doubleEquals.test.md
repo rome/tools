@@ -19,8 +19,8 @@
 
   Suggested fix: Use ===
 
-  - foo == bar
-  + foo === bar
+  - foo·==·bar
+  + foo·===·bar
 
   ℹ This may be unsafe if you are relying on type coercion
 

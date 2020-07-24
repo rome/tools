@@ -11,6 +11,7 @@ import {chainCommands, createServerCommand} from "../commands";
 import check from "./check";
 import test from "./test";
 import {Consumer} from "@romefrontend/consume";
+import {markup} from "@romefrontend/cli-layout";
 
 type Flags = {
 	fix: boolean;
@@ -18,7 +19,7 @@ type Flags = {
 
 export default createServerCommand({
 	category: commandCategories.CODE_QUALITY,
-	description: "run lint and tests",
+	description: markup`run lint and tests`,
 	usage: "",
 	examples: [],
 	defineFlags(consumer: Consumer): Flags {
@@ -26,7 +27,7 @@ export default createServerCommand({
 			fix: consumer.get(
 				"fix",
 				{
-					description: "enables --update-snapshots for test, and --apply for the lint command",
+					description: markup`enables --update-snapshots for test, and --apply for the lint command`,
 				},
 			).asBoolean(false),
 		};
@@ -40,7 +41,7 @@ export default createServerCommand({
 			req,
 			[
 				{
-					title: "Running lint",
+					title: markup`Running lint`,
 					callback: async () => {
 						await check.callback(
 							req,
@@ -54,7 +55,7 @@ export default createServerCommand({
 					},
 				},
 				{
-					title: "Running tests",
+					title: markup`Running tests`,
 					callback: async () => {
 						await test.callback(
 							req,
@@ -66,6 +67,7 @@ export default createServerCommand({
 								updateSnapshots: flags.fix,
 								showAllCoverage: false,
 								syncTests: false,
+								sourceMaps: true,
 							},
 						);
 					},

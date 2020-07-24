@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "The rest element has to be the last element when destructuring"}
+				message: SAFE_MARKUP {value: "The rest element has to be the last element when destructuring"}
 			}
 			location: Object {
 				filename: "input.ts"

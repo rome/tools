@@ -26,6 +26,8 @@ import {
 } from "@romefrontend/events";
 import child = require("child_process");
 import {AbsoluteFilePath, createAbsoluteFilePath} from "@romefrontend/path";
+import {markup} from "@romefrontend/cli-layout";
+import prettyFormat from "@romefrontend/pretty-format";
 
 export type WorkerContainer = {
 	id: number;
@@ -166,7 +168,9 @@ export default class WorkerManager {
 		try {
 			const serverWorker = this.getWorkerAssert(0);
 			this.server.logger.info(
-				`[WorkerManager] Spawning first worker outside of server after exceeding ${MAX_MASTER_BYTES_BEFORE_WORKERS} bytes`,
+				markup`[WorkerManager] Spawning first worker outside of server after exceeding ${String(
+					MAX_MASTER_BYTES_BEFORE_WORKERS,
+				)} bytes`,
 			);
 			this.selfWorker = false;
 
@@ -250,9 +254,9 @@ export default class WorkerManager {
 				type: "client",
 				onSendMessage: (data) => {
 					this.server.logger.info(
-						"[WorkerManager] Sending worker request to %s:",
-						workerId,
-						data,
+						markup`[WorkerManager] Sending worker request to ${String(workerId)}: ${prettyFormat(
+							data,
+						)}`,
 					);
 				},
 			},
@@ -298,9 +302,9 @@ export default class WorkerManager {
 		this.workerStartEvent.send(bridge);
 
 		this.server.logger.info(
-			"[WorkerManager] Worker %s started after %sms",
-			workerId,
-			Date.now() - start,
+			markup`[WorkerManager] Worker ${String(workerId)} started after <duration>${String(
+				Date.now() - start,
+			)}</duration>`,
 		);
 
 		return worker;
@@ -362,7 +366,9 @@ export default class WorkerManager {
 			this.getWorkerCount() < MAX_WORKER_COUNT
 		) {
 			logger.info(
-				`[WorkerManager] Spawning a new worker as we've exceeded ${MAX_WORKER_BYTES_BEFORE_ADD} bytes across each worker`,
+				markup`[WorkerManager] Spawning a new worker as we've exceeded ${String(
+					MAX_WORKER_BYTES_BEFORE_ADD,
+				)} bytes across each worker`,
 			);
 			workerId = this.getNextWorkerId();
 			await this.spawnWorker(workerId);

@@ -28,7 +28,10 @@ import {
 import {commandCategories} from "@romefrontend/core/common/commands";
 import {writeFile} from "@romefrontend/fs";
 import fs = require("fs");
-import {markup} from "@romefrontend/cli-layout";
+import {
+	convertToMarkupFromRandomString,
+	markup,
+} from "@romefrontend/cli-layout";
 import {JSONObject, stringifyJSON} from "@romefrontend/codec-json";
 import {getEnvVar} from "@romefrontend/cli-environment";
 import {
@@ -61,7 +64,7 @@ export default async function cli() {
 		commandSuggestions: {
 			lint: {
 				commandName: "check",
-				description: "The <emphasis>check</emphasis> command covers linting, formatting, and more",
+				description: markup`The <emphasis>check</emphasis> command covers linting, formatting, and more`,
 			},
 		},
 		defineFlags(
@@ -78,7 +81,7 @@ export default async function cli() {
 				c.get(
 					"cwd",
 					{
-						description: "Specify a different working directory",
+						description: markup`Specify a different working directory`,
 					},
 				).asAbsoluteFilePathOrVoid() || CWD_PATH;
 
@@ -87,31 +90,31 @@ export default async function cli() {
 					format: c.get(
 						"outputFormat",
 						{
-							description: "Change the output format. By default it is automatically inferred from terminal settings.",
+							description: markup`Change the output format. By default it is automatically inferred from terminal settings.`,
 						},
 					).asStringSetOrVoid(["ansi", "html", "none"]),
 					isTTY: c.get(
 						"outputTty",
 						{
-							description: "Treat output as TTY regardless of terminal information. This will enable things like ANSI cursor, progress bars etc.",
+							description: markup`Treat output as TTY regardless of terminal information. This will enable things like ANSI cursor, progress bars etc.`,
 						},
 					).asBooleanOrVoid(),
 					columns: c.get(
 						"outputColumns",
 						{
-							description: "Change the display width. By default it is automatically inferred and updated from the terminal.",
+							description: markup`Change the display width. By default it is automatically inferred and updated from the terminal.`,
 						},
 					).asOneIndexedNumberOrVoid(),
 					colorDepth: c.get(
 						"outputColorDepth",
 						{
-							description: "Change the display width. By default it is automatically inferred and updated from the terminal.",
+							description: markup`Change the display width. By default it is automatically inferred and updated from the terminal.`,
 						},
 					).asNumberSetOrVoid([1, 4, 8, 24]),
 					redirectError: c.get(
 						"outputRedirectError",
 						{
-							description: "Redirect stderr to stdout.",
+							description: markup`Redirect stderr to stdout.`,
 						},
 					).asBooleanOrVoid(),
 				},
@@ -121,7 +124,7 @@ export default async function cli() {
 					silent: c.get(
 						"silent",
 						{
-							description: "Don't write anything to the console",
+							description: markup`Don't write anything to the console`,
 						},
 					).asBoolean(DEFAULT_CLIENT_FLAGS.silent),
 				},
@@ -129,75 +132,75 @@ export default async function cli() {
 					markersPath: c.get(
 						"markersPath",
 						{
-							description: "Path where to write markers. When ommitted defaults to Marker-TIMESTAMP.json",
+							description: markup`Path where to write markers. When ommitted defaults to Marker-TIMESTAMP.json`,
 						},
 					).asAbsoluteFilePathOrVoid(cwd),
 					profile: c.get(
 						"profile",
 						{
-							description: "Collect and write profile to disk. Includes profiles for all processes.",
+							description: markup`Collect and write profile to disk. Includes profiles for all processes.`,
 						},
 					).asBoolean(false),
 					profilePath: c.get(
 						"profilePath",
 						{
-							description: "Path where to write profile. When omitted defaults to Profile-TIMESTAMP.json",
+							description: markup`Path where to write profile. When omitted defaults to Profile-TIMESTAMP.json`,
 						},
 					).asAbsoluteFilePathOrVoid(cwd),
 					profileTimeout: c.get(
 						"profileTimeout",
 						{
 							inputName: "millisec",
-							description: "Stop the profile after the milliseconds specified. When omitted the profile is of the whole command",
+							description: markup`Stop the profile after the milliseconds specified. When omitted the profile is of the whole command`,
 						},
 					).asNumberOrVoid(),
 					profileWorkers: c.get(
 						"profileWorkers",
 						{
-							description: "Exclude workers from profile",
+							description: markup`Exclude workers from profile`,
 						},
 					).asBoolean(true),
 					profileSampling: c.get(
 						"profileSampling",
 						{
-							description: "Profiler sampling interval in microseconds",
+							description: markup`Profiler sampling interval in microseconds`,
 							inputName: "microsec",
 						},
 					).asNumber(100),
 					temporaryDaemon: c.get(
 						"temporaryDaemon",
 						{
-							description: "Start a daemon, if one isn't already running, for the lifetime of this command",
+							description: markup`Start a daemon, if one isn't already running, for the lifetime of this command`,
 						},
 					).asBoolean(false),
 					rage: c.get(
 						"rage",
 						{
-							description: "Create a rage tarball of debug information",
+							description: markup`Create a rage tarball of debug information`,
 						},
 					).asBoolean(false),
 					ragePath: c.get(
 						"ragePath",
 						{
-							description: "Path where to write rage tarball. When omitted defaults to Rage-TIMESTAMP.tgz",
+							description: markup`Path where to write rage tarball. When omitted defaults to Rage-TIMESTAMP.tgz`,
 						},
 					).asAbsoluteFilePathOrVoid(cwd),
 					logs: c.get(
 						"logs",
 						{
-							description: "Output server logs",
+							description: markup`Output server logs`,
 						},
 					).asBoolean(false),
 					logWorkers: c.get(
 						"logWorkers",
 						{
-							description: "Output worker logs",
+							description: markup`Output worker logs`,
 						},
 					).asBooleanOrVoid(),
 					logPath: c.get(
 						"logPath",
 						{
-							description: "Path where to output logs. When omitted logs are not written anywhere",
+							description: markup`Path where to output logs. When omitted logs are not written anywhere`,
 						},
 					).asAbsoluteFilePathOrVoid(cwd),
 				},
@@ -205,99 +208,99 @@ export default async function cli() {
 					auxiliaryDiagnosticFormat: c.get(
 						"auxiliaryDiagnosticFormat",
 						{
-							description: "When printing diagnostics, output another format alongside",
+							description: markup`When printing diagnostics, output another format alongside`,
 						},
 					).asStringSetOrVoid(["github-actions"]),
 					benchmark: c.get(
 						"benchmark",
 						{
-							description: "Run a command multiple times, calculating average",
+							description: markup`Run a command multiple times, calculating average`,
 						},
 					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.benchmark),
 					benchmarkIterations: c.get(
 						"benchmarkIterations",
 						{
-							description: "The amount of benchmark iterations to perform",
+							description: markup`The amount of benchmark iterations to perform`,
 						},
 					).asNumber(DEFAULT_CLIENT_REQUEST_FLAGS.benchmarkIterations),
 					collectMarkers: c.get(
 						"collectMarkers",
 						{
-							description: "Collect and write performance markers to disk",
+							description: markup`Collect and write performance markers to disk`,
 						},
 					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.collectMarkers),
 					timing: c.get(
 						"timing",
 						{
-							description: "Dump timing information after running the command",
+							description: markup`Dump timing information after running the command`,
 						},
 					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.timing),
 					review: c.get(
 						"review",
 						{
-							description: "Display and perform actions on diagnostics. Only some commands support this.",
+							description: markup`Display and perform actions on diagnostics. Only some commands support this.`,
 						},
 					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.review),
 					watch: c.get(
 						"watch",
 						{
-							description: "Keep running command and update on file changes. Only some commands support this.",
+							description: markup`Keep running command and update on file changes. Only some commands support this.`,
 						},
 					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.watch),
 					fieri: c.get(
 						"fieri",
 						{
-							description: "Head to flavortown",
+							description: markup`Head to flavortown`,
 						},
 					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.fieri),
 					grep: c.get(
 						"grep",
 						{
-							description: "Only display diagnostics with messages containing this string",
+							description: markup`Only display diagnostics with messages containing this string`,
 						},
 					).asString(DEFAULT_CLIENT_REQUEST_FLAGS.grep),
 					inverseGrep: c.get(
 						"inverseGrep",
 						{
-							description: "Flip grep match. Only display diagnostics with messages that do NOT contain the grep string",
+							description: markup`Flip grep match. Only display diagnostics with messages that do NOT contain the grep string`,
 						},
 					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.inverseGrep),
 					maxDiagnostics: c.get(
 						"maxDiagnostics",
 						{
-							description: "Cap the amount of diagnostics displayed",
+							description: markup`Cap the amount of diagnostics displayed`,
 						},
 					).asNumber(DEFAULT_CLIENT_REQUEST_FLAGS.maxDiagnostics),
 					// false is inlined from DEFAULT_CLIENT_REQUEST_FLAGS.verboseDiagnostics
 					verboseDiagnostics: c.get(
 						"verboseDiagnostics",
 						{
-							description: "Display hidden and truncated diagnostic information",
+							description: markup`Display hidden and truncated diagnostic information`,
 						},
 					).asBoolean(false),
 					showAllDiagnostics: c.get(
 						"showAllDiagnostics",
 						{
-							description: "Display all diagnostics ignoring caps",
+							description: markup`Display all diagnostics ignoring caps`,
 						},
 					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.showAllDiagnostics),
 					resolverPlatform: c.get(
 						"resolverPlatform",
 						{
-							description: "Specify the platform for module resolution",
+							description: markup`Specify the platform for module resolution`,
 							inputName: "platform",
 						},
 					).asStringSetOrVoid(PLATFORMS),
 					resolverScale: c.get(
 						"resolverScale",
 						{
-							description: "Specify the image scale for module resolution",
+							description: markup`Specify the image scale for module resolution`,
 						},
 					).asNumberOrVoid(),
 					resolverMocks: c.get(
 						"resolverMocks",
 						{
-							description: "Enable mocks for module resolution",
+							description: markup`Enable mocks for module resolution`,
 						},
 					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.resolverMocks),
 				},
@@ -360,7 +363,7 @@ export default async function cli() {
 	p.command({
 		name: "rage",
 		category: commandCategories.INTERNAL,
-		description: "TODO",
+		description: markup`TODO`,
 		defineFlags(c) {
 			return {
 				summary: c.get("summary").asBoolean(false),
@@ -381,7 +384,7 @@ export default async function cli() {
 	p.command({
 		name: "logs",
 		category: commandCategories.INTERNAL,
-		description: "TODO",
+		description: markup`TODO`,
 		callback() {
 			overrideCLIFlags = {
 				logs: true,
@@ -472,7 +475,7 @@ export default async function cli() {
 					await writeFile(resolvedProfilePath, str);
 
 					client.reporter.success(
-						`Wrote CPU profile to <emphasis>${resolvedProfilePath.toMarkup()}</emphasis>`,
+						markup`Wrote CPU profile to <emphasis>${resolvedProfilePath}</emphasis>`,
 					);
 				},
 			);
@@ -496,9 +499,16 @@ export default async function cli() {
 				cliFlags.logWorkers === true,
 				(chunk) => {
 					if (fileout === undefined) {
-						client.reporter.logAll(chunk, {newline: false});
+						client.reporter.logAll(
+							convertToMarkupFromRandomString(chunk),
+							{newline: false},
+						);
 					} else {
-						fileout.write(joinMarkupLines(markupToPlainText(chunk)));
+						fileout.write(
+							joinMarkupLines(
+								markupToPlainText(convertToMarkupFromRandomString(chunk)),
+							),
+						);
 					}
 				},
 			);
@@ -533,14 +543,14 @@ export default async function cli() {
 		await writeFile(markersPath, stringifyJSON(res.markers));
 
 		client.reporter.success(
-			markup`Wrote markers to <emphasis>${markersPath.toMarkup()}</emphasis>`,
+			markup`Wrote markers to <emphasis>${markersPath}</emphasis>`,
 		);
 	}
 
 	switch (res.type) {
 		case "ERROR": {
 			if (!res.handled) {
-				console.error("Unhandled CLI query error");
+				console.error(markup`Unhandled CLI query error`);
 				console.error(res.stack);
 			}
 			process.exit(1);

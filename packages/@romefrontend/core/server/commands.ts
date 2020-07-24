@@ -35,6 +35,7 @@ import ServerRequest from "./ServerRequest";
 import {JSONPropertyValue} from "@romefrontend/codec-json";
 import {SharedCommand} from "../common/commands";
 import {DiagnosticsPrinter} from "@romefrontend/cli-diagnostics";
+import {Markup} from "@romefrontend/cli-layout";
 
 export type ServerCommand<Flags extends Dict<unknown>> = SharedCommand<Flags> & {
 	callback: (
@@ -52,7 +53,7 @@ export function createServerCommand<Flags extends Dict<unknown>>(
 export async function chainCommands(
 	req: ServerRequest,
 	fns: Array<{
-		title: string;
+		title: Markup;
 		callback: () => Promise<void>;
 	}>,
 ): Promise<void> {

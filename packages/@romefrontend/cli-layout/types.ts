@@ -54,7 +54,7 @@ export type MarkupTagName =
 	| "hr"
 	| "pad"
 	| "grammarNumber"
-	| "command"
+	| "code"
 	| "inverse"
 	| "dim"
 	| "emphasis"
@@ -75,7 +75,6 @@ export type MarkupTagName =
 	| "table"
 	| "tr"
 	| "td"
-	| "nobr"
 	| "ol"
 	| "ul"
 	| "li";
@@ -110,6 +109,7 @@ export type MarkupPointer = {
 };
 
 export type UserMarkupFormatGridOptions = MarkupFormatOptions & {
+	convertTabs?: boolean;
 	features?: TerminalFeatures;
 	columns?: Number1;
 };

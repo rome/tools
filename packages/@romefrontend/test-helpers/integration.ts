@@ -57,7 +57,10 @@ import {
 	DiagnosticsProcessor,
 	interceptDiagnostics,
 } from "@romefrontend/diagnostics";
-import {markupToPlainText} from "@romefrontend/cli-layout";
+import {
+	convertToMarkupFromRandomString,
+	markupToPlainText,
+} from "@romefrontend/cli-layout";
 import {joinMarkupLines} from "@romefrontend/cli-layout/format";
 
 type IntegrationTestHelper = {
@@ -375,7 +378,9 @@ export function createIntegrationTest(
 				await client.subscribeLogs(
 					true,
 					(chunk) => {
-						logs += joinMarkupLines(markupToPlainText(chunk));
+						logs += joinMarkupLines(
+							markupToPlainText(convertToMarkupFromRandomString(chunk)),
+						);
 					},
 				);
 			});

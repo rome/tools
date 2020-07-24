@@ -5,17 +5,17 @@ import {buildSuggestionAdvice} from "../helpers";
 
 // @romefrontend/cli-layout
 export const stringMarkup = createDiagnosticsCategory({
-	UNCLOSED_STRING: "Unclosed string",
-	EXPECTED_CLOSING_TAG_NAME: "Expected closing tag name",
-	UNKNOWN_START: "Unknown child start",
-	EXPECTED_ATTRIBUTE_NAME: "Expected attribute name",
+	UNCLOSED_STRING: {message: markup`Unclosed string`},
+	EXPECTED_CLOSING_TAG_NAME: {message: markup`Expected closing tag name`},
+	UNKNOWN_START: {message: markup`Unknown child start`},
+	EXPECTED_ATTRIBUTE_NAME: {message: markup`Expected attribute name`},
 	INCORRECT_CLOSING_TAG_NAME: (expected: string, got: string) => ({
 		message: markup`Expected to close ${expected} but found ${got}`,
 	}),
 	UNCLOSED_TAG: (tagName: string, openLocation: DiagnosticLocation) => ({
 		message: markup`Unclosed ${tagName} tag`,
 		advice: [
-			{type: "log", category: "info", text: "Tag started here"},
+			{type: "log", category: "info", text: markup`Tag started here`},
 			{
 				type: "frame",
 				location: openLocation,
@@ -46,7 +46,7 @@ export const stringMarkup = createDiagnosticsCategory({
 		gotParentName: string = "none",
 	) => ({
 		message: markup`The tag <emphasis>${tagName}</emphasis> should only appear as a child of ${orJoin(
-			addEmphasis(allowedParents),
+			addEmphasis(allowedParents.map((str) => markup`${str}`)),
 		)} not <emphasis>${gotParentName}</emphasis>`,
 	}),
 	RESTRICTED_PARENT: (
@@ -55,7 +55,7 @@ export const stringMarkup = createDiagnosticsCategory({
 		gotChildName: string,
 	) => ({
 		message: markup`The tag <emphasis>${tagName}</emphasis> should only contain the tags ${orJoin(
-			addEmphasis(allowedChildren),
+			addEmphasis(allowedChildren.map((str) => markup`${str}`)),
 		)} not <emphasis>${gotChildName}</emphasis>`,
 	}),
 	RESTRICTED_PARENT_TEXT: (tagName: string) => ({

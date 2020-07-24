@@ -99,26 +99,30 @@ function createDiagnosticsPrinter(
 
 			if (hasPendingFixes) {
 				reporter.info(
-					"Fixes available. To apply recommended fixes and formatting run",
+					markup`Fixes available. To apply recommended fixes and formatting run`,
 				);
 				reporter.command("rome check --apply");
-				reporter.info("To choose fix suggestions run");
+				reporter.info(markup`To choose fix suggestions run`);
 				reporter.command("rome check --review");
 			}
 		}
 
 		if (savedCount > 0) {
 			reporter.success(
-				`<number emphasis>${savedCount}</number> <grammarNumber plural="files" singular="file">${savedCount}</grammarNumber> updated`,
+				markup`<number emphasis>${String(savedCount)}</number> <grammarNumber plural="files" singular="file">${String(
+					savedCount,
+				)}</grammarNumber> updated`,
 			);
 		}
 
 		if (!isError) {
 			if (totalCount === 0) {
-				reporter.warn("No files linted");
+				reporter.warn(markup`No files linted`);
 			} else {
 				reporter.info(
-					`<number emphasis>${totalCount}</number> <grammarNumber plural="files" singular="file">${totalCount}</grammarNumber> linted`,
+					markup`<number emphasis>${String(totalCount)}</number> <grammarNumber plural="files" singular="file">${String(
+						totalCount,
+					)}</grammarNumber> linted`,
 				);
 			}
 		}
@@ -185,13 +189,14 @@ class LintRunner {
 
 		const queue: WorkerQueue<void> = new WorkerQueue(server);
 
-		const progress = this.events.createProgress({title: "Linting"});
+		const progress = this.events.createProgress({title: markup`Linting`});
 		progress.setTotal(evictedPaths.size);
 
 		queue.addCallback(async (path) => {
 			const filename = path.join();
-			const text = markup`<filelink target="${filename}" />`;
-			progress.pushText(text);
+			const progressId = progress.pushText(
+				markup`<filelink target="${filename}" />`,
+			);
 
 			let compilerOptions = lintCompilerOptionsPerFile[filename];
 
@@ -245,7 +250,7 @@ class LintRunner {
 				saveQueue.set(path, save);
 			}
 
-			progress.popText(text);
+			progress.popText(progressId);
 			progress.tick();
 		});
 
@@ -285,7 +290,9 @@ class LintRunner {
 
 		// Refresh only the evicted paths
 		const progress = this.events.createProgress({
-			title: firstRun ? "Analyzing files" : "Analyzing changed files",
+			title: firstRun
+				? markup`Analyzing files`
+				: markup`Analyzing changed files`,
 		});
 		await graph.seed({
 			allowFileNotFound: true,
@@ -334,7 +341,7 @@ class LintRunner {
 		// Revalidate dependents
 		if (validatedDependencyPathDependents.size > 0) {
 			const progress = this.events.createProgress({
-				title: "Analyzing dependents",
+				title: markup`Analyzing dependents`,
 			});
 
 			await graph.seed({

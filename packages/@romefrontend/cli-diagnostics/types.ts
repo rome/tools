@@ -29,6 +29,7 @@ export type DiagnosticsFileReaders = {
 export type DiagnosticsPrinterOptions = {
 	processor: DiagnosticsProcessor;
 	reporter: Reporter;
+	wrapErrors?: boolean;
 	cwd?: AbsoluteFilePath;
 	flags?: DiagnosticsPrinterFlags;
 	fileReaders?: DiagnosticsFileReaders;

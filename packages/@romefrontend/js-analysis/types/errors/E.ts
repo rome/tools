@@ -10,6 +10,7 @@ import {DiagnosticDescription} from "@romefrontend/diagnostics";
 import {AnyNode} from "@romefrontend/ast";
 import AnyT from "../AnyT";
 import T from "../T";
+import {Markup} from "@romefrontend/cli-layout";
 
 export type ErrorDefinition = {
 	description: DiagnosticDescription;
@@ -24,8 +25,8 @@ export default class E extends T {
 		return new AnyT(scope, originNode);
 	}
 
-	humanize(): string {
-		return this.getError().description.message.value;
+	humanize(): Markup {
+		return this.getError().description.message;
 	}
 
 	getError(): ErrorDefinition {

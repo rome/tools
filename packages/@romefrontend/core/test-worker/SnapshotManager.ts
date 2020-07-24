@@ -13,7 +13,7 @@ import {DiagnosticDescription, descriptions} from "@romefrontend/diagnostics";
 import {createSnapshotParser} from "./SnapshotParser";
 import {ErrorFrame} from "@romefrontend/v8";
 import {Number0, Number1} from "@romefrontend/ob1";
-import prettyFormat from "@romefrontend/pretty-format";
+import {prettyFormatToString} from "@romefrontend/pretty-format";
 import {naturalCompare} from "@romefrontend/string-utils";
 import {FilePathLocker} from "../common/utils/lockers";
 
@@ -68,7 +68,7 @@ function stringOrPrettyFormat(value: unknown): string {
 	if (typeof value === "string") {
 		return value;
 	} else {
-		return prettyFormat(value);
+		return prettyFormatToString(value);
 	}
 }
 

@@ -2,18 +2,19 @@ import {PACKAGES, reporter} from "./_utils";
 import {main as generateAST} from "./generated-files/ast";
 import {removeFile} from "@romefrontend/fs";
 import {createUnknownFilePath} from "@romefrontend/path";
+import {markup} from "@romefrontend/cli-layout";
 
 export async function main([filename]: Array<string>) {
 	if (filename === undefined) {
 		reporter.error(
-			"./rome run ast-delete-node [language]/[category]/[nodeType]",
+			markup`./rome run ast-delete-node [language]/[category]/[nodeType]`,
 		);
 		return 1;
 	}
 
 	const segments = createUnknownFilePath(filename).getSegments();
 	if (segments.length !== 3) {
-		reporter.error("Expected three segments in filename argument");
+		reporter.error(markup`Expected three segments in filename argument`);
 		return 1;
 	}
 

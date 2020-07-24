@@ -9,7 +9,7 @@ export async function main(
 ): Promise<number> {
 	if (language === undefined || nodeType === undefined || category === undefined) {
 		reporter.error(
-			"./rome run scripts/ast-create-node [language] [node-type] [category]",
+			markup`./rome run scripts/ast-create-node [language] [node-type] [category]`,
 		);
 		return 1;
 	}
@@ -37,11 +37,11 @@ export async function main(
 		dedent`
 			import {NodeBaseWithComments} from "@romefrontend/ast";
 			import {createBuilder} from "../../utils";
-			
+
 			export type ${nodeType} = NodeBaseWithComments & {
 				type: "${nodeType}";
 			};
-			
+
 			export const ${builderName} = createBuilder<${nodeType}>("${nodeType}", {
 				bindingKeys: {},
 				visitorKeys: {},
@@ -51,11 +51,11 @@ export async function main(
 
 	// Write builder
 	await writeFile(
-		PACKAGES.appendList("formatter", "builder", `${joined}.ts`),
+		PACKAGES.appendList("formatter", "builders", `${joined}.ts`),
 		dedent`
 			import {${nodeType}} from "@romefrontend/ast";
 			import {Builder, Token} from "@romefrontend/formatter";
-			
+
 			export default function ${nodeType}(builder: Builder, node: ${nodeType}): Token {
 				throw new Error("unimplemented");
 			}
@@ -65,7 +65,12 @@ export async function main(
 	// Write analysis
 	if (language === "js") {
 		await writeFile(
-			PACKAGES.appendList("js-analysis", category, `${nodeType}.ts`),
+			PACKAGES.appendList(
+				"js-analysis",
+				"evaluators",
+				category,
+				`${nodeType}.ts`,
+			),
 			dedent`
 				import {AnyNode, ${nodeType}, ${builderName}} from "@romefrontend/ast";
 

@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Object pattern cannot contains methods"}
+				message: SAFE_MARKUP {value: "Object pattern cannot contains methods"}
 			}
 			location: Object {
 				filename: "input.js"

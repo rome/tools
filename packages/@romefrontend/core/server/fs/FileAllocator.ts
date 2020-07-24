@@ -10,6 +10,7 @@ import {Stats} from "./MemoryFileSystem";
 import {WorkerContainer} from "../WorkerManager";
 import {FilePathLocker} from "../../common/utils/lockers";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@romefrontend/path";
+import {markup} from "@romefrontend/cli-layout";
 
 export default class FileAllocator {
 	constructor(server: Server) {
@@ -95,7 +96,7 @@ export default class FileAllocator {
 			filename,
 		});
 
-		this.server.logger.info("[FileAllocator] Evicted %s", path.toMarkup());
+		this.server.logger.info(markup`[FileAllocator] Evicted %s ${path}`);
 	}
 
 	async handleDeleted(path: AbsoluteFilePath) {
@@ -147,11 +148,10 @@ export default class FileAllocator {
 			workerManager.own(workerId, newStats);
 		} else if (await this.server.projectManager.maybeEvictPossibleConfig(path)) {
 			logger.info(
-				"[FileAllocator] Evicted the project belonging to config %s",
-				path.toMarkup(),
+				markup`[FileAllocator] Evicted the project belonging to config ${path}`,
 			);
 		} else {
-			logger.info("[FileAllocator] No owner for eviction %s", path.toMarkup());
+			logger.info(markup`[FileAllocator] No owner for eviction ${path}`);
 		}
 	}
 
@@ -171,9 +171,9 @@ export default class FileAllocator {
 
 			// Add ourselves to the file map
 			logger.info(
-				`[FileAllocator] File <emphasis>${path.toMarkup()}</emphasis> (file size <filesize>${memoryFs.getFileStats(
-					path,
-				)?.size}</filesize>) assigned to worker <number>${worker.id}</number>`,
+				markup`[FileAllocator] File <emphasis>${path}</emphasis> (file size <filesize>${String(
+					memoryFs.getFileStats(path)?.size,
+				)}</filesize>) assigned to worker ${worker.id}`,
 			);
 			this.fileToWorker.set(path, worker.id);
 

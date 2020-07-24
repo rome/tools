@@ -9,6 +9,7 @@ import {AnyNode} from "@romefrontend/ast";
 import {HydrateData} from "../Evaluator";
 import {Scope} from "../scopes";
 import T from "./T";
+import {Markup, markup} from "@romefrontend/cli-layout";
 
 export default class UnknownT extends T {
 	static type = "UnknownT";
@@ -21,8 +22,8 @@ export default class UnknownT extends T {
 		return new UnknownT(scope, originNode);
 	}
 
-	humanize(): string {
-		return "unknown";
+	humanize(): Markup {
+		return markup`unknown`;
 	}
 
 	compatibleWith(): boolean {

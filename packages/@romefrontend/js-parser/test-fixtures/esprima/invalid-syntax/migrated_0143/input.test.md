@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Multiple default clauses"}
+				message: SAFE_MARKUP {value: "Multiple default clauses"}
 			}
 			location: Object {
 				filename: "input.js"

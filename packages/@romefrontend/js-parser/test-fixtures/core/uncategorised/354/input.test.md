@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Expected number in radix 16"}
+				message: SAFE_MARKUP {value: "Expected number in radix 16"}
 			}
 			location: Object {
 				filename: "input.js"

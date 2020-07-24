@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "ES2015 named imports do not destructure. Use another statement for destructuring after the import."}
+				message: SAFE_MARKUP {value: "ES2015 named imports do not destructure. Use another statement for destructuring after the import."}
 			}
 			location: Object {
 				filename: "input.js"

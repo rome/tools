@@ -13,7 +13,7 @@ import {
 	ReporterStream,
 } from "./types";
 import ProgressBase from "./ProgressBase";
-import {ansiEscapes, formatAnsi} from "@romefrontend/cli-layout";
+import {Markup, ansiEscapes, formatAnsi} from "@romefrontend/cli-layout";
 import {Number1, ob1Get1} from "@romefrontend/ob1";
 
 type BoldRanges = Array<[number, number]>;
@@ -82,10 +82,10 @@ export default class Progress extends ProgressBase {
 				return this.setText(msg.text);
 
 			case "PROGRESS_PUSH_TEXT":
-				return this.pushText(msg.text);
+				return this.pushText(msg.text, msg.textId);
 
 			case "PROGRESS_POP_TEXT":
-				return this.popText(msg.text);
+				return this.popText(msg.textId);
 
 			case "PROGRESS_SET_APPROXIMATE_ETA":
 				return this.setApproximateETA(msg.duration);
@@ -176,7 +176,7 @@ export default class Progress extends ProgressBase {
 		this.endBouncer();
 	}
 
-	setText(text: string) {
+	setText(text: Markup) {
 		if (this.closed) {
 			return;
 		}

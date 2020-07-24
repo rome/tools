@@ -17,36 +17,47 @@ import {
 	diffConstants,
 	stringDiffUnified,
 } from "@romefrontend/string-diff";
-import {escapeMarkup, markup, markupTag} from "@romefrontend/cli-layout";
+import {
+	Markup,
+	concatMarkup,
+	markup,
+	markupTag,
+} from "@romefrontend/cli-layout";
 import {DiagnosticAdviceDiff} from "@romefrontend/diagnostics";
 
 function formatDiffLine(diffs: Diffs) {
 	let atLineStart = true;
-	return diffs.map(([type, text], i) => {
-		const escaped = escapeMarkup(text);
-		const res = showInvisibles(
-			escaped,
-			{
-				atLineStart,
-				atLineEnd: i === diffs.length - 1,
-			},
-		);
-		if (res.hadNonWhitespace) {
-			atLineStart = false;
-		}
-		const value = res.value;
-		if (type === diffConstants.EQUAL) {
-			return escaped;
-		} else {
-			return markupTag("emphasis", value);
-		}
-	}).join("");
+
+	return concatMarkup(
+		diffs.map(([type, text], i) => {
+			const escapedText = markup`${text}`;
+
+			const {hadNonWhitespace, value} = showInvisibles(
+				escapedText.value,
+				{
+					ignoreLeadingTabs: false,
+					ignoreLoneSpaces: false,
+					atLineStart,
+					atLineEnd: i === diffs.length - 1,
+				},
+			);
+			if (hadNonWhitespace) {
+				atLineStart = false;
+			}
+
+			if (type === diffConstants.EQUAL) {
+				return value;
+			} else {
+				return markupTag("emphasis", value);
+			}
+		}),
+	);
 }
 
-const DELETE_MARKER = markupTag("error", "-");
-const ADD_MARKER = markupTag("success", "+");
+const DELETE_MARKER = markupTag("error", markup`-`);
+const ADD_MARKER = markupTag("success", markup`+`);
 
-function formatSingleLineMarker(text: string): string {
+function formatSingleLineMarker(text: string): Markup {
 	return markup`<emphasis>${text}</emphasis>: `;
 }
 
@@ -55,7 +66,7 @@ export default function buildPatchCodeFrame(
 	truncate: boolean,
 ): {
 	truncated: boolean;
-	frame: string;
+	frame: Markup;
 } {
 	const {diffsByLine, beforeLineCount, afterLineCount} = stringDiffUnified(
 		item.diff,
@@ -84,31 +95,37 @@ export default function buildPatchCodeFrame(
 	const singleLine = beforeLineCount === 1 && afterLineCount === 1;
 
 	const {legend} = item;
-	const frame = [];
+	const frame: Array<Markup> = [];
 	let displayedLines = 0;
 	let truncated = false;
 	let lastDisplayedLine = -1;
 
-	// Add 1 for the space separator
 	const lineNoLength = beforeNoLength + afterNoLength + 1;
-	const skippedLine = `<emphasis>${CODE_FRAME_INDENT}${"\xb7".repeat(
+	const skippedLine = markup`<emphasis>${CODE_FRAME_INDENT}${"\xb7".repeat(
 		lineNoLength,
 	)}${GUTTER}</emphasis>`;
 
 	function createLineNos(
 		beforeLine?: string | number,
 		afterLine?: string | number,
-	) {
-		let gutter = `<emphasis>${CODE_FRAME_INDENT}<pad align="right" width="${beforeNoLength}">`;
+	): Markup {
+		let parts: Array<Markup> = [];
+		parts.push(
+			markup`<emphasis>${CODE_FRAME_INDENT}<pad align="right" width="${String(
+				beforeNoLength,
+			)}">`,
+		);
 		if (beforeLine !== undefined) {
-			gutter += String(beforeLine);
+			parts.push(markup`${String(beforeLine)}`);
 		}
-		gutter += `</pad> <pad align="right" width="${afterNoLength}">`;
+		parts.push(
+			markup`</pad> <pad align="right" width="${String(afterNoLength)}">`,
+		);
 		if (afterLine !== undefined) {
-			gutter += String(afterLine);
+			parts.push(markup`${String(afterLine)}`);
 		}
-		gutter += "</pad></emphasis>";
-		return gutter;
+		parts.push(markup`</pad></emphasis>`);
+		return concatMarkup(parts);
 	}
 
 	// Build the actual frame
@@ -127,7 +144,7 @@ export default function buildPatchCodeFrame(
 		const {beforeLine, afterLine, diffs} = diffsByLine[i];
 
 		let lineType: "EQUAL" | "ADD" | "DELETE" = "EQUAL";
-		let marker = " ";
+		let marker = markup` `;
 
 		if (beforeLine === undefined) {
 			marker = ADD_MARKER;
@@ -146,7 +163,7 @@ export default function buildPatchCodeFrame(
 		const logType = lineType === "ADD" ? "success" : "error";
 
 		if (singleLine) {
-			let legendPrefix = "";
+			let legendPrefix = markup``;
 
 			if (legend !== undefined) {
 				if (lineType === "DELETE") {
@@ -158,32 +175,37 @@ export default function buildPatchCodeFrame(
 
 			if (lineType === "DELETE" || lineType === "ADD") {
 				frame.push(
-					`${legendPrefix}<view><viewLinePrefix>${marker} </viewLinePrefix><${logType}>${formatDiffLine(
+					markup`${legendPrefix}<view><viewLinePrefix>${marker} </viewLinePrefix><${logType}>${formatDiffLine(
 						diffs,
 					)}</${logType}></view>`,
 				);
 			} else {
 				frame.push(
-					`${legendPrefix}<view extraSoftWrapIndent="2"><viewLinePrefix>  </viewLinePrefix>${formatDiffLine(
+					markup`${legendPrefix}<view extraSoftWrapIndent="2"><viewLinePrefix>  </viewLinePrefix>${formatDiffLine(
 						diffs,
 					)}</view>`,
 				);
 			}
 		} else {
-			let prefixes = [
-				`<viewLinePrefix type="first">${createLineNos(beforeLine, afterLine)}${GUTTER}${marker} </viewLinePrefix>`,
-				`<viewLinePrefix type="middle"><dim>${createLineNos(
-					beforeLine === undefined ? undefined : "\u21e5",
-					afterLine === undefined ? undefined : "\u21e5",
+			let prefixes = concatMarkup([
+				markup`<viewLinePrefix type="first">${createLineNos(
+					beforeLine,
+					afterLine,
+				)}${GUTTER}${marker} </viewLinePrefix>`,
+				markup`<viewLinePrefix type="middle"><dim>${createLineNos(
+					beforeLine === undefined ? undefined : "\u2192",
+					afterLine === undefined ? undefined : "\u2192",
 				)}</dim>${GUTTER}${marker} </viewLinePrefix>`,
-			].join("");
+			]);
 			let line = formatDiffLine(diffs);
 
 			if (lineType === "DELETE" || lineType === "ADD") {
-				line = `<${logType}>${line}</${logType}>`;
+				line = markup`<${logType}>${line}</${logType}>`;
 			}
 
-			frame.push(`<view extraSoftWrapIndent="2">${prefixes}${line}</view>`);
+			frame.push(
+				markup`<view extraSoftWrapIndent="2">${prefixes}${line}</view>`,
+			);
 		}
 
 		lastDisplayedLine = i;
@@ -191,19 +213,21 @@ export default function buildPatchCodeFrame(
 
 	if (truncated) {
 		frame.push(
-			`${skippedLine} <dim><number>${displayedLines - MAX_PATCH_LINES}</number> more lines truncated</dim>`,
+			markup`${skippedLine} <dim><number>${String(
+				displayedLines - MAX_PATCH_LINES,
+			)}</number> more lines truncated</dim>`,
 		);
 	}
 
 	if (legend !== undefined && !singleLine) {
-		frame.push("");
-		frame.push(`<error>- ${escapeMarkup(legend.delete)}</error>`);
-		frame.push(`<success>+ ${escapeMarkup(legend.add)}</success>`);
-		frame.push("");
+		frame.push(markup``);
+		frame.push(markup`<error>- ${legend.delete}</error>`);
+		frame.push(markup`<success>+ ${legend.add}</success>`);
+		frame.push(markup``);
 	}
 
 	return {
 		truncated,
-		frame: frame.join("\n"),
+		frame: concatMarkup(frame, markup`\n`),
 	};
 }

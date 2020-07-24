@@ -50,11 +50,11 @@ JSRoot {
 			}
 			description: Object {
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unclosed property name"}
+				message: SAFE_MARKUP {value: "Unclosed property name"}
 				advice: Array [
 					log {
 						category: "info"
-						text: "We expected to find the closing character <emphasis>]</emphasis> here"
+						text: SAFE_MARKUP {value: "We expected to find the closing character <emphasis>]</emphasis> here"}
 					}
 					frame {
 						location: Object {

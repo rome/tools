@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "set can't contain a unicode escape"}
+				message: SAFE_MARKUP {value: "set can't contain a unicode escape"}
 			}
 			location: Object {
 				filename: "input.js"

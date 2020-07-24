@@ -10,10 +10,11 @@ import {createServerCommand} from "../commands";
 import {commandCategories} from "../../common/commands";
 import {readFileText} from "@romefrontend/fs";
 import {parseJSON, stringifyJSON} from "@romefrontend/codec-json";
+import {markup} from "@romefrontend/cli-layout";
 
 export default createServerCommand({
 	category: commandCategories.INTERNAL,
-	description: "TODO",
+	description: markup`TODO`,
 	usage: "",
 	examples: [],
 	defineFlags() {

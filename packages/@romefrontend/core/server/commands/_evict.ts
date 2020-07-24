@@ -8,9 +8,10 @@
 import {ServerRequest} from "@romefrontend/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
+import {markup} from "@romefrontend/cli-layout";
 
 export default createServerCommand({
-	description: "evict a file from the memory cache",
+	description: markup`evict a file from the memory cache`,
 	category: commandCategories.INTERNAL,
 	usage: "",
 	examples: [],
@@ -30,10 +31,11 @@ export default createServerCommand({
 			args.length === 0 ? server.fileAllocator.getAllOwnedFilenames() : args;
 
 		for (const file of files) {
-			await server.fileAllocator.evict(client.flags.cwd.resolve(file));
-			reporter.success(`Evicted ${file}`);
+			const path = client.flags.cwd.resolve(file);
+			await server.fileAllocator.evict(path);
+			reporter.success(markup`Evicted ${path}`);
 		}
 
-		reporter.info(`Evicted ${String(files.length)} files`);
+		reporter.info(markup`Evicted ${String(files.length)} files`);
 	},
 });

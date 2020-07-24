@@ -14,10 +14,11 @@ import {createAbsoluteFilePath} from "@romefrontend/path";
 import {createSingleDiagnosticError} from "@romefrontend/diagnostics";
 import {SourceMapConsumer} from "@romefrontend/codec-source-map";
 import {getEnvVar} from "@romefrontend/cli-environment";
+import {markup} from "@romefrontend/cli-layout";
 
 export default createLocalCommand({
 	category: commandCategories.PROJECT_MANAGEMENT,
-	description: "TODO",
+	description: markup`TODO`,
 	usage: "",
 	examples: [],
 	hidden: getEnvVar("ROME_DEV").type !== "ENABLED",

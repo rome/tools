@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "yield is not allowed in generator parameters"}
+				message: SAFE_MARKUP {value: "yield is not allowed in generator parameters"}
 			}
 			location: Object {
 				filename: "input.js"
