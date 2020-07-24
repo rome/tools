@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/267/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/267/input.js"
 		end: Object {
 			column: 22
 			index: 22
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSWithStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/267/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -49,7 +49,7 @@ JSRoot {
 			object: JSReferenceIdentifier {
 				name: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/267/input.js"
 					identifierName: "x"
 					end: Object {
 						column: 7
@@ -66,7 +66,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/267/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -81,7 +81,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/267/input.js"
 							end: Object {
 								column: 20
 								index: 20
@@ -96,7 +96,7 @@ JSRoot {
 						expression: JSAssignmentExpression {
 							operator: "="
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/267/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -111,7 +111,7 @@ JSRoot {
 							left: JSAssignmentIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/267/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 14
@@ -128,7 +128,7 @@ JSRoot {
 							right: JSReferenceIdentifier {
 								name: "bar"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/267/input.js"
 									identifierName: "bar"
 									end: Object {
 										column: 20

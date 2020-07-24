@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/108/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/108/input.js"
 		end: Object {
 			column: 22
 			index: 22
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Regular expression flags can't contain unicode escapes"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/108/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/108/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/108/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/108/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 5
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/108/input.js"
 							end: Object {
 								column: 22
 								index: 22
@@ -125,7 +125,7 @@ JSRoot {
 							sticky: false
 							unicode: false
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/108/input.js"
 								end: Object {
 									column: 22
 									index: 22
@@ -139,7 +139,7 @@ JSRoot {
 							}
 							expression: JSRegExpSubExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/108/input.js"
 									end: Object {
 										column: 14
 										index: 15
@@ -155,7 +155,7 @@ JSRoot {
 									JSRegExpCharSet {
 										invert: false
 										loc: Object {
-											filename: "input.js"
+											filename: "core/uncategorised/108/input.js"
 											end: Object {
 												column: 14
 												index: 14
@@ -171,7 +171,7 @@ JSRoot {
 											JSRegExpCharacter {
 												value: "P"
 												loc: Object {
-													filename: "input.js"
+													filename: "core/uncategorised/108/input.js"
 													end: Object {
 														column: 11
 														index: 11
@@ -187,7 +187,7 @@ JSRoot {
 											JSRegExpCharacter {
 												value: " "
 												loc: Object {
-													filename: "input.js"
+													filename: "core/uncategorised/108/input.js"
 													end: Object {
 														column: 12
 														index: 12
@@ -203,7 +203,7 @@ JSRoot {
 											JSRegExpCharacter {
 												value: "Q"
 												loc: Object {
-													filename: "input.js"
+													filename: "core/uncategorised/108/input.js"
 													end: Object {
 														column: 13
 														index: 13
@@ -219,7 +219,7 @@ JSRoot {
 											JSRegExpCharacter {
 												value: "R"
 												loc: Object {
-													filename: "input.js"
+													filename: "core/uncategorised/108/input.js"
 													end: Object {
 														column: 14
 														index: 14
@@ -249,7 +249,7 @@ JSRoot {
 
 ```
 
- input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/108/input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Regular expression flags can't contain unicode escapes
 

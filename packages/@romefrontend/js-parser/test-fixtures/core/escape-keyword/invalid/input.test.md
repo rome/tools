@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/escape-keyword/invalid/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/escape-keyword/invalid/input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Escape sequence in keyword break"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/escape-keyword/invalid/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/escape-keyword/invalid/input.js"
 				end: Object {
 					column: 2
 					index: 25
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/escape-keyword/invalid/input.js"
 					end: Object {
 						column: 2
 						index: 25
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/escape-keyword/invalid/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 5
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/escape-keyword/invalid/input.js"
 							end: Object {
 								column: 1
 								index: 24
@@ -119,7 +119,7 @@ JSRoot {
 						}
 						init: JSObjectExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/escape-keyword/invalid/input.js"
 								end: Object {
 									column: 1
 									index: 24
@@ -137,7 +137,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "break"
 											loc: Object {
-												filename: "input.js"
+												filename: "core/escape-keyword/invalid/input.js"
 												identifierName: "break"
 												end: Object {
 													column: 12
@@ -152,7 +152,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "core/escape-keyword/invalid/input.js"
 											end: Object {
 												column: 12
 												index: 22
@@ -168,7 +168,7 @@ JSRoot {
 									value: JSReferenceIdentifier {
 										name: "break"
 										loc: Object {
-											filename: "input.js"
+											filename: "core/escape-keyword/invalid/input.js"
 											identifierName: "break"
 											end: Object {
 												column: 12
@@ -183,7 +183,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "core/escape-keyword/invalid/input.js"
 										end: Object {
 											column: 12
 											index: 22
@@ -210,7 +210,7 @@ JSRoot {
 
 ```
 
- input.js:2:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/escape-keyword/invalid/input.js:2:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Escape sequence in keyword break
 

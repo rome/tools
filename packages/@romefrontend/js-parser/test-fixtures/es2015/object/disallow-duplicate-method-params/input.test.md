@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/object/disallow-duplicate-method-params/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/object/disallow-duplicate-method-params/input.js"
 		end: Object {
 			column: 0
 			index: 23
@@ -34,7 +34,7 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/object/disallow-duplicate-method-params/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 					}
 					frame {
 						location: Object {
-							filename: "input.js"
+							filename: "es2015/object/disallow-duplicate-method-params/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 12
@@ -79,7 +79,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/object/disallow-duplicate-method-params/input.js"
 				end: Object {
 					column: 2
 					index: 22
@@ -93,7 +93,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/object/disallow-duplicate-method-params/input.js"
 					end: Object {
 						column: 1
 						index: 21
@@ -112,7 +112,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "bar"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/object/disallow-duplicate-method-params/input.js"
 									identifierName: "bar"
 									end: Object {
 										column: 7
@@ -127,7 +127,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/object/disallow-duplicate-method-params/input.js"
 								end: Object {
 									column: 7
 									index: 10
@@ -141,7 +141,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/object/disallow-duplicate-method-params/input.js"
 							end: Object {
 								column: 16
 								index: 19
@@ -157,7 +157,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/object/disallow-duplicate-method-params/input.js"
 								end: Object {
 									column: 16
 									index: 19
@@ -179,7 +179,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/object/disallow-duplicate-method-params/input.js"
 								end: Object {
 									column: 13
 									index: 16
@@ -195,7 +195,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/object/disallow-duplicate-method-params/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 9
@@ -212,7 +212,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/object/disallow-duplicate-method-params/input.js"
 											end: Object {
 												column: 9
 												index: 12
@@ -229,7 +229,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/object/disallow-duplicate-method-params/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 12
@@ -246,7 +246,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/object/disallow-duplicate-method-params/input.js"
 											end: Object {
 												column: 12
 												index: 15
@@ -274,7 +274,7 @@ JSRoot {
 
 ```
 
- input.js:2:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/object/disallow-duplicate-method-params/input.js:2:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Argument a name clash in strict mode
 

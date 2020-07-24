@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
 		end: Object {
 			column: 0
 			index: 23
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "setter function argument must not be a rest parameter"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -88,7 +88,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
 						identifierName: "x"
 						end: Object {
 							column: 1
@@ -104,7 +104,7 @@ JSRoot {
 				}
 				right: JSObjectExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -123,7 +123,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "f"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
 										identifierName: "f"
 										end: Object {
 											column: 11
@@ -138,7 +138,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
 									end: Object {
 										column: 11
 										index: 11
@@ -152,7 +152,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -168,7 +168,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
 									end: Object {
 										column: 20
 										index: 20
@@ -190,7 +190,7 @@ JSRoot {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
 									end: Object {
 										column: 17
 										index: 17
@@ -205,7 +205,7 @@ JSRoot {
 								rest: JSBindingIdentifier {
 									name: "y"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
 										identifierName: "y"
 										end: Object {
 											column: 16
@@ -222,7 +222,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
 											end: Object {
 												column: 16
 												index: 16
@@ -250,7 +250,7 @@ JSRoot {
 
 ```
 
- input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/rest-parameter/invalid-setter-rest/input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ setter function argument must not be a rest parameter
 

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/in-iterator-stmt/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/in-iterator-stmt/input.js"
 		end: Object {
 			column: 0
 			index: 47
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Invalid left-hand side in for-in statement"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/yield/in-iterator-stmt/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/in-iterator-stmt/input.js"
 					identifierName: "g"
 					end: Object {
 						column: 11
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/in-iterator-stmt/input.js"
 				end: Object {
 					column: 1
 					index: 46
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/in-iterator-stmt/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/in-iterator-stmt/input.js"
 					end: Object {
 						column: 1
 						index: 46
@@ -128,7 +128,7 @@ JSRoot {
 				body: Array [
 					JSForInStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/in-iterator-stmt/input.js"
 							end: Object {
 								column: 22
 								index: 38
@@ -142,7 +142,7 @@ JSRoot {
 						}
 						body: JSEmptyStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/in-iterator-stmt/input.js"
 								end: Object {
 									column: 22
 									index: 38
@@ -158,7 +158,7 @@ JSRoot {
 						left: JSAssignmentIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/in-iterator-stmt/input.js"
 								end: Object {
 									column: 15
 									index: 31
@@ -174,7 +174,7 @@ JSRoot {
 						right: JSObjectExpression {
 							properties: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/in-iterator-stmt/input.js"
 								end: Object {
 									column: 21
 									index: 37
@@ -190,7 +190,7 @@ JSRoot {
 					}
 					JSEmptyStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/in-iterator-stmt/input.js"
 							end: Object {
 								column: 24
 								index: 40
@@ -205,7 +205,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/in-iterator-stmt/input.js"
 							end: Object {
 								column: 28
 								index: 44
@@ -220,7 +220,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/in-iterator-stmt/input.js"
 								end: Object {
 									column: 26
 									index: 42
@@ -245,7 +245,7 @@ JSRoot {
 
 ```
 
- input.js:2:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/yield/in-iterator-stmt/input.js:2:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid left-hand side in for-in statement
 

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/errors/attribute-empty-expression/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/errors/attribute-empty-expression/input.jsx"
 		end: Object {
 			column: 0
 			index: 15
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "JSX attribute cannot be an empty expression"}
 			}
 			location: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/attribute-empty-expression/input.jsx"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/attribute-empty-expression/input.jsx"
 				end: Object {
 					column: 14
 					index: 14
@@ -74,7 +74,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "foo"
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/errors/attribute-empty-expression/input.jsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -91,7 +91,7 @@ JSRoot {
 				selfClosing: true
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/errors/attribute-empty-expression/input.jsx"
 					end: Object {
 						column: 14
 						index: 14
@@ -108,7 +108,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "bar"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/errors/attribute-empty-expression/input.jsx"
 								end: Object {
 									column: 8
 									index: 8
@@ -123,7 +123,7 @@ JSRoot {
 						}
 						value: JSXExpressionContainer {
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/errors/attribute-empty-expression/input.jsx"
 								end: Object {
 									column: 11
 									index: 11
@@ -137,7 +137,7 @@ JSRoot {
 							}
 							expression: JSXEmptyExpression {
 								loc: Object {
-									filename: "input.jsx"
+									filename: "jsx/errors/attribute-empty-expression/input.jsx"
 									end: Object {
 										column: 10
 										index: 10
@@ -152,7 +152,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/errors/attribute-empty-expression/input.jsx"
 							end: Object {
 								column: 11
 								index: 11
@@ -176,7 +176,7 @@ JSRoot {
 
 ```
 
- input.jsx:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ jsx/errors/attribute-empty-expression/input.jsx:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ JSX attribute cannot be an empty expression
 

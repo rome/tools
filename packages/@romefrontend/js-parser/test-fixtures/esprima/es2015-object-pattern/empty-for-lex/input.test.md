@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-object-pattern/empty-for-lex/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-object-pattern/empty-for-lex/input.js"
 		end: Object {
 			column: 0
 			index: 19
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSForInStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-object-pattern/empty-for-lex/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-object-pattern/empty-for-lex/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -65,7 +65,7 @@ JSRoot {
 				value: 0
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-object-pattern/empty-for-lex/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -81,7 +81,7 @@ JSRoot {
 			left: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-object-pattern/empty-for-lex/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -99,7 +99,7 @@ JSRoot {
 							properties: Array []
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-pattern/empty-for-lex/input.js"
 								end: Object {
 									column: 11
 									index: 11
@@ -114,7 +114,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-object-pattern/empty-for-lex/input.js"
 							end: Object {
 								column: 11
 								index: 11

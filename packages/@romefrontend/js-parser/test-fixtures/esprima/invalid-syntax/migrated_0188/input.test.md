@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0188/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0188/input.js"
 		end: Object {
 			column: 0
 			index: 64
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "arguments is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0188/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "hello"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0188/input.js"
 					identifierName: "hello"
 					end: Object {
 						column: 14
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0188/input.js"
 				end: Object {
 					column: 63
 					index: 63
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0188/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -112,7 +112,7 @@ JSRoot {
 			}
 			body: JSBlockStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0188/input.js"
 					end: Object {
 						column: 63
 						index: 63
@@ -128,7 +128,7 @@ JSRoot {
 					JSDirective {
 						value: "use strict"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0188/input.js"
 							end: Object {
 								column: 31
 								index: 31
@@ -146,7 +146,7 @@ JSRoot {
 					JSTryStatement {
 						finalizer: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0188/input.js"
 							end: Object {
 								column: 61
 								index: 61
@@ -162,7 +162,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0188/input.js"
 								end: Object {
 									column: 39
 									index: 39
@@ -177,7 +177,7 @@ JSRoot {
 						}
 						handler: JSCatchClause {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0188/input.js"
 								end: Object {
 									column: 61
 									index: 61
@@ -193,7 +193,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/invalid-syntax/migrated_0188/input.js"
 									end: Object {
 										column: 61
 										index: 61
@@ -209,7 +209,7 @@ JSRoot {
 							param: JSBindingIdentifier {
 								name: "arguments"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/invalid-syntax/migrated_0188/input.js"
 									identifierName: "arguments"
 									end: Object {
 										column: 56
@@ -236,7 +236,7 @@ JSRoot {
 
 ```
 
- input.js:1:47 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0188/input.js:1:47 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ arguments is a reserved word
 

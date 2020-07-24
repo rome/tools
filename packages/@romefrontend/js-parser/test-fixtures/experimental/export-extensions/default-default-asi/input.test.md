@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/export-extensions/default-default-asi/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/export-extensions/default-default-asi/input.js"
 		end: Object {
 			column: 0
 			index: 27
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/default-default-asi/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSReferenceIdentifier {
 				name: "from"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/default-default-asi/input.js"
 					identifierName: "from"
 					end: Object {
 						column: 19
@@ -66,7 +66,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/default-default-asi/input.js"
 				end: Object {
 					column: 6
 					index: 26
@@ -81,7 +81,7 @@ JSRoot {
 			expression: JSStringLiteral {
 				value: "bar"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/default-default-asi/input.js"
 					end: Object {
 						column: 5
 						index: 25

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2018/object-rest-spread/6/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2018/object-rest-spread/6/input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2018/object-rest-spread/6/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/object-rest-spread/6/input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -66,7 +66,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2018/object-rest-spread/6/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 3
@@ -81,7 +81,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/6/input.js"
 								end: Object {
 									column: 3
 									index: 3
@@ -97,7 +97,7 @@ JSRoot {
 						value: JSReferenceIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/6/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 3
@@ -112,7 +112,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2018/object-rest-spread/6/input.js"
 							end: Object {
 								column: 3
 								index: 3
@@ -127,7 +127,7 @@ JSRoot {
 					}
 					JSSpreadProperty {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2018/object-rest-spread/6/input.js"
 							end: Object {
 								column: 9
 								index: 9
@@ -142,7 +142,7 @@ JSRoot {
 						argument: JSReferenceIdentifier {
 							name: "y"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/6/input.js"
 								identifierName: "y"
 								end: Object {
 									column: 9
@@ -162,7 +162,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2018/object-rest-spread/6/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 12
@@ -177,7 +177,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/6/input.js"
 								end: Object {
 									column: 12
 									index: 12
@@ -193,7 +193,7 @@ JSRoot {
 						value: JSReferenceIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/6/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 12
@@ -208,7 +208,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2018/object-rest-spread/6/input.js"
 							end: Object {
 								column: 12
 								index: 12
@@ -223,7 +223,7 @@ JSRoot {
 					}
 					JSSpreadProperty {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2018/object-rest-spread/6/input.js"
 							end: Object {
 								column: 18
 								index: 18
@@ -238,7 +238,7 @@ JSRoot {
 						argument: JSReferenceIdentifier {
 							name: "b"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/6/input.js"
 								identifierName: "b"
 								end: Object {
 									column: 18
@@ -258,7 +258,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "c"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2018/object-rest-spread/6/input.js"
 									identifierName: "c"
 									end: Object {
 										column: 21
@@ -273,7 +273,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/6/input.js"
 								end: Object {
 									column: 21
 									index: 21
@@ -289,7 +289,7 @@ JSRoot {
 						value: JSReferenceIdentifier {
 							name: "c"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/6/input.js"
 								identifierName: "c"
 								end: Object {
 									column: 21
@@ -304,7 +304,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2018/object-rest-spread/6/input.js"
 							end: Object {
 								column: 21
 								index: 21

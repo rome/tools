@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/modifiers-methods-async/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/modifiers-methods-async/input.ts"
 		end: Object {
 			column: 0
 			index: 257
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " Copy of modifiers-methods with 'async'"
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/modifiers-methods-async/input.ts"
 				end: Object {
 					column: 41
 					index: 41
@@ -54,7 +54,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/modifiers-methods-async/input.ts"
 					identifierName: "C"
 					end: Object {
 						column: 16
@@ -71,7 +71,7 @@ JSRoot {
 			abstract: true
 			leadingComments: Array ["0"]
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/modifiers-methods-async/input.ts"
 				end: Object {
 					column: 1
 					index: 256
@@ -90,7 +90,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/modifiers-methods-async/input.ts"
 					end: Object {
 						column: 1
 						index: 256
@@ -109,7 +109,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-methods-async/input.ts"
 									identifierName: "a"
 									end: Object {
 										column: 20
@@ -124,7 +124,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 20
 									index: 81
@@ -139,7 +139,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-methods-async/input.ts"
 							end: Object {
 								column: 23
 								index: 84
@@ -161,7 +161,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 22
 									index: 83
@@ -187,7 +187,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 20
 									index: 81
@@ -207,7 +207,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "s"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-methods-async/input.ts"
 									identifierName: "s"
 									end: Object {
 										column: 18
@@ -222,7 +222,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 18
 									index: 103
@@ -236,7 +236,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-methods-async/input.ts"
 							end: Object {
 								column: 23
 								index: 108
@@ -252,7 +252,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 23
 									index: 108
@@ -275,7 +275,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 20
 									index: 105
@@ -301,7 +301,7 @@ JSRoot {
 								line: 4
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 18
 									index: 103
@@ -321,7 +321,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "pua"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-methods-async/input.ts"
 									identifierName: "pua"
 									end: Object {
 										column: 29
@@ -336,7 +336,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 29
 									index: 138
@@ -351,7 +351,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-methods-async/input.ts"
 							end: Object {
 								column: 32
 								index: 141
@@ -373,7 +373,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 31
 									index: 140
@@ -399,7 +399,7 @@ JSRoot {
 								line: 5
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 29
 									index: 138
@@ -419,7 +419,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "pus"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-methods-async/input.ts"
 									identifierName: "pus"
 									end: Object {
 										column: 27
@@ -434,7 +434,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 27
 									index: 169
@@ -448,7 +448,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-methods-async/input.ts"
 							end: Object {
 								column: 32
 								index: 174
@@ -464,7 +464,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 32
 									index: 174
@@ -487,7 +487,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 29
 									index: 171
@@ -513,7 +513,7 @@ JSRoot {
 								line: 6
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 27
 									index: 169
@@ -533,7 +533,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "pu"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-methods-async/input.ts"
 									identifierName: "pu"
 									end: Object {
 										column: 19
@@ -548,7 +548,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 19
 									index: 195
@@ -562,7 +562,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-methods-async/input.ts"
 							end: Object {
 								column: 24
 								index: 200
@@ -578,7 +578,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 24
 									index: 200
@@ -601,7 +601,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 21
 									index: 197
@@ -627,7 +627,7 @@ JSRoot {
 								line: 8
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 19
 									index: 195
@@ -647,7 +647,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "po"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-methods-async/input.ts"
 									identifierName: "po"
 									end: Object {
 										column: 22
@@ -662,7 +662,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 22
 									index: 223
@@ -676,7 +676,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-methods-async/input.ts"
 							end: Object {
 								column: 27
 								index: 228
@@ -692,7 +692,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 27
 									index: 228
@@ -715,7 +715,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 24
 									index: 225
@@ -741,7 +741,7 @@ JSRoot {
 								line: 9
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 22
 									index: 223
@@ -761,7 +761,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "pi"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-methods-async/input.ts"
 									identifierName: "pi"
 									end: Object {
 										column: 20
@@ -776,7 +776,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 20
 									index: 249
@@ -790,7 +790,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-methods-async/input.ts"
 							end: Object {
 								column: 25
 								index: 254
@@ -806,7 +806,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 25
 									index: 254
@@ -829,7 +829,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 22
 									index: 251
@@ -855,7 +855,7 @@ JSRoot {
 								line: 10
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 20
 									index: 249

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/invalid-parens-async-arrow/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/invalid-parens-async-arrow/input.js"
 		end: Object {
 			column: 0
 			index: 17
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-parens-async-arrow/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-parens-async-arrow/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-parens-async-arrow/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -87,7 +87,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "async"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/invalid-parens-async-arrow/input.js"
 						identifierName: "async"
 						end: Object {
 							column: 6
@@ -105,7 +105,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-parens-async-arrow/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 9
@@ -124,7 +124,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-parens-async-arrow/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -139,7 +139,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-parens-async-arrow/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -157,7 +157,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-parens-async-arrow/input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -178,7 +178,7 @@ JSRoot {
 
 ```
 
- input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/invalid-parens-async-arrow/input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

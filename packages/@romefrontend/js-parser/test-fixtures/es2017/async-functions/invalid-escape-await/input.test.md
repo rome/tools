@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/invalid-escape-await/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/invalid-escape-await/input.js"
 		end: Object {
 			column: 0
 			index: 36
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Can not use 'await' as identifier inside an async function"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-await/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-await/input.js"
 				end: Object {
 					column: 35
 					index: 35
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSFunctionExpression {
 				id: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-escape-await/input.js"
 					end: Object {
 						column: 34
 						index: 34
@@ -95,7 +95,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/invalid-escape-await/input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -111,7 +111,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/invalid-escape-await/input.js"
 						end: Object {
 							column: 34
 							index: 34
@@ -126,7 +126,7 @@ JSRoot {
 					body: Array [
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/invalid-escape-await/input.js"
 								end: Object {
 									column: 30
 									index: 30
@@ -141,7 +141,7 @@ JSRoot {
 							expression: JSReferenceIdentifier {
 								name: "await"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/invalid-escape-await/input.js"
 									identifierName: "await"
 									end: Object {
 										column: 30
@@ -158,7 +158,7 @@ JSRoot {
 						}
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/invalid-escape-await/input.js"
 								end: Object {
 									column: 32
 									index: 32
@@ -173,7 +173,7 @@ JSRoot {
 							expression: JSReferenceIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/invalid-escape-await/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 32
@@ -200,7 +200,7 @@ JSRoot {
 
 ```
 
- input.js:1:20 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/invalid-escape-await/input.js:1:20 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Can not use 'await' as identifier inside an async function
 

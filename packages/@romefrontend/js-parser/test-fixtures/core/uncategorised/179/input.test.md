@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/179/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/179/input.js"
 		end: Object {
 			column: 9
 			index: 9
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/179/input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "-"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/179/input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -64,7 +64,7 @@ JSRoot {
 				left: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/179/input.js"
 						identifierName: "x"
 						end: Object {
 							column: 1
@@ -81,7 +81,7 @@ JSRoot {
 				right: JSBinaryExpression {
 					operator: "%"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/179/input.js"
 						end: Object {
 							column: 9
 							index: 9
@@ -96,7 +96,7 @@ JSRoot {
 					left: JSReferenceIdentifier {
 						name: "y"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/179/input.js"
 							identifierName: "y"
 							end: Object {
 								column: 5
@@ -113,7 +113,7 @@ JSRoot {
 					right: JSReferenceIdentifier {
 						name: "z"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/179/input.js"
 							identifierName: "z"
 							end: Object {
 								column: 9

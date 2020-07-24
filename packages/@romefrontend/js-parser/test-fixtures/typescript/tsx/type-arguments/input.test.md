@@ -12,7 +12,7 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.tsx"
+	filename: "typescript/tsx/type-arguments/input.tsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
@@ -22,7 +22,7 @@ JSRoot {
 		"jsx"
 	]
 	loc: Object {
-		filename: "input.tsx"
+		filename: "typescript/tsx/type-arguments/input.tsx"
 		end: Object {
 			column: 14
 			index: 34
@@ -37,7 +37,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.tsx"
+				filename: "typescript/tsx/type-arguments/input.tsx"
 				end: Object {
 					column: 7
 					index: 7
@@ -52,7 +52,7 @@ JSRoot {
 			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.tsx"
+					filename: "typescript/tsx/type-arguments/input.tsx"
 					end: Object {
 						column: 6
 						index: 6
@@ -67,7 +67,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "f"
 					loc: Object {
-						filename: "input.tsx"
+						filename: "typescript/tsx/type-arguments/input.tsx"
 						identifierName: "f"
 						end: Object {
 							column: 1
@@ -83,7 +83,7 @@ JSRoot {
 				}
 				typeArguments: TSTypeParameterInstantiation {
 					loc: Object {
-						filename: "input.tsx"
+						filename: "typescript/tsx/type-arguments/input.tsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -99,7 +99,7 @@ JSRoot {
 						TSTypeReference {
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.tsx"
+								filename: "typescript/tsx/type-arguments/input.tsx"
 								end: Object {
 									column: 3
 									index: 3
@@ -114,7 +114,7 @@ JSRoot {
 							typeName: JSReferenceIdentifier {
 								name: "T"
 								loc: Object {
-									filename: "input.tsx"
+									filename: "typescript/tsx/type-arguments/input.tsx"
 									identifierName: "T"
 									end: Object {
 										column: 3
@@ -135,7 +135,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.tsx"
+				filename: "typescript/tsx/type-arguments/input.tsx"
 				end: Object {
 					column: 11
 					index: 19
@@ -151,7 +151,7 @@ JSRoot {
 				arguments: Array []
 				optional: undefined
 				loc: Object {
-					filename: "input.tsx"
+					filename: "typescript/tsx/type-arguments/input.tsx"
 					end: Object {
 						column: 10
 						index: 18
@@ -166,7 +166,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "C"
 					loc: Object {
-						filename: "input.tsx"
+						filename: "typescript/tsx/type-arguments/input.tsx"
 						identifierName: "C"
 						end: Object {
 							column: 5
@@ -182,7 +182,7 @@ JSRoot {
 				}
 				typeArguments: TSTypeParameterInstantiation {
 					loc: Object {
-						filename: "input.tsx"
+						filename: "typescript/tsx/type-arguments/input.tsx"
 						end: Object {
 							column: 8
 							index: 16
@@ -198,7 +198,7 @@ JSRoot {
 						TSTypeReference {
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.tsx"
+								filename: "typescript/tsx/type-arguments/input.tsx"
 								end: Object {
 									column: 7
 									index: 15
@@ -213,7 +213,7 @@ JSRoot {
 							typeName: JSReferenceIdentifier {
 								name: "T"
 								loc: Object {
-									filename: "input.tsx"
+									filename: "typescript/tsx/type-arguments/input.tsx"
 									identifierName: "T"
 									end: Object {
 										column: 7
@@ -236,7 +236,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.tsx"
+					filename: "typescript/tsx/type-arguments/input.tsx"
 					identifierName: "A"
 					end: Object {
 						column: 6
@@ -252,7 +252,7 @@ JSRoot {
 			}
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.tsx"
+				filename: "typescript/tsx/type-arguments/input.tsx"
 				end: Object {
 					column: 14
 					index: 34
@@ -266,7 +266,7 @@ JSRoot {
 			}
 			right: TSTypeReference {
 				loc: Object {
-					filename: "input.tsx"
+					filename: "typescript/tsx/type-arguments/input.tsx"
 					end: Object {
 						column: 13
 						index: 33
@@ -281,7 +281,7 @@ JSRoot {
 				typeName: JSReferenceIdentifier {
 					name: "T"
 					loc: Object {
-						filename: "input.tsx"
+						filename: "typescript/tsx/type-arguments/input.tsx"
 						identifierName: "T"
 						end: Object {
 							column: 10
@@ -297,7 +297,7 @@ JSRoot {
 				}
 				typeParameters: TSTypeParameterInstantiation {
 					loc: Object {
-						filename: "input.tsx"
+						filename: "typescript/tsx/type-arguments/input.tsx"
 						end: Object {
 							column: 13
 							index: 33
@@ -313,7 +313,7 @@ JSRoot {
 						TSTypeReference {
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.tsx"
+								filename: "typescript/tsx/type-arguments/input.tsx"
 								end: Object {
 									column: 12
 									index: 32
@@ -328,7 +328,7 @@ JSRoot {
 							typeName: JSReferenceIdentifier {
 								name: "T"
 								loc: Object {
-									filename: "input.tsx"
+									filename: "typescript/tsx/type-arguments/input.tsx"
 									identifierName: "T"
 									end: Object {
 										column: 12

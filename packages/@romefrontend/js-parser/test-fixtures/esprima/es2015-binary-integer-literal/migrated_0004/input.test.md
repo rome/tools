@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-binary-integer-literal/migrated_0004/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-binary-integer-literal/migrated_0004/input.js"
 		end: Object {
 			column: 0
 			index: 4
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-binary-integer-literal/migrated_0004/input.js"
 				end: Object {
 					column: 3
 					index: 3
@@ -50,7 +50,7 @@ JSRoot {
 				value: 1
 				format: "binary"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-binary-integer-literal/migrated_0004/input.js"
 					end: Object {
 						column: 3
 						index: 3

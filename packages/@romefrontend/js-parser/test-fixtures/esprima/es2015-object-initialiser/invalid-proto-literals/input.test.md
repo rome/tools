@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
 		end: Object {
 			column: 0
 			index: 43
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Redefinition of __proto__ property"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
 				end: Object {
 					column: 42
 					index: 42
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
 					end: Object {
 						column: 41
 						index: 41
@@ -90,7 +90,7 @@ JSRoot {
 							value: JSStringLiteral {
 								value: "__proto__"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
 									end: Object {
 										column: 14
 										index: 14
@@ -104,7 +104,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
 								end: Object {
 									column: 14
 									index: 14
@@ -119,7 +119,7 @@ JSRoot {
 						}
 						value: JSNullLiteral {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -133,7 +133,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
 							end: Object {
 								column: 20
 								index: 20
@@ -151,7 +151,7 @@ JSRoot {
 							value: JSStringLiteral {
 								value: "__proto__"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
 									end: Object {
 										column: 33
 										index: 33
@@ -165,7 +165,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
 								end: Object {
 									column: 33
 									index: 33
@@ -180,7 +180,7 @@ JSRoot {
 						}
 						value: JSNullLiteral {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
 								end: Object {
 									column: 39
 									index: 39
@@ -194,7 +194,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
 							end: Object {
 								column: 39
 								index: 39
@@ -218,7 +218,7 @@ JSRoot {
 
 ```
 
- input.js:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-object-initialiser/invalid-proto-literals/input.js:1:22 parse/js ━━━━━━━━━━━━━━━━━━━
 
   ✖ Redefinition of __proto__ property
 

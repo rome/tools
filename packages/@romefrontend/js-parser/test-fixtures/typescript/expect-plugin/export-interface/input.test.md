@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "typescript/expect-plugin/export-interface/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "typescript/expect-plugin/export-interface/input.js"
 		end: Object {
 			column: 0
 			index: 24
@@ -44,7 +44,7 @@ JSRoot {
 				]
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "typescript/expect-plugin/export-interface/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -65,7 +65,7 @@ JSRoot {
 			exportKind: "type"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "typescript/expect-plugin/export-interface/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -81,7 +81,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "Foo"
 					loc: Object {
-						filename: "input.js"
+						filename: "typescript/expect-plugin/export-interface/input.js"
 						identifierName: "Foo"
 						end: Object {
 							column: 20
@@ -98,7 +98,7 @@ JSRoot {
 				extends: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "typescript/expect-plugin/export-interface/input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -113,7 +113,7 @@ JSRoot {
 				body: TSInterfaceBody {
 					body: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "typescript/expect-plugin/export-interface/input.js"
 						end: Object {
 							column: 23
 							index: 23
@@ -136,7 +136,7 @@ JSRoot {
 
 ```
 
- input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/expect-plugin/export-interface/input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A interface declaration is only valid inside of a TypeScript file
 

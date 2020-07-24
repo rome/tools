@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/function-name-generator-expression/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/function-name-generator-expression/input.js"
 		end: Object {
 			column: 21
 			index: 21
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/yield/function-name-generator-expression/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/function-name-generator-expression/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -74,7 +74,7 @@ JSRoot {
 				operator: "+"
 				prefix: true
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/function-name-generator-expression/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -90,7 +90,7 @@ JSRoot {
 					id: JSBindingIdentifier {
 						name: "yield"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/function-name-generator-expression/input.js"
 							identifierName: "yield"
 							end: Object {
 								column: 16
@@ -105,7 +105,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/yield/function-name-generator-expression/input.js"
 						end: Object {
 							column: 21
 							index: 21
@@ -121,7 +121,7 @@ JSRoot {
 						body: Array []
 						directives: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/function-name-generator-expression/input.js"
 							end: Object {
 								column: 21
 								index: 21
@@ -144,7 +144,7 @@ JSRoot {
 						thisType: undefined
 						typeParameters: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/function-name-generator-expression/input.js"
 							end: Object {
 								column: 18
 								index: 18
@@ -168,7 +168,7 @@ JSRoot {
 
 ```
 
- input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/yield/function-name-generator-expression/input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Can not use 'yield' as identifier inside a generator
 

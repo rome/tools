@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/function-sent/disabled-function-keyword-expression/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/function-sent/disabled-function-keyword-expression/input.js"
 		end: Object {
 			column: 0
 			index: 44
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/function-sent/disabled-function-keyword-expression/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/function-sent/disabled-function-keyword-expression/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 13
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/function-sent/disabled-function-keyword-expression/input.js"
 				end: Object {
 					column: 1
 					index: 43
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/function-sent/disabled-function-keyword-expression/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/function-sent/disabled-function-keyword-expression/input.js"
 					end: Object {
 						column: 1
 						index: 43
@@ -128,7 +128,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/function-sent/disabled-function-keyword-expression/input.js"
 							end: Object {
 								column: 18
 								index: 36
@@ -143,7 +143,7 @@ JSRoot {
 						expression: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/function-sent/disabled-function-keyword-expression/input.js"
 								end: Object {
 									column: 18
 									index: 36
@@ -157,7 +157,7 @@ JSRoot {
 							}
 							callee: JSMetaProperty {
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/function-sent/disabled-function-keyword-expression/input.js"
 									end: Object {
 										column: 16
 										index: 34
@@ -172,7 +172,7 @@ JSRoot {
 								meta: JSIdentifier {
 									name: "function"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/function-sent/disabled-function-keyword-expression/input.js"
 										identifierName: "function"
 										end: Object {
 											column: 11
@@ -189,7 +189,7 @@ JSRoot {
 								property: JSIdentifier {
 									name: "sent"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/function-sent/disabled-function-keyword-expression/input.js"
 										identifierName: "sent"
 										end: Object {
 											column: 16
@@ -210,7 +210,7 @@ JSRoot {
 						body: Array []
 						directives: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/function-sent/disabled-function-keyword-expression/input.js"
 							end: Object {
 								column: 21
 								index: 39
@@ -225,7 +225,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/function-sent/disabled-function-keyword-expression/input.js"
 							end: Object {
 								column: 23
 								index: 41
@@ -240,7 +240,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/function-sent/disabled-function-keyword-expression/input.js"
 								end: Object {
 									column: 22
 									index: 40
@@ -265,7 +265,7 @@ JSRoot {
 
 ```
 
- input.js:2:19 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/function-sent/disabled-function-keyword-expression/input.js:2:19 parse/js ━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ,
 

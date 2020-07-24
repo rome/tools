@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/statement-if/migrated_0006/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/statement-if/migrated_0006/input.js"
 		end: Object {
 			column: 0
 			index: 24
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSIfStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/statement-if/migrated_0006/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			alternate: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-if/migrated_0006/input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -64,7 +64,7 @@ JSRoot {
 			test: JSBooleanLiteral {
 				value: true
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-if/migrated_0006/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -79,7 +79,7 @@ JSRoot {
 			}
 			consequent: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-if/migrated_0006/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -94,7 +94,7 @@ JSRoot {
 				expression: JSCallExpression {
 					arguments: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/statement-if/migrated_0006/input.js"
 						end: Object {
 							column: 16
 							index: 16
@@ -109,7 +109,7 @@ JSRoot {
 					callee: JSReferenceIdentifier {
 						name: "that"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/statement-if/migrated_0006/input.js"
 							identifierName: "that"
 							end: Object {
 								column: 14

@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/abstract/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/abstract/input.ts"
 		end: Object {
 			column: 0
 			index: 255
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " `export abstract class {}` is not valid TypeScript."
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/abstract/input.ts"
 				end: Object {
 					column: 54
 					index: 132
@@ -52,7 +52,7 @@ JSRoot {
 			id: "1"
 			value: " `abstract class` is not valid as an expression."
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/abstract/input.ts"
 				end: Object {
 					column: 50
 					index: 254
@@ -71,7 +71,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C1"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/abstract/input.ts"
 					identifierName: "C1"
 					end: Object {
 						column: 17
@@ -87,7 +87,7 @@ JSRoot {
 			}
 			abstract: true
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/abstract/input.ts"
 				end: Object {
 					column: 20
 					index: 20
@@ -106,7 +106,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/abstract/input.ts"
 					end: Object {
 						column: 20
 						index: 20
@@ -124,7 +124,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C2"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/abstract/input.ts"
 					identifierName: "C2"
 					end: Object {
 						column: 25
@@ -141,7 +141,7 @@ JSRoot {
 			abstract: true
 			declare: true
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/abstract/input.ts"
 				end: Object {
 					column: 28
 					index: 49
@@ -160,7 +160,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/abstract/input.ts"
 					end: Object {
 						column: 28
 						index: 49
@@ -179,7 +179,7 @@ JSRoot {
 			specifiers: undefined
 			trailingComments: Array ["0"]
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/abstract/input.ts"
 				end: Object {
 					column: 27
 					index: 77
@@ -195,7 +195,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "C3"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/class/abstract/input.ts"
 						identifierName: "C3"
 						end: Object {
 							column: 24
@@ -212,7 +212,7 @@ JSRoot {
 				abstract: true
 				trailingComments: Array ["0"]
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/abstract/input.ts"
 					end: Object {
 						column: 27
 						index: 77
@@ -232,7 +232,7 @@ JSRoot {
 					trailingComments: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/class/abstract/input.ts"
 						end: Object {
 							column: 27
 							index: 77
@@ -250,7 +250,7 @@ JSRoot {
 		JSExportDefaultDeclaration {
 			leadingComments: Array ["0"]
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/abstract/input.ts"
 				end: Object {
 					column: 33
 					index: 166
@@ -266,7 +266,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "*default*"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/class/abstract/input.ts"
 						end: Object {
 							column: 33
 							index: 166
@@ -282,7 +282,7 @@ JSRoot {
 				abstract: true
 				leadingComments: Array ["0"]
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/abstract/input.ts"
 					end: Object {
 						column: 33
 						index: 166
@@ -302,7 +302,7 @@ JSRoot {
 					superTypeParameters: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/class/abstract/input.ts"
 						end: Object {
 							column: 33
 							index: 166
@@ -320,7 +320,7 @@ JSRoot {
 		JSExportDefaultDeclaration {
 			trailingComments: Array ["1"]
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/abstract/input.ts"
 				end: Object {
 					column: 36
 					index: 203
@@ -336,7 +336,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "C4"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/class/abstract/input.ts"
 						identifierName: "C4"
 						end: Object {
 							column: 32
@@ -353,7 +353,7 @@ JSRoot {
 				abstract: true
 				trailingComments: Array ["1"]
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/abstract/input.ts"
 					end: Object {
 						column: 36
 						index: 203
@@ -373,7 +373,7 @@ JSRoot {
 					trailingComments: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/class/abstract/input.ts"
 						end: Object {
 							column: 36
 							index: 203

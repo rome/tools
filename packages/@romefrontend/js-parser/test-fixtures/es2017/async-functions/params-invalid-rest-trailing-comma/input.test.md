@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/params-invalid-rest-trailing-comma/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/params-invalid-rest-trailing-comma/input.js"
 		end: Object {
 			column: 0
 			index: 21
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "The rest element has to be the last element when destructuring"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/params-invalid-rest-trailing-comma/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/params-invalid-rest-trailing-comma/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/params-invalid-rest-trailing-comma/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -88,7 +88,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/params-invalid-rest-trailing-comma/input.js"
 						end: Object {
 							column: 19
 							index: 19
@@ -108,7 +108,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/params-invalid-rest-trailing-comma/input.js"
 						end: Object {
 							column: 16
 							index: 16
@@ -123,7 +123,7 @@ JSRoot {
 					rest: JSBindingIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/params-invalid-rest-trailing-comma/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 11
@@ -148,7 +148,7 @@ JSRoot {
 
 ```
 
- input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/params-invalid-rest-trailing-comma/input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━
 
   ✖ The rest element has to be the last element when destructuring
 

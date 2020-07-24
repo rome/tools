@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "typescript/expect-plugin/export-type/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "typescript/expect-plugin/export-type/input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -36,7 +36,7 @@ JSRoot {
 			exportKind: "type"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "typescript/expect-plugin/export-type/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -52,7 +52,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "Foo"
 					loc: Object {
-						filename: "input.js"
+						filename: "typescript/expect-plugin/export-type/input.js"
 						identifierName: "Foo"
 						end: Object {
 							column: 15
@@ -68,7 +68,7 @@ JSRoot {
 				}
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "typescript/expect-plugin/export-type/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -82,7 +82,7 @@ JSRoot {
 				}
 				right: TSNumberKeywordTypeAnnotation {
 					loc: Object {
-						filename: "input.js"
+						filename: "typescript/expect-plugin/export-type/input.js"
 						end: Object {
 							column: 24
 							index: 24

@@ -10,14 +10,14 @@
 JSRoot {
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/read-only-2/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/read-only-2/input.ts"
 		end: Object {
 			column: 32
 			index: 32
@@ -34,7 +34,7 @@ JSRoot {
 			id: "0"
 			value: " Error"
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/read-only-2/input.ts"
 				end: Object {
 					column: 32
 					index: 32
@@ -57,7 +57,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "'readonly' type modifier is only permitted on array and tuple literal types."}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/types/read-only-2/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -78,7 +78,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "T31"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/read-only-2/input.ts"
 					identifierName: "T31"
 					end: Object {
 						column: 8
@@ -95,7 +95,7 @@ JSRoot {
 			typeParameters: undefined
 			trailingComments: Array ["0"]
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/read-only-2/input.ts"
 				end: Object {
 					column: 22
 					index: 22
@@ -110,7 +110,7 @@ JSRoot {
 			right: TSTypeOperator {
 				operator: "readonly"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/read-only-2/input.ts"
 					end: Object {
 						column: 21
 						index: 21
@@ -125,7 +125,7 @@ JSRoot {
 				typeAnnotation: TSTypeReference {
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/types/read-only-2/input.ts"
 						end: Object {
 							column: 21
 							index: 21
@@ -140,7 +140,7 @@ JSRoot {
 					typeName: JSReferenceIdentifier {
 						name: "T"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/read-only-2/input.ts"
 							identifierName: "T"
 							end: Object {
 								column: 21
@@ -165,7 +165,7 @@ JSRoot {
 
 ```
 
- input.ts:1:20 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/types/read-only-2/input.ts:1:20 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ 'readonly' type modifier is only permitted on array and tuple literal types.
 

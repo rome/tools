@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
 		end: Object {
 			column: 26
 			index: 26
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -87,7 +87,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "async"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
 						identifierName: "async"
 						end: Object {
 							column: 5
@@ -105,7 +105,7 @@ JSRoot {
 					JSAssignmentExpression {
 						operator: "="
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
 							end: Object {
 								column: 16
 								index: 16
@@ -120,7 +120,7 @@ JSRoot {
 						left: JSAssignmentIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 8
@@ -137,7 +137,7 @@ JSRoot {
 						right: JSReferenceIdentifier {
 							name: "await"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
 								identifierName: "await"
 								end: Object {
 									column: 16
@@ -157,7 +157,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -173,7 +173,7 @@ JSRoot {
 				value: 2
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -189,7 +189,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -204,7 +204,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -220,7 +220,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -235,7 +235,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -253,7 +253,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -268,7 +268,7 @@ JSRoot {
 		}
 		JSEmptyStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -289,7 +289,7 @@ JSRoot {
 
 ```
 
- input.js:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/await-inside-parameters-of-async-arrow-function/input.js:1:17 parse/js ━━━━━
 
   ✖ Unexpected token, expected ,
 

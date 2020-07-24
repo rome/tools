@@ -366,6 +366,7 @@ export default class WorkerAPI {
 		const {customFormat} = handler;
 		if (customFormat !== undefined) {
 			return await customFormat({
+				mtime: await this.worker.getMtime(ref.real),
 				file: ref,
 				project,
 				worker: this.worker,

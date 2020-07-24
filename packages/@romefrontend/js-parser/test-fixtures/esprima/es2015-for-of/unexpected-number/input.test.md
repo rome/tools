@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-for-of/unexpected-number/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-for-of/unexpected-number/input.js"
 		end: Object {
 			column: 0
 			index: 19
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "A constant must have an initializer"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-for-of/unexpected-number/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -59,7 +59,7 @@ JSRoot {
 		JSForStatement {
 			update: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-for-of/unexpected-number/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -73,7 +73,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/unexpected-number/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -90,7 +90,7 @@ JSRoot {
 				value: 42
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/unexpected-number/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -106,7 +106,7 @@ JSRoot {
 			init: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/unexpected-number/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -123,7 +123,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "of"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-for-of/unexpected-number/input.js"
 								identifierName: "of"
 								end: Object {
 									column: 13
@@ -139,7 +139,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-for-of/unexpected-number/input.js"
 							end: Object {
 								column: 13
 								index: 13
@@ -163,7 +163,7 @@ JSRoot {
 
 ```
 
- input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-for-of/unexpected-number/input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A constant must have an initializer
 

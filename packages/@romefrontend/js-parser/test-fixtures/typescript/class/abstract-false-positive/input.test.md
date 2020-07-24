@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/abstract-false-positive/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/abstract-false-positive/input.ts"
 		end: Object {
 			column: 0
 			index: 88
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " Exports an identifier, doesn't try parsing `abstract class`"
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/abstract-false-positive/input.ts"
 				end: Object {
 					column: 62
 					index: 62
@@ -53,7 +53,7 @@ JSRoot {
 		JSExportDefaultDeclaration {
 			leadingComments: Array ["0"]
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/abstract-false-positive/input.ts"
 				end: Object {
 					column: 24
 					index: 87
@@ -69,7 +69,7 @@ JSRoot {
 				name: "abstract"
 				leadingComments: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/abstract-false-positive/input.ts"
 					identifierName: "abstract"
 					end: Object {
 						column: 23

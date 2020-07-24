@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/regression/10230/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/regression/10230/input.js"
 		end: Object {
 			column: 0
 			index: 36
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " One"
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/regression/10230/input.js"
 				end: Object {
 					column: 8
 					index: 23
@@ -52,7 +52,7 @@ JSRoot {
 			id: "1"
 			value: " Two"
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/regression/10230/input.js"
 				end: Object {
 					column: 6
 					index: 33
@@ -70,7 +70,7 @@ JSRoot {
 		JSExpressionStatement {
 			trailingComments: Array ["1"]
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/regression/10230/input.js"
 				end: Object {
 					column: 1
 					index: 25
@@ -86,7 +86,7 @@ JSRoot {
 				operator: "="
 				trailingComments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/regression/10230/input.js"
 					end: Object {
 						column: 1
 						index: 25
@@ -101,7 +101,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "A"
 					loc: Object {
-						filename: "input.js"
+						filename: "comments/regression/10230/input.js"
 						identifierName: "A"
 						end: Object {
 							column: 1
@@ -118,7 +118,7 @@ JSRoot {
 				right: JSObjectExpression {
 					trailingComments: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "comments/regression/10230/input.js"
 						end: Object {
 							column: 1
 							index: 25
@@ -136,7 +136,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/regression/10230/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 3
@@ -151,7 +151,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "comments/regression/10230/input.js"
 									end: Object {
 										column: 3
 										index: 9
@@ -168,7 +168,7 @@ JSRoot {
 								value: 42
 								format: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "comments/regression/10230/input.js"
 									end: Object {
 										column: 7
 										index: 13
@@ -183,7 +183,7 @@ JSRoot {
 							}
 							trailingComments: Array ["0"]
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/regression/10230/input.js"
 								end: Object {
 									column: 7
 									index: 13
@@ -203,7 +203,7 @@ JSRoot {
 		JSExpressionStatement {
 			leadingComments: Array ["1"]
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/regression/10230/input.js"
 				end: Object {
 					column: 1
 					index: 35
@@ -219,7 +219,7 @@ JSRoot {
 				name: "B"
 				leadingComments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/regression/10230/input.js"
 					identifierName: "B"
 					end: Object {
 						column: 1

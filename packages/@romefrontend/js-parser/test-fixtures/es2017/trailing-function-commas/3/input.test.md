@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/trailing-function-commas/3/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/trailing-function-commas/3/input.js"
 		end: Object {
 			column: 25
 			index: 25
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/trailing-function-commas/3/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/trailing-function-commas/3/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/trailing-function-commas/3/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -88,7 +88,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "bar"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/trailing-function-commas/3/input.js"
 									identifierName: "bar"
 									end: Object {
 										column: 15
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/trailing-function-commas/3/input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -117,7 +117,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/trailing-function-commas/3/input.js"
 							end: Object {
 								column: 23
 								index: 23
@@ -133,7 +133,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/trailing-function-commas/3/input.js"
 								end: Object {
 									column: 23
 									index: 23
@@ -159,7 +159,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/trailing-function-commas/3/input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -181,7 +181,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/trailing-function-commas/3/input.js"
 								end: Object {
 									column: 19
 									index: 19
@@ -197,7 +197,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/trailing-function-commas/3/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 17
@@ -214,7 +214,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2017/trailing-function-commas/3/input.js"
 											end: Object {
 												column: 17
 												index: 17

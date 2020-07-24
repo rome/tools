@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/predicate-types/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/predicate-types/input.ts"
 		end: Object {
 			column: 0
 			index: 84
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/predicate-types/input.ts"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/predicate-types/input.ts"
 				end: Object {
 					column: 1
 					index: 83
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/predicate-types/input.ts"
 					end: Object {
 						column: 1
 						index: 83
@@ -88,7 +88,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "isBar"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/predicate-types/input.ts"
 									identifierName: "isBar"
 									end: Object {
 										column: 7
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/predicate-types/input.ts"
 								end: Object {
 									column: 7
 									index: 19
@@ -117,7 +117,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/predicate-types/input.ts"
 							end: Object {
 								column: 3
 								index: 43
@@ -133,7 +133,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/predicate-types/input.ts"
 								end: Object {
 									column: 3
 									index: 43
@@ -159,7 +159,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/predicate-types/input.ts"
 								end: Object {
 									column: 7
 									index: 19
@@ -181,7 +181,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/predicate-types/input.ts"
 								end: Object {
 									column: 25
 									index: 37
@@ -196,7 +196,7 @@ JSRoot {
 							returnType: TSTypePredicate {
 								asserts: false
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/predicate-types/input.ts"
 									end: Object {
 										column: 25
 										index: 37
@@ -210,7 +210,7 @@ JSRoot {
 								}
 								parameterName: TSThisType {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/predicate-types/input.ts"
 										end: Object {
 											column: 15
 											index: 27
@@ -225,7 +225,7 @@ JSRoot {
 								}
 								typeAnnotation: TSStringKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/predicate-types/input.ts"
 										end: Object {
 											column: 25
 											index: 37
@@ -246,7 +246,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "isBaz"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/predicate-types/input.ts"
 									identifierName: "isBaz"
 									end: Object {
 										column: 7
@@ -261,7 +261,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/predicate-types/input.ts"
 								end: Object {
 									column: 7
 									index: 51
@@ -276,7 +276,7 @@ JSRoot {
 						}
 						value: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/predicate-types/input.ts"
 								end: Object {
 									column: 3
 									index: 81
@@ -292,7 +292,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/predicate-types/input.ts"
 									end: Object {
 										column: 3
 										index: 81
@@ -312,7 +312,7 @@ JSRoot {
 								rest: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/predicate-types/input.ts"
 									end: Object {
 										column: 31
 										index: 75
@@ -327,7 +327,7 @@ JSRoot {
 								returnType: TSTypePredicate {
 									asserts: false
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/predicate-types/input.ts"
 										end: Object {
 											column: 28
 											index: 72
@@ -341,7 +341,7 @@ JSRoot {
 									}
 									parameterName: TSThisType {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/predicate-types/input.ts"
 											end: Object {
 												column: 18
 												index: 62
@@ -356,7 +356,7 @@ JSRoot {
 									}
 									typeAnnotation: TSStringKeywordTypeAnnotation {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/predicate-types/input.ts"
 											end: Object {
 												column: 28
 												index: 72
@@ -375,7 +375,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/predicate-types/input.ts"
 							end: Object {
 								column: 3
 								index: 81
@@ -400,7 +400,7 @@ JSRoot {
 								line: 4
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/predicate-types/input.ts"
 								end: Object {
 									column: 7
 									index: 51

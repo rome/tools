@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js"
 		end: Object {
 			column: 0
 			index: 37
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js"
 				end: Object {
 					column: 36
 					index: 36
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js"
 					end: Object {
 						column: 35
 						index: 35
@@ -64,7 +64,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js"
 						end: Object {
 							column: 35
 							index: 35
@@ -84,7 +84,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js"
 						end: Object {
 							column: 32
 							index: 32
@@ -100,7 +100,7 @@ JSRoot {
 						JSBindingAssignmentPattern {
 							operator: "="
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js"
 								end: Object {
 									column: 28
 									index: 28
@@ -115,7 +115,7 @@ JSRoot {
 							left: JSBindingIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 8
@@ -131,7 +131,7 @@ JSRoot {
 							}
 							right: JSArrowFunctionExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js"
 									end: Object {
 										column: 28
 										index: 28
@@ -147,7 +147,7 @@ JSRoot {
 									body: Array []
 									directives: Array []
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js"
 										end: Object {
 											column: 28
 											index: 28
@@ -167,7 +167,7 @@ JSRoot {
 									returnType: undefined
 									thisType: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js"
 										end: Object {
 											column: 25
 											index: 25
@@ -183,7 +183,7 @@ JSRoot {
 										JSBindingObjectPattern {
 											rest: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js"
 												end: Object {
 													column: 21
 													index: 21
@@ -201,7 +201,7 @@ JSRoot {
 														value: JSIdentifier {
 															name: "await"
 															loc: Object {
-																filename: "input.js"
+																filename: "es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js"
 																identifierName: "await"
 																end: Object {
 																	column: 19
@@ -216,7 +216,7 @@ JSRoot {
 															}
 														}
 														loc: Object {
-															filename: "input.js"
+															filename: "es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js"
 															end: Object {
 																column: 19
 																index: 19
@@ -232,7 +232,7 @@ JSRoot {
 													value: JSBindingIdentifier {
 														name: "await"
 														loc: Object {
-															filename: "input.js"
+															filename: "es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js"
 															identifierName: "await"
 															end: Object {
 																column: 19
@@ -247,7 +247,7 @@ JSRoot {
 														}
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js"
 														end: Object {
 															column: 19
 															index: 19

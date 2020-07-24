@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-generator/generator-parameter-computed-property-name/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-generator/generator-parameter-computed-property-name/input.js"
 		end: Object {
 			column: 0
 			index: 50
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-generator/generator-parameter-computed-property-name/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-generator/generator-parameter-computed-property-name/input.js"
 				end: Object {
 					column: 2
 					index: 49
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSFunctionExpression {
 				id: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-generator/generator-parameter-computed-property-name/input.js"
 					end: Object {
 						column: 1
 						index: 48
@@ -95,7 +95,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-generator/generator-parameter-computed-property-name/input.js"
 						end: Object {
 							column: 12
 							index: 12
@@ -111,7 +111,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-generator/generator-parameter-computed-property-name/input.js"
 						end: Object {
 							column: 1
 							index: 48
@@ -128,7 +128,7 @@ JSRoot {
 							id: JSBindingIdentifier {
 								name: ""
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-generator/generator-parameter-computed-property-name/input.js"
 									identifierName: ""
 									end: Object {
 										column: 13
@@ -143,7 +143,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/generator-parameter-computed-property-name/input.js"
 								end: Object {
 									column: 31
 									index: 46
@@ -159,7 +159,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-generator/generator-parameter-computed-property-name/input.js"
 									end: Object {
 										column: 31
 										index: 46
@@ -181,7 +181,7 @@ JSRoot {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-generator/generator-parameter-computed-property-name/input.js"
 									end: Object {
 										column: 28
 										index: 43
@@ -197,7 +197,7 @@ JSRoot {
 									JSBindingObjectPattern {
 										rest: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-generator/generator-parameter-computed-property-name/input.js"
 											end: Object {
 												column: 27
 												index: 42
@@ -213,7 +213,7 @@ JSRoot {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-generator/generator-parameter-computed-property-name/input.js"
 												end: Object {
 													column: 27
 													index: 42
@@ -232,7 +232,7 @@ JSRoot {
 													value: JSIdentifier {
 														name: ""
 														loc: Object {
-															filename: "input.js"
+															filename: "esprima/es2015-generator/generator-parameter-computed-property-name/input.js"
 															identifierName: ""
 															end: Object {
 																column: 23
@@ -247,7 +247,7 @@ JSRoot {
 														}
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/es2015-generator/generator-parameter-computed-property-name/input.js"
 														end: Object {
 															column: 23
 															index: 38
@@ -263,7 +263,7 @@ JSRoot {
 												value: JSBindingIdentifier {
 													name: "y"
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/es2015-generator/generator-parameter-computed-property-name/input.js"
 														identifierName: "y"
 														end: Object {
 															column: 26
@@ -278,7 +278,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/es2015-generator/generator-parameter-computed-property-name/input.js"
 													end: Object {
 														column: 26
 														index: 41
@@ -308,7 +308,7 @@ JSRoot {
 
 ```
 
- input.js:2:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-generator/generator-parameter-computed-property-name/input.js:2:12 parse/js ━━━━━━━━
 
   ✖ Expected an identifier
 

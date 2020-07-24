@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/293/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/293/input.js"
 		end: Object {
 			column: 30
 			index: 30
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "hello"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/293/input.js"
 					identifierName: "hello"
 					end: Object {
 						column: 14
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/293/input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/293/input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -88,7 +88,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/293/input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -103,7 +103,7 @@ JSRoot {
 				rest: JSBindingIdentifier {
 					name: "rest"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/293/input.js"
 						identifierName: "rest"
 						end: Object {
 							column: 25
@@ -120,7 +120,7 @@ JSRoot {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/293/input.js"
 							end: Object {
 								column: 25
 								index: 25
@@ -138,7 +138,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/293/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 16
@@ -155,7 +155,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/293/input.js"
 								end: Object {
 									column: 16
 									index: 16

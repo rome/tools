@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-arrow-function/object-binding-pattern-empty/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-arrow-function/object-binding-pattern-empty/input.js"
 		end: Object {
 			column: 0
 			index: 9
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/object-binding-pattern-empty/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-arrow-function/object-binding-pattern-empty/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -64,7 +64,7 @@ JSRoot {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/object-binding-pattern-empty/input.js"
 						end: Object {
 							column: 7
 							index: 7
@@ -84,7 +84,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/object-binding-pattern-empty/input.js"
 						end: Object {
 							column: 6
 							index: 6
@@ -101,7 +101,7 @@ JSRoot {
 							properties: Array []
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-arrow-function/object-binding-pattern-empty/input.js"
 								end: Object {
 									column: 3
 									index: 3

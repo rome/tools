@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/488/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/488/input.js"
 		end: Object {
 			column: 36
 			index: 36
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "eval is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/488/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/488/input.js"
 				end: Object {
 					column: 36
 					index: 36
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/488/input.js"
 					end: Object {
 						column: 36
 						index: 36
@@ -89,7 +89,7 @@ JSRoot {
 					id: JSBindingIdentifier {
 						name: "eval"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/488/input.js"
 							identifierName: "eval"
 							end: Object {
 								column: 14
@@ -104,7 +104,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/488/input.js"
 						end: Object {
 							column: 33
 							index: 33
@@ -126,7 +126,7 @@ JSRoot {
 						thisType: undefined
 						typeParameters: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/488/input.js"
 							end: Object {
 								column: 16
 								index: 16
@@ -142,7 +142,7 @@ JSRoot {
 					body: JSBlockStatement {
 						body: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/488/input.js"
 							end: Object {
 								column: 33
 								index: 33
@@ -158,7 +158,7 @@ JSRoot {
 							JSDirective {
 								value: "use strict"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/488/input.js"
 									end: Object {
 										column: 31
 										index: 31
@@ -184,7 +184,7 @@ JSRoot {
 
 ```
 
- input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/488/input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ eval is a reserved word
 

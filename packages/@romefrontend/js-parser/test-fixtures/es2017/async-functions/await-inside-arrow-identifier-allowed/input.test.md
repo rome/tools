@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/await-inside-arrow-identifier-allowed/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/await-inside-arrow-identifier-allowed/input.js"
 		end: Object {
 			column: 15
 			index: 15
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-arrow-identifier-allowed/input.js"
 				end: Object {
 					column: 15
 					index: 15
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-arrow-identifier-allowed/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -68,7 +68,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/await-inside-arrow-identifier-allowed/input.js"
 						end: Object {
 							column: 5
 							index: 5
@@ -84,7 +84,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/await-inside-arrow-identifier-allowed/input.js"
 						end: Object {
 							column: 15
 							index: 15
@@ -99,7 +99,7 @@ JSRoot {
 					body: Array [
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-inside-arrow-identifier-allowed/input.js"
 								end: Object {
 									column: 13
 									index: 13
@@ -114,7 +114,7 @@ JSRoot {
 							expression: JSReferenceIdentifier {
 								name: "await"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/await-inside-arrow-identifier-allowed/input.js"
 									identifierName: "await"
 									end: Object {
 										column: 13

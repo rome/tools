@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
 		end: Object {
 			column: 0
 			index: 8
@@ -34,7 +34,7 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 					}
 					frame {
 						location: Object {
-							filename: "input.jsx"
+							filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
 							end: Object {
 								column: 2
 								index: 2
@@ -78,7 +78,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
 				end: Object {
 					column: 7
 					index: 7
@@ -92,7 +92,7 @@ JSRoot {
 			}
 			expression: JSXFragment {
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
 					end: Object {
 						column: 7
 						index: 7
@@ -108,7 +108,7 @@ JSRoot {
 					JSXFragment {
 						children: Array []
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
 							end: Object {
 								column: 7
 								index: 7
@@ -132,7 +132,7 @@ JSRoot {
 
 ```
 
- input.jsx:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ jsx/errors/nested-fragment-unclosed/input.jsx:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed JSX element
 

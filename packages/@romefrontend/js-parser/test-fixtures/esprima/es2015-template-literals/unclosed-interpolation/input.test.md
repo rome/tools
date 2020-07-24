@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-template-literals/unclosed-interpolation/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-template-literals/unclosed-interpolation/input.js"
 		end: Object {
 			column: 0
 			index: 18
@@ -34,7 +34,7 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-template-literals/unclosed-interpolation/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 					}
 					frame {
 						location: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-template-literals/unclosed-interpolation/input.js"
 							end: Object {
 								column: 11
 								index: 11
@@ -78,7 +78,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-template-literals/unclosed-interpolation/input.js"
 				end: Object {
 					column: 0
 					index: 18
@@ -92,7 +92,7 @@ JSRoot {
 			}
 			expression: JSTemplateLiteral {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-template-literals/unclosed-interpolation/input.js"
 					end: Object {
 						column: 0
 						index: 18
@@ -110,7 +110,7 @@ JSRoot {
 						raw: "hello "
 						tail: false
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-template-literals/unclosed-interpolation/input.js"
 							end: Object {
 								column: 7
 								index: 7
@@ -128,7 +128,7 @@ JSRoot {
 						raw: ";"
 						tail: false
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-template-literals/unclosed-interpolation/input.js"
 							end: Object {
 								column: 12
 								index: 12
@@ -146,7 +146,7 @@ JSRoot {
 						raw: ""
 						tail: false
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-template-literals/unclosed-interpolation/input.js"
 							end: Object {
 								column: 0
 								index: 18
@@ -165,7 +165,7 @@ JSRoot {
 						value: 10
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-template-literals/unclosed-interpolation/input.js"
 							end: Object {
 								column: 11
 								index: 11
@@ -181,7 +181,7 @@ JSRoot {
 					JSTaggedTemplateExpression {
 						typeArguments: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-template-literals/unclosed-interpolation/input.js"
 							end: Object {
 								column: 17
 								index: 17
@@ -196,7 +196,7 @@ JSRoot {
 						tag: JSReferenceIdentifier {
 							name: "test"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-template-literals/unclosed-interpolation/input.js"
 								identifierName: "test"
 								end: Object {
 									column: 16
@@ -213,7 +213,7 @@ JSRoot {
 						quasi: JSTemplateLiteral {
 							expressions: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-template-literals/unclosed-interpolation/input.js"
 								end: Object {
 									column: 17
 									index: 17
@@ -231,7 +231,7 @@ JSRoot {
 									raw: ""
 									tail: false
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-template-literals/unclosed-interpolation/input.js"
 										end: Object {
 											column: 17
 											index: 17
@@ -258,7 +258,7 @@ JSRoot {
 
 ```
 
- input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-template-literals/unclosed-interpolation/input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed template expression value
 

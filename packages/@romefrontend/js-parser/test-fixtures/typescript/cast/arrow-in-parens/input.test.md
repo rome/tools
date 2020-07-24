@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/cast/arrow-in-parens/input.ts"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/cast/arrow-in-parens/input.ts"
 		end: Object {
 			column: 0
 			index: 45
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/arrow-in-parens/input.ts"
 				end: Object {
 					column: 44
 					index: 44
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/arrow-in-parens/input.ts"
 					end: Object {
 						column: 44
 						index: 44
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "asserted1"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/arrow-in-parens/input.ts"
 								identifierName: "asserted1"
 								end: Object {
 									column: 13
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/arrow-in-parens/input.ts"
 							end: Object {
 								column: 43
 								index: 43
@@ -95,7 +95,7 @@ JSRoot {
 						}
 						init: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/arrow-in-parens/input.ts"
 								end: Object {
 									column: 42
 									index: 42
@@ -110,7 +110,7 @@ JSRoot {
 							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/arrow-in-parens/input.ts"
 									end: Object {
 										column: 42
 										index: 42
@@ -125,7 +125,7 @@ JSRoot {
 								body: Array [
 									JSReturnStatement {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/arrow-in-parens/input.ts"
 											end: Object {
 												column: 40
 												index: 40
@@ -140,7 +140,7 @@ JSRoot {
 										argument: JSReferenceIdentifier {
 											name: "n"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/arrow-in-parens/input.ts"
 												identifierName: "n"
 												end: Object {
 													column: 39
@@ -164,7 +164,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/arrow-in-parens/input.ts"
 									end: Object {
 										column: 28
 										index: 28
@@ -180,7 +180,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: "n"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/arrow-in-parens/input.ts"
 											identifierName: "n"
 											end: Object {
 												column: 24
@@ -197,7 +197,7 @@ JSRoot {
 								]
 								typeParameters: TSTypeParameterDeclaration {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/cast/arrow-in-parens/input.ts"
 										end: Object {
 											column: 21
 											index: 21
@@ -215,7 +215,7 @@ JSRoot {
 											constraint: undefined
 											default: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/arrow-in-parens/input.ts"
 												end: Object {
 													column: 20
 													index: 20

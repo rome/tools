@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/expression-left-hand-side/migrated_0008/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/expression-left-hand-side/migrated_0008/input.js"
 		end: Object {
 			column: 0
 			index: 14
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/expression-left-hand-side/migrated_0008/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/expression-left-hand-side/migrated_0008/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -63,7 +63,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "foo"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-left-hand-side/migrated_0008/input.js"
 						identifierName: "foo"
 						end: Object {
 							column: 3
@@ -81,7 +81,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "bar"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/expression-left-hand-side/migrated_0008/input.js"
 							identifierName: "bar"
 							end: Object {
 								column: 7
@@ -98,7 +98,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "baz"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/expression-left-hand-side/migrated_0008/input.js"
 							identifierName: "baz"
 							end: Object {
 								column: 12

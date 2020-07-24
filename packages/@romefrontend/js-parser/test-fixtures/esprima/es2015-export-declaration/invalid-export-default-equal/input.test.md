@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-export-declaration/invalid-export-default-equal/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-export-declaration/invalid-export-default-equal/input.js"
 		end: Object {
 			column: 0
 			index: 20
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown start to an export default declaration"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/invalid-export-default-equal/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/invalid-export-default-equal/input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-export-declaration/invalid-export-default-equal/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -89,7 +89,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/invalid-export-default-equal/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -105,7 +105,7 @@ JSRoot {
 				value: 42
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-export-declaration/invalid-export-default-equal/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -127,7 +127,7 @@ JSRoot {
 
 ```
 
- input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-export-declaration/invalid-export-default-equal/input.js:1:15 parse/js ━━━━━━━━━━━━━
 
   ✖ Unknown start to an export default declaration
 

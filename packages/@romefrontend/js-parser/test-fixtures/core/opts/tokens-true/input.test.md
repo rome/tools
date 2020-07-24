@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/opts/tokens-true/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/opts/tokens-true/input.js"
 		end: Object {
 			column: 0
 			index: 27
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/opts/tokens-true/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/opts/tokens-true/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/opts/tokens-true/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 5
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/opts/tokens-true/input.js"
 							end: Object {
 								column: 9
 								index: 9
@@ -97,7 +97,7 @@ JSRoot {
 							value: 1
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/opts/tokens-true/input.js"
 								end: Object {
 									column: 9
 									index: 9
@@ -116,7 +116,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/opts/tokens-true/input.js"
 				end: Object {
 					column: 14
 					index: 26
@@ -131,7 +131,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/opts/tokens-true/input.js"
 					end: Object {
 						column: 14
 						index: 26
@@ -148,7 +148,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "b"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/opts/tokens-true/input.js"
 								identifierName: "b"
 								end: Object {
 									column: 5
@@ -163,7 +163,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/opts/tokens-true/input.js"
 							end: Object {
 								column: 13
 								index: 25
@@ -178,7 +178,7 @@ JSRoot {
 						init: JSBinaryExpression {
 							operator: "+"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/opts/tokens-true/input.js"
 								end: Object {
 									column: 13
 									index: 25
@@ -193,7 +193,7 @@ JSRoot {
 							left: JSReferenceIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/opts/tokens-true/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 9
@@ -211,7 +211,7 @@ JSRoot {
 								value: 1
 								format: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "core/opts/tokens-true/input.js"
 									end: Object {
 										column: 13
 										index: 25

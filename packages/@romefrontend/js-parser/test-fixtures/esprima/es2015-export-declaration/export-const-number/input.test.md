@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-export-declaration/export-const-number/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-export-declaration/export-const-number/input.js"
 		end: Object {
 			column: 0
 			index: 22
@@ -36,7 +36,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/export-const-number/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -50,7 +50,7 @@ JSRoot {
 			}
 			declaration: JSVariableDeclarationStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-export-declaration/export-const-number/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -65,7 +65,7 @@ JSRoot {
 				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-export-declaration/export-const-number/input.js"
 						end: Object {
 							column: 21
 							index: 21
@@ -82,7 +82,7 @@ JSRoot {
 							id: JSBindingIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-export-declaration/export-const-number/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 16
@@ -97,7 +97,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-export-declaration/export-const-number/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -113,7 +113,7 @@ JSRoot {
 								value: 1
 								format: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-export-declaration/export-const-number/input.js"
 									end: Object {
 										column: 20
 										index: 20

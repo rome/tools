@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/330/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/330/input.js"
 		end: Object {
 			column: 5
 			index: 8
@@ -36,7 +36,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/330/input.js"
 				end: Object {
 					column: 2
 					index: 2
@@ -51,7 +51,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/330/input.js"
 				end: Object {
 					column: 5
 					index: 8
@@ -71,7 +71,7 @@ JSRoot {
 				sticky: false
 				unicode: false
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/330/input.js"
 					end: Object {
 						column: 5
 						index: 8
@@ -85,7 +85,7 @@ JSRoot {
 				}
 				expression: JSRegExpSubExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/330/input.js"
 						end: Object {
 							column: 4
 							index: 7
@@ -101,7 +101,7 @@ JSRoot {
 						JSRegExpCharacter {
 							value: "f"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/330/input.js"
 								end: Object {
 									column: 2
 									index: 5
@@ -117,7 +117,7 @@ JSRoot {
 						JSRegExpCharacter {
 							value: "o"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/330/input.js"
 								end: Object {
 									column: 3
 									index: 6
@@ -133,7 +133,7 @@ JSRoot {
 						JSRegExpCharacter {
 							value: "o"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/330/input.js"
 								end: Object {
 									column: 4
 									index: 7

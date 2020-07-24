@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/export/export-type-declaration/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/export/export-type-declaration/input.ts"
 		end: Object {
 			column: 0
 			index: 108
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ("}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/export/export-type-declaration/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			exportKind: "type"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/export/export-type-declaration/input.ts"
 				end: Object {
 					column: 18
 					index: 18
@@ -76,7 +76,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "A"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/export/export-type-declaration/input.ts"
 						identifierName: "A"
 						end: Object {
 							column: 13
@@ -92,7 +92,7 @@ JSRoot {
 				}
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/export/export-type-declaration/input.ts"
 					end: Object {
 						column: 18
 						index: 18
@@ -108,7 +108,7 @@ JSRoot {
 					value: 2
 					format: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/export/export-type-declaration/input.ts"
 						end: Object {
 							column: 17
 							index: 17
@@ -127,7 +127,7 @@ JSRoot {
 			exportKind: "type"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/export/export-type-declaration/input.ts"
 				end: Object {
 					column: 21
 					index: 40
@@ -143,7 +143,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "B"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/export/export-type-declaration/input.ts"
 						identifierName: "B"
 						end: Object {
 							column: 18
@@ -160,7 +160,7 @@ JSRoot {
 				extends: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/export/export-type-declaration/input.ts"
 					end: Object {
 						column: 21
 						index: 40
@@ -175,7 +175,7 @@ JSRoot {
 				body: TSInterfaceBody {
 					body: Array []
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/export/export-type-declaration/input.ts"
 						end: Object {
 							column: 21
 							index: 40
@@ -194,7 +194,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/export/export-type-declaration/input.ts"
 				end: Object {
 					column: 29
 					index: 107
@@ -210,7 +210,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "function"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/export/export-type-declaration/input.ts"
 						identifierName: "function"
 						end: Object {
 							column: 23
@@ -226,7 +226,7 @@ JSRoot {
 				}
 				declare: true
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/export/export-type-declaration/input.ts"
 					end: Object {
 						column: 29
 						index: 107
@@ -247,7 +247,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/export/export-type-declaration/input.ts"
 						end: Object {
 							column: 25
 							index: 66
@@ -263,7 +263,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/export/export-type-declaration/input.ts"
 								identifierName: "a"
 								end: Object {
 									column: 25
@@ -280,7 +280,7 @@ JSRoot {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/export/export-type-declaration/input.ts"
 									end: Object {
 										column: 25
 										index: 66
@@ -299,7 +299,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/export/export-type-declaration/input.ts"
 						end: Object {
 							column: 29
 							index: 107
@@ -314,7 +314,7 @@ JSRoot {
 					body: Array [
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/export/export-type-declaration/input.ts"
 								end: Object {
 									column: 27
 									index: 68
@@ -329,7 +329,7 @@ JSRoot {
 							expression: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/export/export-type-declaration/input.ts"
 									end: Object {
 										column: 26
 										index: 67
@@ -345,7 +345,7 @@ JSRoot {
 						}
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/export/export-type-declaration/input.ts"
 								end: Object {
 									column: 28
 									index: 69
@@ -360,7 +360,7 @@ JSRoot {
 							expression: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/export/export-type-declaration/input.ts"
 									end: Object {
 										column: 28
 										index: 69
@@ -376,7 +376,7 @@ JSRoot {
 						}
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/export/export-type-declaration/input.ts"
 								end: Object {
 									column: 36
 									index: 77
@@ -391,7 +391,7 @@ JSRoot {
 							expression: JSReferenceIdentifier {
 								name: "string"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/export/export-type-declaration/input.ts"
 									identifierName: "string"
 									end: Object {
 										column: 35
@@ -410,7 +410,7 @@ JSRoot {
 							exportKind: "value"
 							specifiers: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/export/export-type-declaration/input.ts"
 								end: Object {
 									column: 29
 									index: 107
@@ -425,7 +425,7 @@ JSRoot {
 							declaration: JSVariableDeclarationStatement {
 								declare: true
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/export/export-type-declaration/input.ts"
 									end: Object {
 										column: 29
 										index: 107
@@ -440,7 +440,7 @@ JSRoot {
 								declaration: JSVariableDeclaration {
 									kind: "var"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/export/export-type-declaration/input.ts"
 										end: Object {
 											column: 29
 											index: 107
@@ -457,7 +457,7 @@ JSRoot {
 											id: JSBindingIdentifier {
 												name: "b"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/export/export-type-declaration/input.ts"
 													end: Object {
 														column: 28
 														index: 106
@@ -472,7 +472,7 @@ JSRoot {
 												meta: JSPatternMeta {
 													definite: undefined
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/export/export-type-declaration/input.ts"
 														end: Object {
 															column: 28
 															index: 106
@@ -486,7 +486,7 @@ JSRoot {
 													}
 													typeAnnotation: TSStringKeywordTypeAnnotation {
 														loc: Object {
-															filename: "input.ts"
+															filename: "typescript/export/export-type-declaration/input.ts"
 															end: Object {
 																column: 28
 																index: 106
@@ -503,7 +503,7 @@ JSRoot {
 											}
 											init: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/export/export-type-declaration/input.ts"
 												end: Object {
 													column: 28
 													index: 106
@@ -532,7 +532,7 @@ JSRoot {
 
 ```
 
- input.ts:3:24 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/export/export-type-declaration/input.ts:3:24 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected (
 

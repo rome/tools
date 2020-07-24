@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/module-namespace/namespace-new-line/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/module-namespace/namespace-new-line/input.ts"
 		end: Object {
 			column: 0
 			index: 17
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/module-namespace/namespace-new-line/input.ts"
 				end: Object {
 					column: 9
 					index: 9
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "namespace"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/namespace-new-line/input.ts"
 					identifierName: "namespace"
 					end: Object {
 						column: 9
@@ -66,7 +66,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/module-namespace/namespace-new-line/input.ts"
 				end: Object {
 					column: 3
 					index: 13
@@ -81,7 +81,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/namespace-new-line/input.ts"
 					identifierName: "Foo"
 					end: Object {
 						column: 3
@@ -100,7 +100,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/module-namespace/namespace-new-line/input.ts"
 				end: Object {
 					column: 2
 					index: 16

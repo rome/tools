@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/module-namespace/declare-shorthand/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/module-namespace/declare-shorthand/input.ts"
 		end: Object {
 			column: 0
 			index: 20
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSStringLiteral {
 				value: "m"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/declare-shorthand/input.ts"
 					end: Object {
 						column: 18
 						index: 18
@@ -53,7 +53,7 @@ JSRoot {
 			declare: true
 			global: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/module-namespace/declare-shorthand/input.ts"
 				end: Object {
 					column: 19
 					index: 19

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/trailing-function-commas/5/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/trailing-function-commas/5/input.js"
 		end: Object {
 			column: 7
 			index: 7
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown start to an call expression argument"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/trailing-function-commas/5/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/trailing-function-commas/5/input.js"
 				end: Object {
 					column: 7
 					index: 7
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/trailing-function-commas/5/input.js"
 					end: Object {
 						column: 6
 						index: 6
@@ -87,7 +87,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "log"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/trailing-function-commas/5/input.js"
 						identifierName: "log"
 						end: Object {
 							column: 3
@@ -105,7 +105,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "INVALID_PLACEHOLDER"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/trailing-function-commas/5/input.js"
 							end: Object {
 								column: 5
 								index: 5
@@ -129,7 +129,7 @@ JSRoot {
 
 ```
 
- input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/trailing-function-commas/5/input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an call expression argument
 

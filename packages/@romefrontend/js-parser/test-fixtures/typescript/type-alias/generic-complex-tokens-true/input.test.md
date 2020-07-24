@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 		end: Object {
 			column: 0
 			index: 53
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "T"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 					identifierName: "T"
 					end: Object {
 						column: 6
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 				end: Object {
 					column: 52
 					index: 52
@@ -65,7 +65,7 @@ JSRoot {
 			}
 			right: TSTypeReference {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 					end: Object {
 						column: 51
 						index: 51
@@ -80,7 +80,7 @@ JSRoot {
 				typeName: JSReferenceIdentifier {
 					name: "Array"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 						identifierName: "Array"
 						end: Object {
 							column: 48
@@ -96,7 +96,7 @@ JSRoot {
 				}
 				typeParameters: TSTypeParameterInstantiation {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 						end: Object {
 							column: 51
 							index: 51
@@ -112,7 +112,7 @@ JSRoot {
 						TSTypeReference {
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 								end: Object {
 									column: 50
 									index: 50
@@ -127,7 +127,7 @@ JSRoot {
 							typeName: JSReferenceIdentifier {
 								name: "U"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 									identifierName: "U"
 									end: Object {
 										column: 50
@@ -147,7 +147,7 @@ JSRoot {
 			}
 			typeParameters: TSTypeParameterDeclaration {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 					end: Object {
 						column: 40
 						index: 40
@@ -163,7 +163,7 @@ JSRoot {
 					TSTypeParameter {
 						name: "U"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 							end: Object {
 								column: 39
 								index: 39
@@ -177,7 +177,7 @@ JSRoot {
 						}
 						constraint: TSObjectKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 								end: Object {
 									column: 23
 									index: 23
@@ -192,7 +192,7 @@ JSRoot {
 						}
 						default: TSObjectTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 								end: Object {
 									column: 39
 									index: 39
@@ -210,7 +210,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "x"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 												identifierName: "x"
 												end: Object {
 													column: 29
@@ -225,7 +225,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 											end: Object {
 												column: 29
 												index: 29
@@ -241,7 +241,7 @@ JSRoot {
 									optional: false
 									readonly: false
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 										end: Object {
 											column: 37
 											index: 37
@@ -255,7 +255,7 @@ JSRoot {
 									}
 									typeAnnotation: TSNumberKeywordTypeAnnotation {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 											end: Object {
 												column: 37
 												index: 37

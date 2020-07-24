@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-rest-in-object-pattern/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-rest-in-object-pattern/input.js"
 		end: Object {
 			column: 0
 			index: 17
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-rest-in-object-pattern/input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-rest-in-object-pattern/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -64,7 +64,7 @@ JSRoot {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-rest-in-object-pattern/input.js"
 						end: Object {
 							column: 15
 							index: 15
@@ -84,7 +84,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-rest-in-object-pattern/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -99,7 +99,7 @@ JSRoot {
 					params: Array [
 						JSBindingObjectPattern {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-rest-in-object-pattern/input.js"
 								end: Object {
 									column: 9
 									index: 9
@@ -114,7 +114,7 @@ JSRoot {
 							rest: JSBindingIdentifier {
 								name: "b"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-rest-in-object-pattern/input.js"
 									identifierName: "b"
 									end: Object {
 										column: 8
@@ -134,7 +134,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "a"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-rest-in-object-pattern/input.js"
 												identifierName: "a"
 												end: Object {
 													column: 3
@@ -149,7 +149,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-rest-in-object-pattern/input.js"
 											end: Object {
 												column: 3
 												index: 3
@@ -165,7 +165,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "a"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-rest-in-object-pattern/input.js"
 											identifierName: "a"
 											end: Object {
 												column: 3
@@ -180,7 +180,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-rest-in-object-pattern/input.js"
 										end: Object {
 											column: 3
 											index: 3

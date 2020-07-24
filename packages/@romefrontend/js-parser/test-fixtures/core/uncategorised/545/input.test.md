@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/545/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/545/input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "public is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/545/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/545/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/545/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/545/input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -108,7 +108,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "public"
 											loc: Object {
-												filename: "input.js"
+												filename: "core/uncategorised/545/input.js"
 												identifierName: "public"
 												end: Object {
 													column: 14
@@ -123,7 +123,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "core/uncategorised/545/input.js"
 											end: Object {
 												column: 14
 												index: 14
@@ -139,7 +139,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "public"
 										loc: Object {
-											filename: "input.js"
+											filename: "core/uncategorised/545/input.js"
 											identifierName: "public"
 											end: Object {
 												column: 14
@@ -154,7 +154,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "core/uncategorised/545/input.js"
 										end: Object {
 											column: 14
 											index: 14
@@ -170,7 +170,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/545/input.js"
 							end: Object {
 								column: 24
 								index: 24
@@ -185,7 +185,7 @@ JSRoot {
 						init: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/545/input.js"
 								end: Object {
 									column: 24
 									index: 24
@@ -200,7 +200,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/545/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 22
@@ -227,7 +227,7 @@ JSRoot {
 
 ```
 
- input.js:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/545/input.js:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ public is a reserved word
 

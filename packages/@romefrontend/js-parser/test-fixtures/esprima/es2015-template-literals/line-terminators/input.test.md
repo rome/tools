@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-template-literals/line-terminators/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-template-literals/line-terminators/input.js"
 		end: Object {
 			column: 0
 			index: 9
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-template-literals/line-terminators/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSTemplateLiteral {
 				expressions: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-template-literals/line-terminators/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -67,7 +67,7 @@ JSRoot {
 						raw: "\\n\\r\\n"
 						tail: true
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-template-literals/line-terminators/input.js"
 							end: Object {
 								column: 7
 								index: 7

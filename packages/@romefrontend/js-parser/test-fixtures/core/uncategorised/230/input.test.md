@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/230/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/230/input.js"
 		end: Object {
 			column: 23
 			index: 23
@@ -35,7 +35,7 @@ JSRoot {
 		JSIfStatement {
 			alternate: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/230/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -50,7 +50,7 @@ JSRoot {
 			test: JSReferenceIdentifier {
 				name: "morning"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/230/input.js"
 					identifierName: "morning"
 					end: Object {
 						column: 11
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			consequent: JSVariableDeclarationStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/230/input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -81,7 +81,7 @@ JSRoot {
 				declaration: JSVariableDeclaration {
 					kind: "var"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/230/input.js"
 						end: Object {
 							column: 23
 							index: 23
@@ -98,7 +98,7 @@ JSRoot {
 							id: JSBindingIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/230/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 18
@@ -113,7 +113,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/230/input.js"
 								end: Object {
 									column: 22
 									index: 22
@@ -129,7 +129,7 @@ JSRoot {
 								value: 0
 								format: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/230/input.js"
 									end: Object {
 										column: 22
 										index: 22

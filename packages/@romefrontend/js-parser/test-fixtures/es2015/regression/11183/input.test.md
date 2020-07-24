@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/regression/11183/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/regression/11183/input.js"
 		end: Object {
 			column: 0
 			index: 48
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Legacy octal literals are not allowed in strict mode"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/regression/11183/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "X"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/regression/11183/input.js"
 					identifierName: "X"
 					end: Object {
 						column: 7
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/regression/11183/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -94,7 +94,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/regression/11183/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -110,7 +110,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/regression/11183/input.js"
 				end: Object {
 					column: 2
 					index: 13
@@ -126,7 +126,7 @@ JSRoot {
 				value: 5
 				format: "octal"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/regression/11183/input.js"
 					end: Object {
 						column: 2
 						index: 13
@@ -144,7 +144,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/regression/11183/input.js"
 					identifierName: "x"
 					end: Object {
 						column: 10
@@ -159,7 +159,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/regression/11183/input.js"
 				end: Object {
 					column: 29
 					index: 44
@@ -181,7 +181,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/regression/11183/input.js"
 					end: Object {
 						column: 12
 						index: 27
@@ -197,7 +197,7 @@ JSRoot {
 			body: JSBlockStatement {
 				body: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/regression/11183/input.js"
 					end: Object {
 						column: 29
 						index: 44
@@ -213,7 +213,7 @@ JSRoot {
 					JSDirective {
 						value: "use strict"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/regression/11183/input.js"
 							end: Object {
 								column: 27
 								index: 42
@@ -231,7 +231,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/regression/11183/input.js"
 				end: Object {
 					column: 2
 					index: 47
@@ -247,7 +247,7 @@ JSRoot {
 				value: 5
 				format: "octal"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/regression/11183/input.js"
 					end: Object {
 						column: 2
 						index: 47
@@ -269,7 +269,7 @@ JSRoot {
 
 ```
 
- input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/regression/11183/input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Legacy octal literals are not allowed in strict mode
 

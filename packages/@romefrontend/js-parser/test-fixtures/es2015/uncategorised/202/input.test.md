@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/202/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/202/input.js"
 		end: Object {
 			column: 2
 			index: 2
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected number in radix 8"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/202/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/202/input.js"
 				end: Object {
 					column: 2
 					index: 2
@@ -74,7 +74,7 @@ JSRoot {
 				value: 0
 				format: "octal"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/202/input.js"
 					end: Object {
 						column: 2
 						index: 2
@@ -96,7 +96,7 @@ JSRoot {
 
 ```
 
- input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/202/input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected number in radix 8
 

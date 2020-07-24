@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/errors/unclosed-jsx-element/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/errors/unclosed-jsx-element/input.jsx"
 		end: Object {
 			column: 0
 			index: 14
@@ -34,7 +34,7 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/unclosed-jsx-element/input.jsx"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 					}
 					frame {
 						location: Object {
-							filename: "input.jsx"
+							filename: "jsx/errors/unclosed-jsx-element/input.jsx"
 							end: Object {
 								column: 4
 								index: 4
@@ -78,7 +78,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/unclosed-jsx-element/input.jsx"
 				end: Object {
 					column: 13
 					index: 13
@@ -94,7 +94,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "div"
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/errors/unclosed-jsx-element/input.jsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -111,7 +111,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/errors/unclosed-jsx-element/input.jsx"
 					end: Object {
 						column: 13
 						index: 13
@@ -127,7 +127,7 @@ JSRoot {
 					JSXText {
 						value: "() => "
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/errors/unclosed-jsx-element/input.jsx"
 							end: Object {
 								column: 11
 								index: 11
@@ -142,7 +142,7 @@ JSRoot {
 					}
 					JSXExpressionContainer {
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/errors/unclosed-jsx-element/input.jsx"
 							end: Object {
 								column: 13
 								index: 13
@@ -156,7 +156,7 @@ JSRoot {
 						}
 						expression: JSXEmptyExpression {
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/errors/unclosed-jsx-element/input.jsx"
 								end: Object {
 									column: 12
 									index: 12
@@ -181,7 +181,7 @@ JSRoot {
 
 ```
 
- input.jsx:1:13 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ jsx/errors/unclosed-jsx-element/input.jsx:1:13 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed JSX element
 

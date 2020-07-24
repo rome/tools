@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/await-inside-parameters/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/await-inside-parameters/input.js"
 		end: Object {
 			column: 33
 			index: 33
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "await is not allowed in async function parameters"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-parameters/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-parameters/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 17
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-parameters/input.js"
 				end: Object {
 					column: 33
 					index: 33
@@ -91,7 +91,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-parameters/input.js"
 					end: Object {
 						column: 33
 						index: 33
@@ -113,7 +113,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-parameters/input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -128,7 +128,7 @@ JSRoot {
 				params: Array [
 					JSBindingAssignmentPattern {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/await-inside-parameters/input.js"
 							end: Object {
 								column: 29
 								index: 29
@@ -142,7 +142,7 @@ JSRoot {
 						}
 						right: JSAwaitExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-inside-parameters/input.js"
 								end: Object {
 									column: 29
 									index: 29
@@ -158,7 +158,7 @@ JSRoot {
 								value: 2
 								format: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/await-inside-parameters/input.js"
 									end: Object {
 										column: 29
 										index: 29
@@ -175,7 +175,7 @@ JSRoot {
 						left: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-inside-parameters/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 19
@@ -192,7 +192,7 @@ JSRoot {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/await-inside-parameters/input.js"
 									end: Object {
 										column: 19
 										index: 19
@@ -218,7 +218,7 @@ JSRoot {
 
 ```
 
- input.js:1:28 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/await-inside-parameters/input.js:1:28 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ await is not allowed in async function parameters
 

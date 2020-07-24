@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/statements/label-valid-func-non-strict/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/statements/label-valid-func-non-strict/input.js"
 		end: Object {
 			column: 0
 			index: 23
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSLabeledStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/statements/label-valid-func-non-strict/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -49,7 +49,7 @@ JSRoot {
 			label: JSIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/statements/label-valid-func-non-strict/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 3
@@ -67,7 +67,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "bar"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/statements/label-valid-func-non-strict/input.js"
 						identifierName: "bar"
 						end: Object {
 							column: 17
@@ -82,7 +82,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/statements/label-valid-func-non-strict/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -98,7 +98,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/statements/label-valid-func-non-strict/input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -121,7 +121,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/statements/label-valid-func-non-strict/input.js"
 						end: Object {
 							column: 19
 							index: 19

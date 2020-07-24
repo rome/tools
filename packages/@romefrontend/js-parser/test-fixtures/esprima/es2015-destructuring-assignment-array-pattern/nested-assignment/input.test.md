@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -65,7 +65,7 @@ JSRoot {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js"
 						end: Object {
 							column: 24
 							index: 24
@@ -81,7 +81,7 @@ JSRoot {
 				left: JSAssignmentArrayPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -97,7 +97,7 @@ JSRoot {
 						JSAssignmentIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 2
@@ -114,7 +114,7 @@ JSRoot {
 						JSAssignmentAssignmentPattern {
 							operator: "="
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js"
 								end: Object {
 									column: 6
 									index: 6
@@ -129,7 +129,7 @@ JSRoot {
 							left: JSAssignmentIdentifier {
 								name: "b"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js"
 									identifierName: "b"
 									end: Object {
 										column: 4
@@ -147,7 +147,7 @@ JSRoot {
 								value: 0
 								format: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js"
 									end: Object {
 										column: 6
 										index: 6
@@ -164,7 +164,7 @@ JSRoot {
 						JSAssignmentAssignmentPattern {
 							operator: "="
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js"
 								end: Object {
 									column: 21
 									index: 21
@@ -179,7 +179,7 @@ JSRoot {
 							right: JSObjectExpression {
 								properties: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js"
 									end: Object {
 										column: 21
 										index: 21
@@ -194,7 +194,7 @@ JSRoot {
 							}
 							left: JSAssignmentArrayPattern {
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js"
 									end: Object {
 										column: 18
 										index: 18
@@ -210,7 +210,7 @@ JSRoot {
 									JSAssignmentIdentifier {
 										name: "c"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js"
 											identifierName: "c"
 											end: Object {
 												column: 9
@@ -227,7 +227,7 @@ JSRoot {
 								]
 								rest: JSMemberExpression {
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js"
 										end: Object {
 											column: 17
 											index: 17
@@ -242,7 +242,7 @@ JSRoot {
 									object: JSReferenceIdentifier {
 										name: "a"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js"
 											identifierName: "a"
 											end: Object {
 												column: 14
@@ -261,7 +261,7 @@ JSRoot {
 											value: 0
 											format: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js"
 												end: Object {
 													column: 16
 													index: 16
@@ -275,7 +275,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js"
 											end: Object {
 												column: 17
 												index: 17

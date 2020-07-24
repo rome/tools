@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/modifiers-properties/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/modifiers-properties/input.ts"
 		end: Object {
 			column: 0
 			index: 397
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/modifiers-properties/input.ts"
 					identifierName: "C"
 					end: Object {
 						column: 16
@@ -52,7 +52,7 @@ JSRoot {
 			}
 			abstract: true
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/modifiers-properties/input.ts"
 				end: Object {
 					column: 1
 					index: 396
@@ -70,7 +70,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/modifiers-properties/input.ts"
 					end: Object {
 						column: 1
 						index: 396
@@ -88,7 +88,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "r"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-properties/input.ts"
 									identifierName: "r"
 									end: Object {
 										column: 14
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 14
 									index: 33
@@ -120,7 +120,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-properties/input.ts"
 							end: Object {
 								column: 15
 								index: 34
@@ -145,7 +145,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 14
 									index: 33
@@ -164,7 +164,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "r2"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-properties/input.ts"
 									identifierName: "r2"
 									end: Object {
 										column: 15
@@ -179,7 +179,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 15
 									index: 50
@@ -195,7 +195,7 @@ JSRoot {
 						value: undefined
 						definite: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-properties/input.ts"
 							end: Object {
 								column: 25
 								index: 60
@@ -209,7 +209,7 @@ JSRoot {
 						}
 						typeAnnotation: TSNumberKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 24
 									index: 59
@@ -235,7 +235,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 16
 									index: 51
@@ -254,7 +254,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-properties/input.ts"
 									identifierName: "a"
 									end: Object {
 										column: 14
@@ -269,7 +269,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 14
 									index: 75
@@ -286,7 +286,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-properties/input.ts"
 							end: Object {
 								column: 15
 								index: 76
@@ -311,7 +311,7 @@ JSRoot {
 								line: 4
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 14
 									index: 75
@@ -330,7 +330,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "s"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-properties/input.ts"
 									identifierName: "s"
 									end: Object {
 										column: 12
@@ -345,7 +345,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 12
 									index: 89
@@ -362,7 +362,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-properties/input.ts"
 							end: Object {
 								column: 13
 								index: 90
@@ -387,7 +387,7 @@ JSRoot {
 								line: 5
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 12
 									index: 89
@@ -406,7 +406,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "pu"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-properties/input.ts"
 									identifierName: "pu"
 									end: Object {
 										column: 13
@@ -421,7 +421,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 13
 									index: 105
@@ -438,7 +438,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-properties/input.ts"
 							end: Object {
 								column: 14
 								index: 106
@@ -463,7 +463,7 @@ JSRoot {
 								line: 7
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 13
 									index: 105
@@ -482,7 +482,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "po"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-properties/input.ts"
 									identifierName: "po"
 									end: Object {
 										column: 16
@@ -497,7 +497,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 16
 									index: 123
@@ -514,7 +514,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-properties/input.ts"
 							end: Object {
 								column: 17
 								index: 124
@@ -539,7 +539,7 @@ JSRoot {
 								line: 8
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 16
 									index: 123
@@ -558,7 +558,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "pi"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-properties/input.ts"
 									identifierName: "pi"
 									end: Object {
 										column: 14
@@ -573,7 +573,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 14
 									index: 139
@@ -590,7 +590,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-properties/input.ts"
 							end: Object {
 								column: 15
 								index: 140
@@ -615,7 +615,7 @@ JSRoot {
 								line: 9
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 14
 									index: 139
@@ -634,7 +634,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "ra"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-properties/input.ts"
 									identifierName: "ra"
 									end: Object {
 										column: 24
@@ -649,7 +649,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 24
 									index: 166
@@ -666,7 +666,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-properties/input.ts"
 							end: Object {
 								column: 25
 								index: 167
@@ -691,7 +691,7 @@ JSRoot {
 								line: 11
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 24
 									index: 166
@@ -710,7 +710,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "ar"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-properties/input.ts"
 									identifierName: "ar"
 									end: Object {
 										column: 24
@@ -725,7 +725,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 24
 									index: 192
@@ -742,7 +742,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-properties/input.ts"
 							end: Object {
 								column: 25
 								index: 193
@@ -767,7 +767,7 @@ JSRoot {
 								line: 12
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 24
 									index: 192
@@ -786,7 +786,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "sr"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-properties/input.ts"
 									identifierName: "sr"
 									end: Object {
 										column: 22
@@ -801,7 +801,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 22
 									index: 216
@@ -818,7 +818,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-properties/input.ts"
 							end: Object {
 								column: 23
 								index: 217
@@ -843,7 +843,7 @@ JSRoot {
 								line: 13
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 22
 									index: 216
@@ -862,7 +862,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "pur"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-properties/input.ts"
 									identifierName: "pur"
 									end: Object {
 										column: 23
@@ -877,7 +877,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 23
 									index: 242
@@ -894,7 +894,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-properties/input.ts"
 							end: Object {
 								column: 24
 								index: 243
@@ -919,7 +919,7 @@ JSRoot {
 								line: 15
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 23
 									index: 242
@@ -938,7 +938,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "pua"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-properties/input.ts"
 									identifierName: "pua"
 									end: Object {
 										column: 23
@@ -953,7 +953,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 23
 									index: 267
@@ -970,7 +970,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-properties/input.ts"
 							end: Object {
 								column: 24
 								index: 268
@@ -995,7 +995,7 @@ JSRoot {
 								line: 16
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 23
 									index: 267
@@ -1014,7 +1014,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "pus"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-properties/input.ts"
 									identifierName: "pus"
 									end: Object {
 										column: 21
@@ -1029,7 +1029,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 21
 									index: 290
@@ -1046,7 +1046,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-properties/input.ts"
 							end: Object {
 								column: 22
 								index: 291
@@ -1071,7 +1071,7 @@ JSRoot {
 								line: 17
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 21
 									index: 290
@@ -1090,7 +1090,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "pura"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-properties/input.ts"
 									identifierName: "pura"
 									end: Object {
 										column: 33
@@ -1105,7 +1105,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 33
 									index: 325
@@ -1122,7 +1122,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-properties/input.ts"
 							end: Object {
 								column: 34
 								index: 326
@@ -1147,7 +1147,7 @@ JSRoot {
 								line: 18
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 33
 									index: 325
@@ -1166,7 +1166,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "puar"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-properties/input.ts"
 									identifierName: "puar"
 									end: Object {
 										column: 33
@@ -1181,7 +1181,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 33
 									index: 360
@@ -1198,7 +1198,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-properties/input.ts"
 							end: Object {
 								column: 34
 								index: 361
@@ -1223,7 +1223,7 @@ JSRoot {
 								line: 19
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 33
 									index: 360
@@ -1242,7 +1242,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "pusr"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-properties/input.ts"
 									identifierName: "pusr"
 									end: Object {
 										column: 31
@@ -1257,7 +1257,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 31
 									index: 393
@@ -1274,7 +1274,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-properties/input.ts"
 							end: Object {
 								column: 32
 								index: 394
@@ -1299,7 +1299,7 @@ JSRoot {
 								line: 20
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-properties/input.ts"
 								end: Object {
 									column: 31
 									index: 393

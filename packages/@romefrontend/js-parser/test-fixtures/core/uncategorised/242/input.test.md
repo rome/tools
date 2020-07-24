@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/242/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/242/input.js"
 		end: Object {
 			column: 24
 			index: 24
@@ -36,7 +36,7 @@ JSRoot {
 			test: undefined
 			update: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/242/input.js"
 				end: Object {
 					column: 24
 					index: 24
@@ -50,7 +50,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/242/input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -66,7 +66,7 @@ JSRoot {
 			init: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/242/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -83,7 +83,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/242/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 9
@@ -98,7 +98,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/242/input.js"
 							end: Object {
 								column: 13
 								index: 13
@@ -114,7 +114,7 @@ JSRoot {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/242/input.js"
 								end: Object {
 									column: 13
 									index: 13
@@ -132,7 +132,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "y"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/242/input.js"
 								identifierName: "y"
 								end: Object {
 									column: 16
@@ -147,7 +147,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/242/input.js"
 							end: Object {
 								column: 20
 								index: 20
@@ -163,7 +163,7 @@ JSRoot {
 							value: 1
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/242/input.js"
 								end: Object {
 									column: 20
 									index: 20

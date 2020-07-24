@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/33/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/33/input.js"
 		end: Object {
 			column: 23
 			index: 23
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/33/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/33/input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -66,7 +66,7 @@ JSRoot {
 					rest: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/33/input.js"
 						end: Object {
 							column: 4
 							index: 4
@@ -82,7 +82,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "e"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/33/input.js"
 								identifierName: "e"
 								end: Object {
 									column: 1
@@ -100,7 +100,7 @@ JSRoot {
 				}
 				body: JSObjectExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/33/input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -118,7 +118,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "property"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/33/input.js"
 										identifierName: "property"
 										end: Object {
 											column: 16
@@ -133,7 +133,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/33/input.js"
 									end: Object {
 										column: 16
 										index: 16
@@ -150,7 +150,7 @@ JSRoot {
 								value: 42
 								format: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/33/input.js"
 									end: Object {
 										column: 20
 										index: 20
@@ -164,7 +164,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/33/input.js"
 								end: Object {
 									column: 20
 									index: 20

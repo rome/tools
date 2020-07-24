@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/195/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/195/input.js"
 		end: Object {
 			column: 8
 			index: 8
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/195/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -54,7 +54,7 @@ JSRoot {
 				sticky: false
 				unicode: true
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/195/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -68,7 +68,7 @@ JSRoot {
 				}
 				expression: JSRegExpSubExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/195/input.js"
 						end: Object {
 							column: 5
 							index: 6
@@ -84,7 +84,7 @@ JSRoot {
 						JSRegExpCharSet {
 							invert: false
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/195/input.js"
 								end: Object {
 									column: 5
 									index: 5
@@ -99,7 +99,7 @@ JSRoot {
 							body: Array [
 								JSRegExpCharSetRange {
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/195/input.js"
 										end: Object {
 											column: 5
 											index: 5
@@ -114,7 +114,7 @@ JSRoot {
 									end: JSRegExpCharacter {
 										value: "z"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/195/input.js"
 											end: Object {
 												column: 5
 												index: 5
@@ -130,7 +130,7 @@ JSRoot {
 									start: JSRegExpCharacter {
 										value: "a"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/195/input.js"
 											end: Object {
 												column: 3
 												index: 3

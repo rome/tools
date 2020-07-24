@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/type-arguments/empty/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/type-arguments/empty/input.ts"
 		end: Object {
 			column: 0
 			index: 8
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/type-arguments/empty/input.ts"
 				end: Object {
 					column: 7
 					index: 7
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/type-arguments/empty/input.ts"
 					end: Object {
 						column: 7
 						index: 7
@@ -64,7 +64,7 @@ JSRoot {
 				typeArguments: TSTypeParameterInstantiation {
 					params: Array []
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/type-arguments/empty/input.ts"
 						end: Object {
 							column: 5
 							index: 5
@@ -80,7 +80,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "foo"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/type-arguments/empty/input.ts"
 						identifierName: "foo"
 						end: Object {
 							column: 3

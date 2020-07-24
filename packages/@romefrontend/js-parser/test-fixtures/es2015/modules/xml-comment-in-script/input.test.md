@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/modules/xml-comment-in-script/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/modules/xml-comment-in-script/input.js"
 		end: Object {
 			column: 0
 			index: 12
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: "bar"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/xml-comment-in-script/input.js"
 				end: Object {
 					column: 11
 					index: 11
@@ -53,7 +53,7 @@ JSRoot {
 		JSExpressionStatement {
 			trailingComments: Array ["0"]
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/xml-comment-in-script/input.js"
 				end: Object {
 					column: 3
 					index: 3
@@ -69,7 +69,7 @@ JSRoot {
 				name: "foo"
 				trailingComments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/modules/xml-comment-in-script/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 3

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/cast/null-assertion-false-positive/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/cast/null-assertion-false-positive/input.ts"
 		end: Object {
 			column: 0
 			index: 5
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/null-assertion-false-positive/input.ts"
 				end: Object {
 					column: 1
 					index: 1
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "a"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/null-assertion-false-positive/input.ts"
 					identifierName: "a"
 					end: Object {
 						column: 1
@@ -66,7 +66,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/null-assertion-false-positive/input.ts"
 				end: Object {
 					column: 2
 					index: 4
@@ -82,7 +82,7 @@ JSRoot {
 				operator: "!"
 				prefix: true
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/null-assertion-false-positive/input.ts"
 					end: Object {
 						column: 2
 						index: 4
@@ -97,7 +97,7 @@ JSRoot {
 				argument: JSReferenceIdentifier {
 					name: "b"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/null-assertion-false-positive/input.ts"
 						identifierName: "b"
 						end: Object {
 							column: 2

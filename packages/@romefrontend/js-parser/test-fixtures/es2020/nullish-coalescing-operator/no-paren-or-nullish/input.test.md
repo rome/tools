@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js"
 		end: Object {
 			column: 0
 			index: 13
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js"
 				end: Object {
 					column: 12
 					index: 12
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSLogicalExpression {
 				operator: "??"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -64,7 +64,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "j"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js"
 						identifierName: "j"
 						end: Object {
 							column: 11
@@ -81,7 +81,7 @@ JSRoot {
 				left: JSLogicalExpression {
 					operator: "||"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js"
 						end: Object {
 							column: 6
 							index: 6
@@ -96,7 +96,7 @@ JSRoot {
 					left: JSReferenceIdentifier {
 						name: "h"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js"
 							identifierName: "h"
 							end: Object {
 								column: 1
@@ -113,7 +113,7 @@ JSRoot {
 					right: JSReferenceIdentifier {
 						name: "i"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js"
 							identifierName: "i"
 							end: Object {
 								column: 6

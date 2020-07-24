@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2018/object-rest-spread/1/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2018/object-rest-spread/1/input.js"
 		end: Object {
 			column: 14
 			index: 14
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2018/object-rest-spread/1/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/object-rest-spread/1/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingObjectPattern {
 							properties: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/1/input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -81,7 +81,7 @@ JSRoot {
 							rest: JSBindingIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2018/object-rest-spread/1/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 9
@@ -97,7 +97,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2018/object-rest-spread/1/input.js"
 							end: Object {
 								column: 14
 								index: 14
@@ -112,7 +112,7 @@ JSRoot {
 						init: JSReferenceIdentifier {
 							name: "z"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/1/input.js"
 								identifierName: "z"
 								end: Object {
 									column: 14

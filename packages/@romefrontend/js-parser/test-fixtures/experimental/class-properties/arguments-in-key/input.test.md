@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-properties/arguments-in-key/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-properties/arguments-in-key/input.js"
 		end: Object {
 			column: 1
 			index: 54
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/arguments-in-key/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 11
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/arguments-in-key/input.js"
 				end: Object {
 					column: 1
 					index: 54
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/arguments-in-key/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/arguments-in-key/input.js"
 					end: Object {
 						column: 1
 						index: 54
@@ -106,7 +106,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "A"
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/arguments-in-key/input.js"
 								identifierName: "A"
 								end: Object {
 									column: 9
@@ -121,7 +121,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/arguments-in-key/input.js"
 							end: Object {
 								column: 3
 								index: 52
@@ -139,7 +139,7 @@ JSRoot {
 							superTypeParameters: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/arguments-in-key/input.js"
 								end: Object {
 									column: 3
 									index: 52
@@ -157,7 +157,7 @@ JSRoot {
 										value: JSReferenceIdentifier {
 											name: "arguments"
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-properties/arguments-in-key/input.js"
 												identifierName: "arguments"
 												end: Object {
 													column: 14
@@ -172,7 +172,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/arguments-in-key/input.js"
 											end: Object {
 												column: 15
 												index: 43
@@ -189,7 +189,7 @@ JSRoot {
 										value: 2
 										format: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/arguments-in-key/input.js"
 											end: Object {
 												column: 19
 												index: 47
@@ -205,7 +205,7 @@ JSRoot {
 									definite: undefined
 									typeAnnotation: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-properties/arguments-in-key/input.js"
 										end: Object {
 											column: 20
 											index: 48
@@ -230,7 +230,7 @@ JSRoot {
 											line: 3
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/arguments-in-key/input.js"
 											end: Object {
 												column: 15
 												index: 43

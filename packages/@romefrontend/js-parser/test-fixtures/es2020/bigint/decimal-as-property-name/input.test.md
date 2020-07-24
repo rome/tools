@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/bigint/decimal-as-property-name/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/bigint/decimal-as-property-name/input.js"
 		end: Object {
 			column: 0
 			index: 72
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/bigint/decimal-as-property-name/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -90,7 +90,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: ""
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/bigint/decimal-as-property-name/input.js"
 									identifierName: ""
 									end: Object {
 										column: 5
@@ -105,7 +105,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/bigint/decimal-as-property-name/input.js"
 								end: Object {
 									column: 5
 									index: 5
@@ -122,7 +122,7 @@ JSRoot {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/bigint/decimal-as-property-name/input.js"
 								end: Object {
 									column: 8
 									index: 8
@@ -136,7 +136,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/bigint/decimal-as-property-name/input.js"
 							end: Object {
 								column: 8
 								index: 8
@@ -155,7 +155,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: ""
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/bigint/decimal-as-property-name/input.js"
 									identifierName: ""
 									end: Object {
 										column: 12
@@ -170,7 +170,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/bigint/decimal-as-property-name/input.js"
 								end: Object {
 									column: 12
 									index: 12
@@ -184,7 +184,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/bigint/decimal-as-property-name/input.js"
 							end: Object {
 								column: 17
 								index: 17
@@ -200,7 +200,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/bigint/decimal-as-property-name/input.js"
 								end: Object {
 									column: 17
 									index: 17
@@ -223,7 +223,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/bigint/decimal-as-property-name/input.js"
 								end: Object {
 									column: 14
 									index: 14
@@ -242,7 +242,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "get"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/bigint/decimal-as-property-name/input.js"
 									identifierName: "get"
 									end: Object {
 										column: 22
@@ -257,7 +257,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/bigint/decimal-as-property-name/input.js"
 								end: Object {
 									column: 22
 									index: 22
@@ -273,7 +273,7 @@ JSRoot {
 						value: JSReferenceIdentifier {
 							name: "get"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/bigint/decimal-as-property-name/input.js"
 								identifierName: "get"
 								end: Object {
 									column: 22
@@ -288,7 +288,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/bigint/decimal-as-property-name/input.js"
 							end: Object {
 								column: 22
 								index: 22
@@ -306,7 +306,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 27
 					index: 27
@@ -321,7 +321,7 @@ JSRoot {
 			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/bigint/decimal-as-property-name/input.js"
 					end: Object {
 						column: 27
 						index: 27
@@ -336,7 +336,7 @@ JSRoot {
 				callee: JSBigIntLiteral {
 					value: "2"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/bigint/decimal-as-property-name/input.js"
 						end: Object {
 							column: 25
 							index: 25
@@ -355,7 +355,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 29
 					index: 29
@@ -370,7 +370,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -385,7 +385,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/bigint/decimal-as-property-name/input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -401,7 +401,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 34
 					index: 34
@@ -416,7 +416,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "set"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/bigint/decimal-as-property-name/input.js"
 					identifierName: "set"
 					end: Object {
 						column: 34
@@ -433,7 +433,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 40
 					index: 40
@@ -447,7 +447,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/bigint/decimal-as-property-name/input.js"
 					end: Object {
 						column: 40
 						index: 40
@@ -462,7 +462,7 @@ JSRoot {
 				callee: JSBigIntLiteral {
 					value: "3"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/bigint/decimal-as-property-name/input.js"
 						end: Object {
 							column: 37
 							index: 37
@@ -479,7 +479,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "_"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/bigint/decimal-as-property-name/input.js"
 							identifierName: "_"
 							end: Object {
 								column: 39
@@ -500,7 +500,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 42
 					index: 42
@@ -515,7 +515,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 43
 					index: 43
@@ -530,7 +530,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/bigint/decimal-as-property-name/input.js"
 					end: Object {
 						column: 43
 						index: 43
@@ -546,7 +546,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 49
 					index: 49
@@ -561,7 +561,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "async"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/bigint/decimal-as-property-name/input.js"
 					identifierName: "async"
 					end: Object {
 						column: 49
@@ -578,7 +578,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 54
 					index: 54
@@ -593,7 +593,7 @@ JSRoot {
 			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/bigint/decimal-as-property-name/input.js"
 					end: Object {
 						column: 54
 						index: 54
@@ -608,7 +608,7 @@ JSRoot {
 				callee: JSBigIntLiteral {
 					value: "4"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/bigint/decimal-as-property-name/input.js"
 						end: Object {
 							column: 52
 							index: 52
@@ -627,7 +627,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 57
 					index: 57
@@ -642,7 +642,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 64
 					index: 64
@@ -657,7 +657,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "*"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/bigint/decimal-as-property-name/input.js"
 					end: Object {
 						column: 64
 						index: 64
@@ -672,7 +672,7 @@ JSRoot {
 				left: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/bigint/decimal-as-property-name/input.js"
 						end: Object {
 							column: 58
 							index: 58
@@ -688,7 +688,7 @@ JSRoot {
 				right: JSCallExpression {
 					arguments: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/bigint/decimal-as-property-name/input.js"
 						end: Object {
 							column: 64
 							index: 64
@@ -703,7 +703,7 @@ JSRoot {
 					callee: JSBigIntLiteral {
 						value: "5"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/bigint/decimal-as-property-name/input.js"
 							end: Object {
 								column: 62
 								index: 62
@@ -723,7 +723,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 67
 					index: 67
@@ -738,7 +738,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 69
 					index: 69
@@ -753,7 +753,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/bigint/decimal-as-property-name/input.js"
 					end: Object {
 						column: 69
 						index: 69
@@ -769,7 +769,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 71
 					index: 71
@@ -784,7 +784,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/bigint/decimal-as-property-name/input.js"
 					end: Object {
 						column: 70
 						index: 70
@@ -806,7 +806,7 @@ JSRoot {
 
 ```
 
- input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2020/bigint/decimal-as-property-name/input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
 

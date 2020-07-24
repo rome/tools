@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/mapped/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/mapped/input.ts"
 		end: Object {
 			column: 0
 			index: 185
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/mapped/input.ts"
 				end: Object {
 					column: 37
 					index: 37
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/mapped/input.ts"
 					end: Object {
 						column: 37
 						index: 37
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "map1"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/mapped/input.ts"
 								end: Object {
 									column: 36
 									index: 36
@@ -81,7 +81,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/mapped/input.ts"
 									end: Object {
 										column: 36
 										index: 36
@@ -97,7 +97,7 @@ JSRoot {
 									optional: undefined
 									readonly: undefined
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/mapped/input.ts"
 										end: Object {
 											column: 36
 											index: 36
@@ -111,7 +111,7 @@ JSRoot {
 									}
 									typeAnnotation: TSNumberKeywordTypeAnnotation {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/mapped/input.ts"
 											end: Object {
 												column: 33
 												index: 33
@@ -127,7 +127,7 @@ JSRoot {
 									typeParameter: TSTypeParameter {
 										name: "P"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/mapped/input.ts"
 											end: Object {
 												column: 24
 												index: 24
@@ -141,7 +141,7 @@ JSRoot {
 										}
 										constraint: TSStringKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/mapped/input.ts"
 												end: Object {
 													column: 24
 													index: 24
@@ -160,7 +160,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/mapped/input.ts"
 							end: Object {
 								column: 36
 								index: 36
@@ -178,7 +178,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/mapped/input.ts"
 				end: Object {
 					column: 47
 					index: 85
@@ -193,7 +193,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/mapped/input.ts"
 					end: Object {
 						column: 47
 						index: 85
@@ -210,7 +210,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "map2"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/mapped/input.ts"
 								end: Object {
 									column: 46
 									index: 84
@@ -225,7 +225,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/mapped/input.ts"
 									end: Object {
 										column: 46
 										index: 84
@@ -241,7 +241,7 @@ JSRoot {
 									optional: true
 									readonly: true
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/mapped/input.ts"
 										end: Object {
 											column: 46
 											index: 84
@@ -255,7 +255,7 @@ JSRoot {
 									}
 									typeAnnotation: TSNumberKeywordTypeAnnotation {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/mapped/input.ts"
 											end: Object {
 												column: 43
 												index: 81
@@ -271,7 +271,7 @@ JSRoot {
 									typeParameter: TSTypeParameter {
 										name: "P"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/mapped/input.ts"
 											end: Object {
 												column: 33
 												index: 71
@@ -285,7 +285,7 @@ JSRoot {
 										}
 										constraint: TSStringKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/mapped/input.ts"
 												end: Object {
 													column: 33
 													index: 71
@@ -304,7 +304,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/mapped/input.ts"
 							end: Object {
 								column: 46
 								index: 84
@@ -322,7 +322,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/mapped/input.ts"
 				end: Object {
 					column: 49
 					index: 135
@@ -337,7 +337,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/mapped/input.ts"
 					end: Object {
 						column: 49
 						index: 135
@@ -354,7 +354,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "map3"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/mapped/input.ts"
 								end: Object {
 									column: 48
 									index: 134
@@ -369,7 +369,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/mapped/input.ts"
 									end: Object {
 										column: 48
 										index: 134
@@ -385,7 +385,7 @@ JSRoot {
 									optional: "+"
 									readonly: "+"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/mapped/input.ts"
 										end: Object {
 											column: 48
 											index: 134
@@ -399,7 +399,7 @@ JSRoot {
 									}
 									typeAnnotation: TSNumberKeywordTypeAnnotation {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/mapped/input.ts"
 											end: Object {
 												column: 45
 												index: 131
@@ -415,7 +415,7 @@ JSRoot {
 									typeParameter: TSTypeParameter {
 										name: "P"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/mapped/input.ts"
 											end: Object {
 												column: 34
 												index: 120
@@ -429,7 +429,7 @@ JSRoot {
 										}
 										constraint: TSStringKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/mapped/input.ts"
 												end: Object {
 													column: 34
 													index: 120
@@ -448,7 +448,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/mapped/input.ts"
 							end: Object {
 								column: 48
 								index: 134
@@ -466,7 +466,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/mapped/input.ts"
 				end: Object {
 					column: 48
 					index: 184
@@ -481,7 +481,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/mapped/input.ts"
 					end: Object {
 						column: 48
 						index: 184
@@ -498,7 +498,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "map4"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/mapped/input.ts"
 								end: Object {
 									column: 47
 									index: 183
@@ -513,7 +513,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/mapped/input.ts"
 									end: Object {
 										column: 47
 										index: 183
@@ -529,7 +529,7 @@ JSRoot {
 									optional: "-"
 									readonly: "-"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/mapped/input.ts"
 										end: Object {
 											column: 47
 											index: 183
@@ -543,7 +543,7 @@ JSRoot {
 									}
 									typeAnnotation: TSNumberKeywordTypeAnnotation {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/mapped/input.ts"
 											end: Object {
 												column: 45
 												index: 181
@@ -559,7 +559,7 @@ JSRoot {
 									typeParameter: TSTypeParameter {
 										name: "P"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/mapped/input.ts"
 											end: Object {
 												column: 34
 												index: 170
@@ -573,7 +573,7 @@ JSRoot {
 										}
 										constraint: TSStringKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/mapped/input.ts"
 												end: Object {
 													column: 34
 													index: 170
@@ -592,7 +592,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/mapped/input.ts"
 							end: Object {
 								column: 47
 								index: 183

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 		end: Object {
 			column: 0
 			index: 42
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Range values reversed. Start char code is greater than end char code"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 				end: Object {
 					column: 41
 					index: 41
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 					end: Object {
 						column: 41
 						index: 41
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 5
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 							end: Object {
 								column: 41
 								index: 41
@@ -125,7 +125,7 @@ JSRoot {
 							sticky: false
 							unicode: true
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 								end: Object {
 									column: 41
 									index: 41
@@ -139,7 +139,7 @@ JSRoot {
 							}
 							expression: JSRegExpSubExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 									end: Object {
 										column: 38
 										index: 39
@@ -155,7 +155,7 @@ JSRoot {
 									JSRegExpCharSet {
 										invert: false
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 											end: Object {
 												column: 38
 												index: 38
@@ -171,7 +171,7 @@ JSRoot {
 											JSRegExpCharacter {
 												value: "\ud834"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 													end: Object {
 														column: 16
 														index: 16
@@ -186,7 +186,7 @@ JSRoot {
 											}
 											JSRegExpCharSetRange {
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 													end: Object {
 														column: 29
 														index: 29
@@ -201,7 +201,7 @@ JSRoot {
 												end: JSRegExpCharacter {
 													value: "\udf06"
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 														end: Object {
 															column: 22
 															index: 22
@@ -217,7 +217,7 @@ JSRoot {
 												start: JSRegExpCharacter {
 													value: "\ud834"
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 														end: Object {
 															column: 29
 															index: 29
@@ -234,7 +234,7 @@ JSRoot {
 											JSRegExpCharacter {
 												value: "\udf08"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 													end: Object {
 														column: 35
 														index: 35
@@ -249,7 +249,7 @@ JSRoot {
 											}
 											JSRegExpCharSetRange {
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 													end: Object {
 														column: 38
 														index: 38
@@ -264,7 +264,7 @@ JSRoot {
 												end: JSRegExpCharacter {
 													value: "z"
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 														end: Object {
 															column: 38
 															index: 38
@@ -280,7 +280,7 @@ JSRoot {
 												start: JSRegExpCharacter {
 													value: "a"
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 														end: Object {
 															column: 36
 															index: 36
@@ -311,7 +311,8 @@ JSRoot {
 
 ```
 
- input.js:1:16 parse/regex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js:1:16
+parse/regex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Range values reversed. Start char code is greater than end char code
 

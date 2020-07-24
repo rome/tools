@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
 		end: Object {
 			column: 0
 			index: 12
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
 				end: Object {
 					column: 2
 					index: 11
@@ -51,7 +51,7 @@ JSRoot {
 				optional: undefined
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
 					end: Object {
 						column: 2
 						index: 11
@@ -65,7 +65,7 @@ JSRoot {
 				}
 				callee: JSTaggedTemplateExpression {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
 						end: Object {
 							column: 2
 							index: 11
@@ -80,7 +80,7 @@ JSRoot {
 					tag: JSReferenceIdentifier {
 						name: "C"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
 							identifierName: "C"
 							end: Object {
 								column: 5
@@ -97,7 +97,7 @@ JSRoot {
 					quasi: JSTemplateLiteral {
 						expressions: Array []
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
 							end: Object {
 								column: 2
 								index: 11
@@ -115,7 +115,7 @@ JSRoot {
 								raw: ""
 								tail: true
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
 									end: Object {
 										column: 1
 										index: 10
@@ -132,7 +132,7 @@ JSRoot {
 					}
 					typeArguments: TSTypeParameterInstantiation {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
 							end: Object {
 								column: 8
 								index: 8
@@ -148,7 +148,7 @@ JSRoot {
 							TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
 									end: Object {
 										column: 7
 										index: 7
@@ -163,7 +163,7 @@ JSRoot {
 								typeName: JSReferenceIdentifier {
 									name: "T"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/type-arguments/tagged-template-no-asi/input.ts"
 										identifierName: "T"
 										end: Object {
 											column: 7

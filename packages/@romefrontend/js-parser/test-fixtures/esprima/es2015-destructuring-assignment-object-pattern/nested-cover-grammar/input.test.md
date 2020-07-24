@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 		end: Object {
 			column: 0
 			index: 52
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 				end: Object {
 					column: 51
 					index: 51
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 					end: Object {
 						column: 50
 						index: 50
@@ -89,7 +89,7 @@ JSRoot {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 						end: Object {
 							column: 50
 							index: 50
@@ -105,7 +105,7 @@ JSRoot {
 				left: JSAssignmentArrayPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 						end: Object {
 							column: 48
 							index: 48
@@ -121,7 +121,7 @@ JSRoot {
 						JSAssignmentArrayPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 								end: Object {
 									column: 47
 									index: 47
@@ -137,7 +137,7 @@ JSRoot {
 								JSAssignmentArrayPattern {
 									rest: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 										end: Object {
 											column: 46
 											index: 46
@@ -153,7 +153,7 @@ JSRoot {
 										JSAssignmentArrayPattern {
 											rest: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 												end: Object {
 													column: 45
 													index: 45
@@ -169,7 +169,7 @@ JSRoot {
 												JSAssignmentArrayPattern {
 													rest: undefined
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 														end: Object {
 															column: 44
 															index: 44
@@ -185,7 +185,7 @@ JSRoot {
 														JSAssignmentArrayPattern {
 															rest: undefined
 															loc: Object {
-																filename: "input.js"
+																filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																end: Object {
 																	column: 43
 																	index: 43
@@ -201,7 +201,7 @@ JSRoot {
 																JSAssignmentArrayPattern {
 																	rest: undefined
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																		end: Object {
 																			column: 42
 																			index: 42
@@ -217,7 +217,7 @@ JSRoot {
 																		JSAssignmentArrayPattern {
 																			rest: undefined
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																				end: Object {
 																					column: 41
 																					index: 41
@@ -233,7 +233,7 @@ JSRoot {
 																				JSAssignmentArrayPattern {
 																					rest: undefined
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																						end: Object {
 																							column: 40
 																							index: 40
@@ -249,7 +249,7 @@ JSRoot {
 																						JSAssignmentArrayPattern {
 																							rest: undefined
 																							loc: Object {
-																								filename: "input.js"
+																								filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																								end: Object {
 																									column: 39
 																									index: 39
@@ -265,7 +265,7 @@ JSRoot {
 																								JSAssignmentArrayPattern {
 																									rest: undefined
 																									loc: Object {
-																										filename: "input.js"
+																										filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																										end: Object {
 																											column: 38
 																											index: 38
@@ -281,7 +281,7 @@ JSRoot {
 																										JSAssignmentArrayPattern {
 																											rest: undefined
 																											loc: Object {
-																												filename: "input.js"
+																												filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																												end: Object {
 																													column: 37
 																													index: 37
@@ -297,7 +297,7 @@ JSRoot {
 																												JSAssignmentArrayPattern {
 																													rest: undefined
 																													loc: Object {
-																														filename: "input.js"
+																														filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																														end: Object {
 																															column: 36
 																															index: 36
@@ -313,7 +313,7 @@ JSRoot {
 																														JSAssignmentArrayPattern {
 																															rest: undefined
 																															loc: Object {
-																																filename: "input.js"
+																																filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																																end: Object {
 																																	column: 35
 																																	index: 35
@@ -329,7 +329,7 @@ JSRoot {
 																																JSAssignmentArrayPattern {
 																																	rest: undefined
 																																	loc: Object {
-																																		filename: "input.js"
+																																		filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																																		end: Object {
 																																			column: 34
 																																			index: 34
@@ -345,7 +345,7 @@ JSRoot {
 																																		JSAssignmentArrayPattern {
 																																			rest: undefined
 																																			loc: Object {
-																																				filename: "input.js"
+																																				filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																																				end: Object {
 																																					column: 33
 																																					index: 33
@@ -361,7 +361,7 @@ JSRoot {
 																																				JSAssignmentArrayPattern {
 																																					rest: undefined
 																																					loc: Object {
-																																						filename: "input.js"
+																																						filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																																						end: Object {
 																																							column: 32
 																																							index: 32
@@ -377,7 +377,7 @@ JSRoot {
 																																						JSAssignmentArrayPattern {
 																																							rest: undefined
 																																							loc: Object {
-																																								filename: "input.js"
+																																								filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																																								end: Object {
 																																									column: 31
 																																									index: 31
@@ -393,7 +393,7 @@ JSRoot {
 																																								JSAssignmentArrayPattern {
 																																									rest: undefined
 																																									loc: Object {
-																																										filename: "input.js"
+																																										filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																																										end: Object {
 																																											column: 30
 																																											index: 30
@@ -409,7 +409,7 @@ JSRoot {
 																																										JSAssignmentArrayPattern {
 																																											rest: undefined
 																																											loc: Object {
-																																												filename: "input.js"
+																																												filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																																												end: Object {
 																																													column: 29
 																																													index: 29
@@ -425,7 +425,7 @@ JSRoot {
 																																												JSAssignmentAssignmentPattern {
 																																													operator: "="
 																																													loc: Object {
-																																														filename: "input.js"
+																																														filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																																														end: Object {
 																																															column: 27
 																																															index: 27
@@ -439,7 +439,7 @@ JSRoot {
 																																													}
 																																													right: JSMemberExpression {
 																																														loc: Object {
-																																															filename: "input.js"
+																																															filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																																															end: Object {
 																																																column: 27
 																																																index: 27
@@ -454,7 +454,7 @@ JSRoot {
 																																														object: JSReferenceIdentifier {
 																																															name: "b"
 																																															loc: Object {
-																																																filename: "input.js"
+																																																filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																																																identifierName: "b"
 																																																end: Object {
 																																																	column: 24
@@ -473,7 +473,7 @@ JSRoot {
 																																																value: 0
 																																																format: undefined
 																																																loc: Object {
-																																																	filename: "input.js"
+																																																	filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																																																	end: Object {
 																																																		column: 26
 																																																		index: 26
@@ -487,7 +487,7 @@ JSRoot {
 																																																}
 																																															}
 																																															loc: Object {
-																																																filename: "input.js"
+																																																filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																																																end: Object {
 																																																	column: 27
 																																																	index: 27
@@ -504,7 +504,7 @@ JSRoot {
 																																													left: JSAssignmentObjectPattern {
 																																														rest: undefined
 																																														loc: Object {
-																																															filename: "input.js"
+																																															filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																																															end: Object {
 																																																column: 22
 																																																index: 22
@@ -522,7 +522,7 @@ JSRoot {
 																																																	value: JSIdentifier {
 																																																		name: "a"
 																																																		loc: Object {
-																																																			filename: "input.js"
+																																																			filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																																																			identifierName: "a"
 																																																			end: Object {
 																																																				column: 22
@@ -537,7 +537,7 @@ JSRoot {
 																																																		}
 																																																	}
 																																																	loc: Object {
-																																																		filename: "input.js"
+																																																		filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																																																		end: Object {
 																																																			column: 22
 																																																			index: 22
@@ -553,7 +553,7 @@ JSRoot {
 																																																value: JSAssignmentIdentifier {
 																																																	name: "a"
 																																																	loc: Object {
-																																																		filename: "input.js"
+																																																		filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																																																		identifierName: "a"
 																																																		end: Object {
 																																																			column: 22
@@ -568,7 +568,7 @@ JSRoot {
 																																																	}
 																																																}
 																																																loc: Object {
-																																																	filename: "input.js"
+																																																	filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																																																	end: Object {
 																																																		column: 22
 																																																		index: 22
@@ -587,7 +587,7 @@ JSRoot {
 																																												JSAssignmentIdentifier {
 																																													name: "INVALID_PLACEHOLDER"
 																																													loc: Object {
-																																														filename: "input.js"
+																																														filename: "esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js"
 																																														end: Object {
 																																															column: 28
 																																															index: 28
@@ -650,7 +650,8 @@ JSRoot {
 
 ```
 
- input.js:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-destructuring-assignment-object-pattern/nested-cover-grammar/input.js:1:22 parse/js
+ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ,
 

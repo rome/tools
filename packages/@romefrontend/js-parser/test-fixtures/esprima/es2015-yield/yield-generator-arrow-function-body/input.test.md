@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-yield/yield-generator-arrow-function-body/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/yield-generator-arrow-function-body/input.js"
 		end: Object {
 			column: 0
 			index: 40
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-generator-arrow-function-body/input.js"
 					identifierName: "g"
 					end: Object {
 						column: 11
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/yield-generator-arrow-function-body/input.js"
 				end: Object {
 					column: 39
 					index: 39
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-generator-arrow-function-body/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-generator-arrow-function-body/input.js"
 					end: Object {
 						column: 39
 						index: 39
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-yield/yield-generator-arrow-function-body/input.js"
 							end: Object {
 								column: 37
 								index: 37
@@ -118,7 +118,7 @@ JSRoot {
 						}
 						expression: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/yield-generator-arrow-function-body/input.js"
 								end: Object {
 									column: 36
 									index: 36
@@ -137,7 +137,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-yield/yield-generator-arrow-function-body/input.js"
 									end: Object {
 										column: 22
 										index: 22
@@ -153,7 +153,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: "z"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-yield/yield-generator-arrow-function-body/input.js"
 											identifierName: "z"
 											end: Object {
 												column: 18
@@ -172,7 +172,7 @@ JSRoot {
 							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-yield/yield-generator-arrow-function-body/input.js"
 									end: Object {
 										column: 36
 										index: 36
@@ -187,7 +187,7 @@ JSRoot {
 								body: Array [
 									JSExpressionStatement {
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-yield/yield-generator-arrow-function-body/input.js"
 											end: Object {
 												column: 34
 												index: 34
@@ -202,7 +202,7 @@ JSRoot {
 										expression: JSBinaryExpression {
 											operator: "+"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-yield/yield-generator-arrow-function-body/input.js"
 												end: Object {
 													column: 34
 													index: 34
@@ -217,7 +217,7 @@ JSRoot {
 											left: JSReferenceIdentifier {
 												name: "yield"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/es2015-yield/yield-generator-arrow-function-body/input.js"
 													identifierName: "yield"
 													end: Object {
 														column: 30
@@ -234,7 +234,7 @@ JSRoot {
 											right: JSReferenceIdentifier {
 												name: "z"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/es2015-yield/yield-generator-arrow-function-body/input.js"
 													identifierName: "z"
 													end: Object {
 														column: 34

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/arrow-functions/no-ternary-test/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/arrow-functions/no-ternary-test/input.js"
 		end: Object {
 			column: 17
 			index: 17
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/arrow-functions/no-ternary-test/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/arrow-functions/no-ternary-test/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/arrow-functions/no-ternary-test/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -88,7 +88,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/arrow-functions/no-ternary-test/input.js"
 						end: Object {
 							column: 8
 							index: 8
@@ -109,7 +109,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/arrow-functions/no-ternary-test/input.js"
 						end: Object {
 							column: 5
 							index: 5
@@ -126,7 +126,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/arrow-functions/no-ternary-test/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -141,7 +141,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/arrow-functions/no-ternary-test/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -157,7 +157,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/arrow-functions/no-ternary-test/input.js"
 				end: Object {
 					column: 12
 					index: 12
@@ -173,7 +173,7 @@ JSRoot {
 				value: 1
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/arrow-functions/no-ternary-test/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -189,7 +189,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/arrow-functions/no-ternary-test/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -204,7 +204,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/arrow-functions/no-ternary-test/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -220,7 +220,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/arrow-functions/no-ternary-test/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -236,7 +236,7 @@ JSRoot {
 				value: 2
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/arrow-functions/no-ternary-test/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -258,7 +258,7 @@ JSRoot {
 
 ```
 
- input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/arrow-functions/no-ternary-test/input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

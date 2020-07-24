@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/array-rest-spread/comma-after-spread-nested/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/array-rest-spread/comma-after-spread-nested/input.js"
 		end: Object {
 			column: 15
 			index: 15
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/array-rest-spread/comma-after-spread-nested/input.js"
 				end: Object {
 					column: 15
 					index: 15
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/array-rest-spread/comma-after-spread-nested/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -64,7 +64,7 @@ JSRoot {
 				right: JSArrayExpression {
 					elements: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/array-rest-spread/comma-after-spread-nested/input.js"
 						end: Object {
 							column: 14
 							index: 14
@@ -80,7 +80,7 @@ JSRoot {
 				left: JSAssignmentArrayPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/array-rest-spread/comma-after-spread-nested/input.js"
 						end: Object {
 							column: 9
 							index: 9
@@ -96,7 +96,7 @@ JSRoot {
 						JSAssignmentArrayPattern {
 							elements: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/array-rest-spread/comma-after-spread-nested/input.js"
 								end: Object {
 									column: 8
 									index: 8
@@ -111,7 +111,7 @@ JSRoot {
 							rest: JSAssignmentIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/array-rest-spread/comma-after-spread-nested/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 6

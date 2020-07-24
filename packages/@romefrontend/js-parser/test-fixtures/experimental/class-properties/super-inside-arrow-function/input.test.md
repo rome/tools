@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-properties/super-inside-arrow-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-properties/super-inside-arrow-function/input.js"
 		end: Object {
 			column: 0
 			index: 47
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/super-inside-arrow-function/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/super-inside-arrow-function/input.js"
 				end: Object {
 					column: 1
 					index: 46
@@ -68,7 +68,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/super-inside-arrow-function/input.js"
 					end: Object {
 						column: 1
 						index: 46
@@ -83,7 +83,7 @@ JSRoot {
 				superClass: JSReferenceIdentifier {
 					name: "B"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/class-properties/super-inside-arrow-function/input.js"
 						identifierName: "B"
 						end: Object {
 							column: 17
@@ -103,7 +103,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/super-inside-arrow-function/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 5
@@ -118,7 +118,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/super-inside-arrow-function/input.js"
 								end: Object {
 									column: 5
 									index: 25
@@ -133,7 +133,7 @@ JSRoot {
 						}
 						value: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/super-inside-arrow-function/input.js"
 								end: Object {
 									column: 23
 									index: 43
@@ -153,7 +153,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/super-inside-arrow-function/input.js"
 									end: Object {
 										column: 13
 										index: 33
@@ -169,7 +169,7 @@ JSRoot {
 							body: JSCallExpression {
 								arguments: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/super-inside-arrow-function/input.js"
 									end: Object {
 										column: 23
 										index: 43
@@ -183,7 +183,7 @@ JSRoot {
 								}
 								callee: JSMemberExpression {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-properties/super-inside-arrow-function/input.js"
 										end: Object {
 											column: 21
 											index: 41
@@ -197,7 +197,7 @@ JSRoot {
 									}
 									object: JSSuper {
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/super-inside-arrow-function/input.js"
 											end: Object {
 												column: 19
 												index: 39
@@ -214,7 +214,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "x"
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-properties/super-inside-arrow-function/input.js"
 												identifierName: "x"
 												end: Object {
 													column: 21
@@ -229,7 +229,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/super-inside-arrow-function/input.js"
 											identifierName: "x"
 											end: Object {
 												column: 21
@@ -249,7 +249,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/super-inside-arrow-function/input.js"
 							end: Object {
 								column: 24
 								index: 44
@@ -274,7 +274,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/super-inside-arrow-function/input.js"
 								end: Object {
 									column: 5
 									index: 25

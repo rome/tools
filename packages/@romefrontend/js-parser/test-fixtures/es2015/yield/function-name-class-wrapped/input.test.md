@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/function-name-class-wrapped/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/function-name-class-wrapped/input.js"
 		end: Object {
 			column: 0
 			index: 47
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "wrap"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/function-name-class-wrapped/input.js"
 					identifierName: "wrap"
 					end: Object {
 						column: 14
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/function-name-class-wrapped/input.js"
 				end: Object {
 					column: 1
 					index: 46
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/function-name-class-wrapped/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/function-name-class-wrapped/input.js"
 					end: Object {
 						column: 1
 						index: 46
@@ -106,7 +106,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "A"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/function-name-class-wrapped/input.js"
 								identifierName: "A"
 								end: Object {
 									column: 11
@@ -121,7 +121,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/function-name-class-wrapped/input.js"
 							end: Object {
 								column: 25
 								index: 44
@@ -139,7 +139,7 @@ JSRoot {
 							superTypeParameters: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/function-name-class-wrapped/input.js"
 								end: Object {
 									column: 25
 									index: 44
@@ -158,7 +158,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "yield"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/yield/function-name-class-wrapped/input.js"
 												identifierName: "yield"
 												end: Object {
 													column: 19
@@ -173,7 +173,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/yield/function-name-class-wrapped/input.js"
 											end: Object {
 												column: 19
 												index: 38
@@ -187,7 +187,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/yield/function-name-class-wrapped/input.js"
 										end: Object {
 											column: 24
 											index: 43
@@ -203,7 +203,7 @@ JSRoot {
 										body: Array []
 										directives: Array []
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/yield/function-name-class-wrapped/input.js"
 											end: Object {
 												column: 24
 												index: 43
@@ -226,7 +226,7 @@ JSRoot {
 										thisType: undefined
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/yield/function-name-class-wrapped/input.js"
 											end: Object {
 												column: 21
 												index: 40
@@ -252,7 +252,7 @@ JSRoot {
 											line: 2
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/yield/function-name-class-wrapped/input.js"
 											end: Object {
 												column: 19
 												index: 38

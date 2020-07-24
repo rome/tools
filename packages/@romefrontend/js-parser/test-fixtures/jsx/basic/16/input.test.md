@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/basic/16/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/basic/16/input.jsx"
 		end: Object {
 			column: 14
 			index: 14
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/basic/16/input.jsx"
 				end: Object {
 					column: 14
 					index: 14
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "<"
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/basic/16/input.jsx"
 					end: Object {
 						column: 13
 						index: 13
@@ -64,7 +64,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/basic/16/input.jsx"
 						identifierName: "x"
 						end: Object {
 							column: 13
@@ -82,7 +82,7 @@ JSRoot {
 					name: JSXIdentifier {
 						name: "div"
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/basic/16/input.jsx"
 							end: Object {
 								column: 5
 								index: 5
@@ -100,7 +100,7 @@ JSRoot {
 					selfClosing: true
 					typeArguments: undefined
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/basic/16/input.jsx"
 						end: Object {
 							column: 8
 							index: 8

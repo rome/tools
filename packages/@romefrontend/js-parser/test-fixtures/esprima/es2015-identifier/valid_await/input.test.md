@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-identifier/valid_await/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-identifier/valid_await/input.js"
 		end: Object {
 			column: 0
 			index: 20
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-identifier/valid_await/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-identifier/valid_await/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "await"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-identifier/valid_await/input.js"
 								identifierName: "await"
 								end: Object {
 									column: 9
@@ -82,7 +82,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-identifier/valid_await/input.js"
 							end: Object {
 								column: 9
 								index: 9
@@ -100,7 +100,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-identifier/valid_await/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -115,7 +115,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "await"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-identifier/valid_await/input.js"
 					identifierName: "await"
 					end: Object {
 						column: 17

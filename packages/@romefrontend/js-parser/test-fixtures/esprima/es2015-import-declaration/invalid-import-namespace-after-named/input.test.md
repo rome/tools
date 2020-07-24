@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 		end: Object {
 			column: 0
 			index: 35
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected keyword from"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -61,7 +61,7 @@ JSRoot {
 			importKind: undefined
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 				end: Object {
 					column: 12
 					index: 12
@@ -76,7 +76,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: ""
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -92,7 +92,7 @@ JSRoot {
 			namedSpecifiers: Array [
 				JSImportSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -107,7 +107,7 @@ JSRoot {
 					imported: JSIdentifier {
 						name: "bar"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 							identifierName: "bar"
 							end: Object {
 								column: 11
@@ -125,7 +125,7 @@ JSRoot {
 						name: JSBindingIdentifier {
 							name: "bar"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 								identifierName: "bar"
 								end: Object {
 									column: 11
@@ -141,7 +141,7 @@ JSRoot {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 							end: Object {
 								column: 11
 								index: 11
@@ -159,7 +159,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -174,7 +174,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "*"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -189,7 +189,7 @@ JSRoot {
 				left: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -205,7 +205,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "as"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 						identifierName: "as"
 						end: Object {
 							column: 18
@@ -223,7 +223,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -238,7 +238,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 22
@@ -255,7 +255,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 				end: Object {
 					column: 27
 					index: 27
@@ -270,7 +270,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "from"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 					identifierName: "from"
 					end: Object {
 						column: 27
@@ -287,7 +287,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 				end: Object {
 					column: 34
 					index: 34
@@ -302,7 +302,7 @@ JSRoot {
 			expression: JSStringLiteral {
 				value: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 					end: Object {
 						column: 33
 						index: 33
@@ -324,7 +324,7 @@ JSRoot {
 
 ```
 
- input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js:1:12 parse/js ━━━━━
 
   ✖ Expected keyword from
 

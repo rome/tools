@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-export-declaration/export-from-batch/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-export-declaration/export-from-batch/input.js"
 		end: Object {
 			column: 0
 			index: 21
@@ -35,7 +35,7 @@ JSRoot {
 		JSExportAllDeclaration {
 			exportKind: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/export-from-batch/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -50,7 +50,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-export-declaration/export-from-batch/input.js"
 					end: Object {
 						column: 19
 						index: 19

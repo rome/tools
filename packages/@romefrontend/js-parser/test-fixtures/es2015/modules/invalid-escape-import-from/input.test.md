@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/modules/invalid-escape-import-from/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/modules/invalid-escape-import-from/input.js"
 		end: Object {
 			column: 0
 			index: 23
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected keyword from"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/modules/invalid-escape-import-from/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -61,7 +61,7 @@ JSRoot {
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/invalid-escape-import-from/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -76,7 +76,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: ""
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/modules/invalid-escape-import-from/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -91,7 +91,7 @@ JSRoot {
 			}
 			defaultSpecifier: JSImportDefaultSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/modules/invalid-escape-import-from/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -107,7 +107,7 @@ JSRoot {
 					name: JSBindingIdentifier {
 						name: "X"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/modules/invalid-escape-import-from/input.js"
 							identifierName: "X"
 							end: Object {
 								column: 8
@@ -123,7 +123,7 @@ JSRoot {
 					}
 					importKind: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/invalid-escape-import-from/input.js"
 						end: Object {
 							column: 8
 							index: 8
@@ -140,7 +140,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/invalid-escape-import-from/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -155,7 +155,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "from"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/modules/invalid-escape-import-from/input.js"
 					identifierName: "from"
 					end: Object {
 						column: 18
@@ -172,7 +172,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/invalid-escape-import-from/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -187,7 +187,7 @@ JSRoot {
 			expression: JSStringLiteral {
 				value: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/modules/invalid-escape-import-from/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -209,7 +209,7 @@ JSRoot {
 
 ```
 
- input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/modules/invalid-escape-import-from/input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected keyword from
 

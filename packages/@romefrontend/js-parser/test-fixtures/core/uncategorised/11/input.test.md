@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/11/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/11/input.js"
 		end: Object {
 			column: 13
 			index: 13
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/11/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/11/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -64,7 +64,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/11/input.js"
 						identifierName: "x"
 						end: Object {
 							column: 1
@@ -80,7 +80,7 @@ JSRoot {
 				}
 				right: JSArrayExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/11/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -95,7 +95,7 @@ JSRoot {
 					elements: Array [
 						JSArrayHole {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/11/input.js"
 								end: Object {
 									column: 5
 									index: 5
@@ -110,7 +110,7 @@ JSRoot {
 						}
 						JSArrayHole {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/11/input.js"
 								end: Object {
 									column: 7
 									index: 7
@@ -127,7 +127,7 @@ JSRoot {
 							value: 42
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/11/input.js"
 								end: Object {
 									column: 11
 									index: 11

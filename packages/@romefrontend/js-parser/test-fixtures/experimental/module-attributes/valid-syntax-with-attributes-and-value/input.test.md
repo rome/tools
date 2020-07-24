@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 		end: Object {
 			column: 0
 			index: 33
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -62,7 +62,7 @@ JSRoot {
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -77,7 +77,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -93,7 +93,7 @@ JSRoot {
 		}
 		JSWithStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -108,7 +108,7 @@ JSRoot {
 			object: JSReferenceIdentifier {
 				name: "type"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 					identifierName: "type"
 					end: Object {
 						column: 20
@@ -124,7 +124,7 @@ JSRoot {
 			}
 			body: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -139,7 +139,7 @@ JSRoot {
 				expression: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 						end: Object {
 							column: 21
 							index: 21
@@ -156,7 +156,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 				end: Object {
 					column: 3
 					index: 32
@@ -170,7 +170,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 					end: Object {
 						column: 3
 						index: 32
@@ -185,7 +185,7 @@ JSRoot {
 				object: JSStringLiteral {
 					value: "json"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 						end: Object {
 							column: 28
 							index: 28
@@ -203,7 +203,7 @@ JSRoot {
 						value: 0
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 							end: Object {
 								column: 2
 								index: 31
@@ -217,7 +217,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 						end: Object {
 							column: 3
 							index: 32
@@ -240,7 +240,7 @@ JSRoot {
 
 ```
 
- input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js:1:11 parse/js ━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

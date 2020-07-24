@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-spread-element/call-spread-number/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-spread-element/call-spread-number/input.js"
 		end: Object {
 			column: 0
 			index: 10
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-spread-element/call-spread-number/input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-spread-element/call-spread-number/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -63,7 +63,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "f"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-spread-element/call-spread-number/input.js"
 						identifierName: "f"
 						end: Object {
 							column: 1
@@ -80,7 +80,7 @@ JSRoot {
 				arguments: Array [
 					JSSpreadElement {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-spread-element/call-spread-number/input.js"
 							end: Object {
 								column: 7
 								index: 7
@@ -96,7 +96,7 @@ JSRoot {
 							value: 0.5
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-spread-element/call-spread-number/input.js"
 								end: Object {
 									column: 7
 									index: 7

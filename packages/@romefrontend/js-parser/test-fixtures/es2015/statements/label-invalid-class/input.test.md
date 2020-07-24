@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/statements/label-invalid-class/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/statements/label-invalid-class/input.js"
 		end: Object {
 			column: 0
 			index: 16
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/statements/label-invalid-class/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSLabeledStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/statements/label-invalid-class/input.js"
 				end: Object {
 					column: 15
 					index: 15
@@ -73,7 +73,7 @@ JSRoot {
 			label: JSIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/statements/label-invalid-class/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 3
@@ -91,7 +91,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "X"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/statements/label-invalid-class/input.js"
 						identifierName: "X"
 						end: Object {
 							column: 12
@@ -106,7 +106,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/statements/label-invalid-class/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -125,7 +125,7 @@ JSRoot {
 					superTypeParameters: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/statements/label-invalid-class/input.js"
 						end: Object {
 							column: 15
 							index: 15
@@ -148,7 +148,7 @@ JSRoot {
 
 ```
 
- input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/statements/label-invalid-class/input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token
 

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/template-literal-invalid-escapes-untagged/40/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/template-literal-invalid-escapes-untagged/40/input.js"
 		end: Object {
 			column: 25
 			index: 25
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Invalid escape sequence in template"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/template-literal-invalid-escapes-untagged/40/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/template-literal-invalid-escapes-untagged/40/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSTemplateLiteral {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/template-literal-invalid-escapes-untagged/40/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -89,7 +89,7 @@ JSRoot {
 						value: 0
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/template-literal-invalid-escapes-untagged/40/input.js"
 							end: Object {
 								column: 8
 								index: 8
@@ -106,7 +106,7 @@ JSRoot {
 						value: 1
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/template-literal-invalid-escapes-untagged/40/input.js"
 							end: Object {
 								column: 18
 								index: 18
@@ -126,7 +126,7 @@ JSRoot {
 						raw: "left"
 						tail: false
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/template-literal-invalid-escapes-untagged/40/input.js"
 							end: Object {
 								column: 5
 								index: 5
@@ -144,7 +144,7 @@ JSRoot {
 						raw: "\\u{-0}"
 						tail: false
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/template-literal-invalid-escapes-untagged/40/input.js"
 							end: Object {
 								column: 15
 								index: 15
@@ -162,7 +162,7 @@ JSRoot {
 						raw: "right"
 						tail: true
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/template-literal-invalid-escapes-untagged/40/input.js"
 							end: Object {
 								column: 24
 								index: 24
@@ -186,7 +186,7 @@ JSRoot {
 
 ```
 
- input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/template-literal-invalid-escapes-untagged/40/input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid escape sequence in template
 

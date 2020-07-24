@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/function-sent/enabled-inside-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/function-sent/enabled-inside-function/input.js"
 		end: Object {
 			column: 0
 			index: 43
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ("}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/function-sent/enabled-inside-function/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/function-sent/enabled-inside-function/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 12
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/function-sent/enabled-inside-function/input.js"
 				end: Object {
 					column: 1
 					index: 42
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/function-sent/enabled-inside-function/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/function-sent/enabled-inside-function/input.js"
 					end: Object {
 						column: 1
 						index: 42
@@ -128,7 +128,7 @@ JSRoot {
 				body: Array [
 					JSReturnStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/function-sent/enabled-inside-function/input.js"
 							end: Object {
 								column: 1
 								index: 42
@@ -143,7 +143,7 @@ JSRoot {
 						argument: JSFunctionExpression {
 							id: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/function-sent/enabled-inside-function/input.js"
 								end: Object {
 									column: 1
 									index: 42
@@ -158,7 +158,7 @@ JSRoot {
 							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/function-sent/enabled-inside-function/input.js"
 									end: Object {
 										column: 1
 										index: 42
@@ -173,7 +173,7 @@ JSRoot {
 								body: Array [
 									JSExpressionStatement {
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/function-sent/enabled-inside-function/input.js"
 											end: Object {
 												column: 23
 												index: 40
@@ -188,7 +188,7 @@ JSRoot {
 										expression: JSReferenceIdentifier {
 											name: "sent"
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/function-sent/enabled-inside-function/input.js"
 												identifierName: "sent"
 												end: Object {
 													column: 22
@@ -214,7 +214,7 @@ JSRoot {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/function-sent/enabled-inside-function/input.js"
 									end: Object {
 										column: 18
 										index: 35
@@ -230,7 +230,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: ""
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/function-sent/enabled-inside-function/input.js"
 											identifierName: ""
 											end: Object {
 												column: 18
@@ -247,7 +247,7 @@ JSRoot {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/function-sent/enabled-inside-function/input.js"
 												end: Object {
 													column: 18
 													index: 35
@@ -276,7 +276,7 @@ JSRoot {
 
 ```
 
- input.js:2:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/function-sent/enabled-inside-function/input.js:2:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected (
 

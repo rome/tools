@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 		end: Object {
 			column: 0
 			index: 88
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected {"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 				end: Object {
 					column: 1
 					index: 87
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 					end: Object {
 						column: 1
 						index: 87
@@ -112,7 +112,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "isBar"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 									identifierName: "isBar"
 									end: Object {
 										column: 7
@@ -127,7 +127,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 								end: Object {
 									column: 7
 									index: 19
@@ -141,7 +141,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 							end: Object {
 								column: 1
 								index: 87
@@ -166,7 +166,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 								end: Object {
 									column: 7
 									index: 19
@@ -188,7 +188,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 								end: Object {
 									column: 23
 									index: 35
@@ -204,7 +204,7 @@ JSRoot {
 								asserts: true
 								typeAnnotation: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 									end: Object {
 										column: 23
 										index: 35
@@ -219,7 +219,7 @@ JSRoot {
 								parameterName: JSIdentifier {
 									name: "this"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 										identifierName: "this"
 										end: Object {
 											column: 23
@@ -238,7 +238,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 								end: Object {
 									column: 1
 									index: 87
@@ -253,7 +253,7 @@ JSRoot {
 							body: Array [
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 										end: Object {
 											column: 26
 											index: 38
@@ -268,7 +268,7 @@ JSRoot {
 									expression: JSReferenceIdentifier {
 										name: "is"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 											identifierName: "is"
 											end: Object {
 												column: 26
@@ -285,7 +285,7 @@ JSRoot {
 								}
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 										end: Object {
 											column: 30
 											index: 42
@@ -300,7 +300,7 @@ JSRoot {
 									expression: JSReferenceIdentifier {
 										name: "Foo"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 											identifierName: "Foo"
 											end: Object {
 												column: 30
@@ -319,7 +319,7 @@ JSRoot {
 									body: Array []
 									directives: Array []
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 										end: Object {
 											column: 33
 											index: 45
@@ -334,7 +334,7 @@ JSRoot {
 								}
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 										end: Object {
 											column: 12
 											index: 58
@@ -349,7 +349,7 @@ JSRoot {
 									expression: JSAssignmentExpression {
 										operator: "="
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 											end: Object {
 												column: 12
 												index: 58
@@ -364,7 +364,7 @@ JSRoot {
 										right: JSReferenceIdentifier {
 											name: "INVALID_PLACEHOLDER"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 												end: Object {
 													column: 11
 													index: 57
@@ -380,7 +380,7 @@ JSRoot {
 										left: JSAssignmentIdentifier {
 											name: "isBaz"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 												identifierName: "isBaz"
 												end: Object {
 													column: 7
@@ -398,7 +398,7 @@ JSRoot {
 								}
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 										end: Object {
 											column: 13
 											index: 59
@@ -413,7 +413,7 @@ JSRoot {
 									expression: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 											end: Object {
 												column: 13
 												index: 59
@@ -429,7 +429,7 @@ JSRoot {
 								}
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 										end: Object {
 											column: 21
 											index: 67
@@ -444,7 +444,7 @@ JSRoot {
 									expression: JSReferenceIdentifier {
 										name: "asserts"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 											identifierName: "asserts"
 											end: Object {
 												column: 21
@@ -461,7 +461,7 @@ JSRoot {
 								}
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 										end: Object {
 											column: 26
 											index: 72
@@ -475,7 +475,7 @@ JSRoot {
 									}
 									expression: JSThisExpression {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 											end: Object {
 												column: 26
 												index: 72
@@ -491,7 +491,7 @@ JSRoot {
 								}
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 										end: Object {
 											column: 29
 											index: 75
@@ -506,7 +506,7 @@ JSRoot {
 									expression: JSReferenceIdentifier {
 										name: "is"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 											identifierName: "is"
 											end: Object {
 												column: 29
@@ -523,7 +523,7 @@ JSRoot {
 								}
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 										end: Object {
 											column: 39
 											index: 85
@@ -537,7 +537,7 @@ JSRoot {
 									}
 									expression: JSArrowFunctionExpression {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 											end: Object {
 												column: 39
 												index: 85
@@ -553,7 +553,7 @@ JSRoot {
 											body: Array []
 											directives: Array []
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 												end: Object {
 													column: 39
 													index: 85
@@ -572,7 +572,7 @@ JSRoot {
 											rest: undefined
 											thisType: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 												end: Object {
 													column: 36
 													index: 82
@@ -588,7 +588,7 @@ JSRoot {
 												JSBindingIdentifier {
 													name: "Foo"
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 														identifierName: "Foo"
 														end: Object {
 															column: 33
@@ -620,7 +620,7 @@ JSRoot {
 
 ```
 
- input.ts:2:24 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/assert-predicate/asserts-this-with-predicate/input.ts:2:24 parse/js ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected {
 

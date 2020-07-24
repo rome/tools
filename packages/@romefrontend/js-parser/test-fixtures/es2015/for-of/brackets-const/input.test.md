@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/for-of/brackets-const/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/for-of/brackets-const/input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -35,7 +35,7 @@ JSRoot {
 		JSForOfStatement {
 			await: false
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/for-of/brackets-const/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -51,7 +51,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-of/brackets-const/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -72,7 +72,7 @@ JSRoot {
 				sticky: false
 				unicode: false
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-of/brackets-const/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -86,7 +86,7 @@ JSRoot {
 				}
 				expression: JSRegExpSubExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/for-of/brackets-const/input.js"
 						end: Object {
 							column: 20
 							index: 20
@@ -102,7 +102,7 @@ JSRoot {
 						JSRegExpCharacter {
 							value: "b"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-of/brackets-const/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -121,7 +121,7 @@ JSRoot {
 			left: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-of/brackets-const/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -138,7 +138,7 @@ JSRoot {
 						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-of/brackets-const/input.js"
 								end: Object {
 									column: 14
 									index: 14
@@ -156,7 +156,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "a"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/for-of/brackets-const/input.js"
 												identifierName: "a"
 												end: Object {
 													column: 13
@@ -171,7 +171,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/for-of/brackets-const/input.js"
 											end: Object {
 												column: 13
 												index: 13
@@ -187,7 +187,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "a"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/for-of/brackets-const/input.js"
 											identifierName: "a"
 											end: Object {
 												column: 13
@@ -202,7 +202,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/for-of/brackets-const/input.js"
 										end: Object {
 											column: 13
 											index: 13
@@ -219,7 +219,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/for-of/brackets-const/input.js"
 							end: Object {
 								column: 14
 								index: 14

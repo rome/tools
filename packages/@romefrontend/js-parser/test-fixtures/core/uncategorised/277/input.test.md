@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/277/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/277/input.js"
 		end: Object {
 			column: 24
 			index: 24
@@ -35,7 +35,7 @@ JSRoot {
 		JSTryStatement {
 			finalizer: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/277/input.js"
 				end: Object {
 					column: 24
 					index: 24
@@ -51,7 +51,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/277/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			handler: JSCatchClause {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/277/input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -82,7 +82,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/277/input.js"
 						end: Object {
 							column: 24
 							index: 24
@@ -98,7 +98,7 @@ JSRoot {
 				param: JSBindingIdentifier {
 					name: "eval"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/277/input.js"
 						identifierName: "eval"
 						end: Object {
 							column: 19

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/arrow-function/default-parameter-values/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/arrow-function/default-parameter-values/input.ts"
 		end: Object {
 			column: 0
 			index: 22
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/arrow-function/default-parameter-values/input.ts"
 				end: Object {
 					column: 21
 					index: 21
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/arrow-function/default-parameter-values/input.ts"
 					end: Object {
 						column: 20
 						index: 20
@@ -64,7 +64,7 @@ JSRoot {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/default-parameter-values/input.ts"
 						end: Object {
 							column: 20
 							index: 20
@@ -84,7 +84,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/default-parameter-values/input.ts"
 						end: Object {
 							column: 18
 							index: 18
@@ -100,7 +100,7 @@ JSRoot {
 						JSBindingAssignmentPattern {
 							operator: "="
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/arrow-function/default-parameter-values/input.ts"
 								end: Object {
 									column: 14
 									index: 14
@@ -116,7 +116,7 @@ JSRoot {
 								value: 0
 								format: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/arrow-function/default-parameter-values/input.ts"
 									end: Object {
 										column: 14
 										index: 14
@@ -132,7 +132,7 @@ JSRoot {
 							left: JSBindingIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/arrow-function/default-parameter-values/input.ts"
 									end: Object {
 										column: 10
 										index: 10
@@ -147,7 +147,7 @@ JSRoot {
 								meta: JSPatternMeta {
 									optional: undefined
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/arrow-function/default-parameter-values/input.ts"
 										end: Object {
 											column: 10
 											index: 10
@@ -161,7 +161,7 @@ JSRoot {
 									}
 									typeAnnotation: TSNumberKeywordTypeAnnotation {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/arrow-function/default-parameter-values/input.ts"
 											end: Object {
 												column: 10
 												index: 10

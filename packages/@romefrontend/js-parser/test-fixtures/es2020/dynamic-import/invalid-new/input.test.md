@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/dynamic-import/invalid-new/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/dynamic-import/invalid-new/input.js"
 		end: Object {
 			column: 0
 			index: 19
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "super is only allowed in object methods and classes"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2020/dynamic-import/invalid-new/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/dynamic-import/invalid-new/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -75,7 +75,7 @@ JSRoot {
 				optional: undefined
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/dynamic-import/invalid-new/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -89,7 +89,7 @@ JSRoot {
 				}
 				callee: JSImportCall {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/dynamic-import/invalid-new/input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -104,7 +104,7 @@ JSRoot {
 					argument: JSStringLiteral {
 						value: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/dynamic-import/invalid-new/input.js"
 							end: Object {
 								column: 16
 								index: 16
@@ -128,7 +128,7 @@ JSRoot {
 
 ```
 
- input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2020/dynamic-import/invalid-new/input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ super is only allowed in object methods and classes
 

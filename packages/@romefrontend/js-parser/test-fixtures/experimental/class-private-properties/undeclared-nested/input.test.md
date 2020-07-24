@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-properties/undeclared-nested/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-properties/undeclared-nested/input.js"
 		end: Object {
 			column: 0
 			index: 59
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/undeclared-nested/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/undeclared-nested/input.js"
 				end: Object {
 					column: 1
 					index: 58
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/undeclared-nested/input.js"
 					end: Object {
 						column: 1
 						index: 58
@@ -87,7 +87,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/undeclared-nested/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 4
@@ -102,7 +102,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/undeclared-nested/input.js"
 								end: Object {
 									column: 4
 									index: 14
@@ -118,7 +118,7 @@ JSRoot {
 						value: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/undeclared-nested/input.js"
 							end: Object {
 								column: 5
 								index: 15
@@ -143,7 +143,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/undeclared-nested/input.js"
 								end: Object {
 									column: 4
 									index: 14
@@ -163,7 +163,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "meth"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/undeclared-nested/input.js"
 									identifierName: "meth"
 									end: Object {
 										column: 6
@@ -178,7 +178,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/undeclared-nested/input.js"
 								end: Object {
 									column: 6
 									index: 22
@@ -192,7 +192,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/undeclared-nested/input.js"
 							end: Object {
 								column: 3
 								index: 56
@@ -214,7 +214,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/undeclared-nested/input.js"
 								end: Object {
 									column: 8
 									index: 24
@@ -240,7 +240,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/undeclared-nested/input.js"
 								end: Object {
 									column: 6
 									index: 22
@@ -256,7 +256,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/undeclared-nested/input.js"
 								end: Object {
 									column: 3
 									index: 56
@@ -271,7 +271,7 @@ JSRoot {
 							body: Array [
 								JSVariableDeclarationStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/undeclared-nested/input.js"
 										end: Object {
 											column: 25
 											index: 52
@@ -286,7 +286,7 @@ JSRoot {
 									declaration: JSVariableDeclaration {
 										kind: "var"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/undeclared-nested/input.js"
 											end: Object {
 												column: 25
 												index: 52
@@ -303,7 +303,7 @@ JSRoot {
 												id: JSBindingIdentifier {
 													name: "prop"
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/undeclared-nested/input.js"
 														identifierName: "prop"
 														end: Object {
 															column: 12
@@ -318,7 +318,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/undeclared-nested/input.js"
 													end: Object {
 														column: 24
 														index: 51
@@ -332,7 +332,7 @@ JSRoot {
 												}
 												init: JSMemberExpression {
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/undeclared-nested/input.js"
 														end: Object {
 															column: 24
 															index: 51
@@ -347,7 +347,7 @@ JSRoot {
 													object: JSReferenceIdentifier {
 														name: "foo"
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/undeclared-nested/input.js"
 															identifierName: "foo"
 															end: Object {
 																column: 18
@@ -366,7 +366,7 @@ JSRoot {
 															id: JSIdentifier {
 																name: "priv"
 																loc: Object {
-																	filename: "input.js"
+																	filename: "experimental/class-private-properties/undeclared-nested/input.js"
 																	identifierName: "priv"
 																	end: Object {
 																		column: 24
@@ -381,7 +381,7 @@ JSRoot {
 																}
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/undeclared-nested/input.js"
 																end: Object {
 																	column: 24
 																	index: 51
@@ -395,7 +395,7 @@ JSRoot {
 															}
 														}
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/undeclared-nested/input.js"
 															end: Object {
 																column: 24
 																index: 51

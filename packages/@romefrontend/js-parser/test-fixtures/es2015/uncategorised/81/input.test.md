@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/81/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/81/input.js"
 		end: Object {
 			column: 30
 			index: 30
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/81/input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -50,7 +50,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "f"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/81/input.js"
 						identifierName: "f"
 						end: Object {
 							column: 25
@@ -65,7 +65,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/81/input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -81,7 +81,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/81/input.js"
 						end: Object {
 							column: 30
 							index: 30
@@ -104,7 +104,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/81/input.js"
 						end: Object {
 							column: 27
 							index: 27

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/225/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/225/input.js"
 		end: Object {
 			column: 7
 			index: 10
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/225/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/225/input.js"
 				end: Object {
 					column: 1
 					index: 1
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/225/input.js"
 					identifierName: "x"
 					end: Object {
 						column: 1
@@ -90,7 +90,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/225/input.js"
 				end: Object {
 					column: 5
 					index: 8
@@ -105,7 +105,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "isnt"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/225/input.js"
 					identifierName: "isnt"
 					end: Object {
 						column: 5
@@ -122,7 +122,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/225/input.js"
 				end: Object {
 					column: 7
 					index: 10
@@ -137,7 +137,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "y"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/225/input.js"
 					identifierName: "y"
 					end: Object {
 						column: 7
@@ -160,7 +160,7 @@ JSRoot {
 
 ```
 
- input.js:2:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/225/input.js:2:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

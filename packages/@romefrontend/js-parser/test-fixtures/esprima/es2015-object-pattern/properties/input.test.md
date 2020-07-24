@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-object-pattern/properties/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-object-pattern/properties/input.js"
 		end: Object {
 			column: 0
 			index: 32
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-object-pattern/properties/input.js"
 				end: Object {
 					column: 31
 					index: 31
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-object-pattern/properties/input.js"
 					end: Object {
 						column: 31
 						index: 31
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-pattern/properties/input.js"
 								end: Object {
 									column: 29
 									index: 29
@@ -84,7 +84,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "a"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-object-pattern/properties/input.js"
 												identifierName: "a"
 												end: Object {
 													column: 6
@@ -99,7 +99,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-object-pattern/properties/input.js"
 											end: Object {
 												column: 6
 												index: 6
@@ -115,7 +115,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "a"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-object-pattern/properties/input.js"
 											identifierName: "a"
 											end: Object {
 												column: 6
@@ -130,7 +130,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-object-pattern/properties/input.js"
 										end: Object {
 											column: 6
 											index: 6
@@ -148,7 +148,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "b"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-object-pattern/properties/input.js"
 												identifierName: "b"
 												end: Object {
 													column: 8
@@ -163,7 +163,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-object-pattern/properties/input.js"
 											end: Object {
 												column: 8
 												index: 8
@@ -178,7 +178,7 @@ JSRoot {
 									}
 									value: JSBindingAssignmentPattern {
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-object-pattern/properties/input.js"
 											end: Object {
 												column: 10
 												index: 10
@@ -193,7 +193,7 @@ JSRoot {
 										left: JSBindingIdentifier {
 											name: "b"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-object-pattern/properties/input.js"
 												identifierName: "b"
 												end: Object {
 													column: 8
@@ -211,7 +211,7 @@ JSRoot {
 											value: 0
 											format: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-object-pattern/properties/input.js"
 												end: Object {
 													column: 10
 													index: 10
@@ -226,7 +226,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-object-pattern/properties/input.js"
 										end: Object {
 											column: 10
 											index: 10
@@ -244,7 +244,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "c"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-object-pattern/properties/input.js"
 												identifierName: "c"
 												end: Object {
 													column: 12
@@ -259,7 +259,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-object-pattern/properties/input.js"
 											end: Object {
 												column: 12
 												index: 12
@@ -275,7 +275,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "d"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-object-pattern/properties/input.js"
 											identifierName: "d"
 											end: Object {
 												column: 14
@@ -290,7 +290,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-object-pattern/properties/input.js"
 										end: Object {
 											column: 14
 											index: 14
@@ -308,7 +308,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "e"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-object-pattern/properties/input.js"
 												identifierName: "e"
 												end: Object {
 													column: 16
@@ -323,7 +323,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-object-pattern/properties/input.js"
 											end: Object {
 												column: 16
 												index: 16
@@ -338,7 +338,7 @@ JSRoot {
 									}
 									value: JSBindingAssignmentPattern {
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-object-pattern/properties/input.js"
 											end: Object {
 												column: 20
 												index: 20
@@ -353,7 +353,7 @@ JSRoot {
 										left: JSBindingIdentifier {
 											name: "f"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-object-pattern/properties/input.js"
 												identifierName: "f"
 												end: Object {
 													column: 18
@@ -371,7 +371,7 @@ JSRoot {
 											value: 0
 											format: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-object-pattern/properties/input.js"
 												end: Object {
 													column: 20
 													index: 20
@@ -386,7 +386,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-object-pattern/properties/input.js"
 										end: Object {
 											column: 20
 											index: 20
@@ -404,7 +404,7 @@ JSRoot {
 										value: JSReferenceIdentifier {
 											name: "g"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-object-pattern/properties/input.js"
 												identifierName: "g"
 												end: Object {
 													column: 23
@@ -419,7 +419,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-object-pattern/properties/input.js"
 											end: Object {
 												column: 24
 												index: 24
@@ -435,7 +435,7 @@ JSRoot {
 									value: JSBindingArrayPattern {
 										rest: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-object-pattern/properties/input.js"
 											end: Object {
 												column: 28
 												index: 28
@@ -451,7 +451,7 @@ JSRoot {
 											JSBindingIdentifier {
 												name: "h"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/es2015-object-pattern/properties/input.js"
 													identifierName: "h"
 													end: Object {
 														column: 27
@@ -468,7 +468,7 @@ JSRoot {
 													optional: undefined
 													typeAnnotation: undefined
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/es2015-object-pattern/properties/input.js"
 														end: Object {
 															column: 27
 															index: 27
@@ -485,7 +485,7 @@ JSRoot {
 										]
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-object-pattern/properties/input.js"
 										end: Object {
 											column: 28
 											index: 28
@@ -501,7 +501,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-object-pattern/properties/input.js"
 							end: Object {
 								column: 31
 								index: 31
@@ -517,7 +517,7 @@ JSRoot {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-pattern/properties/input.js"
 								end: Object {
 									column: 31
 									index: 31

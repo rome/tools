@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/categorized/not-directive/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/categorized/not-directive/input.js"
 		end: Object {
 			column: 0
 			index: 1_130
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " Should not be a syntax error because should not be parsed in strict mode."
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 76
 					index: 256
@@ -52,7 +52,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 15
 					index: 15
@@ -67,7 +67,7 @@ JSRoot {
 			expression: JSStringLiteral {
 				value: "use strict"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -83,7 +83,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 17
 					index: 34
@@ -97,7 +97,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 16
 						index: 33
@@ -112,7 +112,7 @@ JSRoot {
 				object: JSStringLiteral {
 					value: "use strict"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 12
 							index: 29
@@ -129,7 +129,7 @@ JSRoot {
 					value: JSIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 16
@@ -144,7 +144,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/not-directive/input.js"
 						identifierName: "foo"
 						end: Object {
 							column: 16
@@ -162,7 +162,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 18
 					index: 53
@@ -176,7 +176,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 17
 						index: 52
@@ -191,7 +191,7 @@ JSRoot {
 				object: JSStringLiteral {
 					value: "use strict"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 12
 							index: 47
@@ -208,7 +208,7 @@ JSRoot {
 					value: JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 16
@@ -223,7 +223,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 17
 							index: 52
@@ -240,7 +240,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 18
 					index: 72
@@ -255,7 +255,7 @@ JSRoot {
 			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 17
 						index: 71
@@ -270,7 +270,7 @@ JSRoot {
 				tag: JSStringLiteral {
 					value: "use strict"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 12
 							index: 66
@@ -286,7 +286,7 @@ JSRoot {
 				quasi: JSTemplateLiteral {
 					expressions: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 17
 							index: 71
@@ -304,7 +304,7 @@ JSRoot {
 							raw: "foo"
 							tail: true
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 16
 									index: 70
@@ -323,7 +323,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 18
 					index: 91
@@ -337,7 +337,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 17
 						index: 90
@@ -352,7 +352,7 @@ JSRoot {
 				callee: JSStringLiteral {
 					value: "use strict"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 12
 							index: 85
@@ -369,7 +369,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 16
@@ -388,7 +388,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 7
 					index: 112
@@ -402,7 +402,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 6
 						index: 111
@@ -417,7 +417,7 @@ JSRoot {
 				object: JSStringLiteral {
 					value: "use strict"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 12
 							index: 104
@@ -434,7 +434,7 @@ JSRoot {
 					value: JSIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 6
@@ -449,7 +449,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/not-directive/input.js"
 						identifierName: "foo"
 						end: Object {
 							column: 6
@@ -467,7 +467,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 8
 					index: 134
@@ -481,7 +481,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 7
 						index: 133
@@ -496,7 +496,7 @@ JSRoot {
 				object: JSStringLiteral {
 					value: "use strict"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 12
 							index: 125
@@ -513,7 +513,7 @@ JSRoot {
 					value: JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 6
@@ -528,7 +528,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 7
 							index: 133
@@ -545,7 +545,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 8
 					index: 156
@@ -560,7 +560,7 @@ JSRoot {
 			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 7
 						index: 155
@@ -575,7 +575,7 @@ JSRoot {
 				tag: JSStringLiteral {
 					value: "use strict"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 12
 							index: 147
@@ -591,7 +591,7 @@ JSRoot {
 				quasi: JSTemplateLiteral {
 					expressions: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 7
 							index: 155
@@ -609,7 +609,7 @@ JSRoot {
 							raw: "foo"
 							tail: true
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
 									index: 154
@@ -629,7 +629,7 @@ JSRoot {
 		JSExpressionStatement {
 			trailingComments: Array ["0"]
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 8
 					index: 178
@@ -643,7 +643,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 7
 						index: 177
@@ -658,7 +658,7 @@ JSRoot {
 				callee: JSStringLiteral {
 					value: "use strict"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 12
 							index: 169
@@ -675,7 +675,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 6
@@ -695,7 +695,7 @@ JSRoot {
 		JSExpressionStatement {
 			leadingComments: Array ["0"]
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 5
 					index: 262
@@ -711,7 +711,7 @@ JSRoot {
 				value: "\x05"
 				leadingComments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 4
 						index: 261
@@ -729,7 +729,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -744,7 +744,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
 					index: 307
@@ -766,7 +766,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
 						index: 276
@@ -782,7 +782,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
 						index: 307
@@ -797,7 +797,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 19
 								index: 297
@@ -811,7 +811,7 @@ JSRoot {
 						}
 						expression: JSMemberExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 18
 									index: 296
@@ -826,7 +826,7 @@ JSRoot {
 							object: JSStringLiteral {
 								value: "use strict"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
 										index: 292
@@ -843,7 +843,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "foo"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/categorized/not-directive/input.js"
 										identifierName: "foo"
 										end: Object {
 											column: 18
@@ -858,7 +858,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 18
@@ -876,7 +876,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
 								index: 305
@@ -891,7 +891,7 @@ JSRoot {
 						expression: JSStringLiteral {
 							value: "\x05"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
 									index: 304
@@ -912,7 +912,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -927,7 +927,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
 					index: 353
@@ -949,7 +949,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
 						index: 321
@@ -965,7 +965,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
 						index: 353
@@ -980,7 +980,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 20
 								index: 343
@@ -994,7 +994,7 @@ JSRoot {
 						}
 						expression: JSMemberExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 19
 									index: 342
@@ -1009,7 +1009,7 @@ JSRoot {
 							object: JSStringLiteral {
 								value: "use strict"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
 										index: 337
@@ -1026,7 +1026,7 @@ JSRoot {
 								value: JSReferenceIdentifier {
 									name: "foo"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/categorized/not-directive/input.js"
 										identifierName: "foo"
 										end: Object {
 											column: 18
@@ -1041,7 +1041,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 19
 										index: 342
@@ -1058,7 +1058,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
 								index: 351
@@ -1073,7 +1073,7 @@ JSRoot {
 						expression: JSStringLiteral {
 							value: "\x05"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
 									index: 350
@@ -1094,7 +1094,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -1109,7 +1109,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
 					index: 399
@@ -1131,7 +1131,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
 						index: 367
@@ -1147,7 +1147,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
 						index: 399
@@ -1162,7 +1162,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 20
 								index: 389
@@ -1177,7 +1177,7 @@ JSRoot {
 						expression: JSTaggedTemplateExpression {
 							typeArguments: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 19
 									index: 388
@@ -1192,7 +1192,7 @@ JSRoot {
 							tag: JSStringLiteral {
 								value: "use strict"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
 										index: 383
@@ -1208,7 +1208,7 @@ JSRoot {
 							quasi: JSTemplateLiteral {
 								expressions: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 19
 										index: 388
@@ -1226,7 +1226,7 @@ JSRoot {
 										raw: "foo"
 										tail: true
 										loc: Object {
-											filename: "input.js"
+											filename: "core/categorized/not-directive/input.js"
 											end: Object {
 												column: 18
 												index: 387
@@ -1245,7 +1245,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
 								index: 397
@@ -1260,7 +1260,7 @@ JSRoot {
 						expression: JSStringLiteral {
 							value: "\x05"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
 									index: 396
@@ -1281,7 +1281,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -1296,7 +1296,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
 					index: 445
@@ -1318,7 +1318,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
 						index: 413
@@ -1334,7 +1334,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
 						index: 445
@@ -1349,7 +1349,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 20
 								index: 435
@@ -1363,7 +1363,7 @@ JSRoot {
 						}
 						expression: JSCallExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 19
 									index: 434
@@ -1378,7 +1378,7 @@ JSRoot {
 							callee: JSStringLiteral {
 								value: "use strict"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
 										index: 429
@@ -1395,7 +1395,7 @@ JSRoot {
 								JSReferenceIdentifier {
 									name: "foo"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/categorized/not-directive/input.js"
 										identifierName: "foo"
 										end: Object {
 											column: 18
@@ -1414,7 +1414,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
 								index: 443
@@ -1429,7 +1429,7 @@ JSRoot {
 						expression: JSStringLiteral {
 							value: "\x05"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
 									index: 442
@@ -1450,7 +1450,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -1465,7 +1465,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
 					index: 493
@@ -1487,7 +1487,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
 						index: 459
@@ -1503,7 +1503,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
 						index: 493
@@ -1518,7 +1518,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
 								index: 483
@@ -1532,7 +1532,7 @@ JSRoot {
 						}
 						expression: JSMemberExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
 									index: 482
@@ -1547,7 +1547,7 @@ JSRoot {
 							object: JSStringLiteral {
 								value: "use strict"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
 										index: 475
@@ -1564,7 +1564,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "foo"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/categorized/not-directive/input.js"
 										identifierName: "foo"
 										end: Object {
 											column: 6
@@ -1579,7 +1579,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 6
@@ -1597,7 +1597,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
 								index: 491
@@ -1612,7 +1612,7 @@ JSRoot {
 						expression: JSStringLiteral {
 							value: "\x05"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
 									index: 490
@@ -1633,7 +1633,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -1648,7 +1648,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
 					index: 542
@@ -1670,7 +1670,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
 						index: 507
@@ -1686,7 +1686,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
 						index: 542
@@ -1701,7 +1701,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
 								index: 532
@@ -1715,7 +1715,7 @@ JSRoot {
 						}
 						expression: JSMemberExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
 									index: 531
@@ -1730,7 +1730,7 @@ JSRoot {
 							object: JSStringLiteral {
 								value: "use strict"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
 										index: 523
@@ -1747,7 +1747,7 @@ JSRoot {
 								value: JSReferenceIdentifier {
 									name: "foo"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/categorized/not-directive/input.js"
 										identifierName: "foo"
 										end: Object {
 											column: 6
@@ -1762,7 +1762,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 7
 										index: 531
@@ -1779,7 +1779,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
 								index: 540
@@ -1794,7 +1794,7 @@ JSRoot {
 						expression: JSStringLiteral {
 							value: "\x05"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
 									index: 539
@@ -1815,7 +1815,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -1830,7 +1830,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
 					index: 591
@@ -1852,7 +1852,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
 						index: 556
@@ -1868,7 +1868,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
 						index: 591
@@ -1883,7 +1883,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
 								index: 581
@@ -1898,7 +1898,7 @@ JSRoot {
 						expression: JSTaggedTemplateExpression {
 							typeArguments: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
 									index: 580
@@ -1913,7 +1913,7 @@ JSRoot {
 							tag: JSStringLiteral {
 								value: "use strict"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
 										index: 572
@@ -1929,7 +1929,7 @@ JSRoot {
 							quasi: JSTemplateLiteral {
 								expressions: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 7
 										index: 580
@@ -1947,7 +1947,7 @@ JSRoot {
 										raw: "foo"
 										tail: true
 										loc: Object {
-											filename: "input.js"
+											filename: "core/categorized/not-directive/input.js"
 											end: Object {
 												column: 6
 												index: 579
@@ -1966,7 +1966,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
 								index: 589
@@ -1981,7 +1981,7 @@ JSRoot {
 						expression: JSStringLiteral {
 							value: "\x05"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
 									index: 588
@@ -2002,7 +2002,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -2017,7 +2017,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
 					index: 640
@@ -2039,7 +2039,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
 						index: 605
@@ -2055,7 +2055,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
 						index: 640
@@ -2070,7 +2070,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
 								index: 630
@@ -2084,7 +2084,7 @@ JSRoot {
 						}
 						expression: JSCallExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
 									index: 629
@@ -2099,7 +2099,7 @@ JSRoot {
 							callee: JSStringLiteral {
 								value: "use strict"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
 										index: 621
@@ -2116,7 +2116,7 @@ JSRoot {
 								JSReferenceIdentifier {
 									name: "foo"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/categorized/not-directive/input.js"
 										identifierName: "foo"
 										end: Object {
 											column: 6
@@ -2135,7 +2135,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
 								index: 638
@@ -2150,7 +2150,7 @@ JSRoot {
 						expression: JSStringLiteral {
 							value: "\x05"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
 									index: 637
@@ -2171,7 +2171,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -2186,7 +2186,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
 					index: 694
@@ -2208,7 +2208,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
 						index: 654
@@ -2224,7 +2224,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
 						index: 694
@@ -2239,7 +2239,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
 								index: 664
@@ -2254,7 +2254,7 @@ JSRoot {
 						expression: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
 									index: 663
@@ -2269,7 +2269,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 5
@@ -2287,7 +2287,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 19
 								index: 684
@@ -2301,7 +2301,7 @@ JSRoot {
 						}
 						expression: JSMemberExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 18
 									index: 683
@@ -2316,7 +2316,7 @@ JSRoot {
 							object: JSStringLiteral {
 								value: "use strict"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
 										index: 679
@@ -2333,7 +2333,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "bar"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/categorized/not-directive/input.js"
 										identifierName: "bar"
 										end: Object {
 											column: 18
@@ -2348,7 +2348,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									identifierName: "bar"
 									end: Object {
 										column: 18
@@ -2366,7 +2366,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
 								index: 692
@@ -2381,7 +2381,7 @@ JSRoot {
 						expression: JSStringLiteral {
 							value: "\x05"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
 									index: 691
@@ -2402,7 +2402,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -2417,7 +2417,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
 					index: 749
@@ -2439,7 +2439,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
 						index: 708
@@ -2455,7 +2455,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
 						index: 749
@@ -2470,7 +2470,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
 								index: 718
@@ -2485,7 +2485,7 @@ JSRoot {
 						expression: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
 									index: 717
@@ -2500,7 +2500,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 5
@@ -2518,7 +2518,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 20
 								index: 739
@@ -2532,7 +2532,7 @@ JSRoot {
 						}
 						expression: JSMemberExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 19
 									index: 738
@@ -2547,7 +2547,7 @@ JSRoot {
 							object: JSStringLiteral {
 								value: "use strict"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
 										index: 733
@@ -2564,7 +2564,7 @@ JSRoot {
 								value: JSReferenceIdentifier {
 									name: "bar"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/categorized/not-directive/input.js"
 										identifierName: "bar"
 										end: Object {
 											column: 18
@@ -2579,7 +2579,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 19
 										index: 738
@@ -2596,7 +2596,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
 								index: 747
@@ -2611,7 +2611,7 @@ JSRoot {
 						expression: JSStringLiteral {
 							value: "\x05"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
 									index: 746
@@ -2632,7 +2632,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -2647,7 +2647,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
 					index: 804
@@ -2669,7 +2669,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
 						index: 763
@@ -2685,7 +2685,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
 						index: 804
@@ -2700,7 +2700,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
 								index: 773
@@ -2715,7 +2715,7 @@ JSRoot {
 						expression: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
 									index: 772
@@ -2730,7 +2730,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 5
@@ -2748,7 +2748,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 20
 								index: 794
@@ -2763,7 +2763,7 @@ JSRoot {
 						expression: JSTaggedTemplateExpression {
 							typeArguments: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 19
 									index: 793
@@ -2778,7 +2778,7 @@ JSRoot {
 							tag: JSStringLiteral {
 								value: "use strict"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
 										index: 788
@@ -2794,7 +2794,7 @@ JSRoot {
 							quasi: JSTemplateLiteral {
 								expressions: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 19
 										index: 793
@@ -2812,7 +2812,7 @@ JSRoot {
 										raw: "bar"
 										tail: true
 										loc: Object {
-											filename: "input.js"
+											filename: "core/categorized/not-directive/input.js"
 											end: Object {
 												column: 18
 												index: 792
@@ -2831,7 +2831,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
 								index: 802
@@ -2846,7 +2846,7 @@ JSRoot {
 						expression: JSStringLiteral {
 							value: "\x05"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
 									index: 801
@@ -2867,7 +2867,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -2882,7 +2882,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
 					index: 859
@@ -2904,7 +2904,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
 						index: 818
@@ -2920,7 +2920,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
 						index: 859
@@ -2935,7 +2935,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
 								index: 828
@@ -2950,7 +2950,7 @@ JSRoot {
 						expression: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
 									index: 827
@@ -2965,7 +2965,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 5
@@ -2983,7 +2983,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 20
 								index: 849
@@ -2997,7 +2997,7 @@ JSRoot {
 						}
 						expression: JSCallExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 19
 									index: 848
@@ -3012,7 +3012,7 @@ JSRoot {
 							callee: JSStringLiteral {
 								value: "use strict"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
 										index: 843
@@ -3029,7 +3029,7 @@ JSRoot {
 								JSReferenceIdentifier {
 									name: "bar"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/categorized/not-directive/input.js"
 										identifierName: "bar"
 										end: Object {
 											column: 18
@@ -3048,7 +3048,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
 								index: 857
@@ -3063,7 +3063,7 @@ JSRoot {
 						expression: JSStringLiteral {
 							value: "\x05"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
 									index: 856
@@ -3084,7 +3084,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -3099,7 +3099,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
 					index: 916
@@ -3121,7 +3121,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
 						index: 873
@@ -3137,7 +3137,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
 						index: 916
@@ -3152,7 +3152,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
 								index: 883
@@ -3167,7 +3167,7 @@ JSRoot {
 						expression: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
 									index: 882
@@ -3182,7 +3182,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 5
@@ -3200,7 +3200,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
 								index: 906
@@ -3214,7 +3214,7 @@ JSRoot {
 						}
 						expression: JSMemberExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
 									index: 905
@@ -3229,7 +3229,7 @@ JSRoot {
 							object: JSStringLiteral {
 								value: "use strict"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
 										index: 898
@@ -3246,7 +3246,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "bar"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/categorized/not-directive/input.js"
 										identifierName: "bar"
 										end: Object {
 											column: 6
@@ -3261,7 +3261,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									identifierName: "bar"
 									end: Object {
 										column: 6
@@ -3279,7 +3279,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
 								index: 914
@@ -3294,7 +3294,7 @@ JSRoot {
 						expression: JSStringLiteral {
 							value: "\x05"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
 									index: 913
@@ -3315,7 +3315,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -3330,7 +3330,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
 					index: 974
@@ -3352,7 +3352,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
 						index: 930
@@ -3368,7 +3368,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
 						index: 974
@@ -3383,7 +3383,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
 								index: 940
@@ -3398,7 +3398,7 @@ JSRoot {
 						expression: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
 									index: 939
@@ -3413,7 +3413,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 5
@@ -3431,7 +3431,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
 								index: 964
@@ -3445,7 +3445,7 @@ JSRoot {
 						}
 						expression: JSMemberExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
 									index: 963
@@ -3460,7 +3460,7 @@ JSRoot {
 							object: JSStringLiteral {
 								value: "use strict"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
 										index: 955
@@ -3477,7 +3477,7 @@ JSRoot {
 								value: JSReferenceIdentifier {
 									name: "bar"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/categorized/not-directive/input.js"
 										identifierName: "bar"
 										end: Object {
 											column: 6
@@ -3492,7 +3492,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 7
 										index: 963
@@ -3509,7 +3509,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
 								index: 972
@@ -3524,7 +3524,7 @@ JSRoot {
 						expression: JSStringLiteral {
 							value: "\x05"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
 									index: 971
@@ -3545,7 +3545,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -3560,7 +3560,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
 					index: 1_032
@@ -3582,7 +3582,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
 						index: 988
@@ -3598,7 +3598,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
 						index: 1_032
@@ -3613,7 +3613,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
 								index: 998
@@ -3628,7 +3628,7 @@ JSRoot {
 						expression: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
 									index: 997
@@ -3643,7 +3643,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 5
@@ -3661,7 +3661,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
 								index: 1_022
@@ -3676,7 +3676,7 @@ JSRoot {
 						expression: JSTaggedTemplateExpression {
 							typeArguments: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
 									index: 1_021
@@ -3691,7 +3691,7 @@ JSRoot {
 							tag: JSStringLiteral {
 								value: "use strict"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
 										index: 1_013
@@ -3707,7 +3707,7 @@ JSRoot {
 							quasi: JSTemplateLiteral {
 								expressions: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 7
 										index: 1_021
@@ -3725,7 +3725,7 @@ JSRoot {
 										raw: "bar"
 										tail: true
 										loc: Object {
-											filename: "input.js"
+											filename: "core/categorized/not-directive/input.js"
 											end: Object {
 												column: 6
 												index: 1_020
@@ -3744,7 +3744,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
 								index: 1_030
@@ -3759,7 +3759,7 @@ JSRoot {
 						expression: JSStringLiteral {
 							value: "\x05"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
 									index: 1_029
@@ -3780,7 +3780,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -3795,7 +3795,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
 					index: 1_090
@@ -3817,7 +3817,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
 						index: 1_046
@@ -3833,7 +3833,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
 						index: 1_090
@@ -3848,7 +3848,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
 								index: 1_056
@@ -3863,7 +3863,7 @@ JSRoot {
 						expression: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
 									index: 1_055
@@ -3878,7 +3878,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 5
@@ -3896,7 +3896,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
 								index: 1_080
@@ -3910,7 +3910,7 @@ JSRoot {
 						}
 						expression: JSCallExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
 									index: 1_079
@@ -3925,7 +3925,7 @@ JSRoot {
 							callee: JSStringLiteral {
 								value: "use strict"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
 										index: 1_071
@@ -3942,7 +3942,7 @@ JSRoot {
 								JSReferenceIdentifier {
 									name: "bar"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/categorized/not-directive/input.js"
 										identifierName: "bar"
 										end: Object {
 											column: 6
@@ -3961,7 +3961,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
 								index: 1_088
@@ -3976,7 +3976,7 @@ JSRoot {
 						expression: JSStringLiteral {
 							value: "\x05"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
 									index: 1_087
@@ -3997,7 +3997,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -4012,7 +4012,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
 					index: 1_129
@@ -4034,7 +4034,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
 						index: 1_104
@@ -4050,7 +4050,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
 						index: 1_129
@@ -4065,7 +4065,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 5
 								index: 1_111
@@ -4081,7 +4081,7 @@ JSRoot {
 							value: 5
 							format: "octal"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 4
 									index: 1_110
@@ -4097,7 +4097,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 15
 								index: 1_127
@@ -4112,7 +4112,7 @@ JSRoot {
 						expression: JSStringLiteral {
 							value: "use strict"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 14
 									index: 1_126

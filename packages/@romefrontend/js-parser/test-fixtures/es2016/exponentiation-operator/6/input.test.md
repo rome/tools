@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2016/exponentiation-operator/6/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2016/exponentiation-operator/6/input.js"
 		end: Object {
 			column: 11
 			index: 11
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2016/exponentiation-operator/6/input.js"
 				end: Object {
 					column: 11
 					index: 11
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "**"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2016/exponentiation-operator/6/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -65,7 +65,7 @@ JSRoot {
 					value: 2
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2016/exponentiation-operator/6/input.js"
 						end: Object {
 							column: 1
 							index: 1
@@ -81,7 +81,7 @@ JSRoot {
 				right: JSBinaryExpression {
 					operator: "**"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2016/exponentiation-operator/6/input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -97,7 +97,7 @@ JSRoot {
 						value: 3
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2016/exponentiation-operator/6/input.js"
 							end: Object {
 								column: 6
 								index: 6
@@ -114,7 +114,7 @@ JSRoot {
 						value: 2
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2016/exponentiation-operator/6/input.js"
 							end: Object {
 								column: 11
 								index: 11

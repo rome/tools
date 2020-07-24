@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/304/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/304/input.js"
 		end: Object {
 			column: 8
 			index: 32
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSWhileStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/304/input.js"
 				end: Object {
 					column: 8
 					index: 32
@@ -49,7 +49,7 @@ JSRoot {
 			test: JSBooleanLiteral {
 				value: true
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/304/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -65,7 +65,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/304/input.js"
 					end: Object {
 						column: 8
 						index: 32
@@ -81,7 +81,7 @@ JSRoot {
 					JSContinueStatement {
 						label: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/304/input.js"
 							end: Object {
 								column: 23
 								index: 23
@@ -96,7 +96,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/304/input.js"
 							end: Object {
 								column: 6
 								index: 30
@@ -111,7 +111,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "there"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/304/input.js"
 								identifierName: "there"
 								end: Object {
 									column: 5

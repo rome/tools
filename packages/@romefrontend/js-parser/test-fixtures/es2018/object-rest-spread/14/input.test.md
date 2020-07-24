@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2018/object-rest-spread/14/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2018/object-rest-spread/14/input.js"
 		end: Object {
 			column: 0
 			index: 65
@@ -36,7 +36,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2018/object-rest-spread/14/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -50,7 +50,7 @@ JSRoot {
 			}
 			declaration: JSVariableDeclarationStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/object-rest-spread/14/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -65,7 +65,7 @@ JSRoot {
 				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2018/object-rest-spread/14/input.js"
 						end: Object {
 							column: 21
 							index: 21
@@ -82,7 +82,7 @@ JSRoot {
 							id: JSBindingIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2018/object-rest-spread/14/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 16
@@ -97,7 +97,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/14/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -113,7 +113,7 @@ JSRoot {
 								value: 1
 								format: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2018/object-rest-spread/14/input.js"
 									end: Object {
 										column: 20
 										index: 20
@@ -135,7 +135,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2018/object-rest-spread/14/input.js"
 				end: Object {
 					column: 42
 					index: 64
@@ -149,7 +149,7 @@ JSRoot {
 			}
 			declaration: JSVariableDeclarationStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/object-rest-spread/14/input.js"
 					end: Object {
 						column: 42
 						index: 64
@@ -164,7 +164,7 @@ JSRoot {
 				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2018/object-rest-spread/14/input.js"
 						end: Object {
 							column: 42
 							index: 64
@@ -181,7 +181,7 @@ JSRoot {
 							id: JSBindingArrayPattern {
 								rest: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2018/object-rest-spread/14/input.js"
 									end: Object {
 										column: 35
 										index: 57
@@ -197,7 +197,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: "bar"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2018/object-rest-spread/14/input.js"
 											identifierName: "bar"
 											end: Object {
 												column: 17
@@ -214,7 +214,7 @@ JSRoot {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "es2018/object-rest-spread/14/input.js"
 												end: Object {
 													column: 17
 													index: 39
@@ -230,7 +230,7 @@ JSRoot {
 									}
 									JSBindingObjectPattern {
 										loc: Object {
-											filename: "input.js"
+											filename: "es2018/object-rest-spread/14/input.js"
 											end: Object {
 												column: 34
 												index: 56
@@ -246,7 +246,7 @@ JSRoot {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "es2018/object-rest-spread/14/input.js"
 												end: Object {
 													column: 34
 													index: 56
@@ -262,7 +262,7 @@ JSRoot {
 										rest: JSBindingIdentifier {
 											name: "foo"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2018/object-rest-spread/14/input.js"
 												identifierName: "foo"
 												end: Object {
 													column: 32
@@ -282,7 +282,7 @@ JSRoot {
 													value: JSIdentifier {
 														name: "baz"
 														loc: Object {
-															filename: "input.js"
+															filename: "es2018/object-rest-spread/14/input.js"
 															identifierName: "baz"
 															end: Object {
 																column: 24
@@ -297,7 +297,7 @@ JSRoot {
 														}
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "es2018/object-rest-spread/14/input.js"
 														end: Object {
 															column: 24
 															index: 46
@@ -313,7 +313,7 @@ JSRoot {
 												value: JSBindingIdentifier {
 													name: "baz"
 													loc: Object {
-														filename: "input.js"
+														filename: "es2018/object-rest-spread/14/input.js"
 														identifierName: "baz"
 														end: Object {
 															column: 24
@@ -328,7 +328,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "es2018/object-rest-spread/14/input.js"
 													end: Object {
 														column: 24
 														index: 46
@@ -346,7 +346,7 @@ JSRoot {
 								]
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/14/input.js"
 								end: Object {
 									column: 41
 									index: 63
@@ -361,7 +361,7 @@ JSRoot {
 							init: JSReferenceIdentifier {
 								name: "qux"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2018/object-rest-spread/14/input.js"
 									identifierName: "qux"
 									end: Object {
 										column: 41

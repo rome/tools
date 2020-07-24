@@ -10,14 +10,14 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "input.js"
+	filename: "esprima/es2015-array-pattern/dupe-param-2/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-array-pattern/dupe-param-2/input.js"
 		end: Object {
 			column: 0
 			index: 38
@@ -33,7 +33,7 @@ JSRoot {
 		JSDirective {
 			value: "use strict"
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-array-pattern/dupe-param-2/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -51,7 +51,7 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-array-pattern/dupe-param-2/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -75,7 +75,7 @@ JSRoot {
 					}
 					frame {
 						location: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-array-pattern/dupe-param-2/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 13
@@ -98,7 +98,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-array-pattern/dupe-param-2/input.js"
 					identifierName: "a"
 					end: Object {
 						column: 10
@@ -113,7 +113,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-array-pattern/dupe-param-2/input.js"
 				end: Object {
 					column: 23
 					index: 37
@@ -129,7 +129,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-array-pattern/dupe-param-2/input.js"
 					end: Object {
 						column: 23
 						index: 37
@@ -151,7 +151,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-array-pattern/dupe-param-2/input.js"
 					end: Object {
 						column: 20
 						index: 34
@@ -166,7 +166,7 @@ JSRoot {
 				params: Array [
 					JSBindingArrayPattern {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-array-pattern/dupe-param-2/input.js"
 							end: Object {
 								column: 19
 								index: 33
@@ -182,7 +182,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-array-pattern/dupe-param-2/input.js"
 								end: Object {
 									column: 19
 									index: 33
@@ -198,7 +198,7 @@ JSRoot {
 						rest: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-array-pattern/dupe-param-2/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 18
@@ -215,7 +215,7 @@ JSRoot {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-array-pattern/dupe-param-2/input.js"
 									end: Object {
 										column: 18
 										index: 32
@@ -233,7 +233,7 @@ JSRoot {
 							JSBindingIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-array-pattern/dupe-param-2/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 13
@@ -250,7 +250,7 @@ JSRoot {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-array-pattern/dupe-param-2/input.js"
 										end: Object {
 											column: 13
 											index: 27
@@ -277,7 +277,7 @@ JSRoot {
 
 ```
 
- input.js:2:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-array-pattern/dupe-param-2/input.js:2:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Argument a name clash in strict mode
 

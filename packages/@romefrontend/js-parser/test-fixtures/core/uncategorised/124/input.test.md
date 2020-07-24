@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/124/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/124/input.js"
 		end: Object {
 			column: 21
 			index: 21
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/124/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/124/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -64,7 +64,7 @@ JSRoot {
 					value: JSIdentifier {
 						name: "galaxies"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/124/input.js"
 							identifierName: "galaxies"
 							end: Object {
 								column: 21
@@ -79,7 +79,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/124/input.js"
 						identifierName: "galaxies"
 						end: Object {
 							column: 21
@@ -95,7 +95,7 @@ JSRoot {
 				}
 				object: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/124/input.js"
 						end: Object {
 							column: 12
 							index: 12
@@ -110,7 +110,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "universe"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/124/input.js"
 							identifierName: "universe"
 							end: Object {
 								column: 8
@@ -129,7 +129,7 @@ JSRoot {
 							value: 42
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/124/input.js"
 								end: Object {
 									column: 11
 									index: 11
@@ -143,7 +143,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/124/input.js"
 							end: Object {
 								column: 12
 								index: 12

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/89/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/89/input.js"
 		end: Object {
 			column: 0
 			index: 74
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "encrypt"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/89/input.js"
 					identifierName: "encrypt"
 					end: Object {
 						column: 16
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/89/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/89/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -90,7 +90,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/89/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -108,7 +108,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "decrypt"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/89/input.js"
 					identifierName: "decrypt"
 					end: Object {
 						column: 13
@@ -123,7 +123,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/89/input.js"
 				end: Object {
 					column: 16
 					index: 38
@@ -142,7 +142,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/89/input.js"
 					end: Object {
 						column: 16
 						index: 38
@@ -160,7 +160,7 @@ JSRoot {
 			declaration: undefined
 			exportKind: "value"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/89/input.js"
 				end: Object {
 					column: 34
 					index: 73
@@ -175,7 +175,7 @@ JSRoot {
 			specifiers: Array [
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/89/input.js"
 						end: Object {
 							column: 16
 							index: 55
@@ -190,7 +190,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "encrypt"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/89/input.js"
 							identifierName: "encrypt"
 							end: Object {
 								column: 16
@@ -207,7 +207,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "encrypt"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/89/input.js"
 							identifierName: "encrypt"
 							end: Object {
 								column: 16
@@ -224,7 +224,7 @@ JSRoot {
 				}
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/89/input.js"
 						end: Object {
 							column: 32
 							index: 71
@@ -239,7 +239,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "dec"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/89/input.js"
 							identifierName: "dec"
 							end: Object {
 								column: 32
@@ -256,7 +256,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "decrypt"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/89/input.js"
 							identifierName: "decrypt"
 							end: Object {
 								column: 25

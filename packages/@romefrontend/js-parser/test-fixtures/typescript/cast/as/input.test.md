@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/cast/as/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/cast/as/input.ts"
 		end: Object {
 			column: 0
 			index: 107
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " (x < y) as boolean;"
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as/input.ts"
 				end: Object {
 					column: 40
 					index: 48
@@ -52,7 +52,7 @@ JSRoot {
 			id: "1"
 			value: " x === (1 as number);"
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as/input.ts"
 				end: Object {
 					column: 42
 					index: 91
@@ -69,7 +69,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as/input.ts"
 				end: Object {
 					column: 7
 					index: 7
@@ -83,7 +83,7 @@ JSRoot {
 			}
 			expression: TSAsExpression {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as/input.ts"
 					end: Object {
 						column: 6
 						index: 6
@@ -98,7 +98,7 @@ JSRoot {
 				expression: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/as/input.ts"
 						identifierName: "x"
 						end: Object {
 							column: 1
@@ -115,7 +115,7 @@ JSRoot {
 				typeAnnotation: TSTypeReference {
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/as/input.ts"
 						end: Object {
 							column: 6
 							index: 6
@@ -130,7 +130,7 @@ JSRoot {
 					typeName: JSReferenceIdentifier {
 						name: "T"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as/input.ts"
 							identifierName: "T"
 							end: Object {
 								column: 6
@@ -150,7 +150,7 @@ JSRoot {
 		JSExpressionStatement {
 			trailingComments: Array ["0"]
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as/input.ts"
 				end: Object {
 					column: 17
 					index: 25
@@ -164,7 +164,7 @@ JSRoot {
 			}
 			expression: TSAsExpression {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as/input.ts"
 					end: Object {
 						column: 16
 						index: 24
@@ -178,7 +178,7 @@ JSRoot {
 				}
 				typeAnnotation: TSBooleanKeywordTypeAnnotation {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/as/input.ts"
 						end: Object {
 							column: 16
 							index: 24
@@ -194,7 +194,7 @@ JSRoot {
 				expression: JSBinaryExpression {
 					operator: "<"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/as/input.ts"
 						end: Object {
 							column: 5
 							index: 13
@@ -209,7 +209,7 @@ JSRoot {
 					left: JSReferenceIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as/input.ts"
 							identifierName: "x"
 							end: Object {
 								column: 1
@@ -226,7 +226,7 @@ JSRoot {
 					right: JSReferenceIdentifier {
 						name: "y"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as/input.ts"
 							identifierName: "y"
 							end: Object {
 								column: 5
@@ -247,7 +247,7 @@ JSRoot {
 			leadingComments: Array ["0"]
 			trailingComments: Array ["1"]
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as/input.ts"
 				end: Object {
 					column: 18
 					index: 67
@@ -263,7 +263,7 @@ JSRoot {
 				leadingComments: undefined
 				operator: "==="
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as/input.ts"
 					end: Object {
 						column: 17
 						index: 66
@@ -279,7 +279,7 @@ JSRoot {
 					name: "x"
 					leadingComments: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/as/input.ts"
 						identifierName: "x"
 						end: Object {
 							column: 1
@@ -295,7 +295,7 @@ JSRoot {
 				}
 				right: TSAsExpression {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/as/input.ts"
 						end: Object {
 							column: 17
 							index: 66
@@ -309,7 +309,7 @@ JSRoot {
 					}
 					typeAnnotation: TSNumberKeywordTypeAnnotation {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as/input.ts"
 							end: Object {
 								column: 17
 								index: 66
@@ -326,7 +326,7 @@ JSRoot {
 						value: 1
 						format: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as/input.ts"
 							end: Object {
 								column: 7
 								index: 56
@@ -345,7 +345,7 @@ JSRoot {
 		JSExpressionStatement {
 			leadingComments: Array ["1"]
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as/input.ts"
 				end: Object {
 					column: 14
 					index: 106
@@ -360,7 +360,7 @@ JSRoot {
 			expression: TSAsExpression {
 				leadingComments: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as/input.ts"
 					end: Object {
 						column: 13
 						index: 105
@@ -375,7 +375,7 @@ JSRoot {
 				typeAnnotation: TSTypeReference {
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/as/input.ts"
 						end: Object {
 							column: 13
 							index: 105
@@ -390,7 +390,7 @@ JSRoot {
 					typeName: JSReferenceIdentifier {
 						name: "T"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as/input.ts"
 							identifierName: "T"
 							end: Object {
 								column: 13
@@ -408,7 +408,7 @@ JSRoot {
 				expression: TSAsExpression {
 					leadingComments: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/as/input.ts"
 						end: Object {
 							column: 8
 							index: 100
@@ -422,7 +422,7 @@ JSRoot {
 					}
 					typeAnnotation: TSAnyKeywordTypeAnnotation {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as/input.ts"
 							end: Object {
 								column: 8
 								index: 100
@@ -439,7 +439,7 @@ JSRoot {
 						name: "x"
 						leadingComments: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as/input.ts"
 							identifierName: "x"
 							end: Object {
 								column: 1

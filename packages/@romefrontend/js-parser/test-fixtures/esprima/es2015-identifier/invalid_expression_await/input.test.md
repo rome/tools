@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-identifier/invalid_expression_await/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-identifier/invalid_expression_await/input.js"
 		end: Object {
 			column: 0
 			index: 31
@@ -48,7 +48,7 @@ JSRoot {
 				]
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-identifier/invalid_expression_await/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -69,7 +69,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-identifier/invalid_expression_await/input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -83,7 +83,7 @@ JSRoot {
 			}
 			declaration: JSVariableDeclarationStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-identifier/invalid_expression_await/input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -98,7 +98,7 @@ JSRoot {
 				declaration: JSVariableDeclaration {
 					kind: "var"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-identifier/invalid_expression_await/input.js"
 						end: Object {
 							column: 30
 							index: 30
@@ -115,7 +115,7 @@ JSRoot {
 							id: JSBindingIdentifier {
 								name: "answer"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-identifier/invalid_expression_await/input.js"
 									identifierName: "answer"
 									end: Object {
 										column: 17
@@ -130,7 +130,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-identifier/invalid_expression_await/input.js"
 								end: Object {
 									column: 29
 									index: 29
@@ -145,7 +145,7 @@ JSRoot {
 							init: JSBinaryExpression {
 								operator: "+"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-identifier/invalid_expression_await/input.js"
 									end: Object {
 										column: 29
 										index: 29
@@ -160,7 +160,7 @@ JSRoot {
 								left: JSReferenceIdentifier {
 									name: "await"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-identifier/invalid_expression_await/input.js"
 										identifierName: "await"
 										end: Object {
 											column: 25
@@ -178,7 +178,7 @@ JSRoot {
 									value: 1
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-identifier/invalid_expression_await/input.js"
 										end: Object {
 											column: 29
 											index: 29
@@ -205,7 +205,7 @@ JSRoot {
 
 ```
 
- input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-identifier/invalid_expression_await/input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ import and export can only appear in a module
 

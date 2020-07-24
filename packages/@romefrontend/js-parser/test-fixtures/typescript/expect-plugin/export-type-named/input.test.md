@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "typescript/expect-plugin/export-type-named/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "typescript/expect-plugin/export-type-named/input.js"
 		end: Object {
 			column: 0
 			index: 30
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "typescript/expect-plugin/export-type-named/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "typescript/expect-plugin/export-type-named/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "Foo"
 							loc: Object {
-								filename: "input.js"
+								filename: "typescript/expect-plugin/export-type-named/input.js"
 								identifierName: "Foo"
 								end: Object {
 									column: 7
@@ -82,7 +82,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "typescript/expect-plugin/export-type-named/input.js"
 							end: Object {
 								column: 7
 								index: 7
@@ -102,7 +102,7 @@ JSRoot {
 			declaration: undefined
 			exportKind: "type"
 			loc: Object {
-				filename: "input.js"
+				filename: "typescript/expect-plugin/export-type-named/input.js"
 				end: Object {
 					column: 20
 					index: 29
@@ -117,7 +117,7 @@ JSRoot {
 			specifiers: Array [
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "typescript/expect-plugin/export-type-named/input.js"
 						end: Object {
 							column: 17
 							index: 26
@@ -132,7 +132,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "Foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "typescript/expect-plugin/export-type-named/input.js"
 							identifierName: "Foo"
 							end: Object {
 								column: 17
@@ -149,7 +149,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "Foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "typescript/expect-plugin/export-type-named/input.js"
 							identifierName: "Foo"
 							end: Object {
 								column: 17

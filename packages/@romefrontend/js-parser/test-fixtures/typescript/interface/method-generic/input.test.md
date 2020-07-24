@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/interface/method-generic/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/interface/method-generic/input.ts"
 		end: Object {
 			column: 0
 			index: 62
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/method-generic/input.ts"
 					identifierName: "I"
 					end: Object {
 						column: 11
@@ -53,7 +53,7 @@ JSRoot {
 			extends: undefined
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/method-generic/input.ts"
 				end: Object {
 					column: 1
 					index: 61
@@ -67,7 +67,7 @@ JSRoot {
 			}
 			body: TSInterfaceBody {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/method-generic/input.ts"
 					end: Object {
 						column: 1
 						index: 61
@@ -85,7 +85,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "m"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/interface/method-generic/input.ts"
 									identifierName: "m"
 									end: Object {
 										column: 5
@@ -100,7 +100,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/method-generic/input.ts"
 								end: Object {
 									column: 5
 									index: 19
@@ -115,7 +115,7 @@ JSRoot {
 						}
 						optional: false
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/interface/method-generic/input.ts"
 							end: Object {
 								column: 45
 								index: 59
@@ -130,7 +130,7 @@ JSRoot {
 						returnType: TSTypeReference {
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/method-generic/input.ts"
 								end: Object {
 									column: 44
 									index: 58
@@ -145,7 +145,7 @@ JSRoot {
 							typeName: JSReferenceIdentifier {
 								name: "T"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/interface/method-generic/input.ts"
 									identifierName: "T"
 									end: Object {
 										column: 44
@@ -164,7 +164,7 @@ JSRoot {
 							parameters: Array []
 							rest: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/method-generic/input.ts"
 								end: Object {
 									column: 44
 									index: 58
@@ -178,7 +178,7 @@ JSRoot {
 							}
 							typeParameters: TSTypeParameterDeclaration {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/interface/method-generic/input.ts"
 									end: Object {
 										column: 39
 										index: 53
@@ -194,7 +194,7 @@ JSRoot {
 									TSTypeParameter {
 										name: "T"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/interface/method-generic/input.ts"
 											end: Object {
 												column: 38
 												index: 52
@@ -208,7 +208,7 @@ JSRoot {
 										}
 										constraint: TSObjectKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/interface/method-generic/input.ts"
 												end: Object {
 													column: 22
 													index: 36
@@ -223,7 +223,7 @@ JSRoot {
 										}
 										default: TSObjectTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/interface/method-generic/input.ts"
 												end: Object {
 													column: 38
 													index: 52
@@ -241,7 +241,7 @@ JSRoot {
 														value: JSIdentifier {
 															name: "x"
 															loc: Object {
-																filename: "input.ts"
+																filename: "typescript/interface/method-generic/input.ts"
 																identifierName: "x"
 																end: Object {
 																	column: 28
@@ -256,7 +256,7 @@ JSRoot {
 															}
 														}
 														loc: Object {
-															filename: "input.ts"
+															filename: "typescript/interface/method-generic/input.ts"
 															end: Object {
 																column: 28
 																index: 42
@@ -272,7 +272,7 @@ JSRoot {
 													optional: false
 													readonly: false
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/interface/method-generic/input.ts"
 														end: Object {
 															column: 36
 															index: 50
@@ -286,7 +286,7 @@ JSRoot {
 													}
 													typeAnnotation: TSNumberKeywordTypeAnnotation {
 														loc: Object {
-															filename: "input.ts"
+															filename: "typescript/interface/method-generic/input.ts"
 															end: Object {
 																column: 36
 																index: 50

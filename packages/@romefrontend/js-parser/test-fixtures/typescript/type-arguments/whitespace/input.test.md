@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/type-arguments/whitespace/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/type-arguments/whitespace/input.ts"
 		end: Object {
 			column: 24
 			index: 24
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/type-arguments/whitespace/input.ts"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/type-arguments/whitespace/input.ts"
 				end: Object {
 					column: 24
 					index: 24
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/type-arguments/whitespace/input.ts"
 					end: Object {
 						column: 24
 						index: 24
@@ -89,7 +89,7 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/type-arguments/whitespace/input.ts"
 					end: Object {
 						column: 21
 						index: 21
@@ -103,7 +103,7 @@ JSRoot {
 				}
 				typeParameters: TSTypeParameterDeclaration {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/type-arguments/whitespace/input.ts"
 						end: Object {
 							column: 19
 							index: 19
@@ -121,7 +121,7 @@ JSRoot {
 							constraint: undefined
 							default: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/type-arguments/whitespace/input.ts"
 								end: Object {
 									column: 14
 									index: 14

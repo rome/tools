@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/export/export-type/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/export/export-type/input.ts"
 		end: Object {
 			column: 0
 			index: 31
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/export/export-type/input.ts"
 					identifierName: "A"
 					end: Object {
 						column: 6
@@ -52,7 +52,7 @@ JSRoot {
 			}
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/export/export-type/input.ts"
 				end: Object {
 					column: 11
 					index: 11
@@ -68,7 +68,7 @@ JSRoot {
 				value: 2
 				format: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/export/export-type/input.ts"
 					end: Object {
 						column: 10
 						index: 10
@@ -86,7 +86,7 @@ JSRoot {
 			declaration: undefined
 			exportKind: "type"
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/export/export-type/input.ts"
 				end: Object {
 					column: 18
 					index: 30
@@ -101,7 +101,7 @@ JSRoot {
 			specifiers: Array [
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/export/export-type/input.ts"
 						end: Object {
 							column: 15
 							index: 27
@@ -116,7 +116,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "A"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/export/export-type/input.ts"
 							identifierName: "A"
 							end: Object {
 								column: 15
@@ -133,7 +133,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "A"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/export/export-type/input.ts"
 							identifierName: "A"
 							end: Object {
 								column: 15

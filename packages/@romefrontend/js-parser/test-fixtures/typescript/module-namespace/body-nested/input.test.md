@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/module-namespace/body-nested/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/module-namespace/body-nested/input.ts"
 		end: Object {
 			column: 0
 			index: 40
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/body-nested/input.ts"
 					identifierName: "A"
 					end: Object {
 						column: 11
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/module-namespace/body-nested/input.ts"
 				end: Object {
 					column: 1
 					index: 39
@@ -65,7 +65,7 @@ JSRoot {
 			}
 			body: TSModuleBlock {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/body-nested/input.ts"
 					end: Object {
 						column: 1
 						index: 39
@@ -82,7 +82,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "B"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/module-namespace/body-nested/input.ts"
 								identifierName: "B"
 								end: Object {
 									column: 15
@@ -97,7 +97,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/module-namespace/body-nested/input.ts"
 							end: Object {
 								column: 5
 								index: 37
@@ -112,7 +112,7 @@ JSRoot {
 						body: TSModuleBlock {
 							body: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/module-namespace/body-nested/input.ts"
 								end: Object {
 									column: 5
 									index: 37

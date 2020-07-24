@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2018/async-generators/for-await-no-semi-2/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2018/async-generators/for-await-no-semi-2/input.js"
 		end: Object {
 			column: 0
 			index: 55
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Can't have an await on a regular for loop"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2018/async-generators/for-await-no-semi-2/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/async-generators/for-await-no-semi-2/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 16
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2018/async-generators/for-await-no-semi-2/input.js"
 				end: Object {
 					column: 1
 					index: 54
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/async-generators/for-await-no-semi-2/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/async-generators/for-await-no-semi-2/input.js"
 					end: Object {
 						column: 1
 						index: 54
@@ -129,7 +129,7 @@ JSRoot {
 					JSForStatement {
 						update: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2018/async-generators/for-await-no-semi-2/input.js"
 							end: Object {
 								column: 31
 								index: 52
@@ -143,7 +143,7 @@ JSRoot {
 						}
 						body: JSEmptyStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/async-generators/for-await-no-semi-2/input.js"
 								end: Object {
 									column: 31
 									index: 52
@@ -159,7 +159,7 @@ JSRoot {
 						test: JSBooleanLiteral {
 							value: false
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/async-generators/for-await-no-semi-2/input.js"
 								end: Object {
 									column: 28
 									index: 49
@@ -175,7 +175,7 @@ JSRoot {
 						init: JSVariableDeclaration {
 							kind: "let"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/async-generators/for-await-no-semi-2/input.js"
 								end: Object {
 									column: 22
 									index: 43
@@ -192,7 +192,7 @@ JSRoot {
 									id: JSBindingIdentifier {
 										name: "i"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2018/async-generators/for-await-no-semi-2/input.js"
 											identifierName: "i"
 											end: Object {
 												column: 18
@@ -207,7 +207,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2018/async-generators/for-await-no-semi-2/input.js"
 										end: Object {
 											column: 22
 											index: 43
@@ -223,7 +223,7 @@ JSRoot {
 										value: 0
 										format: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2018/async-generators/for-await-no-semi-2/input.js"
 											end: Object {
 												column: 22
 												index: 43
@@ -251,7 +251,7 @@ JSRoot {
 
 ```
 
- input.js:2:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2018/async-generators/for-await-no-semi-2/input.js:2:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Can't have an await on a regular for loop
 

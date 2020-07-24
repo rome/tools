@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/export/nested-same-name/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/export/nested-same-name/input.ts"
 		end: Object {
 			column: 0
 			index: 67
@@ -36,7 +36,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/export/nested-same-name/input.ts"
 				end: Object {
 					column: 19
 					index: 19
@@ -50,7 +50,7 @@ JSRoot {
 			}
 			declaration: JSVariableDeclarationStatement {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/export/nested-same-name/input.ts"
 					end: Object {
 						column: 19
 						index: 19
@@ -65,7 +65,7 @@ JSRoot {
 				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/export/nested-same-name/input.ts"
 						end: Object {
 							column: 19
 							index: 19
@@ -82,7 +82,7 @@ JSRoot {
 							id: JSBindingIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/export/nested-same-name/input.ts"
 									identifierName: "x"
 									end: Object {
 										column: 14
@@ -97,7 +97,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/export/nested-same-name/input.ts"
 								end: Object {
 									column: 18
 									index: 18
@@ -113,7 +113,7 @@ JSRoot {
 								value: 0
 								format: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/export/nested-same-name/input.ts"
 									end: Object {
 										column: 18
 										index: 18
@@ -135,7 +135,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/export/nested-same-name/input.ts"
 				end: Object {
 					column: 1
 					index: 66
@@ -151,7 +151,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "N"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/export/nested-same-name/input.ts"
 						identifierName: "N"
 						end: Object {
 							column: 18
@@ -166,7 +166,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/export/nested-same-name/input.ts"
 					end: Object {
 						column: 1
 						index: 66
@@ -180,7 +180,7 @@ JSRoot {
 				}
 				body: TSModuleBlock {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/export/nested-same-name/input.ts"
 						end: Object {
 							column: 1
 							index: 66
@@ -197,7 +197,7 @@ JSRoot {
 							exportKind: "value"
 							specifiers: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/export/nested-same-name/input.ts"
 								end: Object {
 									column: 23
 									index: 64
@@ -211,7 +211,7 @@ JSRoot {
 							}
 							declaration: JSVariableDeclarationStatement {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/export/nested-same-name/input.ts"
 									end: Object {
 										column: 23
 										index: 64
@@ -226,7 +226,7 @@ JSRoot {
 								declaration: JSVariableDeclaration {
 									kind: "const"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/export/nested-same-name/input.ts"
 										end: Object {
 											column: 23
 											index: 64
@@ -243,7 +243,7 @@ JSRoot {
 											id: JSBindingIdentifier {
 												name: "x"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/export/nested-same-name/input.ts"
 													identifierName: "x"
 													end: Object {
 														column: 18
@@ -258,7 +258,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/export/nested-same-name/input.ts"
 												end: Object {
 													column: 22
 													index: 63
@@ -274,7 +274,7 @@ JSRoot {
 												value: 1
 												format: undefined
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/export/nested-same-name/input.ts"
 													end: Object {
 														column: 22
 														index: 63

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/method-readonly/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/method-readonly/input.ts"
 		end: Object {
 			column: 0
 			index: 32
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/class/method-readonly/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/method-readonly/input.ts"
 					identifierName: "C"
 					end: Object {
 						column: 7
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/method-readonly/input.ts"
 				end: Object {
 					column: 19
 					index: 29
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/method-readonly/input.ts"
 					end: Object {
 						column: 19
 						index: 29
@@ -111,7 +111,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "m"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/method-readonly/input.ts"
 									identifierName: "m"
 									end: Object {
 										column: 14
@@ -126,7 +126,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/method-readonly/input.ts"
 								end: Object {
 									column: 14
 									index: 24
@@ -143,7 +143,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/method-readonly/input.ts"
 							end: Object {
 								column: 14
 								index: 24
@@ -168,7 +168,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/method-readonly/input.ts"
 								end: Object {
 									column: 14
 									index: 24
@@ -187,7 +187,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: ""
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/method-readonly/input.ts"
 									identifierName: ""
 									end: Object {
 										column: 18
@@ -202,7 +202,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/method-readonly/input.ts"
 								end: Object {
 									column: 18
 									index: 28
@@ -219,7 +219,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/method-readonly/input.ts"
 							end: Object {
 								column: 18
 								index: 28
@@ -244,7 +244,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/method-readonly/input.ts"
 								end: Object {
 									column: 18
 									index: 28
@@ -263,7 +263,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/method-readonly/input.ts"
 				end: Object {
 					column: 1
 					index: 31
@@ -278,7 +278,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/method-readonly/input.ts"
 					end: Object {
 						column: 1
 						index: 31
@@ -300,7 +300,7 @@ JSRoot {
 
 ```
 
- input.ts:2:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/class/method-readonly/input.ts:2:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

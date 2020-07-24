@@ -113,6 +113,9 @@ function createDiagnosticsPrinter(
 					savedCount,
 				)}</grammarNumber> updated`,
 			);
+			reporter.info(
+				markup`You can revert these changes with the <code>rome recover pop</code> command`,
+			);
 		}
 
 		if (!isError) {

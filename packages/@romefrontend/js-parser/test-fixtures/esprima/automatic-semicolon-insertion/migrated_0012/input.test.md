@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/automatic-semicolon-insertion/migrated_0012/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/automatic-semicolon-insertion/migrated_0012/input.js"
 		end: Object {
 			column: 0
 			index: 48
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " Multiline\nComment "
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/automatic-semicolon-insertion/migrated_0012/input.js"
 				end: Object {
 					column: 10
 					index: 42
@@ -52,7 +52,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/automatic-semicolon-insertion/migrated_0012/input.js"
 				end: Object {
 					column: 15
 					index: 47
@@ -67,7 +67,7 @@ JSRoot {
 			expression: JSFunctionExpression {
 				id: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/automatic-semicolon-insertion/migrated_0012/input.js"
 					end: Object {
 						column: 14
 						index: 46
@@ -89,7 +89,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/automatic-semicolon-insertion/migrated_0012/input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -105,7 +105,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/automatic-semicolon-insertion/migrated_0012/input.js"
 						end: Object {
 							column: 14
 							index: 46
@@ -122,7 +122,7 @@ JSRoot {
 							argument: undefined
 							trailingComments: Array ["0"]
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/automatic-semicolon-insertion/migrated_0012/input.js"
 								end: Object {
 									column: 19
 									index: 19
@@ -138,7 +138,7 @@ JSRoot {
 						JSExpressionStatement {
 							leadingComments: Array ["0"]
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/automatic-semicolon-insertion/migrated_0012/input.js"
 								end: Object {
 									column: 12
 									index: 44
@@ -154,7 +154,7 @@ JSRoot {
 								name: "x"
 								leadingComments: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/automatic-semicolon-insertion/migrated_0012/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 11

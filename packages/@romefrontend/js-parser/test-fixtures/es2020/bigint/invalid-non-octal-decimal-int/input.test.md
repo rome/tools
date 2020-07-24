@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/bigint/invalid-non-octal-decimal-int/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/bigint/invalid-non-octal-decimal-int/input.js"
 		end: Object {
 			column: 4
 			index: 4
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/invalid-non-octal-decimal-int/input.js"
 				end: Object {
 					column: 4
 					index: 4
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSBigIntLiteral {
 				value: "089"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/bigint/invalid-non-octal-decimal-int/input.js"
 					end: Object {
 						column: 4
 						index: 4

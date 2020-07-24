@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/cast/arrow-async-parameter-as/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/cast/arrow-async-parameter-as/input.ts"
 		end: Object {
 			column: 21
 			index: 21
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected type cast in parameter position"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/arrow-async-parameter-as/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/arrow-async-parameter-as/input.ts"
 				end: Object {
 					column: 21
 					index: 21
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/arrow-async-parameter-as/input.ts"
 					end: Object {
 						column: 20
 						index: 20
@@ -88,7 +88,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/arrow-async-parameter-as/input.ts"
 						end: Object {
 							column: 20
 							index: 20
@@ -108,7 +108,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/arrow-async-parameter-as/input.ts"
 						end: Object {
 							column: 17
 							index: 17
@@ -124,7 +124,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/arrow-async-parameter-as/input.ts"
 								end: Object {
 									column: 17
 									index: 17
@@ -149,7 +149,7 @@ JSRoot {
 
 ```
 
- input.ts:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/cast/arrow-async-parameter-as/input.ts:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected type cast in parameter position
 

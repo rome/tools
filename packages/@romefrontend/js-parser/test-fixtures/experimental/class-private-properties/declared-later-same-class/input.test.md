@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 		end: Object {
 			column: 1
 			index: 33
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 				end: Object {
 					column: 1
 					index: 33
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 					end: Object {
 						column: 1
 						index: 33
@@ -87,7 +87,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 4
@@ -102,7 +102,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 								end: Object {
 									column: 4
 									index: 14
@@ -117,7 +117,7 @@ JSRoot {
 						}
 						value: JSMemberExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 								end: Object {
 									column: 14
 									index: 24
@@ -131,7 +131,7 @@ JSRoot {
 							}
 							object: JSThisExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 									end: Object {
 										column: 11
 										index: 21
@@ -149,7 +149,7 @@ JSRoot {
 									id: JSIdentifier {
 										name: "y"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 											identifierName: "y"
 											end: Object {
 												column: 14
@@ -164,7 +164,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 										end: Object {
 											column: 14
 											index: 24
@@ -178,7 +178,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 									end: Object {
 										column: 14
 										index: 24
@@ -194,7 +194,7 @@ JSRoot {
 						}
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 							end: Object {
 								column: 15
 								index: 25
@@ -219,7 +219,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 								end: Object {
 									column: 4
 									index: 14
@@ -238,7 +238,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "y"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 									identifierName: "y"
 									end: Object {
 										column: 4
@@ -253,7 +253,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 								end: Object {
 									column: 4
 									index: 30
@@ -269,7 +269,7 @@ JSRoot {
 						value: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 							end: Object {
 								column: 5
 								index: 31
@@ -294,7 +294,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 								end: Object {
 									column: 4
 									index: 30

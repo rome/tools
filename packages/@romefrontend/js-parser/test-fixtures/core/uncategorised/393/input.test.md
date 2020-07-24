@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/393/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/393/input.js"
 		end: Object {
 			column: 22
 			index: 22
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/393/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/393/input.js"
 				end: Object {
 					column: 15
 					index: 15
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/393/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -90,7 +90,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "set"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/393/input.js"
 									identifierName: "set"
 									end: Object {
 										column: 6
@@ -105,7 +105,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/393/input.js"
 								end: Object {
 									column: 6
 									index: 6
@@ -120,7 +120,7 @@ JSRoot {
 						}
 						value: JSCallExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/393/input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -135,7 +135,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "s"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/393/input.js"
 									identifierName: "s"
 									end: Object {
 										column: 9
@@ -153,7 +153,7 @@ JSRoot {
 								JSReferenceIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/uncategorised/393/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 11
@@ -170,7 +170,7 @@ JSRoot {
 								JSReferenceIdentifier {
 									name: "b"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/uncategorised/393/input.js"
 										identifierName: "b"
 										end: Object {
 											column: 14
@@ -187,7 +187,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/393/input.js"
 							end: Object {
 								column: 15
 								index: 15
@@ -207,7 +207,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/393/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -222,7 +222,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/393/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -237,7 +237,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/393/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -253,7 +253,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/393/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -268,7 +268,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/393/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -290,7 +290,7 @@ JSRoot {
 
 ```
 
- input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/393/input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ,
 

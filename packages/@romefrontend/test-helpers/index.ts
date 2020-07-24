@@ -53,6 +53,7 @@ export type FixtureFile = {
 
 async function _getFixtures(
 	opts: {
+		root: AbsoluteFilePath;
 		name: undefined | string;
 		dir: AbsoluteFilePath;
 		parts: Array<string>;
@@ -113,6 +114,7 @@ async function _getFixtures(
 		for (const path of directories) {
 			fixtures = fixtures.concat(
 				await _getFixtures({
+					root: opts.root,
 					name: path.getBasename(),
 					dir: path,
 					parts: ownParts,
@@ -130,7 +132,7 @@ async function _getFixtures(
 		fileContents.set(
 			path.getBasename(),
 			{
-				relative: dir.relative(path),
+				relative: opts.root.relative(path),
 				absolute: path,
 				content: await readFile(path),
 			},
@@ -149,9 +151,11 @@ async function _getFixtures(
 }
 
 export async function getFixtures(dir: string): Promise<Array<Fixture>> {
+	const root = createAbsoluteFilePath(dir).append("test-fixtures");
 	return _getFixtures({
+		root,
 		name: undefined,
-		dir: createAbsoluteFilePath(dir).append("test-fixtures"),
+		dir: root,
 		parts: [],
 		options: consumeUnknown({}, "tests/fixtureOptions"),
 	});

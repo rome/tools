@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/export/as-namespace/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/export/as-namespace/input.ts"
 		end: Object {
 			column: 0
 			index: 23
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/export/as-namespace/input.ts"
 					identifierName: "A"
 					end: Object {
 						column: 21
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/export/as-namespace/input.ts"
 				end: Object {
 					column: 22
 					index: 22

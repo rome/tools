@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/conditional-infer/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/conditional-infer/input.ts"
 		end: Object {
 			column: 0
 			index: 49
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Element"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/conditional-infer/input.ts"
 					identifierName: "Element"
 					end: Object {
 						column: 12
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/conditional-infer/input.ts"
 				end: Object {
 					column: 48
 					index: 48
@@ -65,7 +65,7 @@ JSRoot {
 			}
 			typeParameters: TSTypeParameterDeclaration {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/conditional-infer/input.ts"
 					end: Object {
 						column: 15
 						index: 15
@@ -83,7 +83,7 @@ JSRoot {
 						constraint: undefined
 						default: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/conditional-infer/input.ts"
 							end: Object {
 								column: 14
 								index: 14
@@ -100,7 +100,7 @@ JSRoot {
 			}
 			right: TSConditionalType {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/conditional-infer/input.ts"
 					end: Object {
 						column: 47
 						index: 47
@@ -115,7 +115,7 @@ JSRoot {
 				checkType: TSTypeReference {
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/types/conditional-infer/input.ts"
 						end: Object {
 							column: 19
 							index: 19
@@ -130,7 +130,7 @@ JSRoot {
 					typeName: JSReferenceIdentifier {
 						name: "T"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/conditional-infer/input.ts"
 							identifierName: "T"
 							end: Object {
 								column: 19
@@ -148,7 +148,7 @@ JSRoot {
 				falseType: TSTypeReference {
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/types/conditional-infer/input.ts"
 						end: Object {
 							column: 47
 							index: 47
@@ -163,7 +163,7 @@ JSRoot {
 					typeName: JSReferenceIdentifier {
 						name: "T"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/conditional-infer/input.ts"
 							identifierName: "T"
 							end: Object {
 								column: 47
@@ -181,7 +181,7 @@ JSRoot {
 				trueType: TSTypeReference {
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/types/conditional-infer/input.ts"
 						end: Object {
 							column: 43
 							index: 43
@@ -196,7 +196,7 @@ JSRoot {
 					typeName: JSReferenceIdentifier {
 						name: "U"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/conditional-infer/input.ts"
 							identifierName: "U"
 							end: Object {
 								column: 43
@@ -213,7 +213,7 @@ JSRoot {
 				}
 				extendsType: TSArrayType {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/types/conditional-infer/input.ts"
 						end: Object {
 							column: 39
 							index: 39
@@ -227,7 +227,7 @@ JSRoot {
 					}
 					elementType: TSParenthesizedType {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/conditional-infer/input.ts"
 							end: Object {
 								column: 37
 								index: 37
@@ -241,7 +241,7 @@ JSRoot {
 						}
 						typeAnnotation: TSInferType {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/conditional-infer/input.ts"
 								end: Object {
 									column: 36
 									index: 36
@@ -256,7 +256,7 @@ JSRoot {
 							typeParameter: TSTypeParameter {
 								name: "U"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/conditional-infer/input.ts"
 									end: Object {
 										column: 36
 										index: 36

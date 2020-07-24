@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 		end: Object {
 			column: 0
 			index: 50
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Escape sequence in keyword export"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "export"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 								identifierName: "export"
 								end: Object {
 									column: 15
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 							end: Object {
 								column: 21
 								index: 21
@@ -121,7 +121,7 @@ JSRoot {
 							value: 123
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 								end: Object {
 									column: 21
 									index: 21
@@ -140,7 +140,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 				end: Object {
 					column: 6
 					index: 30
@@ -155,7 +155,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 					end: Object {
 						column: 6
 						index: 30
@@ -172,7 +172,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 5
@@ -188,7 +188,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 							end: Object {
 								column: 5
 								index: 29
@@ -208,7 +208,7 @@ JSRoot {
 			declaration: undefined
 			exportKind: "value"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 				end: Object {
 					column: 18
 					index: 49
@@ -223,7 +223,7 @@ JSRoot {
 			specifiers: Array [
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 						end: Object {
 							column: 15
 							index: 46
@@ -238,7 +238,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 							identifierName: "x"
 							end: Object {
 								column: 15
@@ -255,7 +255,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 							identifierName: "x"
 							end: Object {
 								column: 15
@@ -280,7 +280,7 @@ JSRoot {
 
 ```
 
- input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/identifiers/invalid-escape-seq-export/input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Escape sequence in keyword export
 

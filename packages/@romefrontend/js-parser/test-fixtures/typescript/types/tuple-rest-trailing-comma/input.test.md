@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 		end: Object {
 			column: 0
 			index: 30
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "The rest element has to be the last element when destructuring"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 				end: Object {
 					column: 29
 					index: 29
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 					end: Object {
 						column: 29
 						index: 29
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 								end: Object {
 									column: 29
 									index: 29
@@ -105,7 +105,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 									end: Object {
 										column: 29
 										index: 29
@@ -119,7 +119,7 @@ JSRoot {
 								}
 								typeAnnotation: TSTupleType {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 										end: Object {
 											column: 29
 											index: 29
@@ -136,7 +136,7 @@ JSRoot {
 											name: undefined
 											optional: false
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 												end: Object {
 													column: 14
 													index: 14
@@ -150,7 +150,7 @@ JSRoot {
 											}
 											typeAnnotation: TSStringKeywordTypeAnnotation {
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 													end: Object {
 														column: 14
 														index: 14
@@ -169,7 +169,7 @@ JSRoot {
 										name: undefined
 										optional: false
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 											end: Object {
 												column: 27
 												index: 27
@@ -183,7 +183,7 @@ JSRoot {
 										}
 										typeAnnotation: TSArrayType {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 												end: Object {
 													column: 27
 													index: 27
@@ -197,7 +197,7 @@ JSRoot {
 											}
 											elementType: TSStringKeywordTypeAnnotation {
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 													end: Object {
 														column: 25
 														index: 25
@@ -217,7 +217,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 							end: Object {
 								column: 29
 								index: 29
@@ -241,7 +241,7 @@ JSRoot {
 
 ```
 
- input.ts:1:27 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/types/tuple-rest-trailing-comma/input.ts:1:27 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The rest element has to be the last element when destructuring
 

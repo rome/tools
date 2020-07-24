@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/regression/issue-2114/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/regression/issue-2114/input.jsx"
 		end: Object {
 			column: 0
 			index: 52
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/regression/issue-2114/input.jsx"
 				end: Object {
 					column: 51
 					index: 51
@@ -50,7 +50,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "div"
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/regression/issue-2114/input.jsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -67,7 +67,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/regression/issue-2114/input.jsx"
 					end: Object {
 						column: 50
 						index: 50
@@ -84,7 +84,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "pattern"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/regression/issue-2114/input.jsx"
 								end: Object {
 									column: 12
 									index: 12
@@ -100,7 +100,7 @@ JSRoot {
 						value: JSStringLiteral {
 							value: "^([\\w\\.\\-]+\\s)*[\\w\\.\\-]+\\s?$"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/regression/issue-2114/input.jsx"
 								end: Object {
 									column: 43
 									index: 43
@@ -114,7 +114,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/regression/issue-2114/input.jsx"
 							end: Object {
 								column: 43
 								index: 43

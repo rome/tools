@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-meta-property/unknown-property/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-meta-property/unknown-property/input.js"
 		end: Object {
 			column: 0
 			index: 45
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "The only valid meta property for new is new.target"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-meta-property/unknown-property/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-meta-property/unknown-property/input.js"
 				end: Object {
 					column: 44
 					index: 44
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-meta-property/unknown-property/input.js"
 					end: Object {
 						column: 44
 						index: 44
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "f"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-meta-property/unknown-property/input.js"
 								identifierName: "f"
 								end: Object {
 									column: 5
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-meta-property/unknown-property/input.js"
 							end: Object {
 								column: 44
 								index: 44
@@ -120,7 +120,7 @@ JSRoot {
 						init: JSFunctionExpression {
 							id: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-meta-property/unknown-property/input.js"
 								end: Object {
 									column: 44
 									index: 44
@@ -142,7 +142,7 @@ JSRoot {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-meta-property/unknown-property/input.js"
 									end: Object {
 										column: 18
 										index: 18
@@ -158,7 +158,7 @@ JSRoot {
 							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-meta-property/unknown-property/input.js"
 									end: Object {
 										column: 44
 										index: 44
@@ -173,7 +173,7 @@ JSRoot {
 								body: Array [
 									JSExpressionStatement {
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-meta-property/unknown-property/input.js"
 											end: Object {
 												column: 42
 												index: 42
@@ -187,7 +187,7 @@ JSRoot {
 										}
 										expression: JSMetaProperty {
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-meta-property/unknown-property/input.js"
 												end: Object {
 													column: 41
 													index: 41
@@ -202,7 +202,7 @@ JSRoot {
 											meta: JSIdentifier {
 												name: "new"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/es2015-meta-property/unknown-property/input.js"
 													identifierName: "new"
 													end: Object {
 														column: 24
@@ -219,7 +219,7 @@ JSRoot {
 											property: JSIdentifier {
 												name: "unknown_property"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/es2015-meta-property/unknown-property/input.js"
 													identifierName: "unknown_property"
 													end: Object {
 														column: 41
@@ -250,7 +250,7 @@ JSRoot {
 
 ```
 
- input.js:1:25 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-meta-property/unknown-property/input.js:1:25 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The only valid meta property for new is new.target
 

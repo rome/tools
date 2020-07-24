@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/class-methods/linebreaks/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/class-methods/linebreaks/input.js"
 		end: Object {
 			column: 1
 			index: 239
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class-methods/linebreaks/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/class-methods/linebreaks/input.js"
 				end: Object {
 					column: 1
 					index: 239
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class-methods/linebreaks/input.js"
 					end: Object {
 						column: 1
 						index: 239
@@ -88,7 +88,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/linebreaks/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 3
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
 									index: 19
@@ -117,7 +117,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/linebreaks/input.js"
 							end: Object {
 								column: 7
 								index: 27
@@ -133,7 +133,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 7
 									index: 27
@@ -156,7 +156,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 4
 									index: 24
@@ -182,7 +182,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
 									index: 19
@@ -202,7 +202,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/linebreaks/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 3
@@ -217,7 +217,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
 									index: 38
@@ -231,7 +231,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/linebreaks/input.js"
 							end: Object {
 								column: 8
 								index: 47
@@ -247,7 +247,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 8
 									index: 47
@@ -273,7 +273,7 @@ JSRoot {
 								line: 6
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
 									index: 38
@@ -295,7 +295,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 5
 									index: 44
@@ -311,7 +311,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/class-methods/linebreaks/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 4
@@ -328,7 +328,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/class-methods/linebreaks/input.js"
 											end: Object {
 												column: 4
 												index: 43
@@ -351,7 +351,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/linebreaks/input.js"
 									identifierName: "constructor"
 									end: Object {
 										column: 13
@@ -366,7 +366,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 13
 									index: 62
@@ -380,7 +380,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/linebreaks/input.js"
 							end: Object {
 								column: 7
 								index: 70
@@ -396,7 +396,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 7
 									index: 70
@@ -419,7 +419,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 4
 									index: 67
@@ -445,7 +445,7 @@ JSRoot {
 								line: 10
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 13
 									index: 62
@@ -465,7 +465,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/linebreaks/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 3
@@ -480,7 +480,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
 									index: 75
@@ -494,7 +494,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/linebreaks/input.js"
 							end: Object {
 								column: 7
 								index: 83
@@ -510,7 +510,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 7
 									index: 83
@@ -533,7 +533,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 4
 									index: 80
@@ -559,7 +559,7 @@ JSRoot {
 								line: 13
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
 									index: 75
@@ -579,7 +579,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/linebreaks/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 3
@@ -594,7 +594,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
 									index: 92
@@ -608,7 +608,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/linebreaks/input.js"
 							end: Object {
 								column: 7
 								index: 100
@@ -624,7 +624,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 7
 									index: 100
@@ -647,7 +647,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 4
 									index: 97
@@ -673,7 +673,7 @@ JSRoot {
 								line: 16
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
 									index: 92
@@ -693,7 +693,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/linebreaks/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 3
@@ -708,7 +708,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
 									index: 120
@@ -722,7 +722,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/linebreaks/input.js"
 							end: Object {
 								column: 7
 								index: 128
@@ -738,7 +738,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 7
 									index: 128
@@ -761,7 +761,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 4
 									index: 125
@@ -787,7 +787,7 @@ JSRoot {
 								line: 20
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
 									index: 120
@@ -807,7 +807,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/linebreaks/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 3
@@ -822,7 +822,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
 									index: 148
@@ -836,7 +836,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/linebreaks/input.js"
 							end: Object {
 								column: 8
 								index: 157
@@ -852,7 +852,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 8
 									index: 157
@@ -878,7 +878,7 @@ JSRoot {
 								line: 25
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
 									index: 148
@@ -900,7 +900,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 5
 									index: 154
@@ -916,7 +916,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/class-methods/linebreaks/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 4
@@ -933,7 +933,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/class-methods/linebreaks/input.js"
 											end: Object {
 												column: 4
 												index: 153
@@ -956,7 +956,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/linebreaks/input.js"
 									identifierName: "constructor"
 									end: Object {
 										column: 13
@@ -971,7 +971,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 13
 									index: 181
@@ -985,7 +985,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/linebreaks/input.js"
 							end: Object {
 								column: 7
 								index: 189
@@ -1001,7 +1001,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 7
 									index: 189
@@ -1024,7 +1024,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 4
 									index: 186
@@ -1050,7 +1050,7 @@ JSRoot {
 								line: 30
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 13
 									index: 181
@@ -1070,7 +1070,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/linebreaks/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 3
@@ -1085,7 +1085,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
 									index: 203
@@ -1099,7 +1099,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/linebreaks/input.js"
 							end: Object {
 								column: 7
 								index: 211
@@ -1115,7 +1115,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 7
 									index: 211
@@ -1138,7 +1138,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 4
 									index: 208
@@ -1164,7 +1164,7 @@ JSRoot {
 								line: 34
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
 									index: 203
@@ -1184,7 +1184,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/linebreaks/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 3
@@ -1199,7 +1199,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
 									index: 229
@@ -1213,7 +1213,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/linebreaks/input.js"
 							end: Object {
 								column: 7
 								index: 237
@@ -1229,7 +1229,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 7
 									index: 237
@@ -1252,7 +1252,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 4
 									index: 234
@@ -1278,7 +1278,7 @@ JSRoot {
 								line: 38
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
 									index: 229

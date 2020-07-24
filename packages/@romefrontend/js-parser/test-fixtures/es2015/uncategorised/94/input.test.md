@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/94/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/94/input.js"
 		end: Object {
 			column: 39
 			index: 39
@@ -37,7 +37,7 @@ JSRoot {
 			importKind: undefined
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/94/input.js"
 				end: Object {
 					column: 39
 					index: 39
@@ -52,7 +52,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "crypto"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/94/input.js"
 					end: Object {
 						column: 39
 						index: 39
@@ -68,7 +68,7 @@ JSRoot {
 			namedSpecifiers: Array [
 				JSImportSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/94/input.js"
 						end: Object {
 							column: 23
 							index: 23
@@ -83,7 +83,7 @@ JSRoot {
 					imported: JSIdentifier {
 						name: "encrypt"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/94/input.js"
 							identifierName: "encrypt"
 							end: Object {
 								column: 16
@@ -101,7 +101,7 @@ JSRoot {
 						name: JSBindingIdentifier {
 							name: "enc"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/94/input.js"
 								identifierName: "enc"
 								end: Object {
 									column: 23
@@ -117,7 +117,7 @@ JSRoot {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/94/input.js"
 							end: Object {
 								column: 23
 								index: 23

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/type-alias/generic/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/type-alias/generic/input.ts"
 		end: Object {
 			column: 0
 			index: 15
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "T"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/type-alias/generic/input.ts"
 					identifierName: "T"
 					end: Object {
 						column: 6
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/type-alias/generic/input.ts"
 				end: Object {
 					column: 14
 					index: 14
@@ -66,7 +66,7 @@ JSRoot {
 			right: TSTypeReference {
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/type-alias/generic/input.ts"
 					end: Object {
 						column: 13
 						index: 13
@@ -81,7 +81,7 @@ JSRoot {
 				typeName: JSReferenceIdentifier {
 					name: "U"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/type-alias/generic/input.ts"
 						identifierName: "U"
 						end: Object {
 							column: 13
@@ -98,7 +98,7 @@ JSRoot {
 			}
 			typeParameters: TSTypeParameterDeclaration {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/type-alias/generic/input.ts"
 					end: Object {
 						column: 9
 						index: 9
@@ -116,7 +116,7 @@ JSRoot {
 						constraint: undefined
 						default: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/type-alias/generic/input.ts"
 							end: Object {
 								column: 8
 								index: 8

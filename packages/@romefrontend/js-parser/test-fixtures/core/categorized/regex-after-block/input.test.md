@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/categorized/regex-after-block/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/categorized/regex-after-block/input.js"
 		end: Object {
 			column: 5
 			index: 20
@@ -35,7 +35,7 @@ JSRoot {
 		JSIfStatement {
 			alternate: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/regex-after-block/input.js"
 				end: Object {
 					column: 1
 					index: 13
@@ -50,7 +50,7 @@ JSRoot {
 			test: JSBooleanLiteral {
 				value: true
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/regex-after-block/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/regex-after-block/input.js"
 					end: Object {
 						column: 1
 						index: 13
@@ -83,7 +83,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/regex-after-block/input.js"
 				end: Object {
 					column: 5
 					index: 20
@@ -103,7 +103,7 @@ JSRoot {
 				sticky: false
 				unicode: false
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/regex-after-block/input.js"
 					end: Object {
 						column: 5
 						index: 20
@@ -117,7 +117,7 @@ JSRoot {
 				}
 				expression: JSRegExpSubExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/regex-after-block/input.js"
 						end: Object {
 							column: 4
 							index: 19
@@ -133,7 +133,7 @@ JSRoot {
 						JSRegExpCharacter {
 							value: "f"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/regex-after-block/input.js"
 								end: Object {
 									column: 2
 									index: 17
@@ -149,7 +149,7 @@ JSRoot {
 						JSRegExpCharacter {
 							value: "o"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/regex-after-block/input.js"
 								end: Object {
 									column: 3
 									index: 18
@@ -165,7 +165,7 @@ JSRoot {
 						JSRegExpCharacter {
 							value: "o"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/regex-after-block/input.js"
 								end: Object {
 									column: 4
 									index: 19

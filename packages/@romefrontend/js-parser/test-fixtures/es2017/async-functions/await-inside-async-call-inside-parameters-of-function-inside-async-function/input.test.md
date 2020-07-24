@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
 		end: Object {
 			column: 0
 			index: 57
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 16
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
 				end: Object {
 					column: 1
 					index: 56
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
 					end: Object {
 						column: 1
 						index: 56
@@ -106,7 +106,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "g"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
 								identifierName: "g"
 								end: Object {
 									column: 12
@@ -121,7 +121,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
 							end: Object {
 								column: 33
 								index: 54
@@ -137,7 +137,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
 								end: Object {
 									column: 33
 									index: 54
@@ -159,7 +159,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
 								end: Object {
 									column: 30
 									index: 51
@@ -174,7 +174,7 @@ JSRoot {
 							params: Array [
 								JSBindingAssignmentPattern {
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
 										end: Object {
 											column: 29
 											index: 50
@@ -189,7 +189,7 @@ JSRoot {
 									left: JSBindingIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
 											identifierName: "x"
 											end: Object {
 												column: 14
@@ -206,7 +206,7 @@ JSRoot {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
 												end: Object {
 													column: 14
 													index: 35
@@ -222,7 +222,7 @@ JSRoot {
 									}
 									right: JSCallExpression {
 										loc: Object {
-											filename: "input.js"
+											filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
 											end: Object {
 												column: 29
 												index: 50
@@ -237,7 +237,7 @@ JSRoot {
 										callee: JSReferenceIdentifier {
 											name: "async"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
 												identifierName: "async"
 												end: Object {
 													column: 22
@@ -255,7 +255,7 @@ JSRoot {
 											JSReferenceIdentifier {
 												name: "await"
 												loc: Object {
-													filename: "input.js"
+													filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
 													identifierName: "await"
 													end: Object {
 														column: 28

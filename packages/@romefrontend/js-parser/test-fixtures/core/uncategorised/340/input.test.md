@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/340/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/340/input.js"
 		end: Object {
 			column: 5
 			index: 15
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/340/input.js"
 				end: Object {
 					column: 6
 					index: 6
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/340/input.js"
 					end: Object {
 						column: 6
 						index: 6
@@ -63,7 +63,7 @@ JSRoot {
 				object: JSReferenceIdentifier {
 					name: "foo"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/340/input.js"
 						identifierName: "foo"
 						end: Object {
 							column: 3
@@ -81,7 +81,7 @@ JSRoot {
 					value: JSIdentifier {
 						name: "in"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/340/input.js"
 							identifierName: "in"
 							end: Object {
 								column: 6
@@ -96,7 +96,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/340/input.js"
 						identifierName: "in"
 						end: Object {
 							column: 6
@@ -116,7 +116,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/340/input.js"
 				end: Object {
 					column: 2
 					index: 9
@@ -131,7 +131,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/340/input.js"
 				end: Object {
 					column: 5
 					index: 15
@@ -151,7 +151,7 @@ JSRoot {
 				sticky: false
 				unicode: false
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/340/input.js"
 					end: Object {
 						column: 5
 						index: 15
@@ -165,7 +165,7 @@ JSRoot {
 				}
 				expression: JSRegExpSubExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/340/input.js"
 						end: Object {
 							column: 4
 							index: 14
@@ -181,7 +181,7 @@ JSRoot {
 						JSRegExpCharacter {
 							value: "f"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/340/input.js"
 								end: Object {
 									column: 2
 									index: 12
@@ -197,7 +197,7 @@ JSRoot {
 						JSRegExpCharacter {
 							value: "o"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/340/input.js"
 								end: Object {
 									column: 3
 									index: 13
@@ -213,7 +213,7 @@ JSRoot {
 						JSRegExpCharacter {
 							value: "o"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/340/input.js"
 								end: Object {
 									column: 4
 									index: 14

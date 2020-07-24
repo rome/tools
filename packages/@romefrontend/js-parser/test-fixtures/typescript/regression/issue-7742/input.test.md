@@ -12,7 +12,7 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.tsx"
+	filename: "typescript/regression/issue-7742/input.tsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
@@ -22,7 +22,7 @@ JSRoot {
 		"jsx"
 	]
 	loc: Object {
-		filename: "input.tsx"
+		filename: "typescript/regression/issue-7742/input.tsx"
 		end: Object {
 			column: 0
 			index: 41
@@ -39,7 +39,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.tsx"
+					filename: "typescript/regression/issue-7742/input.tsx"
 					identifierName: "Foo"
 					end: Object {
 						column: 13
@@ -55,7 +55,7 @@ JSRoot {
 			}
 			extends: undefined
 			loc: Object {
-				filename: "input.tsx"
+				filename: "typescript/regression/issue-7742/input.tsx"
 				end: Object {
 					column: 1
 					index: 40
@@ -69,7 +69,7 @@ JSRoot {
 			}
 			typeParameters: TSTypeParameterDeclaration {
 				loc: Object {
-					filename: "input.tsx"
+					filename: "typescript/regression/issue-7742/input.tsx"
 					end: Object {
 						column: 16
 						index: 16
@@ -87,7 +87,7 @@ JSRoot {
 						constraint: undefined
 						default: undefined
 						loc: Object {
-							filename: "input.tsx"
+							filename: "typescript/regression/issue-7742/input.tsx"
 							end: Object {
 								column: 15
 								index: 15
@@ -104,7 +104,7 @@ JSRoot {
 			}
 			body: TSInterfaceBody {
 				loc: Object {
-					filename: "input.tsx"
+					filename: "typescript/regression/issue-7742/input.tsx"
 					end: Object {
 						column: 1
 						index: 40
@@ -119,7 +119,7 @@ JSRoot {
 				body: Array [
 					TSCallSignatureDeclaration {
 						loc: Object {
-							filename: "input.tsx"
+							filename: "typescript/regression/issue-7742/input.tsx"
 							end: Object {
 								column: 19
 								index: 38
@@ -134,7 +134,7 @@ JSRoot {
 						typeAnnotation: TSTypeReference {
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.tsx"
+								filename: "typescript/regression/issue-7742/input.tsx"
 								end: Object {
 									column: 18
 									index: 37
@@ -149,7 +149,7 @@ JSRoot {
 							typeName: JSReferenceIdentifier {
 								name: "T"
 								loc: Object {
-									filename: "input.tsx"
+									filename: "typescript/regression/issue-7742/input.tsx"
 									identifierName: "T"
 									end: Object {
 										column: 18
@@ -167,7 +167,7 @@ JSRoot {
 						meta: TSSignatureDeclarationMeta {
 							rest: undefined
 							loc: Object {
-								filename: "input.tsx"
+								filename: "typescript/regression/issue-7742/input.tsx"
 								end: Object {
 									column: 18
 									index: 37
@@ -181,7 +181,7 @@ JSRoot {
 							}
 							typeParameters: TSTypeParameterDeclaration {
 								loc: Object {
-									filename: "input.tsx"
+									filename: "typescript/regression/issue-7742/input.tsx"
 									end: Object {
 										column: 7
 										index: 26
@@ -199,7 +199,7 @@ JSRoot {
 										constraint: undefined
 										default: undefined
 										loc: Object {
-											filename: "input.tsx"
+											filename: "typescript/regression/issue-7742/input.tsx"
 											end: Object {
 												column: 6
 												index: 25
@@ -218,7 +218,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "bar"
 									loc: Object {
-										filename: "input.tsx"
+										filename: "typescript/regression/issue-7742/input.tsx"
 										identifierName: "bar"
 										end: Object {
 											column: 11
@@ -234,7 +234,7 @@ JSRoot {
 									meta: JSPatternMeta {
 										optional: undefined
 										loc: Object {
-											filename: "input.tsx"
+											filename: "typescript/regression/issue-7742/input.tsx"
 											end: Object {
 												column: 14
 												index: 33
@@ -249,7 +249,7 @@ JSRoot {
 										typeAnnotation: TSTypeReference {
 											typeParameters: undefined
 											loc: Object {
-												filename: "input.tsx"
+												filename: "typescript/regression/issue-7742/input.tsx"
 												end: Object {
 													column: 14
 													index: 33
@@ -264,7 +264,7 @@ JSRoot {
 											typeName: JSReferenceIdentifier {
 												name: "G"
 												loc: Object {
-													filename: "input.tsx"
+													filename: "typescript/regression/issue-7742/input.tsx"
 													identifierName: "G"
 													end: Object {
 														column: 14

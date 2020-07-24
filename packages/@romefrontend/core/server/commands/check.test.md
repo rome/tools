@@ -79,6 +79,7 @@ unknownVariable
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✔ 1 file updated
+ℹ You can revert these changes with the rome recover pop command
 ✖ Found 2 problems
 
 ```

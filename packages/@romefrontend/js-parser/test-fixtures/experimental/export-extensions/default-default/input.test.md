@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/export-extensions/default-default/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/export-extensions/default-default/input.js"
 		end: Object {
 			column: 26
 			index: 26
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/default-default/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/default-default/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSReferenceIdentifier {
 				name: "from"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/default-default/input.js"
 					identifierName: "from"
 					end: Object {
 						column: 19
@@ -90,7 +90,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/default-default/input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -105,7 +105,7 @@ JSRoot {
 			expression: JSStringLiteral {
 				value: "bar"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/default-default/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -127,7 +127,7 @@ JSRoot {
 
 ```
 
- input.js:1:20 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/export-extensions/default-default/input.js:1:20 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/266/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/266/input.js"
 		end: Object {
 			column: 18
 			index: 18
@@ -34,7 +34,7 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/266/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 					}
 					frame {
 						location: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/266/input.js"
 							end: Object {
 								column: 18
 								index: 18
@@ -78,7 +78,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/266/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -92,7 +92,7 @@ JSRoot {
 			}
 			expression: JSTemplateLiteral {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/266/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -110,7 +110,7 @@ JSRoot {
 						raw: "hello "
 						tail: false
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/266/input.js"
 							end: Object {
 								column: 7
 								index: 7
@@ -128,7 +128,7 @@ JSRoot {
 						raw: ""
 						tail: false
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/266/input.js"
 							end: Object {
 								column: 18
 								index: 18
@@ -146,7 +146,7 @@ JSRoot {
 					JSTaggedTemplateExpression {
 						typeArguments: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/266/input.js"
 							end: Object {
 								column: 18
 								index: 18
@@ -162,7 +162,7 @@ JSRoot {
 							value: 10
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/266/input.js"
 								end: Object {
 									column: 11
 									index: 11
@@ -178,7 +178,7 @@ JSRoot {
 						quasi: JSTemplateLiteral {
 							expressions: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/266/input.js"
 								end: Object {
 									column: 18
 									index: 18
@@ -196,7 +196,7 @@ JSRoot {
 									raw: "test"
 									tail: true
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/266/input.js"
 										end: Object {
 											column: 17
 											index: 17
@@ -223,7 +223,7 @@ JSRoot {
 
 ```
 
- input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/266/input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed template expression value
 

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/273/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/273/input.js"
 		end: Object {
 			column: 18
 			index: 18
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown start to an array element"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/273/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/273/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/273/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/273/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 5
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/273/input.js"
 							end: Object {
 								column: 18
 								index: 18
@@ -119,7 +119,7 @@ JSRoot {
 						}
 						init: JSArrayExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/273/input.js"
 								end: Object {
 									column: 18
 									index: 18
@@ -134,7 +134,7 @@ JSRoot {
 							elements: Array [
 								JSCallExpression {
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/273/input.js"
 										end: Object {
 											column: 15
 											index: 15
@@ -149,7 +149,7 @@ JSRoot {
 									callee: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/273/input.js"
 											end: Object {
 												column: 11
 												index: 11
@@ -166,7 +166,7 @@ JSRoot {
 										JSReferenceIdentifier {
 											name: "x"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/uncategorised/273/input.js"
 												identifierName: "x"
 												end: Object {
 													column: 14
@@ -185,7 +185,7 @@ JSRoot {
 								JSReferenceIdentifier {
 									name: "x"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/273/input.js"
 										identifierName: "x"
 										end: Object {
 											column: 17
@@ -213,7 +213,7 @@ JSRoot {
 
 ```
 
- input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/273/input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an array element
 

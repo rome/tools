@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/export-ns-from/ns-and-named/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/export-ns-from/ns-and-named/input.js"
 		end: Object {
 			column: 36
 			index: 36
@@ -35,7 +35,7 @@ JSRoot {
 		JSExportExternalDeclaration {
 			exportKind: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/export-ns-from/ns-and-named/input.js"
 				end: Object {
 					column: 36
 					index: 36
@@ -50,7 +50,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "bar"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/export-ns-from/ns-and-named/input.js"
 					end: Object {
 						column: 35
 						index: 35
@@ -65,7 +65,7 @@ JSRoot {
 			}
 			namespaceSpecifier: JSExportNamespaceSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/export-ns-from/ns-and-named/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -80,7 +80,7 @@ JSRoot {
 				exported: JSIdentifier {
 					name: "foo"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/export-ns-from/ns-and-named/input.js"
 						identifierName: "foo"
 						end: Object {
 							column: 15
@@ -98,7 +98,7 @@ JSRoot {
 			namedSpecifiers: Array [
 				JSExportExternalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/export-ns-from/ns-and-named/input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -113,7 +113,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "bar"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/export-ns-from/ns-and-named/input.js"
 							identifierName: "bar"
 							end: Object {
 								column: 22
@@ -130,7 +130,7 @@ JSRoot {
 					local: JSIdentifier {
 						name: "bar"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/export-ns-from/ns-and-named/input.js"
 							identifierName: "bar"
 							end: Object {
 								column: 22

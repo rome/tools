@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0157/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0157/input.js"
 		end: Object {
 			column: 0
 			index: 6
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unterminated regular expression"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0157/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0157/input.js"
 				end: Object {
 					column: 0
 					index: 6
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "/"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0157/input.js"
 					end: Object {
 						column: 0
 						index: 6
@@ -88,7 +88,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0157/input.js"
 						end: Object {
 							column: 0
 							index: 6
@@ -109,7 +109,7 @@ JSRoot {
 					sticky: false
 					unicode: false
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0157/input.js"
 						end: Object {
 							column: 4
 							index: 4
@@ -123,7 +123,7 @@ JSRoot {
 					}
 					expression: JSRegExpSubExpression {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0157/input.js"
 							end: Object {
 								column: 2
 								index: 3
@@ -139,7 +139,7 @@ JSRoot {
 							JSRegExpCharacter {
 								value: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/invalid-syntax/migrated_0157/input.js"
 									end: Object {
 										column: 2
 										index: 2
@@ -155,7 +155,7 @@ JSRoot {
 							JSRegExpCharacter {
 								value: ""
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/invalid-syntax/migrated_0157/input.js"
 									end: Object {
 										column: 3
 										index: 4
@@ -181,7 +181,7 @@ JSRoot {
 
 ```
 
- input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0157/input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated regular expression
 

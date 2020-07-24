@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 	hasHoistedVars: true
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 		end: Object {
 			column: 0
 			index: 46
@@ -33,7 +33,7 @@ JSRoot {
 	interpreter: JSInterpreterDirective {
 		value: "/usr/bin/env babel-node"
 		loc: Object {
-			filename: "input.js"
+			filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 			end: Object {
 				column: 25
 				index: 25
@@ -49,7 +49,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 				end: Object {
 					column: 18
 					index: 45
@@ -64,7 +64,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 					end: Object {
 						column: 18
 						index: 45
@@ -81,7 +81,7 @@ JSRoot {
 						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 								end: Object {
 									column: 13
 									index: 40
@@ -99,7 +99,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "spawn"
 											loc: Object {
-												filename: "input.js"
+												filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 												identifierName: "spawn"
 												end: Object {
 													column: 11
@@ -114,7 +114,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 											end: Object {
 												column: 11
 												index: 38
@@ -130,7 +130,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "spawn"
 										loc: Object {
-											filename: "input.js"
+											filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 											identifierName: "spawn"
 											end: Object {
 												column: 11
@@ -145,7 +145,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 										end: Object {
 											column: 11
 											index: 38
@@ -161,7 +161,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 							end: Object {
 								column: 17
 								index: 44
@@ -176,7 +176,7 @@ JSRoot {
 						init: JSReferenceIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 17

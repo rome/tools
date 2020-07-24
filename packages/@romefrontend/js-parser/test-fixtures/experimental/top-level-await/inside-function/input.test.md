@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/top-level-await/inside-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/top-level-await/inside-function/input.js"
 		end: Object {
 			column: 1
 			index: 28
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Can't use await outside of an async function"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/top-level-await/inside-function/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/top-level-await/inside-function/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 11
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/top-level-await/inside-function/input.js"
 				end: Object {
 					column: 1
 					index: 28
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/top-level-await/inside-function/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/top-level-await/inside-function/input.js"
 					end: Object {
 						column: 1
 						index: 28
@@ -128,7 +128,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/top-level-await/inside-function/input.js"
 							end: Object {
 								column: 7
 								index: 23
@@ -143,7 +143,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "await"
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/top-level-await/inside-function/input.js"
 								identifierName: "await"
 								end: Object {
 									column: 7
@@ -160,7 +160,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/top-level-await/inside-function/input.js"
 							end: Object {
 								column: 10
 								index: 26
@@ -176,7 +176,7 @@ JSRoot {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/top-level-await/inside-function/input.js"
 								end: Object {
 									column: 9
 									index: 25
@@ -201,7 +201,7 @@ JSRoot {
 
 ```
 
- input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/top-level-await/inside-function/input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Can't use await outside of an async function
 

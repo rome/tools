@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "test262/rest-parameter/array-pattern-single-element-with-array/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "test262/rest-parameter/array-pattern-single-element-with-array/input.js"
 		end: Object {
 			column: 0
 			index: 45
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "singleElementWithArray"
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/array-pattern-single-element-with-array/input.js"
 					identifierName: "singleElementWithArray"
 					end: Object {
 						column: 31
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "test262/rest-parameter/array-pattern-single-element-with-array/input.js"
 				end: Object {
 					column: 44
 					index: 44
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/array-pattern-single-element-with-array/input.js"
 					end: Object {
 						column: 44
 						index: 44
@@ -89,7 +89,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/array-pattern-single-element-with-array/input.js"
 					end: Object {
 						column: 41
 						index: 41
@@ -104,7 +104,7 @@ JSRoot {
 				rest: JSBindingArrayPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "test262/rest-parameter/array-pattern-single-element-with-array/input.js"
 						end: Object {
 							column: 40
 							index: 40
@@ -120,7 +120,7 @@ JSRoot {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "test262/rest-parameter/array-pattern-single-element-with-array/input.js"
 							end: Object {
 								column: 40
 								index: 40
@@ -137,7 +137,7 @@ JSRoot {
 						JSBindingArrayPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "test262/rest-parameter/array-pattern-single-element-with-array/input.js"
 								end: Object {
 									column: 39
 									index: 39
@@ -153,7 +153,7 @@ JSRoot {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/array-pattern-single-element-with-array/input.js"
 									end: Object {
 										column: 39
 										index: 39
@@ -170,7 +170,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "test262/rest-parameter/array-pattern-single-element-with-array/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 38
@@ -187,7 +187,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "test262/rest-parameter/array-pattern-single-element-with-array/input.js"
 											end: Object {
 												column: 38
 												index: 38

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-yield/yield-super-property/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/yield-super-property/input.js"
 		end: Object {
 			column: 0
 			index: 42
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-super-property/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/yield-super-property/input.js"
 				end: Object {
 					column: 41
 					index: 41
@@ -68,7 +68,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-super-property/input.js"
 					end: Object {
 						column: 41
 						index: 41
@@ -83,7 +83,7 @@ JSRoot {
 				superClass: JSReferenceIdentifier {
 					name: "B"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-yield/yield-super-property/input.js"
 						identifierName: "B"
 						end: Object {
 							column: 17
@@ -104,7 +104,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "X"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-yield/yield-super-property/input.js"
 									identifierName: "X"
 									end: Object {
 										column: 21
@@ -119,7 +119,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/yield-super-property/input.js"
 								end: Object {
 									column: 21
 									index: 21
@@ -133,7 +133,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-yield/yield-super-property/input.js"
 							end: Object {
 								column: 39
 								index: 39
@@ -155,7 +155,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/yield-super-property/input.js"
 								end: Object {
 									column: 23
 									index: 23
@@ -181,7 +181,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/yield-super-property/input.js"
 								end: Object {
 									column: 21
 									index: 21
@@ -197,7 +197,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/yield-super-property/input.js"
 								end: Object {
 									column: 39
 									index: 39
@@ -212,7 +212,7 @@ JSRoot {
 							body: Array [
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-yield/yield-super-property/input.js"
 										end: Object {
 											column: 37
 											index: 37
@@ -226,7 +226,7 @@ JSRoot {
 									}
 									expression: JSMemberExpression {
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-yield/yield-super-property/input.js"
 											end: Object {
 												column: 37
 												index: 37
@@ -240,7 +240,7 @@ JSRoot {
 										}
 										object: JSSuper {
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-yield/yield-super-property/input.js"
 												end: Object {
 													column: 31
 													index: 31
@@ -257,7 +257,7 @@ JSRoot {
 											value: JSIdentifier {
 												name: "yield"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/es2015-yield/yield-super-property/input.js"
 													identifierName: "yield"
 													end: Object {
 														column: 37
@@ -272,7 +272,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-yield/yield-super-property/input.js"
 												identifierName: "yield"
 												end: Object {
 													column: 37

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2018/object-rest-spread/4/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2018/object-rest-spread/4/input.js"
 		end: Object {
 			column: 14
 			index: 14
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2018/object-rest-spread/4/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/object-rest-spread/4/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "z"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/4/input.js"
 								identifierName: "z"
 								end: Object {
 									column: 5
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2018/object-rest-spread/4/input.js"
 							end: Object {
 								column: 14
 								index: 14
@@ -95,7 +95,7 @@ JSRoot {
 						}
 						init: JSObjectExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/4/input.js"
 								end: Object {
 									column: 14
 									index: 14
@@ -110,7 +110,7 @@ JSRoot {
 							properties: Array [
 								JSSpreadProperty {
 									loc: Object {
-										filename: "input.js"
+										filename: "es2018/object-rest-spread/4/input.js"
 										end: Object {
 											column: 13
 											index: 13
@@ -125,7 +125,7 @@ JSRoot {
 									argument: JSReferenceIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2018/object-rest-spread/4/input.js"
 											identifierName: "x"
 											end: Object {
 												column: 13

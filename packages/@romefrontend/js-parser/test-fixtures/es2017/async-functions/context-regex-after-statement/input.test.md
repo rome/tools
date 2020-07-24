@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/context-regex-after-statement/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/context-regex-after-statement/input.js"
 		end: Object {
 			column: 6
 			index: 29
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/context-regex-after-statement/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 17
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/context-regex-after-statement/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/context-regex-after-statement/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -90,7 +90,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/context-regex-after-statement/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -106,7 +106,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/context-regex-after-statement/input.js"
 				end: Object {
 					column: 6
 					index: 29
@@ -126,7 +126,7 @@ JSRoot {
 				sticky: false
 				unicode: false
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/context-regex-after-statement/input.js"
 					end: Object {
 						column: 6
 						index: 29
@@ -140,7 +140,7 @@ JSRoot {
 				}
 				expression: JSRegExpSubExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/context-regex-after-statement/input.js"
 						end: Object {
 							column: 4
 							index: 27
@@ -156,7 +156,7 @@ JSRoot {
 						JSRegExpCharacter {
 							value: "f"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/context-regex-after-statement/input.js"
 								end: Object {
 									column: 2
 									index: 25
@@ -172,7 +172,7 @@ JSRoot {
 						JSRegExpCharacter {
 							value: "o"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/context-regex-after-statement/input.js"
 								end: Object {
 									column: 3
 									index: 26
@@ -188,7 +188,7 @@ JSRoot {
 						JSRegExpCharacter {
 							value: "o"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/context-regex-after-statement/input.js"
 								end: Object {
 									column: 4
 									index: 27

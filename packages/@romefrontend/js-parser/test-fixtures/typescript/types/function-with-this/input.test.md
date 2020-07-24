@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/function-with-this/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/function-with-this/input.ts"
 		end: Object {
 			column: 0
 			index: 31
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/function-with-this/input.ts"
 				end: Object {
 					column: 30
 					index: 30
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/function-with-this/input.ts"
 					end: Object {
 						column: 30
 						index: 30
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "f"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/function-with-this/input.ts"
 								end: Object {
 									column: 29
 									index: 29
@@ -81,7 +81,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/function-with-this/input.ts"
 									end: Object {
 										column: 29
 										index: 29
@@ -95,7 +95,7 @@ JSRoot {
 								}
 								typeAnnotation: TSFunctionType {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/function-with-this/input.ts"
 										end: Object {
 											column: 29
 											index: 29
@@ -109,7 +109,7 @@ JSRoot {
 									}
 									typeAnnotation: TSVoidKeywordTypeAnnotation {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/function-with-this/input.ts"
 											end: Object {
 												column: 29
 												index: 29
@@ -126,7 +126,7 @@ JSRoot {
 										rest: undefined
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/function-with-this/input.ts"
 											end: Object {
 												column: 29
 												index: 29
@@ -142,7 +142,7 @@ JSRoot {
 											JSBindingIdentifier {
 												name: "this"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/types/function-with-this/input.ts"
 													identifierName: "this"
 													end: Object {
 														column: 12
@@ -158,7 +158,7 @@ JSRoot {
 												meta: JSPatternMeta {
 													optional: undefined
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/types/function-with-this/input.ts"
 														end: Object {
 															column: 20
 															index: 20
@@ -172,7 +172,7 @@ JSRoot {
 													}
 													typeAnnotation: TSNumberKeywordTypeAnnotation {
 														loc: Object {
-															filename: "input.ts"
+															filename: "typescript/types/function-with-this/input.ts"
 															end: Object {
 																column: 20
 																index: 20
@@ -194,7 +194,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/function-with-this/input.ts"
 							end: Object {
 								column: 29
 								index: 29

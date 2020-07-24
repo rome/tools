@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
 		end: Object {
 			column: 0
 			index: 21
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
 					identifierName: "a"
 					end: Object {
 						column: 10
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -89,7 +89,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -105,7 +105,7 @@ JSRoot {
 					JSBindingArrayPattern {
 						rest: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
 							end: Object {
 								column: 16
 								index: 16
@@ -121,7 +121,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -137,7 +137,7 @@ JSRoot {
 						elements: Array [
 							JSBindingAssignmentPattern {
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
 									end: Object {
 										column: 15
 										index: 15
@@ -153,7 +153,7 @@ JSRoot {
 									value: 0
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
 										end: Object {
 											column: 15
 											index: 15
@@ -169,7 +169,7 @@ JSRoot {
 								left: JSBindingIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 13
@@ -186,7 +186,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-array-pattern/with-default-fn/input.js"
 											end: Object {
 												column: 13
 												index: 13

@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/49/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/49/input.js"
 		end: Object {
 			column: 13
 			index: 44
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " multiline\ncomment\nshould\nbe\nignored "
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/49/input.js"
 				end: Object {
 					column: 10
 					index: 41
@@ -53,7 +53,7 @@ JSRoot {
 		JSExpressionStatement {
 			leadingComments: Array ["0"]
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/49/input.js"
 				end: Object {
 					column: 13
 					index: 44
@@ -70,7 +70,7 @@ JSRoot {
 				format: undefined
 				leadingComments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/49/input.js"
 					end: Object {
 						column: 13
 						index: 44

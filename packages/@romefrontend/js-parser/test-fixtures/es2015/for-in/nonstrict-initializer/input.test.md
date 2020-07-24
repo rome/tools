@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/for-in/nonstrict-initializer/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/for-in/nonstrict-initializer/input.js"
 		end: Object {
 			column: 0
 			index: 145
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/for-in/nonstrict-initializer/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-in/nonstrict-initializer/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "effects"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-in/nonstrict-initializer/input.js"
 								identifierName: "effects"
 								end: Object {
 									column: 13
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/for-in/nonstrict-initializer/input.js"
 							end: Object {
 								column: 17
 								index: 17
@@ -97,7 +97,7 @@ JSRoot {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-in/nonstrict-initializer/input.js"
 								end: Object {
 									column: 17
 									index: 17
@@ -116,7 +116,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/for-in/nonstrict-initializer/input.js"
 				end: Object {
 					column: 21
 					index: 40
@@ -131,7 +131,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-in/nonstrict-initializer/input.js"
 					end: Object {
 						column: 21
 						index: 40
@@ -148,7 +148,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "iterations"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-in/nonstrict-initializer/input.js"
 								identifierName: "iterations"
 								end: Object {
 									column: 16
@@ -163,7 +163,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/for-in/nonstrict-initializer/input.js"
 							end: Object {
 								column: 20
 								index: 39
@@ -179,7 +179,7 @@ JSRoot {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-in/nonstrict-initializer/input.js"
 								end: Object {
 									column: 20
 									index: 39
@@ -198,7 +198,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/for-in/nonstrict-initializer/input.js"
 				end: Object {
 					column: 13
 					index: 54
@@ -213,7 +213,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-in/nonstrict-initializer/input.js"
 					end: Object {
 						column: 13
 						index: 54
@@ -230,7 +230,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "stored"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-in/nonstrict-initializer/input.js"
 								identifierName: "stored"
 								end: Object {
 									column: 12
@@ -246,7 +246,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/for-in/nonstrict-initializer/input.js"
 							end: Object {
 								column: 12
 								index: 53
@@ -264,7 +264,7 @@ JSRoot {
 		}
 		JSForInStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/for-in/nonstrict-initializer/input.js"
 				end: Object {
 					column: 3
 					index: 144
@@ -279,7 +279,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-in/nonstrict-initializer/input.js"
 					end: Object {
 						column: 3
 						index: 144
@@ -294,7 +294,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/for-in/nonstrict-initializer/input.js"
 							end: Object {
 								column: 17
 								index: 140
@@ -310,7 +310,7 @@ JSRoot {
 							operator: "++"
 							prefix: true
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-in/nonstrict-initializer/input.js"
 								end: Object {
 									column: 16
 									index: 139
@@ -325,7 +325,7 @@ JSRoot {
 							argument: JSReferenceIdentifier {
 								name: "iterations"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/for-in/nonstrict-initializer/input.js"
 									identifierName: "iterations"
 									end: Object {
 										column: 16
@@ -346,7 +346,7 @@ JSRoot {
 			left: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-in/nonstrict-initializer/input.js"
 					end: Object {
 						column: 30
 						index: 85
@@ -363,7 +363,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-in/nonstrict-initializer/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 12
@@ -378,7 +378,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/for-in/nonstrict-initializer/input.js"
 							end: Object {
 								column: 30
 								index: 85
@@ -392,7 +392,7 @@ JSRoot {
 						}
 						init: JSSequenceExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-in/nonstrict-initializer/input.js"
 								end: Object {
 									column: 29
 									index: 84
@@ -409,7 +409,7 @@ JSRoot {
 									operator: "++"
 									prefix: true
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/for-in/nonstrict-initializer/input.js"
 										end: Object {
 											column: 25
 											index: 80
@@ -424,7 +424,7 @@ JSRoot {
 									argument: JSReferenceIdentifier {
 										name: "effects"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/for-in/nonstrict-initializer/input.js"
 											identifierName: "effects"
 											end: Object {
 												column: 25
@@ -443,7 +443,7 @@ JSRoot {
 									operator: "-"
 									prefix: true
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/for-in/nonstrict-initializer/input.js"
 										end: Object {
 											column: 29
 											index: 84
@@ -459,7 +459,7 @@ JSRoot {
 										value: 1
 										format: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/for-in/nonstrict-initializer/input.js"
 											end: Object {
 												column: 29
 												index: 84
@@ -480,7 +480,7 @@ JSRoot {
 			}
 			right: JSSequenceExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-in/nonstrict-initializer/input.js"
 					end: Object {
 						column: 64
 						index: 119
@@ -496,7 +496,7 @@ JSRoot {
 					JSAssignmentExpression {
 						operator: "="
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/for-in/nonstrict-initializer/input.js"
 							end: Object {
 								column: 44
 								index: 99
@@ -511,7 +511,7 @@ JSRoot {
 						left: JSAssignmentIdentifier {
 							name: "stored"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-in/nonstrict-initializer/input.js"
 								identifierName: "stored"
 								end: Object {
 									column: 40
@@ -528,7 +528,7 @@ JSRoot {
 						right: JSReferenceIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-in/nonstrict-initializer/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 44
@@ -545,7 +545,7 @@ JSRoot {
 					}
 					JSObjectExpression {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/for-in/nonstrict-initializer/input.js"
 							end: Object {
 								column: 64
 								index: 119
@@ -563,7 +563,7 @@ JSRoot {
 									value: JSIdentifier {
 										name: "a"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/for-in/nonstrict-initializer/input.js"
 											identifierName: "a"
 											end: Object {
 												column: 48
@@ -578,7 +578,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/for-in/nonstrict-initializer/input.js"
 										end: Object {
 											column: 48
 											index: 103
@@ -595,7 +595,7 @@ JSRoot {
 									value: 0
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/for-in/nonstrict-initializer/input.js"
 										end: Object {
 											column: 51
 											index: 106
@@ -609,7 +609,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/for-in/nonstrict-initializer/input.js"
 									end: Object {
 										column: 51
 										index: 106
@@ -627,7 +627,7 @@ JSRoot {
 									value: JSIdentifier {
 										name: "b"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/for-in/nonstrict-initializer/input.js"
 											identifierName: "b"
 											end: Object {
 												column: 54
@@ -642,7 +642,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/for-in/nonstrict-initializer/input.js"
 										end: Object {
 											column: 54
 											index: 109
@@ -659,7 +659,7 @@ JSRoot {
 									value: 1
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/for-in/nonstrict-initializer/input.js"
 										end: Object {
 											column: 57
 											index: 112
@@ -673,7 +673,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/for-in/nonstrict-initializer/input.js"
 									end: Object {
 										column: 57
 										index: 112
@@ -691,7 +691,7 @@ JSRoot {
 									value: JSIdentifier {
 										name: "c"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/for-in/nonstrict-initializer/input.js"
 											identifierName: "c"
 											end: Object {
 												column: 60
@@ -706,7 +706,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/for-in/nonstrict-initializer/input.js"
 										end: Object {
 											column: 60
 											index: 115
@@ -723,7 +723,7 @@ JSRoot {
 									value: 2
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/for-in/nonstrict-initializer/input.js"
 										end: Object {
 											column: 63
 											index: 118
@@ -737,7 +737,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/for-in/nonstrict-initializer/input.js"
 									end: Object {
 										column: 63
 										index: 118

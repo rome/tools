@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/const/reserved-word/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/const/reserved-word/input.ts"
 		end: Object {
 			column: 15
 			index: 15
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown TS non array type start"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/const/reserved-word/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/const/reserved-word/input.ts"
 				end: Object {
 					column: 15
 					index: 15
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/const/reserved-word/input.ts"
 					end: Object {
 						column: 15
 						index: 15
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "b"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/const/reserved-word/input.ts"
 								end: Object {
 									column: 14
 									index: 14
@@ -105,7 +105,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/const/reserved-word/input.ts"
 									end: Object {
 										column: 14
 										index: 14
@@ -119,7 +119,7 @@ JSRoot {
 								}
 								typeAnnotation: TSTypeReference {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/const/reserved-word/input.ts"
 										end: Object {
 											column: 14
 											index: 14
@@ -134,7 +134,7 @@ JSRoot {
 									typeName: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/const/reserved-word/input.ts"
 											end: Object {
 												column: 14
 												index: 14
@@ -152,7 +152,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/const/reserved-word/input.ts"
 							end: Object {
 								column: 14
 								index: 14
@@ -176,7 +176,7 @@ JSRoot {
 
 ```
 
- input.ts:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/const/reserved-word/input.ts:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown TS non array type start
 

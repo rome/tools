@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-export-declaration/invalid-export-batch-missing-from-clause/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-export-declaration/invalid-export-batch-missing-from-clause/input.js"
 		end: Object {
 			column: 0
 			index: 9
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected `from` for an export node"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/invalid-export-batch-missing-from-clause/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -59,7 +59,7 @@ JSRoot {
 		JSExportAllDeclaration {
 			exportKind: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/invalid-export-batch-missing-from-clause/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -74,7 +74,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: ""
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-export-declaration/invalid-export-batch-missing-from-clause/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -96,7 +96,7 @@ JSRoot {
 
 ```
 
- input.js:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-export-declaration/invalid-export-batch-missing-from-clause/input.js:2 parse/js ━━━━
 
   ✖ Expected `from` for an export node
 

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/export-invalid/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/export-invalid/input.js"
 		end: Object {
 			column: 0
 			index: 37
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected =>"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/export-invalid/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/export-invalid/input.js"
 				end: Object {
 					column: 33
 					index: 33
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			declaration: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/export-invalid/input.js"
 					end: Object {
 						column: 33
 						index: 33
@@ -87,7 +87,7 @@ JSRoot {
 				body: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/export-invalid/input.js"
 						end: Object {
 							column: 32
 							index: 32
@@ -106,7 +106,7 @@ JSRoot {
 					rest: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/export-invalid/input.js"
 						end: Object {
 							column: 30
 							index: 30
@@ -122,7 +122,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "functionX"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/export-invalid/input.js"
 								identifierName: "functionX"
 								end: Object {
 									column: 30
@@ -144,7 +144,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/export-invalid/input.js"
 				end: Object {
 					column: 36
 					index: 36
@@ -165,7 +165,7 @@ JSRoot {
 
 ```
 
- input.js:1:31 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/export-invalid/input.js:1:31 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected =>
 

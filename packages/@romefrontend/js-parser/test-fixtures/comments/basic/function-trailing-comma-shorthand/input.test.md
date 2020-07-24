@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/basic/function-trailing-comma-shorthand/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/basic/function-trailing-comma-shorthand/input.js"
 		end: Object {
 			column: 0
 			index: 47
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " comment 1 "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/function-trailing-comma-shorthand/input.js"
 				end: Object {
 					column: 28
 					index: 28
@@ -52,7 +52,7 @@ JSRoot {
 			id: "1"
 			value: " comment 2 "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/function-trailing-comma-shorthand/input.js"
 				end: Object {
 					column: 45
 					index: 45
@@ -69,7 +69,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/function-trailing-comma-shorthand/input.js"
 				end: Object {
 					column: 46
 					index: 46
@@ -84,7 +84,7 @@ JSRoot {
 			expression: JSCallExpression {
 				trailingComments: Array ["1"]
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/function-trailing-comma-shorthand/input.js"
 					end: Object {
 						column: 29
 						index: 29
@@ -99,7 +99,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "fn"
 					loc: Object {
-						filename: "input.js"
+						filename: "comments/basic/function-trailing-comma-shorthand/input.js"
 						identifierName: "fn"
 						end: Object {
 							column: 2
@@ -117,7 +117,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/basic/function-trailing-comma-shorthand/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 4
@@ -134,7 +134,7 @@ JSRoot {
 					JSObjectExpression {
 						trailingComments: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/basic/function-trailing-comma-shorthand/input.js"
 							end: Object {
 								column: 11
 								index: 11
@@ -152,7 +152,7 @@ JSRoot {
 									value: JSIdentifier {
 										name: "b"
 										loc: Object {
-											filename: "input.js"
+											filename: "comments/basic/function-trailing-comma-shorthand/input.js"
 											identifierName: "b"
 											end: Object {
 												column: 9
@@ -167,7 +167,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/basic/function-trailing-comma-shorthand/input.js"
 										end: Object {
 											column: 9
 											index: 9
@@ -183,7 +183,7 @@ JSRoot {
 								value: JSReferenceIdentifier {
 									name: "b"
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/basic/function-trailing-comma-shorthand/input.js"
 										identifierName: "b"
 										end: Object {
 											column: 9
@@ -198,7 +198,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "comments/basic/function-trailing-comma-shorthand/input.js"
 									end: Object {
 										column: 9
 										index: 9

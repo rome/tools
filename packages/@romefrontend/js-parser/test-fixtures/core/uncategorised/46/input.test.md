@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/46/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/46/input.js"
 		end: Object {
 			column: 22
 			index: 22
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " block comment "
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/46/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -53,7 +53,7 @@ JSRoot {
 		JSExpressionStatement {
 			leadingComments: Array ["0"]
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/46/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -70,7 +70,7 @@ JSRoot {
 				format: undefined
 				leadingComments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/46/input.js"
 					end: Object {
 						column: 22
 						index: 22

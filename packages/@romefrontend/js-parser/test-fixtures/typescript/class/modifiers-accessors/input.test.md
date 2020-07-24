@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/modifiers-accessors/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/modifiers-accessors/input.ts"
 		end: Object {
 			column: 0
 			index: 296
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " Copy of modifiers-methods with 'get'"
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/modifiers-accessors/input.ts"
 				end: Object {
 					column: 39
 					index: 39
@@ -54,7 +54,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/modifiers-accessors/input.ts"
 					identifierName: "C"
 					end: Object {
 						column: 16
@@ -71,7 +71,7 @@ JSRoot {
 			abstract: true
 			leadingComments: Array ["0"]
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/modifiers-accessors/input.ts"
 				end: Object {
 					column: 1
 					index: 295
@@ -90,7 +90,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/modifiers-accessors/input.ts"
 					end: Object {
 						column: 1
 						index: 295
@@ -109,7 +109,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-accessors/input.ts"
 									identifierName: "a"
 									end: Object {
 										column: 18
@@ -124,7 +124,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 18
 									index: 77
@@ -139,7 +139,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-accessors/input.ts"
 							end: Object {
 								column: 21
 								index: 80
@@ -161,7 +161,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 20
 									index: 79
@@ -187,7 +187,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 18
 									index: 77
@@ -207,7 +207,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "s"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-accessors/input.ts"
 									identifierName: "s"
 									end: Object {
 										column: 16
@@ -222,7 +222,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 16
 									index: 97
@@ -236,7 +236,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-accessors/input.ts"
 							end: Object {
 								column: 32
 								index: 113
@@ -258,7 +258,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 18
 									index: 99
@@ -284,7 +284,7 @@ JSRoot {
 								line: 4
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 16
 									index: 97
@@ -300,7 +300,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 32
 									index: 113
@@ -315,7 +315,7 @@ JSRoot {
 							body: Array [
 								JSReturnStatement {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/modifiers-accessors/input.ts"
 										end: Object {
 											column: 30
 											index: 111
@@ -331,7 +331,7 @@ JSRoot {
 										value: 0
 										format: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/modifiers-accessors/input.ts"
 											end: Object {
 												column: 29
 												index: 110
@@ -354,7 +354,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "pua"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-accessors/input.ts"
 									identifierName: "pua"
 									end: Object {
 										column: 27
@@ -369,7 +369,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 27
 									index: 141
@@ -384,7 +384,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-accessors/input.ts"
 							end: Object {
 								column: 30
 								index: 144
@@ -406,7 +406,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 29
 									index: 143
@@ -432,7 +432,7 @@ JSRoot {
 								line: 5
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 27
 									index: 141
@@ -452,7 +452,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "pus"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-accessors/input.ts"
 									identifierName: "pus"
 									end: Object {
 										column: 25
@@ -467,7 +467,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 25
 									index: 170
@@ -481,7 +481,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-accessors/input.ts"
 							end: Object {
 								column: 41
 								index: 186
@@ -503,7 +503,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 27
 									index: 172
@@ -529,7 +529,7 @@ JSRoot {
 								line: 6
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 25
 									index: 170
@@ -545,7 +545,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 41
 									index: 186
@@ -560,7 +560,7 @@ JSRoot {
 							body: Array [
 								JSReturnStatement {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/modifiers-accessors/input.ts"
 										end: Object {
 											column: 39
 											index: 184
@@ -576,7 +576,7 @@ JSRoot {
 										value: 0
 										format: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/modifiers-accessors/input.ts"
 											end: Object {
 												column: 38
 												index: 183
@@ -599,7 +599,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "pu"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-accessors/input.ts"
 									identifierName: "pu"
 									end: Object {
 										column: 17
@@ -614,7 +614,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 17
 									index: 205
@@ -628,7 +628,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-accessors/input.ts"
 							end: Object {
 								column: 33
 								index: 221
@@ -650,7 +650,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 19
 									index: 207
@@ -676,7 +676,7 @@ JSRoot {
 								line: 8
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 17
 									index: 205
@@ -692,7 +692,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 33
 									index: 221
@@ -707,7 +707,7 @@ JSRoot {
 							body: Array [
 								JSReturnStatement {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/modifiers-accessors/input.ts"
 										end: Object {
 											column: 31
 											index: 219
@@ -723,7 +723,7 @@ JSRoot {
 										value: 0
 										format: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/modifiers-accessors/input.ts"
 											end: Object {
 												column: 30
 												index: 218
@@ -746,7 +746,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "po"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-accessors/input.ts"
 									identifierName: "po"
 									end: Object {
 										column: 20
@@ -761,7 +761,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 20
 									index: 242
@@ -775,7 +775,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-accessors/input.ts"
 							end: Object {
 								column: 36
 								index: 258
@@ -797,7 +797,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 22
 									index: 244
@@ -823,7 +823,7 @@ JSRoot {
 								line: 9
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 20
 									index: 242
@@ -839,7 +839,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 36
 									index: 258
@@ -854,7 +854,7 @@ JSRoot {
 							body: Array [
 								JSReturnStatement {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/modifiers-accessors/input.ts"
 										end: Object {
 											column: 34
 											index: 256
@@ -870,7 +870,7 @@ JSRoot {
 										value: 0
 										format: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/modifiers-accessors/input.ts"
 											end: Object {
 												column: 33
 												index: 255
@@ -893,7 +893,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "pi"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/modifiers-accessors/input.ts"
 									identifierName: "pi"
 									end: Object {
 										column: 18
@@ -908,7 +908,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 18
 									index: 277
@@ -922,7 +922,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/modifiers-accessors/input.ts"
 							end: Object {
 								column: 34
 								index: 293
@@ -944,7 +944,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 20
 									index: 279
@@ -970,7 +970,7 @@ JSRoot {
 								line: 10
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 18
 									index: 277
@@ -986,7 +986,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/modifiers-accessors/input.ts"
 								end: Object {
 									column: 34
 									index: 293
@@ -1001,7 +1001,7 @@ JSRoot {
 							body: Array [
 								JSReturnStatement {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/modifiers-accessors/input.ts"
 										end: Object {
 											column: 32
 											index: 291
@@ -1017,7 +1017,7 @@ JSRoot {
 										value: 0
 										format: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/modifiers-accessors/input.ts"
 											end: Object {
 												column: 31
 												index: 290

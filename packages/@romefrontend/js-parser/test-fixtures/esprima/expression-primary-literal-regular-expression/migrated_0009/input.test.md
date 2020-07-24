@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 		end: Object {
 			column: 17
 			index: 17
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 5
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 							end: Object {
 								column: 17
 								index: 17
@@ -101,7 +101,7 @@ JSRoot {
 							sticky: false
 							unicode: false
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 								end: Object {
 									column: 17
 									index: 17
@@ -115,7 +115,7 @@ JSRoot {
 							}
 							expression: JSRegExpSubExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 									end: Object {
 										column: 14
 										index: 15
@@ -131,7 +131,7 @@ JSRoot {
 									JSRegExpCharSet {
 										invert: false
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 											end: Object {
 												column: 14
 												index: 14
@@ -147,7 +147,7 @@ JSRoot {
 											JSRegExpCharacter {
 												value: "P"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 													end: Object {
 														column: 11
 														index: 11
@@ -163,7 +163,7 @@ JSRoot {
 											JSRegExpCharacter {
 												value: " "
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 													end: Object {
 														column: 12
 														index: 12
@@ -179,7 +179,7 @@ JSRoot {
 											JSRegExpCharacter {
 												value: "Q"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 													end: Object {
 														column: 13
 														index: 13
@@ -195,7 +195,7 @@ JSRoot {
 											JSRegExpCharacter {
 												value: "R"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 													end: Object {
 														column: 14
 														index: 14

@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/automatic-semicolon-insertion/migrated_0015/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/automatic-semicolon-insertion/migrated_0015/input.js"
 		end: Object {
 			column: 0
 			index: 45
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " Multiline\nComment "
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/automatic-semicolon-insertion/migrated_0015/input.js"
 				end: Object {
 					column: 10
 					index: 36
@@ -53,7 +53,7 @@ JSRoot {
 		JSBlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/automatic-semicolon-insertion/migrated_0015/input.js"
 				end: Object {
 					column: 18
 					index: 44
@@ -69,7 +69,7 @@ JSRoot {
 				JSThrowStatement {
 					trailingComments: Array ["0"]
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/automatic-semicolon-insertion/migrated_0015/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -85,7 +85,7 @@ JSRoot {
 						name: "error"
 						trailingComments: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/automatic-semicolon-insertion/migrated_0015/input.js"
 							identifierName: "error"
 							end: Object {
 								column: 13
@@ -103,7 +103,7 @@ JSRoot {
 				JSExpressionStatement {
 					leadingComments: Array ["0"]
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/automatic-semicolon-insertion/migrated_0015/input.js"
 						end: Object {
 							column: 16
 							index: 42
@@ -119,7 +119,7 @@ JSRoot {
 						name: "error"
 						leadingComments: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/automatic-semicolon-insertion/migrated_0015/input.js"
 							identifierName: "error"
 							end: Object {
 								column: 15

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 		end: Object {
 			column: 0
 			index: 58
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "multiElementWithArray"
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 					identifierName: "multiElementWithArray"
 					end: Object {
 						column: 30
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 				end: Object {
 					column: 57
 					index: 57
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 					end: Object {
 						column: 57
 						index: 57
@@ -89,7 +89,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 					end: Object {
 						column: 54
 						index: 54
@@ -104,7 +104,7 @@ JSRoot {
 				rest: JSBindingObjectPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 						end: Object {
 							column: 53
 							index: 53
@@ -120,7 +120,7 @@ JSRoot {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 							end: Object {
 								column: 53
 								index: 53
@@ -139,7 +139,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "p"
 									loc: Object {
-										filename: "input.js"
+										filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 										identifierName: "p"
 										end: Object {
 											column: 36
@@ -154,7 +154,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 									end: Object {
 										column: 36
 										index: 36
@@ -170,7 +170,7 @@ JSRoot {
 							value: JSBindingArrayPattern {
 								rest: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 									end: Object {
 										column: 41
 										index: 41
@@ -186,7 +186,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: "a"
 										loc: Object {
-											filename: "input.js"
+											filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 											identifierName: "a"
 											end: Object {
 												column: 40
@@ -203,7 +203,7 @@ JSRoot {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 												end: Object {
 													column: 40
 													index: 40
@@ -220,7 +220,7 @@ JSRoot {
 								]
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 								end: Object {
 									column: 41
 									index: 41
@@ -238,7 +238,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "b"
 									loc: Object {
-										filename: "input.js"
+										filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 										identifierName: "b"
 										end: Object {
 											column: 44
@@ -253,7 +253,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 									end: Object {
 										column: 44
 										index: 44
@@ -269,7 +269,7 @@ JSRoot {
 							value: JSBindingIdentifier {
 								name: "b"
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 									identifierName: "b"
 									end: Object {
 										column: 44
@@ -284,7 +284,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 								end: Object {
 									column: 44
 									index: 44
@@ -302,7 +302,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "q"
 									loc: Object {
-										filename: "input.js"
+										filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 										identifierName: "q"
 										end: Object {
 											column: 47
@@ -317,7 +317,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 									end: Object {
 										column: 47
 										index: 47
@@ -333,7 +333,7 @@ JSRoot {
 							value: JSBindingArrayPattern {
 								rest: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 									end: Object {
 										column: 52
 										index: 52
@@ -349,7 +349,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: "c"
 										loc: Object {
-											filename: "input.js"
+											filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 											identifierName: "c"
 											end: Object {
 												column: 51
@@ -366,7 +366,7 @@ JSRoot {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 												end: Object {
 													column: 51
 													index: 51
@@ -383,7 +383,7 @@ JSRoot {
 								]
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "test262/rest-parameter/object-pattern-multi-element-with-array/input.js"
 								end: Object {
 									column: 52
 									index: 52

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
 		end: Object {
 			column: 0
 			index: 35
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
 				end: Object {
 					column: 34
 					index: 34
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
 					end: Object {
 						column: 34
 						index: 34
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 5
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
 							end: Object {
 								column: 33
 								index: 33
@@ -95,7 +95,7 @@ JSRoot {
 						}
 						init: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
 								end: Object {
 									column: 33
 									index: 33
@@ -110,7 +110,7 @@ JSRoot {
 							body: JSReferenceIdentifier {
 								name: "options"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
 									identifierName: "options"
 									end: Object {
 										column: 33
@@ -131,7 +131,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
 									end: Object {
 										column: 25
 										index: 25
@@ -147,7 +147,7 @@ JSRoot {
 									JSBindingAssignmentPattern {
 										operator: "="
 										loc: Object {
-											filename: "input.js"
+											filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
 											end: Object {
 												column: 21
 												index: 21
@@ -162,7 +162,7 @@ JSRoot {
 										right: JSObjectExpression {
 											properties: Array []
 											loc: Object {
-												filename: "input.js"
+												filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
 												end: Object {
 													column: 21
 													index: 21
@@ -178,7 +178,7 @@ JSRoot {
 										left: JSBindingIdentifier {
 											name: "options"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
 												identifierName: "options"
 												end: Object {
 													column: 16

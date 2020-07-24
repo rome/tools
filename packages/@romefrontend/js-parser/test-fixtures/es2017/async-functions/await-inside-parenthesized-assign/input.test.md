@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/await-inside-parenthesized-assign/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/await-inside-parenthesized-assign/input.js"
 		end: Object {
 			column: 1
 			index: 40
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-parenthesized-assign/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 17
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-parenthesized-assign/input.js"
 				end: Object {
 					column: 1
 					index: 40
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-parenthesized-assign/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-parenthesized-assign/input.js"
 					end: Object {
 						column: 1
 						index: 40
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/await-inside-parenthesized-assign/input.js"
 							end: Object {
 								column: 16
 								index: 38
@@ -119,7 +119,7 @@ JSRoot {
 						expression: JSAssignmentExpression {
 							operator: "="
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-inside-parenthesized-assign/input.js"
 								end: Object {
 									column: 14
 									index: 36
@@ -134,7 +134,7 @@ JSRoot {
 							left: JSAssignmentIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/await-inside-parenthesized-assign/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 4
@@ -150,7 +150,7 @@ JSRoot {
 							}
 							right: JSAwaitExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/await-inside-parenthesized-assign/input.js"
 									end: Object {
 										column: 14
 										index: 36
@@ -166,7 +166,7 @@ JSRoot {
 									value: 2
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/async-functions/await-inside-parenthesized-assign/input.js"
 										end: Object {
 											column: 14
 											index: 36

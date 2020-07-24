@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"
 		end: Object {
 			column: 1
 			index: 63
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "await is not allowed in async function parameters"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 17
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"
 				end: Object {
 					column: 1
 					index: 63
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"
 					end: Object {
 						column: 1
 						index: 63
@@ -128,7 +128,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"
 							end: Object {
 								column: 39
 								index: 61
@@ -142,7 +142,7 @@ JSRoot {
 						}
 						expression: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"
 								end: Object {
 									column: 38
 									index: 60
@@ -158,7 +158,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"
 									end: Object {
 										column: 38
 										index: 60
@@ -178,7 +178,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"
 									end: Object {
 										column: 35
 										index: 57
@@ -194,7 +194,7 @@ JSRoot {
 									JSBindingAssignmentPattern {
 										operator: "="
 										loc: Object {
-											filename: "input.js"
+											filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"
 											end: Object {
 												column: 31
 												index: 53
@@ -209,7 +209,7 @@ JSRoot {
 										left: JSBindingIdentifier {
 											name: "x"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"
 												identifierName: "x"
 												end: Object {
 													column: 10
@@ -225,7 +225,7 @@ JSRoot {
 										}
 										right: JSCallExpression {
 											loc: Object {
-												filename: "input.js"
+												filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"
 												end: Object {
 													column: 31
 													index: 53
@@ -240,7 +240,7 @@ JSRoot {
 											callee: JSReferenceIdentifier {
 												name: "async"
 												loc: Object {
-													filename: "input.js"
+													filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"
 													identifierName: "async"
 													end: Object {
 														column: 18
@@ -258,7 +258,7 @@ JSRoot {
 												JSAssignmentExpression {
 													operator: "="
 													loc: Object {
-														filename: "input.js"
+														filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"
 														end: Object {
 															column: 30
 															index: 52
@@ -273,7 +273,7 @@ JSRoot {
 													left: JSAssignmentIdentifier {
 														name: "y"
 														loc: Object {
-															filename: "input.js"
+															filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"
 															identifierName: "y"
 															end: Object {
 																column: 20
@@ -289,7 +289,7 @@ JSRoot {
 													}
 													right: JSAwaitExpression {
 														loc: Object {
-															filename: "input.js"
+															filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"
 															end: Object {
 																column: 30
 																index: 52
@@ -305,7 +305,7 @@ JSRoot {
 															value: 2
 															format: undefined
 															loc: Object {
-																filename: "input.js"
+																filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"
 																end: Object {
 																	column: 30
 																	index: 52
@@ -338,7 +338,8 @@ JSRoot {
 
 ```
 
- input.js:2:28 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-functi
+ on/input.js:2:28 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ await is not allowed in async function parameters
 

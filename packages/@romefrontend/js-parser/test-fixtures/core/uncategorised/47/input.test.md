@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/47/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/47/input.js"
 		end: Object {
 			column: 21
 			index: 21
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: "The"
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/47/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -52,7 +52,7 @@ JSRoot {
 			id: "1"
 			value: "Answer"
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/47/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -73,7 +73,7 @@ JSRoot {
 				"1"
 			]
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/47/input.js"
 				end: Object {
 					column: 2
 					index: 2
@@ -90,7 +90,7 @@ JSRoot {
 				format: undefined
 				trailingComments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/47/input.js"
 					end: Object {
 						column: 2
 						index: 2

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/interface/reserved-method-name/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/interface/reserved-method-name/input.ts"
 		end: Object {
 			column: 0
 			index: 35
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/reserved-method-name/input.ts"
 					identifierName: "I"
 					end: Object {
 						column: 11
@@ -53,7 +53,7 @@ JSRoot {
 			extends: undefined
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/reserved-method-name/input.ts"
 				end: Object {
 					column: 1
 					index: 34
@@ -67,7 +67,7 @@ JSRoot {
 			}
 			body: TSInterfaceBody {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/reserved-method-name/input.ts"
 					end: Object {
 						column: 1
 						index: 34
@@ -85,7 +85,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "catch"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/interface/reserved-method-name/input.ts"
 									identifierName: "catch"
 									end: Object {
 										column: 9
@@ -100,7 +100,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/reserved-method-name/input.ts"
 								end: Object {
 									column: 9
 									index: 23
@@ -115,7 +115,7 @@ JSRoot {
 						}
 						optional: false
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/interface/reserved-method-name/input.ts"
 							end: Object {
 								column: 18
 								index: 32
@@ -129,7 +129,7 @@ JSRoot {
 						}
 						returnType: TSVoidKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/reserved-method-name/input.ts"
 								end: Object {
 									column: 17
 									index: 31
@@ -147,7 +147,7 @@ JSRoot {
 							rest: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/reserved-method-name/input.ts"
 								end: Object {
 									column: 17
 									index: 31

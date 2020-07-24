@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/input-not-followed-by-regex/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/input-not-followed-by-regex/input.js"
 		end: Object {
 			column: 0
 			index: 35
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f2"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/input-not-followed-by-regex/input.js"
 					identifierName: "f2"
 					end: Object {
 						column: 12
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/input-not-followed-by-regex/input.js"
 				end: Object {
 					column: 34
 					index: 34
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/input-not-followed-by-regex/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/input-not-followed-by-regex/input.js"
 					end: Object {
 						column: 34
 						index: 34
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/input-not-followed-by-regex/input.js"
 							end: Object {
 								column: 32
 								index: 32
@@ -118,7 +118,7 @@ JSRoot {
 						}
 						expression: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/input-not-followed-by-regex/input.js"
 								end: Object {
 									column: 32
 									index: 32
@@ -138,7 +138,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/input-not-followed-by-regex/input.js"
 									end: Object {
 										column: 22
 										index: 22
@@ -154,7 +154,7 @@ JSRoot {
 							body: JSBinaryExpression {
 								operator: "/"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/input-not-followed-by-regex/input.js"
 									end: Object {
 										column: 32
 										index: 32
@@ -169,7 +169,7 @@ JSRoot {
 								left: JSReferenceIdentifier {
 									name: "yield"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/yield/input-not-followed-by-regex/input.js"
 										identifierName: "yield"
 										end: Object {
 											column: 28
@@ -187,7 +187,7 @@ JSRoot {
 									value: 1
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/yield/input-not-followed-by-regex/input.js"
 										end: Object {
 											column: 32
 											index: 32

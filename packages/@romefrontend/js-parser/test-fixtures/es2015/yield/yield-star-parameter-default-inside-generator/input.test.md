@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/yield-star-parameter-default-inside-generator/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/yield-star-parameter-default-inside-generator/input.js"
 		end: Object {
 			column: 33
 			index: 33
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "yield is not allowed in generator parameters"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/yield/yield-star-parameter-default-inside-generator/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/yield-star-parameter-default-inside-generator/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 12
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/yield-star-parameter-default-inside-generator/input.js"
 				end: Object {
 					column: 33
 					index: 33
@@ -91,7 +91,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/yield-star-parameter-default-inside-generator/input.js"
 					end: Object {
 						column: 33
 						index: 33
@@ -113,7 +113,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/yield-star-parameter-default-inside-generator/input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -128,7 +128,7 @@ JSRoot {
 				params: Array [
 					JSBindingAssignmentPattern {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/yield-star-parameter-default-inside-generator/input.js"
 							end: Object {
 								column: 29
 								index: 29
@@ -143,7 +143,7 @@ JSRoot {
 						right: JSYieldExpression {
 							delegate: true
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/yield-star-parameter-default-inside-generator/input.js"
 								end: Object {
 									column: 29
 									index: 29
@@ -159,7 +159,7 @@ JSRoot {
 								argument: undefined
 								delegate: false
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/yield-star-parameter-default-inside-generator/input.js"
 									end: Object {
 										column: 29
 										index: 29
@@ -176,7 +176,7 @@ JSRoot {
 						left: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/yield-star-parameter-default-inside-generator/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 14
@@ -193,7 +193,7 @@ JSRoot {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/yield-star-parameter-default-inside-generator/input.js"
 									end: Object {
 										column: 14
 										index: 14
@@ -219,7 +219,7 @@ JSRoot {
 
 ```
 
- input.js:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/yield/yield-star-parameter-default-inside-generator/input.js:1:17 parse/js ━━━━━━━━━━━━━━━━━
 
   ✖ yield is not allowed in generator parameters
 

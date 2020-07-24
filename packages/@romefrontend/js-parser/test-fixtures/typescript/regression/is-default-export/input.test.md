@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/regression/is-default-export/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/regression/is-default-export/input.ts"
 		end: Object {
 			column: 0
 			index: 63
@@ -36,7 +36,7 @@ JSRoot {
 			exportKind: "type"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/regression/is-default-export/input.ts"
 				end: Object {
 					column: 23
 					index: 23
@@ -52,7 +52,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "T"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/regression/is-default-export/input.ts"
 						identifierName: "T"
 						end: Object {
 							column: 13
@@ -68,7 +68,7 @@ JSRoot {
 				}
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/regression/is-default-export/input.ts"
 					end: Object {
 						column: 23
 						index: 23
@@ -82,7 +82,7 @@ JSRoot {
 				}
 				right: TSNumberKeywordTypeAnnotation {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/regression/is-default-export/input.ts"
 						end: Object {
 							column: 22
 							index: 22
@@ -101,7 +101,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/regression/is-default-export/input.ts"
 				end: Object {
 					column: 16
 					index: 40
@@ -117,7 +117,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "E"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/regression/is-default-export/input.ts"
 						identifierName: "E"
 						end: Object {
 							column: 13
@@ -134,7 +134,7 @@ JSRoot {
 				const: false
 				members: Array []
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/regression/is-default-export/input.ts"
 					end: Object {
 						column: 16
 						index: 40
@@ -152,7 +152,7 @@ JSRoot {
 			exportKind: "type"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/regression/is-default-export/input.ts"
 				end: Object {
 					column: 21
 					index: 62
@@ -168,7 +168,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "I"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/regression/is-default-export/input.ts"
 						identifierName: "I"
 						end: Object {
 							column: 18
@@ -185,7 +185,7 @@ JSRoot {
 				extends: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/regression/is-default-export/input.ts"
 					end: Object {
 						column: 21
 						index: 62
@@ -200,7 +200,7 @@ JSRoot {
 				body: TSInterfaceBody {
 					body: Array []
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/regression/is-default-export/input.ts"
 						end: Object {
 							column: 21
 							index: 62

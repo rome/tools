@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/116/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/116/input.js"
 		end: Object {
 			column: 16
 			index: 16
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/116/input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/116/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -63,7 +63,7 @@ JSRoot {
 				}
 				callee: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/116/input.js"
 						end: Object {
 							column: 14
 							index: 14
@@ -79,7 +79,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "bar"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/116/input.js"
 								identifierName: "bar"
 								end: Object {
 									column: 14
@@ -94,7 +94,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/116/input.js"
 							identifierName: "bar"
 							end: Object {
 								column: 14
@@ -113,7 +113,7 @@ JSRoot {
 						optional: undefined
 						typeArguments: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/116/input.js"
 							end: Object {
 								column: 9
 								index: 9
@@ -128,7 +128,7 @@ JSRoot {
 						callee: JSReferenceIdentifier {
 							name: "foo"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/116/input.js"
 								identifierName: "foo"
 								end: Object {
 									column: 9

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2018/async-generators/for-await-async-context/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2018/async-generators/for-await-async-context/input.js"
 		end: Object {
 			column: 0
 			index: 43
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ("}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2018/async-generators/for-await-async-context/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/async-generators/for-await-async-context/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2018/async-generators/for-await-async-context/input.js"
 				end: Object {
 					column: 1
 					index: 42
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/async-generators/for-await-async-context/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/async-generators/for-await-async-context/input.js"
 					end: Object {
 						column: 1
 						index: 42
@@ -128,7 +128,7 @@ JSRoot {
 				body: Array [
 					JSForStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2018/async-generators/for-await-async-context/input.js"
 							end: Object {
 								column: 23
 								index: 38
@@ -143,7 +143,7 @@ JSRoot {
 						test: JSReferenceIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/async-generators/for-await-async-context/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 18
@@ -160,7 +160,7 @@ JSRoot {
 						update: JSReferenceIdentifier {
 							name: "of"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/async-generators/for-await-async-context/input.js"
 								identifierName: "of"
 								end: Object {
 									column: 21
@@ -176,7 +176,7 @@ JSRoot {
 						}
 						body: JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/async-generators/for-await-async-context/input.js"
 								end: Object {
 									column: 23
 									index: 38
@@ -191,7 +191,7 @@ JSRoot {
 							expression: JSReferenceIdentifier {
 								name: "y"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2018/async-generators/for-await-async-context/input.js"
 									identifierName: "y"
 									end: Object {
 										column: 23
@@ -208,7 +208,7 @@ JSRoot {
 						}
 						init: JSCallExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/async-generators/for-await-async-context/input.js"
 								end: Object {
 									column: 16
 									index: 31
@@ -223,7 +223,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "await"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2018/async-generators/for-await-async-context/input.js"
 									identifierName: "await"
 									end: Object {
 										column: 11
@@ -241,7 +241,7 @@ JSRoot {
 								JSReferenceIdentifier {
 									name: "let"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2018/async-generators/for-await-async-context/input.js"
 										identifierName: "let"
 										end: Object {
 											column: 16
@@ -260,7 +260,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2018/async-generators/for-await-async-context/input.js"
 							end: Object {
 								column: 25
 								index: 40
@@ -275,7 +275,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/async-generators/for-await-async-context/input.js"
 								end: Object {
 									column: 24
 									index: 39
@@ -300,7 +300,7 @@ JSRoot {
 
 ```
 
- input.js:2:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2018/async-generators/for-await-async-context/input.js:2:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected (
 

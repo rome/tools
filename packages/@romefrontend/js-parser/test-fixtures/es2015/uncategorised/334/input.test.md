@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/334/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/334/input.js"
 		end: Object {
 			column: 15
 			index: 15
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "eval is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/334/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/334/input.js"
 				end: Object {
 					column: 15
 					index: 15
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/334/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -88,7 +88,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "arr"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/334/input.js"
 						identifierName: "arr"
 						end: Object {
 							column: 15
@@ -105,7 +105,7 @@ JSRoot {
 				left: JSAssignmentArrayPattern {
 					elements: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/334/input.js"
 						end: Object {
 							column: 9
 							index: 9
@@ -120,7 +120,7 @@ JSRoot {
 					rest: JSAssignmentIdentifier {
 						name: "eval"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/334/input.js"
 							identifierName: "eval"
 							end: Object {
 								column: 8
@@ -145,7 +145,7 @@ JSRoot {
 
 ```
 
- input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/334/input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ eval is a reserved word
 

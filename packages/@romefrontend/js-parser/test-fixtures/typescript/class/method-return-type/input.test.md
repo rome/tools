@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/method-return-type/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/method-return-type/input.ts"
 		end: Object {
 			column: 0
 			index: 29
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/method-return-type/input.ts"
 					identifierName: "C"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/method-return-type/input.ts"
 				end: Object {
 					column: 1
 					index: 28
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/method-return-type/input.ts"
 					end: Object {
 						column: 1
 						index: 28
@@ -88,7 +88,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "f"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/method-return-type/input.ts"
 									identifierName: "f"
 									end: Object {
 										column: 5
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/method-return-type/input.ts"
 								end: Object {
 									column: 5
 									index: 15
@@ -117,7 +117,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/method-return-type/input.ts"
 							end: Object {
 								column: 16
 								index: 26
@@ -133,7 +133,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/method-return-type/input.ts"
 								end: Object {
 									column: 16
 									index: 26
@@ -159,7 +159,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/method-return-type/input.ts"
 								end: Object {
 									column: 5
 									index: 15
@@ -181,7 +181,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/method-return-type/input.ts"
 								end: Object {
 									column: 13
 									index: 23
@@ -195,7 +195,7 @@ JSRoot {
 							}
 							returnType: TSVoidKeywordTypeAnnotation {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/method-return-type/input.ts"
 									end: Object {
 										column: 13
 										index: 23

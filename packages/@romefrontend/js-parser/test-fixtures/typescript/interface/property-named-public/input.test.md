@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/interface/property-named-public/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/interface/property-named-public/input.ts"
 		end: Object {
 			column: 0
 			index: 33
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/property-named-public/input.ts"
 					identifierName: "I"
 					end: Object {
 						column: 11
@@ -53,7 +53,7 @@ JSRoot {
 			extends: undefined
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/property-named-public/input.ts"
 				end: Object {
 					column: 1
 					index: 32
@@ -67,7 +67,7 @@ JSRoot {
 			}
 			body: TSInterfaceBody {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/property-named-public/input.ts"
 					end: Object {
 						column: 1
 						index: 32
@@ -85,7 +85,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "public"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/interface/property-named-public/input.ts"
 									identifierName: "public"
 									end: Object {
 										column: 7
@@ -100,7 +100,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/property-named-public/input.ts"
 								end: Object {
 									column: 7
 									index: 21
@@ -116,7 +116,7 @@ JSRoot {
 						optional: false
 						readonly: false
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/interface/property-named-public/input.ts"
 							end: Object {
 								column: 16
 								index: 30
@@ -130,7 +130,7 @@ JSRoot {
 						}
 						typeAnnotation: TSNumberKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/property-named-public/input.ts"
 								end: Object {
 									column: 15
 									index: 29

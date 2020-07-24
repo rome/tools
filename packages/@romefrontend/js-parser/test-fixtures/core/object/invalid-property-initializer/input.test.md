@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "core/object/invalid-property-initializer/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/object/invalid-property-initializer/input.js"
 		end: Object {
 			column: 0
 			index: 45
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/object/invalid-property-initializer/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/object/invalid-property-initializer/input.js"
 				end: Object {
 					column: 14
 					index: 41
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/object/invalid-property-initializer/input.js"
 					end: Object {
 						column: 14
 						index: 41
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "obj"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/object/invalid-property-initializer/input.js"
 								identifierName: "obj"
 								end: Object {
 									column: 9
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/object/invalid-property-initializer/input.js"
 							end: Object {
 								column: 11
 								index: 25
@@ -120,7 +120,7 @@ JSRoot {
 						init: JSAssignmentExpression {
 							operator: "="
 							loc: Object {
-								filename: "input.js"
+								filename: "core/object/invalid-property-initializer/input.js"
 								end: Object {
 									column: 11
 									index: 25
@@ -136,7 +136,7 @@ JSRoot {
 								value: 123
 								format: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "core/object/invalid-property-initializer/input.js"
 									end: Object {
 										column: 11
 										index: 25
@@ -152,7 +152,7 @@ JSRoot {
 							left: JSAssignmentObjectPattern {
 								rest: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "core/object/invalid-property-initializer/input.js"
 									end: Object {
 										column: 5
 										index: 19
@@ -170,7 +170,7 @@ JSRoot {
 											value: JSIdentifier {
 												name: "foo"
 												loc: Object {
-													filename: "input.js"
+													filename: "core/object/invalid-property-initializer/input.js"
 													identifierName: "foo"
 													end: Object {
 														column: 5
@@ -185,7 +185,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.js"
+												filename: "core/object/invalid-property-initializer/input.js"
 												end: Object {
 													column: 5
 													index: 19
@@ -201,7 +201,7 @@ JSRoot {
 										value: JSAssignmentIdentifier {
 											name: "foo"
 											loc: Object {
-												filename: "input.js"
+												filename: "core/object/invalid-property-initializer/input.js"
 												identifierName: "foo"
 												end: Object {
 													column: 5
@@ -216,7 +216,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "core/object/invalid-property-initializer/input.js"
 											end: Object {
 												column: 5
 												index: 19
@@ -237,7 +237,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "bar"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/object/invalid-property-initializer/input.js"
 								end: Object {
 									column: 8
 									index: 35
@@ -252,7 +252,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "core/object/invalid-property-initializer/input.js"
 									end: Object {
 										column: 8
 										index: 35
@@ -267,7 +267,7 @@ JSRoot {
 								typeAnnotation: TSTypeReference {
 									typeParameters: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "core/object/invalid-property-initializer/input.js"
 										end: Object {
 											column: 8
 											index: 35
@@ -282,7 +282,7 @@ JSRoot {
 									typeName: JSReferenceIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.js"
+											filename: "core/object/invalid-property-initializer/input.js"
 											identifierName: "x"
 											end: Object {
 												column: 8
@@ -300,7 +300,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/object/invalid-property-initializer/input.js"
 							end: Object {
 								column: 14
 								index: 41
@@ -316,7 +316,7 @@ JSRoot {
 							value: 123
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/object/invalid-property-initializer/input.js"
 								end: Object {
 									column: 14
 									index: 41
@@ -335,7 +335,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/object/invalid-property-initializer/input.js"
 				end: Object {
 					column: 2
 					index: 44
@@ -350,7 +350,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/object/invalid-property-initializer/input.js"
 					end: Object {
 						column: 1
 						index: 43
@@ -372,7 +372,7 @@ JSRoot {
 
 ```
 
- input.js:2:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/object/invalid-property-initializer/input.js:2:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ,
 

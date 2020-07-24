@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-class/migrated_0019/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-class/migrated_0019/input.js"
 		end: Object {
 			column: 0
 			index: 48
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Duplicate constructor in the same class"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-class/migrated_0019/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-class/migrated_0019/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-class/migrated_0019/input.js"
 				end: Object {
 					column: 47
 					index: 47
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-class/migrated_0019/input.js"
 					end: Object {
 						column: 47
 						index: 47
@@ -112,7 +112,7 @@ JSRoot {
 							value: JSStringLiteral {
 								value: "constructor"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-class/migrated_0019/input.js"
 									end: Object {
 										column: 22
 										index: 22
@@ -126,7 +126,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0019/input.js"
 								end: Object {
 									column: 22
 									index: 22
@@ -140,7 +140,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-class/migrated_0019/input.js"
 							end: Object {
 								column: 26
 								index: 26
@@ -156,7 +156,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0019/input.js"
 								end: Object {
 									column: 26
 									index: 26
@@ -179,7 +179,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0019/input.js"
 								end: Object {
 									column: 24
 									index: 24
@@ -205,7 +205,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0019/input.js"
 								end: Object {
 									column: 22
 									index: 22
@@ -225,7 +225,7 @@ JSRoot {
 							value: JSStringLiteral {
 								value: "constructor"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-class/migrated_0019/input.js"
 									end: Object {
 										column: 41
 										index: 41
@@ -239,7 +239,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0019/input.js"
 								end: Object {
 									column: 42
 									index: 42
@@ -253,7 +253,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-class/migrated_0019/input.js"
 							end: Object {
 								column: 46
 								index: 46
@@ -269,7 +269,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0019/input.js"
 								end: Object {
 									column: 46
 									index: 46
@@ -292,7 +292,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0019/input.js"
 								end: Object {
 									column: 44
 									index: 44
@@ -318,7 +318,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0019/input.js"
 								end: Object {
 									column: 42
 									index: 42
@@ -343,7 +343,7 @@ JSRoot {
 
 ```
 
- input.js:1:27 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-class/migrated_0019/input.js:1:27 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Duplicate constructor in the same class
 

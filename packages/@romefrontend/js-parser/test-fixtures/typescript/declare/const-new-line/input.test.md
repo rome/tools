@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/declare/const-new-line/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/declare/const-new-line/input.ts"
 		end: Object {
 			column: 0
 			index: 36
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/declare/const-new-line/input.ts"
 				end: Object {
 					column: 7
 					index: 7
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "declare"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/declare/const-new-line/input.ts"
 					identifierName: "declare"
 					end: Object {
 						column: 7
@@ -66,7 +66,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/declare/const-new-line/input.ts"
 				end: Object {
 					column: 27
 					index: 35
@@ -81,7 +81,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/declare/const-new-line/input.ts"
 					end: Object {
 						column: 27
 						index: 35
@@ -98,7 +98,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/declare/const-new-line/input.ts"
 								end: Object {
 									column: 15
 									index: 23
@@ -113,7 +113,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/declare/const-new-line/input.ts"
 									end: Object {
 										column: 15
 										index: 23
@@ -127,7 +127,7 @@ JSRoot {
 								}
 								typeAnnotation: TSNumberKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/declare/const-new-line/input.ts"
 										end: Object {
 											column: 15
 											index: 23
@@ -144,7 +144,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/declare/const-new-line/input.ts"
 							end: Object {
 								column: 15
 								index: 23
@@ -161,7 +161,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "y"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/declare/const-new-line/input.ts"
 								end: Object {
 									column: 26
 									index: 34
@@ -176,7 +176,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/declare/const-new-line/input.ts"
 									end: Object {
 										column: 26
 										index: 34
@@ -190,7 +190,7 @@ JSRoot {
 								}
 								typeAnnotation: TSStringKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/declare/const-new-line/input.ts"
 										end: Object {
 											column: 26
 											index: 34
@@ -207,7 +207,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/declare/const-new-line/input.ts"
 							end: Object {
 								column: 26
 								index: 34

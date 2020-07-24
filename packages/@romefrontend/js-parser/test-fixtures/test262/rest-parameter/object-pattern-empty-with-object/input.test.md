@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
 		end: Object {
 			column: 0
 			index: 40
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "emptyWithObject"
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
 					identifierName: "emptyWithObject"
 					end: Object {
 						column: 24
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
 				end: Object {
 					column: 39
 					index: 39
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
 					end: Object {
 						column: 39
 						index: 39
@@ -89,7 +89,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
 					end: Object {
 						column: 36
 						index: 36
@@ -104,7 +104,7 @@ JSRoot {
 				rest: JSBindingObjectPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
 						end: Object {
 							column: 35
 							index: 35
@@ -120,7 +120,7 @@ JSRoot {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
 							end: Object {
 								column: 35
 								index: 35
@@ -139,7 +139,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "p"
 									loc: Object {
-										filename: "input.js"
+										filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
 										identifierName: "p"
 										end: Object {
 											column: 30
@@ -154,7 +154,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
 									end: Object {
 										column: 30
 										index: 30
@@ -171,7 +171,7 @@ JSRoot {
 								properties: Array []
 								rest: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
 									end: Object {
 										column: 34
 										index: 34
@@ -185,7 +185,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "test262/rest-parameter/object-pattern-empty-with-object/input.js"
 								end: Object {
 									column: 34
 									index: 34

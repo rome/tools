@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/for-of/right-regex/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/for-of/right-regex/input.js"
 		end: Object {
 			column: 26
 			index: 50
@@ -35,7 +35,7 @@ JSRoot {
 		JSForOfStatement {
 			await: false
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/for-of/right-regex/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -49,7 +49,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-of/right-regex/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -65,7 +65,7 @@ JSRoot {
 			left: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-of/right-regex/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -82,7 +82,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-of/right-regex/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 10
@@ -98,7 +98,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/for-of/right-regex/input.js"
 							end: Object {
 								column: 10
 								index: 10
@@ -121,7 +121,7 @@ JSRoot {
 				sticky: false
 				unicode: false
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-of/right-regex/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -135,7 +135,7 @@ JSRoot {
 				}
 				expression: JSRegExpSubExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/for-of/right-regex/input.js"
 						end: Object {
 							column: 18
 							index: 18
@@ -151,7 +151,7 @@ JSRoot {
 						JSRegExpCharacter {
 							value: "f"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-of/right-regex/input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -167,7 +167,7 @@ JSRoot {
 						JSRegExpCharacter {
 							value: "o"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-of/right-regex/input.js"
 								end: Object {
 									column: 17
 									index: 17
@@ -183,7 +183,7 @@ JSRoot {
 						JSRegExpCharacter {
 							value: "o"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-of/right-regex/input.js"
 								end: Object {
 									column: 18
 									index: 18
@@ -204,7 +204,7 @@ JSRoot {
 			test: undefined
 			update: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/for-of/right-regex/input.js"
 				end: Object {
 					column: 26
 					index: 50
@@ -218,7 +218,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-of/right-regex/input.js"
 					end: Object {
 						column: 26
 						index: 50
@@ -234,7 +234,7 @@ JSRoot {
 			init: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-of/right-regex/input.js"
 					end: Object {
 						column: 22
 						index: 46
@@ -251,7 +251,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-of/right-regex/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 10
@@ -266,7 +266,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/for-of/right-regex/input.js"
 							end: Object {
 								column: 22
 								index: 46
@@ -281,7 +281,7 @@ JSRoot {
 						init: JSBinaryExpression {
 							operator: "/"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-of/right-regex/input.js"
 								end: Object {
 									column: 22
 									index: 46
@@ -296,7 +296,7 @@ JSRoot {
 							right: JSReferenceIdentifier {
 								name: "g"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/for-of/right-regex/input.js"
 									identifierName: "g"
 									end: Object {
 										column: 22
@@ -313,7 +313,7 @@ JSRoot {
 							left: JSBinaryExpression {
 								operator: "/"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/for-of/right-regex/input.js"
 									end: Object {
 										column: 20
 										index: 44
@@ -328,7 +328,7 @@ JSRoot {
 								left: JSReferenceIdentifier {
 									name: "of"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/for-of/right-regex/input.js"
 										identifierName: "of"
 										end: Object {
 											column: 15
@@ -345,7 +345,7 @@ JSRoot {
 								right: JSReferenceIdentifier {
 									name: "foo"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/for-of/right-regex/input.js"
 										identifierName: "foo"
 										end: Object {
 											column: 20

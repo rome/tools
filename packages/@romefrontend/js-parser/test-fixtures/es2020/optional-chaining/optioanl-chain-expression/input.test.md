@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/optional-chaining/optioanl-chain-expression/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/optional-chaining/optioanl-chain-expression/input.js"
 		end: Object {
 			column: 8
 			index: 8
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/optioanl-chain-expression/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSOptionalCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/optioanl-chain-expression/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -63,7 +63,7 @@ JSRoot {
 				}
 				callee: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/optioanl-chain-expression/input.js"
 						end: Object {
 							column: 6
 							index: 6
@@ -79,7 +79,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "c"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/optioanl-chain-expression/input.js"
 								identifierName: "c"
 								end: Object {
 									column: 6
@@ -95,7 +95,7 @@ JSRoot {
 						}
 						optional: true
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/optioanl-chain-expression/input.js"
 							identifierName: "c"
 							end: Object {
 								column: 6
@@ -111,7 +111,7 @@ JSRoot {
 					}
 					object: JSMemberExpression {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/optioanl-chain-expression/input.js"
 							end: Object {
 								column: 3
 								index: 3
@@ -126,7 +126,7 @@ JSRoot {
 						object: JSReferenceIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/optioanl-chain-expression/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 1
@@ -144,7 +144,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "b"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/optional-chaining/optioanl-chain-expression/input.js"
 									identifierName: "b"
 									end: Object {
 										column: 3
@@ -159,7 +159,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/optioanl-chain-expression/input.js"
 								identifierName: "b"
 								end: Object {
 									column: 3

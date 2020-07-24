@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/20/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/20/input.js"
 		end: Object {
 			column: 18
 			index: 18
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/20/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/20/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -64,7 +64,7 @@ JSRoot {
 				tag: JSReferenceIdentifier {
 					name: "raw"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/20/input.js"
 						identifierName: "raw"
 						end: Object {
 							column: 3
@@ -80,7 +80,7 @@ JSRoot {
 				}
 				quasi: JSTemplateLiteral {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/20/input.js"
 						end: Object {
 							column: 18
 							index: 18
@@ -96,7 +96,7 @@ JSRoot {
 						JSReferenceIdentifier {
 							name: "name"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/20/input.js"
 								identifierName: "name"
 								end: Object {
 									column: 16
@@ -117,7 +117,7 @@ JSRoot {
 							raw: "hello "
 							tail: false
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/20/input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -135,7 +135,7 @@ JSRoot {
 							raw: ""
 							tail: true
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/20/input.js"
 								end: Object {
 									column: 17
 									index: 17

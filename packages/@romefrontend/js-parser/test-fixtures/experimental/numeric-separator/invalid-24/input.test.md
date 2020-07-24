@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/numeric-separator/invalid-24/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/numeric-separator/invalid-24/input.js"
 		end: Object {
 			column: 0
 			index: 6
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown start to an statement expression"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/numeric-separator/invalid-24/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/numeric-separator/invalid-24/input.js"
 				end: Object {
 					column: 1
 					index: 1
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/numeric-separator/invalid-24/input.js"
 					end: Object {
 						column: 1
 						index: 1
@@ -89,7 +89,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/numeric-separator/invalid-24/input.js"
 				end: Object {
 					column: 5
 					index: 5
@@ -104,7 +104,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "_1_1"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/numeric-separator/invalid-24/input.js"
 					identifierName: "_1_1"
 					end: Object {
 						column: 5
@@ -127,7 +127,7 @@ JSRoot {
 
 ```
 
- input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/numeric-separator/invalid-24/input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
 

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/regression/6864/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/regression/6864/input.js"
 		end: Object {
 			column: 0
 			index: 86
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/regression/6864/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 11
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/regression/6864/input.js"
 				end: Object {
 					column: 1
 					index: 85
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/regression/6864/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/regression/6864/input.js"
 					end: Object {
 						column: 1
 						index: 85
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/regression/6864/input.js"
 							end: Object {
 								column: 17
 								index: 33
@@ -119,7 +119,7 @@ JSRoot {
 						expression: JSYieldExpression {
 							delegate: false
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/regression/6864/input.js"
 								end: Object {
 									column: 15
 									index: 31
@@ -133,7 +133,7 @@ JSRoot {
 							}
 							argument: JSArrowFunctionExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/regression/6864/input.js"
 									end: Object {
 										column: 15
 										index: 31
@@ -148,7 +148,7 @@ JSRoot {
 								body: JSReferenceIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/regression/6864/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 15
@@ -168,7 +168,7 @@ JSRoot {
 									rest: undefined
 									thisType: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/regression/6864/input.js"
 										end: Object {
 											column: 13
 											index: 29
@@ -184,7 +184,7 @@ JSRoot {
 										JSBindingIdentifier {
 											name: "a"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/regression/6864/input.js"
 												identifierName: "a"
 												end: Object {
 													column: 10
@@ -205,7 +205,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/regression/6864/input.js"
 							end: Object {
 								column: 23
 								index: 57
@@ -220,7 +220,7 @@ JSRoot {
 						expression: JSYieldExpression {
 							delegate: false
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/regression/6864/input.js"
 								end: Object {
 									column: 21
 									index: 55
@@ -234,7 +234,7 @@ JSRoot {
 							}
 							argument: JSArrowFunctionExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/regression/6864/input.js"
 									end: Object {
 										column: 21
 										index: 55
@@ -249,7 +249,7 @@ JSRoot {
 								body: JSReferenceIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/regression/6864/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 21
@@ -269,7 +269,7 @@ JSRoot {
 									rest: undefined
 									thisType: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/regression/6864/input.js"
 										end: Object {
 											column: 19
 											index: 53
@@ -285,7 +285,7 @@ JSRoot {
 										JSBindingIdentifier {
 											name: "a"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/regression/6864/input.js"
 												identifierName: "a"
 												end: Object {
 													column: 16
@@ -306,7 +306,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/regression/6864/input.js"
 							end: Object {
 								column: 25
 								index: 83
@@ -321,7 +321,7 @@ JSRoot {
 						expression: JSYieldExpression {
 							delegate: false
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/regression/6864/input.js"
 								end: Object {
 									column: 23
 									index: 81
@@ -335,7 +335,7 @@ JSRoot {
 							}
 							argument: JSArrowFunctionExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/regression/6864/input.js"
 									end: Object {
 										column: 23
 										index: 81
@@ -350,7 +350,7 @@ JSRoot {
 								body: JSReferenceIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/regression/6864/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 23
@@ -371,7 +371,7 @@ JSRoot {
 									returnType: undefined
 									thisType: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/regression/6864/input.js"
 										end: Object {
 											column: 21
 											index: 79
@@ -387,7 +387,7 @@ JSRoot {
 										JSBindingIdentifier {
 											name: "a"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/regression/6864/input.js"
 												identifierName: "a"
 												end: Object {
 													column: 17

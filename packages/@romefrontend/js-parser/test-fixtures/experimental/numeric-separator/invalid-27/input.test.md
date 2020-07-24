@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/numeric-separator/invalid-27/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/numeric-separator/invalid-27/input.js"
 		end: Object {
 			column: 0
 			index: 6
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected number in radix 16"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/numeric-separator/invalid-27/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/numeric-separator/invalid-27/input.js"
 				end: Object {
 					column: 2
 					index: 2
@@ -74,7 +74,7 @@ JSRoot {
 				value: 0
 				format: "hex"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/numeric-separator/invalid-27/input.js"
 					end: Object {
 						column: 2
 						index: 2
@@ -90,7 +90,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/numeric-separator/invalid-27/input.js"
 				end: Object {
 					column: 5
 					index: 5
@@ -105,7 +105,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "Z_1"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/numeric-separator/invalid-27/input.js"
 					identifierName: "Z_1"
 					end: Object {
 						column: 5
@@ -128,7 +128,7 @@ JSRoot {
 
 ```
 
- input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/numeric-separator/invalid-27/input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected number in radix 16
 

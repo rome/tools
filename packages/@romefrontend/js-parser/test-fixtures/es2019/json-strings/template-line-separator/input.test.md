@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2019/json-strings/template-line-separator/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2019/json-strings/template-line-separator/input.js"
 		end: Object {
 			column: 0
 			index: 102
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: "      ^ That's a U+2028 LINE SEPARATOR UTF-16 char (between 'before' and 'after')"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2019/json-strings/template-line-separator/input.js"
 				end: Object {
 					column: 83
 					index: 101
@@ -53,7 +53,7 @@ JSRoot {
 		JSExpressionStatement {
 			trailingComments: Array ["0"]
 			loc: Object {
-				filename: "input.js"
+				filename: "es2019/json-strings/template-line-separator/input.js"
 				end: Object {
 					column: 8
 					index: 17
@@ -68,7 +68,7 @@ JSRoot {
 			expression: JSTemplateLiteral {
 				expressions: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2019/json-strings/template-line-separator/input.js"
 					end: Object {
 						column: 6
 						index: 15
@@ -86,7 +86,7 @@ JSRoot {
 						raw: "before\u2028after"
 						tail: true
 						loc: Object {
-							filename: "input.js"
+							filename: "es2019/json-strings/template-line-separator/input.js"
 							end: Object {
 								column: 5
 								index: 14

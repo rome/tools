@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/modules/export-default-variable-declaration2/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/modules/export-default-variable-declaration2/input.js"
 		end: Object {
 			column: 1
 			index: 76
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Only expressions, functions or classes are allowed as the `default` export."}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/modules/export-default-variable-declaration2/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/export-default-variable-declaration2/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSReferenceIdentifier {
 				name: "let"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/modules/export-default-variable-declaration2/input.js"
 					identifierName: "let"
 					end: Object {
 						column: 18
@@ -90,7 +90,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/export-default-variable-declaration2/input.js"
 				end: Object {
 					column: 1
 					index: 76
@@ -105,7 +105,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/modules/export-default-variable-declaration2/input.js"
 					end: Object {
 						column: 1
 						index: 76
@@ -120,7 +120,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "Foo"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/export-default-variable-declaration2/input.js"
 						identifierName: "Foo"
 						end: Object {
 							column: 22
@@ -136,7 +136,7 @@ JSRoot {
 				}
 				right: JSArrowFunctionExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/export-default-variable-declaration2/input.js"
 						end: Object {
 							column: 1
 							index: 76
@@ -156,7 +156,7 @@ JSRoot {
 						returnType: undefined
 						thisType: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/modules/export-default-variable-declaration2/input.js"
 							end: Object {
 								column: 30
 								index: 30
@@ -172,7 +172,7 @@ JSRoot {
 					body: JSBlockStatement {
 						directives: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/modules/export-default-variable-declaration2/input.js"
 							end: Object {
 								column: 1
 								index: 76
@@ -187,7 +187,7 @@ JSRoot {
 						body: Array [
 							JSReturnStatement {
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/modules/export-default-variable-declaration2/input.js"
 									end: Object {
 										column: 41
 										index: 74
@@ -202,7 +202,7 @@ JSRoot {
 								argument: JSTemplateLiteral {
 									expressions: Array []
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/modules/export-default-variable-declaration2/input.js"
 										end: Object {
 											column: 40
 											index: 73
@@ -220,7 +220,7 @@ JSRoot {
 											raw: "<div class=\"bar\">Hola</div>"
 											tail: true
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/modules/export-default-variable-declaration2/input.js"
 												end: Object {
 													column: 39
 													index: 72
@@ -249,7 +249,7 @@ JSRoot {
 
 ```
 
- input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/modules/export-default-variable-declaration2/input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Only expressions, functions or classes are allowed as the `default` export.
 

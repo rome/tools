@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
 					identifierName: "g"
 					end: Object {
 						column: 11
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -89,7 +89,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -105,7 +105,7 @@ JSRoot {
 					JSBindingObjectPattern {
 						rest: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
 							end: Object {
 								column: 22
 								index: 22
@@ -121,7 +121,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
 								end: Object {
 									column: 22
 									index: 22
@@ -140,7 +140,7 @@ JSRoot {
 									value: JSIdentifier {
 										name: "yield"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
 											identifierName: "yield"
 											end: Object {
 												column: 18
@@ -155,7 +155,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
 										end: Object {
 											column: 18
 											index: 18
@@ -171,7 +171,7 @@ JSRoot {
 								value: JSBindingIdentifier {
 									name: "y"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
 										identifierName: "y"
 										end: Object {
 											column: 21
@@ -186,7 +186,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
 									end: Object {
 										column: 21
 										index: 21

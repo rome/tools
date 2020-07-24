@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -108,7 +108,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "x"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
 												identifierName: "x"
 												end: Object {
 													column: 6
@@ -123,7 +123,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
 											end: Object {
 												column: 6
 												index: 6
@@ -138,7 +138,7 @@ JSRoot {
 									}
 									value: JSBindingAssignmentPattern {
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
 											end: Object {
 												column: 17
 												index: 17
@@ -153,7 +153,7 @@ JSRoot {
 										left: JSBindingIdentifier {
 											name: "y"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
 												identifierName: "y"
 												end: Object {
 													column: 9
@@ -170,7 +170,7 @@ JSRoot {
 										right: JSReferenceIdentifier {
 											name: "yield"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
 												identifierName: "yield"
 												end: Object {
 													column: 17
@@ -186,7 +186,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
 										end: Object {
 											column: 17
 											index: 17
@@ -202,7 +202,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
 							end: Object {
 								column: 24
 								index: 24
@@ -217,7 +217,7 @@ JSRoot {
 						init: JSReferenceIdentifier {
 							name: "z"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/invalid-yield-binding-property/input.js"
 								identifierName: "z"
 								end: Object {
 									column: 24
@@ -243,7 +243,7 @@ JSRoot {
 
 ```
 
- input.js:1:18 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-yield/invalid-yield-binding-property/input.js:1:18 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ,
 

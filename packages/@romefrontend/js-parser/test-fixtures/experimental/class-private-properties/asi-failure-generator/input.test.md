@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 		end: Object {
 			column: 0
 			index: 34
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 				end: Object {
 					column: 10
 					index: 31
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 					end: Object {
 						column: 10
 						index: 31
@@ -111,7 +111,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "p"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 									identifierName: "p"
 									end: Object {
 										column: 4
@@ -126,7 +126,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 								end: Object {
 									column: 4
 									index: 16
@@ -142,7 +142,7 @@ JSRoot {
 						value: JSBinaryExpression {
 							operator: "*"
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 								end: Object {
 									column: 7
 									index: 28
@@ -157,7 +157,7 @@ JSRoot {
 							left: JSReferenceIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 8
@@ -174,7 +174,7 @@ JSRoot {
 							right: JSCallExpression {
 								arguments: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 									end: Object {
 										column: 7
 										index: 28
@@ -189,7 +189,7 @@ JSRoot {
 								callee: JSReferenceIdentifier {
 									name: "m"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 										identifierName: "m"
 										end: Object {
 											column: 4
@@ -207,7 +207,7 @@ JSRoot {
 						}
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 							end: Object {
 								column: 7
 								index: 28
@@ -232,7 +232,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 								end: Object {
 									column: 4
 									index: 16
@@ -251,7 +251,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: ""
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 									identifierName: ""
 									end: Object {
 										column: 9
@@ -266,7 +266,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 								end: Object {
 									column: 9
 									index: 30
@@ -283,7 +283,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 							end: Object {
 								column: 9
 								index: 30
@@ -308,7 +308,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 								end: Object {
 									column: 9
 									index: 30
@@ -327,7 +327,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 				end: Object {
 					column: 1
 					index: 33
@@ -342,7 +342,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/asi-failure-generator/input.js"
 					end: Object {
 						column: 1
 						index: 33
@@ -364,7 +364,7 @@ JSRoot {
 
 ```
 
- input.js:3:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-private-properties/asi-failure-generator/input.js:3:8 parse/js ━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

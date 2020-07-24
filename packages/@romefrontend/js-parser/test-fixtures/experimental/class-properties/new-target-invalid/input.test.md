@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-properties/new-target-invalid/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-properties/new-target-invalid/input.js"
 		end: Object {
 			column: 0
 			index: 20
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "new.target can only be used in functions or class properties"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/new-target-invalid/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/new-target-invalid/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/new-target-invalid/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target-invalid/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 5
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/new-target-invalid/input.js"
 							end: Object {
 								column: 18
 								index: 18
@@ -119,7 +119,7 @@ JSRoot {
 						}
 						init: JSMetaProperty {
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target-invalid/input.js"
 								end: Object {
 									column: 18
 									index: 18
@@ -134,7 +134,7 @@ JSRoot {
 							meta: JSIdentifier {
 								name: "new"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target-invalid/input.js"
 									identifierName: "new"
 									end: Object {
 										column: 11
@@ -151,7 +151,7 @@ JSRoot {
 							property: JSIdentifier {
 								name: "target"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target-invalid/input.js"
 									identifierName: "target"
 									end: Object {
 										column: 18
@@ -178,7 +178,7 @@ JSRoot {
 
 ```
 
- input.js:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-properties/new-target-invalid/input.js:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ new.target can only be used in functions or class properties
 

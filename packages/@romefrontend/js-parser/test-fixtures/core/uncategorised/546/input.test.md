@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/546/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/546/input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/546/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/546/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/546/input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -84,7 +84,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "public"
 											loc: Object {
-												filename: "input.js"
+												filename: "core/uncategorised/546/input.js"
 												identifierName: "public"
 												end: Object {
 													column: 14
@@ -99,7 +99,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "core/uncategorised/546/input.js"
 											end: Object {
 												column: 14
 												index: 14
@@ -115,7 +115,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "public"
 										loc: Object {
-											filename: "input.js"
+											filename: "core/uncategorised/546/input.js"
 											identifierName: "public"
 											end: Object {
 												column: 14
@@ -130,7 +130,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "core/uncategorised/546/input.js"
 										end: Object {
 											column: 14
 											index: 14
@@ -146,7 +146,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/546/input.js"
 							end: Object {
 								column: 24
 								index: 24
@@ -161,7 +161,7 @@ JSRoot {
 						init: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/546/input.js"
 								end: Object {
 									column: 24
 									index: 24
@@ -176,7 +176,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/546/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 22

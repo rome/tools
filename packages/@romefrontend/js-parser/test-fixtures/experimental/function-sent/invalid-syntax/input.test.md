@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/function-sent/invalid-syntax/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/function-sent/invalid-syntax/input.js"
 		end: Object {
 			column: 0
 			index: 43
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/function-sent/invalid-syntax/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/function-sent/invalid-syntax/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 13
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/function-sent/invalid-syntax/input.js"
 				end: Object {
 					column: 1
 					index: 42
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/function-sent/invalid-syntax/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/function-sent/invalid-syntax/input.js"
 					end: Object {
 						column: 1
 						index: 42
@@ -129,7 +129,7 @@ JSRoot {
 					JSIfStatement {
 						alternate: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/function-sent/invalid-syntax/input.js"
 							end: Object {
 								column: 22
 								index: 40
@@ -144,7 +144,7 @@ JSRoot {
 						test: JSBooleanLiteral {
 							value: true
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/function-sent/invalid-syntax/input.js"
 								end: Object {
 									column: 10
 									index: 28
@@ -159,7 +159,7 @@ JSRoot {
 						}
 						consequent: JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/function-sent/invalid-syntax/input.js"
 								end: Object {
 									column: 22
 									index: 40
@@ -173,7 +173,7 @@ JSRoot {
 							}
 							expression: JSMetaProperty {
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/function-sent/invalid-syntax/input.js"
 									end: Object {
 										column: 22
 										index: 40
@@ -188,7 +188,7 @@ JSRoot {
 								meta: JSIdentifier {
 									name: "function"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/function-sent/invalid-syntax/input.js"
 										identifierName: "function"
 										end: Object {
 											column: 20
@@ -205,7 +205,7 @@ JSRoot {
 								property: JSIdentifier {
 									name: ""
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/function-sent/invalid-syntax/input.js"
 										identifierName: ""
 										end: Object {
 											column: 22
@@ -233,7 +233,7 @@ JSRoot {
 
 ```
 
- input.js:2:21 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/function-sent/invalid-syntax/input.js:2:21 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token
 

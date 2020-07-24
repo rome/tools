@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/literal-boolean/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/literal-boolean/input.ts"
 		end: Object {
 			column: 0
 			index: 29
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/literal-boolean/input.ts"
 				end: Object {
 					column: 13
 					index: 13
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/literal-boolean/input.ts"
 					end: Object {
 						column: 13
 						index: 13
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x1"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/literal-boolean/input.ts"
 								end: Object {
 									column: 12
 									index: 12
@@ -81,7 +81,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/literal-boolean/input.ts"
 									end: Object {
 										column: 12
 										index: 12
@@ -96,7 +96,7 @@ JSRoot {
 								typeAnnotation: TSBooleanLiteralTypeAnnotation {
 									value: true
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/literal-boolean/input.ts"
 										end: Object {
 											column: 12
 											index: 12
@@ -113,7 +113,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/literal-boolean/input.ts"
 							end: Object {
 								column: 12
 								index: 12
@@ -131,7 +131,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/literal-boolean/input.ts"
 				end: Object {
 					column: 14
 					index: 28
@@ -146,7 +146,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/literal-boolean/input.ts"
 					end: Object {
 						column: 14
 						index: 28
@@ -163,7 +163,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x2"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/literal-boolean/input.ts"
 								end: Object {
 									column: 13
 									index: 27
@@ -178,7 +178,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/literal-boolean/input.ts"
 									end: Object {
 										column: 13
 										index: 27
@@ -193,7 +193,7 @@ JSRoot {
 								typeAnnotation: TSBooleanLiteralTypeAnnotation {
 									value: false
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/literal-boolean/input.ts"
 										end: Object {
 											column: 13
 											index: 27
@@ -210,7 +210,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/literal-boolean/input.ts"
 							end: Object {
 								column: 13
 								index: 27

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/categorized/invalid-assignment-pattern-1/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/categorized/invalid-assignment-pattern-1/input.js"
 		end: Object {
 			column: 11
 			index: 11
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Invalid parenthesized binding"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/categorized/invalid-assignment-pattern-1/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/invalid-assignment-pattern-1/input.js"
 				end: Object {
 					column: 11
 					index: 11
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/invalid-assignment-pattern-1/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -88,7 +88,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "t"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/invalid-assignment-pattern-1/input.js"
 						identifierName: "t"
 						end: Object {
 							column: 11
@@ -105,7 +105,7 @@ JSRoot {
 				left: JSAssignmentAssignmentPattern {
 					operator: "="
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/invalid-assignment-pattern-1/input.js"
 						end: Object {
 							column: 6
 							index: 6
@@ -120,7 +120,7 @@ JSRoot {
 					left: JSAssignmentIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/invalid-assignment-pattern-1/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 2
@@ -138,7 +138,7 @@ JSRoot {
 						value: 1
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/invalid-assignment-pattern-1/input.js"
 							end: Object {
 								column: 6
 								index: 6
@@ -162,7 +162,7 @@ JSRoot {
 
 ```
 
- input.js:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/categorized/invalid-assignment-pattern-1/input.js:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid parenthesized binding
 

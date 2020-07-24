@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/automatic-semicolon-insertion/migrated_0002/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/automatic-semicolon-insertion/migrated_0002/input.js"
 		end: Object {
 			column: 0
 			index: 21
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " comment "
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/automatic-semicolon-insertion/migrated_0002/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -52,7 +52,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/automatic-semicolon-insertion/migrated_0002/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -67,7 +67,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/automatic-semicolon-insertion/migrated_0002/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -85,7 +85,7 @@ JSRoot {
 							name: "x"
 							trailingComments: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/automatic-semicolon-insertion/migrated_0002/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 5
@@ -102,7 +102,7 @@ JSRoot {
 						init: undefined
 						trailingComments: Array ["0"]
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/automatic-semicolon-insertion/migrated_0002/input.js"
 							end: Object {
 								column: 5
 								index: 5

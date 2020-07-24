@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
 		end: Object {
 			column: 0
 			index: 47
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSImportCall {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -87,7 +87,7 @@ JSRoot {
 				argument: JSStringLiteral {
 					value: "foo.json"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -105,7 +105,7 @@ JSRoot {
 		JSBlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
 				end: Object {
 					column: 45
 					index: 45
@@ -120,7 +120,7 @@ JSRoot {
 			body: Array [
 				JSWithStatement {
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
 						end: Object {
 							column: 43
 							index: 43
@@ -135,7 +135,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "INVALID_PLACEHOLDER"
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
 							end: Object {
 								column: 26
 								index: 26
@@ -151,7 +151,7 @@ JSRoot {
 					body: JSBlockStatement {
 						directives: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
 							end: Object {
 								column: 43
 								index: 43
@@ -166,7 +166,7 @@ JSRoot {
 						body: Array [
 							JSLabeledStatement {
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
 									end: Object {
 										column: 41
 										index: 41
@@ -181,7 +181,7 @@ JSRoot {
 								label: JSIdentifier {
 									name: "type"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
 										identifierName: "type"
 										end: Object {
 											column: 33
@@ -197,7 +197,7 @@ JSRoot {
 								}
 								body: JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
 										end: Object {
 											column: 41
 											index: 41
@@ -212,7 +212,7 @@ JSRoot {
 									expression: JSStringLiteral {
 										value: "json"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
 											end: Object {
 												column: 41
 												index: 41
@@ -234,7 +234,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
 				end: Object {
 					column: 46
 					index: 46
@@ -249,7 +249,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
 					end: Object {
 						column: 46
 						index: 46
@@ -271,7 +271,7 @@ JSRoot {
 
 ```
 
- input.js:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/module-attributes/dynamic-import-with-valid-syntax/input.js:1:17 parse/js ━━━━━━━━━━━━
 
   ✖ Trailing comma is disallowed inside import(...) arguments
 

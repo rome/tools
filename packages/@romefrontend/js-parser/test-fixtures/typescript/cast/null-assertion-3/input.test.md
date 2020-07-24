@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/cast/null-assertion-3/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/cast/null-assertion-3/input.ts"
 		end: Object {
 			column: 0
 			index: 18
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/null-assertion-3/input.ts"
 				end: Object {
 					column: 17
 					index: 17
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/null-assertion-3/input.ts"
 					end: Object {
 						column: 17
 						index: 17
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/null-assertion-3/input.ts"
 								identifierName: "x"
 								end: Object {
 									column: 7
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/null-assertion-3/input.ts"
 							end: Object {
 								column: 16
 								index: 16
@@ -95,7 +95,7 @@ JSRoot {
 						}
 						init: TSNonNullExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/null-assertion-3/input.ts"
 								end: Object {
 									column: 16
 									index: 16
@@ -110,7 +110,7 @@ JSRoot {
 							expression: JSCallExpression {
 								arguments: Array []
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/null-assertion-3/input.ts"
 									end: Object {
 										column: 15
 										index: 15
@@ -125,7 +125,7 @@ JSRoot {
 								callee: JSReferenceIdentifier {
 									name: "foo"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/cast/null-assertion-3/input.ts"
 										identifierName: "foo"
 										end: Object {
 											column: 13

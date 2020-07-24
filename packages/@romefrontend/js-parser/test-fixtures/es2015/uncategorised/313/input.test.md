@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/313/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/313/input.js"
 		end: Object {
 			column: 27
 			index: 27
@@ -35,7 +35,7 @@ JSRoot {
 		JSTryStatement {
 			finalizer: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/313/input.js"
 				end: Object {
 					column: 27
 					index: 27
@@ -51,7 +51,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/313/input.js"
 					end: Object {
 						column: 6
 						index: 6
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			handler: JSCatchClause {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/313/input.js"
 					end: Object {
 						column: 27
 						index: 27
@@ -82,7 +82,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/313/input.js"
 						end: Object {
 							column: 27
 							index: 27
@@ -98,7 +98,7 @@ JSRoot {
 				param: JSBindingObjectPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/313/input.js"
 						end: Object {
 							column: 23
 							index: 23
@@ -116,7 +116,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "message"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/313/input.js"
 										identifierName: "message"
 										end: Object {
 											column: 22
@@ -131,7 +131,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/313/input.js"
 									end: Object {
 										column: 22
 										index: 22
@@ -147,7 +147,7 @@ JSRoot {
 							value: JSBindingIdentifier {
 								name: "message"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/313/input.js"
 									identifierName: "message"
 									end: Object {
 										column: 22
@@ -162,7 +162,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/313/input.js"
 								end: Object {
 									column: 22
 									index: 22

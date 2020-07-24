@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/statement-iteration/migrated_0014/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/statement-iteration/migrated_0014/input.js"
 		end: Object {
 			column: 0
 			index: 21
@@ -35,7 +35,7 @@ JSRoot {
 		JSForStatement {
 			update: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/statement-iteration/migrated_0014/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -49,7 +49,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-iteration/migrated_0014/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -65,7 +65,7 @@ JSRoot {
 			init: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-iteration/migrated_0014/input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -80,7 +80,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/statement-iteration/migrated_0014/input.js"
 						identifierName: "x"
 						end: Object {
 							column: 5
@@ -98,7 +98,7 @@ JSRoot {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/statement-iteration/migrated_0014/input.js"
 						end: Object {
 							column: 9
 							index: 9
@@ -115,7 +115,7 @@ JSRoot {
 			test: JSBinaryExpression {
 				operator: "<"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-iteration/migrated_0014/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -130,7 +130,7 @@ JSRoot {
 				left: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/statement-iteration/migrated_0014/input.js"
 						identifierName: "x"
 						end: Object {
 							column: 12
@@ -148,7 +148,7 @@ JSRoot {
 					value: 42
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/statement-iteration/migrated_0014/input.js"
 						end: Object {
 							column: 17
 							index: 17

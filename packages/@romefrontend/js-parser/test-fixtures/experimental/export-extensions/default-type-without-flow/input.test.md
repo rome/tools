@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/export-extensions/default-type-without-flow/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/export-extensions/default-type-without-flow/input.js"
 		end: Object {
 			column: 0
 			index: 25
@@ -37,7 +37,7 @@ JSRoot {
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/default-type-without-flow/input.js"
 				end: Object {
 					column: 24
 					index: 24
@@ -52,7 +52,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "test"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/default-type-without-flow/input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -67,7 +67,7 @@ JSRoot {
 			}
 			defaultSpecifier: JSExportDefaultSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/default-type-without-flow/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -82,7 +82,7 @@ JSRoot {
 				exported: JSIdentifier {
 					name: "type"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/export-extensions/default-type-without-flow/input.js"
 						identifierName: "type"
 						end: Object {
 							column: 11

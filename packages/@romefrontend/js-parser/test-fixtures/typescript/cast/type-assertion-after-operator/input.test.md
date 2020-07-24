@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/cast/type-assertion-after-operator/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/cast/type-assertion-after-operator/input.ts"
 		end: Object {
 			column: 0
 			index: 16
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/type-assertion-after-operator/input.ts"
 				end: Object {
 					column: 15
 					index: 15
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "+"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/type-assertion-after-operator/input.ts"
 					end: Object {
 						column: 14
 						index: 14
@@ -65,7 +65,7 @@ JSRoot {
 					value: 1
 					format: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/type-assertion-after-operator/input.ts"
 						end: Object {
 							column: 1
 							index: 1
@@ -80,7 +80,7 @@ JSRoot {
 				}
 				right: TSTypeAssertion {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/type-assertion-after-operator/input.ts"
 						end: Object {
 							column: 14
 							index: 14
@@ -94,7 +94,7 @@ JSRoot {
 					}
 					typeAnnotation: TSNumberKeywordTypeAnnotation {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/type-assertion-after-operator/input.ts"
 							end: Object {
 								column: 11
 								index: 11
@@ -111,7 +111,7 @@ JSRoot {
 						value: 1
 						format: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/type-assertion-after-operator/input.ts"
 							end: Object {
 								column: 14
 								index: 14

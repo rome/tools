@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/for-of/bare-initializer/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/for-of/bare-initializer/input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Not a valid assignment target"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/for-of/bare-initializer/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/for-of/bare-initializer/input.js"
 				end: Object {
 					column: 6
 					index: 6
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-of/bare-initializer/input.js"
 					end: Object {
 						column: 6
 						index: 6
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-of/bare-initializer/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 5
@@ -106,7 +106,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/for-of/bare-initializer/input.js"
 							end: Object {
 								column: 5
 								index: 5
@@ -125,7 +125,7 @@ JSRoot {
 		JSForOfStatement {
 			await: false
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/for-of/bare-initializer/input.js"
 				end: Object {
 					column: 18
 					index: 25
@@ -139,7 +139,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-of/bare-initializer/input.js"
 					end: Object {
 						column: 18
 						index: 25
@@ -155,7 +155,7 @@ JSRoot {
 			left: JSAssignmentIdentifier {
 				name: "X"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-of/bare-initializer/input.js"
 					end: Object {
 						column: 10
 						index: 17
@@ -171,7 +171,7 @@ JSRoot {
 			right: JSObjectExpression {
 				properties: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-of/bare-initializer/input.js"
 					end: Object {
 						column: 16
 						index: 23
@@ -193,7 +193,7 @@ JSRoot {
 
 ```
 
- input.js:2:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/for-of/bare-initializer/input.js:2:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Not a valid assignment target
 

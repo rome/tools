@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/98/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/98/input.js"
 		end: Object {
 			column: 32
 			index: 32
@@ -37,7 +37,7 @@ JSRoot {
 			importKind: undefined
 			namedSpecifiers: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/98/input.js"
 				end: Object {
 					column: 32
 					index: 32
@@ -52,7 +52,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "crypto"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/98/input.js"
 					end: Object {
 						column: 32
 						index: 32
@@ -67,7 +67,7 @@ JSRoot {
 			}
 			namespaceSpecifier: JSImportNamespaceSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/98/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -83,7 +83,7 @@ JSRoot {
 					name: JSBindingIdentifier {
 						name: "crypto"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/98/input.js"
 							identifierName: "crypto"
 							end: Object {
 								column: 18
@@ -99,7 +99,7 @@ JSRoot {
 					}
 					importKind: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/98/input.js"
 						end: Object {
 							column: 18
 							index: 18

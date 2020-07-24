@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/indexed/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/indexed/input.ts"
 		end: Object {
 			column: 0
 			index: 13
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/indexed/input.ts"
 				end: Object {
 					column: 12
 					index: 12
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/indexed/input.ts"
 					end: Object {
 						column: 12
 						index: 12
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/indexed/input.ts"
 								end: Object {
 									column: 11
 									index: 11
@@ -81,7 +81,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/indexed/input.ts"
 									end: Object {
 										column: 11
 										index: 11
@@ -95,7 +95,7 @@ JSRoot {
 								}
 								typeAnnotation: TSIndexedAccessType {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/indexed/input.ts"
 										end: Object {
 											column: 11
 											index: 11
@@ -110,7 +110,7 @@ JSRoot {
 									indexType: TSTypeReference {
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/indexed/input.ts"
 											end: Object {
 												column: 10
 												index: 10
@@ -125,7 +125,7 @@ JSRoot {
 										typeName: JSReferenceIdentifier {
 											name: "K"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/indexed/input.ts"
 												identifierName: "K"
 												end: Object {
 													column: 10
@@ -143,7 +143,7 @@ JSRoot {
 									objectType: TSTypeReference {
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/indexed/input.ts"
 											end: Object {
 												column: 8
 												index: 8
@@ -158,7 +158,7 @@ JSRoot {
 										typeName: JSReferenceIdentifier {
 											name: "T"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/indexed/input.ts"
 												identifierName: "T"
 												end: Object {
 													column: 8
@@ -178,7 +178,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/indexed/input.ts"
 							end: Object {
 								column: 11
 								index: 11

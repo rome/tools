@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/309/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/309/input.js"
 		end: Object {
 			column: 18
 			index: 52
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " Multiline\nComment "
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/309/input.js"
 				end: Object {
 					column: 10
 					index: 44
@@ -52,7 +52,7 @@ JSRoot {
 	body: Array [
 		JSWhileStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/309/input.js"
 				end: Object {
 					column: 18
 					index: 52
@@ -67,7 +67,7 @@ JSRoot {
 			test: JSBooleanLiteral {
 				value: true
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/309/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -83,7 +83,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/309/input.js"
 					end: Object {
 						column: 18
 						index: 52
@@ -100,7 +100,7 @@ JSRoot {
 						label: undefined
 						trailingComments: Array ["0"]
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/309/input.js"
 							end: Object {
 								column: 20
 								index: 20
@@ -116,7 +116,7 @@ JSRoot {
 					JSExpressionStatement {
 						leadingComments: Array ["0"]
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/309/input.js"
 							end: Object {
 								column: 16
 								index: 50
@@ -132,7 +132,7 @@ JSRoot {
 							name: "there"
 							leadingComments: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/309/input.js"
 								identifierName: "there"
 								end: Object {
 									column: 15

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/454/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/454/input.js"
 		end: Object {
 			column: 6
 			index: 6
@@ -35,7 +35,7 @@ JSRoot {
 		JSReturnStatement {
 			argument: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/454/input.js"
 				end: Object {
 					column: 6
 					index: 6

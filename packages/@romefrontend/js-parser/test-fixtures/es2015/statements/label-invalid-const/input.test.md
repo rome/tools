@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/statements/label-invalid-const/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/statements/label-invalid-const/input.js"
 		end: Object {
 			column: 0
 			index: 23
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Lexical declaration cannot appear in a single-statement context"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/statements/label-invalid-const/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSLabeledStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/statements/label-invalid-const/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -73,7 +73,7 @@ JSRoot {
 			label: JSIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/statements/label-invalid-const/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 3
@@ -89,7 +89,7 @@ JSRoot {
 			}
 			body: JSVariableDeclarationStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/statements/label-invalid-const/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -104,7 +104,7 @@ JSRoot {
 				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/statements/label-invalid-const/input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -121,7 +121,7 @@ JSRoot {
 							id: JSBindingIdentifier {
 								name: "bar"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/statements/label-invalid-const/input.js"
 									identifierName: "bar"
 									end: Object {
 										column: 14
@@ -136,7 +136,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/statements/label-invalid-const/input.js"
 								end: Object {
 									column: 21
 									index: 21
@@ -150,7 +150,7 @@ JSRoot {
 							}
 							init: JSNullLiteral {
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/statements/label-invalid-const/input.js"
 									end: Object {
 										column: 21
 										index: 21
@@ -176,7 +176,7 @@ JSRoot {
 
 ```
 
- input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/statements/label-invalid-const/input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Lexical declaration cannot appear in a single-statement context
 

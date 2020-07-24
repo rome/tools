@@ -12,14 +12,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/85/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/85/input.js"
 		end: Object {
 			column: 7
 			index: 7
@@ -35,7 +35,7 @@ JSRoot {
 		JSDirective {
 			value: "Hello"
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/85/input.js"
 				end: Object {
 					column: 7
 					index: 7

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/arrow-function/async-await-null/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/arrow-function/async-await-null/input.ts"
 		end: Object {
 			column: 0
 			index: 27
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/arrow-function/async-await-null/input.ts"
 				end: Object {
 					column: 26
 					index: 26
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/arrow-function/async-await-null/input.ts"
 					end: Object {
 						column: 25
 						index: 25
@@ -62,7 +62,7 @@ JSRoot {
 				}
 				body: JSAwaitExpression {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/async-await-null/input.ts"
 						end: Object {
 							column: 25
 							index: 25
@@ -76,7 +76,7 @@ JSRoot {
 					}
 					argument: JSNullLiteral {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/arrow-function/async-await-null/input.ts"
 							end: Object {
 								column: 25
 								index: 25
@@ -98,7 +98,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/async-await-null/input.ts"
 						end: Object {
 							column: 14
 							index: 14
@@ -112,7 +112,7 @@ JSRoot {
 					}
 					typeParameters: TSTypeParameterDeclaration {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/arrow-function/async-await-null/input.ts"
 							end: Object {
 								column: 9
 								index: 9
@@ -130,7 +130,7 @@ JSRoot {
 								constraint: undefined
 								default: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/arrow-function/async-await-null/input.ts"
 									end: Object {
 										column: 8
 										index: 8

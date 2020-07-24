@@ -12,7 +12,7 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.tsx"
+	filename: "typescript/regression/less-than-edge-case/input.tsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
@@ -22,7 +22,7 @@ JSRoot {
 		"jsx"
 	]
 	loc: Object {
-		filename: "input.tsx"
+		filename: "typescript/regression/less-than-edge-case/input.tsx"
 		end: Object {
 			column: 1
 			index: 58
@@ -37,7 +37,7 @@ JSRoot {
 	body: Array [
 		JSForStatement {
 			loc: Object {
-				filename: "input.tsx"
+				filename: "typescript/regression/less-than-edge-case/input.tsx"
 				end: Object {
 					column: 1
 					index: 58
@@ -53,7 +53,7 @@ JSRoot {
 				operator: "++"
 				prefix: false
 				loc: Object {
-					filename: "input.tsx"
+					filename: "typescript/regression/less-than-edge-case/input.tsx"
 					end: Object {
 						column: 43
 						index: 43
@@ -68,7 +68,7 @@ JSRoot {
 				argument: JSReferenceIdentifier {
 					name: "i"
 					loc: Object {
-						filename: "input.tsx"
+						filename: "typescript/regression/less-than-edge-case/input.tsx"
 						identifierName: "i"
 						end: Object {
 							column: 41
@@ -86,7 +86,7 @@ JSRoot {
 			init: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.tsx"
+					filename: "typescript/regression/less-than-edge-case/input.tsx"
 					end: Object {
 						column: 14
 						index: 14
@@ -103,7 +103,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "i"
 							loc: Object {
-								filename: "input.tsx"
+								filename: "typescript/regression/less-than-edge-case/input.tsx"
 								identifierName: "i"
 								end: Object {
 									column: 10
@@ -118,7 +118,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.tsx"
+							filename: "typescript/regression/less-than-edge-case/input.tsx"
 							end: Object {
 								column: 14
 								index: 14
@@ -134,7 +134,7 @@ JSRoot {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: "input.tsx"
+								filename: "typescript/regression/less-than-edge-case/input.tsx"
 								end: Object {
 									column: 14
 									index: 14
@@ -153,7 +153,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.tsx"
+					filename: "typescript/regression/less-than-edge-case/input.tsx"
 					end: Object {
 						column: 1
 						index: 58
@@ -168,7 +168,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.tsx"
+							filename: "typescript/regression/less-than-edge-case/input.tsx"
 							end: Object {
 								column: 9
 								index: 56
@@ -182,7 +182,7 @@ JSRoot {
 						}
 						expression: JSCallExpression {
 							loc: Object {
-								filename: "input.tsx"
+								filename: "typescript/regression/less-than-edge-case/input.tsx"
 								end: Object {
 									column: 8
 									index: 55
@@ -197,7 +197,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.tsx"
+									filename: "typescript/regression/less-than-edge-case/input.tsx"
 									identifierName: "x"
 									end: Object {
 										column: 5
@@ -215,7 +215,7 @@ JSRoot {
 								JSReferenceIdentifier {
 									name: "i"
 									loc: Object {
-										filename: "input.tsx"
+										filename: "typescript/regression/less-than-edge-case/input.tsx"
 										identifierName: "i"
 										end: Object {
 											column: 7
@@ -237,7 +237,7 @@ JSRoot {
 			test: JSBinaryExpression {
 				operator: "<"
 				loc: Object {
-					filename: "input.tsx"
+					filename: "typescript/regression/less-than-edge-case/input.tsx"
 					end: Object {
 						column: 38
 						index: 38
@@ -252,7 +252,7 @@ JSRoot {
 				left: JSReferenceIdentifier {
 					name: "i"
 					loc: Object {
-						filename: "input.tsx"
+						filename: "typescript/regression/less-than-edge-case/input.tsx"
 						identifierName: "i"
 						end: Object {
 							column: 17
@@ -268,7 +268,7 @@ JSRoot {
 				}
 				right: JSMemberExpression {
 					loc: Object {
-						filename: "input.tsx"
+						filename: "typescript/regression/less-than-edge-case/input.tsx"
 						end: Object {
 							column: 38
 							index: 38
@@ -284,7 +284,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "bar"
 							loc: Object {
-								filename: "input.tsx"
+								filename: "typescript/regression/less-than-edge-case/input.tsx"
 								identifierName: "bar"
 								end: Object {
 									column: 38
@@ -299,7 +299,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.tsx"
+							filename: "typescript/regression/less-than-edge-case/input.tsx"
 							identifierName: "bar"
 							end: Object {
 								column: 38
@@ -315,7 +315,7 @@ JSRoot {
 					}
 					object: JSCallExpression {
 						loc: Object {
-							filename: "input.tsx"
+							filename: "typescript/regression/less-than-edge-case/input.tsx"
 							end: Object {
 								column: 34
 								index: 34
@@ -330,7 +330,7 @@ JSRoot {
 						callee: JSReferenceIdentifier {
 							name: "require"
 							loc: Object {
-								filename: "input.tsx"
+								filename: "typescript/regression/less-than-edge-case/input.tsx"
 								identifierName: "require"
 								end: Object {
 									column: 27
@@ -348,7 +348,7 @@ JSRoot {
 							JSStringLiteral {
 								value: "foo"
 								loc: Object {
-									filename: "input.tsx"
+									filename: "typescript/regression/less-than-edge-case/input.tsx"
 									end: Object {
 										column: 33
 										index: 33

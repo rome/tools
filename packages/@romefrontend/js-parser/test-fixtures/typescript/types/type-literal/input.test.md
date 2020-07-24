@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/type-literal/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/type-literal/input.ts"
 		end: Object {
 			column: 0
 			index: 121
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " Type literals have the same body syntax as interfaces, so see `interface` directory for that."
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/type-literal/input.ts"
 				end: Object {
 					column: 96
 					index: 120
@@ -53,7 +53,7 @@ JSRoot {
 		JSVariableDeclarationStatement {
 			trailingComments: Array ["0"]
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/type-literal/input.ts"
 				end: Object {
 					column: 23
 					index: 23
@@ -69,7 +69,7 @@ JSRoot {
 				kind: "let"
 				trailingComments: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/type-literal/input.ts"
 					end: Object {
 						column: 23
 						index: 23
@@ -86,7 +86,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "obj"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/type-literal/input.ts"
 								end: Object {
 									column: 22
 									index: 22
@@ -101,7 +101,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/type-literal/input.ts"
 									end: Object {
 										column: 22
 										index: 22
@@ -115,7 +115,7 @@ JSRoot {
 								}
 								typeAnnotation: TSObjectTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/type-literal/input.ts"
 										end: Object {
 											column: 22
 											index: 22
@@ -133,7 +133,7 @@ JSRoot {
 												value: JSIdentifier {
 													name: "x"
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/types/type-literal/input.ts"
 														identifierName: "x"
 														end: Object {
 															column: 12
@@ -148,7 +148,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/types/type-literal/input.ts"
 													end: Object {
 														column: 12
 														index: 12
@@ -164,7 +164,7 @@ JSRoot {
 											optional: false
 											readonly: false
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/type-literal/input.ts"
 												end: Object {
 													column: 20
 													index: 20
@@ -178,7 +178,7 @@ JSRoot {
 											}
 											typeAnnotation: TSNumberKeywordTypeAnnotation {
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/types/type-literal/input.ts"
 													end: Object {
 														column: 20
 														index: 20
@@ -198,7 +198,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/type-literal/input.ts"
 							end: Object {
 								column: 22
 								index: 22

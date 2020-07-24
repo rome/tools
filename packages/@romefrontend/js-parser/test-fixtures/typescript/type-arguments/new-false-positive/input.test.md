@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/type-arguments/new-false-positive/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/type-arguments/new-false-positive/input.ts"
 		end: Object {
 			column: 0
 			index: 11
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/type-arguments/new-false-positive/input.ts"
 				end: Object {
 					column: 10
 					index: 10
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "<"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/type-arguments/new-false-positive/input.ts"
 					end: Object {
 						column: 9
 						index: 9
@@ -64,7 +64,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "T"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/type-arguments/new-false-positive/input.ts"
 						identifierName: "T"
 						end: Object {
 							column: 9
@@ -83,7 +83,7 @@ JSRoot {
 					optional: undefined
 					typeArguments: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/type-arguments/new-false-positive/input.ts"
 						end: Object {
 							column: 5
 							index: 5
@@ -98,7 +98,7 @@ JSRoot {
 					callee: JSReferenceIdentifier {
 						name: "A"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/type-arguments/new-false-positive/input.ts"
 							identifierName: "A"
 							end: Object {
 								column: 5

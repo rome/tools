@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
 		end: Object {
 			column: 13
 			index: 13
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Complex binding patterns require an initialization value"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
 				end: Object {
 					column: 6
 					index: 6
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
 					end: Object {
 						column: 6
 						index: 6
@@ -91,7 +91,7 @@ JSRoot {
 							properties: Array []
 							rest: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
 								end: Object {
 									column: 6
 									index: 6
@@ -106,7 +106,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
 							end: Object {
 								column: 6
 								index: 6
@@ -124,7 +124,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
 				end: Object {
 					column: 9
 					index: 9
@@ -140,7 +140,7 @@ JSRoot {
 				operator: "!"
 				prefix: true
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
 					end: Object {
 						column: 9
 						index: 9
@@ -155,7 +155,7 @@ JSRoot {
 				argument: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
 						end: Object {
 							column: 9
 							index: 9
@@ -174,7 +174,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
 				end: Object {
 					column: 12
 					index: 12
@@ -189,7 +189,7 @@ JSRoot {
 		}
 		JSEmptyStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
 				end: Object {
 					column: 13
 					index: 13
@@ -210,7 +210,7 @@ JSRoot {
 
 ```
 
- input.ts:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/variable-declarator/definite-assignment-not-allowed/input.ts:1:6 parse/js ━━━━━━━━━━━━━━
 
   ✖ Complex binding patterns require an initialization value
 

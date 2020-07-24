@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0210/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0210/input.js"
 		end: Object {
 			column: 0
 			index: 57
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "eval is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0210/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "hello"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0210/input.js"
 					identifierName: "hello"
 					end: Object {
 						column: 14
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0210/input.js"
 				end: Object {
 					column: 56
 					index: 56
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0210/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -112,7 +112,7 @@ JSRoot {
 			}
 			body: JSBlockStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0210/input.js"
 					end: Object {
 						column: 56
 						index: 56
@@ -128,7 +128,7 @@ JSRoot {
 					JSDirective {
 						value: "use strict"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0210/input.js"
 							end: Object {
 								column: 31
 								index: 31
@@ -145,7 +145,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0210/input.js"
 							end: Object {
 								column: 54
 								index: 54
@@ -159,7 +159,7 @@ JSRoot {
 						}
 						expression: JSObjectExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0210/input.js"
 								end: Object {
 									column: 52
 									index: 52
@@ -178,7 +178,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "s"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/invalid-syntax/migrated_0210/input.js"
 												identifierName: "s"
 												end: Object {
 													column: 40
@@ -193,7 +193,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/invalid-syntax/migrated_0210/input.js"
 											end: Object {
 												column: 40
 												index: 40
@@ -207,7 +207,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/invalid-syntax/migrated_0210/input.js"
 										end: Object {
 											column: 50
 											index: 50
@@ -223,7 +223,7 @@ JSRoot {
 										body: Array []
 										directives: Array []
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/invalid-syntax/migrated_0210/input.js"
 											end: Object {
 												column: 50
 												index: 50
@@ -245,7 +245,7 @@ JSRoot {
 										thisType: undefined
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/invalid-syntax/migrated_0210/input.js"
 											end: Object {
 												column: 46
 												index: 46
@@ -261,7 +261,7 @@ JSRoot {
 											JSBindingIdentifier {
 												name: "eval"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/invalid-syntax/migrated_0210/input.js"
 													identifierName: "eval"
 													end: Object {
 														column: 45
@@ -278,7 +278,7 @@ JSRoot {
 													optional: undefined
 													typeAnnotation: undefined
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/invalid-syntax/migrated_0210/input.js"
 														end: Object {
 															column: 45
 															index: 45
@@ -309,7 +309,7 @@ JSRoot {
 
 ```
 
- input.js:1:41 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0210/input.js:1:41 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ eval is a reserved word
 

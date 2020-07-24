@@ -10,14 +10,14 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "input.js"
+	filename: "es2015/uncategorised/280/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/280/input.js"
 		end: Object {
 			column: 36
 			index: 36
@@ -33,7 +33,7 @@ JSRoot {
 		JSDirective {
 			value: "use strict"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/280/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -51,7 +51,7 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/280/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -75,7 +75,7 @@ JSRoot {
 					}
 					frame {
 						location: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/280/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 31
@@ -98,7 +98,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/280/input.js"
 					identifierName: "x"
 					end: Object {
 						column: 24
@@ -113,7 +113,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/280/input.js"
 				end: Object {
 					column: 36
 					index: 36
@@ -129,7 +129,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/280/input.js"
 					end: Object {
 						column: 36
 						index: 36
@@ -151,7 +151,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/280/input.js"
 					end: Object {
 						column: 34
 						index: 34
@@ -167,7 +167,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/280/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 26
@@ -184,7 +184,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/280/input.js"
 								end: Object {
 									column: 26
 									index: 26
@@ -201,7 +201,7 @@ JSRoot {
 					JSBindingObjectPattern {
 						rest: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/280/input.js"
 							end: Object {
 								column: 33
 								index: 33
@@ -217,7 +217,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/280/input.js"
 								end: Object {
 									column: 33
 									index: 33
@@ -236,7 +236,7 @@ JSRoot {
 									value: JSIdentifier {
 										name: "a"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/280/input.js"
 											identifierName: "a"
 											end: Object {
 												column: 31
@@ -251,7 +251,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/280/input.js"
 										end: Object {
 											column: 31
 											index: 31
@@ -267,7 +267,7 @@ JSRoot {
 								value: JSBindingIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/280/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 31
@@ -282,7 +282,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/280/input.js"
 									end: Object {
 										column: 31
 										index: 31
@@ -308,7 +308,7 @@ JSRoot {
 
 ```
 
- input.js:1:30 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/280/input.js:1:30 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Argument a name clash in strict mode
 

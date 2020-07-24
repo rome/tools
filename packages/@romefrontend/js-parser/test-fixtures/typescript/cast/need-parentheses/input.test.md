@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/cast/need-parentheses/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/cast/need-parentheses/input.ts"
 		end: Object {
 			column: 0
 			index: 29
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/need-parentheses/input.ts"
 				end: Object {
 					column: 10
 					index: 10
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/need-parentheses/input.ts"
 					end: Object {
 						column: 9
 						index: 9
@@ -64,7 +64,7 @@ JSRoot {
 					value: JSIdentifier {
 						name: "y"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/need-parentheses/input.ts"
 							identifierName: "y"
 							end: Object {
 								column: 9
@@ -79,7 +79,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/need-parentheses/input.ts"
 						identifierName: "y"
 						end: Object {
 							column: 9
@@ -95,7 +95,7 @@ JSRoot {
 				}
 				object: TSTypeAssertion {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/need-parentheses/input.ts"
 						end: Object {
 							column: 6
 							index: 6
@@ -110,7 +110,7 @@ JSRoot {
 					expression: JSReferenceIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/need-parentheses/input.ts"
 							identifierName: "x"
 							end: Object {
 								column: 6
@@ -127,7 +127,7 @@ JSRoot {
 					typeAnnotation: TSTypeReference {
 						typeParameters: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/need-parentheses/input.ts"
 							end: Object {
 								column: 3
 								index: 3
@@ -142,7 +142,7 @@ JSRoot {
 						typeName: JSReferenceIdentifier {
 							name: "T"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/need-parentheses/input.ts"
 								identifierName: "T"
 								end: Object {
 									column: 3
@@ -162,7 +162,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/need-parentheses/input.ts"
 				end: Object {
 					column: 11
 					index: 22
@@ -176,7 +176,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/need-parentheses/input.ts"
 					end: Object {
 						column: 10
 						index: 21
@@ -192,7 +192,7 @@ JSRoot {
 					value: JSIdentifier {
 						name: "y"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/need-parentheses/input.ts"
 							identifierName: "y"
 							end: Object {
 								column: 10
@@ -207,7 +207,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/need-parentheses/input.ts"
 						identifierName: "y"
 						end: Object {
 							column: 10
@@ -223,7 +223,7 @@ JSRoot {
 				}
 				object: TSAsExpression {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/need-parentheses/input.ts"
 						end: Object {
 							column: 7
 							index: 18
@@ -238,7 +238,7 @@ JSRoot {
 					expression: JSReferenceIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/need-parentheses/input.ts"
 							identifierName: "x"
 							end: Object {
 								column: 2
@@ -255,7 +255,7 @@ JSRoot {
 					typeAnnotation: TSTypeReference {
 						typeParameters: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/need-parentheses/input.ts"
 							end: Object {
 								column: 7
 								index: 18
@@ -270,7 +270,7 @@ JSRoot {
 						typeName: JSReferenceIdentifier {
 							name: "T"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/need-parentheses/input.ts"
 								identifierName: "T"
 								end: Object {
 									column: 7
@@ -290,7 +290,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/need-parentheses/input.ts"
 				end: Object {
 					column: 5
 					index: 28
@@ -304,7 +304,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/need-parentheses/input.ts"
 					end: Object {
 						column: 4
 						index: 27
@@ -318,7 +318,7 @@ JSRoot {
 				}
 				object: TSNonNullExpression {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/need-parentheses/input.ts"
 						end: Object {
 							column: 2
 							index: 25
@@ -333,7 +333,7 @@ JSRoot {
 					expression: JSReferenceIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/need-parentheses/input.ts"
 							identifierName: "x"
 							end: Object {
 								column: 1
@@ -352,7 +352,7 @@ JSRoot {
 					value: JSIdentifier {
 						name: "y"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/need-parentheses/input.ts"
 							identifierName: "y"
 							end: Object {
 								column: 4
@@ -367,7 +367,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/need-parentheses/input.ts"
 						identifierName: "y"
 						end: Object {
 							column: 4

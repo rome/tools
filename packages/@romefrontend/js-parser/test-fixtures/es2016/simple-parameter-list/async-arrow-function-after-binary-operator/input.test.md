@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
 		end: Object {
 			column: 16
 			index: 16
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "+"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -65,7 +65,7 @@ JSRoot {
 					value: 3
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
 						end: Object {
 							column: 1
 							index: 1
@@ -80,7 +80,7 @@ JSRoot {
 				}
 				right: JSArrowFunctionExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
 						end: Object {
 							column: 16
 							index: 16
@@ -96,7 +96,7 @@ JSRoot {
 						value: 2
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
 							end: Object {
 								column: 16
 								index: 16
@@ -117,7 +117,7 @@ JSRoot {
 						returnType: undefined
 						thisType: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
 							end: Object {
 								column: 14
 								index: 14

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "test262/rest-parameter/object-pattern-empty-with-leading/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "test262/rest-parameter/object-pattern-empty-with-leading/input.js"
 		end: Object {
 			column: 0
 			index: 39
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "emptyWithLeading"
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/object-pattern-empty-with-leading/input.js"
 					identifierName: "emptyWithLeading"
 					end: Object {
 						column: 25
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "test262/rest-parameter/object-pattern-empty-with-leading/input.js"
 				end: Object {
 					column: 38
 					index: 38
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/object-pattern-empty-with-leading/input.js"
 					end: Object {
 						column: 38
 						index: 38
@@ -88,7 +88,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/object-pattern-empty-with-leading/input.js"
 					end: Object {
 						column: 35
 						index: 35
@@ -104,7 +104,7 @@ JSRoot {
 					properties: Array []
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "test262/rest-parameter/object-pattern-empty-with-leading/input.js"
 						end: Object {
 							column: 34
 							index: 34
@@ -120,7 +120,7 @@ JSRoot {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "test262/rest-parameter/object-pattern-empty-with-leading/input.js"
 							end: Object {
 								column: 34
 								index: 34
@@ -138,7 +138,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.js"
+							filename: "test262/rest-parameter/object-pattern-empty-with-leading/input.js"
 							identifierName: "x"
 							end: Object {
 								column: 27
@@ -155,7 +155,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "test262/rest-parameter/object-pattern-empty-with-leading/input.js"
 								end: Object {
 									column: 27
 									index: 27

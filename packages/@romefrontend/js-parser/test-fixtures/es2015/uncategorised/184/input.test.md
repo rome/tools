@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/184/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/184/input.js"
 		end: Object {
 			column: 10
 			index: 10
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/184/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/184/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -64,7 +64,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "b"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/184/input.js"
 						identifierName: "b"
 						end: Object {
 							column: 10
@@ -81,7 +81,7 @@ JSRoot {
 				left: JSAssignmentArrayPattern {
 					elements: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/184/input.js"
 						end: Object {
 							column: 6
 							index: 6
@@ -96,7 +96,7 @@ JSRoot {
 					rest: JSAssignmentIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/184/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 5

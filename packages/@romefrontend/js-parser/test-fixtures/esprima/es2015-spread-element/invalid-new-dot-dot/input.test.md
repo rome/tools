@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-spread-element/invalid-new-dot-dot/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-spread-element/invalid-new-dot-dot/input.js"
 		end: Object {
 			column: 0
 			index: 12
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown start to an new expression argument"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-spread-element/invalid-new-dot-dot/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-spread-element/invalid-new-dot-dot/input.js"
 				end: Object {
 					column: 11
 					index: 11
@@ -74,7 +74,7 @@ JSRoot {
 				optional: undefined
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-spread-element/invalid-new-dot-dot/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -89,7 +89,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "f"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-spread-element/invalid-new-dot-dot/input.js"
 						identifierName: "f"
 						end: Object {
 							column: 5
@@ -106,7 +106,7 @@ JSRoot {
 				arguments: Array [
 					JSMemberExpression {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-spread-element/invalid-new-dot-dot/input.js"
 							end: Object {
 								column: 9
 								index: 9
@@ -121,7 +121,7 @@ JSRoot {
 						object: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-spread-element/invalid-new-dot-dot/input.js"
 								end: Object {
 									column: 7
 									index: 7
@@ -138,7 +138,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "g"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-spread-element/invalid-new-dot-dot/input.js"
 									identifierName: "g"
 									end: Object {
 										column: 9
@@ -153,7 +153,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-spread-element/invalid-new-dot-dot/input.js"
 								identifierName: "g"
 								end: Object {
 									column: 9
@@ -179,7 +179,7 @@ JSRoot {
 
 ```
 
- input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-spread-element/invalid-new-dot-dot/input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an new expression argument
 

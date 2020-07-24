@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 		end: Object {
 			column: 0
 			index: 54
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 				end: Object {
 					column: 2
 					index: 53
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 					end: Object {
 						column: 1
 						index: 52
@@ -92,7 +92,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 						end: Object {
 							column: 11
 							index: 11
@@ -108,7 +108,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 						end: Object {
 							column: 1
 							index: 52
@@ -123,7 +123,7 @@ JSRoot {
 					body: Array [
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 								end: Object {
 									column: 13
 									index: 27
@@ -137,7 +137,7 @@ JSRoot {
 							}
 							expression: JSAwaitExpression {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 									end: Object {
 										column: 12
 										index: 26
@@ -151,7 +151,7 @@ JSRoot {
 								}
 								argument: JSNullLiteral {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 										end: Object {
 											column: 12
 											index: 26
@@ -168,7 +168,7 @@ JSRoot {
 						}
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 								end: Object {
 									column: 13
 									index: 41
@@ -183,7 +183,7 @@ JSRoot {
 							expression: JSCallExpression {
 								arguments: Array []
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 									end: Object {
 										column: 13
 										index: 41
@@ -198,7 +198,7 @@ JSRoot {
 								callee: JSReferenceIdentifier {
 									name: "async"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 										identifierName: "async"
 										end: Object {
 											column: 7
@@ -214,7 +214,7 @@ JSRoot {
 								}
 								typeArguments: TSTypeParameterInstantiation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 										end: Object {
 											column: 11
 											index: 39
@@ -230,7 +230,7 @@ JSRoot {
 										TSTypeReference {
 											typeParameters: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 												end: Object {
 													column: 10
 													index: 38
@@ -245,7 +245,7 @@ JSRoot {
 											typeName: JSReferenceIdentifier {
 												name: "T"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 													identifierName: "T"
 													end: Object {
 														column: 10
@@ -266,7 +266,7 @@ JSRoot {
 						}
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 								end: Object {
 									column: 16
 									index: 44
@@ -281,7 +281,7 @@ JSRoot {
 							expression: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 									end: Object {
 										column: 16
 										index: 44
@@ -297,7 +297,7 @@ JSRoot {
 						}
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 								end: Object {
 									column: 22
 									index: 50
@@ -311,7 +311,7 @@ JSRoot {
 							}
 							expression: JSNullLiteral {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 									end: Object {
 										column: 21
 										index: 49
@@ -337,7 +337,7 @@ JSRoot {
 
 ```
 
- input.ts:3:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/arrow-function/async-generic-after-await/input.ts:3:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

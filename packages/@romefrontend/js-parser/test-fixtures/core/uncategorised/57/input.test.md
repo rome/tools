@@ -12,7 +12,7 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/57/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
@@ -21,7 +21,7 @@ JSRoot {
 	trailingComments: Array []
 	innerComments: Array ["0"]
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/57/input.js"
 		end: Object {
 			column: 0
 			index: 17
@@ -38,7 +38,7 @@ JSRoot {
 			id: "0"
 			value: " Hello, world!"
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/57/input.js"
 				end: Object {
 					column: 16
 					index: 16

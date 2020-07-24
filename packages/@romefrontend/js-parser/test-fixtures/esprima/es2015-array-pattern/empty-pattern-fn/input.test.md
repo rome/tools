@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-array-pattern/empty-pattern-fn/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-array-pattern/empty-pattern-fn/input.js"
 		end: Object {
 			column: 0
 			index: 18
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-array-pattern/empty-pattern-fn/input.js"
 					identifierName: "a"
 					end: Object {
 						column: 10
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-array-pattern/empty-pattern-fn/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-array-pattern/empty-pattern-fn/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -89,7 +89,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-array-pattern/empty-pattern-fn/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -106,7 +106,7 @@ JSRoot {
 						elements: Array []
 						rest: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-array-pattern/empty-pattern-fn/input.js"
 							end: Object {
 								column: 13
 								index: 13
@@ -122,7 +122,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-array-pattern/empty-pattern-fn/input.js"
 								end: Object {
 									column: 13
 									index: 13

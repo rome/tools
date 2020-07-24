@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2018/object-rest-spread/comma-after-spread/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2018/object-rest-spread/comma-after-spread/input.js"
 		end: Object {
 			column: 10
 			index: 10
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2018/object-rest-spread/comma-after-spread/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/object-rest-spread/comma-after-spread/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -63,7 +63,7 @@ JSRoot {
 				properties: Array [
 					JSSpreadProperty {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2018/object-rest-spread/comma-after-spread/input.js"
 							end: Object {
 								column: 6
 								index: 6
@@ -78,7 +78,7 @@ JSRoot {
 						argument: JSReferenceIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/comma-after-spread/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 6

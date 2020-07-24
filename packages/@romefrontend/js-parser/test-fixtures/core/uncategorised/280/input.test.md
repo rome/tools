@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/280/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/280/input.js"
 		end: Object {
 			column: 34
 			index: 34
@@ -35,7 +35,7 @@ JSRoot {
 		JSTryStatement {
 			handler: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/280/input.js"
 				end: Object {
 					column: 34
 					index: 34
@@ -51,7 +51,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/280/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -67,7 +67,7 @@ JSRoot {
 			finalizer: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/280/input.js"
 					end: Object {
 						column: 34
 						index: 34
@@ -82,7 +82,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/280/input.js"
 							end: Object {
 								column: 32
 								index: 32
@@ -96,7 +96,7 @@ JSRoot {
 						}
 						expression: JSCallExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/280/input.js"
 								end: Object {
 									column: 32
 									index: 32
@@ -111,7 +111,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "cleanup"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/280/input.js"
 									identifierName: "cleanup"
 									end: Object {
 										column: 25
@@ -129,7 +129,7 @@ JSRoot {
 								JSReferenceIdentifier {
 									name: "stuff"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/uncategorised/280/input.js"
 										identifierName: "stuff"
 										end: Object {
 											column: 31

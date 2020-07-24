@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/module-namespace/head/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/module-namespace/head/input.ts"
 		end: Object {
 			column: 0
 			index: 60
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "N"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/head/input.ts"
 					identifierName: "N"
 					end: Object {
 						column: 11
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/module-namespace/head/input.ts"
 				end: Object {
 					column: 14
 					index: 14
@@ -66,7 +66,7 @@ JSRoot {
 			body: TSModuleBlock {
 				body: Array []
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/head/input.ts"
 					end: Object {
 						column: 14
 						index: 14
@@ -84,7 +84,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "M"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/head/input.ts"
 					identifierName: "M"
 					end: Object {
 						column: 11
@@ -99,7 +99,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/module-namespace/head/input.ts"
 				end: Object {
 					column: 18
 					index: 33
@@ -115,7 +115,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "N"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/module-namespace/head/input.ts"
 						identifierName: "N"
 						end: Object {
 							column: 13
@@ -130,7 +130,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/head/input.ts"
 					end: Object {
 						column: 18
 						index: 33
@@ -146,7 +146,7 @@ JSRoot {
 					id: JSBindingIdentifier {
 						name: "O"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/module-namespace/head/input.ts"
 							identifierName: "O"
 							end: Object {
 								column: 15
@@ -161,7 +161,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/module-namespace/head/input.ts"
 						end: Object {
 							column: 18
 							index: 33
@@ -176,7 +176,7 @@ JSRoot {
 					body: TSModuleBlock {
 						body: Array []
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/module-namespace/head/input.ts"
 							end: Object {
 								column: 18
 								index: 33
@@ -196,7 +196,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "M"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/head/input.ts"
 					identifierName: "M"
 					end: Object {
 						column: 8
@@ -211,7 +211,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/module-namespace/head/input.ts"
 				end: Object {
 					column: 11
 					index: 45
@@ -226,7 +226,7 @@ JSRoot {
 			body: TSModuleBlock {
 				body: Array []
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/head/input.ts"
 					end: Object {
 						column: 11
 						index: 45
@@ -244,7 +244,7 @@ JSRoot {
 			id: JSStringLiteral {
 				value: "m"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/head/input.ts"
 					end: Object {
 						column: 10
 						index: 56
@@ -259,7 +259,7 @@ JSRoot {
 			}
 			global: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/module-namespace/head/input.ts"
 				end: Object {
 					column: 13
 					index: 59
@@ -274,7 +274,7 @@ JSRoot {
 			body: TSModuleBlock {
 				body: Array []
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/head/input.ts"
 					end: Object {
 						column: 13
 						index: 59

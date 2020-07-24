@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
 		end: Object {
 			column: 0
 			index: 28
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "async"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
 					identifierName: "async"
 					end: Object {
 						column: 10
@@ -90,7 +90,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
 				end: Object {
 					column: 27
 					index: 27
@@ -104,7 +104,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
 					end: Object {
 						column: 27
 						index: 27
@@ -122,7 +122,7 @@ JSRoot {
 					rest: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
 						end: Object {
 							column: 15
 							index: 15
@@ -138,7 +138,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 12
@@ -157,7 +157,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
 						end: Object {
 							column: 27
 							index: 27
@@ -172,7 +172,7 @@ JSRoot {
 					body: Array [
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
 								end: Object {
 									column: 23
 									index: 23
@@ -187,7 +187,7 @@ JSRoot {
 							expression: JSReferenceIdentifier {
 								name: "await"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
 									identifierName: "await"
 									end: Object {
 										column: 23
@@ -204,7 +204,7 @@ JSRoot {
 						}
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
 								end: Object {
 									column: 25
 									index: 25
@@ -219,7 +219,7 @@ JSRoot {
 							expression: JSReferenceIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 25
@@ -246,7 +246,7 @@ JSRoot {
 
 ```
 
- input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/invalid-escape-sequence-arrow/input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

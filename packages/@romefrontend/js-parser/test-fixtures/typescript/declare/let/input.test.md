@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/declare/let/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/declare/let/input.ts"
 		end: Object {
 			column: 0
 			index: 15
@@ -35,7 +35,7 @@ JSRoot {
 		JSVariableDeclarationStatement {
 			declare: true
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/declare/let/input.ts"
 				end: Object {
 					column: 14
 					index: 14
@@ -50,7 +50,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/declare/let/input.ts"
 					end: Object {
 						column: 14
 						index: 14
@@ -67,7 +67,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/declare/let/input.ts"
 								identifierName: "x"
 								end: Object {
 									column: 13
@@ -83,7 +83,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/declare/let/input.ts"
 							end: Object {
 								column: 13
 								index: 13

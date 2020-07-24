@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-properties/arguments/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-properties/arguments/input.js"
 		end: Object {
 			column: 1
 			index: 54
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "'arguments' is not allowed in class field initializer"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/arguments/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/arguments/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 11
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/arguments/input.js"
 				end: Object {
 					column: 1
 					index: 54
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/arguments/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/arguments/input.js"
 					end: Object {
 						column: 1
 						index: 54
@@ -130,7 +130,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "A"
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/arguments/input.js"
 								identifierName: "A"
 								end: Object {
 									column: 9
@@ -145,7 +145,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/arguments/input.js"
 							end: Object {
 								column: 3
 								index: 52
@@ -163,7 +163,7 @@ JSRoot {
 							superTypeParameters: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/arguments/input.js"
 								end: Object {
 									column: 3
 									index: 52
@@ -181,7 +181,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "foo"
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-properties/arguments/input.js"
 												identifierName: "foo"
 												end: Object {
 													column: 7
@@ -196,7 +196,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/arguments/input.js"
 											end: Object {
 												column: 7
 												index: 35
@@ -212,7 +212,7 @@ JSRoot {
 									value: JSReferenceIdentifier {
 										name: "arguments"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/arguments/input.js"
 											identifierName: "arguments"
 											end: Object {
 												column: 19
@@ -229,7 +229,7 @@ JSRoot {
 									definite: undefined
 									typeAnnotation: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-properties/arguments/input.js"
 										end: Object {
 											column: 20
 											index: 48
@@ -254,7 +254,7 @@ JSRoot {
 											line: 3
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/arguments/input.js"
 											end: Object {
 												column: 7
 												index: 35
@@ -282,7 +282,7 @@ JSRoot {
 
 ```
 
- input.js:3:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-properties/arguments/input.js:3:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ 'arguments' is not allowed in class field initializer
 

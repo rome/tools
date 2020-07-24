@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/shorthand/2/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/shorthand/2/input.js"
 		end: Object {
 			column: 0
 			index: 21
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected keyword this"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/shorthand/2/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/shorthand/2/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/shorthand/2/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -90,7 +90,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "get"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/shorthand/2/input.js"
 									identifierName: "get"
 									end: Object {
 										column: 6
@@ -105,7 +105,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/shorthand/2/input.js"
 								end: Object {
 									column: 6
 									index: 6
@@ -121,7 +121,7 @@ JSRoot {
 						value: JSReferenceIdentifier {
 							name: "get"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/shorthand/2/input.js"
 								identifierName: "get"
 								end: Object {
 									column: 6
@@ -136,7 +136,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/shorthand/2/input.js"
 							end: Object {
 								column: 6
 								index: 6
@@ -154,7 +154,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "this"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/shorthand/2/input.js"
 									identifierName: "this"
 									end: Object {
 										column: 12
@@ -169,7 +169,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/shorthand/2/input.js"
 								end: Object {
 									column: 12
 									index: 12
@@ -185,7 +185,7 @@ JSRoot {
 						value: JSReferenceIdentifier {
 							name: "this"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/shorthand/2/input.js"
 								identifierName: "this"
 								end: Object {
 									column: 12
@@ -200,7 +200,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/shorthand/2/input.js"
 							end: Object {
 								column: 12
 								index: 12
@@ -218,7 +218,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "if"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/shorthand/2/input.js"
 									identifierName: "if"
 									end: Object {
 										column: 16
@@ -233,7 +233,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/shorthand/2/input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -249,7 +249,7 @@ JSRoot {
 						value: JSReferenceIdentifier {
 							name: "if"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/shorthand/2/input.js"
 								identifierName: "if"
 								end: Object {
 									column: 16
@@ -264,7 +264,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/shorthand/2/input.js"
 							end: Object {
 								column: 16
 								index: 16
@@ -288,7 +288,7 @@ JSRoot {
 
 ```
 
- input.js:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/shorthand/2/input.js:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected keyword this
 

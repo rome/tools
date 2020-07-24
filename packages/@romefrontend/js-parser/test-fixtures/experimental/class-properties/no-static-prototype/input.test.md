@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-properties/no-static-prototype/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-properties/no-static-prototype/input.js"
 		end: Object {
 			column: 0
 			index: 33
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Classes may not have static property named prototype"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/no-static-prototype/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/no-static-prototype/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/no-static-prototype/input.js"
 				end: Object {
 					column: 1
 					index: 32
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/no-static-prototype/input.js"
 					end: Object {
 						column: 1
 						index: 32
@@ -111,7 +111,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "prototype"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/no-static-prototype/input.js"
 									identifierName: "prototype"
 									end: Object {
 										column: 18
@@ -126,7 +126,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/no-static-prototype/input.js"
 								end: Object {
 									column: 18
 									index: 30
@@ -143,7 +143,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/no-static-prototype/input.js"
 							end: Object {
 								column: 18
 								index: 30
@@ -168,7 +168,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/no-static-prototype/input.js"
 								end: Object {
 									column: 18
 									index: 30
@@ -193,7 +193,7 @@ JSRoot {
 
 ```
 
- input.js:2:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-properties/no-static-prototype/input.js:2:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Classes may not have static property named prototype
 

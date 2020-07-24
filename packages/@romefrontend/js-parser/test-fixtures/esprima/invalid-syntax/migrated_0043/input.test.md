@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0043/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0043/input.js"
 		end: Object {
 			column: 0
 			index: 20
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expecting Unicode escape sequence \\uXXXX"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0043/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0043/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0043/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0043/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 5
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0043/input.js"
 							end: Object {
 								column: 19
 								index: 19
@@ -125,7 +125,7 @@ JSRoot {
 							sticky: false
 							unicode: true
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0043/input.js"
 								end: Object {
 									column: 19
 									index: 19
@@ -139,7 +139,7 @@ JSRoot {
 							}
 							expression: JSRegExpSubExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/invalid-syntax/migrated_0043/input.js"
 									end: Object {
 										column: 13
 										index: 14
@@ -155,7 +155,7 @@ JSRoot {
 									JSRegExpCharSet {
 										invert: false
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/invalid-syntax/migrated_0043/input.js"
 											end: Object {
 												column: 13
 												index: 13
@@ -170,7 +170,7 @@ JSRoot {
 										body: Array [
 											JSRegExpCharSetRange {
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/invalid-syntax/migrated_0043/input.js"
 													end: Object {
 														column: 13
 														index: 13
@@ -185,7 +185,7 @@ JSRoot {
 												end: JSRegExpCharacter {
 													value: "z"
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/invalid-syntax/migrated_0043/input.js"
 														end: Object {
 															column: 13
 															index: 13
@@ -201,7 +201,7 @@ JSRoot {
 												start: JSRegExpCharacter {
 													value: "a"
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/invalid-syntax/migrated_0043/input.js"
 														end: Object {
 															column: 11
 															index: 11
@@ -232,7 +232,7 @@ JSRoot {
 
 ```
 
- input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0043/input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expecting Unicode escape sequence \uXXXX
 

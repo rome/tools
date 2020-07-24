@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/regression/10892/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/regression/10892/input.js"
 		end: Object {
 			column: 0
 			index: 70
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: "*\n * lost comment\n "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/regression/10892/input.js"
 				end: Object {
 					column: 3
 					index: 50
@@ -56,7 +56,7 @@ JSRoot {
 			namespaceSpecifier: undefined
 			trailingComments: Array ["0"]
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/regression/10892/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -72,7 +72,7 @@ JSRoot {
 				value: "bar"
 				trailingComments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/regression/10892/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -88,7 +88,7 @@ JSRoot {
 			namedSpecifiers: Array [
 				JSImportSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "comments/regression/10892/input.js"
 						end: Object {
 							column: 12
 							index: 12
@@ -103,7 +103,7 @@ JSRoot {
 					imported: JSIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/regression/10892/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 12
@@ -121,7 +121,7 @@ JSRoot {
 						name: JSBindingIdentifier {
 							name: "foo"
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/regression/10892/input.js"
 								identifierName: "foo"
 								end: Object {
 									column: 12
@@ -137,7 +137,7 @@ JSRoot {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/regression/10892/input.js"
 							end: Object {
 								column: 12
 								index: 12
@@ -156,7 +156,7 @@ JSRoot {
 		JSExportDefaultDeclaration {
 			leadingComments: Array ["0"]
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/regression/10892/input.js"
 				end: Object {
 					column: 1
 					index: 69
@@ -172,7 +172,7 @@ JSRoot {
 				leadingComments: undefined
 				properties: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/regression/10892/input.js"
 					end: Object {
 						column: 1
 						index: 69

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/module-namespace/global-in-module/input.ts"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/module-namespace/global-in-module/input.ts"
 		end: Object {
 			column: 0
 			index: 65
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSStringLiteral {
 				value: "m"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/global-in-module/input.ts"
 					end: Object {
 						column: 18
 						index: 18
@@ -52,7 +52,7 @@ JSRoot {
 			declare: true
 			global: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/module-namespace/global-in-module/input.ts"
 				end: Object {
 					column: 1
 					index: 64
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			body: TSModuleBlock {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/global-in-module/input.ts"
 					end: Object {
 						column: 1
 						index: 64
@@ -83,7 +83,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "global"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/module-namespace/global-in-module/input.ts"
 								identifierName: "global"
 								end: Object {
 									column: 10
@@ -99,7 +99,7 @@ JSRoot {
 						}
 						global: true
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/module-namespace/global-in-module/input.ts"
 							end: Object {
 								column: 5
 								index: 62
@@ -113,7 +113,7 @@ JSRoot {
 						}
 						body: TSModuleBlock {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/module-namespace/global-in-module/input.ts"
 								end: Object {
 									column: 5
 									index: 62
@@ -128,7 +128,7 @@ JSRoot {
 							body: Array [
 								JSVariableDeclarationStatement {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/module-namespace/global-in-module/input.ts"
 										end: Object {
 											column: 22
 											index: 56
@@ -143,7 +143,7 @@ JSRoot {
 									declaration: JSVariableDeclaration {
 										kind: "var"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/module-namespace/global-in-module/input.ts"
 											end: Object {
 												column: 22
 												index: 56
@@ -160,7 +160,7 @@ JSRoot {
 												id: JSBindingIdentifier {
 													name: "x"
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/module-namespace/global-in-module/input.ts"
 														end: Object {
 															column: 21
 															index: 55
@@ -175,7 +175,7 @@ JSRoot {
 													meta: JSPatternMeta {
 														definite: undefined
 														loc: Object {
-															filename: "input.ts"
+															filename: "typescript/module-namespace/global-in-module/input.ts"
 															end: Object {
 																column: 21
 																index: 55
@@ -189,7 +189,7 @@ JSRoot {
 														}
 														typeAnnotation: TSNumberKeywordTypeAnnotation {
 															loc: Object {
-																filename: "input.ts"
+																filename: "typescript/module-namespace/global-in-module/input.ts"
 																end: Object {
 																	column: 21
 																	index: 55
@@ -206,7 +206,7 @@ JSRoot {
 												}
 												init: undefined
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/module-namespace/global-in-module/input.ts"
 													end: Object {
 														column: 21
 														index: 55

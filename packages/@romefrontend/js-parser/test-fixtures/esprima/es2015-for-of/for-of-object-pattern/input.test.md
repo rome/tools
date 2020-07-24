@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
 		end: Object {
 			column: 0
 			index: 19
@@ -35,7 +35,7 @@ JSRoot {
 		JSForOfStatement {
 			await: false
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -49,7 +49,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -65,7 +65,7 @@ JSRoot {
 			right: JSReferenceIdentifier {
 				name: "z"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
 					identifierName: "z"
 					end: Object {
 						column: 16
@@ -82,7 +82,7 @@ JSRoot {
 			left: JSAssignmentObjectPattern {
 				rest: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -100,7 +100,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 7
@@ -115,7 +115,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
 								end: Object {
 									column: 7
 									index: 7
@@ -131,7 +131,7 @@ JSRoot {
 						value: JSAssignmentIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 7
@@ -146,7 +146,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
 							end: Object {
 								column: 7
 								index: 7
@@ -164,7 +164,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "y"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
 									identifierName: "y"
 									end: Object {
 										column: 10
@@ -179,7 +179,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -195,7 +195,7 @@ JSRoot {
 						value: JSAssignmentIdentifier {
 							name: "y"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
 								identifierName: "y"
 								end: Object {
 									column: 10
@@ -210,7 +210,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-for-of/for-of-object-pattern/input.js"
 							end: Object {
 								column: 10
 								index: 10

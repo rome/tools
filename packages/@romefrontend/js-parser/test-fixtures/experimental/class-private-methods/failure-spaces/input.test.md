@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-methods/failure-spaces/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-methods/failure-spaces/input.js"
 		end: Object {
 			column: 0
 			index: 61
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected space between # and identifier"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-methods/failure-spaces/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Spaces"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-methods/failure-spaces/input.js"
 					identifierName: "Spaces"
 					end: Object {
 						column: 12
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-methods/failure-spaces/input.js"
 				end: Object {
 					column: 1
 					index: 60
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-methods/failure-spaces/input.js"
 					end: Object {
 						column: 1
 						index: 60
@@ -112,7 +112,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "wrongSpaces"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-methods/failure-spaces/input.js"
 									identifierName: "wrongSpaces"
 									end: Object {
 										column: 16
@@ -127,7 +127,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/failure-spaces/input.js"
 								end: Object {
 									column: 16
 									index: 31
@@ -141,7 +141,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-methods/failure-spaces/input.js"
 							end: Object {
 								column: 3
 								index: 58
@@ -163,7 +163,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/failure-spaces/input.js"
 								end: Object {
 									column: 18
 									index: 33
@@ -189,7 +189,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/failure-spaces/input.js"
 								end: Object {
 									column: 16
 									index: 31
@@ -205,7 +205,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/failure-spaces/input.js"
 								end: Object {
 									column: 3
 									index: 58
@@ -220,7 +220,7 @@ JSRoot {
 							body: Array [
 								JSReturnStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-methods/failure-spaces/input.js"
 										end: Object {
 											column: 18
 											index: 54
@@ -235,7 +235,7 @@ JSRoot {
 									argument: JSCallExpression {
 										arguments: Array []
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-methods/failure-spaces/input.js"
 											end: Object {
 												column: 17
 												index: 53
@@ -250,7 +250,7 @@ JSRoot {
 										callee: JSReferenceIdentifier {
 											name: "fail"
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-methods/failure-spaces/input.js"
 												identifierName: "fail"
 												end: Object {
 													column: 15
@@ -280,7 +280,7 @@ JSRoot {
 
 ```
 
- input.js:2:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-private-methods/failure-spaces/input.js:2:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected space between # and identifier
 

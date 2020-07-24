@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/154/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/154/input.js"
 		end: Object {
 			column: 30
 			index: 30
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/154/input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/154/input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -64,7 +64,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "f"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/154/input.js"
 						identifierName: "f"
 						end: Object {
 							column: 1
@@ -81,7 +81,7 @@ JSRoot {
 				right: JSFunctionExpression {
 					id: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/154/input.js"
 						end: Object {
 							column: 30
 							index: 30
@@ -97,7 +97,7 @@ JSRoot {
 						body: Array []
 						directives: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/154/input.js"
 							end: Object {
 								column: 30
 								index: 30
@@ -119,7 +119,7 @@ JSRoot {
 						thisType: undefined
 						typeParameters: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/154/input.js"
 							end: Object {
 								column: 27
 								index: 27
@@ -134,7 +134,7 @@ JSRoot {
 						params: Array [
 							JSBindingAssignmentPattern {
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/154/input.js"
 									end: Object {
 										column: 26
 										index: 26
@@ -148,7 +148,7 @@ JSRoot {
 								}
 								right: JSObjectExpression {
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/154/input.js"
 										end: Object {
 											column: 26
 											index: 26
@@ -166,7 +166,7 @@ JSRoot {
 												value: JSIdentifier {
 													name: "x"
 													loc: Object {
-														filename: "input.js"
+														filename: "es2015/uncategorised/154/input.js"
 														identifierName: "x"
 														end: Object {
 															column: 21
@@ -181,7 +181,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/uncategorised/154/input.js"
 													end: Object {
 														column: 21
 														index: 21
@@ -198,7 +198,7 @@ JSRoot {
 												value: 10
 												format: undefined
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/uncategorised/154/input.js"
 													end: Object {
 														column: 25
 														index: 25
@@ -212,7 +212,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/uncategorised/154/input.js"
 												end: Object {
 													column: 25
 													index: 25
@@ -230,7 +230,7 @@ JSRoot {
 								left: JSBindingObjectPattern {
 									rest: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/154/input.js"
 										end: Object {
 											column: 16
 											index: 16
@@ -246,7 +246,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/154/input.js"
 											end: Object {
 												column: 16
 												index: 16
@@ -265,7 +265,7 @@ JSRoot {
 												value: JSIdentifier {
 													name: "x"
 													loc: Object {
-														filename: "input.js"
+														filename: "es2015/uncategorised/154/input.js"
 														identifierName: "x"
 														end: Object {
 															column: 15
@@ -280,7 +280,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/uncategorised/154/input.js"
 													end: Object {
 														column: 15
 														index: 15
@@ -296,7 +296,7 @@ JSRoot {
 											value: JSBindingIdentifier {
 												name: "x"
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/uncategorised/154/input.js"
 													identifierName: "x"
 													end: Object {
 														column: 15
@@ -311,7 +311,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/uncategorised/154/input.js"
 												end: Object {
 													column: 15
 													index: 15

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/destructuring/duplicate-proto-3/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/destructuring/duplicate-proto-3/input.js"
 		end: Object {
 			column: 0
 			index: 40
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Redefinition of __proto__ property"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/destructuring/duplicate-proto-3/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/destructuring/duplicate-proto-3/input.js"
 				end: Object {
 					column: 39
 					index: 39
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/destructuring/duplicate-proto-3/input.js"
 					end: Object {
 						column: 38
 						index: 38
@@ -88,7 +88,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/destructuring/duplicate-proto-3/input.js"
 						end: Object {
 							column: 38
 							index: 38
@@ -108,7 +108,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/destructuring/duplicate-proto-3/input.js"
 						end: Object {
 							column: 35
 							index: 35
@@ -124,7 +124,7 @@ JSRoot {
 						JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/destructuring/duplicate-proto-3/input.js"
 								end: Object {
 									column: 31
 									index: 31
@@ -142,7 +142,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "__proto__"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/destructuring/duplicate-proto-3/input.js"
 												identifierName: "__proto__"
 												end: Object {
 													column: 12
@@ -157,7 +157,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/destructuring/duplicate-proto-3/input.js"
 											end: Object {
 												column: 12
 												index: 12
@@ -173,7 +173,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/destructuring/duplicate-proto-3/input.js"
 											identifierName: "x"
 											end: Object {
 												column: 15
@@ -188,7 +188,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/destructuring/duplicate-proto-3/input.js"
 										end: Object {
 											column: 15
 											index: 15
@@ -206,7 +206,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "__proto__"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/destructuring/duplicate-proto-3/input.js"
 												identifierName: "__proto__"
 												end: Object {
 													column: 26
@@ -221,7 +221,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/destructuring/duplicate-proto-3/input.js"
 											end: Object {
 												column: 26
 												index: 26
@@ -237,7 +237,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "y"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/destructuring/duplicate-proto-3/input.js"
 											identifierName: "y"
 											end: Object {
 												column: 29
@@ -252,7 +252,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/destructuring/duplicate-proto-3/input.js"
 										end: Object {
 											column: 29
 											index: 29
@@ -279,7 +279,7 @@ JSRoot {
 
 ```
 
- input.js:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/destructuring/duplicate-proto-3/input.js:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Redefinition of __proto__ property
 

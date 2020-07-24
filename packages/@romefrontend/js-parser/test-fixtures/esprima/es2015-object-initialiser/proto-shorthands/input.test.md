@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-object-initialiser/proto-shorthands/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-object-initialiser/proto-shorthands/input.js"
 		end: Object {
 			column: 0
 			index: 27
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Redefinition of __proto__ property"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-object-initialiser/proto-shorthands/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-object-initialiser/proto-shorthands/input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-object-initialiser/proto-shorthands/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -90,7 +90,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "__proto__"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-object-initialiser/proto-shorthands/input.js"
 									identifierName: "__proto__"
 									end: Object {
 										column: 12
@@ -105,7 +105,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-initialiser/proto-shorthands/input.js"
 								end: Object {
 									column: 12
 									index: 12
@@ -121,7 +121,7 @@ JSRoot {
 						value: JSReferenceIdentifier {
 							name: "__proto__"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-initialiser/proto-shorthands/input.js"
 								identifierName: "__proto__"
 								end: Object {
 									column: 12
@@ -136,7 +136,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-object-initialiser/proto-shorthands/input.js"
 							end: Object {
 								column: 12
 								index: 12
@@ -154,7 +154,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "__proto__"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-object-initialiser/proto-shorthands/input.js"
 									identifierName: "__proto__"
 									end: Object {
 										column: 23
@@ -169,7 +169,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-initialiser/proto-shorthands/input.js"
 								end: Object {
 									column: 23
 									index: 23
@@ -185,7 +185,7 @@ JSRoot {
 						value: JSReferenceIdentifier {
 							name: "__proto__"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-initialiser/proto-shorthands/input.js"
 								identifierName: "__proto__"
 								end: Object {
 									column: 23
@@ -200,7 +200,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-object-initialiser/proto-shorthands/input.js"
 							end: Object {
 								column: 23
 								index: 23
@@ -224,7 +224,7 @@ JSRoot {
 
 ```
 
- input.js:1:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-object-initialiser/proto-shorthands/input.js:1:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Redefinition of __proto__ property
 

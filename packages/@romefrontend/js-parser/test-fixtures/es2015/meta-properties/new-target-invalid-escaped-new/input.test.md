@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
 		end: Object {
 			column: 0
 			index: 34
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Escape sequence in keyword new"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
 				end: Object {
 					column: 33
 					index: 33
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
 					end: Object {
 						column: 33
 						index: 33
@@ -128,7 +128,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
 							end: Object {
 								column: 31
 								index: 31
@@ -142,7 +142,7 @@ JSRoot {
 						}
 						expression: JSMetaProperty {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
 								end: Object {
 									column: 30
 									index: 30
@@ -157,7 +157,7 @@ JSRoot {
 							meta: JSIdentifier {
 								name: "new"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
 									identifierName: "new"
 									end: Object {
 										column: 23
@@ -174,7 +174,7 @@ JSRoot {
 							property: JSIdentifier {
 								name: "target"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"
 									identifierName: "target"
 									end: Object {
 										column: 30
@@ -201,7 +201,7 @@ JSRoot {
 
 ```
 
- input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/meta-properties/new-target-invalid-escaped-new/input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Escape sequence in keyword new
 

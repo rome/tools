@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-properties/failure-numeric-literal/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-properties/failure-numeric-literal/input.js"
 		end: Object {
 			column: 0
 			index: 23
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/failure-numeric-literal/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/failure-numeric-literal/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/failure-numeric-literal/input.js"
 				end: Object {
 					column: 1
 					index: 22
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/failure-numeric-literal/input.js"
 					end: Object {
 						column: 1
 						index: 22
@@ -111,7 +111,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: ""
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/failure-numeric-literal/input.js"
 									identifierName: ""
 									end: Object {
 										column: 4
@@ -126,7 +126,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-numeric-literal/input.js"
 								end: Object {
 									column: 4
 									index: 16
@@ -142,7 +142,7 @@ JSRoot {
 						value: JSReferenceIdentifier {
 							name: "y"
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-numeric-literal/input.js"
 								identifierName: "y"
 								end: Object {
 									column: 8
@@ -158,7 +158,7 @@ JSRoot {
 						}
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/failure-numeric-literal/input.js"
 							end: Object {
 								column: 8
 								index: 20
@@ -183,7 +183,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-numeric-literal/input.js"
 								end: Object {
 									column: 4
 									index: 16
@@ -208,7 +208,7 @@ JSRoot {
 
 ```
 
- input.js:2:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-private-properties/failure-numeric-literal/input.js:2:3 parse/js ━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
 

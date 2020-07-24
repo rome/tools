@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/constructor-with-modifier-names/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/constructor-with-modifier-names/input.ts"
 		end: Object {
 			column: 0
 			index: 92
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/constructor-with-modifier-names/input.ts"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/constructor-with-modifier-names/input.ts"
 				end: Object {
 					column: 1
 					index: 91
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/constructor-with-modifier-names/input.ts"
 					end: Object {
 						column: 1
 						index: 91
@@ -88,7 +88,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/constructor-with-modifier-names/input.ts"
 									identifierName: "constructor"
 									end: Object {
 										column: 13
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/constructor-with-modifier-names/input.ts"
 								end: Object {
 									column: 13
 									index: 25
@@ -117,7 +117,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/constructor-with-modifier-names/input.ts"
 							end: Object {
 								column: 31
 								index: 43
@@ -133,7 +133,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/constructor-with-modifier-names/input.ts"
 								end: Object {
 									column: 31
 									index: 43
@@ -159,7 +159,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/constructor-with-modifier-names/input.ts"
 								end: Object {
 									column: 13
 									index: 25
@@ -181,7 +181,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/constructor-with-modifier-names/input.ts"
 								end: Object {
 									column: 28
 									index: 40
@@ -197,7 +197,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "set"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/constructor-with-modifier-names/input.ts"
 										identifierName: "set"
 										end: Object {
 											column: 17
@@ -214,7 +214,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/constructor-with-modifier-names/input.ts"
 											end: Object {
 												column: 17
 												index: 29
@@ -231,7 +231,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "readonly"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/constructor-with-modifier-names/input.ts"
 										identifierName: "readonly"
 										end: Object {
 											column: 27
@@ -248,7 +248,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/constructor-with-modifier-names/input.ts"
 											end: Object {
 												column: 27
 												index: 39
@@ -271,7 +271,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/constructor-with-modifier-names/input.ts"
 									identifierName: "constructor"
 									end: Object {
 										column: 13
@@ -286,7 +286,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/constructor-with-modifier-names/input.ts"
 								end: Object {
 									column: 13
 									index: 57
@@ -300,7 +300,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/constructor-with-modifier-names/input.ts"
 							end: Object {
 								column: 45
 								index: 89
@@ -316,7 +316,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/constructor-with-modifier-names/input.ts"
 								end: Object {
 									column: 45
 									index: 89
@@ -342,7 +342,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/constructor-with-modifier-names/input.ts"
 								end: Object {
 									column: 13
 									index: 57
@@ -364,7 +364,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/constructor-with-modifier-names/input.ts"
 								end: Object {
 									column: 42
 									index: 86
@@ -380,7 +380,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "set"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/constructor-with-modifier-names/input.ts"
 										identifierName: "set"
 										end: Object {
 											column: 17
@@ -396,7 +396,7 @@ JSRoot {
 									meta: JSPatternMeta {
 										optional: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/constructor-with-modifier-names/input.ts"
 											end: Object {
 												column: 22
 												index: 66
@@ -410,7 +410,7 @@ JSRoot {
 										}
 										typeAnnotation: TSAnyKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/class/constructor-with-modifier-names/input.ts"
 												end: Object {
 													column: 22
 													index: 66
@@ -428,7 +428,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "readonly"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/constructor-with-modifier-names/input.ts"
 										identifierName: "readonly"
 										end: Object {
 											column: 32
@@ -444,7 +444,7 @@ JSRoot {
 									meta: JSPatternMeta {
 										optional: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/constructor-with-modifier-names/input.ts"
 											end: Object {
 												column: 41
 												index: 85
@@ -458,7 +458,7 @@ JSRoot {
 										}
 										typeAnnotation: TSBooleanKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/class/constructor-with-modifier-names/input.ts"
 												end: Object {
 													column: 41
 													index: 85

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/expression-complex/migrated_0000/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/expression-complex/migrated_0000/input.js"
 		end: Object {
 			column: 0
 			index: 47
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/expression-complex/migrated_0000/input.js"
 				end: Object {
 					column: 46
 					index: 46
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSLogicalExpression {
 				operator: "||"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/expression-complex/migrated_0000/input.js"
 					end: Object {
 						column: 46
 						index: 46
@@ -64,7 +64,7 @@ JSRoot {
 				left: JSReferenceIdentifier {
 					name: "a"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-complex/migrated_0000/input.js"
 						identifierName: "a"
 						end: Object {
 							column: 1
@@ -81,7 +81,7 @@ JSRoot {
 				right: JSLogicalExpression {
 					operator: "&&"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-complex/migrated_0000/input.js"
 						end: Object {
 							column: 46
 							index: 46
@@ -96,7 +96,7 @@ JSRoot {
 					left: JSReferenceIdentifier {
 						name: "b"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/expression-complex/migrated_0000/input.js"
 							identifierName: "b"
 							end: Object {
 								column: 6
@@ -113,7 +113,7 @@ JSRoot {
 					right: JSBinaryExpression {
 						operator: "|"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/expression-complex/migrated_0000/input.js"
 							end: Object {
 								column: 46
 								index: 46
@@ -128,7 +128,7 @@ JSRoot {
 						left: JSReferenceIdentifier {
 							name: "c"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/expression-complex/migrated_0000/input.js"
 								identifierName: "c"
 								end: Object {
 									column: 11
@@ -145,7 +145,7 @@ JSRoot {
 						right: JSBinaryExpression {
 							operator: "^"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/expression-complex/migrated_0000/input.js"
 								end: Object {
 									column: 46
 									index: 46
@@ -160,7 +160,7 @@ JSRoot {
 							left: JSReferenceIdentifier {
 								name: "d"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/expression-complex/migrated_0000/input.js"
 									identifierName: "d"
 									end: Object {
 										column: 15
@@ -177,7 +177,7 @@ JSRoot {
 							right: JSBinaryExpression {
 								operator: "&"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/expression-complex/migrated_0000/input.js"
 									end: Object {
 										column: 46
 										index: 46
@@ -192,7 +192,7 @@ JSRoot {
 								left: JSReferenceIdentifier {
 									name: "e"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/expression-complex/migrated_0000/input.js"
 										identifierName: "e"
 										end: Object {
 											column: 19
@@ -209,7 +209,7 @@ JSRoot {
 								right: JSBinaryExpression {
 									operator: "=="
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/expression-complex/migrated_0000/input.js"
 										end: Object {
 											column: 46
 											index: 46
@@ -224,7 +224,7 @@ JSRoot {
 									left: JSReferenceIdentifier {
 										name: "f"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/expression-complex/migrated_0000/input.js"
 											identifierName: "f"
 											end: Object {
 												column: 23
@@ -241,7 +241,7 @@ JSRoot {
 									right: JSBinaryExpression {
 										operator: "<"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/expression-complex/migrated_0000/input.js"
 											end: Object {
 												column: 46
 												index: 46
@@ -256,7 +256,7 @@ JSRoot {
 										left: JSReferenceIdentifier {
 											name: "g"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/expression-complex/migrated_0000/input.js"
 												identifierName: "g"
 												end: Object {
 													column: 28
@@ -273,7 +273,7 @@ JSRoot {
 										right: JSBinaryExpression {
 											operator: ">>>"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/expression-complex/migrated_0000/input.js"
 												end: Object {
 													column: 46
 													index: 46
@@ -288,7 +288,7 @@ JSRoot {
 											left: JSReferenceIdentifier {
 												name: "h"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-complex/migrated_0000/input.js"
 													identifierName: "h"
 													end: Object {
 														column: 32
@@ -305,7 +305,7 @@ JSRoot {
 											right: JSBinaryExpression {
 												operator: "+"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-complex/migrated_0000/input.js"
 													end: Object {
 														column: 46
 														index: 46
@@ -320,7 +320,7 @@ JSRoot {
 												left: JSReferenceIdentifier {
 													name: "i"
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/expression-complex/migrated_0000/input.js"
 														identifierName: "i"
 														end: Object {
 															column: 38
@@ -337,7 +337,7 @@ JSRoot {
 												right: JSBinaryExpression {
 													operator: "*"
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/expression-complex/migrated_0000/input.js"
 														end: Object {
 															column: 46
 															index: 46
@@ -352,7 +352,7 @@ JSRoot {
 													left: JSReferenceIdentifier {
 														name: "j"
 														loc: Object {
-															filename: "input.js"
+															filename: "esprima/expression-complex/migrated_0000/input.js"
 															identifierName: "j"
 															end: Object {
 																column: 42
@@ -369,7 +369,7 @@ JSRoot {
 													right: JSReferenceIdentifier {
 														name: "k"
 														loc: Object {
-															filename: "input.js"
+															filename: "esprima/expression-complex/migrated_0000/input.js"
 															identifierName: "k"
 															end: Object {
 																column: 46

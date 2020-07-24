@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/let/let-with-linebreak-arr-dstrk/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/let/let-with-linebreak-arr-dstrk/input.js"
 		end: Object {
 			column: 0
 			index: 19
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/let/let-with-linebreak-arr-dstrk/input.js"
 				end: Object {
 					column: 14
 					index: 18
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/let/let-with-linebreak-arr-dstrk/input.js"
 					end: Object {
 						column: 14
 						index: 18
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingArrayPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/let/let-with-linebreak-arr-dstrk/input.js"
 								end: Object {
 									column: 7
 									index: 11
@@ -82,7 +82,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/let/let-with-linebreak-arr-dstrk/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 6
@@ -99,7 +99,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/let/let-with-linebreak-arr-dstrk/input.js"
 											end: Object {
 												column: 6
 												index: 10
@@ -116,7 +116,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/let/let-with-linebreak-arr-dstrk/input.js"
 							end: Object {
 								column: 13
 								index: 17
@@ -130,7 +130,7 @@ JSRoot {
 						}
 						init: JSArrayExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/let/let-with-linebreak-arr-dstrk/input.js"
 								end: Object {
 									column: 13
 									index: 17
@@ -147,7 +147,7 @@ JSRoot {
 									value: 1
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/let/let-with-linebreak-arr-dstrk/input.js"
 										end: Object {
 											column: 12
 											index: 16

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/arrow-functions/object-rest-spread/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/arrow-functions/object-rest-spread/input.js"
 		end: Object {
 			column: 0
 			index: 45
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/arrow-functions/object-rest-spread/input.js"
 				end: Object {
 					column: 2
 					index: 44
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/arrow-functions/object-rest-spread/input.js"
 					end: Object {
 						column: 2
 						index: 44
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "foo"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/arrow-functions/object-rest-spread/input.js"
 								identifierName: "foo"
 								end: Object {
 									column: 7
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/arrow-functions/object-rest-spread/input.js"
 							end: Object {
 								column: 1
 								index: 43
@@ -95,7 +95,7 @@ JSRoot {
 						}
 						init: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/arrow-functions/object-rest-spread/input.js"
 								end: Object {
 									column: 1
 									index: 43
@@ -111,7 +111,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/arrow-functions/object-rest-spread/input.js"
 									end: Object {
 										column: 1
 										index: 43
@@ -131,7 +131,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/arrow-functions/object-rest-spread/input.js"
 									end: Object {
 										column: 36
 										index: 36
@@ -146,7 +146,7 @@ JSRoot {
 								params: Array [
 									JSBindingObjectPattern {
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/arrow-functions/object-rest-spread/input.js"
 											end: Object {
 												column: 31
 												index: 31
@@ -161,7 +161,7 @@ JSRoot {
 										rest: JSBindingIdentifier {
 											name: "other"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/arrow-functions/object-rest-spread/input.js"
 												identifierName: "other"
 												end: Object {
 													column: 29
@@ -181,7 +181,7 @@ JSRoot {
 													value: JSIdentifier {
 														name: "title"
 														loc: Object {
-															filename: "input.js"
+															filename: "es2015/arrow-functions/object-rest-spread/input.js"
 															identifierName: "title"
 															end: Object {
 																column: 19
@@ -196,7 +196,7 @@ JSRoot {
 														}
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "es2015/arrow-functions/object-rest-spread/input.js"
 														end: Object {
 															column: 19
 															index: 19
@@ -212,7 +212,7 @@ JSRoot {
 												value: JSBindingIdentifier {
 													name: "title"
 													loc: Object {
-														filename: "input.js"
+														filename: "es2015/arrow-functions/object-rest-spread/input.js"
 														identifierName: "title"
 														end: Object {
 															column: 19
@@ -227,7 +227,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/arrow-functions/object-rest-spread/input.js"
 													end: Object {
 														column: 19
 														index: 19

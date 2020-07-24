@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/import/export-import/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/import/export-import/input.ts"
 		end: Object {
 			column: 0
 			index: 23
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/import/export-import/input.ts"
 					identifierName: "A"
 					end: Object {
 						column: 15
@@ -52,7 +52,7 @@ JSRoot {
 			}
 			isExport: true
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/import/export-import/input.ts"
 				end: Object {
 					column: 22
 					index: 22
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			moduleReference: TSQualifiedName {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/import/export-import/input.ts"
 					end: Object {
 						column: 21
 						index: 21
@@ -81,7 +81,7 @@ JSRoot {
 				left: JSReferenceIdentifier {
 					name: "B"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/import/export-import/input.ts"
 						identifierName: "B"
 						end: Object {
 							column: 19
@@ -98,7 +98,7 @@ JSRoot {
 				right: JSIdentifier {
 					name: "C"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/import/export-import/input.ts"
 						identifierName: "C"
 						end: Object {
 							column: 21

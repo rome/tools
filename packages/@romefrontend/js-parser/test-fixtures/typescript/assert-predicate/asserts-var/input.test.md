@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/assert-predicate/asserts-var/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/assert-predicate/asserts-var/input.ts"
 		end: Object {
 			column: 0
 			index: 64
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ("}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/assert-predicate/asserts-var/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "function"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/assert-predicate/asserts-var/input.ts"
 					identifierName: "function"
 					end: Object {
 						column: 16
@@ -76,7 +76,7 @@ JSRoot {
 			}
 			declare: true
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/assert-predicate/asserts-var/input.ts"
 				end: Object {
 					column: 63
 					index: 63
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/assert-predicate/asserts-var/input.ts"
 					end: Object {
 						column: 31
 						index: 31
@@ -113,7 +113,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "assertIsString"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/assert-predicate/asserts-var/input.ts"
 							identifierName: "assertIsString"
 							end: Object {
 								column: 31
@@ -130,7 +130,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/assert-predicate/asserts-var/input.ts"
 								end: Object {
 									column: 31
 									index: 31
@@ -149,7 +149,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/assert-predicate/asserts-var/input.ts"
 					end: Object {
 						column: 63
 						index: 63
@@ -164,7 +164,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/assert-predicate/asserts-var/input.ts"
 							end: Object {
 								column: 47
 								index: 47
@@ -179,7 +179,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "value"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/assert-predicate/asserts-var/input.ts"
 								identifierName: "value"
 								end: Object {
 									column: 37
@@ -196,7 +196,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/assert-predicate/asserts-var/input.ts"
 							end: Object {
 								column: 48
 								index: 48
@@ -211,7 +211,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/assert-predicate/asserts-var/input.ts"
 								end: Object {
 									column: 48
 									index: 48
@@ -227,7 +227,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/assert-predicate/asserts-var/input.ts"
 							end: Object {
 								column: 56
 								index: 56
@@ -242,7 +242,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "asserts"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/assert-predicate/asserts-var/input.ts"
 								identifierName: "asserts"
 								end: Object {
 									column: 56
@@ -259,7 +259,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/assert-predicate/asserts-var/input.ts"
 							end: Object {
 								column: 63
 								index: 63
@@ -274,7 +274,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "value"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/assert-predicate/asserts-var/input.ts"
 								identifierName: "value"
 								end: Object {
 									column: 62
@@ -300,7 +300,7 @@ JSRoot {
 
 ```
 
- input.ts:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/assert-predicate/asserts-var/input.ts:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected (
 

@@ -452,14 +452,7 @@ export default class Worker {
 
 		this.logger.info(markup`Parsing: ${path}`);
 
-		// Get the file mtime to warn about outdated diagnostics
-		// If we have a buffer or virtual module for this file then don't set an mtime since our diagnostics
-		// explicitly do not match the file system
-		let mtime;
-		if (!this.buffers.has(path) && !this.virtualModules.isVirtualPath(path)) {
-			const stat = await lstat(path);
-			mtime = stat.mtimeMs;
-		}
+		const mtime = await this.getMtime(path);
 
 		let manifestPath: undefined | string;
 		if (ref.manifest !== undefined) {
@@ -509,6 +502,18 @@ export default class Worker {
 		}
 
 		return res;
+	}
+
+	// Get the file mtime to warn about outdated diagnostics
+	// If we have a buffer or virtual module for this file then don't set an mtime since our diagnostics
+	// explicitly do not match the file system
+	async getMtime(path: AbsoluteFilePath): Promise<undefined | number> {
+		if (this.buffers.has(path) || this.virtualModules.isVirtualPath(path)) {
+			return undefined;
+		} else {
+			const stat = await lstat(path);
+			return stat.mtimeMs;
+		}
 	}
 
 	getProject(id: number): TransformProjectDefinition {

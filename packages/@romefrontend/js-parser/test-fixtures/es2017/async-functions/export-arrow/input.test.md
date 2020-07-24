@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/export-arrow/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/export-arrow/input.js"
 		end: Object {
 			column: 0
 			index: 39
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/export-arrow/input.js"
 				end: Object {
 					column: 38
 					index: 38
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			declaration: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/export-arrow/input.js"
 					end: Object {
 						column: 38
 						index: 38
@@ -68,7 +68,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/export-arrow/input.js"
 						end: Object {
 							column: 26
 							index: 26
@@ -83,7 +83,7 @@ JSRoot {
 				}
 				body: JSAwaitExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/export-arrow/input.js"
 						end: Object {
 							column: 38
 							index: 38
@@ -98,7 +98,7 @@ JSRoot {
 					argument: JSCallExpression {
 						arguments: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/export-arrow/input.js"
 							end: Object {
 								column: 38
 								index: 38
@@ -113,7 +113,7 @@ JSRoot {
 						callee: JSReferenceIdentifier {
 							name: "foo"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/export-arrow/input.js"
 								identifierName: "foo"
 								end: Object {
 									column: 36

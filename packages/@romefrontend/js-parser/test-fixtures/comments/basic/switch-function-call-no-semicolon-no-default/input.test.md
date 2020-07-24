@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/basic/switch-function-call-no-semicolon-no-default/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/basic/switch-function-call-no-semicolon-no-default/input.js"
 		end: Object {
 			column: 0
 			index: 61
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " comment"
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/switch-function-call-no-semicolon-no-default/input.js"
 				end: Object {
 					column: 14
 					index: 58
@@ -52,7 +52,7 @@ JSRoot {
 	body: Array [
 		JSSwitchStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/switch-function-call-no-semicolon-no-default/input.js"
 				end: Object {
 					column: 1
 					index: 60
@@ -67,7 +67,7 @@ JSRoot {
 			discriminant: JSReferenceIdentifier {
 				name: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/switch-function-call-no-semicolon-no-default/input.js"
 					identifierName: "x"
 					end: Object {
 						column: 9
@@ -85,7 +85,7 @@ JSRoot {
 				JSSwitchCase {
 					trailingComments: Array ["0"]
 					loc: Object {
-						filename: "input.js"
+						filename: "comments/basic/switch-function-call-no-semicolon-no-default/input.js"
 						end: Object {
 							column: 20
 							index: 43
@@ -101,7 +101,7 @@ JSRoot {
 						value: 1
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/basic/switch-function-call-no-semicolon-no-default/input.js"
 							end: Object {
 								column: 8
 								index: 21
@@ -118,7 +118,7 @@ JSRoot {
 						JSExpressionStatement {
 							trailingComments: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/basic/switch-function-call-no-semicolon-no-default/input.js"
 								end: Object {
 									column: 20
 									index: 43
@@ -133,7 +133,7 @@ JSRoot {
 							expression: JSCallExpression {
 								trailingComments: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "comments/basic/switch-function-call-no-semicolon-no-default/input.js"
 									end: Object {
 										column: 20
 										index: 43
@@ -149,7 +149,7 @@ JSRoot {
 									JSStringLiteral {
 										value: "1"
 										loc: Object {
-											filename: "input.js"
+											filename: "comments/basic/switch-function-call-no-semicolon-no-default/input.js"
 											end: Object {
 												column: 19
 												index: 42
@@ -165,7 +165,7 @@ JSRoot {
 								]
 								callee: JSMemberExpression {
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/basic/switch-function-call-no-semicolon-no-default/input.js"
 										end: Object {
 											column: 15
 											index: 38
@@ -180,7 +180,7 @@ JSRoot {
 									object: JSReferenceIdentifier {
 										name: "console"
 										loc: Object {
-											filename: "input.js"
+											filename: "comments/basic/switch-function-call-no-semicolon-no-default/input.js"
 											identifierName: "console"
 											end: Object {
 												column: 11
@@ -198,7 +198,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "log"
 											loc: Object {
-												filename: "input.js"
+												filename: "comments/basic/switch-function-call-no-semicolon-no-default/input.js"
 												identifierName: "log"
 												end: Object {
 													column: 15
@@ -213,7 +213,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "comments/basic/switch-function-call-no-semicolon-no-default/input.js"
 											identifierName: "log"
 											end: Object {
 												column: 15

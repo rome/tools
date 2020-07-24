@@ -10,14 +10,14 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "input.js"
+	filename: "es2015/yield/parameter-default-strict/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/parameter-default-strict/input.js"
 		end: Object {
 			column: 25
 			index: 39
@@ -33,7 +33,7 @@ JSRoot {
 		JSDirective {
 			value: "use strict"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/parameter-default-strict/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -56,7 +56,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "yield is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/yield/parameter-default-strict/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -77,7 +77,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-default-strict/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 11
@@ -92,7 +92,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/parameter-default-strict/input.js"
 				end: Object {
 					column: 25
 					index: 39
@@ -108,7 +108,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-default-strict/input.js"
 					end: Object {
 						column: 25
 						index: 39
@@ -130,7 +130,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-default-strict/input.js"
 					end: Object {
 						column: 22
 						index: 36
@@ -145,7 +145,7 @@ JSRoot {
 				params: Array [
 					JSBindingAssignmentPattern {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/parameter-default-strict/input.js"
 							end: Object {
 								column: 21
 								index: 35
@@ -160,7 +160,7 @@ JSRoot {
 						right: JSReferenceIdentifier {
 							name: "yield"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/parameter-default-strict/input.js"
 								identifierName: "yield"
 								end: Object {
 									column: 21
@@ -177,7 +177,7 @@ JSRoot {
 						left: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/parameter-default-strict/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 13
@@ -194,7 +194,7 @@ JSRoot {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/parameter-default-strict/input.js"
 									end: Object {
 										column: 13
 										index: 27
@@ -220,7 +220,7 @@ JSRoot {
 
 ```
 
- input.js:2:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/yield/parameter-default-strict/input.js:2:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ yield is a reserved word
 

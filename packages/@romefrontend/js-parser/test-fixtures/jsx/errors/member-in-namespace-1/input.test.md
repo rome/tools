@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/errors/member-in-namespace-1/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/errors/member-in-namespace-1/input.jsx"
 		end: Object {
 			column: 0
 			index: 10
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown JSX identifier token"}
 			}
 			location: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/member-in-namespace-1/input.jsx"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/member-in-namespace-1/input.jsx"
 				end: Object {
 					column: 9
 					index: 9
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSXElement {
 				name: JSXMemberExpression {
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/errors/member-in-namespace-1/input.jsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -88,7 +88,7 @@ JSRoot {
 					object: JSXIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/errors/member-in-namespace-1/input.jsx"
 							end: Object {
 								column: 2
 								index: 2
@@ -104,7 +104,7 @@ JSRoot {
 					property: JSXIdentifier {
 						name: "b"
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/errors/member-in-namespace-1/input.jsx"
 							end: Object {
 								column: 4
 								index: 4
@@ -122,7 +122,7 @@ JSRoot {
 				selfClosing: true
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/errors/member-in-namespace-1/input.jsx"
 					end: Object {
 						column: 9
 						index: 9
@@ -139,7 +139,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: ""
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/errors/member-in-namespace-1/input.jsx"
 								end: Object {
 									column: 5
 									index: 5
@@ -154,7 +154,7 @@ JSRoot {
 						}
 						value: undefined
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/errors/member-in-namespace-1/input.jsx"
 							end: Object {
 								column: 5
 								index: 5
@@ -171,7 +171,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "c"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/errors/member-in-namespace-1/input.jsx"
 								end: Object {
 									column: 6
 									index: 6
@@ -186,7 +186,7 @@ JSRoot {
 						}
 						value: undefined
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/errors/member-in-namespace-1/input.jsx"
 							end: Object {
 								column: 6
 								index: 6
@@ -210,7 +210,7 @@ JSRoot {
 
 ```
 
- input.jsx:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ jsx/errors/member-in-namespace-1/input.jsx:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown JSX identifier token
 

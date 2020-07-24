@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/module-attributes/incorrect-arity/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/module-attributes/incorrect-arity/input.js"
 		end: Object {
 			column: 0
 			index: 74
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "import() requires exactly one argument"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/incorrect-arity/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/incorrect-arity/input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSImportCall {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/incorrect-arity/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -87,7 +87,7 @@ JSRoot {
 				argument: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/module-attributes/incorrect-arity/input.js"
 						end: Object {
 							column: 7
 							index: 7
@@ -104,7 +104,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/incorrect-arity/input.js"
 				end: Object {
 					column: 20
 					index: 30
@@ -118,7 +118,7 @@ JSRoot {
 			}
 			expression: JSImportCall {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/incorrect-arity/input.js"
 					end: Object {
 						column: 20
 						index: 30
@@ -133,7 +133,7 @@ JSRoot {
 				argument: JSStringLiteral {
 					value: "./foo.json"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/module-attributes/incorrect-arity/input.js"
 						end: Object {
 							column: 19
 							index: 29
@@ -151,7 +151,7 @@ JSRoot {
 		JSBlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/incorrect-arity/input.js"
 				end: Object {
 					column: 46
 					index: 56
@@ -166,7 +166,7 @@ JSRoot {
 			body: Array [
 				JSWithStatement {
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/module-attributes/incorrect-arity/input.js"
 						end: Object {
 							column: 44
 							index: 54
@@ -181,7 +181,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "INVALID_PLACEHOLDER"
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/module-attributes/incorrect-arity/input.js"
 							end: Object {
 								column: 28
 								index: 38
@@ -197,7 +197,7 @@ JSRoot {
 					body: JSBlockStatement {
 						directives: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/module-attributes/incorrect-arity/input.js"
 							end: Object {
 								column: 44
 								index: 54
@@ -212,7 +212,7 @@ JSRoot {
 						body: Array [
 							JSLabeledStatement {
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/module-attributes/incorrect-arity/input.js"
 									end: Object {
 										column: 43
 										index: 53
@@ -227,7 +227,7 @@ JSRoot {
 								label: JSIdentifier {
 									name: "type"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/module-attributes/incorrect-arity/input.js"
 										identifierName: "type"
 										end: Object {
 											column: 35
@@ -243,7 +243,7 @@ JSRoot {
 								}
 								body: JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/module-attributes/incorrect-arity/input.js"
 										end: Object {
 											column: 43
 											index: 53
@@ -258,7 +258,7 @@ JSRoot {
 									expression: JSStringLiteral {
 										value: "json"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/module-attributes/incorrect-arity/input.js"
 											end: Object {
 												column: 43
 												index: 53
@@ -280,7 +280,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/incorrect-arity/input.js"
 				end: Object {
 					column: 47
 					index: 57
@@ -295,7 +295,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/incorrect-arity/input.js"
 					end: Object {
 						column: 47
 						index: 57
@@ -311,7 +311,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/incorrect-arity/input.js"
 				end: Object {
 					column: 61
 					index: 71
@@ -326,7 +326,7 @@ JSRoot {
 			expression: JSStringLiteral {
 				value: "unsupported"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/incorrect-arity/input.js"
 					end: Object {
 						column: 61
 						index: 71
@@ -342,7 +342,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/incorrect-arity/input.js"
 				end: Object {
 					column: 63
 					index: 73
@@ -357,7 +357,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/incorrect-arity/input.js"
 					end: Object {
 						column: 62
 						index: 72
@@ -379,7 +379,7 @@ JSRoot {
 
 ```
 
- input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/module-attributes/incorrect-arity/input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ import() requires exactly one argument
 

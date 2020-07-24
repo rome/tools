@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-arrow-function/invalid-param-strict-mode/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-arrow-function/invalid-param-strict-mode/input.js"
 		end: Object {
 			column: 0
 			index: 24
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "eval is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/invalid-param-strict-mode/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/invalid-param-strict-mode/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-arrow-function/invalid-param-strict-mode/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -87,7 +87,7 @@ JSRoot {
 				body: JSBlockStatement {
 					body: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/invalid-param-strict-mode/input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -103,7 +103,7 @@ JSRoot {
 						JSDirective {
 							value: "use strict"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-arrow-function/invalid-param-strict-mode/input.js"
 								end: Object {
 									column: 21
 									index: 21
@@ -124,7 +124,7 @@ JSRoot {
 					rest: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/invalid-param-strict-mode/input.js"
 						end: Object {
 							column: 7
 							index: 7
@@ -140,7 +140,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "eval"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-arrow-function/invalid-param-strict-mode/input.js"
 								identifierName: "eval"
 								end: Object {
 									column: 4
@@ -166,7 +166,7 @@ JSRoot {
 
 ```
 
- input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-arrow-function/invalid-param-strict-mode/input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ eval is a reserved word
 

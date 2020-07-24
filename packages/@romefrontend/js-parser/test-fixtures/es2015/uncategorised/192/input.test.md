@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/192/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/192/input.js"
 		end: Object {
 			column: 10
 			index: 10
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/192/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/192/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -63,7 +63,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "func"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/192/input.js"
 						identifierName: "func"
 						end: Object {
 							column: 4
@@ -80,7 +80,7 @@ JSRoot {
 				arguments: Array [
 					JSSpreadElement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/192/input.js"
 							end: Object {
 								column: 9
 								index: 9
@@ -95,7 +95,7 @@ JSRoot {
 						argument: JSReferenceIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/192/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 9

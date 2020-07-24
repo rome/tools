@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/private-fields/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/private-fields/input.ts"
 		end: Object {
 			column: 0
 			index: 71
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/class/private-fields/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/private-fields/input.ts"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/private-fields/input.ts"
 				end: Object {
 					column: 1
 					index: 70
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/private-fields/input.ts"
 					end: Object {
 						column: 1
 						index: 70
@@ -111,7 +111,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/private-fields/input.ts"
 									identifierName: "a"
 									end: Object {
 										column: 4
@@ -126,7 +126,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 4
 									index: 14
@@ -141,7 +141,7 @@ JSRoot {
 						}
 						value: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/private-fields/input.ts"
 							end: Object {
 								column: 13
 								index: 23
@@ -155,7 +155,7 @@ JSRoot {
 						}
 						typeAnnotation: TSStringKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 12
 									index: 22
@@ -181,7 +181,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 4
 									index: 14
@@ -200,7 +200,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "b"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/private-fields/input.ts"
 									identifierName: "b"
 									end: Object {
 										column: 4
@@ -215,7 +215,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 4
 									index: 28
@@ -231,7 +231,7 @@ JSRoot {
 						value: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/private-fields/input.ts"
 							end: Object {
 								column: 6
 								index: 30
@@ -256,7 +256,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 5
 									index: 29
@@ -275,7 +275,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "c"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/private-fields/input.ts"
 									identifierName: "c"
 									end: Object {
 										column: 4
@@ -290,7 +290,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 4
 									index: 35
@@ -305,7 +305,7 @@ JSRoot {
 						}
 						value: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/private-fields/input.ts"
 							end: Object {
 								column: 14
 								index: 45
@@ -319,7 +319,7 @@ JSRoot {
 						}
 						typeAnnotation: TSNumberKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 13
 									index: 44
@@ -345,7 +345,7 @@ JSRoot {
 								line: 4
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 5
 									index: 36
@@ -364,7 +364,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "d"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/private-fields/input.ts"
 									identifierName: "d"
 									end: Object {
 										column: 4
@@ -379,7 +379,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 4
 									index: 50
@@ -395,7 +395,7 @@ JSRoot {
 						value: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/private-fields/input.ts"
 							end: Object {
 								column: 4
 								index: 50
@@ -420,7 +420,7 @@ JSRoot {
 								line: 5
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 4
 									index: 50
@@ -439,7 +439,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: ""
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/private-fields/input.ts"
 									identifierName: ""
 									end: Object {
 										column: 5
@@ -454,7 +454,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 5
 									index: 51
@@ -471,7 +471,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/private-fields/input.ts"
 							end: Object {
 								column: 6
 								index: 52
@@ -496,7 +496,7 @@ JSRoot {
 								line: 5
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 5
 									index: 51
@@ -515,7 +515,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "e"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/private-fields/input.ts"
 									identifierName: "e"
 									end: Object {
 										column: 4
@@ -530,7 +530,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 4
 									index: 57
@@ -546,7 +546,7 @@ JSRoot {
 						value: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/private-fields/input.ts"
 							end: Object {
 								column: 4
 								index: 57
@@ -571,7 +571,7 @@ JSRoot {
 								line: 6
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 4
 									index: 57
@@ -590,7 +590,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: ""
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/private-fields/input.ts"
 									identifierName: ""
 									end: Object {
 										column: 5
@@ -605,7 +605,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 5
 									index: 58
@@ -621,7 +621,7 @@ JSRoot {
 						value: undefined
 						definite: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/private-fields/input.ts"
 							end: Object {
 								column: 15
 								index: 68
@@ -635,7 +635,7 @@ JSRoot {
 						}
 						typeAnnotation: TSBooleanKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 14
 									index: 67
@@ -661,7 +661,7 @@ JSRoot {
 								line: 6
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 5
 									index: 58
@@ -686,7 +686,7 @@ JSRoot {
 
 ```
 
- input.ts:5:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/class/private-fields/input.ts:5:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

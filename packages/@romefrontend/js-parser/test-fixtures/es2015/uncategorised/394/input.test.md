@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/394/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/394/input.js"
 		end: Object {
 			column: 0
 			index: 44
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Invalid parenthesized binding"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/394/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/394/input.js"
 				end: Object {
 					column: 6
 					index: 6
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/394/input.js"
 					end: Object {
 						column: 6
 						index: 6
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/394/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 5
@@ -106,7 +106,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/394/input.js"
 							end: Object {
 								column: 5
 								index: 5
@@ -124,7 +124,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/394/input.js"
 				end: Object {
 					column: 9
 					index: 16
@@ -139,7 +139,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/394/input.js"
 					end: Object {
 						column: 8
 						index: 15
@@ -154,7 +154,7 @@ JSRoot {
 				right: JSObjectExpression {
 					properties: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/394/input.js"
 						end: Object {
 							column: 8
 							index: 15
@@ -170,7 +170,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "a"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/394/input.js"
 						identifierName: "a"
 						end: Object {
 							column: 2
@@ -188,7 +188,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/394/input.js"
 				end: Object {
 					column: 11
 					index: 28
@@ -203,7 +203,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/394/input.js"
 					end: Object {
 						column: 10
 						index: 27
@@ -218,7 +218,7 @@ JSRoot {
 				right: JSObjectExpression {
 					properties: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/394/input.js"
 						end: Object {
 							column: 10
 							index: 27
@@ -233,7 +233,7 @@ JSRoot {
 				}
 				left: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/394/input.js"
 						end: Object {
 							column: 4
 							index: 21
@@ -248,7 +248,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/394/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 2
@@ -266,7 +266,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "b"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/394/input.js"
 								identifierName: "b"
 								end: Object {
 									column: 4
@@ -281,7 +281,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/394/input.js"
 							identifierName: "b"
 							end: Object {
 								column: 4
@@ -300,7 +300,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/394/input.js"
 				end: Object {
 					column: 14
 					index: 43
@@ -315,7 +315,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/394/input.js"
 					end: Object {
 						column: 13
 						index: 42
@@ -330,7 +330,7 @@ JSRoot {
 				right: JSObjectExpression {
 					properties: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/394/input.js"
 						end: Object {
 							column: 13
 							index: 42
@@ -345,7 +345,7 @@ JSRoot {
 				}
 				left: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/394/input.js"
 						end: Object {
 							column: 7
 							index: 36
@@ -360,7 +360,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/394/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 2
@@ -378,7 +378,7 @@ JSRoot {
 						value: JSStringLiteral {
 							value: "c"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/394/input.js"
 								end: Object {
 									column: 6
 									index: 35
@@ -392,7 +392,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/394/input.js"
 							end: Object {
 								column: 7
 								index: 36
@@ -416,7 +416,7 @@ JSRoot {
 
 ```
 
- input.js:2:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/394/input.js:2:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid parenthesized binding
 

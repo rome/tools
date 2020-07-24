@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/array/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/array/input.ts"
 		end: Object {
 			column: 0
 			index: 21
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/array/input.ts"
 				end: Object {
 					column: 20
 					index: 20
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/array/input.ts"
 					end: Object {
 						column: 20
 						index: 20
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "arr"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/array/input.ts"
 								end: Object {
 									column: 19
 									index: 19
@@ -81,7 +81,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/array/input.ts"
 									end: Object {
 										column: 19
 										index: 19
@@ -95,7 +95,7 @@ JSRoot {
 								}
 								typeAnnotation: TSArrayType {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/array/input.ts"
 										end: Object {
 											column: 19
 											index: 19
@@ -109,7 +109,7 @@ JSRoot {
 									}
 									elementType: TSArrayType {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/array/input.ts"
 											end: Object {
 												column: 17
 												index: 17
@@ -123,7 +123,7 @@ JSRoot {
 										}
 										elementType: TSNumberKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/array/input.ts"
 												end: Object {
 													column: 15
 													index: 15
@@ -142,7 +142,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/array/input.ts"
 							end: Object {
 								column: 19
 								index: 19

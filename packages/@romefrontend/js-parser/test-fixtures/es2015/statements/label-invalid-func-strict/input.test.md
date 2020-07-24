@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/statements/label-invalid-func-strict/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/statements/label-invalid-func-strict/input.js"
 		end: Object {
 			column: 0
 			index: 54
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "In strict mode code, functions can only be declared at top level or inside a block"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/statements/label-invalid-func-strict/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/statements/label-invalid-func-strict/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 12
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/statements/label-invalid-func-strict/input.js"
 				end: Object {
 					column: 53
 					index: 53
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/statements/label-invalid-func-strict/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -112,7 +112,7 @@ JSRoot {
 			}
 			body: JSBlockStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/statements/label-invalid-func-strict/input.js"
 					end: Object {
 						column: 53
 						index: 53
@@ -128,7 +128,7 @@ JSRoot {
 					JSDirective {
 						value: "use strict"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/statements/label-invalid-func-strict/input.js"
 							end: Object {
 								column: 29
 								index: 29
@@ -145,7 +145,7 @@ JSRoot {
 				body: Array [
 					JSLabeledStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/statements/label-invalid-func-strict/input.js"
 							end: Object {
 								column: 52
 								index: 52
@@ -160,7 +160,7 @@ JSRoot {
 						label: JSIdentifier {
 							name: "bar"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/statements/label-invalid-func-strict/input.js"
 								identifierName: "bar"
 								end: Object {
 									column: 33
@@ -178,7 +178,7 @@ JSRoot {
 							id: JSBindingIdentifier {
 								name: "baz"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/statements/label-invalid-func-strict/input.js"
 									identifierName: "baz"
 									end: Object {
 										column: 47
@@ -193,7 +193,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/statements/label-invalid-func-strict/input.js"
 								end: Object {
 									column: 52
 									index: 52
@@ -209,7 +209,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/statements/label-invalid-func-strict/input.js"
 									end: Object {
 										column: 52
 										index: 52
@@ -232,7 +232,7 @@ JSRoot {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/statements/label-invalid-func-strict/input.js"
 									end: Object {
 										column: 49
 										index: 49
@@ -258,7 +258,7 @@ JSRoot {
 
 ```
 
- input.js:1:35 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/statements/label-invalid-func-strict/input.js:1:35 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ In strict mode code, functions can only be declared at top level or inside a block
 

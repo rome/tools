@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
 		end: Object {
 			column: 9
 			index: 9
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Tagged Template Literals are not allowed in optionalChain"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -88,7 +88,7 @@ JSRoot {
 				quasi: JSTemplateLiteral {
 					expressions: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
 						end: Object {
 							column: 9
 							index: 9
@@ -106,7 +106,7 @@ JSRoot {
 							raw: "foo"
 							tail: true
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
 								end: Object {
 									column: 8
 									index: 8
@@ -123,7 +123,7 @@ JSRoot {
 				}
 				tag: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
 						end: Object {
 							column: 4
 							index: 4
@@ -138,7 +138,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 1
@@ -156,7 +156,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "b"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
 								identifierName: "b"
 								end: Object {
 									column: 4
@@ -172,7 +172,7 @@ JSRoot {
 						}
 						optional: true
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
 							identifierName: "b"
 							end: Object {
 								column: 4
@@ -197,7 +197,7 @@ JSRoot {
 
 ```
 
- input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2020/optional-chaining/optional-tagged-template-literals/input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━
 
   ✖ Tagged Template Literals are not allowed in optionalChain
 

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/arrow-function/destructuring/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/arrow-function/destructuring/input.ts"
 		end: Object {
 			column: 0
 			index: 18
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/arrow-function/destructuring/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/arrow-function/destructuring/input.ts"
 				end: Object {
 					column: 8
 					index: 8
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/arrow-function/destructuring/input.ts"
 					end: Object {
 						column: 8
 						index: 8
@@ -89,7 +89,7 @@ JSRoot {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/destructuring/input.ts"
 						end: Object {
 							column: 8
 							index: 8
@@ -105,7 +105,7 @@ JSRoot {
 				left: JSAssignmentObjectPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/destructuring/input.ts"
 						end: Object {
 							column: 4
 							index: 4
@@ -123,7 +123,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/arrow-function/destructuring/input.ts"
 										identifierName: "a"
 										end: Object {
 											column: 4
@@ -138,7 +138,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/arrow-function/destructuring/input.ts"
 									end: Object {
 										column: 4
 										index: 4
@@ -154,7 +154,7 @@ JSRoot {
 							value: JSAssignmentIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/arrow-function/destructuring/input.ts"
 									identifierName: "a"
 									end: Object {
 										column: 4
@@ -169,7 +169,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/arrow-function/destructuring/input.ts"
 								end: Object {
 									column: 4
 									index: 4
@@ -188,7 +188,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/arrow-function/destructuring/input.ts"
 				end: Object {
 					column: 10
 					index: 10
@@ -203,7 +203,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/arrow-function/destructuring/input.ts"
 					end: Object {
 						column: 10
 						index: 10
@@ -219,7 +219,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/arrow-function/destructuring/input.ts"
 				end: Object {
 					column: 11
 					index: 11
@@ -234,7 +234,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/arrow-function/destructuring/input.ts"
 					end: Object {
 						column: 11
 						index: 11
@@ -250,7 +250,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/arrow-function/destructuring/input.ts"
 				end: Object {
 					column: 14
 					index: 14
@@ -265,7 +265,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/arrow-function/destructuring/input.ts"
 					end: Object {
 						column: 14
 						index: 14
@@ -281,7 +281,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/arrow-function/destructuring/input.ts"
 				end: Object {
 					column: 17
 					index: 17
@@ -297,7 +297,7 @@ JSRoot {
 				value: 0
 				format: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/arrow-function/destructuring/input.ts"
 					end: Object {
 						column: 16
 						index: 16
@@ -319,7 +319,7 @@ JSRoot {
 
 ```
 
- input.ts:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/arrow-function/destructuring/input.ts:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ,
 

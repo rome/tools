@@ -10,14 +10,14 @@
 JSRoot {
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/268/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/268/input.js"
 		end: Object {
 			column: 53
 			index: 53
@@ -34,7 +34,7 @@ JSRoot {
 			id: "0"
 			value: " expression closure is not supported"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/268/input.js"
 				end: Object {
 					column: 53
 					index: 53
@@ -57,7 +57,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected {"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/268/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -78,7 +78,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/268/input.js"
 					identifierName: "a"
 					end: Object {
 						column: 10
@@ -94,7 +94,7 @@ JSRoot {
 			}
 			trailingComments: Array ["0"]
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/268/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -116,7 +116,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/268/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -133,7 +133,7 @@ JSRoot {
 				directives: Array []
 				trailingComments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/268/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -149,7 +149,7 @@ JSRoot {
 					JSExpressionStatement {
 						trailingComments: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/268/input.js"
 							end: Object {
 								column: 14
 								index: 14
@@ -166,7 +166,7 @@ JSRoot {
 							format: undefined
 							trailingComments: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/268/input.js"
 								end: Object {
 									column: 14
 									index: 14
@@ -191,7 +191,7 @@ JSRoot {
 
 ```
 
- input.js:1:13 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/268/input.js:1:13 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected {
 

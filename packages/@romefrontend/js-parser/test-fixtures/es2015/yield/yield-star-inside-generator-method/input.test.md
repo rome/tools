@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/yield-star-inside-generator-method/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/yield-star-inside-generator-method/input.js"
 		end: Object {
 			column: 34
 			index: 34
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/yield-star-inside-generator-method/input.js"
 				end: Object {
 					column: 34
 					index: 34
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/yield-star-inside-generator-method/input.js"
 					end: Object {
 						column: 34
 						index: 34
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/yield-star-inside-generator-method/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 5
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/yield-star-inside-generator-method/input.js"
 							end: Object {
 								column: 33
 								index: 33
@@ -95,7 +95,7 @@ JSRoot {
 						}
 						init: JSObjectExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/yield-star-inside-generator-method/input.js"
 								end: Object {
 									column: 33
 									index: 33
@@ -114,7 +114,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "test"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/yield/yield-star-inside-generator-method/input.js"
 												identifierName: "test"
 												end: Object {
 													column: 15
@@ -129,7 +129,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/yield/yield-star-inside-generator-method/input.js"
 											end: Object {
 												column: 15
 												index: 15
@@ -143,7 +143,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/yield/yield-star-inside-generator-method/input.js"
 										end: Object {
 											column: 31
 											index: 31
@@ -165,7 +165,7 @@ JSRoot {
 										thisType: undefined
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/yield/yield-star-inside-generator-method/input.js"
 											end: Object {
 												column: 18
 												index: 18
@@ -181,7 +181,7 @@ JSRoot {
 									body: JSBlockStatement {
 										directives: Array []
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/yield/yield-star-inside-generator-method/input.js"
 											end: Object {
 												column: 31
 												index: 31
@@ -196,7 +196,7 @@ JSRoot {
 										body: Array [
 											JSExpressionStatement {
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/yield/yield-star-inside-generator-method/input.js"
 													end: Object {
 														column: 29
 														index: 29
@@ -211,7 +211,7 @@ JSRoot {
 												expression: JSYieldExpression {
 													delegate: true
 													loc: Object {
-														filename: "input.js"
+														filename: "es2015/yield/yield-star-inside-generator-method/input.js"
 														end: Object {
 															column: 29
 															index: 29
@@ -226,7 +226,7 @@ JSRoot {
 													argument: JSReferenceIdentifier {
 														name: "v"
 														loc: Object {
-															filename: "input.js"
+															filename: "es2015/yield/yield-star-inside-generator-method/input.js"
 															identifierName: "v"
 															end: Object {
 																column: 29

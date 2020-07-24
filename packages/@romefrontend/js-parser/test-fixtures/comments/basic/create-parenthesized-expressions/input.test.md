@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/basic/create-parenthesized-expressions/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/basic/create-parenthesized-expressions/input.js"
 		end: Object {
 			column: 0
 			index: 66
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " One"
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/create-parenthesized-expressions/input.js"
 				end: Object {
 					column: 6
 					index: 6
@@ -52,7 +52,7 @@ JSRoot {
 			id: "1"
 			value: " Two "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/create-parenthesized-expressions/input.js"
 				end: Object {
 					column: 9
 					index: 22
@@ -69,7 +69,7 @@ JSRoot {
 			id: "2"
 			value: " Three"
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/create-parenthesized-expressions/input.js"
 				end: Object {
 					column: 10
 					index: 41
@@ -86,7 +86,7 @@ JSRoot {
 			id: "3"
 			value: " Four "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/create-parenthesized-expressions/input.js"
 				end: Object {
 					column: 11
 					index: 61
@@ -105,7 +105,7 @@ JSRoot {
 			leadingComments: Array ["0"]
 			trailingComments: Array ["1"]
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/create-parenthesized-expressions/input.js"
 				end: Object {
 					column: 4
 					index: 11
@@ -122,7 +122,7 @@ JSRoot {
 				format: undefined
 				leadingComments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/create-parenthesized-expressions/input.js"
 					end: Object {
 						column: 2
 						index: 9
@@ -139,7 +139,7 @@ JSRoot {
 		JSExpressionStatement {
 			leadingComments: Array ["1"]
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/create-parenthesized-expressions/input.js"
 				end: Object {
 					column: 4
 					index: 27
@@ -156,7 +156,7 @@ JSRoot {
 				format: undefined
 				leadingComments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/create-parenthesized-expressions/input.js"
 					end: Object {
 						column: 2
 						index: 25
@@ -172,7 +172,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/create-parenthesized-expressions/input.js"
 				end: Object {
 					column: 2
 					index: 48
@@ -189,7 +189,7 @@ JSRoot {
 				format: undefined
 				leadingComments: Array ["2"]
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/create-parenthesized-expressions/input.js"
 					end: Object {
 						column: 3
 						index: 45
@@ -205,7 +205,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/create-parenthesized-expressions/input.js"
 				end: Object {
 					column: 15
 					index: 65
@@ -222,7 +222,7 @@ JSRoot {
 				format: undefined
 				leadingComments: Array ["3"]
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/create-parenthesized-expressions/input.js"
 					end: Object {
 						column: 13
 						index: 63

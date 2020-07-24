@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/319/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/319/input.js"
 		end: Object {
 			column: 17
 			index: 17
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/319/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/319/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -65,7 +65,7 @@ JSRoot {
 						value: 10
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/319/input.js"
 							end: Object {
 								column: 16
 								index: 16
@@ -81,7 +81,7 @@ JSRoot {
 				]
 				callee: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/319/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -97,7 +97,7 @@ JSRoot {
 						value: 123
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/319/input.js"
 							end: Object {
 								column: 4
 								index: 4
@@ -114,7 +114,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "toString"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/319/input.js"
 								identifierName: "toString"
 								end: Object {
 									column: 13
@@ -129,7 +129,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/319/input.js"
 							identifierName: "toString"
 							end: Object {
 								column: 13

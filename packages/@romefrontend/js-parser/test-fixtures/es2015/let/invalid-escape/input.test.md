@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/let/invalid-escape/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/let/invalid-escape/input.js"
 		end: Object {
 			column: 0
 			index: 15
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/let/invalid-escape/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/let/invalid-escape/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "let"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/let/invalid-escape/input.js"
 					identifierName: "let"
 					end: Object {
 						column: 8
@@ -90,7 +90,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/let/invalid-escape/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -105,7 +105,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/let/invalid-escape/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -120,7 +120,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/let/invalid-escape/input.js"
 						identifierName: "x"
 						end: Object {
 							column: 10
@@ -138,7 +138,7 @@ JSRoot {
 					value: 5
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/let/invalid-escape/input.js"
 						end: Object {
 							column: 14
 							index: 14
@@ -161,7 +161,7 @@ JSRoot {
 
 ```
 
- input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/let/invalid-escape/input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

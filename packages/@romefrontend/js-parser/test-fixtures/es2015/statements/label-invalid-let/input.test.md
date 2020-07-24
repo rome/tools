@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/statements/label-invalid-let/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/statements/label-invalid-let/input.js"
 		end: Object {
 			column: 0
 			index: 14
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/statements/label-invalid-let/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSLabeledStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/statements/label-invalid-let/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -73,7 +73,7 @@ JSRoot {
 			label: JSIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/statements/label-invalid-let/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 3
@@ -89,7 +89,7 @@ JSRoot {
 			}
 			body: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/statements/label-invalid-let/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -104,7 +104,7 @@ JSRoot {
 				expression: JSReferenceIdentifier {
 					name: "let"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/statements/label-invalid-let/input.js"
 						identifierName: "let"
 						end: Object {
 							column: 8
@@ -122,7 +122,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/statements/label-invalid-let/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -137,7 +137,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "bar"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/statements/label-invalid-let/input.js"
 					identifierName: "bar"
 					end: Object {
 						column: 12
@@ -160,7 +160,7 @@ JSRoot {
 
 ```
 
- input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/statements/label-invalid-let/input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

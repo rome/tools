@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/destructuring/error-operator-for-default/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/destructuring/error-operator-for-default/input.js"
 		end: Object {
 			column: 0
 			index: 15
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Only '=' operator can be used for specifying default value."}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/destructuring/error-operator-for-default/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/destructuring/error-operator-for-default/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/destructuring/error-operator-for-default/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -88,7 +88,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "a"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/destructuring/error-operator-for-default/input.js"
 						identifierName: "a"
 						end: Object {
 							column: 13
@@ -105,7 +105,7 @@ JSRoot {
 				left: JSAssignmentArrayPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/destructuring/error-operator-for-default/input.js"
 						end: Object {
 							column: 9
 							index: 9
@@ -121,7 +121,7 @@ JSRoot {
 						JSAssignmentAssignmentPattern {
 							operator: "+="
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/destructuring/error-operator-for-default/input.js"
 								end: Object {
 									column: 8
 									index: 8
@@ -136,7 +136,7 @@ JSRoot {
 							left: JSAssignmentIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/destructuring/error-operator-for-default/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 3
@@ -153,7 +153,7 @@ JSRoot {
 							right: JSReferenceIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/destructuring/error-operator-for-default/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 8
@@ -180,7 +180,7 @@ JSRoot {
 
 ```
 
- input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/destructuring/error-operator-for-default/input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Only '=' operator can be used for specifying default value.
 

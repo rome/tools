@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-super-property/constructor_super/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-super-property/constructor_super/input.js"
 		end: Object {
 			column: 0
 			index: 65
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-super-property/constructor_super/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-super-property/constructor_super/input.js"
 				end: Object {
 					column: 1
 					index: 64
@@ -68,7 +68,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-super-property/constructor_super/input.js"
 					end: Object {
 						column: 1
 						index: 64
@@ -83,7 +83,7 @@ JSRoot {
 				superClass: JSReferenceIdentifier {
 					name: "B"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-super-property/constructor_super/input.js"
 						identifierName: "B"
 						end: Object {
 							column: 17
@@ -104,7 +104,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-super-property/constructor_super/input.js"
 									identifierName: "constructor"
 									end: Object {
 										column: 15
@@ -119,7 +119,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-super-property/constructor_super/input.js"
 								end: Object {
 									column: 15
 									index: 35
@@ -133,7 +133,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-super-property/constructor_super/input.js"
 							end: Object {
 								column: 5
 								index: 62
@@ -155,7 +155,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-super-property/constructor_super/input.js"
 								end: Object {
 									column: 17
 									index: 37
@@ -181,7 +181,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-super-property/constructor_super/input.js"
 								end: Object {
 									column: 15
 									index: 35
@@ -197,7 +197,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-super-property/constructor_super/input.js"
 								end: Object {
 									column: 5
 									index: 62
@@ -212,7 +212,7 @@ JSRoot {
 							body: Array [
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-super-property/constructor_super/input.js"
 										end: Object {
 											column: 16
 											index: 56
@@ -227,7 +227,7 @@ JSRoot {
 									expression: JSCallExpression {
 										arguments: Array []
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-super-property/constructor_super/input.js"
 											end: Object {
 												column: 15
 												index: 55
@@ -241,7 +241,7 @@ JSRoot {
 										}
 										callee: JSSuper {
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-super-property/constructor_super/input.js"
 												end: Object {
 													column: 13
 													index: 53

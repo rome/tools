@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/shorthand/1/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/shorthand/1/input.js"
 		end: Object {
 			column: 0
 			index: 21
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected keyword const"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/shorthand/1/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/shorthand/1/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/shorthand/1/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/shorthand/1/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 5
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/shorthand/1/input.js"
 							end: Object {
 								column: 19
 								index: 19
@@ -119,7 +119,7 @@ JSRoot {
 						}
 						init: JSObjectExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/shorthand/1/input.js"
 								end: Object {
 									column: 18
 									index: 18
@@ -137,7 +137,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "const"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/shorthand/1/input.js"
 												identifierName: "const"
 												end: Object {
 													column: 16
@@ -152,7 +152,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/shorthand/1/input.js"
 											end: Object {
 												column: 16
 												index: 16
@@ -168,7 +168,7 @@ JSRoot {
 									value: JSReferenceIdentifier {
 										name: "const"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/shorthand/1/input.js"
 											identifierName: "const"
 											end: Object {
 												column: 16
@@ -183,7 +183,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/shorthand/1/input.js"
 										end: Object {
 											column: 16
 											index: 16
@@ -210,7 +210,7 @@ JSRoot {
 
 ```
 
- input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/shorthand/1/input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected keyword const
 

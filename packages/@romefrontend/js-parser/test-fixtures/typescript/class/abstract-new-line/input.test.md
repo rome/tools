@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/abstract-new-line/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/abstract-new-line/input.ts"
 		end: Object {
 			column: 0
 			index: 20
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/abstract-new-line/input.ts"
 				end: Object {
 					column: 8
 					index: 8
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "abstract"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/abstract-new-line/input.ts"
 					identifierName: "abstract"
 					end: Object {
 						column: 8
@@ -68,7 +68,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "B"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/abstract-new-line/input.ts"
 					identifierName: "B"
 					end: Object {
 						column: 7
@@ -83,7 +83,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/abstract-new-line/input.ts"
 				end: Object {
 					column: 10
 					index: 19
@@ -102,7 +102,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/abstract-new-line/input.ts"
 					end: Object {
 						column: 10
 						index: 19

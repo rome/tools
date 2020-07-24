@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/275/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/275/input.js"
 		end: Object {
 			column: 26
 			index: 26
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSThrowStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/275/input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			argument: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/275/input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -66,7 +66,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "message"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/275/input.js"
 									identifierName: "message"
 									end: Object {
 										column: 15
@@ -81,7 +81,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/275/input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -97,7 +97,7 @@ JSRoot {
 						value: JSStringLiteral {
 							value: "Error"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/275/input.js"
 								end: Object {
 									column: 24
 									index: 24
@@ -111,7 +111,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/275/input.js"
 							end: Object {
 								column: 24
 								index: 24

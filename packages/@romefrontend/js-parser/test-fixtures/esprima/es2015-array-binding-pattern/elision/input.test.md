@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-array-binding-pattern/elision/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-array-binding-pattern/elision/input.js"
 		end: Object {
 			column: 0
 			index: 10
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-array-binding-pattern/elision/input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-array-binding-pattern/elision/input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -64,7 +64,7 @@ JSRoot {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-array-binding-pattern/elision/input.js"
 						end: Object {
 							column: 9
 							index: 9
@@ -84,7 +84,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-array-binding-pattern/elision/input.js"
 						end: Object {
 							column: 8
 							index: 8
@@ -100,7 +100,7 @@ JSRoot {
 						JSBindingArrayPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-array-binding-pattern/elision/input.js"
 								end: Object {
 									column: 5
 									index: 5
@@ -115,7 +115,7 @@ JSRoot {
 							elements: Array [
 								JSArrayHole {
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-array-binding-pattern/elision/input.js"
 										end: Object {
 											column: 2
 											index: 2
@@ -130,7 +130,7 @@ JSRoot {
 								}
 								JSArrayHole {
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-array-binding-pattern/elision/input.js"
 										end: Object {
 											column: 3
 											index: 3

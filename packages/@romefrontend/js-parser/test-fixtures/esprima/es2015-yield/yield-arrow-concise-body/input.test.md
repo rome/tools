@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-yield/yield-arrow-concise-body/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/yield-arrow-concise-body/input.js"
 		end: Object {
 			column: 0
 			index: 18
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/yield-arrow-concise-body/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-arrow-concise-body/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -67,7 +67,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-yield/yield-arrow-concise-body/input.js"
 						end: Object {
 							column: 6
 							index: 6
@@ -83,7 +83,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/yield-arrow-concise-body/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 2
@@ -102,7 +102,7 @@ JSRoot {
 				body: JSBinaryExpression {
 					operator: "*"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-yield/yield-arrow-concise-body/input.js"
 						end: Object {
 							column: 16
 							index: 16
@@ -117,7 +117,7 @@ JSRoot {
 					left: JSReferenceIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-yield/yield-arrow-concise-body/input.js"
 							identifierName: "x"
 							end: Object {
 								column: 8
@@ -134,7 +134,7 @@ JSRoot {
 					right: JSReferenceIdentifier {
 						name: "yield"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-yield/yield-arrow-concise-body/input.js"
 							identifierName: "yield"
 							end: Object {
 								column: 16

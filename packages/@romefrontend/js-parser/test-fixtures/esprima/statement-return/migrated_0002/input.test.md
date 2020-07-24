@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/statement-return/migrated_0002/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/statement-return/migrated_0002/input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/statement-return/migrated_0002/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSFunctionExpression {
 				id: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-return/migrated_0002/input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -71,7 +71,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/statement-return/migrated_0002/input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -87,7 +87,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/statement-return/migrated_0002/input.js"
 						end: Object {
 							column: 24
 							index: 24
@@ -102,7 +102,7 @@ JSRoot {
 					body: Array [
 						JSReturnStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/statement-return/migrated_0002/input.js"
 								end: Object {
 									column: 22
 									index: 22
@@ -117,7 +117,7 @@ JSRoot {
 							argument: JSReferenceIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/statement-return/migrated_0002/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 21

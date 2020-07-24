@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/dynamic-import/direct-calls-only/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/dynamic-import/direct-calls-only/input.js"
 		end: Object {
 			column: 0
 			index: 50
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "The only valid meta property for import is import.meta"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2020/dynamic-import/direct-calls-only/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "failsParse"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/dynamic-import/direct-calls-only/input.js"
 					identifierName: "failsParse"
 					end: Object {
 						column: 19
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/dynamic-import/direct-calls-only/input.js"
 				end: Object {
 					column: 1
 					index: 49
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/dynamic-import/direct-calls-only/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/dynamic-import/direct-calls-only/input.js"
 					end: Object {
 						column: 1
 						index: 49
@@ -128,7 +128,7 @@ JSRoot {
 				body: Array [
 					JSReturnStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/dynamic-import/direct-calls-only/input.js"
 							end: Object {
 								column: 23
 								index: 47
@@ -143,7 +143,7 @@ JSRoot {
 						argument: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/dynamic-import/direct-calls-only/input.js"
 								end: Object {
 									column: 22
 									index: 46
@@ -157,7 +157,7 @@ JSRoot {
 							}
 							callee: JSMetaProperty {
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/dynamic-import/direct-calls-only/input.js"
 									end: Object {
 										column: 20
 										index: 44
@@ -172,7 +172,7 @@ JSRoot {
 								meta: JSIdentifier {
 									name: "import"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2020/dynamic-import/direct-calls-only/input.js"
 										identifierName: "import"
 										end: Object {
 											column: 15
@@ -189,7 +189,7 @@ JSRoot {
 								property: JSIdentifier {
 									name: "then"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2020/dynamic-import/direct-calls-only/input.js"
 										identifierName: "then"
 										end: Object {
 											column: 20
@@ -217,7 +217,7 @@ JSRoot {
 
 ```
 
- input.js:2:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2020/dynamic-import/direct-calls-only/input.js:2:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The only valid meta property for import is import.meta
 

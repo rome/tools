@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "core/regression/T2921/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/regression/T2921/input.js"
 		end: Object {
 			column: 0
 			index: 9
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown start to an statement expression"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/regression/T2921/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/regression/T2921/input.js"
 				end: Object {
 					column: 5
 					index: 5
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "<="
 				loc: Object {
-					filename: "input.js"
+					filename: "core/regression/T2921/input.js"
 					end: Object {
 						column: 5
 						index: 5
@@ -88,7 +88,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/regression/T2921/input.js"
 						end: Object {
 							column: 5
 							index: 5
@@ -104,7 +104,7 @@ JSRoot {
 				left: JSReferenceIdentifier {
 					name: "a"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/regression/T2921/input.js"
 						identifierName: "a"
 						end: Object {
 							column: 1
@@ -122,7 +122,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/regression/T2921/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -137,7 +137,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "b"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/regression/T2921/input.js"
 					identifierName: "b"
 					end: Object {
 						column: 7
@@ -160,7 +160,7 @@ JSRoot {
 
 ```
 
- input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/regression/T2921/input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
 

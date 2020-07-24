@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/basic/surrounding-while-loop-comments/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/basic/surrounding-while-loop-comments/input.js"
 		end: Object {
 			column: 0
 			index: 69
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " infinite "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/surrounding-while-loop-comments/input.js"
 				end: Object {
 					column: 29
 					index: 29
@@ -52,7 +52,7 @@ JSRoot {
 			id: "1"
 			value: " bar "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/surrounding-while-loop-comments/input.js"
 				end: Object {
 					column: 56
 					index: 56
@@ -71,7 +71,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/surrounding-while-loop-comments/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -86,7 +86,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/surrounding-while-loop-comments/input.js"
 				end: Object {
 					column: 68
 					index: 68
@@ -108,7 +108,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/surrounding-while-loop-comments/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -124,7 +124,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/surrounding-while-loop-comments/input.js"
 					end: Object {
 						column: 68
 						index: 68
@@ -141,7 +141,7 @@ JSRoot {
 						leadingComments: Array ["0"]
 						trailingComments: Array ["1"]
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/basic/surrounding-while-loop-comments/input.js"
 							end: Object {
 								column: 46
 								index: 46
@@ -157,7 +157,7 @@ JSRoot {
 							value: true
 							leadingComments: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/basic/surrounding-while-loop-comments/input.js"
 								end: Object {
 									column: 41
 									index: 41
@@ -175,7 +175,7 @@ JSRoot {
 							directives: Array []
 							trailingComments: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/basic/surrounding-while-loop-comments/input.js"
 								end: Object {
 									column: 46
 									index: 46
@@ -192,7 +192,7 @@ JSRoot {
 					JSVariableDeclarationStatement {
 						leadingComments: Array ["1"]
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/basic/surrounding-while-loop-comments/input.js"
 							end: Object {
 								column: 66
 								index: 66
@@ -208,7 +208,7 @@ JSRoot {
 							kind: "var"
 							leadingComments: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/basic/surrounding-while-loop-comments/input.js"
 								end: Object {
 									column: 66
 									index: 66
@@ -226,7 +226,7 @@ JSRoot {
 										name: "each"
 										leadingComments: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "comments/basic/surrounding-while-loop-comments/input.js"
 											identifierName: "each"
 											end: Object {
 												column: 65
@@ -243,7 +243,7 @@ JSRoot {
 									init: undefined
 									leadingComments: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/basic/surrounding-while-loop-comments/input.js"
 										end: Object {
 											column: 65
 											index: 65

@@ -10,14 +10,14 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "input.js"
+	filename: "es2015/let/let-as-identifier-strict-fail/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/let/let-as-identifier-strict-fail/input.js"
 		end: Object {
 			column: 0
 			index: 22
@@ -33,7 +33,7 @@ JSRoot {
 		JSDirective {
 			value: "use strict"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/let/let-as-identifier-strict-fail/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -56,7 +56,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "let is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/let/let-as-identifier-strict-fail/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -75,7 +75,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/let/let-as-identifier-strict-fail/input.js"
 				end: Object {
 					column: 7
 					index: 21
@@ -90,7 +90,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "+"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/let/let-as-identifier-strict-fail/input.js"
 					end: Object {
 						column: 7
 						index: 21
@@ -105,7 +105,7 @@ JSRoot {
 				left: JSReferenceIdentifier {
 					name: "let"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/let/let-as-identifier-strict-fail/input.js"
 						identifierName: "let"
 						end: Object {
 							column: 3
@@ -123,7 +123,7 @@ JSRoot {
 					value: 1
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/let/let-as-identifier-strict-fail/input.js"
 						end: Object {
 							column: 7
 							index: 21
@@ -146,7 +146,7 @@ JSRoot {
 
 ```
 
- input.js:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/let/let-as-identifier-strict-fail/input.js:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ let is a reserved word
 

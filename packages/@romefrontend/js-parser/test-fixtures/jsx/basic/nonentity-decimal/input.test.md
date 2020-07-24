@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/basic/nonentity-decimal/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/basic/nonentity-decimal/input.jsx"
 		end: Object {
 			column: 15
 			index: 15
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/basic/nonentity-decimal/input.jsx"
 				end: Object {
 					column: 15
 					index: 15
@@ -50,7 +50,7 @@ JSRoot {
 				name: JSXReferenceIdentifier {
 					name: "A"
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/basic/nonentity-decimal/input.jsx"
 						end: Object {
 							column: 2
 							index: 2
@@ -67,7 +67,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/basic/nonentity-decimal/input.jsx"
 					end: Object {
 						column: 15
 						index: 15
@@ -83,7 +83,7 @@ JSRoot {
 					JSXText {
 						value: "&#1f4a9;"
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/basic/nonentity-decimal/input.jsx"
 							end: Object {
 								column: 11
 								index: 11

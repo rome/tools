@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/method-computed/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/method-computed/input.ts"
 		end: Object {
 			column: 0
 			index: 75
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/method-computed/input.ts"
 					identifierName: "C"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/method-computed/input.ts"
 				end: Object {
 					column: 1
 					index: 74
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/method-computed/input.ts"
 					end: Object {
 						column: 1
 						index: 74
@@ -87,7 +87,7 @@ JSRoot {
 						key: JSComputedPropertyKey {
 							value: JSMemberExpression {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/method-computed/input.ts"
 									end: Object {
 										column: 20
 										index: 30
@@ -102,7 +102,7 @@ JSRoot {
 								object: JSReferenceIdentifier {
 									name: "Symbol"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/method-computed/input.ts"
 										identifierName: "Symbol"
 										end: Object {
 											column: 11
@@ -120,7 +120,7 @@ JSRoot {
 									value: JSIdentifier {
 										name: "iterator"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/method-computed/input.ts"
 											identifierName: "iterator"
 											end: Object {
 												column: 20
@@ -135,7 +135,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/method-computed/input.ts"
 										identifierName: "iterator"
 										end: Object {
 											column: 20
@@ -151,7 +151,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/method-computed/input.ts"
 								end: Object {
 									column: 21
 									index: 31
@@ -166,7 +166,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/method-computed/input.ts"
 							end: Object {
 								column: 30
 								index: 40
@@ -191,7 +191,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/method-computed/input.ts"
 								end: Object {
 									column: 21
 									index: 31
@@ -213,7 +213,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/method-computed/input.ts"
 								end: Object {
 									column: 29
 									index: 39
@@ -227,7 +227,7 @@ JSRoot {
 							}
 							returnType: TSVoidKeywordTypeAnnotation {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/method-computed/input.ts"
 									end: Object {
 										column: 29
 										index: 39
@@ -247,7 +247,7 @@ JSRoot {
 						key: JSComputedPropertyKey {
 							value: JSMemberExpression {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/method-computed/input.ts"
 									end: Object {
 										column: 20
 										index: 61
@@ -262,7 +262,7 @@ JSRoot {
 								object: JSReferenceIdentifier {
 									name: "Symbol"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/method-computed/input.ts"
 										identifierName: "Symbol"
 										end: Object {
 											column: 11
@@ -280,7 +280,7 @@ JSRoot {
 									value: JSIdentifier {
 										name: "iterator"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/method-computed/input.ts"
 											identifierName: "iterator"
 											end: Object {
 												column: 20
@@ -295,7 +295,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/method-computed/input.ts"
 										identifierName: "iterator"
 										end: Object {
 											column: 20
@@ -311,7 +311,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/method-computed/input.ts"
 								end: Object {
 									column: 21
 									index: 62
@@ -326,7 +326,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/method-computed/input.ts"
 							end: Object {
 								column: 31
 								index: 72
@@ -351,7 +351,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/method-computed/input.ts"
 								end: Object {
 									column: 22
 									index: 63
@@ -373,7 +373,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/method-computed/input.ts"
 								end: Object {
 									column: 30
 									index: 71
@@ -387,7 +387,7 @@ JSRoot {
 							}
 							returnType: TSVoidKeywordTypeAnnotation {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/method-computed/input.ts"
 									end: Object {
 										column: 30
 										index: 71

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0248/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0248/input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -34,7 +34,7 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0248/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 					}
 					frame {
 						location: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0248/input.js"
 							identifierName: "__proto__"
 							end: Object {
 								column: 9
@@ -79,7 +79,7 @@ JSRoot {
 	body: Array [
 		JSLabeledStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0248/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -94,7 +94,7 @@ JSRoot {
 			label: JSIdentifier {
 				name: "__proto__"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0248/input.js"
 					identifierName: "__proto__"
 					end: Object {
 						column: 9
@@ -110,7 +110,7 @@ JSRoot {
 			}
 			body: JSLabeledStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0248/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -125,7 +125,7 @@ JSRoot {
 				label: JSIdentifier {
 					name: "__proto__"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0248/input.js"
 						identifierName: "__proto__"
 						end: Object {
 							column: 20
@@ -141,7 +141,7 @@ JSRoot {
 				}
 				body: JSExpressionStatement {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0248/input.js"
 						end: Object {
 							column: 25
 							index: 25
@@ -157,7 +157,7 @@ JSRoot {
 						value: 42
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0248/input.js"
 							end: Object {
 								column: 24
 								index: 24
@@ -181,7 +181,7 @@ JSRoot {
 
 ```
 
- input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0248/input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Label __proto__ is already declared
 

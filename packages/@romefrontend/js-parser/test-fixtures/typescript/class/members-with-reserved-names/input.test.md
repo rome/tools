@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/members-with-reserved-names/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/members-with-reserved-names/input.ts"
 		end: Object {
 			column: 0
 			index: 39
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/members-with-reserved-names/input.ts"
 					identifierName: "C"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/members-with-reserved-names/input.ts"
 				end: Object {
 					column: 1
 					index: 38
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/members-with-reserved-names/input.ts"
 					end: Object {
 						column: 1
 						index: 38
@@ -88,7 +88,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "delete"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/members-with-reserved-names/input.ts"
 									identifierName: "delete"
 									end: Object {
 										column: 17
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/members-with-reserved-names/input.ts"
 								end: Object {
 									column: 17
 									index: 27
@@ -118,7 +118,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/members-with-reserved-names/input.ts"
 							end: Object {
 								column: 26
 								index: 36
@@ -143,7 +143,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/members-with-reserved-names/input.ts"
 								end: Object {
 									column: 17
 									index: 27
@@ -165,7 +165,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/members-with-reserved-names/input.ts"
 								end: Object {
 									column: 25
 									index: 35
@@ -179,7 +179,7 @@ JSRoot {
 							}
 							returnType: TSVoidKeywordTypeAnnotation {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/members-with-reserved-names/input.ts"
 									end: Object {
 										column: 25
 										index: 35
