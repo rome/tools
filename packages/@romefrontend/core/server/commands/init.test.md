@@ -79,6 +79,7 @@ unknownVariable
 	}
 }
 
+
 # rome.rjson
 globals: [
 	"unknownVariable"
@@ -109,6 +110,7 @@ globals: [
 		"vendorPath": "../remote"
 	}
 }
+
 
 # rome.rjson
 {}
