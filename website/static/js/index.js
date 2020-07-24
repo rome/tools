@@ -164,7 +164,7 @@ function toggleMobileTOC(event) {
 		mobileSidebarActive = undefined;
 	} else {
 		if (mobileSidebarActive === "nav") {
-			toggleMobileTOC(event);
+			toggleMobileNav(event);
 		}
 		mobileSidebarActive = "toc";
 	}
