@@ -1,16 +1,18 @@
-import {NodeBaseWithComments} from "@internal/ast";
+import {AnyMarkdownInlineNode, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 // **something**
 export interface MarkdownBoldInline extends NodeBaseWithComments {
 	type: "MarkdownBoldInline";
-	value: string;
+	value: Array<AnyMarkdownInlineNode>;
 }
 
 export const markdownBoldInline = createBuilder<MarkdownBoldInline>(
 	"MarkdownBoldInline",
 	{
 		bindingKeys: {},
-		visitorKeys: {},
+		visitorKeys: {
+			value: true,
+		},
 	},
 );

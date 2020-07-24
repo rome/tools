@@ -6,6 +6,8 @@ import {
 	ValueToken,
 } from "@internal/parser-core";
 import {DiagnosticCategory} from "@internal/diagnostics";
+import {InlineState} from "@internal/markdown-parser/State";
+import {Number0} from "@internal/ob1";
 
 export interface MarkdownParserOptions extends Omit<
 	ParserOptions,
@@ -14,15 +16,39 @@ export interface MarkdownParserOptions extends Omit<
 	consumeDiagnosticCategory?: DiagnosticCategory;
 }
 
-export type State = {
+export type MarkdownParserState = {
 	isBlockHead: boolean;
+	isParagraph: boolean;
+	inlineState: InlineState;
 };
 
 export type ListProperties = {
 	checked: boolean | undefined;
 	numeric: boolean;
-	value?: string;
+	/**
+	 * In case of a numeric list item
+	 */
+	value?: "*" | "-";
 };
+
+export type CodeProperties = {
+	language: string;
+};
+
+/**
+ * This type is used to determine if the character is used for inline styling or not
+ * https://github.github.com/gfm/#emphasis-and-strong-emphasis
+ */
+export type DelimiterRun = {
+	// the index of the counter part that closes the delimiter
+	// this should be assigned only to delimiters that
+	closingIndexOfDelimiter?: Number0;
+	leftFlankingDelimiter?: boolean;
+	rightFlankingDelimiter?: boolean;
+};
+
+export type Emphasis = ComplexToken<"Emphasis", DelimiterRun>;
+export type Strong = ComplexToken<"Strong", DelimiterRun>;
 
 export type Tokens = BaseTokens & {
 	HeadingLevel: ValueToken<"HeadingLevel", number>;
@@ -31,5 +57,17 @@ export type Tokens = BaseTokens & {
 	NewLine: SimpleToken<"NewLine">;
 	Break: ValueToken<"Break", string>;
 	ListItem: ComplexToken<"ListItem", ListProperties>;
-	EndParagraph: SimpleToken<"EndParagraph">;
+	Code: ComplexToken<"Code", CodeProperties>;
+	// [
+	OpenSquareBracket: SimpleToken<"OpenSquareBracket">;
+	// ]
+	CloseSquareBracket: SimpleToken<"CloseSquareBracket">;
+	// (
+	OpenBracket: SimpleToken<"OpenBracket">;
+	// )
+	CloseBracket: SimpleToken<"CloseBracket">;
+	// from * to _
+	Emphasis: Emphasis;
+	// from ** to __
+	Strong: Strong;
 };

@@ -1,5 +1,5 @@
 import {MarkdownListItem} from "@internal/ast";
-import {Builder, Token, Tokens, concat} from "@internal/formatter";
+import {Builder, Token, Tokens, concat, softline} from "@internal/formatter";
 
 export default function MarkdownListItem(
 	builder: Builder,
@@ -10,7 +10,7 @@ export default function MarkdownListItem(
 		tokens.push(`[${node.checked ? "x" : " "}]`);
 	}
 
-	tokens.push(builder.tokenizeStatementList(node.children, node));
-
+	node.children.forEach((child) => tokens.push(builder.tokenize(child, node)));
+	tokens.push(softline);
 	return concat(tokens);
 }
