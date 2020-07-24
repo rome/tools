@@ -62,6 +62,11 @@
 		@include desktop-only() {
 			padding-top: 0;
 			min-width: 256px;
+			display: none;
+		}
+
+		&.with-toc{
+			display: block;
 		}
 
 		h2 {

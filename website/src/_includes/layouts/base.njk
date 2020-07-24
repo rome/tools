@@ -185,22 +185,27 @@
 				{{ content | safe }}
 			</div>
 
-			{% if tocHTML != "" %}
+					{% set sidebarClasses = "sidebar toc" %}
+				{% if tocHTML != "" %}
+					{% set sidebarClasses = "sidebar toc with-toc" %}
+				{% endif %}
+
 				<div class="sidebar-container">
-					<div class="sidebar toc">
+					<div class="{{sidebarClasses}}">
 						<div class="docsearch-container mobile">
 							{% include "./svg/search-icon.njk" %}
 							<input type="text" id="docsearch-mobile" class="docsearch" placeholder="Search" />
 						</div>
+						{% if tocHTML != "" %}
 						<nav aria-labelledby="table-of-content" class="table-of-contents">
 							<h2 id="table-of-content">Table of Contents</h2>
 							<div class="toc-container">
 								{{ tocHTML }}
 							</div>
 						</nav>
+						{% endif %}
 					</div>
 				</div>
-			{% endif %}
 		</div>
 
 		{% if environment == "production" %}

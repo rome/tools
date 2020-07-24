@@ -195,7 +195,9 @@ window.onload = function() {
 			window.docsearch({
 				apiKey: "66db1ad366d458c6acded7cbc23dba7e",
 				indexName: "romefrontend",
-				inputSelector: window.innerWidth > 768 ? '#docsearch-desktop' : "#docsearch-mobile",
+				inputSelector: window.innerWidth > 768
+					? "#docsearch-desktop"
+					: "#docsearch-mobile",
 				debug: false, // Set debug to true if you want to inspect the dropdown
 			});
 		},
