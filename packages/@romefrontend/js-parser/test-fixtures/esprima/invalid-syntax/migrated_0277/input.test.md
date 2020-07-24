@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "enum is a reserved word"}
+				message: MARKUP {
+					parts: Array [
+						"enum"
+						RAW_MARKUP {value: " is a reserved word"}
+					]
+				}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0277/input.js"

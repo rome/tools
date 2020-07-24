@@ -53,7 +53,7 @@ Object {
 			}
 			description: Object {
 				category: "analyzeDependencies/cjsExportInES"
-				message: SAFE_MARKUP {value: "You cannot use CommonJS exports in an ES module"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "You cannot use CommonJS exports in an ES module"}]}
 				advice: Array [
 					action {
 						command: "check"
@@ -62,8 +62,8 @@ Object {
 						shortcut: "s"
 						args: Array ["unknown"]
 						commandFlags: Object {decisions: Array ["suppress-analyzeDependencies/cjsExportInES-unknown-1"]}
-						instruction: SAFE_MARKUP {value: "To suppress this error run"}
-						noun: SAFE_MARKUP {value: "Add suppression comment"}
+						instruction: MARKUP {parts: Array [RAW_MARKUP {value: "To suppress this error run"}]}
+						noun: MARKUP {parts: Array [RAW_MARKUP {value: "Add suppression comment"}]}
 					}
 					action {
 						args: Array []
@@ -72,8 +72,8 @@ Object {
 						hidden: true
 						shortcut: undefined
 						commandFlags: Object {decisions: Array ["global-suppress-analyzeDependencies/cjsExportInES"]}
-						instruction: SAFE_MARKUP {value: "To add suppression comments for ALL files with this category run"}
-						noun: SAFE_MARKUP {value: "Add suppression comments for ALL files with this category"}
+						instruction: MARKUP {parts: Array [RAW_MARKUP {value: "To add suppression comments for ALL files with this category run"}]}
+						noun: MARKUP {parts: Array [RAW_MARKUP {value: "Add suppression comments for ALL files with this category"}]}
 					}
 				]
 			}
@@ -290,20 +290,6 @@ Object {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse/js"}]
-			description: Object {
-				category: "parse/js"
-				message: SAFE_MARKUP {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
-				advice: Array [
-					log {
-						category: "info"
-						text: SAFE_MARKUP {value: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"}
-					}
-					log {
-						category: "info"
-						text: SAFE_MARKUP {value: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"package.json\" />"}
-					}
-				]
-			}
 			location: Object {
 				filename: "unknown"
 				mtime: undefined
@@ -318,6 +304,26 @@ Object {
 					index: 0
 					line: 1
 				}
+			}
+			description: Object {
+				category: "parse/js"
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}]}
+				advice: Array [
+					log {
+						category: "info"
+						text: MARKUP {parts: Array [RAW_MARKUP {value: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"}]}
+					}
+					log {
+						category: "info"
+						text: MARKUP {
+							parts: Array [
+								RAW_MARKUP {value: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\""}
+								"package.json"
+								RAW_MARKUP {value: "\" />"}
+							]
+						}
+					}
+				]
 			}
 		}
 	]

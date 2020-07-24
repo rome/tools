@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Can not use 'await' as identifier inside an async function"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Can not use 'await' as identifier inside an async function"}]}
 			}
 			location: Object {
 				filename: "es2017/async-functions/await-async-function-expression-name/input.js"

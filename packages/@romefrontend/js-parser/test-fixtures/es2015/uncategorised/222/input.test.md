@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Invalid left-hand side in assignment object property value"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Invalid left-hand side in "}
+						"assignment object property value"
+					]
+				}
 			}
 			location: Object {
 				filename: "es2015/uncategorised/222/input.js"

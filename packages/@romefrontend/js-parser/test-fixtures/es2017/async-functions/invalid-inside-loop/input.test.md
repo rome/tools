@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Async functions can only be declared at the top level or inside a block"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Async functions can only be declared at the top level or inside a block"}]}
 			}
 			location: Object {
 				filename: "es2017/async-functions/invalid-inside-loop/input.js"

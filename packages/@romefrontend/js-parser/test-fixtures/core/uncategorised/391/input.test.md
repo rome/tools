@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Expected an identifier"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Expected an identifier"}]}
 			}
 			location: Object {
 				filename: "core/uncategorised/391/input.js"

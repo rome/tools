@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unterminated regular expression"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unterminated regular expression"}]}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0062/input.js"

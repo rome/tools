@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unexpected keyword typeof"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Unexpected keyword "}
+						"typeof"
+					]
+				}
 			}
 			location: Object {
 				filename: "es2015/modules/import-invalid-keyword-typeof/input.js"

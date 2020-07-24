@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unknown class property start"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unknown class property start"}]}
 			}
 			location: Object {
 				filename: "es2015/class-methods/disallow-literal-get/input.js"

@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "get can't contain a unicode escape"}
+				message: MARKUP {
+					parts: Array [
+						"get"
+						RAW_MARKUP {value: " can't contain a unicode escape"}
+					]
+				}
 			}
 			location: Object {
 				filename: "es2015/class/invalid-escape-get/input.js"

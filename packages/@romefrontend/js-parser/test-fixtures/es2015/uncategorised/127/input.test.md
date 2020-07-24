@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Constructor cannot be a generator"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Constructor cannot be a generator"}]}
 			}
 			location: Object {
 				filename: "es2015/uncategorised/127/input.js"

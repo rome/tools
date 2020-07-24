@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Flow type cast expressions aren't allowed in TypeScript"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Flow type cast expressions aren't allowed in TypeScript"}]}
 			}
 			location: Object {
 				filename: "typescript/assert-predicate/arrow-function/input.ts"

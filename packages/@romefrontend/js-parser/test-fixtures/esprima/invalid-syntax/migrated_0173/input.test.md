@@ -54,7 +54,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "No loop label found"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "No loop label found"}]}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0173/input.js"

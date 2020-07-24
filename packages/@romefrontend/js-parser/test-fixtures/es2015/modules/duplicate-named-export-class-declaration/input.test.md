@@ -50,11 +50,17 @@ JSRoot {
 			}
 			description: Object {
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "`Foo` has already been exported. Exported identifiers must be unique."}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "`"}
+						"Foo"
+						RAW_MARKUP {value: "` has already been exported. Exported identifiers must be unique."}
+					]
+				}
 				advice: Array [
 					log {
 						category: "info"
-						text: SAFE_MARKUP {value: "Defined already here"}
+						text: MARKUP {parts: Array [RAW_MARKUP {value: "Defined already here"}]}
 					}
 					frame {
 						location: Object {

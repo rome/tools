@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Invalid left-hand side in for-in statement"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Invalid left-hand side in "}
+						"for-in statement"
+					]
+				}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0126/input.js"

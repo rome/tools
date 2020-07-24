@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Expected `from` for an export node"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Expected `from` for an export node"}]}
 			}
 			location: Object {
 				filename: "esprima/es2015-export-declaration/invalid-export-batch-missing-from-clause/input.js"

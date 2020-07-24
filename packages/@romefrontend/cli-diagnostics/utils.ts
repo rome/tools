@@ -18,6 +18,7 @@ import {
 	Markup,
 	convertToMarkupFromRandomString,
 	markup,
+	readMarkup,
 } from "@romefrontend/cli-layout";
 
 const unicodeControls = /[\u0000-\u001f\u007f-\u00a0]/u;
@@ -80,12 +81,12 @@ export function showInvisibles(
 
 		const visible = showInvisibleChar(char);
 		if (visible !== undefined) {
-			ret += markup`<dim>${visible}</dim>`.value;
+			ret += readMarkup(markup`<dim>${visible}</dim>`);
 			continue;
 		}
 
 		if (nonASCIIwhitespace.test(char) || unicodeControls.test(char)) {
-			ret += showUnicodeChar(char).value;
+			ret += readMarkup(showUnicodeChar(char));
 			continue;
 		}
 

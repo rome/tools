@@ -50,11 +50,11 @@ JSRoot {
 			}
 			description: Object {
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "constructors in/after an Optional Chain are not allowed"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "constructors in/after an Optional Chain are not allowed"}]}
 				advice: Array [
 					log {
 						category: "info"
-						text: SAFE_MARKUP {value: "Optional chain member responsible"}
+						text: MARKUP {parts: Array [RAW_MARKUP {value: "Optional chain member responsible"}]}
 					}
 					frame {
 						location: Object {

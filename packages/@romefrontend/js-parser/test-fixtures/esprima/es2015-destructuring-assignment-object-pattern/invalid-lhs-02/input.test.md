@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Invalid left-hand side in assignment object property value"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Invalid left-hand side in "}
+						"assignment object property value"
+					]
+				}
 			}
 			location: Object {
 				filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-02/input.js"

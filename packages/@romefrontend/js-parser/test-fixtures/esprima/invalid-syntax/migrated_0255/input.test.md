@@ -30,51 +30,6 @@ JSRoot {
 			line: 1
 		}
 	}
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse/js"}]
-			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0255/input.js"
-				mtime: undefined
-				sourceText: undefined
-				end: Object {
-					column: 0
-					index: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					index: 0
-					line: 1
-				}
-			}
-			description: Object {
-				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unclosed block"}
-				advice: Array [
-					log {
-						category: "info"
-						text: SAFE_MARKUP {value: "We expected to find the closing character <emphasis>}</emphasis> here"}
-					}
-					frame {
-						location: Object {
-							filename: "esprima/invalid-syntax/migrated_0255/input.js"
-							end: Object {
-								column: 0
-								index: 7
-								line: 2
-							}
-							start: Object {
-								column: 0
-								index: 7
-								line: 2
-							}
-						}
-					}
-				]
-			}
-		}
-	]
 	body: Array [
 		JSBlockStatement {
 			directives: Array []
@@ -123,6 +78,62 @@ JSRoot {
 					}
 				}
 			]
+		}
+	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse/js"}]
+			location: Object {
+				filename: "esprima/invalid-syntax/migrated_0255/input.js"
+				mtime: undefined
+				sourceText: undefined
+				end: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			description: Object {
+				category: "parse/js"
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Unclosed "}
+						"block"
+					]
+				}
+				advice: Array [
+					log {
+						category: "info"
+						text: MARKUP {
+							parts: Array [
+								RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
+								"}"
+								RAW_MARKUP {value: "</emphasis> here"}
+							]
+						}
+					}
+					frame {
+						location: Object {
+							filename: "esprima/invalid-syntax/migrated_0255/input.js"
+							end: Object {
+								column: 0
+								index: 7
+								line: 2
+							}
+							start: Object {
+								column: 0
+								index: 7
+								line: 2
+							}
+						}
+					}
+				]
+			}
 		}
 	]
 }

@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "A trailing comma is not permitted after the rest element"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "A trailing comma is not permitted after the rest element"}]}
 			}
 			location: Object {
 				filename: "es2018/object-rest-spread/8/input.js"

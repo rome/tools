@@ -6,7 +6,7 @@
  */
 
 import {
-	Markup,
+	AnyMarkup,
 	ansiEscapes,
 	concatMarkup,
 	markup,
@@ -30,7 +30,7 @@ function formatShortcut({shortcut}: SelectOption): string {
 
 export default async function select<Options extends SelectOptions>(
 	reporter: Reporter,
-	message: Markup,
+	message: AnyMarkup,
 	{
 		options,
 		defaults = [],

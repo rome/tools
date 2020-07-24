@@ -37,7 +37,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unterminated comment"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unterminated comment"}]}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0146/input.js"

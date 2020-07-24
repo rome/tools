@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unexpected token"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unexpected token"}]}
 			}
 			location: Object {
 				filename: "esprima/es2015-arrow-function/param-with-rest-without-arrow/input.js"

@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Complex binding patterns require an initialization value"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Complex binding patterns require an initialization value"}]}
 			}
 			location: Object {
 				filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"

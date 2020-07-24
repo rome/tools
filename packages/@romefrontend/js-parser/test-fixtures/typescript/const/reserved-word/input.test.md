@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unknown TS non array type start"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unknown TS non array type start"}]}
 			}
 			location: Object {
 				filename: "typescript/const/reserved-word/input.ts"

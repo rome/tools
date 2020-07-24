@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Expected `from` for an export node"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Expected `from` for an export node"}]}
 			}
 			location: Object {
 				filename: "experimental/export-extensions/export-with-ts/input.js"

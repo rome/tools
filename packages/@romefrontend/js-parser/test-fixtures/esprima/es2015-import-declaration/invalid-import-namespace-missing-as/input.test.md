@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Expected keyword as"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Expected keyword "}
+						"as"
+					]
+				}
 			}
 			location: Object {
 				filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"

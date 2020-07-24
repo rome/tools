@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "A required element cannot follow an optional element."}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "A required element cannot follow an optional element."}]}
 			}
 			location: Object {
 				filename: "typescript/types/tuple-optional-invalid/input.ts"

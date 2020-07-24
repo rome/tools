@@ -31,6 +31,7 @@ import {
 	isEmptyMarkup,
 	markup,
 	markupTag,
+	readMarkup,
 } from "@romefrontend/cli-layout";
 import {Dict} from "@romefrontend/typescript-helpers";
 
@@ -230,7 +231,7 @@ export default function buildCodeFrame(
 
 		// Show invisible characters
 		highlightLine = showInvisibles(
-			highlightLine.value,
+			readMarkup(highlightLine),
 			{
 				ignoreLeadingTabs: true,
 				ignoreLoneSpaces: true,

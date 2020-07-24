@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Classes may not have a private field named '#constructor'"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Classes may not have a private field named '#constructor'"}]}
 			}
 			location: Object {
 				filename: "experimental/class-private-methods/failure-name-constructor/input.js"

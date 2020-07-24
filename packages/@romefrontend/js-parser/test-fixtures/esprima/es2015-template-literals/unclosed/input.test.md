@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unterminated template"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unterminated template"}]}
 			}
 			location: Object {
 				filename: "esprima/es2015-template-literals/unclosed/input.js"

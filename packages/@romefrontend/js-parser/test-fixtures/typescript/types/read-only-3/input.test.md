@@ -54,7 +54,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "'readonly' type modifier is only permitted on array and tuple literal types."}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "'readonly' type modifier is only permitted on array and tuple literal types."}]}
 			}
 			location: Object {
 				filename: "typescript/types/read-only-3/input.ts"

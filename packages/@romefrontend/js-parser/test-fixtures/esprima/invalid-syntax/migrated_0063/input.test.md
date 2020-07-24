@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unterminated string constant"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unterminated string constant"}]}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0063/input.js"

@@ -35,11 +35,11 @@ JSRoot {
 			origins: Array [Object {category: "parse/js"}]
 			description: Object {
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "super() is only valid inside a class constructor of a subclass"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "super() is only valid inside a class constructor of a subclass"}]}
 				advice: Array [
 					log {
 						category: "info"
-						text: SAFE_MARKUP {value: "Maybe a typo in the method name ('constructor') or not extending another class?"}
+						text: MARKUP {parts: Array [RAW_MARKUP {value: "Maybe a typo in the method name ('constructor') or not extending another class?"}]}
 					}
 				]
 			}

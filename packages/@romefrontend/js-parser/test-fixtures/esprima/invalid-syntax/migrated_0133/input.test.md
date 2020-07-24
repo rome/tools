@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Missing catch or finally clause"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Missing catch or finally clause"}]}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0133/input.js"

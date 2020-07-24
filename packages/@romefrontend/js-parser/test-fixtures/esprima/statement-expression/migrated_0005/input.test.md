@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Expecting Unicode escape sequence \\uXXXX"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Expecting Unicode escape sequence \\uXXXX"}]}
 			}
 			location: Object {
 				filename: "esprima/statement-expression/migrated_0005/input.js"

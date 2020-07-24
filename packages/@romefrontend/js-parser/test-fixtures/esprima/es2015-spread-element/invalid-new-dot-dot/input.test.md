@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unknown start to an new expression argument"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Unknown start to an "}
+						"new expression argument"
+					]
+				}
 			}
 			location: Object {
 				filename: "esprima/es2015-spread-element/invalid-new-dot-dot/input.js"

@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Expected number in radix 2"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Expected number in radix "}
+						"2"
+					]
+				}
 			}
 			location: Object {
 				filename: "es2015/uncategorised/206/input.js"

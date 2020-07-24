@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Can't use await outside of an async function"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Can't use await outside of an async function"}]}
 			}
 			location: Object {
 				filename: "es2015/uncategorised/363/input.js"

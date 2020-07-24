@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "await* has been removed from the async functions proposal. Use Promise.all() instead."}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "await* has been removed from the async functions proposal. Use Promise.all() instead."}]}
 			}
 			location: Object {
 				filename: "es2017/async-functions/2/input.js"

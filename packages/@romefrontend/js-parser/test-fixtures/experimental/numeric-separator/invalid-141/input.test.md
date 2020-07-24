@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Invalid or unexpected int token"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Invalid or unexpected int token"}]}
 			}
 			location: Object {
 				filename: "experimental/numeric-separator/invalid-141/input.js"

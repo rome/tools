@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "The rest element has to be the last element when destructuring"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}]}
 			}
 			location: Object {
 				filename: "es2018/object-rest-spread/7/input.js"

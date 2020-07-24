@@ -53,7 +53,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "let is a reserved word"}
+				message: MARKUP {
+					parts: Array [
+						"let"
+						RAW_MARKUP {value: " is a reserved word"}
+					]
+				}
 			}
 			location: Object {
 				filename: "es2015/let/let-as-identifier-strict-fail/input.js"

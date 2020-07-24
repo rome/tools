@@ -36,7 +36,13 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unexpected character <emphasis>\u200d</emphasis>"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Unexpected character <emphasis>"}
+						"\u200d"
+						RAW_MARKUP {value: "</emphasis>"}
+					]
+				}
 			}
 			location: Object {
 				filename: "core/uncategorised/451/input.js"

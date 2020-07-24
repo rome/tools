@@ -11,6 +11,7 @@ import {parseJSON} from "@romefrontend/codec-json";
 import {test} from "rome";
 import {ParserOptions} from "@romefrontend/parser-core";
 import {createUnknownFilePath} from "@romefrontend/path";
+import {readMarkup} from "@romefrontend/cli-layout";
 
 // These are just some very basic tests, most of it is already covered by test262-parse so most are redundant
 function parseExtJSON(opts: ParserOptions) {
@@ -117,7 +118,7 @@ test(
 			() => {
 				parseExtJSON({input: "true /* unclosed comment"});
 			},
-			descriptions.JSON.UNCLOSED_BLOCK_COMMENT.message.value,
+			readMarkup(descriptions.JSON.UNCLOSED_BLOCK_COMMENT.message),
 		);
 	},
 );
@@ -151,28 +152,30 @@ test(
 			() => {
 				parseExtJSON({input: '"foo'});
 			},
-			descriptions.JSON.UNCLOSED_STRING.message.value,
+			readMarkup(descriptions.JSON.UNCLOSED_STRING.message),
 		);
 
 		t.throws(
 			() => {
 				parseExtJSON({input: "'foo'"});
 			},
-			descriptions.JSON.SINGLE_QUOTE_USAGE.message.value,
+			readMarkup(descriptions.JSON.SINGLE_QUOTE_USAGE.message),
 		);
 
 		t.throws(
 			() => {
 				parseExtJSON({input: '"\\u000Z"'});
 			},
-			descriptions.STRING_ESCAPE.INVALID_HEX_DIGIT_FOR_ESCAPE.message.value,
+			readMarkup(
+				descriptions.STRING_ESCAPE.INVALID_HEX_DIGIT_FOR_ESCAPE.message,
+			),
 		);
 
 		t.throws(
 			() => {
 				parseExtJSON({input: '"\\u123"'});
 			},
-			descriptions.STRING_ESCAPE.NOT_ENOUGH_CODE_POINTS.message.value,
+			readMarkup(descriptions.STRING_ESCAPE.NOT_ENOUGH_CODE_POINTS.message),
 		);
 	},
 );
@@ -199,7 +202,7 @@ test(
 			() => {
 				t.is(parseExtJSON({input: "undefined"}), undefined);
 			},
-			descriptions.JSON.UNDEFINED_IN_JSON.message.value,
+			readMarkup(descriptions.JSON.UNDEFINED_IN_JSON.message),
 		);
 	},
 );
@@ -215,28 +218,28 @@ test(
 			() => {
 				parseExtJSON({input: "[,]"});
 			},
-			descriptions.JSON.REDUNDANT_COMMA.message.value,
+			readMarkup(descriptions.JSON.REDUNDANT_COMMA.message),
 		);
 
 		t.throws(
 			() => {
 				parseExtJSON({input: "[1,,]"});
 			},
-			descriptions.JSON.REDUNDANT_COMMA.message.value,
+			readMarkup(descriptions.JSON.REDUNDANT_COMMA.message),
 		);
 
 		t.throws(
 			() => {
 				parseExtJSON({input: "[1, /*comment*/,]"});
 			},
-			descriptions.JSON.REDUNDANT_COMMA.message.value,
+			readMarkup(descriptions.JSON.REDUNDANT_COMMA.message),
 		);
 
 		t.throws(
 			() => {
 				parseExtJSON({input: '["foo": "bar"]'});
 			},
-			descriptions.JSON.MISTAKEN_ARRAY_IDENTITY.message.value,
+			readMarkup(descriptions.JSON.MISTAKEN_ARRAY_IDENTITY.message),
 		);
 	},
 );
@@ -258,21 +261,21 @@ test(
 			() => {
 				parseExtJSON({input: "{,}"});
 			},
-			descriptions.JSON.REDUNDANT_COMMA.message.value,
+			readMarkup(descriptions.JSON.REDUNDANT_COMMA.message),
 		);
 
 		t.throws(
 			() => {
 				parseExtJSON({input: '{"foo": "bar",,}'});
 			},
-			descriptions.JSON.REDUNDANT_COMMA.message.value,
+			readMarkup(descriptions.JSON.REDUNDANT_COMMA.message),
 		);
 
 		t.throws(
 			() => {
 				parseExtJSON({input: '{"foo": "bar", /*comment*/,}'});
 			},
-			descriptions.JSON.REDUNDANT_COMMA.message.value,
+			readMarkup(descriptions.JSON.REDUNDANT_COMMA.message),
 		);
 	},
 );
@@ -284,35 +287,35 @@ test(
 			() => {
 				parseJSON({input: '{foo: "bar"}'});
 			},
-			descriptions.JSON.PROPERTY_KEY_UNQUOTED_IN_JSON.message.value,
+			readMarkup(descriptions.JSON.PROPERTY_KEY_UNQUOTED_IN_JSON.message),
 		);
 
 		t.throws(
 			() => {
 				parseJSON({input: "// foobar\ntrue"});
 			},
-			descriptions.JSON.COMMENTS_IN_JSON.message.value,
+			readMarkup(descriptions.JSON.COMMENTS_IN_JSON.message),
 		);
 
 		t.throws(
 			() => {
 				parseJSON({input: "/* foobar */\ntrue"});
 			},
-			descriptions.JSON.COMMENTS_IN_JSON.message.value,
+			readMarkup(descriptions.JSON.COMMENTS_IN_JSON.message),
 		);
 
 		t.throws(
 			() => {
 				parseJSON({input: '{"foo": "bar",}'});
 			},
-			descriptions.JSON.TRAILING_COMMA_IN_JSON.message.value,
+			readMarkup(descriptions.JSON.TRAILING_COMMA_IN_JSON.message),
 		);
 
 		t.throws(
 			() => {
 				parseJSON({input: '["foo",]'});
 			},
-			descriptions.JSON.TRAILING_COMMA_IN_JSON.message.value,
+			readMarkup(descriptions.JSON.TRAILING_COMMA_IN_JSON.message),
 		);
 	},
 );

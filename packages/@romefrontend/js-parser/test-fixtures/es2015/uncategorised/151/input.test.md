@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unexpected token"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unexpected token"}]}
 			}
 			location: Object {
 				filename: "es2015/uncategorised/151/input.js"

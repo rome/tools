@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "import.meta may only appear in a module"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "import.meta may only appear in a module"}]}
 			}
 			location: Object {
 				filename: "es2020/import-meta/error-in-script/input.js"

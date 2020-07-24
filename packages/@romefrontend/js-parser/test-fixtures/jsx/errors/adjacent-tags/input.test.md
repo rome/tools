@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment \\<>...\\</>?"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment \\<>...\\</>?"}]}
 			}
 			location: Object {
 				filename: "jsx/errors/adjacent-tags/input.jsx"

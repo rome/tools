@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unknown start to an class property value"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Unknown start to an "}
+						"class property value"
+					]
+				}
 			}
 			location: Object {
 				filename: "experimental/class-private-methods/asi-failure-generator/input.js"

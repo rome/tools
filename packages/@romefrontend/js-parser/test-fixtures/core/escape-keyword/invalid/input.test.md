@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Escape sequence in keyword break"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Escape sequence in keyword "}
+						"break"
+					]
+				}
 			}
 			location: Object {
 				filename: "core/escape-keyword/invalid/input.js"

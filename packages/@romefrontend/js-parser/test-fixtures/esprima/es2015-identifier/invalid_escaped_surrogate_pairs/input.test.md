@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Invalid Unicode escape"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Invalid Unicode escape"}]}
 			}
 			location: Object {
 				filename: "esprima/es2015-identifier/invalid_escaped_surrogate_pairs/input.js"

@@ -50,7 +50,12 @@ import {
 	percentInsideCoverageDirectory,
 	sortMapKeys,
 } from "./utils";
-import {Markup, concatMarkup, markup} from "@romefrontend/cli-layout";
+import {
+	Markup,
+	concatMarkup,
+	markup,
+	readMarkup,
+} from "@romefrontend/cli-layout";
 import {MAX_WORKER_COUNT} from "@romefrontend/core/common/constants";
 import {TestWorkerFlags} from "@romefrontend/core/test-worker/TestWorker";
 import net = require("net");
@@ -63,7 +68,7 @@ import {SourceMapConsumerCollection} from "@romefrontend/codec-source-map";
 
 class BridgeDiagnosticsError extends DiagnosticsError {
 	constructor(diag: Diagnostic, bridge: Bridge) {
-		super(diag.description.message.value, [diag]);
+		super(readMarkup(diag.description.message), [diag]);
 		this.bridge = bridge;
 	}
 

@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unexpected type cast in parameter position"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unexpected type cast in parameter position"}]}
 			}
 			location: Object {
 				filename: "typescript/cast/arrow-async-parameter-assertion/input.ts"

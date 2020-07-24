@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "super is only allowed in object methods and classes"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "super is only allowed in object methods and classes"}]}
 			}
 			location: Object {
 				filename: "es2015/class-methods/direct-super-in-object-method/input.js"

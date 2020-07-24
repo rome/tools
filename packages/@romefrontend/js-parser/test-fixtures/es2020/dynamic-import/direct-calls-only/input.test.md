@@ -36,7 +36,16 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "The only valid meta property for import is import.meta"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "The only valid meta property for "}
+						"import"
+						RAW_MARKUP {value: " is "}
+						"import"
+						RAW_MARKUP {value: "."}
+						"meta"
+					]
+				}
 			}
 			location: Object {
 				filename: "es2020/dynamic-import/direct-calls-only/input.js"

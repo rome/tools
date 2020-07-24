@@ -36,7 +36,13 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unknown label <emphasis>x</emphasis>"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Unknown label <emphasis>"}
+						"x"
+						RAW_MARKUP {value: "</emphasis>"}
+					]
+				}
 			}
 			location: Object {
 				filename: "core/uncategorised/460/input.js"

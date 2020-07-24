@@ -53,7 +53,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Expected a semicolon or a line terminator"}]}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0257/input.js"

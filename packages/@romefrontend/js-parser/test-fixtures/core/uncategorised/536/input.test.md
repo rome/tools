@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "A constant must have an initializer"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "A constant must have an initializer"}]}
 			}
 			location: Object {
 				filename: "core/uncategorised/536/input.js"

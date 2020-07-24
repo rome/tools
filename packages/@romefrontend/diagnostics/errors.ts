@@ -9,6 +9,7 @@ import {Diagnostics, DiagnosticsProcessor} from "@romefrontend/diagnostics";
 import {DiagnosticsPrinter} from "@romefrontend/cli-diagnostics";
 import {Diagnostic, DiagnosticSuppressions} from "./types";
 import {Reporter} from "@romefrontend/cli-reporter";
+import {readMarkup} from "@romefrontend/cli-layout";
 
 // If printDiagnosticsToString throws a DiagnosticsError then we'll be trapped in a loop forever
 // since we'll continuously be trying to serialize diagnostics
@@ -46,7 +47,9 @@ export class DiagnosticsError extends Error {
 			return [
 				"Possible DiagnosticsError message serialization infinite loop",
 				"Diagnostic messages:",
-				this.diagnostics.map((diag) => `- ${diag.description.message.value}`),
+				this.diagnostics.map((diag) =>
+					`- ${readMarkup(diag.description.message)}`
+				),
 			].join("\n");
 		}
 
@@ -81,7 +84,7 @@ export function createSingleDiagnosticError(
 	suppressions?: DiagnosticSuppressions,
 ): DiagnosticsError {
 	return new DiagnosticsError(
-		diag.description.message.value,
+		readMarkup(diag.description.message),
 		[diag],
 		suppressions,
 	);

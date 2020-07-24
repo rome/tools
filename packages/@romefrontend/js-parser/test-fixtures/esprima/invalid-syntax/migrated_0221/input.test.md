@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Octal literal in strict mode"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Octal literal in strict mode"}]}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0221/input.js"

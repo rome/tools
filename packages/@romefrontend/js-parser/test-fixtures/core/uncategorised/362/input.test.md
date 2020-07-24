@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Invalid Unicode escape"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Invalid Unicode escape"}]}
 			}
 			location: Object {
 				filename: "core/uncategorised/362/input.js"

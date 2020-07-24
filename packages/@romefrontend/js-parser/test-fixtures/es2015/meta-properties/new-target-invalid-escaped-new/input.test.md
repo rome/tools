@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Escape sequence in keyword new"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Escape sequence in keyword "}
+						"new"
+					]
+				}
 			}
 			location: Object {
 				filename: "es2015/meta-properties/new-target-invalid-escaped-new/input.js"

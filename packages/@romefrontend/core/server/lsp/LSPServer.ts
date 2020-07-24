@@ -34,7 +34,7 @@ import {
 	getPathFromTextDocument,
 	getWorkerBufferPatches,
 } from "./utils";
-import {markup} from "@romefrontend/cli-layout";
+import {markup, readMarkup} from "@romefrontend/cli-layout";
 
 export default class LSPServer {
 	constructor(request: ServerRequest) {
@@ -93,7 +93,7 @@ export default class LSPServer {
 		lines.push(`[Diagnostics - ${date.toTimeString()}] ${path.join()}`);
 		for (const diag of diagnostics) {
 			lines.push(
-				`  (${diag.description.category}) ${diag.description.message.value}`,
+				`  (${diag.description.category}) ${readMarkup(diag.description.message)}`,
 			);
 		}
 		this.logMessage(path, lines.join("\n"));

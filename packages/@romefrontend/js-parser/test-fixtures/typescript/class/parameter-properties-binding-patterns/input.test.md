@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "A parameter property may not be declared using a binding pattern."}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "A parameter property may not be declared using a binding pattern."}]}
 			}
 			location: Object {
 				filename: "typescript/class/parameter-properties-binding-patterns/input.ts"

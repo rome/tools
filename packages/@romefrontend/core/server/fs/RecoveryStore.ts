@@ -139,7 +139,7 @@ export default class RecoveryStore {
 			paths.push([path, timestamp]);
 		}
 
-		paths.sort((a, b) => b[1] - a[1]);
+		paths.sort((a, b) => a[1] - b[1]);
 
 		return new AbsoluteFilePathSet(paths.map(([path]) => path));
 	}

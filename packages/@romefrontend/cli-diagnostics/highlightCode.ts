@@ -21,6 +21,7 @@ import {
 	convertToMarkupFromRandomString,
 	markup,
 	markupTag,
+	readMarkup,
 } from "@romefrontend/cli-layout";
 import {MarkupTokenType} from "@romefrontend/cli-layout/types";
 import {tokenizeHTML} from "@romefrontend/html-parser";
@@ -159,7 +160,7 @@ function reduce<Token extends TokenShape>(
 		}
 	}
 
-	return splitLines(concatMarkup(parts).value).map((line) =>
+	return splitLines(readMarkup(concatMarkup(parts))).map((line) =>
 		convertToMarkupFromRandomString(line)
 	);
 }
@@ -360,7 +361,7 @@ function highlightJS(
 					}
 
 					// These are contextual keywords
-					const word = value.value;
+					const word = readMarkup(value);
 					if (
 						word === "from" ||
 						word === "let" ||

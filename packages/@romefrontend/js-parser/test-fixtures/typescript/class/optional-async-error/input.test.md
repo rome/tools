@@ -36,7 +36,13 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Expected ts syntax to be enabled"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Expected "}
+						"ts"
+						RAW_MARKUP {value: " syntax to be enabled"}
+					]
+				}
 			}
 			location: Object {
 				filename: "typescript/class/optional-async-error/input.js"

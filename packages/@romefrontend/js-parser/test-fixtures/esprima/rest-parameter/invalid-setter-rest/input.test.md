@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "setter function argument must not be a rest parameter"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "setter function argument must not be a rest parameter"}]}
 			}
 			location: Object {
 				filename: "esprima/rest-parameter/invalid-setter-rest/input.js"

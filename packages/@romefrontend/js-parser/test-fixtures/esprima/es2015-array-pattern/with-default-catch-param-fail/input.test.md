@@ -50,11 +50,22 @@ JSRoot {
 			}
 			description: Object {
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unclosed catch clause param"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Unclosed "}
+						"catch clause param"
+					]
+				}
 				advice: Array [
 					log {
 						category: "info"
-						text: SAFE_MARKUP {value: "We expected to find the closing character <emphasis>)</emphasis> here"}
+						text: MARKUP {
+							parts: Array [
+								RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
+								")"
+								RAW_MARKUP {value: "</emphasis> here"}
+							]
+						}
 					}
 					frame {
 						location: Object {

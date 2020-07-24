@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Classes may not have static property named prototype"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Classes may not have static property named prototype"}]}
 			}
 			location: Object {
 				filename: "es2015/class-methods/disallow-static-generator-prototype/input.js"

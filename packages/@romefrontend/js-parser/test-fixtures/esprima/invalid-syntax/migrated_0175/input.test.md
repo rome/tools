@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unexpected token, expected while"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Unexpected token, expected "}
+						"while"
+					]
+				}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0175/input.js"

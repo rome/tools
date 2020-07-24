@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Can't have an await on a regular for loop"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Can't have an await on a regular for loop"}]}
 			}
 			location: Object {
 				filename: "es2018/async-generators/for-await-no-semi-3/input.js"

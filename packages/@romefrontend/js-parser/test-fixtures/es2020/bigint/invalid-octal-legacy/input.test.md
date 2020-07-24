@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "A bigint can't be an octal"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "A bigint can't be an octal"}]}
 			}
 			location: Object {
 				filename: "es2020/bigint/invalid-octal-legacy/input.js"

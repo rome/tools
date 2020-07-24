@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "In TypeScript, a new expression with type arguments must have parens"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "In TypeScript, a new expression with type arguments must have parens"}]}
 			}
 			location: Object {
 				filename: "typescript/type-arguments/new-false-positive-2/input.ts"

@@ -30,51 +30,6 @@ JSRoot {
 			line: 1
 		}
 	}
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse/js"}]
-			location: Object {
-				filename: "jsx/errors/wrong-closing-tag/input.jsx"
-				mtime: undefined
-				sourceText: undefined
-				end: Object {
-					column: 4
-					index: 4
-					line: 1
-				}
-				start: Object {
-					column: 1
-					index: 1
-					line: 1
-				}
-			}
-			description: Object {
-				category: "parse/js"
-				message: SAFE_MARKUP {value: "Expected a corresponding JSX closing tag for <emphasis>Foo</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: SAFE_MARKUP {value: "Originated from opening tag of <emphasis>Foo</emphasis>"}
-					}
-					frame {
-						location: Object {
-							filename: "jsx/errors/wrong-closing-tag/input.jsx"
-							end: Object {
-								column: 4
-								index: 4
-								line: 1
-							}
-							start: Object {
-								column: 1
-								index: 1
-								line: 1
-							}
-						}
-					}
-				]
-			}
-		}
-	]
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
@@ -124,6 +79,63 @@ JSRoot {
 						line: 1
 					}
 				}
+			}
+		}
+	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse/js"}]
+			location: Object {
+				filename: "jsx/errors/wrong-closing-tag/input.jsx"
+				mtime: undefined
+				sourceText: undefined
+				end: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+				start: Object {
+					column: 1
+					index: 1
+					line: 1
+				}
+			}
+			description: Object {
+				category: "parse/js"
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Expected a corresponding JSX closing tag for <emphasis>"}
+						"Foo"
+						RAW_MARKUP {value: "</emphasis>"}
+					]
+				}
+				advice: Array [
+					log {
+						category: "info"
+						text: MARKUP {
+							parts: Array [
+								RAW_MARKUP {value: "Originated from opening tag of <emphasis>"}
+								"Foo"
+								RAW_MARKUP {value: "</emphasis>"}
+							]
+						}
+					}
+					frame {
+						location: Object {
+							filename: "jsx/errors/wrong-closing-tag/input.jsx"
+							end: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+							start: Object {
+								column: 1
+								index: 1
+								line: 1
+							}
+						}
+					}
+				]
 			}
 		}
 	]

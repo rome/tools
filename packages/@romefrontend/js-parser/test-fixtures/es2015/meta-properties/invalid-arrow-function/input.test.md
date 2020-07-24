@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "new.target can only be used in functions or class properties"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "new.target can only be used in functions or class properties"}]}
 			}
 			location: Object {
 				filename: "es2015/meta-properties/invalid-arrow-function/input.js"

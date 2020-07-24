@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Invalid super suffix operator"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Invalid super suffix operator"}]}
 			}
 			location: Object {
 				filename: "es2015/class-methods/malformed-super-expression/input.js"

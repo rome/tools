@@ -22,7 +22,10 @@ import {descriptions} from "./descriptions";
 import {matchesSuppression} from "@romefrontend/compiler";
 import {SourceMapConsumerCollection} from "@romefrontend/codec-source-map";
 import DiagnosticsNormalizer from "./DiagnosticsNormalizer";
-import {MarkupFormatNormalizeOptions} from "@romefrontend/cli-layout";
+import {
+	MarkupFormatNormalizeOptions,
+	readMarkup,
+} from "@romefrontend/cli-layout";
 
 type UniquePart =
 	| "filename"
@@ -164,7 +167,7 @@ export default class DiagnosticsProcessor {
 		for (const filter of this.filters) {
 			if (
 				filter.message !== undefined &&
-				filter.message.value !== diag.description.message.value
+				readMarkup(filter.message) !== readMarkup(diag.description.message)
 			) {
 				continue;
 			}
@@ -224,7 +227,9 @@ export default class DiagnosticsProcessor {
 			const parts = [];
 
 			if (rule.includes("label")) {
-				parts.push(`label:${diag.label?.value}`);
+				parts.push(
+					`label:${diag.label === undefined ? "" : readMarkup(diag.label)}`,
+				);
 			}
 
 			if (rule.includes("category")) {
@@ -236,7 +241,7 @@ export default class DiagnosticsProcessor {
 			}
 
 			if (rule.includes("message")) {
-				parts.push(`message:${diag.description.message.value}`);
+				parts.push(`message:${readMarkup(diag.description.message)}`);
 			}
 
 			if (start !== undefined) {

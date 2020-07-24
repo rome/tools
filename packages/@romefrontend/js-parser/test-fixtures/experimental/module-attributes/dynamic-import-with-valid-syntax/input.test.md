@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}]}
 			}
 			location: Object {
 				filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"

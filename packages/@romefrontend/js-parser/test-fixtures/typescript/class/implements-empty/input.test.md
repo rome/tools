@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "implements list cannot be empty"}
+				message: MARKUP {
+					parts: Array [
+						"implements"
+						RAW_MARKUP {value: " list cannot be empty"}
+					]
+				}
 			}
 			location: Object {
 				filename: "typescript/class/implements-empty/input.ts"

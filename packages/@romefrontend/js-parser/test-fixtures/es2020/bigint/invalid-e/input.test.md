@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "A bigint can't have a decimal"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "A bigint can't have a decimal"}]}
 			}
 			location: Object {
 				filename: "es2020/bigint/invalid-e/input.js"

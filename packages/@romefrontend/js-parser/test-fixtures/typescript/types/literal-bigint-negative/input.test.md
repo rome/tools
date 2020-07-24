@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unexpected token, expected \"number\""}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unexpected token, expected \"number\""}]}
 			}
 			location: Object {
 				filename: "typescript/types/literal-bigint-negative/input.ts"

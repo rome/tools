@@ -22,6 +22,7 @@ import {
 	concatMarkup,
 	markup,
 	markupTag,
+	readMarkup,
 } from "@romefrontend/cli-layout";
 import {DiagnosticAdviceDiff} from "@romefrontend/diagnostics";
 
@@ -33,7 +34,7 @@ function formatDiffLine(diffs: Diffs) {
 			const escapedText = markup`${text}`;
 
 			const {hadNonWhitespace, value} = showInvisibles(
-				escapedText.value,
+				readMarkup(escapedText),
 				{
 					ignoreLeadingTabs: false,
 					ignoreLoneSpaces: false,

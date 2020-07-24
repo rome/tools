@@ -13,11 +13,14 @@ import {
 import {escapeJSString} from "@romefrontend/string-escape";
 import {naturalCompare} from "@romefrontend/string-utils";
 import {
+	AnyMarkup,
+	LazyMarkupFactory,
 	Markup,
 	concatMarkup,
 	markup,
 	markupTag,
 	markupToPlainText,
+	readMarkup,
 } from "@romefrontend/cli-layout";
 import {joinMarkupLines} from "@romefrontend/cli-layout/format";
 
@@ -49,7 +52,7 @@ const DEFAULT_OPTIONS: FormatOptions = {
 export const CUSTOM_PRETTY_FORMAT = Symbol.for("custom-pretty-format");
 
 export function prettyFormatToString(value: unknown): string {
-	return joinMarkupLines(markupToPlainText(prettyFormat(value)));
+	return joinMarkupLines(markupToPlainText(markup`${prettyFormat(value)}`));
 }
 
 export function pretty(
@@ -75,44 +78,46 @@ export function pretty(
 export default function prettyFormat(
 	obj: unknown,
 	rawOpts: FormatPartialOptions = {},
-): Markup {
-	const opts: FormatOptions = mergeObjects(DEFAULT_OPTIONS, rawOpts);
+): LazyMarkupFactory {
+	return () => {
+		const opts: FormatOptions = mergeObjects(DEFAULT_OPTIONS, rawOpts);
 
-	if (opts.maxDepth === opts.depth) {
-		return markup`[depth exceeded]`;
-	}
-
-	switch (typeof obj) {
-		case "symbol": {
-			return markupTag("token", formatSymbol(obj), {type: "string"});
+		if (opts.maxDepth === opts.depth) {
+			return markup`[depth exceeded]`;
 		}
 
-		case "string": {
-			return markupTag("token", formatString(obj), {type: "string"});
+		switch (typeof obj) {
+			case "symbol": {
+				return markupTag("token", formatSymbol(obj), {type: "string"});
+			}
+
+			case "string": {
+				return markupTag("token", formatString(obj), {type: "string"});
+			}
+
+			case "bigint":
+			case "number": {
+				return markupTag("token", formatNumber(obj), {type: "number"});
+			}
+
+			case "boolean": {
+				return markupTag("token", formatBoolean(obj), {type: "boolean"});
+			}
+
+			case "undefined": {
+				return markupTag("color", formatUndefined(), {fg: "brightBlack"});
+			}
+
+			case "function":
+				return formatFunction(obj, opts);
+
+			case "object":
+				return formatObjectish((obj as Objectish), opts);
+
+			default:
+				throw new Error("Unknown type");
 		}
-
-		case "bigint":
-		case "number": {
-			return markupTag("token", formatNumber(obj), {type: "number"});
-		}
-
-		case "boolean": {
-			return markupTag("token", formatBoolean(obj), {type: "boolean"});
-		}
-
-		case "undefined": {
-			return markupTag("color", formatUndefined(), {fg: "brightBlack"});
-		}
-
-		case "function":
-			return formatFunction(obj, opts);
-
-		case "object":
-			return formatObjectish((obj as Objectish), opts);
-
-		default:
-			throw new Error("Unknown type");
-	}
+	};
 }
 
 function isNativeFunction(val: Function): boolean {
@@ -163,7 +168,7 @@ function formatBoolean(val: boolean): Markup {
 	return val === true ? markup`true` : markup`false`;
 }
 
-function formatFunction(val: Function, opts: FormatOptions): Markup {
+function formatFunction(val: Function, opts: FormatOptions): AnyMarkup {
 	const name = val.name === "" ? "anonymous" : val.name;
 	let label = markup`Function ${name}`;
 
@@ -183,10 +188,10 @@ function getExtraObjectProps(
 	obj: Objectish,
 	opts: FormatOptions,
 ): {
-	props: Array<Markup>;
+	props: Array<AnyMarkup>;
 	ignoreKeys: UnknownObject;
 } {
-	const props: Array<Markup> = [];
+	const props: Array<AnyMarkup> = [];
 	const ignoreKeys: UnknownObject = {};
 
 	if (obj instanceof Map) {
@@ -276,7 +281,7 @@ function formatObject(
 	obj: Objectish,
 	opts: FormatOptions,
 	labelKeys: Array<string>,
-): Markup {
+): AnyMarkup {
 	// Detect circular references, and create a pointer to the specific value
 	const {stack} = opts;
 	if (stack.length > 0 && stack.includes(obj)) {
@@ -298,7 +303,7 @@ function formatObject(
 	const {ignoreKeys, props} = getExtraObjectProps(obj, nextOpts);
 
 	// For props that have object values, we always put them at the end, sorted by line count
-	const objProps: Array<Markup> = [];
+	const objProps: Array<AnyMarkup> = [];
 
 	// Get string props
 	for (const {key, object} of sortKeys(obj)) {
@@ -325,7 +330,9 @@ function formatObject(
 	}
 
 	// Sort object props by line count and push them on
-	for (const prop of objProps.sort((a, b) => lineCountCompare(a.value, b.value))) {
+	for (const prop of objProps.sort((a, b) =>
+		lineCountCompare(readMarkup(a), readMarkup(b))
+	)) {
 		props.push(prop);
 	}
 
@@ -347,7 +354,7 @@ function formatObject(
 
 	//
 	let inner = concatMarkup(props, markup`\n`);
-	if (props.length > 1 || inner.value.includes("\n")) {
+	if (props.length > 1 || readMarkup(inner).includes("\n")) {
 		inner = markup`\n<indent>${inner}</indent>\n`;
 	}
 
@@ -368,7 +375,7 @@ type Objectish = {
 	[key: string]: unknown;
 };
 
-function formatObjectish(val: null | Objectish, opts: FormatOptions): Markup {
+function formatObjectish(val: null | Objectish, opts: FormatOptions): AnyMarkup {
 	if (val === null) {
 		return markupTag("emphasis", formatNull());
 	}
