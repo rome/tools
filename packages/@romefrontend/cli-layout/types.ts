@@ -134,6 +134,8 @@ export type MarkupLinesAndWidth = {
 	lines: Array<string>;
 };
 
+export type MarkupRGB = [number, number, number];
+
 export type GridOutputFormat = "ansi" | "html" | "none";
 
 // These match PrismJS class names

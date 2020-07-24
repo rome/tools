@@ -86,24 +86,7 @@ export function getFileHandlerFromPath(
 	return {ext, handler};
 }
 
-export function getFileHandlerFromExtension(
-	ext: string,
-	projectConfig: undefined | ProjectConfig,
-) {
-	let handler = DEFAULT_HANDLERS.get(ext.slice(1));
-
-	if (
-		handler === undefined &&
-		projectConfig !== undefined &&
-		projectConfig.files.assetExtensions.includes(ext)
-	) {
-		handler = assetHandler;
-	}
-
-	return handler;
-}
-
-export function getFileHandlerAssert(
+export function getFileHandlerFromPathAssert(
 	path: UnknownFilePath,
 	projectConfig: undefined | ProjectConfig,
 ): Required<GetFileHandlerResult> {

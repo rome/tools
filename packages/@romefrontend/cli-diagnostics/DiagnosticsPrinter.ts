@@ -20,7 +20,12 @@ import {
 	DiagnosticsPrinterFlags,
 	DiagnosticsPrinterOptions,
 } from "./types";
-import {formatAnsi, markup, markupToPlainText} from "@romefrontend/cli-layout";
+import {
+	MarkupRGB,
+	formatAnsiRGB,
+	markup,
+	markupToPlainText,
+} from "@romefrontend/cli-layout";
 import {ToLines, toLines} from "./utils";
 import {printAdvice} from "./printAdvice";
 import {default as successBanner} from "./banners/success.json";
@@ -39,11 +44,9 @@ import {exists, lstat, readFileText} from "@romefrontend/fs";
 import {joinMarkupLines} from "@romefrontend/cli-layout/format";
 import {inferDiagnosticLanguageFromFilename} from "@romefrontend/core/common/file-handlers";
 
-type Banner = {
-	// Array<number> should really be [number, number, number], but TypeScript widens the imported types
-	palettes: Array<Array<number>>;
-	// Array<number> should really be [number, number], same reason as above
-	rows: Array<Array<number | Array<number>>>;
+type RawBanner = {
+	palettes: Array<MarkupRGB>;
+	rows: Array<Array<number | MarkupRGB>>;
 };
 
 type PositionLike = {
@@ -235,7 +238,7 @@ export default class DiagnosticsPrinter extends Error {
 
 	// Only highlight if we have a reporter stream enabled that isn't format: "none"
 	shouldHighlight(): boolean {
-		for (const stream of this.reporter.getAllStreams()) {
+		for (const {stream} of this.reporter.getStreamHandles()) {
 			if (stream.format !== "none") {
 				return true;
 			}
@@ -438,10 +441,10 @@ export default class DiagnosticsPrinter extends Error {
 			// We can safely catch them here since the presence of diagnostics is considered a critical failure anyway
 			// Display diagnostics is idempotent meaning we can bail at any point
 			// We don't use reporter.error here since the error could have been thrown by cli-layout
-			reporter.logAllRaw(
+			reporter.logRaw(
 				`Encountered an error during diagnostics printing in ${reason}`,
 			);
-			reporter.logAllRaw(err.stack);
+			reporter.logRaw(err.stack);
 		}
 	}
 
@@ -514,7 +517,7 @@ export default class DiagnosticsPrinter extends Error {
 				let log = `::error ${parts.join(",")}::${joinMarkupLines(
 					markupToPlainText(message),
 				)}`;
-				this.reporter.logAllRaw(log);
+				this.reporter.logRaw(log);
 				break;
 			}
 		}
@@ -604,7 +607,7 @@ export default class DiagnosticsPrinter extends Error {
 
 		reporter.hr(derived.header);
 
-		reporter.indent(() => {
+		reporter.indentSync(() => {
 			// Concat all the advice together
 			const allAdvice: DiagnosticAdvice = [
 				...derived.advice,
@@ -716,11 +719,11 @@ export default class DiagnosticsPrinter extends Error {
 
 				if (isError) {
 					if (this.flags.fieri) {
-						this.showBanner(errorBanner);
+						this.showBanner((errorBanner as RawBanner));
 					}
 				} else {
 					if (this.flags.fieri) {
-						this.showBanner(successBanner);
+						this.showBanner((successBanner as RawBanner));
 					}
 				}
 
@@ -740,9 +743,23 @@ export default class DiagnosticsPrinter extends Error {
 		);
 	}
 
-	showBanner(banner: Banner) {
-		for (const stream of this.reporter.getStreams(false)) {
+	showBanner(banner: RawBanner) {
+		for (const {stream} of this.reporter.getStreamHandles()) {
+			if (stream.format !== "ansi") {
+				continue;
+			}
+
+			const text = "FLAVORTOWN";
+			let textIndex = 0;
+			let height = 0;
+			let width = 0;
+
+			let image: Array<Array<MarkupRGB>> = [];
+
+			// Decompress banner
 			for (const row of banner.rows) {
+				const unpackedRow: Array<MarkupRGB> = [];
+
 				for (const field of row) {
 					let palleteIndex;
 					let times = 1;
@@ -753,13 +770,118 @@ export default class DiagnosticsPrinter extends Error {
 					}
 
 					const pallete = banner.palettes[palleteIndex];
-					stream.write(
-						formatAnsi.bgRgb(" ", [pallete[0], pallete[1], pallete[2]]).repeat(
-							times,
-						),
-					);
+					for (let i = 0; i < times; i++) {
+						unpackedRow.push(pallete);
+					}
 				}
-				stream.write("\n");
+
+				image.push(unpackedRow);
+				if (unpackedRow.length > width) {
+					width = unpackedRow.length;
+				}
+				height++;
+			}
+
+			// Calculate scale
+			let scale =
+				stream.features.columns === undefined
+					? 1
+					: ob1Get1(stream.features.columns) / height;
+			if (scale > 1) {
+				scale = 1;
+			}
+
+			function averageColors(colors: Array<MarkupRGB>): MarkupRGB {
+				let averageColor: MarkupRGB = [0, 0, 0];
+
+				for (const color of colors) {
+					averageColor[0] += color[0];
+					averageColor[1] += color[1];
+					averageColor[2] += color[2];
+				}
+
+				return [
+					Math.round(averageColor[0] / colors.length),
+					Math.round(averageColor[1] / colors.length),
+					Math.round(averageColor[2] / colors.length),
+				];
+			}
+
+			// Scale image if necessary
+			if (scale < 1) {
+				const scaledHeight = Math.floor(height * scale);
+				const scaledWidth = Math.floor(width * scale);
+				const scaledImage: Array<Array<MarkupRGB>> = [];
+
+				const heightRatio = width / scaledHeight;
+				const widthRatio = width / scaledWidth;
+
+				for (let i = 1; i <= scaledHeight; i++) {
+					const start = Math.floor(i * heightRatio);
+					const end = Math.ceil(i * heightRatio);
+
+					// Scale height
+					const scaledHeightRow: Array<MarkupRGB> = [];
+					for (let i = 0; i < width; i++) {
+						const colors: Array<MarkupRGB> = [];
+
+						for (let x = start; x <= end; x++) {
+							const color = image[x - 1][i];
+							if (color !== undefined) {
+								colors.push(color);
+							}
+						}
+
+						scaledHeightRow.push(averageColors(colors));
+					}
+
+					// Scale width
+					const scaledRow: Array<MarkupRGB> = [];
+					for (let i = 1; i <= scaledWidth; i++) {
+						const start = Math.floor(i * widthRatio);
+						const end = Math.ceil(i * widthRatio);
+
+						const colors: Array<MarkupRGB> = [];
+						for (let i = start; i <= end; i++) {
+							colors.push(scaledHeightRow[i - 1]);
+						}
+
+						scaledRow.push(averageColors(colors));
+					}
+
+					scaledImage.push(scaledRow);
+				}
+
+				image = scaledImage;
+			}
+
+			// Print image
+			for (const row of image) {
+				let line = "";
+
+				for (const color of row) {
+					let char = text[textIndex];
+					textIndex++;
+					if (textIndex === text.length) {
+						textIndex = 0;
+					}
+
+					char = formatAnsiRGB({
+						background: false,
+						features: stream.features,
+						value: char,
+						color,
+					});
+
+					line += formatAnsiRGB({
+						background: true,
+						features: stream.features,
+						value: char,
+						color,
+					});
+				}
+
+				stream.write(`${line}\n`, false);
 			}
 		}
 	}

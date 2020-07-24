@@ -31,7 +31,7 @@ export default createServerCommand({
 		});
 
 		const json = stringifyJSON(value);
-		reporter.writeAll(json);
+		reporter.write(json);
 		return json;
 	},
 });

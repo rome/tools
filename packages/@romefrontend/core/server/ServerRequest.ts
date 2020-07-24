@@ -45,7 +45,7 @@ import Server, {
 	ServerMarker,
 	ServerUnfinishedMarker,
 } from "./Server";
-import {Reporter} from "@romefrontend/cli-reporter";
+import {Reporter, ReporterNamespace} from "@romefrontend/cli-reporter";
 import {
 	Event,
 	EventSubscription,
@@ -94,7 +94,6 @@ import {VCSClient} from "@romefrontend/vcs";
 import {InlineSnapshotUpdates} from "../test-worker/SnapshotManager";
 import {CacheEntry} from "./Cache";
 import {FormatterOptions} from "@romefrontend/formatter";
-import {InfoPrefixLogger} from "../common/utils/Logger";
 import {RecoverySaveFile} from "./fs/RecoveryStore";
 
 type ServerRequestOptions = {
@@ -205,7 +204,7 @@ export default class ServerRequest {
 
 		this.files = new AbsoluteFilePathMap();
 
-		this.log = opts.server.logger.infoPrefix(
+		this.logger = opts.server.logger.namespace(
 			markup`[ServerRequest] Request #${this.id}:`,
 		);
 	}
@@ -224,7 +223,7 @@ export default class ServerRequest {
 	cancelled: boolean;
 	toredown: boolean;
 	files: AbsoluteFilePathMap<RecoverySaveFile>;
-	log: InfoPrefixLogger;
+	logger: ReporterNamespace;
 
 	queueSaveFile(path: AbsoluteFilePath, opts: RecoverySaveFile) {
 		this.files.set(path, opts);
@@ -236,16 +235,18 @@ export default class ServerRequest {
 		const {logger} = server;
 
 		if (files.size === 0) {
-			this.log(markup`No files to write`);
+			this.logger.info(markup`No files to write`);
 			return 0;
 		} else if (this.query.noFileWrites) {
-			this.log(markup`Writing no files due to noFileWrites flag being set`);
+			this.logger.info(
+				markup`Writing no files due to noFileWrites flag being set`,
+			);
 			return 0;
 		}
 
 		this.files = new AbsoluteFilePathMap();
 
-		this.log(markup`Flushing files`);
+		this.logger.info(markup`Flushing files`);
 		logger.list(Array.from(files.keys(), (path) => markup`${path}`));
 
 		// Need to capture this before as it will be modified by server.writeFiles
@@ -265,7 +266,7 @@ export default class ServerRequest {
 					await this.server.recoveryStore.save(this, path, content);
 				},
 				unexpectedModified: (path, expectedMtime, actualMtime) => {
-					this.log(
+					this.logger.info(
 						markup`Skipped writing file ${path} as the mtime ${actualMtime} of the file on disk was newer than when we read it at ${expectedMtime}`,
 					);
 					this.reporter.warn(
@@ -273,7 +274,7 @@ export default class ServerRequest {
 					);
 				},
 				expectedExists: (path) => {
-					this.log(
+					this.logger.info(
 						markup`Skipped writing file ${path} as it does not exist when we expected it to`,
 					);
 					this.reporter.warn(
@@ -281,7 +282,7 @@ export default class ServerRequest {
 					);
 				},
 				unexpectedExists: (path) => {
-					this.log(
+					this.logger.info(
 						markup`Skipped writing file ${path} as it exists when we didn't expect it`,
 					);
 					this.reporter.warn(
@@ -292,7 +293,7 @@ export default class ServerRequest {
 		);
 
 		await this.server.recoveryStore.commit(this);
-		this.log(markup`Flushed ${totalFiles} files`);
+		this.logger.info(markup`Flushed ${totalFiles} files`);
 
 		return totalFiles;
 	}
@@ -340,7 +341,7 @@ export default class ServerRequest {
 
 		this.toredown = true;
 		this.client.requestsInFlight.delete(this);
-		this.log(markup`Response type: ${String(res?.type)}`);
+		this.logger.info(markup`Response type: ${String(res?.type)}`);
 
 		// Output timing information
 		if (this.query.requestFlags.timing) {
@@ -968,7 +969,7 @@ export default class ServerRequest {
 	startMarker(
 		opts: Omit<ServerUnfinishedMarker, "start">,
 	): ServerUnfinishedMarker {
-		this.log(markup`Started marker: ${opts.label}`);
+		this.logger.info(markup`Started marker: ${opts.label}`);
 		return {
 			...opts,
 			start: Date.now(),
@@ -980,7 +981,7 @@ export default class ServerRequest {
 			...startMarker,
 			end: Date.now(),
 		};
-		this.log(markup`Started marker: ${startMarker.label}`);
+		this.logger.info(markup`Started marker: ${startMarker.label}`);
 		this.markerEvent.send(endMarker);
 		return endMarker;
 	}

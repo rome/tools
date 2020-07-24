@@ -26,8 +26,8 @@ import {
 
 import fs = require("fs");
 import {markup} from "@romefrontend/cli-layout";
-import {InfoPrefixLogger} from "@romefrontend/core/common/utils/Logger";
 import prettyFormat from "@romefrontend/pretty-format";
+import {ReporterNamespace} from "@romefrontend/cli-reporter";
 
 export type RecoverySaveFile = {
 	mtime: undefined | number;
@@ -98,7 +98,7 @@ export default class RecoveryStore {
 		this.requestIdToStore = new Map();
 		this.evictableStoreIds = [];
 		this.blockSave = undefined;
-		this.log = server.logger.infoPrefix(markup`[RecoveryStore]`);
+		this.logger = server.logger.namespace(markup`[RecoveryStore]`);
 		this.shouldTruncate = true;
 		this.recoveryDirectoryPath = server.userConfig.recoveryPath;
 	}
@@ -109,7 +109,7 @@ export default class RecoveryStore {
 	blockSave: undefined | Promise<unknown>;
 	evictableStoreIds: Array<string>;
 	server: Server;
-	log: InfoPrefixLogger;
+	logger: ReporterNamespace;
 	shouldTruncate: boolean;
 
 	getStoreDirectoryPath(storeId: string): AbsoluteFilePath {
@@ -152,7 +152,7 @@ export default class RecoveryStore {
 			await this.readRecoveryDirectory(),
 			(path) => path.getBasename(),
 		);
-		this.log(
+		this.logger.info(
 			markup`Initial store content ${prettyFormat(this.evictableStoreIds)}`,
 		);
 
@@ -182,7 +182,7 @@ export default class RecoveryStore {
 	}
 
 	async drop(storeId: string, reason: string) {
-		this.log(
+		this.logger.info(
 			markup`Dropping recovery store <emphasis>${storeId}</emphasis>. Reason: ${reason}`,
 		);
 		await removeDirectory(this.getStoreDirectoryPath(storeId));
@@ -274,7 +274,7 @@ export default class RecoveryStore {
 
 		const path = this.getStoreDirectoryPath(store.storeId);
 		await createDirectory(path);
-		this.log(markup`Created store ${store.storeId} at ${path}`);
+		this.logger.info(markup`Created store ${store.storeId} at ${path}`);
 
 		// Only consider a request up for eviction when the request has finished
 		req.endEvent.subscribe(async () => {
@@ -302,7 +302,7 @@ export default class RecoveryStore {
 
 		const storePath = this.getStoreDirectoryPath(store.storeId).append(fileId);
 		await writeFile(storePath, content);
-		this.log(markup`Save file from ${path} to ${storePath}`);
+		this.logger.info(markup`Save file from ${path} to ${storePath}`);
 	}
 
 	// Take the contents of the store and write the artifacts back to their original location
@@ -361,7 +361,7 @@ export default class RecoveryStore {
 		if (store !== undefined) {
 			const indexPath = this.getStoreIndexPath(store.storeId);
 			await writeFile(indexPath, stringifyJSON(store.index));
-			this.log(markup`Committed store index to ${indexPath}`);
+			this.logger.info(markup`Committed store index to ${indexPath}`);
 		}
 	}
 

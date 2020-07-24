@@ -33,7 +33,7 @@ import {
 	FileReference,
 	convertTransportFileReference,
 } from "../common/types/files";
-import {getFileHandlerAssert} from "../common/file-handlers/index";
+import {getFileHandlerFromPathAssert} from "../common/file-handlers/index";
 import {TransformProjectDefinition} from "@romefrontend/compiler";
 import WorkerAPI from "./WorkerAPI";
 import {FileNotFound} from "../common/FileNotFound";
@@ -395,7 +395,7 @@ export default class Worker {
 		const project = this.getProject(projectId);
 
 		// Fetch and validate extension handler
-		const {handler} = getFileHandlerAssert(ref.real, project.config);
+		const {handler} = getFileHandlerFromPathAssert(ref.real, project.config);
 		if (handler.parse === undefined) {
 			throw new Error(`We don't know how to parse ${path}`);
 		}

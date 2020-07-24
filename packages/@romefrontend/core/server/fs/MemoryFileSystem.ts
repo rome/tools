@@ -46,7 +46,7 @@ import crypto = require("crypto");
 import fs = require("fs");
 import {FileNotFound} from "@romefrontend/core/common/FileNotFound";
 import {markup} from "@romefrontend/cli-layout";
-import {InfoPrefixLogger} from "@romefrontend/core/common/utils/Logger";
+import {ReporterNamespace} from "@romefrontend/cli-reporter";
 
 const DEFAULT_DENYLIST = [".hg", ".git"];
 
@@ -176,7 +176,7 @@ async function createWatcher(
 				directoryPath,
 				{recursive, persistent: false},
 				(eventType, filename) => {
-					memoryFs.log(
+					memoryFs.logger.info(
 						markup`Raw fs.watch event in <emphasis>${directoryPath}</emphasis> type ${eventType} for ${String(
 							filename,
 						)}`,
@@ -239,7 +239,7 @@ export default class MemoryFileSystem {
 		this.watchers = new AbsoluteFilePathMap();
 		this.buffers = new AbsoluteFilePathMap();
 		this.manifestCounter = 0;
-		this.log = server.logger.infoPrefix(markup`[MemoryFileSystem]`);
+		this.logger = server.logger.namespace(markup`[MemoryFileSystem]`);
 
 		this.changedFileEvent = new Event({
 			name: "MemoryFileSystem.changedFile",
@@ -257,7 +257,7 @@ export default class MemoryFileSystem {
 	directories: AbsoluteFilePathMap<Stats>;
 	files: AbsoluteFilePathMap<Stats>;
 	manifests: AbsoluteFilePathMap<ManifestDefinition>;
-	log: InfoPrefixLogger;
+	logger: ReporterNamespace;
 
 	watchers: AbsoluteFilePathMap<{
 		path: AbsoluteFilePath;
@@ -437,7 +437,7 @@ export default class MemoryFileSystem {
 		}
 
 		// Wait for any subscribers that might need the file's stats
-		this.log(markup`File deleted: ${path}`);
+		this.logger.info(markup`File deleted: ${path}`);
 
 		// Only emit these events for files
 		if (directoryInfo === undefined) {
@@ -507,7 +507,7 @@ export default class MemoryFileSystem {
 		// Check if we're already watching a parent directory
 		for (const {path} of this.watchers.values()) {
 			if (projectDirectory.isRelativeTo(path)) {
-				this.log(
+				this.logger.info(
 					markup`Skipped crawl for ${directoryLink} because we're already watching the parent directory ${path}`,
 				);
 				return undefined;
@@ -518,7 +518,7 @@ export default class MemoryFileSystem {
 		await this.waitIfInitializingWatch(projectDirectory);
 
 		// New watch target
-		this.log(markup`Adding new project directory ${directoryLink}`);
+		this.logger.info(markup`Adding new project directory ${directoryLink}`);
 
 		// Remove watchers that are descedents of this directory as this watcher will handle them
 		for (const [loc, {close, path}] of this.watchers) {
@@ -537,7 +537,7 @@ export default class MemoryFileSystem {
 			],
 		});
 
-		this.log(markup`Watching ${directoryLink}`);
+		this.logger.info(markup`Watching ${directoryLink}`);
 		const promise = createWatcher(this, diagnostics, projectDirectory);
 		this.watchPromises.set(projectDirectory, promise);
 
@@ -1000,7 +1000,7 @@ export default class MemoryFileSystem {
 		// Detect file changes
 		const oldStats = this.getFileStats(path);
 		if (oldStats !== undefined && opts.reason === "watch") {
-			this.log(markup`File change: <emphasis>${path}</emphasis>`);
+			this.logger.info(markup`File change: <emphasis>${path}</emphasis>`);
 			this.server.refreshFileEvent.send(path);
 			this.changedFileEvent.send({path, oldStats, newStats: stats});
 		}

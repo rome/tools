@@ -39,7 +39,7 @@ import FileAllocator from "./fs/FileAllocator";
 import Logger from "../common/utils/Logger";
 import MemoryFileSystem from "./fs/MemoryFileSystem";
 import Cache from "./Cache";
-import {Reporter, ReporterStream} from "@romefrontend/cli-reporter";
+import {Reporter} from "@romefrontend/cli-reporter";
 import {Profiler} from "@romefrontend/v8";
 import {
 	PartialServerQueryRequest,
@@ -70,8 +70,6 @@ import {markup} from "@romefrontend/cli-layout";
 import prettyFormat from "@romefrontend/pretty-format";
 import {convertPossibleNodeError} from "@romefrontend/node";
 import RecoveryStore from "./fs/RecoveryStore";
-
-const STDOUT_MAX_CHUNK_LENGTH = 100_000;
 
 export type ServerClient = {
 	id: number;
@@ -578,8 +576,7 @@ export default class Server {
 	async createClient(bridge: ServerBridge): Promise<ServerClient> {
 		const {
 			flags: rawFlags,
-			useRemoteReporter,
-			hasClearScreen,
+			streamState,
 			outputFormat,
 			outputSupport,
 			version,
@@ -591,68 +588,43 @@ export default class Server {
 			cwd: createAbsoluteFilePath(rawFlags.cwd),
 		};
 
-		let outStream: ReporterStream = {
-			type: "out",
-			format: outputFormat,
-			features: outputSupport,
-			write(chunk: string) {
-				if (flags.silent === true) {
-					return;
-				}
-
-				// Split up stdout chunks
-				if (chunk.length < STDOUT_MAX_CHUNK_LENGTH) {
-					bridge.write.send([chunk, false]);
-				} else {
-					while (chunk.length > 0) {
-						const subChunk = chunk.slice(0, STDOUT_MAX_CHUNK_LENGTH);
-						chunk = chunk.slice(STDOUT_MAX_CHUNK_LENGTH);
-						bridge.write.send([subChunk, false]);
-					}
-				}
-			},
-		};
-
-		let errStream: ReporterStream = {
-			...outStream,
-			type: "error",
-			write(chunk: string) {
-				bridge.write.send([chunk, true]);
-			},
-		};
-
-		bridge.updateFeatures.subscribe((features) => {
-			[outStream, errStream] = reporter.updateStreamsFeatures(
-				[outStream, errStream],
-				features,
-			);
-		});
-
 		// Initialize the reporter
 		const reporter = new Reporter({
-			hasClearScreen,
 			wrapperFactory: this.wrapFatal.bind(this),
-			streams: [outStream, errStream],
 			markupOptions: {
 				...this.logger.markupOptions,
 				cwd: flags.cwd,
 			},
-			useRemoteProgressBars: useRemoteReporter,
 		});
 
-		reporter.sendRemoteClientMessage.subscribe((msg) => {
-			bridge.reporterRemoteServerMessage.send(msg);
+		const streamHandle = reporter.addStream(
+			{
+				format: outputFormat,
+				features: outputSupport,
+				write(chunk: string, error: boolean) {
+					if (flags.silent) {
+						return;
+					}
+
+					bridge.write.send([chunk, error]);
+				},
+			},
+			streamState,
+		);
+
+		bridge.updateFeatures.subscribe((features) => {
+			streamHandle.stream.updateFeatures(features);
 		});
 
-		bridge.reporterRemoteClientMessage.subscribe((msg) => {
-			reporter.receivedRemoteServerMessage(msg);
-		});
+		// Streams to teardown on client disconnect
+		const streamHandles = [streamHandle];
 
 		// Add reporter to connected set, important logs may be output to these
 		if (!flags.silent) {
-			this.connectedReporters.addStream(outStream);
+			streamHandles.push(
+				this.connectedReporters.addAttachedStream(streamHandle.stream),
+			);
 		}
-		this.connectedReporters.addStream(errStream);
 
 		// Warn about disabled disk caching. Don't bother if it's only been set due to ROME_DEV. We don't care to see it in development.
 		if (this.cache.disabled && getEnvVar("ROME_DEV").type !== "ENABLED") {
@@ -693,8 +665,9 @@ export default class Server {
 		bridge.endEvent.subscribe(() => {
 			this.connectedClients.delete(client);
 			this.connectedClientsListeningForLogs.delete(client);
-			this.connectedReporters.removeStream(errStream);
-			this.connectedReporters.removeStream(outStream);
+			for (const handle of streamHandles) {
+				handle.remove();
+			}
 			this.logger.updateStream();
 
 			// Cancel any requests still in flight
@@ -707,7 +680,7 @@ export default class Server {
 	}
 
 	async handleRequestStart(req: ServerRequest) {
-		req.log(markup`Request start ${prettyFormat(req.query)}`);
+		req.logger.info(markup`Request start ${prettyFormat(req.query)}`);
 
 		// Hook used by the web server to track and collect server requests
 		await this.requestStartEvent.callOptional(req);
@@ -723,7 +696,7 @@ export default class Server {
 
 	handleRequestEnd(req: ServerRequest) {
 		this.requestRunningCounter--;
-		req.log(markup`Request end`);
+		req.logger.info(markup`Request end`);
 
 		// If we're waiting to terminate ourselves when idle, then do so when there's no running requests
 		if (this.terminateWhenIdle && this.requestRunningCounter === 0) {
@@ -830,7 +803,7 @@ export default class Server {
 		progress.end();
 		const benchmarkTook = Date.now() - benchmarkStart;
 
-		reporter.section(
+		await reporter.section(
 			markup`Benchmark results`,
 			() => {
 				reporter.info(

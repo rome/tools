@@ -22,14 +22,16 @@ import {
 	readMarkup,
 } from "@romefrontend/cli-layout";
 import {
-	RemoteReporterClientMessage,
-	RemoteReporterReceiveMessage as RemoteReporterServerMessage,
 	ReporterConditionalStream,
 	ReporterDerivedStreams,
+	ReporterNamespace,
 	ReporterProgress,
 	ReporterProgressOptions,
 	ReporterStream,
-	ReporterStreamMeta,
+	ReporterStreamAttached,
+	ReporterStreamHandle,
+	ReporterStreamLineSnapshot,
+	ReporterStreamState,
 	SelectArguments,
 	SelectOptions,
 	SelectOptionsKeys,
@@ -38,7 +40,6 @@ import Progress from "./Progress";
 import prettyFormat from "@romefrontend/pretty-format";
 import stream = require("stream");
 import {CWD_PATH} from "@romefrontend/path";
-import {Event} from "@romefrontend/events";
 import readline = require("readline");
 import select from "./select";
 import {onKeypress} from "./util";
@@ -53,11 +54,14 @@ import {
 	TerminalFeatures,
 	inferTerminalFeatures,
 } from "@romefrontend/cli-environment";
+import * as streamUtils from "./stream";
+import {mergeObjects} from "@romefrontend/typescript-helpers";
 
 type ListOptions = {
 	reverse?: boolean;
 	truncate?: number;
 	ordered?: boolean;
+	pad?: boolean;
 	start?: number;
 };
 
@@ -65,20 +69,18 @@ type ListOptions = {
 type WrapperFactory = <T extends (...args: Array<any>) => any>(callback: T) => T;
 
 export type ReporterOptions = {
-	streams?: Array<ReporterStream>;
+	streams?: Array<ReporterStreamAttached>;
 	stdin?: NodeJS.ReadStream;
-	programName?: string;
-	hasClearScreen?: boolean;
-	programVersion?: string;
 	markupOptions?: MarkupFormatOptions;
-	useRemoteProgressBars?: boolean;
 	startTime?: number;
 	wrapperFactory?: WrapperFactory;
 };
 
 export type LogOptions = {
+	replaceLineSnapshot?: ReporterStreamLineSnapshot;
 	stderr?: boolean;
-	newline?: boolean;
+	noNewline?: boolean;
+	preferNoNewline?: boolean;
 };
 
 export type LogCategoryOptions = LogOptions & {
@@ -96,48 +98,55 @@ type QuestionOptions = {
 	normalize?: (value: string) => string;
 };
 
-let remoteProgressIdCounter = 0;
-
-export default class Reporter {
+export default class Reporter implements ReporterNamespace {
 	constructor(opts: ReporterOptions = {}) {
-		this.programName =
-			opts.programName === undefined ? "rome" : opts.programName;
-		this.programVersion = opts.programVersion;
 		this.startTime = opts.startTime === undefined ? Date.now() : opts.startTime;
-		this.hasClearScreen =
-			opts.hasClearScreen === undefined ? true : opts.hasClearScreen;
 		this.activeElements = new Set();
 		this.indentLevel = 0;
 		this.markupOptions =
 			opts.markupOptions === undefined ? {} : opts.markupOptions;
-		this.streamsWithDoubleNewlineEnd = new Set();
-		this.streamsWithNewlineEnd = new Set();
 		this.shouldRedirectOutToErr = false;
 		this.stdin = opts.stdin;
-
 		this.wrapperFactory = opts.wrapperFactory;
-
-		this.remoteClientProgressBars = new Map();
-		this.remoteServerProgressBars = new Map();
-
-		this.sendRemoteServerMessage = new Event({
-			name: "sendRemoteServerMessage",
-		});
-		this.sendRemoteClientMessage = new Event({
-			name: "sendRemoteClientMessage",
-		});
-
-		this.isRemote = opts.useRemoteProgressBars === true;
-
-		this.outStreams = new Set();
-		this.errStreams = new Set();
-		this.streams = new Set();
+		this.streamHandles = new Set();
 
 		if (opts.streams !== undefined) {
 			for (const stream of opts.streams) {
 				this.addStream(stream);
 			}
 		}
+	}
+
+	markupOptions: MarkupFormatOptions;
+	indentLevel: number;
+	startTime: number;
+	shouldRedirectOutToErr: boolean;
+	wrapperFactory: undefined | WrapperFactory;
+	streamHandles: Set<ReporterStreamHandle>;
+	stdin: undefined | NodeJS.ReadStream;
+
+	//Store active progress indicators so we can easily bail out and destroy them
+	activeElements: Set<{
+		render: () => void;
+		end: () => void;
+	}>;
+
+	getLineSnapshot(populate: boolean = true): ReporterStreamLineSnapshot {
+		const snapshot: ReporterStreamLineSnapshot = {
+			close: () => {
+				for (const {stream} of this.getStreamHandles()) {
+					stream.state.lineSnapshots.delete(snapshot);
+				}
+			},
+		};
+
+		if (populate) {
+			for (const {stream} of this.getStreamHandles()) {
+				stream.state.lineSnapshots.set(snapshot, stream.state.currentLine);
+			}
+		}
+
+		return snapshot;
 	}
 
 	attachStdoutStreams(
@@ -154,54 +163,37 @@ export default class Reporter {
 
 		const {format = features.colorDepth > 1 ? "ansi" : "none"} = force;
 
-		const stdoutWrite: ReporterDerivedStreams["stdoutWrite"] = (chunk) => {
-			if (stdout !== undefined) {
-				// @ts-ignore
-				stdout.write(chunk);
-			}
-		};
-
-		const stderrWrite: ReporterDerivedStreams["stderrWrite"] = (chunk) => {
-			if (stderr !== undefined) {
-				// @ts-ignore
-				stderr.write(chunk);
-			}
-		};
-
 		setupUpdateEvent();
 
-		let outStream: ReporterStream = {
-			type: "out",
+		const handle = this.addStream({
 			format,
 			features,
-			write: stdoutWrite,
+			write: (chunk, error) => {
+				if (error) {
+					if (stderr !== undefined) {
+						// @ts-ignore
+						stderr.write(chunk);
+					}
+				} else {
+					if (stdout !== undefined) {
+						// @ts-ignore
+						stdout.write(chunk);
+					}
+				}
+			},
 			init: setupUpdateEvent,
 			teardown: closeUpdateEvent,
-		};
-
-		let errStream: ReporterStream = {
-			type: "error",
-			format,
-			features,
-			write: stderrWrite,
-		};
-
-		this.addStream(outStream);
-		this.addStream(errStream);
+		});
 
 		updateEvent.subscribe((features) => {
-			[outStream, errStream] = this.updateStreamsFeatures(
-				[outStream, errStream],
-				features,
-			);
+			handle.stream.updateFeatures(features);
 		});
 
 		return {
 			format,
 			features,
 			featuresUpdated: updateEvent,
-			stdoutWrite,
-			stderrWrite,
+			handle,
 		};
 	}
 
@@ -209,16 +201,19 @@ export default class Reporter {
 		stream: ReporterStream,
 		check: () => boolean,
 	): ReporterConditionalStream {
+		let handle: undefined | ReporterStreamHandle;
+
 		const cond: ReporterConditionalStream = {
 			update: () => {
 				if (check()) {
-					if (!this.streams.has(stream)) {
-						this.addStream(stream);
+					if (handle === undefined) {
+						handle = this.addStream(stream);
 					}
 					return true;
 				} else {
-					if (this.streams.has(stream)) {
-						this.removeStream(stream);
+					if (handle !== undefined) {
+						handle.remove();
+						handle = undefined;
 					}
 					return false;
 				}
@@ -239,9 +234,8 @@ export default class Reporter {
 	} {
 		let buff = "";
 
-		const stream: ReporterStream = {
+		const stream = this.addStream({
 			format,
-			type: "all",
 			features: {
 				...DEFAULT_TERMINAL_FEATURES,
 				...features,
@@ -249,17 +243,13 @@ export default class Reporter {
 			write(chunk) {
 				buff += chunk;
 			},
-		};
-
-		this.addStream(stream);
+		});
 
 		return {
 			read() {
 				return buff;
 			},
-			remove: () => {
-				this.removeStream(stream);
-			},
+			remove: stream.remove,
 		};
 	}
 
@@ -277,84 +267,6 @@ export default class Reporter {
 		return reporter;
 	}
 
-	programName: string;
-	programVersion: string | undefined;
-	markupOptions: MarkupFormatOptions;
-
-	isRemote: boolean;
-	streamsWithNewlineEnd: Set<ReporterStreamMeta>;
-	streamsWithDoubleNewlineEnd: Set<ReporterStreamMeta>;
-	indentLevel: number;
-	startTime: number;
-	shouldRedirectOutToErr: boolean;
-	wrapperFactory: undefined | WrapperFactory;
-	outStreams: Set<ReporterStream>;
-	errStreams: Set<ReporterStream>;
-	streams: Set<ReporterStream>;
-	sendRemoteServerMessage: Event<RemoteReporterServerMessage, void>;
-	sendRemoteClientMessage: Event<RemoteReporterClientMessage, void>;
-	stdin: undefined | NodeJS.ReadStream;
-
-	remoteClientProgressBars: Map<string, Progress>;
-	remoteServerProgressBars: Map<
-		string,
-		{
-			end: () => void;
-		}
-	>;
-
-	// track whether we've output anything, we need this to avoid outputting multiple spacers etc
-	hasClearScreen: boolean;
-
-	//Store active progress indicators so we can easily bail out and destroy them
-	activeElements: Set<{
-		render: () => void;
-		end: () => void;
-	}>;
-
-	processRemoteClientMessage(msg: RemoteReporterClientMessage) {
-		if (msg.type === "PROGRESS_CREATE") {
-			this.remoteClientProgressBars.set(
-				msg.id,
-				this.progressLocal(
-					msg.opts,
-					() => {
-						this.sendRemoteServerMessage.call({
-							type: "ENDED",
-							id: msg.id,
-						});
-					},
-				),
-			);
-			return;
-		}
-
-		let bar = this.remoteClientProgressBars.get(msg.id);
-		if (bar === undefined) {
-			throw new Error(
-				`Remote reporter message for progress bar ${msg.id} that does not exist`,
-			);
-		}
-
-		bar.processRemoteClientMessage(msg);
-
-		if (msg.type === "PROGRESS_END") {
-			this.remoteClientProgressBars.delete(msg.id);
-		}
-	}
-
-	receivedRemoteServerMessage(msg: RemoteReporterServerMessage) {
-		// Currently the only message a remote Reporter can send is that it has ended
-		switch (msg.type) {
-			case "ENDED": {
-				const progress = this.remoteServerProgressBars.get(msg.id);
-				if (progress !== undefined) {
-					progress.end();
-				}
-			}
-		}
-	}
-
 	getMessagePrefix(): AnyMarkup {
 		return markup``;
 	}
@@ -365,58 +277,54 @@ export default class Reporter {
 		return old;
 	}
 
-	updateStreamsFeatures(
-		streams: Array<ReporterStream>,
-		features: TerminalFeatures,
-		format?: ReporterStream["format"],
-	): Array<ReporterStream> {
-		const newStreams: Array<ReporterStream> = streams.map((stream) => {
-			this.removeStream(stream);
-			const newStream: ReporterStream = {
-				...stream,
-				format: format === undefined ? stream.format : format,
-				features,
-			};
-			this.addStream(stream);
-			return newStream;
-		});
-		this.refreshActiveElements();
-		return newStreams;
-	}
-
 	refreshActiveElements() {
 		for (const elem of this.activeElements) {
 			elem.render();
 		}
 	}
 
-	addStream(stream: ReporterStream) {
-		if (stream.init !== undefined) {
-			stream.init();
-		}
+	addAttachedStream(stream: ReporterStreamAttached): ReporterStreamHandle {
+		const handle: ReporterStreamHandle = {
+			stream,
+			remove: () => {
+				if (!this.streamHandles.has(handle)) {
+					return;
+				}
 
-		this.streamsWithNewlineEnd.add(stream);
-		this.streams.add(stream);
+				this.streamHandles.delete(handle);
+				stream.handles.delete(handle);
 
-		if (stream.type === "error" || stream.type === "all") {
-			this.errStreams.add(stream);
-		}
-
-		if (stream.type === "out" || stream.type === "all") {
-			this.outStreams.add(stream);
-		}
+				// Only teardown when all handles have been removed
+				if (stream.teardown !== undefined && stream.handles.size === 0) {
+					stream.teardown();
+				}
+			},
+		};
+		stream.handles.add(handle);
+		this.streamHandles.add(handle);
+		return handle;
 	}
 
-	removeStream(stream: ReporterStream) {
-		if (stream.teardown !== undefined) {
-			stream.teardown();
+	addStream(
+		unattached: ReporterStream,
+		state?: Partial<ReporterStreamState>,
+	): ReporterStreamHandle {
+		if (unattached.init !== undefined) {
+			unattached.init();
 		}
-		this.streams.delete(stream);
-		this.outStreams.delete(stream);
-		this.errStreams.delete(stream);
+
+		const stream: ReporterStreamAttached = {
+			...unattached,
+			handles: new Set(),
+			state: mergeObjects(streamUtils.createStreamState(), state),
+			updateFeatures: (newFeatures) => {
+				stream.features = newFeatures;
+				this.refreshActiveElements();
+			},
+		};
+		return this.addAttachedStream(stream);
 	}
 
-	//# Stdin
 	getStdin(): NodeJS.ReadStream {
 		const {stdin} = this;
 		if (stdin === undefined) {
@@ -444,10 +352,10 @@ export default class Reporter {
 			prompt = markup`${prompt} (${def})`;
 		}
 		prompt = markup`${prompt}: `;
-		this.logAll(
+		this.log(
 			prompt,
 			{
-				newline: false,
+				noNewline: true,
 			},
 		);
 
@@ -455,7 +363,7 @@ export default class Reporter {
 			input: stdin,
 			output: new stream.Writable({
 				write: (chunk, encoding, callback) => {
-					this.writeAll(chunk);
+					this.write(chunk);
 					callback();
 				},
 			}),
@@ -471,8 +379,8 @@ export default class Reporter {
 					const normalized = line === "" ? def : line;
 
 					// Replace initial prompt
-					this.writeAll(ansiEscapes.cursorUp());
-					this.writeAll(ansiEscapes.eraseLine);
+					this.write(ansiEscapes.cursorUp());
+					this.write(ansiEscapes.eraseLine);
 
 					let prompt = origPrompt;
 					prompt = markup`${prompt}: `;
@@ -481,7 +389,7 @@ export default class Reporter {
 					} else {
 						prompt = markup`${prompt}${normalized}`;
 					}
-					this.logAll(prompt);
+					this.log(prompt);
 
 					resolve(normalized);
 				},
@@ -546,7 +454,7 @@ export default class Reporter {
 	}
 
 	async confirm(message: string = "Press any key to continue"): Promise<void> {
-		this.logAll(markup`<dim>${message}</dim>`, {newline: false});
+		this.log(markup`<dim>${message}</dim>`, {noNewline: true});
 
 		await new Promise((resolve) => {
 			const keypress = onKeypress(
@@ -559,7 +467,7 @@ export default class Reporter {
 		});
 
 		// Newline
-		this.logAll(markup``);
+		this.log(markup``);
 	}
 
 	async radio<Options extends SelectOptions>(
@@ -579,28 +487,13 @@ export default class Reporter {
 		return select(this, message, args);
 	}
 
-	//# Control
-
-	getAllStreams(): Set<ReporterStream> {
-		return this.streams;
+	getStreamHandles(): Set<ReporterStreamHandle> {
+		return this.streamHandles;
 	}
 
-	getStreams(stderr: undefined | boolean): Set<ReporterStream> {
-		if (this.shouldRedirectOutToErr) {
-			return this.errStreams;
-		}
-
-		if (stderr) {
-			return this.errStreams;
-		}
-
-		return this.outStreams;
-	}
-
-	//# LIFECYCLE
 	teardown() {
-		for (const stream of this.streams) {
-			this.removeStream(stream);
+		for (const handle of this.streamHandles) {
+			handle.remove();
 		}
 
 		for (const elem of this.activeElements) {
@@ -611,33 +504,11 @@ export default class Reporter {
 
 	fork(opts: Partial<ReporterOptions> = {}) {
 		return new Reporter({
-			streams: [...this.streams],
+			streams: [...Array.from(this.streamHandles, (handle) => handle.stream)],
 			markupOptions: this.markupOptions,
 			wrapperFactory: this.wrapperFactory,
 			...opts,
 		});
-	}
-
-	//# INDENTATION METHODS
-	indent(callback: () => void) {
-		this.indentLevel++;
-
-		try {
-			callback();
-		} finally {
-			this.indentLevel--;
-		}
-	}
-
-	noIndent(callback: () => void) {
-		const prevIndentLevel = this.indentLevel;
-		this.indentLevel = 0;
-
-		try {
-			callback();
-		} finally {
-			this.indentLevel = prevIndentLevel;
-		}
 	}
 
 	table(head: Array<Markup>, rawBody: Array<Array<Markup>>) {
@@ -659,12 +530,12 @@ export default class Reporter {
 			body.push(markup`</tr>`);
 		}
 
-		this.logAll(markup`<table>${concatMarkup(body)}</table>`);
+		this.log(markup`<table>${concatMarkup(body)}</table>`);
 	}
 
 	inspect(value: unknown) {
-		const streams = this.getStreams(false);
-		if (streams.size === 0) {
+		const handles = this.getStreamHandles();
+		if (handles.size === 0) {
 			return;
 		}
 
@@ -675,126 +546,109 @@ export default class Reporter {
 			formatted = markup`${String(value)}`;
 		}
 
-		for (const stream of streams) {
-			this.logOne(stream, formatted);
+		for (const {stream} of handles) {
+			this._logMarkup(stream, formatted);
 		}
 	}
 
-	//# ESCAPE HATCHES
-	clearLineAll() {
-		for (const stream of this.getStreams(false)) {
-			this.clearLineSpecific(stream);
+	write(msg: string, stderr: boolean = false) {
+		for (const {stream} of this.getStreamHandles()) {
+			stream.write(msg, stderr);
 		}
-	}
-
-	clearLineSpecific(stream: ReporterStream) {
-		if (stream.format === "ansi" && stream.features.cursor) {
-			stream.write(ansiEscapes.eraseLine);
-			stream.write(ansiEscapes.cursorTo(0));
-		}
-	}
-
-	writeAll(msg: string, opts: LogOptions = {}) {
-		for (const stream of this.getStreams(opts.stderr)) {
-			this.writeSpecific(stream, msg, opts);
-		}
-	}
-
-	writeSpecific(stream: ReporterStream, msg: string, opts: LogOptions) {
-		this.hasClearScreen = false;
-
-		if (this.activeElements.size > 0 && opts.newline) {
-			// A progress bar is active and has probably drawn to the screen
-			this.clearLineSpecific(stream);
-		}
-
-		stream.write(msg);
-	}
-
-	//# UTILITIES
-	getTotalTime(): number {
-		return Date.now() - this.startTime;
 	}
 
 	clearScreen() {
-		for (const stream of this.getStreams(false)) {
-			if (stream.format === "ansi" && stream.features.cursor) {
-				stream.write(ansiEscapes.clearScreen);
-			}
+		for (const {stream} of this.getStreamHandles()) {
+			streamUtils.clearScreen(stream);
 		}
-		this.hasClearScreen = true;
 	}
 
-	//# SECTIONS
 	heading(text: AnyMarkup) {
 		this.br();
-		this.logAll(markup`<inverse><emphasis> ${text} </emphasis></inverse>`);
+		this.log(markup`<inverse><emphasis> ${text} </emphasis></inverse>`);
 		this.br();
 	}
 
-	section(title: undefined | Markup, callback: () => void) {
+	async indent(callback: () => void | Promise<void>) {
+		this.indentLevel++;
+
+		try {
+			await callback();
+		} finally {
+			this.indentLevel--;
+		}
+	}
+
+	indentSync(callback: () => void) {
+		this.indentLevel++;
+
+		try {
+			callback();
+		} finally {
+			this.indentLevel--;
+		}
+	}
+
+	async section(
+		title: undefined | Markup,
+		callback: () => void | Promise<void>,
+	): Promise<void> {
 		this.hr(
 			title === undefined ? undefined : markup`<emphasis>${title}</emphasis>`,
 		);
-		this.indent(() => {
-			callback();
-			this.br();
-		});
+		await this.indent(callback);
+		this.br();
 	}
 
 	hr(text: AnyMarkup = markup``) {
-		const {hasClearScreen} = this;
-
-		this.br();
-
-		if (hasClearScreen && text === undefined) {
-			return;
+		for (const {stream} of this.getStreamHandles()) {
+			this.br();
+			this._logMarkup(stream, markup`<hr>${text}</hr>`);
+			this._logMarkup(stream, markup``);
 		}
+	}
 
-		this.logAll(markup`<hr>${text}</hr>`);
-		this.br();
+	removeLine(snapshot: ReporterStreamLineSnapshot) {
+		for (const {stream} of this.getStreamHandles()) {
+			streamUtils.removeLine(stream, snapshot);
+		}
 	}
 
 	async steps(
 		callbacks: Array<{
 			message: AnyMarkup;
 			callback: () => Promise<void>;
-			clear?: boolean;
 		}>,
+		clear: boolean = true,
 	) {
 		const total = callbacks.length;
 		let current = 1;
-		for (const {clear, message, callback} of callbacks) {
-			this.step(current, total, message);
+		for (const {message, callback} of callbacks) {
+			const lineSnapshot = this.getLineSnapshot();
 
-			if (clear) {
-				this.hasClearScreen = true;
-			}
+			try {
+				this.step(current, total, message);
 
-			await callback();
-			current++;
+				await callback();
+				current++;
 
-			// If a step doesn't produce any output, or just progress bars that are cleared, we can safely remove the previous `step` message line
-			if (clear && this.hasClearScreen) {
-				for (const stream of this.getStreams(false)) {
-					if (stream.format === "ansi" && stream.features.cursor) {
-						stream.write(ansiEscapes.cursorTo(0));
-						stream.write(ansiEscapes.cursorUp());
-						stream.write(ansiEscapes.eraseLine);
-					}
+				if (clear) {
+					this.removeLine(lineSnapshot);
 				}
+			} finally {
+				lineSnapshot.close();
 			}
 		}
 	}
 
 	step(current: number, total: number, msg: AnyMarkup) {
-		this.logAll(markup`<dim>[${String(current)}/${String(total)}]</dim> ${msg}`);
+		this.log(markup`<dim>[${String(current)}/${String(total)}]</dim> ${msg}`);
 	}
 
 	br(force: boolean = false) {
-		for (const stream of this.getStreams(false)) {
-			if (!this.streamsWithDoubleNewlineEnd.has(stream) || force) {
-				this.logOne(stream, markup``);
+		for (const {stream} of this.getStreamHandles()) {
+			if (streamUtils.getLeadingNewlineCount(stream) < 2 || force) {
+				this._logMarkup(stream, markup``);
 			}
 		}
 	}
@@ -812,7 +666,7 @@ export default class Reporter {
 		return joinMarkupLines(markupToPlainText(str, this.markupOptions));
 	}
 
-	format(stream: ReporterStreamMeta, str: AnyMarkup): Array<string> {
+	format(stream: ReporterStreamAttached, str: AnyMarkup): Array<string> {
 		if (isEmptyMarkup(str)) {
 			return [""];
 		}
@@ -822,8 +676,7 @@ export default class Reporter {
 			? str
 			: markup`${prefix}<view>${str}</view>`;
 
-		const shouldIndent =
-			this.indentLevel > 0 && this.streamsWithNewlineEnd.has(stream);
+		const shouldIndent = this.indentLevel > 0;
 
 		if (shouldIndent) {
 			for (let i = 0; i < this.indentLevel; i++) {
@@ -854,76 +707,66 @@ export default class Reporter {
 		}
 	}
 
-	logAll(msg: AnyMarkup, opts: LogOptions = {}) {
-		for (const stream of this.getStreams(opts.stderr)) {
-			this.logOne(stream, msg, opts);
+	log(msg: AnyMarkup, opts: LogOptions = {}) {
+		for (const {stream} of this.getStreamHandles()) {
+			this._logMarkup(stream, msg, opts);
 		}
 	}
 
-	logAllRaw(msg: string, opts: LogOptions = {}) {
-		for (const stream of this.getStreams(opts.stderr)) {
-			this.logOneRaw(stream, msg, opts);
+	logRaw(msg: string, opts: LogOptions = {}) {
+		for (const {stream} of this.getStreamHandles()) {
+			streamUtils.log(stream, msg, opts);
 		}
 	}
 
-	logOne(stream: ReporterStream, msg: AnyMarkup, opts: LogOptions = {}) {
+	_logMarkup(
+		stream: ReporterStreamAttached,
+		msg: AnyMarkup,
+		opts: LogOptions = {},
+	) {
 		const lines = this.format(stream, msg);
 		for (let i = 0; i < lines.length; i++) {
-			this.logOneRaw(
+			streamUtils.log(
 				stream,
 				lines[i],
 				{
 					...opts,
-					newline: i === lines.length - 1 ? opts.newline : true,
+					noNewline: i === lines.length - 1 ? opts.noNewline : false,
 				},
+				i,
 			);
 		}
 	}
 
-	logOneRaw(stream: ReporterStream, msg: string, opts: LogOptions = {}) {
-		if (opts.newline !== false) {
-			msg += "\n";
-		}
-
-		// Track if there's going to be a completely empty line
-		const hasDoubleNewline = msg === "\n" || msg.endsWith("\n\n");
-		if (hasDoubleNewline) {
-			this.streamsWithDoubleNewlineEnd.add(stream);
-		} else {
-			this.streamsWithDoubleNewlineEnd.delete(stream);
-		}
-		if (msg.endsWith("\n")) {
-			this.streamsWithNewlineEnd.add(stream);
-		} else {
-			this.streamsWithNewlineEnd.delete(stream);
-		}
-
-		this.writeSpecific(stream, msg, opts);
-	}
-
-	logAllWithCategory(rawInner: AnyMarkup, opts: LogCategoryOptions) {
-		const streams = this.getStreams(opts.stderr);
-		if (streams.size === 0) {
+	logCategory(rawInner: AnyMarkup, opts: LogCategoryOptions) {
+		const handles = this.getStreamHandles();
+		if (handles.size === 0) {
 			return;
 		}
 
 		let inner = markupTag(opts.markupTag, rawInner);
 
-		for (const stream of streams) {
+		for (const {stream} of handles) {
 			const prefixInner = stream.features.unicode
-				? opts.unicodePrefix
-				: opts.rawPrefix;
+				? markup`${opts.unicodePrefix}`
+				: markup`${opts.rawPrefix}`;
 			const prefix = markupTag(
 				"emphasis",
-				markupTag(opts.markupTag, markup`${prefixInner}`),
+				markupTag(opts.markupTag, prefixInner),
 			);
 			const prefixedInner = markup`${prefix}<view>${inner}</view>`;
-			this.logOne(stream, prefixedInner);
+			this._logMarkup(
+				stream,
+				prefixedInner,
+				{
+					stderr: opts.stderr,
+				},
+			);
 		}
 	}
 
 	success(msg: AnyMarkup) {
-		this.logAllWithCategory(
+		this.logCategory(
 			msg,
 			{
 				unicodePrefix: "\u2714 ",
@@ -934,7 +777,7 @@ export default class Reporter {
 	}
 
 	error(msg: AnyMarkup) {
-		this.logAllWithCategory(
+		this.logCategory(
 			msg,
 			{
 				markupTag: "error",
@@ -952,7 +795,7 @@ export default class Reporter {
 	}
 
 	info(msg: AnyMarkup) {
-		this.logAllWithCategory(
+		this.logCategory(
 			msg,
 			{
 				unicodePrefix: "\u2139 ",
@@ -963,7 +806,7 @@ export default class Reporter {
 	}
 
 	warn(msg: AnyMarkup) {
-		this.logAllWithCategory(
+		this.logCategory(
 			msg,
 			{
 				unicodePrefix: "\u26a0 ",
@@ -975,7 +818,17 @@ export default class Reporter {
 	}
 
 	command(command: string) {
-		this.logAll(markup`<dim>$ ${command}</dim>`);
+		this.log(markup`<dim>$ ${command}</dim>`);
+	}
+
+	namespace(prefix: AnyMarkup): ReporterNamespace {
+		return {
+			success: (suffix) => this.success(markup`${prefix}${suffix}`),
+			info: (suffix) => this.info(markup`${prefix}${suffix}`),
+			error: (suffix) => this.error(markup`${prefix}${suffix}`),
+			warn: (suffix) => this.warn(markup`${prefix}${suffix}`),
+			log: (suffix) => this.log(markup`${prefix}${suffix}`),
+		};
 	}
 
 	processedList<T>(
@@ -1001,28 +854,33 @@ export default class Reporter {
 
 		let buff = markup``;
 
-		for (const item of items) {
+		for (let i = 0; i < items.length; i++) {
+			const item = items[i];
 			const reporter = this.fork({
 				streams: [],
 			});
 			const stream = reporter.attachCaptureStream("markup");
 			const str = callback(reporter, item);
 			stream.remove();
+
 			let inner =
 				str === undefined
 					? convertToMarkupFromRandomString(stream.read().trimRight())
 					: str;
+			if (opts.pad && i !== items.length - 1) {
+				inner = markup`${inner}\n`;
+			}
 			buff = markup`${buff}<li>${inner}</li>`;
 		}
 
 		if (opts.ordered) {
-			this.logAll(markupTag("ol", buff, {start, reversed: opts.reverse}));
+			this.log(markupTag("ol", buff, {start, reversed: opts.reverse}));
 		} else {
-			this.logAll(markup`<ul>${buff}</ul>`);
+			this.log(markup`<ul>${buff}</ul>`);
 		}
 
 		if (truncatedCount > 0) {
-			this.logAll(markup`<dim>and ${truncatedCount} others...</dim>`);
+			this.log(markup`<dim>and ${truncatedCount} others...</dim>`);
 			return {truncated: true};
 		} else {
 			return {truncated: false};
@@ -1039,15 +897,7 @@ export default class Reporter {
 		);
 	}
 
-	progress(opts?: ReporterProgressOptions): ReporterProgress {
-		if (this.isRemote) {
-			return this.progressRemote(opts);
-		} else {
-			return this.progressLocal(opts);
-		}
-	}
-
-	progressLocal(opts?: ReporterProgressOptions, onEnd?: () => void): Progress {
+	progress(opts?: ReporterProgressOptions, onEnd?: () => void): ReporterProgress {
 		const bar = new Progress(
 			this,
 			opts,
@@ -1060,121 +910,5 @@ export default class Reporter {
 		);
 		this.activeElements.add(bar);
 		return bar;
-	}
-
-	progressRemote(opts?: ReporterProgressOptions): ReporterProgress {
-		const id: string = `${process.pid}:${remoteProgressIdCounter++}`;
-
-		this.sendRemoteClientMessage.send({
-			type: "PROGRESS_CREATE",
-			opts,
-			id,
-		});
-
-		let closed = false;
-
-		const dispatch = (message: RemoteReporterClientMessage) => {
-			if (!closed) {
-				this.sendRemoteClientMessage.send(message);
-			}
-		};
-
-		const end = () => {
-			this.activeElements.delete(progress);
-			this.remoteServerProgressBars.delete(id);
-			closed = true;
-		};
-
-		let textIdCounter = 0;
-
-		const progress: ReporterProgress = {
-			render() {
-				// Don't do anything
-				// This is called when columns have updated and we want to force a rerender
-			},
-			setCurrent: (current: number) => {
-				dispatch({
-					type: "PROGRESS_SET_CURRENT",
-					current,
-					id,
-				});
-			},
-			setTotal: (total: number, approximate: boolean = false) => {
-				dispatch({
-					type: "PROGRESS_SET_TOTAL",
-					total,
-					approximate,
-					id,
-				});
-			},
-			setText: (text: Markup) => {
-				dispatch({
-					type: "PROGRESS_SET_TEXT",
-					text,
-					id,
-				});
-			},
-			setApproximateETA: (duration: number) => {
-				dispatch({
-					type: "PROGRESS_SET_APPROXIMATE_ETA",
-					duration,
-					id,
-				});
-			},
-			pushText: (text: Markup, textId?: string) => {
-				if (textId === undefined) {
-					textId = String(textIdCounter++);
-				}
-				dispatch({
-					type: "PROGRESS_PUSH_TEXT",
-					textId,
-					text,
-					id,
-				});
-				return textId;
-			},
-			popText: (textId: string) => {
-				dispatch({
-					type: "PROGRESS_POP_TEXT",
-					textId,
-					id,
-				});
-			},
-			tick: () => {
-				dispatch({
-					type: "PROGRESS_TICK",
-					id,
-				});
-			},
-			end: () => {
-				dispatch({
-					type: "PROGRESS_END",
-					id,
-				});
-			},
-			pause: () => {
-				dispatch({
-					type: "PROGRESS_PAUSE",
-					id,
-				});
-			},
-			resume: () => {
-				dispatch({
-					type: "PROGRESS_RESUME",
-					id,
-				});
-			},
-		};
-
-		this.remoteServerProgressBars.set(
-			id,
-			{
-				end,
-			},
-		);
-
-		this.activeElements.add(progress);
-
-		return progress;
 	}
 }

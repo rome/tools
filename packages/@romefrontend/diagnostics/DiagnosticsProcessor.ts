@@ -72,7 +72,7 @@ export default class DiagnosticsProcessor {
 			this.sourceMaps,
 		);
 
-		this.diagnostics = [];
+		this.diagnostics = new Set();
 		this.cachedDiagnostics = undefined;
 	}
 
@@ -81,7 +81,7 @@ export default class DiagnosticsProcessor {
 	sourceMaps: SourceMapConsumerCollection;
 	unique: UniqueRules;
 	includedKeys: Set<string>;
-	diagnostics: Diagnostics;
+	diagnostics: Set<Diagnostic>;
 	filters: Array<DiagnosticFilterWithTest>;
 	allowedUnusedSuppressionPrefixes: Set<string>;
 	usedSuppressions: Set<DiagnosticSuppression>;
@@ -272,6 +272,10 @@ export default class DiagnosticsProcessor {
 		return this.addDiagnostics([diag], origin)[0];
 	}
 
+	deleteDiagnostic(diag: Diagnostic) {
+		this.diagnostics.delete(diag);
+	}
+
 	addDiagnostics(
 		diags: Diagnostics,
 		origin?: DiagnosticOrigin,
@@ -301,7 +305,7 @@ export default class DiagnosticsProcessor {
 
 		// Filter diagnostics
 		diagLoop: for (let diag of diags) {
-			if (!force && max !== undefined && this.diagnostics.length > max) {
+			if (!force && max !== undefined && this.diagnostics.size > max) {
 				break;
 			}
 
@@ -327,7 +331,7 @@ export default class DiagnosticsProcessor {
 				}
 			}
 
-			this.diagnostics.push(diag);
+			this.diagnostics.add(diag);
 			added.push(diag);
 
 			for (const key of keys) {
@@ -341,7 +345,7 @@ export default class DiagnosticsProcessor {
 		}
 
 		const {throwAfter} = this;
-		if (throwAfter !== undefined && this.diagnostics.length >= throwAfter) {
+		if (throwAfter !== undefined && this.diagnostics.size >= throwAfter) {
 			this.maybeThrowDiagnosticsError();
 		}
 

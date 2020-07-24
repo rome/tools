@@ -13,8 +13,6 @@ import {
 import {DEFAULT_TERMINAL_FEATURES} from "@romefrontend/cli-environment";
 import {AnyMarkup, markup} from "@romefrontend/cli-layout";
 
-export type InfoPrefixLogger = (msg: AnyMarkup) => void;
-
 export default class Logger extends Reporter {
 	constructor(
 		loggerType: string,
@@ -29,7 +27,6 @@ export default class Logger extends Reporter {
 
 		this.conditionalStream = this.attachConditionalStream(
 			{
-				type: "all",
 				format: "markup",
 				features: {
 					...DEFAULT_TERMINAL_FEATURES,
@@ -43,12 +40,6 @@ export default class Logger extends Reporter {
 
 	conditionalStream: ReporterConditionalStream;
 	loggerType: string;
-
-	infoPrefix(prefix: AnyMarkup): InfoPrefixLogger {
-		return (msg) => {
-			this.info(markup`${prefix} ${msg}`);
-		};
-	}
 
 	updateStream() {
 		this.conditionalStream.update();

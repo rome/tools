@@ -554,7 +554,7 @@ export default class Client {
 	}
 
 	async attachBridge(status: BridgeStatus) {
-		const {stdoutWrite, stderrWrite, featuresUpdated, features, format} = this.derivedReporterStreams;
+		const {handle, featuresUpdated, features, format} = this.derivedReporterStreams;
 		const {terminalFeatures = {}} = this.options;
 
 		if (this.bridgeStatus !== undefined) {
@@ -566,19 +566,8 @@ export default class Client {
 		const {bridge} = status;
 
 		bridge.write.subscribe(([chunk, error]) => {
-			if (!error || terminalFeatures.redirectError) {
-				stdoutWrite(chunk);
-			} else {
-				stderrWrite(chunk);
-			}
-		});
-
-		bridge.reporterRemoteServerMessage.subscribe((msg) => {
-			this.reporter.processRemoteClientMessage(msg);
-		});
-
-		this.reporter.sendRemoteServerMessage.subscribe((msg) => {
-			bridge.reporterRemoteClientMessage.send(msg);
+			const isError = error && !terminalFeatures.redirectError;
+			handle.stream.write(chunk, isError);
 		});
 
 		// Listen for resize column events if stdout is a TTY
@@ -591,8 +580,10 @@ export default class Client {
 				version: VERSION,
 				outputFormat: format,
 				outputSupport: features,
-				hasClearScreen: this.reporter.hasClearScreen,
-				useRemoteReporter: true,
+				streamState: {
+					...handle.stream.state,
+					lineSnapshots: undefined,
+				},
 				flags: this.getClientJSONFlags(),
 			}),
 			bridge.handshake(),

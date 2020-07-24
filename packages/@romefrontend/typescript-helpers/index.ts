@@ -53,9 +53,13 @@ export function isIterable(obj: unknown): obj is Iterable<unknown> {
 // can actually have undefined values!
 export function mergeObjects<A extends object, B extends Partial<A>>(
 	a: A,
-	b: B,
-): A & B {
-	const newObj: A & B = {
+	b: undefined | B,
+): A {
+	if (b === undefined) {
+		return a;
+	}
+
+	const newObj: A = {
 		...a,
 		...b,
 	};

@@ -8,32 +8,41 @@
 
 ```
 
- index.js:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ Welcome to Rome! Let's get you started...
 
-  ✖ The unknownVariable variable is undeclared
+[1/2] Generating lint config and apply formatting
+[2/2] Generating .editorconfig
 
-    unknownVariable
-    ^^^^^^^^^^^^^^^
+ Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
- index.js lint/pendingFixes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ 2 files saved
+  ✔ No problems found!
 
-  ✖ Pending formatting and recommended autofixes
+ Files created ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    1   │ - unknownVariable
-      1 │ + unknownVariable;
-      2 │ +
+  - rome.rjson: Your project configuration. Documentation:
+    https://romefrontend.dev/docs/project-config/
+  - .editorconfig: Sets editor formatting and indentation options. Documentation:
+    https://editorconfig.org/
 
-  ℹ To apply fixes and formatting run
-  $ rome check index.js --apply
+ What next? ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  1. Setup an editor extension
+     Get live errors as you type and format when you save. Learn more:
+     https://romefrontend.dev/docs/editor-integration/
 
-ℹ Fixes available. To apply recommended fixes and formatting run
-$ rome check --apply
-ℹ To choose fix suggestions run
-$ rome check --review
-✖ Found 2 problems
-✔ Created config rome.rjson
+  2. Try a command
+     rome check is used to validate your code, verify formatting, and check for lint errors. Run
+     rome --help for a full list of commands and flags.
+
+  3. Read documentation
+     Our website serves as a comprehensive source of guides and documentation
+     https://romefrontend.dev/
+
+  4. Get involved in the community
+     Ask questions, get support, or contribute by participating on GitHub (
+     https://github.com/romefrontend/rome) or our community Discord (https://discord.gg/rome)
+
 
 ```
 
@@ -49,7 +58,7 @@ charset = utf-8
 indent_style = space
 indent_size = 2
 
-[{*.js, *.json}]
+[{*js, *rjson}]
 end_of_line = lf
 trim_trailing_whitespace = true
 insert_final_newline = true
@@ -57,7 +66,7 @@ charset = utf-8
 indent_style = tab
 indent_size = 2
 
-[{*.yml}]
+[{*yml}]
 end_of_line = lf
 trim_trailing_whitespace = true
 insert_final_newline = true
@@ -70,20 +79,17 @@ something: foo
   - else; bar
 
 # index.js
-unknownVariable
-
-# rome.json
-{
-	"files": {
-		"vendorPath": "../remote"
-	}
-}
+unknownVariable;
 
 
 # rome.rjson
-globals: [
-	"unknownVariable"
+name: "project"
+lint: {
+	globals: [
+		"unknownVariable"
 ]
+}
+version: "^0.0.26-dev"
 
 ```
 
@@ -92,9 +98,41 @@ globals: [
 ### `console`
 
 ```
-ℹ 1 file linted
-✔ No known problems!
-✔ Created config rome.rjson
+
+ Welcome to Rome! Let's get you started...
+
+[1/2] Generating lint config and apply formatting
+[2/2] Generating .editorconfig
+⚠ .editorconfig already exists
+
+ Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ℹ 1 file saved
+  ✔ No problems found!
+
+ Files created ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  - rome.rjson: Your project configuration. Documentation:
+    https://romefrontend.dev/docs/project-config/
+
+ What next? ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  1. Setup an editor extension
+     Get live errors as you type and format when you save. Learn more:
+     https://romefrontend.dev/docs/editor-integration/
+
+  2. Try a command
+     rome check is used to validate your code, verify formatting, and check for lint errors. Run
+     rome --help for a full list of commands and flags.
+
+  3. Read documentation
+     Our website serves as a comprehensive source of guides and documentation
+     https://romefrontend.dev/
+
+  4. Get involved in the community
+     Ask questions, get support, or contribute by participating on GitHub (
+     https://github.com/romefrontend/rome) or our community Discord (https://discord.gg/rome)
+
 
 ```
 
@@ -104,15 +142,9 @@ globals: [
 # .editorconfig
 
 
-# rome.json
-{
-	"files": {
-		"vendorPath": "../remote"
-	}
-}
-
-
 # rome.rjson
-{}
+name: "project"
+version: "^0.0.26-dev"
+
 
 ```

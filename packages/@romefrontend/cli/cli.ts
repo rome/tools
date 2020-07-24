@@ -452,7 +452,7 @@ export default async function cli() {
 
 		if (cliFlags.rage) {
 			if (commandFlags.summary === true) {
-				client.reporter.logAll(await client.generateRageSummary());
+				client.reporter.log(await client.generateRageSummary());
 			} else {
 				const {ragePath} = cliFlags;
 				const filename = clientFlags.cwd.resolve(
@@ -506,9 +506,9 @@ export default async function cli() {
 				cliFlags.logWorkers === true,
 				(chunk) => {
 					if (fileout === undefined) {
-						client.reporter.logAll(
+						client.reporter.log(
 							convertToMarkupFromRandomString(chunk),
-							{newline: false},
+							{noNewline: true},
 						);
 					} else {
 						fileout.write(

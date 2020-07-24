@@ -240,7 +240,11 @@ function formatToken(
 		return value;
 	}
 
-	return formatAnsiRGB(value, format.rgb, grid.features);
+	return formatAnsiRGB({
+		value,
+		color: format.rgb,
+		features: grid.features,
+	});
 }
 
 function hexToRgb(hex: undefined | string): [number, number, number] {

@@ -8,13 +8,14 @@
 import {humanizeNumber, humanizeTime} from "@romefrontend/string-utils";
 import {Reporter} from "@romefrontend/cli-reporter";
 import {
-	RemoteReporterClientMessage,
 	ReporterProgressOptions,
 	ReporterStream,
+	ReporterStreamLineSnapshot,
 } from "./types";
 import ProgressBase from "./ProgressBase";
-import {Markup, ansiEscapes, formatAnsi} from "@romefrontend/cli-layout";
+import {Markup, formatAnsi} from "@romefrontend/cli-layout";
 import {Number1, ob1Get1} from "@romefrontend/ob1";
+import * as streamUtils from "./stream";
 
 type BoldRanges = Array<[number, number]>;
 
@@ -32,6 +33,7 @@ export default class Progress extends ProgressBase {
 	) {
 		super(reporter, opts);
 
+		this.firstRenderLineSnapshot = undefined;
 		this.startTime = Date.now();
 		this.lastRenderTime = Date.now();
 		this.lastRenderCurrent = 0;
@@ -52,6 +54,7 @@ export default class Progress extends ProgressBase {
 	closed: boolean;
 	delay: number;
 	renderTimer: undefined | NodeJS.Timeout;
+	firstRenderLineSnapshot: undefined | ReporterStreamLineSnapshot;
 
 	streamToBouncerStart: Map<ReporterStream, number>;
 	bouncerTimer: undefined | NodeJS.Timeout;
@@ -68,40 +71,6 @@ export default class Progress extends ProgressBase {
 		}
 
 		// TODO fetch approximate total and eta based on `name`
-	}
-
-	processRemoteClientMessage(msg: RemoteReporterClientMessage) {
-		switch (msg.type) {
-			case "PROGRESS_SET_CURRENT":
-				return this.setCurrent(msg.current);
-
-			case "PROGRESS_SET_TOTAL":
-				return this.setTotal(msg.total, msg.approximate);
-
-			case "PROGRESS_SET_TEXT":
-				return this.setText(msg.text);
-
-			case "PROGRESS_PUSH_TEXT":
-				return this.pushText(msg.text, msg.textId);
-
-			case "PROGRESS_POP_TEXT":
-				return this.popText(msg.textId);
-
-			case "PROGRESS_SET_APPROXIMATE_ETA":
-				return this.setApproximateETA(msg.duration);
-
-			case "PROGRESS_TICK":
-				return this.tick();
-
-			case "PROGRESS_END":
-				return this.end();
-
-			case "PROGRESS_RESUME":
-				return this.resume();
-
-			case "PROGRESS_PAUSE":
-				return this.pause();
-		}
 	}
 
 	getElapsedTime(): number {
@@ -131,8 +100,11 @@ export default class Progress extends ProgressBase {
 			const elapsedTime = this.getElapsedTime();
 			const elapsedFrames = Math.round(elapsedTime / BOUNCER_INTERVAL);
 
-			for (const stream of this.reporter.streams) {
-				if (stream.features.columns === undefined) {
+			for (const {stream} of this.reporter.streamHandles) {
+				if (
+					!streamUtils.isANSICursorStream(stream) ||
+					stream.features.columns === undefined
+				) {
 					continue;
 				}
 
@@ -221,7 +193,12 @@ export default class Progress extends ProgressBase {
 		this.closed = true;
 		this.endBouncer();
 		this.endRender();
-		this.reporter.clearLineAll();
+
+		const {firstRenderLineSnapshot} = this;
+		if (firstRenderLineSnapshot !== undefined) {
+			this.reporter.removeLine(firstRenderLineSnapshot);
+			firstRenderLineSnapshot.close();
+		}
 
 		if (this.onEnd !== undefined) {
 			this.onEnd();
@@ -229,7 +206,6 @@ export default class Progress extends ProgressBase {
 	}
 
 	// Ensure that we update the progress bar after a certain amount of ticks
-
 	// This allows us to use the progress bar for sync work where the event loop is always blocked
 	isRenderDue(): boolean {
 		const isDue: boolean =
@@ -413,14 +389,23 @@ export default class Progress extends ProgressBase {
 		this.lastRenderCurrent = this.current;
 		this.lastRenderTime = Date.now();
 
-		for (const stream of this.reporter.getStreams(false)) {
+		if (this.firstRenderLineSnapshot === undefined) {
+			this.firstRenderLineSnapshot = this.reporter.getLineSnapshot(false);
+		}
+
+		for (const {stream} of this.reporter.getStreamHandles()) {
 			if (
-				stream.format === "ansi" &&
-				stream.features.cursor &&
+				streamUtils.isANSICursorStream(stream) &&
 				stream.features.columns !== undefined
 			) {
-				stream.write(ansiEscapes.cursorTo(0));
-				stream.write(this.buildBar(stream, stream.features.columns));
+				streamUtils.log(
+					stream,
+					this.buildBar(stream, stream.features.columns),
+					{
+						replaceLineSnapshot: this.firstRenderLineSnapshot,
+						preferNoNewline: true,
+					},
+				);
 			}
 		}
 	}

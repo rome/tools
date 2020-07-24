@@ -61,7 +61,6 @@ JSRoot {
 						text: MARKUP {
 							parts: Array [
 								RAW_MARKUP {value: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\""}
-								undefined
 								RAW_MARKUP {value: "\" />"}
 							]
 						}
@@ -171,7 +170,7 @@ JSRoot {
 
   ℹ Change the extension to .mjs to turn this file into a module
 
-  ℹ Add "type": "module" to your undefined
+  ℹ Add "type": "module" to your ./
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

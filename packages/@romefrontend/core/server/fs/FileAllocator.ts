@@ -11,20 +11,20 @@ import {WorkerContainer} from "../WorkerManager";
 import {FilePathLocker} from "../../common/utils/lockers";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@romefrontend/path";
 import {markup} from "@romefrontend/cli-layout";
-import {InfoPrefixLogger} from "@romefrontend/core/common/utils/Logger";
+import {ReporterNamespace} from "@romefrontend/cli-reporter";
 
 export default class FileAllocator {
 	constructor(server: Server) {
 		this.server = server;
 		this.fileToWorker = new AbsoluteFilePathMap();
 		this.locker = new FilePathLocker();
-		this.log = server.logger.infoPrefix(markup`[FileAllocator]`);
+		this.logger = server.logger.namespace(markup`[FileAllocator]`);
 	}
 
 	server: Server;
 	locker: FilePathLocker;
 	fileToWorker: AbsoluteFilePathMap<number>;
-	log: InfoPrefixLogger;
+	logger: ReporterNamespace;
 
 	init() {
 		this.server.memoryFs.deletedFileEvent.subscribe((path) => {
@@ -99,7 +99,7 @@ export default class FileAllocator {
 			filename,
 		});
 
-		this.log(markup`Evicted ${path}`);
+		this.logger.info(markup`Evicted ${path}`);
 	}
 
 	async handleDeleted(path: AbsoluteFilePath) {
@@ -150,9 +150,9 @@ export default class FileAllocator {
 			workerManager.disown(workerId, oldStats);
 			workerManager.own(workerId, newStats);
 		} else if (await this.server.projectManager.maybeEvictPossibleConfig(path)) {
-			this.log(markup`Evicted the project belonging to config ${path}`);
+			this.logger.info(markup`Evicted the project belonging to config ${path}`);
 		} else {
-			this.log(markup`No owner for eviction ${path}`);
+			this.logger.info(markup`No owner for eviction ${path}`);
 		}
 	}
 
@@ -171,7 +171,7 @@ export default class FileAllocator {
 			const worker = await workerManager.getNextWorker(path);
 
 			// Add ourselves to the file map
-			this.log(
+			this.logger.info(
 				markup`File <emphasis>${path}</emphasis> (file size <filesize>${String(
 					memoryFs.getFileStats(path)?.size,
 				)}</filesize>) assigned to worker ${worker.id}`,

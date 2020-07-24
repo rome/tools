@@ -52,7 +52,7 @@ export default createServerCommand({
 				location: req.getDiagnosticLocationFromFlags({type: "arg", key}),
 			},
 		);
-		reporter.logAll(markup`${resolved.ref.real}`);
+		reporter.log(markup`${resolved.ref.real}`);
 		return resolved.ref.real.join();
 	},
 });

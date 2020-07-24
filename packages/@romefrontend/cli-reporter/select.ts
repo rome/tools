@@ -69,7 +69,7 @@ export default async function select<Options extends SelectOptions>(
 	}
 
 	let prompt = markup`<dim>❯</dim> <emphasis>${message}</emphasis>`;
-	reporter.logAll(prompt);
+	reporter.log(prompt);
 
 	if (radio) {
 		reporter.info(
@@ -126,25 +126,25 @@ export default async function select<Options extends SelectOptions>(
 				symbol = selectedOptions.has(key) ? "\u2611" : "\u2610";
 			}
 
-			reporter.logAll(
+			reporter.log(
 				markup`  ${symbol} ${formattedLabel}${shortcut}`,
 				{
 					// Don't put a newline on the last option
-					newline: i !== optionNames.length - 1,
+					noNewline: i === optionNames.length - 1,
 				},
 			);
 		}
 	}
 	function cleanup() {
 		for (let i = 0; i < optionCount; i++) {
-			reporter.writeAll(ansiEscapes.eraseLine);
+			reporter.write(ansiEscapes.eraseLine);
 
 			// Don't move above the top line
 			if (i !== optionCount - 1) {
-				reporter.writeAll(ansiEscapes.cursorUp());
+				reporter.write(ansiEscapes.cursorUp());
 			}
 		}
-		reporter.writeAll(ansiEscapes.cursorTo(0));
+		reporter.write(ansiEscapes.cursorTo(0));
 	}
 	function toggleOption(optionName: SelectOptionsKeys<Options>) {
 		if (selectedOptions.has(optionName)) {
@@ -223,12 +223,12 @@ export default async function select<Options extends SelectOptions>(
 			cleanup();
 
 			// Remove initial help message
-			reporter.writeAll(ansiEscapes.cursorUp());
-			reporter.writeAll(ansiEscapes.eraseLine);
+			reporter.write(ansiEscapes.cursorUp());
+			reporter.write(ansiEscapes.eraseLine);
 
 			// Remove initial log message
-			reporter.writeAll(ansiEscapes.cursorUp());
-			reporter.writeAll(ansiEscapes.eraseLine);
+			reporter.write(ansiEscapes.cursorUp());
+			reporter.write(ansiEscapes.eraseLine);
 
 			prompt = markup`${prompt}: `;
 			if (selectedOptions.size > 0) {
@@ -239,7 +239,7 @@ export default async function select<Options extends SelectOptions>(
 			} else {
 				prompt = markup`${prompt}<dim>none</dim>`;
 			}
-			reporter.logAll(prompt);
+			reporter.log(prompt);
 
 			// Stop listening for keypress
 			keypress.finish();

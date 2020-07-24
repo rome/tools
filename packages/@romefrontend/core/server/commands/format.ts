@@ -41,7 +41,7 @@ export default createServerCommand({
 			reporter.error(markup`No formatter for this file`);
 			return undefined;
 		} else {
-			reporter.writeAll(res.formatted);
+			reporter.write(res.formatted);
 			return res.formatted;
 		}
 	},

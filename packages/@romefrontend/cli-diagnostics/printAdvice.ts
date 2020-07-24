@@ -135,9 +135,9 @@ function printGroup(
 
 	let truncated = false;
 
-	reporter.logAll(markup`<emphasis>${item.title}</emphasis>`);
+	reporter.log(markup`<emphasis>${item.title}</emphasis>`);
 	reporter.br();
-	reporter.indent(() => {
+	reporter.indentSync(() => {
 		({truncated} = printAdvice(item.advice, opts));
 	});
 
@@ -187,7 +187,7 @@ function printInspect(
 	opts: AdvicePrintOptions,
 ): PrintAdviceResult {
 	const {reporter} = opts;
-	reporter.indent(() => {
+	reporter.indentSync(() => {
 		reporter.inspect(item.data);
 	});
 	return DID_PRINT;
@@ -258,7 +258,7 @@ function printDiff(
 		return DID_NOT_PRINT;
 	}
 
-	opts.reporter.logAll(frame);
+	opts.reporter.log(frame);
 
 	const hint = generateDiffHint(item.diff);
 	if (hint !== undefined) {
@@ -296,7 +296,7 @@ function printList(
 }
 
 function printTruncated(reporter: Reporter, chars: number) {
-	reporter.logAll(markup`<dim>${chars} more characters truncated</dim>`);
+	reporter.log(markup`<dim>${chars} more characters truncated</dim>`);
 }
 
 function printCode(
@@ -327,7 +327,7 @@ function printCode(
 		return DID_NOT_PRINT;
 	}
 
-	reporter.logAll(frame);
+	reporter.log(frame);
 
 	if (truncatedLength) {
 		printTruncated(reporter, item.sourceText.length - MAX_CODE_LENGTH);
@@ -389,7 +389,7 @@ function printFrame(
 		return DID_NOT_PRINT;
 	}
 
-	reporter.logAll(frame);
+	reporter.log(frame);
 	return {
 		printed: true,
 		truncated,
@@ -472,7 +472,7 @@ function printStacktrace(
 				}
 			}
 
-			reporter.logAll(concatMarkup(logParts, markup` `));
+			reporter.log(concatMarkup(logParts, markup` `));
 
 			if (
 				shownCodeFrames < 2 &&
@@ -538,7 +538,7 @@ function printLog(
 	if (text !== undefined) {
 		switch (category) {
 			case "none": {
-				reporter.logAll(text);
+				reporter.log(text);
 				break;
 			}
 

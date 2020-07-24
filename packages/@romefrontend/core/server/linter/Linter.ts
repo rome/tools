@@ -45,10 +45,10 @@ type LintWatchChanges = Array<{
 export type LinterCompilerOptionsPerFile = Dict<Required<LintCompilerOptions>>;
 
 export type LinterOptions = {
-	apply: boolean;
+	apply?: boolean;
 	args?: Array<string>;
-	hasDecisions: boolean;
-	formatOnly: boolean;
+	hasDecisions?: boolean;
+	formatOnly?: boolean;
 	globalDecisions?: LintCompilerOptionsDecisions;
 	lintCompilerOptionsPerFile?: LinterCompilerOptionsPerFile;
 };
@@ -583,7 +583,10 @@ export default class Linter {
 		await request.endEvent.wait();
 	}
 
-	async runSingle() {
+	async runSingle(): Promise<{
+		printer: DiagnosticsPrinter;
+		savedCount: number;
+	}> {
 		const {request} = this;
 		const {reporter} = request;
 		const diagnosticsByFilename: Map<undefined | string, Diagnostics> = new Map();
@@ -625,6 +628,11 @@ export default class Linter {
 			printer.processor.addDiagnostics(diagnostics);
 		}
 
+		return {printer, savedCount};
+	}
+
+	async throwSingle() {
+		const {printer} = await this.runSingle();
 		throw printer;
 	}
 }
