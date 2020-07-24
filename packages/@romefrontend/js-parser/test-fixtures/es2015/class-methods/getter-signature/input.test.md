@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "getter should have no parameters"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "getter should have no parameters"}]}
 			}
 			location: Object {
 				filename: "es2015/class-methods/getter-signature/input.js"

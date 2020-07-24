@@ -36,7 +36,13 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unexpected character <emphasis>\u{2b81e}</emphasis>"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Unexpected character <emphasis>"}
+						"\u{2b81e}"
+						RAW_MARKUP {value: "</emphasis>"}
+					]
+				}
 			}
 			location: Object {
 				filename: "es2015/uncategorised/327/input.js"

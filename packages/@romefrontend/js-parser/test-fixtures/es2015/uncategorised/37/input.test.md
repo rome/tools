@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Binding member expression"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Binding member expression"}]}
 			}
 			location: Object {
 				filename: "es2015/uncategorised/37/input.js"

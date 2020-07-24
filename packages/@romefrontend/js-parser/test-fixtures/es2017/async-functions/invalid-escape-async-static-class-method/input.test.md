@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "async can't contain a unicode escape"}
+				message: MARKUP {
+					parts: Array [
+						"async"
+						RAW_MARKUP {value: " can't contain a unicode escape"}
+					]
+				}
 			}
 			location: Object {
 				filename: "es2017/async-functions/invalid-escape-async-static-class-method/input.js"

@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}]}
 			}
 			location: Object {
 				filename: "esprima/es2015-yield/invalid-yield-generator-declaration/input.js"

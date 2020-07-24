@@ -50,11 +50,17 @@ JSRoot {
 			}
 			description: Object {
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unclosed JSX element"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unclosed JSX element"}]}
 				advice: Array [
 					log {
 						category: "info"
-						text: SAFE_MARKUP {value: "Originated from opening tag of <emphasis>foo</emphasis>"}
+						text: MARKUP {
+							parts: Array [
+								RAW_MARKUP {value: "Originated from opening tag of <emphasis>"}
+								"foo"
+								RAW_MARKUP {value: "</emphasis>"}
+							]
+						}
 					}
 					frame {
 						location: Object {

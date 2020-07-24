@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "There shouldn't be any newlines between async and the rest of the function"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "There shouldn't be any newlines between async and the rest of the function"}]}
 			}
 			location: Object {
 				filename: "es2015/object/async-method-linebreak/input.js"

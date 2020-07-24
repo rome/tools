@@ -87,7 +87,7 @@ import {
 } from "@romefrontend/typescript-helpers";
 import {ob1Coerce0, ob1Number0, ob1Number1} from "@romefrontend/ob1";
 import {MemoryFSGlobOptions} from "./fs/MemoryFileSystem";
-import {markup} from "@romefrontend/cli-layout";
+import {markup, readMarkup} from "@romefrontend/cli-layout";
 import {DiagnosticsProcessorOptions} from "@romefrontend/diagnostics/DiagnosticsProcessor";
 import {JSONObject} from "@romefrontend/codec-json";
 import {VCSClient} from "@romefrontend/vcs";
@@ -583,7 +583,11 @@ export default class ServerRequest {
 			location,
 		};
 
-		throw new ServerRequestInvalid(description.message.value, [diag], showHelp);
+		throw new ServerRequestInvalid(
+			readMarkup(description.message),
+			[diag],
+			showHelp,
+		);
 	}
 
 	getDiagnosticLocationForClientCwd(): DiagnosticLocation {

@@ -33,6 +33,7 @@ import {
 	markup,
 	markupTag,
 	normalizeMarkup,
+	readMarkup,
 } from "@romefrontend/cli-layout";
 import {DiagnosticsPrinterFlags} from "./types";
 import {ob1Number0Neg1} from "@romefrontend/ob1";
@@ -526,7 +527,7 @@ function printLog(
 
 	let truncated = false;
 	let truncatedLength = 0;
-	if (text.value.length > MAX_LOG_LENGTH) {
+	if (readMarkup(text).length > MAX_LOG_LENGTH) {
 		({truncated, text, truncatedLength} = normalizeMarkup(
 			text,
 			{},

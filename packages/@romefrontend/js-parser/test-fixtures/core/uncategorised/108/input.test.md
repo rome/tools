@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Regular expression flags can't contain unicode escapes"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Regular expression flags can't contain unicode escapes"}]}
 			}
 			location: Object {
 				filename: "core/uncategorised/108/input.js"

@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Object pattern cannot contains methods"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Object pattern cannot contains methods"}]}
 			}
 			location: Object {
 				filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js"

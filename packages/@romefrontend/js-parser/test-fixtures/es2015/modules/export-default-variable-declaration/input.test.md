@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Only expressions, functions or classes are allowed as the `default` export."}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Only expressions, functions or classes are allowed as the `default` export."}]}
 			}
 			location: Object {
 				filename: "es2015/modules/export-default-variable-declaration/input.js"

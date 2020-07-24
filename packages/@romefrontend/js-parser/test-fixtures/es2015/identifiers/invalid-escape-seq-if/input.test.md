@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Escape sequence in keyword if"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Escape sequence in keyword "}
+						"if"
+					]
+				}
 			}
 			location: Object {
 				filename: "es2015/identifiers/invalid-escape-seq-if/input.js"

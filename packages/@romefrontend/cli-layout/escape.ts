@@ -13,73 +13,226 @@ import {
 	URLFilePath,
 } from "@romefrontend/path";
 
+type MarkupPart = Markup | RawMarkup | string;
+type LazyMarkupPart = MarkupPart | LazyMarkupFactory | LazyMarkup;
+
+export type LazyMarkupFactory = () => AnyMarkup;
+
+export type Markup = {
+	type: "MARKUP";
+	parts: Array<MarkupPart>;
+};
+
+export type AnyMarkup = Markup | LazyMarkup;
+
+type LazyMarkup = {
+	type: "LAZY_MARKUP";
+	parts: Array<LazyMarkupPart>;
+};
+
+type RawMarkup = {
+	type: "RAW_MARKUP";
+	value: string;
+};
+
+function isMarkup(part: LazyMarkupPart): part is Markup {
+	return typeof part === "object" && part != null && part.type === "MARKUP";
+}
+
+function isRawMarkup(part: LazyMarkupPart): part is RawMarkup {
+	return typeof part === "object" && part != null && part.type === "RAW_MARKUP";
+}
+
+function isLazyMarkup(part: LazyMarkupPart): part is LazyMarkup {
+	return typeof part === "object" && part != null && part.type === "LAZY_MARKUP";
+}
+
 // Awkward name since we should only be doing this very very sparingly
 export function convertToMarkupFromRandomString(unsafe: string): Markup {
-	return safeMarkup(unsafe);
+	return {
+		type: "MARKUP",
+		parts: [toRawMarkup(unsafe)],
+	};
 }
+
+type InterpolatedValue =
+	| number
+	| RelativeFilePath
+	| AbsoluteFilePath
+	| URLFilePath;
 
 // A tagged template literal helper that will escape all interpolated strings, ensuring only markup works
 export function markup(
 	strs: TemplateStringsArray,
-	...values: Array<
-		Markup | string | number | RelativeFilePath | AbsoluteFilePath | URLFilePath
-	>
-): Markup {
-	let out = "";
+	...values: Array<MarkupPart | InterpolatedValue>
+): Markup;
+export function markup(
+	strs: TemplateStringsArray,
+	...values: Array<LazyMarkupPart | InterpolatedValue>
+): AnyMarkup;
+export function markup(
+	strs: TemplateStringsArray,
+	...values: Array<LazyMarkupPart | InterpolatedValue>
+): AnyMarkup {
+	const parts: Array<LazyMarkupPart> = [];
+	let hasLazy = false;
 
 	for (let i = 0; i < strs.length; i++) {
 		const str = strs[i];
-		out += str;
-		if (i === strs.length - 1) {
-			continue;
+
+		if (str !== "") {
+			parts.push({
+				type: "RAW_MARKUP",
+				value: str,
+			});
 		}
 
-		const value = values[i];
+		if (i !== strs.length - 1) {
+			const value = values[i];
 
-		if (typeof value === "number") {
-			out += `<number>${String(value)}</number>`;
-		} else if (value instanceof URLFilePath) {
-			out += markup`<hyperlink target="${value.join()}" />`.value;
-		} else if (
-			value instanceof RelativeFilePath ||
-			value instanceof AbsoluteFilePath
-		) {
-			out += markup`<filelink target="${value.join()}" />`.value;
-		} else if (
-			typeof value === "object" &&
-			value != null &&
-			value.type === "SAFE_MARKUP"
-		) {
-			out += value.value;
-		} else {
-			out += escapeMarkup(String(value));
-			continue;
+			if (typeof value === "number") {
+				parts.push(toRawMarkup(`<number>${String(value)}</number>`));
+			} else if (value instanceof URLFilePath) {
+				parts.push(
+					toRawMarkup(`<hyperlink target="${escapeMarkup(value.join())}" />`),
+				);
+			} else if (
+				value instanceof RelativeFilePath ||
+				value instanceof AbsoluteFilePath
+			) {
+				parts.push(
+					toRawMarkup(`<filelink target="${escapeMarkup(value.join())}" />`),
+				);
+			} else {
+				if (typeof value === "function" || isLazyMarkup(value)) {
+					hasLazy = true;
+				}
+				parts.push(value);
+			}
 		}
 	}
 
-	return safeMarkup(out);
-}
-
-export function isEmptyMarkup(safe: Markup): boolean {
-	return safe.value === "";
-}
-
-export type Markup = {
-	type: "SAFE_MARKUP";
-	value: string;
-};
-
-export function concatMarkup(
-	items: Array<Markup>,
-	separator: Markup = markup``,
-): Markup {
-	return safeMarkup(items.map((item) => item.value).join(separator.value));
-}
-
-function safeMarkup(input: string): Markup {
+	// @ts-ignore
 	return {
-		type: "SAFE_MARKUP",
-		value: input,
+		type: hasLazy ? "LAZY_MARKUP" : "MARKUP",
+		parts,
+	};
+}
+
+// Here we have a cache making serializing markup so we can call it performantly with only the object
+// We can also benefit from a small speed up by common interpolated markup
+const readCache: WeakMap<AnyMarkup, string> = new WeakMap();
+const factoryCache: WeakMap<LazyMarkupFactory, AnyMarkup> = new WeakMap();
+
+export function readMarkup(item: AnyMarkup | LazyMarkupFactory): string {
+	if (typeof item === "function") {
+		let res = factoryCache.get(item);
+		if (res === undefined) {
+			res = item();
+			factoryCache.set(item, res);
+		}
+		return readMarkup(res);
+	}
+
+	const cached = readCache.get(item);
+	if (cached !== undefined) {
+		return cached;
+	}
+
+	let out = "";
+	for (const part of item.parts) {
+		if (isRawMarkup(part)) {
+			out += part.value;
+		} else if (
+			isMarkup(part) ||
+			isLazyMarkup(part) ||
+			typeof part === "function"
+		) {
+			out += readMarkup(part);
+		} else {
+			out += escapeMarkup(String(part));
+			continue;
+		}
+	}
+	readCache.set(item, out);
+	return out;
+}
+
+export function serializeLazyMarkup(
+	markup: AnyMarkup | LazyMarkupFactory,
+): Markup {
+	if (isLazyMarkup(markup) || typeof markup === "function") {
+		return {
+			type: "MARKUP",
+			parts: [toRawMarkup(readMarkup(markup))],
+		};
+	} else {
+		return markup;
+	}
+}
+
+export function isEmptyMarkup(safe: AnyMarkup): boolean {
+	for (const part of safe.parts) {
+		if (typeof part === "string") {
+			if (part !== "") {
+				return false;
+			}
+		} else if (isMarkup(part)) {
+			if (!isEmptyMarkup(part)) {
+				return false;
+			}
+		} else if (isRawMarkup(part)) {
+			if (part.value !== "") {
+				return false;
+			}
+		} else if (isLazyMarkup(part)) {
+			if (!isEmptyMarkup(part)) {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+export function concatMarkup(items: Array<Markup>, separator?: Markup): Markup;
+export function concatMarkup(
+	items: Array<AnyMarkup>,
+	separator?: AnyMarkup,
+): AnyMarkup;
+export function concatMarkup(
+	items: Array<AnyMarkup>,
+	separator: AnyMarkup = markup``,
+): AnyMarkup {
+	const parts: Array<LazyMarkupPart> = [];
+	let hasLazy = isLazyMarkup(separator);
+
+	for (let i = 0; i < items.length; i++) {
+		const item = items[i];
+		parts.push(item);
+
+		if (isLazyMarkup(item)) {
+			hasLazy = true;
+		}
+
+		if (i !== items.length - 1) {
+			parts.push(separator);
+		}
+	}
+
+	// @ts-ignore
+	return {
+		type: hasLazy ? "LAZY_MARKUP" : "MARKUP",
+		parts,
+	};
+}
+
+function toRawMarkup(value: string): RawMarkup {
+	return {
+		type: "RAW_MARKUP",
+		value,
 	};
 }
 
@@ -102,25 +255,48 @@ function escapeMarkup(input: string): string {
 	return escaped;
 }
 
+type MarkupAttributes = Dict<undefined | string | number | boolean>;
+
 export function markupTag(
 	tagName: MarkupTagName,
 	text: Markup,
-	attrs?: Dict<undefined | string | number | boolean>,
-): Markup {
+	attrs?: MarkupAttributes,
+): Markup;
+export function markupTag(
+	tagName: MarkupTagName,
+	text: AnyMarkup,
+	attrs?: MarkupAttributes,
+): AnyMarkup;
+export function markupTag(
+	tagName: MarkupTagName,
+	text: AnyMarkup,
+	attrs?: MarkupAttributes,
+): AnyMarkup {
 	let ret = `<${tagName}`;
 
 	if (attrs !== undefined) {
 		for (const key in attrs) {
 			const value = attrs[key];
 			if (value !== undefined) {
-				ret += markup` ${key}="${String(value)}"`.value;
+				ret += ` ${escapeMarkup(key)}="${escapeMarkup(String(value))}"`;
 			}
 		}
 	}
 
-	ret += `>${text.value}</${tagName}>`;
+	const open = toRawMarkup(`${ret}>`);
+	const close = toRawMarkup(`</${tagName}>`);
 
-	return safeMarkup(ret);
+	if (text.type === "LAZY_MARKUP") {
+		return {
+			type: "LAZY_MARKUP",
+			parts: [open, text, close],
+		};
+	} else {
+		return {
+			type: "MARKUP",
+			parts: [open, text, close],
+		};
+	}
 }
 
 export function unescapeTextValue(str: string): string {

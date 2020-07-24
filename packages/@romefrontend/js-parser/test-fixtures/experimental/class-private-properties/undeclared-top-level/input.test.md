@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unexpected character #"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unexpected character #"}]}
 			}
 			location: Object {
 				filename: "experimental/class-private-properties/undeclared-top-level/input.js"

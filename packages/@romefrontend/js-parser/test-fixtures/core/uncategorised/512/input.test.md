@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "static is a reserved word"}
+				message: MARKUP {
+					parts: Array [
+						"static"
+						RAW_MARKUP {value: " is a reserved word"}
+					]
+				}
 			}
 			location: Object {
 				filename: "core/uncategorised/512/input.js"

@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Not a valid assignment target"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Not a valid assignment target"}]}
 			}
 			location: Object {
 				filename: "es2015/for-in/bare-initializer/input.js"

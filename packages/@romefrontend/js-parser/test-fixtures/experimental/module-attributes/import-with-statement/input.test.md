@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "'with' in strict mode"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "'with' in strict mode"}]}
 			}
 			location: Object {
 				filename: "experimental/module-attributes/import-with-statement/input.js"

@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Parenthesized expression didnt contain anything"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Parenthesized expression didnt contain anything"}]}
 			}
 			location: Object {
 				filename: "esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js"

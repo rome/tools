@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unknown JSX identifier token"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unknown JSX identifier token"}]}
 			}
 			location: Object {
 				filename: "jsx/errors/member-in-namespace-1/input.jsx"

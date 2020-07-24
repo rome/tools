@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Generators can only be declared at the top level or inside a block"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Generators can only be declared at the top level or inside a block"}]}
 			}
 			location: Object {
 				filename: "es2015/generators/invalid-hanging/input.js"

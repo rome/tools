@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "await is not allowed in async function parameters"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "await is not allowed in async function parameters"}]}
 			}
 			location: Object {
 				filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"

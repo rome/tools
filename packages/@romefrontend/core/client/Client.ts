@@ -53,7 +53,7 @@ import {
 	markupToPlainText,
 } from "@romefrontend/cli-layout/format";
 import {
-	Markup,
+	AnyMarkup,
 	concatMarkup,
 	convertToMarkupFromRandomString,
 	markup,
@@ -323,8 +323,8 @@ export default class Client {
 		});
 	}
 
-	async generateRageSummary(): Promise<Markup> {
-		let summary: Array<Markup> = [];
+	async generateRageSummary(): Promise<AnyMarkup> {
+		let summary: Array<AnyMarkup> = [];
 
 		function push(name: string, value: unknown) {
 			const formatted =

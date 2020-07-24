@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unexpected keyword if"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Unexpected keyword "}
+						"if"
+					]
+				}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0064/input.js"

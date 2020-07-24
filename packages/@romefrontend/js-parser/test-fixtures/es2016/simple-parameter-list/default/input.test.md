@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Illegal 'use strict' directive in function with non-simple parameter list"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Illegal 'use strict' directive in function with non-simple parameter list"}]}
 			}
 			location: Object {
 				filename: "es2016/simple-parameter-list/default/input.js"

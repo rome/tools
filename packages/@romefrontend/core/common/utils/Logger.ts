@@ -11,9 +11,9 @@ import {
 	ReporterOptions,
 } from "@romefrontend/cli-reporter";
 import {DEFAULT_TERMINAL_FEATURES} from "@romefrontend/cli-environment";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {AnyMarkup, markup} from "@romefrontend/cli-layout";
 
-export type InfoPrefixLogger = (msg: Markup) => void;
+export type InfoPrefixLogger = (msg: AnyMarkup) => void;
 
 export default class Logger extends Reporter {
 	constructor(
@@ -44,7 +44,7 @@ export default class Logger extends Reporter {
 	conditionalStream: ReporterConditionalStream;
 	loggerType: string;
 
-	infoPrefix(prefix: Markup): InfoPrefixLogger {
+	infoPrefix(prefix: AnyMarkup): InfoPrefixLogger {
 		return (msg) => {
 			this.info(markup`${prefix} ${msg}`);
 		};
@@ -54,7 +54,7 @@ export default class Logger extends Reporter {
 		this.conditionalStream.update();
 	}
 
-	getMessagePrefix(): Markup {
+	getMessagePrefix(): AnyMarkup {
 		const inner = `${this.loggerType} ${process.pid}`;
 		const timestamp = new Date().toISOString();
 		return markup`<dim>[${timestamp}] [${inner}]</dim> `;

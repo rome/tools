@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Redefinition of __proto__ property"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Redefinition of __proto__ property"}]}
 			}
 			location: Object {
 				filename: "esprima/es2015-object-initialiser/proto-literal-shorthand/input.js"

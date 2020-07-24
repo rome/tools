@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Expected number in radix 8"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Expected number in radix "}
+						"8"
+					]
+				}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0013/input.js"

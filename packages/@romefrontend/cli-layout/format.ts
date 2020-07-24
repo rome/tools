@@ -15,11 +15,13 @@ import {
 } from "./types";
 import {parseMarkup} from "./parse";
 import {
+	AnyMarkup,
 	Markup,
 	concatMarkup,
 	convertToMarkupFromRandomString,
 	isEmptyMarkup,
 	markup,
+	readMarkup,
 } from "./escape";
 import Grid from "./grid/Grid";
 import {ob1Get1} from "@romefrontend/ob1";
@@ -28,7 +30,7 @@ import {buildFileLink, formatGrammarNumber} from "./util";
 
 function buildTag(
 	tag: TagNode,
-	inner: Markup,
+	inner: AnyMarkup,
 	opts: MarkupFormatNormalizeOptions,
 ): Markup {
 	let {attributes} = tag;
@@ -54,7 +56,7 @@ function buildTag(
 		// We don't technically need to normalize this but it's one less tag to have to support
 		// if other tools need to consume it
 		case "grammarNumber":
-			return markup`${formatGrammarNumber(attributes, inner.value)}`;
+			return markup`${formatGrammarNumber(attributes, readMarkup(inner))}`;
 	}
 
 	let open = `<${tag.name}`;
@@ -69,7 +71,7 @@ function buildTag(
 		if (raw === true) {
 			open += ` ${key}`;
 		} else {
-			open += markup` ${key}="${String(raw)}"`.value;
+			open += readMarkup(markup` ${key}="${String(raw)}"`);
 		}
 	}
 
@@ -77,7 +79,7 @@ function buildTag(
 		return convertToMarkupFromRandomString(`${open} />`);
 	} else {
 		return convertToMarkupFromRandomString(
-			`${open}>${inner.value}</${tag.name}>`,
+			`${open}>${readMarkup(inner)}</${tag.name}>`,
 		);
 	}
 }
@@ -101,7 +103,7 @@ function normalizeMarkupChildren(
 
 	for (const child of children) {
 		if (child.type === "Text") {
-			let text = markup`${child.value}`.value;
+			let text = readMarkup(markup`${child.value}`);
 			textLength += text.length;
 
 			const isVisible = remainingChars > 0;
@@ -137,11 +139,11 @@ function normalizeMarkupChildren(
 }
 
 function renderGrid(
-	safe: Markup,
+	safe: AnyMarkup,
 	opts: UserMarkupFormatGridOptions = {},
 	format: GridOutputFormat,
 ): MarkupLinesAndWidth {
-	const input = safe.value;
+	const input = readMarkup(safe);
 	const grid = new Grid({
 		...opts,
 		sourceText: input,
@@ -155,21 +157,21 @@ function renderGrid(
 }
 
 export function markupToPlainText(
-	input: Markup,
+	input: AnyMarkup,
 	opts: UserMarkupFormatGridOptions = {},
 ): MarkupLinesAndWidth {
 	return renderGrid(input, opts, "none");
 }
 
 export function markupToAnsi(
-	input: Markup,
+	input: AnyMarkup,
 	opts: UserMarkupFormatGridOptions = {},
 ): MarkupLinesAndWidth {
 	return renderGrid(input, opts, "ansi");
 }
 
 export function markupToHtml(
-	input: Markup,
+	input: AnyMarkup,
 	opts: UserMarkupFormatGridOptions = {},
 ): MarkupLinesAndWidth {
 	return renderGrid(input, opts, "html");
@@ -180,7 +182,7 @@ export function joinMarkupLines({lines}: MarkupLinesAndWidth): string {
 }
 
 export function normalizeMarkup(
-	input: Markup,
+	input: AnyMarkup,
 	opts: MarkupFormatNormalizeOptions = {},
 	maxLength: number = Infinity,
 ): {
@@ -191,7 +193,7 @@ export function normalizeMarkup(
 	truncated: boolean;
 } {
 	const {textLength, text} = normalizeMarkupChildren(
-		parseMarkup(input.value),
+		parseMarkup(readMarkup(input)),
 		opts,
 		maxLength,
 	);

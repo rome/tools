@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Identifier directly after number"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Identifier directly after number"}]}
 			}
 			location: Object {
 				filename: "es2015/uncategorised/207/input.js"

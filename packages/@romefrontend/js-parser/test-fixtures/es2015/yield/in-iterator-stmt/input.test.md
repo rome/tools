@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Invalid left-hand side in for-in statement"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Invalid left-hand side in "}
+						"for-in statement"
+					]
+				}
 			}
 			location: Object {
 				filename: "es2015/yield/in-iterator-stmt/input.js"

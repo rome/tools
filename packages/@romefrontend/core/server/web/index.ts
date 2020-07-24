@@ -200,11 +200,7 @@ export class WebServer {
 
 		let buf = concatMarkup(
 			msg.data.map((arg) => {
-				if (typeof arg === "string") {
-					return markup`${arg}`;
-				} else {
-					return prettyFormat(arg);
-				}
+				return markup`${typeof arg === "string" ? arg : prettyFormat(arg)}`;
 			}),
 			markup` `,
 		);

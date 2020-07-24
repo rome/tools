@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unknown start to an array element"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Unknown start to an "}
+						"array element"
+					]
+				}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0058/input.js"

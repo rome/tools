@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "ES2015 named imports do not destructure. Use another statement for destructuring after the import."}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "ES2015 named imports do not destructure. Use another statement for destructuring after the import."}]}
 			}
 			location: Object {
 				filename: "es2015/uncategorised/392/input.js"

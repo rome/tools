@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Bad character escape sequence"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Bad character escape sequence"}]}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0037/input.js"

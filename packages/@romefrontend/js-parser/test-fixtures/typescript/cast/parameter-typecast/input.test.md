@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Function parameter type annotation? Possibly forgot curlies around an object. Possibly forgot async keyword."}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Function parameter type annotation? Possibly forgot curlies around an object. Possibly forgot async keyword."}]}
 			}
 			location: Object {
 				filename: "typescript/cast/parameter-typecast/input.ts"

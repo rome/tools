@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Binding member expression"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Binding member expression"}]}
 			}
 			location: Object {
 				filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"

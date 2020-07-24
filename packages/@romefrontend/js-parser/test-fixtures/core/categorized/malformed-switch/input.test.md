@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Statement outside of a case or default block"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Statement outside of a case or default block"}]}
 			}
 			location: Object {
 				filename: "core/categorized/malformed-switch/input.js"

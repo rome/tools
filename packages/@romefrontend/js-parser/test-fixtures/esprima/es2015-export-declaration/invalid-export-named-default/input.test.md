@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unexpected keyword default"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Unexpected keyword "}
+						"default"
+					]
+				}
 			}
 			location: Object {
 				filename: "esprima/es2015-export-declaration/invalid-export-named-default/input.js"

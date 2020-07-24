@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unknown start to an statement expression"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Unknown start to an "}
+						"statement expression"
+					]
+				}
 			}
 			location: Object {
 				filename: "experimental/logical-assignment-operator/mallet-no-plugin/input.js"

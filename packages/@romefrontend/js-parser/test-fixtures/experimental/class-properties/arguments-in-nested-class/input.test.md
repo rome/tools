@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "'arguments' is not allowed in class field initializer"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "'arguments' is not allowed in class field initializer"}]}
 			}
 			location: Object {
 				filename: "experimental/class-properties/arguments-in-nested-class/input.js"

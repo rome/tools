@@ -58,7 +58,7 @@ import {
 	createURLFilePath,
 	createUnknownFilePath,
 } from "@romefrontend/path";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup, readMarkup} from "@romefrontend/cli-layout";
 
 type UnexpectedConsumerOptions = {
 	loc?: SourceLocation;
@@ -401,7 +401,7 @@ export default class Consumer {
 			// If consumer is undefined and we have no filename then we were not able to find a location,
 			// in this case, just throw a normal error
 			if (consumer === undefined && filename === undefined) {
-				throw new Error(message.value);
+				throw new Error(readMarkup(message));
 			}
 
 			// Warn that we didn't find this value in the source if it's parent wasn't either
@@ -419,7 +419,7 @@ export default class Consumer {
 		}
 
 		if (location === undefined) {
-			throw new Error(message.value);
+			throw new Error(readMarkup(message));
 		}
 
 		const diagnostic: Diagnostic = {

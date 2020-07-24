@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "setter should have exactly one param"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "setter should have exactly one param"}]}
 			}
 			location: Object {
 				filename: "es2015/uncategorised/347/input.js"

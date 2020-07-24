@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Expected an identifier"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Expected an identifier"}]}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0061/input.js"

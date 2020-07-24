@@ -53,7 +53,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "yield is a reserved word"}
+				message: MARKUP {
+					parts: Array [
+						"yield"
+						RAW_MARKUP {value: " is a reserved word"}
+					]
+				}
 			}
 			location: Object {
 				filename: "esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js"

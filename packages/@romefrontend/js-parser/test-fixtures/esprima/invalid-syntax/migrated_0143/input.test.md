@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Multiple default clauses"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Multiple default clauses"}]}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0143/input.js"

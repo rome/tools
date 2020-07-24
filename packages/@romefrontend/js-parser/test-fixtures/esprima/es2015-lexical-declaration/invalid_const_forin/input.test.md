@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Loop variable declaration may not have an initializer"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}]}
 			}
 			location: Object {
 				filename: "esprima/es2015-lexical-declaration/invalid_const_forin/input.js"

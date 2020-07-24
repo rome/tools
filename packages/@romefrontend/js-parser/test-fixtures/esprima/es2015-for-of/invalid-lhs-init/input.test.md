@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Invalid left-hand side in for-of statement"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Invalid left-hand side in "}
+						"for-of statement"
+					]
+				}
 			}
 			location: Object {
 				filename: "esprima/es2015-for-of/invalid-lhs-init/input.js"

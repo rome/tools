@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unknown start to an call expression argument"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Unknown start to an "}
+						"call expression argument"
+					]
+				}
 			}
 			location: Object {
 				filename: "es2017/trailing-function-commas/5/input.js"

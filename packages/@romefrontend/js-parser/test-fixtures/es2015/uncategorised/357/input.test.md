@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unknown start to an await argument"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Unknown start to an "}
+						"await argument"
+					]
+				}
 			}
 			location: Object {
 				filename: "es2015/uncategorised/357/input.js"

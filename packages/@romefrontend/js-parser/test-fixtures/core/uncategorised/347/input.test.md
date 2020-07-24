@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Invalid number"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Invalid number"}]}
 			}
 			location: Object {
 				filename: "core/uncategorised/347/input.js"

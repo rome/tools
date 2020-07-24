@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Deleting a private field is not allowed"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Deleting a private field is not allowed"}]}
 			}
 			location: Object {
 				filename: "experimental/class-private-properties/failure-delete-private-property/input.js"

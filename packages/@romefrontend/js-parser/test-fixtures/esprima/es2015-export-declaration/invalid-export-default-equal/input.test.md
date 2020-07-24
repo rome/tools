@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unknown start to an export default declaration"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Unknown start to an "}
+						"export default declaration"
+					]
+				}
 			}
 			location: Object {
 				filename: "esprima/es2015-export-declaration/invalid-export-default-equal/input.js"

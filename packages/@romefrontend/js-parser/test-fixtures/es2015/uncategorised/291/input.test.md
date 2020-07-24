@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "'import' and 'export' may only appear at the top level"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "'import' and 'export' may only appear at the top level"}]}
 			}
 			location: Object {
 				filename: "es2015/uncategorised/291/input.js"

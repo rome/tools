@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Spread is not allowed in import()"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Spread is not allowed in import()"}]}
 			}
 			location: Object {
 				filename: "es2020/dynamic-import/invalid-arguments-spread/input.js"

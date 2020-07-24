@@ -44,10 +44,11 @@ import {
 } from "../common/types/files";
 import {AbsoluteFilePath, createAbsoluteFilePath} from "@romefrontend/path";
 import {
-	Markup,
 	concatMarkup,
 	isEmptyMarkup,
 	markup,
+	readMarkup,
+	serializeLazyMarkup,
 } from "@romefrontend/cli-layout";
 import {
 	ErrorFrames,
@@ -176,14 +177,18 @@ export default class TestWorkerRunner {
 			const frames = cleanFrames(struct.frames.slice(2));
 
 			this.consoleAdvice.push(() => {
-				let textParts: Array<Markup> = [];
+				let text;
 				if (args.length === 1 && typeof args[0] === "string") {
-					textParts.push(markup`${args[0]}`);
+					text = markup`${args[0]}`;
 				} else {
-					textParts = args.map((arg) => prettyFormat(arg, {allowCustom: false}));
+					text = concatMarkup(
+						args.map((arg) =>
+							serializeLazyMarkup(prettyFormat(arg, {allowCustom: false}))
+						),
+						markup` `,
+					);
 				}
 
-				let text = concatMarkup(textParts, markup` `);
 				if (isEmptyMarkup(text)) {
 					text = markup`<dim>empty log</dim>`;
 				}
@@ -274,7 +279,9 @@ export default class TestWorkerRunner {
 			});
 
 			if (res.syntaxError !== undefined) {
-				const message = markup`A bundle was generated that contained a syntax error: ${res.syntaxError.description.message.value}`;
+				const message = markup`A bundle was generated that contained a syntax error: ${readMarkup(
+					res.syntaxError.description.message,
+				)}`;
 
 				throw createSingleDiagnosticError({
 					...res.syntaxError,

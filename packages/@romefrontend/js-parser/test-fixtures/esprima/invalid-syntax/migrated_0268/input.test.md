@@ -33,16 +33,6 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse/js"}]
-			description: Object {
-				category: "parse/js"
-				message: SAFE_MARKUP {value: "A type annotation is only valid inside of a TypeScript file"}
-				advice: Array [
-					log {
-						category: "info"
-						text: SAFE_MARKUP {value: "To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>"}
-					}
-				]
-			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0268/input.js"
 				mtime: undefined
@@ -56,6 +46,22 @@ JSRoot {
 					column: 10
 					index: 10
 					line: 1
+				}
+			}
+			description: Object {
+				category: "parse/js"
+				advice: Array [
+					log {
+						category: "info"
+						text: MARKUP {parts: Array [RAW_MARKUP {value: "To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>"}]}
+					}
+				]
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "A "}
+						"type annotation"
+						RAW_MARKUP {value: " is only valid inside of a TypeScript file"}
+					]
 				}
 			}
 		}

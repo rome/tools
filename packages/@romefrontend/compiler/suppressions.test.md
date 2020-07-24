@@ -11,7 +11,13 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/duplicate"
-				message: SAFE_MARKUP {value: "Duplicate suppression category <emphasis>dog</emphasis>"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Duplicate suppression category <emphasis>"}
+						"dog"
+						RAW_MARKUP {value: "</emphasis>"}
+					]
+				}
 			}
 			location: Object {
 				filename: "unknown"
@@ -31,7 +37,13 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/duplicate"
-				message: SAFE_MARKUP {value: "Duplicate suppression category <emphasis>dog</emphasis>"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Duplicate suppression category <emphasis>"}
+						"dog"
+						RAW_MARKUP {value: "</emphasis>"}
+					]
+				}
 			}
 			location: Object {
 				filename: "unknown"
@@ -120,7 +132,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
-				message: SAFE_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}]}
 			}
 			location: Object {
 				filename: "unknown"
@@ -140,7 +152,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
-				message: SAFE_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}]}
 			}
 			location: Object {
 				filename: "unknown"
@@ -160,7 +172,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
-				message: SAFE_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}]}
 			}
 			location: Object {
 				filename: "unknown"
@@ -180,7 +192,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
-				message: SAFE_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}]}
 			}
 			location: Object {
 				filename: "unknown"
@@ -200,7 +212,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
-				message: SAFE_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}]}
 			}
 			location: Object {
 				filename: "unknown"
@@ -220,7 +232,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
-				message: SAFE_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}]}
 			}
 			location: Object {
 				filename: "unknown"
@@ -240,7 +252,7 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
-				message: SAFE_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}]}
 			}
 			location: Object {
 				filename: "unknown"
@@ -431,7 +443,13 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
-				message: SAFE_MARKUP {value: "overlap suppression category <emphasis>foo</emphasis>"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "overlap suppression category <emphasis>"}
+						"foo"
+						RAW_MARKUP {value: "</emphasis>"}
+					]
+				}
 			}
 			location: Object {
 				filename: "unknown"
@@ -451,7 +469,13 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
-				message: SAFE_MARKUP {value: "overlap suppression category <emphasis>foo</emphasis>"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "overlap suppression category <emphasis>"}
+						"foo"
+						RAW_MARKUP {value: "</emphasis>"}
+					]
+				}
 			}
 			location: Object {
 				filename: "unknown"
@@ -558,7 +582,13 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
-				message: SAFE_MARKUP {value: "overlap suppression category <emphasis>foo</emphasis>"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "overlap suppression category <emphasis>"}
+						"foo"
+						RAW_MARKUP {value: "</emphasis>"}
+					]
+				}
 			}
 			location: Object {
 				filename: "unknown"
@@ -646,7 +676,13 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
-				message: SAFE_MARKUP {value: "overlap suppression category <emphasis>foo</emphasis>"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "overlap suppression category <emphasis>"}
+						"foo"
+						RAW_MARKUP {value: "</emphasis>"}
+					]
+				}
 			}
 			location: Object {
 				filename: "unknown"
@@ -715,7 +751,13 @@ Object {
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
-				message: SAFE_MARKUP {value: "overlap suppression category <emphasis>foo</emphasis>"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "overlap suppression category <emphasis>"}
+						"foo"
+						RAW_MARKUP {value: "</emphasis>"}
+					]
+				}
 			}
 			location: Object {
 				filename: "unknown"

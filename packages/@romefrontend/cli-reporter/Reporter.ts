@@ -6,6 +6,7 @@
  */
 
 import {
+	AnyMarkup,
 	Markup,
 	MarkupFormatOptions,
 	MarkupTagName,
@@ -18,6 +19,7 @@ import {
 	markupTag,
 	markupToAnsi,
 	markupToPlainText,
+	readMarkup,
 } from "@romefrontend/cli-layout";
 import {
 	RemoteReporterClientMessage,
@@ -353,7 +355,7 @@ export default class Reporter {
 		}
 	}
 
-	getMessagePrefix(): Markup {
+	getMessagePrefix(): AnyMarkup {
 		return markup``;
 	}
 
@@ -424,7 +426,7 @@ export default class Reporter {
 	}
 
 	async question(
-		message: Markup,
+		message: AnyMarkup,
 		{hint, default: def = "", yes = false}: QuestionOptions = {},
 	): Promise<string> {
 		if (yes) {
@@ -488,7 +490,7 @@ export default class Reporter {
 	}
 
 	async questionValidate<T>(
-		message: Markup,
+		message: AnyMarkup,
 		validate: (value: string) => QuestionValidateResult<T>,
 		options: Omit<QuestionOptions, "normalize"> = {},
 	): Promise<T> {
@@ -524,7 +526,7 @@ export default class Reporter {
 		}
 	}
 
-	async radioConfirm(message: Markup): Promise<boolean> {
+	async radioConfirm(message: AnyMarkup): Promise<boolean> {
 		const answer = await this.radio(
 			message,
 			{
@@ -561,7 +563,7 @@ export default class Reporter {
 	}
 
 	async radio<Options extends SelectOptions>(
-		message: Markup,
+		message: AnyMarkup,
 		arg: SelectArguments<Options>,
 	): Promise<SelectOptionsKeys<Options>> {
 		const set = await this.select(message, {...arg, radio: true});
@@ -571,7 +573,7 @@ export default class Reporter {
 	}
 
 	async select<Options extends SelectOptions>(
-		message: Markup,
+		message: AnyMarkup,
 		args: SelectArguments<Options>,
 	): Promise<Set<SelectOptionsKeys<Options>>> {
 		return select(this, message, args);
@@ -668,7 +670,7 @@ export default class Reporter {
 
 		let formatted;
 		if (typeof value !== "number" && typeof value !== "string") {
-			formatted = prettyFormat(value);
+			formatted = markup`${prettyFormat(value)}`;
 		} else {
 			formatted = markup`${String(value)}`;
 		}
@@ -724,7 +726,7 @@ export default class Reporter {
 	}
 
 	//# SECTIONS
-	heading(text: Markup) {
+	heading(text: AnyMarkup) {
 		this.br();
 		this.logAll(markup`<inverse><emphasis> ${text} </emphasis></inverse>`);
 		this.br();
@@ -740,7 +742,7 @@ export default class Reporter {
 		});
 	}
 
-	hr(text: Markup = markup``) {
+	hr(text: AnyMarkup = markup``) {
 		const {hasClearScreen} = this;
 
 		this.br();
@@ -755,7 +757,7 @@ export default class Reporter {
 
 	async steps(
 		callbacks: Array<{
-			message: Markup;
+			message: AnyMarkup;
 			callback: () => Promise<void>;
 			clear?: boolean;
 		}>,
@@ -785,7 +787,7 @@ export default class Reporter {
 		}
 	}
 
-	step(current: number, total: number, msg: Markup) {
+	step(current: number, total: number, msg: AnyMarkup) {
 		this.logAll(markup`<dim>[${String(current)}/${String(total)}]</dim> ${msg}`);
 	}
 
@@ -806,11 +808,11 @@ export default class Reporter {
 		}
 	};
 
-	stripMarkup(str: Markup): string {
+	stripMarkup(str: AnyMarkup): string {
 		return joinMarkupLines(markupToPlainText(str, this.markupOptions));
 	}
 
-	format(stream: ReporterStreamMeta, str: Markup): Array<string> {
+	format(stream: ReporterStreamMeta, str: AnyMarkup): Array<string> {
 		if (isEmptyMarkup(str)) {
 			return [""];
 		}
@@ -848,11 +850,11 @@ export default class Reporter {
 				return markupToPlainText(built, gridMarkupOptions).lines;
 
 			case "markup":
-				return [normalizeMarkup(built, this.markupOptions).text.value];
+				return [readMarkup(normalizeMarkup(built, this.markupOptions).text)];
 		}
 	}
 
-	logAll(msg: Markup, opts: LogOptions = {}) {
+	logAll(msg: AnyMarkup, opts: LogOptions = {}) {
 		for (const stream of this.getStreams(opts.stderr)) {
 			this.logOne(stream, msg, opts);
 		}
@@ -864,7 +866,7 @@ export default class Reporter {
 		}
 	}
 
-	logOne(stream: ReporterStream, msg: Markup, opts: LogOptions = {}) {
+	logOne(stream: ReporterStream, msg: AnyMarkup, opts: LogOptions = {}) {
 		const lines = this.format(stream, msg);
 		for (let i = 0; i < lines.length; i++) {
 			this.logOneRaw(
@@ -899,7 +901,7 @@ export default class Reporter {
 		this.writeSpecific(stream, msg, opts);
 	}
 
-	logAllWithCategory(rawInner: Markup, opts: LogCategoryOptions) {
+	logAllWithCategory(rawInner: AnyMarkup, opts: LogCategoryOptions) {
 		const streams = this.getStreams(opts.stderr);
 		if (streams.size === 0) {
 			return;
@@ -920,7 +922,7 @@ export default class Reporter {
 		}
 	}
 
-	success(msg: Markup) {
+	success(msg: AnyMarkup) {
 		this.logAllWithCategory(
 			msg,
 			{
@@ -931,7 +933,7 @@ export default class Reporter {
 		);
 	}
 
-	error(msg: Markup) {
+	error(msg: AnyMarkup) {
 		this.logAllWithCategory(
 			msg,
 			{
@@ -949,7 +951,7 @@ export default class Reporter {
 		);
 	}
 
-	info(msg: Markup) {
+	info(msg: AnyMarkup) {
 		this.logAllWithCategory(
 			msg,
 			{
@@ -960,7 +962,7 @@ export default class Reporter {
 		);
 	}
 
-	warn(msg: Markup) {
+	warn(msg: AnyMarkup) {
 		this.logAllWithCategory(
 			msg,
 			{

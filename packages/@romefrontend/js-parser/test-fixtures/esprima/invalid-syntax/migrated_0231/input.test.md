@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "yield is a reserved word"}
+				message: MARKUP {
+					parts: Array [
+						"yield"
+						RAW_MARKUP {value: " is a reserved word"}
+					]
+				}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0231/input.js"

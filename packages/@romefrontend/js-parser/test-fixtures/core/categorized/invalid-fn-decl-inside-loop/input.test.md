@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "In non-strict mode code, functions can only be declared at top level, inside a block, or as the body of an if statement"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "In non-strict mode code, functions can only be declared at top level, inside a block, or as the body of an if statement"}]}
 			}
 			location: Object {
 				filename: "core/categorized/invalid-fn-decl-inside-loop/input.js"

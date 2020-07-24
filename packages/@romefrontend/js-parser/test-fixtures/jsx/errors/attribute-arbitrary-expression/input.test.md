@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "JSX attribute value should be either an expression or a quoted JSX text"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "JSX attribute value should be either an expression or a quoted JSX text"}]}
 			}
 			location: Object {
 				filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"

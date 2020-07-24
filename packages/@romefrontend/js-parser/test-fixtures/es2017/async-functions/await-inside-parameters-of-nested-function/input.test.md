@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Expected a comma to separate items in function params"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Expected a comma to separate items in "}
+						"function params"
+					]
+				}
 			}
 			location: Object {
 				filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"

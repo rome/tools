@@ -36,7 +36,16 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "The only valid meta property for new is new.target"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "The only valid meta property for "}
+						"new"
+						RAW_MARKUP {value: " is "}
+						"new"
+						RAW_MARKUP {value: "."}
+						"target"
+					]
+				}
 			}
 			location: Object {
 				filename: "esprima/es2015-meta-property/unknown-property/input.js"

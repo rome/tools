@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Function parameters can't be parenthesized"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Function parameters can't be parenthesized"}]}
 			}
 			location: Object {
 				filename: "es2017/async-functions/3/input.js"

@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Invalid escape sequence in template"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Invalid escape sequence in template"}]}
 			}
 			location: Object {
 				filename: "experimental/template-literal-invalid-escapes-untagged/56/input.js"

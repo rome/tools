@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unexpected token, expected while"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Unexpected token, expected "}
+						"while"
+					]
+				}
 			}
 			location: Object {
 				filename: "core/uncategorised/458/input.js"

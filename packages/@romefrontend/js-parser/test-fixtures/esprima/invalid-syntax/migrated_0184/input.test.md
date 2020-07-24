@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "'with' in strict mode"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "'with' in strict mode"}]}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0184/input.js"

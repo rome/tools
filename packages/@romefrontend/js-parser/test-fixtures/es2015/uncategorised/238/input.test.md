@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Expected keyword from"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Expected keyword "}
+						"from"
+					]
+				}
 			}
 			location: Object {
 				filename: "es2015/uncategorised/238/input.js"

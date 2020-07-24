@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Duplicate regular expression flag"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Duplicate regular expression flag"}]}
 			}
 			location: Object {
 				filename: "es2015/regex/duplicate-flags/input.js"

@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Lexical declaration cannot appear in a single-statement context"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Lexical declaration cannot appear in a single-statement context"}]}
 			}
 			location: Object {
 				filename: "es2015/uncategorised/329/input.js"

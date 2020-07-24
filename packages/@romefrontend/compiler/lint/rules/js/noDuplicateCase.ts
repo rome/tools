@@ -13,11 +13,7 @@ import {
 	resolveIndirection,
 	tryStaticEvaluation,
 } from "@romefrontend/js-ast-utils";
-import prettyFormat from "@romefrontend/pretty-format";
-import {
-	joinMarkupLines,
-	markupToPlainText,
-} from "@romefrontend/cli-layout/format";
+import {prettyFormatToString} from "@romefrontend/pretty-format";
 
 export default {
 	name: "js/noDuplicateCase",
@@ -49,10 +45,7 @@ export default {
 					continue;
 				}
 
-				duplicates.addLocation(
-					joinMarkupLines(markupToPlainText(prettyFormat(res.value))),
-					param.test.loc,
-				);
+				duplicates.addLocation(prettyFormatToString(res.value), param.test.loc);
 			}
 
 			duplicates.process();

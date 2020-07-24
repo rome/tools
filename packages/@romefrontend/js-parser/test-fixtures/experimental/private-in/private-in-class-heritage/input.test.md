@@ -36,7 +36,12 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Unknown start to an class heritage"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Unknown start to an "}
+						"class heritage"
+					]
+				}
 			}
 			location: Object {
 				filename: "experimental/private-in/private-in-class-heritage/input.js"

@@ -50,11 +50,17 @@ JSRoot {
 			}
 			description: Object {
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Label <emphasis>x</emphasis> is already declared"}
+				message: MARKUP {
+					parts: Array [
+						RAW_MARKUP {value: "Label <emphasis>"}
+						"x"
+						RAW_MARKUP {value: "</emphasis> is already declared"}
+					]
+				}
 				advice: Array [
 					log {
 						category: "info"
-						text: SAFE_MARKUP {value: "Defined already here"}
+						text: MARKUP {parts: Array [RAW_MARKUP {value: "Defined already here"}]}
 					}
 					frame {
 						location: Object {

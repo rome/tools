@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "yield is not allowed in generator parameters"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "yield is not allowed in generator parameters"}]}
 			}
 			location: Object {
 				filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-5/input.js"

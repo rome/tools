@@ -36,7 +36,7 @@ JSRoot {
 			description: Object {
 				advice: Array []
 				category: "parse/js"
-				message: SAFE_MARKUP {value: "Class name is required"}
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Class name is required"}]}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0263/input.js"
