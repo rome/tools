@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-for-of/let-of-of/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-for-of/let-of-of/input.js"
 		end: Object {
 			column: 0
 			index: 21
@@ -35,7 +35,7 @@ JSRoot {
 		JSForOfStatement {
 			await: false
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-for-of/let-of-of/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -49,7 +49,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/let-of-of/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -65,7 +65,7 @@ JSRoot {
 			right: JSReferenceIdentifier {
 				name: "xyz"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/let-of-of/input.js"
 					identifierName: "xyz"
 					end: Object {
 						column: 18
@@ -82,7 +82,7 @@ JSRoot {
 			left: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/let-of-of/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -99,7 +99,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "of"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-for-of/let-of-of/input.js"
 								identifierName: "of"
 								end: Object {
 									column: 11
@@ -115,7 +115,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-for-of/let-of-of/input.js"
 							end: Object {
 								column: 11
 								index: 11

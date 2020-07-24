@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/async-named-properties/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/async-named-properties/input.ts"
 		end: Object {
 			column: 1
 			index: 46
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/async-named-properties/input.ts"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/async-named-properties/input.ts"
 				end: Object {
 					column: 1
 					index: 46
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/async-named-properties/input.ts"
 					end: Object {
 						column: 1
 						index: 46
@@ -88,7 +88,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "async"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/async-named-properties/input.ts"
 									identifierName: "async"
 									end: Object {
 										column: 7
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/async-named-properties/input.ts"
 								end: Object {
 									column: 7
 									index: 17
@@ -118,7 +118,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/async-named-properties/input.ts"
 							end: Object {
 								column: 16
 								index: 26
@@ -143,7 +143,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/async-named-properties/input.ts"
 								end: Object {
 									column: 8
 									index: 18
@@ -165,7 +165,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/async-named-properties/input.ts"
 								end: Object {
 									column: 16
 									index: 26
@@ -179,7 +179,7 @@ JSRoot {
 							}
 							returnType: TSVoidKeywordTypeAnnotation {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/async-named-properties/input.ts"
 									end: Object {
 										column: 16
 										index: 26
@@ -199,7 +199,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "async"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/async-named-properties/input.ts"
 									identifierName: "async"
 									end: Object {
 										column: 7
@@ -214,7 +214,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/async-named-properties/input.ts"
 								end: Object {
 									column: 7
 									index: 34
@@ -230,7 +230,7 @@ JSRoot {
 						value: undefined
 						definite: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/async-named-properties/input.ts"
 							end: Object {
 								column: 17
 								index: 44
@@ -244,7 +244,7 @@ JSRoot {
 						}
 						typeAnnotation: TSBooleanKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/async-named-properties/input.ts"
 								end: Object {
 									column: 17
 									index: 44
@@ -270,7 +270,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/async-named-properties/input.ts"
 								end: Object {
 									column: 8
 									index: 35

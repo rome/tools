@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/interface/index-signature/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/interface/index-signature/input.ts"
 		end: Object {
 			column: 0
 			index: 41
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/index-signature/input.ts"
 					identifierName: "I"
 					end: Object {
 						column: 11
@@ -53,7 +53,7 @@ JSRoot {
 			extends: undefined
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/index-signature/input.ts"
 				end: Object {
 					column: 1
 					index: 40
@@ -67,7 +67,7 @@ JSRoot {
 			}
 			body: TSInterfaceBody {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/index-signature/input.ts"
 					end: Object {
 						column: 1
 						index: 40
@@ -84,7 +84,7 @@ JSRoot {
 						key: JSBindingIdentifier {
 							name: "s"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/index-signature/input.ts"
 								end: Object {
 									column: 14
 									index: 28
@@ -98,7 +98,7 @@ JSRoot {
 							}
 							meta: JSPatternMeta {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/interface/index-signature/input.ts"
 									end: Object {
 										column: 14
 										index: 28
@@ -112,7 +112,7 @@ JSRoot {
 								}
 								typeAnnotation: TSStringKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/interface/index-signature/input.ts"
 										end: Object {
 											column: 14
 											index: 28
@@ -129,7 +129,7 @@ JSRoot {
 						}
 						readonly: false
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/interface/index-signature/input.ts"
 							end: Object {
 								column: 24
 								index: 38
@@ -143,7 +143,7 @@ JSRoot {
 						}
 						typeAnnotation: TSNumberKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/index-signature/input.ts"
 								end: Object {
 									column: 23
 									index: 37

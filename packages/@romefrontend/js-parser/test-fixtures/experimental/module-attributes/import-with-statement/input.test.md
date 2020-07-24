@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/module-attributes/import-with-statement/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/module-attributes/import-with-statement/input.js"
 		end: Object {
 			column: 0
 			index: 22
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "'with' in strict mode"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/import-with-statement/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -62,7 +62,7 @@ JSRoot {
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/import-with-statement/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -77,7 +77,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/import-with-statement/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -93,7 +93,7 @@ JSRoot {
 		}
 		JSWithStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/import-with-statement/input.js"
 				end: Object {
 					column: 10
 					index: 21
@@ -107,7 +107,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/import-with-statement/input.js"
 					end: Object {
 						column: 10
 						index: 21
@@ -123,7 +123,7 @@ JSRoot {
 			object: JSObjectExpression {
 				properties: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/import-with-statement/input.js"
 					end: Object {
 						column: 8
 						index: 19
@@ -145,7 +145,7 @@ JSRoot {
 
 ```
 
- input.js:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/module-attributes/import-with-statement/input.js:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ 'with' in strict mode
 

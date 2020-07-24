@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/literal-string-1/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/literal-string-1/input.ts"
 		end: Object {
 			column: 0
 			index: 14
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/literal-string-1/input.ts"
 				end: Object {
 					column: 13
 					index: 13
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/literal-string-1/input.ts"
 					end: Object {
 						column: 13
 						index: 13
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/literal-string-1/input.ts"
 								end: Object {
 									column: 12
 									index: 12
@@ -81,7 +81,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/literal-string-1/input.ts"
 									end: Object {
 										column: 12
 										index: 12
@@ -96,7 +96,7 @@ JSRoot {
 								typeAnnotation: TSTemplateLiteralTypeAnnotation {
 									value: "foo"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/literal-string-1/input.ts"
 										end: Object {
 											column: 12
 											index: 12
@@ -113,7 +113,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/literal-string-1/input.ts"
 							end: Object {
 								column: 12
 								index: 12

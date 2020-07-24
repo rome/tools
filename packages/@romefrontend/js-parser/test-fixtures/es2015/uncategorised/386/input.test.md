@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/386/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/386/input.js"
 		end: Object {
 			column: 0
 			index: 19
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected {"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/386/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			declaration: undefined
 			exportKind: "value"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/386/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -75,7 +75,7 @@ JSRoot {
 			specifiers: Array [
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/386/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -90,7 +90,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "typeof"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/386/input.js"
 							identifierName: "typeof"
 							end: Object {
 								column: 13
@@ -107,7 +107,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "typeof"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/386/input.js"
 							identifierName: "typeof"
 							end: Object {
 								column: 13
@@ -124,7 +124,7 @@ JSRoot {
 				}
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/386/input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -139,7 +139,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/386/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 17
@@ -156,7 +156,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/386/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 17
@@ -173,7 +173,7 @@ JSRoot {
 				}
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/386/input.js"
 						end: Object {
 							column: 18
 							index: 18
@@ -188,7 +188,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: ""
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/386/input.js"
 							identifierName: ""
 							end: Object {
 								column: 18
@@ -205,7 +205,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: ""
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/386/input.js"
 							identifierName: ""
 							end: Object {
 								column: 18
@@ -230,7 +230,7 @@ JSRoot {
 
 ```
 
- input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/386/input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected {
 

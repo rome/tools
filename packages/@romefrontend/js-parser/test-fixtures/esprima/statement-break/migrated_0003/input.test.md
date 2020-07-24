@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/statement-break/migrated_0003/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/statement-break/migrated_0003/input.js"
 		end: Object {
 			column: 0
 			index: 45
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSLabeledStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/statement-break/migrated_0003/input.js"
 				end: Object {
 					column: 44
 					index: 44
@@ -49,7 +49,7 @@ JSRoot {
 			label: JSIdentifier {
 				name: "__proto__"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-break/migrated_0003/input.js"
 					identifierName: "__proto__"
 					end: Object {
 						column: 9
@@ -65,7 +65,7 @@ JSRoot {
 			}
 			body: JSWhileStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-break/migrated_0003/input.js"
 					end: Object {
 						column: 44
 						index: 44
@@ -80,7 +80,7 @@ JSRoot {
 				test: JSBooleanLiteral {
 					value: true
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/statement-break/migrated_0003/input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -96,7 +96,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/statement-break/migrated_0003/input.js"
 						end: Object {
 							column: 44
 							index: 44
@@ -111,7 +111,7 @@ JSRoot {
 					body: Array [
 						JSBreakStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/statement-break/migrated_0003/input.js"
 								end: Object {
 									column: 42
 									index: 42
@@ -126,7 +126,7 @@ JSRoot {
 							label: JSIdentifier {
 								name: "__proto__"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/statement-break/migrated_0003/input.js"
 									identifierName: "__proto__"
 									end: Object {
 										column: 41

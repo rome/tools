@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-array-pattern/hole/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-array-pattern/hole/input.js"
 		end: Object {
 			column: 0
 			index: 13
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-array-pattern/hole/input.js"
 				end: Object {
 					column: 12
 					index: 12
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-array-pattern/hole/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingArrayPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-array-pattern/hole/input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -82,7 +82,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-array-pattern/hole/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 6
@@ -99,7 +99,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-array-pattern/hole/input.js"
 											end: Object {
 												column: 6
 												index: 6
@@ -115,7 +115,7 @@ JSRoot {
 								}
 								JSArrayHole {
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-array-pattern/hole/input.js"
 										end: Object {
 											column: 7
 											index: 7
@@ -131,7 +131,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "b"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-array-pattern/hole/input.js"
 										identifierName: "b"
 										end: Object {
 											column: 9
@@ -148,7 +148,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-array-pattern/hole/input.js"
 											end: Object {
 												column: 9
 												index: 9
@@ -165,7 +165,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-array-pattern/hole/input.js"
 							end: Object {
 								column: 12
 								index: 12
@@ -181,7 +181,7 @@ JSRoot {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-array-pattern/hole/input.js"
 								end: Object {
 									column: 12
 									index: 12

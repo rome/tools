@@ -27,7 +27,7 @@ import {IMPLICIT_JS_EXTENSIONS} from "../../common/file-handlers/javascript";
 import {writeFile} from "@romefrontend/fs";
 import https = require("https");
 
-import {MOCKS_FOLDER_NAME} from "@romefrontend/core/common/constants";
+import {MOCKS_DIRECTORY_NAME} from "@romefrontend/core/common/constants";
 import {Consumer} from "@romefrontend/consume";
 import {markup} from "@romefrontend/cli-layout";
 
@@ -759,7 +759,7 @@ export default class Resolver {
 		const moduleName = query.source.assertRelative();
 
 		for (const dir of parentDirectories) {
-			const mocksDir = dir.append(MOCKS_FOLDER_NAME);
+			const mocksDir = dir.append(MOCKS_DIRECTORY_NAME);
 
 			// No use resolving against a directory that doesn't exist
 			if (!this.server.memoryFs.exists(mocksDir)) {

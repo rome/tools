@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/create-parenthesized-expressions/valid-parenthesized-expression/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/create-parenthesized-expressions/valid-parenthesized-expression/input.js"
 		end: Object {
 			column: 0
 			index: 11
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/create-parenthesized-expressions/valid-parenthesized-expression/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSStringLiteral {
 				value: "hello"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/create-parenthesized-expressions/valid-parenthesized-expression/input.js"
 					end: Object {
 						column: 8
 						index: 8

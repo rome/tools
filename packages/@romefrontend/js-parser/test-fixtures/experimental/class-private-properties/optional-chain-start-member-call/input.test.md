@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 		end: Object {
 			column: 0
 			index: 85
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 				end: Object {
 					column: 1
 					index: 84
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 					end: Object {
 						column: 1
 						index: 84
@@ -111,7 +111,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 11
@@ -126,7 +126,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 								end: Object {
 									column: 11
 									index: 23
@@ -143,7 +143,7 @@ JSRoot {
 							value: 1
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 								end: Object {
 									column: 15
 									index: 27
@@ -158,7 +158,7 @@ JSRoot {
 						}
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 							end: Object {
 								column: 16
 								index: 28
@@ -183,7 +183,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 								end: Object {
 									column: 11
 									index: 23
@@ -203,7 +203,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "test"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 									identifierName: "test"
 									end: Object {
 										column: 13
@@ -218,7 +218,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 								end: Object {
 									column: 13
 									index: 43
@@ -232,7 +232,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 							end: Object {
 								column: 3
 								index: 82
@@ -254,7 +254,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 								end: Object {
 									column: 15
 									index: 45
@@ -280,7 +280,7 @@ JSRoot {
 								line: 4
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 								end: Object {
 									column: 13
 									index: 43
@@ -296,7 +296,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 								end: Object {
 									column: 3
 									index: 82
@@ -311,7 +311,7 @@ JSRoot {
 							body: Array [
 								JSReturnStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 										end: Object {
 											column: 17
 											index: 65
@@ -325,7 +325,7 @@ JSRoot {
 									}
 									argument: JSMemberExpression {
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 											end: Object {
 												column: 17
 												index: 65
@@ -340,7 +340,7 @@ JSRoot {
 										object: JSReferenceIdentifier {
 											name: "Foo"
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 												identifierName: "Foo"
 												end: Object {
 													column: 14
@@ -358,7 +358,7 @@ JSRoot {
 											value: JSIdentifier {
 												name: ""
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 													identifierName: ""
 													end: Object {
 														column: 17
@@ -374,7 +374,7 @@ JSRoot {
 											}
 											optional: true
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 												identifierName: ""
 												end: Object {
 													column: 17
@@ -392,7 +392,7 @@ JSRoot {
 								}
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 										end: Object {
 											column: 30
 											index: 78
@@ -406,7 +406,7 @@ JSRoot {
 									}
 									expression: JSCallExpression {
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 											end: Object {
 												column: 29
 												index: 77
@@ -423,7 +423,7 @@ JSRoot {
 												value: 2
 												format: undefined
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 													end: Object {
 														column: 28
 														index: 76
@@ -439,7 +439,7 @@ JSRoot {
 										]
 										callee: JSMemberExpression {
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 												end: Object {
 													column: 26
 													index: 74
@@ -454,7 +454,7 @@ JSRoot {
 											object: JSReferenceIdentifier {
 												name: "x"
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 													identifierName: "x"
 													end: Object {
 														column: 18
@@ -472,7 +472,7 @@ JSRoot {
 												value: JSIdentifier {
 													name: "toFixed"
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 														identifierName: "toFixed"
 														end: Object {
 															column: 26
@@ -487,7 +487,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 													identifierName: "toFixed"
 													end: Object {
 														column: 26
@@ -518,7 +518,7 @@ JSRoot {
 
 ```
 
- input.js:5:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-private-properties/optional-chain-start-member-call/input.js:5:16 parse/js ━━━━━
 
   ✖ Expected an identifier
 

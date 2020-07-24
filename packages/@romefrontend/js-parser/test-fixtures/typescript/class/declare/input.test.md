@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/declare/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/declare/input.ts"
 		end: Object {
 			column: 0
 			index: 88
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/declare/input.ts"
 					identifierName: "C"
 					end: Object {
 						column: 15
@@ -52,7 +52,7 @@ JSRoot {
 			}
 			declare: true
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/declare/input.ts"
 				end: Object {
 					column: 1
 					index: 87
@@ -70,7 +70,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/declare/input.ts"
 					end: Object {
 						column: 1
 						index: 87
@@ -87,7 +87,7 @@ JSRoot {
 						key: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare/input.ts"
 								end: Object {
 									column: 14
 									index: 32
@@ -101,7 +101,7 @@ JSRoot {
 							}
 							meta: JSPatternMeta {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/declare/input.ts"
 									end: Object {
 										column: 14
 										index: 32
@@ -115,7 +115,7 @@ JSRoot {
 								}
 								typeAnnotation: TSStringKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/declare/input.ts"
 										end: Object {
 											column: 14
 											index: 32
@@ -132,7 +132,7 @@ JSRoot {
 						}
 						readonly: false
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/declare/input.ts"
 							end: Object {
 								column: 21
 								index: 39
@@ -146,7 +146,7 @@ JSRoot {
 						}
 						typeAnnotation: TSAnyKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare/input.ts"
 								end: Object {
 									column: 20
 									index: 38
@@ -165,7 +165,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/declare/input.ts"
 									identifierName: "x"
 									end: Object {
 										column: 5
@@ -180,7 +180,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare/input.ts"
 								end: Object {
 									column: 5
 									index: 45
@@ -197,7 +197,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/declare/input.ts"
 							end: Object {
 								column: 6
 								index: 46
@@ -222,7 +222,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare/input.ts"
 								end: Object {
 									column: 5
 									index: 45
@@ -241,7 +241,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/declare/input.ts"
 									identifierName: "x"
 									end: Object {
 										column: 5
@@ -256,7 +256,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare/input.ts"
 								end: Object {
 									column: 5
 									index: 52
@@ -272,7 +272,7 @@ JSRoot {
 						value: undefined
 						definite: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/declare/input.ts"
 							end: Object {
 								column: 14
 								index: 61
@@ -286,7 +286,7 @@ JSRoot {
 						}
 						typeAnnotation: TSNumberKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare/input.ts"
 								end: Object {
 									column: 13
 									index: 60
@@ -312,7 +312,7 @@ JSRoot {
 								line: 4
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare/input.ts"
 								end: Object {
 									column: 5
 									index: 52
@@ -332,7 +332,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "f"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/declare/input.ts"
 									identifierName: "f"
 									end: Object {
 										column: 5
@@ -347,7 +347,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare/input.ts"
 								end: Object {
 									column: 5
 									index: 67
@@ -362,7 +362,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/declare/input.ts"
 							end: Object {
 								column: 8
 								index: 70
@@ -384,7 +384,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare/input.ts"
 								end: Object {
 									column: 7
 									index: 69
@@ -410,7 +410,7 @@ JSRoot {
 								line: 5
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare/input.ts"
 								end: Object {
 									column: 5
 									index: 67
@@ -430,7 +430,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "f"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/declare/input.ts"
 									identifierName: "f"
 									end: Object {
 										column: 5
@@ -445,7 +445,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare/input.ts"
 								end: Object {
 									column: 5
 									index: 76
@@ -460,7 +460,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/declare/input.ts"
 							end: Object {
 								column: 14
 								index: 85
@@ -485,7 +485,7 @@ JSRoot {
 								line: 6
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare/input.ts"
 								end: Object {
 									column: 5
 									index: 76
@@ -507,7 +507,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare/input.ts"
 								end: Object {
 									column: 13
 									index: 84
@@ -521,7 +521,7 @@ JSRoot {
 							}
 							returnType: TSVoidKeywordTypeAnnotation {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/declare/input.ts"
 									end: Object {
 										column: 13
 										index: 84

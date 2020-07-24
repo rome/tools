@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/291/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/291/input.js"
 		end: Object {
 			column: 22
 			index: 22
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "'import' and 'export' may only appear at the top level"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/291/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -59,7 +59,7 @@ JSRoot {
 		JSIfStatement {
 			alternate: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/291/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -75,7 +75,7 @@ JSRoot {
 				value: 1
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/291/input.js"
 					end: Object {
 						column: 5
 						index: 5
@@ -94,7 +94,7 @@ JSRoot {
 				namedSpecifiers: Array []
 				namespaceSpecifier: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/291/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -109,7 +109,7 @@ JSRoot {
 				source: JSStringLiteral {
 					value: "acorn"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/291/input.js"
 						end: Object {
 							column: 21
 							index: 21
@@ -132,7 +132,7 @@ JSRoot {
 
 ```
 
- input.js:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/291/input.js:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ 'import' and 'export' may only appear at the top level
 

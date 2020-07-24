@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/class/invalid-escape-static/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/class/invalid-escape-static/input.js"
 		end: Object {
 			column: 0
 			index: 31
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "static can't contain a unicode escape"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/class/invalid-escape-static/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "X"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class/invalid-escape-static/input.js"
 					identifierName: "X"
 					end: Object {
 						column: 7
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/class/invalid-escape-static/input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class/invalid-escape-static/input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -112,7 +112,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "y"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class/invalid-escape-static/input.js"
 									identifierName: "y"
 									end: Object {
 										column: 23
@@ -127,7 +127,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class/invalid-escape-static/input.js"
 								end: Object {
 									column: 23
 									index: 23
@@ -141,7 +141,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class/invalid-escape-static/input.js"
 							end: Object {
 								column: 28
 								index: 28
@@ -157,7 +157,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class/invalid-escape-static/input.js"
 								end: Object {
 									column: 28
 									index: 28
@@ -180,7 +180,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class/invalid-escape-static/input.js"
 								end: Object {
 									column: 25
 									index: 25
@@ -206,7 +206,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class/invalid-escape-static/input.js"
 								end: Object {
 									column: 23
 									index: 23
@@ -231,7 +231,7 @@ JSRoot {
 
 ```
 
- input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/class/invalid-escape-static/input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ static can't contain a unicode escape
 

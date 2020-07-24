@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/basic/1/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/basic/1/input.jsx"
 		end: Object {
 			column: 5
 			index: 5
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/basic/1/input.jsx"
 				end: Object {
 					column: 5
 					index: 5
@@ -50,7 +50,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "a"
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/basic/1/input.jsx"
 						end: Object {
 							column: 2
 							index: 2
@@ -68,7 +68,7 @@ JSRoot {
 				selfClosing: true
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/basic/1/input.jsx"
 					end: Object {
 						column: 5
 						index: 5

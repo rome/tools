@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/declaration-function/migrated_0008/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/declaration-function/migrated_0008/input.js"
 		end: Object {
 			column: 0
 			index: 33
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/declaration-function/migrated_0008/input.js"
 				end: Object {
 					column: 32
 					index: 32
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/declaration-function/migrated_0008/input.js"
 					end: Object {
 						column: 32
 						index: 32
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "hi"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/declaration-function/migrated_0008/input.js"
 								identifierName: "hi"
 								end: Object {
 									column: 6
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/declaration-function/migrated_0008/input.js"
 							end: Object {
 								column: 31
 								index: 31
@@ -96,7 +96,7 @@ JSRoot {
 						init: JSFunctionExpression {
 							id: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/declaration-function/migrated_0008/input.js"
 								end: Object {
 									column: 31
 									index: 31
@@ -118,7 +118,7 @@ JSRoot {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/declaration-function/migrated_0008/input.js"
 									end: Object {
 										column: 19
 										index: 19
@@ -134,7 +134,7 @@ JSRoot {
 							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/declaration-function/migrated_0008/input.js"
 									end: Object {
 										column: 31
 										index: 31
@@ -149,7 +149,7 @@ JSRoot {
 								body: Array [
 									JSExpressionStatement {
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/declaration-function/migrated_0008/input.js"
 											end: Object {
 												column: 29
 												index: 29
@@ -164,7 +164,7 @@ JSRoot {
 										expression: JSCallExpression {
 											arguments: Array []
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/declaration-function/migrated_0008/input.js"
 												end: Object {
 													column: 29
 													index: 29
@@ -179,7 +179,7 @@ JSRoot {
 											callee: JSReferenceIdentifier {
 												name: "sayHi"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/declaration-function/migrated_0008/input.js"
 													identifierName: "sayHi"
 													end: Object {
 														column: 27

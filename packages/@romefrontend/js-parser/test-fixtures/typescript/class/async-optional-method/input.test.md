@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "typescript/class/async-optional-method/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "typescript/class/async-optional-method/input.js"
 		end: Object {
 			column: 1
 			index: 66
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected ts syntax to be enabled"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "typescript/class/async-optional-method/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "typescript/class/async-optional-method/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "typescript/class/async-optional-method/input.js"
 				end: Object {
 					column: 1
 					index: 66
@@ -92,7 +92,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "typescript/class/async-optional-method/input.js"
 					end: Object {
 						column: 1
 						index: 66
@@ -107,7 +107,7 @@ JSRoot {
 				superClass: JSReferenceIdentifier {
 					name: "B"
 					loc: Object {
-						filename: "input.js"
+						filename: "typescript/class/async-optional-method/input.js"
 						identifierName: "B"
 						end: Object {
 							column: 17
@@ -128,7 +128,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "method"
 								loc: Object {
-									filename: "input.js"
+									filename: "typescript/class/async-optional-method/input.js"
 									identifierName: "method"
 									end: Object {
 										column: 14
@@ -143,7 +143,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "typescript/class/async-optional-method/input.js"
 								end: Object {
 									column: 14
 									index: 34
@@ -158,7 +158,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "typescript/class/async-optional-method/input.js"
 							end: Object {
 								column: 44
 								index: 64
@@ -183,7 +183,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "typescript/class/async-optional-method/input.js"
 								end: Object {
 									column: 15
 									index: 35
@@ -204,7 +204,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "typescript/class/async-optional-method/input.js"
 								end: Object {
 									column: 43
 									index: 63
@@ -220,7 +220,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "val"
 									loc: Object {
-										filename: "input.js"
+										filename: "typescript/class/async-optional-method/input.js"
 										identifierName: "val"
 										end: Object {
 											column: 19
@@ -236,7 +236,7 @@ JSRoot {
 									meta: JSPatternMeta {
 										optional: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "typescript/class/async-optional-method/input.js"
 											end: Object {
 												column: 27
 												index: 47
@@ -250,7 +250,7 @@ JSRoot {
 										}
 										typeAnnotation: TSStringKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.js"
+												filename: "typescript/class/async-optional-method/input.js"
 												end: Object {
 													column: 27
 													index: 47
@@ -268,7 +268,7 @@ JSRoot {
 							]
 							returnType: TSTypeReference {
 								loc: Object {
-									filename: "input.js"
+									filename: "typescript/class/async-optional-method/input.js"
 									end: Object {
 										column: 43
 										index: 63
@@ -283,7 +283,7 @@ JSRoot {
 								typeName: JSReferenceIdentifier {
 									name: "Promise"
 									loc: Object {
-										filename: "input.js"
+										filename: "typescript/class/async-optional-method/input.js"
 										identifierName: "Promise"
 										end: Object {
 											column: 37
@@ -299,7 +299,7 @@ JSRoot {
 								}
 								typeParameters: TSTypeParameterInstantiation {
 									loc: Object {
-										filename: "input.js"
+										filename: "typescript/class/async-optional-method/input.js"
 										end: Object {
 											column: 43
 											index: 63
@@ -314,7 +314,7 @@ JSRoot {
 									params: Array [
 										TSVoidKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.js"
+												filename: "typescript/class/async-optional-method/input.js"
 												end: Object {
 													column: 42
 													index: 62
@@ -343,7 +343,7 @@ JSRoot {
 
 ```
 
- input.js:2:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/class/async-optional-method/input.js:2:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected ts syntax to be enabled
 

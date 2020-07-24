@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-properties/failure-shorthand/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-properties/failure-shorthand/input.js"
 		end: Object {
 			column: 0
 			index: 57
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown start to an statement expression"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/failure-shorthand/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/failure-shorthand/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/failure-shorthand/input.js"
 				end: Object {
 					column: 1
 					index: 56
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/failure-shorthand/input.js"
 					end: Object {
 						column: 1
 						index: 56
@@ -111,7 +111,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/failure-shorthand/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 4
@@ -126,7 +126,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-shorthand/input.js"
 								end: Object {
 									column: 4
 									index: 16
@@ -142,7 +142,7 @@ JSRoot {
 						value: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/failure-shorthand/input.js"
 							end: Object {
 								column: 5
 								index: 17
@@ -167,7 +167,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-shorthand/input.js"
 								end: Object {
 									column: 4
 									index: 16
@@ -187,7 +187,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/failure-shorthand/input.js"
 									identifierName: "constructor"
 									end: Object {
 										column: 13
@@ -202,7 +202,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-shorthand/input.js"
 								end: Object {
 									column: 13
 									index: 31
@@ -216,7 +216,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/failure-shorthand/input.js"
 							end: Object {
 								column: 3
 								index: 54
@@ -238,7 +238,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-shorthand/input.js"
 								end: Object {
 									column: 15
 									index: 33
@@ -264,7 +264,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-shorthand/input.js"
 								end: Object {
 									column: 13
 									index: 31
@@ -280,7 +280,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-shorthand/input.js"
 								end: Object {
 									column: 3
 									index: 54
@@ -295,7 +295,7 @@ JSRoot {
 							body: Array [
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/failure-shorthand/input.js"
 										end: Object {
 											column: 12
 											index: 48
@@ -311,7 +311,7 @@ JSRoot {
 										operator: "delete"
 										prefix: true
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/failure-shorthand/input.js"
 											end: Object {
 												column: 12
 												index: 48
@@ -326,7 +326,7 @@ JSRoot {
 										argument: JSReferenceIdentifier {
 											name: "INVALID_PLACEHOLDER"
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/failure-shorthand/input.js"
 												end: Object {
 													column: 12
 													index: 48
@@ -343,7 +343,7 @@ JSRoot {
 								}
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/failure-shorthand/input.js"
 										end: Object {
 											column: 14
 											index: 50
@@ -358,7 +358,7 @@ JSRoot {
 									expression: JSReferenceIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/failure-shorthand/input.js"
 											identifierName: "x"
 											end: Object {
 												column: 13
@@ -387,7 +387,7 @@ JSRoot {
 
 ```
 
- input.js:4:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-private-properties/failure-shorthand/input.js:4:11 parse/js ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
 

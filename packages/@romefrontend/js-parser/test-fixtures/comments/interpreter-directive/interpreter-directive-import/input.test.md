@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/interpreter-directive/interpreter-directive-import/input.js"
 	hasHoistedVars: false
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/interpreter-directive/interpreter-directive-import/input.js"
 		end: Object {
 			column: 0
 			index: 57
@@ -33,7 +33,7 @@ JSRoot {
 	interpreter: JSInterpreterDirective {
 		value: "/usr/bin/env babel-node"
 		loc: Object {
-			filename: "input.js"
+			filename: "comments/interpreter-directive/interpreter-directive-import/input.js"
 			end: Object {
 				column: 25
 				index: 25
@@ -52,7 +52,7 @@ JSRoot {
 			importKind: undefined
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/interpreter-directive/interpreter-directive-import/input.js"
 				end: Object {
 					column: 29
 					index: 56
@@ -67,7 +67,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "foobar"
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/interpreter-directive/interpreter-directive-import/input.js"
 					end: Object {
 						column: 28
 						index: 55
@@ -83,7 +83,7 @@ JSRoot {
 			namedSpecifiers: Array [
 				JSImportSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "comments/interpreter-directive/interpreter-directive-import/input.js"
 						end: Object {
 							column: 13
 							index: 40
@@ -98,7 +98,7 @@ JSRoot {
 					imported: JSIdentifier {
 						name: "spawn"
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/interpreter-directive/interpreter-directive-import/input.js"
 							identifierName: "spawn"
 							end: Object {
 								column: 13
@@ -116,7 +116,7 @@ JSRoot {
 						name: JSBindingIdentifier {
 							name: "spawn"
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/interpreter-directive/interpreter-directive-import/input.js"
 								identifierName: "spawn"
 								end: Object {
 									column: 13
@@ -132,7 +132,7 @@ JSRoot {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/interpreter-directive/interpreter-directive-import/input.js"
 							end: Object {
 								column: 13
 								index: 40

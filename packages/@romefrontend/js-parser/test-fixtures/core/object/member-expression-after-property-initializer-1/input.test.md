@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "core/object/member-expression-after-property-initializer-1/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/object/member-expression-after-property-initializer-1/input.js"
 		end: Object {
 			column: 26
 			index: 26
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/object/member-expression-after-property-initializer-1/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/object/member-expression-after-property-initializer-1/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSSequenceExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/object/member-expression-after-property-initializer-1/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -88,7 +88,7 @@ JSRoot {
 					JSAssignmentExpression {
 						operator: "="
 						loc: Object {
-							filename: "input.js"
+							filename: "core/object/member-expression-after-property-initializer-1/input.js"
 							end: Object {
 								column: 8
 								index: 8
@@ -104,7 +104,7 @@ JSRoot {
 							value: 42
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/object/member-expression-after-property-initializer-1/input.js"
 								end: Object {
 									column: 8
 									index: 8
@@ -120,7 +120,7 @@ JSRoot {
 						left: JSAssignmentObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/object/member-expression-after-property-initializer-1/input.js"
 								end: Object {
 									column: 3
 									index: 3
@@ -138,7 +138,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "a"
 											loc: Object {
-												filename: "input.js"
+												filename: "core/object/member-expression-after-property-initializer-1/input.js"
 												identifierName: "a"
 												end: Object {
 													column: 3
@@ -153,7 +153,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "core/object/member-expression-after-property-initializer-1/input.js"
 											end: Object {
 												column: 3
 												index: 3
@@ -169,7 +169,7 @@ JSRoot {
 									value: JSAssignmentIdentifier {
 										name: "a"
 										loc: Object {
-											filename: "input.js"
+											filename: "core/object/member-expression-after-property-initializer-1/input.js"
 											identifierName: "a"
 											end: Object {
 												column: 3
@@ -184,7 +184,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "core/object/member-expression-after-property-initializer-1/input.js"
 										end: Object {
 											column: 3
 											index: 3
@@ -203,7 +203,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "b"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/object/member-expression-after-property-initializer-1/input.js"
 							identifierName: "b"
 							end: Object {
 								column: 11
@@ -222,7 +222,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/object/member-expression-after-property-initializer-1/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -237,7 +237,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "core/object/member-expression-after-property-initializer-1/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -252,7 +252,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/object/member-expression-after-property-initializer-1/input.js"
 						end: Object {
 							column: 20
 							index: 20
@@ -268,7 +268,7 @@ JSRoot {
 				right: JSObjectExpression {
 					properties: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "core/object/member-expression-after-property-initializer-1/input.js"
 						end: Object {
 							column: 25
 							index: 25
@@ -285,7 +285,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/object/member-expression-after-property-initializer-1/input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -300,7 +300,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/object/member-expression-after-property-initializer-1/input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -322,7 +322,7 @@ JSRoot {
 
 ```
 
- input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/object/member-expression-after-property-initializer-1/input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ,
 

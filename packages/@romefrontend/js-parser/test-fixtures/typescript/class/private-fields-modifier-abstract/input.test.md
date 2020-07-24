@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/private-fields-modifier-abstract/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/private-fields-modifier-abstract/input.ts"
 		end: Object {
 			column: 0
 			index: 36
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/private-fields-modifier-abstract/input.ts"
 					identifierName: "A"
 					end: Object {
 						column: 16
@@ -52,7 +52,7 @@ JSRoot {
 			}
 			abstract: true
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/private-fields-modifier-abstract/input.ts"
 				end: Object {
 					column: 1
 					index: 35
@@ -70,7 +70,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/private-fields-modifier-abstract/input.ts"
 					end: Object {
 						column: 1
 						index: 35
@@ -88,7 +88,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/private-fields-modifier-abstract/input.ts"
 									identifierName: "a"
 									end: Object {
 										column: 13
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields-modifier-abstract/input.ts"
 								end: Object {
 									column: 13
 									index: 32
@@ -119,7 +119,7 @@ JSRoot {
 						value: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/private-fields-modifier-abstract/input.ts"
 							end: Object {
 								column: 14
 								index: 33
@@ -144,7 +144,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields-modifier-abstract/input.ts"
 								end: Object {
 									column: 13
 									index: 32

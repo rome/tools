@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/228/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/228/input.js"
 		end: Object {
 			column: 49
 			index: 49
@@ -34,7 +34,7 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/228/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 					}
 					frame {
 						location: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/228/input.js"
 							identifierName: "t"
 							end: Object {
 								column: 38
@@ -81,7 +81,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/228/input.js"
 					identifierName: "a"
 					end: Object {
 						column: 10
@@ -96,7 +96,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/228/input.js"
 				end: Object {
 					column: 49
 					index: 49
@@ -118,7 +118,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/228/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -133,7 +133,7 @@ JSRoot {
 			}
 			body: JSBlockStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/228/input.js"
 					end: Object {
 						column: 49
 						index: 49
@@ -149,7 +149,7 @@ JSRoot {
 					JSDirective {
 						value: "use strict"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/228/input.js"
 							end: Object {
 								column: 28
 								index: 28
@@ -166,7 +166,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/228/input.js"
 							end: Object {
 								column: 47
 								index: 47
@@ -180,7 +180,7 @@ JSRoot {
 						}
 						expression: JSObjectExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/228/input.js"
 								end: Object {
 									column: 45
 									index: 45
@@ -199,7 +199,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "b"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/uncategorised/228/input.js"
 												identifierName: "b"
 												end: Object {
 													column: 33
@@ -214,7 +214,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/228/input.js"
 											end: Object {
 												column: 33
 												index: 33
@@ -228,7 +228,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/228/input.js"
 										end: Object {
 											column: 43
 											index: 43
@@ -244,7 +244,7 @@ JSRoot {
 										body: Array []
 										directives: Array []
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/228/input.js"
 											end: Object {
 												column: 43
 												index: 43
@@ -266,7 +266,7 @@ JSRoot {
 										thisType: undefined
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/228/input.js"
 											end: Object {
 												column: 39
 												index: 39
@@ -282,7 +282,7 @@ JSRoot {
 											JSBindingIdentifier {
 												name: "t"
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/uncategorised/228/input.js"
 													identifierName: "t"
 													end: Object {
 														column: 35
@@ -299,7 +299,7 @@ JSRoot {
 													optional: undefined
 													typeAnnotation: undefined
 													loc: Object {
-														filename: "input.js"
+														filename: "es2015/uncategorised/228/input.js"
 														end: Object {
 															column: 35
 															index: 35
@@ -316,7 +316,7 @@ JSRoot {
 											JSBindingIdentifier {
 												name: "t"
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/uncategorised/228/input.js"
 													identifierName: "t"
 													end: Object {
 														column: 38
@@ -333,7 +333,7 @@ JSRoot {
 													optional: undefined
 													typeAnnotation: undefined
 													loc: Object {
-														filename: "input.js"
+														filename: "es2015/uncategorised/228/input.js"
 														end: Object {
 															column: 38
 															index: 38
@@ -364,7 +364,7 @@ JSRoot {
 
 ```
 
- input.js:1:37 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/228/input.js:1:37 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Argument t name clash in strict mode
 

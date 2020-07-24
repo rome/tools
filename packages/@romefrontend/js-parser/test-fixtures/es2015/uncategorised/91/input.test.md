@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/91/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/91/input.js"
 		end: Object {
 			column: 15
 			index: 15
@@ -38,7 +38,7 @@ JSRoot {
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/91/input.js"
 				end: Object {
 					column: 15
 					index: 15
@@ -53,7 +53,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "jquery"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/91/input.js"
 					end: Object {
 						column: 15
 						index: 15

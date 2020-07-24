@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/399/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/399/input.js"
 		end: Object {
 			column: 21
 			index: 21
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected keyword false"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/399/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "t"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/399/input.js"
 					identifierName: "t"
 					end: Object {
 						column: 10
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/399/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -91,7 +91,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/399/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -113,7 +113,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/399/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -129,7 +129,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "false"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/399/input.js"
 							identifierName: "false"
 							end: Object {
 								column: 16
@@ -146,7 +146,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/399/input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -171,7 +171,7 @@ JSRoot {
 
 ```
 
- input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/399/input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected keyword false
 

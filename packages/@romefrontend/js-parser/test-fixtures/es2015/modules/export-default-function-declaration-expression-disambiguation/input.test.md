@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
 		end: Object {
 			column: 0
 			index: 37
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
 				end: Object {
 					column: 29
 					index: 29
@@ -50,7 +50,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "*default*"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
 						end: Object {
 							column: 29
 							index: 29
@@ -64,7 +64,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
 					end: Object {
 						column: 29
 						index: 29
@@ -80,7 +80,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
 						end: Object {
 							column: 29
 							index: 29
@@ -103,7 +103,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
 						end: Object {
 							column: 26
 							index: 26
@@ -120,7 +120,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
 				end: Object {
 					column: 6
 					index: 36
@@ -135,7 +135,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 4

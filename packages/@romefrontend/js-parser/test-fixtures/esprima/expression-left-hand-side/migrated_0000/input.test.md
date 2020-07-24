@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/expression-left-hand-side/migrated_0000/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/expression-left-hand-side/migrated_0000/input.js"
 		end: Object {
 			column: 0
 			index: 11
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/expression-left-hand-side/migrated_0000/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -51,7 +51,7 @@ JSRoot {
 				optional: undefined
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/expression-left-hand-side/migrated_0000/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -66,7 +66,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "Button"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-left-hand-side/migrated_0000/input.js"
 						identifierName: "Button"
 						end: Object {
 							column: 10

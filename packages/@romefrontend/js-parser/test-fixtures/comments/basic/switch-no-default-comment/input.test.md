@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/basic/switch-no-default-comment/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/basic/switch-no-default-comment/input.js"
 		end: Object {
 			column: 0
 			index: 59
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: "no default"
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/switch-no-default-comment/input.js"
 				end: Object {
 					column: 16
 					index: 56
@@ -52,7 +52,7 @@ JSRoot {
 	body: Array [
 		JSSwitchStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/switch-no-default-comment/input.js"
 				end: Object {
 					column: 1
 					index: 58
@@ -67,7 +67,7 @@ JSRoot {
 			discriminant: JSReferenceIdentifier {
 				name: "a"
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/switch-no-default-comment/input.js"
 					identifierName: "a"
 					end: Object {
 						column: 9
@@ -85,7 +85,7 @@ JSRoot {
 				JSSwitchCase {
 					trailingComments: Array ["0"]
 					loc: Object {
-						filename: "input.js"
+						filename: "comments/basic/switch-no-default-comment/input.js"
 						end: Object {
 							column: 14
 							index: 39
@@ -101,7 +101,7 @@ JSRoot {
 						value: 1
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/basic/switch-no-default-comment/input.js"
 							end: Object {
 								column: 10
 								index: 23
@@ -119,7 +119,7 @@ JSRoot {
 							label: undefined
 							trailingComments: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/basic/switch-no-default-comment/input.js"
 								end: Object {
 									column: 14
 									index: 39

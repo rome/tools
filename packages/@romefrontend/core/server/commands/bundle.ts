@@ -55,6 +55,8 @@ export default createServerCommand<Flags>({
 			await writeFile(file, buff);
 		}
 
+		await req.flushFiles();
+
 		if (commandFlags.quiet) {
 			reporter.success(markup`Saved to <emphasis>${dir}</emphasis>`);
 		} else {

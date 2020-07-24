@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/interface/export/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/interface/export/input.ts"
 		end: Object {
 			column: 0
 			index: 52
@@ -36,7 +36,7 @@ JSRoot {
 			exportKind: "type"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/export/input.ts"
 				end: Object {
 					column: 21
 					index: 21
@@ -52,7 +52,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "I"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/interface/export/input.ts"
 						identifierName: "I"
 						end: Object {
 							column: 18
@@ -69,7 +69,7 @@ JSRoot {
 				extends: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/export/input.ts"
 					end: Object {
 						column: 21
 						index: 21
@@ -84,7 +84,7 @@ JSRoot {
 				body: TSInterfaceBody {
 					body: Array []
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/interface/export/input.ts"
 						end: Object {
 							column: 21
 							index: 21
@@ -101,7 +101,7 @@ JSRoot {
 		}
 		JSExportDefaultDeclaration {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/export/input.ts"
 				end: Object {
 					column: 29
 					index: 51
@@ -117,7 +117,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "A"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/interface/export/input.ts"
 						identifierName: "A"
 						end: Object {
 							column: 26
@@ -134,7 +134,7 @@ JSRoot {
 				extends: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/export/input.ts"
 					end: Object {
 						column: 29
 						index: 51
@@ -149,7 +149,7 @@ JSRoot {
 				body: TSInterfaceBody {
 					body: Array []
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/interface/export/input.ts"
 						end: Object {
 							column: 29
 							index: 51

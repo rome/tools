@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/await-inside-class-methods/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/await-inside-class-methods/input.js"
 		end: Object {
 			column: 0
 			index: 41
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-class-methods/input.js"
 				end: Object {
 					column: 1
 					index: 40
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-class-methods/input.js"
 					end: Object {
 						column: 1
 						index: 40
@@ -68,7 +68,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/await-inside-class-methods/input.js"
 						end: Object {
 							column: 5
 							index: 5
@@ -84,7 +84,7 @@ JSRoot {
 				body: JSClassExpression {
 					id: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/await-inside-class-methods/input.js"
 						end: Object {
 							column: 1
 							index: 40
@@ -102,7 +102,7 @@ JSRoot {
 						superTypeParameters: undefined
 						typeParameters: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/await-inside-class-methods/input.js"
 							end: Object {
 								column: 1
 								index: 40
@@ -121,7 +121,7 @@ JSRoot {
 									value: JSIdentifier {
 										name: "m"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2017/async-functions/await-inside-class-methods/input.js"
 											identifierName: "m"
 											end: Object {
 												column: 9
@@ -136,7 +136,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/async-functions/await-inside-class-methods/input.js"
 										end: Object {
 											column: 9
 											index: 23
@@ -150,7 +150,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/await-inside-class-methods/input.js"
 									end: Object {
 										column: 24
 										index: 38
@@ -172,7 +172,7 @@ JSRoot {
 									thisType: undefined
 									typeParameters: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/async-functions/await-inside-class-methods/input.js"
 										end: Object {
 											column: 11
 											index: 25
@@ -198,7 +198,7 @@ JSRoot {
 										line: 2
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/async-functions/await-inside-class-methods/input.js"
 										end: Object {
 											column: 9
 											index: 23
@@ -214,7 +214,7 @@ JSRoot {
 								body: JSBlockStatement {
 									directives: Array []
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/async-functions/await-inside-class-methods/input.js"
 										end: Object {
 											column: 24
 											index: 38
@@ -229,7 +229,7 @@ JSRoot {
 									body: Array [
 										JSExpressionStatement {
 											loc: Object {
-												filename: "input.js"
+												filename: "es2017/async-functions/await-inside-class-methods/input.js"
 												end: Object {
 													column: 22
 													index: 36
@@ -243,7 +243,7 @@ JSRoot {
 											}
 											expression: JSAwaitExpression {
 												loc: Object {
-													filename: "input.js"
+													filename: "es2017/async-functions/await-inside-class-methods/input.js"
 													end: Object {
 														column: 22
 														index: 36
@@ -259,7 +259,7 @@ JSRoot {
 													value: 42
 													format: undefined
 													loc: Object {
-														filename: "input.js"
+														filename: "es2017/async-functions/await-inside-class-methods/input.js"
 														end: Object {
 															column: 22
 															index: 36

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 		end: Object {
 			column: 1
 			index: 55
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a comma to separate items in function params"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 18
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 				end: Object {
 					column: 1
 					index: 55
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 					end: Object {
 						column: 1
 						index: 55
@@ -130,7 +130,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "bar"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 								identifierName: "bar"
 								end: Object {
 									column: 14
@@ -145,7 +145,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 							end: Object {
 								column: 1
 								index: 55
@@ -166,7 +166,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 								end: Object {
 									column: 24
 									index: 47
@@ -181,7 +181,7 @@ JSRoot {
 							params: Array [
 								JSBindingAssignmentPattern {
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 										end: Object {
 											column: 24
 											index: 47
@@ -196,7 +196,7 @@ JSRoot {
 									right: JSReferenceIdentifier {
 										name: "await"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 											identifierName: "await"
 											end: Object {
 												column: 24
@@ -213,7 +213,7 @@ JSRoot {
 									left: JSBindingIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 											identifierName: "x"
 											end: Object {
 												column: 16
@@ -230,7 +230,7 @@ JSRoot {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 												end: Object {
 													column: 16
 													index: 39
@@ -250,7 +250,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 								end: Object {
 									column: 1
 									index: 55
@@ -265,7 +265,7 @@ JSRoot {
 							body: Array [
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 										end: Object {
 											column: 26
 											index: 49
@@ -281,7 +281,7 @@ JSRoot {
 										value: 2
 										format: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 											end: Object {
 												column: 26
 												index: 49
@@ -297,7 +297,7 @@ JSRoot {
 								}
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 										end: Object {
 											column: 27
 											index: 50
@@ -312,7 +312,7 @@ JSRoot {
 									expression: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 											end: Object {
 												column: 27
 												index: 50
@@ -330,7 +330,7 @@ JSRoot {
 									body: Array []
 									directives: Array []
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 										end: Object {
 											column: 30
 											index: 53
@@ -357,7 +357,7 @@ JSRoot {
 
 ```
 
- input.js:2:25 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/await-inside-parameters-of-nested-function/input.js:2:25 parse/js ━━━━━━━━━━
 
   ✖ Expected a comma to separate items in function params
 

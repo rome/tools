@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/in-class-heritage/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/in-class-heritage/input.js"
 		end: Object {
 			column: 27
 			index: 27
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "yield is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/yield/in-class-heritage/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/in-class-heritage/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/in-class-heritage/input.js"
 				end: Object {
 					column: 27
 					index: 27
@@ -92,7 +92,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/in-class-heritage/input.js"
 					end: Object {
 						column: 27
 						index: 27
@@ -107,7 +107,7 @@ JSRoot {
 				superClass: JSReferenceIdentifier {
 					name: "yield"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/yield/in-class-heritage/input.js"
 						identifierName: "yield"
 						end: Object {
 							column: 21
@@ -127,7 +127,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: ""
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/in-class-heritage/input.js"
 									identifierName: ""
 									end: Object {
 										column: 25
@@ -142,7 +142,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/in-class-heritage/input.js"
 								end: Object {
 									column: 25
 									index: 25
@@ -159,7 +159,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/in-class-heritage/input.js"
 							end: Object {
 								column: 25
 								index: 25
@@ -184,7 +184,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/in-class-heritage/input.js"
 								end: Object {
 									column: 25
 									index: 25
@@ -209,7 +209,7 @@ JSRoot {
 
 ```
 
- input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/yield/in-class-heritage/input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ yield is a reserved word
 

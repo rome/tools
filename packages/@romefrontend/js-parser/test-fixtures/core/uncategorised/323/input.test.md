@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/323/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/323/input.js"
 		end: Object {
 			column: 17
 			index: 17
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSLabeledStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/323/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -49,7 +49,7 @@ JSRoot {
 			label: JSIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/323/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 3
@@ -65,7 +65,7 @@ JSRoot {
 			}
 			body: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/323/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -81,7 +81,7 @@ JSRoot {
 					value: 10
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/323/input.js"
 						end: Object {
 							column: 7
 							index: 7
@@ -98,7 +98,7 @@ JSRoot {
 		}
 		JSLabeledStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/323/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -113,7 +113,7 @@ JSRoot {
 			label: JSIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/323/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 12
@@ -129,7 +129,7 @@ JSRoot {
 			}
 			body: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/323/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -145,7 +145,7 @@ JSRoot {
 					value: 20
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/323/input.js"
 						end: Object {
 							column: 16
 							index: 16

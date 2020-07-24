@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/427/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/427/input.js"
 		end: Object {
 			column: 32
 			index: 32
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Multiple default clauses"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/427/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSSwitchStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/427/input.js"
 				end: Object {
 					column: 32
 					index: 32
@@ -73,7 +73,7 @@ JSRoot {
 			discriminant: JSReferenceIdentifier {
 				name: "c"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/427/input.js"
 					identifierName: "c"
 					end: Object {
 						column: 9
@@ -92,7 +92,7 @@ JSRoot {
 					consequent: Array []
 					test: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/427/input.js"
 						end: Object {
 							column: 21
 							index: 21
@@ -109,7 +109,7 @@ JSRoot {
 					consequent: Array []
 					test: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/427/input.js"
 						end: Object {
 							column: 30
 							index: 30
@@ -132,7 +132,7 @@ JSRoot {
 
 ```
 
- input.js:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/427/input.js:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Multiple default clauses
 

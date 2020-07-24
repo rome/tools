@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-properties/failure-numeric-start-identifier/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-properties/failure-numeric-start-identifier/input.js"
 		end: Object {
 			column: 0
 			index: 24
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Identifier directly after number"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/failure-numeric-start-identifier/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/failure-numeric-start-identifier/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/failure-numeric-start-identifier/input.js"
 				end: Object {
 					column: 1
 					index: 23
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/failure-numeric-start-identifier/input.js"
 					end: Object {
 						column: 1
 						index: 23
@@ -111,7 +111,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/failure-numeric-start-identifier/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 5
@@ -126,7 +126,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-numeric-start-identifier/input.js"
 								end: Object {
 									column: 5
 									index: 17
@@ -142,7 +142,7 @@ JSRoot {
 						value: JSReferenceIdentifier {
 							name: "y"
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-numeric-start-identifier/input.js"
 								identifierName: "y"
 								end: Object {
 									column: 9
@@ -159,7 +159,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/failure-numeric-start-identifier/input.js"
 							end: Object {
 								column: 9
 								index: 21
@@ -184,7 +184,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-numeric-start-identifier/input.js"
 								end: Object {
 									column: 5
 									index: 17
@@ -209,7 +209,7 @@ JSRoot {
 
 ```
 
- input.js:2:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-private-properties/failure-numeric-start-identifier/input.js:2:4 parse/js ━━━━━━
 
   ✖ Identifier directly after number
 

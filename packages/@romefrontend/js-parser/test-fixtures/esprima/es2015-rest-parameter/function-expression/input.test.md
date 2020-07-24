@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-rest-parameter/function-expression/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-rest-parameter/function-expression/input.js"
 		end: Object {
 			column: 0
 			index: 25
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-rest-parameter/function-expression/input.js"
 				end: Object {
 					column: 24
 					index: 24
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-rest-parameter/function-expression/input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -64,7 +64,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "f"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-rest-parameter/function-expression/input.js"
 						identifierName: "f"
 						end: Object {
 							column: 1
@@ -81,7 +81,7 @@ JSRoot {
 				right: JSFunctionExpression {
 					id: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-rest-parameter/function-expression/input.js"
 						end: Object {
 							column: 24
 							index: 24
@@ -97,7 +97,7 @@ JSRoot {
 						body: Array []
 						directives: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-rest-parameter/function-expression/input.js"
 							end: Object {
 								column: 24
 								index: 24
@@ -118,7 +118,7 @@ JSRoot {
 						thisType: undefined
 						typeParameters: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-rest-parameter/function-expression/input.js"
 							end: Object {
 								column: 21
 								index: 21
@@ -133,7 +133,7 @@ JSRoot {
 						rest: JSBindingIdentifier {
 							name: "b"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-rest-parameter/function-expression/input.js"
 								identifierName: "b"
 								end: Object {
 									column: 20
@@ -150,7 +150,7 @@ JSRoot {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-rest-parameter/function-expression/input.js"
 									end: Object {
 										column: 20
 										index: 20
@@ -168,7 +168,7 @@ JSRoot {
 							JSBindingIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-rest-parameter/function-expression/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 14
@@ -185,7 +185,7 @@ JSRoot {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-rest-parameter/function-expression/input.js"
 										end: Object {
 											column: 14
 											index: 14

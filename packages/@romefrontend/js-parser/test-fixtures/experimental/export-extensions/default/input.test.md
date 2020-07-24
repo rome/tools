@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/export-extensions/default/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/export-extensions/default/input.js"
 		end: Object {
 			column: 0
 			index: 22
@@ -37,7 +37,7 @@ JSRoot {
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/default/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -52,7 +52,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "test"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/default/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -67,7 +67,7 @@ JSRoot {
 			}
 			defaultSpecifier: JSExportDefaultSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/default/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -82,7 +82,7 @@ JSRoot {
 				exported: JSIdentifier {
 					name: "A"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/export-extensions/default/input.js"
 						identifierName: "A"
 						end: Object {
 							column: 8

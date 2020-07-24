@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/extends-empty/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/extends-empty/input.ts"
 		end: Object {
 			column: 0
 			index: 26
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "extends list cannot be empty"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/class/extends-empty/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/extends-empty/input.ts"
 					identifierName: "foo"
 					end: Object {
 						column: 13
@@ -77,7 +77,7 @@ JSRoot {
 			extends: Array []
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/extends-empty/input.ts"
 				end: Object {
 					column: 1
 					index: 25
@@ -92,7 +92,7 @@ JSRoot {
 			body: TSInterfaceBody {
 				body: Array []
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/extends-empty/input.ts"
 					end: Object {
 						column: 1
 						index: 25
@@ -114,7 +114,7 @@ JSRoot {
 
 ```
 
- input.ts:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/class/extends-empty/input.ts:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ extends list cannot be empty
 

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-spread-element/new-spread-default/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-spread-element/new-spread-default/input.js"
 		end: Object {
 			column: 0
 			index: 20
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-spread-element/new-spread-default/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -50,7 +50,7 @@ JSRoot {
 				optional: undefined
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-spread-element/new-spread-default/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -65,7 +65,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "f"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-spread-element/new-spread-default/input.js"
 						identifierName: "f"
 						end: Object {
 							column: 5
@@ -83,7 +83,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "g"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-spread-element/new-spread-default/input.js"
 							identifierName: "g"
 							end: Object {
 								column: 7
@@ -99,7 +99,7 @@ JSRoot {
 					}
 					JSSpreadElement {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-spread-element/new-spread-default/input.js"
 							end: Object {
 								column: 17
 								index: 17
@@ -114,7 +114,7 @@ JSRoot {
 						argument: JSAssignmentExpression {
 							operator: "="
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-spread-element/new-spread-default/input.js"
 								end: Object {
 									column: 17
 									index: 17
@@ -129,7 +129,7 @@ JSRoot {
 							left: JSAssignmentIdentifier {
 								name: "h"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-spread-element/new-spread-default/input.js"
 									identifierName: "h"
 									end: Object {
 										column: 13
@@ -146,7 +146,7 @@ JSRoot {
 							right: JSReferenceIdentifier {
 								name: "i"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-spread-element/new-spread-default/input.js"
 									identifierName: "i"
 									end: Object {
 										column: 17

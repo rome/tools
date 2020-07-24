@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-properties/yield-in-generator-in-class-property/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-properties/yield-in-generator-in-class-property/input.js"
 		end: Object {
 			column: 0
 			index: 47
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/yield-in-generator-in-class-property/input.js"
 					identifierName: "C"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/yield-in-generator-in-class-property/input.js"
 				end: Object {
 					column: 1
 					index: 46
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/yield-in-generator-in-class-property/input.js"
 					end: Object {
 						column: 1
 						index: 46
@@ -87,7 +87,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "p"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/yield-in-generator-in-class-property/input.js"
 									identifierName: "p"
 									end: Object {
 										column: 3
@@ -102,7 +102,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/yield-in-generator-in-class-property/input.js"
 								end: Object {
 									column: 3
 									index: 13
@@ -118,7 +118,7 @@ JSRoot {
 						value: JSFunctionExpression {
 							id: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/yield-in-generator-in-class-property/input.js"
 								end: Object {
 									column: 33
 									index: 43
@@ -140,7 +140,7 @@ JSRoot {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/yield-in-generator-in-class-property/input.js"
 									end: Object {
 										column: 18
 										index: 28
@@ -156,7 +156,7 @@ JSRoot {
 							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/yield-in-generator-in-class-property/input.js"
 									end: Object {
 										column: 33
 										index: 43
@@ -171,7 +171,7 @@ JSRoot {
 								body: Array [
 									JSExpressionStatement {
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/yield-in-generator-in-class-property/input.js"
 											end: Object {
 												column: 31
 												index: 41
@@ -186,7 +186,7 @@ JSRoot {
 										expression: JSYieldExpression {
 											delegate: false
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-properties/yield-in-generator-in-class-property/input.js"
 												end: Object {
 													column: 31
 													index: 41
@@ -202,7 +202,7 @@ JSRoot {
 												operator: "+"
 												prefix: true
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-properties/yield-in-generator-in-class-property/input.js"
 													end: Object {
 														column: 31
 														index: 41
@@ -218,7 +218,7 @@ JSRoot {
 													value: 42
 													format: undefined
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-properties/yield-in-generator-in-class-property/input.js"
 														end: Object {
 															column: 31
 															index: 41
@@ -240,7 +240,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/yield-in-generator-in-class-property/input.js"
 							end: Object {
 								column: 34
 								index: 44
@@ -265,7 +265,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/yield-in-generator-in-class-property/input.js"
 								end: Object {
 									column: 3
 									index: 13

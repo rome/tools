@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/122/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/122/input.js"
 		end: Object {
 			column: 38
 			index: 38
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/122/input.js"
 				end: Object {
 					column: 38
 					index: 38
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/122/input.js"
 					end: Object {
 						column: 38
 						index: 38
@@ -63,7 +63,7 @@ JSRoot {
 				object: JSReferenceIdentifier {
 					name: "universe"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/122/input.js"
 						identifierName: "universe"
 						end: Object {
 							column: 8
@@ -80,7 +80,7 @@ JSRoot {
 				property: JSComputedMemberProperty {
 					value: JSSequenceExpression {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/122/input.js"
 							end: Object {
 								column: 37
 								index: 37
@@ -96,7 +96,7 @@ JSRoot {
 							JSReferenceIdentifier {
 								name: "galaxyName"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/122/input.js"
 									identifierName: "galaxyName"
 									end: Object {
 										column: 19
@@ -113,7 +113,7 @@ JSRoot {
 							JSReferenceIdentifier {
 								name: "otherUselessName"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/122/input.js"
 									identifierName: "otherUselessName"
 									end: Object {
 										column: 37
@@ -130,7 +130,7 @@ JSRoot {
 						]
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/122/input.js"
 						end: Object {
 							column: 38
 							index: 38

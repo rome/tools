@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js"
 		end: Object {
 			column: 0
 			index: 20
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Object pattern cannot contains methods"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -88,7 +88,7 @@ JSRoot {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js"
 						end: Object {
 							column: 18
 							index: 18
@@ -108,7 +108,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js"
 						end: Object {
 							column: 16
 							index: 16
@@ -124,7 +124,7 @@ JSRoot {
 						JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js"
 								end: Object {
 									column: 12
 									index: 12
@@ -142,7 +142,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "X"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js"
 												end: Object {
 													column: 11
 													index: 11
@@ -156,7 +156,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js"
 											end: Object {
 												column: 11
 												index: 11
@@ -172,7 +172,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "X"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js"
 											end: Object {
 												column: 11
 												index: 11
@@ -186,7 +186,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js"
 										end: Object {
 											column: 11
 											index: 11
@@ -213,7 +213,8 @@ JSRoot {
 
 ```
 
- input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js:1:6
+parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Object pattern cannot contains methods
 

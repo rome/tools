@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/automatic-semicolon-insertion/migrated_0013/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/automatic-semicolon-insertion/migrated_0013/input.js"
 		end: Object {
 			column: 0
 			index: 23
@@ -35,7 +35,7 @@ JSRoot {
 		JSBlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/automatic-semicolon-insertion/migrated_0013/input.js"
 				end: Object {
 					column: 8
 					index: 22
@@ -50,7 +50,7 @@ JSRoot {
 			body: Array [
 				JSThrowStatement {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/automatic-semicolon-insertion/migrated_0013/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -65,7 +65,7 @@ JSRoot {
 					argument: JSReferenceIdentifier {
 						name: "error"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/automatic-semicolon-insertion/migrated_0013/input.js"
 							identifierName: "error"
 							end: Object {
 								column: 13
@@ -82,7 +82,7 @@ JSRoot {
 				}
 				JSExpressionStatement {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/automatic-semicolon-insertion/migrated_0013/input.js"
 						end: Object {
 							column: 6
 							index: 20
@@ -97,7 +97,7 @@ JSRoot {
 					expression: JSReferenceIdentifier {
 						name: "error"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/automatic-semicolon-insertion/migrated_0013/input.js"
 							identifierName: "error"
 							end: Object {
 								column: 5

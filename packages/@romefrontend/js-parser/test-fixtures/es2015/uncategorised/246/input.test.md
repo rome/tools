@@ -10,14 +10,14 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "input.js"
+	filename: "es2015/uncategorised/246/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/246/input.js"
 		end: Object {
 			column: 34
 			index: 34
@@ -33,7 +33,7 @@ JSRoot {
 		JSDirective {
 			value: "use strict"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/246/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -56,7 +56,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "arguments is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/246/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -75,7 +75,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/246/input.js"
 				end: Object {
 					column: 34
 					index: 34
@@ -89,7 +89,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/246/input.js"
 					end: Object {
 						column: 34
 						index: 34
@@ -105,7 +105,7 @@ JSRoot {
 					value: 42
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/246/input.js"
 						end: Object {
 							column: 34
 							index: 34
@@ -125,7 +125,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/246/input.js"
 						end: Object {
 							column: 31
 							index: 31
@@ -141,7 +141,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "arguments"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/246/input.js"
 								identifierName: "arguments"
 								end: Object {
 									column: 24
@@ -158,7 +158,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/246/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 27
@@ -184,7 +184,7 @@ JSRoot {
 
 ```
 
- input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/246/input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ arguments is a reserved word
 

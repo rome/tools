@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/class-methods/malformed-super-expression/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/class-methods/malformed-super-expression/input.js"
 		end: Object {
 			column: 1
 			index: 39
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Invalid super suffix operator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/class-methods/malformed-super-expression/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class-methods/malformed-super-expression/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/class-methods/malformed-super-expression/input.js"
 				end: Object {
 					column: 1
 					index: 39
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class-methods/malformed-super-expression/input.js"
 					end: Object {
 						column: 1
 						index: 39
@@ -112,7 +112,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/malformed-super-expression/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 3
@@ -127,7 +127,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/malformed-super-expression/input.js"
 								end: Object {
 									column: 3
 									index: 13
@@ -141,7 +141,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/malformed-super-expression/input.js"
 							end: Object {
 								column: 3
 								index: 37
@@ -163,7 +163,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/malformed-super-expression/input.js"
 								end: Object {
 									column: 6
 									index: 16
@@ -189,7 +189,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/malformed-super-expression/input.js"
 								end: Object {
 									column: 3
 									index: 13
@@ -205,7 +205,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/malformed-super-expression/input.js"
 								end: Object {
 									column: 3
 									index: 37
@@ -220,7 +220,7 @@ JSRoot {
 							body: Array [
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/class-methods/malformed-super-expression/input.js"
 										end: Object {
 											column: 14
 											index: 33
@@ -235,7 +235,7 @@ JSRoot {
 									expression: JSBinaryExpression {
 										operator: "-"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/class-methods/malformed-super-expression/input.js"
 											end: Object {
 												column: 13
 												index: 32
@@ -249,7 +249,7 @@ JSRoot {
 										}
 										left: JSSuper {
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/class-methods/malformed-super-expression/input.js"
 												end: Object {
 													column: 9
 													index: 28
@@ -266,7 +266,7 @@ JSRoot {
 											value: 1
 											format: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/class-methods/malformed-super-expression/input.js"
 												end: Object {
 													column: 13
 													index: 32
@@ -295,7 +295,7 @@ JSRoot {
 
 ```
 
- input.js:3:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/class-methods/malformed-super-expression/input.js:3:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid super suffix operator
 

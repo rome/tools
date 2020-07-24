@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 		end: Object {
 			column: 0
 			index: 77
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "'arguments' is not allowed in class field initializer"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 11
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 				end: Object {
 					column: 1
 					index: 76
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 					end: Object {
 						column: 1
 						index: 76
@@ -130,7 +130,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "A"
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 								identifierName: "A"
 								end: Object {
 									column: 9
@@ -145,7 +145,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 							end: Object {
 								column: 3
 								index: 74
@@ -163,7 +163,7 @@ JSRoot {
 							superTypeParameters: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 								end: Object {
 									column: 3
 									index: 74
@@ -181,7 +181,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "foo"
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 												identifierName: "foo"
 												end: Object {
 													column: 7
@@ -196,7 +196,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 											end: Object {
 												column: 7
 												index: 35
@@ -213,7 +213,7 @@ JSRoot {
 										id: JSBindingIdentifier {
 											name: "B"
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 												identifierName: "B"
 												end: Object {
 													column: 17
@@ -228,7 +228,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 											end: Object {
 												column: 41
 												index: 69
@@ -246,7 +246,7 @@ JSRoot {
 											superTypeParameters: undefined
 											typeParameters: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 												end: Object {
 													column: 41
 													index: 69
@@ -265,7 +265,7 @@ JSRoot {
 														value: JSIdentifier {
 															name: "bar"
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 																identifierName: "bar"
 																end: Object {
 																	column: 23
@@ -280,7 +280,7 @@ JSRoot {
 															}
 														}
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 															end: Object {
 																column: 23
 																index: 51
@@ -294,7 +294,7 @@ JSRoot {
 														}
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 														end: Object {
 															column: 39
 															index: 67
@@ -316,7 +316,7 @@ JSRoot {
 														thisType: undefined
 														typeParameters: undefined
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 															end: Object {
 																column: 25
 																index: 53
@@ -342,7 +342,7 @@ JSRoot {
 															line: 3
 														}
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 															end: Object {
 																column: 23
 																index: 51
@@ -358,7 +358,7 @@ JSRoot {
 													body: JSBlockStatement {
 														directives: Array []
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 															end: Object {
 																column: 39
 																index: 67
@@ -373,7 +373,7 @@ JSRoot {
 														body: Array [
 															JSExpressionStatement {
 																loc: Object {
-																	filename: "input.js"
+																	filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 																	end: Object {
 																		column: 37
 																		index: 65
@@ -388,7 +388,7 @@ JSRoot {
 																expression: JSReferenceIdentifier {
 																	name: "arguments"
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 																		identifierName: "arguments"
 																		end: Object {
 																			column: 37
@@ -412,7 +412,7 @@ JSRoot {
 									definite: undefined
 									typeAnnotation: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 										end: Object {
 											column: 42
 											index: 70
@@ -437,7 +437,7 @@ JSRoot {
 											line: 3
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 											end: Object {
 												column: 7
 												index: 35
@@ -465,7 +465,7 @@ JSRoot {
 
 ```
 
- input.js:3:28 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-properties/arguments-in-nested-class/input.js:3:28 parse/js ━━━━━━━━━━━━━━━━━━━━
 
   ✖ 'arguments' is not allowed in class field initializer
 

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/export/export-type-from/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/export/export-type-from/input.ts"
 		end: Object {
 			column: 0
 			index: 32
@@ -37,7 +37,7 @@ JSRoot {
 			exportKind: "type"
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/export/export-type-from/input.ts"
 				end: Object {
 					column: 31
 					index: 31
@@ -52,7 +52,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "./mod"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/export/export-type-from/input.ts"
 					end: Object {
 						column: 30
 						index: 30
@@ -68,7 +68,7 @@ JSRoot {
 			namedSpecifiers: Array [
 				JSExportExternalSpecifier {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/export/export-type-from/input.ts"
 						end: Object {
 							column: 15
 							index: 15
@@ -83,7 +83,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "T"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/export/export-type-from/input.ts"
 							identifierName: "T"
 							end: Object {
 								column: 15
@@ -100,7 +100,7 @@ JSRoot {
 					local: JSIdentifier {
 						name: "T"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/export/export-type-from/input.ts"
 							identifierName: "T"
 							end: Object {
 								column: 15

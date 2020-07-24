@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/enum/members-trailing-comma-with-initializer/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/enum/members-trailing-comma-with-initializer/input.ts"
 		end: Object {
 			column: 0
 			index: 22
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "E"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/enum/members-trailing-comma-with-initializer/input.ts"
 					identifierName: "E"
 					end: Object {
 						column: 6
@@ -52,7 +52,7 @@ JSRoot {
 			}
 			const: false
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/enum/members-trailing-comma-with-initializer/input.ts"
 				end: Object {
 					column: 1
 					index: 21
@@ -69,7 +69,7 @@ JSRoot {
 					id: JSIdentifier {
 						name: "A"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/enum/members-trailing-comma-with-initializer/input.ts"
 							identifierName: "A"
 							end: Object {
 								column: 5
@@ -84,7 +84,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/enum/members-trailing-comma-with-initializer/input.ts"
 						end: Object {
 							column: 9
 							index: 18
@@ -100,7 +100,7 @@ JSRoot {
 						value: 0
 						format: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/enum/members-trailing-comma-with-initializer/input.ts"
 							end: Object {
 								column: 9
 								index: 18

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0170/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0170/input.js"
 		end: Object {
 			column: 0
 			index: 19
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0170/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -59,7 +59,7 @@ JSRoot {
 		JSTryStatement {
 			finalizer: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0170/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -75,7 +75,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0170/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -90,7 +90,7 @@ JSRoot {
 			}
 			handler: JSCatchClause {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0170/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -106,7 +106,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0170/input.js"
 						end: Object {
 							column: 18
 							index: 18
@@ -122,7 +122,7 @@ JSRoot {
 				param: JSBindingIdentifier {
 					name: ""
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0170/input.js"
 						identifierName: ""
 						end: Object {
 							column: 15
@@ -146,7 +146,7 @@ JSRoot {
 
 ```
 
- input.js:1:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0170/input.js:1:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
 

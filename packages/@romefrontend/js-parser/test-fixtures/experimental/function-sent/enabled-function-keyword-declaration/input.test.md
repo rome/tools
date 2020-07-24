@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
 		end: Object {
 			column: 0
 			index: 41
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 13
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
 				end: Object {
 					column: 1
 					index: 40
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
 					end: Object {
 						column: 1
 						index: 40
@@ -128,7 +128,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
 							end: Object {
 								column: 17
 								index: 35
@@ -143,7 +143,7 @@ JSRoot {
 						expression: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
 								end: Object {
 									column: 17
 									index: 35
@@ -157,7 +157,7 @@ JSRoot {
 							}
 							callee: JSMetaProperty {
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
 									end: Object {
 										column: 15
 										index: 33
@@ -172,7 +172,7 @@ JSRoot {
 								meta: JSIdentifier {
 									name: "function"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
 										identifierName: "function"
 										end: Object {
 											column: 10
@@ -189,7 +189,7 @@ JSRoot {
 								property: JSIdentifier {
 									name: "sent"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
 										identifierName: "sent"
 										end: Object {
 											column: 15
@@ -210,7 +210,7 @@ JSRoot {
 						body: Array []
 						directives: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
 							end: Object {
 								column: 20
 								index: 38
@@ -234,7 +234,7 @@ JSRoot {
 
 ```
 
- input.js:2:18 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/function-sent/enabled-function-keyword-declaration/input.js:2:18 parse/js ━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

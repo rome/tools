@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-super-property/super_member/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-super-property/super_member/input.js"
 		end: Object {
 			column: 0
 			index: 61
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-super-property/super_member/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-super-property/super_member/input.js"
 				end: Object {
 					column: 1
 					index: 60
@@ -68,7 +68,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-super-property/super_member/input.js"
 					end: Object {
 						column: 1
 						index: 60
@@ -83,7 +83,7 @@ JSRoot {
 				superClass: JSReferenceIdentifier {
 					name: "B"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-super-property/super_member/input.js"
 						identifierName: "B"
 						end: Object {
 							column: 17
@@ -104,7 +104,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "X"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-super-property/super_member/input.js"
 									identifierName: "X"
 									end: Object {
 										column: 5
@@ -119,7 +119,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-super-property/super_member/input.js"
 								end: Object {
 									column: 5
 									index: 25
@@ -133,7 +133,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-super-property/super_member/input.js"
 							end: Object {
 								column: 5
 								index: 58
@@ -155,7 +155,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-super-property/super_member/input.js"
 								end: Object {
 									column: 7
 									index: 27
@@ -181,7 +181,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-super-property/super_member/input.js"
 								end: Object {
 									column: 5
 									index: 25
@@ -197,7 +197,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-super-property/super_member/input.js"
 								end: Object {
 									column: 5
 									index: 58
@@ -212,7 +212,7 @@ JSRoot {
 							body: Array [
 								JSReturnStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-super-property/super_member/input.js"
 										end: Object {
 											column: 22
 											index: 52
@@ -226,7 +226,7 @@ JSRoot {
 									}
 									argument: JSMemberExpression {
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-super-property/super_member/input.js"
 											end: Object {
 												column: 22
 												index: 52
@@ -240,7 +240,7 @@ JSRoot {
 										}
 										object: JSSuper {
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-super-property/super_member/input.js"
 												end: Object {
 													column: 20
 													index: 50
@@ -257,7 +257,7 @@ JSRoot {
 											value: JSIdentifier {
 												name: "y"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/es2015-super-property/super_member/input.js"
 													identifierName: "y"
 													end: Object {
 														column: 22
@@ -272,7 +272,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-super-property/super_member/input.js"
 												identifierName: "y"
 												end: Object {
 													column: 22

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js"
 		end: Object {
 			column: 0
 			index: 24
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected keyword from"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -61,7 +61,7 @@ JSRoot {
 			importKind: undefined
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -76,7 +76,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: ""
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -92,7 +92,7 @@ JSRoot {
 			namedSpecifiers: Array [
 				JSImportSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -107,7 +107,7 @@ JSRoot {
 					imported: JSIdentifier {
 						name: "default"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js"
 							identifierName: "default"
 							end: Object {
 								column: 15
@@ -125,7 +125,7 @@ JSRoot {
 						name: JSBindingIdentifier {
 							name: "foo"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js"
 								identifierName: "foo"
 								end: Object {
 									column: 22
@@ -141,7 +141,7 @@ JSRoot {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js"
 							end: Object {
 								column: 22
 								index: 22
@@ -165,7 +165,7 @@ JSRoot {
 
 ```
 
- input.js:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js:2 parse/js ━━━━━━━━
 
   ✖ Expected keyword from
 

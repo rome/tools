@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/enum/const/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/enum/const/input.ts"
 		end: Object {
 			column: 0
 			index: 16
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "E"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/enum/const/input.ts"
 					identifierName: "E"
 					end: Object {
 						column: 12
@@ -53,7 +53,7 @@ JSRoot {
 			const: true
 			members: Array []
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/enum/const/input.ts"
 				end: Object {
 					column: 15
 					index: 15

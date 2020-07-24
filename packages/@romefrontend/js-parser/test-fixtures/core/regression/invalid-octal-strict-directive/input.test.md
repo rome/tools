@@ -10,14 +10,14 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "input.js"
+	filename: "core/regression/invalid-octal-strict-directive/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/regression/invalid-octal-strict-directive/input.js"
 		end: Object {
 			column: 0
 			index: 97
@@ -38,7 +38,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Octal literal in strict mode"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/regression/invalid-octal-strict-directive/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -57,7 +57,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/regression/invalid-octal-strict-directive/input.js"
 				end: Object {
 					column: 3
 					index: 68
@@ -73,7 +73,7 @@ JSRoot {
 				value: 4
 				format: "octal"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/regression/invalid-octal-strict-directive/input.js"
 					end: Object {
 						column: 2
 						index: 67
@@ -89,7 +89,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/regression/invalid-octal-strict-directive/input.js"
 				end: Object {
 					column: 3
 					index: 72
@@ -105,7 +105,7 @@ JSRoot {
 				value: 5
 				format: "octal"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/regression/invalid-octal-strict-directive/input.js"
 					end: Object {
 						column: 2
 						index: 71
@@ -121,7 +121,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/regression/invalid-octal-strict-directive/input.js"
 				end: Object {
 					column: 22
 					index: 96
@@ -136,7 +136,7 @@ JSRoot {
 			expression: JSStringLiteral {
 				value: "\x04 foo \x05 bar \x06"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/regression/invalid-octal-strict-directive/input.js"
 					end: Object {
 						column: 21
 						index: 95
@@ -155,7 +155,7 @@ JSRoot {
 		JSDirective {
 			value: "\\01 foo \\02 bar \\03"
 			loc: Object {
-				filename: "input.js"
+				filename: "core/regression/invalid-octal-strict-directive/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -171,7 +171,7 @@ JSRoot {
 		JSDirective {
 			value: "\\4"
 			loc: Object {
-				filename: "input.js"
+				filename: "core/regression/invalid-octal-strict-directive/input.js"
 				end: Object {
 					column: 5
 					index: 29
@@ -187,7 +187,7 @@ JSRoot {
 		JSDirective {
 			value: "\\5"
 			loc: Object {
-				filename: "input.js"
+				filename: "core/regression/invalid-octal-strict-directive/input.js"
 				end: Object {
 					column: 5
 					index: 35
@@ -203,7 +203,7 @@ JSRoot {
 		JSDirective {
 			value: "use strict"
 			loc: Object {
-				filename: "input.js"
+				filename: "core/regression/invalid-octal-strict-directive/input.js"
 				end: Object {
 					column: 13
 					index: 50
@@ -219,7 +219,7 @@ JSRoot {
 		JSDirective {
 			value: "\\4"
 			loc: Object {
-				filename: "input.js"
+				filename: "core/regression/invalid-octal-strict-directive/input.js"
 				end: Object {
 					column: 5
 					index: 57
@@ -235,7 +235,7 @@ JSRoot {
 		JSDirective {
 			value: "\\5"
 			loc: Object {
-				filename: "input.js"
+				filename: "core/regression/invalid-octal-strict-directive/input.js"
 				end: Object {
 					column: 5
 					index: 63
@@ -256,7 +256,7 @@ JSRoot {
 
 ```
 
- input.js:8:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/regression/invalid-octal-strict-directive/input.js:8:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Octal literal in strict mode
 

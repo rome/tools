@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-yield/invalid-yield-expression/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/invalid-yield-expression/input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/invalid-yield-expression/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/invalid-yield-expression/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSFunctionExpression {
 				id: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/invalid-yield-expression/input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -95,7 +95,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-yield/invalid-yield-expression/input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -111,7 +111,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-yield/invalid-yield-expression/input.js"
 						end: Object {
 							column: 24
 							index: 24
@@ -126,7 +126,7 @@ JSRoot {
 					body: Array [
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/invalid-yield-expression/input.js"
 								end: Object {
 									column: 19
 									index: 19
@@ -141,7 +141,7 @@ JSRoot {
 							expression: JSReferenceIdentifier {
 								name: "yield"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-yield/invalid-yield-expression/input.js"
 									identifierName: "yield"
 									end: Object {
 										column: 19
@@ -158,7 +158,7 @@ JSRoot {
 						}
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/invalid-yield-expression/input.js"
 								end: Object {
 									column: 22
 									index: 22
@@ -174,7 +174,7 @@ JSRoot {
 								value: 3
 								format: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-yield/invalid-yield-expression/input.js"
 									end: Object {
 										column: 21
 										index: 21
@@ -200,7 +200,7 @@ JSRoot {
 
 ```
 
- input.js:1:20 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-yield/invalid-yield-expression/input.js:1:20 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

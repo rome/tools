@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/17/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/17/input.js"
 		end: Object {
 			column: 36
 			index: 36
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/17/input.js"
 				end: Object {
 					column: 36
 					index: 36
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/17/input.js"
 					end: Object {
 						column: 36
 						index: 36
@@ -63,7 +63,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "f"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/17/input.js"
 						identifierName: "f"
 						end: Object {
 							column: 1
@@ -81,7 +81,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/17/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 3
@@ -97,7 +97,7 @@ JSRoot {
 					}
 					JSArrowFunctionExpression {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/17/input.js"
 							end: Object {
 								column: 35
 								index: 35
@@ -111,7 +111,7 @@ JSRoot {
 						}
 						body: JSAwaitExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/17/input.js"
 								end: Object {
 									column: 35
 									index: 35
@@ -126,7 +126,7 @@ JSRoot {
 							argument: JSReferenceIdentifier {
 								name: "promise"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/17/input.js"
 									identifierName: "promise"
 									end: Object {
 										column: 35
@@ -147,7 +147,7 @@ JSRoot {
 							rest: undefined
 							thisType: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/17/input.js"
 								end: Object {
 									column: 21
 									index: 21
@@ -163,7 +163,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "promise"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/async-functions/17/input.js"
 										identifierName: "promise"
 										end: Object {
 											column: 18

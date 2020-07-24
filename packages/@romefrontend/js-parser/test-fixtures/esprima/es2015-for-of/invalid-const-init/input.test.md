@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-for-of/invalid-const-init/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-for-of/invalid-const-init/input.js"
 		end: Object {
 			column: 0
 			index: 24
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Loop variable declaration may not have an initializer"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-for-of/invalid-const-init/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -59,7 +59,7 @@ JSRoot {
 		JSForOfStatement {
 			await: false
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-for-of/invalid-const-init/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -73,7 +73,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/invalid-const-init/input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -89,7 +89,7 @@ JSRoot {
 			right: JSReferenceIdentifier {
 				name: "y"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/invalid-const-init/input.js"
 					identifierName: "y"
 					end: Object {
 						column: 21
@@ -106,7 +106,7 @@ JSRoot {
 			left: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/invalid-const-init/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -123,7 +123,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-for-of/invalid-const-init/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 12
@@ -138,7 +138,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-for-of/invalid-const-init/input.js"
 							end: Object {
 								column: 16
 								index: 16
@@ -154,7 +154,7 @@ JSRoot {
 							value: 1
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-for-of/invalid-const-init/input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -179,7 +179,7 @@ JSRoot {
 
 ```
 
- input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-for-of/invalid-const-init/input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Loop variable declaration may not have an initializer
 

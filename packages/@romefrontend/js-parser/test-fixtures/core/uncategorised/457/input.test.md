@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/457/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/457/input.js"
 		end: Object {
 			column: 33
 			index: 33
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "No loop label found"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/457/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSSwitchStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/457/input.js"
 				end: Object {
 					column: 33
 					index: 33
@@ -73,7 +73,7 @@ JSRoot {
 			discriminant: JSReferenceIdentifier {
 				name: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/457/input.js"
 					identifierName: "x"
 					end: Object {
 						column: 9
@@ -91,7 +91,7 @@ JSRoot {
 				JSSwitchCase {
 					test: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/457/input.js"
 						end: Object {
 							column: 31
 							index: 31
@@ -107,7 +107,7 @@ JSRoot {
 						JSContinueStatement {
 							label: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/457/input.js"
 								end: Object {
 									column: 31
 									index: 31
@@ -132,7 +132,7 @@ JSRoot {
 
 ```
 
- input.js:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/457/input.js:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ No loop label found
 

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-import-declaration/invalid-import-module-specifier/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-import-declaration/invalid-import-module-specifier/input.js"
 		end: Object {
 			column: 0
 			index: 22
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Export from only allows strings"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-module-specifier/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -61,7 +61,7 @@ JSRoot {
 			exportKind: undefined
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-module-specifier/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -76,7 +76,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: ""
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-module-specifier/input.js"
 					identifierName: "bar"
 					end: Object {
 						column: 21
@@ -93,7 +93,7 @@ JSRoot {
 			namedSpecifiers: Array [
 				JSExportExternalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-import-declaration/invalid-import-module-specifier/input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -108,7 +108,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-module-specifier/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 11
@@ -125,7 +125,7 @@ JSRoot {
 					local: JSIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-module-specifier/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 11
@@ -150,7 +150,7 @@ JSRoot {
 
 ```
 
- input.js:1:18 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-import-declaration/invalid-import-module-specifier/input.js:1:18 parse/js ━━━━━━━━━━
 
   ✖ Export from only allows strings
 

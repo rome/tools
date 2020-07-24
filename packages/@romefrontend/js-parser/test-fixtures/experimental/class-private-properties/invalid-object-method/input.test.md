@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-properties/invalid-object-method/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-properties/invalid-object-method/input.js"
 		end: Object {
 			column: 0
 			index: 33
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/invalid-object-method/input.js"
 					identifierName: "C"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/invalid-object-method/input.js"
 				end: Object {
 					column: 1
 					index: 32
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/invalid-object-method/input.js"
 					end: Object {
 						column: 1
 						index: 32
@@ -87,7 +87,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "p"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/invalid-object-method/input.js"
 									identifierName: "p"
 									end: Object {
 										column: 4
@@ -102,7 +102,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/invalid-object-method/input.js"
 								end: Object {
 									column: 4
 									index: 14
@@ -117,7 +117,7 @@ JSRoot {
 						}
 						value: JSObjectExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/invalid-object-method/input.js"
 								end: Object {
 									column: 18
 									index: 28
@@ -136,7 +136,7 @@ JSRoot {
 											id: JSIdentifier {
 												name: "x"
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/invalid-object-method/input.js"
 													identifierName: "x"
 													end: Object {
 														column: 12
@@ -151,7 +151,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/invalid-object-method/input.js"
 												end: Object {
 													column: 12
 													index: 22
@@ -165,7 +165,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/invalid-object-method/input.js"
 											end: Object {
 												column: 12
 												index: 22
@@ -182,7 +182,7 @@ JSRoot {
 										value: 42
 										format: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/invalid-object-method/input.js"
 											end: Object {
 												column: 16
 												index: 26
@@ -196,7 +196,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/invalid-object-method/input.js"
 										end: Object {
 											column: 16
 											index: 26
@@ -213,7 +213,7 @@ JSRoot {
 						}
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/invalid-object-method/input.js"
 							end: Object {
 								column: 20
 								index: 30
@@ -238,7 +238,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/invalid-object-method/input.js"
 								end: Object {
 									column: 4
 									index: 14

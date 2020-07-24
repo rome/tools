@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/export/export-value-declaration/input.ts"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/export/export-value-declaration/input.ts"
 		end: Object {
 			column: 0
 			index: 95
@@ -36,7 +36,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/export/export-value-declaration/input.ts"
 				end: Object {
 					column: 13
 					index: 13
@@ -50,7 +50,7 @@ JSRoot {
 			}
 			declaration: JSVariableDeclarationStatement {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/export/export-value-declaration/input.ts"
 					end: Object {
 						column: 13
 						index: 13
@@ -65,7 +65,7 @@ JSRoot {
 				declaration: JSVariableDeclaration {
 					kind: "var"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/export/export-value-declaration/input.ts"
 						end: Object {
 							column: 13
 							index: 13
@@ -82,7 +82,7 @@ JSRoot {
 							id: JSBindingIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/export/export-value-declaration/input.ts"
 									identifierName: "a"
 									end: Object {
 										column: 12
@@ -98,7 +98,7 @@ JSRoot {
 							}
 							init: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/export/export-value-declaration/input.ts"
 								end: Object {
 									column: 12
 									index: 12
@@ -119,7 +119,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/export/export-value-declaration/input.ts"
 				end: Object {
 					column: 22
 					index: 36
@@ -135,7 +135,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "b"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/export/export-value-declaration/input.ts"
 						identifierName: "b"
 						end: Object {
 							column: 17
@@ -150,7 +150,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/export/export-value-declaration/input.ts"
 					end: Object {
 						column: 22
 						index: 36
@@ -166,7 +166,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/export/export-value-declaration/input.ts"
 						end: Object {
 							column: 22
 							index: 36
@@ -189,7 +189,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/export/export-value-declaration/input.ts"
 						end: Object {
 							column: 19
 							index: 33
@@ -208,7 +208,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/export/export-value-declaration/input.ts"
 				end: Object {
 					column: 17
 					index: 54
@@ -224,7 +224,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "C"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/export/export-value-declaration/input.ts"
 						identifierName: "C"
 						end: Object {
 							column: 14
@@ -239,7 +239,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/export/export-value-declaration/input.ts"
 					end: Object {
 						column: 17
 						index: 54
@@ -258,7 +258,7 @@ JSRoot {
 					superTypeParameters: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/export/export-value-declaration/input.ts"
 						end: Object {
 							column: 17
 							index: 54
@@ -277,7 +277,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/export/export-value-declaration/input.ts"
 				end: Object {
 					column: 16
 					index: 72
@@ -293,7 +293,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "D"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/export/export-value-declaration/input.ts"
 						identifierName: "D"
 						end: Object {
 							column: 13
@@ -310,7 +310,7 @@ JSRoot {
 				const: false
 				members: Array []
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/export/export-value-declaration/input.ts"
 					end: Object {
 						column: 16
 						index: 72
@@ -328,7 +328,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/export/export-value-declaration/input.ts"
 				end: Object {
 					column: 21
 					index: 94
@@ -344,7 +344,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "E"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/export/export-value-declaration/input.ts"
 						identifierName: "E"
 						end: Object {
 							column: 18
@@ -359,7 +359,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/export/export-value-declaration/input.ts"
 					end: Object {
 						column: 21
 						index: 94
@@ -374,7 +374,7 @@ JSRoot {
 				body: TSModuleBlock {
 					body: Array []
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/export/export-value-declaration/input.ts"
 						end: Object {
 							column: 21
 							index: 94

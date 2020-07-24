@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/expression-primary-object/migrated_0034/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/expression-primary-object/migrated_0034/input.js"
 		end: Object {
 			column: 11
 			index: 11
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/expression-primary-object/migrated_0034/input.js"
 				end: Object {
 					column: 11
 					index: 11
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/expression-primary-object/migrated_0034/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -67,7 +67,7 @@ JSRoot {
 							value: JSReferenceIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/expression-primary-object/migrated_0034/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 4
@@ -82,7 +82,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/expression-primary-object/migrated_0034/input.js"
 								end: Object {
 									column: 5
 									index: 5
@@ -96,7 +96,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/expression-primary-object/migrated_0034/input.js"
 							end: Object {
 								column: 9
 								index: 9
@@ -112,7 +112,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/expression-primary-object/migrated_0034/input.js"
 								end: Object {
 									column: 9
 									index: 9
@@ -135,7 +135,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/expression-primary-object/migrated_0034/input.js"
 								end: Object {
 									column: 7
 									index: 7

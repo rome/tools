@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
 		end: Object {
 			column: 0
 			index: 33
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
 				end: Object {
 					column: 32
 					index: 32
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
 					end: Object {
 						column: 32
 						index: 32
@@ -88,7 +88,7 @@ JSRoot {
 							value: JSReferenceIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 24
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
 								end: Object {
 									column: 25
 									index: 25
@@ -117,7 +117,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
 							end: Object {
 								column: 30
 								index: 30
@@ -133,7 +133,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
 								end: Object {
 									column: 30
 									index: 30
@@ -156,7 +156,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
 								end: Object {
 									column: 27
 									index: 27
@@ -182,7 +182,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
 								end: Object {
 									column: 25
 									index: 25

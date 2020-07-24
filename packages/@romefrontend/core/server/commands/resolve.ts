@@ -49,7 +49,7 @@ export default createServerCommand({
 		const resolved = await server.resolver.resolveEntryAssert(
 			query,
 			{
-				location: req.getDiagnosticPointerFromFlags({type: "arg", key}),
+				location: req.getDiagnosticLocationFromFlags({type: "arg", key}),
 			},
 		);
 		reporter.logAll(markup`${resolved.ref.real}`);

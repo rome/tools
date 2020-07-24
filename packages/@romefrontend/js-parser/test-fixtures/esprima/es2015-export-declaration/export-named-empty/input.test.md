@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-export-declaration/export-named-empty/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-export-declaration/export-named-empty/input.js"
 		end: Object {
 			column: 0
 			index: 11
@@ -37,7 +37,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/export-named-empty/input.js"
 				end: Object {
 					column: 10
 					index: 10

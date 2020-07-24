@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/43/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/43/input.js"
 		end: Object {
 			column: 32
 			index: 32
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/43/input.js"
 				end: Object {
 					column: 32
 					index: 32
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/43/input.js"
 					end: Object {
 						column: 32
 						index: 32
@@ -64,7 +64,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/43/input.js"
 						identifierName: "x"
 						end: Object {
 							column: 1
@@ -80,7 +80,7 @@ JSRoot {
 				}
 				right: JSObjectExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/43/input.js"
 						end: Object {
 							column: 32
 							index: 32
@@ -100,7 +100,7 @@ JSRoot {
 									value: 10
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "core/uncategorised/43/input.js"
 										end: Object {
 											column: 12
 											index: 12
@@ -114,7 +114,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/43/input.js"
 									end: Object {
 										column: 12
 										index: 12
@@ -128,7 +128,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/43/input.js"
 								end: Object {
 									column: 30
 									index: 30
@@ -149,7 +149,7 @@ JSRoot {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/43/input.js"
 									end: Object {
 										column: 15
 										index: 15
@@ -165,7 +165,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: "w"
 										loc: Object {
-											filename: "input.js"
+											filename: "core/uncategorised/43/input.js"
 											identifierName: "w"
 											end: Object {
 												column: 14
@@ -182,7 +182,7 @@ JSRoot {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "core/uncategorised/43/input.js"
 												end: Object {
 													column: 14
 													index: 14
@@ -201,7 +201,7 @@ JSRoot {
 							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/43/input.js"
 									end: Object {
 										column: 30
 										index: 30
@@ -216,7 +216,7 @@ JSRoot {
 								body: Array [
 									JSExpressionStatement {
 										loc: Object {
-											filename: "input.js"
+											filename: "core/uncategorised/43/input.js"
 											end: Object {
 												column: 28
 												index: 28
@@ -231,7 +231,7 @@ JSRoot {
 										expression: JSAssignmentExpression {
 											operator: "="
 											loc: Object {
-												filename: "input.js"
+												filename: "core/uncategorised/43/input.js"
 												end: Object {
 													column: 28
 													index: 28
@@ -246,7 +246,7 @@ JSRoot {
 											left: JSAssignmentIdentifier {
 												name: "m_null"
 												loc: Object {
-													filename: "input.js"
+													filename: "core/uncategorised/43/input.js"
 													identifierName: "m_null"
 													end: Object {
 														column: 24
@@ -263,7 +263,7 @@ JSRoot {
 											right: JSReferenceIdentifier {
 												name: "w"
 												loc: Object {
-													filename: "input.js"
+													filename: "core/uncategorised/43/input.js"
 													identifierName: "w"
 													end: Object {
 														column: 28

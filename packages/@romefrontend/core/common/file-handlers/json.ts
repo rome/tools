@@ -31,7 +31,7 @@ export const jsonHandler: ExtensionHandler = {
 	async customFormat(
 		info: ExtensionHandlerMethodInfo,
 	): Promise<ExtensionLintResult> {
-		const {file, worker} = info;
+		const {file, mtime, worker} = info;
 		const {uid} = file;
 
 		const real = createAbsoluteFilePath(file.real);
@@ -45,11 +45,13 @@ export const jsonHandler: ExtensionHandler = {
 			parseJSON({
 				path,
 				input: sourceText,
+				mtime,
 			});
 		} else {
 			const {consumer, comments, hasExtensions} = consumeJSONExtra({
 				input: sourceText,
 				path,
+				mtime,
 			});
 
 			if (hasExtensions) {
@@ -60,6 +62,7 @@ export const jsonHandler: ExtensionHandler = {
 		}
 
 		return {
+			mtime,
 			sourceText,
 			diagnostics: [],
 			suppressions: [],
@@ -67,7 +70,7 @@ export const jsonHandler: ExtensionHandler = {
 		};
 	},
 
-	async parse({path, file, worker}) {
+	async parse({mtime, path, file, worker}) {
 		const src = await worker.readFile(file.real);
 
 		// Parse the JSON to make sure it's valid
@@ -82,7 +85,7 @@ export const jsonHandler: ExtensionHandler = {
 
 		return {
 			// Shouldn't error
-			ast: parseJS({input: sourceText, sourceType: "module", path}),
+			ast: parseJS({input: sourceText, mtime, sourceType: "module", path}),
 			sourceText,
 			astModifiedFromSource: true,
 		};

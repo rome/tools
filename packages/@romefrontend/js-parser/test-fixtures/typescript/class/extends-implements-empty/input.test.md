@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/extends-implements-empty/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/extends-implements-empty/input.ts"
 		end: Object {
 			column: 0
 			index: 37
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "implements list cannot be empty"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/class/extends-implements-empty/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/extends-implements-empty/input.ts"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/extends-implements-empty/input.ts"
 				end: Object {
 					column: 1
 					index: 36
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/extends-implements-empty/input.ts"
 					end: Object {
 						column: 1
 						index: 36
@@ -108,7 +108,7 @@ JSRoot {
 				superClass: JSReferenceIdentifier {
 					name: "Bar"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/class/extends-implements-empty/input.ts"
 						identifierName: "Bar"
 						end: Object {
 							column: 21
@@ -132,7 +132,7 @@ JSRoot {
 
 ```
 
- input.ts:1:33 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/class/extends-implements-empty/input.ts:1:33 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ implements list cannot be empty
 

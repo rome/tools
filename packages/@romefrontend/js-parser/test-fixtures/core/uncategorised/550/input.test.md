@@ -10,14 +10,14 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "input.js"
+	filename: "core/uncategorised/550/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/550/input.js"
 		end: Object {
 			column: 0
 			index: 28
@@ -33,7 +33,7 @@ JSRoot {
 		JSDirective {
 			value: "use strict"
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/550/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -56,7 +56,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Legacy octal literals are not allowed in strict mode"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/550/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -75,7 +75,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/550/input.js"
 				end: Object {
 					column: 13
 					index: 27
@@ -90,7 +90,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/550/input.js"
 					end: Object {
 						column: 13
 						index: 27
@@ -107,7 +107,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/550/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 7
@@ -122,7 +122,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/550/input.js"
 							end: Object {
 								column: 12
 								index: 26
@@ -138,7 +138,7 @@ JSRoot {
 							value: 7
 							format: "octal"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/550/input.js"
 								end: Object {
 									column: 12
 									index: 26
@@ -163,7 +163,7 @@ JSRoot {
 
 ```
 
- input.js:2:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/550/input.js:2:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Legacy octal literals are not allowed in strict mode
 

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/yield class/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/yield class/input.js"
 		end: Object {
 			column: 0
 			index: 35
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "bar"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/yield class/input.js"
 					identifierName: "bar"
 					end: Object {
 						column: 13
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/yield class/input.js"
 				end: Object {
 					column: 34
 					index: 34
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/yield class/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/yield class/input.js"
 					end: Object {
 						column: 34
 						index: 34
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/yield class/input.js"
 							end: Object {
 								column: 32
 								index: 32
@@ -119,7 +119,7 @@ JSRoot {
 						expression: JSYieldExpression {
 							delegate: false
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/yield class/input.js"
 								end: Object {
 									column: 32
 									index: 32
@@ -134,7 +134,7 @@ JSRoot {
 							argument: JSClassExpression {
 								id: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/yield class/input.js"
 									end: Object {
 										column: 32
 										index: 32
@@ -153,7 +153,7 @@ JSRoot {
 									superTypeParameters: undefined
 									typeParameters: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/yield/yield class/input.js"
 										end: Object {
 											column: 32
 											index: 32

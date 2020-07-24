@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
 		end: Object {
 			column: 0
 			index: 34
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
 					identifierName: "a"
 					end: Object {
 						column: 10
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
 				end: Object {
 					column: 1
 					index: 33
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
 					end: Object {
 						column: 1
 						index: 33
@@ -128,7 +128,7 @@ JSRoot {
 				body: Array [
 					JSReturnStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
 							end: Object {
 								column: 14
 								index: 29
@@ -143,7 +143,7 @@ JSRoot {
 						argument: JSReferenceIdentifier {
 							name: "await"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
 								identifierName: "await"
 								end: Object {
 									column: 14
@@ -160,7 +160,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
 							end: Object {
 								column: 16
 								index: 31
@@ -176,7 +176,7 @@ JSRoot {
 							value: 1
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
 								end: Object {
 									column: 16
 									index: 31
@@ -201,7 +201,7 @@ JSRoot {
 
 ```
 
- input.js:2:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/allow-await-outside-function-throw/input.js:2:15 parse/js ━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

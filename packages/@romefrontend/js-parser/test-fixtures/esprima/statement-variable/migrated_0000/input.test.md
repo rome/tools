@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/statement-variable/migrated_0000/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/statement-variable/migrated_0000/input.js"
 		end: Object {
 			column: 0
 			index: 6
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/statement-variable/migrated_0000/input.js"
 				end: Object {
 					column: 5
 					index: 5
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-variable/migrated_0000/input.js"
 					end: Object {
 						column: 5
 						index: 5
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/statement-variable/migrated_0000/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 5
@@ -82,7 +82,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/statement-variable/migrated_0000/input.js"
 							end: Object {
 								column: 5
 								index: 5

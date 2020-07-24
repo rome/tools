@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/20/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/20/input.js"
 		end: Object {
 			column: 17
 			index: 17
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/20/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/20/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "ok"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/20/input.js"
 								identifierName: "ok"
 								end: Object {
 									column: 6
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/20/input.js"
 							end: Object {
 								column: 17
 								index: 17
@@ -95,7 +95,7 @@ JSRoot {
 						}
 						init: JSCallExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/20/input.js"
 								end: Object {
 									column: 17
 									index: 17
@@ -110,7 +110,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "async"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/20/input.js"
 									identifierName: "async"
 									end: Object {
 										column: 14
@@ -128,7 +128,7 @@ JSRoot {
 								JSReferenceIdentifier {
 									name: "x"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/async-functions/20/input.js"
 										identifierName: "x"
 										end: Object {
 											column: 16

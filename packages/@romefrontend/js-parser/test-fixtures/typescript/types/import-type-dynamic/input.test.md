@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/import-type-dynamic/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/import-type-dynamic/input.ts"
 		end: Object {
 			column: 0
 			index: 90
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/import-type-dynamic/input.ts"
 				end: Object {
 					column: 28
 					index: 28
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/import-type-dynamic/input.ts"
 					end: Object {
 						column: 28
 						index: 28
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/import-type-dynamic/input.ts"
 								end: Object {
 									column: 27
 									index: 27
@@ -81,7 +81,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/import-type-dynamic/input.ts"
 									end: Object {
 										column: 27
 										index: 27
@@ -95,7 +95,7 @@ JSRoot {
 								}
 								typeAnnotation: TSTypeQuery {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/import-type-dynamic/input.ts"
 										end: Object {
 											column: 27
 											index: 27
@@ -111,7 +111,7 @@ JSRoot {
 										qualifier: undefined
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/import-type-dynamic/input.ts"
 											end: Object {
 												column: 27
 												index: 27
@@ -126,7 +126,7 @@ JSRoot {
 										argument: JSStringLiteral {
 											value: "./x"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/import-type-dynamic/input.ts"
 												end: Object {
 													column: 26
 													index: 26
@@ -145,7 +145,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/import-type-dynamic/input.ts"
 							end: Object {
 								column: 27
 								index: 27
@@ -163,7 +163,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/import-type-dynamic/input.ts"
 				end: Object {
 					column: 23
 					index: 52
@@ -178,7 +178,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/import-type-dynamic/input.ts"
 					end: Object {
 						column: 23
 						index: 52
@@ -195,7 +195,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "Y"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/import-type-dynamic/input.ts"
 								end: Object {
 									column: 22
 									index: 51
@@ -210,7 +210,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/import-type-dynamic/input.ts"
 									end: Object {
 										column: 22
 										index: 51
@@ -225,7 +225,7 @@ JSRoot {
 								typeAnnotation: TSImportType {
 									typeParameters: undefined
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/import-type-dynamic/input.ts"
 										end: Object {
 											column: 22
 											index: 51
@@ -240,7 +240,7 @@ JSRoot {
 									argument: JSStringLiteral {
 										value: "./y"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/import-type-dynamic/input.ts"
 											end: Object {
 												column: 19
 												index: 48
@@ -256,7 +256,7 @@ JSRoot {
 									qualifier: JSReferenceIdentifier {
 										name: "Y"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/import-type-dynamic/input.ts"
 											identifierName: "Y"
 											end: Object {
 												column: 22
@@ -275,7 +275,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/import-type-dynamic/input.ts"
 							end: Object {
 								column: 22
 								index: 51
@@ -293,7 +293,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/import-type-dynamic/input.ts"
 				end: Object {
 					column: 36
 					index: 89
@@ -308,7 +308,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/import-type-dynamic/input.ts"
 					end: Object {
 						column: 36
 						index: 89
@@ -325,7 +325,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "z"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/import-type-dynamic/input.ts"
 								end: Object {
 									column: 35
 									index: 88
@@ -340,7 +340,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/import-type-dynamic/input.ts"
 									end: Object {
 										column: 35
 										index: 88
@@ -354,7 +354,7 @@ JSRoot {
 								}
 								typeAnnotation: TSImportType {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/import-type-dynamic/input.ts"
 										end: Object {
 											column: 35
 											index: 88
@@ -369,7 +369,7 @@ JSRoot {
 									argument: JSStringLiteral {
 										value: "/z"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/import-type-dynamic/input.ts"
 											end: Object {
 												column: 18
 												index: 71
@@ -384,7 +384,7 @@ JSRoot {
 									}
 									typeParameters: TSTypeParameterInstantiation {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/import-type-dynamic/input.ts"
 											end: Object {
 												column: 35
 												index: 88
@@ -399,7 +399,7 @@ JSRoot {
 										params: Array [
 											TSStringKeywordTypeAnnotation {
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/types/import-type-dynamic/input.ts"
 													end: Object {
 														column: 34
 														index: 87
@@ -416,7 +416,7 @@ JSRoot {
 									}
 									qualifier: TSQualifiedName {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/import-type-dynamic/input.ts"
 											end: Object {
 												column: 27
 												index: 80
@@ -431,7 +431,7 @@ JSRoot {
 										left: JSReferenceIdentifier {
 											name: "foo"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/import-type-dynamic/input.ts"
 												identifierName: "foo"
 												end: Object {
 													column: 23
@@ -448,7 +448,7 @@ JSRoot {
 										right: JSIdentifier {
 											name: "bar"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/import-type-dynamic/input.ts"
 												identifierName: "bar"
 												end: Object {
 													column: 27
@@ -468,7 +468,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/import-type-dynamic/input.ts"
 							end: Object {
 								column: 35
 								index: 88

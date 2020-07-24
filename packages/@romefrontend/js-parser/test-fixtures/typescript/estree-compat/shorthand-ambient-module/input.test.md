@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/estree-compat/shorthand-ambient-module/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/estree-compat/shorthand-ambient-module/input.ts"
 		end: Object {
 			column: 32
 			index: 32
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSStringLiteral {
 				value: "hot-new-module"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/estree-compat/shorthand-ambient-module/input.ts"
 					end: Object {
 						column: 31
 						index: 31
@@ -53,7 +53,7 @@ JSRoot {
 			declare: true
 			global: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/estree-compat/shorthand-ambient-module/input.ts"
 				end: Object {
 					column: 32
 					index: 32

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/332/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/332/input.js"
 		end: Object {
 			column: 6
 			index: 10
@@ -35,7 +35,7 @@ JSRoot {
 		JSBlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/332/input.js"
 				end: Object {
 					column: 6
 					index: 10
@@ -52,7 +52,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/332/input.js"
 						end: Object {
 							column: 3
 							index: 3
@@ -67,7 +67,7 @@ JSRoot {
 				}
 				JSExpressionStatement {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/332/input.js"
 						end: Object {
 							column: 5
 							index: 9
@@ -87,7 +87,7 @@ JSRoot {
 						sticky: false
 						unicode: false
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/332/input.js"
 							end: Object {
 								column: 5
 								index: 9
@@ -101,7 +101,7 @@ JSRoot {
 						}
 						expression: JSRegExpSubExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/332/input.js"
 								end: Object {
 									column: 4
 									index: 8
@@ -117,7 +117,7 @@ JSRoot {
 								JSRegExpCharacter {
 									value: "f"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/uncategorised/332/input.js"
 										end: Object {
 											column: 2
 											index: 6
@@ -133,7 +133,7 @@ JSRoot {
 								JSRegExpCharacter {
 									value: "o"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/uncategorised/332/input.js"
 										end: Object {
 											column: 3
 											index: 7
@@ -149,7 +149,7 @@ JSRoot {
 								JSRegExpCharacter {
 									value: "o"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/uncategorised/332/input.js"
 										end: Object {
 											column: 4
 											index: 8

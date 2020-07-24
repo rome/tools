@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSSequenceExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -88,7 +88,7 @@ JSRoot {
 					JSAssignmentExpression {
 						operator: "="
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 							end: Object {
 								column: 7
 								index: 7
@@ -103,7 +103,7 @@ JSRoot {
 						right: JSReferenceIdentifier {
 							name: "b"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 								identifierName: "b"
 								end: Object {
 									column: 7
@@ -120,7 +120,7 @@ JSRoot {
 						left: JSAssignmentObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 								end: Object {
 									column: 5
 									index: 5
@@ -138,7 +138,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "a"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 												identifierName: "a"
 												end: Object {
 													column: 3
@@ -153,7 +153,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 											end: Object {
 												column: 3
 												index: 3
@@ -169,7 +169,7 @@ JSRoot {
 									value: JSAssignmentIdentifier {
 										name: "a"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 											identifierName: "a"
 											end: Object {
 												column: 3
@@ -184,7 +184,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 										end: Object {
 											column: 3
 											index: 3
@@ -202,7 +202,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "b"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 												identifierName: "b"
 												end: Object {
 													column: 5
@@ -217,7 +217,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 											end: Object {
 												column: 5
 												index: 5
@@ -233,7 +233,7 @@ JSRoot {
 									value: JSAssignmentIdentifier {
 										name: "b"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 											identifierName: "b"
 											end: Object {
 												column: 5
@@ -248,7 +248,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 										end: Object {
 											column: 5
 											index: 5
@@ -267,7 +267,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 9
@@ -283,7 +283,7 @@ JSRoot {
 					}
 					JSArrayExpression {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 							end: Object {
 								column: 15
 								index: 15
@@ -299,7 +299,7 @@ JSRoot {
 							JSReferenceIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 14
@@ -320,7 +320,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -335,7 +335,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -351,7 +351,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -366,7 +366,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -382,7 +382,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -397,7 +397,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -413,7 +413,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -429,7 +429,7 @@ JSRoot {
 				value: 0
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -451,7 +451,7 @@ JSRoot {
 
 ```
 
- input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-arrow-function/object-binding-pattern-01/input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ,
 

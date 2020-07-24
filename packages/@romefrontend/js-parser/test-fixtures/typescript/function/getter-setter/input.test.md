@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/function/getter-setter/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/function/getter-setter/input.ts"
 		end: Object {
 			column: 2
 			index: 78
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/function/getter-setter/input.ts"
 				end: Object {
 					column: 2
 					index: 35
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/function/getter-setter/input.ts"
 					end: Object {
 						column: 2
 						index: 35
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "g"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/getter-setter/input.ts"
 								identifierName: "g"
 								end: Object {
 									column: 7
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/function/getter-setter/input.ts"
 							end: Object {
 								column: 1
 								index: 34
@@ -95,7 +95,7 @@ JSRoot {
 						}
 						init: JSObjectExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/getter-setter/input.ts"
 								end: Object {
 									column: 1
 									index: 34
@@ -114,7 +114,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "m"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/function/getter-setter/input.ts"
 												identifierName: "m"
 												end: Object {
 													column: 7
@@ -129,7 +129,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/function/getter-setter/input.ts"
 											end: Object {
 												column: 7
 												index: 19
@@ -143,7 +143,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/function/getter-setter/input.ts"
 										end: Object {
 											column: 20
 											index: 32
@@ -159,7 +159,7 @@ JSRoot {
 										body: Array []
 										directives: Array []
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/function/getter-setter/input.ts"
 											end: Object {
 												column: 20
 												index: 32
@@ -181,7 +181,7 @@ JSRoot {
 										returnType: undefined
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/function/getter-setter/input.ts"
 											end: Object {
 												column: 17
 												index: 29
@@ -196,7 +196,7 @@ JSRoot {
 										thisType: JSBindingIdentifier {
 											name: "this"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/function/getter-setter/input.ts"
 												identifierName: "this"
 												end: Object {
 													column: 12
@@ -212,7 +212,7 @@ JSRoot {
 											meta: JSPatternMeta {
 												optional: undefined
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/function/getter-setter/input.ts"
 													end: Object {
 														column: 16
 														index: 28
@@ -227,7 +227,7 @@ JSRoot {
 												typeAnnotation: TSObjectTypeAnnotation {
 													members: Array []
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/function/getter-setter/input.ts"
 														end: Object {
 															column: 16
 															index: 28
@@ -252,7 +252,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/function/getter-setter/input.ts"
 				end: Object {
 					column: 2
 					index: 78
@@ -267,7 +267,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/function/getter-setter/input.ts"
 					end: Object {
 						column: 2
 						index: 78
@@ -284,7 +284,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "s"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/getter-setter/input.ts"
 								identifierName: "s"
 								end: Object {
 									column: 7
@@ -299,7 +299,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/function/getter-setter/input.ts"
 							end: Object {
 								column: 1
 								index: 77
@@ -313,7 +313,7 @@ JSRoot {
 						}
 						init: JSObjectExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/getter-setter/input.ts"
 								end: Object {
 									column: 1
 									index: 77
@@ -332,7 +332,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "m"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/function/getter-setter/input.ts"
 												identifierName: "m"
 												end: Object {
 													column: 7
@@ -347,7 +347,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/function/getter-setter/input.ts"
 											end: Object {
 												column: 7
 												index: 55
@@ -361,7 +361,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/function/getter-setter/input.ts"
 										end: Object {
 											column: 27
 											index: 75
@@ -377,7 +377,7 @@ JSRoot {
 										body: Array []
 										directives: Array []
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/function/getter-setter/input.ts"
 											end: Object {
 												column: 27
 												index: 75
@@ -398,7 +398,7 @@ JSRoot {
 										returnType: undefined
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/function/getter-setter/input.ts"
 											end: Object {
 												column: 24
 												index: 72
@@ -414,7 +414,7 @@ JSRoot {
 											JSBindingIdentifier {
 												name: "value"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/function/getter-setter/input.ts"
 													identifierName: "value"
 													end: Object {
 														column: 23
@@ -431,7 +431,7 @@ JSRoot {
 													optional: undefined
 													typeAnnotation: undefined
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/function/getter-setter/input.ts"
 														end: Object {
 															column: 23
 															index: 71
@@ -449,7 +449,7 @@ JSRoot {
 										thisType: JSBindingIdentifier {
 											name: "this"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/function/getter-setter/input.ts"
 												identifierName: "this"
 												end: Object {
 													column: 12
@@ -465,7 +465,7 @@ JSRoot {
 											meta: JSPatternMeta {
 												optional: undefined
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/function/getter-setter/input.ts"
 													end: Object {
 														column: 16
 														index: 64
@@ -480,7 +480,7 @@ JSRoot {
 												typeAnnotation: TSObjectTypeAnnotation {
 													members: Array []
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/function/getter-setter/input.ts"
 														end: Object {
 															column: 16
 															index: 64

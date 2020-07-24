@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/directive-prolog/migrated_0000/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/directive-prolog/migrated_0000/input.js"
 		end: Object {
 			column: 0
 			index: 47
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/directive-prolog/migrated_0000/input.js"
 				end: Object {
 					column: 46
 					index: 46
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/directive-prolog/migrated_0000/input.js"
 					end: Object {
 						column: 45
 						index: 45
@@ -64,7 +64,7 @@ JSRoot {
 				callee: JSFunctionExpression {
 					id: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/directive-prolog/migrated_0000/input.js"
 						end: Object {
 							column: 43
 							index: 43
@@ -86,7 +86,7 @@ JSRoot {
 						thisType: undefined
 						typeParameters: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/directive-prolog/migrated_0000/input.js"
 							end: Object {
 								column: 12
 								index: 12
@@ -101,7 +101,7 @@ JSRoot {
 					}
 					body: JSBlockStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/directive-prolog/migrated_0000/input.js"
 							end: Object {
 								column: 43
 								index: 43
@@ -117,7 +117,7 @@ JSRoot {
 							JSDirective {
 								value: "use\\x20strict"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/directive-prolog/migrated_0000/input.js"
 									end: Object {
 										column: 31
 										index: 31
@@ -134,7 +134,7 @@ JSRoot {
 						body: Array [
 							JSWithStatement {
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/directive-prolog/migrated_0000/input.js"
 									end: Object {
 										column: 41
 										index: 41
@@ -148,7 +148,7 @@ JSRoot {
 								}
 								body: JSEmptyStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/directive-prolog/migrated_0000/input.js"
 										end: Object {
 											column: 41
 											index: 41
@@ -164,7 +164,7 @@ JSRoot {
 								object: JSReferenceIdentifier {
 									name: "i"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/directive-prolog/migrated_0000/input.js"
 										identifierName: "i"
 										end: Object {
 											column: 39

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-names-duplicated/static-get-instance-field/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-names-duplicated/static-get-instance-field/input.js"
 		end: Object {
 			column: 1
 			index: 42
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-names-duplicated/static-get-instance-field/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-names-duplicated/static-get-instance-field/input.js"
 				end: Object {
 					column: 1
 					index: 42
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-names-duplicated/static-get-instance-field/input.js"
 					end: Object {
 						column: 1
 						index: 42
@@ -88,7 +88,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-names-duplicated/static-get-instance-field/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 15
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/static-get-instance-field/input.js"
 								end: Object {
 									column: 15
 									index: 25
@@ -117,7 +117,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-names-duplicated/static-get-instance-field/input.js"
 							end: Object {
 								column: 20
 								index: 30
@@ -133,7 +133,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/static-get-instance-field/input.js"
 								end: Object {
 									column: 20
 									index: 30
@@ -156,7 +156,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/static-get-instance-field/input.js"
 								end: Object {
 									column: 17
 									index: 27
@@ -182,7 +182,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/static-get-instance-field/input.js"
 								end: Object {
 									column: 15
 									index: 25
@@ -201,7 +201,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-names-duplicated/static-get-instance-field/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 4
@@ -216,7 +216,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/static-get-instance-field/input.js"
 								end: Object {
 									column: 4
 									index: 35
@@ -233,7 +233,7 @@ JSRoot {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/static-get-instance-field/input.js"
 								end: Object {
 									column: 8
 									index: 39
@@ -248,7 +248,7 @@ JSRoot {
 						}
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-names-duplicated/static-get-instance-field/input.js"
 							end: Object {
 								column: 9
 								index: 40
@@ -273,7 +273,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/static-get-instance-field/input.js"
 								end: Object {
 									column: 4
 									index: 35

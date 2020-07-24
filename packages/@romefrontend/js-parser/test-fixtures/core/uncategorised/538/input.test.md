@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/538/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/538/input.js"
 		end: Object {
 			column: 1
 			index: 6
@@ -34,7 +34,7 @@ JSRoot {
 		JSEmptyStatement {
 			leadingComments: Array ["0"]
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/538/input.js"
 				end: Object {
 					column: 1
 					index: 6
@@ -53,7 +53,7 @@ JSRoot {
 			id: "0"
 			value: ""
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/538/input.js"
 				end: Object {
 					column: 4
 					index: 4

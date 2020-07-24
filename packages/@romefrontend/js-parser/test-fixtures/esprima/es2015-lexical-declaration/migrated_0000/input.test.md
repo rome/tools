@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-lexical-declaration/migrated_0000/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-lexical-declaration/migrated_0000/input.js"
 		end: Object {
 			column: 0
 			index: 48
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSSwitchStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-lexical-declaration/migrated_0000/input.js"
 				end: Object {
 					column: 47
 					index: 47
@@ -49,7 +49,7 @@ JSRoot {
 			discriminant: JSReferenceIdentifier {
 				name: "answer"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-lexical-declaration/migrated_0000/input.js"
 					identifierName: "answer"
 					end: Object {
 						column: 14
@@ -66,7 +66,7 @@ JSRoot {
 			cases: Array [
 				JSSwitchCase {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-lexical-declaration/migrated_0000/input.js"
 						end: Object {
 							column: 45
 							index: 45
@@ -82,7 +82,7 @@ JSRoot {
 						value: 42
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-lexical-declaration/migrated_0000/input.js"
 							end: Object {
 								column: 25
 								index: 25
@@ -98,7 +98,7 @@ JSRoot {
 					consequent: Array [
 						JSVariableDeclarationStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-lexical-declaration/migrated_0000/input.js"
 								end: Object {
 									column: 38
 									index: 38
@@ -113,7 +113,7 @@ JSRoot {
 							declaration: JSVariableDeclaration {
 								kind: "let"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-lexical-declaration/migrated_0000/input.js"
 									end: Object {
 										column: 38
 										index: 38
@@ -130,7 +130,7 @@ JSRoot {
 										id: JSBindingIdentifier {
 											name: "t"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-lexical-declaration/migrated_0000/input.js"
 												identifierName: "t"
 												end: Object {
 													column: 32
@@ -145,7 +145,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-lexical-declaration/migrated_0000/input.js"
 											end: Object {
 												column: 37
 												index: 37
@@ -161,7 +161,7 @@ JSRoot {
 											value: 42
 											format: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-lexical-declaration/migrated_0000/input.js"
 												end: Object {
 													column: 37
 													index: 37
@@ -181,7 +181,7 @@ JSRoot {
 						JSBreakStatement {
 							label: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-lexical-declaration/migrated_0000/input.js"
 								end: Object {
 									column: 45
 									index: 45

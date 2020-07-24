@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/364/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/364/input.js"
 		end: Object {
 			column: 0
 			index: 20
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "await"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/364/input.js"
 					identifierName: "await"
 					end: Object {
 						column: 14
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/364/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/364/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -90,7 +90,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/364/input.js"
 					end: Object {
 						column: 16
 						index: 16

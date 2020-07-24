@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/top-level-await/for-await-module/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/top-level-await/for-await-module/input.js"
 		end: Object {
 			column: 25
 			index: 25
@@ -35,7 +35,7 @@ JSRoot {
 		JSForOfStatement {
 			await: true
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/top-level-await/for-await-module/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -49,7 +49,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/top-level-await/for-await-module/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -65,7 +65,7 @@ JSRoot {
 			right: JSReferenceIdentifier {
 				name: "b"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/top-level-await/for-await-module/input.js"
 					identifierName: "b"
 					end: Object {
 						column: 23
@@ -82,7 +82,7 @@ JSRoot {
 			left: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/top-level-await/for-await-module/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -99,7 +99,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/top-level-await/for-await-module/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 18
@@ -115,7 +115,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/top-level-await/for-await-module/input.js"
 							end: Object {
 								column: 18
 								index: 18

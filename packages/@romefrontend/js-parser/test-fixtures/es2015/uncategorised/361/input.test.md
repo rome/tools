@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/361/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/361/input.js"
 		end: Object {
 			column: 0
 			index: 25
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Can not use 'await' as identifier inside an async function"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/361/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/361/input.js"
 				end: Object {
 					column: 24
 					index: 24
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/361/input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/361/input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -108,7 +108,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "await"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/uncategorised/361/input.js"
 												identifierName: "await"
 												end: Object {
 													column: 13
@@ -123,7 +123,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/361/input.js"
 											end: Object {
 												column: 13
 												index: 13
@@ -139,7 +139,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "await"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/361/input.js"
 											identifierName: "await"
 											end: Object {
 												column: 13
@@ -154,7 +154,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/361/input.js"
 										end: Object {
 											column: 13
 											index: 13
@@ -170,7 +170,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/361/input.js"
 							end: Object {
 								column: 23
 								index: 23
@@ -185,7 +185,7 @@ JSRoot {
 						init: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/361/input.js"
 								end: Object {
 									column: 23
 									index: 23
@@ -200,7 +200,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/361/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 21
@@ -227,7 +227,7 @@ JSRoot {
 
 ```
 
- input.js:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/361/input.js:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Can not use 'await' as identifier inside an async function
 

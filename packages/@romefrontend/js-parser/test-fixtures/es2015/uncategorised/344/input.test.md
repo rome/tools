@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/344/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/344/input.js"
 		end: Object {
 			column: 5
 			index: 5
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "super is only allowed in object methods and classes"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/344/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/344/input.js"
 				end: Object {
 					column: 5
 					index: 5
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSSuper {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/344/input.js"
 					end: Object {
 						column: 5
 						index: 5
@@ -94,7 +94,7 @@ JSRoot {
 
 ```
 
- input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/344/input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ super is only allowed in object methods and classes
 

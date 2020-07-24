@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-names-duplicated/static-set-instance-get/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-names-duplicated/static-set-instance-get/input.js"
 		end: Object {
 			column: 1
 			index: 47
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-names-duplicated/static-set-instance-get/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-names-duplicated/static-set-instance-get/input.js"
 				end: Object {
 					column: 1
 					index: 47
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-names-duplicated/static-set-instance-get/input.js"
 					end: Object {
 						column: 1
 						index: 47
@@ -88,7 +88,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-names-duplicated/static-set-instance-get/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 15
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/static-set-instance-get/input.js"
 								end: Object {
 									column: 15
 									index: 25
@@ -117,7 +117,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-names-duplicated/static-set-instance-get/input.js"
 							end: Object {
 								column: 21
 								index: 31
@@ -133,7 +133,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/static-set-instance-get/input.js"
 								end: Object {
 									column: 21
 									index: 31
@@ -159,7 +159,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/static-set-instance-get/input.js"
 								end: Object {
 									column: 15
 									index: 25
@@ -181,7 +181,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/static-set-instance-get/input.js"
 								end: Object {
 									column: 18
 									index: 28
@@ -197,7 +197,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "_"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-names-duplicated/static-set-instance-get/input.js"
 										identifierName: "_"
 										end: Object {
 											column: 17
@@ -214,7 +214,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-names-duplicated/static-set-instance-get/input.js"
 											end: Object {
 												column: 17
 												index: 27
@@ -237,7 +237,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-names-duplicated/static-set-instance-get/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 8
@@ -252,7 +252,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/static-set-instance-get/input.js"
 								end: Object {
 									column: 8
 									index: 40
@@ -266,7 +266,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-names-duplicated/static-set-instance-get/input.js"
 							end: Object {
 								column: 13
 								index: 45
@@ -282,7 +282,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/static-set-instance-get/input.js"
 								end: Object {
 									column: 13
 									index: 45
@@ -305,7 +305,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/static-set-instance-get/input.js"
 								end: Object {
 									column: 10
 									index: 42
@@ -331,7 +331,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/static-set-instance-get/input.js"
 								end: Object {
 									column: 8
 									index: 40

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 		end: Object {
 			column: 1
 			index: 45
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 12
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 				end: Object {
 					column: 1
 					index: 45
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 					end: Object {
 						column: 1
 						index: 45
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 							end: Object {
 								column: 26
 								index: 43
@@ -118,7 +118,7 @@ JSRoot {
 						}
 						expression: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 								end: Object {
 									column: 25
 									index: 42
@@ -138,7 +138,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 									end: Object {
 										column: 7
 										index: 24
@@ -153,7 +153,7 @@ JSRoot {
 							}
 							body: JSArrowFunctionExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 									end: Object {
 										column: 25
 										index: 42
@@ -169,7 +169,7 @@ JSRoot {
 									body: Array []
 									directives: Array []
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 										end: Object {
 											column: 25
 											index: 42
@@ -189,7 +189,7 @@ JSRoot {
 									returnType: undefined
 									thisType: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 										end: Object {
 											column: 22
 											index: 39
@@ -205,7 +205,7 @@ JSRoot {
 										JSBindingAssignmentPattern {
 											operator: "="
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 												end: Object {
 													column: 18
 													index: 35
@@ -220,7 +220,7 @@ JSRoot {
 											left: JSBindingIdentifier {
 												name: "x"
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 													identifierName: "x"
 													end: Object {
 														column: 10
@@ -237,7 +237,7 @@ JSRoot {
 											right: JSReferenceIdentifier {
 												name: "yield"
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 													identifierName: "yield"
 													end: Object {
 														column: 18

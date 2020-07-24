@@ -9,10 +9,10 @@ MarkdownRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "input.md"
+	filename: "smoke/input.md"
 	mtime: undefined
 	loc: Object {
-		filename: "input.md"
+		filename: "smoke/input.md"
 		end: Object {
 			column: 3
 			index: 146
@@ -29,7 +29,7 @@ MarkdownRoot {
 			value: "Title"
 			level: 1
 			loc: Object {
-				filename: "input.md"
+				filename: "smoke/input.md"
 				end: Object {
 					column: 7
 					index: 7
@@ -46,7 +46,7 @@ MarkdownRoot {
 			value: "Title"
 			level: 2
 			loc: Object {
-				filename: "input.md"
+				filename: "smoke/input.md"
 				end: Object {
 					column: 8
 					index: 16
@@ -63,7 +63,7 @@ MarkdownRoot {
 			value: "Title"
 			level: 3
 			loc: Object {
-				filename: "input.md"
+				filename: "smoke/input.md"
 				end: Object {
 					column: 9
 					index: 26
@@ -80,7 +80,7 @@ MarkdownRoot {
 			value: "Title"
 			level: 4
 			loc: Object {
-				filename: "input.md"
+				filename: "smoke/input.md"
 				end: Object {
 					column: 10
 					index: 37
@@ -97,7 +97,7 @@ MarkdownRoot {
 			value: "Title"
 			level: 5
 			loc: Object {
-				filename: "input.md"
+				filename: "smoke/input.md"
 				end: Object {
 					column: 11
 					index: 49
@@ -114,7 +114,7 @@ MarkdownRoot {
 			value: "Title"
 			level: 6
 			loc: Object {
-				filename: "input.md"
+				filename: "smoke/input.md"
 				end: Object {
 					column: 12
 					index: 62
@@ -129,7 +129,7 @@ MarkdownRoot {
 		}
 		MarkdownParagraph {
 			loc: Object {
-				filename: "input.md"
+				filename: "smoke/input.md"
 				end: Object {
 					column: 0
 					index: 96
@@ -145,7 +145,7 @@ MarkdownRoot {
 				MarkdownText {
 					value: "####### this will be a paragraph"
 					loc: Object {
-						filename: "input.md"
+						filename: "smoke/input.md"
 						end: Object {
 							column: 32
 							index: 95
@@ -161,7 +161,7 @@ MarkdownRoot {
 				MarkdownText {
 					value: "\n"
 					loc: Object {
-						filename: "input.md"
+						filename: "smoke/input.md"
 						end: Object {
 							column: 32
 							index: 95
@@ -179,7 +179,7 @@ MarkdownRoot {
 		MarkdownDividerBlock {
 			value: "___"
 			loc: Object {
-				filename: "input.md"
+				filename: "smoke/input.md"
 				end: Object {
 					column: 3
 					index: 99
@@ -195,7 +195,7 @@ MarkdownRoot {
 		MarkdownListBlock {
 			ordered: true
 			loc: Object {
-				filename: "input.md"
+				filename: "smoke/input.md"
 				end: Object {
 					column: 0
 					index: 129
@@ -212,7 +212,7 @@ MarkdownRoot {
 					value: undefined
 					checked: undefined
 					loc: Object {
-						filename: "input.md"
+						filename: "smoke/input.md"
 						end: Object {
 							column: 0
 							index: 114
@@ -227,7 +227,7 @@ MarkdownRoot {
 					children: Array [
 						MarkdownParagraph {
 							loc: Object {
-								filename: "input.md"
+								filename: "smoke/input.md"
 								end: Object {
 									column: 0
 									index: 114
@@ -243,7 +243,7 @@ MarkdownRoot {
 								MarkdownText {
 									value: "first item"
 									loc: Object {
-										filename: "input.md"
+										filename: "smoke/input.md"
 										end: Object {
 											column: 13
 											index: 113
@@ -264,7 +264,7 @@ MarkdownRoot {
 					value: undefined
 					checked: undefined
 					loc: Object {
-						filename: "input.md"
+						filename: "smoke/input.md"
 						end: Object {
 							column: 0
 							index: 129
@@ -279,7 +279,7 @@ MarkdownRoot {
 					children: Array [
 						MarkdownParagraph {
 							loc: Object {
-								filename: "input.md"
+								filename: "smoke/input.md"
 								end: Object {
 									column: 0
 									index: 129
@@ -295,7 +295,7 @@ MarkdownRoot {
 								MarkdownText {
 									value: "second item"
 									loc: Object {
-										filename: "input.md"
+										filename: "smoke/input.md"
 										end: Object {
 											column: 14
 											index: 128
@@ -317,7 +317,7 @@ MarkdownRoot {
 		MarkdownDividerBlock {
 			value: "---"
 			loc: Object {
-				filename: "input.md"
+				filename: "smoke/input.md"
 				end: Object {
 					column: 3
 					index: 132
@@ -332,7 +332,7 @@ MarkdownRoot {
 		}
 		MarkdownParagraph {
 			loc: Object {
-				filename: "input.md"
+				filename: "smoke/input.md"
 				end: Object {
 					column: 0
 					index: 143
@@ -348,7 +348,7 @@ MarkdownRoot {
 				MarkdownText {
 					value: "Paragraph"
 					loc: Object {
-						filename: "input.md"
+						filename: "smoke/input.md"
 						end: Object {
 							column: 9
 							index: 142
@@ -364,7 +364,7 @@ MarkdownRoot {
 				MarkdownText {
 					value: "\n"
 					loc: Object {
-						filename: "input.md"
+						filename: "smoke/input.md"
 						end: Object {
 							column: 9
 							index: 142
@@ -382,7 +382,7 @@ MarkdownRoot {
 		MarkdownDividerBlock {
 			value: "***"
 			loc: Object {
-				filename: "input.md"
+				filename: "smoke/input.md"
 				end: Object {
 					column: 3
 					index: 146

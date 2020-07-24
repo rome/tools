@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0254/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0254/input.js"
 		end: Object {
 			column: 0
 			index: 6
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0254/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0254/input.js"
 				end: Object {
 					column: 0
 					index: 6
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0254/input.js"
 					end: Object {
 						column: 0
 						index: 6
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: ""
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0254/input.js"
 								identifierName: ""
 								end: Object {
 									column: 0
@@ -106,7 +106,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0254/input.js"
 							end: Object {
 								column: 0
 								index: 6
@@ -130,7 +130,7 @@ JSRoot {
 
 ```
 
- input.js:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0254/input.js:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
 

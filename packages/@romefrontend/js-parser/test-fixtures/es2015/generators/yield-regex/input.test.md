@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/generators/yield-regex/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/generators/yield-regex/input.js"
 		end: Object {
 			column: 0
 			index: 29
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/generators/yield-regex/input.js"
 					identifierName: "x"
 					end: Object {
 						column: 11
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/generators/yield-regex/input.js"
 				end: Object {
 					column: 28
 					index: 28
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/generators/yield-regex/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/generators/yield-regex/input.js"
 					end: Object {
 						column: 28
 						index: 28
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/generators/yield-regex/input.js"
 							end: Object {
 								column: 26
 								index: 26
@@ -119,7 +119,7 @@ JSRoot {
 						expression: JSYieldExpression {
 							delegate: true
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/generators/yield-regex/input.js"
 								end: Object {
 									column: 26
 									index: 26
@@ -139,7 +139,7 @@ JSRoot {
 								sticky: false
 								unicode: false
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/generators/yield-regex/input.js"
 									end: Object {
 										column: 26
 										index: 26
@@ -153,7 +153,7 @@ JSRoot {
 								}
 								expression: JSRegExpSubExpression {
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/generators/yield-regex/input.js"
 										end: Object {
 											column: 25
 											index: 25
@@ -169,7 +169,7 @@ JSRoot {
 										JSRegExpCharacter {
 											value: "z"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/generators/yield-regex/input.js"
 												end: Object {
 													column: 25
 													index: 25

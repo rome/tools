@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/400/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/400/input.js"
 		end: Object {
 			column: 20
 			index: 20
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected keyword null"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/400/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "t"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/400/input.js"
 					identifierName: "t"
 					end: Object {
 						column: 10
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/400/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -91,7 +91,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/400/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -113,7 +113,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/400/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -129,7 +129,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "null"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/400/input.js"
 							identifierName: "null"
 							end: Object {
 								column: 15
@@ -146,7 +146,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/400/input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -171,7 +171,7 @@ JSRoot {
 
 ```
 
- input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/400/input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected keyword null
 

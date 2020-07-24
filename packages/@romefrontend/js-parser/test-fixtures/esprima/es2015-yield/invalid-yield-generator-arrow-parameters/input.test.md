@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js"
 		end: Object {
 			column: 0
 			index: 40
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "yield is not allowed in generator parameters"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js"
 					identifierName: "g"
 					end: Object {
 						column: 11
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js"
 				end: Object {
 					column: 39
 					index: 39
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js"
 					end: Object {
 						column: 39
 						index: 39
@@ -128,7 +128,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js"
 							end: Object {
 								column: 37
 								index: 37
@@ -142,7 +142,7 @@ JSRoot {
 						}
 						expression: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js"
 								end: Object {
 									column: 37
 									index: 37
@@ -158,7 +158,7 @@ JSRoot {
 								value: 42
 								format: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js"
 									end: Object {
 										column: 37
 										index: 37
@@ -178,7 +178,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js"
 									end: Object {
 										column: 34
 										index: 34
@@ -194,7 +194,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: "a"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js"
 											identifierName: "a"
 											end: Object {
 												column: 17
@@ -211,7 +211,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: "b"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js"
 											identifierName: "b"
 											end: Object {
 												column: 20
@@ -228,7 +228,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: "c"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js"
 											identifierName: "c"
 											end: Object {
 												column: 23
@@ -245,7 +245,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js"
 											end: Object {
 												column: 34
 												index: 34
@@ -273,7 +273,7 @@ JSRoot {
 
 ```
 
- input.js:1:30 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js:1:30 parse/js ━━━━━━━━━━━━━━
 
   ✖ yield is not allowed in generator parameters
 

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-arrow-function/migrated_0015/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-arrow-function/migrated_0015/input.js"
 		end: Object {
 			column: 0
 			index: 9
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/migrated_0015/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-arrow-function/migrated_0015/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -63,7 +63,7 @@ JSRoot {
 				body: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/migrated_0015/input.js"
 						identifierName: "x"
 						end: Object {
 							column: 7
@@ -83,7 +83,7 @@ JSRoot {
 					rest: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/migrated_0015/input.js"
 						end: Object {
 							column: 5
 							index: 5
@@ -99,7 +99,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-arrow-function/migrated_0015/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 2

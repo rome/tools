@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/export-async/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/export-async/input.js"
 		end: Object {
 			column: 0
 			index: 14
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Started with `export async` so we expected to receive an async function but no function keyword was found"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/export-async/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -61,7 +61,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/export-async/input.js"
 				end: Object {
 					column: 6
 					index: 6
@@ -76,7 +76,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/export-async/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -91,7 +91,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "async"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/export-async/input.js"
 					identifierName: "async"
 					end: Object {
 						column: 12
@@ -114,7 +114,7 @@ JSRoot {
 
 ```
 
- input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/export-async/input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Started with `export async` so we expected to receive an async function but no function
     keyword was found

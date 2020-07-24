@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"
 		end: Object {
 			column: 0
 			index: 20
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected keyword as"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -61,7 +61,7 @@ JSRoot {
 			importKind: undefined
 			namedSpecifiers: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -76,7 +76,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: ""
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -91,7 +91,7 @@ JSRoot {
 			}
 			namespaceSpecifier: JSImportNamespaceSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -107,7 +107,7 @@ JSRoot {
 					name: JSBindingIdentifier {
 						name: "from"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"
 							identifierName: "from"
 							end: Object {
 								column: 13
@@ -123,7 +123,7 @@ JSRoot {
 					}
 					importKind: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -140,7 +140,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -155,7 +155,7 @@ JSRoot {
 			expression: JSStringLiteral {
 				value: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -177,7 +177,7 @@ JSRoot {
 
 ```
 
- input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js:1:9 parse/js ━━━━━━━
 
   ✖ Expected keyword as
 

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0142/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0142/input.js"
 		end: Object {
 			column: 0
 			index: 22
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Lexical declaration cannot appear in a single-statement context"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0142/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -59,7 +59,7 @@ JSRoot {
 		JSIfStatement {
 			alternate: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0142/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -74,7 +74,7 @@ JSRoot {
 			test: JSBooleanLiteral {
 				value: true
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0142/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -89,7 +89,7 @@ JSRoot {
 			}
 			consequent: JSVariableDeclarationStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0142/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -104,7 +104,7 @@ JSRoot {
 				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0142/input.js"
 						end: Object {
 							column: 21
 							index: 21
@@ -121,7 +121,7 @@ JSRoot {
 							id: JSBindingIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/invalid-syntax/migrated_0142/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 16
@@ -136,7 +136,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0142/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -152,7 +152,7 @@ JSRoot {
 								value: 1
 								format: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/invalid-syntax/migrated_0142/input.js"
 									end: Object {
 										column: 20
 										index: 20
@@ -178,7 +178,7 @@ JSRoot {
 
 ```
 
- input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0142/input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Lexical declaration cannot appear in a single-statement context
 

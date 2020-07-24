@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/let/let-at-binding-list-fail-6/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/let/let-at-binding-list-fail-6/input.js"
 		end: Object {
 			column: 0
 			index: 15
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/let/let-at-binding-list-fail-6/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/let/let-at-binding-list-fail-6/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "let"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/let/let-at-binding-list-fail-6/input.js"
 								identifierName: "let"
 								end: Object {
 									column: 9
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/let/let-at-binding-list-fail-6/input.js"
 							end: Object {
 								column: 14
 								index: 14
@@ -96,7 +96,7 @@ JSRoot {
 						init: JSStringLiteral {
 							value: ""
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/let/let-at-binding-list-fail-6/input.js"
 								end: Object {
 									column: 14
 									index: 14

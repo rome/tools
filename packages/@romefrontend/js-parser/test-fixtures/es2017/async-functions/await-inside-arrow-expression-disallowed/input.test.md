@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
 		end: Object {
 			column: 17
 			index: 17
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -92,7 +92,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
 						end: Object {
 							column: 5
 							index: 5
@@ -108,7 +108,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -123,7 +123,7 @@ JSRoot {
 					body: Array [
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
 								end: Object {
 									column: 13
 									index: 13
@@ -138,7 +138,7 @@ JSRoot {
 							expression: JSReferenceIdentifier {
 								name: "await"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
 									identifierName: "await"
 									end: Object {
 										column: 13
@@ -155,7 +155,7 @@ JSRoot {
 						}
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -170,7 +170,7 @@ JSRoot {
 							expression: JSReferenceIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/await-inside-arrow-expression-disallowed/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 15
@@ -197,7 +197,7 @@ JSRoot {
 
 ```
 
- input.js:1:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/await-inside-arrow-expression-disallowed/input.js:1:14 parse/js ━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

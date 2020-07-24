@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-export-declaration/export-var-anonymous-function/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-export-declaration/export-var-anonymous-function/input.js"
 		end: Object {
 			column: 0
 			index: 33
@@ -36,7 +36,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/export-var-anonymous-function/input.js"
 				end: Object {
 					column: 32
 					index: 32
@@ -50,7 +50,7 @@ JSRoot {
 			}
 			declaration: JSVariableDeclarationStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-export-declaration/export-var-anonymous-function/input.js"
 					end: Object {
 						column: 32
 						index: 32
@@ -65,7 +65,7 @@ JSRoot {
 				declaration: JSVariableDeclaration {
 					kind: "var"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-export-declaration/export-var-anonymous-function/input.js"
 						end: Object {
 							column: 32
 							index: 32
@@ -82,7 +82,7 @@ JSRoot {
 							id: JSBindingIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-export-declaration/export-var-anonymous-function/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 14
@@ -97,7 +97,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-export-declaration/export-var-anonymous-function/input.js"
 								end: Object {
 									column: 31
 									index: 31
@@ -112,7 +112,7 @@ JSRoot {
 							init: JSFunctionExpression {
 								id: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-export-declaration/export-var-anonymous-function/input.js"
 									end: Object {
 										column: 31
 										index: 31
@@ -128,7 +128,7 @@ JSRoot {
 									body: Array []
 									directives: Array []
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-export-declaration/export-var-anonymous-function/input.js"
 										end: Object {
 											column: 31
 											index: 31
@@ -151,7 +151,7 @@ JSRoot {
 									thisType: undefined
 									typeParameters: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-export-declaration/export-var-anonymous-function/input.js"
 										end: Object {
 											column: 28
 											index: 28

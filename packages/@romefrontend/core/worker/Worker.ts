@@ -28,7 +28,7 @@ import {
 	createAbsoluteFilePath,
 	createUnknownFilePath,
 } from "@romefrontend/path";
-import {lstat, readFileText, writeFile} from "@romefrontend/fs";
+import {lstat, readFileText} from "@romefrontend/fs";
 import {
 	FileReference,
 	convertTransportFileReference,
@@ -43,6 +43,7 @@ import {markup} from "@romefrontend/cli-layout";
 
 export type ParseResult = {
 	ast: AnyRoot;
+	mtime: undefined | number;
 	project: TransformProjectDefinition;
 	path: AbsoluteFilePath;
 	lastAccessed: number;
@@ -451,14 +452,7 @@ export default class Worker {
 
 		this.logger.info(markup`Parsing: ${path}`);
 
-		// Get the file mtime to warn about outdated diagnostics
-		// If we have a buffer or virtual module for this file then don't set an mtime since our diagnostics
-		// explicitly do not match the file system
-		let mtime;
-		if (!this.buffers.has(path) && !this.virtualModules.isVirtualPath(path)) {
-			const stat = await lstat(path);
-			mtime = stat.mtimeMs;
-		}
+		const mtime = await this.getMtime(path);
 
 		let manifestPath: undefined | string;
 		if (ref.manifest !== undefined) {
@@ -500,6 +494,7 @@ export default class Worker {
 			project,
 			path,
 			astModifiedFromSource,
+			mtime,
 		};
 
 		if (cacheEnabled) {
@@ -507,6 +502,18 @@ export default class Worker {
 		}
 
 		return res;
+	}
+
+	// Get the file mtime to warn about outdated diagnostics
+	// If we have a buffer or virtual module for this file then don't set an mtime since our diagnostics
+	// explicitly do not match the file system
+	async getMtime(path: AbsoluteFilePath): Promise<undefined | number> {
+		if (this.buffers.has(path) || this.virtualModules.isVirtualPath(path)) {
+			return undefined;
+		} else {
+			const stat = await lstat(path);
+			return stat.mtimeMs;
+		}
 	}
 
 	getProject(id: number): TransformProjectDefinition {
@@ -517,14 +524,6 @@ export default class Worker {
 			);
 		}
 		return config;
-	}
-
-	async writeFile(path: AbsoluteFilePath, content: string): Promise<void> {
-		// Write the file out
-		await writeFile(path, content);
-
-		// We just wrote the file but the server watcher hasn't had time to notify us
-		this.evict(path);
 	}
 
 	evict(path: AbsoluteFilePath) {

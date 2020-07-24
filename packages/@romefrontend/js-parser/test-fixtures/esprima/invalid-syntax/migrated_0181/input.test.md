@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0181/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0181/input.js"
 		end: Object {
 			column: 0
 			index: 49
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "No loop label found"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0181/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSLabeledStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0181/input.js"
 				end: Object {
 					column: 48
 					index: 48
@@ -73,7 +73,7 @@ JSRoot {
 			label: JSIdentifier {
 				name: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0181/input.js"
 					identifierName: "x"
 					end: Object {
 						column: 1
@@ -89,7 +89,7 @@ JSRoot {
 			}
 			body: JSWhileStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0181/input.js"
 					end: Object {
 						column: 48
 						index: 48
@@ -104,7 +104,7 @@ JSRoot {
 				test: JSBooleanLiteral {
 					value: true
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0181/input.js"
 						end: Object {
 							column: 14
 							index: 14
@@ -120,7 +120,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0181/input.js"
 						end: Object {
 							column: 48
 							index: 48
@@ -135,7 +135,7 @@ JSRoot {
 					body: Array [
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0181/input.js"
 								end: Object {
 									column: 46
 									index: 46
@@ -150,7 +150,7 @@ JSRoot {
 							expression: JSFunctionExpression {
 								id: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/invalid-syntax/migrated_0181/input.js"
 									end: Object {
 										column: 44
 										index: 44
@@ -172,7 +172,7 @@ JSRoot {
 									thisType: undefined
 									typeParameters: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/invalid-syntax/migrated_0181/input.js"
 										end: Object {
 											column: 30
 											index: 30
@@ -188,7 +188,7 @@ JSRoot {
 								body: JSBlockStatement {
 									directives: Array []
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/invalid-syntax/migrated_0181/input.js"
 										end: Object {
 											column: 44
 											index: 44
@@ -204,7 +204,7 @@ JSRoot {
 										JSContinueStatement {
 											label: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/invalid-syntax/migrated_0181/input.js"
 												end: Object {
 													column: 42
 													index: 42
@@ -233,7 +233,7 @@ JSRoot {
 
 ```
 
- input.js:1:33 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0181/input.js:1:33 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ No loop label found
 

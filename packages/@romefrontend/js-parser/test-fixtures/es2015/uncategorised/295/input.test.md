@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/295/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/295/input.js"
 		end: Object {
 			column: 0
 			index: 37
@@ -34,7 +34,7 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/295/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 					}
 					frame {
 						location: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/295/input.js"
 							end: Object {
 								column: 0
 								index: 37
@@ -78,7 +78,7 @@ JSRoot {
 	body: Array [
 		JSSwitchStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/295/input.js"
 				end: Object {
 					column: 36
 					index: 36
@@ -93,7 +93,7 @@ JSRoot {
 			discriminant: JSReferenceIdentifier {
 				name: "cond"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/295/input.js"
 					identifierName: "cond"
 					end: Object {
 						column: 12
@@ -110,7 +110,7 @@ JSRoot {
 			cases: Array [
 				JSSwitchCase {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/295/input.js"
 						end: Object {
 							column: 36
 							index: 36
@@ -126,7 +126,7 @@ JSRoot {
 						value: 10
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/295/input.js"
 							end: Object {
 								column: 23
 								index: 23
@@ -142,7 +142,7 @@ JSRoot {
 					consequent: Array [
 						JSVariableDeclarationStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/295/input.js"
 								end: Object {
 									column: 36
 									index: 36
@@ -157,7 +157,7 @@ JSRoot {
 							declaration: JSVariableDeclaration {
 								kind: "let"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/295/input.js"
 									end: Object {
 										column: 36
 										index: 36
@@ -174,7 +174,7 @@ JSRoot {
 										id: JSBindingIdentifier {
 											name: "a"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/uncategorised/295/input.js"
 												identifierName: "a"
 												end: Object {
 													column: 30
@@ -189,7 +189,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/295/input.js"
 											end: Object {
 												column: 35
 												index: 35
@@ -205,7 +205,7 @@ JSRoot {
 											value: 20
 											format: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/uncategorised/295/input.js"
 												end: Object {
 													column: 35
 													index: 35
@@ -234,7 +234,7 @@ JSRoot {
 
 ```
 
- input.js:1:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/295/input.js:1:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed switch body
 

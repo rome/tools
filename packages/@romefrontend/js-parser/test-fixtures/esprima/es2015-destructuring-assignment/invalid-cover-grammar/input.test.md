@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 		end: Object {
 			column: 0
 			index: 46
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 				end: Object {
 					column: 45
 					index: 45
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSArrayExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 					end: Object {
 						column: 45
 						index: 45
@@ -87,7 +87,7 @@ JSRoot {
 				elements: Array [
 					JSArrayExpression {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 							end: Object {
 								column: 44
 								index: 44
@@ -102,7 +102,7 @@ JSRoot {
 						elements: Array [
 							JSArrayExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 									end: Object {
 										column: 43
 										index: 43
@@ -117,7 +117,7 @@ JSRoot {
 								elements: Array [
 									JSArrayExpression {
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 											end: Object {
 												column: 42
 												index: 42
@@ -132,7 +132,7 @@ JSRoot {
 										elements: Array [
 											JSArrayExpression {
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 													end: Object {
 														column: 41
 														index: 41
@@ -147,7 +147,7 @@ JSRoot {
 												elements: Array [
 													JSArrayExpression {
 														loc: Object {
-															filename: "input.js"
+															filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 															end: Object {
 																column: 40
 																index: 40
@@ -162,7 +162,7 @@ JSRoot {
 														elements: Array [
 															JSArrayExpression {
 																loc: Object {
-																	filename: "input.js"
+																	filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																	end: Object {
 																		column: 39
 																		index: 39
@@ -177,7 +177,7 @@ JSRoot {
 																elements: Array [
 																	JSArrayExpression {
 																		loc: Object {
-																			filename: "input.js"
+																			filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																			end: Object {
 																				column: 38
 																				index: 38
@@ -192,7 +192,7 @@ JSRoot {
 																		elements: Array [
 																			JSArrayExpression {
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																					end: Object {
 																						column: 37
 																						index: 37
@@ -207,7 +207,7 @@ JSRoot {
 																				elements: Array [
 																					JSArrayExpression {
 																						loc: Object {
-																							filename: "input.js"
+																							filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																							end: Object {
 																								column: 36
 																								index: 36
@@ -222,7 +222,7 @@ JSRoot {
 																						elements: Array [
 																							JSArrayExpression {
 																								loc: Object {
-																									filename: "input.js"
+																									filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																									end: Object {
 																										column: 35
 																										index: 35
@@ -237,7 +237,7 @@ JSRoot {
 																								elements: Array [
 																									JSArrayExpression {
 																										loc: Object {
-																											filename: "input.js"
+																											filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																											end: Object {
 																												column: 34
 																												index: 34
@@ -252,7 +252,7 @@ JSRoot {
 																										elements: Array [
 																											JSArrayExpression {
 																												loc: Object {
-																													filename: "input.js"
+																													filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																													end: Object {
 																														column: 33
 																														index: 33
@@ -267,7 +267,7 @@ JSRoot {
 																												elements: Array [
 																													JSArrayExpression {
 																														loc: Object {
-																															filename: "input.js"
+																															filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																															end: Object {
 																																column: 32
 																																index: 32
@@ -282,7 +282,7 @@ JSRoot {
 																														elements: Array [
 																															JSArrayExpression {
 																																loc: Object {
-																																	filename: "input.js"
+																																	filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																																	end: Object {
 																																		column: 31
 																																		index: 31
@@ -297,7 +297,7 @@ JSRoot {
 																																elements: Array [
 																																	JSArrayExpression {
 																																		loc: Object {
-																																			filename: "input.js"
+																																			filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																																			end: Object {
 																																				column: 30
 																																				index: 30
@@ -312,7 +312,7 @@ JSRoot {
 																																		elements: Array [
 																																			JSArrayExpression {
 																																				loc: Object {
-																																					filename: "input.js"
+																																					filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																																					end: Object {
 																																						column: 29
 																																						index: 29
@@ -327,7 +327,7 @@ JSRoot {
 																																				elements: Array [
 																																					JSArrayExpression {
 																																						loc: Object {
-																																							filename: "input.js"
+																																							filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																																							end: Object {
 																																								column: 28
 																																								index: 28
@@ -342,7 +342,7 @@ JSRoot {
 																																						elements: Array [
 																																							JSArrayExpression {
 																																								loc: Object {
-																																									filename: "input.js"
+																																									filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																																									end: Object {
 																																										column: 27
 																																										index: 27
@@ -357,7 +357,7 @@ JSRoot {
 																																								elements: Array [
 																																									JSArrayExpression {
 																																										loc: Object {
-																																											filename: "input.js"
+																																											filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																																											end: Object {
 																																												column: 26
 																																												index: 26
@@ -373,7 +373,7 @@ JSRoot {
 																																											JSAssignmentExpression {
 																																												operator: "="
 																																												loc: Object {
-																																													filename: "input.js"
+																																													filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																																													end: Object {
 																																														column: 24
 																																														index: 24
@@ -388,7 +388,7 @@ JSRoot {
 																																												right: JSReferenceIdentifier {
 																																													name: "b"
 																																													loc: Object {
-																																														filename: "input.js"
+																																														filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																																														identifierName: "b"
 																																														end: Object {
 																																															column: 24
@@ -405,7 +405,7 @@ JSRoot {
 																																												left: JSAssignmentObjectPattern {
 																																													rest: undefined
 																																													loc: Object {
-																																														filename: "input.js"
+																																														filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																																														end: Object {
 																																															column: 22
 																																															index: 22
@@ -423,7 +423,7 @@ JSRoot {
 																																																value: JSIdentifier {
 																																																	name: "a"
 																																																	loc: Object {
-																																																		filename: "input.js"
+																																																		filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																																																		identifierName: "a"
 																																																		end: Object {
 																																																			column: 22
@@ -438,7 +438,7 @@ JSRoot {
 																																																	}
 																																																}
 																																																loc: Object {
-																																																	filename: "input.js"
+																																																	filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																																																	end: Object {
 																																																		column: 22
 																																																		index: 22
@@ -454,7 +454,7 @@ JSRoot {
 																																															value: JSAssignmentIdentifier {
 																																																name: "a"
 																																																loc: Object {
-																																																	filename: "input.js"
+																																																	filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																																																	identifierName: "a"
 																																																	end: Object {
 																																																		column: 22
@@ -469,7 +469,7 @@ JSRoot {
 																																																}
 																																															}
 																																															loc: Object {
-																																																filename: "input.js"
+																																																filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																																																end: Object {
 																																																	column: 22
 																																																	index: 22
@@ -488,7 +488,7 @@ JSRoot {
 																																											JSReferenceIdentifier {
 																																												name: "INVALID_PLACEHOLDER"
 																																												loc: Object {
-																																													filename: "input.js"
+																																													filename: "esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js"
 																																													end: Object {
 																																														column: 25
 																																														index: 25
@@ -550,7 +550,7 @@ JSRoot {
 
 ```
 
- input.js:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-destructuring-assignment/invalid-cover-grammar/input.js:1:22 parse/js ━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ,
 

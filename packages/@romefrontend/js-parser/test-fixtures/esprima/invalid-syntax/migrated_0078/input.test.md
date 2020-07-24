@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0078/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0078/input.js"
 		end: Object {
 			column: 0
 			index: 20
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0078/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0078/input.js"
 				end: Object {
 					column: 12
 					index: 12
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0078/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -90,7 +90,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "get"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/invalid-syntax/migrated_0078/input.js"
 									identifierName: "get"
 									end: Object {
 										column: 6
@@ -105,7 +105,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0078/input.js"
 								end: Object {
 									column: 6
 									index: 6
@@ -120,7 +120,7 @@ JSRoot {
 						}
 						value: JSCallExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0078/input.js"
 								end: Object {
 									column: 12
 									index: 12
@@ -135,7 +135,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "g"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/invalid-syntax/migrated_0078/input.js"
 									identifierName: "g"
 									end: Object {
 										column: 9
@@ -153,7 +153,7 @@ JSRoot {
 								JSReferenceIdentifier {
 									name: "d"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/invalid-syntax/migrated_0078/input.js"
 										identifierName: "d"
 										end: Object {
 											column: 11
@@ -170,7 +170,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0078/input.js"
 							end: Object {
 								column: 12
 								index: 12
@@ -190,7 +190,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0078/input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -205,7 +205,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0078/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -220,7 +220,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0078/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -236,7 +236,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0078/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -251,7 +251,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0078/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -273,7 +273,7 @@ JSRoot {
 
 ```
 
- input.js:1:13 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0078/input.js:1:13 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ,
 

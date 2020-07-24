@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/arrow-function/optional-parameter/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/arrow-function/optional-parameter/input.ts"
 		end: Object {
 			column: 0
 			index: 43
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/arrow-function/optional-parameter/input.ts"
 				end: Object {
 					column: 23
 					index: 23
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/arrow-function/optional-parameter/input.ts"
 					end: Object {
 						column: 22
 						index: 22
@@ -63,7 +63,7 @@ JSRoot {
 				body: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/optional-parameter/input.ts"
 						identifierName: "x"
 						end: Object {
 							column: 22
@@ -83,7 +83,7 @@ JSRoot {
 					rest: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/optional-parameter/input.ts"
 						end: Object {
 							column: 20
 							index: 20
@@ -97,7 +97,7 @@ JSRoot {
 					}
 					returnType: TSAnyKeywordTypeAnnotation {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/arrow-function/optional-parameter/input.ts"
 							end: Object {
 								column: 17
 								index: 17
@@ -114,7 +114,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/arrow-function/optional-parameter/input.ts"
 								end: Object {
 									column: 20
 									index: 20
@@ -129,7 +129,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								optional: true
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/arrow-function/optional-parameter/input.ts"
 									end: Object {
 										column: 20
 										index: 20
@@ -143,7 +143,7 @@ JSRoot {
 								}
 								typeAnnotation: TSNumberKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/arrow-function/optional-parameter/input.ts"
 										end: Object {
 											column: 11
 											index: 11
@@ -164,7 +164,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/arrow-function/optional-parameter/input.ts"
 				end: Object {
 					column: 18
 					index: 42
@@ -179,7 +179,7 @@ JSRoot {
 			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/arrow-function/optional-parameter/input.ts"
 					end: Object {
 						column: 17
 						index: 41
@@ -193,7 +193,7 @@ JSRoot {
 				}
 				callee: JSArrowFunctionExpression {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/optional-parameter/input.ts"
 						end: Object {
 							column: 14
 							index: 38
@@ -208,7 +208,7 @@ JSRoot {
 					body: JSBinaryExpression {
 						operator: "+"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/arrow-function/optional-parameter/input.ts"
 							end: Object {
 								column: 14
 								index: 38
@@ -223,7 +223,7 @@ JSRoot {
 						left: JSReferenceIdentifier {
 							name: "k"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/arrow-function/optional-parameter/input.ts"
 								identifierName: "k"
 								end: Object {
 									column: 10
@@ -241,7 +241,7 @@ JSRoot {
 							value: 1
 							format: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/arrow-function/optional-parameter/input.ts"
 								end: Object {
 									column: 14
 									index: 38
@@ -262,7 +262,7 @@ JSRoot {
 						returnType: undefined
 						thisType: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/arrow-function/optional-parameter/input.ts"
 							end: Object {
 								column: 8
 								index: 32
@@ -278,7 +278,7 @@ JSRoot {
 							JSBindingIdentifier {
 								name: "k"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/arrow-function/optional-parameter/input.ts"
 									end: Object {
 										column: 8
 										index: 32
@@ -294,7 +294,7 @@ JSRoot {
 									optional: true
 									typeAnnotation: undefined
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/arrow-function/optional-parameter/input.ts"
 										end: Object {
 											column: 8
 											index: 32

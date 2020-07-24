@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/trailing-function-commas/1/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/trailing-function-commas/1/input.js"
 		end: Object {
 			column: 16
 			index: 16
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/trailing-function-commas/1/input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/trailing-function-commas/1/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -63,7 +63,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "log"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/trailing-function-commas/1/input.js"
 						identifierName: "log"
 						end: Object {
 							column: 3
@@ -81,7 +81,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "n"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/trailing-function-commas/1/input.js"
 							identifierName: "n"
 							end: Object {
 								column: 5
@@ -98,7 +98,7 @@ JSRoot {
 					JSStringLiteral {
 						value: "="
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/trailing-function-commas/1/input.js"
 							end: Object {
 								column: 10
 								index: 10
@@ -115,7 +115,7 @@ JSRoot {
 						value: 2
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/trailing-function-commas/1/input.js"
 							end: Object {
 								column: 13
 								index: 13

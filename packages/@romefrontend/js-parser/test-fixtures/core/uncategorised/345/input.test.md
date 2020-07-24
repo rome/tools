@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/345/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/345/input.js"
 		end: Object {
 			column: 1
 			index: 1
@@ -35,7 +35,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/345/input.js"
 				end: Object {
 					column: 1
 					index: 1
@@ -53,7 +53,7 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/345/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -77,7 +77,7 @@ JSRoot {
 					}
 					frame {
 						location: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/345/input.js"
 							end: Object {
 								column: 1
 								index: 1
@@ -101,7 +101,7 @@ JSRoot {
 
 ```
 
- input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/345/input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed block
 

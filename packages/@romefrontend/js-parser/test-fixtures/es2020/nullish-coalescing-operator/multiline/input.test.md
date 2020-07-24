@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/nullish-coalescing-operator/multiline/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/nullish-coalescing-operator/multiline/input.js"
 		end: Object {
 			column: 0
 			index: 18
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/nullish-coalescing-operator/multiline/input.js"
 				end: Object {
 					column: 7
 					index: 17
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSLogicalExpression {
 				operator: "??"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/nullish-coalescing-operator/multiline/input.js"
 					end: Object {
 						column: 6
 						index: 16
@@ -64,7 +64,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "c"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/nullish-coalescing-operator/multiline/input.js"
 						identifierName: "c"
 						end: Object {
 							column: 6
@@ -81,7 +81,7 @@ JSRoot {
 				left: JSLogicalExpression {
 					operator: "??"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/nullish-coalescing-operator/multiline/input.js"
 						end: Object {
 							column: 6
 							index: 9
@@ -96,7 +96,7 @@ JSRoot {
 					left: JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/nullish-coalescing-operator/multiline/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 1
@@ -113,7 +113,7 @@ JSRoot {
 					right: JSReferenceIdentifier {
 						name: "b"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/nullish-coalescing-operator/multiline/input.js"
 							identifierName: "b"
 							end: Object {
 								column: 6

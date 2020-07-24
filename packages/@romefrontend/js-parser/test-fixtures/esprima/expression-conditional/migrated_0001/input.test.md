@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/expression-conditional/migrated_0001/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/expression-conditional/migrated_0001/input.js"
 		end: Object {
 			column: 0
 			index: 15
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/expression-conditional/migrated_0001/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSConditionalExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/expression-conditional/migrated_0001/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -64,7 +64,7 @@ JSRoot {
 					value: 2
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-conditional/migrated_0001/input.js"
 						end: Object {
 							column: 14
 							index: 14
@@ -81,7 +81,7 @@ JSRoot {
 					value: 1
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-conditional/migrated_0001/input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -97,7 +97,7 @@ JSRoot {
 				test: JSLogicalExpression {
 					operator: "&&"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-conditional/migrated_0001/input.js"
 						end: Object {
 							column: 6
 							index: 6
@@ -112,7 +112,7 @@ JSRoot {
 					left: JSReferenceIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/expression-conditional/migrated_0001/input.js"
 							identifierName: "x"
 							end: Object {
 								column: 1
@@ -129,7 +129,7 @@ JSRoot {
 					right: JSReferenceIdentifier {
 						name: "y"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/expression-conditional/migrated_0001/input.js"
 							identifierName: "y"
 							end: Object {
 								column: 6

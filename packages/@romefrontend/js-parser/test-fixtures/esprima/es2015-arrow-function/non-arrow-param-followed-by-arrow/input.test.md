@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-arrow-function/non-arrow-param-followed-by-arrow/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-arrow-function/non-arrow-param-followed-by-arrow/input.js"
 		end: Object {
 			column: 0
 			index: 11
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Function parameters can't be parenthesized"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/non-arrow-param-followed-by-arrow/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/non-arrow-param-followed-by-arrow/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-arrow-function/non-arrow-param-followed-by-arrow/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -88,7 +88,7 @@ JSRoot {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/non-arrow-param-followed-by-arrow/input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -108,7 +108,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/non-arrow-param-followed-by-arrow/input.js"
 						end: Object {
 							column: 8
 							index: 8
@@ -124,7 +124,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-arrow-function/non-arrow-param-followed-by-arrow/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 3
@@ -150,7 +150,7 @@ JSRoot {
 
 ```
 
- input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-arrow-function/non-arrow-param-followed-by-arrow/input.js:1:2 parse/js ━━━━━━━━━━━━━
 
   ✖ Function parameters can't be parenthesized
 

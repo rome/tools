@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/231/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/231/input.js"
 		end: Object {
 			column: 11
 			index: 11
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected keyword default"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/231/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/231/input.js"
 				end: Object {
 					column: 11
 					index: 11
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/231/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "default"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/231/input.js"
 								identifierName: "default"
 								end: Object {
 									column: 11
@@ -106,7 +106,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/231/input.js"
 							end: Object {
 								column: 11
 								index: 11
@@ -130,7 +130,7 @@ JSRoot {
 
 ```
 
- input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/231/input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected keyword default
 

@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/basic/object-expression-trailing-comma/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/basic/object-expression-trailing-comma/input.js"
 		end: Object {
 			column: 18
 			index: 69
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " One "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/object-expression-trailing-comma/input.js"
 				end: Object {
 					column: 11
 					index: 19
@@ -52,7 +52,7 @@ JSRoot {
 			id: "1"
 			value: " Two "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/object-expression-trailing-comma/input.js"
 				end: Object {
 					column: 11
 					index: 35
@@ -69,7 +69,7 @@ JSRoot {
 			id: "2"
 			value: " Three "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/object-expression-trailing-comma/input.js"
 				end: Object {
 					column: 13
 					index: 50
@@ -86,7 +86,7 @@ JSRoot {
 			id: "3"
 			value: " Four "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/object-expression-trailing-comma/input.js"
 				end: Object {
 					column: 12
 					index: 63
@@ -103,7 +103,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/object-expression-trailing-comma/input.js"
 				end: Object {
 					column: 18
 					index: 69
@@ -118,7 +118,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/object-expression-trailing-comma/input.js"
 					end: Object {
 						column: 18
 						index: 69
@@ -136,7 +136,7 @@ JSRoot {
 							rest: undefined
 							trailingComments: Array ["3"]
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/basic/object-expression-trailing-comma/input.js"
 								end: Object {
 									column: 1
 									index: 52
@@ -156,7 +156,7 @@ JSRoot {
 											leadingComments: undefined
 											trailingComments: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "comments/basic/object-expression-trailing-comma/input.js"
 												identifierName: "x"
 												end: Object {
 													column: 3
@@ -173,7 +173,7 @@ JSRoot {
 										leadingComments: undefined
 										trailingComments: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "comments/basic/object-expression-trailing-comma/input.js"
 											end: Object {
 												column: 3
 												index: 23
@@ -191,7 +191,7 @@ JSRoot {
 										leadingComments: undefined
 										trailingComments: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "comments/basic/object-expression-trailing-comma/input.js"
 											identifierName: "x"
 											end: Object {
 												column: 3
@@ -211,7 +211,7 @@ JSRoot {
 										"2"
 									]
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/basic/object-expression-trailing-comma/input.js"
 										end: Object {
 											column: 3
 											index: 23
@@ -227,7 +227,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/basic/object-expression-trailing-comma/input.js"
 							end: Object {
 								column: 17
 								index: 68
@@ -242,7 +242,7 @@ JSRoot {
 						init: JSObjectExpression {
 							properties: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/basic/object-expression-trailing-comma/input.js"
 								end: Object {
 									column: 17
 									index: 68

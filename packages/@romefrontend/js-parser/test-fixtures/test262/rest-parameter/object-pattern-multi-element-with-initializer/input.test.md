@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 		end: Object {
 			column: 0
 			index: 71
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "multiElementWithInitializer"
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 					identifierName: "multiElementWithInitializer"
 					end: Object {
 						column: 36
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 				end: Object {
 					column: 70
 					index: 70
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 					end: Object {
 						column: 70
 						index: 70
@@ -89,7 +89,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 					end: Object {
 						column: 67
 						index: 67
@@ -104,7 +104,7 @@ JSRoot {
 				rest: JSBindingObjectPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 						end: Object {
 							column: 66
 							index: 66
@@ -120,7 +120,7 @@ JSRoot {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 							end: Object {
 								column: 66
 								index: 66
@@ -139,7 +139,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 42
@@ -154,7 +154,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 									end: Object {
 										column: 42
 										index: 42
@@ -169,7 +169,7 @@ JSRoot {
 							}
 							value: JSBindingAssignmentPattern {
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 									end: Object {
 										column: 49
 										index: 49
@@ -184,7 +184,7 @@ JSRoot {
 								left: JSBindingIdentifier {
 									name: "r"
 									loc: Object {
-										filename: "input.js"
+										filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 										identifierName: "r"
 										end: Object {
 											column: 45
@@ -202,7 +202,7 @@ JSRoot {
 									value: 0
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 										end: Object {
 											column: 49
 											index: 49
@@ -217,7 +217,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 								end: Object {
 									column: 49
 									index: 49
@@ -235,7 +235,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "b"
 									loc: Object {
-										filename: "input.js"
+										filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 										identifierName: "b"
 										end: Object {
 											column: 52
@@ -250,7 +250,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 									end: Object {
 										column: 52
 										index: 52
@@ -266,7 +266,7 @@ JSRoot {
 							value: JSBindingIdentifier {
 								name: "s"
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 									identifierName: "s"
 									end: Object {
 										column: 55
@@ -281,7 +281,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 								end: Object {
 									column: 55
 									index: 55
@@ -299,7 +299,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "c"
 									loc: Object {
-										filename: "input.js"
+										filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 										identifierName: "c"
 										end: Object {
 											column: 58
@@ -314,7 +314,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 									end: Object {
 										column: 58
 										index: 58
@@ -329,7 +329,7 @@ JSRoot {
 							}
 							value: JSBindingAssignmentPattern {
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 									end: Object {
 										column: 65
 										index: 65
@@ -344,7 +344,7 @@ JSRoot {
 								left: JSBindingIdentifier {
 									name: "t"
 									loc: Object {
-										filename: "input.js"
+										filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 										identifierName: "t"
 										end: Object {
 											column: 61
@@ -362,7 +362,7 @@ JSRoot {
 									value: 1
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 										end: Object {
 											column: 65
 											index: 65
@@ -377,7 +377,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 								end: Object {
 									column: 65
 									index: 65

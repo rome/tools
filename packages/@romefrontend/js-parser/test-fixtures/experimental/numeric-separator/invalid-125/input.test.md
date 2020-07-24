@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/numeric-separator/invalid-125/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/numeric-separator/invalid-125/input.js"
 		end: Object {
 			column: 0
 			index: 7
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Invalid or unexpected int token"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/numeric-separator/invalid-125/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -59,7 +59,7 @@ JSRoot {
 		JSBlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/numeric-separator/invalid-125/input.js"
 				end: Object {
 					column: 6
 					index: 6
@@ -74,7 +74,7 @@ JSRoot {
 			body: Array [
 				JSExpressionStatement {
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/numeric-separator/invalid-125/input.js"
 						end: Object {
 							column: 5
 							index: 5
@@ -90,7 +90,7 @@ JSRoot {
 						value: 11
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/numeric-separator/invalid-125/input.js"
 							end: Object {
 								column: 5
 								index: 5
@@ -114,7 +114,7 @@ JSRoot {
 
 ```
 
- input.js:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/numeric-separator/invalid-125/input.js:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid or unexpected int token
 

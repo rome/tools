@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/optional-chaining/optional-super-property/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/optional-chaining/optional-super-property/input.js"
 		end: Object {
 			column: 1
 			index: 53
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Invalid super suffix operator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/optional-super-property/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/optional-super-property/input.js"
 				end: Object {
 					column: 1
 					index: 53
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/optional-super-property/input.js"
 					end: Object {
 						column: 1
 						index: 53
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/optional-super-property/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 7
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/optional-super-property/input.js"
 							end: Object {
 								column: 1
 								index: 53
@@ -119,7 +119,7 @@ JSRoot {
 						}
 						init: JSObjectExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/optional-super-property/input.js"
 								end: Object {
 									column: 1
 									index: 53
@@ -138,7 +138,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "b"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2020/optional-chaining/optional-super-property/input.js"
 												identifierName: "b"
 												end: Object {
 													column: 5
@@ -153,7 +153,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2020/optional-chaining/optional-super-property/input.js"
 											end: Object {
 												column: 5
 												index: 17
@@ -167,7 +167,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2020/optional-chaining/optional-super-property/input.js"
 										end: Object {
 											column: 5
 											index: 51
@@ -189,7 +189,7 @@ JSRoot {
 										thisType: undefined
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2020/optional-chaining/optional-super-property/input.js"
 											end: Object {
 												column: 7
 												index: 19
@@ -205,7 +205,7 @@ JSRoot {
 									body: JSBlockStatement {
 										directives: Array []
 										loc: Object {
-											filename: "input.js"
+											filename: "es2020/optional-chaining/optional-super-property/input.js"
 											end: Object {
 												column: 5
 												index: 51
@@ -220,7 +220,7 @@ JSRoot {
 										body: Array [
 											JSReturnStatement {
 												loc: Object {
-													filename: "input.js"
+													filename: "es2020/optional-chaining/optional-super-property/input.js"
 													end: Object {
 														column: 24
 														index: 45
@@ -234,7 +234,7 @@ JSRoot {
 												}
 												argument: JSMemberExpression {
 													loc: Object {
-														filename: "input.js"
+														filename: "es2020/optional-chaining/optional-super-property/input.js"
 														end: Object {
 															column: 23
 															index: 44
@@ -248,7 +248,7 @@ JSRoot {
 													}
 													object: JSSuper {
 														loc: Object {
-															filename: "input.js"
+															filename: "es2020/optional-chaining/optional-super-property/input.js"
 															end: Object {
 																column: 20
 																index: 41
@@ -265,7 +265,7 @@ JSRoot {
 														value: JSIdentifier {
 															name: "c"
 															loc: Object {
-																filename: "input.js"
+																filename: "es2020/optional-chaining/optional-super-property/input.js"
 																identifierName: "c"
 																end: Object {
 																	column: 23
@@ -281,7 +281,7 @@ JSRoot {
 														}
 														optional: true
 														loc: Object {
-															filename: "input.js"
+															filename: "es2020/optional-chaining/optional-super-property/input.js"
 															identifierName: "c"
 															end: Object {
 																column: 23
@@ -314,7 +314,7 @@ JSRoot {
 
 ```
 
- input.js:3:20 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2020/optional-chaining/optional-super-property/input.js:3:20 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid super suffix operator
 

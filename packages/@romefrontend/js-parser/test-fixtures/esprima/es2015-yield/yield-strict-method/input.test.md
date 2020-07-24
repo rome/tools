@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-yield/yield-strict-method/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/yield-strict-method/input.js"
 		end: Object {
 			column: 0
 			index: 31
@@ -34,7 +34,7 @@ JSRoot {
 		JSDirective {
 			value: "use strict"
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/yield-strict-method/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -51,7 +51,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/yield-strict-method/input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -65,7 +65,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-strict-method/input.js"
 					end: Object {
 						column: 29
 						index: 29
@@ -84,7 +84,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "yield"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-yield/yield-strict-method/input.js"
 									identifierName: "yield"
 									end: Object {
 										column: 22
@@ -99,7 +99,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/yield-strict-method/input.js"
 								end: Object {
 									column: 22
 									index: 22
@@ -113,7 +113,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-yield/yield-strict-method/input.js"
 							end: Object {
 								column: 27
 								index: 27
@@ -129,7 +129,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/yield-strict-method/input.js"
 								end: Object {
 									column: 27
 									index: 27
@@ -152,7 +152,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/yield-strict-method/input.js"
 								end: Object {
 									column: 24
 									index: 24

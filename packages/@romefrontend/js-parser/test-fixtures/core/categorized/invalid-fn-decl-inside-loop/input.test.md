@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/categorized/invalid-fn-decl-inside-loop/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/categorized/invalid-fn-decl-inside-loop/input.js"
 		end: Object {
 			column: 26
 			index: 26
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "In non-strict mode code, functions can only be declared at top level, inside a block, or as the body of an if statement"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/categorized/invalid-fn-decl-inside-loop/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSWhileStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/invalid-fn-decl-inside-loop/input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -74,7 +74,7 @@ JSRoot {
 				value: 1
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/invalid-fn-decl-inside-loop/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -91,7 +91,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "foo"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/invalid-fn-decl-inside-loop/input.js"
 						identifierName: "foo"
 						end: Object {
 							column: 22
@@ -106,7 +106,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/invalid-fn-decl-inside-loop/input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -122,7 +122,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/invalid-fn-decl-inside-loop/input.js"
 						end: Object {
 							column: 26
 							index: 26
@@ -145,7 +145,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/invalid-fn-decl-inside-loop/input.js"
 						end: Object {
 							column: 24
 							index: 24
@@ -168,7 +168,7 @@ JSRoot {
 
 ```
 
- input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/categorized/invalid-fn-decl-inside-loop/input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ In non-strict mode code, functions can only be declared at top level, inside a block, or as
     the body of an if statement

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/cast/null-assertion/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/cast/null-assertion/input.ts"
 		end: Object {
 			column: 0
 			index: 4
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/null-assertion/input.ts"
 				end: Object {
 					column: 3
 					index: 3
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: TSNonNullExpression {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/null-assertion/input.ts"
 					end: Object {
 						column: 2
 						index: 2
@@ -63,7 +63,7 @@ JSRoot {
 				expression: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/null-assertion/input.ts"
 						identifierName: "x"
 						end: Object {
 							column: 1

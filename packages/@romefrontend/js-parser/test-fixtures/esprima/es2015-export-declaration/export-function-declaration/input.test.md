@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-export-declaration/export-function-declaration/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-export-declaration/export-function-declaration/input.js"
 		end: Object {
 			column: 0
 			index: 32
@@ -36,7 +36,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/export-function-declaration/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -52,7 +52,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "foo"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-export-declaration/export-function-declaration/input.js"
 						identifierName: "foo"
 						end: Object {
 							column: 19
@@ -67,7 +67,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-export-declaration/export-function-declaration/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -83,7 +83,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-export-declaration/export-function-declaration/input.js"
 						end: Object {
 							column: 25
 							index: 25
@@ -106,7 +106,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-export-declaration/export-function-declaration/input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -123,7 +123,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/export-function-declaration/input.js"
 				end: Object {
 					column: 31
 					index: 31
@@ -138,7 +138,7 @@ JSRoot {
 			expression: JSBooleanLiteral {
 				value: false
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-export-declaration/export-function-declaration/input.js"
 					end: Object {
 						column: 31
 						index: 31

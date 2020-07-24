@@ -10,14 +10,14 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0257/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0257/input.js"
 		end: Object {
 			column: 0
 			index: 24
@@ -33,7 +33,7 @@ JSRoot {
 		JSDirective {
 			value: "use strict"
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0257/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -56,7 +56,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0257/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -75,7 +75,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0257/input.js"
 				end: Object {
 					column: 15
 					index: 15
@@ -90,7 +90,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "a"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0257/input.js"
 					identifierName: "a"
 					end: Object {
 						column: 15
@@ -107,7 +107,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0257/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -122,7 +122,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "package"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0257/input.js"
 					identifierName: "package"
 					end: Object {
 						column: 23
@@ -145,7 +145,7 @@ JSRoot {
 
 ```
 
- input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0257/input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

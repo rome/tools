@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-import-declaration/import-jquery/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-import-declaration/import-jquery/input.js"
 		end: Object {
 			column: 0
 			index: 23
@@ -37,7 +37,7 @@ JSRoot {
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/import-jquery/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -52,7 +52,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "jquery"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/import-jquery/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -67,7 +67,7 @@ JSRoot {
 			}
 			defaultSpecifier: JSImportDefaultSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/import-jquery/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -83,7 +83,7 @@ JSRoot {
 					name: JSBindingIdentifier {
 						name: "$"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/import-jquery/input.js"
 							identifierName: "$"
 							end: Object {
 								column: 8
@@ -99,7 +99,7 @@ JSRoot {
 					}
 					importKind: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-import-declaration/import-jquery/input.js"
 						end: Object {
 							column: 8
 							index: 8

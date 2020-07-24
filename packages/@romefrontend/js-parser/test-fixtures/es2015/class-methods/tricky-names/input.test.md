@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/class-methods/tricky-names/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/class-methods/tricky-names/input.js"
 		end: Object {
 			column: 0
 			index: 312
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class-methods/tricky-names/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/class-methods/tricky-names/input.js"
 				end: Object {
 					column: 1
 					index: 311
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class-methods/tricky-names/input.js"
 					end: Object {
 						column: 1
 						index: 311
@@ -88,7 +88,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "get"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/tricky-names/input.js"
 									identifierName: "get"
 									end: Object {
 										column: 5
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 5
 									index: 15
@@ -117,7 +117,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
 								index: 23
@@ -133,7 +133,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 23
@@ -156,7 +156,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
 									index: 20
@@ -182,7 +182,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 5
 									index: 15
@@ -202,7 +202,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "set"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/tricky-names/input.js"
 									identifierName: "set"
 									end: Object {
 										column: 5
@@ -217,7 +217,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 5
 									index: 30
@@ -231,7 +231,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
 								index: 38
@@ -247,7 +247,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 38
@@ -270,7 +270,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
 									index: 35
@@ -296,7 +296,7 @@ JSRoot {
 								line: 5
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 5
 									index: 30
@@ -316,7 +316,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "static"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/tricky-names/input.js"
 									identifierName: "static"
 									end: Object {
 										column: 8
@@ -331,7 +331,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								identifierName: "static"
 								end: Object {
 									column: 8
@@ -346,7 +346,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
 								index: 56
@@ -362,7 +362,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 56
@@ -383,7 +383,7 @@ JSRoot {
 							static: false
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 8
 									index: 48
@@ -406,7 +406,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
 									index: 53
@@ -426,7 +426,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "async"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/tricky-names/input.js"
 									identifierName: "async"
 									end: Object {
 										column: 7
@@ -441,7 +441,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 65
@@ -455,7 +455,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
 								index: 73
@@ -471,7 +471,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 73
@@ -494,7 +494,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
 									index: 70
@@ -520,7 +520,7 @@ JSRoot {
 								line: 11
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 65
@@ -540,7 +540,7 @@ JSRoot {
 							value: JSStringLiteral {
 								value: "get"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/tricky-names/input.js"
 									end: Object {
 										column: 7
 										index: 83
@@ -554,7 +554,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 83
@@ -568,7 +568,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
 								index: 91
@@ -584,7 +584,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 91
@@ -607,7 +607,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
 									index: 88
@@ -633,7 +633,7 @@ JSRoot {
 								line: 15
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 83
@@ -653,7 +653,7 @@ JSRoot {
 							value: JSStringLiteral {
 								value: "set"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/tricky-names/input.js"
 									end: Object {
 										column: 7
 										index: 100
@@ -667,7 +667,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 100
@@ -681,7 +681,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
 								index: 108
@@ -697,7 +697,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 108
@@ -720,7 +720,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
 									index: 105
@@ -746,7 +746,7 @@ JSRoot {
 								line: 18
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 100
@@ -766,7 +766,7 @@ JSRoot {
 							value: JSStringLiteral {
 								value: "async"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/tricky-names/input.js"
 									end: Object {
 										column: 9
 										index: 119
@@ -780,7 +780,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 9
 									index: 119
@@ -794,7 +794,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
 								index: 127
@@ -810,7 +810,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 127
@@ -833,7 +833,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
 									index: 124
@@ -859,7 +859,7 @@ JSRoot {
 								line: 21
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 9
 									index: 119
@@ -879,7 +879,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "get"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/tricky-names/input.js"
 									identifierName: "get"
 									end: Object {
 										column: 5
@@ -894,7 +894,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 5
 									index: 144
@@ -908,7 +908,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
 								index: 152
@@ -924,7 +924,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 152
@@ -947,7 +947,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
 									index: 149
@@ -973,7 +973,7 @@ JSRoot {
 								line: 25
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 5
 									index: 144
@@ -993,7 +993,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "set"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/tricky-names/input.js"
 									identifierName: "set"
 									end: Object {
 										column: 5
@@ -1008,7 +1008,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 5
 									index: 168
@@ -1022,7 +1022,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
 								index: 176
@@ -1038,7 +1038,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 176
@@ -1061,7 +1061,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
 									index: 173
@@ -1087,7 +1087,7 @@ JSRoot {
 								line: 29
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 5
 									index: 168
@@ -1107,7 +1107,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "static"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/tricky-names/input.js"
 									identifierName: "static"
 									end: Object {
 										column: 8
@@ -1122,7 +1122,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 8
 									index: 195
@@ -1136,7 +1136,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
 								index: 203
@@ -1152,7 +1152,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 203
@@ -1175,7 +1175,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
 									index: 200
@@ -1201,7 +1201,7 @@ JSRoot {
 								line: 33
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 8
 									index: 195
@@ -1221,7 +1221,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "async"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/tricky-names/input.js"
 									identifierName: "async"
 									end: Object {
 										column: 7
@@ -1236,7 +1236,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 221
@@ -1250,7 +1250,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
 								index: 229
@@ -1266,7 +1266,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 229
@@ -1289,7 +1289,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
 									index: 226
@@ -1315,7 +1315,7 @@ JSRoot {
 								line: 37
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 221
@@ -1335,7 +1335,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/tricky-names/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 3
@@ -1350,7 +1350,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 3
 									index: 243
@@ -1364,7 +1364,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
 								index: 251
@@ -1380,7 +1380,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 251
@@ -1403,7 +1403,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
 									index: 248
@@ -1429,7 +1429,7 @@ JSRoot {
 								line: 41
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 3
 									index: 243
@@ -1449,7 +1449,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "async"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/tricky-names/input.js"
 									identifierName: "async"
 									end: Object {
 										column: 7
@@ -1464,7 +1464,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 267
@@ -1478,7 +1478,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
 								index: 275
@@ -1494,7 +1494,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 275
@@ -1517,7 +1517,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
 									index: 272
@@ -1543,7 +1543,7 @@ JSRoot {
 								line: 46
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 267
@@ -1563,7 +1563,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "static"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/tricky-names/input.js"
 									identifierName: "static"
 									end: Object {
 										column: 8
@@ -1578,7 +1578,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 8
 									index: 301
@@ -1592,7 +1592,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
 								index: 309
@@ -1608,7 +1608,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
 									index: 309
@@ -1631,7 +1631,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
 									index: 306
@@ -1657,7 +1657,7 @@ JSRoot {
 								line: 51
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 8
 									index: 301

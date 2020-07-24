@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/type-alias/declare/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/type-alias/declare/input.ts"
 		end: Object {
 			column: 0
 			index: 25
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "T"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/type-alias/declare/input.ts"
 					identifierName: "T"
 					end: Object {
 						column: 14
@@ -53,7 +53,7 @@ JSRoot {
 			declare: true
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/type-alias/declare/input.ts"
 				end: Object {
 					column: 24
 					index: 24
@@ -67,7 +67,7 @@ JSRoot {
 			}
 			right: TSNumberKeywordTypeAnnotation {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/type-alias/declare/input.ts"
 					end: Object {
 						column: 23
 						index: 23

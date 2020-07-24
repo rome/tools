@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/433/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/433/input.js"
 		end: Object {
 			column: 7
 			index: 7
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unterminated comment"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/433/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/433/input.js"
 				end: Object {
 					column: 7
 					index: 7
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "hello"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/433/input.js"
 					identifierName: "hello"
 					end: Object {
 						column: 7
@@ -96,7 +96,7 @@ JSRoot {
 
 ```
 
- input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/433/input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated comment
 

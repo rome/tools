@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/variable-declarator/definite-assignment/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/variable-declarator/definite-assignment/input.ts"
 		end: Object {
 			column: 0
 			index: 16
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/variable-declarator/definite-assignment/input.ts"
 				end: Object {
 					column: 15
 					index: 15
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/variable-declarator/definite-assignment/input.ts"
 					end: Object {
 						column: 15
 						index: 15
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/variable-declarator/definite-assignment/input.ts"
 								end: Object {
 									column: 14
 									index: 14
@@ -81,7 +81,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: true
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/variable-declarator/definite-assignment/input.ts"
 									end: Object {
 										column: 14
 										index: 14
@@ -95,7 +95,7 @@ JSRoot {
 								}
 								typeAnnotation: TSNumberKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/variable-declarator/definite-assignment/input.ts"
 										end: Object {
 											column: 14
 											index: 14
@@ -112,7 +112,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/variable-declarator/definite-assignment/input.ts"
 							end: Object {
 								column: 14
 								index: 14

@@ -11,7 +11,7 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.tsx"
+	filename: "typescript/arrow-function/generic-tsx/input.tsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
@@ -21,7 +21,7 @@ JSRoot {
 		"jsx"
 	]
 	loc: Object {
-		filename: "input.tsx"
+		filename: "typescript/arrow-function/generic-tsx/input.tsx"
 		end: Object {
 			column: 0
 			index: 80
@@ -38,7 +38,7 @@ JSRoot {
 			id: "0"
 			value: " Same as `generic`. Verify that JSX doesn't change things."
 			loc: Object {
-				filename: "input.tsx"
+				filename: "typescript/arrow-function/generic-tsx/input.tsx"
 				end: Object {
 					column: 60
 					index: 60
@@ -56,7 +56,7 @@ JSRoot {
 		JSExpressionStatement {
 			leadingComments: Array ["0"]
 			loc: Object {
-				filename: "input.tsx"
+				filename: "typescript/arrow-function/generic-tsx/input.tsx"
 				end: Object {
 					column: 18
 					index: 79
@@ -70,7 +70,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.tsx"
+					filename: "typescript/arrow-function/generic-tsx/input.tsx"
 					end: Object {
 						column: 17
 						index: 78
@@ -85,7 +85,7 @@ JSRoot {
 				body: JSReferenceIdentifier {
 					name: "a"
 					loc: Object {
-						filename: "input.tsx"
+						filename: "typescript/arrow-function/generic-tsx/input.tsx"
 						identifierName: "a"
 						end: Object {
 							column: 17
@@ -105,7 +105,7 @@ JSRoot {
 					rest: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.tsx"
+						filename: "typescript/arrow-function/generic-tsx/input.tsx"
 						end: Object {
 							column: 15
 							index: 76
@@ -120,7 +120,7 @@ JSRoot {
 					returnType: TSTypeReference {
 						typeParameters: undefined
 						loc: Object {
-							filename: "input.tsx"
+							filename: "typescript/arrow-function/generic-tsx/input.tsx"
 							end: Object {
 								column: 12
 								index: 73
@@ -135,7 +135,7 @@ JSRoot {
 						typeName: JSReferenceIdentifier {
 							name: "T"
 							loc: Object {
-								filename: "input.tsx"
+								filename: "typescript/arrow-function/generic-tsx/input.tsx"
 								identifierName: "T"
 								end: Object {
 									column: 12
@@ -153,7 +153,7 @@ JSRoot {
 					typeParameters: TSTypeParameterDeclaration {
 						leadingComments: undefined
 						loc: Object {
-							filename: "input.tsx"
+							filename: "typescript/arrow-function/generic-tsx/input.tsx"
 							end: Object {
 								column: 3
 								index: 64
@@ -172,7 +172,7 @@ JSRoot {
 								default: undefined
 								leadingComments: undefined
 								loc: Object {
-									filename: "input.tsx"
+									filename: "typescript/arrow-function/generic-tsx/input.tsx"
 									end: Object {
 										column: 2
 										index: 63
@@ -191,7 +191,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.tsx"
+								filename: "typescript/arrow-function/generic-tsx/input.tsx"
 								end: Object {
 									column: 15
 									index: 76
@@ -206,7 +206,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								optional: undefined
 								loc: Object {
-									filename: "input.tsx"
+									filename: "typescript/arrow-function/generic-tsx/input.tsx"
 									end: Object {
 										column: 15
 										index: 76
@@ -221,7 +221,7 @@ JSRoot {
 								typeAnnotation: TSTypeReference {
 									typeParameters: undefined
 									loc: Object {
-										filename: "input.tsx"
+										filename: "typescript/arrow-function/generic-tsx/input.tsx"
 										end: Object {
 											column: 8
 											index: 69
@@ -236,7 +236,7 @@ JSRoot {
 									typeName: JSReferenceIdentifier {
 										name: "T"
 										loc: Object {
-											filename: "input.tsx"
+											filename: "typescript/arrow-function/generic-tsx/input.tsx"
 											identifierName: "T"
 											end: Object {
 												column: 8

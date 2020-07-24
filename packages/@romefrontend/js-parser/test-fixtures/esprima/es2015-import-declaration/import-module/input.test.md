@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-import-declaration/import-module/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-import-declaration/import-module/input.js"
 		end: Object {
 			column: 0
 			index: 14
@@ -38,7 +38,7 @@ JSRoot {
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/import-module/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -53,7 +53,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/import-module/input.js"
 					end: Object {
 						column: 12
 						index: 12

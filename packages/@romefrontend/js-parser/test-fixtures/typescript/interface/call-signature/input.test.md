@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/interface/call-signature/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/interface/call-signature/input.ts"
 		end: Object {
 			column: 0
 			index: 39
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/call-signature/input.ts"
 					identifierName: "I"
 					end: Object {
 						column: 11
@@ -53,7 +53,7 @@ JSRoot {
 			extends: undefined
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/call-signature/input.ts"
 				end: Object {
 					column: 1
 					index: 38
@@ -67,7 +67,7 @@ JSRoot {
 			}
 			body: TSInterfaceBody {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/call-signature/input.ts"
 					end: Object {
 						column: 1
 						index: 38
@@ -82,7 +82,7 @@ JSRoot {
 				body: Array [
 					TSCallSignatureDeclaration {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/interface/call-signature/input.ts"
 							end: Object {
 								column: 22
 								index: 36
@@ -96,7 +96,7 @@ JSRoot {
 						}
 						typeAnnotation: TSVoidKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/call-signature/input.ts"
 								end: Object {
 									column: 21
 									index: 35
@@ -113,7 +113,7 @@ JSRoot {
 							rest: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/call-signature/input.ts"
 								end: Object {
 									column: 21
 									index: 35
@@ -129,7 +129,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "x"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/interface/call-signature/input.ts"
 										identifierName: "x"
 										end: Object {
 											column: 6
@@ -145,7 +145,7 @@ JSRoot {
 									meta: JSPatternMeta {
 										optional: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/interface/call-signature/input.ts"
 											end: Object {
 												column: 14
 												index: 28
@@ -159,7 +159,7 @@ JSRoot {
 										}
 										typeAnnotation: TSNumberKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/interface/call-signature/input.ts"
 												end: Object {
 													column: 14
 													index: 28

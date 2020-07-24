@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-object-pattern/empty-catch-param/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-object-pattern/empty-catch-param/input.js"
 		end: Object {
 			column: 0
 			index: 22
@@ -35,7 +35,7 @@ JSRoot {
 		JSTryStatement {
 			finalizer: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-object-pattern/empty-catch-param/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -51,7 +51,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-object-pattern/empty-catch-param/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			handler: JSCatchClause {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-object-pattern/empty-catch-param/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -82,7 +82,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-object-pattern/empty-catch-param/input.js"
 						end: Object {
 							column: 21
 							index: 21
@@ -99,7 +99,7 @@ JSRoot {
 					properties: Array []
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-object-pattern/empty-catch-param/input.js"
 						end: Object {
 							column: 17
 							index: 17

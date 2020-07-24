@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/basic/comment-within-condition/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/basic/comment-within-condition/input.js"
 		end: Object {
 			column: 0
 			index: 31
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " foo "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/comment-within-condition/input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -52,7 +52,7 @@ JSRoot {
 			id: "1"
 			value: " bar "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/comment-within-condition/input.js"
 				end: Object {
 					column: 13
 					index: 23
@@ -71,7 +71,7 @@ JSRoot {
 			alternate: undefined
 			leadingComments: Array ["0"]
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/comment-within-condition/input.js"
 				end: Object {
 					column: 20
 					index: 30
@@ -87,7 +87,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/comment-within-condition/input.js"
 					end: Object {
 						column: 20
 						index: 30
@@ -104,7 +104,7 @@ JSRoot {
 				name: "a"
 				leadingComments: Array ["1"]
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/comment-within-condition/input.js"
 					identifierName: "a"
 					end: Object {
 						column: 16

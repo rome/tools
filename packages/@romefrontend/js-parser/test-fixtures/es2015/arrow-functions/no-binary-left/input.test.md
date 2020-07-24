@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/arrow-functions/no-binary-left/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/arrow-functions/no-binary-left/input.js"
 		end: Object {
 			column: 16
 			index: 16
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/arrow-functions/no-binary-left/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/arrow-functions/no-binary-left/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/arrow-functions/no-binary-left/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -88,7 +88,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/arrow-functions/no-binary-left/input.js"
 						end: Object {
 							column: 8
 							index: 8
@@ -109,7 +109,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/arrow-functions/no-binary-left/input.js"
 						end: Object {
 							column: 5
 							index: 5
@@ -126,7 +126,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/arrow-functions/no-binary-left/input.js"
 				end: Object {
 					column: 11
 					index: 11
@@ -141,7 +141,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/arrow-functions/no-binary-left/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -157,7 +157,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/arrow-functions/no-binary-left/input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -172,7 +172,7 @@ JSRoot {
 			expression: JSBooleanLiteral {
 				value: true
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/arrow-functions/no-binary-left/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -194,7 +194,7 @@ JSRoot {
 
 ```
 
- input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/arrow-functions/no-binary-left/input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

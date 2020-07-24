@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/237/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/237/input.js"
 		end: Object {
 			column: 28
 			index: 28
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSWhileStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/237/input.js"
 				end: Object {
 					column: 28
 					index: 28
@@ -49,7 +49,7 @@ JSRoot {
 			test: JSBinaryExpression {
 				operator: "<"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/237/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -64,7 +64,7 @@ JSRoot {
 				left: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/237/input.js"
 						identifierName: "x"
 						end: Object {
 							column: 8
@@ -82,7 +82,7 @@ JSRoot {
 					value: 10
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/237/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -99,7 +99,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/237/input.js"
 					end: Object {
 						column: 28
 						index: 28
@@ -114,7 +114,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/237/input.js"
 							end: Object {
 								column: 21
 								index: 21
@@ -130,7 +130,7 @@ JSRoot {
 							operator: "++"
 							prefix: false
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/237/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -145,7 +145,7 @@ JSRoot {
 							argument: JSReferenceIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/237/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 18
@@ -163,7 +163,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/237/input.js"
 							end: Object {
 								column: 26
 								index: 26
@@ -179,7 +179,7 @@ JSRoot {
 							operator: "--"
 							prefix: false
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/237/input.js"
 								end: Object {
 									column: 25
 									index: 25
@@ -194,7 +194,7 @@ JSRoot {
 							argument: JSReferenceIdentifier {
 								name: "y"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/237/input.js"
 									identifierName: "y"
 									end: Object {
 										column: 23

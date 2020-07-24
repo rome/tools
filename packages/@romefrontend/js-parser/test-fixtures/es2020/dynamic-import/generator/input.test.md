@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/dynamic-import/generator/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/dynamic-import/generator/input.js"
 		end: Object {
 			column: 0
 			index: 42
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/dynamic-import/generator/input.js"
 					identifierName: "a"
 					end: Object {
 						column: 11
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/dynamic-import/generator/input.js"
 				end: Object {
 					column: 1
 					index: 41
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/dynamic-import/generator/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/dynamic-import/generator/input.js"
 					end: Object {
 						column: 1
 						index: 41
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/dynamic-import/generator/input.js"
 							end: Object {
 								column: 23
 								index: 39
@@ -119,7 +119,7 @@ JSRoot {
 						expression: JSYieldExpression {
 							delegate: false
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/dynamic-import/generator/input.js"
 								end: Object {
 									column: 22
 									index: 38
@@ -133,7 +133,7 @@ JSRoot {
 							}
 							argument: JSImportCall {
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/dynamic-import/generator/input.js"
 									end: Object {
 										column: 22
 										index: 38
@@ -148,7 +148,7 @@ JSRoot {
 								argument: JSStringLiteral {
 									value: "http"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2020/dynamic-import/generator/input.js"
 										end: Object {
 											column: 21
 											index: 37

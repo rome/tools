@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/import/export-import-require/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/import/export-import-require/input.ts"
 		end: Object {
 			column: 0
 			index: 32
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/import/export-import-require/input.ts"
 					identifierName: "a"
 					end: Object {
 						column: 15
@@ -52,7 +52,7 @@ JSRoot {
 			}
 			isExport: true
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/import/export-import-require/input.ts"
 				end: Object {
 					column: 31
 					index: 31
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			moduleReference: TSExternalModuleReference {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/import/export-import-require/input.ts"
 					end: Object {
 						column: 30
 						index: 30
@@ -81,7 +81,7 @@ JSRoot {
 				expression: JSStringLiteral {
 					value: "a"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/import/export-import-require/input.ts"
 						end: Object {
 							column: 29
 							index: 29

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/function-name-generator-method/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/function-name-generator-method/input.js"
 		end: Object {
 			column: 1
 			index: 25
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/function-name-generator-method/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/function-name-generator-method/input.js"
 				end: Object {
 					column: 1
 					index: 25
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/function-name-generator-method/input.js"
 					end: Object {
 						column: 1
 						index: 25
@@ -88,7 +88,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "yield"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/function-name-generator-method/input.js"
 									identifierName: "yield"
 									end: Object {
 										column: 8
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/function-name-generator-method/input.js"
 								end: Object {
 									column: 8
 									index: 18
@@ -117,7 +117,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/function-name-generator-method/input.js"
 							end: Object {
 								column: 13
 								index: 23
@@ -133,7 +133,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/function-name-generator-method/input.js"
 								end: Object {
 									column: 13
 									index: 23
@@ -156,7 +156,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/function-name-generator-method/input.js"
 								end: Object {
 									column: 10
 									index: 20
@@ -182,7 +182,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/function-name-generator-method/input.js"
 								end: Object {
 									column: 8
 									index: 18

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/logical-assignment-operator/qq-equals-no-plugin/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/logical-assignment-operator/qq-equals-no-plugin/input.js"
 		end: Object {
 			column: 0
 			index: 22
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/logical-assignment-operator/qq-equals-no-plugin/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "??="
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/logical-assignment-operator/qq-equals-no-plugin/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -64,7 +64,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "a"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/logical-assignment-operator/qq-equals-no-plugin/input.js"
 						identifierName: "a"
 						end: Object {
 							column: 1
@@ -81,7 +81,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "b"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/logical-assignment-operator/qq-equals-no-plugin/input.js"
 						identifierName: "b"
 						end: Object {
 							column: 7
@@ -99,7 +99,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/logical-assignment-operator/qq-equals-no-plugin/input.js"
 				end: Object {
 					column: 12
 					index: 21
@@ -114,7 +114,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "??="
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/logical-assignment-operator/qq-equals-no-plugin/input.js"
 					end: Object {
 						column: 11
 						index: 20
@@ -129,7 +129,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "b"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/logical-assignment-operator/qq-equals-no-plugin/input.js"
 						identifierName: "b"
 						end: Object {
 							column: 11
@@ -145,7 +145,7 @@ JSRoot {
 				}
 				left: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/logical-assignment-operator/qq-equals-no-plugin/input.js"
 						end: Object {
 							column: 5
 							index: 14
@@ -160,7 +160,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "obj"
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/logical-assignment-operator/qq-equals-no-plugin/input.js"
 							identifierName: "obj"
 							end: Object {
 								column: 3
@@ -178,7 +178,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/logical-assignment-operator/qq-equals-no-plugin/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 5
@@ -193,7 +193,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/logical-assignment-operator/qq-equals-no-plugin/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 5

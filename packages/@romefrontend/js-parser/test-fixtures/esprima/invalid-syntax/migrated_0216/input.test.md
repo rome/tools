@@ -11,14 +11,14 @@ JSRoot {
 	body: Array []
 	comments: Array []
 	corrupt: false
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0216/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0216/input.js"
 		end: Object {
 			column: 0
 			index: 20
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Octal literal in strict mode"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0216/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -59,7 +59,7 @@ JSRoot {
 		JSDirective {
 			value: "\\1"
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0216/input.js"
 				end: Object {
 					column: 5
 					index: 5
@@ -75,7 +75,7 @@ JSRoot {
 		JSDirective {
 			value: "use strict"
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0216/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -96,7 +96,7 @@ JSRoot {
 
 ```
 
- input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0216/input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Octal literal in strict mode
 

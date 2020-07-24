@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/declaration-let/migrated_0003/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/declaration-let/migrated_0003/input.js"
 		end: Object {
 			column: 0
 			index: 32
@@ -35,7 +35,7 @@ JSRoot {
 		JSBlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/declaration-let/migrated_0003/input.js"
 				end: Object {
 					column: 31
 					index: 31
@@ -50,7 +50,7 @@ JSRoot {
 			body: Array [
 				JSVariableDeclarationStatement {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/declaration-let/migrated_0003/input.js"
 						end: Object {
 							column: 29
 							index: 29
@@ -65,7 +65,7 @@ JSRoot {
 					declaration: JSVariableDeclaration {
 						kind: "let"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/declaration-let/migrated_0003/input.js"
 							end: Object {
 								column: 29
 								index: 29
@@ -82,7 +82,7 @@ JSRoot {
 								id: JSBindingIdentifier {
 									name: "x"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/declaration-let/migrated_0003/input.js"
 										identifierName: "x"
 										end: Object {
 											column: 7
@@ -97,7 +97,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/declaration-let/migrated_0003/input.js"
 									end: Object {
 										column: 12
 										index: 12
@@ -113,7 +113,7 @@ JSRoot {
 									value: 14
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/declaration-let/migrated_0003/input.js"
 										end: Object {
 											column: 12
 											index: 12
@@ -131,7 +131,7 @@ JSRoot {
 								id: JSBindingIdentifier {
 									name: "y"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/declaration-let/migrated_0003/input.js"
 										identifierName: "y"
 										end: Object {
 											column: 15
@@ -146,7 +146,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/declaration-let/migrated_0003/input.js"
 									end: Object {
 										column: 19
 										index: 19
@@ -162,7 +162,7 @@ JSRoot {
 									value: 3
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/declaration-let/migrated_0003/input.js"
 										end: Object {
 											column: 19
 											index: 19
@@ -180,7 +180,7 @@ JSRoot {
 								id: JSBindingIdentifier {
 									name: "z"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/declaration-let/migrated_0003/input.js"
 										identifierName: "z"
 										end: Object {
 											column: 22
@@ -195,7 +195,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/declaration-let/migrated_0003/input.js"
 									end: Object {
 										column: 29
 										index: 29
@@ -211,7 +211,7 @@ JSRoot {
 									value: 1_977
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/declaration-let/migrated_0003/input.js"
 										end: Object {
 											column: 29
 											index: 29

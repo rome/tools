@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0268/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0268/input.js"
 		end: Object {
 			column: 0
 			index: 14
@@ -44,7 +44,7 @@ JSRoot {
 				]
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0268/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -65,7 +65,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0268/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -80,7 +80,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0268/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -98,7 +98,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0268/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -116,7 +116,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/invalid-syntax/migrated_0268/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 10
@@ -131,7 +131,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0268/input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -147,7 +147,7 @@ JSRoot {
 						value: undefined
 						definite: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0268/input.js"
 							end: Object {
 								column: 12
 								index: 12
@@ -163,7 +163,7 @@ JSRoot {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0268/input.js"
 								end: Object {
 									column: 12
 									index: 12
@@ -189,7 +189,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0268/input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -214,7 +214,7 @@ JSRoot {
 
 ```
 
- input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0268/input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A type annotation is only valid inside of a TypeScript file
 

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/44/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/44/input.js"
 		end: Object {
 			column: 17
 			index: 17
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/44/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/44/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -64,7 +64,7 @@ JSRoot {
 					value: 42
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/44/input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -84,7 +84,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/44/input.js"
 						end: Object {
 							column: 14
 							index: 14
@@ -100,7 +100,7 @@ JSRoot {
 						JSBindingAssignmentPattern {
 							operator: "="
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/44/input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -115,7 +115,7 @@ JSRoot {
 							left: JSBindingIdentifier {
 								name: "eval"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/44/input.js"
 									identifierName: "eval"
 									end: Object {
 										column: 5
@@ -133,7 +133,7 @@ JSRoot {
 								value: 10
 								format: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/44/input.js"
 									end: Object {
 										column: 10
 										index: 10

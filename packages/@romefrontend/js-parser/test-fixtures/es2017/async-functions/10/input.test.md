@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/10/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/10/input.js"
 		end: Object {
 			column: 13
 			index: 27
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/10/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/10/input.js"
 				end: Object {
 					column: 3
 					index: 17
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/10/input.js"
 					end: Object {
 						column: 3
 						index: 17
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/10/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 5
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/10/input.js"
 							end: Object {
 								column: 3
 								index: 17
@@ -119,7 +119,7 @@ JSRoot {
 						}
 						init: JSCallExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/10/input.js"
 								end: Object {
 									column: 3
 									index: 17
@@ -134,7 +134,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "async"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/10/input.js"
 									identifierName: "async"
 									end: Object {
 										column: 13
@@ -152,7 +152,7 @@ JSRoot {
 								JSReferenceIdentifier {
 									name: "x"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/async-functions/10/input.js"
 										identifierName: "x"
 										end: Object {
 											column: 2
@@ -174,7 +174,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/10/input.js"
 				end: Object {
 					column: 6
 					index: 20
@@ -189,7 +189,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/10/input.js"
 					end: Object {
 						column: 6
 						index: 20
@@ -205,7 +205,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/10/input.js"
 				end: Object {
 					column: 13
 					index: 27
@@ -220,7 +220,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "+"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/10/input.js"
 					end: Object {
 						column: 12
 						index: 26
@@ -235,7 +235,7 @@ JSRoot {
 				left: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/10/input.js"
 						identifierName: "x"
 						end: Object {
 							column: 8
@@ -253,7 +253,7 @@ JSRoot {
 					value: 1
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/10/input.js"
 						end: Object {
 							column: 12
 							index: 26
@@ -276,7 +276,7 @@ JSRoot {
 
 ```
 
- input.js:2:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/10/input.js:2:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

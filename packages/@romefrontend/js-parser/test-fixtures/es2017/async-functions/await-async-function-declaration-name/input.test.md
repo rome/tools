@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/await-async-function-declaration-name/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/await-async-function-declaration-name/input.js"
 		end: Object {
 			column: 25
 			index: 25
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "await"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-async-function-declaration-name/input.js"
 					identifierName: "await"
 					end: Object {
 						column: 20
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-async-function-declaration-name/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-async-function-declaration-name/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -90,7 +90,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-async-function-declaration-name/input.js"
 					end: Object {
 						column: 22
 						index: 22

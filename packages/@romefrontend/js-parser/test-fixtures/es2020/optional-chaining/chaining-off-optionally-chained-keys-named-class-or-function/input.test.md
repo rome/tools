@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 		end: Object {
 			column: 0
 			index: 72
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -64,7 +64,7 @@ JSRoot {
 					value: JSIdentifier {
 						name: "bar"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 							identifierName: "bar"
 							end: Object {
 								column: 14
@@ -79,7 +79,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 						identifierName: "bar"
 						end: Object {
 							column: 14
@@ -95,7 +95,7 @@ JSRoot {
 				}
 				object: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -110,7 +110,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 3
@@ -128,7 +128,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "class"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 								identifierName: "class"
 								end: Object {
 									column: 10
@@ -144,7 +144,7 @@ JSRoot {
 						}
 						optional: true
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 							identifierName: "class"
 							end: Object {
 								column: 10
@@ -163,7 +163,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 				end: Object {
 					column: 17
 					index: 32
@@ -177,7 +177,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 					end: Object {
 						column: 17
 						index: 32
@@ -193,7 +193,7 @@ JSRoot {
 					value: JSIdentifier {
 						name: "bar"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 							identifierName: "bar"
 							end: Object {
 								column: 17
@@ -208,7 +208,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 						identifierName: "bar"
 						end: Object {
 							column: 17
@@ -224,7 +224,7 @@ JSRoot {
 				}
 				object: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 						end: Object {
 							column: 13
 							index: 28
@@ -239,7 +239,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 3
@@ -257,7 +257,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "function"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 								identifierName: "function"
 								end: Object {
 									column: 13
@@ -273,7 +273,7 @@ JSRoot {
 						}
 						optional: true
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 							identifierName: "function"
 							end: Object {
 								column: 13
@@ -292,7 +292,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 				end: Object {
 					column: 19
 					index: 52
@@ -306,7 +306,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 					end: Object {
 						column: 19
 						index: 52
@@ -322,7 +322,7 @@ JSRoot {
 					value: JSIdentifier {
 						name: "bar"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 							identifierName: "bar"
 							end: Object {
 								column: 19
@@ -337,7 +337,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 						identifierName: "bar"
 						end: Object {
 							column: 19
@@ -353,7 +353,7 @@ JSRoot {
 				}
 				object: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 						end: Object {
 							column: 15
 							index: 48
@@ -369,7 +369,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "class"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 								identifierName: "class"
 								end: Object {
 									column: 15
@@ -385,7 +385,7 @@ JSRoot {
 						}
 						optional: true
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 							identifierName: "class"
 							end: Object {
 								column: 15
@@ -401,7 +401,7 @@ JSRoot {
 					}
 					object: JSMemberExpression {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 							end: Object {
 								column: 8
 								index: 41
@@ -416,7 +416,7 @@ JSRoot {
 						object: JSReferenceIdentifier {
 							name: "foo"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 								identifierName: "foo"
 								end: Object {
 									column: 3
@@ -434,7 +434,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "bar"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 									identifierName: "bar"
 									end: Object {
 										column: 8
@@ -450,7 +450,7 @@ JSRoot {
 							}
 							optional: true
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 								identifierName: "bar"
 								end: Object {
 									column: 8
@@ -470,7 +470,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 				end: Object {
 					column: 18
 					index: 71
@@ -484,7 +484,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 					end: Object {
 						column: 18
 						index: 71
@@ -500,7 +500,7 @@ JSRoot {
 					value: JSIdentifier {
 						name: "bar"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 							identifierName: "bar"
 							end: Object {
 								column: 18
@@ -516,7 +516,7 @@ JSRoot {
 					}
 					optional: true
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 						identifierName: "bar"
 						end: Object {
 							column: 18
@@ -532,7 +532,7 @@ JSRoot {
 				}
 				object: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 						end: Object {
 							column: 13
 							index: 66
@@ -547,7 +547,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 3
@@ -565,7 +565,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "function"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 								identifierName: "function"
 								end: Object {
 									column: 13
@@ -581,7 +581,7 @@ JSRoot {
 						}
 						optional: true
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 							identifierName: "function"
 							end: Object {
 								column: 13

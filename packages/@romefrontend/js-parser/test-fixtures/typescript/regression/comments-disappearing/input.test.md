@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/regression/comments-disappearing/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/regression/comments-disappearing/input.ts"
 		end: Object {
 			column: 0
 			index: 71
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " one"
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/regression/comments-disappearing/input.ts"
 				end: Object {
 					column: 10
 					index: 28
@@ -52,7 +52,7 @@ JSRoot {
 			id: "1"
 			value: " two"
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/regression/comments-disappearing/input.ts"
 				end: Object {
 					column: 10
 					index: 39
@@ -69,7 +69,7 @@ JSRoot {
 			id: "2"
 			value: " three"
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/regression/comments-disappearing/input.ts"
 				end: Object {
 					column: 12
 					index: 52
@@ -86,7 +86,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/regression/comments-disappearing/input.ts"
 				end: Object {
 					column: 1
 					index: 70
@@ -101,7 +101,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/regression/comments-disappearing/input.ts"
 					end: Object {
 						column: 1
 						index: 70
@@ -118,7 +118,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "fun"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/regression/comments-disappearing/input.ts"
 								identifierName: "fun"
 								end: Object {
 									column: 7
@@ -133,7 +133,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/regression/comments-disappearing/input.ts"
 							end: Object {
 								column: 1
 								index: 70
@@ -147,7 +147,7 @@ JSRoot {
 						}
 						init: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/regression/comments-disappearing/input.ts"
 								end: Object {
 									column: 1
 									index: 70
@@ -167,7 +167,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/regression/comments-disappearing/input.ts"
 									end: Object {
 										column: 15
 										index: 15
@@ -183,7 +183,7 @@ JSRoot {
 							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/regression/comments-disappearing/input.ts"
 									end: Object {
 										column: 1
 										index: 70
@@ -203,7 +203,7 @@ JSRoot {
 											"2"
 										]
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/regression/comments-disappearing/input.ts"
 											end: Object {
 												column: 15
 												index: 68
@@ -220,7 +220,7 @@ JSRoot {
 											format: undefined
 											leadingComments: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/regression/comments-disappearing/input.ts"
 												end: Object {
 													column: 13
 													index: 66

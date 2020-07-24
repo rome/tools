@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/405/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/405/input.js"
 		end: Object {
 			column: 4
 			index: 4
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/405/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/405/input.js"
 				end: Object {
 					column: 1
 					index: 1
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "a"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/405/input.js"
 					identifierName: "a"
 					end: Object {
 						column: 1
@@ -90,7 +90,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/405/input.js"
 				end: Object {
 					column: 4
 					index: 4
@@ -105,7 +105,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "b"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/405/input.js"
 					identifierName: "b"
 					end: Object {
 						column: 3
@@ -128,7 +128,7 @@ JSRoot {
 
 ```
 
- input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/405/input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

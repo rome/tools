@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/statement-if/migrated_0004/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/statement-if/migrated_0004/input.js"
 		end: Object {
 			column: 0
 			index: 43
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSIfStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/statement-if/migrated_0004/input.js"
 				end: Object {
 					column: 42
 					index: 42
@@ -49,7 +49,7 @@ JSRoot {
 			test: JSReferenceIdentifier {
 				name: "morning"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-if/migrated_0004/input.js"
 					identifierName: "morning"
 					end: Object {
 						column: 11
@@ -65,7 +65,7 @@ JSRoot {
 			}
 			alternate: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-if/migrated_0004/input.js"
 					end: Object {
 						column: 42
 						index: 42
@@ -80,7 +80,7 @@ JSRoot {
 				expression: JSCallExpression {
 					arguments: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/statement-if/migrated_0004/input.js"
 						end: Object {
 							column: 42
 							index: 42
@@ -95,7 +95,7 @@ JSRoot {
 					callee: JSReferenceIdentifier {
 						name: "goodDay"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/statement-if/migrated_0004/input.js"
 							identifierName: "goodDay"
 							end: Object {
 								column: 40
@@ -113,7 +113,7 @@ JSRoot {
 			}
 			consequent: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-if/migrated_0004/input.js"
 					end: Object {
 						column: 27
 						index: 27
@@ -128,7 +128,7 @@ JSRoot {
 				expression: JSCallExpression {
 					arguments: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/statement-if/migrated_0004/input.js"
 						end: Object {
 							column: 26
 							index: 26
@@ -143,7 +143,7 @@ JSRoot {
 					callee: JSReferenceIdentifier {
 						name: "goodMorning"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/statement-if/migrated_0004/input.js"
 							identifierName: "goodMorning"
 							end: Object {
 								column: 24

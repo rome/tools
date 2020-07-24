@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/85/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/85/input.js"
 		end: Object {
 			column: 22
 			index: 22
@@ -35,7 +35,7 @@ JSRoot {
 		JSExportAllDeclaration {
 			exportKind: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/85/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -50,7 +50,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "crypto"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/85/input.js"
 					end: Object {
 						column: 22
 						index: 22

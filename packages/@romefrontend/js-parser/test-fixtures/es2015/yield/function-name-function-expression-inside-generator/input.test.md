@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/function-name-function-expression-inside-generator/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/function-name-function-expression-inside-generator/input.js"
 		end: Object {
 			column: 1
 			index: 43
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/function-name-function-expression-inside-generator/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 12
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/function-name-function-expression-inside-generator/input.js"
 				end: Object {
 					column: 1
 					index: 43
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/function-name-function-expression-inside-generator/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/function-name-function-expression-inside-generator/input.js"
 					end: Object {
 						column: 1
 						index: 43
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/function-name-function-expression-inside-generator/input.js"
 							end: Object {
 								column: 24
 								index: 41
@@ -120,7 +120,7 @@ JSRoot {
 							id: JSBindingIdentifier {
 								name: "yield"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/function-name-function-expression-inside-generator/input.js"
 									identifierName: "yield"
 									end: Object {
 										column: 17
@@ -135,7 +135,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/function-name-function-expression-inside-generator/input.js"
 								end: Object {
 									column: 22
 									index: 39
@@ -151,7 +151,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/function-name-function-expression-inside-generator/input.js"
 									end: Object {
 										column: 22
 										index: 39
@@ -174,7 +174,7 @@ JSRoot {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/function-name-function-expression-inside-generator/input.js"
 									end: Object {
 										column: 19
 										index: 36

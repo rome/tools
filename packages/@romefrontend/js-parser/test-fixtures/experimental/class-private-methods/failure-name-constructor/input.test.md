@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-methods/failure-name-constructor/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-methods/failure-name-constructor/input.js"
 		end: Object {
 			column: 0
 			index: 35
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Classes may not have a private field named '#constructor'"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-methods/failure-name-constructor/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-methods/failure-name-constructor/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-methods/failure-name-constructor/input.js"
 				end: Object {
 					column: 1
 					index: 34
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-methods/failure-name-constructor/input.js"
 					end: Object {
 						column: 1
 						index: 34
@@ -112,7 +112,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "constructor"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-methods/failure-name-constructor/input.js"
 									identifierName: "constructor"
 									end: Object {
 										column: 14
@@ -127,7 +127,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/failure-name-constructor/input.js"
 								end: Object {
 									column: 14
 									index: 26
@@ -141,7 +141,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-methods/failure-name-constructor/input.js"
 							end: Object {
 								column: 19
 								index: 31
@@ -157,7 +157,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/failure-name-constructor/input.js"
 								end: Object {
 									column: 19
 									index: 31
@@ -180,7 +180,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/failure-name-constructor/input.js"
 								end: Object {
 									column: 16
 									index: 28
@@ -206,7 +206,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/failure-name-constructor/input.js"
 								end: Object {
 									column: 14
 									index: 26
@@ -231,7 +231,7 @@ JSRoot {
 
 ```
 
- input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-private-methods/failure-name-constructor/input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━
 
   ✖ Classes may not have a private field named '#constructor'
 

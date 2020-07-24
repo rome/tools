@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 		end: Object {
 			column: 0
 			index: 35
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected keyword from"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			importKind: undefined
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -75,7 +75,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: ""
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -90,7 +90,7 @@ JSRoot {
 			}
 			defaultSpecifier: JSImportDefaultSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -106,7 +106,7 @@ JSRoot {
 					name: JSBindingIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 10
@@ -122,7 +122,7 @@ JSRoot {
 					}
 					importKind: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -139,7 +139,7 @@ JSRoot {
 			namedSpecifiers: Array [
 				JSImportSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 						end: Object {
 							column: 16
 							index: 16
@@ -154,7 +154,7 @@ JSRoot {
 					imported: JSIdentifier {
 						name: "bar"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 							identifierName: "bar"
 							end: Object {
 								column: 16
@@ -172,7 +172,7 @@ JSRoot {
 						name: JSBindingIdentifier {
 							name: "bar"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 								identifierName: "bar"
 								end: Object {
 									column: 16
@@ -188,7 +188,7 @@ JSRoot {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 							end: Object {
 								column: 16
 								index: 16
@@ -206,7 +206,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -221,7 +221,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -237,7 +237,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -252,7 +252,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 22
@@ -269,7 +269,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 				end: Object {
 					column: 27
 					index: 27
@@ -284,7 +284,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "from"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 					identifierName: "from"
 					end: Object {
 						column: 27
@@ -301,7 +301,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 				end: Object {
 					column: 34
 					index: 34
@@ -316,7 +316,7 @@ JSRoot {
 			expression: JSStringLiteral {
 				value: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 					end: Object {
 						column: 33
 						index: 33
@@ -338,7 +338,8 @@ JSRoot {
 
 ```
 
- input.js:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js:1:17
+parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected keyword from
 

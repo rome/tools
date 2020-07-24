@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/basic/12/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/basic/12/input.jsx"
 		end: Object {
 			column: 41
 			index: 41
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/basic/12/input.jsx"
 				end: Object {
 					column: 41
 					index: 41
@@ -50,7 +50,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "div"
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/basic/12/input.jsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -67,7 +67,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/basic/12/input.jsx"
 					end: Object {
 						column: 41
 						index: 41
@@ -84,7 +84,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "br"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/basic/12/input.jsx"
 								end: Object {
 									column: 8
 									index: 8
@@ -102,7 +102,7 @@ JSRoot {
 						selfClosing: true
 						typeArguments: undefined
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/basic/12/input.jsx"
 							end: Object {
 								column: 11
 								index: 11
@@ -118,7 +118,7 @@ JSRoot {
 					JSXText {
 						value: "7x invalid-js-identifier"
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/basic/12/input.jsx"
 							end: Object {
 								column: 35
 								index: 35

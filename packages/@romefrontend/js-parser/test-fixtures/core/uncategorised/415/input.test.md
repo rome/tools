@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/415/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/415/input.js"
 		end: Object {
 			column: 22
 			index: 22
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ;"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/415/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSForStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/415/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/415/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -88,7 +88,7 @@ JSRoot {
 			test: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/415/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -104,7 +104,7 @@ JSRoot {
 			update: JSObjectExpression {
 				properties: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/415/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -120,7 +120,7 @@ JSRoot {
 			init: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/415/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -137,7 +137,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "i"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/415/input.js"
 								identifierName: "i"
 								end: Object {
 									column: 10
@@ -153,7 +153,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/415/input.js"
 							end: Object {
 								column: 10
 								index: 10
@@ -170,7 +170,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "i2"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/415/input.js"
 								identifierName: "i2"
 								end: Object {
 									column: 14
@@ -186,7 +186,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/415/input.js"
 							end: Object {
 								column: 14
 								index: 14
@@ -210,7 +210,7 @@ JSRoot {
 
 ```
 
- input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/415/input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ;
 

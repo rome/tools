@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
 		end: Object {
 			column: 1
 			index: 42
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "yield is not allowed in generator parameters"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 12
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
 				end: Object {
 					column: 1
 					index: 42
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
 					end: Object {
 						column: 1
 						index: 42
@@ -128,7 +128,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
 							end: Object {
 								column: 23
 								index: 40
@@ -142,7 +142,7 @@ JSRoot {
 						}
 						expression: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
 								end: Object {
 									column: 22
 									index: 39
@@ -158,7 +158,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
 									end: Object {
 										column: 22
 										index: 39
@@ -178,7 +178,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
 									end: Object {
 										column: 19
 										index: 36
@@ -194,7 +194,7 @@ JSRoot {
 									JSBindingAssignmentPattern {
 										operator: "="
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
 											end: Object {
 												column: 15
 												index: 32
@@ -209,7 +209,7 @@ JSRoot {
 										left: JSBindingIdentifier {
 											name: "x"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
 												identifierName: "x"
 												end: Object {
 													column: 4
@@ -226,7 +226,7 @@ JSRoot {
 										right: JSYieldExpression {
 											delegate: false
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
 												end: Object {
 													column: 15
 													index: 32
@@ -241,7 +241,7 @@ JSRoot {
 											argument: JSReferenceIdentifier {
 												name: "fn"
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
 													identifierName: "fn"
 													end: Object {
 														column: 15
@@ -272,7 +272,7 @@ JSRoot {
 
 ```
 
- input.js:2:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js:2:12 parse/js ━━━━━━━━━━━━━
 
   ✖ yield is not allowed in generator parameters
 

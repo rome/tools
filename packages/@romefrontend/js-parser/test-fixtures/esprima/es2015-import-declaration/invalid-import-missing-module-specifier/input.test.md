@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js"
 		end: Object {
 			column: 0
 			index: 20
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected keyword from"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -61,7 +61,7 @@ JSRoot {
 			importKind: undefined
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -76,7 +76,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: ""
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -92,7 +92,7 @@ JSRoot {
 			namedSpecifiers: Array [
 				JSImportSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js"
 						end: Object {
 							column: 12
 							index: 12
@@ -107,7 +107,7 @@ JSRoot {
 					imported: JSIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 12
@@ -125,7 +125,7 @@ JSRoot {
 						name: JSBindingIdentifier {
 							name: "foo"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js"
 								identifierName: "foo"
 								end: Object {
 									column: 12
@@ -141,7 +141,7 @@ JSRoot {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js"
 							end: Object {
 								column: 12
 								index: 12
@@ -157,7 +157,7 @@ JSRoot {
 				}
 				JSImportSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -172,7 +172,7 @@ JSRoot {
 					imported: JSIdentifier {
 						name: "bar"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js"
 							identifierName: "bar"
 							end: Object {
 								column: 17
@@ -190,7 +190,7 @@ JSRoot {
 						name: JSBindingIdentifier {
 							name: "bar"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js"
 								identifierName: "bar"
 								end: Object {
 									column: 17
@@ -206,7 +206,7 @@ JSRoot {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js"
 							end: Object {
 								column: 17
 								index: 17
@@ -230,7 +230,7 @@ JSRoot {
 
 ```
 
- input.js:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js:2 parse/js ━━━━━
 
   ✖ Expected keyword from
 

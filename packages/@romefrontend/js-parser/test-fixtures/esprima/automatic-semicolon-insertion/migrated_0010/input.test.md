@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/automatic-semicolon-insertion/migrated_0010/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/automatic-semicolon-insertion/migrated_0010/input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/automatic-semicolon-insertion/migrated_0010/input.js"
 				end: Object {
 					column: 5
 					index: 25
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSFunctionExpression {
 				id: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/automatic-semicolon-insertion/migrated_0010/input.js"
 					end: Object {
 						column: 4
 						index: 24
@@ -71,7 +71,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/automatic-semicolon-insertion/migrated_0010/input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -87,7 +87,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/automatic-semicolon-insertion/migrated_0010/input.js"
 						end: Object {
 							column: 4
 							index: 24
@@ -103,7 +103,7 @@ JSRoot {
 						JSReturnStatement {
 							argument: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/automatic-semicolon-insertion/migrated_0010/input.js"
 								end: Object {
 									column: 19
 									index: 19
@@ -118,7 +118,7 @@ JSRoot {
 						}
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/automatic-semicolon-insertion/migrated_0010/input.js"
 								end: Object {
 									column: 2
 									index: 22
@@ -133,7 +133,7 @@ JSRoot {
 							expression: JSReferenceIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/automatic-semicolon-insertion/migrated_0010/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 1

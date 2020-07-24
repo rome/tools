@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/class/extends-strict/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/class/extends-strict/input.js"
 		end: Object {
 			column: 0
 			index: 65
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "'with' in strict mode"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/class/extends-strict/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class/extends-strict/input.js"
 					identifierName: "C"
 					end: Object {
 						column: 7
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/class/extends-strict/input.js"
 				end: Object {
 					column: 7
 					index: 64
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class/extends-strict/input.js"
 					end: Object {
 						column: 7
 						index: 64
@@ -108,7 +108,7 @@ JSRoot {
 				superClass: JSCallExpression {
 					arguments: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/class/extends-strict/input.js"
 						end: Object {
 							column: 3
 							index: 60
@@ -124,7 +124,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "B"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class/extends-strict/input.js"
 								identifierName: "B"
 								end: Object {
 									column: 27
@@ -139,7 +139,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class/extends-strict/input.js"
 							end: Object {
 								column: 1
 								index: 58
@@ -161,7 +161,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class/extends-strict/input.js"
 								end: Object {
 									column: 29
 									index: 29
@@ -177,7 +177,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class/extends-strict/input.js"
 								end: Object {
 									column: 1
 									index: 58
@@ -192,7 +192,7 @@ JSRoot {
 							body: Array [
 								JSWithStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/class/extends-strict/input.js"
 										end: Object {
 											column: 12
 											index: 44
@@ -206,7 +206,7 @@ JSRoot {
 									}
 									body: JSEmptyStatement {
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/class/extends-strict/input.js"
 											end: Object {
 												column: 12
 												index: 44
@@ -222,7 +222,7 @@ JSRoot {
 									object: JSObjectExpression {
 										properties: Array []
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/class/extends-strict/input.js"
 											end: Object {
 												column: 10
 												index: 42
@@ -238,7 +238,7 @@ JSRoot {
 								}
 								JSReturnStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/class/extends-strict/input.js"
 										end: Object {
 											column: 11
 											index: 56
@@ -253,7 +253,7 @@ JSRoot {
 									argument: JSReferenceIdentifier {
 										name: "B"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/class/extends-strict/input.js"
 											identifierName: "B"
 											end: Object {
 												column: 10
@@ -282,7 +282,7 @@ JSRoot {
 
 ```
 
- input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/class/extends-strict/input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ 'with' in strict mode
 

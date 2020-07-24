@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/expression-left-hand-side/migrated_0017/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/expression-left-hand-side/migrated_0017/input.js"
 		end: Object {
 			column: 0
 			index: 42
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/expression-left-hand-side/migrated_0017/input.js"
 				end: Object {
 					column: 41
 					index: 41
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/expression-left-hand-side/migrated_0017/input.js"
 					end: Object {
 						column: 41
 						index: 41
@@ -64,7 +64,7 @@ JSRoot {
 					value: JSIdentifier {
 						name: "milkyway"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/expression-left-hand-side/migrated_0017/input.js"
 							identifierName: "milkyway"
 							end: Object {
 								column: 41
@@ -79,7 +79,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-left-hand-side/migrated_0017/input.js"
 						identifierName: "milkyway"
 						end: Object {
 							column: 41
@@ -95,7 +95,7 @@ JSRoot {
 				}
 				object: JSCallExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-left-hand-side/migrated_0017/input.js"
 						end: Object {
 							column: 32
 							index: 32
@@ -112,7 +112,7 @@ JSRoot {
 							value: 14
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/expression-left-hand-side/migrated_0017/input.js"
 								end: Object {
 									column: 24
 									index: 24
@@ -129,7 +129,7 @@ JSRoot {
 							value: 3
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/expression-left-hand-side/migrated_0017/input.js"
 								end: Object {
 									column: 27
 									index: 27
@@ -146,7 +146,7 @@ JSRoot {
 							value: 77
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/expression-left-hand-side/migrated_0017/input.js"
 								end: Object {
 									column: 31
 									index: 31
@@ -162,7 +162,7 @@ JSRoot {
 					]
 					callee: JSMemberExpression {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/expression-left-hand-side/migrated_0017/input.js"
 							end: Object {
 								column: 21
 								index: 21
@@ -178,7 +178,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "galaxies"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/expression-left-hand-side/migrated_0017/input.js"
 									identifierName: "galaxies"
 									end: Object {
 										column: 21
@@ -193,7 +193,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/expression-left-hand-side/migrated_0017/input.js"
 								identifierName: "galaxies"
 								end: Object {
 									column: 21
@@ -209,7 +209,7 @@ JSRoot {
 						}
 						object: JSCallExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/expression-left-hand-side/migrated_0017/input.js"
 								end: Object {
 									column: 12
 									index: 12
@@ -224,7 +224,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "universe"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/expression-left-hand-side/migrated_0017/input.js"
 									identifierName: "universe"
 									end: Object {
 										column: 8
@@ -243,7 +243,7 @@ JSRoot {
 									value: 42
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/expression-left-hand-side/migrated_0017/input.js"
 										end: Object {
 											column: 11
 											index: 11

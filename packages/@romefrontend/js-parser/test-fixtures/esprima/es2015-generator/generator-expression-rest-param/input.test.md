@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-generator/generator-expression-rest-param/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-generator/generator-expression-rest-param/input.js"
 		end: Object {
 			column: 0
 			index: 21
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-generator/generator-expression-rest-param/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSFunctionExpression {
 				id: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-generator/generator-expression-rest-param/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -65,7 +65,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-generator/generator-expression-rest-param/input.js"
 						end: Object {
 							column: 19
 							index: 19
@@ -87,7 +87,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-generator/generator-expression-rest-param/input.js"
 						end: Object {
 							column: 16
 							index: 16
@@ -102,7 +102,7 @@ JSRoot {
 					rest: JSBindingIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-generator/generator-expression-rest-param/input.js"
 							identifierName: "x"
 							end: Object {
 								column: 15
@@ -119,7 +119,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/generator-expression-rest-param/input.js"
 								end: Object {
 									column: 15
 									index: 15

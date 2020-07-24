@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-export-declaration/invalid-export-named-default/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-export-declaration/invalid-export-named-default/input.js"
 		end: Object {
 			column: 0
 			index: 17
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected keyword default"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/invalid-export-named-default/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			declaration: undefined
 			exportKind: "value"
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/invalid-export-named-default/input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -75,7 +75,7 @@ JSRoot {
 			specifiers: Array [
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-export-declaration/invalid-export-named-default/input.js"
 						end: Object {
 							column: 15
 							index: 15
@@ -90,7 +90,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "default"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-export-declaration/invalid-export-named-default/input.js"
 							identifierName: "default"
 							end: Object {
 								column: 15
@@ -107,7 +107,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "default"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-export-declaration/invalid-export-named-default/input.js"
 							identifierName: "default"
 							end: Object {
 								column: 15
@@ -132,7 +132,7 @@ JSRoot {
 
 ```
 
- input.js:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-export-declaration/invalid-export-named-default/input.js:1:8 parse/js ━━━━━━━━━━━━━━
 
   ✖ Unexpected keyword default
 

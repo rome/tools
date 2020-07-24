@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-methods/async-generator/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-methods/async-generator/input.js"
 		end: Object {
 			column: 0
 			index: 213
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-methods/async-generator/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-methods/async-generator/input.js"
 				end: Object {
 					column: 1
 					index: 212
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-methods/async-generator/input.js"
 					end: Object {
 						column: 1
 						index: 212
@@ -88,7 +88,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "readLines"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-methods/async-generator/input.js"
 									identifierName: "readLines"
 									end: Object {
 										column: 19
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/async-generator/input.js"
 								end: Object {
 									column: 19
 									index: 31
@@ -117,7 +117,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-methods/async-generator/input.js"
 							end: Object {
 								column: 3
 								index: 210
@@ -142,7 +142,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/async-generator/input.js"
 								end: Object {
 									column: 19
 									index: 31
@@ -164,7 +164,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/async-generator/input.js"
 								end: Object {
 									column: 25
 									index: 37
@@ -180,7 +180,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "path"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-methods/async-generator/input.js"
 										identifierName: "path"
 										end: Object {
 											column: 24
@@ -197,7 +197,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-methods/async-generator/input.js"
 											end: Object {
 												column: 24
 												index: 36
@@ -216,7 +216,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/async-generator/input.js"
 								end: Object {
 									column: 3
 									index: 210
@@ -231,7 +231,7 @@ JSRoot {
 							body: Array [
 								JSVariableDeclarationStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-methods/async-generator/input.js"
 										end: Object {
 											column: 36
 											index: 76
@@ -246,7 +246,7 @@ JSRoot {
 									declaration: JSVariableDeclaration {
 										kind: "let"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-methods/async-generator/input.js"
 											end: Object {
 												column: 36
 												index: 76
@@ -263,7 +263,7 @@ JSRoot {
 												id: JSBindingIdentifier {
 													name: "file"
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-methods/async-generator/input.js"
 														identifierName: "file"
 														end: Object {
 															column: 12
@@ -278,7 +278,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-methods/async-generator/input.js"
 													end: Object {
 														column: 35
 														index: 75
@@ -292,7 +292,7 @@ JSRoot {
 												}
 												init: JSAwaitExpression {
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-methods/async-generator/input.js"
 														end: Object {
 															column: 35
 															index: 75
@@ -306,7 +306,7 @@ JSRoot {
 													}
 													argument: JSCallExpression {
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-methods/async-generator/input.js"
 															end: Object {
 																column: 35
 																index: 75
@@ -321,7 +321,7 @@ JSRoot {
 														callee: JSReferenceIdentifier {
 															name: "fileOpen"
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-methods/async-generator/input.js"
 																identifierName: "fileOpen"
 																end: Object {
 																	column: 29
@@ -339,7 +339,7 @@ JSRoot {
 															JSReferenceIdentifier {
 																name: "path"
 																loc: Object {
-																	filename: "input.js"
+																	filename: "experimental/class-private-methods/async-generator/input.js"
 																	identifierName: "path"
 																	end: Object {
 																		column: 34
@@ -363,7 +363,7 @@ JSRoot {
 								JSTryStatement {
 									handler: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-methods/async-generator/input.js"
 										end: Object {
 											column: 5
 											index: 206
@@ -378,7 +378,7 @@ JSRoot {
 									finalizer: JSBlockStatement {
 										directives: Array []
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-methods/async-generator/input.js"
 											end: Object {
 												column: 5
 												index: 206
@@ -393,7 +393,7 @@ JSRoot {
 										body: Array [
 											JSExpressionStatement {
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-methods/async-generator/input.js"
 													end: Object {
 														column: 25
 														index: 200
@@ -407,7 +407,7 @@ JSRoot {
 												}
 												expression: JSAwaitExpression {
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-methods/async-generator/input.js"
 														end: Object {
 															column: 24
 															index: 199
@@ -422,7 +422,7 @@ JSRoot {
 													argument: JSCallExpression {
 														arguments: Array []
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-methods/async-generator/input.js"
 															end: Object {
 																column: 24
 																index: 199
@@ -436,7 +436,7 @@ JSRoot {
 														}
 														callee: JSMemberExpression {
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-methods/async-generator/input.js"
 																end: Object {
 																	column: 22
 																	index: 197
@@ -451,7 +451,7 @@ JSRoot {
 															object: JSReferenceIdentifier {
 																name: "file"
 																loc: Object {
-																	filename: "input.js"
+																	filename: "experimental/class-private-methods/async-generator/input.js"
 																	identifierName: "file"
 																	end: Object {
 																		column: 16
@@ -469,7 +469,7 @@ JSRoot {
 																value: JSIdentifier {
 																	name: "close"
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "experimental/class-private-methods/async-generator/input.js"
 																		identifierName: "close"
 																		end: Object {
 																			column: 22
@@ -484,7 +484,7 @@ JSRoot {
 																	}
 																}
 																loc: Object {
-																	filename: "input.js"
+																	filename: "experimental/class-private-methods/async-generator/input.js"
 																	identifierName: "close"
 																	end: Object {
 																		column: 22
@@ -507,7 +507,7 @@ JSRoot {
 									block: JSBlockStatement {
 										directives: Array []
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-methods/async-generator/input.js"
 											end: Object {
 												column: 5
 												index: 164
@@ -522,7 +522,7 @@ JSRoot {
 										body: Array [
 											JSWhileStatement {
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-methods/async-generator/input.js"
 													end: Object {
 														column: 7
 														index: 158
@@ -538,7 +538,7 @@ JSRoot {
 													operator: "!"
 													prefix: true
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-methods/async-generator/input.js"
 														end: Object {
 															column: 22
 															index: 110
@@ -552,7 +552,7 @@ JSRoot {
 													}
 													argument: JSMemberExpression {
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-methods/async-generator/input.js"
 															end: Object {
 																column: 22
 																index: 110
@@ -567,7 +567,7 @@ JSRoot {
 														object: JSReferenceIdentifier {
 															name: "file"
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-methods/async-generator/input.js"
 																identifierName: "file"
 																end: Object {
 																	column: 18
@@ -585,7 +585,7 @@ JSRoot {
 															value: JSIdentifier {
 																name: "EOF"
 																loc: Object {
-																	filename: "input.js"
+																	filename: "experimental/class-private-methods/async-generator/input.js"
 																	identifierName: "EOF"
 																	end: Object {
 																		column: 22
@@ -600,7 +600,7 @@ JSRoot {
 																}
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-methods/async-generator/input.js"
 																identifierName: "EOF"
 																end: Object {
 																	column: 22
@@ -619,7 +619,7 @@ JSRoot {
 												body: JSBlockStatement {
 													directives: Array []
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-methods/async-generator/input.js"
 														end: Object {
 															column: 7
 															index: 158
@@ -634,7 +634,7 @@ JSRoot {
 													body: Array [
 														JSExpressionStatement {
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-methods/async-generator/input.js"
 																end: Object {
 																	column: 36
 																	index: 150
@@ -649,7 +649,7 @@ JSRoot {
 															expression: JSYieldExpression {
 																delegate: false
 																loc: Object {
-																	filename: "input.js"
+																	filename: "experimental/class-private-methods/async-generator/input.js"
 																	end: Object {
 																		column: 35
 																		index: 149
@@ -663,7 +663,7 @@ JSRoot {
 																}
 																argument: JSAwaitExpression {
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "experimental/class-private-methods/async-generator/input.js"
 																		end: Object {
 																			column: 35
 																			index: 149
@@ -678,7 +678,7 @@ JSRoot {
 																	argument: JSCallExpression {
 																		arguments: Array []
 																		loc: Object {
-																			filename: "input.js"
+																			filename: "experimental/class-private-methods/async-generator/input.js"
 																			end: Object {
 																				column: 35
 																				index: 149
@@ -692,7 +692,7 @@ JSRoot {
 																		}
 																		callee: JSMemberExpression {
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "experimental/class-private-methods/async-generator/input.js"
 																				end: Object {
 																					column: 33
 																					index: 147
@@ -707,7 +707,7 @@ JSRoot {
 																			object: JSReferenceIdentifier {
 																				name: "file"
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-methods/async-generator/input.js"
 																					identifierName: "file"
 																					end: Object {
 																						column: 24
@@ -725,7 +725,7 @@ JSRoot {
 																				value: JSIdentifier {
 																					name: "readLine"
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "experimental/class-private-methods/async-generator/input.js"
 																						identifierName: "readLine"
 																						end: Object {
 																							column: 33
@@ -740,7 +740,7 @@ JSRoot {
 																					}
 																				}
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-methods/async-generator/input.js"
 																					identifierName: "readLine"
 																					end: Object {
 																						column: 33

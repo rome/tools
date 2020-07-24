@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/expression-primary-other/migrated_0003/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/expression-primary-other/migrated_0003/input.js"
 		end: Object {
 			column: 12
 			index: 12
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/expression-primary-other/migrated_0003/input.js"
 				end: Object {
 					column: 12
 					index: 12
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "*"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/expression-primary-other/migrated_0003/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -65,7 +65,7 @@ JSRoot {
 					value: 3
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-primary-other/migrated_0003/input.js"
 						end: Object {
 							column: 12
 							index: 12
@@ -81,7 +81,7 @@ JSRoot {
 				left: JSBinaryExpression {
 					operator: "+"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-primary-other/migrated_0003/input.js"
 						end: Object {
 							column: 6
 							index: 6
@@ -97,7 +97,7 @@ JSRoot {
 						value: 1
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/expression-primary-other/migrated_0003/input.js"
 							end: Object {
 								column: 2
 								index: 2
@@ -114,7 +114,7 @@ JSRoot {
 						value: 2
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/expression-primary-other/migrated_0003/input.js"
 							end: Object {
 								column: 6
 								index: 6

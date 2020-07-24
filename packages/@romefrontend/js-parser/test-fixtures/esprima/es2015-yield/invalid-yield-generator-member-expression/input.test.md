@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
 		end: Object {
 			column: 0
 			index: 34
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
 					identifierName: "g"
 					end: Object {
 						column: 11
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
 				end: Object {
 					column: 33
 					index: 33
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
 					end: Object {
 						column: 33
 						index: 33
@@ -128,7 +128,7 @@ JSRoot {
 				body: Array [
 					JSReturnStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
 							end: Object {
 								column: 28
 								index: 28
@@ -144,7 +144,7 @@ JSRoot {
 							argument: undefined
 							delegate: false
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
 								end: Object {
 									column: 28
 									index: 28
@@ -160,7 +160,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
 							end: Object {
 								column: 29
 								index: 29
@@ -175,7 +175,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
 								end: Object {
 									column: 29
 									index: 29
@@ -191,7 +191,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
 							end: Object {
 								column: 31
 								index: 31
@@ -206,7 +206,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 30
@@ -232,7 +232,7 @@ JSRoot {
 
 ```
 
- input.js:1:28 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-yield/invalid-yield-generator-member-expression/input.js:1:28 parse/js ━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

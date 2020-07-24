@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js"
 		end: Object {
 			column: 1
 			index: 50
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 17
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js"
 				end: Object {
 					column: 1
 					index: 50
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js"
 					end: Object {
 						column: 1
 						index: 50
@@ -106,7 +106,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "g"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js"
 								identifierName: "g"
 								end: Object {
 									column: 12
@@ -121,7 +121,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js"
 							end: Object {
 								column: 26
 								index: 48
@@ -137,7 +137,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js"
 								end: Object {
 									column: 26
 									index: 48
@@ -159,7 +159,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js"
 								end: Object {
 									column: 23
 									index: 45
@@ -174,7 +174,7 @@ JSRoot {
 							params: Array [
 								JSBindingAssignmentPattern {
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js"
 										end: Object {
 											column: 22
 											index: 44
@@ -189,7 +189,7 @@ JSRoot {
 									right: JSReferenceIdentifier {
 										name: "await"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js"
 											identifierName: "await"
 											end: Object {
 												column: 22
@@ -206,7 +206,7 @@ JSRoot {
 									left: JSBindingIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js"
 											identifierName: "x"
 											end: Object {
 												column: 14
@@ -223,7 +223,7 @@ JSRoot {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js"
 												end: Object {
 													column: 14
 													index: 36

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/categorized/startline-specified/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/categorized/startline-specified/input.js"
 		end: Object {
 			column: 0
 			index: 17
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/startline-specified/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/startline-specified/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -63,7 +63,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "call"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/startline-specified/input.js"
 						identifierName: "call"
 						end: Object {
 							column: 4
@@ -82,7 +82,7 @@ JSRoot {
 						value: 1
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/startline-specified/input.js"
 							end: Object {
 								column: 6
 								index: 6
@@ -100,7 +100,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/startline-specified/input.js"
 				end: Object {
 					column: 7
 					index: 16
@@ -114,7 +114,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/startline-specified/input.js"
 					end: Object {
 						column: 6
 						index: 15
@@ -129,7 +129,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "run"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/startline-specified/input.js"
 						identifierName: "run"
 						end: Object {
 							column: 3
@@ -148,7 +148,7 @@ JSRoot {
 						value: 2
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/startline-specified/input.js"
 							end: Object {
 								column: 5
 								index: 14

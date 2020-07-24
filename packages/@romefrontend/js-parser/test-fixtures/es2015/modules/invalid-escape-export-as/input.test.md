@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/modules/invalid-escape-export-as/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/modules/invalid-escape-export-as/input.js"
 		end: Object {
 			column: 0
 			index: 23
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/modules/invalid-escape-export-as/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			declaration: undefined
 			exportKind: "value"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/invalid-escape-export-as/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -75,7 +75,7 @@ JSRoot {
 			specifiers: Array [
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/invalid-escape-export-as/input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -90,7 +90,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "X"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/modules/invalid-escape-export-as/input.js"
 							identifierName: "X"
 							end: Object {
 								column: 10
@@ -107,7 +107,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "X"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/modules/invalid-escape-export-as/input.js"
 							identifierName: "X"
 							end: Object {
 								column: 10
@@ -124,7 +124,7 @@ JSRoot {
 				}
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/invalid-escape-export-as/input.js"
 						end: Object {
 							column: 18
 							index: 18
@@ -139,7 +139,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "as"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/modules/invalid-escape-export-as/input.js"
 							identifierName: "as"
 							end: Object {
 								column: 18
@@ -156,7 +156,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "as"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/modules/invalid-escape-export-as/input.js"
 							identifierName: "as"
 							end: Object {
 								column: 18
@@ -173,7 +173,7 @@ JSRoot {
 				}
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/invalid-escape-export-as/input.js"
 						end: Object {
 							column: 20
 							index: 20
@@ -188,7 +188,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "Y"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/modules/invalid-escape-export-as/input.js"
 							identifierName: "Y"
 							end: Object {
 								column: 20
@@ -205,7 +205,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "Y"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/modules/invalid-escape-export-as/input.js"
 							identifierName: "Y"
 							end: Object {
 								column: 20
@@ -230,7 +230,7 @@ JSRoot {
 
 ```
 
- input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/modules/invalid-escape-export-as/input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ,
 

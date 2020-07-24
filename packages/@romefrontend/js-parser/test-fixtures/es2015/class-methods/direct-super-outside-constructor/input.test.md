@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
 		end: Object {
 			column: 1
 			index: 28
@@ -44,7 +44,7 @@ JSRoot {
 				]
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -65,7 +65,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -80,7 +80,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
 				end: Object {
 					column: 1
 					index: 28
@@ -98,7 +98,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
 					end: Object {
 						column: 1
 						index: 28
@@ -117,7 +117,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 3
@@ -132,7 +132,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
 								end: Object {
 									column: 3
 									index: 13
@@ -146,7 +146,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
 							end: Object {
 								column: 16
 								index: 26
@@ -168,7 +168,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
 								end: Object {
 									column: 6
 									index: 16
@@ -194,7 +194,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
 								end: Object {
 									column: 3
 									index: 13
@@ -210,7 +210,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
 								end: Object {
 									column: 16
 									index: 26
@@ -225,7 +225,7 @@ JSRoot {
 							body: Array [
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
 										end: Object {
 											column: 15
 											index: 25
@@ -240,7 +240,7 @@ JSRoot {
 									expression: JSCallExpression {
 										arguments: Array []
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
 											end: Object {
 												column: 15
 												index: 25
@@ -254,7 +254,7 @@ JSRoot {
 										}
 										callee: JSSuper {
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
 												end: Object {
 													column: 13
 													index: 23
@@ -283,7 +283,7 @@ JSRoot {
 
 ```
 
- input.js:2:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/class-methods/direct-super-outside-constructor/input.js:2:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ super() is only valid inside a class constructor of a subclass
 

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/parameter-name-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/parameter-name-function/input.js"
 		end: Object {
 			column: 21
 			index: 21
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-name-function/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 11
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/parameter-name-function/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-name-function/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -89,7 +89,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-name-function/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -105,7 +105,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "yield"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/parameter-name-function/input.js"
 							identifierName: "yield"
 							end: Object {
 								column: 17
@@ -122,7 +122,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/parameter-name-function/input.js"
 								end: Object {
 									column: 17
 									index: 17

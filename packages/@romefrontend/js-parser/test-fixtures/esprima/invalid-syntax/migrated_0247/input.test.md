@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0247/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0247/input.js"
 		end: Object {
 			column: 0
 			index: 40
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "package is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0247/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0247/input.js"
 				end: Object {
 					column: 39
 					index: 39
@@ -74,7 +74,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "a"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0247/input.js"
 						identifierName: "a"
 						end: Object {
 							column: 11
@@ -89,7 +89,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0247/input.js"
 					end: Object {
 						column: 38
 						index: 38
@@ -104,7 +104,7 @@ JSRoot {
 				body: JSBlockStatement {
 					body: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0247/input.js"
 						end: Object {
 							column: 38
 							index: 38
@@ -120,7 +120,7 @@ JSRoot {
 						JSDirective {
 							value: "use strict"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0247/input.js"
 								end: Object {
 									column: 36
 									index: 36
@@ -144,7 +144,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0247/input.js"
 						end: Object {
 							column: 20
 							index: 20
@@ -160,7 +160,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "package"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0247/input.js"
 								identifierName: "package"
 								end: Object {
 									column: 19
@@ -177,7 +177,7 @@ JSRoot {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/invalid-syntax/migrated_0247/input.js"
 									end: Object {
 										column: 19
 										index: 19
@@ -203,7 +203,7 @@ JSRoot {
 
 ```
 
- input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0247/input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ package is a reserved word
 

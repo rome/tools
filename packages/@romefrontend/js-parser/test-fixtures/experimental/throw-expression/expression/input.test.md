@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/throw-expression/expression/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/throw-expression/expression/input.js"
 		end: Object {
 			column: 0
 			index: 33
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "test"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/throw-expression/expression/input.js"
 					identifierName: "test"
 					end: Object {
 						column: 13
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/throw-expression/expression/input.js"
 				end: Object {
 					column: 1
 					index: 32
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/throw-expression/expression/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/throw-expression/expression/input.js"
 					end: Object {
 						column: 1
 						index: 32
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/throw-expression/expression/input.js"
 							end: Object {
 								column: 12
 								index: 30
@@ -120,7 +120,7 @@ JSRoot {
 							operator: "throw"
 							prefix: true
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/throw-expression/expression/input.js"
 								end: Object {
 									column: 10
 									index: 28
@@ -136,7 +136,7 @@ JSRoot {
 								value: 1
 								format: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/throw-expression/expression/input.js"
 									end: Object {
 										column: 10
 										index: 28

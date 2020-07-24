@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/union-intersection/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/union-intersection/input.ts"
 		end: Object {
 			column: 0
 			index: 161
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/union-intersection/input.ts"
 				end: Object {
 					column: 37
 					index: 37
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/union-intersection/input.ts"
 					end: Object {
 						column: 37
 						index: 37
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "union"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/union-intersection/input.ts"
 								end: Object {
 									column: 36
 									index: 36
@@ -81,7 +81,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/union-intersection/input.ts"
 									end: Object {
 										column: 36
 										index: 36
@@ -95,7 +95,7 @@ JSRoot {
 								}
 								typeAnnotation: TSUnionTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/union-intersection/input.ts"
 										end: Object {
 											column: 36
 											index: 36
@@ -110,7 +110,7 @@ JSRoot {
 									types: Array [
 										TSNumberKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/union-intersection/input.ts"
 												end: Object {
 													column: 17
 													index: 17
@@ -125,7 +125,7 @@ JSRoot {
 										}
 										TSNullKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/union-intersection/input.ts"
 												end: Object {
 													column: 24
 													index: 24
@@ -140,7 +140,7 @@ JSRoot {
 										}
 										TSUndefinedKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/union-intersection/input.ts"
 												end: Object {
 													column: 36
 													index: 36
@@ -159,7 +159,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/union-intersection/input.ts"
 							end: Object {
 								column: 36
 								index: 36
@@ -177,7 +177,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/union-intersection/input.ts"
 				end: Object {
 					column: 34
 					index: 72
@@ -192,7 +192,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/union-intersection/input.ts"
 					end: Object {
 						column: 34
 						index: 72
@@ -209,7 +209,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "intersection"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/union-intersection/input.ts"
 								end: Object {
 									column: 33
 									index: 71
@@ -224,7 +224,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/union-intersection/input.ts"
 									end: Object {
 										column: 33
 										index: 71
@@ -238,7 +238,7 @@ JSRoot {
 								}
 								typeAnnotation: TSIntersectionTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/union-intersection/input.ts"
 										end: Object {
 											column: 33
 											index: 71
@@ -253,7 +253,7 @@ JSRoot {
 									types: Array [
 										TSNumberKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/union-intersection/input.ts"
 												end: Object {
 													column: 24
 													index: 62
@@ -268,7 +268,7 @@ JSRoot {
 										}
 										TSStringKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/union-intersection/input.ts"
 												end: Object {
 													column: 33
 													index: 71
@@ -287,7 +287,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/union-intersection/input.ts"
 							end: Object {
 								column: 33
 								index: 71
@@ -305,7 +305,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/union-intersection/input.ts"
 				end: Object {
 					column: 43
 					index: 116
@@ -320,7 +320,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/union-intersection/input.ts"
 					end: Object {
 						column: 43
 						index: 116
@@ -337,7 +337,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "precedence1"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/union-intersection/input.ts"
 								end: Object {
 									column: 42
 									index: 115
@@ -352,7 +352,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/union-intersection/input.ts"
 									end: Object {
 										column: 42
 										index: 115
@@ -366,7 +366,7 @@ JSRoot {
 								}
 								typeAnnotation: TSUnionTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/union-intersection/input.ts"
 										end: Object {
 											column: 42
 											index: 115
@@ -381,7 +381,7 @@ JSRoot {
 									types: Array [
 										TSNumberKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/union-intersection/input.ts"
 												end: Object {
 													column: 23
 													index: 96
@@ -396,7 +396,7 @@ JSRoot {
 										}
 										TSIntersectionTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/union-intersection/input.ts"
 												end: Object {
 													column: 42
 													index: 115
@@ -411,7 +411,7 @@ JSRoot {
 											types: Array [
 												TSStringKeywordTypeAnnotation {
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/types/union-intersection/input.ts"
 														end: Object {
 															column: 32
 															index: 105
@@ -426,7 +426,7 @@ JSRoot {
 												}
 												TSBooleanKeywordTypeAnnotation {
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/types/union-intersection/input.ts"
 														end: Object {
 															column: 42
 															index: 115
@@ -447,7 +447,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/union-intersection/input.ts"
 							end: Object {
 								column: 42
 								index: 115
@@ -465,7 +465,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/union-intersection/input.ts"
 				end: Object {
 					column: 43
 					index: 160
@@ -480,7 +480,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/union-intersection/input.ts"
 					end: Object {
 						column: 43
 						index: 160
@@ -497,7 +497,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "precedence2"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/union-intersection/input.ts"
 								end: Object {
 									column: 42
 									index: 159
@@ -512,7 +512,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/union-intersection/input.ts"
 									end: Object {
 										column: 42
 										index: 159
@@ -526,7 +526,7 @@ JSRoot {
 								}
 								typeAnnotation: TSUnionTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/union-intersection/input.ts"
 										end: Object {
 											column: 42
 											index: 159
@@ -541,7 +541,7 @@ JSRoot {
 									types: Array [
 										TSIntersectionTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/union-intersection/input.ts"
 												end: Object {
 													column: 32
 													index: 149
@@ -556,7 +556,7 @@ JSRoot {
 											types: Array [
 												TSNumberKeywordTypeAnnotation {
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/types/union-intersection/input.ts"
 														end: Object {
 															column: 23
 															index: 140
@@ -571,7 +571,7 @@ JSRoot {
 												}
 												TSStringKeywordTypeAnnotation {
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/types/union-intersection/input.ts"
 														end: Object {
 															column: 32
 															index: 149
@@ -588,7 +588,7 @@ JSRoot {
 										}
 										TSBooleanKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/union-intersection/input.ts"
 												end: Object {
 													column: 42
 													index: 159
@@ -607,7 +607,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/union-intersection/input.ts"
 							end: Object {
 								column: 42
 								index: 159

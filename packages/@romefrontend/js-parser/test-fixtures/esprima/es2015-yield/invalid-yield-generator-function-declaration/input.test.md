@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-yield/invalid-yield-generator-function-declaration/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/invalid-yield-generator-function-declaration/input.js"
 		end: Object {
 			column: 0
 			index: 38
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/invalid-yield-generator-function-declaration/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/invalid-yield-generator-function-declaration/input.js"
 					identifierName: "g"
 					end: Object {
 						column: 11
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/invalid-yield-generator-function-declaration/input.js"
 				end: Object {
 					column: 37
 					index: 37
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/invalid-yield-generator-function-declaration/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/invalid-yield-generator-function-declaration/input.js"
 					end: Object {
 						column: 37
 						index: 37
@@ -130,7 +130,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "yield"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/invalid-yield-generator-function-declaration/input.js"
 								identifierName: "yield"
 								end: Object {
 									column: 30
@@ -145,7 +145,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-yield/invalid-yield-generator-function-declaration/input.js"
 							end: Object {
 								column: 35
 								index: 35
@@ -161,7 +161,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/invalid-yield-generator-function-declaration/input.js"
 								end: Object {
 									column: 35
 									index: 35
@@ -184,7 +184,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/invalid-yield-generator-function-declaration/input.js"
 								end: Object {
 									column: 32
 									index: 32
@@ -209,7 +209,7 @@ JSRoot {
 
 ```
 
- input.js:1:25 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-yield/invalid-yield-generator-function-declaration/input.js:1:25 parse/js ━━━━━━━━━━
 
   ✖ Can not use 'yield' as identifier inside a generator
 

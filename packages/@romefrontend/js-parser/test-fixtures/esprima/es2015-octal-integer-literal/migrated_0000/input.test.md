@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-octal-integer-literal/migrated_0000/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-octal-integer-literal/migrated_0000/input.js"
 		end: Object {
 			column: 0
 			index: 3
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-octal-integer-literal/migrated_0000/input.js"
 				end: Object {
 					column: 2
 					index: 2
@@ -50,7 +50,7 @@ JSRoot {
 				value: 0
 				format: "octal"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-octal-integer-literal/migrated_0000/input.js"
 					end: Object {
 						column: 2
 						index: 2

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/392/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/392/input.js"
 		end: Object {
 			column: 0
 			index: 45
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "ES2015 named imports do not destructure. Use another statement for destructuring after the import."}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/392/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			importKind: undefined
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/392/input.js"
 				end: Object {
 					column: 24
 					index: 24
@@ -75,7 +75,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: ""
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/392/input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -90,7 +90,7 @@ JSRoot {
 			}
 			defaultSpecifier: JSImportDefaultSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/392/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -106,7 +106,7 @@ JSRoot {
 					name: JSBindingIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/392/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 10
@@ -122,7 +122,7 @@ JSRoot {
 					}
 					importKind: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/392/input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -139,7 +139,7 @@ JSRoot {
 			namedSpecifiers: Array [
 				JSImportSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/392/input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -154,7 +154,7 @@ JSRoot {
 					imported: JSIdentifier {
 						name: "bar"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/392/input.js"
 							identifierName: "bar"
 							end: Object {
 								column: 17
@@ -172,7 +172,7 @@ JSRoot {
 						name: JSBindingIdentifier {
 							name: "bar"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/392/input.js"
 								identifierName: "bar"
 								end: Object {
 									column: 17
@@ -188,7 +188,7 @@ JSRoot {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/392/input.js"
 							end: Object {
 								column: 17
 								index: 17
@@ -204,7 +204,7 @@ JSRoot {
 				}
 				JSImportSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/392/input.js"
 						end: Object {
 							column: 20
 							index: 20
@@ -219,7 +219,7 @@ JSRoot {
 					imported: JSIdentifier {
 						name: ""
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/392/input.js"
 							identifierName: ""
 							end: Object {
 								column: 20
@@ -237,7 +237,7 @@ JSRoot {
 						name: JSBindingIdentifier {
 							name: ""
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/392/input.js"
 								identifierName: ""
 								end: Object {
 									column: 20
@@ -253,7 +253,7 @@ JSRoot {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/392/input.js"
 							end: Object {
 								column: 20
 								index: 20
@@ -269,7 +269,7 @@ JSRoot {
 				}
 				JSImportSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/392/input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -284,7 +284,7 @@ JSRoot {
 					imported: JSIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/392/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 22
@@ -302,7 +302,7 @@ JSRoot {
 						name: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/392/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 22
@@ -318,7 +318,7 @@ JSRoot {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/392/input.js"
 							end: Object {
 								column: 22
 								index: 22
@@ -336,7 +336,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/392/input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -351,7 +351,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/392/input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -367,7 +367,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/392/input.js"
 				end: Object {
 					column: 31
 					index: 31
@@ -382,7 +382,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "from"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/392/input.js"
 					identifierName: "from"
 					end: Object {
 						column: 31
@@ -399,7 +399,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/392/input.js"
 				end: Object {
 					column: 44
 					index: 44
@@ -414,7 +414,7 @@ JSRoot {
 			expression: JSStringLiteral {
 				value: "my-module"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/392/input.js"
 					end: Object {
 						column: 43
 						index: 43
@@ -436,7 +436,7 @@ JSRoot {
 
 ```
 
- input.js:1:19 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/392/input.js:1:19 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ ES2015 named imports do not destructure. Use another statement for destructuring after the
     import.

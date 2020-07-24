@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-identifier/estimated/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-identifier/estimated/input.js"
 		end: Object {
 			column: 0
 			index: 6
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-identifier/estimated/input.js"
 				end: Object {
 					column: 5
 					index: 5
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-identifier/estimated/input.js"
 					end: Object {
 						column: 5
 						index: 5
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "\u212e"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-identifier/estimated/input.js"
 								identifierName: "\u212e"
 								end: Object {
 									column: 5
@@ -82,7 +82,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-identifier/estimated/input.js"
 							end: Object {
 								column: 5
 								index: 5

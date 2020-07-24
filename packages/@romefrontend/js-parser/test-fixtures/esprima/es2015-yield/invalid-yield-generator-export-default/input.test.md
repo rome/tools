@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-yield/invalid-yield-generator-export-default/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/invalid-yield-generator-export-default/input.js"
 		end: Object {
 			column: 0
 			index: 36
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "yield is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/invalid-yield-generator-export-default/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/invalid-yield-generator-export-default/input.js"
 				end: Object {
 					column: 35
 					index: 35
@@ -74,7 +74,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "yield"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-yield/invalid-yield-generator-export-default/input.js"
 						identifierName: "yield"
 						end: Object {
 							column: 30
@@ -89,7 +89,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/invalid-yield-generator-export-default/input.js"
 					end: Object {
 						column: 35
 						index: 35
@@ -105,7 +105,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-yield/invalid-yield-generator-export-default/input.js"
 						end: Object {
 							column: 35
 							index: 35
@@ -128,7 +128,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-yield/invalid-yield-generator-export-default/input.js"
 						end: Object {
 							column: 32
 							index: 32
@@ -151,7 +151,7 @@ JSRoot {
 
 ```
 
- input.js:1:25 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-yield/invalid-yield-generator-export-default/input.js:1:25 parse/js ━━━━━━━━━━━━━━━━
 
   ✖ yield is a reserved word
 

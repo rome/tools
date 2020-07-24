@@ -11,14 +11,14 @@ JSRoot {
 	body: Array []
 	comments: Array []
 	corrupt: false
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0168/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0168/input.js"
 		end: Object {
 			column: 1
 			index: 4
@@ -34,7 +34,7 @@ JSRoot {
 		JSDirective {
 			value: "\\"
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0168/input.js"
 				end: Object {
 					column: 1
 					index: 4
@@ -57,7 +57,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unterminated string constant"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0168/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -80,7 +80,7 @@ JSRoot {
 
 ```
 
- input.js:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0168/input.js:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated string constant
 

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/489/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/489/input.js"
 		end: Object {
 			column: 41
 			index: 41
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "arguments is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/489/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/489/input.js"
 				end: Object {
 					column: 41
 					index: 41
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/489/input.js"
 					end: Object {
 						column: 41
 						index: 41
@@ -89,7 +89,7 @@ JSRoot {
 					id: JSBindingIdentifier {
 						name: "arguments"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/489/input.js"
 							identifierName: "arguments"
 							end: Object {
 								column: 19
@@ -104,7 +104,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/489/input.js"
 						end: Object {
 							column: 38
 							index: 38
@@ -126,7 +126,7 @@ JSRoot {
 						thisType: undefined
 						typeParameters: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/489/input.js"
 							end: Object {
 								column: 21
 								index: 21
@@ -142,7 +142,7 @@ JSRoot {
 					body: JSBlockStatement {
 						body: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/489/input.js"
 							end: Object {
 								column: 38
 								index: 38
@@ -158,7 +158,7 @@ JSRoot {
 							JSDirective {
 								value: "use strict"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/489/input.js"
 									end: Object {
 										column: 36
 										index: 36
@@ -184,7 +184,7 @@ JSRoot {
 
 ```
 
- input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/489/input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ arguments is a reserved word
 

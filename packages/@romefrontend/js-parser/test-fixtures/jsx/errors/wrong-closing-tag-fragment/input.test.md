@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/errors/wrong-closing-tag-fragment/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/errors/wrong-closing-tag-fragment/input.jsx"
 		end: Object {
 			column: 0
 			index: 15
@@ -33,7 +33,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/wrong-closing-tag-fragment/input.jsx"
 				end: Object {
 					column: 14
 					index: 14
@@ -48,7 +48,7 @@ JSRoot {
 			expression: JSXFragment {
 				children: Array []
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/errors/wrong-closing-tag-fragment/input.jsx"
 					end: Object {
 						column: 14
 						index: 14
@@ -67,7 +67,7 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/wrong-closing-tag-fragment/input.jsx"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -91,7 +91,7 @@ JSRoot {
 					}
 					frame {
 						location: Object {
-							filename: "input.jsx"
+							filename: "jsx/errors/wrong-closing-tag-fragment/input.jsx"
 							end: Object {
 								column: 2
 								index: 2
@@ -115,7 +115,7 @@ JSRoot {
 
 ```
 
- input.jsx:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ jsx/errors/wrong-closing-tag-fragment/input.jsx:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected JSX closing fragment tag
 

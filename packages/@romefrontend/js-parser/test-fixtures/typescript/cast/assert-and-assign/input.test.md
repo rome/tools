@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/cast/assert-and-assign/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/cast/assert-and-assign/input.ts"
 		end: Object {
 			column: 19
 			index: 19
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/assert-and-assign/input.ts"
 				end: Object {
 					column: 19
 					index: 19
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/assert-and-assign/input.ts"
 					end: Object {
 						column: 18
 						index: 18
@@ -65,7 +65,7 @@ JSRoot {
 					value: 42
 					format: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/assert-and-assign/input.ts"
 						end: Object {
 							column: 18
 							index: 18
@@ -80,7 +80,7 @@ JSRoot {
 				}
 				left: TSAssignmentAsExpression {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/assert-and-assign/input.ts"
 						end: Object {
 							column: 12
 							index: 12
@@ -94,7 +94,7 @@ JSRoot {
 					}
 					typeAnnotation: TSNumberKeywordTypeAnnotation {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/assert-and-assign/input.ts"
 							end: Object {
 								column: 12
 								index: 12
@@ -110,7 +110,7 @@ JSRoot {
 					expression: JSAssignmentIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/assert-and-assign/input.ts"
 							identifierName: "a"
 							end: Object {
 								column: 2

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/export/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/export/input.js"
 		end: Object {
 			column: 0
 			index: 70
@@ -36,7 +36,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/export/input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -52,7 +52,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "foo"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/export/input.js"
 						identifierName: "foo"
 						end: Object {
 							column: 25
@@ -67,7 +67,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/export/input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -83,7 +83,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/export/input.js"
 						end: Object {
 							column: 30
 							index: 30
@@ -106,7 +106,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/export/input.js"
 						end: Object {
 							column: 27
 							index: 27
@@ -123,7 +123,7 @@ JSRoot {
 		}
 		JSExportDefaultDeclaration {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/export/input.js"
 				end: Object {
 					column: 38
 					index: 69
@@ -139,7 +139,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "bar"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/export/input.js"
 						identifierName: "bar"
 						end: Object {
 							column: 33
@@ -154,7 +154,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/export/input.js"
 					end: Object {
 						column: 38
 						index: 69
@@ -170,7 +170,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/export/input.js"
 						end: Object {
 							column: 38
 							index: 69
@@ -193,7 +193,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/export/input.js"
 						end: Object {
 							column: 35
 							index: 66

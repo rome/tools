@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/statements/label-invalid-func-async/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/statements/label-invalid-func-async/input.js"
 		end: Object {
 			column: 0
 			index: 29
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Async functions can only be declared at the top level or inside a block"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/statements/label-invalid-func-async/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSLabeledStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/statements/label-invalid-func-async/input.js"
 				end: Object {
 					column: 28
 					index: 28
@@ -73,7 +73,7 @@ JSRoot {
 			label: JSIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/statements/label-invalid-func-async/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 3
@@ -91,7 +91,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "bar"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/statements/label-invalid-func-async/input.js"
 						identifierName: "bar"
 						end: Object {
 							column: 23
@@ -106,7 +106,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/statements/label-invalid-func-async/input.js"
 					end: Object {
 						column: 28
 						index: 28
@@ -122,7 +122,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/statements/label-invalid-func-async/input.js"
 						end: Object {
 							column: 28
 							index: 28
@@ -145,7 +145,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/statements/label-invalid-func-async/input.js"
 						end: Object {
 							column: 25
 							index: 25
@@ -168,7 +168,7 @@ JSRoot {
 
 ```
 
- input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/statements/label-invalid-func-async/input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Async functions can only be declared at the top level or inside a block
 

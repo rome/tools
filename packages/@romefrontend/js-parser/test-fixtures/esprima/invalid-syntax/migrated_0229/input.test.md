@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0229/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0229/input.js"
 		end: Object {
 			column: 0
 			index: 47
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "public is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0229/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "hello"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0229/input.js"
 					identifierName: "hello"
 					end: Object {
 						column: 14
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0229/input.js"
 				end: Object {
 					column: 46
 					index: 46
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0229/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -112,7 +112,7 @@ JSRoot {
 			}
 			body: JSBlockStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0229/input.js"
 					end: Object {
 						column: 46
 						index: 46
@@ -128,7 +128,7 @@ JSRoot {
 					JSDirective {
 						value: "use strict"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0229/input.js"
 							end: Object {
 								column: 32
 								index: 32
@@ -145,7 +145,7 @@ JSRoot {
 				body: Array [
 					JSVariableDeclarationStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0229/input.js"
 							end: Object {
 								column: 44
 								index: 44
@@ -160,7 +160,7 @@ JSRoot {
 						declaration: JSVariableDeclaration {
 							kind: "var"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0229/input.js"
 								end: Object {
 									column: 44
 									index: 44
@@ -177,7 +177,7 @@ JSRoot {
 									id: JSBindingIdentifier {
 										name: "public"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/invalid-syntax/migrated_0229/input.js"
 											identifierName: "public"
 											end: Object {
 												column: 43
@@ -193,7 +193,7 @@ JSRoot {
 									}
 									init: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/invalid-syntax/migrated_0229/input.js"
 										end: Object {
 											column: 43
 											index: 43
@@ -220,7 +220,7 @@ JSRoot {
 
 ```
 
- input.js:1:37 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0229/input.js:1:37 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ public is a reserved word
 

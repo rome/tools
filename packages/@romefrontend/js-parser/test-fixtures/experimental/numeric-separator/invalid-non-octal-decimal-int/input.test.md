@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/numeric-separator/invalid-non-octal-decimal-int/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/numeric-separator/invalid-non-octal-decimal-int/input.js"
 		end: Object {
 			column: 5
 			index: 5
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/numeric-separator/invalid-non-octal-decimal-int/input.js"
 				end: Object {
 					column: 5
 					index: 5
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSBigIntLiteral {
 				value: "080"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/numeric-separator/invalid-non-octal-decimal-int/input.js"
 					end: Object {
 						column: 5
 						index: 5

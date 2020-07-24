@@ -10,14 +10,14 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "input.js"
+	filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
 		end: Object {
 			column: 0
 			index: 38
@@ -33,7 +33,7 @@ JSRoot {
 		JSDirective {
 			value: "use strict"
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -56,7 +56,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "yield is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -77,7 +77,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 24
@@ -92,7 +92,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
 				end: Object {
 					column: 37
 					index: 37
@@ -108,7 +108,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
 					end: Object {
 						column: 37
 						index: 37
@@ -130,7 +130,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
 					end: Object {
 						column: 34
 						index: 34
@@ -145,7 +145,7 @@ JSRoot {
 				rest: JSBindingIdentifier {
 					name: "yield"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
 						identifierName: "yield"
 						end: Object {
 							column: 33
@@ -162,7 +162,7 @@ JSRoot {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
 							end: Object {
 								column: 33
 								index: 33
@@ -186,7 +186,7 @@ JSRoot {
 
 ```
 
- input.js:1:28 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js:1:28 parse/js ━━━━━━━━━━━━━━━━━━━
 
   ✖ yield is a reserved word
 

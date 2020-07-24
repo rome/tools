@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-array-pattern/nested-pattern/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-array-pattern/nested-pattern/input.js"
 		end: Object {
 			column: 0
 			index: 11
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-array-pattern/nested-pattern/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-array-pattern/nested-pattern/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingArrayPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-array-pattern/nested-pattern/input.js"
 								end: Object {
 									column: 8
 									index: 8
@@ -83,7 +83,7 @@ JSRoot {
 									elements: Array []
 									rest: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-array-pattern/nested-pattern/input.js"
 										end: Object {
 											column: 7
 											index: 7
@@ -99,7 +99,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-array-pattern/nested-pattern/input.js"
 											end: Object {
 												column: 7
 												index: 7
@@ -116,7 +116,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-array-pattern/nested-pattern/input.js"
 							end: Object {
 								column: 10
 								index: 10
@@ -132,7 +132,7 @@ JSRoot {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-array-pattern/nested-pattern/input.js"
 								end: Object {
 									column: 10
 									index: 10

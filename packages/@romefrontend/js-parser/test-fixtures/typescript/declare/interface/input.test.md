@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/declare/interface/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/declare/interface/input.ts"
 		end: Object {
 			column: 0
 			index: 23
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/declare/interface/input.ts"
 					identifierName: "I"
 					end: Object {
 						column: 19
@@ -54,7 +54,7 @@ JSRoot {
 			extends: undefined
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/declare/interface/input.ts"
 				end: Object {
 					column: 22
 					index: 22
@@ -69,7 +69,7 @@ JSRoot {
 			body: TSInterfaceBody {
 				body: Array []
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/declare/interface/input.ts"
 					end: Object {
 						column: 22
 						index: 22

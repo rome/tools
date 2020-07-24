@@ -17,6 +17,8 @@ import {
 } from "@romefrontend/cli-reporter";
 import {ServerMarker} from "../../server/Server";
 import {TerminalFeatures} from "@romefrontend/cli-environment";
+import {Dict} from "@romefrontend/typescript-helpers";
+import {RecoverySaveFile} from "@romefrontend/core/server/fs/RecoveryStore";
 
 export type ServerQueryRequest = {
 	requestFlags: ClientRequestFlags;
@@ -25,6 +27,7 @@ export type ServerQueryRequest = {
 	commandName: string;
 	silent: boolean;
 	noData: boolean;
+	noFileWrites: boolean;
 	terminateWhenIdle: boolean;
 	cancelToken?: string;
 };
@@ -45,6 +48,7 @@ export type ServerQueryResponseSuccess = ServerQueryResponseBase & {
 	type: "SUCCESS";
 	hasData: boolean;
 	data: JSONPropertyValue;
+	files: Dict<RecoverySaveFile>;
 };
 
 export type ServerQueryResponseError = ServerQueryResponseBase & {
@@ -60,6 +64,7 @@ export type ServerQueryResponseDiagnostics = ServerQueryResponseBase & {
 	type: "DIAGNOSTICS";
 	hasDiagnostics: boolean;
 	diagnostics: Diagnostics;
+	files: Dict<RecoverySaveFile>;
 };
 
 export type ServerQueryResponseInvalid = ServerQueryResponseBase & {
@@ -72,12 +77,18 @@ export type ServerQueryResponseCancelled = ServerQueryResponseBase & {
 	type: "CANCELLED";
 };
 
+export type ServerQueryResponseExit = ServerQueryResponseBase & {
+	type: "EXIT";
+	code: number;
+};
+
 export type ServerQueryResponse =
 	| ServerQueryResponseInvalid
 	| ServerQueryResponseSuccess
 	| ServerQueryResponseError
 	| ServerQueryResponseCancelled
-	| ServerQueryResponseDiagnostics;
+	| ServerQueryResponseDiagnostics
+	| ServerQueryResponseExit;
 
 export type ProfilingStartData = {
 	samplingInterval: number;

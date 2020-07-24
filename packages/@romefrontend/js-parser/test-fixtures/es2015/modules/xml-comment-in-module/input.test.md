@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/modules/xml-comment-in-module/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/modules/xml-comment-in-module/input.js"
 		end: Object {
 			column: 0
 			index: 12
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/xml-comment-in-module/input.js"
 				end: Object {
 					column: 11
 					index: 11
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "<"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/modules/xml-comment-in-module/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -64,7 +64,7 @@ JSRoot {
 				left: JSReferenceIdentifier {
 					name: "foo"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/xml-comment-in-module/input.js"
 						identifierName: "foo"
 						end: Object {
 							column: 3
@@ -82,7 +82,7 @@ JSRoot {
 					operator: "!"
 					prefix: true
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/xml-comment-in-module/input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -98,7 +98,7 @@ JSRoot {
 						operator: "--"
 						prefix: true
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/modules/xml-comment-in-module/input.js"
 							end: Object {
 								column: 11
 								index: 11
@@ -113,7 +113,7 @@ JSRoot {
 						argument: JSReferenceIdentifier {
 							name: "bar"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/modules/xml-comment-in-module/input.js"
 								identifierName: "bar"
 								end: Object {
 									column: 11

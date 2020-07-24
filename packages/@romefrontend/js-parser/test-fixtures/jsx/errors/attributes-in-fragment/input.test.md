@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/errors/attributes-in-fragment/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/errors/attributes-in-fragment/input.jsx"
 		end: Object {
 			column: 0
 			index: 17
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown JSX identifier token"}
 			}
 			location: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/attributes-in-fragment/input.jsx"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/attributes-in-fragment/input.jsx"
 				end: Object {
 					column: 16
 					index: 16
@@ -74,7 +74,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "key"
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/errors/attributes-in-fragment/input.jsx"
 						end: Object {
 							column: 5
 							index: 5
@@ -91,7 +91,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/errors/attributes-in-fragment/input.jsx"
 					end: Object {
 						column: 16
 						index: 16
@@ -108,7 +108,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: ""
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/errors/attributes-in-fragment/input.jsx"
 								end: Object {
 									column: 6
 									index: 6
@@ -123,7 +123,7 @@ JSRoot {
 						}
 						value: undefined
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/errors/attributes-in-fragment/input.jsx"
 							end: Object {
 								column: 6
 								index: 6
@@ -140,7 +140,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: ""
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/errors/attributes-in-fragment/input.jsx"
 								end: Object {
 									column: 12
 									index: 12
@@ -155,7 +155,7 @@ JSRoot {
 						}
 						value: undefined
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/errors/attributes-in-fragment/input.jsx"
 							end: Object {
 								column: 12
 								index: 12
@@ -179,7 +179,7 @@ JSRoot {
 
 ```
 
- input.jsx:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ jsx/errors/attributes-in-fragment/input.jsx:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown JSX identifier token
 

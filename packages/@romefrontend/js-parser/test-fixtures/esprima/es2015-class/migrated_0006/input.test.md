@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-class/migrated_0006/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-class/migrated_0006/input.js"
 		end: Object {
 			column: 0
 			index: 22
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-class/migrated_0006/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-class/migrated_0006/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-class/migrated_0006/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -88,7 +88,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-class/migrated_0006/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 10
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0006/input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -117,7 +117,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-class/migrated_0006/input.js"
 							end: Object {
 								column: 14
 								index: 14
@@ -133,7 +133,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0006/input.js"
 								end: Object {
 									column: 14
 									index: 14
@@ -156,7 +156,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0006/input.js"
 								end: Object {
 									column: 12
 									index: 12
@@ -182,7 +182,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0006/input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -202,7 +202,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "b"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-class/migrated_0006/input.js"
 									identifierName: "b"
 									end: Object {
 										column: 16
@@ -217,7 +217,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0006/input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -231,7 +231,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-class/migrated_0006/input.js"
 							end: Object {
 								column: 20
 								index: 20
@@ -247,7 +247,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0006/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -270,7 +270,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0006/input.js"
 								end: Object {
 									column: 18
 									index: 18
@@ -296,7 +296,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0006/input.js"
 								end: Object {
 									column: 16
 									index: 16

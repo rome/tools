@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/statement-iteration/migrated_0003/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/statement-iteration/migrated_0003/input.js"
 		end: Object {
 			column: 0
 			index: 31
@@ -35,7 +35,7 @@ JSRoot {
 		JSBlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/statement-iteration/migrated_0003/input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -50,7 +50,7 @@ JSRoot {
 			body: Array [
 				JSDoWhileStatement {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/statement-iteration/migrated_0003/input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -65,7 +65,7 @@ JSRoot {
 					test: JSBooleanLiteral {
 						value: false
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/statement-iteration/migrated_0003/input.js"
 							end: Object {
 								column: 21
 								index: 21
@@ -82,7 +82,7 @@ JSRoot {
 						body: Array []
 						directives: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/statement-iteration/migrated_0003/input.js"
 							end: Object {
 								column: 8
 								index: 8
@@ -98,7 +98,7 @@ JSRoot {
 				}
 				JSExpressionStatement {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/statement-iteration/migrated_0003/input.js"
 						end: Object {
 							column: 28
 							index: 28
@@ -113,7 +113,7 @@ JSRoot {
 					expression: JSBooleanLiteral {
 						value: false
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/statement-iteration/migrated_0003/input.js"
 							end: Object {
 								column: 28
 								index: 28

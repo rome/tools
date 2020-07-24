@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/function-name-generator-declaration/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/function-name-generator-declaration/input.js"
 		end: Object {
 			column: 20
 			index: 20
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "yield"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/function-name-generator-declaration/input.js"
 					identifierName: "yield"
 					end: Object {
 						column: 15
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/function-name-generator-declaration/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/function-name-generator-declaration/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -90,7 +90,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/function-name-generator-declaration/input.js"
 					end: Object {
 						column: 17
 						index: 17

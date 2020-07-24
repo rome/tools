@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/module-namespace/body-declare/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/module-namespace/body-declare/input.ts"
 		end: Object {
 			column: 0
 			index: 45
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "N"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/body-declare/input.ts"
 					identifierName: "N"
 					end: Object {
 						column: 19
@@ -52,7 +52,7 @@ JSRoot {
 			}
 			declare: true
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/module-namespace/body-declare/input.ts"
 				end: Object {
 					column: 1
 					index: 44
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			body: TSModuleBlock {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/body-declare/input.ts"
 					end: Object {
 						column: 1
 						index: 44
@@ -81,7 +81,7 @@ JSRoot {
 				body: Array [
 					JSVariableDeclarationStatement {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/module-namespace/body-declare/input.ts"
 							end: Object {
 								column: 20
 								index: 42
@@ -96,7 +96,7 @@ JSRoot {
 						declaration: JSVariableDeclaration {
 							kind: "const"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/module-namespace/body-declare/input.ts"
 								end: Object {
 									column: 20
 									index: 42
@@ -113,7 +113,7 @@ JSRoot {
 									id: JSBindingIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/module-namespace/body-declare/input.ts"
 											end: Object {
 												column: 19
 												index: 41
@@ -128,7 +128,7 @@ JSRoot {
 										meta: JSPatternMeta {
 											definite: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/module-namespace/body-declare/input.ts"
 												end: Object {
 													column: 19
 													index: 41
@@ -142,7 +142,7 @@ JSRoot {
 											}
 											typeAnnotation: TSNumberKeywordTypeAnnotation {
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/module-namespace/body-declare/input.ts"
 													end: Object {
 														column: 19
 														index: 41
@@ -159,7 +159,7 @@ JSRoot {
 									}
 									init: undefined
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/module-namespace/body-declare/input.ts"
 										end: Object {
 											column: 19
 											index: 41

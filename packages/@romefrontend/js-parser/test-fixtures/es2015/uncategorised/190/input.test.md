@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/190/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/190/input.js"
 		end: Object {
 			column: 24
 			index: 24
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/190/input.js"
 				end: Object {
 					column: 24
 					index: 24
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/190/input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -65,7 +65,7 @@ JSRoot {
 					JSVariableDeclarator {
 						id: JSBindingArrayPattern {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/190/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -80,7 +80,7 @@ JSRoot {
 							rest: JSBindingIdentifier {
 								name: "c"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/190/input.js"
 									identifierName: "c"
 									end: Object {
 										column: 19
@@ -97,7 +97,7 @@ JSRoot {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/190/input.js"
 										end: Object {
 											column: 19
 											index: 19
@@ -115,7 +115,7 @@ JSRoot {
 								JSBindingObjectPattern {
 									rest: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/190/input.js"
 										end: Object {
 											column: 13
 											index: 13
@@ -131,7 +131,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/190/input.js"
 											end: Object {
 												column: 13
 												index: 13
@@ -150,7 +150,7 @@ JSRoot {
 												value: JSIdentifier {
 													name: "a"
 													loc: Object {
-														filename: "input.js"
+														filename: "es2015/uncategorised/190/input.js"
 														identifierName: "a"
 														end: Object {
 															column: 8
@@ -165,7 +165,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/uncategorised/190/input.js"
 													end: Object {
 														column: 8
 														index: 8
@@ -181,7 +181,7 @@ JSRoot {
 											value: JSBindingIdentifier {
 												name: "a"
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/uncategorised/190/input.js"
 													identifierName: "a"
 													end: Object {
 														column: 8
@@ -196,7 +196,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/uncategorised/190/input.js"
 												end: Object {
 													column: 8
 													index: 8
@@ -214,7 +214,7 @@ JSRoot {
 												value: JSIdentifier {
 													name: "b"
 													loc: Object {
-														filename: "input.js"
+														filename: "es2015/uncategorised/190/input.js"
 														identifierName: "b"
 														end: Object {
 															column: 11
@@ -229,7 +229,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/uncategorised/190/input.js"
 													end: Object {
 														column: 11
 														index: 11
@@ -245,7 +245,7 @@ JSRoot {
 											value: JSBindingIdentifier {
 												name: "b"
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/uncategorised/190/input.js"
 													identifierName: "b"
 													end: Object {
 														column: 11
@@ -260,7 +260,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/uncategorised/190/input.js"
 												end: Object {
 													column: 11
 													index: 11
@@ -278,7 +278,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/190/input.js"
 							end: Object {
 								column: 24
 								index: 24
@@ -293,7 +293,7 @@ JSRoot {
 						init: JSReferenceIdentifier {
 							name: "d"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/190/input.js"
 								identifierName: "d"
 								end: Object {
 									column: 24

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0065/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0065/input.js"
 		end: Object {
 			column: 0
 			index: 8
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected character #"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0065/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0065/input.js"
 				end: Object {
 					column: 7
 					index: 7
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0065/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -88,7 +88,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "i"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0065/input.js"
 						identifierName: "i"
 						end: Object {
 							column: 1
@@ -106,7 +106,7 @@ JSRoot {
 					value: 42
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0065/input.js"
 						end: Object {
 							column: 7
 							index: 7
@@ -129,7 +129,7 @@ JSRoot {
 
 ```
 
- input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0065/input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected character #
 

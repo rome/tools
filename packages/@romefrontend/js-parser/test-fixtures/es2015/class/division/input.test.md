@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/class/division/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/class/division/input.js"
 		end: Object {
 			column: 0
 			index: 87
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/class/division/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class/division/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -64,7 +64,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/class/division/input.js"
 						identifierName: "x"
 						end: Object {
 							column: 1
@@ -81,7 +81,7 @@ JSRoot {
 				right: JSBinaryExpression {
 					operator: "/"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/class/division/input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -96,7 +96,7 @@ JSRoot {
 					right: JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class/division/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 17
@@ -113,7 +113,7 @@ JSRoot {
 					left: JSClassExpression {
 						id: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class/division/input.js"
 							end: Object {
 								column: 11
 								index: 11
@@ -132,7 +132,7 @@ JSRoot {
 							superTypeParameters: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class/division/input.js"
 								end: Object {
 									column: 11
 									index: 11
@@ -151,7 +151,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/class/division/input.js"
 				end: Object {
 					column: 10
 					index: 86
@@ -166,7 +166,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class/division/input.js"
 					end: Object {
 						column: 10
 						index: 86
@@ -181,7 +181,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/class/division/input.js"
 						identifierName: "x"
 						end: Object {
 							column: 1
@@ -198,7 +198,7 @@ JSRoot {
 				right: JSBinaryExpression {
 					operator: "/"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/class/division/input.js"
 						end: Object {
 							column: 10
 							index: 86
@@ -213,7 +213,7 @@ JSRoot {
 					left: JSBinaryExpression {
 						operator: "/"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class/division/input.js"
 							end: Object {
 								column: 5
 								index: 36
@@ -228,7 +228,7 @@ JSRoot {
 						right: JSReferenceIdentifier {
 							name: "foo"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class/division/input.js"
 								identifierName: "foo"
 								end: Object {
 									column: 5
@@ -245,7 +245,7 @@ JSRoot {
 						left: JSClassExpression {
 							id: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class/division/input.js"
 								end: Object {
 									column: 11
 									index: 30
@@ -264,7 +264,7 @@ JSRoot {
 								superTypeParameters: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class/division/input.js"
 									end: Object {
 										column: 11
 										index: 30
@@ -281,7 +281,7 @@ JSRoot {
 					}
 					right: JSCallExpression {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class/division/input.js"
 							end: Object {
 								column: 10
 								index: 86
@@ -295,7 +295,7 @@ JSRoot {
 						}
 						callee: JSCallExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class/division/input.js"
 								end: Object {
 									column: 19
 									index: 61
@@ -310,7 +310,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "g"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class/division/input.js"
 									identifierName: "g"
 									end: Object {
 										column: 9
@@ -328,7 +328,7 @@ JSRoot {
 								JSAssignmentExpression {
 									operator: "="
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/class/division/input.js"
 										end: Object {
 											column: 18
 											index: 60
@@ -343,7 +343,7 @@ JSRoot {
 									left: JSAssignmentIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/class/division/input.js"
 											identifierName: "x"
 											end: Object {
 												column: 2
@@ -360,7 +360,7 @@ JSRoot {
 									right: JSBinaryExpression {
 										operator: "/"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/class/division/input.js"
 											end: Object {
 												column: 18
 												index: 60
@@ -375,7 +375,7 @@ JSRoot {
 										right: JSReferenceIdentifier {
 											name: "foo"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/class/division/input.js"
 												identifierName: "foo"
 												end: Object {
 													column: 18
@@ -392,7 +392,7 @@ JSRoot {
 										left: JSClassExpression {
 											id: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/class/division/input.js"
 												end: Object {
 													column: 12
 													index: 54
@@ -411,7 +411,7 @@ JSRoot {
 												superTypeParameters: undefined
 												typeParameters: undefined
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/class/division/input.js"
 													end: Object {
 														column: 12
 														index: 54
@@ -433,7 +433,7 @@ JSRoot {
 							JSAssignmentExpression {
 								operator: "="
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class/division/input.js"
 									end: Object {
 										column: 9
 										index: 85
@@ -448,7 +448,7 @@ JSRoot {
 								left: JSAssignmentIdentifier {
 									name: "x"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/class/division/input.js"
 										identifierName: "x"
 										end: Object {
 											column: 2
@@ -465,7 +465,7 @@ JSRoot {
 								right: JSBinaryExpression {
 									operator: "/"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/class/division/input.js"
 										end: Object {
 											column: 9
 											index: 85
@@ -480,7 +480,7 @@ JSRoot {
 									right: JSReferenceIdentifier {
 										name: "g"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/class/division/input.js"
 											identifierName: "g"
 											end: Object {
 												column: 9
@@ -497,7 +497,7 @@ JSRoot {
 									left: JSBinaryExpression {
 										operator: "/"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/class/division/input.js"
 											end: Object {
 												column: 5
 												index: 81
@@ -512,7 +512,7 @@ JSRoot {
 										right: JSReferenceIdentifier {
 											name: "foo"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/class/division/input.js"
 												identifierName: "foo"
 												end: Object {
 													column: 5
@@ -529,7 +529,7 @@ JSRoot {
 										left: JSClassExpression {
 											id: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/class/division/input.js"
 												end: Object {
 													column: 12
 													index: 75
@@ -548,7 +548,7 @@ JSRoot {
 												superTypeParameters: undefined
 												typeParameters: undefined
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/class/division/input.js"
 													end: Object {
 														column: 12
 														index: 75

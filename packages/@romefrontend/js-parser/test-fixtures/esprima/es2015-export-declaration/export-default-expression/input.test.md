@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-export-declaration/export-default-expression/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-export-declaration/export-default-expression/input.js"
 		end: Object {
 			column: 0
 			index: 24
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/export-default-expression/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSBinaryExpression {
 				operator: "+"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-export-declaration/export-default-expression/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -65,7 +65,7 @@ JSRoot {
 					value: 1
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-export-declaration/export-default-expression/input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -82,7 +82,7 @@ JSRoot {
 					value: 2
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-export-declaration/export-default-expression/input.js"
 						end: Object {
 							column: 21
 							index: 21

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0277/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0277/input.js"
 		end: Object {
 			column: 0
 			index: 20
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "enum is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0277/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0277/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0277/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0277/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -112,7 +112,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/invalid-syntax/migrated_0277/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 10
@@ -127,7 +127,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0277/input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -141,7 +141,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0277/input.js"
 							end: Object {
 								column: 18
 								index: 18
@@ -157,7 +157,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0277/input.js"
 								end: Object {
 									column: 18
 									index: 18
@@ -183,7 +183,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0277/input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -205,7 +205,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0277/input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -221,7 +221,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "enum"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/invalid-syntax/migrated_0277/input.js"
 										identifierName: "enum"
 										end: Object {
 											column: 15
@@ -238,7 +238,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/invalid-syntax/migrated_0277/input.js"
 											end: Object {
 												column: 15
 												index: 15
@@ -266,7 +266,7 @@ JSRoot {
 
 ```
 
- input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0277/input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ enum is a reserved word
 

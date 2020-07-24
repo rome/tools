@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/224/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/224/input.js"
 		end: Object {
 			column: 1
 			index: 1
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/224/input.js"
 				end: Object {
 					column: 1
 					index: 1
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/224/input.js"
 					identifierName: "x"
 					end: Object {
 						column: 1

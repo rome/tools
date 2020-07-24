@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/286/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/286/input.js"
 		end: Object {
 			column: 24
 			index: 24
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "arguments"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/286/input.js"
 					identifierName: "arguments"
 					end: Object {
 						column: 18
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/286/input.js"
 				end: Object {
 					column: 24
 					index: 24
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/286/input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -90,7 +90,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/286/input.js"
 					end: Object {
 						column: 20
 						index: 20

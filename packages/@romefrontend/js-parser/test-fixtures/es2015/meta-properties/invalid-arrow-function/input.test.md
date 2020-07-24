@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 		end: Object {
 			column: 0
 			index: 34
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "new.target can only be used in functions or class properties"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 				end: Object {
 					column: 1
 					index: 33
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 					end: Object {
 						column: 1
 						index: 33
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "A"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 								identifierName: "A"
 								end: Object {
 									column: 7
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 							end: Object {
 								column: 1
 								index: 33
@@ -119,7 +119,7 @@ JSRoot {
 						}
 						init: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 								end: Object {
 									column: 1
 									index: 33
@@ -139,7 +139,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 									end: Object {
 										column: 15
 										index: 15
@@ -155,7 +155,7 @@ JSRoot {
 							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 									end: Object {
 										column: 1
 										index: 33
@@ -170,7 +170,7 @@ JSRoot {
 								body: Array [
 									JSExpressionStatement {
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 											end: Object {
 												column: 13
 												index: 31
@@ -184,7 +184,7 @@ JSRoot {
 										}
 										expression: JSMetaProperty {
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 												end: Object {
 													column: 12
 													index: 30
@@ -199,7 +199,7 @@ JSRoot {
 											meta: JSIdentifier {
 												name: "new"
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 													identifierName: "new"
 													end: Object {
 														column: 5
@@ -216,7 +216,7 @@ JSRoot {
 											property: JSIdentifier {
 												name: "target"
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 													identifierName: "target"
 													end: Object {
 														column: 12
@@ -247,7 +247,7 @@ JSRoot {
 
 ```
 
- input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/meta-properties/invalid-arrow-function/input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ new.target can only be used in functions or class properties
 

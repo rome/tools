@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/function/export-default/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/function/export-default/input.ts"
 		end: Object {
 			column: 0
 			index: 43
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/function/export-default/input.ts"
 				end: Object {
 					column: 42
 					index: 42
@@ -50,7 +50,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "*default*"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/function/export-default/input.ts"
 						end: Object {
 							column: 42
 							index: 42
@@ -64,7 +64,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/function/export-default/input.ts"
 					end: Object {
 						column: 42
 						index: 42
@@ -84,7 +84,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/function/export-default/input.ts"
 						end: Object {
 							column: 41
 							index: 41
@@ -98,7 +98,7 @@ JSRoot {
 					}
 					returnType: TSVoidKeywordTypeAnnotation {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/function/export-default/input.ts"
 							end: Object {
 								column: 41
 								index: 41
@@ -115,7 +115,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/export-default/input.ts"
 								identifierName: "x"
 								end: Object {
 									column: 25
@@ -131,7 +131,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								optional: true
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/function/export-default/input.ts"
 									end: Object {
 										column: 34
 										index: 34
@@ -145,7 +145,7 @@ JSRoot {
 								}
 								typeAnnotation: TSNumberKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/function/export-default/input.ts"
 										end: Object {
 											column: 34
 											index: 34

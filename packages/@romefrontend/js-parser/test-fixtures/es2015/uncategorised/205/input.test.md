@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/205/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/205/input.js"
 		end: Object {
 			column: 4
 			index: 4
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/205/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/205/input.js"
 				end: Object {
 					column: 3
 					index: 3
@@ -74,7 +74,7 @@ JSRoot {
 				value: 1
 				format: "octal"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/205/input.js"
 					end: Object {
 						column: 3
 						index: 3
@@ -90,7 +90,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/205/input.js"
 				end: Object {
 					column: 4
 					index: 4
@@ -106,7 +106,7 @@ JSRoot {
 				value: 8
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/205/input.js"
 					end: Object {
 						column: 4
 						index: 4
@@ -128,7 +128,7 @@ JSRoot {
 
 ```
 
- input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/205/input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

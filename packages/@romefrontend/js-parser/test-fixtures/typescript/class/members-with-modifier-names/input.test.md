@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/members-with-modifier-names/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/members-with-modifier-names/input.ts"
 		end: Object {
 			column: 0
 			index: 119
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/members-with-modifier-names/input.ts"
 					identifierName: "C"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/members-with-modifier-names/input.ts"
 				end: Object {
 					column: 1
 					index: 118
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/members-with-modifier-names/input.ts"
 					end: Object {
 						column: 1
 						index: 118
@@ -88,7 +88,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "public"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/members-with-modifier-names/input.ts"
 									identifierName: "public"
 									end: Object {
 										column: 10
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 10
 									index: 20
@@ -118,7 +118,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/members-with-modifier-names/input.ts"
 							end: Object {
 								column: 19
 								index: 29
@@ -143,7 +143,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 10
 									index: 20
@@ -165,7 +165,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 18
 									index: 28
@@ -179,7 +179,7 @@ JSRoot {
 							}
 							returnType: TSVoidKeywordTypeAnnotation {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/members-with-modifier-names/input.ts"
 									end: Object {
 										column: 18
 										index: 28
@@ -200,7 +200,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "static"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/members-with-modifier-names/input.ts"
 									identifierName: "static"
 									end: Object {
 										column: 17
@@ -215,7 +215,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/members-with-modifier-names/input.ts"
 								identifierName: "static"
 								end: Object {
 									column: 17
@@ -231,7 +231,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/members-with-modifier-names/input.ts"
 							end: Object {
 								column: 26
 								index: 56
@@ -251,7 +251,7 @@ JSRoot {
 							static: false
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 17
 									index: 47
@@ -273,7 +273,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 25
 									index: 55
@@ -287,7 +287,7 @@ JSRoot {
 							}
 							returnType: TSVoidKeywordTypeAnnotation {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/members-with-modifier-names/input.ts"
 									end: Object {
 										column: 25
 										index: 55
@@ -307,7 +307,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "readonly"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/members-with-modifier-names/input.ts"
 									identifierName: "readonly"
 									end: Object {
 										column: 12
@@ -322,7 +322,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 12
 									index: 69
@@ -339,7 +339,7 @@ JSRoot {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 16
 									index: 73
@@ -355,7 +355,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/members-with-modifier-names/input.ts"
 							end: Object {
 								column: 17
 								index: 74
@@ -380,7 +380,7 @@ JSRoot {
 								line: 4
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 12
 									index: 69
@@ -400,7 +400,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "async"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/members-with-modifier-names/input.ts"
 									identifierName: "async"
 									end: Object {
 										column: 9
@@ -415,7 +415,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 9
 									index: 84
@@ -430,7 +430,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/members-with-modifier-names/input.ts"
 							end: Object {
 								column: 21
 								index: 96
@@ -455,7 +455,7 @@ JSRoot {
 								line: 5
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 9
 									index: 84
@@ -476,7 +476,7 @@ JSRoot {
 							rest: undefined
 							thisType: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 20
 									index: 95
@@ -490,7 +490,7 @@ JSRoot {
 							}
 							returnType: TSVoidKeywordTypeAnnotation {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/members-with-modifier-names/input.ts"
 									end: Object {
 										column: 20
 										index: 95
@@ -505,7 +505,7 @@ JSRoot {
 							}
 							typeParameters: TSTypeParameterDeclaration {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/members-with-modifier-names/input.ts"
 									end: Object {
 										column: 12
 										index: 87
@@ -523,7 +523,7 @@ JSRoot {
 										constraint: undefined
 										default: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/members-with-modifier-names/input.ts"
 											end: Object {
 												column: 11
 												index: 86
@@ -545,7 +545,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "abstract"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/members-with-modifier-names/input.ts"
 									identifierName: "abstract"
 									end: Object {
 										column: 12
@@ -560,7 +560,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 12
 									index: 109
@@ -576,7 +576,7 @@ JSRoot {
 						value: undefined
 						definite: true
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/members-with-modifier-names/input.ts"
 							end: Object {
 								column: 19
 								index: 116
@@ -590,7 +590,7 @@ JSRoot {
 						}
 						typeAnnotation: TSVoidKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 18
 									index: 115
@@ -616,7 +616,7 @@ JSRoot {
 								line: 6
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 12
 									index: 109

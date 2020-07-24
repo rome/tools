@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-properties/edge-cases/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-properties/edge-cases/input.js"
 		end: Object {
 			column: 1
 			index: 381
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A1"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					identifierName: "A1"
 					end: Object {
 						column: 8
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 1
 					index: 34
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 1
 						index: 34
@@ -87,7 +87,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/edge-cases/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 3
@@ -102,7 +102,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 3
 									index: 23
@@ -119,7 +119,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 3
 								index: 23
@@ -144,7 +144,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 3
 									index: 23
@@ -163,7 +163,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "static"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/edge-cases/input.js"
 									identifierName: "static"
 									end: Object {
 										column: 8
@@ -178,7 +178,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								identifierName: "static"
 								end: Object {
 									column: 8
@@ -196,7 +196,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 8
 								index: 32
@@ -216,7 +216,7 @@ JSRoot {
 							static: false
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 8
 									index: 32
@@ -237,7 +237,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A2"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					identifierName: "A2"
 					end: Object {
 						column: 8
@@ -252,7 +252,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 14
 					index: 50
@@ -270,7 +270,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 14
 						index: 50
@@ -288,7 +288,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/edge-cases/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 12
@@ -303,7 +303,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 12
 									index: 48
@@ -320,7 +320,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 12
 								index: 48
@@ -345,7 +345,7 @@ JSRoot {
 								line: 7
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 12
 									index: 48
@@ -366,7 +366,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A3"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					identifierName: "A3"
 					end: Object {
 						column: 8
@@ -381,7 +381,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 16
 					index: 67
@@ -399,7 +399,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 16
 						index: 67
@@ -417,7 +417,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "get"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/edge-cases/input.js"
 									identifierName: "get"
 									end: Object {
 										column: 14
@@ -432,7 +432,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 14
 									index: 65
@@ -449,7 +449,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 14
 								index: 65
@@ -474,7 +474,7 @@ JSRoot {
 								line: 8
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 14
 									index: 65
@@ -495,7 +495,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A4"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					identifierName: "A4"
 					end: Object {
 						column: 8
@@ -510,7 +510,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 16
 					index: 84
@@ -528,7 +528,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 16
 						index: 84
@@ -546,7 +546,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "set"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/edge-cases/input.js"
 									identifierName: "set"
 									end: Object {
 										column: 14
@@ -561,7 +561,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 14
 									index: 82
@@ -578,7 +578,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 14
 								index: 82
@@ -603,7 +603,7 @@ JSRoot {
 								line: 9
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 14
 									index: 82
@@ -624,7 +624,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A5"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					identifierName: "A5"
 					end: Object {
 						column: 8
@@ -639,7 +639,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 19
 					index: 104
@@ -657,7 +657,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 19
 						index: 104
@@ -675,7 +675,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "static"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/edge-cases/input.js"
 									identifierName: "static"
 									end: Object {
 										column: 17
@@ -690,7 +690,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								identifierName: "static"
 								end: Object {
 									column: 17
@@ -708,7 +708,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 17
 								index: 102
@@ -728,7 +728,7 @@ JSRoot {
 							static: false
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 17
 									index: 102
@@ -749,7 +749,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A6"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					identifierName: "A6"
 					end: Object {
 						column: 8
@@ -764,7 +764,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 18
 					index: 123
@@ -782,7 +782,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 18
 						index: 123
@@ -800,7 +800,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "async"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/edge-cases/input.js"
 									identifierName: "async"
 									end: Object {
 										column: 16
@@ -815,7 +815,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 16
 									index: 121
@@ -832,7 +832,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 16
 								index: 121
@@ -857,7 +857,7 @@ JSRoot {
 								line: 11
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 16
 									index: 121
@@ -878,7 +878,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A7"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					identifierName: "A7"
 					end: Object {
 						column: 8
@@ -893,7 +893,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 1
 					index: 152
@@ -911,7 +911,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 1
 						index: 152
@@ -929,7 +929,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "get"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/edge-cases/input.js"
 									identifierName: "get"
 									end: Object {
 										column: 5
@@ -944,7 +944,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 5
 									index: 141
@@ -961,7 +961,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 5
 								index: 141
@@ -986,7 +986,7 @@ JSRoot {
 								line: 14
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 5
 									index: 141
@@ -1006,7 +1006,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/edge-cases/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 4
@@ -1021,7 +1021,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 4
 									index: 146
@@ -1035,7 +1035,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 8
 								index: 150
@@ -1051,7 +1051,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 8
 									index: 150
@@ -1074,7 +1074,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 6
 									index: 148
@@ -1100,7 +1100,7 @@ JSRoot {
 								line: 15
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 4
 									index: 146
@@ -1121,7 +1121,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A8"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					identifierName: "A8"
 					end: Object {
 						column: 8
@@ -1136,7 +1136,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 1
 					index: 184
@@ -1154,7 +1154,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 1
 						index: 184
@@ -1173,7 +1173,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/edge-cases/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 4
@@ -1188,7 +1188,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 4
 									index: 178
@@ -1202,7 +1202,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 8
 								index: 182
@@ -1218,7 +1218,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 8
 									index: 182
@@ -1241,7 +1241,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 6
 									index: 180
@@ -1267,7 +1267,7 @@ JSRoot {
 								line: 19
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 4
 									index: 178
@@ -1288,7 +1288,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A9"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					identifierName: "A9"
 					end: Object {
 						column: 8
@@ -1303,7 +1303,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 1
 					index: 214
@@ -1321,7 +1321,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 1
 						index: 214
@@ -1339,7 +1339,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "async"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/edge-cases/input.js"
 									identifierName: "async"
 									end: Object {
 										column: 7
@@ -1354,7 +1354,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 7
 									index: 204
@@ -1371,7 +1371,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 7
 								index: 204
@@ -1396,7 +1396,7 @@ JSRoot {
 								line: 24
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 7
 									index: 204
@@ -1416,7 +1416,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/edge-cases/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 3
@@ -1431,7 +1431,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 3
 									index: 208
@@ -1445,7 +1445,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 7
 								index: 212
@@ -1461,7 +1461,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 7
 									index: 212
@@ -1484,7 +1484,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 5
 									index: 210
@@ -1510,7 +1510,7 @@ JSRoot {
 								line: 25
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 3
 									index: 208
@@ -1531,7 +1531,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A10"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					identifierName: "A10"
 					end: Object {
 						column: 9
@@ -1546,7 +1546,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 1
 					index: 250
@@ -1564,7 +1564,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 1
 						index: 250
@@ -1582,7 +1582,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "async"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/edge-cases/input.js"
 									identifierName: "async"
 									end: Object {
 										column: 7
@@ -1597,7 +1597,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 7
 									index: 244
@@ -1614,7 +1614,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 7
 								index: 244
@@ -1639,7 +1639,7 @@ JSRoot {
 								line: 29
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 7
 									index: 244
@@ -1658,7 +1658,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/edge-cases/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 3
@@ -1673,7 +1673,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 3
 									index: 248
@@ -1690,7 +1690,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 3
 								index: 248
@@ -1715,7 +1715,7 @@ JSRoot {
 								line: 31
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 3
 									index: 248
@@ -1736,7 +1736,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A11"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					identifierName: "A11"
 					end: Object {
 						column: 9
@@ -1751,7 +1751,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 21
 					index: 273
@@ -1769,7 +1769,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 21
 						index: 273
@@ -1787,7 +1787,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "static"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/edge-cases/input.js"
 									identifierName: "static"
 									end: Object {
 										column: 18
@@ -1802,7 +1802,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								identifierName: "static"
 								end: Object {
 									column: 18
@@ -1820,7 +1820,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 19
 								index: 271
@@ -1840,7 +1840,7 @@ JSRoot {
 							static: false
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 18
 									index: 270
@@ -1861,7 +1861,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A12"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					identifierName: "A12"
 					end: Object {
 						column: 9
@@ -1876,7 +1876,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 1
 					index: 302
@@ -1894,7 +1894,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 1
 						index: 302
@@ -1912,7 +1912,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "static"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/edge-cases/input.js"
 									identifierName: "static"
 									end: Object {
 										column: 8
@@ -1927,7 +1927,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								identifierName: "static"
 								end: Object {
 									column: 8
@@ -1945,7 +1945,7 @@ JSRoot {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 12
 									index: 299
@@ -1961,7 +1961,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 13
 								index: 300
@@ -1981,7 +1981,7 @@ JSRoot {
 							static: false
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 8
 									index: 295
@@ -2002,7 +2002,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A13"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					identifierName: "A13"
 					end: Object {
 						column: 9
@@ -2017,7 +2017,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 1
 					index: 335
@@ -2035,7 +2035,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 1
 						index: 335
@@ -2054,7 +2054,7 @@ JSRoot {
 							value: JSStringLiteral {
 								value: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/edge-cases/input.js"
 									end: Object {
 										column: 6
 										index: 328
@@ -2068,7 +2068,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 7
 									index: 329
@@ -2082,7 +2082,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 11
 								index: 333
@@ -2098,7 +2098,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 11
 									index: 333
@@ -2121,7 +2121,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 9
 									index: 331
@@ -2147,7 +2147,7 @@ JSRoot {
 								line: 41
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 7
 									index: 329
@@ -2168,7 +2168,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A14"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					identifierName: "A14"
 					end: Object {
 						column: 9
@@ -2183,7 +2183,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 1
 					index: 381
@@ -2201,7 +2201,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 1
 						index: 381
@@ -2220,7 +2220,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "static"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/edge-cases/input.js"
 									identifierName: "static"
 									end: Object {
 										column: 8
@@ -2235,7 +2235,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 8
 									index: 372
@@ -2249,7 +2249,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 6
 								index: 379
@@ -2265,7 +2265,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 6
 									index: 379
@@ -2288,7 +2288,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 4
 									index: 377
@@ -2314,7 +2314,7 @@ JSRoot {
 								line: 46
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 8
 									index: 372

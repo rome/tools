@@ -10,14 +10,14 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "input.js"
+	filename: "esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js"
 		end: Object {
 			column: 0
 			index: 28
@@ -33,7 +33,7 @@ JSRoot {
 		JSDirective {
 			value: "use strict"
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -56,7 +56,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "yield is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -75,7 +75,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js"
 				end: Object {
 					column: 27
 					index: 27
@@ -90,7 +90,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -105,7 +105,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js"
 						identifierName: "x"
 						end: Object {
 							column: 26
@@ -122,7 +122,7 @@ JSRoot {
 				left: JSAssignmentArrayPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -138,7 +138,7 @@ JSRoot {
 						JSAssignmentIdentifier {
 							name: "yield"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js"
 								identifierName: "yield"
 								end: Object {
 									column: 21
@@ -164,7 +164,7 @@ JSRoot {
 
 ```
 
- input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━
 
   ✖ yield is a reserved word
 

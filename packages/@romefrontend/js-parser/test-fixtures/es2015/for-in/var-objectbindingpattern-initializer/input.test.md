@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
 		end: Object {
 			column: 24
 			index: 24
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Loop variable declaration may not have an initializer"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSForInStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
 				end: Object {
 					column: 24
 					index: 24
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -88,7 +88,7 @@ JSRoot {
 			right: JSObjectExpression {
 				properties: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -104,7 +104,7 @@ JSRoot {
 			left: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -121,7 +121,7 @@ JSRoot {
 						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
 								end: Object {
 									column: 12
 									index: 12
@@ -139,7 +139,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "a"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
 												identifierName: "a"
 												end: Object {
 													column: 11
@@ -154,7 +154,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
 											end: Object {
 												column: 11
 												index: 11
@@ -170,7 +170,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "a"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
 											identifierName: "a"
 											end: Object {
 												column: 11
@@ -185,7 +185,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
 										end: Object {
 											column: 11
 											index: 11
@@ -201,7 +201,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
 							end: Object {
 								column: 16
 								index: 16
@@ -217,7 +217,7 @@ JSRoot {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -242,7 +242,7 @@ JSRoot {
 
 ```
 
- input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/for-in/var-objectbindingpattern-initializer/input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Loop variable declaration may not have an initializer
 

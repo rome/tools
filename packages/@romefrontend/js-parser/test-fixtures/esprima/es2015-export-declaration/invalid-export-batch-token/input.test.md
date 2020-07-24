@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
 		end: Object {
 			column: 0
 			index: 11
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected `from` for an export node"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -59,7 +59,7 @@ JSRoot {
 		JSExportAllDeclaration {
 			exportKind: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -74,7 +74,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: ""
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -90,7 +90,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
 				end: Object {
 					column: 0
 					index: 11
@@ -106,7 +106,7 @@ JSRoot {
 				operator: "+"
 				prefix: true
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
 					end: Object {
 						column: 0
 						index: 11
@@ -121,7 +121,7 @@ JSRoot {
 				argument: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
 						end: Object {
 							column: 0
 							index: 11
@@ -144,7 +144,7 @@ JSRoot {
 
 ```
 
- input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-export-declaration/invalid-export-batch-token/input.js:1:9 parse/js ━━━━━━━━━━━━━━━━
 
   ✖ Expected `from` for an export node
 

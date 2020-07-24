@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/expression-primary-array/migrated_0012/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/expression-primary-array/migrated_0012/input.js"
 		end: Object {
 			column: 0
 			index: 19
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Invalid Unicode escape"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/expression-primary-array/migrated_0012/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/expression-primary-array/migrated_0012/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "\u2163\u2161\u200a"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/expression-primary-array/migrated_0012/input.js"
 					identifierName: "\u2163\u2161\u200a"
 					end: Object {
 						column: 18
@@ -96,7 +96,7 @@ JSRoot {
 
 ```
 
- input.js:1:18 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/expression-primary-array/migrated_0012/input.js:1:18 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid Unicode escape
 

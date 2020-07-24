@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/289/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/289/input.js"
 		end: Object {
 			column: 53
 			index: 53
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "eval"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/289/input.js"
 					identifierName: "eval"
 					end: Object {
 						column: 13
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/289/input.js"
 				end: Object {
 					column: 53
 					index: 53
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/289/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/289/input.js"
 					end: Object {
 						column: 53
 						index: 53
@@ -106,7 +106,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "inner"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/289/input.js"
 								identifierName: "inner"
 								end: Object {
 									column: 32
@@ -121,7 +121,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/289/input.js"
 							end: Object {
 								column: 51
 								index: 51
@@ -143,7 +143,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/289/input.js"
 								end: Object {
 									column: 34
 									index: 34
@@ -159,7 +159,7 @@ JSRoot {
 						body: JSBlockStatement {
 							body: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/289/input.js"
 								end: Object {
 									column: 51
 									index: 51
@@ -175,7 +175,7 @@ JSRoot {
 								JSDirective {
 									value: "use strict"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/uncategorised/289/input.js"
 										end: Object {
 											column: 49
 											index: 49

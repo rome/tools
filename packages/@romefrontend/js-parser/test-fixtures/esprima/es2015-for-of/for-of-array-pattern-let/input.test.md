@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
 		end: Object {
 			column: 0
 			index: 23
@@ -35,7 +35,7 @@ JSRoot {
 		JSForOfStatement {
 			await: false
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -49,7 +49,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -65,7 +65,7 @@ JSRoot {
 			right: JSReferenceIdentifier {
 				name: "r"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
 					identifierName: "r"
 					end: Object {
 						column: 20
@@ -82,7 +82,7 @@ JSRoot {
 			left: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -99,7 +99,7 @@ JSRoot {
 						id: JSBindingArrayPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -115,7 +115,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "p"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
 										identifierName: "p"
 										end: Object {
 											column: 11
@@ -132,7 +132,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
 											end: Object {
 												column: 11
 												index: 11
@@ -149,7 +149,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "q"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
 										identifierName: "q"
 										end: Object {
 											column: 14
@@ -166,7 +166,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
 											end: Object {
 												column: 14
 												index: 14
@@ -184,7 +184,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
 							end: Object {
 								column: 15
 								index: 15

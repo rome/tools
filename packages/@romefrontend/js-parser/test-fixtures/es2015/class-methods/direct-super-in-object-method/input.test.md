@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 		end: Object {
 			column: 0
 			index: 88
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "super is only allowed in object methods and classes"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 				end: Object {
 					column: 3
 					index: 87
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 					end: Object {
 						column: 2
 						index: 86
@@ -86,7 +86,7 @@ JSRoot {
 				}
 				callee: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -101,7 +101,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "Object"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 							identifierName: "Object"
 							end: Object {
 								column: 6
@@ -119,7 +119,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "create"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 								identifierName: "create"
 								end: Object {
 									column: 13
@@ -134,7 +134,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 							identifierName: "create"
 							end: Object {
 								column: 13
@@ -153,7 +153,7 @@ JSRoot {
 					JSObjectExpression {
 						properties: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 							end: Object {
 								column: 16
 								index: 16
@@ -168,7 +168,7 @@ JSRoot {
 					}
 					JSObjectExpression {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 							end: Object {
 								column: 1
 								index: 85
@@ -186,7 +186,7 @@ JSRoot {
 									value: JSIdentifier {
 										name: "foo"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 											identifierName: "foo"
 											end: Object {
 												column: 5
@@ -201,7 +201,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 										end: Object {
 											column: 5
 											index: 25
@@ -216,7 +216,7 @@ JSRoot {
 								}
 								value: JSObjectExpression {
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 										end: Object {
 											column: 3
 											index: 83
@@ -234,7 +234,7 @@ JSRoot {
 												value: JSIdentifier {
 													name: "get"
 													loc: Object {
-														filename: "input.js"
+														filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 														identifierName: "get"
 														end: Object {
 															column: 7
@@ -249,7 +249,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 													end: Object {
 														column: 7
 														index: 36
@@ -265,7 +265,7 @@ JSRoot {
 											value: JSFunctionExpression {
 												id: undefined
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 													end: Object {
 														column: 5
 														index: 79
@@ -287,7 +287,7 @@ JSRoot {
 													thisType: undefined
 													typeParameters: undefined
 													loc: Object {
-														filename: "input.js"
+														filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 														end: Object {
 															column: 19
 															index: 48
@@ -303,7 +303,7 @@ JSRoot {
 												body: JSBlockStatement {
 													directives: Array []
 													loc: Object {
-														filename: "input.js"
+														filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 														end: Object {
 															column: 5
 															index: 79
@@ -318,7 +318,7 @@ JSRoot {
 													body: Array [
 														JSReturnStatement {
 															loc: Object {
-																filename: "input.js"
+																filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 																end: Object {
 																	column: 23
 																	index: 73
@@ -332,7 +332,7 @@ JSRoot {
 															}
 															argument: JSMemberExpression {
 																loc: Object {
-																	filename: "input.js"
+																	filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 																	end: Object {
 																		column: 22
 																		index: 72
@@ -346,7 +346,7 @@ JSRoot {
 																}
 																object: JSSuper {
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 																		end: Object {
 																			column: 18
 																			index: 68
@@ -363,7 +363,7 @@ JSRoot {
 																	value: JSIdentifier {
 																		name: "foo"
 																		loc: Object {
-																			filename: "input.js"
+																			filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 																			identifierName: "foo"
 																			end: Object {
 																				column: 22
@@ -378,7 +378,7 @@ JSRoot {
 																		}
 																	}
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 																		identifierName: "foo"
 																		end: Object {
 																			column: 22
@@ -398,7 +398,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 												end: Object {
 													column: 5
 													index: 79
@@ -414,7 +414,7 @@ JSRoot {
 									]
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 									end: Object {
 										column: 3
 										index: 83
@@ -440,7 +440,7 @@ JSRoot {
 
 ```
 
- input.js:4:13 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/class-methods/direct-super-in-object-method/input.js:4:13 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ super is only allowed in object methods and classes
 

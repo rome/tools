@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/export-extensions/export-with-ts/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/export-extensions/export-with-ts/input.js"
 		end: Object {
 			column: 0
 			index: 165
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected `from` for an export node"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/export-with-ts/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -61,7 +61,7 @@ JSRoot {
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 15
 					index: 15
@@ -76,7 +76,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: ""
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -91,7 +91,7 @@ JSRoot {
 			}
 			defaultSpecifier: JSExportDefaultSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -106,7 +106,7 @@ JSRoot {
 				exported: JSIdentifier {
 					name: "abstract"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/export-extensions/export-with-ts/input.js"
 						identifierName: "abstract"
 						end: Object {
 							column: 15
@@ -126,7 +126,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/export-with-ts/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 23
@@ -141,7 +141,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -160,7 +160,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -179,7 +179,7 @@ JSRoot {
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 14
 					index: 41
@@ -194,7 +194,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: ""
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 14
 						index: 41
@@ -209,7 +209,7 @@ JSRoot {
 			}
 			defaultSpecifier: JSExportDefaultSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 14
 						index: 41
@@ -224,7 +224,7 @@ JSRoot {
 				exported: JSIdentifier {
 					name: "declare"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/export-extensions/export-with-ts/input.js"
 						identifierName: "declare"
 						end: Object {
 							column: 14
@@ -244,7 +244,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "B"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/export-with-ts/input.js"
 					identifierName: "B"
 					end: Object {
 						column: 26
@@ -261,7 +261,7 @@ JSRoot {
 			extends: undefined
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 29
 					index: 56
@@ -276,7 +276,7 @@ JSRoot {
 			body: TSInterfaceBody {
 				body: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 29
 						index: 56
@@ -295,7 +295,7 @@ JSRoot {
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 11
 					index: 68
@@ -310,7 +310,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: ""
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 11
 						index: 68
@@ -325,7 +325,7 @@ JSRoot {
 			}
 			defaultSpecifier: JSExportDefaultSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 11
 						index: 68
@@ -340,7 +340,7 @@ JSRoot {
 				exported: JSIdentifier {
 					name: "enum"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/export-extensions/export-with-ts/input.js"
 						identifierName: "enum"
 						end: Object {
 							column: 11
@@ -358,7 +358,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 13
 					index: 70
@@ -373,7 +373,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/export-with-ts/input.js"
 					identifierName: "C"
 					end: Object {
 						column: 13
@@ -392,7 +392,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 16
 					index: 73
@@ -409,7 +409,7 @@ JSRoot {
 			exportKind: "type"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 21
 					index: 95
@@ -425,7 +425,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "D"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/export-extensions/export-with-ts/input.js"
 						identifierName: "D"
 						end: Object {
 							column: 18
@@ -442,7 +442,7 @@ JSRoot {
 				extends: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 21
 						index: 95
@@ -457,7 +457,7 @@ JSRoot {
 				body: TSInterfaceBody {
 					body: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/export-extensions/export-with-ts/input.js"
 						end: Object {
 							column: 21
 							index: 95
@@ -477,7 +477,7 @@ JSRoot {
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 13
 					index: 109
@@ -492,7 +492,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: ""
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 13
 						index: 109
@@ -507,7 +507,7 @@ JSRoot {
 			}
 			defaultSpecifier: JSExportDefaultSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 13
 						index: 109
@@ -522,7 +522,7 @@ JSRoot {
 				exported: JSIdentifier {
 					name: "module"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/export-extensions/export-with-ts/input.js"
 						identifierName: "module"
 						end: Object {
 							column: 13
@@ -540,7 +540,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 15
 					index: 111
@@ -555,7 +555,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "E"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/export-with-ts/input.js"
 					identifierName: "E"
 					end: Object {
 						column: 15
@@ -574,7 +574,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 18
 					index: 114
@@ -592,7 +592,7 @@ JSRoot {
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 16
 					index: 131
@@ -607,7 +607,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: ""
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 16
 						index: 131
@@ -622,7 +622,7 @@ JSRoot {
 			}
 			defaultSpecifier: JSExportDefaultSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 16
 						index: 131
@@ -637,7 +637,7 @@ JSRoot {
 				exported: JSIdentifier {
 					name: "namespace"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/export-extensions/export-with-ts/input.js"
 						identifierName: "namespace"
 						end: Object {
 							column: 16
@@ -655,7 +655,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 18
 					index: 133
@@ -670,7 +670,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "F"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/export-with-ts/input.js"
 					identifierName: "F"
 					end: Object {
 						column: 18
@@ -689,7 +689,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 21
 					index: 136
@@ -706,7 +706,7 @@ JSRoot {
 			exportKind: "type"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 27
 					index: 164
@@ -722,7 +722,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "G"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/export-extensions/export-with-ts/input.js"
 						identifierName: "G"
 						end: Object {
 							column: 13
@@ -738,7 +738,7 @@ JSRoot {
 				}
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 27
 						index: 164
@@ -752,7 +752,7 @@ JSRoot {
 				}
 				right: TSTypeQuery {
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/export-extensions/export-with-ts/input.js"
 						end: Object {
 							column: 26
 							index: 163
@@ -767,7 +767,7 @@ JSRoot {
 					exprName: JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/export-extensions/export-with-ts/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 26
@@ -792,7 +792,7 @@ JSRoot {
 
 ```
 
- input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/export-extensions/export-with-ts/input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected `from` for an export node
 

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/318/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/318/input.js"
 		end: Object {
 			column: 4
 			index: 40
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/318/input.js"
 				end: Object {
 					column: 4
 					index: 40
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/318/input.js"
 					end: Object {
 						column: 3
 						index: 39
@@ -64,7 +64,7 @@ JSRoot {
 				callee: JSFunctionExpression {
 					id: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/318/input.js"
 						end: Object {
 							column: 1
 							index: 37
@@ -86,7 +86,7 @@ JSRoot {
 						thisType: undefined
 						typeParameters: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/318/input.js"
 							end: Object {
 								column: 12
 								index: 12
@@ -102,7 +102,7 @@ JSRoot {
 					body: JSBlockStatement {
 						body: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/318/input.js"
 							end: Object {
 								column: 1
 								index: 37
@@ -118,7 +118,7 @@ JSRoot {
 							JSDirective {
 								value: "use strict"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/318/input.js"
 									end: Object {
 										column: 14
 										index: 29
@@ -134,7 +134,7 @@ JSRoot {
 							JSDirective {
 								value: "\0"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/318/input.js"
 									end: Object {
 										column: 5
 										index: 35

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/86/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/86/input.js"
 		end: Object {
 			column: 0
 			index: 42
@@ -36,7 +36,7 @@ JSRoot {
 			declaration: undefined
 			exportKind: "value"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/86/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -51,7 +51,7 @@ JSRoot {
 			specifiers: Array [
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/86/input.js"
 						end: Object {
 							column: 16
 							index: 16
@@ -66,7 +66,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "encrypt"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/86/input.js"
 							identifierName: "encrypt"
 							end: Object {
 								column: 16
@@ -83,7 +83,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "encrypt"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/86/input.js"
 							identifierName: "encrypt"
 							end: Object {
 								column: 16
@@ -104,7 +104,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "encrypt"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/86/input.js"
 					identifierName: "encrypt"
 					end: Object {
 						column: 16
@@ -119,7 +119,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/86/input.js"
 				end: Object {
 					column: 22
 					index: 41
@@ -135,7 +135,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/86/input.js"
 					end: Object {
 						column: 22
 						index: 41
@@ -158,7 +158,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/86/input.js"
 					end: Object {
 						column: 19
 						index: 38

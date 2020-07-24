@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/255/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/255/input.js"
 		end: Object {
 			column: 19
 			index: 19
@@ -34,7 +34,7 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/255/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 					}
 					frame {
 						location: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/255/input.js"
 							end: Object {
 								column: 9
 								index: 9
@@ -78,7 +78,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/255/input.js"
 				end: Object {
 					column: 12
 					index: 12
@@ -94,7 +94,7 @@ JSRoot {
 				operator: "void"
 				prefix: true
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/255/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -109,7 +109,7 @@ JSRoot {
 				argument: JSObjectExpression {
 					properties: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/255/input.js"
 						end: Object {
 							column: 12
 							index: 12
@@ -126,7 +126,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/255/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -141,7 +141,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/255/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -157,7 +157,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/255/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -172,7 +172,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/255/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -188,7 +188,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/255/input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -204,7 +204,7 @@ JSRoot {
 				value: 3
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/255/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -220,7 +220,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/255/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -235,7 +235,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/255/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -257,7 +257,7 @@ JSRoot {
 
 ```
 
- input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/255/input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed property name
 

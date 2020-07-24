@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/private-in/private-expression/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/private-in/private-expression/input.js"
 		end: Object {
 			column: 0
 			index: 47
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown start to an statement expression"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/private-in/private-expression/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/private-in/private-expression/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/private-in/private-expression/input.js"
 				end: Object {
 					column: 1
 					index: 46
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/private-in/private-expression/input.js"
 					end: Object {
 						column: 1
 						index: 46
@@ -111,7 +111,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/private-in/private-expression/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 4
@@ -126,7 +126,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/private-in/private-expression/input.js"
 								end: Object {
 									column: 4
 									index: 16
@@ -143,7 +143,7 @@ JSRoot {
 							value: 1
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/private-in/private-expression/input.js"
 								end: Object {
 									column: 8
 									index: 20
@@ -158,7 +158,7 @@ JSRoot {
 						}
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/private-in/private-expression/input.js"
 							end: Object {
 								column: 9
 								index: 21
@@ -183,7 +183,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/private-in/private-expression/input.js"
 								end: Object {
 									column: 4
 									index: 16
@@ -203,7 +203,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "test"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/private-in/private-expression/input.js"
 									identifierName: "test"
 									end: Object {
 										column: 6
@@ -218,7 +218,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/private-in/private-expression/input.js"
 								end: Object {
 									column: 6
 									index: 28
@@ -232,7 +232,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/private-in/private-expression/input.js"
 							end: Object {
 								column: 3
 								index: 44
@@ -254,7 +254,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/private-in/private-expression/input.js"
 								end: Object {
 									column: 8
 									index: 30
@@ -280,7 +280,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/private-in/private-expression/input.js"
 								end: Object {
 									column: 6
 									index: 28
@@ -296,7 +296,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/private-in/private-expression/input.js"
 								end: Object {
 									column: 3
 									index: 44
@@ -311,7 +311,7 @@ JSRoot {
 							body: Array [
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/private-in/private-expression/input.js"
 										end: Object {
 											column: 5
 											index: 38
@@ -326,7 +326,7 @@ JSRoot {
 									expression: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/private-in/private-expression/input.js"
 											end: Object {
 												column: 5
 												index: 38
@@ -342,7 +342,7 @@ JSRoot {
 								}
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/private-in/private-expression/input.js"
 										end: Object {
 											column: 7
 											index: 40
@@ -357,7 +357,7 @@ JSRoot {
 									expression: JSReferenceIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/private-in/private-expression/input.js"
 											identifierName: "x"
 											end: Object {
 												column: 6
@@ -386,7 +386,7 @@ JSRoot {
 
 ```
 
- input.js:4:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/private-in/private-expression/input.js:4:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
 

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/interface/export-abstract-interface/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/interface/export-abstract-interface/input.ts"
 		end: Object {
 			column: 0
 			index: 33
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/export-abstract-interface/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/export-abstract-interface/input.ts"
 				end: Object {
 					column: 15
 					index: 15
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "abstract"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/export-abstract-interface/input.ts"
 					identifierName: "abstract"
 					end: Object {
 						column: 15
@@ -92,7 +92,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/export-abstract-interface/input.ts"
 					identifierName: "I"
 					end: Object {
 						column: 27
@@ -109,7 +109,7 @@ JSRoot {
 			extends: undefined
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/export-abstract-interface/input.ts"
 				end: Object {
 					column: 1
 					index: 32
@@ -124,7 +124,7 @@ JSRoot {
 			body: TSInterfaceBody {
 				body: Array []
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/export-abstract-interface/input.ts"
 					end: Object {
 						column: 1
 						index: 32
@@ -146,7 +146,7 @@ JSRoot {
 
 ```
 
- input.ts:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/interface/export-abstract-interface/input.ts:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

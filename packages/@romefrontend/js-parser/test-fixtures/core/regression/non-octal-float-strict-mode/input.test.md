@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/regression/non-octal-float-strict-mode/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/regression/non-octal-float-strict-mode/input.js"
 		end: Object {
 			column: 0
 			index: 5
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Legacy octal literals are not allowed in strict mode"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/regression/non-octal-float-strict-mode/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/regression/non-octal-float-strict-mode/input.js"
 				end: Object {
 					column: 4
 					index: 4
@@ -74,7 +74,7 @@ JSRoot {
 				value: 9.5
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/regression/non-octal-float-strict-mode/input.js"
 					end: Object {
 						column: 4
 						index: 4
@@ -96,7 +96,7 @@ JSRoot {
 
 ```
 
- input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/regression/non-octal-float-strict-mode/input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Legacy octal literals are not allowed in strict mode
 

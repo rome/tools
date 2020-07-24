@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/555/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/555/input.js"
 		end: Object {
 			column: 0
 			index: 60
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "The rest element has to be the last element when destructuring"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/555/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/555/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 12
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/555/input.js"
 				end: Object {
 					column: 1
 					index: 58
@@ -91,7 +91,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/555/input.js"
 					end: Object {
 						column: 1
 						index: 58
@@ -112,7 +112,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/555/input.js"
 					end: Object {
 						column: 1
 						index: 54
@@ -127,7 +127,7 @@ JSRoot {
 				rest: JSBindingIdentifier {
 					name: "second"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/555/input.js"
 						identifierName: "second"
 						end: Object {
 							column: 13
@@ -144,7 +144,7 @@ JSRoot {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/555/input.js"
 							end: Object {
 								column: 13
 								index: 40
@@ -162,7 +162,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "first"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/555/input.js"
 							identifierName: "first"
 							end: Object {
 								column: 9
@@ -179,7 +179,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/555/input.js"
 								end: Object {
 									column: 9
 									index: 25
@@ -196,7 +196,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "third"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/555/input.js"
 							identifierName: "third"
 							end: Object {
 								column: 9
@@ -213,7 +213,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/555/input.js"
 								end: Object {
 									column: 9
 									index: 51
@@ -232,7 +232,7 @@ JSRoot {
 		}
 		JSEmptyStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/555/input.js"
 				end: Object {
 					column: 2
 					index: 59
@@ -253,7 +253,7 @@ JSRoot {
 
 ```
 
- input.js:3:13 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/555/input.js:3:13 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The rest element has to be the last element when destructuring
 

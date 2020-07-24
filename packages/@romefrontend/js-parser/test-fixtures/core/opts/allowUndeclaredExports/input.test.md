@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/opts/allowUndeclaredExports/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/opts/allowUndeclaredExports/input.js"
 		end: Object {
 			column: 15
 			index: 15
@@ -36,7 +36,7 @@ JSRoot {
 			declaration: undefined
 			exportKind: "value"
 			loc: Object {
-				filename: "input.js"
+				filename: "core/opts/allowUndeclaredExports/input.js"
 				end: Object {
 					column: 15
 					index: 15
@@ -51,7 +51,7 @@ JSRoot {
 			specifiers: Array [
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/opts/allowUndeclaredExports/input.js"
 						end: Object {
 							column: 12
 							index: 12
@@ -66,7 +66,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/opts/allowUndeclaredExports/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 12
@@ -83,7 +83,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/opts/allowUndeclaredExports/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 12

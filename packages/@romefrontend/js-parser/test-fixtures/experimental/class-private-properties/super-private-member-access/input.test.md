@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-properties/super-private-member-access/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-properties/super-private-member-access/input.js"
 		end: Object {
 			column: 0
 			index: 60
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/super-private-member-access/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/super-private-member-access/input.js"
 				end: Object {
 					column: 1
 					index: 59
@@ -68,7 +68,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/super-private-member-access/input.js"
 					end: Object {
 						column: 1
 						index: 59
@@ -83,7 +83,7 @@ JSRoot {
 				superClass: JSReferenceIdentifier {
 					name: "B"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/class-private-properties/super-private-member-access/input.js"
 						identifierName: "B"
 						end: Object {
 							column: 17
@@ -103,7 +103,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/super-private-member-access/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 4
@@ -118,7 +118,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/super-private-member-access/input.js"
 								end: Object {
 									column: 4
 									index: 24
@@ -134,7 +134,7 @@ JSRoot {
 						value: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/super-private-member-access/input.js"
 							end: Object {
 								column: 5
 								index: 25
@@ -159,7 +159,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/super-private-member-access/input.js"
 								end: Object {
 									column: 4
 									index: 24
@@ -179,7 +179,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "method"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/super-private-member-access/input.js"
 									identifierName: "method"
 									end: Object {
 										column: 8
@@ -194,7 +194,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/super-private-member-access/input.js"
 								end: Object {
 									column: 8
 									index: 35
@@ -208,7 +208,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/super-private-member-access/input.js"
 							end: Object {
 								column: 3
 								index: 57
@@ -230,7 +230,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/super-private-member-access/input.js"
 								end: Object {
 									column: 10
 									index: 37
@@ -256,7 +256,7 @@ JSRoot {
 								line: 4
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/super-private-member-access/input.js"
 								end: Object {
 									column: 8
 									index: 35
@@ -272,7 +272,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/super-private-member-access/input.js"
 								end: Object {
 									column: 3
 									index: 57
@@ -287,7 +287,7 @@ JSRoot {
 							body: Array [
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/super-private-member-access/input.js"
 										end: Object {
 											column: 13
 											index: 53
@@ -301,7 +301,7 @@ JSRoot {
 									}
 									expression: JSMemberExpression {
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/super-private-member-access/input.js"
 											end: Object {
 												column: 12
 												index: 52
@@ -315,7 +315,7 @@ JSRoot {
 										}
 										object: JSSuper {
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/super-private-member-access/input.js"
 												end: Object {
 													column: 9
 													index: 49
@@ -333,7 +333,7 @@ JSRoot {
 												id: JSIdentifier {
 													name: "x"
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/super-private-member-access/input.js"
 														identifierName: "x"
 														end: Object {
 															column: 12
@@ -348,7 +348,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/super-private-member-access/input.js"
 													end: Object {
 														column: 12
 														index: 52
@@ -362,7 +362,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/super-private-member-access/input.js"
 												end: Object {
 													column: 12
 													index: 52

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/bigint/hex-as-property-name/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/bigint/hex-as-property-name/input.js"
 		end: Object {
 			column: 0
 			index: 20
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/hex-as-property-name/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/hex-as-property-name/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/bigint/hex-as-property-name/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -90,7 +90,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: ""
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/bigint/hex-as-property-name/input.js"
 									identifierName: ""
 									end: Object {
 										column: 12
@@ -105,7 +105,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/bigint/hex-as-property-name/input.js"
 								end: Object {
 									column: 12
 									index: 12
@@ -122,7 +122,7 @@ JSRoot {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/bigint/hex-as-property-name/input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -136,7 +136,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/bigint/hex-as-property-name/input.js"
 							end: Object {
 								column: 15
 								index: 15
@@ -160,7 +160,7 @@ JSRoot {
 
 ```
 
- input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2020/bigint/hex-as-property-name/input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
 

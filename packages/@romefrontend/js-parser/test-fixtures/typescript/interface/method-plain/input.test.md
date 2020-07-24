@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/interface/method-plain/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/interface/method-plain/input.ts"
 		end: Object {
 			column: 0
 			index: 66
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/method-plain/input.ts"
 					identifierName: "I"
 					end: Object {
 						column: 11
@@ -53,7 +53,7 @@ JSRoot {
 			extends: undefined
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/method-plain/input.ts"
 				end: Object {
 					column: 1
 					index: 65
@@ -67,7 +67,7 @@ JSRoot {
 			}
 			body: TSInterfaceBody {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/method-plain/input.ts"
 					end: Object {
 						column: 1
 						index: 65
@@ -85,7 +85,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "m"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/interface/method-plain/input.ts"
 									identifierName: "m"
 									end: Object {
 										column: 5
@@ -100,7 +100,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/method-plain/input.ts"
 								end: Object {
 									column: 5
 									index: 19
@@ -116,7 +116,7 @@ JSRoot {
 						optional: false
 						returnType: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/interface/method-plain/input.ts"
 							end: Object {
 								column: 8
 								index: 22
@@ -133,7 +133,7 @@ JSRoot {
 							rest: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/method-plain/input.ts"
 								end: Object {
 									column: 7
 									index: 21
@@ -152,7 +152,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "m"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/interface/method-plain/input.ts"
 									identifierName: "m"
 									end: Object {
 										column: 5
@@ -167,7 +167,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/method-plain/input.ts"
 								end: Object {
 									column: 5
 									index: 28
@@ -182,7 +182,7 @@ JSRoot {
 						}
 						optional: false
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/interface/method-plain/input.ts"
 							end: Object {
 								column: 40
 								index: 63
@@ -196,7 +196,7 @@ JSRoot {
 						}
 						returnType: TSVoidKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/method-plain/input.ts"
 								end: Object {
 									column: 39
 									index: 62
@@ -212,7 +212,7 @@ JSRoot {
 						meta: TSSignatureDeclarationMeta {
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/method-plain/input.ts"
 								end: Object {
 									column: 39
 									index: 62
@@ -228,7 +228,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "x"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/interface/method-plain/input.ts"
 										identifierName: "x"
 										end: Object {
 											column: 7
@@ -244,7 +244,7 @@ JSRoot {
 									meta: JSPatternMeta {
 										optional: true
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/interface/method-plain/input.ts"
 											end: Object {
 												column: 16
 												index: 39
@@ -258,7 +258,7 @@ JSRoot {
 										}
 										typeAnnotation: TSNumberKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/interface/method-plain/input.ts"
 												end: Object {
 													column: 16
 													index: 39
@@ -277,7 +277,7 @@ JSRoot {
 							rest: JSBindingIdentifier {
 								name: "y"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/interface/method-plain/input.ts"
 									identifierName: "y"
 									end: Object {
 										column: 22
@@ -293,7 +293,7 @@ JSRoot {
 								meta: JSPatternMeta {
 									optional: undefined
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/interface/method-plain/input.ts"
 										end: Object {
 											column: 32
 											index: 55
@@ -307,7 +307,7 @@ JSRoot {
 									}
 									typeAnnotation: TSArrayType {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/interface/method-plain/input.ts"
 											end: Object {
 												column: 32
 												index: 55
@@ -321,7 +321,7 @@ JSRoot {
 										}
 										elementType: TSNumberKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/interface/method-plain/input.ts"
 												end: Object {
 													column: 30
 													index: 53

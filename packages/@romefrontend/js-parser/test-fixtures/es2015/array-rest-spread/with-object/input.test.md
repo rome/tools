@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/array-rest-spread/with-object/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/array-rest-spread/with-object/input.js"
 		end: Object {
 			column: 0
 			index: 32
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/array-rest-spread/with-object/input.js"
 				end: Object {
 					column: 31
 					index: 31
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/array-rest-spread/with-object/input.js"
 					end: Object {
 						column: 31
 						index: 31
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingArrayPattern {
 							elements: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/array-rest-spread/with-object/input.js"
 								end: Object {
 									column: 17
 									index: 17
@@ -81,7 +81,7 @@ JSRoot {
 							rest: JSBindingObjectPattern {
 								rest: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/array-rest-spread/with-object/input.js"
 									end: Object {
 										column: 16
 										index: 16
@@ -97,7 +97,7 @@ JSRoot {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/array-rest-spread/with-object/input.js"
 										end: Object {
 											column: 16
 											index: 16
@@ -116,7 +116,7 @@ JSRoot {
 											value: JSIdentifier {
 												name: "length"
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/array-rest-spread/with-object/input.js"
 													identifierName: "length"
 													end: Object {
 														column: 15
@@ -131,7 +131,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/array-rest-spread/with-object/input.js"
 												end: Object {
 													column: 15
 													index: 15
@@ -147,7 +147,7 @@ JSRoot {
 										value: JSBindingIdentifier {
 											name: "length"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/array-rest-spread/with-object/input.js"
 												identifierName: "length"
 												end: Object {
 													column: 15
@@ -162,7 +162,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/array-rest-spread/with-object/input.js"
 											end: Object {
 												column: 15
 												index: 15
@@ -179,7 +179,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/array-rest-spread/with-object/input.js"
 							end: Object {
 								column: 30
 								index: 30
@@ -193,7 +193,7 @@ JSRoot {
 						}
 						init: JSArrayExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/array-rest-spread/with-object/input.js"
 								end: Object {
 									column: 30
 									index: 30
@@ -210,7 +210,7 @@ JSRoot {
 									value: 1
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/array-rest-spread/with-object/input.js"
 										end: Object {
 											column: 23
 											index: 23
@@ -227,7 +227,7 @@ JSRoot {
 									value: 2
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/array-rest-spread/with-object/input.js"
 										end: Object {
 											column: 26
 											index: 26
@@ -244,7 +244,7 @@ JSRoot {
 									value: 3
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/array-rest-spread/with-object/input.js"
 										end: Object {
 											column: 29
 											index: 29

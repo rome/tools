@@ -205,6 +205,12 @@ export default async function cli() {
 					).asAbsoluteFilePathOrVoid(cwd),
 				},
 				requestFlags: {
+					unsafeWrites: c.get(
+						"unsafeWrites",
+						{
+							description: markup`When writing files, don't verify mtime or existence. Potentially dangerous and could lead to unintended data loss`,
+						},
+					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.unsafeWrites),
 					auxiliaryDiagnosticFormat: c.get(
 						"auxiliaryDiagnosticFormat",
 						{
@@ -216,7 +222,7 @@ export default async function cli() {
 						{
 							description: markup`Run a command multiple times, calculating average`,
 						},
-					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.benchmark),
+					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.unsafeWrites),
 					benchmarkIterations: c.get(
 						"benchmarkIterations",
 						{
@@ -271,7 +277,8 @@ export default async function cli() {
 							description: markup`Cap the amount of diagnostics displayed`,
 						},
 					).asNumber(DEFAULT_CLIENT_REQUEST_FLAGS.maxDiagnostics),
-					// false is inlined from DEFAULT_CLIENT_REQUEST_FLAGS.verboseDiagnostics
+					// DiagnosticsPrinterFlags["verboseDiagnostics"] can be a boolean or some string constants
+					// But we only want to allow booleans in the CLI
 					verboseDiagnostics: c.get(
 						"verboseDiagnostics",
 						{
@@ -554,6 +561,11 @@ export default async function cli() {
 				console.error(res.stack);
 			}
 			process.exit(1);
+			break;
+		}
+
+		case "EXIT": {
+			process.exit(res.code);
 			break;
 		}
 

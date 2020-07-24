@@ -22,6 +22,7 @@ export type ExtensionLintInfo = ExtensionHandlerMethodInfo & {
 };
 
 export type ExtensionLintResult = {
+	mtime: undefined | number;
 	sourceText: string;
 	diagnostics: Diagnostics;
 	formatted: string;
@@ -30,6 +31,7 @@ export type ExtensionLintResult = {
 
 export type ExtensionHandlerMethodInfo = {
 	parseOptions: WorkerParseOptions;
+	mtime: undefined | number;
 	file: FileReference;
 	project: compiler.TransformProjectDefinition;
 	worker: Worker;
@@ -37,7 +39,6 @@ export type ExtensionHandlerMethodInfo = {
 
 export type ExtensionParseInfo = ExtensionHandlerMethodInfo & {
 	sourceTypeJS: ConstJSSourceType;
-	mtime: undefined | number;
 	manifestPath: undefined | string;
 	path: UnknownFilePath;
 };

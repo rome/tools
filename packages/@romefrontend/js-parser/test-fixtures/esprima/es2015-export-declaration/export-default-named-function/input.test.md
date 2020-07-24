@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-export-declaration/export-default-named-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-export-declaration/export-default-named-function/input.js"
 		end: Object {
 			column: 0
 			index: 33
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/export-default-named-function/input.js"
 				end: Object {
 					column: 32
 					index: 32
@@ -50,7 +50,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "foo"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-export-declaration/export-default-named-function/input.js"
 						identifierName: "foo"
 						end: Object {
 							column: 27
@@ -65,7 +65,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-export-declaration/export-default-named-function/input.js"
 					end: Object {
 						column: 32
 						index: 32
@@ -81,7 +81,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-export-declaration/export-default-named-function/input.js"
 						end: Object {
 							column: 32
 							index: 32
@@ -104,7 +104,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-export-declaration/export-default-named-function/input.js"
 						end: Object {
 							column: 29
 							index: 29

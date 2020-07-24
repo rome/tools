@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/309/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/309/input.js"
 		end: Object {
 			column: 23
 			index: 23
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/309/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/309/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/309/input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -88,7 +88,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "arr"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/309/input.js"
 						identifierName: "arr"
 						end: Object {
 							column: 23
@@ -105,7 +105,7 @@ JSRoot {
 				left: JSAssignmentArrayPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/309/input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -121,7 +121,7 @@ JSRoot {
 						JSAssignmentIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/309/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 2
@@ -138,7 +138,7 @@ JSRoot {
 						JSAssignmentObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/309/input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -156,7 +156,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "b"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/uncategorised/309/input.js"
 												identifierName: "b"
 												end: Object {
 													column: 6
@@ -171,7 +171,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/309/input.js"
 											end: Object {
 												column: 6
 												index: 6
@@ -187,7 +187,7 @@ JSRoot {
 									value: JSAssignmentAssignmentPattern {
 										operator: "="
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/309/input.js"
 											end: Object {
 												column: 14
 												index: 14
@@ -203,7 +203,7 @@ JSRoot {
 											value: 1
 											format: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/uncategorised/309/input.js"
 												end: Object {
 													column: 14
 													index: 14
@@ -219,7 +219,7 @@ JSRoot {
 										left: JSAssignmentObjectPattern {
 											rest: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/uncategorised/309/input.js"
 												end: Object {
 													column: 10
 													index: 10
@@ -237,7 +237,7 @@ JSRoot {
 														value: JSIdentifier {
 															name: "c"
 															loc: Object {
-																filename: "input.js"
+																filename: "es2015/uncategorised/309/input.js"
 																identifierName: "c"
 																end: Object {
 																	column: 10
@@ -252,7 +252,7 @@ JSRoot {
 															}
 														}
 														loc: Object {
-															filename: "input.js"
+															filename: "es2015/uncategorised/309/input.js"
 															end: Object {
 																column: 10
 																index: 10
@@ -268,7 +268,7 @@ JSRoot {
 													value: JSAssignmentIdentifier {
 														name: "c"
 														loc: Object {
-															filename: "input.js"
+															filename: "es2015/uncategorised/309/input.js"
 															identifierName: "c"
 															end: Object {
 																column: 10
@@ -283,7 +283,7 @@ JSRoot {
 														}
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "es2015/uncategorised/309/input.js"
 														end: Object {
 															column: 10
 															index: 10
@@ -300,7 +300,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/309/input.js"
 										end: Object {
 											column: 14
 											index: 14
@@ -318,7 +318,7 @@ JSRoot {
 						JSAssignmentIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/309/input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -343,7 +343,7 @@ JSRoot {
 
 ```
 
- input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/309/input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ,
 

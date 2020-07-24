@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-yield/yield-arrow-parameter-name/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/yield-arrow-parameter-name/input.js"
 		end: Object {
 			column: 0
 			index: 15
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/yield-arrow-parameter-name/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-arrow-parameter-name/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -64,7 +64,7 @@ JSRoot {
 					value: 42
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-yield/yield-arrow-parameter-name/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -84,7 +84,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-yield/yield-arrow-parameter-name/input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -100,7 +100,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "yield"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/yield-arrow-parameter-name/input.js"
 								identifierName: "yield"
 								end: Object {
 									column: 6

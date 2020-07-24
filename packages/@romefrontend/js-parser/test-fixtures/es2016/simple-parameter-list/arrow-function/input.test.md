@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2016/simple-parameter-list/arrow-function/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2016/simple-parameter-list/arrow-function/input.js"
 		end: Object {
 			column: 0
 			index: 47
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Illegal 'use strict' directive in function with non-simple parameter list"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2016/simple-parameter-list/arrow-function/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2016/simple-parameter-list/arrow-function/input.js"
 				end: Object {
 					column: 2
 					index: 46
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2016/simple-parameter-list/arrow-function/input.js"
 					end: Object {
 						column: 2
 						index: 46
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2016/simple-parameter-list/arrow-function/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 5
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2016/simple-parameter-list/arrow-function/input.js"
 							end: Object {
 								column: 1
 								index: 45
@@ -119,7 +119,7 @@ JSRoot {
 						}
 						init: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2016/simple-parameter-list/arrow-function/input.js"
 								end: Object {
 									column: 1
 									index: 45
@@ -134,7 +134,7 @@ JSRoot {
 							body: JSBlockStatement {
 								body: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "es2016/simple-parameter-list/arrow-function/input.js"
 									end: Object {
 										column: 1
 										index: 45
@@ -150,7 +150,7 @@ JSRoot {
 									JSDirective {
 										value: "use strict"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2016/simple-parameter-list/arrow-function/input.js"
 											end: Object {
 												column: 15
 												index: 43
@@ -172,7 +172,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2016/simple-parameter-list/arrow-function/input.js"
 									end: Object {
 										column: 25
 										index: 25
@@ -188,7 +188,7 @@ JSRoot {
 									JSBindingAssignmentPattern {
 										operator: "="
 										loc: Object {
-											filename: "input.js"
+											filename: "es2016/simple-parameter-list/arrow-function/input.js"
 											end: Object {
 												column: 21
 												index: 21
@@ -203,7 +203,7 @@ JSRoot {
 										right: JSObjectExpression {
 											properties: Array []
 											loc: Object {
-												filename: "input.js"
+												filename: "es2016/simple-parameter-list/arrow-function/input.js"
 												end: Object {
 													column: 21
 													index: 21
@@ -219,7 +219,7 @@ JSRoot {
 										left: JSBindingIdentifier {
 											name: "options"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2016/simple-parameter-list/arrow-function/input.js"
 												identifierName: "options"
 												end: Object {
 													column: 16
@@ -249,7 +249,7 @@ JSRoot {
 
 ```
 
- input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2016/simple-parameter-list/arrow-function/input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Illegal 'use strict' directive in function with non-simple parameter list
 

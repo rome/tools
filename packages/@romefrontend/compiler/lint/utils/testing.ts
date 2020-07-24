@@ -131,7 +131,7 @@ async function testLintExpect(
 
 	t.namedSnapshot(
 		`${snapshotName}: formatted`,
-		res.save,
+		res.save?.content,
 		undefined,
 		{filename: snapshotFilename},
 	);

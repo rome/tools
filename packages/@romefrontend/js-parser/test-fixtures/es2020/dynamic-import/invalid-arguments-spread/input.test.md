@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/dynamic-import/invalid-arguments-spread/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/dynamic-import/invalid-arguments-spread/input.js"
 		end: Object {
 			column: 0
 			index: 15
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Spread is not allowed in import()"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2020/dynamic-import/invalid-arguments-spread/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/dynamic-import/invalid-arguments-spread/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSImportCall {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/dynamic-import/invalid-arguments-spread/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -86,7 +86,7 @@ JSRoot {
 				}
 				argument: JSArrayExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/dynamic-import/invalid-arguments-spread/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -103,7 +103,7 @@ JSRoot {
 							value: 1
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/dynamic-import/invalid-arguments-spread/input.js"
 								end: Object {
 									column: 12
 									index: 12
@@ -128,7 +128,7 @@ JSRoot {
 
 ```
 
- input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2020/dynamic-import/invalid-arguments-spread/input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Spread is not allowed in import()
 

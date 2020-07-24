@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js"
 		end: Object {
 			column: 0
 			index: 21
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -89,7 +89,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -105,7 +105,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "yield"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js"
 							identifierName: "yield"
 							end: Object {
 								column: 16
@@ -122,7 +122,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/yield-function-declaration-formal-parameter/input.js"
 								end: Object {
 									column: 16
 									index: 16

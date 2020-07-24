@@ -6,9 +6,12 @@
  */
 
 import {consumeJSON} from "@romefrontend/codec-json";
-import {VERSION} from "./constants";
-import {ROME_CONFIG_FILENAMES} from "@romefrontend/project";
-import {AbsoluteFilePath, HOME_PATH, TEMP_PATH} from "@romefrontend/path";
+import {
+	USER_CONFIG_DIRECTORY,
+	USER_CONFIG_FILENAMES,
+	VERSION,
+} from "./constants";
+import {AbsoluteFilePath, TEMP_PATH} from "@romefrontend/path";
 import {existsSync, readFileTextSync} from "@romefrontend/fs";
 import {Consumer} from "@romefrontend/consume";
 import {descriptions} from "@romefrontend/diagnostics";
@@ -16,12 +19,14 @@ import {descriptions} from "@romefrontend/diagnostics";
 export type UserConfig = {
 	configPath: undefined | AbsoluteFilePath;
 	cachePath: AbsoluteFilePath;
+	recoveryPath: AbsoluteFilePath;
 	syntaxTheme: undefined | Consumer;
 };
 
 export const DEFAULT_USER_CONFIG: UserConfig = {
 	configPath: undefined,
 	cachePath: TEMP_PATH.append(`rome-${VERSION}`),
+	recoveryPath: USER_CONFIG_DIRECTORY.append("recovery"),
 	syntaxTheme: undefined,
 };
 
@@ -70,8 +75,8 @@ export function getUserConfigFile():
 			consumer: Consumer;
 			configPath: AbsoluteFilePath;
 		} {
-	for (const configFilename of ROME_CONFIG_FILENAMES) {
-		const configPath = HOME_PATH.appendList(".config", configFilename);
+	for (const configFilename of USER_CONFIG_FILENAMES) {
+		const configPath = USER_CONFIG_DIRECTORY.append(configFilename);
 
 		if (!existsSync(configPath)) {
 			continue;

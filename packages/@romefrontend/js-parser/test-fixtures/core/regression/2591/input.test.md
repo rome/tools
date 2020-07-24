@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/regression/2591/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/regression/2591/input.js"
 		end: Object {
 			column: 0
 			index: 34
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/regression/2591/input.js"
 					identifierName: "x"
 					end: Object {
 						column: 10
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/regression/2591/input.js"
 				end: Object {
 					column: 1
 					index: 33
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/regression/2591/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/regression/2591/input.js"
 					end: Object {
 						column: 1
 						index: 33
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSVariableDeclarationStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/regression/2591/input.js"
 							end: Object {
 								column: 7
 								index: 22
@@ -119,7 +119,7 @@ JSRoot {
 						declaration: JSVariableDeclaration {
 							kind: "let"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/regression/2591/input.js"
 								end: Object {
 									column: 7
 									index: 22
@@ -136,7 +136,7 @@ JSRoot {
 									id: JSBindingIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.js"
+											filename: "core/regression/2591/input.js"
 											identifierName: "x"
 											end: Object {
 												column: 7
@@ -152,7 +152,7 @@ JSRoot {
 									}
 									init: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "core/regression/2591/input.js"
 										end: Object {
 											column: 7
 											index: 22
@@ -170,7 +170,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/regression/2591/input.js"
 							end: Object {
 								column: 8
 								index: 31
@@ -190,7 +190,7 @@ JSRoot {
 							sticky: false
 							unicode: false
 							loc: Object {
-								filename: "input.js"
+								filename: "core/regression/2591/input.js"
 								end: Object {
 									column: 7
 									index: 30
@@ -204,7 +204,7 @@ JSRoot {
 							}
 							expression: JSRegExpSubExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "core/regression/2591/input.js"
 									end: Object {
 										column: 6
 										index: 29
@@ -220,7 +220,7 @@ JSRoot {
 									JSRegExpCharacter {
 										value: "w"
 										loc: Object {
-											filename: "input.js"
+											filename: "core/regression/2591/input.js"
 											end: Object {
 												column: 4
 												index: 27
@@ -236,7 +236,7 @@ JSRoot {
 									JSRegExpCharacter {
 										value: "o"
 										loc: Object {
-											filename: "input.js"
+											filename: "core/regression/2591/input.js"
 											end: Object {
 												column: 5
 												index: 28
@@ -252,7 +252,7 @@ JSRoot {
 									JSRegExpCharacter {
 										value: "w"
 										loc: Object {
-											filename: "input.js"
+											filename: "core/regression/2591/input.js"
 											end: Object {
 												column: 6
 												index: 29

@@ -10,14 +10,14 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "input.js"
+	filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js"
 		end: Object {
 			column: 0
 			index: 59
@@ -33,7 +33,7 @@ JSRoot {
 		JSDirective {
 			value: "use strict"
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -56,7 +56,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "yield is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -77,7 +77,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js"
 					identifierName: "g"
 					end: Object {
 						column: 25
@@ -92,7 +92,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js"
 				end: Object {
 					column: 58
 					index: 58
@@ -114,7 +114,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js"
 					end: Object {
 						column: 27
 						index: 27
@@ -130,7 +130,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js"
 					end: Object {
 						column: 58
 						index: 58
@@ -145,7 +145,7 @@ JSRoot {
 				body: Array [
 					JSVariableDeclarationStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js"
 							end: Object {
 								column: 56
 								index: 56
@@ -160,7 +160,7 @@ JSRoot {
 						declaration: JSVariableDeclaration {
 							kind: "var"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js"
 								end: Object {
 									column: 56
 									index: 56
@@ -177,7 +177,7 @@ JSRoot {
 									id: JSBindingIdentifier {
 										name: "z"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js"
 											identifierName: "z"
 											end: Object {
 												column: 35
@@ -192,7 +192,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js"
 										end: Object {
 											column: 56
 											index: 56
@@ -207,7 +207,7 @@ JSRoot {
 									init: JSFunctionExpression {
 										id: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js"
 											end: Object {
 												column: 56
 												index: 56
@@ -223,7 +223,7 @@ JSRoot {
 											body: Array []
 											directives: Array []
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js"
 												end: Object {
 													column: 56
 													index: 56
@@ -245,7 +245,7 @@ JSRoot {
 											thisType: undefined
 											typeParameters: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js"
 												end: Object {
 													column: 53
 													index: 53
@@ -261,7 +261,7 @@ JSRoot {
 												JSBindingIdentifier {
 													name: "yield"
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js"
 														identifierName: "yield"
 														end: Object {
 															column: 52
@@ -278,7 +278,7 @@ JSRoot {
 														optional: undefined
 														typeAnnotation: undefined
 														loc: Object {
-															filename: "input.js"
+															filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js"
 															end: Object {
 																column: 52
 																index: 52
@@ -310,7 +310,7 @@ JSRoot {
 
 ```
 
- input.js:1:47 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js:1:47 parse/js ━━━━━
 
   ✖ yield is a reserved word
 

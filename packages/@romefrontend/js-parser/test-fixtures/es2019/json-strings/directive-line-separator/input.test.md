@@ -11,14 +11,14 @@ JSRoot {
 	body: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "input.js"
+	filename: "es2019/json-strings/directive-line-separator/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2019/json-strings/directive-line-separator/input.js"
 		end: Object {
 			column: 0
 			index: 99
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: "     ^ That's a U+2028 LINE SEPARATOR UTF-16 char (between 'before' and 'after')"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2019/json-strings/directive-line-separator/input.js"
 				end: Object {
 					column: 82
 					index: 98
@@ -54,7 +54,7 @@ JSRoot {
 			value: "before\u2028after"
 			trailingComments: Array ["0"]
 			loc: Object {
-				filename: "input.js"
+				filename: "es2019/json-strings/directive-line-separator/input.js"
 				end: Object {
 					column: 15
 					index: 15

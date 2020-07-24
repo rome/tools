@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/class/invalid-escape-get/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/class/invalid-escape-get/input.js"
 		end: Object {
 			column: 0
 			index: 28
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "get can't contain a unicode escape"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/class/invalid-escape-get/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "X"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class/invalid-escape-get/input.js"
 					identifierName: "X"
 					end: Object {
 						column: 7
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/class/invalid-escape-get/input.js"
 				end: Object {
 					column: 27
 					index: 27
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class/invalid-escape-get/input.js"
 					end: Object {
 						column: 27
 						index: 27
@@ -112,7 +112,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class/invalid-escape-get/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 20
@@ -127,7 +127,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class/invalid-escape-get/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -141,7 +141,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class/invalid-escape-get/input.js"
 							end: Object {
 								column: 25
 								index: 25
@@ -157,7 +157,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class/invalid-escape-get/input.js"
 								end: Object {
 									column: 25
 									index: 25
@@ -180,7 +180,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class/invalid-escape-get/input.js"
 								end: Object {
 									column: 22
 									index: 22
@@ -206,7 +206,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class/invalid-escape-get/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -231,7 +231,7 @@ JSRoot {
 
 ```
 
- input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/class/invalid-escape-get/input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ get can't contain a unicode escape
 

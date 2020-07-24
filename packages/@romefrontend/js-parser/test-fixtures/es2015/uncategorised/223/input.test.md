@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/223/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/223/input.js"
 		end: Object {
 			column: 0
 			index: 21
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Object pattern cannot contains methods"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/223/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/223/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/223/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -89,7 +89,7 @@ JSRoot {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/223/input.js"
 						end: Object {
 							column: 19
 							index: 19
@@ -105,7 +105,7 @@ JSRoot {
 				left: JSAssignmentObjectPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/223/input.js"
 						end: Object {
 							column: 15
 							index: 15
@@ -123,7 +123,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "X"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/223/input.js"
 										end: Object {
 											column: 13
 											index: 13
@@ -137,7 +137,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/223/input.js"
 									end: Object {
 										column: 13
 										index: 13
@@ -153,7 +153,7 @@ JSRoot {
 							value: JSAssignmentIdentifier {
 								name: "X"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/223/input.js"
 									end: Object {
 										column: 13
 										index: 13
@@ -167,7 +167,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/223/input.js"
 								end: Object {
 									column: 13
 									index: 13
@@ -192,7 +192,7 @@ JSRoot {
 
 ```
 
- input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/223/input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Object pattern cannot contains methods
 

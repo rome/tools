@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
 		end: Object {
 			column: 0
 			index: 19
@@ -34,7 +34,7 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 					}
 					frame {
 						location: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
 							identifierName: "b"
 							end: Object {
 								column: 6
@@ -79,7 +79,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -93,7 +93,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -109,7 +109,7 @@ JSRoot {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -129,7 +129,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
 						end: Object {
 							column: 16
 							index: 16
@@ -144,7 +144,7 @@ JSRoot {
 					params: Array [
 						JSBindingArrayPattern {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
 								end: Object {
 									column: 13
 									index: 13
@@ -159,7 +159,7 @@ JSRoot {
 							rest: JSBindingIdentifier {
 								name: "b"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
 									identifierName: "b"
 									end: Object {
 										column: 12
@@ -177,7 +177,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 3
@@ -194,7 +194,7 @@ JSRoot {
 								JSBindingArrayPattern {
 									rest: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
 										end: Object {
 											column: 7
 											index: 7
@@ -210,7 +210,7 @@ JSRoot {
 										JSBindingIdentifier {
 											name: "b"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
 												identifierName: "b"
 												end: Object {
 													column: 6
@@ -240,7 +240,7 @@ JSRoot {
 
 ```
 
- input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-array-binding-pattern/invalid-dup-param/input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Argument b name clash in strict mode
 

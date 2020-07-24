@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-object-initialiser/proto-identifier-getter/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-object-initialiser/proto-identifier-getter/input.js"
 		end: Object {
 			column: 0
 			index: 41
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-object-initialiser/proto-identifier-getter/input.js"
 				end: Object {
 					column: 40
 					index: 40
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-object-initialiser/proto-identifier-getter/input.js"
 					end: Object {
 						column: 39
 						index: 39
@@ -66,7 +66,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "__proto__"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-object-initialiser/proto-identifier-getter/input.js"
 									identifierName: "__proto__"
 									end: Object {
 										column: 12
@@ -81,7 +81,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-initialiser/proto-identifier-getter/input.js"
 								end: Object {
 									column: 12
 									index: 12
@@ -96,7 +96,7 @@ JSRoot {
 						}
 						value: JSNullLiteral {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-initialiser/proto-identifier-getter/input.js"
 								end: Object {
 									column: 18
 									index: 18
@@ -110,7 +110,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-object-initialiser/proto-identifier-getter/input.js"
 							end: Object {
 								column: 18
 								index: 18
@@ -129,7 +129,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "__proto__"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-object-initialiser/proto-identifier-getter/input.js"
 									identifierName: "__proto__"
 									end: Object {
 										column: 33
@@ -144,7 +144,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-initialiser/proto-identifier-getter/input.js"
 								end: Object {
 									column: 33
 									index: 33
@@ -158,7 +158,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-object-initialiser/proto-identifier-getter/input.js"
 							end: Object {
 								column: 37
 								index: 37
@@ -174,7 +174,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-initialiser/proto-identifier-getter/input.js"
 								end: Object {
 									column: 37
 									index: 37
@@ -197,7 +197,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-initialiser/proto-identifier-getter/input.js"
 								end: Object {
 									column: 35
 									index: 35

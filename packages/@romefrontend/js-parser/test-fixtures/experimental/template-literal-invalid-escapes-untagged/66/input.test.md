@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/template-literal-invalid-escapes-untagged/66/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/template-literal-invalid-escapes-untagged/66/input.js"
 		end: Object {
 			column: 21
 			index: 21
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Invalid escape sequence in template"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/template-literal-invalid-escapes-untagged/66/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/template-literal-invalid-escapes-untagged/66/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSTemplateLiteral {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/template-literal-invalid-escapes-untagged/66/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -89,7 +89,7 @@ JSRoot {
 						value: 0
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/template-literal-invalid-escapes-untagged/66/input.js"
 							end: Object {
 								column: 14
 								index: 14
@@ -109,7 +109,7 @@ JSRoot {
 						raw: "\\u{110000}"
 						tail: false
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/template-literal-invalid-escapes-untagged/66/input.js"
 							end: Object {
 								column: 11
 								index: 11
@@ -127,7 +127,7 @@ JSRoot {
 						raw: "right"
 						tail: true
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/template-literal-invalid-escapes-untagged/66/input.js"
 							end: Object {
 								column: 20
 								index: 20
@@ -151,7 +151,7 @@ JSRoot {
 
 ```
 
- input.js:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/template-literal-invalid-escapes-untagged/66/input.js:1:1 parse/js ━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid escape sequence in template
 

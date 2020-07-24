@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts"
 		end: Object {
 			column: 0
 			index: 26
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts"
 				end: Object {
 					column: 24
 					index: 24
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "+"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts"
 					end: Object {
 						column: 24
 						index: 24
@@ -65,7 +65,7 @@ JSRoot {
 					value: 4
 					format: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts"
 						end: Object {
 							column: 1
 							index: 1
@@ -80,7 +80,7 @@ JSRoot {
 				}
 				right: JSArrowFunctionExpression {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts"
 						end: Object {
 							column: 24
 							index: 24
@@ -96,7 +96,7 @@ JSRoot {
 						value: 2
 						format: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts"
 							end: Object {
 								column: 24
 								index: 24
@@ -117,7 +117,7 @@ JSRoot {
 						returnType: undefined
 						thisType: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts"
 							end: Object {
 								column: 22
 								index: 22
@@ -131,7 +131,7 @@ JSRoot {
 						}
 						typeParameters: TSTypeParameterDeclaration {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts"
 								end: Object {
 									column: 17
 									index: 17
@@ -149,7 +149,7 @@ JSRoot {
 									constraint: undefined
 									default: undefined
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts"
 										end: Object {
 											column: 16
 											index: 16

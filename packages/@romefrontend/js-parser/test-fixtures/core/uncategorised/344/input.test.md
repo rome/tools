@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/344/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/344/input.js"
 		end: Object {
 			column: 16
 			index: 30
@@ -34,7 +34,7 @@ JSRoot {
 		JSDirective {
 			value: "use strict"
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/344/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -51,7 +51,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/344/input.js"
 				end: Object {
 					column: 16
 					index: 30
@@ -66,7 +66,7 @@ JSRoot {
 			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/344/input.js"
 					end: Object {
 						column: 15
 						index: 29
@@ -80,7 +80,7 @@ JSRoot {
 				}
 				callee: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/344/input.js"
 						end: Object {
 							column: 13
 							index: 27
@@ -95,7 +95,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "object"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/344/input.js"
 							identifierName: "object"
 							end: Object {
 								column: 6
@@ -113,7 +113,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "static"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/344/input.js"
 								identifierName: "static"
 								end: Object {
 									column: 13
@@ -128,7 +128,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/344/input.js"
 							identifierName: "static"
 							end: Object {
 								column: 13

@@ -14,14 +14,14 @@ export const textHandler: PartialExtensionHandler = {
 	canFormat: false,
 	language: "unknown",
 
-	async parse({path, file, worker}) {
+	async parse({path, mtime, file, worker}) {
 		const src = await worker.readFile(file.real);
 		const serial = JSON.stringify(src);
 		const sourceText = `export default ${serial};`;
 
 		return {
 			// Shouldn't error
-			ast: parseJS({input: sourceText, sourceType: "module", path}),
+			ast: parseJS({input: sourceText, mtime, sourceType: "module", path}),
 			sourceText,
 			astModifiedFromSource: true,
 		};

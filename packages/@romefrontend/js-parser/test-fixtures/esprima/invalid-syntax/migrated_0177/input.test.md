@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0177/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0177/input.js"
 		end: Object {
 			column: 0
 			index: 29
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown label <emphasis>x</emphasis>"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0177/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSWhileStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0177/input.js"
 				end: Object {
 					column: 28
 					index: 28
@@ -73,7 +73,7 @@ JSRoot {
 			test: JSBooleanLiteral {
 				value: true
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0177/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0177/input.js"
 					end: Object {
 						column: 28
 						index: 28
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSContinueStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0177/input.js"
 							end: Object {
 								column: 26
 								index: 26
@@ -119,7 +119,7 @@ JSRoot {
 						label: JSIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0177/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 25
@@ -145,7 +145,7 @@ JSRoot {
 
 ```
 
- input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0177/input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown label x
 

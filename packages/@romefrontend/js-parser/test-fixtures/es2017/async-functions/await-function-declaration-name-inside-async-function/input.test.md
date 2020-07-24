@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/await-function-declaration-name-inside-async-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/await-function-declaration-name-inside-async-function/input.js"
 		end: Object {
 			column: 1
 			index: 46
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Can not use 'await' as identifier inside an async function"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-function-declaration-name-inside-async-function/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-function-declaration-name-inside-async-function/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 18
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-function-declaration-name-inside-async-function/input.js"
 				end: Object {
 					column: 1
 					index: 46
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-function-declaration-name-inside-async-function/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-function-declaration-name-inside-async-function/input.js"
 					end: Object {
 						column: 1
 						index: 46
@@ -130,7 +130,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "await"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-function-declaration-name-inside-async-function/input.js"
 								identifierName: "await"
 								end: Object {
 									column: 16
@@ -145,7 +145,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/await-function-declaration-name-inside-async-function/input.js"
 							end: Object {
 								column: 21
 								index: 44
@@ -161,7 +161,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-function-declaration-name-inside-async-function/input.js"
 								end: Object {
 									column: 21
 									index: 44
@@ -184,7 +184,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-function-declaration-name-inside-async-function/input.js"
 								end: Object {
 									column: 18
 									index: 41
@@ -209,7 +209,8 @@ JSRoot {
 
 ```
 
- input.js:2:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/await-function-declaration-name-inside-async-function/input.js:2:11 parse/js
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Can not use 'await' as identifier inside an async function
 

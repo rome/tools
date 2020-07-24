@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
 		end: Object {
 			column: 0
 			index: 14
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown start to an spread argument"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -87,7 +87,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "f"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
 						identifierName: "f"
 						end: Object {
 							column: 1
@@ -104,7 +104,7 @@ JSRoot {
 				arguments: Array [
 					JSSpreadElement {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
 							end: Object {
 								column: 9
 								index: 9
@@ -119,7 +119,7 @@ JSRoot {
 						argument: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
 								end: Object {
 									column: 9
 									index: 9
@@ -138,7 +138,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
 				end: Object {
 					column: 11
 					index: 11
@@ -153,7 +153,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "g"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
 					identifierName: "g"
 					end: Object {
 						column: 11
@@ -170,7 +170,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -185,7 +185,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -207,7 +207,7 @@ JSRoot {
 
 ```
 
- input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-spread-element/invalid-call-spreads/input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an spread argument
 

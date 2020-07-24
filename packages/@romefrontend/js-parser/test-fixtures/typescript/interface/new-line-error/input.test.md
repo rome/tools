@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/interface/new-line-error/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/interface/new-line-error/input.ts"
 		end: Object {
 			column: 0
 			index: 15
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/new-line-error/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/new-line-error/input.ts"
 				end: Object {
 					column: 9
 					index: 9
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "interface"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/new-line-error/input.ts"
 					identifierName: "interface"
 					end: Object {
 						column: 9
@@ -90,7 +90,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/new-line-error/input.ts"
 				end: Object {
 					column: 1
 					index: 11
@@ -105,7 +105,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "F"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/new-line-error/input.ts"
 					identifierName: "F"
 					end: Object {
 						column: 1
@@ -124,7 +124,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/new-line-error/input.ts"
 				end: Object {
 					column: 4
 					index: 14
@@ -145,7 +145,7 @@ JSRoot {
 
 ```
 
- input.ts:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/interface/new-line-error/input.ts:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

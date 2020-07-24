@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js"
 		end: Object {
 			column: 0
 			index: 7
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Complex binding patterns require an initialization value"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js"
 				end: Object {
 					column: 6
 					index: 6
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js"
 					end: Object {
 						column: 6
 						index: 6
@@ -91,7 +91,7 @@ JSRoot {
 							elements: Array []
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js"
 								end: Object {
 									column: 6
 									index: 6
@@ -106,7 +106,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js"
 							end: Object {
 								column: 6
 								index: 6
@@ -130,7 +130,7 @@ JSRoot {
 
 ```
 
- input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js:1:6 parse/js ━━━━━
 
   ✖ Complex binding patterns require an initialization value
 

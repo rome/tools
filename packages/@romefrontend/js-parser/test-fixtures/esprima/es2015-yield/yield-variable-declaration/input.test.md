@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-yield/yield-variable-declaration/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/yield-variable-declaration/input.js"
 		end: Object {
 			column: 0
 			index: 11
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/yield-variable-declaration/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-variable-declaration/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "yield"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/yield-variable-declaration/input.js"
 								identifierName: "yield"
 								end: Object {
 									column: 9
@@ -82,7 +82,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-yield/yield-variable-declaration/input.js"
 							end: Object {
 								column: 9
 								index: 9

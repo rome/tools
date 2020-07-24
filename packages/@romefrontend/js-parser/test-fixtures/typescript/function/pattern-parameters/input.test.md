@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/function/pattern-parameters/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/function/pattern-parameters/input.ts"
 		end: Object {
 			column: 0
 			index: 23
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "A binding pattern parameter cannot be optional in an implementation signature."}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/function/pattern-parameters/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/function/pattern-parameters/input.ts"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/function/pattern-parameters/input.ts"
 				end: Object {
 					column: 22
 					index: 22
@@ -91,7 +91,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/function/pattern-parameters/input.ts"
 					end: Object {
 						column: 22
 						index: 22
@@ -113,7 +113,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/function/pattern-parameters/input.ts"
 					end: Object {
 						column: 19
 						index: 19
@@ -130,7 +130,7 @@ JSRoot {
 						elements: Array []
 						rest: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/function/pattern-parameters/input.ts"
 							end: Object {
 								column: 13
 								index: 13
@@ -146,7 +146,7 @@ JSRoot {
 							optional: true
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/pattern-parameters/input.ts"
 								end: Object {
 									column: 14
 									index: 14
@@ -164,7 +164,7 @@ JSRoot {
 						properties: Array []
 						rest: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/function/pattern-parameters/input.ts"
 							end: Object {
 								column: 18
 								index: 18
@@ -180,7 +180,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/pattern-parameters/input.ts"
 								end: Object {
 									column: 18
 									index: 18
@@ -205,7 +205,7 @@ JSRoot {
 
 ```
 
- input.ts:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/function/pattern-parameters/input.ts:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A binding pattern parameter cannot be optional in an implementation signature.
 

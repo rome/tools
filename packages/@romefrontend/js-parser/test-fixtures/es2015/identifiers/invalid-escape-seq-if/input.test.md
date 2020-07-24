@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/identifiers/invalid-escape-seq-if/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/identifiers/invalid-escape-seq-if/input.js"
 		end: Object {
 			column: 0
 			index: 23
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Escape sequence in keyword if"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/identifiers/invalid-escape-seq-if/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -59,7 +59,7 @@ JSRoot {
 		JSIfStatement {
 			alternate: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/identifiers/invalid-escape-seq-if/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -74,7 +74,7 @@ JSRoot {
 			test: JSBooleanLiteral {
 				value: true
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/identifiers/invalid-escape-seq-if/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -91,7 +91,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/identifiers/invalid-escape-seq-if/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -113,7 +113,7 @@ JSRoot {
 
 ```
 
- input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/identifiers/invalid-escape-seq-if/input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Escape sequence in keyword if
 

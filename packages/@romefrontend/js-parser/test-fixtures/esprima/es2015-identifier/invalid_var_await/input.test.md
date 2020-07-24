@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-identifier/invalid_var_await/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-identifier/invalid_var_await/input.js"
 		end: Object {
 			column: 0
 			index: 18
@@ -48,7 +48,7 @@ JSRoot {
 				]
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-identifier/invalid_var_await/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -69,7 +69,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-identifier/invalid_var_await/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -83,7 +83,7 @@ JSRoot {
 			}
 			declaration: JSVariableDeclarationStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-identifier/invalid_var_await/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -98,7 +98,7 @@ JSRoot {
 				declaration: JSVariableDeclaration {
 					kind: "var"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-identifier/invalid_var_await/input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -115,7 +115,7 @@ JSRoot {
 							id: JSBindingIdentifier {
 								name: "await"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-identifier/invalid_var_await/input.js"
 									identifierName: "await"
 									end: Object {
 										column: 16
@@ -131,7 +131,7 @@ JSRoot {
 							}
 							init: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-identifier/invalid_var_await/input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -156,7 +156,7 @@ JSRoot {
 
 ```
 
- input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-identifier/invalid_var_await/input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ import and export can only appear in a module
 

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/function/anonymous-generator/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/function/anonymous-generator/input.ts"
 		end: Object {
 			column: 0
 			index: 69
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/function/anonymous-generator/input.ts"
 				end: Object {
 					column: 1
 					index: 68
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/function/anonymous-generator/input.ts"
 					end: Object {
 						column: 1
 						index: 68
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "fn"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/anonymous-generator/input.ts"
 								identifierName: "fn"
 								end: Object {
 									column: 8
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/function/anonymous-generator/input.ts"
 							end: Object {
 								column: 1
 								index: 68
@@ -96,7 +96,7 @@ JSRoot {
 						init: JSFunctionExpression {
 							id: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/anonymous-generator/input.ts"
 								end: Object {
 									column: 1
 									index: 68
@@ -111,7 +111,7 @@ JSRoot {
 							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/function/anonymous-generator/input.ts"
 									end: Object {
 										column: 1
 										index: 68
@@ -126,7 +126,7 @@ JSRoot {
 								body: Array [
 									JSExpressionStatement {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/function/anonymous-generator/input.ts"
 											end: Object {
 												column: 10
 												index: 66
@@ -141,7 +141,7 @@ JSRoot {
 										expression: JSYieldExpression {
 											delegate: false
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/function/anonymous-generator/input.ts"
 												end: Object {
 													column: 9
 													index: 65
@@ -157,7 +157,7 @@ JSRoot {
 												value: 2
 												format: undefined
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/function/anonymous-generator/input.ts"
 													end: Object {
 														column: 9
 														index: 65
@@ -181,7 +181,7 @@ JSRoot {
 								rest: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/function/anonymous-generator/input.ts"
 									end: Object {
 										column: 53
 										index: 53
@@ -195,7 +195,7 @@ JSRoot {
 								}
 								typeParameters: TSTypeParameterDeclaration {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/function/anonymous-generator/input.ts"
 										end: Object {
 											column: 24
 											index: 24
@@ -213,7 +213,7 @@ JSRoot {
 											constraint: undefined
 											default: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/function/anonymous-generator/input.ts"
 												end: Object {
 													column: 23
 													index: 23
@@ -230,7 +230,7 @@ JSRoot {
 								}
 								returnType: TSTypeReference {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/function/anonymous-generator/input.ts"
 										end: Object {
 											column: 53
 											index: 53
@@ -245,7 +245,7 @@ JSRoot {
 									typeName: JSReferenceIdentifier {
 										name: "Generator"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/function/anonymous-generator/input.ts"
 											identifierName: "Generator"
 											end: Object {
 												column: 45
@@ -261,7 +261,7 @@ JSRoot {
 									}
 									typeParameters: TSTypeParameterInstantiation {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/function/anonymous-generator/input.ts"
 											end: Object {
 												column: 53
 												index: 53
@@ -276,7 +276,7 @@ JSRoot {
 										params: Array [
 											TSNumberKeywordTypeAnnotation {
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/function/anonymous-generator/input.ts"
 													end: Object {
 														column: 52
 														index: 52
@@ -296,7 +296,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: "input"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/function/anonymous-generator/input.ts"
 											identifierName: "input"
 											end: Object {
 												column: 30
@@ -312,7 +312,7 @@ JSRoot {
 										meta: JSPatternMeta {
 											optional: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/function/anonymous-generator/input.ts"
 												end: Object {
 													column: 33
 													index: 33
@@ -327,7 +327,7 @@ JSRoot {
 											typeAnnotation: TSTypeReference {
 												typeParameters: undefined
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/function/anonymous-generator/input.ts"
 													end: Object {
 														column: 33
 														index: 33
@@ -342,7 +342,7 @@ JSRoot {
 												typeName: JSReferenceIdentifier {
 													name: "T"
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/function/anonymous-generator/input.ts"
 														identifierName: "T"
 														end: Object {
 															column: 33

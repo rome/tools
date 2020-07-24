@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/regression/issue-2083/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/regression/issue-2083/input.jsx"
 		end: Object {
 			column: 0
 			index: 28
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/regression/issue-2083/input.jsx"
 				end: Object {
 					column: 27
 					index: 27
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSConditionalExpression {
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/regression/issue-2083/input.jsx"
 					end: Object {
 						column: 26
 						index: 26
@@ -63,7 +63,7 @@ JSRoot {
 				test: JSBooleanLiteral {
 					value: true
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/regression/issue-2083/input.jsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -80,7 +80,7 @@ JSRoot {
 					name: JSXIdentifier {
 						name: "div"
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/regression/issue-2083/input.jsx"
 							end: Object {
 								column: 23
 								index: 23
@@ -98,7 +98,7 @@ JSRoot {
 					selfClosing: true
 					typeArguments: undefined
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/regression/issue-2083/input.jsx"
 						end: Object {
 							column: 26
 							index: 26
@@ -115,7 +115,7 @@ JSRoot {
 					name: JSXIdentifier {
 						name: "div"
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/regression/issue-2083/input.jsx"
 							end: Object {
 								column: 12
 								index: 12
@@ -133,7 +133,7 @@ JSRoot {
 					selfClosing: true
 					typeArguments: undefined
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/regression/issue-2083/input.jsx"
 						end: Object {
 							column: 15
 							index: 15

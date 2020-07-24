@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/146/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/146/input.js"
 		end: Object {
 			column: 12
 			index: 12
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/146/input.js"
 				end: Object {
 					column: 12
 					index: 12
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/146/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -67,7 +67,7 @@ JSRoot {
 							value: JSReferenceIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/146/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 4
@@ -82,7 +82,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/146/input.js"
 								end: Object {
 									column: 5
 									index: 5
@@ -96,7 +96,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/146/input.js"
 							end: Object {
 								column: 10
 								index: 10
@@ -112,7 +112,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/146/input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -135,7 +135,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/146/input.js"
 								end: Object {
 									column: 7
 									index: 7

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2019/optional-catch-binding/no-binding/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2019/optional-catch-binding/no-binding/input.js"
 		end: Object {
 			column: 0
 			index: 22
@@ -35,7 +35,7 @@ JSRoot {
 		JSTryStatement {
 			finalizer: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2019/optional-catch-binding/no-binding/input.js"
 				end: Object {
 					column: 1
 					index: 21
@@ -51,7 +51,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2019/optional-catch-binding/no-binding/input.js"
 					end: Object {
 						column: 1
 						index: 8
@@ -67,7 +67,7 @@ JSRoot {
 			handler: JSCatchClause {
 				param: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2019/optional-catch-binding/no-binding/input.js"
 					end: Object {
 						column: 1
 						index: 21
@@ -83,7 +83,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2019/optional-catch-binding/no-binding/input.js"
 						end: Object {
 							column: 1
 							index: 21

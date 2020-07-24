@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/modules/import-invalid-keyword-typeof/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/modules/import-invalid-keyword-typeof/input.js"
 		end: Object {
 			column: 0
 			index: 30
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected keyword typeof"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/modules/import-invalid-keyword-typeof/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -61,7 +61,7 @@ JSRoot {
 			importKind: undefined
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/import-invalid-keyword-typeof/input.js"
 				end: Object {
 					column: 29
 					index: 29
@@ -76,7 +76,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/modules/import-invalid-keyword-typeof/input.js"
 					end: Object {
 						column: 28
 						index: 28
@@ -92,7 +92,7 @@ JSRoot {
 			namedSpecifiers: Array [
 				JSImportSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/import-invalid-keyword-typeof/input.js"
 						end: Object {
 							column: 15
 							index: 15
@@ -107,7 +107,7 @@ JSRoot {
 					imported: JSIdentifier {
 						name: "typeof"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/modules/import-invalid-keyword-typeof/input.js"
 							identifierName: "typeof"
 							end: Object {
 								column: 15
@@ -125,7 +125,7 @@ JSRoot {
 						name: JSBindingIdentifier {
 							name: "typeof"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/modules/import-invalid-keyword-typeof/input.js"
 								identifierName: "typeof"
 								end: Object {
 									column: 15
@@ -141,7 +141,7 @@ JSRoot {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/modules/import-invalid-keyword-typeof/input.js"
 							end: Object {
 								column: 15
 								index: 15
@@ -165,7 +165,7 @@ JSRoot {
 
 ```
 
- input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/modules/import-invalid-keyword-typeof/input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected keyword typeof
 

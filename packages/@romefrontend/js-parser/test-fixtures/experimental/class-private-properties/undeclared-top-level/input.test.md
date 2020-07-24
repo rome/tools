@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-properties/undeclared-top-level/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-properties/undeclared-top-level/input.js"
 		end: Object {
 			column: 21
 			index: 21
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected character #"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/undeclared-top-level/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/undeclared-top-level/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/undeclared-top-level/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "prop"
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/undeclared-top-level/input.js"
 								identifierName: "prop"
 								end: Object {
 									column: 8
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/undeclared-top-level/input.js"
 							end: Object {
 								column: 20
 								index: 20
@@ -119,7 +119,7 @@ JSRoot {
 						}
 						init: JSMemberExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/undeclared-top-level/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -134,7 +134,7 @@ JSRoot {
 							object: JSReferenceIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/undeclared-top-level/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 14
@@ -152,7 +152,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "priv"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/undeclared-top-level/input.js"
 										identifierName: "priv"
 										end: Object {
 											column: 20
@@ -167,7 +167,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/undeclared-top-level/input.js"
 									identifierName: "priv"
 									end: Object {
 										column: 20
@@ -194,7 +194,7 @@ JSRoot {
 
 ```
 
- input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-private-properties/undeclared-top-level/input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected character #
 

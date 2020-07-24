@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
 		end: Object {
 			column: 0
 			index: 20
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -64,7 +64,7 @@ JSRoot {
 				right: JSObjectExpression {
 					properties: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
 						end: Object {
 							column: 18
 							index: 18
@@ -79,7 +79,7 @@ JSRoot {
 				}
 				left: JSAssignmentObjectPattern {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -94,7 +94,7 @@ JSRoot {
 					rest: JSAssignmentIdentifier {
 						name: "rest"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
 							identifierName: "rest"
 							end: Object {
 								column: 9
@@ -114,7 +114,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "b"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
 										identifierName: "b"
 										end: Object {
 											column: 12
@@ -129,7 +129,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
 									end: Object {
 										column: 12
 										index: 12
@@ -145,7 +145,7 @@ JSRoot {
 							value: JSAssignmentIdentifier {
 								name: "b"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
 									identifierName: "b"
 									end: Object {
 										column: 12
@@ -160,7 +160,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
 								end: Object {
 									column: 12
 									index: 12

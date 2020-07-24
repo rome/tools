@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/38/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/38/input.js"
 		end: Object {
 			column: 29
 			index: 29
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Parenthesized expression didnt contain anything"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/38/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/38/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/38/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -89,7 +89,7 @@ JSRoot {
 						operator: "typeof"
 						prefix: true
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/38/input.js"
 							end: Object {
 								column: 21
 								index: 21
@@ -104,7 +104,7 @@ JSRoot {
 						argument: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/38/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -121,7 +121,7 @@ JSRoot {
 				]
 				callee: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/38/input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -136,7 +136,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "console"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/38/input.js"
 							identifierName: "console"
 							end: Object {
 								column: 7
@@ -154,7 +154,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "log"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/38/input.js"
 								identifierName: "log"
 								end: Object {
 									column: 11
@@ -169,7 +169,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/38/input.js"
 							identifierName: "log"
 							end: Object {
 								column: 11
@@ -188,7 +188,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/38/input.js"
 				end: Object {
 					column: 24
 					index: 24
@@ -203,7 +203,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/38/input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -221,7 +221,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/38/input.js"
 				end: Object {
 					column: 27
 					index: 27
@@ -236,7 +236,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/38/input.js"
 				end: Object {
 					column: 29
 					index: 29
@@ -251,7 +251,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/38/input.js"
 					end: Object {
 						column: 28
 						index: 28
@@ -273,7 +273,7 @@ JSRoot {
 
 ```
 
- input.js:1:20 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/38/input.js:1:20 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Parenthesized expression didnt contain anything
 

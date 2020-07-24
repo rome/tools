@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
 		end: Object {
 			column: 0
 			index: 29
@@ -44,7 +44,7 @@ JSRoot {
 				]
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -65,7 +65,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
 					identifierName: "I"
 					end: Object {
 						column: 11
@@ -82,7 +82,7 @@ JSRoot {
 			extends: undefined
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
 				end: Object {
 					column: 1
 					index: 28
@@ -96,7 +96,7 @@ JSRoot {
 			}
 			body: TSInterfaceBody {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
 					end: Object {
 						column: 1
 						index: 28
@@ -114,7 +114,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "p"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
 									identifierName: "p"
 									end: Object {
 										column: 4
@@ -129,7 +129,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
 								end: Object {
 									column: 4
 									index: 18
@@ -145,7 +145,7 @@ JSRoot {
 						optional: false
 						readonly: false
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
 							end: Object {
 								column: 12
 								index: 26
@@ -159,7 +159,7 @@ JSRoot {
 						}
 						typeAnnotation: TSStringKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
 								end: Object {
 									column: 12
 									index: 26
@@ -184,7 +184,7 @@ JSRoot {
 
 ```
 
- input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-private-properties/invalid-ts-type-literal/input.js:1 parse/js ━━━━━━━━━━━━━━━━━
 
   ✖ A interface declaration is only valid inside of a TypeScript file
 

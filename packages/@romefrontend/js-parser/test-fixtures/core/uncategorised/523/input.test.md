@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/523/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/523/input.js"
 		end: Object {
 			column: 14
 			index: 14
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected keyword this"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/523/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/523/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/523/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "this"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/523/input.js"
 								identifierName: "this"
 								end: Object {
 									column: 8
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/523/input.js"
 							end: Object {
 								column: 13
 								index: 13
@@ -121,7 +121,7 @@ JSRoot {
 							value: 10
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/523/input.js"
 								end: Object {
 									column: 13
 									index: 13
@@ -146,7 +146,7 @@ JSRoot {
 
 ```
 
- input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/523/input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected keyword this
 

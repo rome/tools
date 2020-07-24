@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/optional-chaining/conditional-decimal/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/optional-chaining/conditional-decimal/input.js"
 		end: Object {
 			column: 0
 			index: 25
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/conditional-decimal/input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSConditionalExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/conditional-decimal/input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -63,7 +63,7 @@ JSRoot {
 				test: JSBooleanLiteral {
 					value: true
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/conditional-decimal/input.js"
 						end: Object {
 							column: 4
 							index: 4
@@ -80,7 +80,7 @@ JSRoot {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/conditional-decimal/input.js"
 						end: Object {
 							column: 9
 							index: 9
@@ -97,7 +97,7 @@ JSRoot {
 					value: 0.3
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/conditional-decimal/input.js"
 						end: Object {
 							column: 7
 							index: 7
@@ -114,7 +114,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/conditional-decimal/input.js"
 				end: Object {
 					column: 13
 					index: 24
@@ -128,7 +128,7 @@ JSRoot {
 			}
 			expression: JSConditionalExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/conditional-decimal/input.js"
 					end: Object {
 						column: 13
 						index: 24
@@ -143,7 +143,7 @@ JSRoot {
 				test: JSBooleanLiteral {
 					value: true
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/conditional-decimal/input.js"
 						end: Object {
 							column: 4
 							index: 15
@@ -160,7 +160,7 @@ JSRoot {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/conditional-decimal/input.js"
 						end: Object {
 							column: 13
 							index: 24
@@ -177,7 +177,7 @@ JSRoot {
 					value: 0.3
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/conditional-decimal/input.js"
 						end: Object {
 							column: 9
 							index: 20

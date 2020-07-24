@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/declare/var/input.ts"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/declare/var/input.ts"
 		end: Object {
 			column: 0
 			index: 35
@@ -35,7 +35,7 @@ JSRoot {
 		JSVariableDeclarationStatement {
 			declare: true
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/declare/var/input.ts"
 				end: Object {
 					column: 14
 					index: 14
@@ -50,7 +50,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/declare/var/input.ts"
 					end: Object {
 						column: 14
 						index: 14
@@ -67,7 +67,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/declare/var/input.ts"
 								identifierName: "x"
 								end: Object {
 									column: 13
@@ -83,7 +83,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/declare/var/input.ts"
 							end: Object {
 								column: 13
 								index: 13
@@ -102,7 +102,7 @@ JSRoot {
 		JSVariableDeclarationStatement {
 			declare: true
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/declare/var/input.ts"
 				end: Object {
 					column: 19
 					index: 34
@@ -117,7 +117,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/declare/var/input.ts"
 					end: Object {
 						column: 19
 						index: 34
@@ -134,7 +134,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/declare/var/input.ts"
 								end: Object {
 									column: 18
 									index: 33
@@ -149,7 +149,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/declare/var/input.ts"
 									end: Object {
 										column: 18
 										index: 33
@@ -163,7 +163,7 @@ JSRoot {
 								}
 								typeAnnotation: TSAnyKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/declare/var/input.ts"
 										end: Object {
 											column: 18
 											index: 33
@@ -180,7 +180,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/declare/var/input.ts"
 							end: Object {
 								column: 18
 								index: 33

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/127/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/127/input.js"
 		end: Object {
 			column: 45
 			index: 45
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/127/input.js"
 				end: Object {
 					column: 45
 					index: 45
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/127/input.js"
 					end: Object {
 						column: 45
 						index: 45
@@ -65,7 +65,7 @@ JSRoot {
 						value: 2_014
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/127/input.js"
 							end: Object {
 								column: 44
 								index: 44
@@ -81,7 +81,7 @@ JSRoot {
 				]
 				callee: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/127/input.js"
 						end: Object {
 							column: 39
 							index: 39
@@ -97,7 +97,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "prepareForElection"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/127/input.js"
 								identifierName: "prepareForElection"
 								end: Object {
 									column: 39
@@ -112,7 +112,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/127/input.js"
 							identifierName: "prepareForElection"
 							end: Object {
 								column: 39
@@ -128,7 +128,7 @@ JSRoot {
 					}
 					object: JSMemberExpression {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/127/input.js"
 							end: Object {
 								column: 20
 								index: 20
@@ -144,7 +144,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "Indonesia"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/127/input.js"
 									identifierName: "Indonesia"
 									end: Object {
 										column: 20
@@ -159,7 +159,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/127/input.js"
 								identifierName: "Indonesia"
 								end: Object {
 									column: 20
@@ -175,7 +175,7 @@ JSRoot {
 						}
 						object: JSMemberExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/127/input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -190,7 +190,7 @@ JSRoot {
 							object: JSReferenceIdentifier {
 								name: "earth"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/127/input.js"
 									identifierName: "earth"
 									end: Object {
 										column: 5
@@ -208,7 +208,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "asia"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/uncategorised/127/input.js"
 										identifierName: "asia"
 										end: Object {
 											column: 10
@@ -223,7 +223,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/127/input.js"
 									identifierName: "asia"
 									end: Object {
 										column: 10

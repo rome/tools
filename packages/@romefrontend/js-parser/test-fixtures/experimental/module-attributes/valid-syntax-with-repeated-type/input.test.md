@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 		end: Object {
 			column: 0
 			index: 60
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -61,7 +61,7 @@ JSRoot {
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -76,7 +76,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "foo.json"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -91,7 +91,7 @@ JSRoot {
 			}
 			defaultSpecifier: JSImportDefaultSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -107,7 +107,7 @@ JSRoot {
 					name: JSBindingIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 10
@@ -123,7 +123,7 @@ JSRoot {
 					}
 					importKind: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -140,7 +140,7 @@ JSRoot {
 		}
 		JSWithStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 				end: Object {
 					column: 37
 					index: 37
@@ -155,7 +155,7 @@ JSRoot {
 			object: JSReferenceIdentifier {
 				name: "type"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 					identifierName: "type"
 					end: Object {
 						column: 36
@@ -171,7 +171,7 @@ JSRoot {
 			}
 			body: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 					end: Object {
 						column: 37
 						index: 37
@@ -186,7 +186,7 @@ JSRoot {
 				expression: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 						end: Object {
 							column: 37
 							index: 37
@@ -203,7 +203,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 				end: Object {
 					column: 50
 					index: 50
@@ -217,7 +217,7 @@ JSRoot {
 			}
 			expression: JSSequenceExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 					end: Object {
 						column: 50
 						index: 50
@@ -233,7 +233,7 @@ JSRoot {
 					JSStringLiteral {
 						value: "json"
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 							end: Object {
 								column: 44
 								index: 44
@@ -249,7 +249,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "type"
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 							identifierName: "type"
 							end: Object {
 								column: 50
@@ -268,7 +268,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 				end: Object {
 					column: 51
 					index: 51
@@ -283,7 +283,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 					end: Object {
 						column: 51
 						index: 51
@@ -299,7 +299,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 				end: Object {
 					column: 59
 					index: 59
@@ -314,7 +314,7 @@ JSRoot {
 			expression: JSStringLiteral {
 				value: "html"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/valid-syntax-with-repeated-type/input.js"
 					end: Object {
 						column: 58
 						index: 58
@@ -336,7 +336,7 @@ JSRoot {
 
 ```
 
- input.js:1:27 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/module-attributes/valid-syntax-with-repeated-type/input.js:1:27 parse/js ━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

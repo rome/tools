@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-default-parameter-value/migrated_0000/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-default-parameter-value/migrated_0000/input.js"
 		end: Object {
 			column: 0
 			index: 23
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-default-parameter-value/migrated_0000/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-default-parameter-value/migrated_0000/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -64,7 +64,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-default-parameter-value/migrated_0000/input.js"
 						identifierName: "x"
 						end: Object {
 							column: 1
@@ -81,7 +81,7 @@ JSRoot {
 				right: JSFunctionExpression {
 					id: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-default-parameter-value/migrated_0000/input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -97,7 +97,7 @@ JSRoot {
 						body: Array []
 						directives: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-default-parameter-value/migrated_0000/input.js"
 							end: Object {
 								column: 22
 								index: 22
@@ -119,7 +119,7 @@ JSRoot {
 						thisType: undefined
 						typeParameters: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-default-parameter-value/migrated_0000/input.js"
 							end: Object {
 								column: 19
 								index: 19
@@ -134,7 +134,7 @@ JSRoot {
 						params: Array [
 							JSBindingAssignmentPattern {
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-default-parameter-value/migrated_0000/input.js"
 									end: Object {
 										column: 18
 										index: 18
@@ -150,7 +150,7 @@ JSRoot {
 									value: 1
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-default-parameter-value/migrated_0000/input.js"
 										end: Object {
 											column: 18
 											index: 18
@@ -166,7 +166,7 @@ JSRoot {
 								left: JSBindingIdentifier {
 									name: "y"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-default-parameter-value/migrated_0000/input.js"
 										identifierName: "y"
 										end: Object {
 											column: 14
@@ -183,7 +183,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-default-parameter-value/migrated_0000/input.js"
 											end: Object {
 												column: 14
 												index: 14

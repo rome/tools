@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/expression-generic/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/expression-generic/input.ts"
 		end: Object {
 			column: 0
 			index: 32
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/expression-generic/input.ts"
 				end: Object {
 					column: 14
 					index: 14
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSClassExpression {
 				id: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/expression-generic/input.ts"
 					end: Object {
 						column: 12
 						index: 12
@@ -67,7 +67,7 @@ JSRoot {
 					superClass: undefined
 					superTypeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/class/expression-generic/input.ts"
 						end: Object {
 							column: 12
 							index: 12
@@ -81,7 +81,7 @@ JSRoot {
 					}
 					typeParameters: TSTypeParameterDeclaration {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/expression-generic/input.ts"
 							end: Object {
 								column: 9
 								index: 9
@@ -99,7 +99,7 @@ JSRoot {
 								constraint: undefined
 								default: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/expression-generic/input.ts"
 									end: Object {
 										column: 8
 										index: 8
@@ -119,7 +119,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/expression-generic/input.ts"
 				end: Object {
 					column: 16
 					index: 31
@@ -135,7 +135,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "C"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/class/expression-generic/input.ts"
 						identifierName: "C"
 						end: Object {
 							column: 8
@@ -150,7 +150,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/expression-generic/input.ts"
 					end: Object {
 						column: 14
 						index: 29
@@ -168,7 +168,7 @@ JSRoot {
 					superClass: undefined
 					superTypeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/class/expression-generic/input.ts"
 						end: Object {
 							column: 14
 							index: 29
@@ -182,7 +182,7 @@ JSRoot {
 					}
 					typeParameters: TSTypeParameterDeclaration {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/expression-generic/input.ts"
 							end: Object {
 								column: 11
 								index: 26
@@ -200,7 +200,7 @@ JSRoot {
 								constraint: undefined
 								default: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/expression-generic/input.ts"
 									end: Object {
 										column: 10
 										index: 25

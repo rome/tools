@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
 		end: Object {
 			column: 0
 			index: 13
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Invalid left-hand side in assignment object property value"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
 				end: Object {
 					column: 12
 					index: 12
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -89,7 +89,7 @@ JSRoot {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -105,7 +105,7 @@ JSRoot {
 				left: JSAssignmentObjectPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
 						end: Object {
 							column: 9
 							index: 9
@@ -123,7 +123,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 3
@@ -138,7 +138,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
 									end: Object {
 										column: 3
 										index: 3
@@ -154,7 +154,7 @@ JSRoot {
 							value: JSAssignmentIdentifier {
 								name: "INVALID_PLACEHOLDER"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
 									end: Object {
 										column: 9
 										index: 9
@@ -168,7 +168,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
 								end: Object {
 									column: 8
 									index: 8
@@ -193,7 +193,7 @@ JSRoot {
 
 ```
 
- input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js:1:4 parse/js ━━━━━━━
 
   ✖ Invalid left-hand side in assignment object property value
 

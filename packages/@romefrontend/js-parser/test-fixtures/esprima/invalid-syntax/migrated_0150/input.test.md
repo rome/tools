@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0150/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0150/input.js"
 		end: Object {
 			column: 0
 			index: 11
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unterminated comment"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0150/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0150/input.js"
 				end: Object {
 					column: 0
 					index: 11
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "*"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0150/input.js"
 					end: Object {
 						column: 0
 						index: 11
@@ -88,7 +88,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0150/input.js"
 						end: Object {
 							column: 0
 							index: 11
@@ -104,7 +104,7 @@ JSRoot {
 				left: JSReferenceIdentifier {
 					name: "hello"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0150/input.js"
 						identifierName: "hello"
 						end: Object {
 							column: 7
@@ -128,7 +128,7 @@ JSRoot {
 
 ```
 
- input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0150/input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated comment
 

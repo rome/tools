@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/optional-chaining/member-access-bracket/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/optional-chaining/member-access-bracket/input.js"
 		end: Object {
 			column: 13
 			index: 97
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/member-access-bracket/input.js"
 				end: Object {
 					column: 11
 					index: 11
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/member-access-bracket/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -63,7 +63,7 @@ JSRoot {
 				object: JSReferenceIdentifier {
 					name: "obj"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						identifierName: "obj"
 						end: Object {
 							column: 3
@@ -81,7 +81,7 @@ JSRoot {
 					value: JSReferenceIdentifier {
 						name: "expr"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/member-access-bracket/input.js"
 							identifierName: "expr"
 							end: Object {
 								column: 10
@@ -97,7 +97,7 @@ JSRoot {
 					}
 					optional: true
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -114,7 +114,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/member-access-bracket/input.js"
 				end: Object {
 					column: 20
 					index: 33
@@ -128,7 +128,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/member-access-bracket/input.js"
 					end: Object {
 						column: 20
 						index: 33
@@ -144,7 +144,7 @@ JSRoot {
 					value: JSReferenceIdentifier {
 						name: "other"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/member-access-bracket/input.js"
 							identifierName: "other"
 							end: Object {
 								column: 19
@@ -160,7 +160,7 @@ JSRoot {
 					}
 					optional: true
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						end: Object {
 							column: 20
 							index: 33
@@ -175,7 +175,7 @@ JSRoot {
 				}
 				object: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						end: Object {
 							column: 11
 							index: 24
@@ -190,7 +190,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "obj"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/member-access-bracket/input.js"
 							identifierName: "obj"
 							end: Object {
 								column: 3
@@ -208,7 +208,7 @@ JSRoot {
 						value: JSReferenceIdentifier {
 							name: "expr"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/member-access-bracket/input.js"
 								identifierName: "expr"
 								end: Object {
 									column: 10
@@ -224,7 +224,7 @@ JSRoot {
 						}
 						optional: true
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/member-access-bracket/input.js"
 							end: Object {
 								column: 11
 								index: 24
@@ -242,7 +242,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/member-access-bracket/input.js"
 				end: Object {
 					column: 11
 					index: 46
@@ -256,7 +256,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/member-access-bracket/input.js"
 					end: Object {
 						column: 11
 						index: 46
@@ -271,7 +271,7 @@ JSRoot {
 				object: JSReferenceIdentifier {
 					name: "obj"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						identifierName: "obj"
 						end: Object {
 							column: 3
@@ -289,7 +289,7 @@ JSRoot {
 					value: JSBooleanLiteral {
 						value: true
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/member-access-bracket/input.js"
 							end: Object {
 								column: 10
 								index: 45
@@ -304,7 +304,7 @@ JSRoot {
 					}
 					optional: true
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						end: Object {
 							column: 11
 							index: 46
@@ -321,7 +321,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/member-access-bracket/input.js"
 				end: Object {
 					column: 19
 					index: 67
@@ -335,7 +335,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/member-access-bracket/input.js"
 					end: Object {
 						column: 19
 						index: 67
@@ -351,7 +351,7 @@ JSRoot {
 					value: JSBooleanLiteral {
 						value: true
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/member-access-bracket/input.js"
 							end: Object {
 								column: 18
 								index: 66
@@ -366,7 +366,7 @@ JSRoot {
 					}
 					optional: true
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						end: Object {
 							column: 19
 							index: 67
@@ -381,7 +381,7 @@ JSRoot {
 				}
 				object: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						end: Object {
 							column: 11
 							index: 59
@@ -396,7 +396,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "obj"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/member-access-bracket/input.js"
 							identifierName: "obj"
 							end: Object {
 								column: 3
@@ -414,7 +414,7 @@ JSRoot {
 						value: JSBooleanLiteral {
 							value: true
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/member-access-bracket/input.js"
 								end: Object {
 									column: 10
 									index: 58
@@ -429,7 +429,7 @@ JSRoot {
 						}
 						optional: true
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/member-access-bracket/input.js"
 							end: Object {
 								column: 11
 								index: 59
@@ -447,7 +447,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/member-access-bracket/input.js"
 				end: Object {
 					column: 13
 					index: 82
@@ -461,7 +461,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/member-access-bracket/input.js"
 					end: Object {
 						column: 13
 						index: 82
@@ -477,7 +477,7 @@ JSRoot {
 					value: JSReferenceIdentifier {
 						name: "expr"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/member-access-bracket/input.js"
 							identifierName: "expr"
 							end: Object {
 								column: 12
@@ -493,7 +493,7 @@ JSRoot {
 					}
 					optional: true
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						end: Object {
 							column: 13
 							index: 82
@@ -508,7 +508,7 @@ JSRoot {
 				}
 				object: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						end: Object {
 							column: 5
 							index: 74
@@ -523,7 +523,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "obj"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/member-access-bracket/input.js"
 							identifierName: "obj"
 							end: Object {
 								column: 3
@@ -541,7 +541,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/member-access-bracket/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 5
@@ -556,7 +556,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/member-access-bracket/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 5
@@ -575,7 +575,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/member-access-bracket/input.js"
 				end: Object {
 					column: 13
 					index: 97
@@ -589,7 +589,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/member-access-bracket/input.js"
 					end: Object {
 						column: 13
 						index: 97
@@ -605,7 +605,7 @@ JSRoot {
 					value: JSBooleanLiteral {
 						value: true
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/member-access-bracket/input.js"
 							end: Object {
 								column: 12
 								index: 96
@@ -620,7 +620,7 @@ JSRoot {
 					}
 					optional: true
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						end: Object {
 							column: 13
 							index: 97
@@ -635,7 +635,7 @@ JSRoot {
 				}
 				object: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						end: Object {
 							column: 5
 							index: 89
@@ -650,7 +650,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "obj"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/member-access-bracket/input.js"
 							identifierName: "obj"
 							end: Object {
 								column: 3
@@ -668,7 +668,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/member-access-bracket/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 5
@@ -683,7 +683,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/member-access-bracket/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 5

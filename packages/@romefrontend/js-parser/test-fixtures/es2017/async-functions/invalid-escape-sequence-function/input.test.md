@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/invalid-escape-sequence-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/invalid-escape-sequence-function/input.js"
 		end: Object {
 			column: 0
 			index: 34
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-sequence-function/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-sequence-function/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "async"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-escape-sequence-function/input.js"
 					identifierName: "async"
 					end: Object {
 						column: 10
@@ -92,7 +92,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: ""
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-escape-sequence-function/input.js"
 					identifierName: ""
 					end: Object {
 						column: 20
@@ -107,7 +107,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-sequence-function/input.js"
 				end: Object {
 					column: 33
 					index: 33
@@ -129,7 +129,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-escape-sequence-function/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -145,7 +145,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-escape-sequence-function/input.js"
 					end: Object {
 						column: 33
 						index: 33
@@ -160,7 +160,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-sequence-function/input.js"
 							end: Object {
 								column: 29
 								index: 29
@@ -175,7 +175,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "await"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/invalid-escape-sequence-function/input.js"
 								identifierName: "await"
 								end: Object {
 									column: 29
@@ -192,7 +192,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-sequence-function/input.js"
 							end: Object {
 								column: 31
 								index: 31
@@ -207,7 +207,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/invalid-escape-sequence-function/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 31
@@ -233,7 +233,7 @@ JSRoot {
 
 ```
 
- input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/invalid-escape-sequence-function/input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

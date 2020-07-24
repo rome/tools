@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/357/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/357/input.js"
 		end: Object {
 			column: 0
 			index: 15
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown start to an await argument"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/357/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/357/input.js"
 				end: Object {
 					column: 7
 					index: 7
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSAwaitExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/357/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -87,7 +87,7 @@ JSRoot {
 				argument: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/357/input.js"
 						end: Object {
 							column: 7
 							index: 7
@@ -104,7 +104,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/357/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -119,7 +119,7 @@ JSRoot {
 			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/357/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -134,7 +134,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "foo"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/357/input.js"
 						identifierName: "foo"
 						end: Object {
 							column: 11
@@ -158,7 +158,7 @@ JSRoot {
 
 ```
 
- input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/357/input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an await argument
 

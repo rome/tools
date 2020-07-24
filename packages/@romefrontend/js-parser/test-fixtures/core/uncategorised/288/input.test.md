@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/288/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/288/input.js"
 		end: Object {
 			column: 25
 			index: 25
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/288/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -50,7 +50,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "test"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/288/input.js"
 						identifierName: "test"
 						end: Object {
 							column: 14
@@ -65,7 +65,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/288/input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -81,7 +81,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/288/input.js"
 						end: Object {
 							column: 24
 							index: 24
@@ -103,7 +103,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/288/input.js"
 						end: Object {
 							column: 20
 							index: 20
@@ -119,7 +119,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "t"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/288/input.js"
 								identifierName: "t"
 								end: Object {
 									column: 16
@@ -136,7 +136,7 @@ JSRoot {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/288/input.js"
 									end: Object {
 										column: 16
 										index: 16
@@ -153,7 +153,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "t"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/288/input.js"
 								identifierName: "t"
 								end: Object {
 									column: 19
@@ -170,7 +170,7 @@ JSRoot {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/288/input.js"
 									end: Object {
 										column: 19
 										index: 19

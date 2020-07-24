@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0056/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0056/input.js"
 		end: Object {
 			column: 0
 			index: 33
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Invalid left-hand side in for-in statement"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0056/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSForInStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0056/input.js"
 				end: Object {
 					column: 32
 					index: 32
@@ -73,7 +73,7 @@ JSRoot {
 			left: JSAssignmentIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0056/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -89,7 +89,7 @@ JSRoot {
 			right: JSReferenceIdentifier {
 				name: "list"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0056/input.js"
 					identifierName: "list"
 					end: Object {
 						column: 19
@@ -105,7 +105,7 @@ JSRoot {
 			}
 			body: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0056/input.js"
 					end: Object {
 						column: 32
 						index: 32
@@ -119,7 +119,7 @@ JSRoot {
 				}
 				expression: JSCallExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0056/input.js"
 						end: Object {
 							column: 31
 							index: 31
@@ -134,7 +134,7 @@ JSRoot {
 					callee: JSReferenceIdentifier {
 						name: "process"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0056/input.js"
 							identifierName: "process"
 							end: Object {
 								column: 28
@@ -152,7 +152,7 @@ JSRoot {
 						JSReferenceIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0056/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 30
@@ -178,7 +178,7 @@ JSRoot {
 
 ```
 
- input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0056/input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid left-hand side in for-in statement
 

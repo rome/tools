@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-object-initialiser/proto-literal-method/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-object-initialiser/proto-literal-method/input.js"
 		end: Object {
 			column: 0
 			index: 40
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-object-initialiser/proto-literal-method/input.js"
 				end: Object {
 					column: 39
 					index: 39
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-object-initialiser/proto-literal-method/input.js"
 					end: Object {
 						column: 38
 						index: 38
@@ -66,7 +66,7 @@ JSRoot {
 							value: JSStringLiteral {
 								value: "__proto__"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-object-initialiser/proto-literal-method/input.js"
 									end: Object {
 										column: 14
 										index: 14
@@ -80,7 +80,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-initialiser/proto-literal-method/input.js"
 								end: Object {
 									column: 14
 									index: 14
@@ -95,7 +95,7 @@ JSRoot {
 						}
 						value: JSNullLiteral {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-initialiser/proto-literal-method/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -109,7 +109,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-object-initialiser/proto-literal-method/input.js"
 							end: Object {
 								column: 20
 								index: 20
@@ -128,7 +128,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "__proto__"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-object-initialiser/proto-literal-method/input.js"
 									identifierName: "__proto__"
 									end: Object {
 										column: 31
@@ -143,7 +143,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-initialiser/proto-literal-method/input.js"
 								end: Object {
 									column: 31
 									index: 31
@@ -157,7 +157,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-object-initialiser/proto-literal-method/input.js"
 							end: Object {
 								column: 35
 								index: 35
@@ -173,7 +173,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-initialiser/proto-literal-method/input.js"
 								end: Object {
 									column: 35
 									index: 35
@@ -196,7 +196,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-initialiser/proto-literal-method/input.js"
 								end: Object {
 									column: 33
 									index: 33

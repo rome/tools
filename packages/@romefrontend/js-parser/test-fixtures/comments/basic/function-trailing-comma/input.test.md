@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/basic/function-trailing-comma/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/basic/function-trailing-comma/input.js"
 		end: Object {
 			column: 0
 			index: 42
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " comment 1 "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/function-trailing-comma/input.js"
 				end: Object {
 					column: 24
 					index: 24
@@ -52,7 +52,7 @@ JSRoot {
 			id: "1"
 			value: " comment 2"
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/function-trailing-comma/input.js"
 				end: Object {
 					column: 40
 					index: 40
@@ -69,7 +69,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/function-trailing-comma/input.js"
 				end: Object {
 					column: 41
 					index: 41
@@ -84,7 +84,7 @@ JSRoot {
 			expression: JSCallExpression {
 				trailingComments: Array ["1"]
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/function-trailing-comma/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -99,7 +99,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "fn"
 					loc: Object {
-						filename: "input.js"
+						filename: "comments/basic/function-trailing-comma/input.js"
 						identifierName: "fn"
 						end: Object {
 							column: 2
@@ -117,7 +117,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/basic/function-trailing-comma/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 4
@@ -135,7 +135,7 @@ JSRoot {
 						name: "b"
 						trailingComments: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/basic/function-trailing-comma/input.js"
 							identifierName: "b"
 							end: Object {
 								column: 7

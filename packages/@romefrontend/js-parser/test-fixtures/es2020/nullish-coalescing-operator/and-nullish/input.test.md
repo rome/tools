@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/nullish-coalescing-operator/and-nullish/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/nullish-coalescing-operator/and-nullish/input.js"
 		end: Object {
 			column: 0
 			index: 15
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/nullish-coalescing-operator/and-nullish/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSLogicalExpression {
 				operator: "??"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/nullish-coalescing-operator/and-nullish/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -64,7 +64,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "c"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/nullish-coalescing-operator/and-nullish/input.js"
 						identifierName: "c"
 						end: Object {
 							column: 13
@@ -81,7 +81,7 @@ JSRoot {
 				left: JSLogicalExpression {
 					operator: "&&"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/nullish-coalescing-operator/and-nullish/input.js"
 						end: Object {
 							column: 7
 							index: 7
@@ -96,7 +96,7 @@ JSRoot {
 					left: JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/nullish-coalescing-operator/and-nullish/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 2
@@ -113,7 +113,7 @@ JSRoot {
 					right: JSReferenceIdentifier {
 						name: "b"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/nullish-coalescing-operator/and-nullish/input.js"
 							identifierName: "b"
 							end: Object {
 								column: 7

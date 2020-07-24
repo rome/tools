@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-generator/static-generator-method/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-generator/static-generator-method/input.js"
 		end: Object {
 			column: 0
 			index: 31
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-generator/static-generator-method/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-generator/static-generator-method/input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-generator/static-generator-method/input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -88,7 +88,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-generator/static-generator-method/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 23
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/static-generator-method/input.js"
 								end: Object {
 									column: 23
 									index: 23
@@ -117,7 +117,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-generator/static-generator-method/input.js"
 							end: Object {
 								column: 28
 								index: 28
@@ -133,7 +133,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/static-generator-method/input.js"
 								end: Object {
 									column: 28
 									index: 28
@@ -156,7 +156,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/static-generator-method/input.js"
 								end: Object {
 									column: 25
 									index: 25
@@ -182,7 +182,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/static-generator-method/input.js"
 								end: Object {
 									column: 23
 									index: 23

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/module-namespace/module-new-line-error/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/module-namespace/module-new-line-error/input.ts"
 		end: Object {
 			column: 0
 			index: 14
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/module-namespace/module-new-line-error/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/module-namespace/module-new-line-error/input.ts"
 				end: Object {
 					column: 6
 					index: 6
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "module"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/module-new-line-error/input.ts"
 					identifierName: "module"
 					end: Object {
 						column: 6
@@ -90,7 +90,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/module-namespace/module-new-line-error/input.ts"
 				end: Object {
 					column: 3
 					index: 10
@@ -105,7 +105,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/module-new-line-error/input.ts"
 					identifierName: "Foo"
 					end: Object {
 						column: 3
@@ -124,7 +124,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/module-namespace/module-new-line-error/input.ts"
 				end: Object {
 					column: 6
 					index: 13
@@ -145,7 +145,7 @@ JSRoot {
 
 ```
 
- input.ts:2:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/module-namespace/module-new-line-error/input.ts:2:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js"
 		end: Object {
 			column: 0
 			index: 10
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Invalid left-hand side in assignment expression"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "+="
 				loc: Object {
-					filename: "input.js"
+					filename: "core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -88,7 +88,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js"
 						end: Object {
 							column: 4
 							index: 4
@@ -105,7 +105,7 @@ JSRoot {
 					value: 1
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js"
 						end: Object {
 							column: 9
 							index: 9
@@ -128,7 +128,7 @@ JSRoot {
 
 ```
 
- input.js:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js:1:1 parse/js ━━
 
   ✖ Invalid left-hand side in assignment expression
 

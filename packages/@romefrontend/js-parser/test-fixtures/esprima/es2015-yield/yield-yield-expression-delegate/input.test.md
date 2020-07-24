@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-yield/yield-yield-expression-delegate/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/yield-yield-expression-delegate/input.js"
 		end: Object {
 			column: 0
 			index: 31
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-yield-expression-delegate/input.js"
 					identifierName: "g"
 					end: Object {
 						column: 11
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/yield-yield-expression-delegate/input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-yield-expression-delegate/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-yield-expression-delegate/input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-yield/yield-yield-expression-delegate/input.js"
 							end: Object {
 								column: 28
 								index: 28
@@ -119,7 +119,7 @@ JSRoot {
 						expression: JSYieldExpression {
 							delegate: true
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/yield-yield-expression-delegate/input.js"
 								end: Object {
 									column: 28
 									index: 28
@@ -135,7 +135,7 @@ JSRoot {
 								argument: undefined
 								delegate: false
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-yield/yield-yield-expression-delegate/input.js"
 									end: Object {
 										column: 28
 										index: 28

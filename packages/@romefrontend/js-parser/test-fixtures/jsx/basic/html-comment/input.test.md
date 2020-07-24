@@ -12,7 +12,7 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/basic/html-comment/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
@@ -21,7 +21,7 @@ JSRoot {
 	innerComments: Array ["0"]
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/basic/html-comment/input.jsx"
 		end: Object {
 			column: 0
 			index: 6
@@ -38,7 +38,7 @@ JSRoot {
 			id: "0"
 			value: "a"
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/basic/html-comment/input.jsx"
 				end: Object {
 					column: 5
 					index: 5

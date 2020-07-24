@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/420/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/420/input.js"
 		end: Object {
 			column: 24
 			index: 24
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown start to an statement expression"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/420/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSIfStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/420/input.js"
 				end: Object {
 					column: 24
 					index: 24
@@ -73,7 +73,7 @@ JSRoot {
 			test: JSBooleanLiteral {
 				value: false
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/420/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -88,7 +88,7 @@ JSRoot {
 			}
 			alternate: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/420/input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -103,7 +103,7 @@ JSRoot {
 				expression: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/420/input.js"
 						end: Object {
 							column: 24
 							index: 24
@@ -119,7 +119,7 @@ JSRoot {
 			}
 			consequent: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/420/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -134,7 +134,7 @@ JSRoot {
 				expression: JSCallExpression {
 					arguments: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/420/input.js"
 						end: Object {
 							column: 18
 							index: 18
@@ -149,7 +149,7 @@ JSRoot {
 					callee: JSReferenceIdentifier {
 						name: "doThis"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/420/input.js"
 							identifierName: "doThis"
 							end: Object {
 								column: 16
@@ -174,7 +174,7 @@ JSRoot {
 
 ```
 
- input.js:1:24 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/420/input.js:1:24 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
 

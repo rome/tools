@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/context-division-after-expression/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/context-division-after-expression/input.js"
 		end: Object {
 			column: 6
 			index: 34
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/context-division-after-expression/input.js"
 				end: Object {
 					column: 27
 					index: 27
@@ -50,7 +50,7 @@ JSRoot {
 				operator: "void"
 				prefix: true
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/context-division-after-expression/input.js"
 					end: Object {
 						column: 27
 						index: 27
@@ -66,7 +66,7 @@ JSRoot {
 					id: JSBindingIdentifier {
 						name: "fn"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/context-division-after-expression/input.js"
 							identifierName: "fn"
 							end: Object {
 								column: 22
@@ -81,7 +81,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/context-division-after-expression/input.js"
 						end: Object {
 							column: 27
 							index: 27
@@ -97,7 +97,7 @@ JSRoot {
 						body: Array []
 						directives: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/context-division-after-expression/input.js"
 							end: Object {
 								column: 27
 								index: 27
@@ -120,7 +120,7 @@ JSRoot {
 						thisType: undefined
 						typeParameters: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/context-division-after-expression/input.js"
 							end: Object {
 								column: 24
 								index: 24
@@ -138,7 +138,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/context-division-after-expression/input.js"
 				end: Object {
 					column: 6
 					index: 34
@@ -158,7 +158,7 @@ JSRoot {
 				sticky: false
 				unicode: false
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/context-division-after-expression/input.js"
 					end: Object {
 						column: 6
 						index: 34
@@ -172,7 +172,7 @@ JSRoot {
 				}
 				expression: JSRegExpSubExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/context-division-after-expression/input.js"
 						end: Object {
 							column: 4
 							index: 32
@@ -188,7 +188,7 @@ JSRoot {
 						JSRegExpCharacter {
 							value: "f"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/context-division-after-expression/input.js"
 								end: Object {
 									column: 2
 									index: 30
@@ -204,7 +204,7 @@ JSRoot {
 						JSRegExpCharacter {
 							value: "o"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/context-division-after-expression/input.js"
 								end: Object {
 									column: 3
 									index: 31
@@ -220,7 +220,7 @@ JSRoot {
 						JSRegExpCharacter {
 							value: "o"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/context-division-after-expression/input.js"
 								end: Object {
 									column: 4
 									index: 32

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/yield-star-inside-plain-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/yield-star-inside-plain-function/input.js"
 		end: Object {
 			column: 27
 			index: 27
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/yield-star-inside-plain-function/input.js"
 				end: Object {
 					column: 27
 					index: 27
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSFunctionExpression {
 				id: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/yield-star-inside-plain-function/input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -71,7 +71,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/yield/yield-star-inside-plain-function/input.js"
 						end: Object {
 							column: 12
 							index: 12
@@ -87,7 +87,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/yield/yield-star-inside-plain-function/input.js"
 						end: Object {
 							column: 26
 							index: 26
@@ -102,7 +102,7 @@ JSRoot {
 					body: Array [
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/yield-star-inside-plain-function/input.js"
 								end: Object {
 									column: 24
 									index: 24
@@ -117,7 +117,7 @@ JSRoot {
 							expression: JSBinaryExpression {
 								operator: "*"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/yield-star-inside-plain-function/input.js"
 									end: Object {
 										column: 24
 										index: 24
@@ -132,7 +132,7 @@ JSRoot {
 								left: JSReferenceIdentifier {
 									name: "yield"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/yield/yield-star-inside-plain-function/input.js"
 										identifierName: "yield"
 										end: Object {
 											column: 20
@@ -150,7 +150,7 @@ JSRoot {
 									value: 10
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/yield/yield-star-inside-plain-function/input.js"
 										end: Object {
 											column: 24
 											index: 24

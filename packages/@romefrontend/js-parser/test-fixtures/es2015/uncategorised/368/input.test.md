@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/368/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/368/input.js"
 		end: Object {
 			column: 0
 			index: 14
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "enum is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/368/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/368/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/368/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -88,7 +88,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "enum"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/368/input.js"
 						identifierName: "enum"
 						end: Object {
 							column: 4
@@ -105,7 +105,7 @@ JSRoot {
 				right: JSCallExpression {
 					arguments: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/368/input.js"
 						end: Object {
 							column: 12
 							index: 12
@@ -120,7 +120,7 @@ JSRoot {
 					callee: JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/368/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 10
@@ -145,7 +145,7 @@ JSRoot {
 
 ```
 
- input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/368/input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ enum is a reserved word
 

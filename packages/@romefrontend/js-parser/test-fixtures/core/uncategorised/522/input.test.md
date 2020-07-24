@@ -10,14 +10,14 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "input.js"
+	filename: "core/uncategorised/522/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/522/input.js"
 		end: Object {
 			column: 69
 			index: 69
@@ -33,7 +33,7 @@ JSRoot {
 		JSDirective {
 			value: "use strict"
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/522/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -56,7 +56,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Legacy octal literals are not allowed in strict mode"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/522/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -77,7 +77,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/522/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 25
@@ -92,7 +92,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/522/input.js"
 				end: Object {
 					column: 42
 					index: 42
@@ -114,7 +114,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/522/input.js"
 					end: Object {
 						column: 27
 						index: 27
@@ -130,7 +130,7 @@ JSRoot {
 			body: JSBlockStatement {
 				body: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/522/input.js"
 					end: Object {
 						column: 42
 						index: 42
@@ -146,7 +146,7 @@ JSRoot {
 					JSDirective {
 						value: "use strict"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/522/input.js"
 							end: Object {
 								column: 41
 								index: 41
@@ -166,7 +166,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "bar"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/522/input.js"
 					identifierName: "bar"
 					end: Object {
 						column: 54
@@ -181,7 +181,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/522/input.js"
 				end: Object {
 					column: 69
 					index: 69
@@ -203,7 +203,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/522/input.js"
 					end: Object {
 						column: 56
 						index: 56
@@ -219,7 +219,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/522/input.js"
 					end: Object {
 						column: 69
 						index: 69
@@ -234,7 +234,7 @@ JSRoot {
 				body: Array [
 					JSVariableDeclarationStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/522/input.js"
 							end: Object {
 								column: 68
 								index: 68
@@ -249,7 +249,7 @@ JSRoot {
 						declaration: JSVariableDeclaration {
 							kind: "var"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/522/input.js"
 								end: Object {
 									column: 68
 									index: 68
@@ -266,7 +266,7 @@ JSRoot {
 									id: JSBindingIdentifier {
 										name: "v"
 										loc: Object {
-											filename: "input.js"
+											filename: "core/uncategorised/522/input.js"
 											identifierName: "v"
 											end: Object {
 												column: 62
@@ -281,7 +281,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "core/uncategorised/522/input.js"
 										end: Object {
 											column: 68
 											index: 68
@@ -297,7 +297,7 @@ JSRoot {
 										value: 13
 										format: "octal"
 										loc: Object {
-											filename: "input.js"
+											filename: "core/uncategorised/522/input.js"
 											end: Object {
 												column: 68
 												index: 68
@@ -325,7 +325,7 @@ JSRoot {
 
 ```
 
- input.js:1:68 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/522/input.js:1:68 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Legacy octal literals are not allowed in strict mode
 

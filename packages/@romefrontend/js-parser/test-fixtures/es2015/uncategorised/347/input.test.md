@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/347/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/347/input.js"
 		end: Object {
 			column: 29
 			index: 29
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "setter should have exactly one param"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/347/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/347/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/347/input.js"
 				end: Object {
 					column: 29
 					index: 29
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/347/input.js"
 					end: Object {
 						column: 29
 						index: 29
@@ -112,7 +112,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "prop"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/347/input.js"
 									identifierName: "prop"
 									end: Object {
 										column: 18
@@ -127,7 +127,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/347/input.js"
 								end: Object {
 									column: 18
 									index: 18
@@ -141,7 +141,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/347/input.js"
 							end: Object {
 								column: 27
 								index: 27
@@ -157,7 +157,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/347/input.js"
 								end: Object {
 									column: 27
 									index: 27
@@ -183,7 +183,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/347/input.js"
 								end: Object {
 									column: 18
 									index: 18
@@ -205,7 +205,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/347/input.js"
 								end: Object {
 									column: 24
 									index: 24
@@ -221,7 +221,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "x"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/347/input.js"
 										identifierName: "x"
 										end: Object {
 											column: 20
@@ -238,7 +238,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/347/input.js"
 											end: Object {
 												column: 20
 												index: 20
@@ -255,7 +255,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "y"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/347/input.js"
 										identifierName: "y"
 										end: Object {
 											column: 23
@@ -272,7 +272,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/347/input.js"
 											end: Object {
 												column: 23
 												index: 23
@@ -300,7 +300,7 @@ JSRoot {
 
 ```
 
- input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/347/input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ setter should have exactly one param
 

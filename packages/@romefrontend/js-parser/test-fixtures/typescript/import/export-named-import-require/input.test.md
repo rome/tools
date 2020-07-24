@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/import/export-named-import-require/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/import/export-named-import-require/input.ts"
 		end: Object {
 			column: 0
 			index: 39
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/import/export-named-import-require/input.ts"
 					identifierName: "a"
 					end: Object {
 						column: 8
@@ -52,7 +52,7 @@ JSRoot {
 			}
 			isExport: false
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/import/export-named-import-require/input.ts"
 				end: Object {
 					column: 24
 					index: 24
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			moduleReference: TSExternalModuleReference {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/import/export-named-import-require/input.ts"
 					end: Object {
 						column: 23
 						index: 23
@@ -81,7 +81,7 @@ JSRoot {
 				expression: JSStringLiteral {
 					value: "a"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/import/export-named-import-require/input.ts"
 						end: Object {
 							column: 22
 							index: 22
@@ -100,7 +100,7 @@ JSRoot {
 			declaration: undefined
 			exportKind: "value"
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/import/export-named-import-require/input.ts"
 				end: Object {
 					column: 13
 					index: 38
@@ -115,7 +115,7 @@ JSRoot {
 			specifiers: Array [
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/import/export-named-import-require/input.ts"
 						end: Object {
 							column: 10
 							index: 35
@@ -130,7 +130,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/import/export-named-import-require/input.ts"
 							identifierName: "a"
 							end: Object {
 								column: 10
@@ -147,7 +147,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/import/export-named-import-require/input.ts"
 							identifierName: "a"
 							end: Object {
 								column: 10

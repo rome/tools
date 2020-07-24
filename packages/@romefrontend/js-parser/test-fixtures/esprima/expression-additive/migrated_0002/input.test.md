@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/expression-additive/migrated_0002/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/expression-additive/migrated_0002/input.js"
 		end: Object {
 			column: 0
 			index: 18
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/expression-additive/migrated_0002/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "+"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/expression-additive/migrated_0002/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -64,7 +64,7 @@ JSRoot {
 				left: JSStringLiteral {
 					value: "use strict"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-additive/migrated_0002/input.js"
 						end: Object {
 							column: 12
 							index: 12
@@ -81,7 +81,7 @@ JSRoot {
 					value: 42
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-additive/migrated_0002/input.js"
 						end: Object {
 							column: 17
 							index: 17

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/method-with-newline-with-body/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/method-with-newline-with-body/input.ts"
 		end: Object {
 			column: 0
 			index: 32
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/method-with-newline-with-body/input.ts"
 					identifierName: "C"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/method-with-newline-with-body/input.ts"
 				end: Object {
 					column: 1
 					index: 31
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/method-with-newline-with-body/input.ts"
 					end: Object {
 						column: 1
 						index: 31
@@ -88,7 +88,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "m"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/method-with-newline-with-body/input.ts"
 									identifierName: "m"
 									end: Object {
 										column: 5
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/method-with-newline-with-body/input.ts"
 								end: Object {
 									column: 5
 									index: 15
@@ -117,7 +117,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/method-with-newline-with-body/input.ts"
 							end: Object {
 								column: 5
 								index: 29
@@ -133,7 +133,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/method-with-newline-with-body/input.ts"
 								end: Object {
 									column: 5
 									index: 29
@@ -156,7 +156,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/method-with-newline-with-body/input.ts"
 								end: Object {
 									column: 7
 									index: 17
@@ -182,7 +182,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/method-with-newline-with-body/input.ts"
 								end: Object {
 									column: 5
 									index: 15

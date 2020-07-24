@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/asi2/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/asi2/input.js"
 		end: Object {
 			column: 0
 			index: 31
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/asi2/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 11
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/asi2/input.js"
 				end: Object {
 					column: 1
 					index: 30
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/asi2/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/asi2/input.js"
 					end: Object {
 						column: 1
 						index: 30
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/asi2/input.js"
 							end: Object {
 								column: 21
 								index: 21
@@ -120,7 +120,7 @@ JSRoot {
 							argument: undefined
 							delegate: false
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/asi2/input.js"
 								end: Object {
 									column: 21
 									index: 21
@@ -138,7 +138,7 @@ JSRoot {
 						body: Array []
 						directives: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/asi2/input.js"
 							end: Object {
 								column: 2
 								index: 24
@@ -153,7 +153,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/asi2/input.js"
 							end: Object {
 								column: 6
 								index: 28
@@ -173,7 +173,7 @@ JSRoot {
 							sticky: false
 							unicode: false
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/asi2/input.js"
 								end: Object {
 									column: 6
 									index: 28
@@ -187,7 +187,7 @@ JSRoot {
 							}
 							expression: JSRegExpSubExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/asi2/input.js"
 									end: Object {
 										column: 4
 										index: 26
@@ -203,7 +203,7 @@ JSRoot {
 									JSRegExpCharacter {
 										value: "1"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/yield/asi2/input.js"
 											end: Object {
 												column: 4
 												index: 26

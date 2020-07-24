@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/294/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/294/input.js"
 		end: Object {
 			column: 9
 			index: 9
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/294/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/294/input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSSequenceExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/294/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -88,7 +88,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "b"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/294/input.js"
 							identifierName: "b"
 							end: Object {
 								column: 2
@@ -105,7 +105,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "INVALID_PLACEHOLDER"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/294/input.js"
 							end: Object {
 								column: 9
 								index: 9
@@ -129,7 +129,7 @@ JSRoot {
 
 ```
 
- input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/294/input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token
 

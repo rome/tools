@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-properties/failure-computed/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-properties/failure-computed/input.js"
 		end: Object {
 			column: 0
 			index: 34
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/failure-computed/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/failure-computed/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/failure-computed/input.js"
 				end: Object {
 					column: 1
 					index: 33
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/failure-computed/input.js"
 					end: Object {
 						column: 1
 						index: 33
@@ -111,7 +111,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "p"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/failure-computed/input.js"
 									identifierName: "p"
 									end: Object {
 										column: 4
@@ -126,7 +126,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-computed/input.js"
 								end: Object {
 									column: 4
 									index: 16
@@ -142,7 +142,7 @@ JSRoot {
 						value: JSReferenceIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-computed/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 8
@@ -158,7 +158,7 @@ JSRoot {
 						}
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/failure-computed/input.js"
 							end: Object {
 								column: 8
 								index: 20
@@ -183,7 +183,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-computed/input.js"
 								end: Object {
 									column: 4
 									index: 16
@@ -202,7 +202,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: ""
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/failure-computed/input.js"
 									identifierName: ""
 									end: Object {
 										column: 6
@@ -217,7 +217,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-computed/input.js"
 								end: Object {
 									column: 6
 									index: 27
@@ -234,7 +234,7 @@ JSRoot {
 							value: 1
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-computed/input.js"
 								end: Object {
 									column: 10
 									index: 31
@@ -250,7 +250,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/failure-computed/input.js"
 							end: Object {
 								column: 10
 								index: 31
@@ -275,7 +275,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-computed/input.js"
 								end: Object {
 									column: 6
 									index: 27
@@ -300,7 +300,7 @@ JSRoot {
 
 ```
 
- input.js:3:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-private-properties/failure-computed/input.js:3:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
 

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/nullish-coalescing-operator/no-paren-nullish-and/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/nullish-coalescing-operator/no-paren-nullish-and/input.js"
 		end: Object {
 			column: 0
 			index: 13
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/nullish-coalescing-operator/no-paren-nullish-and/input.js"
 				end: Object {
 					column: 12
 					index: 12
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSLogicalExpression {
 				operator: "??"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/nullish-coalescing-operator/no-paren-nullish-and/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -64,7 +64,7 @@ JSRoot {
 				left: JSReferenceIdentifier {
 					name: "a"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/nullish-coalescing-operator/no-paren-nullish-and/input.js"
 						identifierName: "a"
 						end: Object {
 							column: 1
@@ -81,7 +81,7 @@ JSRoot {
 				right: JSLogicalExpression {
 					operator: "&&"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/nullish-coalescing-operator/no-paren-nullish-and/input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -96,7 +96,7 @@ JSRoot {
 					left: JSReferenceIdentifier {
 						name: "b"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/nullish-coalescing-operator/no-paren-nullish-and/input.js"
 							identifierName: "b"
 							end: Object {
 								column: 6
@@ -113,7 +113,7 @@ JSRoot {
 					right: JSReferenceIdentifier {
 						name: "c"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/nullish-coalescing-operator/no-paren-nullish-and/input.js"
 							identifierName: "c"
 							end: Object {
 								column: 11

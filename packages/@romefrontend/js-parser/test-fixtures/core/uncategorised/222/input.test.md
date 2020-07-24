@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/222/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/222/input.js"
 		end: Object {
 			column: 38
 			index: 38
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/222/input.js"
 				end: Object {
 					column: 38
 					index: 38
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/222/input.js"
 					end: Object {
 						column: 38
 						index: 38
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "private"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/222/input.js"
 								identifierName: "private"
 								end: Object {
 									column: 11
@@ -82,7 +82,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/222/input.js"
 							end: Object {
 								column: 11
 								index: 11
@@ -99,7 +99,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "protected"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/222/input.js"
 								identifierName: "protected"
 								end: Object {
 									column: 22
@@ -115,7 +115,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/222/input.js"
 							end: Object {
 								column: 22
 								index: 22
@@ -132,7 +132,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "public"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/222/input.js"
 								identifierName: "public"
 								end: Object {
 									column: 30
@@ -148,7 +148,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/222/input.js"
 							end: Object {
 								column: 30
 								index: 30
@@ -165,7 +165,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "static"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/222/input.js"
 								identifierName: "static"
 								end: Object {
 									column: 38
@@ -181,7 +181,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/222/input.js"
 							end: Object {
 								column: 38
 								index: 38

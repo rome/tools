@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-object-literal-property-value-shorthand/migrated_0000/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-object-literal-property-value-shorthand/migrated_0000/input.js"
 		end: Object {
 			column: 0
 			index: 13
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-object-literal-property-value-shorthand/migrated_0000/input.js"
 				end: Object {
 					column: 12
 					index: 12
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-object-literal-property-value-shorthand/migrated_0000/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -64,7 +64,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-object-literal-property-value-shorthand/migrated_0000/input.js"
 						identifierName: "x"
 						end: Object {
 							column: 1
@@ -80,7 +80,7 @@ JSRoot {
 				}
 				right: JSObjectExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-object-literal-property-value-shorthand/migrated_0000/input.js"
 						end: Object {
 							column: 12
 							index: 12
@@ -98,7 +98,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "y"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-object-literal-property-value-shorthand/migrated_0000/input.js"
 										identifierName: "y"
 										end: Object {
 											column: 7
@@ -113,7 +113,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-object-literal-property-value-shorthand/migrated_0000/input.js"
 									end: Object {
 										column: 7
 										index: 7
@@ -129,7 +129,7 @@ JSRoot {
 							value: JSReferenceIdentifier {
 								name: "y"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-object-literal-property-value-shorthand/migrated_0000/input.js"
 									identifierName: "y"
 									end: Object {
 										column: 7
@@ -144,7 +144,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-literal-property-value-shorthand/migrated_0000/input.js"
 								end: Object {
 									column: 7
 									index: 7
@@ -162,7 +162,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "z"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-object-literal-property-value-shorthand/migrated_0000/input.js"
 										identifierName: "z"
 										end: Object {
 											column: 10
@@ -177,7 +177,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-object-literal-property-value-shorthand/migrated_0000/input.js"
 									end: Object {
 										column: 10
 										index: 10
@@ -193,7 +193,7 @@ JSRoot {
 							value: JSReferenceIdentifier {
 								name: "z"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-object-literal-property-value-shorthand/migrated_0000/input.js"
 									identifierName: "z"
 									end: Object {
 										column: 10
@@ -208,7 +208,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-object-literal-property-value-shorthand/migrated_0000/input.js"
 								end: Object {
 									column: 10
 									index: 10

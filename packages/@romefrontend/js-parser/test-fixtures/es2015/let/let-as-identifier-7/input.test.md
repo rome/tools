@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/let/let-as-identifier-7/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/let/let-as-identifier-7/input.js"
 		end: Object {
 			column: 0
 			index: 29
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSWhileStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/let/let-as-identifier-7/input.js"
 				end: Object {
 					column: 14
 					index: 28
@@ -50,7 +50,7 @@ JSRoot {
 				value: 0
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/let/let-as-identifier-7/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -65,7 +65,7 @@ JSRoot {
 			}
 			body: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/let/let-as-identifier-7/input.js"
 					end: Object {
 						column: 14
 						index: 28
@@ -80,7 +80,7 @@ JSRoot {
 				expression: JSBinaryExpression {
 					operator: "instanceof"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/let/let-as-identifier-7/input.js"
 						end: Object {
 							column: 14
 							index: 28
@@ -95,7 +95,7 @@ JSRoot {
 					left: JSReferenceIdentifier {
 						name: "let"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/let/let-as-identifier-7/input.js"
 							identifierName: "let"
 							end: Object {
 								column: 13
@@ -112,7 +112,7 @@ JSRoot {
 					right: JSReferenceIdentifier {
 						name: "Foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/let/let-as-identifier-7/input.js"
 							identifierName: "Foo"
 							end: Object {
 								column: 14

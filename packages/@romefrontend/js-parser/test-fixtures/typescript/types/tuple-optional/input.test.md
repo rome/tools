@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/tuple-optional/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/tuple-optional/input.ts"
 		end: Object {
 			column: 0
 			index: 45
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/tuple-optional/input.ts"
 				end: Object {
 					column: 44
 					index: 44
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/tuple-optional/input.ts"
 					end: Object {
 						column: 44
 						index: 44
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/tuple-optional/input.ts"
 								end: Object {
 									column: 44
 									index: 44
@@ -81,7 +81,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/tuple-optional/input.ts"
 									end: Object {
 										column: 44
 										index: 44
@@ -96,7 +96,7 @@ JSRoot {
 								typeAnnotation: TSTupleType {
 									rest: undefined
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/tuple-optional/input.ts"
 										end: Object {
 											column: 44
 											index: 44
@@ -113,7 +113,7 @@ JSRoot {
 											name: undefined
 											optional: false
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/tuple-optional/input.ts"
 												end: Object {
 													column: 14
 													index: 14
@@ -127,7 +127,7 @@ JSRoot {
 											}
 											typeAnnotation: TSStringKeywordTypeAnnotation {
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/types/tuple-optional/input.ts"
 													end: Object {
 														column: 14
 														index: 14
@@ -145,7 +145,7 @@ JSRoot {
 											name: undefined
 											optional: true
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/tuple-optional/input.ts"
 												end: Object {
 													column: 23
 													index: 23
@@ -159,7 +159,7 @@ JSRoot {
 											}
 											typeAnnotation: TSNumberKeywordTypeAnnotation {
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/types/tuple-optional/input.ts"
 													end: Object {
 														column: 22
 														index: 22
@@ -177,7 +177,7 @@ JSRoot {
 											name: undefined
 											optional: true
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/tuple-optional/input.ts"
 												end: Object {
 													column: 43
 													index: 43
@@ -191,7 +191,7 @@ JSRoot {
 											}
 											typeAnnotation: TSParenthesizedType {
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/types/tuple-optional/input.ts"
 													end: Object {
 														column: 42
 														index: 42
@@ -205,7 +205,7 @@ JSRoot {
 												}
 												typeAnnotation: TSUnionTypeAnnotation {
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/types/tuple-optional/input.ts"
 														end: Object {
 															column: 41
 															index: 41
@@ -220,7 +220,7 @@ JSRoot {
 													types: Array [
 														TSStringKeywordTypeAnnotation {
 															loc: Object {
-																filename: "input.ts"
+																filename: "typescript/types/tuple-optional/input.ts"
 																end: Object {
 																	column: 32
 																	index: 32
@@ -235,7 +235,7 @@ JSRoot {
 														}
 														TSNumberKeywordTypeAnnotation {
 															loc: Object {
-																filename: "input.ts"
+																filename: "typescript/types/tuple-optional/input.ts"
 																end: Object {
 																	column: 41
 																	index: 41
@@ -258,7 +258,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/tuple-optional/input.ts"
 							end: Object {
 								column: 44
 								index: 44

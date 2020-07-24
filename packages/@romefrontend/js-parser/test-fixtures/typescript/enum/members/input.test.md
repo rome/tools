@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/enum/members/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/enum/members/input.ts"
 		end: Object {
 			column: 0
 			index: 28
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "E"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/enum/members/input.ts"
 					identifierName: "E"
 					end: Object {
 						column: 6
@@ -52,7 +52,7 @@ JSRoot {
 			}
 			const: false
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/enum/members/input.ts"
 				end: Object {
 					column: 1
 					index: 27
@@ -69,7 +69,7 @@ JSRoot {
 					id: JSIdentifier {
 						name: "A"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/enum/members/input.ts"
 							identifierName: "A"
 							end: Object {
 								column: 5
@@ -85,7 +85,7 @@ JSRoot {
 					}
 					initializer: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/enum/members/input.ts"
 						end: Object {
 							column: 5
 							index: 14
@@ -102,7 +102,7 @@ JSRoot {
 					id: JSIdentifier {
 						name: "B"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/enum/members/input.ts"
 							identifierName: "B"
 							end: Object {
 								column: 5
@@ -117,7 +117,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/enum/members/input.ts"
 						end: Object {
 							column: 9
 							index: 25
@@ -133,7 +133,7 @@ JSRoot {
 						value: 0
 						format: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/enum/members/input.ts"
 							end: Object {
 								column: 9
 								index: 25

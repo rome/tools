@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/yield-yield/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/yield-yield/input.js"
 		end: Object {
 			column: 33
 			index: 33
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/yield-yield/input.js"
 				end: Object {
 					column: 33
 					index: 33
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSFunctionExpression {
 				id: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/yield-yield/input.js"
 					end: Object {
 						column: 32
 						index: 32
@@ -71,7 +71,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/yield/yield-yield/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -87,7 +87,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/yield/yield-yield/input.js"
 						end: Object {
 							column: 32
 							index: 32
@@ -102,7 +102,7 @@ JSRoot {
 					body: Array [
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/yield-yield/input.js"
 								end: Object {
 									column: 30
 									index: 30
@@ -117,7 +117,7 @@ JSRoot {
 							expression: JSYieldExpression {
 								delegate: false
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/yield-yield/input.js"
 									end: Object {
 										column: 30
 										index: 30
@@ -132,7 +132,7 @@ JSRoot {
 								argument: JSYieldExpression {
 									delegate: false
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/yield/yield-yield/input.js"
 										end: Object {
 											column: 30
 											index: 30
@@ -148,7 +148,7 @@ JSRoot {
 										value: 10
 										format: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/yield/yield-yield/input.js"
 											end: Object {
 												column: 30
 												index: 30

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/static/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/static/input.ts"
 		end: Object {
 			column: 0
 			index: 101
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/static/input.ts"
 					identifierName: "C"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/static/input.ts"
 				end: Object {
 					column: 1
 					index: 100
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/static/input.ts"
 					end: Object {
 						column: 1
 						index: 100
@@ -88,7 +88,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "f"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/static/input.ts"
 									identifierName: "f"
 									end: Object {
 										column: 12
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 12
 									index: 22
@@ -118,7 +118,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/static/input.ts"
 							end: Object {
 								column: 15
 								index: 25
@@ -140,7 +140,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 14
 									index: 24
@@ -166,7 +166,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 12
 									index: 22
@@ -186,7 +186,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "f"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/static/input.ts"
 									identifierName: "f"
 									end: Object {
 										column: 19
@@ -201,7 +201,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 19
 									index: 45
@@ -216,7 +216,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/static/input.ts"
 							end: Object {
 								column: 22
 								index: 48
@@ -238,7 +238,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 21
 									index: 47
@@ -264,7 +264,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 19
 									index: 45
@@ -284,7 +284,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "f"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/static/input.ts"
 									identifierName: "f"
 									end: Object {
 										column: 22
@@ -299,7 +299,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 22
 									index: 71
@@ -314,7 +314,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/static/input.ts"
 							end: Object {
 								column: 25
 								index: 74
@@ -336,7 +336,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 24
 									index: 73
@@ -362,7 +362,7 @@ JSRoot {
 								line: 4
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 22
 									index: 71
@@ -382,7 +382,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "f"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/static/input.ts"
 									identifierName: "f"
 									end: Object {
 										column: 20
@@ -397,7 +397,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 20
 									index: 95
@@ -412,7 +412,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/static/input.ts"
 							end: Object {
 								column: 23
 								index: 98
@@ -434,7 +434,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 22
 									index: 97
@@ -460,7 +460,7 @@ JSRoot {
 								line: 5
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 20
 									index: 95

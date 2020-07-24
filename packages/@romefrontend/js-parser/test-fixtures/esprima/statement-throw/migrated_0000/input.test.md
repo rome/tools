@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/statement-throw/migrated_0000/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/statement-throw/migrated_0000/input.js"
 		end: Object {
 			column: 0
 			index: 9
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSThrowStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/statement-throw/migrated_0000/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -49,7 +49,7 @@ JSRoot {
 			argument: JSReferenceIdentifier {
 				name: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-throw/migrated_0000/input.js"
 					identifierName: "x"
 					end: Object {
 						column: 7

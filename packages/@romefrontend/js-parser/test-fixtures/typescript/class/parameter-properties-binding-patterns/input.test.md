@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
 		end: Object {
 			column: 0
 			index: 42
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "A parameter property may not be declared using a binding pattern."}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
 					identifierName: "C"
 					end: Object {
 						column: 7
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
 				end: Object {
 					column: 1
 					index: 41
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
 					end: Object {
 						column: 1
 						index: 41
@@ -112,7 +112,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
 									identifierName: "constructor"
 									end: Object {
 										column: 15
@@ -127,7 +127,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
 								end: Object {
 									column: 15
 									index: 25
@@ -141,7 +141,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
 							end: Object {
 								column: 29
 								index: 39
@@ -157,7 +157,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
 								end: Object {
 									column: 29
 									index: 39
@@ -183,7 +183,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
 								end: Object {
 									column: 15
 									index: 25
@@ -205,7 +205,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
 								end: Object {
 									column: 26
 									index: 36
@@ -222,7 +222,7 @@ JSRoot {
 									elements: Array []
 									rest: undefined
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
 										end: Object {
 											column: 25
 											index: 35
@@ -238,7 +238,7 @@ JSRoot {
 										accessibility: "public"
 										readonly: false
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
 											end: Object {
 												column: 25
 												index: 35
@@ -266,7 +266,7 @@ JSRoot {
 
 ```
 
- input.ts:2:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/class/parameter-properties-binding-patterns/input.ts:2:16 parse/js ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A parameter property may not be declared using a binding pattern.
 

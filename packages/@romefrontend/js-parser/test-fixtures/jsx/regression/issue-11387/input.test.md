@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/regression/issue-11387/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/regression/issue-11387/input.jsx"
 		end: Object {
 			column: 0
 			index: 70
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: "input.jsx"
+				filename: "jsx/regression/issue-11387/input.jsx"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/regression/issue-11387/input.jsx"
 				end: Object {
 					column: 69
 					index: 69
@@ -74,7 +74,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "div"
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/regression/issue-11387/input.jsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -91,7 +91,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/regression/issue-11387/input.jsx"
 					end: Object {
 						column: 69
 						index: 69
@@ -106,7 +106,7 @@ JSRoot {
 				children: Array [
 					JSXExpressionContainer {
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/regression/issue-11387/input.jsx"
 							end: Object {
 								column: 46
 								index: 46
@@ -120,7 +120,7 @@ JSRoot {
 						}
 						expression: JSSequenceExpression {
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/regression/issue-11387/input.jsx"
 								end: Object {
 									column: 46
 									index: 46
@@ -135,7 +135,7 @@ JSRoot {
 							expressions: Array [
 								JSMemberExpression {
 									loc: Object {
-										filename: "input.jsx"
+										filename: "jsx/regression/issue-11387/input.jsx"
 										end: Object {
 											column: 18
 											index: 18
@@ -149,7 +149,7 @@ JSRoot {
 									}
 									object: JSThisExpression {
 										loc: Object {
-											filename: "input.jsx"
+											filename: "jsx/regression/issue-11387/input.jsx"
 											end: Object {
 												column: 11
 												index: 11
@@ -166,7 +166,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "class"
 											loc: Object {
-												filename: "input.jsx"
+												filename: "jsx/regression/issue-11387/input.jsx"
 												identifierName: "class"
 												end: Object {
 													column: 18
@@ -182,7 +182,7 @@ JSRoot {
 										}
 										optional: true
 										loc: Object {
-											filename: "input.jsx"
+											filename: "jsx/regression/issue-11387/input.jsx"
 											identifierName: "class"
 											end: Object {
 												column: 18
@@ -199,7 +199,7 @@ JSRoot {
 								}
 								JSMemberExpression {
 									loc: Object {
-										filename: "input.jsx"
+										filename: "jsx/regression/issue-11387/input.jsx"
 										end: Object {
 											column: 30
 											index: 30
@@ -213,7 +213,7 @@ JSRoot {
 									}
 									object: JSThisExpression {
 										loc: Object {
-											filename: "input.jsx"
+											filename: "jsx/regression/issue-11387/input.jsx"
 											end: Object {
 												column: 24
 												index: 24
@@ -230,7 +230,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "class"
 											loc: Object {
-												filename: "input.jsx"
+												filename: "jsx/regression/issue-11387/input.jsx"
 												identifierName: "class"
 												end: Object {
 													column: 30
@@ -245,7 +245,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.jsx"
+											filename: "jsx/regression/issue-11387/input.jsx"
 											identifierName: "class"
 											end: Object {
 												column: 30
@@ -262,7 +262,7 @@ JSRoot {
 								}
 								JSMemberExpression {
 									loc: Object {
-										filename: "input.jsx"
+										filename: "jsx/regression/issue-11387/input.jsx"
 										end: Object {
 											column: 46
 											index: 46
@@ -276,7 +276,7 @@ JSRoot {
 									}
 									object: JSThisExpression {
 										loc: Object {
-											filename: "input.jsx"
+											filename: "jsx/regression/issue-11387/input.jsx"
 											end: Object {
 												column: 36
 												index: 36
@@ -293,7 +293,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "function"
 											loc: Object {
-												filename: "input.jsx"
+												filename: "jsx/regression/issue-11387/input.jsx"
 												identifierName: "function"
 												end: Object {
 													column: 46
@@ -309,7 +309,7 @@ JSRoot {
 										}
 										optional: true
 										loc: Object {
-											filename: "input.jsx"
+											filename: "jsx/regression/issue-11387/input.jsx"
 											identifierName: "function"
 											end: Object {
 												column: 46
@@ -330,7 +330,7 @@ JSRoot {
 					JSXText {
 						value: ", this.function)}"
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/regression/issue-11387/input.jsx"
 							end: Object {
 								column: 63
 								index: 63
@@ -354,7 +354,7 @@ JSRoot {
 
 ```
 
- input.jsx:1:46 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ jsx/regression/issue-11387/input.jsx:1:46 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ,
 

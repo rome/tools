@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/expression-binary-logical/migrated_0002/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/expression-binary-logical/migrated_0002/input.js"
 		end: Object {
 			column: 0
 			index: 12
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/expression-binary-logical/migrated_0002/input.js"
 				end: Object {
 					column: 11
 					index: 11
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSLogicalExpression {
 				operator: "||"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/expression-binary-logical/migrated_0002/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -64,7 +64,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "z"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-binary-logical/migrated_0002/input.js"
 						identifierName: "z"
 						end: Object {
 							column: 11
@@ -81,7 +81,7 @@ JSRoot {
 				left: JSLogicalExpression {
 					operator: "||"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-binary-logical/migrated_0002/input.js"
 						end: Object {
 							column: 6
 							index: 6
@@ -96,7 +96,7 @@ JSRoot {
 					left: JSReferenceIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/expression-binary-logical/migrated_0002/input.js"
 							identifierName: "x"
 							end: Object {
 								column: 1
@@ -113,7 +113,7 @@ JSRoot {
 					right: JSReferenceIdentifier {
 						name: "y"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/expression-binary-logical/migrated_0002/input.js"
 							identifierName: "y"
 							end: Object {
 								column: 6

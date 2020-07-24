@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/statement-continue/migrated_0002/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/statement-continue/migrated_0002/input.js"
 		end: Object {
 			column: 0
 			index: 37
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSLabeledStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/statement-continue/migrated_0002/input.js"
 				end: Object {
 					column: 36
 					index: 36
@@ -49,7 +49,7 @@ JSRoot {
 			label: JSIdentifier {
 				name: "done"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-continue/migrated_0002/input.js"
 					identifierName: "done"
 					end: Object {
 						column: 4
@@ -65,7 +65,7 @@ JSRoot {
 			}
 			body: JSWhileStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-continue/migrated_0002/input.js"
 					end: Object {
 						column: 36
 						index: 36
@@ -80,7 +80,7 @@ JSRoot {
 				test: JSBooleanLiteral {
 					value: true
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/statement-continue/migrated_0002/input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -96,7 +96,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/statement-continue/migrated_0002/input.js"
 						end: Object {
 							column: 36
 							index: 36
@@ -111,7 +111,7 @@ JSRoot {
 					body: Array [
 						JSContinueStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/statement-continue/migrated_0002/input.js"
 								end: Object {
 									column: 34
 									index: 34
@@ -126,7 +126,7 @@ JSRoot {
 							label: JSIdentifier {
 								name: "done"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/statement-continue/migrated_0002/input.js"
 									identifierName: "done"
 									end: Object {
 										column: 34

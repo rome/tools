@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/trailing-function-commas/6/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/trailing-function-commas/6/input.js"
 		end: Object {
 			column: 19
 			index: 19
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/trailing-function-commas/6/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "log"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/trailing-function-commas/6/input.js"
 					identifierName: "log"
 					end: Object {
 						column: 12
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/trailing-function-commas/6/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -91,7 +91,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/trailing-function-commas/6/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -113,7 +113,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/trailing-function-commas/6/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -129,7 +129,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: ""
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/trailing-function-commas/6/input.js"
 							identifierName: ""
 							end: Object {
 								column: 14
@@ -146,7 +146,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/trailing-function-commas/6/input.js"
 								end: Object {
 									column: 14
 									index: 14
@@ -171,7 +171,7 @@ JSRoot {
 
 ```
 
- input.js:1:13 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/trailing-function-commas/6/input.js:1:13 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
 

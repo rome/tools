@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/interface/separators/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/interface/separators/input.ts"
 		end: Object {
 			column: 0
 			index: 131
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Comma"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/separators/input.ts"
 					identifierName: "Comma"
 					end: Object {
 						column: 15
@@ -53,7 +53,7 @@ JSRoot {
 			extends: undefined
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/separators/input.ts"
 				end: Object {
 					column: 40
 					index: 40
@@ -67,7 +67,7 @@ JSRoot {
 			}
 			body: TSInterfaceBody {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/separators/input.ts"
 					end: Object {
 						column: 40
 						index: 40
@@ -85,7 +85,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/interface/separators/input.ts"
 									identifierName: "x"
 									end: Object {
 										column: 19
@@ -100,7 +100,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 19
 									index: 19
@@ -116,7 +116,7 @@ JSRoot {
 						optional: false
 						readonly: false
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/interface/separators/input.ts"
 							end: Object {
 								column: 28
 								index: 28
@@ -130,7 +130,7 @@ JSRoot {
 						}
 						typeAnnotation: TSNumberKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 27
 									index: 27
@@ -149,7 +149,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "y"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/interface/separators/input.ts"
 									identifierName: "y"
 									end: Object {
 										column: 30
@@ -164,7 +164,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 30
 									index: 30
@@ -180,7 +180,7 @@ JSRoot {
 						optional: false
 						readonly: false
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/interface/separators/input.ts"
 							end: Object {
 								column: 38
 								index: 38
@@ -194,7 +194,7 @@ JSRoot {
 						}
 						typeAnnotation: TSNumberKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 38
 									index: 38
@@ -215,7 +215,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Semi"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/separators/input.ts"
 					identifierName: "Semi"
 					end: Object {
 						column: 14
@@ -232,7 +232,7 @@ JSRoot {
 			extends: undefined
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/separators/input.ts"
 				end: Object {
 					column: 39
 					index: 80
@@ -246,7 +246,7 @@ JSRoot {
 			}
 			body: TSInterfaceBody {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/separators/input.ts"
 					end: Object {
 						column: 39
 						index: 80
@@ -264,7 +264,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/interface/separators/input.ts"
 									identifierName: "x"
 									end: Object {
 										column: 18
@@ -279,7 +279,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 18
 									index: 59
@@ -295,7 +295,7 @@ JSRoot {
 						optional: false
 						readonly: false
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/interface/separators/input.ts"
 							end: Object {
 								column: 27
 								index: 68
@@ -309,7 +309,7 @@ JSRoot {
 						}
 						typeAnnotation: TSNumberKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 26
 									index: 67
@@ -328,7 +328,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "y"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/interface/separators/input.ts"
 									identifierName: "y"
 									end: Object {
 										column: 29
@@ -343,7 +343,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 29
 									index: 70
@@ -359,7 +359,7 @@ JSRoot {
 						optional: false
 						readonly: false
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/interface/separators/input.ts"
 							end: Object {
 								column: 37
 								index: 78
@@ -373,7 +373,7 @@ JSRoot {
 						}
 						typeAnnotation: TSNumberKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 37
 									index: 78
@@ -394,7 +394,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Newline"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/separators/input.ts"
 					identifierName: "Newline"
 					end: Object {
 						column: 17
@@ -411,7 +411,7 @@ JSRoot {
 			extends: undefined
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/separators/input.ts"
 				end: Object {
 					column: 1
 					index: 130
@@ -425,7 +425,7 @@ JSRoot {
 			}
 			body: TSInterfaceBody {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/separators/input.ts"
 					end: Object {
 						column: 1
 						index: 130
@@ -443,7 +443,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/interface/separators/input.ts"
 									identifierName: "x"
 									end: Object {
 										column: 5
@@ -458,7 +458,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 5
 									index: 106
@@ -474,7 +474,7 @@ JSRoot {
 						optional: false
 						readonly: false
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/interface/separators/input.ts"
 							end: Object {
 								column: 13
 								index: 114
@@ -488,7 +488,7 @@ JSRoot {
 						}
 						typeAnnotation: TSNumberKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 13
 									index: 114
@@ -507,7 +507,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "y"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/interface/separators/input.ts"
 									identifierName: "y"
 									end: Object {
 										column: 5
@@ -522,7 +522,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 5
 									index: 120
@@ -538,7 +538,7 @@ JSRoot {
 						optional: false
 						readonly: false
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/interface/separators/input.ts"
 							end: Object {
 								column: 13
 								index: 128
@@ -552,7 +552,7 @@ JSRoot {
 						}
 						typeAnnotation: TSNumberKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 13
 									index: 128

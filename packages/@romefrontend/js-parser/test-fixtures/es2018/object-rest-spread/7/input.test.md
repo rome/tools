@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2018/object-rest-spread/7/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2018/object-rest-spread/7/input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "The rest element has to be the last element when destructuring"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2018/object-rest-spread/7/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2018/object-rest-spread/7/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/object-rest-spread/7/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -89,7 +89,7 @@ JSRoot {
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/7/input.js"
 								end: Object {
 									column: 18
 									index: 18
@@ -104,7 +104,7 @@ JSRoot {
 							rest: JSBindingIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2018/object-rest-spread/7/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 10
@@ -124,7 +124,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "y"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2018/object-rest-spread/7/input.js"
 												identifierName: "y"
 												end: Object {
 													column: 13
@@ -139,7 +139,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2018/object-rest-spread/7/input.js"
 											end: Object {
 												column: 13
 												index: 13
@@ -155,7 +155,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "y"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2018/object-rest-spread/7/input.js"
 											identifierName: "y"
 											end: Object {
 												column: 13
@@ -170,7 +170,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2018/object-rest-spread/7/input.js"
 										end: Object {
 											column: 13
 											index: 13
@@ -188,7 +188,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "z"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2018/object-rest-spread/7/input.js"
 												identifierName: "z"
 												end: Object {
 													column: 16
@@ -203,7 +203,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2018/object-rest-spread/7/input.js"
 											end: Object {
 												column: 16
 												index: 16
@@ -219,7 +219,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "z"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2018/object-rest-spread/7/input.js"
 											identifierName: "z"
 											end: Object {
 												column: 16
@@ -234,7 +234,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2018/object-rest-spread/7/input.js"
 										end: Object {
 											column: 16
 											index: 16
@@ -250,7 +250,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2018/object-rest-spread/7/input.js"
 							end: Object {
 								column: 24
 								index: 24
@@ -265,7 +265,7 @@ JSRoot {
 						init: JSReferenceIdentifier {
 							name: "obj"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/7/input.js"
 								identifierName: "obj"
 								end: Object {
 									column: 24
@@ -291,7 +291,7 @@ JSRoot {
 
 ```
 
- input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2018/object-rest-spread/7/input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The rest element has to be the last element when destructuring
 

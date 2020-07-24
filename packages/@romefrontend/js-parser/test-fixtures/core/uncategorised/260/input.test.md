@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/260/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/260/input.js"
 		end: Object {
 			column: 23
 			index: 23
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/260/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSFunctionExpression {
 				id: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/260/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -71,7 +71,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/260/input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -87,7 +87,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/260/input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -103,7 +103,7 @@ JSRoot {
 						JSReturnStatement {
 							argument: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/260/input.js"
 								end: Object {
 									column: 20
 									index: 20

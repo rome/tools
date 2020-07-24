@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/554/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/554/input.js"
 		end: Object {
 			column: 14
 			index: 14
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/554/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/554/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/554/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/554/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 5
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/554/input.js"
 							end: Object {
 								column: 14
 								index: 14
@@ -119,7 +119,7 @@ JSRoot {
 						}
 						init: JSMemberExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/554/input.js"
 								end: Object {
 									column: 14
 									index: 14
@@ -135,7 +135,7 @@ JSRoot {
 								value: 83
 								format: "octal"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/554/input.js"
 									end: Object {
 										column: 12
 										index: 12
@@ -152,7 +152,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: ""
 									loc: Object {
-										filename: "input.js"
+										filename: "core/uncategorised/554/input.js"
 										identifierName: ""
 										end: Object {
 											column: 14
@@ -167,7 +167,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/554/input.js"
 									identifierName: ""
 									end: Object {
 										column: 14
@@ -194,7 +194,7 @@ JSRoot {
 
 ```
 
- input.js:1:13 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/554/input.js:1:13 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
 

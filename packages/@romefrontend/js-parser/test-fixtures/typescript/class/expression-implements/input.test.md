@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/expression-implements/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/expression-implements/input.ts"
 		end: Object {
 			column: 0
 			index: 62
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/expression-implements/input.ts"
 				end: Object {
 					column: 29
 					index: 29
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSClassExpression {
 				id: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/expression-implements/input.ts"
 					end: Object {
 						column: 27
 						index: 27
@@ -67,7 +67,7 @@ JSRoot {
 					superTypeParameters: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/class/expression-implements/input.ts"
 						end: Object {
 							column: 27
 							index: 27
@@ -82,7 +82,7 @@ JSRoot {
 					implements: Array [
 						TSExpressionWithTypeArguments {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/expression-implements/input.ts"
 								end: Object {
 									column: 24
 									index: 24
@@ -96,7 +96,7 @@ JSRoot {
 							}
 							expression: TSQualifiedName {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/expression-implements/input.ts"
 									end: Object {
 										column: 21
 										index: 21
@@ -111,7 +111,7 @@ JSRoot {
 								left: JSReferenceIdentifier {
 									name: "X"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/expression-implements/input.ts"
 										identifierName: "X"
 										end: Object {
 											column: 19
@@ -128,7 +128,7 @@ JSRoot {
 								right: JSIdentifier {
 									name: "Y"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/expression-implements/input.ts"
 										identifierName: "Y"
 										end: Object {
 											column: 21
@@ -145,7 +145,7 @@ JSRoot {
 							}
 							typeParameters: TSTypeParameterInstantiation {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/expression-implements/input.ts"
 									end: Object {
 										column: 24
 										index: 24
@@ -161,7 +161,7 @@ JSRoot {
 									TSTypeReference {
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/expression-implements/input.ts"
 											end: Object {
 												column: 23
 												index: 23
@@ -176,7 +176,7 @@ JSRoot {
 										typeName: JSReferenceIdentifier {
 											name: "T"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/class/expression-implements/input.ts"
 												identifierName: "T"
 												end: Object {
 													column: 23
@@ -200,7 +200,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/expression-implements/input.ts"
 				end: Object {
 					column: 31
 					index: 61
@@ -216,7 +216,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "C"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/class/expression-implements/input.ts"
 						identifierName: "C"
 						end: Object {
 							column: 8
@@ -231,7 +231,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/expression-implements/input.ts"
 					end: Object {
 						column: 29
 						index: 59
@@ -249,7 +249,7 @@ JSRoot {
 					superTypeParameters: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/class/expression-implements/input.ts"
 						end: Object {
 							column: 29
 							index: 59
@@ -264,7 +264,7 @@ JSRoot {
 					implements: Array [
 						TSExpressionWithTypeArguments {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/expression-implements/input.ts"
 								end: Object {
 									column: 26
 									index: 56
@@ -278,7 +278,7 @@ JSRoot {
 							}
 							expression: TSQualifiedName {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/expression-implements/input.ts"
 									end: Object {
 										column: 23
 										index: 53
@@ -293,7 +293,7 @@ JSRoot {
 								left: JSReferenceIdentifier {
 									name: "X"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/expression-implements/input.ts"
 										identifierName: "X"
 										end: Object {
 											column: 21
@@ -310,7 +310,7 @@ JSRoot {
 								right: JSIdentifier {
 									name: "Y"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/expression-implements/input.ts"
 										identifierName: "Y"
 										end: Object {
 											column: 23
@@ -327,7 +327,7 @@ JSRoot {
 							}
 							typeParameters: TSTypeParameterInstantiation {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/expression-implements/input.ts"
 									end: Object {
 										column: 26
 										index: 56
@@ -343,7 +343,7 @@ JSRoot {
 									TSTypeReference {
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/expression-implements/input.ts"
 											end: Object {
 												column: 25
 												index: 55
@@ -358,7 +358,7 @@ JSRoot {
 										typeName: JSReferenceIdentifier {
 											name: "T"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/class/expression-implements/input.ts"
 												identifierName: "T"
 												end: Object {
 													column: 25

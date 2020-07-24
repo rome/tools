@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/arrow-function/async/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/arrow-function/async/input.ts"
 		end: Object {
 			column: 0
 			index: 30
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/arrow-function/async/input.ts"
 				end: Object {
 					column: 29
 					index: 29
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/arrow-function/async/input.ts"
 					end: Object {
 						column: 28
 						index: 28
@@ -63,7 +63,7 @@ JSRoot {
 				body: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/async/input.ts"
 						identifierName: "x"
 						end: Object {
 							column: 28
@@ -83,7 +83,7 @@ JSRoot {
 					rest: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/async/input.ts"
 						end: Object {
 							column: 26
 							index: 26
@@ -97,7 +97,7 @@ JSRoot {
 					}
 					returnType: TSAnyKeywordTypeAnnotation {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/arrow-function/async/input.ts"
 							end: Object {
 								column: 23
 								index: 23
@@ -114,7 +114,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/arrow-function/async/input.ts"
 								end: Object {
 									column: 26
 									index: 26
@@ -129,7 +129,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								optional: true
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/arrow-function/async/input.ts"
 									end: Object {
 										column: 26
 										index: 26
@@ -143,7 +143,7 @@ JSRoot {
 								}
 								typeAnnotation: TSNumberKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/arrow-function/async/input.ts"
 										end: Object {
 											column: 17
 											index: 17

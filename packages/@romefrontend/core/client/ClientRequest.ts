@@ -91,6 +91,7 @@ export default class ClientRequest {
 				data: undefined,
 				hasData: false,
 				markers: [],
+				files: {},
 			};
 		} else if (res === false) {
 			return {

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/categorized/malformed-switch/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/categorized/malformed-switch/input.js"
 		end: Object {
 			column: 1
 			index: 27
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Statement outside of a case or default block"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/categorized/malformed-switch/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -59,7 +59,7 @@ JSRoot {
 		JSSwitchStatement {
 			cases: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/malformed-switch/input.js"
 				end: Object {
 					column: 1
 					index: 27
@@ -74,7 +74,7 @@ JSRoot {
 			discriminant: JSReferenceIdentifier {
 				name: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/malformed-switch/input.js"
 					identifierName: "x"
 					end: Object {
 						column: 9
@@ -97,7 +97,7 @@ JSRoot {
 
 ```
 
- input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/categorized/malformed-switch/input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Statement outside of a case or default block
 

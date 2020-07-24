@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/rest-parameter/rest-parameter-object/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/rest-parameter/rest-parameter-object/input.js"
 		end: Object {
 			column: 0
 			index: 22
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/rest-parameter/rest-parameter-object/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/rest-parameter/rest-parameter-object/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/rest-parameter/rest-parameter-object/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -89,7 +89,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/rest-parameter/rest-parameter-object/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -104,7 +104,7 @@ JSRoot {
 				rest: JSBindingObjectPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/rest-parameter/rest-parameter-object/input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -120,7 +120,7 @@ JSRoot {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/rest-parameter/rest-parameter-object/input.js"
 							end: Object {
 								column: 17
 								index: 17
@@ -139,7 +139,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/rest-parameter/rest-parameter-object/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 16
@@ -154,7 +154,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/rest-parameter/rest-parameter-object/input.js"
 									end: Object {
 										column: 16
 										index: 16
@@ -170,7 +170,7 @@ JSRoot {
 							value: JSBindingIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/rest-parameter/rest-parameter-object/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 16
@@ -185,7 +185,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/rest-parameter/rest-parameter-object/input.js"
 								end: Object {
 									column: 16
 									index: 16

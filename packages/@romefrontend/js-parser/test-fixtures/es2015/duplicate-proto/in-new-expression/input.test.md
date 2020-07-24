@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/duplicate-proto/in-new-expression/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/duplicate-proto/in-new-expression/input.js"
 		end: Object {
 			column: 0
 			index: 54
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Redefinition of __proto__ property"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/duplicate-proto/in-new-expression/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/duplicate-proto/in-new-expression/input.js"
 				end: Object {
 					column: 53
 					index: 53
@@ -75,7 +75,7 @@ JSRoot {
 				optional: undefined
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/duplicate-proto/in-new-expression/input.js"
 					end: Object {
 						column: 52
 						index: 52
@@ -89,7 +89,7 @@ JSRoot {
 				}
 				callee: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/duplicate-proto/in-new-expression/input.js"
 						end: Object {
 							column: 52
 							index: 52
@@ -105,7 +105,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "__proto__"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/duplicate-proto/in-new-expression/input.js"
 								identifierName: "__proto__"
 								end: Object {
 									column: 52
@@ -120,7 +120,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/duplicate-proto/in-new-expression/input.js"
 							identifierName: "__proto__"
 							end: Object {
 								column: 52
@@ -136,7 +136,7 @@ JSRoot {
 					}
 					object: JSObjectExpression {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/duplicate-proto/in-new-expression/input.js"
 							end: Object {
 								column: 42
 								index: 42
@@ -154,7 +154,7 @@ JSRoot {
 									value: JSIdentifier {
 										name: "__proto__"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/duplicate-proto/in-new-expression/input.js"
 											identifierName: "__proto__"
 											end: Object {
 												column: 14
@@ -169,7 +169,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/duplicate-proto/in-new-expression/input.js"
 										end: Object {
 											column: 14
 											index: 14
@@ -185,7 +185,7 @@ JSRoot {
 								value: JSReferenceIdentifier {
 									name: "Number"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/duplicate-proto/in-new-expression/input.js"
 										identifierName: "Number"
 										end: Object {
 											column: 22
@@ -200,7 +200,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/duplicate-proto/in-new-expression/input.js"
 									end: Object {
 										column: 22
 										index: 22
@@ -218,7 +218,7 @@ JSRoot {
 									value: JSIdentifier {
 										name: "__proto__"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/duplicate-proto/in-new-expression/input.js"
 											identifierName: "__proto__"
 											end: Object {
 												column: 33
@@ -233,7 +233,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/duplicate-proto/in-new-expression/input.js"
 										end: Object {
 											column: 33
 											index: 33
@@ -249,7 +249,7 @@ JSRoot {
 								value: JSReferenceIdentifier {
 									name: "Number"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/duplicate-proto/in-new-expression/input.js"
 										identifierName: "Number"
 										end: Object {
 											column: 41
@@ -264,7 +264,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/duplicate-proto/in-new-expression/input.js"
 									end: Object {
 										column: 41
 										index: 41
@@ -290,7 +290,7 @@ JSRoot {
 
 ```
 
- input.js:1:24 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/duplicate-proto/in-new-expression/input.js:1:24 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Redefinition of __proto__ property
 

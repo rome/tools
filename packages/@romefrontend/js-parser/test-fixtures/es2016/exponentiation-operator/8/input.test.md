@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2016/exponentiation-operator/8/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2016/exponentiation-operator/8/input.js"
 		end: Object {
 			column: 11
 			index: 11
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2016/exponentiation-operator/8/input.js"
 				end: Object {
 					column: 11
 					index: 11
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "*"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2016/exponentiation-operator/8/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -65,7 +65,7 @@ JSRoot {
 					value: 2
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2016/exponentiation-operator/8/input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -81,7 +81,7 @@ JSRoot {
 				left: JSBinaryExpression {
 					operator: "**"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2016/exponentiation-operator/8/input.js"
 						end: Object {
 							column: 7
 							index: 7
@@ -97,7 +97,7 @@ JSRoot {
 						value: 2
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2016/exponentiation-operator/8/input.js"
 							end: Object {
 								column: 1
 								index: 1
@@ -114,7 +114,7 @@ JSRoot {
 						operator: "-"
 						prefix: true
 						loc: Object {
-							filename: "input.js"
+							filename: "es2016/exponentiation-operator/8/input.js"
 							end: Object {
 								column: 7
 								index: 7
@@ -130,7 +130,7 @@ JSRoot {
 							value: 1
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2016/exponentiation-operator/8/input.js"
 								end: Object {
 									column: 7
 									index: 7

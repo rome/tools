@@ -11,14 +11,14 @@ JSRoot {
 	body: Array []
 	comments: Array []
 	corrupt: false
-	filename: "input.js"
+	filename: "core/uncategorised/360/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/360/input.js"
 		end: Object {
 			column: 13
 			index: 13
@@ -34,7 +34,7 @@ JSRoot {
 		JSDirective {
 			value: "Hello\nWorld"
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/360/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -57,7 +57,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unterminated string constant"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/360/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -80,7 +80,7 @@ JSRoot {
 
 ```
 
- input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/360/input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated string constant
 

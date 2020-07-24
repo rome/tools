@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-properties/asi-success/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-properties/asi-success/input.js"
 		end: Object {
 			column: 0
 			index: 54
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/asi-success/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/asi-success/input.js"
 				end: Object {
 					column: 1
 					index: 21
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/asi-success/input.js"
 					end: Object {
 						column: 1
 						index: 21
@@ -87,7 +87,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/asi-success/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 3
@@ -102,7 +102,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/asi-success/input.js"
 								end: Object {
 									column: 3
 									index: 15
@@ -119,7 +119,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/asi-success/input.js"
 							end: Object {
 								column: 3
 								index: 15
@@ -144,7 +144,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/asi-success/input.js"
 								end: Object {
 									column: 3
 									index: 15
@@ -163,7 +163,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "y"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/asi-success/input.js"
 									identifierName: "y"
 									end: Object {
 										column: 3
@@ -178,7 +178,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/asi-success/input.js"
 								end: Object {
 									column: 3
 									index: 19
@@ -195,7 +195,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/asi-success/input.js"
 							end: Object {
 								column: 3
 								index: 19
@@ -220,7 +220,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/asi-success/input.js"
 								end: Object {
 									column: 3
 									index: 19
@@ -241,7 +241,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo2"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/asi-success/input.js"
 					identifierName: "Foo2"
 					end: Object {
 						column: 10
@@ -256,7 +256,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/asi-success/input.js"
 				end: Object {
 					column: 1
 					index: 53
@@ -274,7 +274,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/asi-success/input.js"
 					end: Object {
 						column: 1
 						index: 53
@@ -292,7 +292,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "p"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/asi-success/input.js"
 									identifierName: "p"
 									end: Object {
 										column: 3
@@ -307,7 +307,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/asi-success/input.js"
 								end: Object {
 									column: 3
 									index: 39
@@ -324,7 +324,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/asi-success/input.js"
 							end: Object {
 								column: 3
 								index: 39
@@ -349,7 +349,7 @@ JSRoot {
 								line: 7
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/asi-success/input.js"
 								end: Object {
 									column: 3
 									index: 39
@@ -369,7 +369,7 @@ JSRoot {
 							value: JSReferenceIdentifier {
 								name: "m"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/asi-success/input.js"
 									identifierName: "m"
 									end: Object {
 										column: 4
@@ -384,7 +384,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/asi-success/input.js"
 								end: Object {
 									column: 5
 									index: 45
@@ -398,7 +398,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/asi-success/input.js"
 							end: Object {
 								column: 11
 								index: 51
@@ -414,7 +414,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/asi-success/input.js"
 								end: Object {
 									column: 11
 									index: 51
@@ -437,7 +437,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/asi-success/input.js"
 								end: Object {
 									column: 8
 									index: 48
@@ -463,7 +463,7 @@ JSRoot {
 								line: 8
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/asi-success/input.js"
 								end: Object {
 									column: 5
 									index: 45

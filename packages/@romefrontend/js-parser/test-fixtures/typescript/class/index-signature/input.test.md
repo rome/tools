@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/index-signature/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/index-signature/input.ts"
 		end: Object {
 			column: 0
 			index: 65
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/index-signature/input.ts"
 					identifierName: "C"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/index-signature/input.ts"
 				end: Object {
 					column: 1
 					index: 64
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/index-signature/input.ts"
 					end: Object {
 						column: 1
 						index: 64
@@ -86,7 +86,7 @@ JSRoot {
 						key: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/index-signature/input.ts"
 								end: Object {
 									column: 14
 									index: 24
@@ -100,7 +100,7 @@ JSRoot {
 							}
 							meta: JSPatternMeta {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/index-signature/input.ts"
 									end: Object {
 										column: 14
 										index: 24
@@ -114,7 +114,7 @@ JSRoot {
 								}
 								typeAnnotation: TSStringKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/index-signature/input.ts"
 										end: Object {
 											column: 14
 											index: 24
@@ -131,7 +131,7 @@ JSRoot {
 						}
 						readonly: false
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/index-signature/input.ts"
 							end: Object {
 								column: 21
 								index: 31
@@ -145,7 +145,7 @@ JSRoot {
 						}
 						typeAnnotation: TSAnyKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/index-signature/input.ts"
 								end: Object {
 									column: 20
 									index: 30
@@ -163,7 +163,7 @@ JSRoot {
 						key: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/index-signature/input.ts"
 								end: Object {
 									column: 23
 									index: 55
@@ -177,7 +177,7 @@ JSRoot {
 							}
 							meta: JSPatternMeta {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/index-signature/input.ts"
 									end: Object {
 										column: 23
 										index: 55
@@ -191,7 +191,7 @@ JSRoot {
 								}
 								typeAnnotation: TSStringKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/index-signature/input.ts"
 										end: Object {
 											column: 23
 											index: 55
@@ -208,7 +208,7 @@ JSRoot {
 						}
 						readonly: true
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/index-signature/input.ts"
 							end: Object {
 								column: 30
 								index: 62
@@ -222,7 +222,7 @@ JSRoot {
 						}
 						typeAnnotation: TSAnyKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/index-signature/input.ts"
 								end: Object {
 									column: 29
 									index: 61

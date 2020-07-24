@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/categorized/01-regex/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/categorized/01-regex/input.js"
 		end: Object {
 			column: 0
 			index: 34
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/01-regex/input.js"
 				end: Object {
 					column: 33
 					index: 33
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/01-regex/input.js"
 					end: Object {
 						column: 33
 						index: 33
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/01-regex/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 7
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/01-regex/input.js"
 							end: Object {
 								column: 33
 								index: 33
@@ -96,7 +96,7 @@ JSRoot {
 						init: JSBinaryExpression {
 							operator: "/"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/01-regex/input.js"
 								end: Object {
 									column: 33
 									index: 33
@@ -111,7 +111,7 @@ JSRoot {
 							right: JSReferenceIdentifier {
 								name: "i"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/01-regex/input.js"
 									identifierName: "i"
 									end: Object {
 										column: 33
@@ -128,7 +128,7 @@ JSRoot {
 							left: JSBinaryExpression {
 								operator: "/"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/01-regex/input.js"
 									end: Object {
 										column: 31
 										index: 31
@@ -144,7 +144,7 @@ JSRoot {
 									value: 42
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "core/categorized/01-regex/input.js"
 										end: Object {
 											column: 31
 											index: 31
@@ -161,7 +161,7 @@ JSRoot {
 									id: JSBindingIdentifier {
 										name: "foo"
 										loc: Object {
-											filename: "input.js"
+											filename: "core/categorized/01-regex/input.js"
 											identifierName: "foo"
 											end: Object {
 												column: 22
@@ -176,7 +176,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "core/categorized/01-regex/input.js"
 										end: Object {
 											column: 27
 											index: 27
@@ -192,7 +192,7 @@ JSRoot {
 										body: Array []
 										directives: Array []
 										loc: Object {
-											filename: "input.js"
+											filename: "core/categorized/01-regex/input.js"
 											end: Object {
 												column: 27
 												index: 27
@@ -215,7 +215,7 @@ JSRoot {
 										thisType: undefined
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "core/categorized/01-regex/input.js"
 											end: Object {
 												column: 24
 												index: 24

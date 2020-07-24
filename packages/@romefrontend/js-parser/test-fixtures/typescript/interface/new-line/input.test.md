@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/interface/new-line/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/interface/new-line/input.ts"
 		end: Object {
 			column: 0
 			index: 15
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/new-line/input.ts"
 				end: Object {
 					column: 9
 					index: 9
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "interface"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/new-line/input.ts"
 					identifierName: "interface"
 					end: Object {
 						column: 9
@@ -66,7 +66,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/new-line/input.ts"
 				end: Object {
 					column: 1
 					index: 11
@@ -81,7 +81,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "F"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/new-line/input.ts"
 					identifierName: "F"
 					end: Object {
 						column: 1
@@ -100,7 +100,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/new-line/input.ts"
 				end: Object {
 					column: 2
 					index: 14

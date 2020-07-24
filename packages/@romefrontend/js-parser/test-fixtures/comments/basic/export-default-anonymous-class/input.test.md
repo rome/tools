@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/basic/export-default-anonymous-class/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/basic/export-default-anonymous-class/input.js"
 		end: Object {
 			column: 0
 			index: 122
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: "*\n * this is anonymous class.\n "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/export-default-anonymous-class/input.js"
 				end: Object {
 					column: 3
 					index: 35
@@ -52,7 +52,7 @@ JSRoot {
 			id: "1"
 			value: "*\n     * this is method1.\n     "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/export-default-anonymous-class/input.js"
 				end: Object {
 					column: 7
 					index: 98
@@ -70,7 +70,7 @@ JSRoot {
 		JSExportDefaultDeclaration {
 			leadingComments: Array ["0"]
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/export-default-anonymous-class/input.js"
 				end: Object {
 					column: 1
 					index: 121
@@ -86,7 +86,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "*default*"
 					loc: Object {
-						filename: "input.js"
+						filename: "comments/basic/export-default-anonymous-class/input.js"
 						end: Object {
 							column: 1
 							index: 121
@@ -101,7 +101,7 @@ JSRoot {
 				}
 				leadingComments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/export-default-anonymous-class/input.js"
 					end: Object {
 						column: 1
 						index: 121
@@ -120,7 +120,7 @@ JSRoot {
 					superTypeParameters: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "comments/basic/export-default-anonymous-class/input.js"
 						end: Object {
 							column: 1
 							index: 121
@@ -140,7 +140,7 @@ JSRoot {
 									name: "method1"
 									leadingComments: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/basic/export-default-anonymous-class/input.js"
 										identifierName: "method1"
 										end: Object {
 											column: 11
@@ -156,7 +156,7 @@ JSRoot {
 								}
 								leadingComments: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "comments/basic/export-default-anonymous-class/input.js"
 									end: Object {
 										column: 11
 										index: 110
@@ -171,7 +171,7 @@ JSRoot {
 							}
 							leadingComments: Array ["1"]
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/basic/export-default-anonymous-class/input.js"
 								end: Object {
 									column: 5
 									index: 119
@@ -187,7 +187,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "comments/basic/export-default-anonymous-class/input.js"
 									end: Object {
 										column: 5
 										index: 119
@@ -210,7 +210,7 @@ JSRoot {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "comments/basic/export-default-anonymous-class/input.js"
 									end: Object {
 										column: 13
 										index: 112
@@ -237,7 +237,7 @@ JSRoot {
 									line: 8
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "comments/basic/export-default-anonymous-class/input.js"
 									end: Object {
 										column: 11
 										index: 110

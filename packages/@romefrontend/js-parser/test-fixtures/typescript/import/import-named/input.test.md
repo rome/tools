@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/import/import-named/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/import/import-named/input.ts"
 		end: Object {
 			column: 0
 			index: 27
@@ -37,7 +37,7 @@ JSRoot {
 			importKind: undefined
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/import/import-named/input.ts"
 				end: Object {
 					column: 26
 					index: 26
@@ -52,7 +52,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "bar"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/import/import-named/input.ts"
 					end: Object {
 						column: 25
 						index: 25
@@ -68,7 +68,7 @@ JSRoot {
 			namedSpecifiers: Array [
 				JSImportSpecifier {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/import/import-named/input.ts"
 						end: Object {
 							column: 12
 							index: 12
@@ -83,7 +83,7 @@ JSRoot {
 					imported: JSIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/import/import-named/input.ts"
 							identifierName: "foo"
 							end: Object {
 								column: 12
@@ -101,7 +101,7 @@ JSRoot {
 						name: JSBindingIdentifier {
 							name: "foo"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/import/import-named/input.ts"
 								identifierName: "foo"
 								end: Object {
 									column: 12
@@ -117,7 +117,7 @@ JSRoot {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/import/import-named/input.ts"
 							end: Object {
 								column: 12
 								index: 12

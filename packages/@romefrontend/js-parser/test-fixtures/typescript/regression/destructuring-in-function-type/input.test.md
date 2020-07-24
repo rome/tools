@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/regression/destructuring-in-function-type/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/regression/destructuring-in-function-type/input.ts"
 		end: Object {
 			column: 0
 			index: 76
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "MyType"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/regression/destructuring-in-function-type/input.ts"
 					identifierName: "MyType"
 					end: Object {
 						column: 11
@@ -52,7 +52,7 @@ JSRoot {
 			}
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/regression/destructuring-in-function-type/input.ts"
 				end: Object {
 					column: 37
 					index: 37
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			right: TSFunctionType {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/regression/destructuring-in-function-type/input.ts"
 					end: Object {
 						column: 37
 						index: 37
@@ -80,7 +80,7 @@ JSRoot {
 				}
 				typeAnnotation: TSAnyKeywordTypeAnnotation {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/regression/destructuring-in-function-type/input.ts"
 						end: Object {
 							column: 37
 							index: 37
@@ -97,7 +97,7 @@ JSRoot {
 					rest: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/regression/destructuring-in-function-type/input.ts"
 						end: Object {
 							column: 37
 							index: 37
@@ -113,7 +113,7 @@ JSRoot {
 						JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/regression/destructuring-in-function-type/input.ts"
 								end: Object {
 									column: 24
 									index: 24
@@ -128,7 +128,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								optional: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/regression/destructuring-in-function-type/input.ts"
 									end: Object {
 										column: 29
 										index: 29
@@ -142,7 +142,7 @@ JSRoot {
 								}
 								typeAnnotation: TSAnyKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/regression/destructuring-in-function-type/input.ts"
 										end: Object {
 											column: 29
 											index: 29
@@ -162,7 +162,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "theme"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/regression/destructuring-in-function-type/input.ts"
 												identifierName: "theme"
 												end: Object {
 													column: 22
@@ -177,7 +177,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/regression/destructuring-in-function-type/input.ts"
 											end: Object {
 												column: 22
 												index: 22
@@ -193,7 +193,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "theme"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/regression/destructuring-in-function-type/input.ts"
 											identifierName: "theme"
 											end: Object {
 												column: 22
@@ -208,7 +208,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/regression/destructuring-in-function-type/input.ts"
 										end: Object {
 											column: 22
 											index: 22
@@ -231,7 +231,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "AnotherType"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/regression/destructuring-in-function-type/input.ts"
 					identifierName: "AnotherType"
 					end: Object {
 						column: 16
@@ -247,7 +247,7 @@ JSRoot {
 			}
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/regression/destructuring-in-function-type/input.ts"
 				end: Object {
 					column: 36
 					index: 75
@@ -261,7 +261,7 @@ JSRoot {
 			}
 			right: TSFunctionType {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/regression/destructuring-in-function-type/input.ts"
 					end: Object {
 						column: 36
 						index: 75
@@ -275,7 +275,7 @@ JSRoot {
 				}
 				typeAnnotation: TSAnyKeywordTypeAnnotation {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/regression/destructuring-in-function-type/input.ts"
 						end: Object {
 							column: 36
 							index: 75
@@ -292,7 +292,7 @@ JSRoot {
 					rest: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/regression/destructuring-in-function-type/input.ts"
 						end: Object {
 							column: 36
 							index: 75
@@ -308,7 +308,7 @@ JSRoot {
 						JSBindingArrayPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/regression/destructuring-in-function-type/input.ts"
 								end: Object {
 									column: 23
 									index: 62
@@ -323,7 +323,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								optional: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/regression/destructuring-in-function-type/input.ts"
 									end: Object {
 										column: 28
 										index: 67
@@ -337,7 +337,7 @@ JSRoot {
 								}
 								typeAnnotation: TSAnyKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/regression/destructuring-in-function-type/input.ts"
 										end: Object {
 											column: 28
 											index: 67
@@ -355,7 +355,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/regression/destructuring-in-function-type/input.ts"
 										identifierName: "a"
 										end: Object {
 											column: 22
@@ -372,7 +372,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/regression/destructuring-in-function-type/input.ts"
 											end: Object {
 												column: 22
 												index: 61

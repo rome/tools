@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/263/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/263/input.js"
 		end: Object {
 			column: 13
 			index: 13
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Class name is required"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/263/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/263/input.js"
 					end: Object {
 						column: 5
 						index: 5
@@ -74,7 +74,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/263/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -92,7 +92,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/263/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -110,7 +110,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "default"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/263/input.js"
 									identifierName: "default"
 									end: Object {
 										column: 13
@@ -125,7 +125,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/263/input.js"
 								end: Object {
 									column: 13
 									index: 13
@@ -142,7 +142,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/263/input.js"
 							end: Object {
 								column: 13
 								index: 13
@@ -167,7 +167,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/263/input.js"
 								end: Object {
 									column: 13
 									index: 13
@@ -192,7 +192,7 @@ JSRoot {
 
 ```
 
- input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/263/input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Class name is required
 

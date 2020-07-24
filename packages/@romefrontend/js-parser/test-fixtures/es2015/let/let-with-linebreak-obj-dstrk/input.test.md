@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 				end: Object {
 					column: 21
 					index: 25
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 					end: Object {
 						column: 21
 						index: 25
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 								end: Object {
 									column: 9
 									index: 13
@@ -84,7 +84,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "a"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 												identifierName: "a"
 												end: Object {
 													column: 7
@@ -99,7 +99,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 											end: Object {
 												column: 7
 												index: 11
@@ -115,7 +115,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "a"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 											identifierName: "a"
 											end: Object {
 												column: 7
@@ -130,7 +130,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 										end: Object {
 											column: 7
 											index: 11
@@ -146,7 +146,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 							end: Object {
 								column: 20
 								index: 24
@@ -160,7 +160,7 @@ JSRoot {
 						}
 						init: JSObjectExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 								end: Object {
 									column: 20
 									index: 24
@@ -178,7 +178,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "a"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 												identifierName: "a"
 												end: Object {
 													column: 15
@@ -193,7 +193,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 											end: Object {
 												column: 15
 												index: 19
@@ -210,7 +210,7 @@ JSRoot {
 										value: 1
 										format: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 											end: Object {
 												column: 18
 												index: 22
@@ -224,7 +224,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 										end: Object {
 											column: 18
 											index: 22

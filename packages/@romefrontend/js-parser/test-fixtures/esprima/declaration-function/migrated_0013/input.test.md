@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/declaration-function/migrated_0013/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/declaration-function/migrated_0013/input.js"
 		end: Object {
 			column: 0
 			index: 33
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "universe"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/declaration-function/migrated_0013/input.js"
 					identifierName: "universe"
 					end: Object {
 						column: 17
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/declaration-function/migrated_0013/input.js"
 				end: Object {
 					column: 32
 					index: 32
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/declaration-function/migrated_0013/input.js"
 					end: Object {
 						column: 32
 						index: 32
@@ -89,7 +89,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/declaration-function/migrated_0013/input.js"
 					end: Object {
 						column: 28
 						index: 28
@@ -105,7 +105,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "__proto__"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/declaration-function/migrated_0013/input.js"
 							identifierName: "__proto__"
 							end: Object {
 								column: 27
@@ -122,7 +122,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/declaration-function/migrated_0013/input.js"
 								end: Object {
 									column: 27
 									index: 27

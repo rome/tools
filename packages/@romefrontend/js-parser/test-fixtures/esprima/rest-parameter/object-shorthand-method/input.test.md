@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/rest-parameter/object-shorthand-method/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/rest-parameter/object-shorthand-method/input.js"
 		end: Object {
 			column: 0
 			index: 28
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/rest-parameter/object-shorthand-method/input.js"
 				end: Object {
 					column: 27
 					index: 27
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/rest-parameter/object-shorthand-method/input.js"
 					end: Object {
 						column: 27
 						index: 27
@@ -64,7 +64,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/rest-parameter/object-shorthand-method/input.js"
 						identifierName: "x"
 						end: Object {
 							column: 1
@@ -80,7 +80,7 @@ JSRoot {
 				}
 				right: JSObjectExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/rest-parameter/object-shorthand-method/input.js"
 						end: Object {
 							column: 27
 							index: 27
@@ -99,7 +99,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "method"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/rest-parameter/object-shorthand-method/input.js"
 										identifierName: "method"
 										end: Object {
 											column: 12
@@ -114,7 +114,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/rest-parameter/object-shorthand-method/input.js"
 									end: Object {
 										column: 12
 										index: 12
@@ -128,7 +128,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/rest-parameter/object-shorthand-method/input.js"
 								end: Object {
 									column: 25
 									index: 25
@@ -144,7 +144,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/rest-parameter/object-shorthand-method/input.js"
 									end: Object {
 										column: 25
 										index: 25
@@ -166,7 +166,7 @@ JSRoot {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/rest-parameter/object-shorthand-method/input.js"
 									end: Object {
 										column: 21
 										index: 21
@@ -181,7 +181,7 @@ JSRoot {
 								rest: JSBindingIdentifier {
 									name: "test"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/rest-parameter/object-shorthand-method/input.js"
 										identifierName: "test"
 										end: Object {
 											column: 20
@@ -198,7 +198,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/rest-parameter/object-shorthand-method/input.js"
 											end: Object {
 												column: 20
 												index: 20

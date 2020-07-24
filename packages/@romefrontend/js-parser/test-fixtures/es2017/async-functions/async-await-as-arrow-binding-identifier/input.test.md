@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/async-await-as-arrow-binding-identifier/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/async-await-as-arrow-binding-identifier/input.js"
 		end: Object {
 			column: 0
 			index: 18
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/async-await-as-arrow-binding-identifier/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/async-await-as-arrow-binding-identifier/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -64,7 +64,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/async-await-as-arrow-binding-identifier/input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -83,7 +83,7 @@ JSRoot {
 					rest: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/async-await-as-arrow-binding-identifier/input.js"
 						end: Object {
 							column: 14
 							index: 14
@@ -99,7 +99,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "await"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/async-await-as-arrow-binding-identifier/input.js"
 								identifierName: "await"
 								end: Object {
 									column: 11

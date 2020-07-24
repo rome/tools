@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/314/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/314/input.js"
 		end: Object {
 			column: 8
 			index: 32
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " Comment"
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/314/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -53,7 +53,7 @@ JSRoot {
 		JSBlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/314/input.js"
 				end: Object {
 					column: 8
 					index: 32
@@ -69,7 +69,7 @@ JSRoot {
 				JSThrowStatement {
 					trailingComments: Array ["0"]
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/314/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -85,7 +85,7 @@ JSRoot {
 						name: "error"
 						trailingComments: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/314/input.js"
 							identifierName: "error"
 							end: Object {
 								column: 13
@@ -103,7 +103,7 @@ JSRoot {
 				JSExpressionStatement {
 					leadingComments: Array ["0"]
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/314/input.js"
 						end: Object {
 							column: 6
 							index: 30
@@ -119,7 +119,7 @@ JSRoot {
 						name: "error"
 						leadingComments: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/314/input.js"
 							identifierName: "error"
 							end: Object {
 								column: 5

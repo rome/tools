@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/326/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/326/input.js"
 		end: Object {
 			column: 8
 			index: 8
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/326/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "/"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/326/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -64,7 +64,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "b"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/326/input.js"
 						identifierName: "b"
 						end: Object {
 							column: 8
@@ -80,7 +80,7 @@ JSRoot {
 				}
 				left: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/326/input.js"
 						end: Object {
 							column: 4
 							index: 4
@@ -95,7 +95,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/326/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 1
@@ -113,7 +113,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "in"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/326/input.js"
 								identifierName: "in"
 								end: Object {
 									column: 4
@@ -128,7 +128,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/326/input.js"
 							identifierName: "in"
 							end: Object {
 								column: 4

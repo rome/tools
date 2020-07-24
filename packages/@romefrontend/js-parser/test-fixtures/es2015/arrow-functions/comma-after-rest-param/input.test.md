@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/arrow-functions/comma-after-rest-param/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/arrow-functions/comma-after-rest-param/input.js"
 		end: Object {
 			column: 0
 			index: 17
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "The rest element has to be the last element when destructuring"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/arrow-functions/comma-after-rest-param/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/arrow-functions/comma-after-rest-param/input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/arrow-functions/comma-after-rest-param/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -88,7 +88,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/arrow-functions/comma-after-rest-param/input.js"
 						end: Object {
 							column: 16
 							index: 16
@@ -108,7 +108,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/arrow-functions/comma-after-rest-param/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -123,7 +123,7 @@ JSRoot {
 					rest: JSBindingIdentifier {
 						name: "rest"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/arrow-functions/comma-after-rest-param/input.js"
 							identifierName: "rest"
 							end: Object {
 								column: 8
@@ -148,7 +148,7 @@ JSRoot {
 
 ```
 
- input.js:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/arrow-functions/comma-after-rest-param/input.js:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The rest element has to be the last element when destructuring
 

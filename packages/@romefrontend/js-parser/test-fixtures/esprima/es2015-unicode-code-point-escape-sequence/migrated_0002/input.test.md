@@ -12,14 +12,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-unicode-code-point-escape-sequence/migrated_0002/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-unicode-code-point-escape-sequence/migrated_0002/input.js"
 		end: Object {
 			column: 0
 			index: 19
@@ -35,7 +35,7 @@ JSRoot {
 		JSDirective {
 			value: "\\\\u{00000000034}"
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-unicode-code-point-escape-sequence/migrated_0002/input.js"
 				end: Object {
 					column: 18
 					index: 18

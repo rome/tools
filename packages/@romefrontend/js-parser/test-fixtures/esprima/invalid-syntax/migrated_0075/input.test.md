@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0075/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0075/input.js"
 		end: Object {
 			column: 0
 			index: 18
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "setter should have exactly one param"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0075/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0075/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0075/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -91,7 +91,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "s"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/invalid-syntax/migrated_0075/input.js"
 									identifierName: "s"
 									end: Object {
 										column: 8
@@ -106,7 +106,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0075/input.js"
 								end: Object {
 									column: 8
 									index: 8
@@ -120,7 +120,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0075/input.js"
 							end: Object {
 								column: 14
 								index: 14
@@ -136,7 +136,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0075/input.js"
 								end: Object {
 									column: 14
 									index: 14
@@ -159,7 +159,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0075/input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -184,7 +184,7 @@ JSRoot {
 
 ```
 
- input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0075/input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ setter should have exactly one param
 

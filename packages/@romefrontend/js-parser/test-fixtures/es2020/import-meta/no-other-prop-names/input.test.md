@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/import-meta/no-other-prop-names/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/import-meta/no-other-prop-names/input.js"
 		end: Object {
 			column: 0
 			index: 16
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "The only valid meta property for import is import.meta"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2020/import-meta/no-other-prop-names/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/import-meta/no-other-prop-names/input.js"
 				end: Object {
 					column: 15
 					index: 15
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSMetaProperty {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/import-meta/no-other-prop-names/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -87,7 +87,7 @@ JSRoot {
 				meta: JSIdentifier {
 					name: "import"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/import-meta/no-other-prop-names/input.js"
 						identifierName: "import"
 						end: Object {
 							column: 6
@@ -104,7 +104,7 @@ JSRoot {
 				property: JSIdentifier {
 					name: "notMeta"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/import-meta/no-other-prop-names/input.js"
 						identifierName: "notMeta"
 						end: Object {
 							column: 14
@@ -128,7 +128,7 @@ JSRoot {
 
 ```
 
- input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2020/import-meta/no-other-prop-names/input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The only valid meta property for import is import.meta
 

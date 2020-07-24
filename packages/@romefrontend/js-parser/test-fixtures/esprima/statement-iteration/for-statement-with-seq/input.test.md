@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/statement-iteration/for-statement-with-seq/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/statement-iteration/for-statement-with-seq/input.js"
 		end: Object {
 			column: 0
 			index: 14
@@ -36,7 +36,7 @@ JSRoot {
 			test: undefined
 			update: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/statement-iteration/for-statement-with-seq/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -50,7 +50,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-iteration/for-statement-with-seq/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -65,7 +65,7 @@ JSRoot {
 			}
 			init: JSSequenceExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-iteration/for-statement-with-seq/input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -81,7 +81,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/statement-iteration/for-statement-with-seq/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 5
@@ -98,7 +98,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "b"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/statement-iteration/for-statement-with-seq/input.js"
 							identifierName: "b"
 							end: Object {
 								column: 7
@@ -115,7 +115,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "c"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/statement-iteration/for-statement-with-seq/input.js"
 							identifierName: "c"
 							end: Object {
 								column: 9

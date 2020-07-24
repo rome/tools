@@ -12,7 +12,7 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.tsx"
+	filename: "typescript/type-arguments/tsx/input.tsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
@@ -22,7 +22,7 @@ JSRoot {
 		"jsx"
 	]
 	loc: Object {
-		filename: "input.tsx"
+		filename: "typescript/type-arguments/tsx/input.tsx"
 		end: Object {
 			column: 0
 			index: 31
@@ -37,7 +37,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.tsx"
+				filename: "typescript/type-arguments/tsx/input.tsx"
 				end: Object {
 					column: 16
 					index: 16
@@ -53,7 +53,7 @@ JSRoot {
 				name: JSXReferenceIdentifier {
 					name: "C"
 					loc: Object {
-						filename: "input.tsx"
+						filename: "typescript/type-arguments/tsx/input.tsx"
 						end: Object {
 							column: 2
 							index: 2
@@ -70,7 +70,7 @@ JSRoot {
 				children: Array []
 				selfClosing: false
 				loc: Object {
-					filename: "input.tsx"
+					filename: "typescript/type-arguments/tsx/input.tsx"
 					end: Object {
 						column: 15
 						index: 15
@@ -84,7 +84,7 @@ JSRoot {
 				}
 				typeArguments: TSTypeParameterInstantiation {
 					loc: Object {
-						filename: "input.tsx"
+						filename: "typescript/type-arguments/tsx/input.tsx"
 						end: Object {
 							column: 10
 							index: 10
@@ -99,7 +99,7 @@ JSRoot {
 					params: Array [
 						TSNumberKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.tsx"
+								filename: "typescript/type-arguments/tsx/input.tsx"
 								end: Object {
 									column: 9
 									index: 9
@@ -118,7 +118,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.tsx"
+				filename: "typescript/type-arguments/tsx/input.tsx"
 				end: Object {
 					column: 13
 					index: 30
@@ -134,7 +134,7 @@ JSRoot {
 				name: JSXReferenceIdentifier {
 					name: "C"
 					loc: Object {
-						filename: "input.tsx"
+						filename: "typescript/type-arguments/tsx/input.tsx"
 						end: Object {
 							column: 2
 							index: 19
@@ -151,7 +151,7 @@ JSRoot {
 				children: Array []
 				selfClosing: true
 				loc: Object {
-					filename: "input.tsx"
+					filename: "typescript/type-arguments/tsx/input.tsx"
 					end: Object {
 						column: 12
 						index: 29
@@ -165,7 +165,7 @@ JSRoot {
 				}
 				typeArguments: TSTypeParameterInstantiation {
 					loc: Object {
-						filename: "input.tsx"
+						filename: "typescript/type-arguments/tsx/input.tsx"
 						end: Object {
 							column: 10
 							index: 27
@@ -180,7 +180,7 @@ JSRoot {
 					params: Array [
 						TSNumberKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.tsx"
+								filename: "typescript/type-arguments/tsx/input.tsx"
 								end: Object {
 									column: 9
 									index: 26

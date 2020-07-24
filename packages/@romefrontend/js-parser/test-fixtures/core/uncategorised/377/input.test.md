@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/377/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/377/input.js"
 		end: Object {
 			column: 5
 			index: 5
@@ -34,7 +34,7 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/377/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 					}
 					frame {
 						location: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/377/input.js"
 							end: Object {
 								column: 5
 								index: 5
@@ -78,7 +78,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/377/input.js"
 				end: Object {
 					column: 5
 					index: 5
@@ -93,7 +93,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "+"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/377/input.js"
 					end: Object {
 						column: 5
 						index: 5
@@ -108,7 +108,7 @@ JSRoot {
 				right: JSObjectExpression {
 					properties: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/377/input.js"
 						end: Object {
 							column: 5
 							index: 5
@@ -125,7 +125,7 @@ JSRoot {
 					value: 1
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/377/input.js"
 						end: Object {
 							column: 1
 							index: 1
@@ -148,7 +148,7 @@ JSRoot {
 
 ```
 
- input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/377/input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed object
 

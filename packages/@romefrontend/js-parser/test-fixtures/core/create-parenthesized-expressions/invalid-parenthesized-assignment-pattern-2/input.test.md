@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js"
 		end: Object {
 			column: 22
 			index: 22
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -64,7 +64,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "t"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js"
 						identifierName: "t"
 						end: Object {
 							column: 22
@@ -81,7 +81,7 @@ JSRoot {
 				left: JSAssignmentArrayPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js"
 						end: Object {
 							column: 18
 							index: 18
@@ -97,7 +97,7 @@ JSRoot {
 						JSAssignmentObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js"
 								end: Object {
 									column: 17
 									index: 17
@@ -115,7 +115,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "b"
 											loc: Object {
-												filename: "input.js"
+												filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js"
 												identifierName: "b"
 												end: Object {
 													column: 3
@@ -130,7 +130,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js"
 											end: Object {
 												column: 3
 												index: 3
@@ -146,7 +146,7 @@ JSRoot {
 									value: JSAssignmentArrayPattern {
 										rest: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js"
 											end: Object {
 												column: 16
 												index: 16
@@ -162,7 +162,7 @@ JSRoot {
 											JSAssignmentArrayPattern {
 												rest: undefined
 												loc: Object {
-													filename: "input.js"
+													filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js"
 													end: Object {
 														column: 14
 														index: 14
@@ -178,7 +178,7 @@ JSRoot {
 													JSAssignmentAssignmentPattern {
 														operator: "="
 														loc: Object {
-															filename: "input.js"
+															filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js"
 															end: Object {
 																column: 13
 																index: 13
@@ -193,7 +193,7 @@ JSRoot {
 														left: JSAssignmentIdentifier {
 															name: "a"
 															loc: Object {
-																filename: "input.js"
+																filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js"
 																identifierName: "a"
 																end: Object {
 																	column: 9
@@ -211,7 +211,7 @@ JSRoot {
 															value: 1
 															format: undefined
 															loc: Object {
-																filename: "input.js"
+																filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js"
 																end: Object {
 																	column: 13
 																	index: 13
@@ -230,7 +230,7 @@ JSRoot {
 										]
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js"
 										end: Object {
 											column: 16
 											index: 16

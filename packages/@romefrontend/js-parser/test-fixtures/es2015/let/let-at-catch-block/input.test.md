@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/let/let-at-catch-block/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/let/let-at-catch-block/input.js"
 		end: Object {
 			column: 1
 			index: 33
@@ -35,7 +35,7 @@ JSRoot {
 		JSTryStatement {
 			finalizer: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/let/let-at-catch-block/input.js"
 				end: Object {
 					column: 1
 					index: 33
@@ -51,7 +51,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/let/let-at-catch-block/input.js"
 					end: Object {
 						column: 6
 						index: 6
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			handler: JSCatchClause {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/let/let-at-catch-block/input.js"
 					end: Object {
 						column: 1
 						index: 33
@@ -81,7 +81,7 @@ JSRoot {
 				param: JSBindingIdentifier {
 					name: "err"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/let/let-at-catch-block/input.js"
 						identifierName: "err"
 						end: Object {
 							column: 17
@@ -98,7 +98,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/let/let-at-catch-block/input.js"
 						end: Object {
 							column: 1
 							index: 33
@@ -113,7 +113,7 @@ JSRoot {
 					body: Array [
 						JSVariableDeclarationStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/let/let-at-catch-block/input.js"
 								end: Object {
 									column: 10
 									index: 31
@@ -128,7 +128,7 @@ JSRoot {
 							declaration: JSVariableDeclaration {
 								kind: "let"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/let/let-at-catch-block/input.js"
 									end: Object {
 										column: 10
 										index: 31
@@ -145,7 +145,7 @@ JSRoot {
 										id: JSBindingIdentifier {
 											name: "let"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/let/let-at-catch-block/input.js"
 												identifierName: "let"
 												end: Object {
 													column: 9
@@ -161,7 +161,7 @@ JSRoot {
 										}
 										init: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/let/let-at-catch-block/input.js"
 											end: Object {
 												column: 9
 												index: 30

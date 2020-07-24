@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/function-sent/disabled-inside-generator/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/function-sent/disabled-inside-generator/input.js"
 		end: Object {
 			column: 0
 			index: 44
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/function-sent/disabled-inside-generator/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 13
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/function-sent/disabled-inside-generator/input.js"
 				end: Object {
 					column: 1
 					index: 43
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/function-sent/disabled-inside-generator/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/function-sent/disabled-inside-generator/input.js"
 					end: Object {
 						column: 1
 						index: 43
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSReturnStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/function-sent/disabled-inside-generator/input.js"
 							end: Object {
 								column: 23
 								index: 41
@@ -118,7 +118,7 @@ JSRoot {
 						}
 						argument: JSMetaProperty {
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/function-sent/disabled-inside-generator/input.js"
 								end: Object {
 									column: 22
 									index: 40
@@ -133,7 +133,7 @@ JSRoot {
 							meta: JSIdentifier {
 								name: "function"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/function-sent/disabled-inside-generator/input.js"
 									identifierName: "function"
 									end: Object {
 										column: 17
@@ -150,7 +150,7 @@ JSRoot {
 							property: JSIdentifier {
 								name: "sent"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/function-sent/disabled-inside-generator/input.js"
 									identifierName: "sent"
 									end: Object {
 										column: 22

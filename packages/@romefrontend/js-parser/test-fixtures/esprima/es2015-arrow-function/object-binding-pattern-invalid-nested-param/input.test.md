@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 		end: Object {
 			column: 0
 			index: 55
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Binding member expression"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 				end: Object {
 					column: 54
 					index: 54
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 					end: Object {
 						column: 53
 						index: 53
@@ -88,7 +88,7 @@ JSRoot {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 						end: Object {
 							column: 53
 							index: 53
@@ -108,7 +108,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 						end: Object {
 							column: 52
 							index: 52
@@ -124,7 +124,7 @@ JSRoot {
 						JSBindingArrayPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 								end: Object {
 									column: 49
 									index: 49
@@ -140,7 +140,7 @@ JSRoot {
 								JSBindingArrayPattern {
 									rest: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 										end: Object {
 											column: 48
 											index: 48
@@ -156,7 +156,7 @@ JSRoot {
 										JSBindingArrayPattern {
 											rest: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 												end: Object {
 													column: 47
 													index: 47
@@ -172,7 +172,7 @@ JSRoot {
 												JSBindingArrayPattern {
 													rest: undefined
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 														end: Object {
 															column: 46
 															index: 46
@@ -188,7 +188,7 @@ JSRoot {
 														JSBindingArrayPattern {
 															rest: undefined
 															loc: Object {
-																filename: "input.js"
+																filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 																end: Object {
 																	column: 45
 																	index: 45
@@ -204,7 +204,7 @@ JSRoot {
 																JSBindingArrayPattern {
 																	rest: undefined
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 																		end: Object {
 																			column: 44
 																			index: 44
@@ -220,7 +220,7 @@ JSRoot {
 																		JSBindingArrayPattern {
 																			rest: undefined
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 																				end: Object {
 																					column: 43
 																					index: 43
@@ -236,7 +236,7 @@ JSRoot {
 																				JSBindingArrayPattern {
 																					rest: undefined
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 																						end: Object {
 																							column: 42
 																							index: 42
@@ -252,7 +252,7 @@ JSRoot {
 																						JSBindingArrayPattern {
 																							rest: undefined
 																							loc: Object {
-																								filename: "input.js"
+																								filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 																								end: Object {
 																									column: 41
 																									index: 41
@@ -268,7 +268,7 @@ JSRoot {
 																								JSBindingArrayPattern {
 																									rest: undefined
 																									loc: Object {
-																										filename: "input.js"
+																										filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 																										end: Object {
 																											column: 40
 																											index: 40
@@ -284,7 +284,7 @@ JSRoot {
 																										JSBindingArrayPattern {
 																											rest: undefined
 																											loc: Object {
-																												filename: "input.js"
+																												filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 																												end: Object {
 																													column: 39
 																													index: 39
@@ -300,7 +300,7 @@ JSRoot {
 																												JSBindingArrayPattern {
 																													rest: undefined
 																													loc: Object {
-																														filename: "input.js"
+																														filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 																														end: Object {
 																															column: 38
 																															index: 38
@@ -316,7 +316,7 @@ JSRoot {
 																														JSBindingArrayPattern {
 																															rest: undefined
 																															loc: Object {
-																																filename: "input.js"
+																																filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 																																end: Object {
 																																	column: 37
 																																	index: 37
@@ -332,7 +332,7 @@ JSRoot {
 																																JSBindingArrayPattern {
 																																	rest: undefined
 																																	loc: Object {
-																																		filename: "input.js"
+																																		filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 																																		end: Object {
 																																			column: 36
 																																			index: 36
@@ -348,7 +348,7 @@ JSRoot {
 																																		JSBindingArrayPattern {
 																																			rest: undefined
 																																			loc: Object {
-																																				filename: "input.js"
+																																				filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 																																				end: Object {
 																																					column: 35
 																																					index: 35
@@ -364,7 +364,7 @@ JSRoot {
 																																				JSBindingArrayPattern {
 																																					rest: undefined
 																																					loc: Object {
-																																						filename: "input.js"
+																																						filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 																																						end: Object {
 																																							column: 34
 																																							index: 34
@@ -380,7 +380,7 @@ JSRoot {
 																																						JSBindingArrayPattern {
 																																							rest: undefined
 																																							loc: Object {
-																																								filename: "input.js"
+																																								filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 																																								end: Object {
 																																									column: 33
 																																									index: 33
@@ -396,7 +396,7 @@ JSRoot {
 																																								JSBindingArrayPattern {
 																																									rest: undefined
 																																									loc: Object {
-																																										filename: "input.js"
+																																										filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 																																										end: Object {
 																																											column: 32
 																																											index: 32
@@ -412,7 +412,7 @@ JSRoot {
 																																										JSBindingArrayPattern {
 																																											rest: undefined
 																																											loc: Object {
-																																												filename: "input.js"
+																																												filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 																																												end: Object {
 																																													column: 31
 																																													index: 31
@@ -428,7 +428,7 @@ JSRoot {
 																																												JSBindingArrayPattern {
 																																													rest: undefined
 																																													loc: Object {
-																																														filename: "input.js"
+																																														filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 																																														end: Object {
 																																															column: 30
 																																															index: 30
@@ -444,7 +444,7 @@ JSRoot {
 																																														JSBindingObjectPattern {
 																																															rest: undefined
 																																															loc: Object {
-																																																filename: "input.js"
+																																																filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 																																																end: Object {
 																																																	column: 29
 																																																	index: 29
@@ -462,7 +462,7 @@ JSRoot {
 																																																		value: JSIdentifier {
 																																																			name: "a"
 																																																			loc: Object {
-																																																				filename: "input.js"
+																																																				filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 																																																				identifierName: "a"
 																																																				end: Object {
 																																																					column: 23
@@ -477,7 +477,7 @@ JSRoot {
 																																																			}
 																																																		}
 																																																		loc: Object {
-																																																			filename: "input.js"
+																																																			filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 																																																			end: Object {
 																																																				column: 23
 																																																				index: 23
@@ -493,7 +493,7 @@ JSRoot {
 																																																	value: JSBindingIdentifier {
 																																																		name: "X"
 																																																		loc: Object {
-																																																			filename: "input.js"
+																																																			filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 																																																			end: Object {
 																																																				column: 28
 																																																				index: 28
@@ -507,7 +507,7 @@ JSRoot {
 																																																		}
 																																																	}
 																																																	loc: Object {
-																																																		filename: "input.js"
+																																																		filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 																																																		end: Object {
 																																																			column: 28
 																																																			index: 28
@@ -574,7 +574,7 @@ JSRoot {
 
 ```
 
- input.js:1:24 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js:1:24 parse/js ━━
 
   ✖ Binding member expression
 

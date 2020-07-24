@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/358/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/358/input.js"
 		end: Object {
 			column: 0
 			index: 21
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/358/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/358/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "await"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/358/input.js"
 								identifierName: "await"
 								end: Object {
 									column: 11
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/358/input.js"
 							end: Object {
 								column: 19
 								index: 19
@@ -96,7 +96,7 @@ JSRoot {
 						init: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/358/input.js"
 								end: Object {
 									column: 19
 									index: 19
@@ -111,7 +111,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/358/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 17

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/196/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/196/input.js"
 		end: Object {
 			column: 33
 			index: 33
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Range values reversed. Start char code is greater than end char code"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/196/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/196/input.js"
 				end: Object {
 					column: 33
 					index: 33
@@ -78,7 +78,7 @@ JSRoot {
 				sticky: false
 				unicode: true
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/196/input.js"
 					end: Object {
 						column: 33
 						index: 33
@@ -92,7 +92,7 @@ JSRoot {
 				}
 				expression: JSRegExpSubExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/196/input.js"
 						end: Object {
 							column: 30
 							index: 31
@@ -108,7 +108,7 @@ JSRoot {
 						JSRegExpCharSet {
 							invert: false
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/196/input.js"
 								end: Object {
 									column: 30
 									index: 30
@@ -124,7 +124,7 @@ JSRoot {
 								JSRegExpCharacter {
 									value: "\ud834"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/196/input.js"
 										end: Object {
 											column: 8
 											index: 8
@@ -139,7 +139,7 @@ JSRoot {
 								}
 								JSRegExpCharSetRange {
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/196/input.js"
 										end: Object {
 											column: 21
 											index: 21
@@ -154,7 +154,7 @@ JSRoot {
 									end: JSRegExpCharacter {
 										value: "\udf06"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/196/input.js"
 											end: Object {
 												column: 14
 												index: 14
@@ -170,7 +170,7 @@ JSRoot {
 									start: JSRegExpCharacter {
 										value: "\ud834"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/196/input.js"
 											end: Object {
 												column: 21
 												index: 21
@@ -187,7 +187,7 @@ JSRoot {
 								JSRegExpCharacter {
 									value: "\udf08"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/196/input.js"
 										end: Object {
 											column: 27
 											index: 27
@@ -202,7 +202,7 @@ JSRoot {
 								}
 								JSRegExpCharSetRange {
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/196/input.js"
 										end: Object {
 											column: 30
 											index: 30
@@ -217,7 +217,7 @@ JSRoot {
 									end: JSRegExpCharacter {
 										value: "z"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/196/input.js"
 											end: Object {
 												column: 30
 												index: 30
@@ -233,7 +233,7 @@ JSRoot {
 									start: JSRegExpCharacter {
 										value: "a"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/196/input.js"
 											end: Object {
 												column: 28
 												index: 28
@@ -261,7 +261,7 @@ JSRoot {
 
 ```
 
- input.js:1:8 parse/regex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/196/input.js:1:8 parse/regex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Range values reversed. Start char code is greater than end char code
 

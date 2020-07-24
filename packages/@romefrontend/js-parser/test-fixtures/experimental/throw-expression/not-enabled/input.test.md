@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/throw-expression/not-enabled/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/throw-expression/not-enabled/input.js"
 		end: Object {
 			column: 0
 			index: 36
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "test"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/throw-expression/not-enabled/input.js"
 					identifierName: "test"
 					end: Object {
 						column: 13
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/throw-expression/not-enabled/input.js"
 				end: Object {
 					column: 1
 					index: 35
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/throw-expression/not-enabled/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/throw-expression/not-enabled/input.js"
 					end: Object {
 						column: 1
 						index: 35
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/throw-expression/not-enabled/input.js"
 							end: Object {
 								column: 15
 								index: 33
@@ -118,7 +118,7 @@ JSRoot {
 						}
 						expression: JSSequenceExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/throw-expression/not-enabled/input.js"
 								end: Object {
 									column: 13
 									index: 31
@@ -135,7 +135,7 @@ JSRoot {
 									operator: "throw"
 									prefix: true
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/throw-expression/not-enabled/input.js"
 										end: Object {
 											column: 10
 											index: 28
@@ -151,7 +151,7 @@ JSRoot {
 										value: 1
 										format: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/throw-expression/not-enabled/input.js"
 											end: Object {
 												column: 10
 												index: 28
@@ -169,7 +169,7 @@ JSRoot {
 									value: 2
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/throw-expression/not-enabled/input.js"
 										end: Object {
 											column: 13
 											index: 31

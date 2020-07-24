@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 		end: Object {
 			column: 0
 			index: 43
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected {"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			declaration: undefined
 			exportKind: "value"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 				end: Object {
 					column: 42
 					index: 42
@@ -75,7 +75,7 @@ JSRoot {
 			specifiers: Array [
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -90,7 +90,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "async"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 							identifierName: "async"
 							end: Object {
 								column: 17
@@ -107,7 +107,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "async"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 							identifierName: "async"
 							end: Object {
 								column: 17
@@ -124,7 +124,7 @@ JSRoot {
 				}
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 						end: Object {
 							column: 26
 							index: 26
@@ -139,7 +139,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "function"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 							identifierName: "function"
 							end: Object {
 								column: 26
@@ -156,7 +156,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "function"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 							identifierName: "function"
 							end: Object {
 								column: 26
@@ -173,7 +173,7 @@ JSRoot {
 				}
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 						end: Object {
 							column: 28
 							index: 28
@@ -188,7 +188,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "y"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 							identifierName: "y"
 							end: Object {
 								column: 28
@@ -205,7 +205,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "y"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 							identifierName: "y"
 							end: Object {
 								column: 28
@@ -222,7 +222,7 @@ JSRoot {
 				}
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 						end: Object {
 							column: 29
 							index: 29
@@ -237,7 +237,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: ""
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 							identifierName: ""
 							end: Object {
 								column: 29
@@ -254,7 +254,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: ""
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 							identifierName: ""
 							end: Object {
 								column: 29
@@ -271,7 +271,7 @@ JSRoot {
 				}
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 						end: Object {
 							column: 30
 							index: 30
@@ -286,7 +286,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: ""
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 							identifierName: ""
 							end: Object {
 								column: 30
@@ -303,7 +303,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: ""
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 							identifierName: ""
 							end: Object {
 								column: 30
@@ -320,7 +320,7 @@ JSRoot {
 				}
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 						end: Object {
 							column: 32
 							index: 32
@@ -335,7 +335,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: ""
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 							identifierName: ""
 							end: Object {
 								column: 32
@@ -352,7 +352,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: ""
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 							identifierName: ""
 							end: Object {
 								column: 32
@@ -369,7 +369,7 @@ JSRoot {
 				}
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 						end: Object {
 							column: 38
 							index: 38
@@ -384,7 +384,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "await"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 							identifierName: "await"
 							end: Object {
 								column: 38
@@ -401,7 +401,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "await"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 							identifierName: "await"
 							end: Object {
 								column: 38
@@ -418,7 +418,7 @@ JSRoot {
 				}
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 						end: Object {
 							column: 40
 							index: 40
@@ -433,7 +433,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 							identifierName: "x"
 							end: Object {
 								column: 40
@@ -450,7 +450,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-export-async-function/input.js"
 							identifierName: "x"
 							end: Object {
 								column: 40
@@ -475,7 +475,7 @@ JSRoot {
 
 ```
 
- input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/invalid-escape-export-async-function/input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected {
 

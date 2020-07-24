@@ -11,7 +11,7 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.tsx"
+	filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
@@ -21,7 +21,7 @@ JSRoot {
 		"jsx"
 	]
 	loc: Object {
-		filename: "input.tsx"
+		filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 		end: Object {
 			column: 0
 			index: 69
@@ -42,7 +42,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ("}
 			}
 			location: Object {
-				filename: "input.tsx"
+				filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -61,7 +61,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.tsx"
+				filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 				end: Object {
 					column: 10
 					index: 66
@@ -76,7 +76,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.tsx"
+					filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 					end: Object {
 						column: 10
 						index: 66
@@ -93,7 +93,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "fn"
 							loc: Object {
-								filename: "input.tsx"
+								filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 								identifierName: "fn"
 								end: Object {
 									column: 8
@@ -108,7 +108,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.tsx"
+							filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 							end: Object {
 								column: 10
 								index: 66
@@ -123,7 +123,7 @@ JSRoot {
 						init: JSFunctionExpression {
 							id: undefined
 							loc: Object {
-								filename: "input.tsx"
+								filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 								end: Object {
 									column: 10
 									index: 66
@@ -144,7 +144,7 @@ JSRoot {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.tsx"
+									filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 									end: Object {
 										column: 24
 										index: 24
@@ -160,7 +160,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: ""
 										loc: Object {
-											filename: "input.tsx"
+											filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 											identifierName: ""
 											end: Object {
 												column: 22
@@ -177,7 +177,7 @@ JSRoot {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: "input.tsx"
+												filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 												end: Object {
 													column: 22
 													index: 22
@@ -194,7 +194,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: ""
 										loc: Object {
-											filename: "input.tsx"
+											filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 											identifierName: ""
 											end: Object {
 												column: 24
@@ -211,7 +211,7 @@ JSRoot {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: "input.tsx"
+												filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 												end: Object {
 													column: 24
 													index: 24
@@ -230,7 +230,7 @@ JSRoot {
 							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: "input.tsx"
+									filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 									end: Object {
 										column: 10
 										index: 66
@@ -245,7 +245,7 @@ JSRoot {
 								body: Array [
 									JSExpressionStatement {
 										loc: Object {
-											filename: "input.tsx"
+											filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 											end: Object {
 												column: 45
 												index: 45
@@ -260,7 +260,7 @@ JSRoot {
 										expression: JSReferenceIdentifier {
 											name: "INVALID_PLACEHOLDER"
 											loc: Object {
-												filename: "input.tsx"
+												filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 												end: Object {
 													column: 45
 													index: 45
@@ -276,7 +276,7 @@ JSRoot {
 									}
 									JSExpressionStatement {
 										loc: Object {
-											filename: "input.tsx"
+											filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 											end: Object {
 												column: 10
 												index: 66
@@ -292,7 +292,7 @@ JSRoot {
 											name: JSXIdentifier {
 												name: "number"
 												loc: Object {
-													filename: "input.tsx"
+													filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 													end: Object {
 														column: 52
 														index: 52
@@ -309,7 +309,7 @@ JSRoot {
 											selfClosing: false
 											typeArguments: undefined
 											loc: Object {
-												filename: "input.tsx"
+												filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 												end: Object {
 													column: 9
 													index: 65
@@ -325,7 +325,7 @@ JSRoot {
 												JSXText {
 													value: " "
 													loc: Object {
-														filename: "input.tsx"
+														filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 														end: Object {
 															column: 54
 															index: 54
@@ -340,7 +340,7 @@ JSRoot {
 												}
 												JSXExpressionContainer {
 													loc: Object {
-														filename: "input.tsx"
+														filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 														end: Object {
 															column: 9
 															index: 65
@@ -355,7 +355,7 @@ JSRoot {
 													expression: JSYieldExpression {
 														delegate: false
 														loc: Object {
-															filename: "input.tsx"
+															filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 															end: Object {
 																column: 9
 																index: 65
@@ -371,7 +371,7 @@ JSRoot {
 															value: 2
 															format: undefined
 															loc: Object {
-																filename: "input.tsx"
+																filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 																end: Object {
 																	column: 9
 																	index: 65
@@ -404,7 +404,7 @@ JSRoot {
 
 ```
 
- input.tsx:1:21 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/tsx/anonymous-function-generator-invalid/input.tsx:1:21 parse/js ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected (
 

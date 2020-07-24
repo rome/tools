@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js"
 		end: Object {
 			column: 0
 			index: 12
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Object pattern cannot contains methods"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js"
 				end: Object {
 					column: 11
 					index: 11
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -89,7 +89,7 @@ JSRoot {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -105,7 +105,7 @@ JSRoot {
 				left: JSAssignmentObjectPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js"
 						end: Object {
 							column: 8
 							index: 8
@@ -123,7 +123,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "X"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js"
 										end: Object {
 											column: 7
 											index: 7
@@ -137,7 +137,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js"
 									end: Object {
 										column: 7
 										index: 7
@@ -153,7 +153,7 @@ JSRoot {
 							value: JSAssignmentIdentifier {
 								name: "X"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js"
 									end: Object {
 										column: 7
 										index: 7
@@ -167,7 +167,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js"
 								end: Object {
 									column: 7
 									index: 7
@@ -192,7 +192,8 @@ JSRoot {
 
 ```
 
- input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js:1:2
+parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Object pattern cannot contains methods
 

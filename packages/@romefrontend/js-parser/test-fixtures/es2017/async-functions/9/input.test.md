@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/9/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/9/input.js"
 		end: Object {
 			column: 40
 			index: 40
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/9/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/9/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 12
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/9/input.js"
 				end: Object {
 					column: 40
 					index: 40
@@ -96,7 +96,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/9/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -112,7 +112,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "promise"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/9/input.js"
 							identifierName: "promise"
 							end: Object {
 								column: 20
@@ -129,7 +129,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/9/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -148,7 +148,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/9/input.js"
 					end: Object {
 						column: 40
 						index: 40
@@ -163,7 +163,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/9/input.js"
 							end: Object {
 								column: 29
 								index: 29
@@ -178,7 +178,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "await"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/9/input.js"
 								identifierName: "await"
 								end: Object {
 									column: 29
@@ -195,7 +195,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/9/input.js"
 							end: Object {
 								column: 38
 								index: 38
@@ -210,7 +210,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "promise"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/9/input.js"
 								identifierName: "promise"
 								end: Object {
 									column: 37
@@ -236,7 +236,7 @@ JSRoot {
 
 ```
 
- input.js:1:30 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/9/input.js:1:30 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

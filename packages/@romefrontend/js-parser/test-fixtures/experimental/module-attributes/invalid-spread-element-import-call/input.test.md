@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
 		end: Object {
 			column: 0
 			index: 29
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSImportCall {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -87,7 +87,7 @@ JSRoot {
 				argument: JSStringLiteral {
 					value: "./foo.json"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
 						end: Object {
 							column: 19
 							index: 19
@@ -104,7 +104,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -118,7 +118,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -133,7 +133,7 @@ JSRoot {
 				object: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
 						end: Object {
 							column: 24
 							index: 24
@@ -150,7 +150,7 @@ JSRoot {
 					value: JSReferenceIdentifier {
 						name: "INVALID_PLACEHOLDER"
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
 							end: Object {
 								column: 26
 								index: 26
@@ -164,7 +164,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
 						end: Object {
 							column: 26
 							index: 26
@@ -181,7 +181,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
 				end: Object {
 					column: 28
 					index: 28
@@ -196,7 +196,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
 					end: Object {
 						column: 27
 						index: 27
@@ -218,7 +218,7 @@ JSRoot {
 
 ```
 
- input.js:1:19 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/module-attributes/invalid-spread-element-import-call/input.js:1:19 parse/js ━━━━━━━━━━
 
   ✖ Trailing comma is disallowed inside import(...) arguments
 

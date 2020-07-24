@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 		end: Object {
 			column: 0
 			index: 33
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -90,7 +90,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "async"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 									identifierName: "async"
 									end: Object {
 										column: 13
@@ -105,7 +105,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 								end: Object {
 									column: 13
 									index: 13
@@ -121,7 +121,7 @@ JSRoot {
 						value: JSReferenceIdentifier {
 							name: "async"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 								identifierName: "async"
 								end: Object {
 									column: 13
@@ -136,7 +136,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 							end: Object {
 								column: 13
 								index: 13
@@ -154,7 +154,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -169,7 +169,7 @@ JSRoot {
 			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -184,7 +184,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 						identifierName: "x"
 						end: Object {
 							column: 15
@@ -203,7 +203,7 @@ JSRoot {
 		JSBlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 				end: Object {
 					column: 29
 					index: 29
@@ -218,7 +218,7 @@ JSRoot {
 			body: Array [
 				JSExpressionStatement {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 						end: Object {
 							column: 25
 							index: 25
@@ -233,7 +233,7 @@ JSRoot {
 					expression: JSReferenceIdentifier {
 						name: "await"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 							identifierName: "await"
 							end: Object {
 								column: 25
@@ -250,7 +250,7 @@ JSRoot {
 				}
 				JSExpressionStatement {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 						end: Object {
 							column: 27
 							index: 27
@@ -265,7 +265,7 @@ JSRoot {
 					expression: JSReferenceIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 							identifierName: "x"
 							end: Object {
 								column: 27
@@ -284,7 +284,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 				end: Object {
 					column: 31
 					index: 31
@@ -299,7 +299,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 					end: Object {
 						column: 31
 						index: 31
@@ -315,7 +315,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 				end: Object {
 					column: 32
 					index: 32
@@ -330,7 +330,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 					end: Object {
 						column: 32
 						index: 32
@@ -352,7 +352,7 @@ JSRoot {
 
 ```
 
- input.js:1:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/invalid-escape-async-obj-method/input.js:1:14 parse/js ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ,
 

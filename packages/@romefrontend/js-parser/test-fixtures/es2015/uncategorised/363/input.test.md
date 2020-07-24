@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/363/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/363/input.js"
 		end: Object {
 			column: 0
 			index: 27
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Can't use await outside of an async function"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/363/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/363/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 12
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/363/input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -91,7 +91,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/363/input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -113,7 +113,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/363/input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -129,7 +129,7 @@ JSRoot {
 					JSBindingObjectPattern {
 						rest: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/363/input.js"
 							end: Object {
 								column: 22
 								index: 22
@@ -145,7 +145,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/363/input.js"
 								end: Object {
 									column: 22
 									index: 22
@@ -164,7 +164,7 @@ JSRoot {
 									value: JSIdentifier {
 										name: "await"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/363/input.js"
 											identifierName: "await"
 											end: Object {
 												column: 20
@@ -179,7 +179,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/363/input.js"
 										end: Object {
 											column: 20
 											index: 20
@@ -195,7 +195,7 @@ JSRoot {
 								value: JSBindingIdentifier {
 									name: "await"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/363/input.js"
 										identifierName: "await"
 										end: Object {
 											column: 20
@@ -210,7 +210,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/363/input.js"
 									end: Object {
 										column: 20
 										index: 20
@@ -236,7 +236,7 @@ JSRoot {
 
 ```
 
- input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/363/input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Can't use await outside of an async function
 

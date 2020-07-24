@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 		end: Object {
 			column: 0
 			index: 24
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected {"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			importKind: undefined
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -75,7 +75,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: ""
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -90,7 +90,7 @@ JSRoot {
 			}
 			defaultSpecifier: JSImportDefaultSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -106,7 +106,7 @@ JSRoot {
 					name: JSBindingIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 10
@@ -122,7 +122,7 @@ JSRoot {
 					}
 					importKind: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -139,7 +139,7 @@ JSRoot {
 			namedSpecifiers: Array [
 				JSImportSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 						end: Object {
 							column: 16
 							index: 16
@@ -154,7 +154,7 @@ JSRoot {
 					imported: JSIdentifier {
 						name: "from"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 							identifierName: "from"
 							end: Object {
 								column: 16
@@ -172,7 +172,7 @@ JSRoot {
 						name: JSBindingIdentifier {
 							name: "from"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 								identifierName: "from"
 								end: Object {
 									column: 16
@@ -188,7 +188,7 @@ JSRoot {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 							end: Object {
 								column: 16
 								index: 16
@@ -204,7 +204,7 @@ JSRoot {
 				}
 				JSImportSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -219,7 +219,7 @@ JSRoot {
 					imported: JSIdentifier {
 						name: ""
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 							identifierName: ""
 							end: Object {
 								column: 22
@@ -237,7 +237,7 @@ JSRoot {
 						name: JSBindingIdentifier {
 							name: ""
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 								identifierName: ""
 								end: Object {
 									column: 22
@@ -253,7 +253,7 @@ JSRoot {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 							end: Object {
 								column: 22
 								index: 22
@@ -269,7 +269,7 @@ JSRoot {
 				}
 				JSImportSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 						end: Object {
 							column: 23
 							index: 23
@@ -284,7 +284,7 @@ JSRoot {
 					imported: JSIdentifier {
 						name: ""
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 							identifierName: ""
 							end: Object {
 								column: 23
@@ -302,7 +302,7 @@ JSRoot {
 						name: JSBindingIdentifier {
 							name: ""
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 								identifierName: ""
 								end: Object {
 									column: 23
@@ -318,7 +318,7 @@ JSRoot {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-specifiers/input.js"
 							end: Object {
 								column: 23
 								index: 23
@@ -342,7 +342,7 @@ JSRoot {
 
 ```
 
- input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-import-declaration/invalid-import-specifiers/input.js:1:12 parse/js ━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected {
 

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/import/import-star-as/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/import/import-star-as/input.ts"
 		end: Object {
 			column: 0
 			index: 24
@@ -37,7 +37,7 @@ JSRoot {
 			importKind: undefined
 			namedSpecifiers: Array []
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/import/import-star-as/input.ts"
 				end: Object {
 					column: 23
 					index: 23
@@ -52,7 +52,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "a"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/import/import-star-as/input.ts"
 					end: Object {
 						column: 22
 						index: 22
@@ -67,7 +67,7 @@ JSRoot {
 			}
 			namespaceSpecifier: JSImportNamespaceSpecifier {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/import/import-star-as/input.ts"
 					end: Object {
 						column: 13
 						index: 13
@@ -83,7 +83,7 @@ JSRoot {
 					name: JSBindingIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/import/import-star-as/input.ts"
 							identifierName: "a"
 							end: Object {
 								column: 13
@@ -99,7 +99,7 @@ JSRoot {
 					}
 					importKind: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/import/import-star-as/input.ts"
 						end: Object {
 							column: 13
 							index: 13

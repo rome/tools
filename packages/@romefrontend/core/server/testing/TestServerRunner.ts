@@ -231,12 +231,15 @@ export default class TestServerRunner {
 				};
 			});
 
-			const diagnostics = await this.request.requestWorkerUpdateInlineSnapshots(
+			const {diagnostics, file} = await this.request.requestWorkerUpdateInlineSnapshots(
 				path,
 				inlineSnapshotUpdates,
 				{},
 			);
 			this.printer.processor.addDiagnostics(diagnostics);
+			if (file !== undefined) {
+				this.request.queueSaveFile(path, file);
+			}
 		}
 	}
 
@@ -506,6 +509,8 @@ export default class TestServerRunner {
 		await Promise.all(callbacks.map((callback) => callback()));
 		runProgress.teardown();
 
+		// Finish up
+		await this.request.flushFiles();
 		this.throwPrinter();
 	}
 

@@ -10,14 +10,14 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "input.js"
+	filename: "es2015/uncategorised/290/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/290/input.js"
 		end: Object {
 			column: 27
 			index: 27
@@ -33,7 +33,7 @@ JSRoot {
 		JSDirective {
 			value: "use strict"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/290/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -56,7 +56,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Invalid escape sequence in template"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/290/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -75,7 +75,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/290/input.js"
 				end: Object {
 					column: 27
 					index: 27
@@ -89,7 +89,7 @@ JSRoot {
 			}
 			expression: JSTemplateLiteral {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/290/input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -105,7 +105,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "test"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/290/input.js"
 							identifierName: "test"
 							end: Object {
 								column: 21
@@ -126,7 +126,7 @@ JSRoot {
 						raw: ""
 						tail: false
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/290/input.js"
 							end: Object {
 								column: 15
 								index: 15
@@ -144,7 +144,7 @@ JSRoot {
 						raw: "\\02"
 						tail: true
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/290/input.js"
 							end: Object {
 								column: 25
 								index: 25
@@ -168,7 +168,7 @@ JSRoot {
 
 ```
 
- input.js:1:23 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/290/input.js:1:23 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid escape sequence in template
 

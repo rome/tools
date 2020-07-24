@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/interface/properties/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/interface/properties/input.ts"
 		end: Object {
 			column: 0
 			index: 54
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/properties/input.ts"
 					identifierName: "I"
 					end: Object {
 						column: 11
@@ -53,7 +53,7 @@ JSRoot {
 			extends: undefined
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/properties/input.ts"
 				end: Object {
 					column: 1
 					index: 53
@@ -67,7 +67,7 @@ JSRoot {
 			}
 			body: TSInterfaceBody {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/properties/input.ts"
 					end: Object {
 						column: 1
 						index: 53
@@ -85,7 +85,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/interface/properties/input.ts"
 									identifierName: "x"
 									end: Object {
 										column: 5
@@ -100,7 +100,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/properties/input.ts"
 								end: Object {
 									column: 5
 									index: 19
@@ -117,7 +117,7 @@ JSRoot {
 						readonly: false
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/interface/properties/input.ts"
 							end: Object {
 								column: 6
 								index: 20
@@ -135,7 +135,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "y"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/interface/properties/input.ts"
 									identifierName: "y"
 									end: Object {
 										column: 5
@@ -150,7 +150,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/properties/input.ts"
 								end: Object {
 									column: 5
 									index: 26
@@ -166,7 +166,7 @@ JSRoot {
 						optional: false
 						readonly: false
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/interface/properties/input.ts"
 							end: Object {
 								column: 14
 								index: 35
@@ -180,7 +180,7 @@ JSRoot {
 						}
 						typeAnnotation: TSNumberKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/properties/input.ts"
 								end: Object {
 									column: 13
 									index: 34
@@ -199,7 +199,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "z"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/interface/properties/input.ts"
 									identifierName: "z"
 									end: Object {
 										column: 5
@@ -214,7 +214,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/properties/input.ts"
 								end: Object {
 									column: 5
 									index: 41
@@ -230,7 +230,7 @@ JSRoot {
 						optional: true
 						readonly: false
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/interface/properties/input.ts"
 							end: Object {
 								column: 15
 								index: 51
@@ -244,7 +244,7 @@ JSRoot {
 						}
 						typeAnnotation: TSNumberKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/properties/input.ts"
 								end: Object {
 									column: 14
 									index: 50

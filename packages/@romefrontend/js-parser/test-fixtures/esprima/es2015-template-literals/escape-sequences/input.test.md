@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-template-literals/escape-sequences/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-template-literals/escape-sequences/input.js"
 		end: Object {
 			column: 0
 			index: 31
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-template-literals/escape-sequences/input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSTemplateLiteral {
 				expressions: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-template-literals/escape-sequences/input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -67,7 +67,7 @@ JSRoot {
 						raw: "\\\\n\\\\r\\\\b\\\\v\\\\t\\\\f\\\\\\n\\\\\\r\\n"
 						tail: true
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-template-literals/escape-sequences/input.js"
 							end: Object {
 								column: 29
 								index: 29

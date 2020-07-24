@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/optional-chaining/separated-chaining/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/optional-chaining/separated-chaining/input.js"
 		end: Object {
 			column: 0
 			index: 28
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/separated-chaining/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/separated-chaining/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -64,7 +64,7 @@ JSRoot {
 					value: JSIdentifier {
 						name: "f"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/separated-chaining/input.js"
 							identifierName: "f"
 							end: Object {
 								column: 13
@@ -80,7 +80,7 @@ JSRoot {
 					}
 					optional: true
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/separated-chaining/input.js"
 						identifierName: "f"
 						end: Object {
 							column: 13
@@ -96,7 +96,7 @@ JSRoot {
 				}
 				object: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/separated-chaining/input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -112,7 +112,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "e"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/separated-chaining/input.js"
 								identifierName: "e"
 								end: Object {
 									column: 10
@@ -127,7 +127,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/separated-chaining/input.js"
 							identifierName: "e"
 							end: Object {
 								column: 10
@@ -143,7 +143,7 @@ JSRoot {
 					}
 					object: JSMemberExpression {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/separated-chaining/input.js"
 							end: Object {
 								column: 8
 								index: 8
@@ -159,7 +159,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "d"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/optional-chaining/separated-chaining/input.js"
 									identifierName: "d"
 									end: Object {
 										column: 8
@@ -174,7 +174,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/separated-chaining/input.js"
 								identifierName: "d"
 								end: Object {
 									column: 8
@@ -190,7 +190,7 @@ JSRoot {
 						}
 						object: JSMemberExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/separated-chaining/input.js"
 								end: Object {
 									column: 6
 									index: 6
@@ -206,7 +206,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "c"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2020/optional-chaining/separated-chaining/input.js"
 										identifierName: "c"
 										end: Object {
 											column: 6
@@ -221,7 +221,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/optional-chaining/separated-chaining/input.js"
 									identifierName: "c"
 									end: Object {
 										column: 6
@@ -237,7 +237,7 @@ JSRoot {
 							}
 							object: JSMemberExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/optional-chaining/separated-chaining/input.js"
 									end: Object {
 										column: 4
 										index: 4
@@ -252,7 +252,7 @@ JSRoot {
 								object: JSReferenceIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2020/optional-chaining/separated-chaining/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 1
@@ -270,7 +270,7 @@ JSRoot {
 									value: JSIdentifier {
 										name: "b"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2020/optional-chaining/separated-chaining/input.js"
 											identifierName: "b"
 											end: Object {
 												column: 4
@@ -286,7 +286,7 @@ JSRoot {
 									}
 									optional: true
 									loc: Object {
-										filename: "input.js"
+										filename: "es2020/optional-chaining/separated-chaining/input.js"
 										identifierName: "b"
 										end: Object {
 											column: 4
@@ -308,7 +308,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/separated-chaining/input.js"
 				end: Object {
 					column: 12
 					index: 27
@@ -322,7 +322,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/separated-chaining/input.js"
 					end: Object {
 						column: 12
 						index: 27
@@ -338,7 +338,7 @@ JSRoot {
 					value: JSIdentifier {
 						name: "f"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/separated-chaining/input.js"
 							identifierName: "f"
 							end: Object {
 								column: 12
@@ -353,7 +353,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/separated-chaining/input.js"
 						identifierName: "f"
 						end: Object {
 							column: 12
@@ -369,7 +369,7 @@ JSRoot {
 				}
 				object: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/separated-chaining/input.js"
 						end: Object {
 							column: 10
 							index: 25
@@ -385,7 +385,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "e"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/separated-chaining/input.js"
 								identifierName: "e"
 								end: Object {
 									column: 10
@@ -400,7 +400,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/separated-chaining/input.js"
 							identifierName: "e"
 							end: Object {
 								column: 10
@@ -416,7 +416,7 @@ JSRoot {
 					}
 					object: JSMemberExpression {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/separated-chaining/input.js"
 							end: Object {
 								column: 8
 								index: 23
@@ -432,7 +432,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "d"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/optional-chaining/separated-chaining/input.js"
 									identifierName: "d"
 									end: Object {
 										column: 8
@@ -448,7 +448,7 @@ JSRoot {
 							}
 							optional: true
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/separated-chaining/input.js"
 								identifierName: "d"
 								end: Object {
 									column: 8
@@ -464,7 +464,7 @@ JSRoot {
 						}
 						object: JSMemberExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/separated-chaining/input.js"
 								end: Object {
 									column: 5
 									index: 20
@@ -480,7 +480,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "c"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2020/optional-chaining/separated-chaining/input.js"
 										identifierName: "c"
 										end: Object {
 											column: 5
@@ -495,7 +495,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/optional-chaining/separated-chaining/input.js"
 									identifierName: "c"
 									end: Object {
 										column: 5
@@ -511,7 +511,7 @@ JSRoot {
 							}
 							object: JSMemberExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/optional-chaining/separated-chaining/input.js"
 									end: Object {
 										column: 3
 										index: 18
@@ -526,7 +526,7 @@ JSRoot {
 								object: JSReferenceIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2020/optional-chaining/separated-chaining/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 1
@@ -544,7 +544,7 @@ JSRoot {
 									value: JSIdentifier {
 										name: "b"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2020/optional-chaining/separated-chaining/input.js"
 											identifierName: "b"
 											end: Object {
 												column: 3
@@ -559,7 +559,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2020/optional-chaining/separated-chaining/input.js"
 										identifierName: "b"
 										end: Object {
 											column: 3

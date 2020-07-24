@@ -58,7 +58,7 @@ export default createLocalCommand({
 
 			switch (type) {
 				case "executeCode": {
-					const {syntaxError} = await executeMain({
+					const {syntaxError, exitCode} = await executeMain({
 						// Remove the first argument which will be the file path
 						args: data.get("args").asMappedArray((item) => item.asString()),
 						path: createAbsoluteFilePath(data.get("filename").asString()),
@@ -67,6 +67,13 @@ export default createLocalCommand({
 					});
 					if (syntaxError !== undefined) {
 						throw createSingleDiagnosticError(syntaxError);
+					}
+					if (exitCode !== undefined) {
+						return {
+							type: "EXIT",
+							code: exitCode,
+							markers: [],
+						};
 					}
 					break;
 				}

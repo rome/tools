@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/categorized/label-kind-switch/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/categorized/label-kind-switch/input.js"
 		end: Object {
 			column: 1
 			index: 25
@@ -35,7 +35,7 @@ JSRoot {
 		JSBlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/label-kind-switch/input.js"
 				end: Object {
 					column: 1
 					index: 25
@@ -50,7 +50,7 @@ JSRoot {
 			body: Array [
 				JSLabeledStatement {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/label-kind-switch/input.js"
 						end: Object {
 							column: 3
 							index: 23
@@ -65,7 +65,7 @@ JSRoot {
 					label: JSIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/label-kind-switch/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 3
@@ -82,7 +82,7 @@ JSRoot {
 					body: JSSwitchStatement {
 						cases: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/label-kind-switch/input.js"
 							end: Object {
 								column: 3
 								index: 23
@@ -97,7 +97,7 @@ JSRoot {
 						discriminant: JSReferenceIdentifier {
 							name: "i"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/label-kind-switch/input.js"
 								identifierName: "i"
 								end: Object {
 									column: 14

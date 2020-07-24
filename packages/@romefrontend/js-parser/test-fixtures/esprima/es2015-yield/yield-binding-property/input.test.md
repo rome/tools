@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-yield/yield-binding-property/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/yield-binding-property/input.js"
 		end: Object {
 			column: 0
 			index: 24
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/yield-binding-property/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-binding-property/input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/yield-binding-property/input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -84,7 +84,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "yield"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-yield/yield-binding-property/input.js"
 												identifierName: "yield"
 												end: Object {
 													column: 11
@@ -99,7 +99,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-yield/yield-binding-property/input.js"
 											end: Object {
 												column: 11
 												index: 11
@@ -115,7 +115,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-yield/yield-binding-property/input.js"
 											identifierName: "x"
 											end: Object {
 												column: 14
@@ -130,7 +130,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-yield/yield-binding-property/input.js"
 										end: Object {
 											column: 14
 											index: 14
@@ -146,7 +146,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-yield/yield-binding-property/input.js"
 							end: Object {
 								column: 22
 								index: 22
@@ -161,7 +161,7 @@ JSRoot {
 						init: JSReferenceIdentifier {
 							name: "foo"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/yield-binding-property/input.js"
 								identifierName: "foo"
 								end: Object {
 									column: 22

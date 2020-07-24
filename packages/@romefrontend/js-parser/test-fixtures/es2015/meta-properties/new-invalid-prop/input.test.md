@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/meta-properties/new-invalid-prop/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/meta-properties/new-invalid-prop/input.js"
 		end: Object {
 			column: 1
 			index: 27
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "The only valid meta property for new is new.target"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/meta-properties/new-invalid-prop/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/meta-properties/new-invalid-prop/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/meta-properties/new-invalid-prop/input.js"
 				end: Object {
 					column: 1
 					index: 27
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/meta-properties/new-invalid-prop/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/meta-properties/new-invalid-prop/input.js"
 					end: Object {
 						column: 1
 						index: 27
@@ -128,7 +128,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/meta-properties/new-invalid-prop/input.js"
 							end: Object {
 								column: 10
 								index: 25
@@ -142,7 +142,7 @@ JSRoot {
 						}
 						expression: JSMetaProperty {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/meta-properties/new-invalid-prop/input.js"
 								end: Object {
 									column: 10
 									index: 25
@@ -157,7 +157,7 @@ JSRoot {
 							meta: JSIdentifier {
 								name: "new"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/meta-properties/new-invalid-prop/input.js"
 									identifierName: "new"
 									end: Object {
 										column: 5
@@ -174,7 +174,7 @@ JSRoot {
 							property: JSIdentifier {
 								name: "prop"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/meta-properties/new-invalid-prop/input.js"
 									identifierName: "prop"
 									end: Object {
 										column: 10
@@ -201,7 +201,7 @@ JSRoot {
 
 ```
 
- input.js:2:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/meta-properties/new-invalid-prop/input.js:2:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The only valid meta property for new is new.target
 

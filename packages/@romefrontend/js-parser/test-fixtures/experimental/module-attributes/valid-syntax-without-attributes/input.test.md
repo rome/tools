@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/module-attributes/valid-syntax-without-attributes/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/module-attributes/valid-syntax-without-attributes/input.js"
 		end: Object {
 			column: 0
 			index: 28
@@ -37,7 +37,7 @@ JSRoot {
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/valid-syntax-without-attributes/input.js"
 				end: Object {
 					column: 27
 					index: 27
@@ -52,7 +52,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "foo.json"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/valid-syntax-without-attributes/input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -67,7 +67,7 @@ JSRoot {
 			}
 			defaultSpecifier: JSImportDefaultSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/valid-syntax-without-attributes/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -83,7 +83,7 @@ JSRoot {
 					name: JSBindingIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/module-attributes/valid-syntax-without-attributes/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 10
@@ -99,7 +99,7 @@ JSRoot {
 					}
 					importKind: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/module-attributes/valid-syntax-without-attributes/input.js"
 						end: Object {
 							column: 10
 							index: 10

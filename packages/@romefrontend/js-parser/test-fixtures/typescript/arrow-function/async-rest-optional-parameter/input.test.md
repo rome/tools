@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 		end: Object {
 			column: 0
 			index: 35
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 				end: Object {
 					column: 34
 					index: 34
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 					end: Object {
 						column: 34
 						index: 34
@@ -64,7 +64,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 						end: Object {
 							column: 34
 							index: 34
@@ -83,7 +83,7 @@ JSRoot {
 					params: Array []
 					thisType: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 						end: Object {
 							column: 31
 							index: 31
@@ -97,7 +97,7 @@ JSRoot {
 					}
 					returnType: TSAnyKeywordTypeAnnotation {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 							end: Object {
 								column: 28
 								index: 28
@@ -113,7 +113,7 @@ JSRoot {
 					rest: JSBindingIdentifier {
 						name: "args"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 							end: Object {
 								column: 31
 								index: 31
@@ -128,7 +128,7 @@ JSRoot {
 						meta: JSPatternMeta {
 							optional: true
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 								end: Object {
 									column: 31
 									index: 31
@@ -142,7 +142,7 @@ JSRoot {
 							}
 							typeAnnotation: TSArrayType {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 									end: Object {
 										column: 21
 										index: 21
@@ -156,7 +156,7 @@ JSRoot {
 								}
 								elementType: TSAnyKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 										end: Object {
 											column: 19
 											index: 19

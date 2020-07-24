@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/errors/unclosed-tag/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/errors/unclosed-tag/input.jsx"
 		end: Object {
 			column: 0
 			index: 9
@@ -34,7 +34,7 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/unclosed-tag/input.jsx"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 					}
 					frame {
 						location: Object {
-							filename: "input.jsx"
+							filename: "jsx/errors/unclosed-tag/input.jsx"
 							end: Object {
 								column: 4
 								index: 4
@@ -78,7 +78,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/unclosed-tag/input.jsx"
 				end: Object {
 					column: 5
 					index: 5
@@ -94,7 +94,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "foo"
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/errors/unclosed-tag/input.jsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -112,7 +112,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/errors/unclosed-tag/input.jsx"
 					end: Object {
 						column: 5
 						index: 5
@@ -134,7 +134,7 @@ JSRoot {
 
 ```
 
- input.jsx:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ jsx/errors/unclosed-tag/input.jsx:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed JSX element
 

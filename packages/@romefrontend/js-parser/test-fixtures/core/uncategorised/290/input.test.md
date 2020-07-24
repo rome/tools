@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/290/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/290/input.js"
 		end: Object {
 			column: 30
 			index: 30
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "hello"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/290/input.js"
 					identifierName: "hello"
 					end: Object {
 						column: 14
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/290/input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -72,7 +72,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/290/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -88,7 +88,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/290/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 16
@@ -105,7 +105,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/290/input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -124,7 +124,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/290/input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -139,7 +139,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/290/input.js"
 							end: Object {
 								column: 28
 								index: 28
@@ -154,7 +154,7 @@ JSRoot {
 						expression: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/290/input.js"
 								end: Object {
 									column: 27
 									index: 27
@@ -169,7 +169,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "sayHi"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/290/input.js"
 									identifierName: "sayHi"
 									end: Object {
 										column: 25

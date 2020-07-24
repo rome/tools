@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-identifier/math_dal_part/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-identifier/math_dal_part/input.js"
 		end: Object {
 			column: 0
 			index: 8
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-identifier/math_dal_part/input.js"
 				end: Object {
 					column: 7
 					index: 7
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-identifier/math_dal_part/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "_\u{1ee03}"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-identifier/math_dal_part/input.js"
 								identifierName: "_\u{1ee03}"
 								end: Object {
 									column: 7
@@ -82,7 +82,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-identifier/math_dal_part/input.js"
 							end: Object {
 								column: 7
 								index: 7

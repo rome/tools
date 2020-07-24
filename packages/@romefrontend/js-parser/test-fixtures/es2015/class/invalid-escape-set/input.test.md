@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/class/invalid-escape-set/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/class/invalid-escape-set/input.js"
 		end: Object {
 			column: 0
 			index: 33
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "set can't contain a unicode escape"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/class/invalid-escape-set/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "X"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class/invalid-escape-set/input.js"
 					identifierName: "X"
 					end: Object {
 						column: 7
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/class/invalid-escape-set/input.js"
 				end: Object {
 					column: 32
 					index: 32
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class/invalid-escape-set/input.js"
 					end: Object {
 						column: 32
 						index: 32
@@ -112,7 +112,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class/invalid-escape-set/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 20
@@ -127,7 +127,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class/invalid-escape-set/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -141,7 +141,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class/invalid-escape-set/input.js"
 							end: Object {
 								column: 30
 								index: 30
@@ -157,7 +157,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class/invalid-escape-set/input.js"
 								end: Object {
 									column: 30
 									index: 30
@@ -183,7 +183,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class/invalid-escape-set/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -205,7 +205,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class/invalid-escape-set/input.js"
 								end: Object {
 									column: 27
 									index: 27
@@ -221,7 +221,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "value"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/class/invalid-escape-set/input.js"
 										identifierName: "value"
 										end: Object {
 											column: 26
@@ -238,7 +238,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/class/invalid-escape-set/input.js"
 											end: Object {
 												column: 26
 												index: 26
@@ -266,7 +266,7 @@ JSRoot {
 
 ```
 
- input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/class/invalid-escape-set/input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ set can't contain a unicode escape
 

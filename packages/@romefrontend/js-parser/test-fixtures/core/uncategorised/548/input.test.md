@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/548/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/548/input.js"
 		end: Object {
 			column: 0
 			index: 29
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "arguments is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/548/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/548/input.js"
 				end: Object {
 					column: 28
 					index: 28
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/548/input.js"
 					end: Object {
 						column: 28
 						index: 28
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/548/input.js"
 								end: Object {
 									column: 19
 									index: 19
@@ -108,7 +108,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "arguments"
 											loc: Object {
-												filename: "input.js"
+												filename: "core/uncategorised/548/input.js"
 												identifierName: "arguments"
 												end: Object {
 													column: 17
@@ -123,7 +123,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "core/uncategorised/548/input.js"
 											end: Object {
 												column: 17
 												index: 17
@@ -139,7 +139,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "arguments"
 										loc: Object {
-											filename: "input.js"
+											filename: "core/uncategorised/548/input.js"
 											identifierName: "arguments"
 											end: Object {
 												column: 17
@@ -154,7 +154,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "core/uncategorised/548/input.js"
 										end: Object {
 											column: 17
 											index: 17
@@ -170,7 +170,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/548/input.js"
 							end: Object {
 								column: 27
 								index: 27
@@ -185,7 +185,7 @@ JSRoot {
 						init: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/548/input.js"
 								end: Object {
 									column: 27
 									index: 27
@@ -200,7 +200,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/548/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 25
@@ -227,7 +227,7 @@ JSRoot {
 
 ```
 
- input.js:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/548/input.js:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ arguments is a reserved word
 

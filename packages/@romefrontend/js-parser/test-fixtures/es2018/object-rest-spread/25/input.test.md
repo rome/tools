@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2018/object-rest-spread/25/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2018/object-rest-spread/25/input.js"
 		end: Object {
 			column: 0
 			index: 17
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2018/object-rest-spread/25/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2018/object-rest-spread/25/input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/object-rest-spread/25/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -89,7 +89,7 @@ JSRoot {
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/25/input.js"
 								end: Object {
 									column: 11
 									index: 11
@@ -104,7 +104,7 @@ JSRoot {
 							rest: JSBindingIdentifier {
 								name: ""
 								loc: Object {
-									filename: "input.js"
+									filename: "es2018/object-rest-spread/25/input.js"
 									identifierName: ""
 									end: Object {
 										column: 9
@@ -124,7 +124,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: ""
 											loc: Object {
-												filename: "input.js"
+												filename: "es2018/object-rest-spread/25/input.js"
 												identifierName: ""
 												end: Object {
 													column: 10
@@ -139,7 +139,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2018/object-rest-spread/25/input.js"
 											end: Object {
 												column: 10
 												index: 10
@@ -155,7 +155,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: ""
 										loc: Object {
-											filename: "input.js"
+											filename: "es2018/object-rest-spread/25/input.js"
 											identifierName: ""
 											end: Object {
 												column: 10
@@ -170,7 +170,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2018/object-rest-spread/25/input.js"
 										end: Object {
 											column: 10
 											index: 10
@@ -186,7 +186,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2018/object-rest-spread/25/input.js"
 							end: Object {
 								column: 16
 								index: 16
@@ -201,7 +201,7 @@ JSRoot {
 						init: JSObjectExpression {
 							properties: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/25/input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -226,7 +226,7 @@ JSRoot {
 
 ```
 
- input.js:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2018/object-rest-spread/25/input.js:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
 

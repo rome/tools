@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
 		end: Object {
 			column: 0
 			index: 16
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
 				end: Object {
 					column: 15
 					index: 15
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -112,7 +112,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: ""
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
 									identifierName: ""
 									end: Object {
 										column: 15
@@ -127,7 +127,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -142,7 +142,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
 							end: Object {
 								column: 15
 								index: 15
@@ -164,7 +164,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -190,7 +190,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -215,7 +215,7 @@ JSRoot {
 
 ```
 
- input.js:1:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-generator/malformed-generator-method-2/input.js:1:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
 

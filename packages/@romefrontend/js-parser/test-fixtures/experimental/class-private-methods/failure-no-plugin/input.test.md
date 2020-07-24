@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-methods/failure-no-plugin/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-methods/failure-no-plugin/input.js"
 		end: Object {
 			column: 0
 			index: 34
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-methods/failure-no-plugin/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-methods/failure-no-plugin/input.js"
 				end: Object {
 					column: 1
 					index: 33
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-methods/failure-no-plugin/input.js"
 					end: Object {
 						column: 1
 						index: 33
@@ -87,7 +87,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "p"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-methods/failure-no-plugin/input.js"
 									identifierName: "p"
 									end: Object {
 										column: 4
@@ -102,7 +102,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/failure-no-plugin/input.js"
 								end: Object {
 									column: 4
 									index: 16
@@ -118,7 +118,7 @@ JSRoot {
 						value: JSReferenceIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/failure-no-plugin/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 8
@@ -134,7 +134,7 @@ JSRoot {
 						}
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-methods/failure-no-plugin/input.js"
 							end: Object {
 								column: 8
 								index: 20
@@ -159,7 +159,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/failure-no-plugin/input.js"
 								end: Object {
 									column: 4
 									index: 16
@@ -179,7 +179,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "m"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-methods/failure-no-plugin/input.js"
 									identifierName: "m"
 									end: Object {
 										column: 4
@@ -194,7 +194,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/failure-no-plugin/input.js"
 								end: Object {
 									column: 4
 									index: 25
@@ -208,7 +208,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-methods/failure-no-plugin/input.js"
 							end: Object {
 								column: 10
 								index: 31
@@ -224,7 +224,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/failure-no-plugin/input.js"
 								end: Object {
 									column: 10
 									index: 31
@@ -247,7 +247,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/failure-no-plugin/input.js"
 								end: Object {
 									column: 7
 									index: 28
@@ -273,7 +273,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/failure-no-plugin/input.js"
 								end: Object {
 									column: 4
 									index: 25

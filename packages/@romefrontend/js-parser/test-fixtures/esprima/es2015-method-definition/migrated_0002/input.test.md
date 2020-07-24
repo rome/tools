@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-method-definition/migrated_0002/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-method-definition/migrated_0002/input.js"
 		end: Object {
 			column: 0
 			index: 23
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-method-definition/migrated_0002/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-method-definition/migrated_0002/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -64,7 +64,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-method-definition/migrated_0002/input.js"
 						identifierName: "x"
 						end: Object {
 							column: 1
@@ -80,7 +80,7 @@ JSRoot {
 				}
 				right: JSObjectExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-method-definition/migrated_0002/input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -99,7 +99,7 @@ JSRoot {
 								value: JSStringLiteral {
 									value: "method"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-method-definition/migrated_0002/input.js"
 										end: Object {
 											column: 14
 											index: 14
@@ -113,7 +113,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-method-definition/migrated_0002/input.js"
 									end: Object {
 										column: 14
 										index: 14
@@ -127,7 +127,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-method-definition/migrated_0002/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -143,7 +143,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-method-definition/migrated_0002/input.js"
 									end: Object {
 										column: 20
 										index: 20
@@ -166,7 +166,7 @@ JSRoot {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-method-definition/migrated_0002/input.js"
 									end: Object {
 										column: 16
 										index: 16
