@@ -98,7 +98,25 @@
 	align-items: center;
 	justify-content: center;
 
-	svg {
+	&.mobile-handle-toc, &.mobile-handle-nav{
+		&.active{
+			.icon{
+				display: none;
+			}
+		}
+	}
+
+	.close{
+		display: none;
+	}
+
+	&.active {
+		.close{
+			display: inline !important;
+		}
+	}
+
+	.icon {
 		height: 24px;
 		width: 24px;
 	}

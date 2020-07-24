@@ -155,6 +155,7 @@ function toggleMobileNav(event) {
 	}
 
 	event.preventDefault();
+	elements.mobileHandleNav.classList.toggle("active");
 	elements.sidebarNav.classList.toggle("visible");
 	document.body.classList.toggle("no-scroll");
 }
@@ -170,6 +171,7 @@ function toggleMobileTOC(event) {
 	}
 
 	event.preventDefault();
+	elements.mobileHandleTOC.classList.toggle("active");
 	elements.sidebarTOC.classList.toggle("visible");
 	document.body.classList.toggle("no-scroll");
 	toc.highlight();
