@@ -12,12 +12,12 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSAssignmentExpression = NodeBaseWithComments & {
+export interface JSAssignmentExpression extends NodeBaseWithComments {
 	type: "JSAssignmentExpression";
 	operator: AssignmentOperator;
 	left: AnyJSAssignmentPattern;
 	right: AnyJSExpression;
-};
+}
 
 export type AssignmentOperator =
 	| "="

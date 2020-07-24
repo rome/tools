@@ -21,7 +21,7 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSXElement = NodeBaseWithComments & {
+export interface JSXElement extends NodeBaseWithComments {
 	type: "JSXElement";
 	name:
 		| JSXReferenceIdentifier
@@ -34,7 +34,7 @@ export type JSXElement = NodeBaseWithComments & {
 	children: Array<
 		JSXText | JSXExpressionContainer | JSXSpreadChild | JSXElement | JSXFragment
 	>;
-};
+}
 
 export const jsxElement = createBuilder<JSXElement>(
 	"JSXElement",

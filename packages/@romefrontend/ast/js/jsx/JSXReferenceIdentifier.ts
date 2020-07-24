@@ -8,10 +8,10 @@
 import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSXReferenceIdentifier = NodeBaseWithComments & {
+export interface JSXReferenceIdentifier extends NodeBaseWithComments {
 	type: "JSXReferenceIdentifier";
 	name: string;
-};
+}
 
 export const jsxReferenceIdentifier = createBuilder<JSXReferenceIdentifier>(
 	"JSXReferenceIdentifier",

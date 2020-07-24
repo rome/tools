@@ -1,10 +1,10 @@
 import {NodeBaseWithComments} from "../../index";
 import {createBuilder} from "../../utils";
 
-export type CSSLengthType = NodeBaseWithComments & {
+export interface CSSLengthType extends NodeBaseWithComments {
 	type: "CSSLengthType";
 	// TODO
-};
+}
 
 export const cssLengthType = createBuilder<CSSLengthType>(
 	"CSSLengthType",

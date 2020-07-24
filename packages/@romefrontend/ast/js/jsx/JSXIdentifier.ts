@@ -8,10 +8,10 @@
 import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSXIdentifier = NodeBaseWithComments & {
+export interface JSXIdentifier extends NodeBaseWithComments {
 	type: "JSXIdentifier";
 	name: string;
-};
+}
 
 export const jsxIdentifier = createQuickBuilder<JSXIdentifier, "name">(
 	"JSXIdentifier",

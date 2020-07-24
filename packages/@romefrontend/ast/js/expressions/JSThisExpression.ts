@@ -8,9 +8,9 @@
 import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSThisExpression = NodeBaseWithComments & {
+export interface JSThisExpression extends NodeBaseWithComments {
 	type: "JSThisExpression";
-};
+}
 
 export const jsThisExpression = createBuilder<JSThisExpression>(
 	"JSThisExpression",

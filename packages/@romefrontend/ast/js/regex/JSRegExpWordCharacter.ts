@@ -8,9 +8,9 @@
 import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSRegExpWordCharacter = NodeBaseWithComments & {
+export interface JSRegExpWordCharacter extends NodeBaseWithComments {
 	type: "JSRegExpWordCharacter";
-};
+}
 
 export const jsRegExpWordCharacter = createBuilder<JSRegExpWordCharacter>(
 	"JSRegExpWordCharacter",

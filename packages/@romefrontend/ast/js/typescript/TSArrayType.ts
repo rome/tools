@@ -8,10 +8,10 @@
 import {AnyTSPrimary, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSArrayType = NodeBaseWithComments & {
+export interface TSArrayType extends NodeBaseWithComments {
 	type: "TSArrayType";
 	elementType: AnyTSPrimary;
-};
+}
 
 export const tsArrayType = createBuilder<TSArrayType>(
 	"TSArrayType",

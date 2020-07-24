@@ -5,12 +5,12 @@ import {
 } from "../../index";
 import {createBuilder} from "../../utils";
 
-export type TSTupleElement = NodeBaseWithComments & {
+export interface TSTupleElement extends NodeBaseWithComments {
 	type: "TSTupleElement";
 	name?: JSBindingIdentifier;
 	optional?: boolean;
 	typeAnnotation: AnyTSPrimary;
-};
+}
 
 export const tsTupleElement = createBuilder<TSTupleElement>(
 	"TSTupleElement",

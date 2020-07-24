@@ -12,10 +12,10 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSTypeQuery = NodeBaseWithComments & {
+export interface TSTypeQuery extends NodeBaseWithComments {
 	type: "TSTypeQuery";
 	exprName: TSImportType | AnyTSEntityName;
-};
+}
 
 export const tsTypeQuery = createBuilder<TSTypeQuery>(
 	"TSTypeQuery",

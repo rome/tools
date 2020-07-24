@@ -2,11 +2,11 @@ import {AnyCSSRuleStatement, NodeBaseWithComments} from "../../index";
 import {createBuilder} from "../../utils";
 
 // @supports
-export type CSSSupportsAtStatement = NodeBaseWithComments & {
+export interface CSSSupportsAtStatement extends NodeBaseWithComments {
 	type: "CSSSupportsAtStatement";
 	body: Array<AnyCSSRuleStatement>;
 	// TODO supports condition
-};
+}
 
 export const cssSupportsAtStatement = createBuilder<CSSSupportsAtStatement>(
 	"CSSSupportsAtStatement",

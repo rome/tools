@@ -8,10 +8,10 @@
 import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSSpreadProperty = NodeBaseWithComments & {
+export interface JSSpreadProperty extends NodeBaseWithComments {
 	type: "JSSpreadProperty";
 	argument: AnyJSExpression;
-};
+}
 
 export const jsSpreadProperty = createBuilder<JSSpreadProperty>(
 	"JSSpreadProperty",

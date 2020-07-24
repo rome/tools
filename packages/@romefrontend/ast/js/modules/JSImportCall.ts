@@ -8,10 +8,10 @@
 import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSImportCall = NodeBaseWithComments & {
+export interface JSImportCall extends NodeBaseWithComments {
 	type: "JSImportCall";
 	argument: AnyJSExpression;
-};
+}
 
 export const jsImportCall = createBuilder<JSImportCall>(
 	"JSImportCall",

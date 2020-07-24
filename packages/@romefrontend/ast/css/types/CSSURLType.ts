@@ -1,10 +1,10 @@
 import {CSSStringType, NodeBaseWithComments} from "../../index";
 import {createBuilder} from "../../utils";
 
-export type CSSURLType = NodeBaseWithComments & {
+export interface CSSURLType extends NodeBaseWithComments {
 	type: "CSSURLType";
 	url: CSSStringType;
-};
+}
 
 export const cssurlType = createBuilder<CSSURLType>(
 	"CSSURLType",

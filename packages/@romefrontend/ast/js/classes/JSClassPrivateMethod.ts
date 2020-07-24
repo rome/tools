@@ -15,14 +15,14 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSClassPrivateMethod = NodeBaseWithComments & {
+export interface JSClassPrivateMethod extends NodeBaseWithComments {
 	type: "JSClassPrivateMethod";
 	kind: JSClassMethodKind;
 	key: JSPrivateName;
 	head: JSFunctionHead;
 	body: JSBlockStatement;
 	meta: JSClassPropertyMeta;
-};
+}
 
 export const jsClassPrivateMethod = createBuilder<JSClassPrivateMethod>(
 	"JSClassPrivateMethod",

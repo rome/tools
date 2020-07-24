@@ -1,10 +1,10 @@
 import {NodeBaseWithComments} from "../../index";
 import {createBuilder} from "../../utils";
 
-export type CSSShapeType = NodeBaseWithComments & {
+export interface CSSShapeType extends NodeBaseWithComments {
 	type: "CSSShapeType";
 	// TODO
-};
+}
 
 export const cssShapeType = createBuilder<CSSShapeType>(
 	"CSSShapeType",

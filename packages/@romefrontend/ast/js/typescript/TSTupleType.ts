@@ -8,11 +8,11 @@
 import {NodeBaseWithComments, TSTupleElement} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSTupleType = NodeBaseWithComments & {
+export interface TSTupleType extends NodeBaseWithComments {
 	type: "TSTupleType";
 	elementTypes: Array<TSTupleElement>;
 	rest?: TSTupleElement;
-};
+}
 
 export const tsTupleType = createBuilder<TSTupleType>(
 	"TSTupleType",

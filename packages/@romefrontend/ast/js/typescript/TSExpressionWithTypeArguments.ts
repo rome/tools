@@ -12,11 +12,11 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSExpressionWithTypeArguments = NodeBaseWithComments & {
+export interface TSExpressionWithTypeArguments extends NodeBaseWithComments {
 	type: "TSExpressionWithTypeArguments";
 	expression: AnyTSEntityName;
 	typeParameters?: TSTypeParameterInstantiation;
-};
+}
 
 export const tsExpressionWithTypeArguments = createBuilder<TSExpressionWithTypeArguments>(
 	"TSExpressionWithTypeArguments",

@@ -8,11 +8,11 @@
 import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSComputedMemberProperty = NodeBaseWithComments & {
+export interface JSComputedMemberProperty extends NodeBaseWithComments {
 	type: "JSComputedMemberProperty";
 	value: AnyJSExpression;
 	optional?: boolean;
-};
+}
 
 export const jsComputedMemberProperty = createQuickBuilder<
 	JSComputedMemberProperty,

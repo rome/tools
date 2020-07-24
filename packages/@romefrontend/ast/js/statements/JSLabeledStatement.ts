@@ -12,11 +12,11 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSLabeledStatement = NodeBaseWithComments & {
+export interface JSLabeledStatement extends NodeBaseWithComments {
 	type: "JSLabeledStatement";
 	label: JSIdentifier;
 	body: AnyJSStatement;
-};
+}
 
 export const jsLabeledStatement = createBuilder<JSLabeledStatement>(
 	"JSLabeledStatement",

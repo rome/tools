@@ -4,7 +4,7 @@ import {createBuilder} from "../../utils";
 // foo > bar
 // foo bar
 // foo + bar
-export type CSSSelectorCombinator = NodeBaseWithComments & {
+export interface CSSSelectorCombinator extends NodeBaseWithComments {
 	type: "CSSSelectorCombinator";
 	kind:
 		| "descendant"
@@ -14,7 +14,7 @@ export type CSSSelectorCombinator = NodeBaseWithComments & {
 		| "column";
 	left: AnyCSSSelector;
 	right: AnyCSSSelector;
-};
+}
 
 export const cssSelectorCombinator = createBuilder<CSSSelectorCombinator>(
 	"CSSSelectorCombinator",

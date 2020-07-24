@@ -12,13 +12,13 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSClassDeclaration = NodeBaseWithComments & {
+export interface JSClassDeclaration extends NodeBaseWithComments {
 	type: "JSClassDeclaration";
 	id: JSBindingIdentifier;
 	meta: JSClassHead;
 	abstract?: boolean;
 	declare?: boolean;
-};
+}
 
 export const jsClassDeclaration = createBuilder<JSClassDeclaration>(
 	"JSClassDeclaration",

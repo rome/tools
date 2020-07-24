@@ -9,16 +9,16 @@ import {AnyComment} from "@romefrontend/ast";
 import {Diagnostics} from "@romefrontend/diagnostics";
 import {NodeBase} from "@romefrontend/parser-core";
 
-export type NodeBaseWithComments = NodeBase & {
+export interface NodeBaseWithComments extends NodeBase {
 	leadingComments?: Array<string>;
 	trailingComments?: Array<string>;
 	innerComments?: Array<string>;
-};
+}
 
-export type RootBase = {
+export interface RootBase {
 	comments: Array<AnyComment>;
 	filename: string;
 	diagnostics: Diagnostics;
 	mtime: undefined | number;
 	corrupt: boolean;
-};
+}

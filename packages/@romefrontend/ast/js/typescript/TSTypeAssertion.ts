@@ -12,11 +12,11 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSTypeAssertion = NodeBaseWithComments & {
+export interface TSTypeAssertion extends NodeBaseWithComments {
 	type: "TSTypeAssertion";
 	expression: AnyJSExpression;
 	typeAnnotation: AnyTSPrimary;
-};
+}
 
 export const tsTypeAssertion = createBuilder<TSTypeAssertion>(
 	"TSTypeAssertion",

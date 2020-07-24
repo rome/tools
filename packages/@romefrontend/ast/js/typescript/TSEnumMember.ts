@@ -13,11 +13,11 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSEnumMember = NodeBaseWithComments & {
+export interface TSEnumMember extends NodeBaseWithComments {
 	type: "TSEnumMember";
 	id: JSStringLiteral | JSIdentifier;
 	initializer?: AnyJSExpression;
-};
+}
 
 export const tsEnumMember = createBuilder<TSEnumMember>(
 	"TSEnumMember",

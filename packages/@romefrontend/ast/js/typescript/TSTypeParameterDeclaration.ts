@@ -8,10 +8,10 @@
 import {NodeBaseWithComments, TSTypeParameter} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSTypeParameterDeclaration = NodeBaseWithComments & {
+export interface TSTypeParameterDeclaration extends NodeBaseWithComments {
 	type: "TSTypeParameterDeclaration";
 	params: Array<TSTypeParameter>;
-};
+}
 
 export const tsTypeParameterDeclaration = createBuilder<TSTypeParameterDeclaration>(
 	"TSTypeParameterDeclaration",

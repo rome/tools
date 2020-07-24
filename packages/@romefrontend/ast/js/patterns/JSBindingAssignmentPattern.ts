@@ -13,12 +13,12 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSBindingAssignmentPattern = NodeBaseWithComments & {
+export interface JSBindingAssignmentPattern extends NodeBaseWithComments {
 	type: "JSBindingAssignmentPattern";
 	left: AnyJSTargetBindingPattern;
 	right: AnyJSExpression;
 	meta?: JSPatternMeta;
-};
+}
 
 export const jsBindingAssignmentPattern = createBuilder<JSBindingAssignmentPattern>(
 	"JSBindingAssignmentPattern",

@@ -8,12 +8,12 @@
 import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSUnaryExpression = NodeBaseWithComments & {
+export interface JSUnaryExpression extends NodeBaseWithComments {
 	type: "JSUnaryExpression";
 	operator: UnaryOperator;
 	prefix?: boolean;
 	argument: AnyJSExpression;
-};
+}
 
 export type UnaryOperator =
 	| "-"

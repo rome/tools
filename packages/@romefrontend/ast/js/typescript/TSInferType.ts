@@ -8,10 +8,10 @@
 import {NodeBaseWithComments, TSTypeParameter} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSInferType = NodeBaseWithComments & {
+export interface TSInferType extends NodeBaseWithComments {
 	type: "TSInferType";
 	typeParameter: TSTypeParameter;
-};
+}
 
 export const tsInferType = createBuilder<TSInferType>(
 	"TSInferType",

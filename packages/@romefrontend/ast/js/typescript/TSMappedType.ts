@@ -14,13 +14,13 @@ import {createBuilder} from "../../utils";
 
 export type TSMappedTypeBoolean = undefined | boolean | "+" | "-";
 
-export type TSMappedType = NodeBaseWithComments & {
+export interface TSMappedType extends NodeBaseWithComments {
 	type: "TSMappedType";
 	typeParameter: TSTypeParameter;
 	typeAnnotation?: AnyTSPrimary;
 	optional?: TSMappedTypeBoolean;
 	readonly?: TSMappedTypeBoolean;
-};
+}
 
 export const tsMappedType = createBuilder<TSMappedType>(
 	"TSMappedType",

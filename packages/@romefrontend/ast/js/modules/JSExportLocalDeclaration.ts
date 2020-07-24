@@ -20,7 +20,7 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSExportLocalDeclaration = NodeBaseWithComments & {
+export interface JSExportLocalDeclaration extends NodeBaseWithComments {
 	type: "JSExportLocalDeclaration";
 	declaration?:
 		| undefined
@@ -35,7 +35,7 @@ export type JSExportLocalDeclaration = NodeBaseWithComments & {
 	specifiers?: Array<JSExportLocalSpecifier>;
 	exportKind?: ConstJSExportModuleKind;
 	declare?: boolean;
-};
+}
 
 export const jsExportLocalDeclaration = createBuilder<JSExportLocalDeclaration>(
 	"JSExportLocalDeclaration",

@@ -12,11 +12,11 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSAsExpression = NodeBaseWithComments & {
+export interface TSAsExpression extends NodeBaseWithComments {
 	type: "TSAsExpression";
 	typeAnnotation: AnyTSPrimary;
 	expression: AnyJSExpression;
-};
+}
 
 export const tsAsExpression = createBuilder<TSAsExpression>(
 	"TSAsExpression",

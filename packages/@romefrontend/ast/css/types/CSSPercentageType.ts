@@ -1,10 +1,10 @@
 import {NodeBaseWithComments} from "../../index";
 import {createBuilder} from "../../utils";
 
-export type CSSPercentageType = NodeBaseWithComments & {
+export interface CSSPercentageType extends NodeBaseWithComments {
 	type: "CSSPercentageType";
 	value: number;
-};
+}
 
 export const cssPercentageType = createBuilder<CSSPercentageType>(
 	"CSSPercentageType",

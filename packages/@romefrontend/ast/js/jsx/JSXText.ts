@@ -8,10 +8,10 @@
 import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSXText = NodeBaseWithComments & {
+export interface JSXText extends NodeBaseWithComments {
 	type: "JSXText";
 	value: string;
-};
+}
 
 export const jsxText = createBuilder<JSXText>(
 	"JSXText",

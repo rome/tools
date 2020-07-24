@@ -8,9 +8,9 @@
 import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSArrayHole = NodeBaseWithComments & {
+export interface JSArrayHole extends NodeBaseWithComments {
 	type: "JSArrayHole";
-};
+}
 
 export const jsArrayHole = createBuilder<JSArrayHole>(
 	"ArrayHole",

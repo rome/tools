@@ -8,11 +8,11 @@
 import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSAssignmentIdentifier = NodeBaseWithComments & {
+export interface JSAssignmentIdentifier extends NodeBaseWithComments {
 	type: "JSAssignmentIdentifier";
 	name: string;
 	definite?: boolean;
-};
+}
 
 export const jsAssignmentIdentifier = createQuickBuilder<
 	JSAssignmentIdentifier,

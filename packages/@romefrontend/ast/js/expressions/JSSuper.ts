@@ -8,9 +8,9 @@
 import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSSuper = NodeBaseWithComments & {
+export interface JSSuper extends NodeBaseWithComments {
 	type: "JSSuper";
-};
+}
 
 export const jsSuper = createBuilder<JSSuper>(
 	"JSSuper",

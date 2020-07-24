@@ -8,10 +8,10 @@
 import {JSIdentifier, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSExportNamespaceSpecifier = NodeBaseWithComments & {
+export interface JSExportNamespaceSpecifier extends NodeBaseWithComments {
 	type: "JSExportNamespaceSpecifier";
 	exported: JSIdentifier;
-};
+}
 
 export const jsExportNamespaceSpecifier = createBuilder<JSExportNamespaceSpecifier>(
 	"JSExportNamespaceSpecifier",

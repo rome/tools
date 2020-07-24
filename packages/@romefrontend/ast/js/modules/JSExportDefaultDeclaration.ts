@@ -15,7 +15,7 @@ import {
 import {createBuilder} from "../../utils";
 import {TSDeclareFunction} from "../typescript/TSDeclareFunction";
 
-export type JSExportDefaultDeclaration = NodeBaseWithComments & {
+export interface JSExportDefaultDeclaration extends NodeBaseWithComments {
 	type: "JSExportDefaultDeclaration";
 	declaration:
 		| JSFunctionDeclaration
@@ -25,7 +25,7 @@ export type JSExportDefaultDeclaration = NodeBaseWithComments & {
 		| AnyJSExpression;
 	exportKind?: undefined;
 	declare?: boolean;
-};
+}
 
 export const jsExportDefaultDeclaration = createBuilder<JSExportDefaultDeclaration>(
 	"JSExportDefaultDeclaration",

@@ -12,12 +12,12 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSTryStatement = NodeBaseWithComments & {
+export interface JSTryStatement extends NodeBaseWithComments {
 	type: "JSTryStatement";
 	block: JSBlockStatement;
 	handler: undefined | JSCatchClause;
 	finalizer: undefined | JSBlockStatement;
-};
+}
 
 export const jsTryStatement = createBuilder<JSTryStatement>(
 	"JSTryStatement",

@@ -14,12 +14,12 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSCallExpression = NodeBaseWithComments & {
+export interface JSCallExpression extends NodeBaseWithComments {
 	type: "JSCallExpression";
 	callee: AnyJSExpression | JSSuper;
 	arguments: Array<AnyJSExpression | JSSpreadElement>;
 	typeArguments?: TSTypeParameterInstantiation;
-};
+}
 
 export const jsCallExpression = createBuilder<JSCallExpression>(
 	"JSCallExpression",

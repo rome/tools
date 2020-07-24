@@ -2,10 +2,10 @@ import {CSSIdentifierType, NodeBaseWithComments} from "../../index";
 import {createBuilder} from "../../utils";
 
 // ::after
-export type CSSSelectorPseudoElementSelector = NodeBaseWithComments & {
+export interface CSSSelectorPseudoElementSelector extends NodeBaseWithComments {
 	type: "CSSSelectorPseudoElementSelector";
 	name: CSSIdentifierType;
-};
+}
 
 export const cssSelectorPseudoElementSelector = createBuilder<CSSSelectorPseudoElementSelector>(
 	"CSSSelectorPseudoElementSelector",

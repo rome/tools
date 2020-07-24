@@ -2,10 +2,10 @@ import {CSSIdentifierType, NodeBaseWithComments} from "../../index";
 import {createBuilder} from "../../utils";
 
 // .foo
-export type CSSSelectorClass = NodeBaseWithComments & {
+export interface CSSSelectorClass extends NodeBaseWithComments {
 	type: "CSSSelectorClass";
 	className: CSSIdentifierType;
-};
+}
 
 export const cssSelectorClass = createBuilder<CSSSelectorClass>(
 	"CSSSelectorClass",

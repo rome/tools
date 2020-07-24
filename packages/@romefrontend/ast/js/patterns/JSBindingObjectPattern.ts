@@ -13,12 +13,12 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSBindingObjectPattern = NodeBaseWithComments & {
+export interface JSBindingObjectPattern extends NodeBaseWithComments {
 	meta?: JSPatternMeta;
 	type: "JSBindingObjectPattern";
 	properties: Array<JSBindingObjectPatternProperty>;
 	rest: undefined | JSBindingIdentifier;
-};
+}
 
 export const jsBindingObjectPattern = createBuilder<JSBindingObjectPattern>(
 	"JSBindingObjectPattern",

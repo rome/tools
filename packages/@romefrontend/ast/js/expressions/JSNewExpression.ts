@@ -14,13 +14,13 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSNewExpression = NodeBaseWithComments & {
+export interface JSNewExpression extends NodeBaseWithComments {
 	type: "JSNewExpression";
 	callee: AnyJSExpression | JSSuper;
 	arguments: Array<AnyJSExpression | JSSpreadElement>;
 	typeArguments?: undefined | TSTypeParameterInstantiation;
 	optional?: boolean;
-};
+}
 
 export const jsNewExpression = createBuilder<JSNewExpression>(
 	"JSNewExpression",

@@ -4,11 +4,11 @@ import {MarkdownReference} from "@romefrontend/ast/markdown/unions";
 
 // ![Atl text](//url)
 // ![Atl text] [1]
-export type MarkdownImageInline = NodeBaseWithComments & {
+export interface MarkdownImageInline extends NodeBaseWithComments {
 	type: "MarkdownImageInline";
 	url: MarkdownReference;
 	altText: string;
-};
+}
 
 export const markdownImageInline = createBuilder<MarkdownImageInline>(
 	"MarkdownImageInline",

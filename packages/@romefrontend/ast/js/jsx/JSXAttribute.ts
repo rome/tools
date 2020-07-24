@@ -16,7 +16,7 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSXAttribute = NodeBaseWithComments & {
+export interface JSXAttribute extends NodeBaseWithComments {
 	type: "JSXAttribute";
 	name: JSXIdentifier | JSXNamespacedName;
 	value?:
@@ -25,7 +25,7 @@ export type JSXAttribute = NodeBaseWithComments & {
 		| JSXFragment
 		| JSStringLiteral
 		| JSXExpressionContainer;
-};
+}
 
 export const jsxAttribute = createBuilder<JSXAttribute>(
 	"JSXAttribute",

@@ -8,10 +8,10 @@
 import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSXSpreadChild = NodeBaseWithComments & {
+export interface JSXSpreadChild extends NodeBaseWithComments {
 	type: "JSXSpreadChild";
 	expression: AnyJSExpression;
-};
+}
 
 export const jsxSpreadChild = createBuilder<JSXSpreadChild>(
 	"JSXSpreadChild",
