@@ -1,11 +1,16 @@
-import {AnyCSSRuleStatement, NodeBaseWithComments, RootBase} from "../../index";
-import {createBuilder} from "../../utils";
+import {
+	CSSAtRule,
+	CSSRule,
+	NodeBaseWithComments,
+	RootBase,
+} from "@romefrontend/ast";
+import {createBuilder} from "@romefrontend/ast/utils";
 
-export interface CSSRoot extends NodeBaseWithComments,
-RootBase {
-	type: "CSSRoot";
-	body: Array<AnyCSSRuleStatement>;
-}
+export type CSSRoot = NodeBaseWithComments &
+	RootBase & {
+		type: "CSSRoot";
+		body: Array<CSSAtRule | CSSRule>;
+	};
 
 export const cssRoot = createBuilder<CSSRoot>(
 	"CSSRoot",
