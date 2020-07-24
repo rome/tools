@@ -18,14 +18,15 @@ export default createLocalCommand({
 	description: markup`create a project config`,
 	usage: "",
 	examples: [],
-	hidden: true,
 	defineFlags() {
 		return {};
 	},
 	async callback(req: ClientRequest) {
 		const {reporter} = req.client;
 
-		const configPath = req.client.flags.cwd.append("rome.rjson");
+		const projectPath = req.client.flags.cwd;
+		const configPath = projectPath.append("rome.rjson");
+
 		if (await exists(configPath)) {
 			reporter.error(
 				markup`<filelink target="${configPath.join()}" emphasis>rome.rjson</filelink> file already exists`,
@@ -37,16 +38,42 @@ export default createLocalCommand({
 		}
 
 		const config: Dict<unknown> = {};
-		await writeConfig();
 
 		async function writeConfig() {
 			await writeFile(configPath, stringifyRJSON(config));
+			reporter.success(markup`Created config ${configPath}`);
+		}
+		// Run lint, capture diagnostics
+		const response = await req.client.query(
+			{
+				commandName: "check",
+				silent: true,
+			},
+			"server",
+		);
+		let globals: Array<string> = [];
+		if (response.type === "DIAGNOSTICS") {
+			if (response.hasDiagnostics) {
+				response.diagnostics.forEach((d) => {
+					if (d.description.category === "lint/js/undeclaredVariables") {
+						if (d.meta && d.meta.identifierName) {
+							globals.push(d.meta.identifierName);
+						}
+					}
+				});
+			}
+		}
+		if (globals.length > 0) {
+			config["globals"] = globals;
 		}
 
-		// Run lint, capture diagnostics
-
-		reporter.success(markup`Created config ${configPath}`);
-
+		await writeConfig();
+		await req.client.query(
+			{
+				commandName: "init",
+			},
+			"server",
+		);
 		return true;
 	},
 });

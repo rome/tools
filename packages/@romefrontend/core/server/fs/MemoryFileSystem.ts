@@ -41,7 +41,7 @@ import {
 	readFileText,
 	watch,
 } from "@romefrontend/fs";
-import {getFileHandler} from "../../common/file-handlers/index";
+import {getFileHandlerFromPath} from "../../common/file-handlers/index";
 import crypto = require("crypto");
 import fs = require("fs");
 import {FileNotFound} from "@romefrontend/core/common/FileNotFound";
@@ -609,7 +609,10 @@ export default class MemoryFileSystem {
 		}
 
 		// If we're a file and don't have an extension handler so there's no reason for us to care about it
-		if (type === "file" && getFileHandler(path, project.config) === undefined) {
+		if (
+			type === "file" &&
+			getFileHandlerFromPath(path, project.config) === undefined
+		) {
 			return true;
 		}
 

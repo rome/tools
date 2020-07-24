@@ -13,6 +13,7 @@ export const textHandler: PartialExtensionHandler = {
 	canLint: false,
 	canFormat: false,
 	language: "unknown",
+	hasTabs: false,
 
 	async parse({path, mtime, file, worker}) {
 		const src = await worker.readFile(file.real);

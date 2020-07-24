@@ -24,6 +24,7 @@ export const htmlHandler: ExtensionHandler = {
 	canLint: true,
 	canFormat: true,
 	language: "html",
+	hasTabs: true,
 
 	async parse({mtime, path, file, worker}) {
 		const sourceText = await worker.readFile(file.real);

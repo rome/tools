@@ -19,7 +19,7 @@ import {ProjectDefinition} from "@romefrontend/project";
 import DependencyOrderer, {DependencyOrder} from "./DependencyOrderer";
 import {WorkerAnalyzeDependencyResult} from "../../common/bridges/WorkerBridge";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@romefrontend/path";
-import {getFileHandler} from "../../common/file-handlers/index";
+import {getFileHandlerFromPath} from "../../common/file-handlers/index";
 import {ExtensionHandler} from "../../common/file-handlers/types";
 import {
 	AnalyzeDependency,
@@ -101,7 +101,7 @@ export default class DependencyNode {
 
 		this.analyze = res;
 
-		const {handler} = getFileHandler(ref.real, this.project.config);
+		const {handler} = getFileHandlerFromPath(ref.real, this.project.config);
 		this.handler = handler;
 	}
 

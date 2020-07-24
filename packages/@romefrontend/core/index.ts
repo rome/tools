@@ -7,7 +7,7 @@
 
 export * from "./common/constants";
 
-export {getFileHandler} from "./common/file-handlers/index";
+export {getFileHandlerFromPath} from "./common/file-handlers/index";
 
 export {default as Client} from "./client/Client";
 export {localCommands} from "./client/commands";

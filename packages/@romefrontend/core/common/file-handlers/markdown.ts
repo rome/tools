@@ -6,6 +6,7 @@ export const markdownHandler: ExtensionHandler = {
 	canLint: true,
 	canFormat: true,
 	language: "md",
+	hasTabs: true,
 
 	async parse({mtime, path, file, worker}) {
 		const sourceText = await worker.readFile(file.real);

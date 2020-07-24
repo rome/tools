@@ -46,7 +46,7 @@ import {
 import {FileReference, JSONFileReference} from "../../common/types/files";
 import {
 	GetFileHandlerResult,
-	getFileHandler,
+	getFileHandlerFromPath,
 } from "../../common/file-handlers/index";
 import {IMPLICIT_JS_EXTENSIONS} from "../../common/file-handlers/javascript";
 import {createDirectory, readFileText} from "@romefrontend/fs";
@@ -733,7 +733,7 @@ export default class ProjectManager {
 		if (project === undefined) {
 			return {ext: "", handler: undefined};
 		} else {
-			return getFileHandler(path, project.config);
+			return getFileHandlerFromPath(path, project.config);
 		}
 	}
 
