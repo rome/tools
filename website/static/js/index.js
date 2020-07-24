@@ -180,6 +180,23 @@ for (const link of elements.tocLinks) {
 	link.innerText = link.innerText.replace(/(\s#)$/, "");
 }
 
+/**
+ * @param {string} inputSelector
+ */
+function initDocsearch(inputSelector) {
+	//checks if docsearch wasn't already instantiated
+	const input = document.querySelector(`.algolia-autocomplete ${inputSelector}`);
+
+	if (input == null) {
+		return window.docsearch({
+			apiKey: "66db1ad366d458c6acded7cbc23dba7e",
+			indexName: "romefrontend",
+			inputSelector,
+			debug: false, // Set debug to true if you want to inspect the dropdown
+		});
+	}
+}
+
 window.onload = function() {
 	if (window.location.hash !== "") {
 		scrollToHeading(window.location.hash);
@@ -192,18 +209,21 @@ window.onload = function() {
 	script.addEventListener(
 		"load",
 		() => {
-			window.docsearch({
-				apiKey: "66db1ad366d458c6acded7cbc23dba7e",
-				indexName: "romefrontend",
-				inputSelector: window.innerWidth > 768
-					? "#docsearch-desktop"
-					: "#docsearch-mobile",
-				debug: false, // Set debug to true if you want to inspect the dropdown
-			});
+			initDocsearch(
+				window.innerWidth > 768 ? "#docsearch-desktop" : "#docsearch-mobile",
+			);
 		},
 	);
 	document.body.appendChild(script);
 };
+
+const mediaQueryListener = window.matchMedia("(min-width: 768px)");
+
+mediaQueryListener.addListener(() => {
+	initDocsearch(
+		window.innerWidth > 768 ? "#docsearch-desktop" : "#docsearch-mobile",
+	);
+});
 
 document.addEventListener(
 	"click",
